@@ -28,12 +28,13 @@ public class MouseManager : MonoBehaviour {
         mainScript = FindObjectOfType<MainScript>();
         hit = new RaycastHit();
         mouseCursor = GameObject.Find("MouseCursor");
-
     }
     float updateFrequency = 0.1f;
     float updateTime = 0;
 	// Update is called once per frame
+    
 	void Update () {
+        /*
         if (!active)
             return;
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -106,7 +107,9 @@ public class MouseManager : MonoBehaviour {
                     }
                 }
             }
+
         }
+        */
 
     }
     static int oldX = -1;
@@ -159,11 +162,9 @@ public class MouseManager : MonoBehaviour {
         {
             for (int j = lastPositions.Count - 1; j >= 0; j--)
             {
-               // Debug.Log("Position: " + v);
             
                 if (GetDelta(lastPositions[j].position, new Vector2(xAttack, zAttack))== c.charclass.AttackRanges[i]&&mainScript.gridScript.fields[(int)lastPositions[j].position.x, (int)lastPositions[j].position.y].character==null)
                 {
-                    //Debug.Log(c.charclass.AttackRanges[i] + " "+c.name+" "+GetDelta(v, new Vector2(xAttack, zAttack))+" "+xAttack+" "+zAttack+" "+v);
                     return lastPositions[j].position;
                 }
             }
@@ -181,30 +182,30 @@ public class MouseManager : MonoBehaviour {
                 mousePath.Add(new Vector2(p.getStep(i).getX(), p.getStep(i).getY()));
             }
         }
-        /*foreach (Vector2 v in mousePath)
+        foreach (Vector2 v in mousePath)
         {
             GameObject dot = GameObject.Instantiate(FindObjectOfType<UXRessources>().moveArrowDot);
-            dot.transform.position = new Vector3(v.x + 0.5f, mainScript.gridScript.fields[(int)v.x, (int)v.y].height, v.y + 0.5f);
+            dot.transform.position = new Vector3(v.x + 0.5f, v.y,0);
             dots.Add(dot);
-        }*/
+        }
     }
-    public static void CharacterDrag(int x, int z, Character character)
+    public static void CharacterDrag(int x, int y, Character character)
     {
-        /*
+        
         if (mainScript.activeCharacter == null)
         {
             ResetMoveArrow();
             return;
         }
-        if (isOldDrag(x, z))
+        if (isOldDrag(x, y))
         {
             return;
         }
        
-        MapField field = mainScript.gridScript.fields[x, z];
+        MapField field = mainScript.gridScript.fields[x, y];
         if (field.isActive && field.character == null)
         {
-            lastPositions.Add(new CursorPosition(new Vector2(x, z),null));
+            lastPositions.Add(new CursorPosition(new Vector2(x, y),null));
             
             if (lastPositions.Count > character.charclass.movRange)
             {
@@ -217,7 +218,7 @@ public class MouseManager : MonoBehaviour {
         //Dragged on Enemy
         if (field.character != null && field.character.team != character.team)
         {
-            if (FindObjectOfType<GridScript>().IsFieldAttackable(x, z))
+            if (FindObjectOfType<GridScript>().IsFieldAttackable(x, y))
             {
                 FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().material.mainTexture = FindObjectOfType<TextureScript>().cursorTextures[1];
                 FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().enabled = true;
@@ -236,18 +237,18 @@ public class MouseManager : MonoBehaviour {
                     foreach (Vector2 v in mousePath)
                     {
                         int xDiff = (int)Mathf.Abs(v.x - field.character.x);
-                        int zDiff = (int)Mathf.Abs(v.y - field.character.z);
-                        if ((xDiff + zDiff) == mainScript.activeCharacter.charclass.AttackRanges[i] && mainScript.gridScript.fields[(int)v.x, (int)v.y].isActive && mainScript.gridScript.fields[(int)v.x, (int)v.y].character == null)
+                        int yDiff = (int)Mathf.Abs(v.y - field.character.y);
+                        if ((xDiff + yDiff) == mainScript.activeCharacter.charclass.AttackRanges[i] && mainScript.gridScript.fields[(int)v.x, (int)v.y].isActive && mainScript.gridScript.fields[(int)v.x, (int)v.y].character == null)
                         {
                             //Debug.Log("WHY?");
 
                             if (mousePath.IndexOf(v) + 1 < mousePath.Count && mousePath.Count - (mousePath.IndexOf(v) + 1) > 0)
                             {
-                                Debug.Log(GetLastAttackPosition(character, (int)field.character.x, (int)field.character.z));
-                                CalculateMousePathToPositon(character, GetLastAttackPosition(character, (int)field.character.x, (int)field.character.z));
-                                Finish(character, field, x, z);
+                                Debug.Log(GetLastAttackPosition(character, (int)field.character.x, (int)field.character.y));
+                                CalculateMousePathToPositon(character, GetLastAttackPosition(character, (int)field.character.x, (int)field.character.y));
+                                Finish(character, field, x, y);
                                 return;
-                                Debug.Log("Was ist das?" + v + " " + mousePath.IndexOf(v) + " " + (mousePath.Count - (mousePath.IndexOf(v) + 1)) + " " + mousePath.Count + "  " + field.character.x + " " + field.character.z);
+                                Debug.Log("Was ist das?" + v + " " + mousePath.IndexOf(v) + " " + (mousePath.Count - (mousePath.IndexOf(v) + 1)) + " " + mousePath.Count + "  " + field.character.x + " " + field.character.y);
                                 reset = false;
                                 mousePath.RemoveRange(mousePath.IndexOf(v) + 1, mousePath.Count - (mousePath.IndexOf(v) + 1));
                                 i = -1;
@@ -259,7 +260,7 @@ public class MouseManager : MonoBehaviour {
                                 foreach (Vector2 ve in mousePath)
                                 {
                                     GameObject dot = GameObject.Instantiate(FindObjectOfType<UXRessources>().moveArrowDot);
-                                    dot.transform.position = new Vector3(ve.x + 0.5f, mainScript.gridScript.fields[(int)ve.x, (int)ve.y].height, ve.y + 0.5f);
+                                    dot.transform.position = new Vector3(ve.x + 0.5f,  ve.y + 0.5f,0);
                                     dots.Add(dot);
                                 }
                                 break;
@@ -276,7 +277,7 @@ public class MouseManager : MonoBehaviour {
                                 foreach (Vector2 ve in mousePath)
                                 {
                                     GameObject dot = GameObject.Instantiate(FindObjectOfType<UXRessources>().moveArrowDot);
-                                    dot.transform.position = new Vector3(ve.x + 0.5f, mainScript.gridScript.fields[(int)ve.x, (int)ve.y].height, ve.y + 0.5f);
+                                    dot.transform.position = new Vector3(ve.x + 0.5f, ve.y + 0.5f,0);
                                     dots.Add(dot);
                                 }
                                 i = -1;
@@ -285,9 +286,9 @@ public class MouseManager : MonoBehaviour {
                         }
                     }
                     int xDif = (int)Mathf.Abs(character.x - field.character.x);
-                    int zDif = (int)Mathf.Abs(character.z - field.character.z);
+                    int yDif = (int)Mathf.Abs(character.y - field.character.y);
 
-                    if (i != -1 && (xDif + zDif) == mainScript.activeCharacter.charclass.AttackRanges[i])
+                    if (i != -1 && (xDif + yDif) == mainScript.activeCharacter.charclass.AttackRanges[i])
                     {
                         Debug.Log("2---Vom Stand aus in Range und mit MousePath nicht in Range!");
                         mousePath.Clear();
@@ -299,7 +300,7 @@ public class MouseManager : MonoBehaviour {
                         foreach (Vector2 ve in mousePath)
                         {
                             GameObject dot = GameObject.Instantiate(FindObjectOfType<UXRessources>().moveArrowDot);
-                            dot.transform.position = new Vector3(ve.x + 0.5f, mainScript.gridScript.fields[(int)ve.x, (int)ve.y].height, ve.y + 0.5f);
+                            dot.transform.position = new Vector3(ve.x + 0.5f, ve.y + 0.5f,0);
                             dots.Add(dot);
                         }
                         i = -1;
@@ -308,7 +309,7 @@ public class MouseManager : MonoBehaviour {
                 }
 
                 //Diagonal
-                if ((Mathf.Abs(oldX - x) + Mathf.Abs(oldZ - z) > 1))
+                if ((Mathf.Abs(oldX - x) + Mathf.Abs(oldY - y) > 1))
                 {
                     reset = true;
                 }
@@ -321,10 +322,10 @@ public class MouseManager : MonoBehaviour {
                         foreach (Vector2 pos in mousePath)
                         {
                             int xDiff = (int)Mathf.Abs(pos.x - field.character.x);
-                            int zDiff = (int)Mathf.Abs(pos.y - field.character.z);
-                            if ((xDiff + zDiff) == mainScript.activeCharacter.charclass.AttackRanges[i] && mainScript.gridScript.fields[(int)pos.x, (int)pos.y].isActive && mainScript.gridScript.fields[(int)pos.x, (int)pos.y].character == null)
+                            int yDiff = (int)Mathf.Abs(pos.y - field.character.y);
+                            if ((xDiff + yDiff) == mainScript.activeCharacter.charclass.AttackRanges[i] && mainScript.gridScript.fields[(int)pos.x, (int)pos.y].isActive && mainScript.gridScript.fields[(int)pos.x, (int)pos.y].character == null)
                             {
-                                Debug.Log("Reset" + pos + " " + mousePath.IndexOf(pos) + " " + (mousePath.Count - (mousePath.IndexOf(pos) + 1)) + " " + mousePath.Count + "  " + character.x + " " + character.z);
+                                Debug.Log("Reset" + pos + " " + mousePath.IndexOf(pos) + " " + (mousePath.Count - (mousePath.IndexOf(pos) + 1)) + " " + mousePath.Count + "  " + character.x + " " + character.y);
                                 if (mousePath.IndexOf(pos) + 1 < mousePath.Count && mousePath.Count - (mousePath.IndexOf(pos) + 1) > 0)
                                     mousePath.RemoveRange(mousePath.IndexOf(pos) + 1, mousePath.Count - (mousePath.IndexOf(pos) + 1));
                                 i = -1;
@@ -338,10 +339,10 @@ public class MouseManager : MonoBehaviour {
                     if (!flag)
                     {
                         int xDiff = (int)Mathf.Abs(character.x - field.character.x);
-                        int zDiff = (int)Mathf.Abs(character.z - field.character.z);
+                        int yDiff = (int)Mathf.Abs(character.y - field.character.y);
                         for (int i = mainScript.activeCharacter.charclass.AttackRanges.Count - 1; i >= 0; i--)
                         {
-                            if ((xDiff + zDiff) == mainScript.activeCharacter.charclass.AttackRanges[i])
+                            if ((xDiff + yDiff) == mainScript.activeCharacter.charclass.AttackRanges[i])
                             {
                                 Debug.Log("Vom Stand aus in Range und mit MousePath nicht in Range!");
                                 flag = true;
@@ -360,20 +361,20 @@ public class MouseManager : MonoBehaviour {
                         foreach (Vector2 v in mousePath)
                         {
                             GameObject dot = GameObject.Instantiate(FindObjectOfType<UXRessources>().moveArrowDot);
-                            dot.transform.position = new Vector3(v.x + 0.5f, mainScript.gridScript.fields[(int)v.x, (int)v.y].height, v.y + 0.5f);
+                            dot.transform.position = new Vector3(v.x + 0.5f, v.y + 0.5f,0);
                             dots.Add(dot);
                         }
                     }
                     else
                     {
                         ResetMoveArrow();
-                        MovementPath p = mainScript.gridScript.getPath(character.x, character.z, x, z, character.team, false, character.charclass.AttackRanges);
+                        MovementPath p = mainScript.gridScript.getPath(character.x, character.y, x, y, character.team, false, character.charclass.AttackRanges);
                         int removeFromPath = 1;
                         foreach (int attackRange in mainScript.activeCharacter.charclass.AttackRanges)
                         {
                             int xAttackRange = (int)p.getStep(p.getLength() - 1 - attackRange).getX();
-                            int zAttackRange = (int)p.getStep(p.getLength() - 1 - attackRange).getZ();
-                            if (mainScript.gridScript.fields[xAttackRange, zAttackRange].character == null && mainScript.gridScript.fields[xAttackRange, zAttackRange].isActive)
+                            int yAttackRange = (int)p.getStep(p.getLength() - 1 - attackRange).getY();
+                            if (mainScript.gridScript.fields[xAttackRange, yAttackRange].character == null && mainScript.gridScript.fields[xAttackRange, yAttackRange].isActive)
                             {
                                 removeFromPath = attackRange;
                             }
@@ -386,7 +387,7 @@ public class MouseManager : MonoBehaviour {
                             for (int i = p.getLength() - 2; i >= removeFromPath; i--)
                             //  for (int i = removeFromPath; i < p.getLength()-1 ; i++)
                             {
-                                mousePath.Add(new Vector2(p.getStep(i).getX(), p.getStep(i).getZ()));
+                                mousePath.Add(new Vector2(p.getStep(i).getX(), p.getStep(i).getY()));
                                 // Debug.Log(mousePath[i]);
                             }
                         }
@@ -394,7 +395,7 @@ public class MouseManager : MonoBehaviour {
                         foreach (Vector2 v in mousePath)
                         {
                             GameObject dot = GameObject.Instantiate(FindObjectOfType<UXRessources>().moveArrowDot);
-                            dot.transform.position = new Vector3(v.x + 0.5f, mainScript.gridScript.fields[(int)v.x, (int)v.y].height, v.y + 0.5f);
+                            dot.transform.position = new Vector3(v.x + 0.5f, v.y + 0.5f,0);
                             dots.Add(dot);
                         }
                     }
@@ -409,17 +410,17 @@ public class MouseManager : MonoBehaviour {
             if (field.isActive)
             {
                 FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().enabled = true;
-                FindObjectOfType<DragCursor>().transform.position = new Vector3(x + 0.5f, FindObjectOfType<GridScript>().fields[x, z].height, z + 0.5f);
+                FindObjectOfType<DragCursor>().transform.position = new Vector3(x + 0.5f, y + 0.5f,0);
             }
             else
             {
                 FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().enabled = false;
             }
-            if (field.isActive && !(field.x == character.x && field.y == character.z))
+            if (field.isActive && !(field.x == character.x && field.y == character.y))
             {
 
                 FindObjectOfType<UXRessources>().movementFlag.SetActive(true);
-                FindObjectOfType<UXRessources>().movementFlag.transform.position = new Vector3(x + 0.5f, FindObjectOfType<GridScript>().fields[x, z].height, z + 0.5f);
+                FindObjectOfType<UXRessources>().movementFlag.transform.position = new Vector3(x + 0.5f, y + 0.5f,0);
             }
             else
             {
@@ -427,7 +428,7 @@ public class MouseManager : MonoBehaviour {
             }
         }
         //If Field is Orange and not the filed currently standing on
-        if (!(x == character.x && z == character.z)&&field.isActive)//&&field.character==null)
+        if (!(x == character.x && y == character.y)&&field.isActive)//&&field.character==null)
         {
             if (nonActive)
             {
@@ -435,45 +436,44 @@ public class MouseManager : MonoBehaviour {
             }
             nonActive = false;
             bool contains = false;
-            if(mousePath.Contains(new Vector2(x, z)))
+            if(mousePath.Contains(new Vector2(x, y)))
             {
                 contains = true;
             }
            // Debug.Log("ADD");
-            mousePath.Add(new Vector2(x, z));
+            mousePath.Add(new Vector2(x, y));
             //Debug.Log("WAHT");
             foreach (GameObject dot in dots)
             {
                 GameObject.Destroy(dot);
             }
             dots.Clear();
-            if (mousePath.Count> character.charclass.movRange||contains||(Mathf.Abs(oldX - x) + Mathf.Abs(oldZ - z) > 1))
+            if (mousePath.Count> character.charclass.movRange||contains||(Mathf.Abs(oldX - x) + Mathf.Abs(oldY - y) > 1))
             {
                 mousePath.Clear();
-                MovementPath p = mainScript.gridScript.getPath(character.x, character.z, x, z, character.team, false, character.charclass.AttackRanges);
+                MovementPath p = mainScript.gridScript.getPath(character.x, character.y, x, y, character.team, false, character.charclass.AttackRanges);
                 if (p != null)
                 {
                     for (int i = p.getLength() - 2; i >= 0; i--)
-                    //    for (int i = 0; i < p.getLength()-1; i++)
                     {
-                        mousePath.Add(new Vector2(p.getStep(i).getX(), p.getStep(i).getZ()));
+                        mousePath.Add(new Vector2(p.getStep(i).getX(), p.getStep(i).getY()));
                     }
                 }
             }
             foreach(Vector2 v in mousePath)
             {
                 GameObject dot = GameObject.Instantiate(FindObjectOfType<UXRessources>().moveArrowDot);
-                dot.transform.position = new Vector3(v.x + 0.5f, mainScript.gridScript.fields[(int)v.x, (int)v.y].height,v.y + 0.5f);
+                dot.transform.position = new Vector3(v.x + 0.5f, v.y + 0.5f,0);
                 dots.Add(dot);
             }
         }
-        else if(x == character.x && z == character.z)
+        else if(x == character.x && y == character.y)
         {
             ResetMoveArrow();
             nonActive = false;
         }
-        Finish(character, field, x, z);
-        */
+        Finish(character, field, x, y);
+        
     }
     public static void Finish(Character character, MapField field, int x, int y)
     {

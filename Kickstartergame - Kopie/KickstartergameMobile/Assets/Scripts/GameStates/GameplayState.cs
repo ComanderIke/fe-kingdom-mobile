@@ -21,26 +21,15 @@ namespace Assets.Scripts.GameStates
         float cameraSpeed = 3f;
         bool isAnimation = false;
 
-        public GameplayState()
-        {
-           
-
-			//MouseWheelInput.mouseWheelDown +=SwitchCharacter;
-        }
         public override void enter()
         {
-            //MainScript.moveCharacterEvent += MoveActiveCharacter;
             mainScript = GameObject.Find(MainScript.MAIN_GAME_OBJ).GetComponent<MainScript>();
-            //GameObject.FindObjectOfType<HudScript>().SetEndTurnButton(true);
             activePlayer = MainScript.players[MainScript.ActivePlayerNumber];
         }
 
         public override void exit()
         {
-            //GameObject.FindObjectOfType<HudScript>().SetEndTurnButton(false);
-            //global::Character c = GameObject.Find(MainScript.MAIN_GAME_OBJ).GetComponent<MainScript>().activeCharacter;
-            //if(c!= null)
-            //GameObject.Find(MainScript.CURSOR_NAME).GetComponent<CursorScript>().SetPosition(c.GetPositionOnGrid().x, GameObject.Find(MainScript.MAIN_GAME_OBJ).GetComponent<MainScript>().gridScript.fields[(int)c.gameObject.transform.localPosition.x, (int)c.gameObject.transform.localPosition.z].height + MainScript.CURSOROFFSET, c.GetPositionOnGrid().y);
+
         }
 
         public override void update()
@@ -72,14 +61,11 @@ namespace Assets.Scripts.GameStates
             if (loser != null)
             {
                 Debug.Log("GameOver!");
-                //mainScript.SwitchState(new GameOverState(loser,mainScript.gameOverScreen));
-                //Application.LoadLevel("Levelauswahl");
             }
         }
-        /*
+        
         private void RemoveDeadCharacters()
         {
-
             foreach (Player player in MainScript.players)
             {
                 foreach (global::Character character in player.getCharacters())
@@ -123,17 +109,11 @@ namespace Assets.Scripts.GameStates
                 }
                 Debug.Log("Turn: " + mainScript.turncount);
             }
-            Vector3 firstCharacterPosition = activePlayer.getCharacters()[0].gameObject.transform.position;
-            GameObject cursor = GameObject.Find("Cursor");
-            cursor.GetComponent<CursorScript>().SetPosition(firstCharacterPosition.x, firstCharacterPosition.y, firstCharacterPosition.z);
-            CursorPositionChanged(cursor);
-            int x = (int)(cursor.transform.localPosition.x - 0.5f);
-            int z = (int)(cursor.transform.localPosition.z - 0.5f);
             //mainScript.gridScript.fields[x, z].gameObject.GetComponent<FieldClicked>().hovered = false;
             foreach (global::Character c in activePlayer.getCharacters())
             {
                 c.UpdateTurn();
-                c.gameObject.GetComponent<CharacterScript>().WaitAnimation(false);
+                //c.gameObject.GetComponent<CharacterScript>().WaitAnimation(false);
                 if (activePlayer.isPlayerControlled)
                     GameObject.Instantiate(GameObject.FindObjectOfType<UXRessources>().activeUnitField, c.gameObject.transform.position, Quaternion.identity, c.gameObject.transform);
             }
@@ -144,60 +124,12 @@ namespace Assets.Scripts.GameStates
             foreach (global::Character c in activePlayer.getCharacters())
             {
                 c.IsWaiting = false;
-                c.gameObject.GetComponent<CharacterScript>().SetSelected(false);
-            }
-            foreach (MapField f in mainScript.gridScript.fields)
-            {
-                    f.effect.Effect(f.character, activePlayer.number);
+                //c.gameObject.GetComponent<CharacterScript>().SetSelected(false);
             }
             MainScript.ActivePlayerNumber++;
             activePlayer = MainScript.players[MainScript.ActivePlayerNumber];
             mainScript.activeCharacter = null;
             StartTurn();
-
-        }
-
-        public void CursorPositionChanged(GameObject cursor)
-        {
-
-            clampOnGrid(cursor);
-            int x = (int)(cursor.transform.localPosition.x - 0.5f);
-            int z = (int)(cursor.transform.localPosition.z - 0.5f);
-            cursor.transform.localPosition = new Vector3(cursor.transform.localPosition.x, mainScript.gridScript.fields[x, z].height + MainScript.CURSOROFFSET, cursor.transform.localPosition.z);
-            resetHoverOnCharacters();
-            if (mainScript.gridScript.fields[x, z].character != null)
-            {
-                mainScript.gridScript.fields[x, z].character.hovered = true;
-                //if (mainScript.activeCharacter != mainScript.gridScript.fields[x, z].character)
-                    //mainScript.gridScript.fields[x, z].character.gameObject.GetComponentInChildren<HighlightSelected>().Hovered = true;
-            }
-            //mainScript.gridScript.fields[x, z].gameObject.GetComponent<FieldClicked>().hovered = true;
-        }
-
-        private void resetHoverOnCharacters()
-        {
-            foreach (Player p in MainScript.players)
-            {
-                foreach (global::Character c in p.getCharacters())
-                {
-                    c.hovered = false;
-                    //if (c.gameObject != null)//TODO
-                    //    c.gameObject.GetComponentInChildren<HighlightSelected>().Hovered = false;
-                }
-            }
-        }
-
-
-        private void clampOnGrid(GameObject go)
-        {
-            if (go.transform.localPosition.x - 0.5f >= mainScript.gridScript.grid.width)
-                go.transform.localPosition = new Vector3(mainScript.gridScript.grid.width - 0.5f, go.transform.localPosition.y, go.transform.localPosition.z);
-            if (go.transform.localPosition.x - 0.5f < 0f)
-                go.transform.localPosition = new Vector3(0.5f, go.transform.localPosition.y, go.transform.localPosition.z);
-            if (go.transform.localPosition.z - 0.5f >= mainScript.gridScript.grid.height)
-                go.transform.localPosition = new Vector3(go.transform.localPosition.x, go.transform.localPosition.y, mainScript.gridScript.grid.height - 0.5f);
-            if (go.transform.localPosition.z - 0.5f < 0f)
-                go.transform.localPosition = new Vector3(go.transform.localPosition.x, go.transform.localPosition.y, 0.5f);
         }
 
         private void ShowAllEnemyAttackRanges()
@@ -234,24 +166,8 @@ namespace Assets.Scripts.GameStates
             }
         }
 
-        public void Back()
-        {
-            Debug.Log("BACK");
-            MouseManager.ResetMoveArrow();
-            GameObject.Find(MainScript.CURSOR_NAME).GetComponent<CursorScript>().lightningcursor = false;
-            GameObject.Find(MainScript.CURSOR_NAME).GetComponent<CursorScript>().wallcursor = false;
-            if (mainScript.activeCharacter != null)
-            {
-                mainScript.gridScript.HideMovement();
-                mainScript.activeCharacter.Selected = false;
-                mainScript.activeCharacter = null;
-            }
-
-        }
-
 		private void SwitchPreviousCharacter()
 		{
-
 			Debug.Log ("Previous");
 			cameraSpeed = 0.1f;
 			if (mainScript == null)
@@ -264,7 +180,6 @@ namespace Assets.Scripts.GameStates
 				{
 					Debug.Log ("SET1");
 					SetActiveCharacter(c, true);
-					mainScript.clickedCharacter = c;
 					CharacterNumber = i;
 					return;
 				}
@@ -276,7 +191,6 @@ namespace Assets.Scripts.GameStates
 				{
 					Debug.Log ("SET2");
 					SetActiveCharacter(c, true);
-					mainScript.clickedCharacter = c;
 					CharacterNumber = i;
 					return;
 				}
@@ -285,7 +199,6 @@ namespace Assets.Scripts.GameStates
 		}
         private void SwitchCharacter()
         {
-
 			Debug.Log ("Next");
             cameraSpeed = 0.1f;
 			if (mainScript == null)
@@ -298,7 +211,6 @@ namespace Assets.Scripts.GameStates
                 {
 					Debug.Log ("SET3");
                     SetActiveCharacter(c, true);
-					mainScript.clickedCharacter = c;
                     CharacterNumber = i;
                     return;
                 }
@@ -310,7 +222,6 @@ namespace Assets.Scripts.GameStates
                 {
 					Debug.Log ("SET4");
                     SetActiveCharacter(c, true);
-					mainScript.clickedCharacter = c;
                     CharacterNumber = i;
                     return;
                 }
@@ -323,30 +234,20 @@ namespace Assets.Scripts.GameStates
             if (mainScript.gridScript.fields[(int)v.x, (int)v.y].character == null)
             {
                 int x = (int)v.x;
-                int z = (int)v.y;
+                int y = (int)v.y;
                 if (mainScript.activeCharacter != null)
                 {
-
-                    if (mainScript.gridScript.fields[x, z].isActive)
+                    if (mainScript.gridScript.fields[x, y].isActive)
                     {
                         int sx = (int)mainScript.activeCharacter.gameObject.transform.position.x;
-                        int sy = (int)mainScript.activeCharacter.gameObject.transform.position.z;
+                        int sy = (int)mainScript.activeCharacter.gameObject.transform.position.y;
                         int tx = (int)x;
-                        int ty = (int)z;
-                       // List<int> range = new List<int>();
-                       // range.Add(1);
-                        //Debug.Log(mainScript.activeCharacter.team + " " + mainScript.gridScript.GetField(c.GetPositionOnGrid()).character.team);
-                      //  MovementPath path = mainScript.gridScript.getPath(sx, sy, tx, ty, mainScript.activeCharacter.team, mainScript.activeCharacter.CanPassThrough(), false, range);//last step not possible cause enemy?!
+                        int ty = (int)y;
                         List<Vector3> movePath = new List<Vector3>();
                         for (int i = 0; i < MouseManager.oldMousePath.Count; i++)
                         {
-                            movePath.Add(new Vector3(MouseManager.oldMousePath[i].x, mainScript.gridScript.GetHeight((int)MouseManager.oldMousePath[i].x, (int)MouseManager.oldMousePath[i].y), MouseManager.oldMousePath[i].y));
+                            movePath.Add(new Vector2(MouseManager.oldMousePath[i].x, MouseManager.oldMousePath[i].y));
                         }
-                        //for (int i = 0; i < path.getLength(); i++)
-                        //{
-                        //    Debug.Log(path.getStep(i).getX() + " " + path.getStep(i).getZ());
-                        //}
-                        //Debug.Log(path.getLength() + " " + mainScript.activeCharacter.charclass.movRange);//+ATTACKRANGE?
 
                         MoveCharacter(mainScript.activeCharacter, movePath,false, new GameplayState());
                         mainScript.gridScript.HideMovement();
@@ -378,25 +279,15 @@ namespace Assets.Scripts.GameStates
                 Debug.Log("Enemy is in Range:");
                 mainScript.oldPosition = new Vector2(character.GetPositionOnGrid().x, character.GetPositionOnGrid().y);
                 Debug.Log(mainScript.oldPosition);
-                //mainScript.gridScript.HideMovement();
-                //mainScript.SwitchState(new ActionMenueState("attack", c)); //mainScript.activeCharacter, mainScript.GetTradeMenuePartners(), mainScript.GetAttackTargets(mainScript.activeCharacter), mainScript.skillPositionTargets, mainScript.jumpPositionTargets, mainScript.GetNearbyChest(), mainScript.GetNearbyDoorSwitch()));
-                mainScript.activeCharacter.OldPosition = new Vector2(mainScript.activeCharacter.x, mainScript.activeCharacter.z);
+                mainScript.activeCharacter.OldPosition = new Vector2(mainScript.activeCharacter.x, mainScript.activeCharacter.y);
                 if (!drag)
                 {
-                   // if (GameObject.FindObjectOfType<AttackPreview>().visible && GameObject.FindObjectOfType<AttackPreview>().defender == enemy)
-                  //  {
-                        GameObject.FindObjectOfType<AttackPreview>().Hide();
-                        mainScript.SwitchState(new FightState(character, new AttackTarget(enemy), new GameplayState()));
-                   // }
-                   // else
-                   // {
-                    //    mainScript.RotateCharacterTo(character, enemy);
-                   //     GameObject.FindObjectOfType<AttackPreview>().Show(character, enemy);
-                    //}
+                    GameObject.FindObjectOfType<AttackPreview>().Hide();
+                    mainScript.SwitchState(new FightState(character, new AttackTarget(enemy), new GameplayState()));
+
                 }
                 else
                 {
-                    mainScript.RotateCharacterTo(character, enemy);
                     GameObject.FindObjectOfType<AttackPreview>().Hide();
                     mainScript.SwitchState(new FightState(character, new AttackTarget(enemy), new GameplayState()));
                 }
@@ -405,49 +296,37 @@ namespace Assets.Scripts.GameStates
             else//go to enemy cause not in range
             {
                 Debug.Log("Got to Enemy!");
-                if (mainScript.gridScript.IsFieldAttackable(enemy.x, enemy.z))
+                if (mainScript.gridScript.IsFieldAttackable(enemy.x, enemy.y))
                 {
                     Debug.Log("Field Attackable");
                     mainScript.gridScript.HideMovement();
                     int sx = (int)character.gameObject.transform.position.x;
-                    int sy = (int)character.gameObject.transform.position.z;
+                    int sy = (int)character.gameObject.transform.position.y;
                     int tx = (int)enemy.gameObject.transform.position.x;
-                    int ty = (int)enemy.gameObject.transform.position.z;
-                    //List<int> attackranges = character.charclass.AttackRanges;
-                    //MovementPath path = mainScript.gridScript.getPath(sx, sy, tx, ty, character.team, character.CanPassThrough(), true, attackranges);
+                    int ty = (int)enemy.gameObject.transform.position.y;
 
  
                     List<Vector3> movePath = new List<Vector3>();
                     for (int i = 0; i < MouseManager.oldMousePath.Count; i++)
                     {
-                        movePath.Add(new Vector3(MouseManager.oldMousePath[i].x,mainScript.gridScript.GetHeight((int)MouseManager.oldMousePath[i].x, (int)MouseManager.oldMousePath[i].y), MouseManager.oldMousePath[i].y));
+                        movePath.Add(new Vector2(MouseManager.oldMousePath[i].x, MouseManager.oldMousePath[i].y));
                         Debug.Log(movePath[i]);
                     }
-                    //if (moveP.getLength() - 2 <= character.charclass.movRange + (character.GetMaxAttackRange() - 1))
-                    //{
                     
-                        Debug.Log("In Range");
-                        if (drag)
-                        {
-                            GameObject.FindObjectOfType<AttackPreview>().Hide();
-                            MoveCharacter(character, movePath, false, new FightState(character, new AttackTarget(enemy), new GameplayState()));
-                        }
-                        else
-                        {
-                            GameObject.FindObjectOfType<AttackPreview>().Hide();
-                            MoveCharacter(character, movePath, false, new FightState(character, new AttackTarget(enemy), new GameplayState()));
-
-                        }
-                        mainScript.AttackRangeFromPath = 0;
-                   // }
-                   
-                    if (!drag)
-                    { 
-                        RotateCharacterA = mainScript.activeCharacter;
-                        RotateCharacterB = enemy;
-                        MainScript.endOfMoveCharacterEvent += Rotate;
+                    Debug.Log("In Range");
+                    if (drag)
+                    {
+                        GameObject.FindObjectOfType<AttackPreview>().Hide();
+                        MoveCharacter(character, movePath, false, new FightState(character, new AttackTarget(enemy), new GameplayState()));
+                    }
+                    else
+                    {
+                        GameObject.FindObjectOfType<AttackPreview>().Hide();
+                        MoveCharacter(character, movePath, false, new FightState(character, new AttackTarget(enemy), new GameplayState()));
 
                     }
+                    mainScript.AttackRangeFromPath = 0;
+
                     return;
                 }
                 else
@@ -455,12 +334,10 @@ namespace Assets.Scripts.GameStates
                     return;
                 }
             }
-            }
+        }
+
         public void SetActiveCharacter(global::Character c, bool switchChar)//TODO will be called by CHaracterClicked
-        {
-            if (MyInputManager.isLevelUpState)
-            	return;
-            
+        {     
             if (!switchChar && mainScript.activeCharacter != null && mainScript.activeCharacter.gameObject != null && c != mainScript.activeCharacter)
             {
 
@@ -496,35 +373,23 @@ namespace Assets.Scripts.GameStates
                 }
                 else
                 {
-                   
                     mainScript.activeCharacter = null;
-                    mainScript.gridScript.HideAllyMovement();
                     Debug.Log("Enemy Selectd!");
                     EnemySelected(c);
                 }
             }
         }
-        Character RotateCharacterA;
-        Character RotateCharacterB;
-        void Rotate()
-        {
-            MainScript.endOfMoveCharacterEvent -= Rotate;
-            mainScript.RotateCharacterTo(RotateCharacterA, RotateCharacterB);
-            //GameObject.FindObjectOfType<AttackPreview>().Show(RotateCharacterA, RotateCharacterB);
-        }
+
         void EnemySelected(global::Character c)
         {
             GridScript s = mainScript.GetComponentInChildren<GridScript>();
 
             if (c.IsAttackRangeShown())
             {
-                s.HideCharacterMovement(c);
                 c.SetAttackRangeShown(false);
             }
             else
             {
-
-                s.HideAllyMovement();
                 c.SetAttackRangeShown(true);
                 s.ShowMovement((int)c.gameObject.transform.localPosition.x, (int)c.gameObject.transform.localPosition.z, c.charclass.movRange, c.charclass.movRange, new List<int>(c.charclass.AttackRanges), 0, c.team, false);
                 s.ShowAttack(c, new List<int>(c.charclass.AttackRanges), false);
@@ -533,9 +398,7 @@ namespace Assets.Scripts.GameStates
                 {
                     mainScript.activeCharacter.Selected = false;
                     if (mainScript.activeCharacter.gameObject != null)
-                        //if (mainScript.activeCharacter.gameObject.GetComponentInChildren<HighlightSelected>() != null)//TODO
-                        //    mainScript.activeCharacter.gameObject.GetComponentInChildren<HighlightSelected>().Hovered = false;
-                    mainScript.activeCharacter = null;
+                        mainScript.activeCharacter = null;
                 }
             }
         }
@@ -544,7 +407,6 @@ namespace Assets.Scripts.GameStates
         {
             mainScript.oldPosition = new Vector2(mainScript.activeCharacter.gameObject.transform.localPosition.x, mainScript.activeCharacter.gameObject.transform.localPosition.z);
 			GridScript s = mainScript.GetComponentInChildren<GridScript>();
-            s.HideAllyMovement();
             UXRessources ux = GameObject.FindObjectOfType<UXRessources>();
             Debug.Log("Same Selected");
             if (c.gameObject.GetComponentInChildren<ActiveUnitEffect>() != null) 
@@ -556,7 +418,6 @@ namespace Assets.Scripts.GameStates
             Debug.Log("Select " + c.name);
 			if (mainScript.activeCharacter != null) {
 				mainScript.activeCharacter.Selected = false;
-				Debug.Log ("SetSelectedFalse" + mainScript.activeCharacter.name);
 			}
             mainScript.activeCharacter = c;
             c.Selected = true;
@@ -565,11 +426,8 @@ namespace Assets.Scripts.GameStates
             s.HideMovement();
             s.ShowMovement((int)c.gameObject.transform.localPosition.x, (int)c.gameObject.transform.localPosition.z, c.charclass.movRange, 0, new List<int>(c.charclass.AttackRanges), 0, c.team, false);
             s.ShowAttack(c, new List<int>(c.charclass.AttackRanges), false);
-           
-            //GameObject.Find(MainScript.CURSOR_NAME).GetComponent<CursorScript>().SetPosition(c.gameObject.transform.localPosition.x + 0.5f, mainScript.gridScript.fields[(int)c.gameObject.transform.localPosition.x, (int)c.gameObject.transform.localPosition.z].height + MainScript.CURSOROFFSET, c.gameObject.transform.localPosition.z + 0.5f);
-            resetHoverOnCharacters();
             mainScript.activeCharacter.hovered = true;
-            //mainScript.activeCharacter.gameObject.GetComponentInChildren<HighlightSelected>().Selected(true);
+
         }
 
         bool IsAdjacenFieldActive(MapField f)
@@ -602,31 +460,5 @@ namespace Assets.Scripts.GameStates
         {
             mainScript.SwitchState(new MovementState(mainScript, c,path, drag, targetState));
         }
-        private void SwitchCameraAngle()
-        {
-            //GameObject cam = GameObject.Find("Main Camera");
-            //CameraDegrees -= 10;
-            //if (CameraDegrees < 45)
-            //{
-            //    CameraDegrees = 90;
-            //    cam.transform.RotateAround(cam.transform.position, new Vector3(1, 0, 0), -310f);
-            //}
-            //else
-            //    cam.transform.RotateAround(cam.transform.position, new Vector3(1, 0, 0), -10f);
-
-        }
-
-        private void SwitchCameraHeight()
-        {
-            //GameObject cam = GameObject.Find("Main Camera");
-            //CameraHeight += 1;
-            //if (CameraHeight > 15)
-            //{
-            //    CameraHeight = 6;
-
-            //}
-            //cam.transform.position = new Vector3(cam.transform.position.x, CameraHeight, cam.transform.position.z);
-        }
-*/
     }
 }

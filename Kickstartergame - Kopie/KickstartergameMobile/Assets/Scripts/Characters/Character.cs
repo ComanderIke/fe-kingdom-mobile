@@ -54,7 +54,7 @@ public class Character : LivingObject{
     GameObject effectGO;
     #endregion
 
-    /*
+    
     #region Getter/Setter
     public Weapon EquipedWeapon {
 		get{
@@ -132,19 +132,15 @@ public class Character : LivingObject{
 		set{
 			if(gameObject!=null){
 			    HighlightSelected h=gameObject.GetComponentInChildren<HighlightSelected> ();
-				if (value) { 
-					gameObject.GetComponent<CharacterScript> ().PlayVoice ();
-				} 
+
 			}
 			selected = value;
-            gameObject.GetComponent<CharacterScript> ().SetSelected (selected);
 		}
 	}
 
    
     private void WaitAnimation()
     {
-        gameObject.GetComponent<CharacterScript>().WaitAnimation(true);
         ActiveUnitEffect a = gameObject.GetComponentInChildren<ActiveUnitEffect>();
         if (a != null)
         {
@@ -184,51 +180,23 @@ public class Character : LivingObject{
         this.characterClassType = type;
         if (characterClassType == CharacterClassType.SwordFighter)
         {
-			passiveSpriteObject = GameObject.Find("RessourceScript").GetComponent<CharacterSpriteScript>().tankPassiveSprite;
-			passiveSpriteMOObject = GameObject.Find("RessourceScript").GetComponent<CharacterSpriteScript>().tankPassiveMOSprite;
-			passiveSprite_selected =  GameObject.Find("RessourceScript").GetComponent<CharacterSpriteScript>().tankPassiveSprite_selected;
-			activeSpriteObject = GameObject.Find("RessourceScript").GetComponent<CharacterSpriteScript>().tankActiveSprite;
+			activeSpriteObject = GameObject.Find("RessourceScript").GetComponent<SpriteScript>().swordActiveSprite;
             charclass = new Tank();
         }
         if (characterClassType == CharacterClassType.Hellebardier)
         {
-			activeSpriteObject = GameObject.Find("RessourceScript").GetComponent<CharacterSpriteScript>().lancerActiveSprite;
-			passiveSpriteObject = GameObject.Find("RessourceScript").GetComponent<CharacterSpriteScript>().lancerPassiveSprite;
-			passiveSpriteMOObject = GameObject.Find("RessourceScript").GetComponent<CharacterSpriteScript>().lancerPassiveMOSprite;
-			passiveSprite_selected =  GameObject.Find("RessourceScript").GetComponent<CharacterSpriteScript>().lancerPassiveSprite_selected;
+			activeSpriteObject = GameObject.Find("RessourceScript").GetComponent<SpriteScript>().lancerActiveSprite;
             charclass = new Hellebardier();
-        }
-        if (characterClassType == CharacterClassType.Rogue)
-        {
-            charclass = new Rogue();
-			activeSpriteObject = GameObject.Find("RessourceScript").GetComponent<CharacterSpriteScript>().rogueActiveSprite;
-			passiveSpriteObject = GameObject.Find("RessourceScript").GetComponent<CharacterSpriteScript>().roguePassiveSprite;
-			passiveSpriteMOObject = GameObject.Find("RessourceScript").GetComponent<CharacterSpriteScript>().roguePassiveMOSprite;
-			passiveSprite_selected =  GameObject.Find("RessourceScript").GetComponent<CharacterSpriteScript>().roguePassiveSprite_selected;
         }
         if (characterClassType == CharacterClassType.Mage)
         {
-			activeSpriteObject = GameObject.Find("RessourceScript").GetComponent<CharacterSpriteScript>().mageActiveSprite;
-			passiveSpriteObject = GameObject.Find("RessourceScript").GetComponent<CharacterSpriteScript>().magePassiveSprite;
-			passiveSpriteMOObject = GameObject.Find("RessourceScript").GetComponent<CharacterSpriteScript>().magePassiveMOSprite;
-			passiveSprite_selected =  GameObject.Find("RessourceScript").GetComponent<CharacterSpriteScript>().magePassiveSprite_selected;
+			activeSpriteObject = GameObject.Find("RessourceScript").GetComponent<SpriteScript>().axeActiveSprite;
             charclass = new Mage();
             EquipedWeapon = GameObject.Find("RessourceScript").GetComponent<WeaponScript>().ignis;
         }
-        if (characterClassType == CharacterClassType.Priest)
-        {
-			activeSpriteObject = GameObject.Find("RessourceScript").GetComponent<CharacterSpriteScript>().priestActiveSprite;
-			passiveSpriteObject = GameObject.Find("RessourceScript").GetComponent<CharacterSpriteScript>().priestPassiveSprite;
-			passiveSpriteMOObject = GameObject.Find("RessourceScript").GetComponent<CharacterSpriteScript>().priestPassiveMOSprite;
-			passiveSprite_selected =  GameObject.Find("RessourceScript").GetComponent<CharacterSpriteScript>().priestPassiveSprite_selected;
-            charclass = new Priest();
-        }
         if (characterClassType == CharacterClassType.Archer)
         {
-			activeSpriteObject = GameObject.Find("RessourceScript").GetComponent<CharacterSpriteScript>().archerActiveSprite;
-			passiveSpriteObject = GameObject.Find("RessourceScript").GetComponent<CharacterSpriteScript>().archerPassiveSprite;
-			passiveSpriteMOObject = GameObject.Find("RessourceScript").GetComponent<CharacterSpriteScript>().archerPassiveSprite;
-			passiveSprite_selected =  GameObject.Find("RessourceScript").GetComponent<CharacterSpriteScript>().archerPassiveSprite_selected;
+			activeSpriteObject = GameObject.Find("RessourceScript").GetComponent<SpriteScript>().archerActiveSprite;
             charclass = new Archer();
         }
         stats = new Stats(charclass.stats.maxHP, charclass.stats.attack, charclass.stats.speed, charclass.stats.defense, charclass.stats.accuracy, charclass.stats.spirit);
@@ -328,13 +296,12 @@ public class Character : LivingObject{
     public override void DeathAnimation (){
 
         GameObject.FindObjectOfType<MainScript>().gridScript.fields[x, y].character = null;
-		lastdamagedealer.gameObject.GetComponent<CharacterScript> ().PlayTauntAnimation ();
         lastdamagedealer.GetExpForKill(this);
         if (instantiatedWeapon != null)
         {
             GameObject.Destroy(instantiatedWeapon);
         }
-        gameObject.GetComponent<CharacterScript>().PlayDeath();
+        //gameObject.GetComponent<CharacterScript>().PlayDeath();
        
     }
 
@@ -355,7 +322,7 @@ public class Character : LivingObject{
 
     public void addExp(int exp) {
 		this.exp += exp;
-        gameObject.GetComponent<CharacterScript>().StartAnimatedText("+ "+exp+ " Exp", GameObject.FindObjectOfType<MaterialScript>().yellow, 0, 50);
+        //gameObject.GetComponent<CharacterScript>().StartAnimatedText("+ "+exp+ " Exp", GameObject.FindObjectOfType<MaterialScript>().yellow, 0, 50);
         if (this.exp >= MAX_EXP){
             this.exp -= MAX_EXP;
 			levelUp();
@@ -412,7 +379,7 @@ public class Character : LivingObject{
             case StatAttribute.Speed: stats.speed += value; text += "Speed + " + value; break;
             case StatAttribute.Spirit: stats.spirit += value; text += "Spirit + " + value; break;
         }
-        gameObject.GetComponent<CharacterScript>().StartAnimatedText(text, GameObject.FindObjectOfType<MaterialScript>().orange,delay,80);
+        //gameObject.GetComponent<CharacterScript>().StartAnimatedText(text, GameObject.FindObjectOfType<MaterialScript>().orange,delay,80);
     }
     public int inflictMagicDamage(int dmg, Character damagedealer)
     {
@@ -439,17 +406,17 @@ public class Character : LivingObject{
             if (dmg <= 5)
             {
                 CameraShake.Shake(0.3f, 0.02f);
-                gameObject.GetComponent<CharacterScript>().GetHitAnimation();
+                //gameObject.GetComponent<CharacterScript>().GetHitAnimation();
             }
             else if (dmg < 10)
             {
                 CameraShake.Shake(0.35f, 0.03f);
-                gameObject.GetComponent<CharacterScript>().GetHit2Animation();
+                //gameObject.GetComponent<CharacterScript>().GetHit2Animation();
             }
             else
             {
                 CameraShake.Shake(0.35f, 0.1f);
-                gameObject.GetComponent<CharacterScript>().GetHit2Animation();
+                //gameObject.GetComponent<CharacterScript>().GetHit2Animation();
             }
 		}
         else
@@ -518,18 +485,18 @@ public class Character : LivingObject{
 		if (HP > 0) {
             if (inflictedDmg <= 5)
             {
-                gameObject.GetComponent<CharacterScript>().GetHitAnimation();
+                //gameObject.GetComponent<CharacterScript>().GetHitAnimation();
                 CameraShake.Shake(0.3f, 0.02f);
             }
             else if(inflictedDmg <10)
             {
                 CameraShake.Shake(0.35f, 0.03f);
-                gameObject.GetComponent<CharacterScript>().GetHit2Animation();
+                //gameObject.GetComponent<CharacterScript>().GetHit2Animation();
             }
             else
             {
                 CameraShake.Shake(0.35f, 0.1f);
-                gameObject.GetComponent<CharacterScript>().GetHit2Animation();
+                //gameObject.GetComponent<CharacterScript>().GetHit2Animation();
             }
 		}
         else
@@ -813,7 +780,7 @@ public class Character : LivingObject{
         }
     }
 	public void PlayDogueAnimation (){
-		gameObject.GetComponent<CharacterScript>().PlayDogueAnimation ();
+		//gameObject.GetComponent<CharacterScript>().PlayDogueAnimation ();
 	}
 
 	public void DespawnWeapon(){
@@ -831,7 +798,7 @@ public class Character : LivingObject{
         }
     }
    
-    */
+    
 }
 
 

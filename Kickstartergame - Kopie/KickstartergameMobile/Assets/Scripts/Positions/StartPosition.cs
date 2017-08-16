@@ -4,7 +4,6 @@ using Assets.Scripts.Characters.Classes;
 
 public class StartPosition : MonoBehaviour {
 
-    public CharacterClassType charType;
     // Use this for initialization
     void Start () {
         GetComponentInChildren<MeshRenderer>().enabled = false;
@@ -13,13 +12,9 @@ public class StartPosition : MonoBehaviour {
     {
         return (int)transform.localPosition.x;
     }
-    public int GetZ()
+    public int GetY()
     {
-        return (int)transform.localPosition.z;
+        return (int)transform.localPosition.y;
     }
 
-    // Update is called once per frame
-    void Update () {
-	
-	}
 }

@@ -14,20 +14,12 @@ public class CharacterScript :  MonoBehaviour {
 	private Boolean init = true;
     [HideInInspector]
     public Animator animator;
-    public AudioClip voice;
-    public AudioClip death;
-    public AudioClip run;
     public GameObject animatedText=null;
     [HideInInspector]
     public Material[] startMaterials;
-	const float TAUNT_TIME=1.0f;
     float dragtime = 0;
     const float DRAG_DELAY = 0.25f;
-    [HideInInspector]
-    public GameObject arrow;
     Vector3 jumpPosition;
-    private bool taunt = false;
-    private float taunttime = 0;
     public static bool drag = false;
     bool dragging = false;
     bool delayDrag = true;
@@ -35,41 +27,18 @@ public class CharacterScript :  MonoBehaviour {
     Vector3 dist;
     float posX;
     float posY;
-    /*
-    // public ControllerServer server;
-    // Use this for initialization
+    
     public Character getCharacter()
     {
         return character;
     }
-    public void setCharacter(Character c)
-    {
-        character = c;
-    }
-    public void SetColor(Color c)
-    {
-        int cnt = 0;
-        SpriteRenderer[] s = GetComponentsInChildren<SpriteRenderer>();
-        foreach (SpriteRenderer sr in s)
-        {
-            if (cnt < 2)
-                sr.color = c;
-            cnt++;
-        }
-    }
-    public void SetHPBar()
-    {
-        HPBarOnMap hpBar = GetComponentInChildren<HPBarOnMap>();
-        hpBar.SetActive(character);
-    }
+
 	void Start () {
-        //character = new Character("name",CharacterClassType.SwordFighter,weaponPosition);
-		//HPBarOnMap hpBar = GetComponentInChildren<HPBarOnMap> ();
-		//hpBar.SetActive (character);
         animator = GetComponentInChildren<Animator>();
 	}
-
+    
     #region AnimationEvents
+    /*
     public void SetAnimator()
     {
         animator = GetComponentInChildren<Animator>();
@@ -334,21 +303,11 @@ public class CharacterScript :  MonoBehaviour {
         GetComponent<AudioSource>().clip = death;
         GetComponent<AudioSource>().Play();
     }
+    */
     #endregion
 
 	void Update () {
 	
-        if (character != null)
-        {
-			if (taunt) {
-				taunttime += Time.deltaTime;
-				if (taunttime > TAUNT_TIME) {
-					taunttime = 0;
-					taunt = false;
-					animator.SetTrigger("Taunt");
-				}
-			}
-        }
         if (dragging)
         {
             if (Input.GetMouseButton(0))
@@ -368,7 +327,6 @@ public class CharacterScript :  MonoBehaviour {
             {
                 if (!delayDrag)
                 {
-                    
                     FindObjectOfType<UXRessources>().movementFlag.SetActive(false);
                     dragging = false;
                     drag = false;
@@ -387,16 +345,16 @@ public class CharacterScript :  MonoBehaviour {
                         if (FindObjectOfType<GridScript>().fields[x, y].isActive && !(x == character.x && y == character.y))
                         {
                             character.SetPosition(character.x, character.y);
-                            FindObjectOfType<MainScript>().MoveCharacterTo(character, MouseManager.oldMousePath, true, new GameplayState());
+                            //FindObjectOfType<MainScript>().MoveCharacterTo(character, MouseManager.oldMousePath, true, new GameplayState());
 
                         }
                         else if (FindObjectOfType<GridScript>().fields[x, y].character != null && FindObjectOfType<GridScript>().fields[x, y].character.team != character.team)
                         {
-                            FindObjectOfType<MainScript>().GoToEnemy(character, FindObjectOfType<GridScript>().fields[x, y].character, true);
+                           // FindObjectOfType<MainScript>().GoToEnemy(character, FindObjectOfType<GridScript>().fields[x, y].character, true);
                         }
                         else
                         {
-                            FindObjectOfType<MainScript>().DeselectActiveCharacter();
+                            //FindObjectOfType<MainScript>().DeselectActiveCharacter();
                         }
                     }
                     else if (hit.collider.gameObject.GetComponent<CharacterScript>() != null)
@@ -404,19 +362,19 @@ public class CharacterScript :  MonoBehaviour {
                         Character ch = hit.collider.gameObject.GetComponent<CharacterScript>().character;
                         if (ch.team != character.team)
                         {
-                            if(FindObjectOfType<GridScript>().IsFieldAttackable(ch.x,ch.z))
-                                FindObjectOfType<MainScript>().GoToEnemy(character, ch, true);
+                           // if(FindObjectOfType<GridScript>().IsFieldAttackable(ch.x,ch.z))
+                              //  FindObjectOfType<MainScript>().GoToEnemy(character, ch, true);
                         }
                         else
                         {
                             Debug.Log("Deselect2");
-                            FindObjectOfType<MainScript>().DeselectActiveCharacter();
+                           // FindObjectOfType<MainScript>().DeselectActiveCharacter();
                         }
                     }
                     else
                     {
                         Debug.Log("Deselect1");
-                        FindObjectOfType<MainScript>().DeselectActiveCharacter();
+                        //FindObjectOfType<MainScript>().DeselectActiveCharacter();
                     }
                 }
             }
@@ -429,63 +387,16 @@ public class CharacterScript :  MonoBehaviour {
 	}
     public void LevelUp()
     {
-        CameraMovement.moveToFinishedEvent += SpawnLevelUpOrbs;
-    }
-    IEnumerator DelayOrbSpawn(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        GameObject orbs = GameObject.Instantiate(GameObject.FindObjectOfType<EffectsScript>().LevelUpOrbs);
-        orbs.GetComponent<LevelUpOrbs>().LevelUp(character);
-        CameraMovement.moveToFinishedEvent -= SpawnLevelUpOrbs;
-    }
-    public void FadeOutLevelUpEffect()
-    {
-        StartCoroutine(FadeOutLevelEffect(0.5f));
-        CharacterScript.LevelUpEffect.GetComponentInChildren<ParticleSystem>().Stop(true, ParticleSystemStopBehavior.StopEmitting);
-    }
-    float fadeTime = 0;
-    IEnumerator FadeOutLevelEffect(float duration)
-    {
-        while (fadeTime <= 1)
-        {
-            foreach (MeshRenderer mr in CharacterScript.LevelUpEffect.GetComponentsInChildren<MeshRenderer>())
-            {
-                mr.material.SetColor("_TintColor", new Color(1, 1, 1, 1 - fadeTime));
-
-            }
-            fadeTime += 0.02f / duration;
-
-            yield return new WaitForSeconds(0.02f);
-        }
-        foreach (MeshRenderer mr in CharacterScript.LevelUpEffect.GetComponentsInChildren<MeshRenderer>())
-        {
-
-            mr.material.SetColor("_TintColor", new Color(1, 1, 1, 0));
-        }
-        yield return new WaitForSeconds(0.2f);
-        GameObject.Destroy(LevelUpEffect);
-    }
-    public static GameObject LevelUpEffect;
-    public void SpawnLevelUpOrbs()
-    {
-        CameraMovement.locked = true;
-        //BloodPosition pos = this.gameObject.GetComponentInChildren<BloodPosition>();
-        LevelUpEffect=GameObject.Instantiate(GameObject.Find("RessourceScript").GetComponent<EffectsScript>().newLevelUpEffect, transform.position, Quaternion.identity)as GameObject;
-        StartCoroutine(DelayOrbSpawn(1.25f));
-        
+      
     }
 
     void EndOfMove()
     {
         MainScript.endOfMoveCharacterEvent -= EndOfMove;
-        //FindObjectOfType<MainScript>().ActiveCharWait();
     }
 
 	void OnMouseEnter(){
 		if (!EventSystem.current.IsPointerOverGameObject ()) {
-            //GameObject.Find (MainScript.MAIN_GAME_OBJ).GetComponent<MainScript> ().ShowCharacterInfo (character);
-
-            // if (drag)
             ActiveUnitEffect a =GetComponentInChildren<ActiveUnitEffect>();
             if (a != null)
             {
@@ -496,12 +407,6 @@ public class CharacterScript :  MonoBehaviour {
                 MouseManager.DraggedOver(character);
             }
         }
-    }
-    void OnMouseOver()
-    {
-        
-		//if(GameObject.Find(MainScript.MAIN_GAME_OBJ).GetComponent<MainScript>().lastClickedCharacter != character)
-       // GameObject.Find(MainScript.MAIN_GAME_OBJ).GetComponent<MainScript>().UpdateCharacterInfo();
     }
     void OnMouseExit(){
         character.hovered = false;
@@ -529,7 +434,6 @@ public class CharacterScript :  MonoBehaviour {
                 GetComponent<BoxCollider>().enabled = false;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit = new RaycastHit();
-                // Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Terrain"));
                 Physics.Raycast(ray, out hit, Mathf.Infinity);
                 if (hit.collider.tag == "Grid")
                 {
@@ -565,9 +469,9 @@ public class CharacterScript :  MonoBehaviour {
         if (!EventSystem.current.IsPointerOverGameObject())
         {
             GameObject.Find("AttackIcon").GetComponent<Image>().enabled = false;
-            MainScript.characterClickedEvent(character);
+            //MainScript.characterClickedEvent(character);
         }
     }
         
-*/
+
 }
