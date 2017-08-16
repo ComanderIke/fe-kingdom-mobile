@@ -35,6 +35,7 @@ public class CharacterScript :  MonoBehaviour {
     Vector3 dist;
     float posX;
     float posY;
+    /*
     // public ControllerServer server;
     // Use this for initialization
     public Character getCharacter()
@@ -336,14 +337,7 @@ public class CharacterScript :  MonoBehaviour {
     #endregion
 
 	void Update () {
-		if (EventSystem.current.IsPointerOverGameObject ()) {
-			/*
-			if (GameObject.Find (MainScript.MAIN_GAME_OBJ).GetComponent<MainScript> ().lastClickedCharacter != character) {
-				Debug.Log("Hide3" + GameObject.Find (MainScript.MAIN_GAME_OBJ).GetComponent<MainScript> ().lastClickedCharacter.name+" "+character.name);
-				GameObject.Find (MainScript.MAIN_GAME_OBJ).GetComponent<MainScript> ().HideCharacterInfo ();
-
-			}*/
-		}
+	
         if (character != null)
         {
 			if (taunt) {
@@ -383,22 +377,22 @@ public class CharacterScript :  MonoBehaviour {
                     //Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Terrain"));
                     Physics.Raycast(ray, out hit, Mathf.Infinity);
                     int x = (int)Mathf.Floor(hit.point.x);
-                    int z = (int)Mathf.Floor(hit.point.z);
+                    int y = (int)Mathf.Floor(hit.point.y);
                     GameObject.Find("AttackIcon").GetComponent<Image>().enabled = false;
                     FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().enabled = false;
                     // ChangeToStartMaterial();
                     dragMaterial = false;
                     if (hit.collider.gameObject.tag == "Grid")
                     {
-                        if (FindObjectOfType<GridScript>().fields[x, z].isActive && !(x == character.x && z == character.z))
+                        if (FindObjectOfType<GridScript>().fields[x, y].isActive && !(x == character.x && y == character.y))
                         {
-                            character.SetPosition(character.x, character.z);
+                            character.SetPosition(character.x, character.y);
                             FindObjectOfType<MainScript>().MoveCharacterTo(character, MouseManager.oldMousePath, true, new GameplayState());
 
                         }
-                        else if (FindObjectOfType<GridScript>().fields[x, z].character != null && FindObjectOfType<GridScript>().fields[x, z].character.team != character.team)
+                        else if (FindObjectOfType<GridScript>().fields[x, y].character != null && FindObjectOfType<GridScript>().fields[x, y].character.team != character.team)
                         {
-                            FindObjectOfType<MainScript>().GoToEnemy(character, FindObjectOfType<GridScript>().fields[x, z].character, true);
+                            FindObjectOfType<MainScript>().GoToEnemy(character, FindObjectOfType<GridScript>().fields[x, y].character, true);
                         }
                         else
                         {
@@ -440,7 +434,6 @@ public class CharacterScript :  MonoBehaviour {
     IEnumerator DelayOrbSpawn(float delay)
     {
         yield return new WaitForSeconds(delay);
-        CameraMovement.Desaturate(0.5f, 0.55f);
         GameObject orbs = GameObject.Instantiate(GameObject.FindObjectOfType<EffectsScript>().LevelUpOrbs);
         orbs.GetComponent<LevelUpOrbs>().LevelUp(character);
         CameraMovement.moveToFinishedEvent -= SpawnLevelUpOrbs;
@@ -491,10 +484,7 @@ public class CharacterScript :  MonoBehaviour {
 	void OnMouseEnter(){
 		if (!EventSystem.current.IsPointerOverGameObject ()) {
             //GameObject.Find (MainScript.MAIN_GAME_OBJ).GetComponent<MainScript> ().ShowCharacterInfo (character);
-            /*character.hovered = true;
-			if (GameObject.Find (MainScript.MAIN_GAME_OBJ).GetComponent<MainScript> ().gameState is ActionMenueState) {
-				((ActionMenueState)GameObject.Find (MainScript.MAIN_GAME_OBJ).GetComponent<MainScript> ().gameState).actionMenueState.CharacterHovered (character);
-			}*/
+
             // if (drag)
             ActiveUnitEffect a =GetComponentInChildren<ActiveUnitEffect>();
             if (a != null)
@@ -520,9 +510,6 @@ public class CharacterScript :  MonoBehaviour {
         {
             a.SetHovered(false);
         }
-        if (GameObject.Find (MainScript.MAIN_GAME_OBJ).GetComponent<MainScript> ().lastClickedCharacter != character|| character.team==1) {
-			GameObject.Find (MainScript.MAIN_GAME_OBJ).GetComponent<MainScript> ().HideCharacterInfo ();
-		}
         if (drag)
         {
             MouseManager.DraggedExit();
@@ -554,7 +541,7 @@ public class CharacterScript :  MonoBehaviour {
                 else if (hit.collider.GetComponent<CharacterScript>() != null)
                 {
                     int x = hit.collider.GetComponent<CharacterScript>().character.x;
-                    int z = hit.collider.GetComponent<CharacterScript>().character.z;
+                    int z = hit.collider.GetComponent<CharacterScript>().character.y;
                     if (MouseManager.active)
                         MouseManager.CharacterDrag(x, z, character);
                 }
@@ -582,5 +569,5 @@ public class CharacterScript :  MonoBehaviour {
         }
     }
         
-
+*/
 }

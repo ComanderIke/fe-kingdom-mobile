@@ -130,7 +130,6 @@ public class MainScript : MonoBehaviour {
     private const float DOUBLE_ATTACK_THRESHOLD = 1.3f;
     private const float delay = 0.2f;
     public const float CURSOROFFSET = 0.2f;
-	public DialogState dialogState;
 	public Character lastClickedCharacter;
     #endregion
 
@@ -149,7 +148,6 @@ public class MainScript : MonoBehaviour {
     public GameObject CharacterScreenPrefab;
     public GameObject PlayerTurnAnimation;
     public GameObject AITurnAnimation;
-	private Level2Events level2events;
 	[HideInInspector]
     public bool canEndTurn = false;
     public Text turnTime;
@@ -161,16 +159,6 @@ public class MainScript : MonoBehaviour {
     private AttackTarget attackTarget = null;
 	[HideInInspector]
 	public List<Character> characterList;
-	[HideInInspector]
-    public List<TreasureChest> chests;
-	[HideInInspector]
-    public List<Door> doors;
-	[HideInInspector]
-	public List<TerrainEffectPosition> terraineffects;
-	[HideInInspector]
-	public List<CrystalScript> crystals;
-	[HideInInspector]
-    public List<DoorSwitch> doorSwitches;
 	[HideInInspector]
     public Image faceSprite;
 	public GridScript gridScript;
@@ -187,7 +175,6 @@ public class MainScript : MonoBehaviour {
     public List<Vector2> Startpositions;
 	[HideInInspector]
     public List<Vector2> Startpositions2;
-	private DialogSystem dialogSystem;
    
 	//[HideInInspector]
 	//public bool hasMoved = false;
@@ -198,8 +185,6 @@ public class MainScript : MonoBehaviour {
 	public Character fightCharacter = null;
 	[HideInInspector]
 	public Vector2 oldPosition;
-	List<ItemDrop> itemDrops;
-    private LevelUpDialogScript levelscript;
 	private ArrayList attackOrderList;
 	private bool animationFlag = false;
     bool attackRangesOn = false;
@@ -250,7 +235,7 @@ public class MainScript : MonoBehaviour {
     bool flag3 = false;
     bool attack2 = false;
     #endregion
-
+    
     public static int ActivePlayerNumber
     {
         get
@@ -265,6 +250,7 @@ public class MainScript : MonoBehaviour {
                 activePlayerNumber = value;
         }
     }
+    /*
     void Awake()
     {
         gameState = new GameplayState();
@@ -379,31 +365,7 @@ public class MainScript : MonoBehaviour {
     {
         CharacterView.transform.position = Input.mousePosition;
     }
-    public void ShowCharacterInfo(Character c)
-    {
-        CharacterView.SetActive(true);
-        /*if (c.team != 1)
-        {*/
-            GameObject.Find("CharView").GetComponent<Image>().enabled = true;
-        /*}
-        else
-        {
-            GameObject.Find("CharView2").GetComponent<Image>().enabled = false;
-        }*/
-        CharacterView.transform.position = Input.mousePosition;
-        string name = c.name;
-        Sprite sprite = c.activeSpriteObject;
-		if (c.team == 2)
-			sprite = GameObject.Find ("RessourceScript").GetComponent<CharacterSpriteScript> ().enemySprite;
-        GameObject.Find("CharViewSprite").GetComponent<Image>().sprite = sprite;
-		GameObject.Find("CharViewWeapon").GetComponent<Image>().sprite = c.EquipedWeapon.sprite;
-		GameObject.Find("StrValue").GetComponent<Text>().text = ""+c.stats.attack;
-		GameObject.Find("DefValue").GetComponent<Text>().text = ""+c.stats.defense;
-		GameObject.Find("SpeedValue").GetComponent<Text>().text = ""+c.stats.speed;
-		GameObject.Find("SkillValue").GetComponent<Text>().text = ""+c.stats.accuracy;
-		GameObject.Find("ResValue").GetComponent<Text>().text = ""+c.stats.spirit;
-        //GameObject.Find("CharViewName").GetComponent<Text>().text = name;
-    }
+    
 
     #endregion
 
@@ -506,7 +468,6 @@ public class MainScript : MonoBehaviour {
     }
     private void Initialize()
     {
-        /* examplè */
 
 
 
@@ -735,13 +696,7 @@ public class MainScript : MonoBehaviour {
     Vector2 cameraTargetPosition;
 	[HideInInspector]
     public bool moveCam = false;
-   /* public void MoveCameraTo(int x, int z)
-    {
-		float xoffset = 0;
-		float zoffset = 0;
-        cameraTargetPosition = new Vector2(-x-xoffset, -z-zoffset);//Camera is rotated thats why - x/z
-        moveCam = true;
-    }*/
+
 	[HideInInspector]
     public bool movingCam = false;
     void UpdateCamera()
@@ -1013,35 +968,7 @@ public class MainScript : MonoBehaviour {
         }
         return value;
     }
-   /* public Character CharacterStepBack(){
-        //Debug.Log("StepBack!");
-        if (activeCharacter == null)
-            return null;
-        
-        //gridScript.HideMovement ();
-        isAnimation = false;
-		int oldX = (int)activeCharacter.gameObject.transform.localPosition.x;
-		int oldZ = (int)activeCharacter.gameObject.transform.localPosition.z;
-		//Debug.Log (oldPosition.x + " " + oldPosition.y);
-        activeCharacter.SetPosition((int)oldPosition.x, (int)oldPosition.y);
-		//activeCharacter.gameObject.transform.localPosition = new Vector3 (oldPosition.x,gridScript.fields[(int)oldPosition.x,(int)oldPosition.y].height ,oldPosition.y);
-		//gridScript.fields[oldX, oldZ].character = null;
-		//gridScript.fields[(int)oldPosition.x,(int)oldPosition.y].character = activeCharacter;
-        UnhoverAllCharacters();
-        activeCharacter.hovered = true;
-        //GameObject.Find(CURSOR_NAME).transform.position = new Vector3(activeCharacter.gameObject.transform.localPosition.x + 0.5f, gridScript.fields[(int)activeCharacter.gameObject.transform.localPosition.x, (int)activeCharacter.gameObject.transform.localPosition.z].height + CURSOROFFSET, activeCharacter.gameObject.transform.localPosition.z + 0.5f);
-        //GameObject.Find(CURSOR_NAME).GetComponent<CursorScript>().SetPosition(activeCharacter.gameObject.transform.localPosition.x + 0.5f, gridScript.fields[(int)activeCharacter.gameObject.transform.localPosition.x, (int)activeCharacter.gameObject.transform.localPosition.z].height + CURSOROFFSET, activeCharacter.gameObject.transform.localPosition.z + 0.5f);
-        faceSprite.sprite = activeCharacter.activeSpriteObject;
-        GridScript s = GetComponentInChildren<GridScript>();
-        s.HideMovement();
-        Character c = activeCharacter;
-        activeCharacter = null;
-        return c;
-        
-        //s.ShowMovement((int)activeCharacter.gameObject.transform.localPosition.x, (int)activeCharacter.gameObject.transform.localPosition.z, activeCharacter.movRange, 0, new List<int>(activeCharacter.charclass.AttackRanges), 0, activeCharacter.team, false);
-        //s.ShowAttack(activeCharacter, new List<int>(activeCharacter.charclass.AttackRanges),false);
-        //ShowAttackRange(activeCharacter);
-    }*/
+
 
     public bool CheckAttackField(int x, int y)
     {
@@ -1919,7 +1846,8 @@ public class MainScript : MonoBehaviour {
 		}
 	}
 
-
+    
   
     #endregion
+    */
 }

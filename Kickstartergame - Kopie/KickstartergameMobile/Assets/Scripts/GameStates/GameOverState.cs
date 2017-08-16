@@ -36,10 +36,7 @@ namespace Assets.Scripts.GameStates
 
         public override void update()
         {
-            if (MyInputManager.IsAButtonDown())
-            {
-                exit();
-            }
+
         }
     }
 }

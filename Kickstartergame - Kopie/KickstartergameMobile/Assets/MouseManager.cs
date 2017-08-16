@@ -93,13 +93,13 @@ public class MouseManager : MonoBehaviour {
                             Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Terrain"));
                             int x = (int)Mathf.Floor(hit.point.x);
                             int z = (int)Mathf.Floor(hit.point.z);
-                            if (x == FindObjectOfType<MainScript>().activeCharacter.x && z == mainScript.activeCharacter.z)
+                            if (x == FindObjectOfType<MainScript>().activeCharacter.x && z == mainScript.activeCharacter.y)
                                 ResetMoveArrow();
                         }
                         else if (mainScript.activeCharacter != null && cs.character.team != mainScript.activeCharacter.team)
                         {
                             int x = (int)Mathf.Floor(cs.character.x);
-                            int z = (int)Mathf.Floor(cs.character.z);
+                            int z = (int)Mathf.Floor(cs.character.y);
                             mouseCursor.transform.position = new Vector3(x + 0.5f, hit.point.y, z + 0.5f);
                             CharacterDrag(x, z, mainScript.activeCharacter);
                         }
@@ -110,7 +110,7 @@ public class MouseManager : MonoBehaviour {
 
     }
     static int oldX = -1;
-    static int oldZ=-1;
+    static int oldY=-1;
     public static List<Vector2> mousePath = new List<Vector2>();
     public static List<CursorPosition> lastPositions = new List<CursorPosition>();
     public static List<Vector2> oldMousePath = new List<Vector2>();
@@ -125,14 +125,14 @@ public class MouseManager : MonoBehaviour {
         dots.Clear();
         mousePath.Clear();
         oldX = -1;
-        oldZ = -1;
+        oldY= -1;
         FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().enabled = false;
         FindObjectOfType<UXRessources>().movementFlag.SetActive(false);
     }
     static bool nonActive = false;
     public static void DraggedOver(Character character)
     {
-        if (mainScript.activeCharacter.team != character.team&&mainScript.gridScript.IsFieldAttackable(character.x, character.z))
+        if (mainScript.activeCharacter.team != character.team&&mainScript.gridScript.IsFieldAttackable(character.x, character.y))
         {
             FindObjectOfType<AttackPreview>().Show(mainScript.activeCharacter, character);
         }
@@ -141,10 +141,10 @@ public class MouseManager : MonoBehaviour {
     {
         FindObjectOfType<AttackPreview>().Hide();
     }
-    public static bool isOldDrag(int x, int z)
+    public static bool isOldDrag(int x, int y)
     {
         
-        return x == oldX && z == oldZ;
+        return x == oldX && y == oldY;
     }
     public static int GetDelta(Vector2 v, Vector2 v2)
     {
@@ -173,23 +173,24 @@ public class MouseManager : MonoBehaviour {
     public static void CalculateMousePathToPositon(Character character, Vector2 position)
     {
         ResetMoveArrow();
-        MovementPath p = mainScript.gridScript.getPath(character.x, character.z, (int)position.x,(int) position.y, character.team, false, character.charclass.AttackRanges);
+        MovementPath p = mainScript.gridScript.getPath(character.x, character.y, (int)position.x,(int) position.y, character.team, false, character.charclass.AttackRanges);
         if (p != null)
         {
             for (int i = p.getLength() - 2; i >= 0; i--)
             {
-                mousePath.Add(new Vector2(p.getStep(i).getX(), p.getStep(i).getZ()));
+                mousePath.Add(new Vector2(p.getStep(i).getX(), p.getStep(i).getY()));
             }
         }
-        foreach (Vector2 v in mousePath)
+        /*foreach (Vector2 v in mousePath)
         {
             GameObject dot = GameObject.Instantiate(FindObjectOfType<UXRessources>().moveArrowDot);
             dot.transform.position = new Vector3(v.x + 0.5f, mainScript.gridScript.fields[(int)v.x, (int)v.y].height, v.y + 0.5f);
             dots.Add(dot);
-        }
+        }*/
     }
     public static void CharacterDrag(int x, int z, Character character)
     {
+        /*
         if (mainScript.activeCharacter == null)
         {
             ResetMoveArrow();
@@ -220,11 +221,11 @@ public class MouseManager : MonoBehaviour {
             {
                 FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().material.mainTexture = FindObjectOfType<TextureScript>().cursorTextures[1];
                 FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().enabled = true;
-                FindObjectOfType<DragCursor>().transform.position = new Vector3(x + 0.5f, FindObjectOfType<GridScript>().fields[x, z].height, z + 0.5f);
+                //FindObjectOfType<DragCursor>().transform.position = new Vector3(x + 0.5f, FindObjectOfType<GridScript>().fields[x, z].height, z + 0.5f);
                 
                 GameObject.Find("AttackIcon").GetComponent<Image>().sprite = FindObjectOfType<IconScript>().AttackSprite;
                 GameObject.Find("AttackIcon").GetComponent<Image>().enabled = true;
-                GameObject.Find("AttackIconCanvas").transform.position = new Vector3(x + 0.5f, FindObjectOfType<GridScript>().fields[x, z].height + 1.5f, z + 0.5f);
+                //GameObject.Find("AttackIconCanvas").transform.position = new Vector3(x + 0.5f, FindObjectOfType<GridScript>().fields[x, z].height + 1.5f, z + 0.5f);
                 FindObjectOfType<UXRessources>().movementFlag.SetActive(false);
 
                 bool reset = true;
@@ -472,13 +473,14 @@ public class MouseManager : MonoBehaviour {
             nonActive = false;
         }
         Finish(character, field, x, z);
+        */
     }
-    public static void Finish(Character character, MapField field, int x, int z)
+    public static void Finish(Character character, MapField field, int x, int y)
     {
         oldX = x;
-        oldZ = z;
+        oldY = y;
         nonActive = false;
-        if (!field.isActive && !(x == character.x && z == character.z))
+        if (!field.isActive && !(x == character.x && y == character.y))
         {
             nonActive = true;
         }

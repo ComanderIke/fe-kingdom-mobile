@@ -42,7 +42,7 @@ namespace Assets.Scripts.GameStates
         }
 
         public override void enter()
-        {
+        {/*
             MouseManager.active = false;
             if (mousePath == null)
             {
@@ -68,6 +68,7 @@ namespace Assets.Scripts.GameStates
                     path.Reverse();
             }
             GameObject.Find(MainScript.CURSOR_NAME).GetComponent<CursorScript>().SetPosition(x, MainScript.CURSOROFFSET, z);
+            */
         }
 
         public override void exit()
@@ -81,12 +82,11 @@ namespace Assets.Scripts.GameStates
         }
         void ContinueWalkAnimation()
         {
+            /*
             //speedincr=1.0f;
             mainScript.cameraSpeed = 3f;
             character.gameObject.GetComponent<CharacterScript>().setRunning();
-            /*Animation animation = character.gameObject.GetComponentInChildren<Animation>();
-            if (animation != null)
-                animation.Play("Walk");*/
+
             float x = character.gameObject.transform.localPosition.x;
 
     
@@ -206,11 +206,7 @@ namespace Assets.Scripts.GameStates
                 character.gameObject.GetComponent<CharacterScript>().StopRun();
                 GameObject.Find(MainScript.CURSOR_NAME).GetComponent<CursorScript>().SetPosition((int)character.GetPositionOnGrid().x, MainScript.CURSOROFFSET, (int)character.GetPositionOnGrid().y);
                 mainScript.MoveCursorTo((int)character.GetPositionOnGrid().x, (int)character.GetPositionOnGrid().y);
-                /* if (animation != null)
-                 {
-                     animation.Stop();
-                     animation.Play("Idle");
-                 }*/
+
                  if(MainScript.endOfMoveCharacterEvent!=null)
                     MainScript.endOfMoveCharacterEvent();
                 character.hasMoved = true;
@@ -242,6 +238,7 @@ namespace Assets.Scripts.GameStates
                     mainScript.SwitchState(targetState);
                 }
             }
+            */
         }
     }
 }

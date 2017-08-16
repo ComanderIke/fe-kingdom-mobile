@@ -26,12 +26,7 @@ namespace Assets.Scripts.Characters
             attackgrowth = 15;
             defensegrowth = 15;
 			spiritgrowth = 15;
-            orbs.Add(Orb.getRedOrb(2));
-            orbs.Add(Orb.getWhiteOrb(2));
-            orbs.Add(Orb.getBlueOrb(2));
-            orbs.Add(Orb.getBlackOrb(2));
-            orbs.Add(Orb.getGreenOrb(2));
-            orbs.Add(Orb.getPurpleOrb(2));
+
         }
     }
 }

@@ -36,6 +36,7 @@ namespace Assets.Scripts.GameStates
 		bool gotExp=false;
         private GameState targetState;
         private List<Attack> attackOrderList;
+        
         public FightState(global::Character attacker, AttackTarget defender, GameState targetState)
         {
             this.activeCharacter = attacker;
@@ -63,7 +64,7 @@ namespace Assets.Scripts.GameStates
         }
         public override void enter()
         {
-            activeCharacter.hasAttacked = true;
+           /* activeCharacter.hasAttacked = true;
             MouseManager.active = false;
             //SetOtherCharsVisibility(false);
             cameraStartPosition = GameObject.Find(MainScript.MAIN_GAME_OBJ).GetComponent<MainScript>().myCamera.transform.position;
@@ -88,10 +89,10 @@ namespace Assets.Scripts.GameStates
                
             }
 
-
+            */
 
         }
-        private void MoveCamera()
+       /* private void MoveCamera()
         {
 
             float offset = -3;
@@ -230,22 +231,23 @@ namespace Assets.Scripts.GameStates
 				}
 			}
 		}
-       
+       */
         public override void exit()
         {
-            MouseManager.active = true;
+            /*MouseManager.active = true;
             SetOtherCharsVisibility(true);
             GameObject.Find(MainScript.MAIN_GAME_OBJ).GetComponent<MainScript>().ActiveCharWait();
             CombatCamera cc = MainScript.GetInstance().combatCamera;
             MainScript.GetInstance().FightCanvas.gameObject.SetActive(false);
             cc.gameObject.SetActive(false);
             MainScript.GetInstance().myCamera.gameObject.SetActive(true);
+            */
         }
         bool endfight = false;
         float cameraTime = 0;
         public override void update()
         {
-            ContinueFightAnimation();
+            /*ContinueFightAnimation();
 			if (endfight) {
 				if (!gotExp) {
 					//activeCharacter.GetExpForBattle (fightCharacter);
@@ -257,9 +259,10 @@ namespace Assets.Scripts.GameStates
             else
             {
                 //MoveCamera();
-            }
+            }*/
 
         }
+        /*
 		private int rng = 0;
         void Attack(global::Character attacker, Character defender)
         {
@@ -610,5 +613,6 @@ namespace Assets.Scripts.GameStates
             delta = (int)(Math.Abs(a.GetPositionOnGrid().x - fightCharacter.GetPositionOnGrid().x) + Math.Abs(a.GetPositionOnGrid().y - fightCharacter.GetPositionOnGrid().y));
             return delta;
         }
+        */
     }
 }

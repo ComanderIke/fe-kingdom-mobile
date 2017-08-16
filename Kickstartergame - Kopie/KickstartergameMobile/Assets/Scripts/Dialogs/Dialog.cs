@@ -9,6 +9,7 @@ namespace Assets.Scripts.Dialogs
 {
     class Dialog
     {
+        /*
 		private int characterindex;
 		private int stringindex = 0;
 		private int letterindex = 0;
@@ -95,5 +96,7 @@ namespace Assets.Scripts.Dialogs
 			}
 			else { speed = 0.03f; }
 		}
+        */
     }
+    
 }

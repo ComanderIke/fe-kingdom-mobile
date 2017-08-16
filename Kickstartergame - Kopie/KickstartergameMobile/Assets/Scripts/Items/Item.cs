@@ -76,10 +76,6 @@ public abstract class Item {
 	
 	public abstract void use(Character character);
 
-    public void drop(Character character)
-    {
-		GameObject.Find (MainScript.MAIN_GAME_OBJ).GetComponent<MainScript> ().NewItemDrop (new ItemDrop (this, character.x, character.z));
-    }
 
 }
 

@@ -25,50 +25,32 @@ using Assets.Scripts.GameStates;
           
     }
 
-		public override void use(Character character) {
+	public override void use(Character character) {
 		
-			switch(attribute){
+		switch(attribute){
 		case PotionType.HP:
-			character.Heal (effect);
+			//character.Heal (effect);
 			MainScript.healthPotionUsedEvent ();
 			break;
-		case PotionType.EXP:
-			character.addExp(effect);
-			MainScript.healthPotionUsedEvent ();
-			break;
-			    case PotionType.MaxHP: character.stats.maxHP+= effect;break;
-                case PotionType.CDR:
-                foreach(Skill s in character.charclass.skills)
-                {
-                    s.CurrentCooldown = 0;
-                }
-                break;
-                //case Attribute.DoubleAttack:
-                //    character.doubleAttack = true; break;
-                case PotionType.MOV:
-                    character.charclass.movRange += 1; break;
-			}
+		
+		}
 		Usage--;
 		if (Usage <= 0)
 			character.items.Remove(this);
-           // GameObject.Find("ItemMessage").GetComponent<ItemMessage>().Show(this);
-        GameObject.Find(MainScript.MAIN_GAME_OBJ).GetComponent<MainScript>().ActiveCharWait();
-
-		GameObject.Find(MainScript.MAIN_GAME_OBJ).GetComponent<MainScript>().SwitchState(new GameplayState());
          
        
 			
-		}
-		
-		public PotionType Attribute {
-			get{ return attribute;}
-			set{ attribute = value;}
-		}
-		public int Effect {
-			get{ return effect;}
-			set{ effect = value;}
-		}
-		
 	}
+		
+	public PotionType Attribute {
+		get{ return attribute;}
+		set{ attribute = value;}
+	}
+	public int Effect {
+		get{ return effect;}
+		set{ effect = value;}
+	}
+		
+}
 
 

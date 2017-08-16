@@ -24,7 +24,7 @@ public class CreateCharacter : MonoBehaviour {
 		
 
 	}
-
+    /*
     public void placeCharacter(int PlayerNumber, Character c ,int x, float y, int z)
     {
         GameObject o = null;
@@ -129,4 +129,5 @@ public class CreateCharacter : MonoBehaviour {
     void Update () {
 	
 	}
+    */
 }

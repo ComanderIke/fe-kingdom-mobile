@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
-using Assets.Scripts.AI;
 using AssemblyCSharp;
 using Assets.Scripts.Items;
 
@@ -25,22 +24,20 @@ namespace Assets.Scripts.GameStates
         public GameplayState()
         {
            
-			MouseWheelInput.mouseWheelUp =null;
-			MouseWheelInput.mouseWheelDown =null;
-			MouseWheelInput.mouseWheelUp +=SwitchPreviousCharacter;
+
 			//MouseWheelInput.mouseWheelDown +=SwitchCharacter;
         }
         public override void enter()
         {
             //MainScript.moveCharacterEvent += MoveActiveCharacter;
             mainScript = GameObject.Find(MainScript.MAIN_GAME_OBJ).GetComponent<MainScript>();
-            GameObject.FindObjectOfType<HudScript>().SetEndTurnButton(true);
+            //GameObject.FindObjectOfType<HudScript>().SetEndTurnButton(true);
             activePlayer = MainScript.players[MainScript.ActivePlayerNumber];
         }
 
         public override void exit()
         {
-            GameObject.FindObjectOfType<HudScript>().SetEndTurnButton(false);
+            //GameObject.FindObjectOfType<HudScript>().SetEndTurnButton(false);
             //global::Character c = GameObject.Find(MainScript.MAIN_GAME_OBJ).GetComponent<MainScript>().activeCharacter;
             //if(c!= null)
             //GameObject.Find(MainScript.CURSOR_NAME).GetComponent<CursorScript>().SetPosition(c.GetPositionOnGrid().x, GameObject.Find(MainScript.MAIN_GAME_OBJ).GetComponent<MainScript>().gridScript.fields[(int)c.gameObject.transform.localPosition.x, (int)c.gameObject.transform.localPosition.z].height + MainScript.CURSOROFFSET, c.GetPositionOnGrid().y);
@@ -51,7 +48,7 @@ namespace Assets.Scripts.GameStates
             CheckGameOver();
         }
 
-
+        
         public void CheckGameOver()
         {
             Player loser = null;
@@ -79,7 +76,7 @@ namespace Assets.Scripts.GameStates
                 //Application.LoadLevel("Levelauswahl");
             }
         }
-
+        /*
         private void RemoveDeadCharacters()
         {
 
@@ -418,15 +415,8 @@ namespace Assets.Scripts.GameStates
                     int ty = (int)enemy.gameObject.transform.position.z;
                     //List<int> attackranges = character.charclass.AttackRanges;
                     //MovementPath path = mainScript.gridScript.getPath(sx, sy, tx, ty, character.team, character.CanPassThrough(), true, attackranges);
-                    /* if (path == null)
-                     {
-                         Debug.Log("PLay Bad SOund cause no way found");
-                         return;
 
-                     }*/
-                    /*  for (int i = 0; i< path.getLength(); i++){
-                          Debug.Log(path.getStep(i).getX()+ " "+path.getStep(i).getZ());
-                      }*/
+ 
                     List<Vector3> movePath = new List<Vector3>();
                     for (int i = 0; i < MouseManager.oldMousePath.Count; i++)
                     {
@@ -525,9 +515,7 @@ namespace Assets.Scripts.GameStates
         void EnemySelected(global::Character c)
         {
             GridScript s = mainScript.GetComponentInChildren<GridScript>();
-            /*GameObject.Destroy(mainScript.characterInfo);
-            mainScript.characterInfo = GameObject.Instantiate(mainScript.actionMenueScript.CharacterInfo);
-            mainScript.characterInfo.transform.SetParent(GameObject.Find(ActionMenueState.ACTIONMENUE_PANEL).transform);*/
+
             if (c.IsAttackRangeShown())
             {
                 s.HideCharacterMovement(c);
@@ -639,6 +627,6 @@ namespace Assets.Scripts.GameStates
             //}
             //cam.transform.position = new Vector3(cam.transform.position.x, CameraHeight, cam.transform.position.z);
         }
-
+*/
     }
 }

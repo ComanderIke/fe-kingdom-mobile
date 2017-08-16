@@ -23,14 +23,12 @@ namespace Assets.Scripts.Characters.Classes
         public int attackgrowth = 0;
         public int defensegrowth = 0;
 		public int spiritgrowth = 0;
-        public List<Orb> orbs;
 
         public CharClass()
         {
 			weaponType = new List<WeaponCategory> ();
             AttackRanges = new List<int>();
             skills = new List<Skill>();
-            orbs = new List<Orb>();
         }
 
     }

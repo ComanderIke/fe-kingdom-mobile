@@ -25,7 +25,7 @@ namespace Assets.Scripts.Characters.Debuffs
             {
                 base.currduration -= 1;
                 c.charclass.movRange -= slow;
-                c.inflictMagicDamage((c.charclass.stats.maxHP / dmg), caster);
+               // c.inflictMagicDamage((c.charclass.stats.maxHP / dmg), caster);
             }
             else
                 return true;

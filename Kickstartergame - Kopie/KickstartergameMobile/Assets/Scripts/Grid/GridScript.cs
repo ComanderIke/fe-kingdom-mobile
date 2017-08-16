@@ -11,22 +11,17 @@ public class Grid{
 [System.Serializable]
 public class Step {
 	private int x;
-	private float y;
-	private int z;
+	private int y;
 
-	public Step(int x, float y, int z){
+	public Step(int x, int y){
 		this.x = x;
 		this.y  =y;
-		this.z = z;
 	}
 	public int getX(){
 		return x;
 	}
-	public float getY(){
+	public int getY(){
 		return y;
-	}
-	public int getZ(){
-		return z;
 	}
 }
 [System.Serializable]
@@ -42,8 +37,8 @@ public class MovementPath {
 	public Step getStep(int index){
 		return (Step)steps [index];
 	}
-	public void prependStep(int x,float y, int z){
-		steps.Add(new Step (x, y,z));
+	public void prependStep(int x, int y){
+		steps.Add(new Step (x, y));
 	}
 	public void Reverse(){
 		steps.Reverse ();
@@ -71,55 +66,25 @@ public class Node {
 		return depth;
 	}
 }
-[System.Serializable]
-public enum FieldEffectType
-{
-    None,
-    Heal
-}
-public class FieldEffect
-{
-    public FieldEffectType type;
-    public int heal;
 
-    public FieldEffect(FieldEffectType type, int heal)
-    {
-        this.type = type;
-        this.heal = heal;
-    }
-    public void Effect(Character c, int playernumber)
-    {
-        if (type == FieldEffectType.Heal && c != null && playernumber == c.team)
-        {
-            c.Heal(heal);
-
-        }
-    }
-}
 [System.Serializable]
 public class MapField{
 	public GameObject gameObject;
 	public bool isAccessible = true;
     public Character attackRangeCharacter;
 	public Character character;
-    public TreasureChest chest;
-    public Door door;
 	public FieldState fieldState = FieldState.Normal;
 	public int movementCost = 1;
-    public FieldEffect effect;
-	public float height;
     public bool isJumpable = true;
 	public bool isActive = false;
     public int x;
     public int y;
     public bool enemyAttackRange = false;
     public bool blockArrow = false;
-	public MapField(int i, int j, GameObject gameObject,float height){
+	public MapField(int i, int j, GameObject gameObject){
 		this.gameObject = gameObject;
-		this.height = height;
         x = i;
         y = j;
-        effect = new FieldEffect(FieldEffectType.None, 0);
 	}
     
 }
@@ -143,9 +108,6 @@ public class GridScript : MonoBehaviour {
     #region fields
     public Grid grid;
 	public float cellSize = 1;
-	public float yOffset ;
-	public float yOffsetStairs;
-	public float yOffsetBridge;
 	public Material cellMaterialValid;
 	public Material cellMaterialInvalid;
 	public GameObject field;
@@ -158,51 +120,18 @@ public class GridScript : MonoBehaviour {
     public Texture mouseHoverTexture;
     public Texture skillRangeTexture;
     public MapField[,] fields;
-    public bool[,] stairs;
-	public bool[,] bridge;
     private ArrayList closed;
     private ArrayList open;
     private  Node [,]nodes;
-	private float[] _heights;
     #endregion
 
     void Start() {
-		stairs = new bool[grid.width, grid.height];
-		for (int i = 0; i < grid.width; i++) {
-			for (int j = 0; j < grid.height; j++) {
 
-				stairs [i, j] = false;
-			}
-		}
-		bridge = new bool[grid.width, grid.height];
-		for (int i = 0; i < grid.width; i++) {
-			for (int j = 0; j < grid.height; j++) {
-
-				bridge [i, j] = false;
-			}
-		}
-		stairs [16, grid.height-1] = true;
-		stairs [16, grid.height-4] = true;
-		stairs [16, grid.height-5] = true;
-		stairs [16, 0] = true;
-		stairs [16, 1] = true;
-		stairs [18, 6] = true;
-		stairs [10, 6] = true;
-		stairs [9, 6] = true;
-		bridge [8, 14] = true;
-		bridge [9, 14] = true;
-		_heights = new float[(grid.height + 1) * (grid.width + 1)];
-		UpdateHeights();
 		fields = new MapField[grid.width, grid.height];
 		nodes = new Node[grid.width, grid.height];
 		for (int i = 0; i < grid.width; i++) {
 			for (int j = 0; j < grid.height; j++) {
-				if(stairs[i,j])
-					fields[i,j] = new MapField(i,j,CreateChild(i,_heights[j * (grid.width + 1) + i] + yOffsetStairs,j), _heights[j * (grid.width+1) + i]);
-				else if(bridge[i,j])
-					fields[i,j] = new MapField(i,j,CreateChild(i,_heights[j * (grid.width + 1) + i] + yOffsetBridge,j), _heights[j * (grid.width+1) + i]);
-				else
-					fields[i,j] = new MapField(i,j,CreateChild(i,_heights[j * (grid.width + 1) + i] + yOffset,j), _heights[j * (grid.width+1) + i]);
+				fields[i,j] = new MapField(i,j,CreateChild(i, j));
                 nodes[i,j] = new Node(i, j, 1000);
 			}
 		}
@@ -227,16 +156,8 @@ public class GridScript : MonoBehaviour {
         if (x >= 0 && y >= 0 && x < grid.width && y < grid.height)
         {
             MapField field = fields[x, y];
-            if ((field.isAccessible || field.door != null))
+            if (field.isAccessible)
             {
-                if (field.chest != null)
-                    return false;
-                if (field.door != null)
-                {
-                    if (field.door.opened)
-                        return true;
-                    return false;
-                }
                 if (field.character == null)
                     return true;
                 else if (field.character.team == team)
@@ -267,21 +188,21 @@ public class GridScript : MonoBehaviour {
         return false;
     }
 
-    GameObject CreateChild(int xvalue, float yvalue, int zvalue)
+    GameObject CreateChild(int xvalue, float yvalue)
     {
         GameObject go = new GameObject();
         go.layer = CELL_LAYER;
         go.tag = CELL_TAG;
-		go.name = CELL_NAME +" "+ xvalue+" "+zvalue;
+		go.name = CELL_NAME +" "+ xvalue+" "+yvalue;
         go.transform.parent = transform;
-        go.transform.localPosition = new Vector3(0, yvalue, 0);
+        go.transform.localPosition = new Vector3(xvalue, yvalue, 0);
         go.transform.localRotation = Quaternion.identity;
         go.AddComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
         Mesh meshobj = CreateMesh();
         go.AddComponent<MeshFilter>().mesh = meshobj;
         go.GetComponent<MeshFilter>().sharedMesh.bounds = new Bounds(new Vector3(0, 0, 0), new Vector3(500, 500, 500));//this is important!
-        go.AddComponent<BoxCollider>().center = new Vector3(xvalue + 0.5f, 0, zvalue + 0.5f);
-        go.GetComponent<BoxCollider>().size = new Vector3(1, 0.4f, 1);
+        go.AddComponent<BoxCollider>().center = new Vector3(0.5f, 0.5f, 0);
+        go.GetComponent<BoxCollider>().size = new Vector3(1, 1, 0.1f);
         //go.AddComponent<FieldClicked>().position = new Vector3(xvalue, yvalue, zvalue);
         return go;
     }
@@ -297,7 +218,7 @@ public class GridScript : MonoBehaviour {
         return mesh;
     }
 	public void ShowStandOnTexture(Character c){
-		fields [c.x, c.z].gameObject.GetComponent<MeshRenderer> ().material.mainTexture = StandOnTexture;
+		fields [c.x, c.y].gameObject.GetComponent<MeshRenderer> ().material.mainTexture = StandOnTexture;
 	}
 	public void HideStandOnTexture(Character c){
 		//Do Nothing?
@@ -390,10 +311,10 @@ public class GridScript : MonoBehaviour {
         Node target = nodes[tx, tz];
         while (target != nodes[sx, sz])
         {
-            path.prependStep(target.x, fields[target.x, target.y].height, target.y);
+            path.prependStep(target.x, target.y);
             target = target.parent;
         }
-        path.prependStep(sx, fields[sx, sz].height, sz);
+        path.prependStep(sx, sz);
         return path;
 
     }
@@ -423,50 +344,7 @@ public class GridScript : MonoBehaviour {
         return findPath(x, z, x2, z2, team, toadjacentPos, range);
     }
 
-    public void HideAllyMovement()
-    {
-        for (int i = 0; i < grid.width; i++)
-        {
-            for (int j = 0; j < grid.height; j++)
-            {
-                MeshRenderer m = fields[i, j].gameObject.GetComponent<MeshRenderer>();
-                if (fields[i, j].isAccessible)
-                {
-                    if (fields[i, j].enemyAttackRange == false)
-                        m.material.mainTexture = StandardTexture;
-                }
-                else
-                {
-                    if (fields[i, j].enemyAttackRange == false)
-                        m.material = cellMaterialInvalid;
-                }
-                nodes[i, j].c = 1000;
-                fields[i, j].isActive = false;
-            }
-        }
-    }
 
-    public void HideCharacterMovement(Character character)
-    {
-        for (int i = 0; i < grid.width; i++)
-        {
-            for (int j = 0; j < grid.height; j++)
-            {
-                MeshRenderer m = fields[i, j].gameObject.GetComponent<MeshRenderer>();
-                if (fields[i, j].attackRangeCharacter == character)
-                {
-                    if (fields[i, j].isAccessible)
-                        m.material.mainTexture = StandardTexture;
-                    else
-                    {
-                        m.material = cellMaterialInvalid;
-                    }
-                    nodes[i, j].c = 1000;
-                    fields[i, j].isActive = false;
-                }
-            }
-        }
-    }
 
     public void HideMovement()
     {
@@ -498,26 +376,12 @@ public class GridScript : MonoBehaviour {
 
     bool IsCellValid(int x, int z)
     {
-
-        return true;
-        float avg = (_heights[z * (grid.width + 1) + x] +
-            _heights[(z + 1) * (grid.width + 1) + x] +
-            _heights[z * (grid.width + 1) + x + 1] +
-            _heights[(z + 1) * (grid.width + 1) + x + 1]) / 4;
-        float offset = 0.2f;
-        if (avg > (_heights[z * (grid.width + 1) + x] + offset) || avg > (_heights[z * (grid.width + 1) + x + 1] + offset) || avg > _heights[(z + 1) * (grid.width + 1) + x] + offset || avg > _heights[(z + 1) * (grid.width + 1) + x + 1] + offset)
-            return false;
-
         return true;
     }
 
     private bool isValidLocation(int team, int sx, int sy, int x, int y, bool isAdjacent)
     {
         bool invalid = (x < 0) || (y < 0) || (x >= grid.width) || (y >= grid.height);
-        if (!invalid && fields[x, y].door != null)
-        {
-            return fields[x, y].door.opened;
-        }
         if ((!invalid) && ((sx != x) || (sy != y)))
         {
             invalid = !fields[x, y].isAccessible;
@@ -543,9 +407,9 @@ public class GridScript : MonoBehaviour {
         return !invalid;
     }
 
-	Vector3 MeshVertex(int x, int z, float minus)
+	Vector3 MeshVertex(int x, int y, float minus)
     {
-		return new Vector3(x * cellSize, _heights[z * (grid.width + 1) + x]-minus, z * cellSize);
+		return new Vector3(x * cellSize, y * cellSize, 0);
     }
 
     private bool nodeFaster(int x, int y, int c)
@@ -756,10 +620,7 @@ public class GridScript : MonoBehaviour {
 
     }
 
-    public float GetHeight(int x, int z)
-    {
-        return fields[x, z].height;
-    }
+
 
     public void ShowMovement(int x, int z, int range, int attackIndex, List<int> attack, int c, int team, bool enemy)
     {
@@ -813,7 +674,6 @@ public class GridScript : MonoBehaviour {
     void UpdateCells()
     {
         GetBlockedFields();
-        bool[,] blockedArrows = GetBlockedArrows();
         for (int z = 0; z < grid.height; z++)
         {
             for (int x = 0; x < grid.width; x++)
@@ -821,10 +681,7 @@ public class GridScript : MonoBehaviour {
                 GameObject cell = fields[x, z].gameObject;
                 MeshRenderer meshRenderer = cell.GetComponent<MeshRenderer>();
                 MeshFilter meshFilter = cell.GetComponent<MeshFilter>();
-               
-                //meshRenderer.material = IsCellValid(x, z) ? cellMaterialValid : cellMaterialInvalid;
-                //if (!IsCellValid(x, z))
-                //    fields[x, z].isAccessible = false;
+
                 meshRenderer.material = blockedFields[x, z] ? cellMaterialInvalid : cellMaterialValid;
                 if (blockedFields[x, z])
                 {
@@ -832,22 +689,18 @@ public class GridScript : MonoBehaviour {
                     fields[x, z].gameObject.GetComponent<MeshRenderer>().enabled = false;
                     fields[x, z].gameObject.GetComponent<BoxCollider>().enabled = false;
                 }
-                if (blockedArrows[x, z])
-                {
-                    fields[x, z].blockArrow = true;
-                }
                 UpdateMesh(meshFilter.mesh, x, z);
             }
         }
     }
 
-    void UpdateMesh(Mesh mesh, int x, int z)
+    void UpdateMesh(Mesh mesh, int x, int y)
     {
         mesh.vertices = new Vector3[] {
-			MeshVertex(x, z, _heights[z * (grid.width + 1) + x]),
-			MeshVertex(x, z + 1,_heights[z * (grid.width + 1) + x]),
-			MeshVertex(x + 1, z,_heights[z * (grid.width + 1) + x]),
-			MeshVertex(x + 1, z + 1,_heights[z * (grid.width + 1) + x]),
+			MeshVertex(0, 0, 0),
+			MeshVertex(0, 1,0),
+			MeshVertex( 1, 0,0 ),
+			MeshVertex(1,  1,0 ),
         };
     }
 
@@ -883,48 +736,27 @@ public class GridScript : MonoBehaviour {
         RaycastHit hitInfo;
         Vector3 origin;
         blockedFields = new bool[grid.width, grid.height];
-        for (int z = 0; z < grid.height; z++)
+        for (int y = 0; y < grid.height; y++)
         {
             for (int x = 0; x < grid.width; x++)
             {
                 //Debug.Log(x + " " + z);
-                origin = new Vector3(x * cellSize+(cellSize/2), 200, z * cellSize + (cellSize / 2));
+                origin = new Vector3(x * cellSize+(cellSize/2), 200, y * cellSize + (cellSize / 2));
                 if (Physics.Raycast(transform.TransformPoint(origin), Vector3.down, out hitInfo, Mathf.Infinity, LayerMask.GetMask(BLOCK_FIELD_LAYER)))
                 {
-                    blockedFields[x, z] = true;
-                }
-                else if (!Physics.Raycast(transform.TransformPoint(origin), Vector3.down, out hitInfo, Mathf.Infinity, LayerMask.GetMask("Terrain")))
-                {
-                    //Debug.Log("FALSE"+x + " " + z);
-                    blockedFields[x, z] = true;
+                    blockedFields[x, y] = true;
                 }
                 else
                 {
                     //Debug.Log(hitInfo.point);
-                    blockedFields[x, z] = false;
+                    blockedFields[x, y] = false;
                 }
 
                 //Debug.Log("X: " + x + "Y: "+
             }
         }
     }
-    void UpdateHeights()
-    {
-        RaycastHit hitInfo;
-        Vector3 origin;
 
-        for (int z = 0; z < grid.height + 1; z++)
-        {
-            for (int x = 0; x < grid.width + 1; x++)
-            {
-                origin = new Vector3(x * cellSize, 200, z * cellSize);
-                Physics.Raycast(transform.TransformPoint(origin), Vector3.down, out hitInfo, Mathf.Infinity, LayerMask.GetMask("Terrain"));
-                //Debug.Log("X: " + x + "Z: " + z + " " + hitInfo.point);
-                _heights[z * (grid.width + 1) + x] = hitInfo.point.y;
-                //Debug.Log("X: " + x + "Y: "+
-            }
-        }
-    }
 
     public void ShowGreenFields(List<Vector3> jumpPositionTargets)
     {

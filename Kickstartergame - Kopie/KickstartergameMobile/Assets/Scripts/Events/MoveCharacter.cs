@@ -18,14 +18,14 @@ namespace AssemblyCSharp
 		void Start(){
 			MainScript.moveCharacterEvent += StartMovingCharacter;
 		}
-		void StartMovingCharacter(Character c, int x, int z){
+		void StartMovingCharacter(Character c, int x, int y){
 			moving = true;
 			character = c;
-			this.pos = new Vector3(x,mainScript.gridScript.GetHeight(x,z),z);
+			this.pos = new Vector3(x,y,0);
 			mainScript = GameObject.Find (MainScript.MAIN_GAME_OBJ).GetComponent<MainScript> ();
-			character.gameObject.GetComponent<CharacterScript>().PlayRun();
-			path = mainScript.gridScript.getPath(c.x, c.z, (int)pos.x, (int)pos.z, character.team, false, new List<int>());
-            Debug.Log("Move " + c.name + " from " + c.x + " " + c.z + " to " + pos.x + " " + pos.z + " ");
+			//character.gameObject.GetComponent<CharacterScript>().PlayRun();
+			path = mainScript.gridScript.getPath(c.x, c.y, (int)pos.x, (int)pos.y, character.team, false, new List<int>());
+            Debug.Log("Move " + c.name + " from " + c.x + " " + c.y + " to " + pos.x + " " + pos.y + " ");
 			path.Reverse();
 			pathCounter = 1;
 		}
@@ -33,11 +33,9 @@ namespace AssemblyCSharp
 		void Update(){
 			if (!moving)
 				return;
-
+/*
 			character.gameObject.GetComponent<CharacterScript>().setRunning();
-			/*Animation animation = character.gameObject.GetComponentInChildren<Animation>();
-			if (animation != null)
-				animation.Play("Walk");*/
+
 			float x = character.gameObject.transform.localPosition.x;
 			float y = character.gameObject.transform.localPosition.y;
 			float z = character.gameObject.transform.localPosition.z;
@@ -137,6 +135,7 @@ namespace AssemblyCSharp
 				MainScript.endOfMoveCharacterEvent ();
 				moving = false;
 			}
+            */
 		}
 	}
 }

@@ -13,7 +13,7 @@ public class ManageCharacters : MonoBehaviour {
 	
 	}
 	public void CharacterClicked(Character c){
-        GameObject.Find(MainScript.MAIN_GAME_OBJ).GetComponent<MainScript>().SetActiveCharacter(c, false);
+       // GameObject.Find(MainScript.MAIN_GAME_OBJ).GetComponent<MainScript>().SetActiveCharacter(c, false);
 		//SendMessageUpwards ("SetActiveCharacter", c);
 
 	}

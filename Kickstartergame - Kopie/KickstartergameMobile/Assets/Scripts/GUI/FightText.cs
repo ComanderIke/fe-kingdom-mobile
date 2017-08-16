@@ -133,21 +133,6 @@ public class FightText : MonoBehaviour {
     CharacterClassType charclasstype;
     private Character defender;
     public void setText(Vector3 position, string str, FightTextType type, Character Attacker, Character Defender){
-		if (Attacker!=null&&Attacker.characterClassType == CharacterClassType.Mage) {
-			if (Attacker.EquipedWeapon.Name == "Ignis") {
-				animationObject = GameObject.Find ("RessourceScript").GetComponent<AttackEffects> ().ignis;
-			}
-			if (Attacker.EquipedWeapon.Name == "Ventus") {
-				animationObject = GameObject.Find ("RessourceScript").GetComponent<AttackEffects> ().ventus;
-			}
-			if (Attacker.EquipedWeapon.Name == "ThanatosBreath") {
-				animationObject = GameObject.Find ("RessourceScript").GetComponent<AttackEffects> ().thanatosBreath;
-			}
-		}
-        else
-        {
-			animationObject = GameObject.Find("RessourceScript").GetComponent<AttackEffects>().sparks;
-        }
         DamageText dt = new DamageText(position,str, type );
         isActive = true;
 		if (Attacker != null)

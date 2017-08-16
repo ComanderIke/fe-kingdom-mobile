@@ -39,7 +39,7 @@ namespace Assets.Scripts.Items
             //GameObject.Find("ItemMessage").GetComponent<ItemMessage>().Show(this);
             //character.items.Remove(this);
             //character.items.Add(character.EquipedWeapon);
-            character.EquipedWeapon = this;
+            //character.EquipedWeapon = this;
             
             
         }

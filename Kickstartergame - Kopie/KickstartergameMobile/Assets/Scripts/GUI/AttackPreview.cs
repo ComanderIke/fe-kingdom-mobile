@@ -18,7 +18,7 @@ namespace Assets.Scripts.GameStates
         public GameObject attackpreview;
         public void Show(Character attacker, Character defender)
         {
-            visible = true;
+          /*  visible = true;
             this.attacker = attacker;
             this.defender = defender;
             attackpreview.SetActive(true);
@@ -34,7 +34,7 @@ namespace Assets.Scripts.GameStates
                 doubletext = " x 2";
             GameObject.Find("DefenderDamage").GetComponent<Text>().text = "" + defender.GetDamageAgainstTarget(attacker) + doubletext;
             GameObject.Find("AttackerAccuracy").GetComponent<Text>().text = "" + attacker.GetHitAgainstTarget(defender);
-            GameObject.Find("DefenderAccuracy").GetComponent<Text>().text = "" + defender.GetHitAgainstTarget(attacker);
+            GameObject.Find("DefenderAccuracy").GetComponent<Text>().text = "" + defender.GetHitAgainstTarget(attacker);*/
 
         }
         public void Hide()

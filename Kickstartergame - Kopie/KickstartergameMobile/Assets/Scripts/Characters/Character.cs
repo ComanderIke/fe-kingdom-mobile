@@ -46,7 +46,7 @@ public class Character : LivingObject{
     public int exp;
     private bool selected = false;
     public int x;
-    public int z;
+    public int y;
     public int attributepoints = 0;
     public Character lastdamagedealer;
     public int weaponIndex = 0;
@@ -54,7 +54,7 @@ public class Character : LivingObject{
     GameObject effectGO;
     #endregion
 
-
+    /*
     #region Getter/Setter
     public Weapon EquipedWeapon {
 		get{
@@ -91,15 +91,15 @@ public class Character : LivingObject{
             isWaiting = value;
         }
     }
-    public void SetPosition(int x, int z)
+    public void SetPosition(int x, int y)
     {
-        OldPosition = new Vector2(this.x, this.z);
+        OldPosition = new Vector2(this.x, this.y);
         MainScript m = GameObject.Find(MainScript.MAIN_GAME_OBJ).GetComponent<MainScript>();
         m.gridScript.fields[(int)GetPositionOnGrid().x, (int)GetPositionOnGrid().y].character = null;
         this.x = x;
-        this.z = z;
-        gameObject.transform.localPosition = new Vector3(x, m.gridScript.fields[x,z].height, z);
-        m.gridScript.fields[x, z].character = this;
+        this.y = y;
+        gameObject.transform.localPosition = new Vector3(x, y, 0);
+        m.gridScript.fields[x, y].character = this;
     }
 
     public int GetMaxAttackRange()
@@ -112,13 +112,13 @@ public class Character : LivingObject{
         }
         return max;
     }
-    public void SetInternPosition(int x, int z)
+    public void SetInternPosition(int x, int y)
     {
         MainScript m = GameObject.Find(MainScript.MAIN_GAME_OBJ).GetComponent<MainScript>();      
         m.gridScript.fields[(int)GetPositionOnGrid().x, (int)GetPositionOnGrid().y].character = null;
-        m.gridScript.fields[x, z].character = this;
+        m.gridScript.fields[x, y].character = this;
         this.x = x;
-        this.z = z;
+        this.y = y;
     }
     private void ShowFightText(string damage, Character attacker, Character defender, FightTextType type)
     {
@@ -235,11 +235,6 @@ public class Character : LivingObject{
         HP = stats.maxHP;
     }
 
-    public Character(string name, CharacterClassType type, AIBehaviour behaviour) : this(name, type)
-    {
-        this.behaviour = behaviour;
-    }
-
     public void AutomaticLevelUp(int targetLevel)
     {
         for (int i= this.level; i < targetLevel; i++)
@@ -332,11 +327,8 @@ public class Character : LivingObject{
 
     public override void DeathAnimation (){
 
-        GameObject.FindObjectOfType<MainScript>().gridScript.fields[x, z].character = null;
+        GameObject.FindObjectOfType<MainScript>().gridScript.fields[x, y].character = null;
 		lastdamagedealer.gameObject.GetComponent<CharacterScript> ().PlayTauntAnimation ();
-      
-		GameObject.Find(MainScript.MAIN_GAME_OBJ).GetComponent<MainScript>().characterRooms[this.name]=-1;
-		List<Item> drops = new List<Item> ();
         lastdamagedealer.GetExpForKill(this);
         if (instantiatedWeapon != null)
         {
@@ -371,7 +363,7 @@ public class Character : LivingObject{
 	}
 
     public Vector2 GetPositionOnGrid(){
-		return new Vector2 (this.x, this.z);
+		return new Vector2 (this.x, this.y);
 	}
     public void UpdateOnWholeTurn()
     {
@@ -404,18 +396,9 @@ public class Character : LivingObject{
 
     
 	public void levelUp(){
-        MainScript m = GameObject.Find(MainScript.MAIN_GAME_OBJ).GetComponent<MainScript>();
         level++;
-        LevelUpEffect();  
 	}
-    private void LevelUpEffect()
-    {
-        if (this.gameObject != null)
-        {
-            gameObject.GetComponent<CharacterScript>().LevelUp();
-            CameraMovement.MoveTo(new Vector3(-(x),GameObject.FindObjectOfType<MainScript>().gridScript.GetHeight(x,z)+0.5f, -(z)));
-        }
-    }
+
     
     public void AddAttribute(StatAttribute attr, int value, float delay)
     {
@@ -848,7 +831,7 @@ public class Character : LivingObject{
         }
     }
    
-    
+    */
 }
 
 
