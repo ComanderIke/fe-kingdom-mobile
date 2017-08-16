@@ -38,15 +38,15 @@ public class CreateCharacter : MonoBehaviour {
         if (c.characterClassType == CharacterClassType.Mage) {
 			o = Instantiate<GameObject>(mage);
         }
-
+        
         o.name = c.name;
         o.tag = "Player";
-        o.transform.parent = GameObject.Find(player).GetComponentInChildren<ManageCharacters>().gameObject.transform;
+        o.transform.parent = gameObject.transform;
         CharacterScript characterScript = o.GetComponentInChildren<CharacterScript>();
         characterScript.character=c;
         characterScript.getCharacter().gameObject = o;
         o.transform.localPosition = new Vector3(x, y, 0);
-        o.transform.Rotate(new Vector3(0, 1, 0), 180);
+        c.SetPosition(x, y);
         c.InstantiateWeapon();
     }
 

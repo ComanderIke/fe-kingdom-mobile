@@ -344,7 +344,7 @@ public class MainScript : MonoBehaviour {
 
     private void Initialize()
     {
-        gridScript = GetComponentInChildren<GridScript>();
+        gridScript = FindObjectOfType<GridScript>();
 
         CreateFillerCharacters();
         activeCharacter = null;
@@ -378,7 +378,7 @@ public class MainScript : MonoBehaviour {
         Character filler2 = null;
         Character filler3 = null;
         Character filler4 = null;
-
+        
         filler = new Character("Leila", CharacterClassType.SwordFighter);
         filler2 = new Character("Flora", CharacterClassType.Mage);
         filler3 = new Character("Eldric", CharacterClassType.Archer);
@@ -388,6 +388,12 @@ public class MainScript : MonoBehaviour {
         p.addCharacter(filler2);
         p.addCharacter(filler3);
         p.addCharacter(filler4);
+        StartPosition[] startPositions = FindObjectsOfType<StartPosition>();
+        CreateCharacter cc = FindObjectOfType<CreateCharacter>();
+        cc.placeCharacter(0, filler, startPositions[0].GetX(), startPositions[0].GetY());
+        cc.placeCharacter(0, filler2, startPositions[1].GetX(), startPositions[1].GetY());
+        cc.placeCharacter(0, filler3, startPositions[2].GetX(), startPositions[2].GetY());
+        cc.placeCharacter(0, filler4, startPositions[3].GetX(), startPositions[3].GetY());
     }
 
     public void SwitchState(GameState state)
@@ -414,6 +420,7 @@ public class MainScript : MonoBehaviour {
         foreach (Character c in activePlayer.getCharacters())
         {
            c.UpdateTurn();
+           Debug.Log(c.gameObject);
            GameObject.Instantiate(FindObjectOfType<UXRessources>().activeUnitField, c.gameObject.transform.position,Quaternion.identity,c.gameObject.transform);
         }
         
@@ -606,9 +613,9 @@ public class MainScript : MonoBehaviour {
    
     #region RedirectingMethods
 
-    public void ShowMovement(Character c)
+    public void ShowMovementAndAttack(Character c)
     {
-        gridScript.ShowMovement((int)c.gameObject.transform.localPosition.x, (int)c.gameObject.transform.localPosition.z, c.charclass.movRange, 0, new List<int>(c.charclass.AttackRanges), 0, c.team, false);
+        gridScript.ShowMovement(c);
         gridScript.ShowAttack(c, new List<int>(c.charclass.AttackRanges), false);
     }
 

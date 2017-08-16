@@ -621,8 +621,11 @@ public class GridScript : MonoBehaviour {
     }
 
 
-
-    public void ShowMovement(int x, int z, int range, int attackIndex, List<int> attack, int c, int team, bool enemy)
+    public void ShowMovement(Character c)
+    {
+        ShowMovement((int)c.gameObject.transform.localPosition.x, (int)c.gameObject.transform.localPosition.y, c.charclass.movRange, c.charclass.movRange, new List<int>(c.charclass.AttackRanges), 0, c.team, false);
+    }
+    private void ShowMovement(int x, int z, int range, int attackIndex, List<int> attack, int c, int team, bool enemy)
     {
         if (range < 0)
         {

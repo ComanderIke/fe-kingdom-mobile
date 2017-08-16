@@ -469,7 +469,8 @@ public class CharacterScript :  MonoBehaviour {
         if (!EventSystem.current.IsPointerOverGameObject())
         {
             GameObject.Find("AttackIcon").GetComponent<Image>().enabled = false;
-            //MainScript.characterClickedEvent(character);
+            MainScript.characterClickedEvent(character);
+            Debug.Log(character.x + " " + character.y);
         }
     }
         

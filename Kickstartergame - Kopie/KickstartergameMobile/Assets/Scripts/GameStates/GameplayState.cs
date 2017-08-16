@@ -40,7 +40,7 @@ namespace Assets.Scripts.GameStates
         
         public void CheckGameOver()
         {
-            Player loser = null;
+            /*Player loser = null;
             foreach (Player p in MainScript.players)
             {
                 bool allCharactersDead = true;
@@ -61,7 +61,7 @@ namespace Assets.Scripts.GameStates
             if (loser != null)
             {
                 Debug.Log("GameOver!");
-            }
+            }*/
         }
         
         private void RemoveDeadCharacters()
@@ -152,7 +152,7 @@ namespace Assets.Scripts.GameStates
                     {
                         foreach (global::Character c in p.getCharacters())
                         {
-                            mainScript.gridScript.ShowMovement((int)c.GetPositionOnGrid().x, (int)c.GetPositionOnGrid().y, c.charclass.movRange, 0, c.charclass.AttackRanges, 0, c.team, true);
+                            mainScript.gridScript.ShowMovement(c);
                             mainScript.gridScript.ShowAttack(c, c.charclass.AttackRanges, true);
                             mainScript.gridScript.ResetActiveFields();
 
@@ -382,7 +382,7 @@ namespace Assets.Scripts.GameStates
 
         void EnemySelected(global::Character c)
         {
-            GridScript s = mainScript.GetComponentInChildren<GridScript>();
+            GridScript gridScript = mainScript.GetComponentInChildren<GridScript>();
 
             if (c.IsAttackRangeShown())
             {
@@ -391,9 +391,9 @@ namespace Assets.Scripts.GameStates
             else
             {
                 c.SetAttackRangeShown(true);
-                s.ShowMovement((int)c.gameObject.transform.localPosition.x, (int)c.gameObject.transform.localPosition.z, c.charclass.movRange, c.charclass.movRange, new List<int>(c.charclass.AttackRanges), 0, c.team, false);
-                s.ShowAttack(c, new List<int>(c.charclass.AttackRanges), false);
-                s.ResetActiveFields();
+                gridScript.ShowMovement(c); 
+                gridScript.ShowAttack(c, new List<int>(c.charclass.AttackRanges), false);
+                gridScript.ResetActiveFields();
                 if (mainScript.activeCharacter != null)
                 {
                     mainScript.activeCharacter.Selected = false;
@@ -405,7 +405,7 @@ namespace Assets.Scripts.GameStates
 
         void SameCharacterSelected(global::Character c)
         {
-            mainScript.oldPosition = new Vector2(mainScript.activeCharacter.gameObject.transform.localPosition.x, mainScript.activeCharacter.gameObject.transform.localPosition.z);
+            mainScript.oldPosition = new Vector2(mainScript.activeCharacter.gameObject.transform.localPosition.x, mainScript.activeCharacter.gameObject.transform.localPosition.y);
 			GridScript s = mainScript.GetComponentInChildren<GridScript>();
             UXRessources ux = GameObject.FindObjectOfType<UXRessources>();
             Debug.Log("Same Selected");
@@ -422,9 +422,9 @@ namespace Assets.Scripts.GameStates
             mainScript.activeCharacter = c;
             c.Selected = true;
             mainScript.faceSprite.sprite = c.activeSpriteObject;
-            GridScript s = mainScript.GetComponentInChildren<GridScript>();
+            GridScript s = mainScript.gridScript;
             s.HideMovement();
-            s.ShowMovement((int)c.gameObject.transform.localPosition.x, (int)c.gameObject.transform.localPosition.z, c.charclass.movRange, 0, new List<int>(c.charclass.AttackRanges), 0, c.team, false);
+            s.ShowMovement(c);
             s.ShowAttack(c, new List<int>(c.charclass.AttackRanges), false);
             mainScript.activeCharacter.hovered = true;
 

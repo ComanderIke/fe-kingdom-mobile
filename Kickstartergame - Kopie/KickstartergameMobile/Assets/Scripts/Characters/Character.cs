@@ -180,23 +180,23 @@ public class Character : LivingObject{
         this.characterClassType = type;
         if (characterClassType == CharacterClassType.SwordFighter)
         {
-			activeSpriteObject = GameObject.Find("RessourceScript").GetComponent<SpriteScript>().swordActiveSprite;
+			activeSpriteObject = GameObject.FindObjectOfType<SpriteScript>().swordActiveSprite;
             charclass = new Tank();
         }
         if (characterClassType == CharacterClassType.Hellebardier)
         {
-			activeSpriteObject = GameObject.Find("RessourceScript").GetComponent<SpriteScript>().lancerActiveSprite;
+			activeSpriteObject = GameObject.FindObjectOfType<SpriteScript>().lancerActiveSprite;
             charclass = new Hellebardier();
         }
         if (characterClassType == CharacterClassType.Mage)
         {
-			activeSpriteObject = GameObject.Find("RessourceScript").GetComponent<SpriteScript>().axeActiveSprite;
+			activeSpriteObject = GameObject.FindObjectOfType<SpriteScript>().axeActiveSprite;
             charclass = new Mage();
-            EquipedWeapon = GameObject.Find("RessourceScript").GetComponent<WeaponScript>().ignis;
+           
         }
         if (characterClassType == CharacterClassType.Archer)
         {
-			activeSpriteObject = GameObject.Find("RessourceScript").GetComponent<SpriteScript>().archerActiveSprite;
+			activeSpriteObject = GameObject.FindObjectOfType<SpriteScript>().archerActiveSprite;
             charclass = new Archer();
         }
         stats = new Stats(charclass.stats.maxHP, charclass.stats.attack, charclass.stats.speed, charclass.stats.defense, charclass.stats.accuracy, charclass.stats.spirit);
