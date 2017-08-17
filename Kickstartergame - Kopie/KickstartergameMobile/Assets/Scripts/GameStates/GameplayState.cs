@@ -415,6 +415,7 @@ namespace Assets.Scripts.GameStates
 
         void SelectCharacter(global::Character c)
         {
+            mainScript.uiController.HideBottomUI();
             Debug.Log("Select " + c.name);
 			if (mainScript.activeCharacter != null) {
 				mainScript.activeCharacter.Selected = false;

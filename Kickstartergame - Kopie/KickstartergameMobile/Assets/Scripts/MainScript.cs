@@ -187,6 +187,7 @@ public class MainScript : MonoBehaviour {
 	private bool fightRotationSetup = true;
 	private bool isFighting = false;
     private bool isFightingAgainstWall = false;
+    public UIController uiController;
 	[HideInInspector]
 	public Character fightCharacter = null;
 	[HideInInspector]
@@ -420,7 +421,6 @@ public class MainScript : MonoBehaviour {
         foreach (Character c in activePlayer.getCharacters())
         {
            c.UpdateTurn();
-           Debug.Log(c.gameObject);
            GameObject.Instantiate(FindObjectOfType<UXRessources>().activeUnitField, c.gameObject.transform.position,Quaternion.identity,c.gameObject.transform);
         }
         
@@ -635,10 +635,10 @@ public class MainScript : MonoBehaviour {
         Debug.Log("DeselectCharacter");
         activeCharacter = null;
         gridScript.HideMovement();
+        uiController.ShowBottomUI();
     }
 
     public void SetActiveCharacter(Character c, bool switchChar){
-        Debug.Log("SetActive");
 		lastClickedCharacter = c;
 		if (activePlayerNumber == 0&& c.team==0&&activeCharacter==null)
         {
@@ -682,6 +682,7 @@ public class MainScript : MonoBehaviour {
             activeCharacter.IsWaiting = true;
             activeCharacter.Selected = false;
             activeCharacter = null;
+            uiController.ShowBottomUI();
         }
 	}
 }

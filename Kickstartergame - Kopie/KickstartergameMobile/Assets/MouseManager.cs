@@ -20,21 +20,25 @@ public class MouseManager : MonoBehaviour {
 
     static MainScript mainScript;
     public static bool active = true;
+    static UXRessources ressources;
     RaycastHit hit;
-    GameObject mouseCursor;
+    static Transform gameWorld;
+    //GameObject mouseCursor;
     Ray ray;
 	// Use this for initialization
 	void Start () {
         mainScript = FindObjectOfType<MainScript>();
         hit = new RaycastHit();
-        mouseCursor = GameObject.Find("MouseCursor");
+        gameWorld = GameObject.FindGameObjectWithTag("World").transform;
+        ressources = FindObjectOfType<UXRessources>();
+        //mouseCursor = GameObject.Find("MouseCursor");
     }
     float updateFrequency = 0.1f;
     float updateTime = 0;
 	// Update is called once per frame
     
 	void Update () {
-        /*
+        
         if (!active)
             return;
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -43,17 +47,17 @@ public class MouseManager : MonoBehaviour {
         {
             oldMousePath = new List<Vector2>(mousePath);
             ResetMoveArrow();
-            GameObject.Find("AttackIcon").GetComponent<Image>().enabled = false;
-
+           
             Physics.Raycast(ray, out hit, Mathf.Infinity);
             int x = (int)Mathf.Floor(hit.point.x);
-            int z = (int)Mathf.Floor(hit.point.z);
+            int y = (int)Mathf.Floor(hit.point.y);
+            Debug.Log(x+" "+y+ " "+hit.collider.name);
             if (hit.collider != null)
             {
                 if (hit.collider.tag == "Grid")
                 {
-
-                    MainScript.clickedOnField(x, z);;
+                    Debug.Log("CLikced");
+                    MainScript.clickedOnField(x, y);
                 }
             }
 
@@ -65,7 +69,6 @@ public class MouseManager : MonoBehaviour {
         else if (Input.GetMouseButtonUp(0))
         {
             oldMousePath = new List<Vector2>(mousePath);
-            GameObject.Find("AttackIcon").GetComponent<Image>().enabled = false;
             ResetMoveArrow();
 
         }
@@ -80,11 +83,11 @@ public class MouseManager : MonoBehaviour {
                     if (hit.collider.tag == "Grid")
                     {
                         int x = (int)Mathf.Floor(hit.point.x);
-                        int z = (int)Mathf.Floor(hit.point.z);
-                        mouseCursor.transform.position = new Vector3(x + 0.5f, hit.point.y, z + 0.5f);
+                        int y = (int)Mathf.Floor(hit.point.y);
+                        //mouseCursor.transform.position = new Vector3(x + 0.5f, hit.point.y, z + 0.5f);
                         if (mainScript.activeCharacter != null)
                         {
-                            CharacterDrag(x, z, mainScript.activeCharacter);
+                            CharacterDrag(x, y, mainScript.activeCharacter);
                         }
                     }
                     else if (cs != null)
@@ -93,24 +96,22 @@ public class MouseManager : MonoBehaviour {
                         {
                             Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Terrain"));
                             int x = (int)Mathf.Floor(hit.point.x);
-                            int z = (int)Mathf.Floor(hit.point.z);
-                            if (x == FindObjectOfType<MainScript>().activeCharacter.x && z == mainScript.activeCharacter.y)
+                            int y = (int)Mathf.Floor(hit.point.y);
+                            if (x == FindObjectOfType<MainScript>().activeCharacter.x && y == mainScript.activeCharacter.y)
                                 ResetMoveArrow();
                         }
                         else if (mainScript.activeCharacter != null && cs.character.team != mainScript.activeCharacter.team)
                         {
                             int x = (int)Mathf.Floor(cs.character.x);
-                            int z = (int)Mathf.Floor(cs.character.y);
-                            mouseCursor.transform.position = new Vector3(x + 0.5f, hit.point.y, z + 0.5f);
-                            CharacterDrag(x, z, mainScript.activeCharacter);
+                            int y = (int)Mathf.Floor(cs.character.y);
+                            //mouseCursor.transform.position = new Vector3(x + 0.5f, hit.point.y, z + 0.5f);
+                            CharacterDrag(x, y, mainScript.activeCharacter);
                         }
                     }
                 }
             }
 
         }
-        */
-
     }
     static int oldX = -1;
     static int oldY=-1;
@@ -130,7 +131,7 @@ public class MouseManager : MonoBehaviour {
         oldX = -1;
         oldY= -1;
         FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().enabled = false;
-        FindObjectOfType<UXRessources>().movementFlag.SetActive(false);
+        //FindObjectOfType<UXRessources>().movementFlag.SetActive(false);
     }
     static bool nonActive = false;
     public static void DraggedOver(Character character)
@@ -201,7 +202,7 @@ public class MouseManager : MonoBehaviour {
         {
             return;
         }
-       
+
         MapField field = mainScript.gridScript.fields[x, y];
         if (field.isActive && field.character == null)
         {
@@ -224,10 +225,8 @@ public class MouseManager : MonoBehaviour {
                 FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().enabled = true;
                 //FindObjectOfType<DragCursor>().transform.position = new Vector3(x + 0.5f, FindObjectOfType<GridScript>().fields[x, z].height, z + 0.5f);
                 
-                GameObject.Find("AttackIcon").GetComponent<Image>().sprite = FindObjectOfType<IconScript>().AttackSprite;
-                GameObject.Find("AttackIcon").GetComponent<Image>().enabled = true;
                 //GameObject.Find("AttackIconCanvas").transform.position = new Vector3(x + 0.5f, FindObjectOfType<GridScript>().fields[x, z].height + 1.5f, z + 0.5f);
-                FindObjectOfType<UXRessources>().movementFlag.SetActive(false);
+                //FindObjectOfType<UXRessources>().movementFlag.SetActive(false);
 
                 bool reset = true;
                 for (int i = mainScript.activeCharacter.charclass.AttackRanges.Count - 1; i >= 0; i--)
@@ -257,12 +256,7 @@ public class MouseManager : MonoBehaviour {
                                     GameObject.Destroy(dot);
                                 }
                                 dots.Clear();
-                                foreach (Vector2 ve in mousePath)
-                                {
-                                    GameObject dot = GameObject.Instantiate(FindObjectOfType<UXRessources>().moveArrowDot);
-                                    dot.transform.position = new Vector3(ve.x + 0.5f,  ve.y + 0.5f,0);
-                                    dots.Add(dot);
-                                }
+                                DrawMousePath(character.x, character.y);
                                 break;
                             }
                             else
@@ -274,12 +268,7 @@ public class MouseManager : MonoBehaviour {
                                     GameObject.Destroy(dot);
                                 }
                                 dots.Clear();
-                                foreach (Vector2 ve in mousePath)
-                                {
-                                    GameObject dot = GameObject.Instantiate(FindObjectOfType<UXRessources>().moveArrowDot);
-                                    dot.transform.position = new Vector3(ve.x + 0.5f, ve.y + 0.5f,0);
-                                    dots.Add(dot);
-                                }
+                                DrawMousePath(character.x, character.y);
                                 i = -1;
                                 break;
                             }
@@ -297,12 +286,7 @@ public class MouseManager : MonoBehaviour {
                             GameObject.Destroy(dot);
                         }
                         dots.Clear();
-                        foreach (Vector2 ve in mousePath)
-                        {
-                            GameObject dot = GameObject.Instantiate(FindObjectOfType<UXRessources>().moveArrowDot);
-                            dot.transform.position = new Vector3(ve.x + 0.5f, ve.y + 0.5f,0);
-                            dots.Add(dot);
-                        }
+                        DrawMousePath(character.x, character.y);
                         i = -1;
                         reset = false;
                     }
@@ -358,12 +342,7 @@ public class MouseManager : MonoBehaviour {
                             GameObject.Destroy(dot);
                         }
                         dots.Clear();
-                        foreach (Vector2 v in mousePath)
-                        {
-                            GameObject dot = GameObject.Instantiate(FindObjectOfType<UXRessources>().moveArrowDot);
-                            dot.transform.position = new Vector3(v.x + 0.5f, v.y + 0.5f,0);
-                            dots.Add(dot);
-                        }
+                        DrawMousePath(character.x, character.y);
                     }
                     else
                     {
@@ -392,12 +371,7 @@ public class MouseManager : MonoBehaviour {
                             }
                         }
 
-                        foreach (Vector2 v in mousePath)
-                        {
-                            GameObject dot = GameObject.Instantiate(FindObjectOfType<UXRessources>().moveArrowDot);
-                            dot.transform.position = new Vector3(v.x + 0.5f, v.y + 0.5f,0);
-                            dots.Add(dot);
-                        }
+                        DrawMousePath(character.x, character.y);
                     }
                 }
             }
@@ -405,7 +379,6 @@ public class MouseManager : MonoBehaviour {
         //No enemy
         else
         {
-            GameObject.Find("AttackIcon").GetComponent<Image>().enabled = false;
             FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().material.mainTexture = FindObjectOfType<TextureScript>().cursorTextures[0];
             if (field.isActive)
             {
@@ -419,12 +392,12 @@ public class MouseManager : MonoBehaviour {
             if (field.isActive && !(field.x == character.x && field.y == character.y))
             {
 
-                FindObjectOfType<UXRessources>().movementFlag.SetActive(true);
-                FindObjectOfType<UXRessources>().movementFlag.transform.position = new Vector3(x + 0.5f, y + 0.5f,0);
+                //FindObjectOfType<UXRessources>().movementFlag.SetActive(true);
+               // FindObjectOfType<UXRessources>().movementFlag.transform.position = new Vector3(x + 0.5f, y + 0.5f,0);
             }
             else
             {
-                FindObjectOfType<UXRessources>().movementFlag.SetActive(false);
+                //FindObjectOfType<UXRessources>().movementFlag.SetActive(false);
             }
         }
         //If Field is Orange and not the filed currently standing on
@@ -460,12 +433,7 @@ public class MouseManager : MonoBehaviour {
                     }
                 }
             }
-            foreach(Vector2 v in mousePath)
-            {
-                GameObject dot = GameObject.Instantiate(FindObjectOfType<UXRessources>().moveArrowDot);
-                dot.transform.position = new Vector3(v.x + 0.5f, v.y + 0.5f,0);
-                dots.Add(dot);
-            }
+            DrawMousePath(character.x,character.y);
         }
         else if(x == character.x && y == character.y)
         {
@@ -474,6 +442,111 @@ public class MouseManager : MonoBehaviour {
         }
         Finish(character, field, x, y);
         
+    }
+    private static void DrawMousePath(int x, int y)
+    {
+        for (int i=0; i < mousePath.Count; i++) 
+        {
+            Vector2 v = mousePath[i];
+            
+            GameObject dot = GameObject.Instantiate(ressources.moveArrowDot,gameWorld);
+            dot.transform.localPosition = new Vector3(v.x + 0.5f, v.y + 0.5f, -0.5f);
+            dots.Add(dot);
+            if (i == mousePath.Count - 1)
+            {
+                dot.GetComponent<SpriteRenderer>().sprite = ressources.moveArrowHead;
+                if (i != 0)
+                {
+                    if (v.x - mousePath[i - 1].x > 0)
+                        dot.transform.rotation = Quaternion.Euler(0, 0, 180);
+                    else if (v.x - mousePath[i - 1].x < 0)
+                        dot.transform.rotation = Quaternion.Euler(0, 0, 0);
+                    else if (v.y - mousePath[i - 1].y > 0)
+                        dot.transform.rotation = Quaternion.Euler(0, 0, 270);
+                    else if (v.y - mousePath[i - 1].y < 0)
+                        dot.transform.rotation = Quaternion.Euler(0, 0, 90);
+                }
+                else
+                {
+                    if (v.x - x > 0)
+                        dot.transform.rotation = Quaternion.Euler(0, 0, 180);
+                    else if (v.x -x < 0)
+                        dot.transform.rotation = Quaternion.Euler(0, 0, 0);
+                    else if (v.y - y > 0)
+                        dot.transform.rotation = Quaternion.Euler(0, 0, 270);
+                    else if (v.y - y < 0)
+                        dot.transform.rotation = Quaternion.Euler(0, 0, 90);
+                }
+            }
+            else 
+            {
+                Vector2 vAfter = mousePath[i + 1];
+                Vector2 vBefore;
+                if (i != 0)
+                {
+                    vBefore = mousePath[i - 1];
+                    ArrowCurve(dot,v, vBefore, vAfter);
+                    
+                }
+                else
+                {
+                    vBefore = new Vector2(x, y);
+                    ArrowCurve(dot, v, vBefore, vAfter);
+                }
+            }
+        }
+    }
+    public static void ArrowCurve(GameObject dot,Vector2 v, Vector2 vBefore, Vector2 vAfter)
+    {
+        if (vBefore.x == vAfter.x)
+        {
+            dot.GetComponent<SpriteRenderer>().sprite = ressources.moveArrowStraight;
+            dot.transform.rotation = Quaternion.Euler(0, 0, 90);
+        }
+        else if (vBefore.y == vAfter.y)
+        {
+            dot.GetComponent<SpriteRenderer>().sprite = ressources.moveArrowStraight;
+            dot.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        else
+        {
+            dot.GetComponent<SpriteRenderer>().sprite = ressources.moveArrowCurve;
+            if (vBefore.x - vAfter.x > 0)
+            {
+                if ((vBefore.y - vAfter.y > 0))
+                {
+                    if (vBefore.x == v.x)
+                        dot.transform.rotation = Quaternion.Euler(0, 0, 90);
+                    else
+                        dot.transform.rotation = Quaternion.Euler(0, 0, 270);
+                }
+
+                else
+                {
+                    if (vBefore.x == v.x)
+                        dot.transform.rotation = Quaternion.Euler(0, 0, 180);
+                    else
+                        dot.transform.rotation = Quaternion.Euler(0, 0, 0);
+                }
+            }
+            else if (vBefore.x - vAfter.x < 0)
+            {
+                if ((vBefore.y - vAfter.y > 0))
+                {
+                    if (vBefore.x == v.x)
+                        dot.transform.rotation = Quaternion.Euler(0, 0, 0);
+                    else
+                        dot.transform.rotation = Quaternion.Euler(0, 0, 180);
+                }
+                else
+                {
+                    if (vBefore.x == v.x)
+                        dot.transform.rotation = Quaternion.Euler(0, 0, 270);
+                    else
+                        dot.transform.rotation = Quaternion.Euler(0, 0, 90);
+                }
+            }
+        }
     }
     public static void Finish(Character character, MapField field, int x, int y)
     {

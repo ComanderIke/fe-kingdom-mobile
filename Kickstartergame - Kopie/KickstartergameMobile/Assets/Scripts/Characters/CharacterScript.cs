@@ -327,7 +327,7 @@ public class CharacterScript :  MonoBehaviour {
             {
                 if (!delayDrag)
                 {
-                    FindObjectOfType<UXRessources>().movementFlag.SetActive(false);
+                    //FindObjectOfType<UXRessources>().movementFlag.SetActive(false);
                     dragging = false;
                     drag = false;
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -336,25 +336,25 @@ public class CharacterScript :  MonoBehaviour {
                     Physics.Raycast(ray, out hit, Mathf.Infinity);
                     int x = (int)Mathf.Floor(hit.point.x);
                     int y = (int)Mathf.Floor(hit.point.y);
-                    GameObject.Find("AttackIcon").GetComponent<Image>().enabled = false;
                     FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().enabled = false;
                     // ChangeToStartMaterial();
                     dragMaterial = false;
+                    Debug.Log(hit.collider.name);
                     if (hit.collider.gameObject.tag == "Grid")
                     {
                         if (FindObjectOfType<GridScript>().fields[x, y].isActive && !(x == character.x && y == character.y))
                         {
                             character.SetPosition(character.x, character.y);
-                            //FindObjectOfType<MainScript>().MoveCharacterTo(character, MouseManager.oldMousePath, true, new GameplayState());
+                            FindObjectOfType<MainScript>().MoveCharacterTo(character, MouseManager.oldMousePath, true, new GameplayState());
 
                         }
                         else if (FindObjectOfType<GridScript>().fields[x, y].character != null && FindObjectOfType<GridScript>().fields[x, y].character.team != character.team)
                         {
-                           // FindObjectOfType<MainScript>().GoToEnemy(character, FindObjectOfType<GridScript>().fields[x, y].character, true);
+                           FindObjectOfType<MainScript>().GoToEnemy(character, FindObjectOfType<GridScript>().fields[x, y].character, true);
                         }
                         else
                         {
-                            //FindObjectOfType<MainScript>().DeselectActiveCharacter();
+                            FindObjectOfType<MainScript>().DeselectActiveCharacter();
                         }
                     }
                     else if (hit.collider.gameObject.GetComponent<CharacterScript>() != null)
@@ -362,19 +362,19 @@ public class CharacterScript :  MonoBehaviour {
                         Character ch = hit.collider.gameObject.GetComponent<CharacterScript>().character;
                         if (ch.team != character.team)
                         {
-                           // if(FindObjectOfType<GridScript>().IsFieldAttackable(ch.x,ch.z))
-                              //  FindObjectOfType<MainScript>().GoToEnemy(character, ch, true);
+                            if(FindObjectOfType<GridScript>().IsFieldAttackable(ch.x,ch.y))
+                                FindObjectOfType<MainScript>().GoToEnemy(character, ch, true);
                         }
                         else
                         {
                             Debug.Log("Deselect2");
-                           // FindObjectOfType<MainScript>().DeselectActiveCharacter();
+                           FindObjectOfType<MainScript>().DeselectActiveCharacter();
                         }
                     }
                     else
                     {
                         Debug.Log("Deselect1");
-                        //FindObjectOfType<MainScript>().DeselectActiveCharacter();
+                        FindObjectOfType<MainScript>().DeselectActiveCharacter();
                     }
                 }
             }
@@ -382,7 +382,6 @@ public class CharacterScript :  MonoBehaviour {
         else
         {
             GetComponent<BoxCollider>().enabled = true;
-            //  GameObject.Find("AttackIcon").GetComponent<Image>().enabled = false;
         }
 	}
     public void LevelUp()
@@ -438,16 +437,16 @@ public class CharacterScript :  MonoBehaviour {
                 if (hit.collider.tag == "Grid")
                 {
                     int x = (int)Mathf.Floor(hit.point.x);
-                    int z = (int)Mathf.Floor(hit.point.z);
+                    int y = (int)Mathf.Floor(hit.point.y);
                     if (MouseManager.active)
-                        MouseManager.CharacterDrag(x, z, character);
+                        MouseManager.CharacterDrag(x, y, character);
                 }
                 else if (hit.collider.GetComponent<CharacterScript>() != null)
                 {
                     int x = hit.collider.GetComponent<CharacterScript>().character.x;
-                    int z = hit.collider.GetComponent<CharacterScript>().character.y;
+                    int y= hit.collider.GetComponent<CharacterScript>().character.y;
                     if (MouseManager.active)
-                        MouseManager.CharacterDrag(x, z, character);
+                        MouseManager.CharacterDrag(x, y, character);
                 }
             }
         }
@@ -468,9 +467,7 @@ public class CharacterScript :  MonoBehaviour {
         MouseManager.oldMousePath = new List<Vector2>(MouseManager.mousePath);
         if (!EventSystem.current.IsPointerOverGameObject())
         {
-            GameObject.Find("AttackIcon").GetComponent<Image>().enabled = false;
             MainScript.characterClickedEvent(character);
-            Debug.Log(character.x + " " + character.y);
         }
     }
         

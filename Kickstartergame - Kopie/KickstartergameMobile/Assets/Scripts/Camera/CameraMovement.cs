@@ -25,6 +25,7 @@ public class CameraMovement : MonoBehaviour {
     float offset = 0.01f;
     private Vector3 lastPosition;
     MainScript mainScript;
+    bool drag = false;
  
     // Use this for initialization
     void Start () {
@@ -39,16 +40,24 @@ public class CameraMovement : MonoBehaviour {
 		
         if (Input.GetMouseButtonDown(0))
         {
-            lastPosition = Input.mousePosition;
+            RaycastHit hit = new RaycastHit();
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Physics.Raycast(ray, out hit, Mathf.Infinity);
+            if (hit.collider.gameObject.tag == "Grid")
+            {
+                lastPosition = Input.mousePosition;
+                drag = true;
+            }
         }
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0)&&drag)
         {
             Vector3 delta  = Input.mousePosition - lastPosition;
             transform.Translate(-delta.x * Time.deltaTime,- delta.y * Time.deltaTime, 0);
             lastPosition = Input.mousePosition;
         }
-
+        if (Input.GetMouseButtonUp(0))
+            drag = false;
         if (this.transform.localPosition.x < minX)
             this.transform.localPosition = new Vector3(minX, this.transform.localPosition.y, this.transform.localPosition.z);
         if (this.transform.localPosition.y < minY)
