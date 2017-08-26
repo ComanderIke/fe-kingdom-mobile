@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using Assets.Scripts.Characters.Classes;
 
 public class CreateCharacter : MonoBehaviour {
 
@@ -21,24 +19,7 @@ public class CreateCharacter : MonoBehaviour {
     {
         GameObject o = null;
         string player = "Player" + (PlayerNumber+1);
-        if (c.characterClassType == CharacterClassType.SwordFighter)
-        {
-			o = Instantiate<GameObject>(melee);
-
-        }
-        if (c.characterClassType == CharacterClassType.Hellebardier)
-        {
-            o = Instantiate<GameObject>(hellebardier);
-
-        }
-        if (c.characterClassType == CharacterClassType.Archer)
-        {
-			o = Instantiate<GameObject>(archer);
-        }
-        if (c.characterClassType == CharacterClassType.Mage) {
-			o = Instantiate<GameObject>(mage);
-        }
-        
+		o = Instantiate<GameObject>(melee);
         o.name = c.name;
         o.tag = "Player";
         o.transform.parent = gameObject.transform;

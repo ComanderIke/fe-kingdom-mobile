@@ -28,37 +28,17 @@ public abstract class Item {
 	private String name;
     [HideInInspector]
     public Sprite sprite;
-    [HideInInspector]
-    public Sprite sprite_hovered;
-    [HideInInspector]
-    public Sprite sprite_pressed;
     private int usage = 1;
     public bool droppedOnDeath = false;
 	private string description;
 	public GameObject gameobject;
-	public GameObject gameobject3d;
-	public Item(String name, String description, int useage, Sprite sprite, Sprite hovered, Sprite pressed, GameObject go,  GameObject go3d){
+	public Item(String name, String description, int useage, Sprite sprite, GameObject go){
 		this.name = name;
 		this.description = description;
         this.usage = useage;
         this.sprite = sprite;
-        this.sprite_hovered = hovered;
-        this.sprite_pressed = pressed;
 		this.gameobject = go;
-		this.gameobject3d = go3d;
 	}
-	public Item(String name, String description, int useage, Sprite sprite, Sprite hovered, Sprite pressed, GameObject go, GameObject go3d, bool dropOnDeath)
-    {
-        this.name = name;
-        this.usage = useage;
-		this.description = description;
-        this.sprite = sprite;
-        this.sprite_hovered = hovered;
-        this.sprite_pressed = pressed;
-        this.droppedOnDeath = dropOnDeath;
-		this.gameobject = go;
-		this.gameobject3d = go3d;
-    }
     public int Usage {
 		get { return usage;}
 		set { usage = value;

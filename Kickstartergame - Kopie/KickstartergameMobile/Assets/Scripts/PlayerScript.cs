@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using Assets.Scripts.Characters.Classes;
-using Assets.Scripts;
+using Assets.Scripts.Characters;
+
 [System.Serializable]
 public class Player{
 	public int number;
@@ -10,7 +9,7 @@ public class Player{
 	public string name;
     public bool isPlayerControlled;
     [System.NonSerialized]
-	private List<Character> characters;
+	private List<LivingObject> units;
 
     public Color GetColor()
     {
@@ -22,23 +21,19 @@ public class Player{
         this.name = name;
         this.isPlayerControlled = isPlayerControlled;
 		this.color = color;
-        characters = new List<Character>();
+        units = new List<LivingObject>();
 	}
-
-	public void Init(){
-		characters= new List<Character> ();
-	}
-	public List<Character> getCharacters(){
-		return characters;
+	public List<LivingObject> getCharacters(){
+		return units;
 	}
     public void addCharacter(Character c)
     {
         c.team = number;
         c.player = this;
-        characters.Add(c);
+        units.Add(c);
     }
-    public void setCharacters(List<Character> c){
-		characters = c;
+    public void setCharacters(List<LivingObject> c){
+		units = c;
 	}
 
 
@@ -49,10 +44,5 @@ public class Player{
 public class PlayerScript : MonoBehaviour {
 
 	public Player player;
-
-    void Start() {
-        player.Init();
-        List<Character> characters = new List<Character>();
-    }
 
 }

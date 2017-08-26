@@ -4,24 +4,10 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System;
-using System.Linq;
 using Assets.Scripts.GameStates;
 using Assets.Scripts.Characters.Skills;
 using Assets.Scripts.Characters;
-using Assets.Scripts.Characters.Classes;
-using AssemblyCSharp;
-using Assets.Scripts.Items;
 
-[System.Serializable]
-public class AttackTarget
-{
-    public Character character;
-    public AttackTarget(Character character)
-    {
-        this.character = character;
-        
-    }
-}
 public class MainScript : MonoBehaviour {
 	const float START_FADE = 3.0f;
 
@@ -161,8 +147,8 @@ public class MainScript : MonoBehaviour {
     public Image moveSpriteImage;
     public GameObject LevelUpDialog;
 	[HideInInspector]
-	public Character activeCharacter = null;
-    private AttackTarget attackTarget = null;
+	public LivingObject activeCharacter = null;
+    private LivingObject attackTarget = null;
 	[HideInInspector]
 	public List<Character> characterList;
 	[HideInInspector]
@@ -312,7 +298,7 @@ public class MainScript : MonoBehaviour {
             ((GameplayState)gameState).MoveCharacter(c, x, y,drag, targetState);
         }
     }
-    public void MoveCharacterTo(Character c, List<Vector2> path, bool drag, GameState targetState)
+    public void MoveCharacterTo(Character c, int x, int y,List<Vector2> path, bool drag, GameState targetState)
     {
         if (gameState is GameplayState)
         {
@@ -322,7 +308,7 @@ public class MainScript : MonoBehaviour {
                 movePath.Add(new Vector2(path[i].x, path[i].y));
                 Debug.Log(movePath[i]);
             }
-            ((GameplayState)gameState).MoveCharacter(c, movePath, drag, targetState);
+            ((GameplayState)gameState).MoveCharacter(c, x, y,movePath, drag, targetState);
         }
     }
 
@@ -380,10 +366,24 @@ public class MainScript : MonoBehaviour {
         Character filler3 = null;
         Character filler4 = null;
         
-        filler = new Character("Leila", CharacterClassType.SwordFighter);
-        filler2 = new Character("Flora", CharacterClassType.Mage);
-        filler3 = new Character("Eldric", CharacterClassType.Archer);
-        filler4 = new Character("Hector", CharacterClassType.Hellebardier);
+        filler = new Character("Leila");
+        filler2 = new Character("Flora");
+        filler3 = new Character("Eldric");
+        filler4 = new Character("Hector");
+        WeaponScript ws = FindObjectOfType<WeaponScript>();
+        filler.addItem(ws.bastardSword);
+        filler.EquipedWeapon = ws.bastardSword;
+        filler2.addItem(ws.warAxe);
+        filler2.EquipedWeapon = ws.warAxe;
+        filler3.addItem(ws.steelLance);
+        filler3.EquipedWeapon = ws.steelLance;
+        filler4.addItem(ws.recurveBow);
+        filler4.EquipedWeapon = ws.recurveBow;
+        SpriteScript ss = FindObjectOfType<SpriteScript>();
+        filler.activeSpriteObject = ss.swordActiveSprite;
+        filler2.activeSpriteObject = ss.axeActiveSprite;
+        filler3.activeSpriteObject = ss.archerActiveSprite;
+        filler4.activeSpriteObject = ss.lancerActiveSprite;
 
         p.addCharacter(filler);
         p.addCharacter(filler2);
@@ -426,7 +426,7 @@ public class MainScript : MonoBehaviour {
         
 	}
 
-    public void GoToEnemy(Character a, Character b, bool drag)
+    public void GoToEnemy(LivingObject a, LivingObject b, bool drag)
     {
         if(gameState is GameplayState)
             ((GameplayState)gameState).GoToEnemy(a, b, drag);
@@ -445,32 +445,23 @@ public class MainScript : MonoBehaviour {
 
     public void UpdateCharacters()
     {
-        foreach (Player p in MainScript.players)
-        {
-            foreach (Character c in p.getCharacters())
-            {
-                foreach (Skill s in c.charclass.skills)
-                {
-                    s.Update();//Todo only update active Skills
-                }
-            }
-        }
+
     }
     
     #region GetSurroundingTargets
    
-    public void GetAttackableCharacters(Character character, int x, int y, int range, List<AttackTarget> characters, List<int> direction)
+    public void GetAttackableCharacters(LivingObject character, int x, int y, int range, List<LivingObject> characters, List<int> direction)
     {
         if (range <= 0)
         {
-            Character c = gridScript.fields[x, y].character;
+            LivingObject c = gridScript.fields[x, y].character;
          
             if (c != null && c.team != character.team && c.isAlive)
             {
                 bool contains = false;
-                foreach (AttackTarget a in characters)
+                foreach (LivingObject a in characters)
                 {
-                    if (a.character == c)
+                    if (a == c)
                     {
                         contains = true;
 
@@ -478,7 +469,7 @@ public class MainScript : MonoBehaviour {
                 }
                 if (!contains)
                 {
-                    characters.Add(new AttackTarget(c));
+                    characters.Add(c);
                 }
             }
             return;
@@ -522,17 +513,17 @@ public class MainScript : MonoBehaviour {
 
     }
     
-    public Character GetCharacterAtLocation(Vector3 location)
+    public LivingObject GetCharacterAtLocation(Vector3 location)
     {
         return gridScript.fields[(int)location.x, (int)location.z].character;
     }
  
-    public List<AttackTarget> GetAttackableTargetsAtLocation(Vector3 location, Character character)
+    public List<LivingObject> GetAttackableTargetsAtLocation(Vector3 location, LivingObject character)
     {
-        List<AttackTarget> attackTargets = new List<AttackTarget>();
+        List<LivingObject> attackTargets = new List<LivingObject>();
         int x = (int)location.x;
         int z = (int)location.z;
-        foreach (int range in character.charclass.AttackRanges)
+        foreach (int range in character.AttackRanges)
         {
             GetAttackableCharacters(character, x, z, range, attackTargets, new List<int>());
         }
@@ -543,7 +534,7 @@ public class MainScript : MonoBehaviour {
     {
         if (range <= 0)
         {
-            Character c = gridScript.fields[x, y].character;
+            LivingObject c = gridScript.fields[x, y].character;
             MeshRenderer m = gridScript.fields[x, y].gameObject.GetComponent<MeshRenderer>();
             m.material.mainTexture = gridScript.AttackTexture;
             return;
@@ -587,22 +578,22 @@ public class MainScript : MonoBehaviour {
 
     }
 
-    public void ShowAttackRange(Character c)
+    public void ShowAttackRange(LivingObject c)
     {
-        List<AttackTarget> characters = new List<AttackTarget>();
+        List<LivingObject> characters = new List<LivingObject>();
         int x = (int)c.GetPositionOnGrid().x;
         int z = (int)c.GetPositionOnGrid().y;
-        foreach (int range in c.charclass.AttackRanges)
+        foreach (int range in c.AttackRanges)
         {
             ShowAttackRanges(x, z, range, new List<int>());
         }
     }
 
-    public List<AttackTarget> GetAttackTargets(Character c){
+    public List<LivingObject> GetAttackTargets(LivingObject c){
 		int x = (int)c.GetPositionOnGrid().x;
         int z = (int)c.GetPositionOnGrid().y;
-        List<AttackTarget> characters = new List<AttackTarget>();
-        foreach (int range in c.charclass.AttackRanges)
+        List<LivingObject> characters = new List<LivingObject>();
+        foreach (int range in c.AttackRanges)
         {
             GetAttackableCharacters(c, x, z, range, characters,new List<int>());
         }
@@ -613,13 +604,13 @@ public class MainScript : MonoBehaviour {
    
     #region RedirectingMethods
 
-    public void ShowMovementAndAttack(Character c)
+    public void ShowMovementAndAttack(LivingObject c)
     {
         gridScript.ShowMovement(c);
-        gridScript.ShowAttack(c, new List<int>(c.charclass.AttackRanges), false);
+        gridScript.ShowAttack(c, new List<int>(c.AttackRanges), false);
     }
 
-    public void OnEndTurnClicked()
+    public void EndTurn()
     {
         if(gameState is GameplayState)
         {
@@ -635,6 +626,7 @@ public class MainScript : MonoBehaviour {
         Debug.Log("DeselectCharacter");
         activeCharacter = null;
         gridScript.HideMovement();
+        uiController.HideTopUI();
         uiController.ShowBottomUI();
     }
 
@@ -676,12 +668,13 @@ public class MainScript : MonoBehaviour {
     #endregion
 
     public void ActiveCharWait(){
-        if (activeCharacter != null && !activeCharacter.IsWaiting)
+        if (activeCharacter != null && !activeCharacter.isWaiting)
         {
             gridScript.HideMovement();
-            activeCharacter.IsWaiting = true;
+            activeCharacter.isWaiting = true;
             activeCharacter.Selected = false;
             activeCharacter = null;
+            uiController.HideTopUI();
             uiController.ShowBottomUI();
         }
 	}

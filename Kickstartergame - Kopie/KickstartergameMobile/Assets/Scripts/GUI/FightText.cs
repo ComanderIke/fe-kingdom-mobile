@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
+
 using UnityEngine.UI;
 using System.Collections.Generic;
-using Assets.Scripts.Characters.Classes;
-using AssemblyCSharp;
+
 
 [System.Serializable]
 public enum FightTextType{
@@ -69,12 +68,6 @@ public class FightText : MonoBehaviour {
                     if (type == FightTextType.Critical)
                     {
                         t.color = Color.yellow;
-                        if (charclasstype == CharacterClassType.Mage)
-                            GetComponent<AudioSource>().PlayOneShot(mageAttack);
-                        else if (charclasstype == CharacterClassType.Rogue)
-                                GetComponent<AudioSource>().PlayOneShot(ninjaAttack);
-                        else if (charclasstype == CharacterClassType.SwordFighter)
-                            GetComponent<AudioSource>().PlayOneShot(WarriorAttack);
                     }
                     else if (type == FightTextType.Missed)
                     {
@@ -94,12 +87,6 @@ public class FightText : MonoBehaviour {
                     {
                         t.color = Color.red;
 						t.fontSize = 40;
-                        if (charclasstype == CharacterClassType.Mage)
-                            GetComponent<AudioSource>().PlayOneShot(mageAttack);
-                        else if (charclasstype == CharacterClassType.Rogue)
-                            GetComponent<AudioSource>().PlayOneShot(ninjaAttack);
-                        else if (charclasstype == CharacterClassType.SwordFighter)
-                            GetComponent<AudioSource>().PlayOneShot(WarriorAttack);
                     }
                 }
                 time += Time.deltaTime;
@@ -130,13 +117,10 @@ public class FightText : MonoBehaviour {
 	}
 
     List<DamageText> list = new List<DamageText>();
-    CharacterClassType charclasstype;
     private Character defender;
     public void setText(Vector3 position, string str, FightTextType type, Character Attacker, Character Defender){
         DamageText dt = new DamageText(position,str, type );
         isActive = true;
-		if (Attacker != null)
-			charclasstype = Attacker.characterClassType;
         defender = Defender;
         list.Add(dt);
 		

@@ -123,7 +123,7 @@ namespace Assets.Scripts.GameStates
         {
             foreach (global::Character c in activePlayer.getCharacters())
             {
-                c.IsWaiting = false;
+                c.isWaiting = false;
                 //c.gameObject.GetComponent<CharacterScript>().SetSelected(false);
             }
             MainScript.ActivePlayerNumber++;
@@ -153,7 +153,7 @@ namespace Assets.Scripts.GameStates
                         foreach (global::Character c in p.getCharacters())
                         {
                             mainScript.gridScript.ShowMovement(c);
-                            mainScript.gridScript.ShowAttack(c, c.charclass.AttackRanges, true);
+                            mainScript.gridScript.ShowAttack(c, c.AttackRanges, true);
                             mainScript.gridScript.ResetActiveFields();
 
                         }
@@ -172,11 +172,11 @@ namespace Assets.Scripts.GameStates
 			cameraSpeed = 0.1f;
 			if (mainScript == null)
 				mainScript = GameObject.Find (MainScript.MAIN_GAME_OBJ).GetComponent<MainScript> ();
-			List<global::Character> characters =mainScript.activePlayer.getCharacters();
+			List<LivingObject> characters =mainScript.activePlayer.getCharacters();
 			for (int i = CharacterNumber; i > 0; i--)
 			{
-				global::Character c = characters[i];
-				if (c != mainScript.activeCharacter && c.isAlive && !c.IsWaiting)
+                LivingObject c = characters[i];
+				if (c != mainScript.activeCharacter && c.isAlive && !c.isWaiting)
 				{
 					Debug.Log ("SET1");
 					SetActiveCharacter(c, true);
@@ -186,8 +186,8 @@ namespace Assets.Scripts.GameStates
 			}
 			for (int i = characters.Count-1; i >= 0; i--)
 			{
-				global::Character c = characters[i];
-				if (c != mainScript.activeCharacter && c.isAlive && !c.IsWaiting)
+                LivingObject c = characters[i];
+				if (c != mainScript.activeCharacter && c.isAlive && !c.isWaiting)
 				{
 					Debug.Log ("SET2");
 					SetActiveCharacter(c, true);
@@ -203,13 +203,12 @@ namespace Assets.Scripts.GameStates
             cameraSpeed = 0.1f;
 			if (mainScript == null)
 				mainScript = GameObject.Find (MainScript.MAIN_GAME_OBJ).GetComponent<MainScript> ();
-			List<global::Character> characters = mainScript.activePlayer.getCharacters();
+			List<LivingObject> characters = mainScript.activePlayer.getCharacters();
             for (int i = CharacterNumber; i < characters.Count; i++)
             {
-                global::Character c = characters[i];
-                if (c != mainScript.activeCharacter && c.isAlive && !c.IsWaiting)
+                LivingObject c = characters[i];
+                if (c != mainScript.activeCharacter && c.isAlive && !c.isWaiting)
                 {
-					Debug.Log ("SET3");
                     SetActiveCharacter(c, true);
                     CharacterNumber = i;
                     return;
@@ -217,10 +216,9 @@ namespace Assets.Scripts.GameStates
             }
             for (int i = 0; i < characters.Count; i++)
             {
-                global::Character c = characters[i];
-                if (c != mainScript.activeCharacter && c.isAlive && !c.IsWaiting)
+                LivingObject c = characters[i];
+                if (c != mainScript.activeCharacter && c.isAlive && !c.isWaiting)
                 {
-					Debug.Log ("SET4");
                     SetActiveCharacter(c, true);
                     CharacterNumber = i;
                     return;
@@ -248,8 +246,7 @@ namespace Assets.Scripts.GameStates
                         {
                             movePath.Add(new Vector2(MouseManager.oldMousePath[i].x, MouseManager.oldMousePath[i].y));
                         }
-
-                        MoveCharacter(mainScript.activeCharacter, movePath,false, new GameplayState());
+                        MoveCharacter(mainScript.activeCharacter, x,y,movePath,false, new GameplayState());
                         mainScript.gridScript.HideMovement();
                         return;
                     }
@@ -266,14 +263,14 @@ namespace Assets.Scripts.GameStates
         {
 
             Debug.Log(mainScript.activeCharacter.name);
-            mainScript.SwitchState(new FightState(mainScript.activeCharacter, new AttackTarget(fightCharacter), new GameplayState()));
+            mainScript.SwitchState(new FightState(mainScript.activeCharacter, fightCharacter, new GameplayState()));
             MainScript.endOfMoveCharacterEvent -= Fight;
         }
-        public void GoToEnemy(Character character, Character enemy, bool drag)
+        public void GoToEnemy(LivingObject character, LivingObject enemy, bool drag)
         {
             MouseManager.ResetMoveArrow();
             
-            if (MouseManager.oldMousePath.Count==0&&character.charclass.AttackRanges.Contains<int>((int)(Mathf.Abs(enemy.GetPositionOnGrid().x - character.GetPositionOnGrid().x) + Mathf.Abs(enemy.GetPositionOnGrid().y - character.GetPositionOnGrid().y))))
+            if (MouseManager.oldMousePath.Count==0&&character.AttackRanges.Contains<int>((int)(Mathf.Abs(enemy.GetPositionOnGrid().x - character.GetPositionOnGrid().x) + Mathf.Abs(enemy.GetPositionOnGrid().y - character.GetPositionOnGrid().y))))
             {
                 mainScript.gridScript.HideMovement();
                 Debug.Log("Enemy is in Range:");
@@ -282,14 +279,12 @@ namespace Assets.Scripts.GameStates
                 mainScript.activeCharacter.OldPosition = new Vector2(mainScript.activeCharacter.x, mainScript.activeCharacter.y);
                 if (!drag)
                 {
-                    GameObject.FindObjectOfType<AttackPreview>().Hide();
-                    mainScript.SwitchState(new FightState(character, new AttackTarget(enemy), new GameplayState()));
+                    mainScript.SwitchState(new FightState(character, enemy, new GameplayState()));
 
                 }
                 else
                 {
-                    GameObject.FindObjectOfType<AttackPreview>().Hide();
-                    mainScript.SwitchState(new FightState(character, new AttackTarget(enemy), new GameplayState()));
+                    mainScript.SwitchState(new FightState(character, enemy, new GameplayState()));
                 }
                 return;
             }
@@ -312,17 +307,13 @@ namespace Assets.Scripts.GameStates
                         movePath.Add(new Vector2(MouseManager.oldMousePath[i].x, MouseManager.oldMousePath[i].y));
                         Debug.Log(movePath[i]);
                     }
-                    
-                    Debug.Log("In Range");
                     if (drag)
                     {
-                        GameObject.FindObjectOfType<AttackPreview>().Hide();
-                        MoveCharacter(character, movePath, false, new FightState(character, new AttackTarget(enemy), new GameplayState()));
+                        MoveCharacter(character,0,0, movePath, false, new FightState(character, enemy, new GameplayState()));
                     }
                     else
                     {
-                        GameObject.FindObjectOfType<AttackPreview>().Hide();
-                        MoveCharacter(character, movePath, false, new FightState(character, new AttackTarget(enemy), new GameplayState()));
+                        MoveCharacter(character,0,0, movePath, false, new FightState(character, enemy, new GameplayState()));
 
                     }
                     mainScript.AttackRangeFromPath = 0;
@@ -336,7 +327,7 @@ namespace Assets.Scripts.GameStates
             }
         }
 
-        public void SetActiveCharacter(global::Character c, bool switchChar)//TODO will be called by CHaracterClicked
+        public void SetActiveCharacter(LivingObject c, bool switchChar)//TODO will be called by CHaracterClicked
         {     
             if (!switchChar && mainScript.activeCharacter != null && mainScript.activeCharacter.gameObject != null && c != mainScript.activeCharacter)
             {
@@ -352,7 +343,7 @@ namespace Assets.Scripts.GameStates
             {
                 if (mainScript.activePlayer.getCharacters().Contains(c))
                 {
-                    if (!c.IsWaiting)
+                    if (!c.isWaiting)
                     {
                         if (!switchChar && mainScript.activeCharacter != null && mainScript.activeCharacter == c)
                         {
@@ -380,7 +371,7 @@ namespace Assets.Scripts.GameStates
             }
         }
 
-        void EnemySelected(global::Character c)
+        void EnemySelected(LivingObject c)
         {
             GridScript gridScript = mainScript.GetComponentInChildren<GridScript>();
 
@@ -392,7 +383,7 @@ namespace Assets.Scripts.GameStates
             {
                 c.SetAttackRangeShown(true);
                 gridScript.ShowMovement(c); 
-                gridScript.ShowAttack(c, new List<int>(c.charclass.AttackRanges), false);
+                gridScript.ShowAttack(c, new List<int>(c.AttackRanges), false);
                 gridScript.ResetActiveFields();
                 if (mainScript.activeCharacter != null)
                 {
@@ -403,7 +394,7 @@ namespace Assets.Scripts.GameStates
             }
         }
 
-        void SameCharacterSelected(global::Character c)
+        void SameCharacterSelected(LivingObject c)
         {
             mainScript.oldPosition = new Vector2(mainScript.activeCharacter.gameObject.transform.localPosition.x, mainScript.activeCharacter.gameObject.transform.localPosition.y);
 			GridScript s = mainScript.GetComponentInChildren<GridScript>();
@@ -413,20 +404,20 @@ namespace Assets.Scripts.GameStates
                 GameObject.Instantiate(ux.activeUnitField, c.gameObject.transform.position, Quaternion.identity, c.gameObject.transform);
         }
 
-        void SelectCharacter(global::Character c)
+        void SelectCharacter(LivingObject c)
         {
             mainScript.uiController.HideBottomUI();
+            mainScript.uiController.ShowTopUI(c);
             Debug.Log("Select " + c.name);
 			if (mainScript.activeCharacter != null) {
 				mainScript.activeCharacter.Selected = false;
 			}
             mainScript.activeCharacter = c;
             c.Selected = true;
-            mainScript.faceSprite.sprite = c.activeSpriteObject;
             GridScript s = mainScript.gridScript;
             s.HideMovement();
             s.ShowMovement(c);
-            s.ShowAttack(c, new List<int>(c.charclass.AttackRanges), false);
+            s.ShowAttack(c, new List<int>(c.AttackRanges), false);
             mainScript.activeCharacter.hovered = true;
 
         }
@@ -453,13 +444,13 @@ namespace Assets.Scripts.GameStates
             return false;
         }
 
-       public void MoveCharacter(Character c, int x, int z, bool drag, GameState targetState)
+       public void MoveCharacter(LivingObject c, int x, int y, bool drag, GameState targetState)
         {
-            mainScript.SwitchState(new MovementState(mainScript, c, x, z,drag, targetState));
+            mainScript.SwitchState(new MovementState(mainScript, c, x, y,drag, targetState));
         }
-        public void MoveCharacter(Character c, List<Vector3>path, bool drag, GameState targetState)
+        public void MoveCharacter(LivingObject c, int x,int y,List<Vector3>path, bool drag, GameState targetState)
         {
-            mainScript.SwitchState(new MovementState(mainScript, c,path, drag, targetState));
+            mainScript.SwitchState(new MovementState(mainScript, c,x,y,path, drag, targetState));
         }
     }
 }

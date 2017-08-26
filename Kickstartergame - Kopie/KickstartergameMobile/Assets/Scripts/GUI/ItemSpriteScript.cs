@@ -48,32 +48,9 @@ public class ItemSpriteScript : MonoBehaviour {
 	
     public Potion CreateHealthPotion()
     {
-		return new Potion("HealthPotion", "Restores 15 HP", 1, PotionType.HP, 15, Healthpotion_sprite, Healthpotion_hovered, Healthpotion_pressed, Healthpotion_go,Healthpotion_go, false);
+		return new Potion("HealthPotion", "Restores 15 HP", 1, PotionType.HP, 15, Healthpotion_sprite, Healthpotion_go);
     }
-    public Potion CreateCDRPotion()
-    {
-		return new Potion("CD-Reduction Potion", "this is a healthpotion", 1, PotionType.CDR, 10, CDR_sprite, CDR_hovered, CDR_pressed, CDR_go ,CDR_go,false);
-    }
-    public Potion CreateBoots()
-    {
-		return new Potion("Boots", "this is a healthpotion", 1, PotionType.MOV, 10, Boots_sprite, Boots_hovered, Boots_pressed, Boots_go,Boots_go, false);
-    }
-    public Potion CreateDoubleAttack()
-    {
-		return new Potion("Double Attack","this is a healthpotion",  1, PotionType.DoubleAttack, 10, DoubleAttackPotion_sprite, DoubleAttackPotion_hovered, DoubleAttackPotion_pressed, DoubleAttackPotion_go, DoubleAttackPotion_go, false);
-    }
-	public Potion CreateHealthCrystal(){
-		return new Potion ("Healthcrystal", "Restores 10 HP", 1, PotionType.HP, 10, healthcrystal_sprite, healthcrystal_sprite_hovered, healthcrystal_sprite_pressed, healthcrystal_go, healthcrystal_go3d, false);
-	}
-	public Potion CreateManaCrystal(){
-		return new Potion ("Manacrystal", "Restores 10 Mana", 1, PotionType.HP, 10, manacrystal_sprite, manacrystal_sprite_hovered, manacrystal_sprite_pressed, manacrystal_go, manacrystal_go3d, false);
-	}
-	public Potion CreateExpCrystal(){
-		return new Potion ("Experiencecrystal", "Grants 50 EXP", 1, PotionType.EXP, 50, expcrystal_sprite, expcrystal_sprite_hovered, expcrystal_sprite_pressed, expcrystal_go, expcrystal_go3d, false);
-	}
-	public DoorKey CreateKey(){
-		return new DoorKey ("Door Key", "Opens a closed door", 1,key_sprite,key_hovered, key_pressed, key_go, key_go3d, true);
-	}
+
     // Update is called once per frame
     void Update () {
 	

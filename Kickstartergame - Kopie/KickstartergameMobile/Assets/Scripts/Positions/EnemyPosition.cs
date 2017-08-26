@@ -1,7 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using Assets.Scripts.Characters.Classes;
-using System.Collections.Generic;
 using Assets.Scripts.Characters;
 
 public enum AIBehaviour

@@ -7,7 +7,6 @@ using Assets.Scripts.Characters;
 using Assets.Scripts.Characters.Skills;
 using Assets.Scripts.Characters.Debuffs;
 using Assets.Scripts.Characters.Attributes;
-using Assets.Scripts.Characters.Classes;
 using Assets.Scripts.Battle;
 using AssemblyCSharp;
 
@@ -28,28 +27,31 @@ public class Character : LivingObject{
     
     #region fields
 
-	public Sprite activeSpriteObject;
+
 	public Sprite passiveSprite_selected;
     [HideInInspector]
     public List<Item> items = new List<Item>();
-	public CharacterClassType characterClassType;
-	public CharClass charclass;
-    public bool hasAttacked = false;
+   
 	public bool isActive;
-	bool isWaiting;
-    public Vector2 OldPosition;
+
+
     public Sprite passiveSpriteObject;
     public Sprite passiveSpriteMOObject;
-    public bool hasMoved=false;
+
 	private Weapon equipedWeapon;
 	public GameObject weaponPosition;
     public int exp;
-    private bool selected = false;
-    public int x;
-    public int y;
+  
+    public int hpgrowth = 0;
+    public int speedgrowth = 0;
+    public int accuracygrowth = 0;
+    public int attackgrowth = 0;
+    public int defensegrowth = 0;
+    public int spiritgrowth = 0;
     public int attributepoints = 0;
     public Character lastdamagedealer;
     public int weaponIndex = 0;
+    public List<Skill> skills;
     GameObject instantiatedWeapon;
     GameObject effectGO;
     #endregion
@@ -61,65 +63,37 @@ public class Character : LivingObject{
 			return equipedWeapon;
 		}
 		set{
-			foreach (WeaponCategory w in charclass.weaponType) {
-				if (value.weaponType.type == w.type) {
-					equipedWeapon = value;
-					if (gameObject != null) {
-						if (instantiatedWeapon != null) {
-							GameObject.Destroy (instantiatedWeapon);
-						}
-						instantiatedWeapon = GameObject.Instantiate<GameObject> (equipedWeapon.gameobject);
-						instantiatedWeapon.transform.SetParent (gameObject.GetComponentInChildren<WeaponTransform> ().transform);
-						instantiatedWeapon.transform.localRotation = equipedWeapon.gameobject.transform.localRotation;//Quaternion.Euler(2, 190, 290);
-						instantiatedWeapon.transform.localScale = equipedWeapon.gameobject.transform.localScale;//= new Vector3(0.006f, 0.006f, 0.006f) 
-						instantiatedWeapon.transform.localPosition = equipedWeapon.gameobject.transform.localPosition;
-					}
-					return;
-				} 
+			equipedWeapon = value;
+			if (gameObject != null) {
+				if (instantiatedWeapon != null) {
+					GameObject.Destroy (instantiatedWeapon);
+				}
+				instantiatedWeapon = GameObject.Instantiate<GameObject> (equipedWeapon.gameobject);
+				instantiatedWeapon.transform.SetParent (gameObject.GetComponentInChildren<WeaponTransform> ().transform);
+				instantiatedWeapon.transform.localRotation = equipedWeapon.gameobject.transform.localRotation;//Quaternion.Euler(2, 190, 290);
+				instantiatedWeapon.transform.localScale = equipedWeapon.gameobject.transform.localScale;//= new Vector3(0.006f, 0.006f, 0.006f) 
+				instantiatedWeapon.transform.localPosition = equipedWeapon.gameobject.transform.localPosition;
 			}
+			return;
 			Debug.Log (value);
 			Debug.Log (value.weaponType);
 			throw new Exception ("Falscher Waffentyp" + value.weaponType);
 		}
 	}
-    public bool IsWaiting
-    {
-        get{
-            return isWaiting;
-        }
-        set{
-            isWaiting = value;
-        }
-    }
-    public void SetPosition(int x, int y)
-    {
-        OldPosition = new Vector2(this.x, this.y);
-        MainScript m = GameObject.Find(MainScript.MAIN_GAME_OBJ).GetComponent<MainScript>();
-        m.gridScript.fields[(int)GetPositionOnGrid().x, (int)GetPositionOnGrid().y].character = null;
-        this.x = x;
-        this.y = y;
-        gameObject.transform.localPosition = new Vector3(x, y, 0);
-        m.gridScript.fields[x, y].character = this;
-    }
+ 
+   
 
     public int GetMaxAttackRange()
     {
         int max = 0;
-        foreach(int attack in charclass.AttackRanges)
+        foreach(int attack in AttackRanges)
         {
             if (attack > max)
                 max = attack;
         }
         return max;
     }
-    public void SetInternPosition(int x, int y)
-    {
-        MainScript m = GameObject.Find(MainScript.MAIN_GAME_OBJ).GetComponent<MainScript>();      
-        m.gridScript.fields[(int)GetPositionOnGrid().x, (int)GetPositionOnGrid().y].character = null;
-        m.gridScript.fields[x, y].character = this;
-        this.x = x;
-        this.y = y;
-    }
+    
     private void ShowFightText(string damage, Character attacker, Character defender, FightTextType type)
     {
         FightText t = GameObject.Find(MainScript.MAIN_GAME_OBJ).GetComponentInChildren<FightText>();
@@ -127,16 +101,7 @@ public class Character : LivingObject{
         t.setText(textPosition,damage,type,attacker, defender);
     }
 
-    public bool Selected{
-		get{return selected;}
-		set{
-			if(gameObject!=null){
-			    HighlightSelected h=gameObject.GetComponentInChildren<HighlightSelected> ();
 
-			}
-			selected = value;
-		}
-	}
 
    
     private void WaitAnimation()
@@ -172,34 +137,16 @@ public class Character : LivingObject{
     #endregion
 
 
-    public Character (string name, CharacterClassType type)
+    public Character (string name)
     {
         this.name = name;
         items.Capacity = MAX_ITEMS;
         level = 1;
-        this.characterClassType = type;
-        if (characterClassType == CharacterClassType.SwordFighter)
-        {
-			activeSpriteObject = GameObject.FindObjectOfType<SpriteScript>().swordActiveSprite;
-            charclass = new Tank();
-        }
-        if (characterClassType == CharacterClassType.Hellebardier)
-        {
-			activeSpriteObject = GameObject.FindObjectOfType<SpriteScript>().lancerActiveSprite;
-            charclass = new Hellebardier();
-        }
-        if (characterClassType == CharacterClassType.Mage)
-        {
-			activeSpriteObject = GameObject.FindObjectOfType<SpriteScript>().axeActiveSprite;
-            charclass = new Mage();
-           
-        }
-        if (characterClassType == CharacterClassType.Archer)
-        {
-			activeSpriteObject = GameObject.FindObjectOfType<SpriteScript>().archerActiveSprite;
-            charclass = new Archer();
-        }
-        stats = new Stats(charclass.stats.maxHP, charclass.stats.attack, charclass.stats.speed, charclass.stats.defense, charclass.stats.accuracy, charclass.stats.spirit);
+		activeSpriteObject = GameObject.FindObjectOfType<SpriteScript>().swordActiveSprite;
+        stats = new Stats(15, 5, 5, 5, 5, 5);
+        movRange = 3;
+        AttackRanges = new List<int>();
+        AttackRanges.Add(1);
         HP = stats.maxHP;
     }
 
@@ -215,22 +162,20 @@ public class Character : LivingObject{
 		for (int i=0; i<7; i++) {
 			if (!contains.Contains (i)) {
 				switch (i) {
-				case 0:sum += charclass.hpgrowth;
+				case 0:sum += hpgrowth;
 					break;
-				case 1:sum += charclass.attackgrowth;
+				case 1:sum += attackgrowth;
 					break;
-				case 2:sum += charclass.speedgrowth;
+				case 2:sum += speedgrowth;
 					break;
-				case 3:sum += charclass.defensegrowth;
+				case 3:sum += defensegrowth;
 					break;
-				case 4:sum += charclass.accuracygrowth;
+				case 4:sum += accuracygrowth;
 					break;
-				case 5:sum += charclass.spiritgrowth;
+				case 5:sum += spiritgrowth;
 					break;
-
 				}
-			}
-				
+			}	
 		}
 		return sum;
 	}
@@ -240,12 +185,6 @@ public class Character : LivingObject{
         level++;
 		List<int> contains = new List<int> ();
 		int points = 4;
-		if (TransferData.difficulty == Difficulty.Hard) {
-			points = 5;
-		}
-		if (TransferData.difficulty == Difficulty.Easy) {
-			points = 3;
-		}
         for(int i=0; i < points; i++)
         {
 			int max = GetMaxGrowth (contains);
@@ -253,38 +192,38 @@ public class Character : LivingObject{
             int border = 0;
             if (!contains.Contains(0))
             {
-                if (rng <= (border += charclass.hpgrowth))
+                if (rng <= (border += hpgrowth))
                 {
                     stats.maxHP += 2;
                     contains.Add(0);
                     continue;
                 }
 			} if (!contains.Contains (1)) {
-				if (rng <= (border += charclass.attackgrowth) && !contains.Contains (1)) {
+				if (rng <= (border += attackgrowth) && !contains.Contains (1)) {
 					stats.attack += 1;
 					contains.Add (1);
 					continue;
 				}
 			} if (!contains.Contains (2)) {
-				if (rng <= (border += charclass.speedgrowth) && !contains.Contains (2)) {
+				if (rng <= (border += speedgrowth) && !contains.Contains (2)) {
 					stats.speed += 1;
 					contains.Add (2);
 					continue;
 				}
 			} if (!contains.Contains (3)) {
-				if (rng <= (border += charclass.defensegrowth) && !contains.Contains (3)) {
+				if (rng <= (border += defensegrowth) && !contains.Contains (3)) {
 					stats.defense += 1;
 					contains.Add (3);
 					continue;
 				}
 			} if (!contains.Contains (4)) {
-				if (rng <= (border += charclass.accuracygrowth) && !contains.Contains (4)) {
+				if (rng <= (border += accuracygrowth) && !contains.Contains (4)) {
 					stats.accuracy += 1;
 					contains.Add (4);
 					continue;
 				}
 			} if (!contains.Contains (5)) {
-				if (rng <= (border += charclass.spiritgrowth) && !contains.Contains (5)) {
+				if (rng <= (border += spiritgrowth) && !contains.Contains (5)) {
 					stats.accuracy += 1;
 					contains.Add (5);
 					continue;
@@ -329,9 +268,7 @@ public class Character : LivingObject{
 		}
 	}
 
-    public Vector2 GetPositionOnGrid(){
-		return new Vector2 (this.x, this.y);
-	}
+    
     public void UpdateOnWholeTurn()
     {
         List<Debuff> debuffEnd = new List<Debuff>();
@@ -437,7 +374,7 @@ public class Character : LivingObject{
     }
     public bool HasSkill(Type type)
     {
-        foreach(Skill s in this.charclass.skills)
+        foreach(Skill s in this.skills)
         {
             if(s.GetType() == type)
             {
@@ -449,7 +386,7 @@ public class Character : LivingObject{
     public Skill GetSkill(Type type)
     {
 
-        foreach (Skill s in this.charclass.skills)
+        foreach (Skill s in this.skills)
         {
             if (s.GetType() == type)
             {
@@ -524,26 +461,7 @@ public class Character : LivingObject{
 		return (int)Mathf.Clamp ((stats.attack + weaponDamage), 0, Mathf.Infinity);
 	}
 
-    public int GetDamageAgainstTarget(Character target){
-		int weaponDamage = 0;
-		if(EquipedWeapon!=null)
-			weaponDamage = EquipedWeapon.dmg;
-        if (Battle.IsEffectiveAgainst(this.equipedWeapon.weaponType, target.EquipedWeapon.weaponType))
-        {
-            weaponDamage = weaponDamage + Battle.BonusDamage;
-        }
-        else if (Battle.IsEffectiveAgainst(target.equipedWeapon.weaponType, this.EquipedWeapon.weaponType))
-        {
-            weaponDamage = weaponDamage - Battle.BonusDamage;
-        }
-        float multiplier = 1.0f;
-		if (equipedWeapon.weaponType.type == WeaponType.Magic)
-            
-            return (int)(multiplier*Mathf.Clamp(stats.attack + weaponDamage-target.stats.spirit, 1, Mathf.Infinity));
-        else
-            return (int)(multiplier * Mathf.Clamp(stats.attack + weaponDamage - target.stats.defense, 1, Mathf.Infinity));
-
-	}
+   
     float getRotation(global::Character a, Character b)
     {
         int xa = (int)a.gameObject.transform.localPosition.x;
@@ -718,20 +636,12 @@ public class Character : LivingObject{
 
         return value;
     }
-    public int GetTotalDamageAgainstTarget(Character target)
+    public override int GetTotalDamageAgainstTarget(LivingObject target)
     {
         int weaponDamage = 0;
         int attacks = 1;
         if (EquipedWeapon != null)
             weaponDamage = EquipedWeapon.dmg;
-        if (Battle.IsEffectiveAgainst(this.equipedWeapon.weaponType, target.EquipedWeapon.weaponType))
-        {
-            weaponDamage = weaponDamage + Battle.BonusDamage;
-        }
-        else if (Battle.IsEffectiveAgainst(target.equipedWeapon.weaponType, this.EquipedWeapon.weaponType))
-        {
-            weaponDamage = weaponDamage - Battle.BonusDamage;
-        }
         float multiplier = 1.0f;
         if (CanDoubleAttack(target))
             attacks = 2;
@@ -742,21 +652,10 @@ public class Character : LivingObject{
 
     }
 
-    public override int GetHitAgainstTarget(LivingObject target){
-		int weaponHit = 0;
-		if(EquipedWeapon!=null)
-			weaponHit = EquipedWeapon.hit;
-        return  (int)Mathf.Clamp(weaponHit + base.GetHitAgainstTarget(target), 0, 100);
-	}
+   
 
-    public bool CanAttack(int range)
-    {
-        return this.charclass.AttackRanges.Contains(range);
-    }
-    public bool CanKillTarget(Character target)
-    {
-        return GetDamageAgainstTarget(target) >= target.HP;
-    }
+    
+   
     public Weapon GetWeapon()
     {
         if(EquipedWeapon == null)
@@ -775,7 +674,7 @@ public class Character : LivingObject{
     {
         if (player.isPlayerControlled)
         {
-            Debug.Log(enemy.name+" Killed by: " + name + " " + charclass);
+            Debug.Log(enemy.name+" Killed by: " + name);
 			addExp(EXP_PER_KILL);
         }
     }
@@ -790,15 +689,34 @@ public class Character : LivingObject{
     {
         if (equipedWeapon != null)
         {
-			instantiatedWeapon = GameObject.Instantiate<GameObject>(equipedWeapon.gameobject);
-            instantiatedWeapon.transform.SetParent(gameObject.GetComponentInChildren<WeaponTransform>().transform);
-			instantiatedWeapon.transform.localRotation = equipedWeapon.gameobject.transform.localRotation;//Quaternion.Euler(2, 190, 290);
-			instantiatedWeapon.transform.localScale = equipedWeapon.gameobject.transform.localScale;//= new Vector3(0.006f, 0.006f, 0.006f) 
-            instantiatedWeapon.transform.localPosition = equipedWeapon.gameobject.transform.localPosition;
+			//instantiatedWeapon = GameObject.Instantiate<GameObject>(equipedWeapon.gameobject);
+   //         instantiatedWeapon.transform.SetParent(gameObject.GetComponentInChildren<WeaponTransform>().transform);
+			//instantiatedWeapon.transform.localRotation = equipedWeapon.gameobject.transform.localRotation;//Quaternion.Euler(2, 190, 290);
+			//instantiatedWeapon.transform.localScale = equipedWeapon.gameobject.transform.localScale;//= new Vector3(0.006f, 0.006f, 0.006f) 
+   //         instantiatedWeapon.transform.localPosition = equipedWeapon.gameobject.transform.localPosition;
         }
     }
-   
-    
+    public override int GetHitAgainstTarget(LivingObject target)
+    {
+        int weaponHit = 0;
+        if (EquipedWeapon != null)
+            weaponHit = EquipedWeapon.hit;
+        return (int)Mathf.Clamp(weaponHit + base.GetHitAgainstTarget(target), 0, 100);
+    }
+    public override int GetDamageAgainstTarget(LivingObject target)
+    {
+        int weaponDamage = 0;
+        if (EquipedWeapon != null)
+            weaponDamage = EquipedWeapon.dmg;
+        float multiplier = 1.0f;
+        if (equipedWeapon.weaponType.type == WeaponType.Magic)
+            return (int)(multiplier * Mathf.Clamp(stats.attack + weaponDamage - target.stats.spirit, 1, Mathf.Infinity));
+        else
+            return (int)(multiplier * Mathf.Clamp(stats.attack + weaponDamage - target.stats.defense, 1, Mathf.Infinity));
+
+    }
+
+
 }
 
 

@@ -19,7 +19,7 @@ using Assets.Scripts.GameStates;
 		private PotionType attribute;
 		private int effect;
 		
-	public Potion(String name, String description, int useage, PotionType attribute, int effect,Sprite sprite, Sprite hovered, Sprite pressed, GameObject go, GameObject go3d, bool droppedOnDeath):base(name, description, useage, sprite, hovered, pressed, go,go3d, droppedOnDeath) {
+	public Potion(String name, String description, int useage, PotionType attribute, int effect,Sprite sprite, GameObject go):base(name, description, useage, sprite, go) {
 			this.effect = effect;
 			this.attribute = attribute;
           

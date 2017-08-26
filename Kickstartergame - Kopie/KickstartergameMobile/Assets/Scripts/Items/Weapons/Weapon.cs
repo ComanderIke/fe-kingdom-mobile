@@ -19,8 +19,7 @@ namespace Assets.Scripts.Items
 		public Sprite attack2;
         public WeaponCategory weaponType;
 
-        public Weapon(string name, string description, WeaponCategory type, int dmg, int hit, int crit, int price, int range, GameObject go, GameObject go3d, Sprite sprite, 
-			Sprite hovered, Sprite pressed, Sprite attack, Sprite attack2, bool droppedOnDeath):base(name, description, 1, sprite, hovered, pressed, go, go3d, droppedOnDeath)
+        public Weapon(string name, string description, WeaponCategory type, int dmg, int hit, int crit, int price, int range, GameObject go, Sprite sprite):base(name, description, 1, sprite, go)
 
         {
             this.weaponType = type;

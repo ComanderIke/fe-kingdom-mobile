@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Assets.Scripts.Characters
 {
-    enum CharacterAction
+    public enum CharacterAction
     {
         Attack,
         Wait,

@@ -1,9 +1,5 @@
-﻿using Assets.Scripts.Characters.Classes;
-using Assets.Scripts.Characters.Skills;
-using System;
+﻿using Assets.Scripts.Characters;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace Assets.Scripts.GameStates
@@ -17,11 +13,11 @@ namespace Assets.Scripts.GameStates
         public int pathCounter = 1;
         public MovementPath path;
         private MainScript mainScript;
-        private Character character;
+        private LivingObject character;
         private GameState targetState;
         List<Vector3> mousePath;
         bool drag;
-        public MovementState(MainScript mainScript,Character c, int x, int y, bool drag,GameState targetState)
+        public MovementState(MainScript mainScript,LivingObject c, int x, int y, bool drag,GameState targetState)
         {
             this.mainScript = mainScript;
             this.x = x;
@@ -30,11 +26,13 @@ namespace Assets.Scripts.GameStates
             this.character = c;
             this.drag = drag;
         }
-        public MovementState(MainScript mainScript, Character c, List<Vector3>path, bool drag, GameState targetState)
+        public MovementState(MainScript mainScript, LivingObject c,int x,int y, List<Vector3>path, bool drag, GameState targetState)
         {
             this.mainScript = mainScript;
             this.targetState = targetState;
             this.character = c;
+            this.x = x;
+            this.y = y;
             this.drag = drag;
             this.mousePath = path;
             Debug.Log(mousePath);
@@ -59,12 +57,19 @@ namespace Assets.Scripts.GameStates
             {
                 mainScript.gridScript.HideMovement();
             }
-            if (mousePath == null)
+            if (mousePath == null|| mousePath.Count == 0)
             {
-                Debug.Log(character.name + " ");
+                Debug.Log(character.x + " " + character.y+ " "+x+ " "+y);
                 path = mainScript.gridScript.getPath((int)character.x, (int)character.y, x, y, character.team, false, new List<int>());
-                if(path!=null)
+               
+                if (path!=null)
                     path.Reverse();
+                //for (int i = 0; i < path.getLength(); i++)
+                //{
+
+                //    Debug.Log(path.getStep(i).getX() + " " + path.getStep(i).getY());
+                //}
+                pathCounter = 1;
             }
         }
 
@@ -79,14 +84,12 @@ namespace Assets.Scripts.GameStates
         }
         void ContinueWalkAnimation()
         {
-            
-
             float x = character.gameObject.transform.localPosition.x;
             float y = character.gameObject.transform.localPosition.y;
             float z = character.gameObject.transform.localPosition.z;
             float tx ;
             float ty ;
-            if (mousePath != null)
+            if (mousePath != null&&mousePath.Count>0)
             {
                 tx = mousePath[pathCounter].x;
                 ty = mousePath[pathCounter].y;
@@ -97,11 +100,9 @@ namespace Assets.Scripts.GameStates
                tx = path.getStep(pathCounter).getX();
                ty = path.getStep(pathCounter).getY();
             }
-                
             float walkspeed = 5f;
             float value = walkspeed * Time.deltaTime;
             float offset = 0.005f;
-
             if (x != tx)
             {
                 if (x < tx)
@@ -144,7 +145,7 @@ namespace Assets.Scripts.GameStates
                 pathCounter++;
             }
 
-            if ((path!=null&&pathCounter >= path.getLength())||(mousePath!=null&&pathCounter>=mousePath.Count))
+            if ((path!=null&&pathCounter >= path.getLength())||(path==null&&mousePath!=null&&pathCounter>=mousePath.Count))
             {
                 pathCounter = 0;
                 character.SetPosition((int)tx, (int)ty);

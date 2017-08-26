@@ -1,14 +1,8 @@
-﻿using Assets.Scripts.Characters;
-using Assets.Scripts.Characters.Classes;
-using Assets.Scripts.Characters.Skills;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 using Assets.Scripts.Battle;
-using AssemblyCSharp;
+using Assets.Scripts.Characters;
 
 namespace Assets.Scripts.GameStates
 {
@@ -21,9 +15,8 @@ namespace Assets.Scripts.GameStates
         public const String FIGHT_PANEL = "FightPanel";
         private const String ATTACK_MISS_TEXT = "missed!";
         private const String ATTACK_CRIT_TEXT = "Crit: ";
-        private global::Character activeCharacter;
-        private AttackTarget defender;
-        private global::Character fightCharacter;
+        private LivingObject activeCharacter;
+        private LivingObject defender;
         Vector3 cameraStartPosition;
         Quaternion cameraStartRotation;
         bool flag;
@@ -37,7 +30,7 @@ namespace Assets.Scripts.GameStates
         private GameState targetState;
         private List<Attack> attackOrderList;
         
-        public FightState(global::Character attacker, AttackTarget defender, GameState targetState)
+        public FightState(LivingObject attacker, LivingObject defender, GameState targetState)
         {
             this.activeCharacter = attacker;
             this.targetState = targetState;
@@ -48,7 +41,7 @@ namespace Assets.Scripts.GameStates
             MainScript m = GameObject.Find(MainScript.MAIN_GAME_OBJ).GetComponent<MainScript>();
             foreach(global::Character c in m.characterList)
             {
-                if(c != activeCharacter && c!= defender.character)
+                if(c != activeCharacter && c!= defender)
                 {
                     
                     foreach(SkinnedMeshRenderer sm in c.gameObject.GetComponentsInChildren<SkinnedMeshRenderer>())

@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using Assets.Scripts.Characters.Classes;
 
 public class StartPosition : MonoBehaviour {
 

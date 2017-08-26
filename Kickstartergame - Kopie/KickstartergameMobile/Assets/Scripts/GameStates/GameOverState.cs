@@ -30,8 +30,6 @@ namespace Assets.Scripts.GameStates
 
         public override void exit()
         {
-            GameObject.Find("TransferToNextScene").GetComponent<TransferData>().player = MainScript.players[0];
-            Application.LoadLevel("Levelauswahl");
         }
 
         public override void update()

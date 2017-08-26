@@ -18,7 +18,7 @@ public class CharacterScript :  MonoBehaviour {
     [HideInInspector]
     public Material[] startMaterials;
     float dragtime = 0;
-    const float DRAG_DELAY = 0.25f;
+    const float DRAG_DELAY = 0.55f;
     Vector3 jumpPosition;
     public static bool drag = false;
     bool dragging = false;
@@ -345,7 +345,7 @@ public class CharacterScript :  MonoBehaviour {
                         if (FindObjectOfType<GridScript>().fields[x, y].isActive && !(x == character.x && y == character.y))
                         {
                             character.SetPosition(character.x, character.y);
-                            FindObjectOfType<MainScript>().MoveCharacterTo(character, MouseManager.oldMousePath, true, new GameplayState());
+                            FindObjectOfType<MainScript>().MoveCharacterTo(character, x , y, MouseManager.oldMousePath, true, new GameplayState());
 
                         }
                         else if (FindObjectOfType<GridScript>().fields[x, y].character != null && FindObjectOfType<GridScript>().fields[x, y].character.team != character.team)
@@ -424,7 +424,7 @@ public class CharacterScript :  MonoBehaviour {
     {
         if (lockInput)
             return;
-        if (!character.IsWaiting &&character.isAlive&& character.team == MainScript.ActivePlayerNumber)
+        if (!character.isWaiting &&character.isAlive&& character.team == MainScript.ActivePlayerNumber)
         {
             dragging = true;
             
@@ -455,6 +455,7 @@ public class CharacterScript :  MonoBehaviour {
 
     void OnMouseDown()
     {
+        Debug.Log("CLICK");
         if (!character.isAlive)
             return;
         if (lockInput)

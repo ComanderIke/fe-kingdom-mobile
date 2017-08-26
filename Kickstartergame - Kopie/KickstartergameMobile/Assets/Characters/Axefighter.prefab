@@ -64,13 +64,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1924430662603556}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0.52900004, y: 0.5409999, z: 0.05}
-  m_LocalScale: {x: 0.5903488, y: 0.59034884, z: 0.59034884}
+  m_LocalScale: {x: 0.20024967, y: 0.20024964, z: 0.20024964}
   m_Children: []
   m_Father: {fileID: 4572408323495500}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!65 &65180193713229530
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -112,12 +112,16 @@ MonoBehaviour:
       attack: 0
       accuracy: 0
       spirit: 0
+    isWaiting: 0
     team: 0
+    movRange: 0
+    x: 0
+    y: 0
+    AttackRanges: 
     rotation: 180
     movement: 0
     activeSpriteObject: {fileID: 0}
     passiveSprite_selected: {fileID: 0}
-    characterClassType: 0
     hasAttacked: 0
     isActive: 0
     OldPosition: {x: 0, y: 0}
@@ -126,8 +130,12 @@ MonoBehaviour:
     hasMoved: 0
     weaponPosition: {fileID: 0}
     exp: 0
-    x: 0
-    y: 0
+    hpgrowth: 0
+    speedgrowth: 0
+    accuracygrowth: 0
+    attackgrowth: 0
+    defensegrowth: 0
+    spiritgrowth: 0
     attributepoints: 0
     weaponIndex: 0
   animator: {fileID: 0}
@@ -165,7 +173,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 910ffdc2930f144428bb25402955c9f7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6701d1cc6495b3d488cfcad725bba1b7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

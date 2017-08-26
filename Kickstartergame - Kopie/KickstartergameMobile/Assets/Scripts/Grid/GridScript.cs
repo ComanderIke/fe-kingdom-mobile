@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using Assets.Scripts.Characters;
 
 [System.Serializable]
 public class Grid{
@@ -71,8 +72,7 @@ public class Node {
 public class MapField{
 	public GameObject gameObject;
 	public bool isAccessible = true;
-    public Character attackRangeCharacter;
-	public Character character;
+	public LivingObject character;
 	public FieldState fieldState = FieldState.Normal;
 	public int movementCost = 1;
     public bool isJumpable = true;
@@ -217,26 +217,26 @@ public class GridScript : MonoBehaviour {
         mesh.uv = new Vector2[] { new Vector2(1, 1), new Vector2(1, 0), new Vector2(0, 1), new Vector2(0, 0) };
         return mesh;
     }
-	public void ShowStandOnTexture(Character c){
+	public void ShowStandOnTexture(LivingObject c){
 		fields [c.x, c.y].gameObject.GetComponent<MeshRenderer> ().material.mainTexture = StandOnTexture;
 	}
 	public void HideStandOnTexture(Character c){
 		//Do Nothing?
 	}
-    public MovementPath findPath(int sx, int sz, int tx, int tz, int team, bool toadjacentPos, List<int> range)
+    public MovementPath findPath(int sx, int sy, int tx, int ty, int team, bool toadjacentPos, List<int> range)
     {
-        nodes[sx, sz].costfromStart = 0;
-        nodes[sx, sz].depth = 0;
+        nodes[sx, sy].costfromStart = 0;
+        nodes[sx, sy].depth = 0;
         closed.Clear();
         open.Clear();
-        open.Add(nodes[sx, sz]);
-        nodes[tx, tz].parent = null;
+        open.Add(nodes[sx, sy]);
+        nodes[tx, ty].parent = null;
         int maxDepth = 0;
         int maxSearchDistance = 100;
         while ((maxDepth < maxSearchDistance) && (open.Count != 0))
         {
             Node current = getFirstInOpen();
-            if (current == nodes[tx, tz])
+            if (current == nodes[tx, ty])
             {
                 break;
             }
@@ -257,7 +257,7 @@ public class GridScript : MonoBehaviour {
                     bool isAdjacent = false;
                     if (toadjacentPos)
                     {
-                        int delta = Mathf.Abs(xp- nodes[tx, tz].x) + Mathf.Abs(yp - nodes[tx, tz].y);
+                        int delta = Mathf.Abs(xp- nodes[tx, ty].x) + Mathf.Abs(yp - nodes[tx, ty].y);
                         range.Reverse();
                        foreach(int r in range)
                         {
@@ -278,7 +278,7 @@ public class GridScript : MonoBehaviour {
                         }
                         range.Reverse();
                     }
-                    if (isValidLocation(team, sx, sz, xp, yp, isAdjacent)|| (xp == tx && yp== tz))
+                    if (isValidLocation(team, sx, sy, xp, yp, isAdjacent)|| (xp == tx && yp== ty))
                     {
                         int nextStepCost = current.costfromStart + fields[xp, yp].movementCost;
                         Node neighbour = nodes[xp, yp];
@@ -303,18 +303,18 @@ public class GridScript : MonoBehaviour {
                 }
             }
         }
-        if (nodes[tx, tz].parent == null)
+        if (nodes[tx, ty].parent == null)
         {
             return null;
         }
         MovementPath path = new MovementPath();
-        Node target = nodes[tx, tz];
-        while (target != nodes[sx, sz])
+        Node target = nodes[tx, ty];
+        while (target != nodes[sx, sy])
         {
             path.prependStep(target.x, target.y);
             target = target.parent;
         }
-        path.prependStep(sx, sz);
+        path.prependStep(sx, sy);
         return path;
 
     }
@@ -328,7 +328,7 @@ public class GridScript : MonoBehaviour {
         return (Node)open[0];
     }
 
-    public MovementPath getPath(int x, int z, int x2, int z2, int team, bool toadjacentPos, List<int>range)
+    public MovementPath getPath(int x, int y, int x2, int y2, int team, bool toadjacentPos, List<int>range)
     {
         nodes = new Node[grid.width, grid.height];
         closed = new ArrayList();
@@ -341,7 +341,7 @@ public class GridScript : MonoBehaviour {
             }
         }
 
-        return findPath(x, z, x2, z2, team, toadjacentPos, range);
+        return findPath(x, y, x2, y2, team, toadjacentPos, range);
     }
 
 
@@ -447,7 +447,7 @@ public class GridScript : MonoBehaviour {
         }
     }
 
-    public void ShowAttack(Character character, List<int> attack, bool enemy)
+    public void ShowAttack(LivingObject character, List<int> attack, bool enemy)
     {
         List<MapField> fieldsFromWhereUCanAttack = new List<MapField>();
         foreach (MapField f in fields)
@@ -479,90 +479,7 @@ public class GridScript : MonoBehaviour {
 
     }
 
-    public void ShowHealRange(Character character, List<int> healrange)
-    {
-        List<MapField> fieldsFromWhereUCanAttack = new List<MapField>();
-        foreach (MapField f in fields)
-        {
-            if (f.isActive)
-            {
-                fieldsFromWhereUCanAttack.Add(f);
-            }
-        }
-        for (int i = 0; i < grid.width; i++)
-        {
-            for (int j = 0; j < grid.height; j++)
-            {
-                nodes[i, j].c = 1000;
-            }
-        }
-        foreach (MapField f in fieldsFromWhereUCanAttack)
-        {
-
-            int x = f.x;
-            int y = f.y;
-            foreach (int range in healrange)
-            {
-                ShowHealRecursive(character, x, y, range, new List<int>());
-
-            }
-        }
-		ShowStandOnTexture (character);
-    }
-
-    public void ShowHealRecursive(Character character, int x, int y, int range, List<int> direction)
-    {
-        MeshRenderer m = fields[x, y].gameObject.GetComponent<MeshRenderer>();
-
-
-        if (range <= 0)
-        {
-            m = fields[x, y].gameObject.GetComponent<MeshRenderer>();
-            if (m.material.mainTexture == MoveTexture)
-                return;
-            m.material.mainTexture = healTexture;
-            return;
-        }
-        if (!direction.Contains(2))
-        {
-            if (checkAttackField(x + 1, y))
-            { //&& AttackNodeFaster(x+1, y, c))
-                List<int> newdirection = new List<int>(direction);
-                newdirection.Add(1);
-                ShowHealRecursive(character, x + 1, y, range - 1, newdirection);
-            }
-        }
-        if (!direction.Contains(1))
-        {
-            if (checkAttackField(x - 1, y))
-            { //&& AttackNodeFaster(x - 1, y, c))
-                List<int> newdirection = new List<int>(direction);
-                newdirection.Add(2);
-                ShowHealRecursive(character, x - 1, y, range - 1, newdirection);
-            }
-        }
-        if (!direction.Contains(4))
-        {
-            if (checkAttackField(x, y + 1))
-            {// && AttackNodeFaster(x , y+1, c))
-                List<int> newdirection = new List<int>(direction);
-                newdirection.Add(3);
-                ShowHealRecursive(character, x, y + 1, range - 1, newdirection);
-            }
-        }
-        if (!direction.Contains(3))
-        {
-            if (checkAttackField(x, y - 1))
-            { //&& AttackNodeFaster(x , y-1, c))
-                List<int> newdirection = new List<int>(direction);
-                newdirection.Add(4);
-                ShowHealRecursive(character, x, y - 1, range - 1, newdirection);
-            }
-        }
-
-    }
-
-    public void ShowAttackRecursive(Character character, int x, int y, int range, List<int> direction, bool enemy)
+    public void ShowAttackRecursive(LivingObject character, int x, int y, int range, List<int> direction, bool enemy)
     {
         MeshRenderer m = fields[x, y].gameObject.GetComponent<MeshRenderer>();
 
@@ -575,7 +492,6 @@ public class GridScript : MonoBehaviour {
             m.material.mainTexture = AttackTexture;
             if (enemy)
             {
-                fields[x, y].attackRangeCharacter = character;
                 fields[x, y].enemyAttackRange = true;
                 m.material.mainTexture = EnemyAttackTexture;
             }
@@ -621,11 +537,11 @@ public class GridScript : MonoBehaviour {
     }
 
 
-    public void ShowMovement(Character c)
+    public void ShowMovement(LivingObject c)
     {
-        ShowMovement((int)c.gameObject.transform.localPosition.x, (int)c.gameObject.transform.localPosition.y, c.charclass.movRange, c.charclass.movRange, new List<int>(c.charclass.AttackRanges), 0, c.team, false);
+        ShowMovement((int)c.gameObject.transform.localPosition.x, (int)c.gameObject.transform.localPosition.y, c.movRange, c.movRange, new List<int>(c.AttackRanges), 0, c.team, false);
     }
-    private void ShowMovement(int x, int z, int range, int attackIndex, List<int> attack, int c, int team, bool enemy)
+    private void ShowMovement(int x, int y, int range, int attackIndex, List<int> attack, int c, int team, bool enemy)
     {
         if (range < 0)
         {
@@ -635,44 +551,44 @@ public class GridScript : MonoBehaviour {
 
         if (!enemy)
         {
-            MeshRenderer m = fields[x, z].gameObject.GetComponent<MeshRenderer>();
+            MeshRenderer m = fields[x, y].gameObject.GetComponent<MeshRenderer>();
             m.material.mainTexture = MoveTexture;
-            if(fields[x,z].character!=null&& fields[x,z].character.team!= team)
+            if(fields[x,y].character!=null&& fields[x,y].character.team!= team)
             {
                 Debug.Log("test4");
                 m.material.mainTexture = AttackTexture;
             }
         }
-        fields[x, z].isActive = true;
-        nodes[x, z].c = c;
+        fields[x, y].isActive = true;
+        nodes[x, y].c = c;
         c++;
-        if (checkField(x - 1, z, team, range) && nodeFaster(x - 1, z, c))
-            ShowMovement(x - 1, z, range - 1, attackIndex, new List<int>(attack), c, team, enemy);
-        if (checkField(x + 1, z, team, range) && nodeFaster(x + 1, z, c))
-            ShowMovement(x + 1, z, range - 1, attackIndex, new List<int>(attack), c, team, enemy);
-        if (checkField(x, z - 1, team, range) && nodeFaster(x, z - 1, c))
-            ShowMovement(x, z - 1, range - 1, attackIndex, new List<int>(attack), c, team, enemy);
-        if (checkField(x, z + 1, team, range) && nodeFaster(x, z + 1, c))
-            ShowMovement(x, z + 1, range - 1, attackIndex, new List<int>(attack), c, team, enemy);
+        if (checkField(x - 1, y, team, range) && nodeFaster(x - 1, y, c))
+            ShowMovement(x - 1, y, range - 1, attackIndex, new List<int>(attack), c, team, enemy);
+        if (checkField(x + 1, y, team, range) && nodeFaster(x + 1, y, c))
+            ShowMovement(x + 1, y, range - 1, attackIndex, new List<int>(attack), c, team, enemy);
+        if (checkField(x, y - 1, team, range) && nodeFaster(x, y - 1, c))
+            ShowMovement(x, y - 1, range - 1, attackIndex, new List<int>(attack), c, team, enemy);
+        if (checkField(x, y + 1, team, range) && nodeFaster(x, y + 1, c))
+            ShowMovement(x, y + 1, range - 1, attackIndex, new List<int>(attack), c, team, enemy);
     }
-    public void GetMovement(int x, int z, List<Vector3> locations, int range, int c, int team)
+    public void GetMovement(int x, int y, List<Vector2> locations, int range, int c, int team)
     {
         if (range < 0)
         {
             return;
         }
-        if(!locations.Contains(new Vector3(x, 0, z))&&fields[x,z].character==null)
-            locations.Add(new Vector3(x, 0, z));//TODO Height?!
-        nodes[x, z].c = c;
+        if(!locations.Contains(new Vector2(x, y))&&fields[x,y].character==null)
+            locations.Add(new Vector3(x, y));//TODO Height?!
+        nodes[x, y].c = c;
         c++;
-        if (checkField(x - 1, z, team, range) && nodeFaster(x - 1, z, c))
-            GetMovement(x - 1, z, locations, range - 1, c, team);
-        if (checkField(x + 1, z, team, range) && nodeFaster(x + 1, z, c))
-            GetMovement(x + 1, z, locations, range - 1, c, team);
-        if (checkField(x, z - 1, team, range) && nodeFaster(x, z - 1, c))
-            GetMovement(x, z - 1, locations, range - 1, c, team);
-        if (checkField(x, z + 1, team, range) && nodeFaster(x, z + 1, c))
-            GetMovement(x, z + 1, locations, range - 1, c, team);
+        if (checkField(x - 1, y, team, range) && nodeFaster(x - 1, y, c))
+            GetMovement(x - 1, y, locations, range - 1, c, team);
+        if (checkField(x + 1, y, team, range) && nodeFaster(x + 1, y, c))
+            GetMovement(x + 1, y, locations, range - 1, c, team);
+        if (checkField(x, y - 1, team, range) && nodeFaster(x, y - 1, c))
+            GetMovement(x, y - 1, locations, range - 1, c, team);
+        if (checkField(x, y + 1, team, range) && nodeFaster(x, y+ 1, c))
+            GetMovement(x, y + 1, locations, range - 1, c, team);
     }
     void UpdateCells()
     {

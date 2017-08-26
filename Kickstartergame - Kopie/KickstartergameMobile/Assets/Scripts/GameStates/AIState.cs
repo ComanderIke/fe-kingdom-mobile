@@ -9,10 +9,10 @@ namespace Assets.Scripts.GameStates
 {
     class AIState : GameState
     {
-        //Dorothy dorothy;
+        SimpleMonsterAI simpleMonsterAI;
         public AIState(Player p)
         {
-            //dorothy = new Dorothy(p);
+            simpleMonsterAI = new SimpleMonsterAI(p);
 
         }
         public override void enter()
@@ -27,7 +27,7 @@ namespace Assets.Scripts.GameStates
 
         public override void update()
         {
-           // dorothy.update();
+            simpleMonsterAI.update();
         }
     }
 }
