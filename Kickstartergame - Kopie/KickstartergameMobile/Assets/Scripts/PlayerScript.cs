@@ -21,16 +21,19 @@ public class Player{
         this.name = name;
         this.isPlayerControlled = isPlayerControlled;
 		this.color = color;
-        units = new List<LivingObject>();
+        
 	}
 	public List<LivingObject> getCharacters(){
 		return units;
 	}
     public void addCharacter(Character c)
     {
+        if(units==null)
+            units = new List<LivingObject>();
         c.team = number;
         c.player = this;
-        units.Add(c);
+        units.Add((LivingObject)c);
+
     }
     public void setCharacters(List<LivingObject> c){
 		units = c;
@@ -44,5 +47,6 @@ public class Player{
 public class PlayerScript : MonoBehaviour {
 
 	public Player player;
+
 
 }

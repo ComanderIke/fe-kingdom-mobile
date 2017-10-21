@@ -38,7 +38,7 @@ public class EnemyPosition : MonoBehaviour {
 	public int level;
 	// Use this for initialization
 	void Start () {
-        GetComponentInChildren<MeshRenderer>().enabled = false;
+
     }
 	public int GetLevel(){
 		return level;
