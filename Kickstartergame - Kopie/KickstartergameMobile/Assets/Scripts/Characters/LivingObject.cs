@@ -92,7 +92,7 @@ namespace Assets.Scripts.Characters
         {
 
         }
-        public void SetPosition(int x, int y)
+        public virtual void SetPosition(int x, int y)
         {
             OldPosition = new Vector2(this.x, this.y);
             MainScript m = GameObject.Find(MainScript.MAIN_GAME_OBJ).GetComponent<MainScript>();

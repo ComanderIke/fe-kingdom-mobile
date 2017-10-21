@@ -73,14 +73,14 @@ public class MouseManager : MonoBehaviour {
             ResetMoveArrow();
 
         }
-        else if(CharacterScript.drag==false){
+        else if(MovableObject.drag==false){
             updateTime += Time.deltaTime;
             if (updateTime > updateFrequency) {
                 updateTime = 0;
                 Physics.Raycast(ray, out hit, Mathf.Infinity);
                 if (hit.collider != null)
                 {
-                    CharacterScript cs = hit.collider.gameObject.GetComponent<CharacterScript>();
+                    MovableObject cs = hit.collider.gameObject.GetComponent<MovableObject>();
                     if (hit.collider.tag == "Grid")
                     {
                         int x = (int)Mathf.Floor(hit.point.x);
@@ -93,7 +93,7 @@ public class MouseManager : MonoBehaviour {
                     }
                     else if (cs != null)
                     {
-                        if (cs.character == mainScript.activeCharacter)
+                        if (cs.unit == mainScript.activeCharacter)
                         {
                             Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Terrain"));
                             int x = (int)Mathf.Floor(hit.point.x);
@@ -101,10 +101,10 @@ public class MouseManager : MonoBehaviour {
                             if (x == FindObjectOfType<MainScript>().activeCharacter.x && y == mainScript.activeCharacter.y)
                                 ResetMoveArrow();
                         }
-                        else if (mainScript.activeCharacter != null && cs.character.team != mainScript.activeCharacter.team)
+                        else if (mainScript.activeCharacter != null && cs.unit.team != mainScript.activeCharacter.team)
                         {
-                            int x = (int)Mathf.Floor(cs.character.x);
-                            int y = (int)Mathf.Floor(cs.character.y);
+                            int x = (int)Mathf.Floor(cs.unit.x);
+                            int y = (int)Mathf.Floor(cs.unit.y);
                             //mouseCursor.transform.position = new Vector3(x + 0.5f, hit.point.y, z + 0.5f);
                             CharacterDrag(x, y, mainScript.activeCharacter);
                         }
@@ -135,7 +135,7 @@ public class MouseManager : MonoBehaviour {
         //FindObjectOfType<UXRessources>().movementFlag.SetActive(false);
     }
     static bool nonActive = false;
-    public static void DraggedOver(Character character)
+    public static void DraggedOver(LivingObject character)
     {
         //TODO: Show Attack Icon or something
     }

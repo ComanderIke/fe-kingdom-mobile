@@ -19,7 +19,7 @@ public class SimpleMonsterAI : AIInterface {
 
     public override void Think()
     {
-        if (CharacterScript.lockInput)
+        if (MovableObject.lockInput)
             return;
         startTurn = true;
         foreach (LivingObject u in player.getCharacters())

@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using Assets.Scripts.Characters;
 
 public class HPBarOnMap : MonoBehaviour {
-	public Character character;
+	public LivingObject character;
 	private float scaleFactor = 1;
 	private float currentValue;
     public bool isArmor = false;
@@ -15,7 +16,7 @@ public class HPBarOnMap : MonoBehaviour {
 	// Use this for initialization
 	void Start () {	
 		transforms = this.gameObject.GetComponentsInChildren<Transform> ();
-        character=this.transform.parent.gameObject.GetComponent<CharacterScript>().character;
+        character=this.transform.parent.gameObject.GetComponent<MovableObject>().unit;
         foreach(Transform go in GetComponentsInChildren<Transform>())
         {
             go.gameObject.SetActive(false);

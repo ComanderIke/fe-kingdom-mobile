@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Characters;
+using UnityEngine;
 
 public class CreateCharacter : MonoBehaviour {
 
@@ -15,20 +16,19 @@ public class CreateCharacter : MonoBehaviour {
 
 	}
     
-    public void placeCharacter(int PlayerNumber, Character c ,int x, int y)
+    public void placeCharacter(int PlayerNumber, LivingObject unit ,int x, int y)
     {
         GameObject o = null;
         string player = "Player" + (PlayerNumber+1);
 		o = Instantiate<GameObject>(melee);
-        o.name = c.name;
+        o.name = unit.name;
         o.tag = "Player";
         o.transform.parent = gameObject.transform;
-        CharacterScript characterScript = o.GetComponentInChildren<CharacterScript>();
-        characterScript.character=c;
-        characterScript.getCharacter().gameObject = o;
+        MovableObject characterScript = o.GetComponentInChildren<MovableObject>();
+        characterScript.unit = unit;
+        characterScript.GetUnit().gameObject = o;
         o.transform.localPosition = new Vector3(x, y, 0);
-        c.SetPosition(x, y);
-        c.InstantiateWeapon();
+        unit.SetPosition(x, y);
     }
 
     

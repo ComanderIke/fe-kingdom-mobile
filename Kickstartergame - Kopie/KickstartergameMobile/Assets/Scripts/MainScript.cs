@@ -81,7 +81,7 @@ public class MainScript : MonoBehaviour {
 	public static DisableEverythingExceptUseOfHealthPotionEvent disableEverythingExceptUseOfHealthPotionEvent;
 	public delegate void EndOfDisableEverythingExceptUseOfHealthPotionEvent();
 	public static EndOfDisableEverythingExceptUseOfHealthPotionEvent endOfDisableEverythingExceptUseOfHealthPotionEvent;
-    public delegate void CharacterClickedEvent(Character c);
+    public delegate void CharacterClickedEvent(LivingObject c);
     public static CharacterClickedEvent characterClickedEvent;
 
     #region dialoge scene 1 
@@ -117,7 +117,7 @@ public class MainScript : MonoBehaviour {
     private const float delay = 0.2f;
     const float START_TIME = 2.5f;
     public const float CURSOROFFSET = 0.2f;
-	public Character lastClickedCharacter;
+	public LivingObject lastClickedCharacter;
     #endregion
 
     #region fields
@@ -286,19 +286,19 @@ public class MainScript : MonoBehaviour {
 	}
     #endregion
 
-    void CharacterClicked(Character c)
+    void CharacterClicked(LivingObject c)
     {
         SetActiveCharacter(c, false);
     }
   
-    public void MoveCharacterTo(Character c, int x, int y,bool drag, GameState targetState)
+    public void MoveCharacterTo(LivingObject c, int x, int y,bool drag, GameState targetState)
     {
         if(gameState is GameplayState)
         {
             ((GameplayState)gameState).MoveCharacter(c, x, y,drag, targetState);
         }
     }
-    public void MoveCharacterTo(Character c, int x, int y,List<Vector2> path, bool drag, GameState targetState)
+    public void MoveCharacterTo(LivingObject c, int x, int y,List<Vector2> path, bool drag, GameState targetState)
     {
         if (gameState is GameplayState)
         {
@@ -397,6 +397,9 @@ public class MainScript : MonoBehaviour {
         cc.placeCharacter(0, filler2, startPositions[1].GetX(), startPositions[1].GetY());
         cc.placeCharacter(0, filler3, startPositions[2].GetX(), startPositions[2].GetY());
         cc.placeCharacter(0, filler4, startPositions[3].GetX(), startPositions[3].GetY());
+        EnemyPosition[] enemyPosition = FindObjectsOfType<EnemyPosition>();
+        Monster monster = new Monster(MonsterType.Mammoth);
+        cc.placeCharacter(1, monster, enemyPosition[0].GetX(), enemyPosition[0].GetY());
     }
 
     public void SwitchState(GameState state)
@@ -633,7 +636,7 @@ public class MainScript : MonoBehaviour {
         uiController.ShowBottomUI();
     }
 
-    public void SetActiveCharacter(Character c, bool switchChar){
+    public void SetActiveCharacter(LivingObject c, bool switchChar){
 		lastClickedCharacter = c;
 		if (activePlayerNumber == 0&& c.team==0&&activeCharacter==null)
         {

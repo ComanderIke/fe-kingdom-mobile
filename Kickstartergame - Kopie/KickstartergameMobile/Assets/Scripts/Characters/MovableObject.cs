@@ -6,10 +6,11 @@ using Assets.Scripts.GameStates;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using Assets.Scripts.Characters;
 
-public class CharacterScript :  MonoBehaviour {
+public class MovableObject :  MonoBehaviour {
     [HideInInspector]
-	public Character character;
+	public LivingObject unit;
     public static bool lockInput=false;
 	private Boolean init = true;
     [HideInInspector]
@@ -28,9 +29,9 @@ public class CharacterScript :  MonoBehaviour {
     float posX;
     float posY;
     
-    public Character getCharacter()
+    public LivingObject GetUnit()
     {
-        return character;
+        return unit;
     }
 
 	void Start () {
@@ -342,28 +343,28 @@ public class CharacterScript :  MonoBehaviour {
                     Debug.Log(hit.collider.name);
                     if (hit.collider.gameObject.tag == "Grid")
                     {
-                        if (FindObjectOfType<GridScript>().fields[x, y].isActive && !(x == character.x && y == character.y))
+                        if (FindObjectOfType<GridScript>().fields[x, y].isActive && !(x == unit.x && y == unit.y))
                         {
-                            character.SetPosition(character.x, character.y);
-                            FindObjectOfType<MainScript>().MoveCharacterTo(character, x , y, MouseManager.oldMousePath, true, new GameplayState());
+                            unit.SetPosition(unit.x, unit.y);
+                            FindObjectOfType<MainScript>().MoveCharacterTo(unit, x , y, MouseManager.oldMousePath, true, new GameplayState());
 
                         }
-                        else if (FindObjectOfType<GridScript>().fields[x, y].character != null && FindObjectOfType<GridScript>().fields[x, y].character.team != character.team)
+                        else if (FindObjectOfType<GridScript>().fields[x, y].character != null && FindObjectOfType<GridScript>().fields[x, y].character.team != unit.team)
                         {
-                           FindObjectOfType<MainScript>().GoToEnemy(character, FindObjectOfType<GridScript>().fields[x, y].character, true);
+                           FindObjectOfType<MainScript>().GoToEnemy(unit, FindObjectOfType<GridScript>().fields[x, y].character, true);
                         }
                         else
                         {
                             FindObjectOfType<MainScript>().DeselectActiveCharacter();
                         }
                     }
-                    else if (hit.collider.gameObject.GetComponent<CharacterScript>() != null)
+                    else if (hit.collider.gameObject.GetComponent<MovableObject>() != null)
                     {
-                        Character ch = hit.collider.gameObject.GetComponent<CharacterScript>().character;
-                        if (ch.team != character.team)
+                        LivingObject ch = hit.collider.gameObject.GetComponent<MovableObject>().unit;
+                        if (ch.team != unit.team)
                         {
                             if(FindObjectOfType<GridScript>().IsFieldAttackable(ch.x,ch.y))
-                                FindObjectOfType<MainScript>().GoToEnemy(character, ch, true);
+                                FindObjectOfType<MainScript>().GoToEnemy(unit, ch, true);
                         }
                         else
                         {
@@ -401,14 +402,14 @@ public class CharacterScript :  MonoBehaviour {
             {
                 a.SetHovered(true);
             }
-            if(FindObjectOfType<MainScript>().activeCharacter!=null && FindObjectOfType<MainScript>().activeCharacter !=character)
+            if(FindObjectOfType<MainScript>().activeCharacter!=null && FindObjectOfType<MainScript>().activeCharacter !=unit)
             {
-                MouseManager.DraggedOver(character);
+                MouseManager.DraggedOver(unit);
             }
         }
     }
     void OnMouseExit(){
-        character.hovered = false;
+        unit.hovered = false;
         ActiveUnitEffect a = GetComponentInChildren<ActiveUnitEffect>();
         if (a != null)
         {
@@ -424,7 +425,7 @@ public class CharacterScript :  MonoBehaviour {
     {
         if (lockInput)
             return;
-        if (!character.isWaiting &&character.isAlive&& character.team == MainScript.ActivePlayerNumber)
+        if (!unit.isWaiting &&unit.isAlive&& unit.team == MainScript.ActivePlayerNumber)
         {
             dragging = true;
             
@@ -439,14 +440,14 @@ public class CharacterScript :  MonoBehaviour {
                     int x = (int)Mathf.Floor(hit.point.x);
                     int y = (int)Mathf.Floor(hit.point.y);
                     if (MouseManager.active)
-                        MouseManager.CharacterDrag(x, y, character);
+                        MouseManager.CharacterDrag(x, y, unit);
                 }
-                else if (hit.collider.GetComponent<CharacterScript>() != null)
+                else if (hit.collider.GetComponent<MovableObject>() != null)
                 {
-                    int x = hit.collider.GetComponent<CharacterScript>().character.x;
-                    int y= hit.collider.GetComponent<CharacterScript>().character.y;
+                    int x = hit.collider.GetComponent<MovableObject>().unit.x;
+                    int y= hit.collider.GetComponent<MovableObject>().unit.y;
                     if (MouseManager.active)
-                        MouseManager.CharacterDrag(x, y, character);
+                        MouseManager.CharacterDrag(x, y, unit);
                 }
             }
         }
@@ -456,7 +457,7 @@ public class CharacterScript :  MonoBehaviour {
     void OnMouseDown()
     {
         Debug.Log("CLICK");
-        if (!character.isAlive)
+        if (!unit.isAlive)
             return;
         if (lockInput)
             return;
@@ -468,7 +469,7 @@ public class CharacterScript :  MonoBehaviour {
         MouseManager.oldMousePath = new List<Vector2>(MouseManager.mousePath);
         if (!EventSystem.current.IsPointerOverGameObject())
         {
-            MainScript.characterClickedEvent(character);
+            MainScript.characterClickedEvent(unit);
         }
     }
         
