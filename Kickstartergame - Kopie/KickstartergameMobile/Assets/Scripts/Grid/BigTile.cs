@@ -34,5 +34,14 @@ namespace Assets.Scripts.Grid
         {
             return positions[3];
         }
+        public override bool Equals(object obj)
+        {
+            if(obj is BigTile)
+            {
+                BigTile bt = (BigTile)obj;
+                return bt.BottomLeft() == BottomLeft() && bt.BottomRight() == BottomRight() && bt.TopLeft() == TopLeft() && bt.TopRight() == TopRight();
+            }
+            return base.Equals(obj);
+        }
     }
 }

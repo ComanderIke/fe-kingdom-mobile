@@ -69,8 +69,11 @@ public class MouseManager : MonoBehaviour {
                         {
                             confirmClick = true;
                             clickedField = new Vector2(x, y);
-                            MouseManager.CalculateMousePathToPositon(mainScript.activeCharacter, new Vector2(x, y));
-                            MouseManager.DrawMousePath(mainScript.activeCharacter.x, mainScript.activeCharacter.y);
+                            if (mainScript.gridScript.fields[x, y].isActive)
+                            {
+                                MouseManager.CalculateMousePathToPositon(mainScript.activeCharacter, new Vector2(x, y));
+                                MouseManager.DrawMousePath(mainScript.activeCharacter.x, mainScript.activeCharacter.y);
+                            }
                         }
                     }
                     else
@@ -191,10 +194,18 @@ public class MouseManager : MonoBehaviour {
         }
         return new Vector2(-1,-1);
     }
-    public static void CalculateMousePathToPositon(LivingObject character, Vector2 position)
+    public static void CalculateMousePathToPositon(LivingObject character, BigTile position)
     {
         ResetMoveArrow();
-        MovementPath p = mainScript.gridScript.getPath(character.x, character.y, (int)position.x,(int) position.y, character.team, false, character.AttackRanges);
+        MovementPath p=null;
+        if (character is Monster)
+        {
+            p = mainScript.gridScript.GetMonsterPath(character, position);
+        }
+        else
+        {
+            p = mainScript.gridScript.getPath(character.x, character.y, (int)position.x, (int)position.y, character.team, false, character.AttackRanges);
+        }
         if (p != null)
         {
             for (int i = p.getLength() - 2; i >= 0; i--)
