@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class CameraMovement : MonoBehaviour {
-
+    const float LERP_SPEED = 0.1f;
     public delegate void MoveToFinishedEvent();
     public static MoveToFinishedEvent moveToFinishedEvent;
     public static bool locked=false;
@@ -26,7 +26,9 @@ public class CameraMovement : MonoBehaviour {
     private Vector3 lastPosition;
     MainScript mainScript;
     bool drag = false;
- 
+    private Vector3 targetPosition;
+    private float lerpTime;
+
     // Use this for initialization
     void Start () {
         mainScript = FindObjectOfType<MainScript>();
@@ -66,6 +68,11 @@ public class CameraMovement : MonoBehaviour {
             this.transform.localPosition = new Vector3(maxX, this.transform.localPosition.y, this.transform.localPosition.z);
         if (this.transform.localPosition.y > maxY)
             this.transform.localPosition = new Vector3(this.transform.localPosition.x, maxY, this.transform.localPosition.z);
-
+        if (!drag)
+        {
+            lerpTime = Time.deltaTime / LERP_SPEED;
+            targetPosition = new Vector3(Mathf.Round(this.transform.localPosition.x), Mathf.Round(this.transform.localPosition.y), Mathf.Round(this.transform.localPosition.z));
+            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, targetPosition, lerpTime);
+        }
     }
 }

@@ -456,7 +456,7 @@ public class MovableObject :  MonoBehaviour {
 
     void OnMouseDown()
     {
-        Debug.Log("CLICK");
+
         if (!unit.isAlive)
             return;
         if (lockInput)

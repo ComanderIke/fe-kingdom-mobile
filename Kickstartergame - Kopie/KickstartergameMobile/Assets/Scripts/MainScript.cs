@@ -383,10 +383,7 @@ public class MainScript : MonoBehaviour {
         filler2.activeSpriteObject = ss.axeActiveSprite;
         filler3.activeSpriteObject = ss.archerActiveSprite;
         filler4.activeSpriteObject = ss.lancerActiveSprite;
-        Debug.Log(filler);
-        Debug.Log(filler2);
-        Debug.Log(filler3);
-        Debug.Log(filler4);
+
         p.addCharacter(filler);
         p.addCharacter(filler2);
         p.addCharacter(filler3);
@@ -423,7 +420,6 @@ public class MainScript : MonoBehaviour {
         if (!activePlayer.isPlayerControlled)
             SwitchState(new AIState(activePlayer));
         init2 = true;
-        Debug.Log(activePlayer.getCharacters().Count);
         foreach (Character c in activePlayer.getCharacters())
         {
            c.UpdateTurn();

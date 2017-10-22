@@ -13,10 +13,10 @@ namespace Assets.Scripts.Grid
         public BigTile(Vector2 bottomLeft, Vector2 bottomRight, Vector2 topLeft, Vector2 topRight)
         {
             positions = new List<Vector2>();
-            positions[0] = bottomLeft;
-            positions[1] = bottomRight;
-            positions[2] = topLeft;
-            positions[3] = topRight;
+            positions.Add(bottomLeft);
+            positions.Add(bottomRight);
+            positions.Add(topLeft);
+            positions.Add(topRight);
         }
         public Vector2 BottomLeft()
         {
