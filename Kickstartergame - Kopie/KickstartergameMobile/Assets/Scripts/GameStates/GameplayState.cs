@@ -335,7 +335,16 @@ namespace Assets.Scripts.GameStates
                 if (c.team != mainScript.activeCharacter.team)//Clicked On Enemy
                 {
                     //Enemy already in Range
-                    GoToEnemy(mainScript.activeCharacter, c,false);
+                    if (MouseManager.confirmClick && MouseManager.clickedField == new Vector2(c.x,c.y))
+                        GoToEnemy(mainScript.activeCharacter, c, false);
+                    else
+                    {
+                        MouseManager.confirmClick = true;
+                        MouseManager.clickedField = new Vector2(c.x, c.y);
+                        MouseManager.CalculateMousePathToPositon(mainScript.activeCharacter, new Vector2(c.x, c.y));
+                        MouseManager.DrawMousePath((int)c.x, (int)c.y);
+                    }
+                   
                     return;
                 }
             }
@@ -352,6 +361,8 @@ namespace Assets.Scripts.GameStates
                         else
                         {
                             mainScript.gridScript.HideMovement();
+                            MouseManager.confirmClick = false;
+                            MouseManager.clickedField = new Vector2(-1, -1);
                             SelectCharacter(c);
                         }
                     }

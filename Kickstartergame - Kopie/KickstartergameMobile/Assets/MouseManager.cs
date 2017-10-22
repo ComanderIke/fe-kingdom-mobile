@@ -25,6 +25,8 @@ public class MouseManager : MonoBehaviour {
     RaycastHit hit;
     static Transform gameWorld;
     static GameObject moveCursor;
+    public static bool confirmClick = false;
+    public static Vector2 clickedField;
     //GameObject mouseCursor;
     Ray ray;
 	// Use this for initialization
@@ -59,8 +61,20 @@ public class MouseManager : MonoBehaviour {
                 Debug.Log(x + " " + y + " " + hit.collider.name);
                 if (hit.collider.tag == "Grid")
                 {
-                    Debug.Log("CLikced");
-                    MainScript.clickedOnField(x, y);
+                    if (mainScript.activeCharacter != null)
+                    {
+                        if (confirmClick && clickedField == new Vector2(x,y))
+                            MainScript.clickedOnField(x, y);
+                        else
+                        {
+                            confirmClick = true;
+                            clickedField = new Vector2(x, y);
+                            MouseManager.CalculateMousePathToPositon(mainScript.activeCharacter, new Vector2(x, y));
+                            MouseManager.DrawMousePath(mainScript.activeCharacter.x, mainScript.activeCharacter.y);
+                        }
+                    }
+                    else
+                        MainScript.clickedOnField(x, y);
                 }
             }
 
@@ -72,7 +86,10 @@ public class MouseManager : MonoBehaviour {
         else if (Input.GetMouseButtonUp(0))
         {
             oldMousePath = new List<Vector2>(mousePath);
-            ResetMoveArrow();
+            if (!confirmClick)
+            {
+                ResetMoveArrow();
+            }
 
         }
         /*else if(MovableObject.drag==false){
@@ -446,7 +463,7 @@ public class MouseManager : MonoBehaviour {
         Finish(character, field, x, y);
         
     }
-    private static void DrawMousePath(int x, int y)
+    public static void DrawMousePath(int startx, int starty)
     {
         if (moveCursor != null)
             GameObject.Destroy(moveCursor);
@@ -476,13 +493,13 @@ public class MouseManager : MonoBehaviour {
                 }
                 else
                 {
-                    if (v.x - x > 0)
+                    if (v.x - startx > 0)
                         dot.transform.rotation = Quaternion.Euler(0, 0, 180);
-                    else if (v.x -x < 0)
+                    else if (v.x -startx < 0)
                         dot.transform.rotation = Quaternion.Euler(0, 0, 0);
-                    else if (v.y - y > 0)
+                    else if (v.y - starty > 0)
                         dot.transform.rotation = Quaternion.Euler(0, 0, 270);
-                    else if (v.y - y < 0)
+                    else if (v.y - starty < 0)
                         dot.transform.rotation = Quaternion.Euler(0, 0, 90);
                 }
             }
@@ -498,7 +515,7 @@ public class MouseManager : MonoBehaviour {
                 }
                 else
                 {
-                    vBefore = new Vector2(x, y);
+                    vBefore = new Vector2(startx, starty);
                     ArrowCurve(dot, v, vBefore, vAfter);
                 }
             }
