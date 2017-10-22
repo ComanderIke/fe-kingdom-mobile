@@ -13,8 +13,6 @@ public class UIController : MonoBehaviour {
     [SerializeField]
     Image faceSpriteLeft;
     [SerializeField]
-    Image faceSpriteRight;
-    [SerializeField]
     Image[] inventorySprites;
     [SerializeField]
     Text hpLeft;
@@ -26,16 +24,7 @@ public class UIController : MonoBehaviour {
     Text defLeft;
     [SerializeField]
     Text accLeft;
-    [SerializeField]
-    Text hpRight;
-    [SerializeField]
-    Text atkRight;
-    [SerializeField]
-    Text spdRight;
-    [SerializeField]
-    Text defRight;
-    [SerializeField]
-    Text accRight;
+
 
     MainScript mainScript;
 	// Use this for initialization
@@ -62,6 +51,7 @@ public class UIController : MonoBehaviour {
     public void ShowTopUI(LivingObject c)
     {
         topUI.SetActive(true);
+
         hpLeft.text = c.HP+" / "+c.stats.maxHP;
         atkLeft.text = ""+c.stats.attack;
         spdLeft.text = "" + c.stats.speed;

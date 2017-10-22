@@ -26,7 +26,7 @@ namespace Assets.Scripts.Grid
         {
             return positions[1];
         }
-        public Vector2 ToplLeft()
+        public Vector2 TopLeft()
         {
             return positions[2];
         }

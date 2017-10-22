@@ -53,9 +53,10 @@ public class MouseManager : MonoBehaviour {
             Physics.Raycast(ray, out hit, Mathf.Infinity);
             int x = (int)Mathf.Floor(hit.point.x);
             int y = (int)Mathf.Floor(hit.point.y);
-            Debug.Log(x+" "+y+ " "+hit.collider.name);
+           
             if (hit.collider != null)
             {
+                Debug.Log(x + " " + y + " " + hit.collider.name);
                 if (hit.collider.tag == "Grid")
                 {
                     Debug.Log("CLikced");
@@ -74,7 +75,7 @@ public class MouseManager : MonoBehaviour {
             ResetMoveArrow();
 
         }
-        else if(MovableObject.drag==false){
+        /*else if(MovableObject.drag==false){
             updateTime += Time.deltaTime;
             if (updateTime > updateFrequency) {
                 updateTime = 0;
@@ -113,7 +114,7 @@ public class MouseManager : MonoBehaviour {
                 }
             }
 
-        }
+        }*/
     }
     static int oldX = -1;
     static int oldY=-1;

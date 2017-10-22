@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using Assets.Scripts.Characters;
+using Assets.Scripts.Grid;
 
 [System.Serializable]
 public class Grid{
@@ -218,7 +219,17 @@ public class GridScript : MonoBehaviour {
         return mesh;
     }
 	public void ShowStandOnTexture(LivingObject c){
-		fields [c.x, c.y].gameObject.GetComponent<MeshRenderer> ().material.mainTexture = StandOnTexture;
+        if(c is Monster)
+        {
+            Monster m = (Monster)c;
+
+            fields[(int)m.Position.BottomLeft().x, (int)m.Position.BottomLeft().y].gameObject.GetComponent<MeshRenderer>().material.mainTexture = StandOnTexture;
+            fields[(int)m.Position.BottomRight().x, (int)m.Position.BottomRight().y].gameObject.GetComponent<MeshRenderer>().material.mainTexture = StandOnTexture;
+            fields[(int)m.Position.TopLeft().x, (int)m.Position.TopLeft().y].gameObject.GetComponent<MeshRenderer>().material.mainTexture = StandOnTexture;
+            fields[(int)m.Position.TopRight().x, (int)m.Position.TopRight().y].gameObject.GetComponent<MeshRenderer>().material.mainTexture = StandOnTexture;
+        }
+        else
+		    fields [c.x, c.y].gameObject.GetComponent<MeshRenderer> ().material.mainTexture = StandOnTexture;
 	}
 	public void HideStandOnTexture(Character c){
 		//Do Nothing?
@@ -539,7 +550,49 @@ public class GridScript : MonoBehaviour {
 
     public void ShowMovement(LivingObject c)
     {
-        ShowMovement((int)c.gameObject.transform.localPosition.x, (int)c.gameObject.transform.localPosition.y, c.movRange, c.movRange, new List<int>(c.AttackRanges), 0, c.team, false);
+        if(c is Monster)
+            ShowMonsterMovement((int) c.gameObject.transform.localPosition.x, (int) c.gameObject.transform.localPosition.y, c.movRange, new List<int>(c.AttackRanges), 0, c.team);
+        else
+            ShowMovement((int)c.gameObject.transform.localPosition.x, (int)c.gameObject.transform.localPosition.y, c.movRange, c.movRange, new List<int>(c.AttackRanges), 0, c.team, false);
+    }
+    private void SetFieldTexture(Vector2 pos) {
+        MeshRenderer m = fields[(int)pos.x,(int)pos.y].gameObject.GetComponent<MeshRenderer>();
+        m.material.mainTexture = MoveTexture;
+        fields[(int)pos.x, (int)pos.y].isActive = true;
+        /*if (fields[x, y].character != null && fields[x, y].character.team != team)
+       {
+           m.material.mainTexture = AttackTexture;
+       }*/
+    }
+    public void SetBigTileActive(BigTile bigTile)
+    {
+        SetFieldTexture(bigTile.BottomLeft());
+        SetFieldTexture(bigTile.BottomRight());
+        SetFieldTexture(bigTile.TopLeft());
+        SetFieldTexture(bigTile.TopRight());
+    }
+    private void ShowMonsterMovement(int x, int y, int range, List<int> attack, int c, int team)
+    {
+        if (range < 0)
+        {
+            return;
+
+        }
+
+        SetBigTileActive(new BigTile(new Vector2(x,y),new Vector2(x+1,y), new Vector2(x,y+1), new Vector2(x+1,y+1)));
+        if (checkMonsterField(new BigTile(new Vector2(x-1, y), new Vector2(x, y), new Vector2(x-1, y + 1), new Vector2(x, y + 1)), team, range))
+            ShowMonsterMovement(x - 1, y, range - 1, new List<int>(attack), c, team);
+        if (checkMonsterField(new BigTile(new Vector2(x + 1, y), new Vector2(x+2, y), new Vector2(x + 1, y+1 ), new Vector2(x+2, y + 1)), team, range))
+            ShowMonsterMovement(x + 1, y, range - 1, new List<int>(attack), c, team);
+        if (checkMonsterField(new BigTile(new Vector2(x, y-1), new Vector2(x+1, y-1), new Vector2(x, y), new Vector2(x+1, y)), team, range))
+            ShowMonsterMovement(x, y - 1, range - 1, new List<int>(attack), c, team);
+        if (checkMonsterField(new BigTile(new Vector2(x, y+1), new Vector2(x+1, y+1), new Vector2(x, y + 2), new Vector2(x+1, y + 2)), team, range))
+            ShowMonsterMovement(x, y + 1, range - 1, new List<int>(attack), c, team);
+    }
+    public bool checkMonsterField(BigTile bigTile, int team, int range)
+    {
+        return checkField((int)bigTile.BottomLeft().x, (int)bigTile.BottomLeft().y, team, range) && checkField((int)bigTile.BottomRight().x, (int)bigTile.BottomRight().y, team, range)&& checkField((int)bigTile.TopLeft().x, (int)bigTile.TopLeft().y, team, range)&& checkField((int)bigTile.TopRight().x, (int)bigTile.TopRight().y, team, range);
+        
     }
     private void ShowMovement(int x, int y, int range, int attackIndex, List<int> attack, int c, int team, bool enemy)
     {
@@ -605,8 +658,8 @@ public class GridScript : MonoBehaviour {
                 if (blockedFields[x, z])
                 {
                     fields[x, z].isAccessible = false;
-                    fields[x, z].gameObject.GetComponent<MeshRenderer>().enabled = false;
-                    fields[x, z].gameObject.GetComponent<BoxCollider>().enabled = false;
+                    //fields[x, z].gameObject.GetComponent<MeshRenderer>().enabled = false;
+                    //fields[x, z].gameObject.GetComponent<BoxCollider>().enabled = false;
                 }
                 UpdateMesh(meshFilter.mesh, x, z);
             }
@@ -635,8 +688,8 @@ public class GridScript : MonoBehaviour {
             for (int x = 0; x < grid.width; x++)
             {
                 //Debug.Log(x + " " + z);
-                origin = new Vector3(x * cellSize+(cellSize/2), 200, y * cellSize + (cellSize / 2));
-                if (Physics.Raycast(transform.TransformPoint(origin), Vector3.down, out hitInfo, Mathf.Infinity, LayerMask.GetMask(BLOCK_FIELD_LAYER)))
+                origin = new Vector3(x * cellSize+(cellSize/2),  y * cellSize + (cellSize / 2), -5);
+                if (Physics.Raycast(transform.TransformPoint(origin), Vector3.forward, out hitInfo, Mathf.Infinity, LayerMask.GetMask(BLOCK_FIELD_LAYER)))
                 {
                     blockedFields[x, y] = true;
                 }

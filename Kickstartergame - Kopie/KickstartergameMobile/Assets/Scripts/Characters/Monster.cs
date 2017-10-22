@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Grid;
+﻿using Assets.Scripts.Characters.Attributes;
+using Assets.Scripts.Grid;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,15 @@ namespace Assets.Scripts.Characters
     {
         public BigTile Position { get; set; }
 
-        public Monster(MonsterType type) : base()
+        public Monster(string name, MonsterType type) : base()
         {
-
+            this.name = name;
+            movRange = 3;
+            stats = new Stats(100, 5, 5, 5, 5, 5);
+            AttackRanges = new List<int>();
+            AttackRanges.Add(1);
+            HP = stats.maxHP;
+            level = 1;
         }
         public override void SetPosition(int x, int y)
         {

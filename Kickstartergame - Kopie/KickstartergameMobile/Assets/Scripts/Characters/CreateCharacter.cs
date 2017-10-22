@@ -6,6 +6,7 @@ public class CreateCharacter : MonoBehaviour {
 	public GameObject melee;
     public GameObject mage;
     public GameObject archer;
+    public GameObject mammoth;
     public GameObject hellebardier;
     public GameObject meleeWeaponPosition;
     public GameObject rangedWeaponPosition;
@@ -20,7 +21,14 @@ public class CreateCharacter : MonoBehaviour {
     {
         GameObject o = null;
         string player = "Player" + (PlayerNumber+1);
-		o = Instantiate<GameObject>(melee);
+        if (unit is Monster)
+        {
+            o = Instantiate<GameObject>(mammoth);
+        }
+        else
+        {
+            o = Instantiate<GameObject>(melee);
+        }
         o.name = unit.name;
         o.tag = "Player";
         o.transform.parent = gameObject.transform;

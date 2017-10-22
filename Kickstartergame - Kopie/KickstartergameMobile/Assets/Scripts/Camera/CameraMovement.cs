@@ -45,11 +45,12 @@ public class CameraMovement : MonoBehaviour {
             RaycastHit hit = new RaycastHit();
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Physics.Raycast(ray, out hit, Mathf.Infinity);
-            if (hit.collider.gameObject.tag == "Grid")
-            {
-                lastPosition = Input.mousePosition;
-                drag = true;
-            }
+            if(hit.collider != null)
+                if (hit.collider.gameObject.tag == "Grid")
+                {
+                    lastPosition = Input.mousePosition;
+                    drag = true;
+                }
         }
 
         if (Input.GetMouseButton(0)&&drag)

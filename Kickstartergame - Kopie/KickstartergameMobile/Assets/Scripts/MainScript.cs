@@ -395,9 +395,9 @@ public class MainScript : MonoBehaviour {
         cc.placeCharacter(0, filler3, startPositions[2].GetX(), startPositions[2].GetY());
         cc.placeCharacter(0, filler4, startPositions[3].GetX(), startPositions[3].GetY());
         EnemyPosition[] enemyPosition = FindObjectsOfType<EnemyPosition>();
-        Monster monster = new Monster(MonsterType.Mammoth);
-        players[1].addUnit(monster);
-        cc.placeCharacter(1, monster, enemyPosition[0].GetX(), enemyPosition[0].GetY());
+        Monster monster = new Monster("Mammoth",MonsterType.Mammoth);
+        players[0].addUnit(monster);
+        cc.placeCharacter(0, monster, enemyPosition[0].GetX(), enemyPosition[0].GetY());
     }
 
     public void SwitchState(GameState state)
@@ -421,9 +421,8 @@ public class MainScript : MonoBehaviour {
         if (!activePlayer.isPlayerControlled)
             SwitchState(new AIState(activePlayer));
         init2 = true;
-        foreach (Character c in activePlayer.getCharacters())
+        foreach (LivingObject c in activePlayer.getCharacters())
         {
-           c.UpdateTurn();
            GameObject.Instantiate(FindObjectOfType<UXRessources>().activeUnitField, c.gameObject.transform.position,Quaternion.identity,c.gameObject.transform);
         }
         
@@ -642,7 +641,7 @@ public class MainScript : MonoBehaviour {
         if(gameState is GameplayState)
         {
             UXRessources ux = GameObject.FindObjectOfType<UXRessources>();
-            foreach (global::Character chara in activePlayer.getCharacters())
+            foreach (LivingObject chara in activePlayer.getCharacters())
             {
                 if (!chara.hasMoved && chara.gameObject.GetComponentInChildren<ActiveUnitEffect>() == null)
                 {
