@@ -373,7 +373,7 @@ namespace Assets.Scripts.GameStates
 
         void EnemySelected(LivingObject c)
         {
-            GridScript gridScript = mainScript.GetComponentInChildren<GridScript>();
+            GridScript gridScript = mainScript.gridScript;
 
             if (c.IsAttackRangeShown())
             {

@@ -102,7 +102,7 @@ public class GridScript : MonoBehaviour {
     const string CELL_TAG = "Grid";
     const int CELL_LAYER = 0;
     const string BLOCK_FIELD_LAYER = "BlockField";
-    const string BLOCK_ARROW_LAYER = "BlockArrows";
+    public const float GRID_X_OFFSET = 0.25f;
     #endregion
 
     #region fields
@@ -624,32 +624,7 @@ public class GridScript : MonoBehaviour {
     }
 
     public bool[,] blockedFields;
-    bool[,] GetBlockedArrows()
-    {
-        RaycastHit hitInfo;
-        Vector3 origin;
-        bool[,] blockedArrows = new bool[grid.width, grid.height];
-        for (int z = 0; z < grid.height; z++)
-        {
-            for (int x = 0; x < grid.width; x++)
-            {
-                //Debug.Log(x + " " + z);
-                origin = new Vector3(x * cellSize + (cellSize / 2), 200, z * cellSize + (cellSize / 2));
-                if (Physics.Raycast(transform.TransformPoint(origin), Vector3.down, out hitInfo, Mathf.Infinity, LayerMask.GetMask(BLOCK_ARROW_LAYER)))
-                {
-                    blockedArrows[x, z] = true;
-                }
-                else
-                {
-                    //Debug.Log(hitInfo.point);
-                    blockedArrows[x, z] = false;
-                }
 
-                //Debug.Log("X: " + x + "Y: "+
-            }
-        }
-        return blockedArrows;
-    }
     void GetBlockedFields()
     {
         RaycastHit hitInfo;

@@ -19,7 +19,7 @@ public class MovableObject :  MonoBehaviour {
     [HideInInspector]
     public Material[] startMaterials;
     float dragtime = 0;
-    const float DRAG_DELAY = 0.55f;
+    const float DRAG_DELAY = 0.15f;
     Vector3 jumpPosition;
     public static bool drag = false;
     bool dragging = false;
@@ -435,6 +435,12 @@ public class MovableObject :  MonoBehaviour {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit = new RaycastHit();
                 Physics.Raycast(ray, out hit, Mathf.Infinity);
+                Vector3 curPos = new Vector3(Input.mousePosition.x - posX, Input.mousePosition.y - posY, 0);
+                Vector3 worldPos = Camera.main.ScreenToWorldPoint(curPos);
+                worldPos.z = 0;
+                worldPos.x -= GridScript.GRID_X_OFFSET;
+                Debug.Log(unit.team + " " + MainScript.ActivePlayerNumber);
+                transform.localPosition = Vector3.Lerp(transform.localPosition,worldPos,Time.deltaTime*13);
                 if (hit.collider.tag == "Grid")
                 {
                     int x = (int)Mathf.Floor(hit.point.x);
@@ -452,7 +458,7 @@ public class MovableObject :  MonoBehaviour {
             }
         }
     }
-   
+
 
     void OnMouseDown()
     {

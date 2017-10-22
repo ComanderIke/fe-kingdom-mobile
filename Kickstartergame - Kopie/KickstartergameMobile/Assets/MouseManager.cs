@@ -24,6 +24,7 @@ public class MouseManager : MonoBehaviour {
     static UXRessources ressources;
     RaycastHit hit;
     static Transform gameWorld;
+    static GameObject moveCursor;
     //GameObject mouseCursor;
     Ray ray;
 	// Use this for initialization
@@ -131,6 +132,8 @@ public class MouseManager : MonoBehaviour {
         mousePath.Clear();
         oldX = -1;
         oldY= -1;
+        if (moveCursor != null)
+            GameObject.Destroy(moveCursor);
         FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().enabled = false;
         //FindObjectOfType<UXRessources>().movementFlag.SetActive(false);
     }
@@ -196,6 +199,7 @@ public class MouseManager : MonoBehaviour {
             ResetMoveArrow();
             return;
         }
+
         if (isOldDrag(x, y))
         {
             return;
@@ -443,6 +447,9 @@ public class MouseManager : MonoBehaviour {
     }
     private static void DrawMousePath(int x, int y)
     {
+        if (moveCursor != null)
+            GameObject.Destroy(moveCursor);
+        
         for (int i=0; i < mousePath.Count; i++) 
         {
             Vector2 v = mousePath[i];
@@ -452,6 +459,8 @@ public class MouseManager : MonoBehaviour {
             dots.Add(dot);
             if (i == mousePath.Count - 1)
             {
+                moveCursor = GameObject.Instantiate(ressources.moveCursor, gameWorld);
+                moveCursor.transform.localPosition = new Vector3(v.x,v.y, -0.5f);
                 dot.GetComponent<SpriteRenderer>().sprite = ressources.moveArrowHead;
                 if (i != 0)
                 {

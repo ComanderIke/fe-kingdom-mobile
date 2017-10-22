@@ -321,7 +321,7 @@ public class MainScript : MonoBehaviour {
     public void PlaceCharacterOnField(int x, int y, Character character, Player player)
     {
         GameObject.Find(MAIN_GAME_OBJ).GetComponent<CreateCharacter>().placeCharacter(player.number, character, x, y);
-        player.addCharacter(character);
+        player.addUnit(character);
         characterList.Add(character);
         gridScript.fields[x, y].character = character;
         character.x = x;
@@ -384,10 +384,10 @@ public class MainScript : MonoBehaviour {
         filler3.activeSpriteObject = ss.archerActiveSprite;
         filler4.activeSpriteObject = ss.lancerActiveSprite;
 
-        p.addCharacter(filler);
-        p.addCharacter(filler2);
-        p.addCharacter(filler3);
-        p.addCharacter(filler4);
+        p.addUnit(filler);
+        p.addUnit(filler2);
+        p.addUnit(filler3);
+        p.addUnit(filler4);
         StartPosition[] startPositions = FindObjectsOfType<StartPosition>();
         CreateCharacter cc = FindObjectOfType<CreateCharacter>();
         cc.placeCharacter(0, filler, startPositions[0].GetX(), startPositions[0].GetY());
@@ -396,6 +396,7 @@ public class MainScript : MonoBehaviour {
         cc.placeCharacter(0, filler4, startPositions[3].GetX(), startPositions[3].GetY());
         EnemyPosition[] enemyPosition = FindObjectsOfType<EnemyPosition>();
         Monster monster = new Monster(MonsterType.Mammoth);
+        players[1].addUnit(monster);
         cc.placeCharacter(1, monster, enemyPosition[0].GetX(), enemyPosition[0].GetY());
     }
 

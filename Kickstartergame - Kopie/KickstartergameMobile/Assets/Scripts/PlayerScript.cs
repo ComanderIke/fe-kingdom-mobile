@@ -26,7 +26,7 @@ public class Player{
 	public List<LivingObject> getCharacters(){
 		return units;
 	}
-    public void addCharacter(Character c)
+    public void addUnit(LivingObject c)
     {
         if(units==null)
             units = new List<LivingObject>();
