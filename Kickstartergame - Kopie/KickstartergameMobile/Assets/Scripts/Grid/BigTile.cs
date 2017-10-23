@@ -43,5 +43,9 @@ namespace Assets.Scripts.Grid
             }
             return base.Equals(obj);
         }
+        public override string ToString()
+        {
+            return BottomLeft().x + " " + BottomLeft().y + " | " + BottomRight().x + " " + BottomRight().y + " | " + TopLeft().x + " " + TopLeft().y + " | " + TopRight().x + " " + TopRight().y; ;
+        }
     }
 }

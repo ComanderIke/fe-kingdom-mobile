@@ -152,6 +152,24 @@ public class GridScript : MonoBehaviour {
     {
         return fields[x, z].gameObject.GetComponent<MeshRenderer>().material.mainTexture == AttackTexture;
     }
+    private bool IsValidAndActive(Vector2 pos, int team)
+    {
+        bool invalid = (pos.x < 0) || (pos.y < 0) || (pos.x >= grid.width) || (pos.y >= grid.height);
+        if (!invalid)
+        {
+            invalid = !fields[(int)pos.x, (int)pos.y].isAccessible;
+            if (fields[(int)pos.x, (int)pos.y].character != null)
+                if (fields[(int)pos.x, (int)pos.y].character.team == team)
+                    invalid = false;
+            if (!fields[(int)pos.x, (int)pos.y].isActive)
+                invalid = true;
+        }
+        return !invalid;
+    }
+    public bool IsValidAndActive(BigTile position, int team)
+    {
+        return IsValidAndActive(position.BottomLeft(),team) && IsValidAndActive(position.BottomRight(), team) && IsValidAndActive(position.TopLeft(), team) && IsValidAndActive(position.TopRight(), team);
+    }
     public bool checkField(int x, int y, int team, int range)
     {
         if (x >= 0 && y >= 0 && x < grid.width && y < grid.height)

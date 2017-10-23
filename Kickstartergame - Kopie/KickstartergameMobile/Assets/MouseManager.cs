@@ -75,11 +75,35 @@ public class MouseManager : MonoBehaviour {
                                 if (mainScript.activeCharacter is Monster)
                                 {
                                     
-                                    Debug.Log(hit.point.x - GridScript.GRID_X_OFFSET+" "+hit.point.y);
+                                   // Debug.Log(hit.point.x - GridScript.GRID_X_OFFSET+" "+hit.point.y);
                                     Debug.Log(Mathf.Round(hit.point.x - GridScript.GRID_X_OFFSET) + " " + Mathf.Round(hit.point.y));
-                                    int bottomLeftX = (int)Mathf.Round(hit.point.x - GridScript.GRID_X_OFFSET) - 1;
-                                    int bottomLeftY = (int)Mathf.Round(hit.point.y) - 1;
-                                    BigTile clickedBigTile = new BigTile(new Vector2(bottomLeftX, bottomLeftY), new Vector2(bottomLeftX+1, bottomLeftY), new Vector2(bottomLeftX, bottomLeftY+1), new Vector2(bottomLeftX+1, bottomLeftY+1));
+                                    int centerX = (int)Mathf.Round(hit.point.x - GridScript.GRID_X_OFFSET) - 1;
+                                    int centerY = (int)Mathf.Round(hit.point.y) -1;
+                                    BigTile clickedBigTile = new BigTile(new Vector2(centerX, centerY), new Vector2(centerX+1, centerY), new Vector2(centerX, centerY+1), new Vector2(centerX+1, centerY+1));
+
+                                    if (!mainScript.gridScript.IsValidAndActive(clickedBigTile,mainScript.activeCharacter.team))
+                                    {
+
+                                        clickedBigTile = new BigTile(new Vector2(x, y), new Vector2(x+1, y), new Vector2(x, y+1), new Vector2(x+1, y+1));
+
+                                        if (!mainScript.gridScript.IsValidAndActive(clickedBigTile, mainScript.activeCharacter.team))
+                                        {
+                                           
+
+                                            clickedBigTile = new BigTile(new Vector2(x - 1, y), new Vector2(x, y), new Vector2(x - 1, y + 1), new Vector2(x, y + 1));
+
+                                            if (!mainScript.gridScript.IsValidAndActive(clickedBigTile, mainScript.activeCharacter.team))
+                                            {
+
+                                                clickedBigTile = new BigTile(new Vector2(x, y - 1), new Vector2(x + 1, y - 1), new Vector2(x, y), new Vector2(x + 1, y));
+
+                                                if (!mainScript.gridScript.IsValidAndActive(clickedBigTile, mainScript.activeCharacter.team))
+                                                {
+                                                    clickedBigTile = new BigTile(new Vector2(x - 1, y - 1), new Vector2(x, y - 1), new Vector2(x - 1, y), new Vector2(x, y));
+                                                }
+                                            }
+                                        }
+                                    }
                                     MouseManager.CalculateMousePathToPositon(mainScript.activeCharacter, clickedBigTile);
                                     MouseManager.DrawMousePath(mainScript.activeCharacter.x, mainScript.activeCharacter.y);
                                 }
@@ -220,12 +244,6 @@ public class MouseManager : MonoBehaviour {
                 mousePath.Add(new Vector2(p.getStep(i).getX(), p.getStep(i).getY()));
             }
         }
-        foreach (Vector2 v in mousePath)
-        {
-            GameObject dot = GameObject.Instantiate(FindObjectOfType<UXRessources>().moveArrowDot);
-            dot.transform.position = new Vector3(v.x + 0.5f, v.y, 0);
-            dots.Add(dot);
-        }
     }
     public static void CalculateMousePathToPositon(LivingObject character, BigTile position)
     {
@@ -233,7 +251,7 @@ public class MouseManager : MonoBehaviour {
         MovementPath p = mainScript.gridScript.GetMonsterPath((Monster)character, position);
             for (int i = 0; i < p.getLength(); i++)
             {
-                Debug.Log(p.getStep(i));
+                //Debug.Log(p.getStep(i));
             }
 
         if (p != null)
@@ -243,12 +261,7 @@ public class MouseManager : MonoBehaviour {
                 mousePath.Add(new Vector2(p.getStep(i).getX(), p.getStep(i).getY()));
             }
         }
-        foreach (Vector2 v in mousePath)
-        {
-            GameObject dot = GameObject.Instantiate(FindObjectOfType<UXRessources>().moveArrowDot);
-            dot.transform.position = new Vector3(v.x + 0.5f, v.y,0);
-            dots.Add(dot);
-        }
+
     }
     public static void CharacterDrag(int x, int y, LivingObject character)
     {
