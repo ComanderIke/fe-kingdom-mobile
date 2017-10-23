@@ -18,7 +18,7 @@ namespace Assets.Scripts.Characters
         Accuracy,
         HP
     }
-    public class LivingObject
+    public abstract class LivingObject
     {
         const int AGILITY_TO_DOUBLE = 0;
 
@@ -54,6 +54,7 @@ namespace Assets.Scripts.Characters
                 selected = value;
             }
         }
+        private HPBarOnMap hpBar;
         public int HP
         {
             get { return hp; }
@@ -70,23 +71,24 @@ namespace Assets.Scripts.Characters
                     if (isAlive)
                     {
                         isAlive = false;
-
                         DeathAnimation();
                     }
                     hp = 0;
                 }
-                if (gameObject != null)
-                {
-                    if (((hp * 1.0) / stats.maxHP) < 0.4f)
-                    {
-                        //gameObject.GetComponent<CharacterScript>().SetInjuredIdle(true);
-                    }
-                    else
-                    {
-                      //  gameObject.GetComponent<CharacterScript>().SetInjuredIdle(false);
-                    }
-                }
+                if(hpBar!=null)
+                    hpBar.SetCurrentHealth(hp);
             }
+        }
+
+        public LivingObject()
+        {
+           
+        }
+        public void Init()
+        {
+            hpBar = gameObject.GetComponentInChildren<HPBarOnMap>();
+            hpBar.SetMaxHealth(stats.maxHP);
+            hpBar.SetCurrentHealth(hp);
         }
         public virtual void DeathAnimation()
         {

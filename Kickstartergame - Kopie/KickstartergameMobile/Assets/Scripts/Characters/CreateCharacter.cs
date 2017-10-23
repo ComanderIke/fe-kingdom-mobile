@@ -35,6 +35,7 @@ public class CreateCharacter : MonoBehaviour {
         MovableObject characterScript = o.GetComponentInChildren<MovableObject>();
         characterScript.unit = unit;
         characterScript.GetUnit().gameObject = o;
+        unit.Init();
         o.transform.localPosition = new Vector3(x, y, 0);
         unit.SetPosition(x, y);
     }

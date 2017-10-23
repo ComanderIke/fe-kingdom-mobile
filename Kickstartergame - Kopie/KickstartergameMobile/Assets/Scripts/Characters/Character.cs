@@ -137,7 +137,7 @@ public class Character : LivingObject{
     #endregion
 
 
-    public Character (string name)
+    public Character (string name):base()
     {
         this.name = name;
         items.Capacity = MAX_ITEMS;
