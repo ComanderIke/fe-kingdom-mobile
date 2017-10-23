@@ -439,7 +439,6 @@ public class MovableObject :  MonoBehaviour {
                 Vector3 worldPos = Camera.main.ScreenToWorldPoint(curPos);
                 worldPos.z = 0;
                 worldPos.x -= GridScript.GRID_X_OFFSET;
-                Debug.Log(unit.team + " " + MainScript.ActivePlayerNumber);
                 transform.localPosition = Vector3.Lerp(transform.localPosition,worldPos,Time.deltaTime*13);
                 if (hit.collider.tag == "Grid")
                 {

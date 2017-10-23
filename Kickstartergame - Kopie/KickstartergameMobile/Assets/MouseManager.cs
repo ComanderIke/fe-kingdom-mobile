@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Characters;
 using Assets.Scripts.GameStates;
+using Assets.Scripts.Grid;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -53,7 +54,7 @@ public class MouseManager : MonoBehaviour {
             ResetMoveArrow();
            
             Physics.Raycast(ray, out hit, Mathf.Infinity);
-            int x = (int)Mathf.Floor(hit.point.x);
+            int x = (int)Mathf.Floor(hit.point.x-GridScript.GRID_X_OFFSET);
             int y = (int)Mathf.Floor(hit.point.y);
            
             if (hit.collider != null)
@@ -71,8 +72,22 @@ public class MouseManager : MonoBehaviour {
                             clickedField = new Vector2(x, y);
                             if (mainScript.gridScript.fields[x, y].isActive)
                             {
-                                MouseManager.CalculateMousePathToPositon(mainScript.activeCharacter, new Vector2(x, y));
-                                MouseManager.DrawMousePath(mainScript.activeCharacter.x, mainScript.activeCharacter.y);
+                                if (mainScript.activeCharacter is Monster)
+                                {
+                                    
+                                    Debug.Log(hit.point.x - GridScript.GRID_X_OFFSET+" "+hit.point.y);
+                                    Debug.Log(Mathf.Round(hit.point.x - GridScript.GRID_X_OFFSET) + " " + Mathf.Round(hit.point.y));
+                                    int bottomLeftX = (int)Mathf.Round(hit.point.x - GridScript.GRID_X_OFFSET) - 1;
+                                    int bottomLeftY = (int)Mathf.Round(hit.point.y) - 1;
+                                    BigTile clickedBigTile = new BigTile(new Vector2(bottomLeftX, bottomLeftY), new Vector2(bottomLeftX+1, bottomLeftY), new Vector2(bottomLeftX, bottomLeftY+1), new Vector2(bottomLeftX+1, bottomLeftY+1));
+                                    MouseManager.CalculateMousePathToPositon(mainScript.activeCharacter, clickedBigTile);
+                                    MouseManager.DrawMousePath(mainScript.activeCharacter.x, mainScript.activeCharacter.y);
+                                }
+                                else
+                                {
+                                    MouseManager.CalculateMousePathToPositon(mainScript.activeCharacter, new Vector2(x, y));
+                                    MouseManager.DrawMousePath(mainScript.activeCharacter.x, mainScript.activeCharacter.y);
+                                }
                             }
                         }
                     }
@@ -194,18 +209,33 @@ public class MouseManager : MonoBehaviour {
         }
         return new Vector2(-1,-1);
     }
+    public static void CalculateMousePathToPositon(LivingObject character, Vector2 position)
+    {
+        ResetMoveArrow();
+        MovementPath p = mainScript.gridScript.getPath(character.x, character.y, (int)position.x, (int)position.y, character.team, false, character.AttackRanges);
+        if (p != null)
+        {
+            for (int i = p.getLength() - 2; i >= 0; i--)
+            {
+                mousePath.Add(new Vector2(p.getStep(i).getX(), p.getStep(i).getY()));
+            }
+        }
+        foreach (Vector2 v in mousePath)
+        {
+            GameObject dot = GameObject.Instantiate(FindObjectOfType<UXRessources>().moveArrowDot);
+            dot.transform.position = new Vector3(v.x + 0.5f, v.y, 0);
+            dots.Add(dot);
+        }
+    }
     public static void CalculateMousePathToPositon(LivingObject character, BigTile position)
     {
         ResetMoveArrow();
-        MovementPath p=null;
-        if (character is Monster)
-        {
-            p = mainScript.gridScript.GetMonsterPath(character, position);
-        }
-        else
-        {
-            p = mainScript.gridScript.getPath(character.x, character.y, (int)position.x, (int)position.y, character.team, false, character.AttackRanges);
-        }
+        MovementPath p = mainScript.gridScript.GetMonsterPath((Monster)character, position);
+            for (int i = 0; i < p.getLength(); i++)
+            {
+                Debug.Log(p.getStep(i));
+            }
+
         if (p != null)
         {
             for (int i = p.getLength() - 2; i >= 0; i--)

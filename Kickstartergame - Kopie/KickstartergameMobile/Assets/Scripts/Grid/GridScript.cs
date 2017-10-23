@@ -12,17 +12,17 @@ public class Grid{
 }
 [System.Serializable]
 public class Step {
-	private int x;
-	private int y;
+	private float x;
+	private float y;
 
-	public Step(int x, int y){
+	public Step(float x, float y){
 		this.x = x;
 		this.y  =y;
 	}
-	public int getX(){
+	public float getX(){
 		return x;
 	}
-	public int getY(){
+	public float getY(){
 		return y;
 	}
 }
@@ -39,7 +39,7 @@ public class MovementPath {
 	public Step getStep(int index){
 		return (Step)steps [index];
 	}
-	public void prependStep(int x, int y){
+	public void prependStep(float x, float y){
 		steps.Add(new Step (x, y));
 	}
 	public void Reverse(){

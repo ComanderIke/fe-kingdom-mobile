@@ -27,6 +27,8 @@ namespace Assets.Scripts.Grid
         {
             this.start = start;
             this.end = end;
+            open = new ArrayList();
+            closed = new ArrayList();
             nodes = new List<Node2x2>();
             return FindPath(start, end);
         }
@@ -111,7 +113,16 @@ namespace Assets.Scripts.Grid
                         if (isValidLocation(newPos) || newPos.Equals(end))
                         {
                             int nextStepCost = current.costfromStart + 1;
-                            Node2x2 neighbour = nodes[xp, yp];
+                            Node2x2 neighbour = new Node2x2(newPos, 0);
+                            if (nodes.Contains(neighbour))
+                            {
+                                neighbour = nodes[nodes.IndexOf(neighbour)];
+                            }
+                            else
+                            {
+                                nodes.Add(neighbour);
+                            }
+                               
                             if (nextStepCost < neighbour.costfromStart)
                             {
                                 if (InOpenList(neighbour))
@@ -133,18 +144,18 @@ namespace Assets.Scripts.Grid
                     }
                 }
             }
-            if (nodes[tx, ty].parent == null)
+            if (endNode.parent == null)
             {
                 return null;
             }
             MovementPath path = new MovementPath();
-            Node target = nodes[tx, ty];
-            while (target != nodes[sx, sy])
+            Node2x2 target = endNode;
+            while (target != startNode)
             {
-                path.prependStep(target.x, target.y);
+                path.prependStep(target.Position.BottomLeft().x+0.5f, target.Position.BottomLeft().y+0.5f);
                 target = target.parent;
             }
-            path.prependStep(sx, sy);
+            path.prependStep(startNode.Position.BottomLeft().x+0.5f,startNode.Position.BottomLeft().y+0.5f);
             return path;
         }
     }
