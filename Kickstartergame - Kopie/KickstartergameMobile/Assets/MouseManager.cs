@@ -51,7 +51,7 @@ public class MouseManager : MonoBehaviour {
         if (Input.GetMouseButtonDown(0)&&!EventSystem.current.IsPointerOverGameObject())
         {
             oldMousePath = new List<Vector2>(mousePath);
-            ResetMoveArrow();
+           
            
             Physics.Raycast(ray, out hit, Mathf.Infinity);
             int x = (int)Mathf.Floor(hit.point.x-GridScript.GRID_X_OFFSET);
@@ -59,9 +59,9 @@ public class MouseManager : MonoBehaviour {
            
             if (hit.collider != null)
             {
-                Debug.Log(x + " " + y + " " + hit.collider.name);
                 if (hit.collider.tag == "Grid")
                 {
+                    ResetMousePath();
                     if (mainScript.activeCharacter != null)
                     {
                         if (confirmClick && clickedField == new Vector2(x,y))
@@ -121,16 +121,13 @@ public class MouseManager : MonoBehaviour {
             }
 
         }
-        else if (Input.GetMouseButtonDown(1))
-        {
-            ResetMoveArrow();
-        }
         else if (Input.GetMouseButtonUp(0))
         {
             oldMousePath = new List<Vector2>(mousePath);
             if (!confirmClick)
             {
-                ResetMoveArrow();
+                
+                ResetMousePath();
             }
 
         }
@@ -181,9 +178,9 @@ public class MouseManager : MonoBehaviour {
     public static List<CursorPosition> lastPositions = new List<CursorPosition>();
     public static List<Vector2> oldMousePath = new List<Vector2>();
     static List<GameObject> dots = new List<GameObject>();
-    public static void ResetMoveArrow()
+    public static void ResetMousePath()
     {
-      
+        Debug.Log("ResetMousePath");
         foreach (GameObject dot in dots)
         {
             GameObject.Destroy(dot);
@@ -235,8 +232,12 @@ public class MouseManager : MonoBehaviour {
     }
     public static void CalculateMousePathToPositon(LivingObject character, Vector2 position)
     {
-        ResetMoveArrow();
+        ResetMousePath();
         MovementPath p = mainScript.gridScript.getPath(character.x, character.y, (int)position.x, (int)position.y, character.team, false, character.AttackRanges);
+        for (int i = 0; i < p.getLength(); i++)
+        {
+            Debug.Log(p.getStep(i));
+        }
         if (p != null)
         {
             for (int i = p.getLength() - 2; i >= 0; i--)
@@ -245,13 +246,30 @@ public class MouseManager : MonoBehaviour {
             }
         }
     }
+    public static void CalculateMousePathToEnemy(LivingObject character, Vector2 position)
+    {
+        ResetMousePath();
+        Debug.Log("from" + character.x + " " + character.y + " to " + position.x + " " + position.y + " team " + character.team + " " + character.AttackRanges[0]);
+        MovementPath p = mainScript.gridScript.getPath(character.x, character.y, (int)position.x, (int)position.y, character.team, true, character.AttackRanges);
+        for (int i = 0; i < p.getLength(); i++)
+        {
+            Debug.Log(p.getStep(i));
+        }
+        if (p != null)
+        {
+            for (int i = p.getLength() - 2; i >= mainScript.AttackRangeFromPath; i--)
+            {
+                mousePath.Add(new Vector2(p.getStep(i).getX(), p.getStep(i).getY()));
+            }
+        }
+    }
     public static void CalculateMousePathToPositon(LivingObject character, BigTile position)
     {
-        ResetMoveArrow();
+        ResetMousePath();
         MovementPath p = mainScript.gridScript.GetMonsterPath((Monster)character, position);
             for (int i = 0; i < p.getLength(); i++)
             {
-                //Debug.Log(p.getStep(i));
+                Debug.Log(p.getStep(i));
             }
 
         if (p != null)
@@ -268,7 +286,7 @@ public class MouseManager : MonoBehaviour {
         
         if (mainScript.activeCharacter == null)
         {
-            ResetMoveArrow();
+            ResetMousePath();
             return;
         }
 
@@ -295,8 +313,6 @@ public class MouseManager : MonoBehaviour {
         {
             if (FindObjectOfType<GridScript>().IsFieldAttackable(x, y))
             {
-                FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().material.mainTexture = FindObjectOfType<TextureScript>().cursorTextures[1];
-                FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().enabled = true;
                 //FindObjectOfType<DragCursor>().transform.position = new Vector3(x + 0.5f, FindObjectOfType<GridScript>().fields[x, z].height, z + 0.5f);
                 
                 //GameObject.Find("AttackIconCanvas").transform.position = new Vector3(x + 0.5f, FindObjectOfType<GridScript>().fields[x, z].height + 1.5f, z + 0.5f);
@@ -420,7 +436,7 @@ public class MouseManager : MonoBehaviour {
                     }
                     else
                     {
-                        ResetMoveArrow();
+                        ResetMousePath();
                         MovementPath p = mainScript.gridScript.getPath(character.x, character.y, x, y, character.team, false, character.AttackRanges);
                         int removeFromPath = 1;
                         foreach (int attackRange in mainScript.activeCharacter.AttackRanges)
@@ -479,7 +495,7 @@ public class MouseManager : MonoBehaviour {
         {
             if (nonActive)
             {
-                ResetMoveArrow();
+                ResetMousePath();
             }
             nonActive = false;
             bool contains = false;
@@ -511,7 +527,7 @@ public class MouseManager : MonoBehaviour {
         }
         else if(x == character.x && y == character.y)
         {
-            ResetMoveArrow();
+            ResetMousePath();
             nonActive = false;
         }
         Finish(character, field, x, y);
@@ -519,6 +535,7 @@ public class MouseManager : MonoBehaviour {
     }
     public static void DrawMousePath(int startx, int starty)
     {
+        Debug.Log("DrawMousePath");
         if (moveCursor != null)
             GameObject.Destroy(moveCursor);
         

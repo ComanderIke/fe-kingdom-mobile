@@ -268,7 +268,7 @@ namespace Assets.Scripts.GameStates
         }
         public void GoToEnemy(LivingObject character, LivingObject enemy, bool drag)
         {
-            MouseManager.ResetMoveArrow();
+            MouseManager.ResetMousePath();
             
             if (MouseManager.oldMousePath.Count==0&&character.AttackRanges.Contains<int>((int)(Mathf.Abs(enemy.GetPositionOnGrid().x - character.GetPositionOnGrid().x) + Mathf.Abs(enemy.GetPositionOnGrid().y - character.GetPositionOnGrid().y))))
             {
@@ -335,14 +335,16 @@ namespace Assets.Scripts.GameStates
                 if (c.team != mainScript.activeCharacter.team)//Clicked On Enemy
                 {
                     //Enemy already in Range
+                    
                     if (MouseManager.confirmClick && MouseManager.clickedField == new Vector2(c.x,c.y))
                         GoToEnemy(mainScript.activeCharacter, c, false);
                     else
                     {
+                        Debug.Log(c.name+" "+ c.x+" "+c.y);
                         MouseManager.confirmClick = true;
                         MouseManager.clickedField = new Vector2(c.x, c.y);
-                        MouseManager.CalculateMousePathToPositon(mainScript.activeCharacter, new Vector2(c.x, c.y));
-                        MouseManager.DrawMousePath((int)c.x, (int)c.y);
+                        MouseManager.CalculateMousePathToEnemy(mainScript.activeCharacter, new Vector2(c.x, c.y));
+                        MouseManager.DrawMousePath(mainScript.activeCharacter.x, mainScript.activeCharacter.y);
                     }
                    
                     return;
@@ -419,7 +421,6 @@ namespace Assets.Scripts.GameStates
         {
             mainScript.uiController.HideBottomUI();
             mainScript.uiController.ShowTopUI(c);
-            Debug.Log("Select " + c.name);
 			if (mainScript.activeCharacter != null) {
 				mainScript.activeCharacter.Selected = false;
 			}

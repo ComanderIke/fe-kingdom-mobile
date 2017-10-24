@@ -396,8 +396,8 @@ public class MainScript : MonoBehaviour {
         cc.placeCharacter(0, filler4, startPositions[3].GetX(), startPositions[3].GetY());
         EnemyPosition[] enemyPosition = FindObjectsOfType<EnemyPosition>();
         Monster monster = new Monster("Mammoth",MonsterType.Mammoth);
-        players[0].addUnit(monster);
-        cc.placeCharacter(0, monster, enemyPosition[0].GetX(), enemyPosition[0].GetY());
+        players[1].addUnit(monster);
+        cc.placeCharacter(1, monster, enemyPosition[0].GetX(), enemyPosition[0].GetY());
     }
 
     public void SwitchState(GameState state)
@@ -624,8 +624,7 @@ public class MainScript : MonoBehaviour {
     {
         if(activeCharacter!=null)
             activeCharacter.Selected = false;
-        MouseManager.ResetMoveArrow();
-        Debug.Log("DeselectCharacter");
+        MouseManager.ResetMousePath();
         activeCharacter = null;
         gridScript.HideMovement();
         uiController.HideTopUI();

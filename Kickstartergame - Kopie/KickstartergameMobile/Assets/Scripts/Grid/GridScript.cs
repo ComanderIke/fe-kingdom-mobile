@@ -25,6 +25,10 @@ public class Step {
 	public float getY(){
 		return y;
 	}
+    public override string ToString()
+    {
+        return "Step: "+x+ " "+y;
+    }
 }
 [System.Serializable]
 public class MovementPath {
@@ -269,8 +273,6 @@ public class GridScript : MonoBehaviour {
             {
                 break;
             }
-            
-           
             removeFromOpen(current);
             addToClosed(current);
             for (int x = -1; x < 2; x++)
@@ -286,8 +288,8 @@ public class GridScript : MonoBehaviour {
                     bool isAdjacent = false;
                     if (toadjacentPos)
                     {
-                        int delta = Mathf.Abs(xp- nodes[tx, ty].x) + Mathf.Abs(yp - nodes[tx, ty].y);
-                        range.Reverse();
+                       int delta = Mathf.Abs(xp- nodes[tx, ty].x) + Mathf.Abs(yp - nodes[tx, ty].y);
+                       range.Reverse();
                        foreach(int r in range)
                         {
                             if (delta == r)
@@ -301,8 +303,6 @@ public class GridScript : MonoBehaviour {
                                     m.AttackRangeFromPath = r;
                                    // break;
                                 }
-                               
-                                
                             }
                         }
                         range.Reverse();
@@ -359,6 +359,7 @@ public class GridScript : MonoBehaviour {
 
     public MovementPath getPath(int x, int y, int x2, int y2, int team, bool toadjacentPos, List<int>range)
     {
+        MainScript.GetInstance().AttackRangeFromPath = 0;
         nodes = new Node[grid.width, grid.height];
         closed = new ArrayList();
         open = new ArrayList();
@@ -374,6 +375,7 @@ public class GridScript : MonoBehaviour {
     }
     public MovementPath GetMonsterPath(Monster monster, BigTile position)
     {
+        MainScript.GetInstance().AttackRangeFromPath = 0;
         PathFindingNode[,] nodes = new PathFindingNode[grid.width, grid.height];
         for(int x = 0; x < grid.width; x++)
         {
