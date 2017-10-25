@@ -14,7 +14,6 @@ namespace Assets.Scripts.GameStates
     public class GameplayState : GameState
     {
         MainScript mainScript;
-        public Player activePlayer;
         bool attackRangesOn = false;
         int CharacterNumber = 0;
 
@@ -24,7 +23,6 @@ namespace Assets.Scripts.GameStates
         public override void enter()
         {
             mainScript = GameObject.Find(MainScript.MAIN_GAME_OBJ).GetComponent<MainScript>();
-            activePlayer = MainScript.players[MainScript.ActivePlayerNumber];
         }
 
         public override void exit()
@@ -84,9 +82,9 @@ namespace Assets.Scripts.GameStates
         
         void StartTurn()
         {
-            if (!activePlayer.isPlayerControlled)
+            if (!mainScript.activePlayer.isPlayerControlled)
             {
-                mainScript.SwitchState(new AIState(activePlayer));
+                mainScript.SwitchState(new AIState(mainScript.activePlayer));
                 GameObject go = GameObject.Instantiate(mainScript.AITurnAnimation, new Vector3(), Quaternion.identity)as GameObject;
                 go.transform.SetParent(GameObject.Find("Canvas").transform, false);
                 //go.transform.localPosition = new Vector3();
@@ -99,7 +97,7 @@ namespace Assets.Scripts.GameStates
                 go.transform.SetParent(GameObject.Find("Canvas").transform, false);
                 
             }
-            if (activePlayer.number == 1)
+            if (mainScript.activePlayer.number == 1)
             {
                 mainScript.turncount++;
                 foreach(Character c in mainScript.characterList)
@@ -110,25 +108,27 @@ namespace Assets.Scripts.GameStates
                 Debug.Log("Turn: " + mainScript.turncount);
             }
             //mainScript.gridScript.fields[x, z].gameObject.GetComponent<FieldClicked>().hovered = false;
-            foreach (global::Character c in activePlayer.getCharacters())
+            foreach (LivingObject c in mainScript.activePlayer.getCharacters())
             {
-                c.UpdateTurn();
+               // c.UpdateTurn();
                 //c.gameObject.GetComponent<CharacterScript>().WaitAnimation(false);
-                if (activePlayer.isPlayerControlled)
+                if (mainScript.activePlayer.isPlayerControlled)
                     GameObject.Instantiate(GameObject.FindObjectOfType<UXRessources>().activeUnitField, c.gameObject.transform.position, Quaternion.identity, c.gameObject.transform);
             }
     }
 
         public void EndTurn()
         {
-            foreach (global::Character c in activePlayer.getCharacters())
+            foreach (LivingObject c in mainScript.activePlayer.getCharacters())
             {
                 c.isWaiting = false;
                 //c.gameObject.GetComponent<CharacterScript>().SetSelected(false);
             }
             MainScript.ActivePlayerNumber++;
-            activePlayer = MainScript.players[MainScript.ActivePlayerNumber];
+            mainScript.activePlayer = MainScript.players[MainScript.ActivePlayerNumber];
+            Debug.Log(mainScript.activePlayer.getCharacters()[0].name);
             mainScript.activeCharacter = null;
+            Debug.Log("EndTurn" + MainScript.ActivePlayerNumber);
             StartTurn();
         }
 
@@ -148,7 +148,7 @@ namespace Assets.Scripts.GameStates
                 }
                 foreach (Player p in MainScript.players)
                 {
-                    if (p != activePlayer)
+                    if (p != mainScript.activePlayer)
                     {
                         foreach (global::Character c in p.getCharacters())
                         {
@@ -378,7 +378,8 @@ namespace Assets.Scripts.GameStates
                 else
                 {
                     mainScript.activeCharacter = null;
-                    Debug.Log("Enemy Selectd!");
+                    Debug.Log(mainScript.activePlayer.getCharacters()[0].name + " " + c.name);
+                    Debug.Log("Enemy Selectd!"+MainScript.ActivePlayerNumber+" "+c.team);
                     EnemySelected(c);
                 }
             }
@@ -419,8 +420,7 @@ namespace Assets.Scripts.GameStates
 
         void SelectCharacter(LivingObject c)
         {
-            mainScript.uiController.HideBottomUI();
-            mainScript.uiController.ShowTopUI(c);
+
 			if (mainScript.activeCharacter != null) {
 				mainScript.activeCharacter.Selected = false;
 			}

@@ -28,6 +28,7 @@ public class MovableObject :  MonoBehaviour {
     Vector3 dist;
     float posX;
     float posY;
+    Vector2 posBeforeDrag;
     
     public LivingObject GetUnit()
     {
@@ -340,6 +341,7 @@ public class MovableObject :  MonoBehaviour {
                     FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().enabled = false;
                     // ChangeToStartMaterial();
                     dragMaterial = false;
+                    transform.position = posBeforeDrag;
                     Debug.Log(hit.collider.name);
                     if (hit.collider.gameObject.tag == "Grid")
                     {
@@ -462,6 +464,7 @@ public class MovableObject :  MonoBehaviour {
         dist = Camera.main.WorldToScreenPoint(transform.position);
         posX = Input.mousePosition.x - dist.x;
         posY = Input.mousePosition.y - dist.y;
+        posBeforeDrag = transform.position;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit = new RaycastHit();
         //Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Terrain"));

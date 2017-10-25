@@ -391,6 +391,24 @@ public class GridScript : MonoBehaviour {
         MovementPath p = aStar.GetPath(monster.Position, position);
         return p;
     }
+    public MovementPath GetMonsterPath(Monster monster, BigTile position, bool adjacent, List<int> attackRanges)
+    {
+        MainScript.GetInstance().AttackRangeFromPath = 0;
+        PathFindingNode[,] nodes = new PathFindingNode[grid.width, grid.height];
+        for (int x = 0; x < grid.width; x++)
+        {
+            for (int y = 0; y < grid.height; y++)
+            {
+                bool isAccesible = fields[x, y].isAccessible;
+                if (fields[x, y].character != null && fields[x, y].character.team != monster.team)
+                    isAccesible = false;
+                nodes[x, y] = new PathFindingNode(x, y, isAccesible);
+            }
+        }
+        AStar2x2 aStar = new AStar2x2(nodes);
+        MovementPath p = aStar.GetPath(monster.Position, position, monster.team, adjacent, attackRanges);
+        return p;
+    }
 
 
 

@@ -627,8 +627,7 @@ public class MainScript : MonoBehaviour {
         MouseManager.ResetMousePath();
         activeCharacter = null;
         gridScript.HideMovement();
-        uiController.HideTopUI();
-        uiController.ShowBottomUI();
+
     }
 
     public void SetActiveCharacter(LivingObject c, bool switchChar){
@@ -675,8 +674,7 @@ public class MainScript : MonoBehaviour {
             activeCharacter.isWaiting = true;
             activeCharacter.Selected = false;
             activeCharacter = null;
-            uiController.HideTopUI();
-            uiController.ShowBottomUI();
+
         }
 	}
 }

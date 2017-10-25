@@ -23,13 +23,13 @@ public class MouseManager : MonoBehaviour {
     static MainScript mainScript;
     public static bool active = true;
     static UXRessources ressources;
-    RaycastHit hit;
+    private static RaycastHit hit;
     static Transform gameWorld;
     static GameObject moveCursor;
     public static bool confirmClick = false;
     public static Vector2 clickedField;
     //GameObject mouseCursor;
-    Ray ray;
+    private static Ray ray;
 	// Use this for initialization
 	void Start () {
         mainScript = FindObjectOfType<MainScript>();
@@ -80,31 +80,7 @@ public class MouseManager : MonoBehaviour {
                                     Debug.Log(Mathf.Round(hit.point.x - GridScript.GRID_X_OFFSET) + " " + Mathf.Round(hit.point.y));
                                     int centerX = (int)Mathf.Round(hit.point.x - GridScript.GRID_X_OFFSET) - 1;
                                     int centerY = (int)Mathf.Round(hit.point.y) -1;
-                                    BigTile clickedBigTile = new BigTile(new Vector2(centerX, centerY), new Vector2(centerX+1, centerY), new Vector2(centerX, centerY+1), new Vector2(centerX+1, centerY+1));
-
-                                    if (!mainScript.gridScript.IsValidAndActive(clickedBigTile,mainScript.activeCharacter.team))
-                                    {
-
-                                        clickedBigTile = new BigTile(new Vector2(x, y), new Vector2(x+1, y), new Vector2(x, y+1), new Vector2(x+1, y+1));
-
-                                        if (!mainScript.gridScript.IsValidAndActive(clickedBigTile, mainScript.activeCharacter.team))
-                                        {
-                                           
-
-                                            clickedBigTile = new BigTile(new Vector2(x - 1, y), new Vector2(x, y), new Vector2(x - 1, y + 1), new Vector2(x, y + 1));
-
-                                            if (!mainScript.gridScript.IsValidAndActive(clickedBigTile, mainScript.activeCharacter.team))
-                                            {
-
-                                                clickedBigTile = new BigTile(new Vector2(x, y - 1), new Vector2(x + 1, y - 1), new Vector2(x, y), new Vector2(x + 1, y));
-
-                                                if (!mainScript.gridScript.IsValidAndActive(clickedBigTile, mainScript.activeCharacter.team))
-                                                {
-                                                    clickedBigTile = new BigTile(new Vector2(x - 1, y - 1), new Vector2(x, y - 1), new Vector2(x - 1, y), new Vector2(x, y));
-                                                }
-                                            }
-                                        }
-                                    }
+                                    BigTile clickedBigTile = GetClickedBigTile(centerX, centerY, x, y);
                                     MouseManager.CalculateMousePathToPositon(mainScript.activeCharacter, clickedBigTile);
                                     MouseManager.DrawMousePath(mainScript.activeCharacter.x, mainScript.activeCharacter.y);
                                 }
@@ -132,46 +108,36 @@ public class MouseManager : MonoBehaviour {
             }
 
         }
-        /*else if(MovableObject.drag==false){
-            updateTime += Time.deltaTime;
-            if (updateTime > updateFrequency) {
-                updateTime = 0;
-                Physics.Raycast(ray, out hit, Mathf.Infinity);
-                if (hit.collider != null)
+
+    }
+    private static BigTile GetClickedBigTile(int centerX, int centerY, int x, int y)
+    {
+        BigTile clickedBigTile= new BigTile(new Vector2(centerX, centerY), new Vector2(centerX + 1, centerY), new Vector2(centerX, centerY + 1), new Vector2(centerX + 1, centerY + 1));
+
+        if (!mainScript.gridScript.IsValidAndActive(clickedBigTile, mainScript.activeCharacter.team))
+        {
+
+            clickedBigTile = new BigTile(new Vector2(x, y), new Vector2(x + 1, y), new Vector2(x, y + 1), new Vector2(x + 1, y + 1));
+
+            if (!mainScript.gridScript.IsValidAndActive(clickedBigTile, mainScript.activeCharacter.team))
+            {
+
+
+                clickedBigTile = new BigTile(new Vector2(x - 1, y), new Vector2(x, y), new Vector2(x - 1, y + 1), new Vector2(x, y + 1));
+
+                if (!mainScript.gridScript.IsValidAndActive(clickedBigTile, mainScript.activeCharacter.team))
                 {
-                    MovableObject cs = hit.collider.gameObject.GetComponent<MovableObject>();
-                    if (hit.collider.tag == "Grid")
+
+                    clickedBigTile = new BigTile(new Vector2(x, y - 1), new Vector2(x + 1, y - 1), new Vector2(x, y), new Vector2(x + 1, y));
+
+                    if (!mainScript.gridScript.IsValidAndActive(clickedBigTile, mainScript.activeCharacter.team))
                     {
-                        int x = (int)Mathf.Floor(hit.point.x);
-                        int y = (int)Mathf.Floor(hit.point.y);
-                        //mouseCursor.transform.position = new Vector3(x + 0.5f, hit.point.y, z + 0.5f);
-                        if (mainScript.activeCharacter != null)
-                        {
-                            CharacterDrag(x, y, mainScript.activeCharacter);
-                        }
-                    }
-                    else if (cs != null)
-                    {
-                        if (cs.unit == mainScript.activeCharacter)
-                        {
-                            Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Terrain"));
-                            int x = (int)Mathf.Floor(hit.point.x);
-                            int y = (int)Mathf.Floor(hit.point.y);
-                            if (x == FindObjectOfType<MainScript>().activeCharacter.x && y == mainScript.activeCharacter.y)
-                                ResetMoveArrow();
-                        }
-                        else if (mainScript.activeCharacter != null && cs.unit.team != mainScript.activeCharacter.team)
-                        {
-                            int x = (int)Mathf.Floor(cs.unit.x);
-                            int y = (int)Mathf.Floor(cs.unit.y);
-                            //mouseCursor.transform.position = new Vector3(x + 0.5f, hit.point.y, z + 0.5f);
-                            CharacterDrag(x, y, mainScript.activeCharacter);
-                        }
+                        clickedBigTile = new BigTile(new Vector2(x - 1, y - 1), new Vector2(x, y - 1), new Vector2(x - 1, y), new Vector2(x, y));
                     }
                 }
             }
-
-        }*/
+        }
+        return clickedBigTile;
     }
     public static int currentX = -1;
     public static int currentY = -1;
@@ -266,15 +232,28 @@ public class MouseManager : MonoBehaviour {
             }
         }
     }
-    public static void CalculateMousePathToPositon(LivingObject character, BigTile position)
+    public static void CalculateMousePathToÉnemy(LivingObject character, BigTile position)
     {
         ResetMousePath();
-        MovementPath p = mainScript.gridScript.GetMonsterPath((Monster)character, position);
+        Debug.Log("FUCKTESTfrom" + character.x + " " + character.y + " to " + position + " team " + character.team + " " + character.AttackRanges[0]);
+        MovementPath p = mainScript.gridScript.GetMonsterPath((Monster)character, position, true, character.AttackRanges);
+        
+        if (p != null)
+        {
             for (int i = 0; i < p.getLength(); i++)
             {
                 Debug.Log(p.getStep(i));
             }
-
+            for (int i = p.getLength() - 2; i >= mainScript.AttackRangeFromPath; i--)
+            {
+                mousePath.Add(new Vector2(p.getStep(i).getX(), p.getStep(i).getY()));
+            }
+        }
+    }
+    public static void CalculateMousePathToPositon(LivingObject character, BigTile position)
+    {
+        ResetMousePath();
+        MovementPath p = mainScript.gridScript.GetMonsterPath((Monster)character, position);
         if (p != null)
         {
             for (int i = p.getLength() - 2; i >= 0; i--)
@@ -299,6 +278,7 @@ public class MouseManager : MonoBehaviour {
         }
         currentX = x;
         currentY = y;
+        
         MapField field = mainScript.gridScript.fields[x, y];
         if (field.isActive && field.character == null)
         {
@@ -315,162 +295,7 @@ public class MouseManager : MonoBehaviour {
         //Dragged on Enemy
         if (field.character != null && field.character.team != character.team)
         {
-            if (FindObjectOfType<GridScript>().IsFieldAttackable(x, y))
-            {
-                //FindObjectOfType<DragCursor>().transform.position = new Vector3(x + 0.5f, FindObjectOfType<GridScript>().fields[x, z].height, z + 0.5f);
-                
-                //GameObject.Find("AttackIconCanvas").transform.position = new Vector3(x + 0.5f, FindObjectOfType<GridScript>().fields[x, z].height + 1.5f, z + 0.5f);
-                //FindObjectOfType<UXRessources>().movementFlag.SetActive(false);
-
-                bool reset = true;
-                for (int i = mainScript.activeCharacter.AttackRanges.Count - 1; i >= 0; i--)
-                {
-                    //if (mainScript.activeCharacter.charclass.AttackRanges[i] == 1)
-                     //   continue;
-                    foreach (Vector2 v in mousePath)
-                    {
-                        int xDiff = (int)Mathf.Abs(v.x - field.character.x);
-                        int yDiff = (int)Mathf.Abs(v.y - field.character.y);
-                        if ((xDiff + yDiff) == mainScript.activeCharacter.AttackRanges[i] && mainScript.gridScript.fields[(int)v.x, (int)v.y].isActive && mainScript.gridScript.fields[(int)v.x, (int)v.y].character == null)
-                        {
-                            //Debug.Log("WHY?");
-
-                            if (mousePath.IndexOf(v) + 1 < mousePath.Count && mousePath.Count - (mousePath.IndexOf(v) + 1) > 0)
-                            {
-                                Debug.Log(GetLastAttackPosition(character, (int)field.character.x, (int)field.character.y));
-                                CalculateMousePathToPositon(character, GetLastAttackPosition(character, (int)field.character.x, (int)field.character.y));
-                                Finish(character, field, x, y);
-                                return;
-                                Debug.Log("Was ist das?" + v + " " + mousePath.IndexOf(v) + " " + (mousePath.Count - (mousePath.IndexOf(v) + 1)) + " " + mousePath.Count + "  " + field.character.x + " " + field.character.y);
-                                reset = false;
-                                mousePath.RemoveRange(mousePath.IndexOf(v) + 1, mousePath.Count - (mousePath.IndexOf(v) + 1));
-                                i = -1;
-                                foreach (GameObject dot in dots)
-                                {
-                                    GameObject.Destroy(dot);
-                                }
-                                dots.Clear();
-                                DrawMousePath(character.x, character.y);
-                                break;
-                            }
-                            else
-                            {
-                                Debug.Log("WEL FUCK");
-                                mousePath.Clear();
-                                foreach (GameObject dot in dots)
-                                {
-                                    GameObject.Destroy(dot);
-                                }
-                                dots.Clear();
-                                DrawMousePath(character.x, character.y);
-                                i = -1;
-                                break;
-                            }
-                        }
-                    }
-                    int xDif = (int)Mathf.Abs(character.x - field.character.x);
-                    int yDif = (int)Mathf.Abs(character.y - field.character.y);
-
-                    if (i != -1 && (xDif + yDif) == mainScript.activeCharacter.AttackRanges[i])
-                    {
-                        Debug.Log("2---Vom Stand aus in Range und mit MousePath nicht in Range!");
-                        mousePath.Clear();
-                        foreach (GameObject dot in dots)
-                        {
-                            GameObject.Destroy(dot);
-                        }
-                        dots.Clear();
-                        DrawMousePath(character.x, character.y);
-                        i = -1;
-                        reset = false;
-                    }
-                }
-
-                //Diagonal
-                if ((Mathf.Abs(oldX - x) + Mathf.Abs(oldY - y) > 1))
-                {
-                    reset = true;
-                }
-                if (reset)
-                {
-                    Debug.Log("Reset");
-                    bool flag = false;
-                    for (int i = mainScript.activeCharacter.AttackRanges.Count - 1; i >= 0; i--)
-                    {
-                        foreach (Vector2 pos in mousePath)
-                        {
-                            int xDiff = (int)Mathf.Abs(pos.x - field.character.x);
-                            int yDiff = (int)Mathf.Abs(pos.y - field.character.y);
-                            if ((xDiff + yDiff) == mainScript.activeCharacter.AttackRanges[i] && mainScript.gridScript.fields[(int)pos.x, (int)pos.y].isActive && mainScript.gridScript.fields[(int)pos.x, (int)pos.y].character == null)
-                            {
-                                Debug.Log("Reset" + pos + " " + mousePath.IndexOf(pos) + " " + (mousePath.Count - (mousePath.IndexOf(pos) + 1)) + " " + mousePath.Count + "  " + character.x + " " + character.y);
-                                if (mousePath.IndexOf(pos) + 1 < mousePath.Count && mousePath.Count - (mousePath.IndexOf(pos) + 1) > 0)
-                                    mousePath.RemoveRange(mousePath.IndexOf(pos) + 1, mousePath.Count - (mousePath.IndexOf(pos) + 1));
-                                i = -1;
-                                flag = true;
-                                break;
-
-                            }
-                        }
-
-                    }
-                    if (!flag)
-                    {
-                        int xDiff = (int)Mathf.Abs(character.x - field.character.x);
-                        int yDiff = (int)Mathf.Abs(character.y - field.character.y);
-                        for (int i = mainScript.activeCharacter.AttackRanges.Count - 1; i >= 0; i--)
-                        {
-                            if ((xDiff + yDiff) == mainScript.activeCharacter.AttackRanges[i])
-                            {
-                                Debug.Log("Vom Stand aus in Range und mit MousePath nicht in Range!");
-                                flag = true;
-                                mousePath.Clear();
-                                break;
-                            }
-                        }
-                    }
-                    if (flag)
-                    {
-                        foreach (GameObject dot in dots)
-                        {
-                            GameObject.Destroy(dot);
-                        }
-                        dots.Clear();
-                        Debug.Log("WTF");
-                        DrawMousePath(character.x, character.y);
-                    }
-                    else
-                    {
-                        Debug.Log("WTF2");
-                        ResetMousePath();
-                        MovementPath p = mainScript.gridScript.getPath(character.x, character.y, x, y, character.team, false, character.AttackRanges);
-                        int removeFromPath = 1;
-                        foreach (int attackRange in mainScript.activeCharacter.AttackRanges)
-                        {
-                            int xAttackRange = (int)p.getStep(p.getLength() - 1 - attackRange).getX();
-                            int yAttackRange = (int)p.getStep(p.getLength() - 1 - attackRange).getY();
-                            if (mainScript.gridScript.fields[xAttackRange, yAttackRange].character == null && mainScript.gridScript.fields[xAttackRange, yAttackRange].isActive)
-                            {
-                                removeFromPath = attackRange;
-                            }
-                        }
-
-
-
-                        if (p != null)
-                        {
-                            for (int i = p.getLength() - 2; i >= removeFromPath; i--)
-                            //  for (int i = removeFromPath; i < p.getLength()-1 ; i++)
-                            {
-                                mousePath.Add(new Vector2(p.getStep(i).getX(), p.getStep(i).getY()));
-                                // Debug.Log(mousePath[i]);
-                            }
-                        }
-
-                        DrawMousePath(character.x, character.y);
-                    }
-                }
-            }
+            DraggedOnEnemy(x, y, field, character);
         }
         //No enemy
         else
@@ -485,51 +310,11 @@ public class MouseManager : MonoBehaviour {
             {
                 FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().enabled = false;
             }
-            if (field.isActive && !(field.x == character.x && field.y == character.y))
-            {
-
-                //FindObjectOfType<UXRessources>().movementFlag.SetActive(true);
-               // FindObjectOfType<UXRessources>().movementFlag.transform.position = new Vector3(x + 0.5f, y + 0.5f,0);
-            }
-            else
-            {
-                //FindObjectOfType<UXRessources>().movementFlag.SetActive(false);
-            }
         }
-        //If Field is Orange and not the filed currently standing on
+        //If Field is Active and not the filed currently standing on
         if (!(x == character.x && y == character.y)&&field.isActive)//&&field.character==null)
         {
-            if (nonActive)
-            {
-                ResetMousePath();
-            }
-            nonActive = false;
-            bool contains = false;
-            if(mousePath.Contains(new Vector2(x, y)))
-            {
-                contains = true;
-            }
-           // Debug.Log("ADD");
-            mousePath.Add(new Vector2(x, y));
-            //Debug.Log("WAHT");
-            foreach (GameObject dot in dots)
-            {
-                GameObject.Destroy(dot);
-            }
-            dots.Clear();
-            if (mousePath.Count> character.movRange||contains||(Mathf.Abs(oldX - x) + Mathf.Abs(oldY - y) > 1))
-            {
-                mousePath.Clear();
-                MovementPath p = mainScript.gridScript.getPath(character.x, character.y, x, y, character.team, false, character.AttackRanges);
-                if (p != null)
-                {
-                    for (int i = p.getLength() - 2; i >= 0; i--)
-                    {
-                        mousePath.Add(new Vector2(p.getStep(i).getX(), p.getStep(i).getY()));
-                    }
-                }
-            }
-            DrawMousePath(character.x,character.y);
+            DraggedOnActiveField(x,y,character);
         }
         else if(x == character.x && y == character.y)
         {
@@ -538,6 +323,208 @@ public class MouseManager : MonoBehaviour {
         }
         Finish(character, field, x, y);
         
+    }
+    public static void DraggedOnEnemy(int x, int y, MapField field,LivingObject character)
+    {
+        if(mainScript.activeCharacter is Monster)
+        {
+            Physics.Raycast(ray, out hit, Mathf.Infinity);
+            int centerX = (int)Mathf.Round(hit.point.x - GridScript.GRID_X_OFFSET) - 1;
+            int centerY = (int)Mathf.Round(hit.point.y) - 1;
+            BigTile clickedBigTile = GetClickedBigTile(centerX, centerY, x, y);
+            CalculateMousePathToÉnemy(mainScript.activeCharacter, clickedBigTile);
+            DrawMousePath(mainScript.activeCharacter.x, mainScript.activeCharacter.y);
+            return;
+        }
+        if (FindObjectOfType<GridScript>().IsFieldAttackable(x, y))
+        {
+            bool reset = true;
+            for (int i = mainScript.activeCharacter.AttackRanges.Count - 1; i >= 0; i--)
+            {
+
+                foreach (Vector2 v in mousePath)
+                {
+                    int xDiff = (int)Mathf.Abs(v.x - field.character.x);
+                    int yDiff = (int)Mathf.Abs(v.y - field.character.y);
+                    if ((xDiff + yDiff) == mainScript.activeCharacter.AttackRanges[i] && mainScript.gridScript.fields[(int)v.x, (int)v.y].isActive && mainScript.gridScript.fields[(int)v.x, (int)v.y].character == null)
+                    {
+                        if (mousePath.IndexOf(v) + 1 < mousePath.Count && mousePath.Count - (mousePath.IndexOf(v) + 1) > 0)
+                        {
+                            Debug.Log(GetLastAttackPosition(character, (int)field.character.x, (int)field.character.y));
+                            CalculateMousePathToPositon(character, GetLastAttackPosition(character, (int)field.character.x, (int)field.character.y));
+                            Finish(character, field, x, y);
+                            return;
+                            Debug.Log("Was ist das?" + v + " " + mousePath.IndexOf(v) + " " + (mousePath.Count - (mousePath.IndexOf(v) + 1)) + " " + mousePath.Count + "  " + field.character.x + " " + field.character.y);
+                            reset = false;
+                            mousePath.RemoveRange(mousePath.IndexOf(v) + 1, mousePath.Count - (mousePath.IndexOf(v) + 1));
+                            i = -1;
+                            foreach (GameObject dot in dots)
+                            {
+                                GameObject.Destroy(dot);
+                            }
+                            dots.Clear();
+                            DrawMousePath(character.x, character.y);
+                            break;
+                        }
+                        else
+                        {
+                            Debug.Log("WEL FUCK");
+                            mousePath.Clear();
+                            foreach (GameObject dot in dots)
+                            {
+                                GameObject.Destroy(dot);
+                            }
+                            dots.Clear();
+                            DrawMousePath(character.x, character.y);
+                            i = -1;
+                            break;
+                        }
+                    }
+                }
+                int xDif = (int)Mathf.Abs(character.x - field.character.x);
+                int yDif = (int)Mathf.Abs(character.y - field.character.y);
+
+                if (i != -1 && (xDif + yDif) == mainScript.activeCharacter.AttackRanges[i])
+                {
+                    Debug.Log("2---Vom Stand aus in Range und mit MousePath nicht in Range!");
+                    mousePath.Clear();
+                    foreach (GameObject dot in dots)
+                    {
+                        GameObject.Destroy(dot);
+                    }
+                    dots.Clear();
+                    DrawMousePath(character.x, character.y);
+                    i = -1;
+                    reset = false;
+                }
+            }
+
+            //Diagonal
+            if ((Mathf.Abs(oldX - x) + Mathf.Abs(oldY - y) > 1))
+            {
+                reset = true;
+            }
+            if (reset)
+            {
+                Debug.Log("Reset");
+                bool flag = false;
+                for (int i = mainScript.activeCharacter.AttackRanges.Count - 1; i >= 0; i--)
+                {
+                    foreach (Vector2 pos in mousePath)
+                    {
+                        int xDiff = (int)Mathf.Abs(pos.x - field.character.x);
+                        int yDiff = (int)Mathf.Abs(pos.y - field.character.y);
+                        if ((xDiff + yDiff) == mainScript.activeCharacter.AttackRanges[i] && mainScript.gridScript.fields[(int)pos.x, (int)pos.y].isActive && mainScript.gridScript.fields[(int)pos.x, (int)pos.y].character == null)
+                        {
+                            Debug.Log("Reset" + pos + " " + mousePath.IndexOf(pos) + " " + (mousePath.Count - (mousePath.IndexOf(pos) + 1)) + " " + mousePath.Count + "  " + character.x + " " + character.y);
+                            if (mousePath.IndexOf(pos) + 1 < mousePath.Count && mousePath.Count - (mousePath.IndexOf(pos) + 1) > 0)
+                                mousePath.RemoveRange(mousePath.IndexOf(pos) + 1, mousePath.Count - (mousePath.IndexOf(pos) + 1));
+                            i = -1;
+                            flag = true;
+                            break;
+
+                        }
+                    }
+
+                }
+                if (!flag)
+                {
+                    int xDiff = (int)Mathf.Abs(character.x - field.character.x);
+                    int yDiff = (int)Mathf.Abs(character.y - field.character.y);
+                    for (int i = mainScript.activeCharacter.AttackRanges.Count - 1; i >= 0; i--)
+                    {
+                        if ((xDiff + yDiff) == mainScript.activeCharacter.AttackRanges[i])
+                        {
+                            Debug.Log("Vom Stand aus in Range und mit MousePath nicht in Range!");
+                            flag = true;
+                            mousePath.Clear();
+                            break;
+                        }
+                    }
+                }
+                if (flag)
+                {
+                    foreach (GameObject dot in dots)
+                    {
+                        GameObject.Destroy(dot);
+                    }
+                    dots.Clear();
+                    DrawMousePath(character.x, character.y);
+                }
+                else
+                {
+                    ResetMousePath();
+                    MovementPath p = mainScript.gridScript.getPath(character.x, character.y, x, y, character.team, false, character.AttackRanges);
+                    int removeFromPath = 1;
+                    foreach (int attackRange in mainScript.activeCharacter.AttackRanges)
+                    {
+                        int xAttackRange = (int)p.getStep(p.getLength() - 1 - attackRange).getX();
+                        int yAttackRange = (int)p.getStep(p.getLength() - 1 - attackRange).getY();
+                        if (mainScript.gridScript.fields[xAttackRange, yAttackRange].character == null && mainScript.gridScript.fields[xAttackRange, yAttackRange].isActive)
+                        {
+                            removeFromPath = attackRange;
+                        }
+                    }
+
+
+
+                    if (p != null)
+                    {
+                        for (int i = p.getLength() - 2; i >= removeFromPath; i--)
+                        {
+                            mousePath.Add(new Vector2(p.getStep(i).getX(), p.getStep(i).getY()));
+                        }
+                    }
+
+                    DrawMousePath(character.x, character.y);
+                }
+            }
+        }
+    }
+    public static void DraggedOnActiveField(int x, int y, LivingObject character)
+    {
+        if (nonActive)
+        {
+            ResetMousePath();
+        }
+        if (mainScript.activeCharacter is Monster)
+        {
+            Physics.Raycast(ray, out hit, Mathf.Infinity);
+            int centerX = (int)Mathf.Round(hit.point.x - GridScript.GRID_X_OFFSET) - 1;
+            int centerY = (int)Mathf.Round(hit.point.y) - 1;
+            BigTile clickedBigTile = GetClickedBigTile(centerX, centerY, x, y);
+            CalculateMousePathToPositon(mainScript.activeCharacter, clickedBigTile);
+            DrawMousePath(mainScript.activeCharacter.x, mainScript.activeCharacter.y);
+            return;
+        }
+        
+        nonActive = false;
+        bool contains = false;
+        if (mousePath.Contains(new Vector2(x, y)))
+        {
+            contains = true;
+        }
+        // Debug.Log("ADD");
+        mousePath.Add(new Vector2(x, y));
+        //Debug.Log("WAHT");
+        foreach (GameObject dot in dots)
+        {
+            GameObject.Destroy(dot);
+        }
+        dots.Clear();
+        if (mousePath.Count > character.movRange || contains || (Mathf.Abs(oldX - x) + Mathf.Abs(oldY - y) > 1))
+        {
+            mousePath.Clear();
+            MovementPath p = mainScript.gridScript.getPath(character.x, character.y, x, y, character.team, false, character.AttackRanges);
+            if (p != null)
+            {
+                for (int i = p.getLength() - 2; i >= 0; i--)
+                {
+                    mousePath.Add(new Vector2(p.getStep(i).getX(), p.getStep(i).getY()));
+                }
+            }
+        }
+        DrawMousePath(character.x, character.y);
     }
     public static void DrawMousePath(int startx, int starty)
     {
