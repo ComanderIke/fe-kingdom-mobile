@@ -335,7 +335,7 @@ public class MovableObject :  MonoBehaviour {
                     RaycastHit hit = new RaycastHit();
                     //Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Terrain"));
                     Physics.Raycast(ray, out hit, Mathf.Infinity);
-                    int x = (int)Mathf.Floor(hit.point.x);
+                    int x = (int)Mathf.Floor(hit.point.x-GridScript.GRID_X_OFFSET);
                     int y = (int)Mathf.Floor(hit.point.y);
                     FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().enabled = false;
                     // ChangeToStartMaterial();
@@ -440,20 +440,11 @@ public class MovableObject :  MonoBehaviour {
                 worldPos.z = 0;
                 worldPos.x -= GridScript.GRID_X_OFFSET;
                 transform.localPosition = Vector3.Lerp(transform.localPosition,worldPos,Time.deltaTime*13);
-                if (hit.collider.tag == "Grid")
-                {
-                    int x = (int)Mathf.Floor(hit.point.x);
-                    int y = (int)Mathf.Floor(hit.point.y);
-                    if (MouseManager.active)
-                        MouseManager.CharacterDrag(x, y, unit);
-                }
-                else if (hit.collider.GetComponent<MovableObject>() != null)
-                {
-                    int x = hit.collider.GetComponent<MovableObject>().unit.x;
-                    int y= hit.collider.GetComponent<MovableObject>().unit.y;
-                    if (MouseManager.active)
-                        MouseManager.CharacterDrag(x, y, unit);
-                }
+ 
+                int x = (int)Mathf.Floor(hit.point.x-GridScript.GRID_X_OFFSET);
+                int y = (int)Mathf.Floor(hit.point.y);
+                if (MouseManager.active)
+                    MouseManager.CharacterDrag(x, y, unit);
             }
         }
     }
@@ -471,6 +462,14 @@ public class MovableObject :  MonoBehaviour {
         dist = Camera.main.WorldToScreenPoint(transform.position);
         posX = Input.mousePosition.x - dist.x;
         posY = Input.mousePosition.y - dist.y;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit = new RaycastHit();
+        //Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Terrain"));
+        Physics.Raycast(ray, out hit, Mathf.Infinity);
+        int x = (int)Mathf.Floor(hit.point.x-GridScript.GRID_X_OFFSET);
+        int y = (int)Mathf.Floor(hit.point.y);
+        MouseManager.currentX = x;
+        MouseManager.currentY = y;
         MouseManager.oldMousePath = new List<Vector2>(MouseManager.mousePath);
         if (!EventSystem.current.IsPointerOverGameObject())
         {

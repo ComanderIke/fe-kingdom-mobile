@@ -336,14 +336,14 @@ namespace Assets.Scripts.GameStates
                 {
                     //Enemy already in Range
                     
-                    if (MouseManager.confirmClick && MouseManager.clickedField == new Vector2(c.x,c.y))
+                    if (MouseManager.confirmClick && MouseManager.clickedField == new Vector2(MouseManager.currentX, MouseManager.currentY))
                         GoToEnemy(mainScript.activeCharacter, c, false);
                     else
                     {
-                        Debug.Log(c.name+" "+ c.x+" "+c.y);
+                        Debug.Log(c.name+" "+ MouseManager.currentX + " "+ MouseManager.currentY);
                         MouseManager.confirmClick = true;
-                        MouseManager.clickedField = new Vector2(c.x, c.y);
-                        MouseManager.CalculateMousePathToEnemy(mainScript.activeCharacter, new Vector2(c.x, c.y));
+                        MouseManager.clickedField = new Vector2(MouseManager.currentX, MouseManager.currentY);
+                        MouseManager.CalculateMousePathToEnemy(mainScript.activeCharacter, new Vector2(MouseManager.currentX, MouseManager.currentY));
                         MouseManager.DrawMousePath(mainScript.activeCharacter.x, mainScript.activeCharacter.y);
                     }
                    

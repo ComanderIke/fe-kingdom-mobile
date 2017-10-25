@@ -56,7 +56,8 @@ public class MouseManager : MonoBehaviour {
             Physics.Raycast(ray, out hit, Mathf.Infinity);
             int x = (int)Mathf.Floor(hit.point.x-GridScript.GRID_X_OFFSET);
             int y = (int)Mathf.Floor(hit.point.y);
-           
+            MouseManager.currentX = x;
+            MouseManager.currentY = y;
             if (hit.collider != null)
             {
                 if (hit.collider.tag == "Grid")
@@ -172,15 +173,17 @@ public class MouseManager : MonoBehaviour {
 
         }*/
     }
-    static int oldX = -1;
-    static int oldY=-1;
+    public static int currentX = -1;
+    public static int currentY = -1;
+    public static int oldX = -1;
+    public static int oldY=-1;
     public static List<Vector2> mousePath = new List<Vector2>();
     public static List<CursorPosition> lastPositions = new List<CursorPosition>();
     public static List<Vector2> oldMousePath = new List<Vector2>();
     static List<GameObject> dots = new List<GameObject>();
     public static void ResetMousePath()
     {
-        Debug.Log("ResetMousePath");
+        //Debug.Log("ResetMousePath");
         foreach (GameObject dot in dots)
         {
             GameObject.Destroy(dot);
@@ -289,12 +292,13 @@ public class MouseManager : MonoBehaviour {
             ResetMousePath();
             return;
         }
-
+        
         if (isOldDrag(x, y))
         {
             return;
         }
-
+        currentX = x;
+        currentY = y;
         MapField field = mainScript.gridScript.fields[x, y];
         if (field.isActive && field.character == null)
         {
@@ -432,10 +436,12 @@ public class MouseManager : MonoBehaviour {
                             GameObject.Destroy(dot);
                         }
                         dots.Clear();
+                        Debug.Log("WTF");
                         DrawMousePath(character.x, character.y);
                     }
                     else
                     {
+                        Debug.Log("WTF2");
                         ResetMousePath();
                         MovementPath p = mainScript.gridScript.getPath(character.x, character.y, x, y, character.team, false, character.AttackRanges);
                         int removeFromPath = 1;
@@ -535,7 +541,7 @@ public class MouseManager : MonoBehaviour {
     }
     public static void DrawMousePath(int startx, int starty)
     {
-        Debug.Log("DrawMousePath");
+        //Debug.Log("DrawMousePath");
         if (moveCursor != null)
             GameObject.Destroy(moveCursor);
         
