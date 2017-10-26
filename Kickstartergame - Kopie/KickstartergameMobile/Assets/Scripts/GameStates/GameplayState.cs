@@ -344,7 +344,7 @@ namespace Assets.Scripts.GameStates
                         MouseManager.confirmClick = true;
                         MouseManager.clickedField = new Vector2(MouseManager.currentX, MouseManager.currentY);
                         MouseManager.CalculateMousePathToEnemy(mainScript.activeCharacter, new Vector2(MouseManager.currentX, MouseManager.currentY));
-                        MouseManager.DrawMousePath(mainScript.activeCharacter.x, mainScript.activeCharacter.y);
+                        MouseManager.DrawMousePath();
                     }
                    
                     return;

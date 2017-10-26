@@ -303,11 +303,11 @@ public class MainScript : MonoBehaviour {
         if (gameState is GameplayState)
         {
             List<Vector3> movePath = new List<Vector3>();
-            for (int i = 0; i < path.Count; i++)
-            {
-                movePath.Add(new Vector2(path[i].x, path[i].y));
-                Debug.Log(movePath[i]);
-            }
+            //for (int i = 0; i < path.Count; i++)
+            //{
+            //    movePath.Add(new Vector2(path[i].x, path[i].y));
+            //    Debug.Log(movePath[i]);
+            //}
             ((GameplayState)gameState).MoveCharacter(c, x, y,movePath, drag, targetState);
         }
     }

@@ -34,6 +34,10 @@ namespace Assets.Scripts.Grid
         {
             return positions[3];
         }
+        public Vector2 CenterPos()
+        {
+            return new Vector2(BottomLeft().x + 0.5f, BottomLeft().y + 0.5f);
+        }
         public override bool Equals(object obj)
         {
             if(obj is BigTile)

@@ -82,12 +82,12 @@ public class MouseManager : MonoBehaviour {
                                     int centerY = (int)Mathf.Round(hit.point.y) -1;
                                     BigTile clickedBigTile = GetClickedBigTile(centerX, centerY, x, y);
                                     MouseManager.CalculateMousePathToPositon(mainScript.activeCharacter, clickedBigTile);
-                                    MouseManager.DrawMousePath(mainScript.activeCharacter.x, mainScript.activeCharacter.y);
+                                    MouseManager.DrawMousePath();
                                 }
                                 else
                                 {
                                     MouseManager.CalculateMousePathToPositon(mainScript.activeCharacter, new Vector2(x, y));
-                                    MouseManager.DrawMousePath(mainScript.activeCharacter.x, mainScript.activeCharacter.y);
+                                    MouseManager.DrawMousePath();
                                 }
                             }
                         }
@@ -261,6 +261,11 @@ public class MouseManager : MonoBehaviour {
                 mousePath.Add(new Vector2(p.getStep(i).getX(), p.getStep(i).getY()));
             }
         }
+        Debug.Log("======");
+        for (int i = 0; i < mousePath.Count; i++)
+        {
+            Debug.Log(mousePath[i]);
+        }
 
     }
     public static void CharacterDrag(int x, int y, LivingObject character)
@@ -333,7 +338,7 @@ public class MouseManager : MonoBehaviour {
             int centerY = (int)Mathf.Round(hit.point.y) - 1;
             BigTile clickedBigTile = GetClickedBigTile(centerX, centerY, x, y);
             CalculateMousePathToÉnemy(mainScript.activeCharacter, clickedBigTile);
-            DrawMousePath(mainScript.activeCharacter.x, mainScript.activeCharacter.y);
+            DrawMousePath();
             return;
         }
         if (FindObjectOfType<GridScript>().IsFieldAttackable(x, y))
@@ -363,7 +368,7 @@ public class MouseManager : MonoBehaviour {
                                 GameObject.Destroy(dot);
                             }
                             dots.Clear();
-                            DrawMousePath(character.x, character.y);
+                            DrawMousePath();
                             break;
                         }
                         else
@@ -375,7 +380,7 @@ public class MouseManager : MonoBehaviour {
                                 GameObject.Destroy(dot);
                             }
                             dots.Clear();
-                            DrawMousePath(character.x, character.y);
+                            DrawMousePath();
                             i = -1;
                             break;
                         }
@@ -393,7 +398,7 @@ public class MouseManager : MonoBehaviour {
                         GameObject.Destroy(dot);
                     }
                     dots.Clear();
-                    DrawMousePath(character.x, character.y);
+                    DrawMousePath();
                     i = -1;
                     reset = false;
                 }
@@ -449,7 +454,7 @@ public class MouseManager : MonoBehaviour {
                         GameObject.Destroy(dot);
                     }
                     dots.Clear();
-                    DrawMousePath(character.x, character.y);
+                    DrawMousePath();
                 }
                 else
                 {
@@ -476,7 +481,7 @@ public class MouseManager : MonoBehaviour {
                         }
                     }
 
-                    DrawMousePath(character.x, character.y);
+                    DrawMousePath();
                 }
             }
         }
@@ -494,7 +499,7 @@ public class MouseManager : MonoBehaviour {
             int centerY = (int)Mathf.Round(hit.point.y) - 1;
             BigTile clickedBigTile = GetClickedBigTile(centerX, centerY, x, y);
             CalculateMousePathToPositon(mainScript.activeCharacter, clickedBigTile);
-            DrawMousePath(mainScript.activeCharacter.x, mainScript.activeCharacter.y);
+            DrawMousePath();
             return;
         }
         
@@ -524,14 +529,30 @@ public class MouseManager : MonoBehaviour {
                 }
             }
         }
-        DrawMousePath(character.x, character.y);
+        DrawMousePath();
     }
-    public static void DrawMousePath(int startx, int starty)
+    public static void DrawMousePath()
     {
         //Debug.Log("DrawMousePath");
+        float startX = -1;
+        float startY = -1;
+        if(mainScript.activeCharacter is Monster)
+        {
+            startX = ((Monster)mainScript.activeCharacter).Position.CenterPos().x;
+            startY= ((Monster)mainScript.activeCharacter).Position.CenterPos().y;
+        }
+        else
+        {
+            startX=mainScript.activeCharacter.x;
+            startY = mainScript.activeCharacter.y;
+        }
         if (moveCursor != null)
             GameObject.Destroy(moveCursor);
-        
+        Debug.Log("------"+ mainScript.activeCharacter.name+" "+startX + " "+startY);
+        for (int i = 0; i < mousePath.Count; i++)
+        {
+            Debug.Log(mousePath[i]);
+        }
         for (int i=0; i < mousePath.Count; i++) 
         {
             Vector2 v = mousePath[i];
@@ -557,13 +578,13 @@ public class MouseManager : MonoBehaviour {
                 }
                 else
                 {
-                    if (v.x - startx > 0)
+                    if (v.x - startX > 0)
                         dot.transform.rotation = Quaternion.Euler(0, 0, 180);
-                    else if (v.x -startx < 0)
+                    else if (v.x -startX < 0)
                         dot.transform.rotation = Quaternion.Euler(0, 0, 0);
-                    else if (v.y - starty > 0)
+                    else if (v.y - startY > 0)
                         dot.transform.rotation = Quaternion.Euler(0, 0, 270);
-                    else if (v.y - starty < 0)
+                    else if (v.y - startY < 0)
                         dot.transform.rotation = Quaternion.Euler(0, 0, 90);
                 }
             }
@@ -579,7 +600,7 @@ public class MouseManager : MonoBehaviour {
                 }
                 else
                 {
-                    vBefore = new Vector2(startx, starty);
+                    vBefore = new Vector2(startX, startY);
                     ArrowCurve(dot, v, vBefore, vAfter);
                 }
             }
