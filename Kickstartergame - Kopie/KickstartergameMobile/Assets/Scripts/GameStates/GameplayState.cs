@@ -241,7 +241,7 @@ namespace Assets.Scripts.GameStates
                         int sy = (int)mainScript.activeCharacter.gameObject.transform.position.y;
                         int tx = (int)x;
                         int ty = (int)y;
-                        List<Vector3> movePath = new List<Vector3>();
+                        List<Vector2> movePath = new List<Vector2>();
                         for (int i = 0; i < MouseManager.oldMousePath.Count; i++)
                         {
                             movePath.Add(new Vector2(MouseManager.oldMousePath[i].x, MouseManager.oldMousePath[i].y));
@@ -301,7 +301,7 @@ namespace Assets.Scripts.GameStates
                     int ty = (int)enemy.gameObject.transform.position.y;
 
  
-                    List<Vector3> movePath = new List<Vector3>();
+                    List<Vector2> movePath = new List<Vector2>();
                     for (int i = 0; i < MouseManager.oldMousePath.Count; i++)
                     {
                         movePath.Add(new Vector2(MouseManager.oldMousePath[i].x, MouseManager.oldMousePath[i].y));
@@ -460,7 +460,7 @@ namespace Assets.Scripts.GameStates
         {
             mainScript.SwitchState(new MovementState(mainScript, c, x, y,drag, targetState));
         }
-        public void MoveCharacter(LivingObject c, int x,int y,List<Vector3>path, bool drag, GameState targetState)
+        public void MoveCharacter(LivingObject c, int x,int y,List<Vector2>path, bool drag, GameState targetState)
         {
             mainScript.SwitchState(new MovementState(mainScript, c,x,y,path, drag, targetState));
         }

@@ -15,7 +15,7 @@ namespace Assets.Scripts.GameStates
         private MainScript mainScript;
         private LivingObject character;
         private GameState targetState;
-        List<Vector3> mousePath;
+        List<Vector2> mousePath;
         bool drag;
         public MovementState(MainScript mainScript,LivingObject c, int x, int y, bool drag,GameState targetState)
         {
@@ -26,7 +26,7 @@ namespace Assets.Scripts.GameStates
             this.character = c;
             this.drag = drag;
         }
-        public MovementState(MainScript mainScript, LivingObject c,int x,int y, List<Vector3>path, bool drag, GameState targetState)
+        public MovementState(MainScript mainScript, LivingObject c,int x,int y, List<Vector2>path, bool drag, GameState targetState)
         {
             this.mainScript = mainScript;
             this.targetState = targetState;
@@ -35,8 +35,6 @@ namespace Assets.Scripts.GameStates
             this.y = y;
             this.drag = drag;
             this.mousePath = path;
-            Debug.Log(mousePath);
-            Debug.Log(mainScript.activeCharacter.name);
         }
 
         public override void enter()
@@ -44,6 +42,7 @@ namespace Assets.Scripts.GameStates
             MouseManager.active = false;
             if (mousePath == null)
             {
+                Debug.Log("MOUSEPATH NULL");
                 if (character.x == x && character.y== y)
                 {
                     mainScript.SwitchState(targetState);
@@ -57,20 +56,31 @@ namespace Assets.Scripts.GameStates
             {
                 mainScript.gridScript.HideMovement();
             }
-            if (mousePath == null|| mousePath.Count == 0)
+            if ( mousePath.Count == 0)
             {
-                Debug.Log(character.x + " " + character.y+ " "+x+ " "+y);
+                Debug.Log("MOUSEPATH COUNT 0"+ character.x + " " + character.y+ " "+x+ " "+y);
+                for (int i = 0; i < MouseManager.mousePath.Count; i++)
+                {
+
+                    Debug.Log(MouseManager.mousePath[i]);
+                }
                 path = mainScript.gridScript.getPath((int)character.x, (int)character.y, x, y, character.team, false, new List<int>());
                
                 if (path!=null)
                     path.Reverse();
-                //for (int i = 0; i < path.getLength(); i++)
-                //{
 
-                //    Debug.Log(path.getStep(i).getX() + " " + path.getStep(i).getY());
-                //}
                 pathCounter = 1;
             }
+            if(mainScript.activeCharacter is Monster)
+            {
+                for (int i = 0; i < mousePath.Count; i++)
+                {
+
+                    mousePath[i] = new Vector3(mousePath[i].x - 0.5f, mousePath[i].y - 0.5f, 0);
+                }
+
+            }
+           
         }
 
         public override void exit()

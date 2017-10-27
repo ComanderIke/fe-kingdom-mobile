@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using Assets.Scripts.Characters;
+using Assets.Scripts.Grid;
 
 public class MovableObject :  MonoBehaviour {
     [HideInInspector]
@@ -348,6 +349,11 @@ public class MovableObject :  MonoBehaviour {
                         if (FindObjectOfType<GridScript>().fields[x, y].isActive && !(x == unit.x && y == unit.y))
                         {
                             unit.SetPosition(unit.x, unit.y);
+                            //int centerX = (int)Mathf.Round(hit.point.x - GridScript.GRID_X_OFFSET) - 1;
+                            //int centerY = (int)Mathf.Round(hit.point.y) - 1;
+                            //BigTile clickedBigTile = MouseManager.GetClickedBigTile(centerX, centerY, x, y);
+
+                           // MouseManager.CalculateMousePathToPositon(unit, clickedBigTile);
                             FindObjectOfType<MainScript>().MoveCharacterTo(unit, x , y, MouseManager.oldMousePath, true, new GameplayState());
 
                         }

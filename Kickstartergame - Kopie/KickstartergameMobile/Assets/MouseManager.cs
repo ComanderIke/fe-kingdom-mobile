@@ -103,14 +103,14 @@ public class MouseManager : MonoBehaviour {
             oldMousePath = new List<Vector2>(mousePath);
             if (!confirmClick)
             {
-                
+                Debug.Log("WTF");
                 ResetMousePath();
             }
 
         }
 
     }
-    private static BigTile GetClickedBigTile(int centerX, int centerY, int x, int y)
+    public static BigTile GetClickedBigTile(int centerX, int centerY, int x, int y)
     {
         BigTile clickedBigTile= new BigTile(new Vector2(centerX, centerY), new Vector2(centerX + 1, centerY), new Vector2(centerX, centerY + 1), new Vector2(centerX + 1, centerY + 1));
 
@@ -149,7 +149,7 @@ public class MouseManager : MonoBehaviour {
     static List<GameObject> dots = new List<GameObject>();
     public static void ResetMousePath()
     {
-        //Debug.Log("ResetMousePath");
+        Debug.Log("ResetMousePath");
         foreach (GameObject dot in dots)
         {
             GameObject.Destroy(dot);
@@ -261,11 +261,11 @@ public class MouseManager : MonoBehaviour {
                 mousePath.Add(new Vector2(p.getStep(i).getX(), p.getStep(i).getY()));
             }
         }
-        Debug.Log("======");
-        for (int i = 0; i < mousePath.Count; i++)
-        {
-            Debug.Log(mousePath[i]);
-        }
+        //Debug.Log("======");
+        //for (int i = 0; i < mousePath.Count; i++)
+        //{
+        //    Debug.Log(mousePath[i]);
+        //}
 
     }
     public static void CharacterDrag(int x, int y, LivingObject character)
@@ -548,7 +548,7 @@ public class MouseManager : MonoBehaviour {
         }
         if (moveCursor != null)
             GameObject.Destroy(moveCursor);
-        Debug.Log("------"+ mainScript.activeCharacter.name+" "+startX + " "+startY);
+        //Debug.Log("------"+ mainScript.activeCharacter.name+" "+startX + " "+startY);
         for (int i = 0; i < mousePath.Count; i++)
         {
             Debug.Log(mousePath[i]);
