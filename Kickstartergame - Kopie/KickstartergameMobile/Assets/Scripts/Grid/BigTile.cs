@@ -34,6 +34,17 @@ namespace Assets.Scripts.Grid
         {
             return positions[3];
         }
+        public bool Contains(Vector2 pos)
+        {
+            foreach(Vector2 p in positions)
+            {
+                if (p == pos)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         public Vector2 CenterPos()
         {
             return new Vector2(BottomLeft().x + 0.5f, BottomLeft().y + 0.5f);

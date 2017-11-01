@@ -409,8 +409,55 @@ public class GridScript : MonoBehaviour {
         MovementPath p = aStar.GetPath(monster.Position, position, monster.team, adjacent, attackRanges);
         return p;
     }
-
-
+    public BigTile GetMoveableBigTileFromPosition(Vector2 position, int team, LivingObject character)
+    {
+        BigTile leftTop = new BigTile(new Vector2(position.x - 1, position.y), new Vector2(position.x, position.y), new Vector2(position.x - 1, position.y + 1), new Vector2(position.x, position.y + 1));
+        BigTile leftBottom = new BigTile(new Vector2(position.x - 1, position.y - 1), new Vector2(position.x, position.y - 1), new Vector2(position.x - 1, position.y), new Vector2(position.x, position.y));
+        BigTile rightTop = new BigTile(new Vector2(position.x, position.y), new Vector2(position.x + 1, position.y), new Vector2(position.x, position.y + 1), new Vector2(position.x + 1, position.y + 1));
+        BigTile rightBottom = new BigTile(new Vector2(position.x, position.y - 1), new Vector2(position.x + 1, position.y - 1), new Vector2(position.x, position.y), new Vector2(position.x + 1, position.y));
+        if (isMovableLocation(leftTop, team,character))
+            return leftTop;
+        if (isMovableLocation(leftBottom, team,character))
+            return leftBottom;
+        if (isMovableLocation(rightTop, team,character))
+            return rightTop;
+        if (isMovableLocation(rightBottom, team,character))
+            return rightBottom;
+        return null;
+    }
+    public BigTile GetNearestBigTileFromEnemy(LivingObject character)
+    {
+        Vector2 leftPosition = new Vector2(character.x - 1, character.y);
+        Vector2 rightPosition = new Vector2(character.x + 1, character.y);
+        Vector2 topPosition = new Vector2(character.x , character.y+1);
+        Vector2 bottomPosition = new Vector2(character.x , character.y-1);
+        if (isValidLocation(leftPosition,character.team,character))
+        {
+            BigTile moveOption =GetMoveableBigTileFromPosition(leftPosition, character.team, character);
+            if (moveOption != null)
+                return moveOption;
+        }
+        if (isValidLocation(rightPosition, character.team,character))
+        {
+            BigTile moveOption = GetMoveableBigTileFromPosition(rightPosition, character.team, character);
+            if (moveOption != null)
+                return moveOption;
+        }
+        if (isValidLocation(topPosition, character.team,character))
+        {
+            BigTile moveOption = GetMoveableBigTileFromPosition(topPosition, character.team, character);
+            if (moveOption != null)
+                return moveOption;
+        }
+        if (isValidLocation(bottomPosition, character.team,character))
+        {
+            BigTile moveOption = GetMoveableBigTileFromPosition(bottomPosition, character.team,character);
+            if (moveOption != null)
+                return moveOption;
+        }
+        
+        return null;
+    }
 
     public void HideMovement()
     {
@@ -477,7 +524,30 @@ public class GridScript : MonoBehaviour {
     {
 		return new Vector3(x * cellSize, y * cellSize, 0);
     }
+    private bool isValidLocation(Vector2 pos, int team, LivingObject character)
+    {
+        bool invalid = (pos.x < 0) || (pos.y < 0) || (pos.x >= grid.width) || (pos.y >= grid.height);
 
+        if (!invalid)
+        {
+            if (!fields[(int)pos.x, (int)pos.y].isActive)
+                return false;
+            invalid = !fields[(int)pos.x, (int)pos.y].isAccessible;
+            if (fields[(int)pos.x, (int)pos.y].character != null)
+            {
+                if(fields[(int)pos.x, (int)pos.y].character != character)
+                    invalid = true;
+            }
+        }
+        
+        return !invalid;
+    }
+
+    private bool isMovableLocation(BigTile position, int team, LivingObject character)
+    {
+
+        return isValidLocation(position.BottomLeft(), team, character) && isValidLocation(position.BottomRight(), team, character) && isValidLocation(position.TopLeft(), team, character) && isValidLocation(position.TopRight(), team, character);
+    }
     private bool nodeFaster(int x, int y, int c)
     {
         if (nodes[x, y].c < c)

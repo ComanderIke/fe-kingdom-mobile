@@ -330,31 +330,34 @@ public class MovableObject :  MonoBehaviour {
             {
                 if (!delayDrag)
                 {
-                    //FindObjectOfType<UXRessources>().movementFlag.SetActive(false);
                     dragging = false;
                     drag = false;
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     RaycastHit hit = new RaycastHit();
-                    //Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Terrain"));
                     Physics.Raycast(ray, out hit, Mathf.Infinity);
                     int x = (int)Mathf.Floor(hit.point.x-GridScript.GRID_X_OFFSET);
                     int y = (int)Mathf.Floor(hit.point.y);
                     FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().enabled = false;
-                    // ChangeToStartMaterial();
                     dragMaterial = false;
-                    transform.position = posBeforeDrag;
-                    Debug.Log(hit.collider.name);
+                    transform.localPosition = posBeforeDrag;
                     if (hit.collider.gameObject.tag == "Grid")
                     {
                         if (FindObjectOfType<GridScript>().fields[x, y].isActive && !(x == unit.x && y == unit.y))
                         {
-                            unit.SetPosition(unit.x, unit.y);
-                            //int centerX = (int)Mathf.Round(hit.point.x - GridScript.GRID_X_OFFSET) - 1;
-                            //int centerY = (int)Mathf.Round(hit.point.y) - 1;
-                            //BigTile clickedBigTile = MouseManager.GetClickedBigTile(centerX, centerY, x, y);
+                            if (!(unit is Monster)||(unit is Monster && !((Monster)unit).Position.Contains(new Vector2(x, y))))
+                            {
+                                unit.SetPosition(unit.x, unit.y);
+                                //int centerX = (int)Mathf.Round(hit.point.x - GridScript.GRID_X_OFFSET) - 1;
+                                //int centerY = (int)Mathf.Round(hit.point.y) - 1;
+                                //BigTile clickedBigTile = MouseManager.GetClickedBigTile(centerX, centerY, x, y);
 
-                           // MouseManager.CalculateMousePathToPositon(unit, clickedBigTile);
-                            FindObjectOfType<MainScript>().MoveCharacterTo(unit, x , y, MouseManager.oldMousePath, true, new GameplayState());
+                                // MouseManager.CalculateMousePathToPositon(unit, clickedBigTile);
+                                FindObjectOfType<MainScript>().MoveCharacterTo(unit, x, y, MouseManager.oldMousePath, true, new GameplayState());
+                            }
+                            else
+                            {
+                                FindObjectOfType<MainScript>().DeselectActiveCharacter();
+                            }
 
                         }
                         else if (FindObjectOfType<GridScript>().fields[x, y].character != null && FindObjectOfType<GridScript>().fields[x, y].character.team != unit.team)
@@ -470,7 +473,7 @@ public class MovableObject :  MonoBehaviour {
         dist = Camera.main.WorldToScreenPoint(transform.position);
         posX = Input.mousePosition.x - dist.x;
         posY = Input.mousePosition.y - dist.y;
-        posBeforeDrag = transform.position;
+        posBeforeDrag = transform.localPosition;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit = new RaycastHit();
         //Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Terrain"));

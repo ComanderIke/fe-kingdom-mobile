@@ -103,7 +103,6 @@ public class MouseManager : MonoBehaviour {
             oldMousePath = new List<Vector2>(mousePath);
             if (!confirmClick)
             {
-                Debug.Log("WTF");
                 ResetMousePath();
             }
 
@@ -149,7 +148,7 @@ public class MouseManager : MonoBehaviour {
     static List<GameObject> dots = new List<GameObject>();
     public static void ResetMousePath()
     {
-        Debug.Log("ResetMousePath");
+        //Debug.Log("ResetMousePath");
         foreach (GameObject dot in dots)
         {
             GameObject.Destroy(dot);
@@ -218,6 +217,7 @@ public class MouseManager : MonoBehaviour {
     public static void CalculateMousePathToEnemy(LivingObject character, Vector2 position)
     {
         ResetMousePath();
+
         Debug.Log("from" + character.x + " " + character.y + " to " + position.x + " " + position.y + " team " + character.team + " " + character.AttackRanges[0]);
         MovementPath p = mainScript.gridScript.getPath(character.x, character.y, (int)position.x, (int)position.y, character.team, true, character.AttackRanges);
         for (int i = 0; i < p.getLength(); i++)
@@ -256,16 +256,19 @@ public class MouseManager : MonoBehaviour {
         MovementPath p = mainScript.gridScript.GetMonsterPath((Monster)character, position);
         if (p != null)
         {
+            Debug.Log(p.getLength());
+            Debug.Log(p.getStep(0).getX()+" "+p.getStep(0).getY());
             for (int i = p.getLength() - 2; i >= 0; i--)
             {
+
                 mousePath.Add(new Vector2(p.getStep(i).getX(), p.getStep(i).getY()));
             }
         }
-        //Debug.Log("======");
-        //for (int i = 0; i < mousePath.Count; i++)
-        //{
-        //    Debug.Log(mousePath[i]);
-        //}
+        Debug.Log("======");
+        for (int i = 0; i < mousePath.Count; i++)
+        {
+            Debug.Log(mousePath[i]);
+        }
 
     }
     public static void CharacterDrag(int x, int y, LivingObject character)
@@ -337,7 +340,10 @@ public class MouseManager : MonoBehaviour {
             int centerX = (int)Mathf.Round(hit.point.x - GridScript.GRID_X_OFFSET) - 1;
             int centerY = (int)Mathf.Round(hit.point.y) - 1;
             BigTile clickedBigTile = GetClickedBigTile(centerX, centerY, x, y);
-            CalculateMousePathToÉnemy(mainScript.activeCharacter, clickedBigTile);
+            BigTile nearestBigTile = mainScript.gridScript.GetNearestBigTileFromEnemy(character);
+            Debug.Log("BOY"+nearestBigTile);
+            CalculateMousePathToPositon(mainScript.activeCharacter, nearestBigTile);
+            Debug.Log("WTFDragOnENemy");
             DrawMousePath();
             return;
         }
@@ -548,11 +554,6 @@ public class MouseManager : MonoBehaviour {
         }
         if (moveCursor != null)
             GameObject.Destroy(moveCursor);
-        //Debug.Log("------"+ mainScript.activeCharacter.name+" "+startX + " "+startY);
-        for (int i = 0; i < mousePath.Count; i++)
-        {
-            Debug.Log(mousePath[i]);
-        }
         for (int i=0; i < mousePath.Count; i++) 
         {
             Vector2 v = mousePath[i];

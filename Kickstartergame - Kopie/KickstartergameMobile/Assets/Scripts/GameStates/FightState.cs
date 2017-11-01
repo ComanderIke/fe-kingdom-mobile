@@ -24,7 +24,6 @@ namespace Assets.Scripts.GameStates
         int cnt = 0;
         bool attack2 = false;
         bool fightRotationSetup;
-        bool isFightingAgainstWall = false;
         bool flag3 = false;
 		bool gotExp=false;
         private GameState targetState;
