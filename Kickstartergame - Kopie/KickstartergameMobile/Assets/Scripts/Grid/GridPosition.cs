@@ -9,8 +9,8 @@ namespace Assets.Scripts.Characters
     public class GridPosition
     {
 
-        public int x;
-        public int y;
+        public int x=-1;
+        public int y=-1;
 
         protected LivingObject character;
         protected GridManager gridScript;
@@ -23,8 +23,11 @@ namespace Assets.Scripts.Characters
 
         public virtual void SetPosition(int newX, int newY)
         {
-            gridScript.Tiles[x, y].character = null;
+            if(x!=-1&&y!=-1)
+                gridScript.Tiles[x, y].character = null;
             gridScript.Tiles[newX, newY].character = character;
+            Debug.Log("OldPosition: " + x + " " + y + " " + character.Name);
+            Debug.Log("NewPosition: " +newX + " " + newY + " " + character.Name);
             x = newX;
             y = newY;
         }

@@ -42,7 +42,7 @@ public class MovableObject :  MonoBehaviour, DragAble {
     {
         if (lockInput)
             return;
-        if (!Unit.UnitTurnState.IsDragable())
+        if (Unit.UnitTurnState.IsDragable())
         {
             DragManager.Dragging();
         }
@@ -54,6 +54,7 @@ public class MovableObject :  MonoBehaviour, DragAble {
             return;
         if (lockInput)
             return;
+        
         DragManager.StartDrag();
     }
 

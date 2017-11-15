@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Characters;
+using Assets.Scripts.Engine;
 using Assets.Scripts.Events;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.GameStates
 {
-    public class UnitSelectionManager
+    public class UnitSelectionManager : EngineSystem
     {
         MainScript mainScript;
         public LivingObject SelectedCharacter { get; set; }
@@ -40,7 +41,7 @@ namespace Assets.Scripts.GameStates
         }
         void SelectCharacter(LivingObject c)
         {
-
+            Debug.Log("Select Character");
             if (SelectedCharacter != null)
             {
                 SelectedCharacter.UnitTurnState.Selected = false;

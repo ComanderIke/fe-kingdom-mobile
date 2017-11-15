@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Characters;
+using Assets.Scripts.Engine;
 using Assets.Scripts.Events;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.GameStates
 {
-    public class UnitActionManager
+    public class UnitActionManager : EngineSystem
     {
         MainScript mainScript;
         public UnitActionManager()
