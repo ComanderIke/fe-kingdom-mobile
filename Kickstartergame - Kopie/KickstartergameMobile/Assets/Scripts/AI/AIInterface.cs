@@ -1,6 +1,8 @@
 ﻿
 using Assets.Scripts.Characters;
+using Assets.Scripts.Events;
 using Assets.Scripts.GameStates;
+using Assets.Scripts.Players;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,14 +11,16 @@ namespace Assets.Scripts.AI
 {
     public abstract class AIInterface
     {
-        protected Player player;
         public const float PAUSE_BETWEEN_ACTIONS = 0.5f;
         const float PAUSE_START = 1.0f;
         const float PAUSE_END = 1.0f;
-        protected MainScript mainScript;
+
         public static float pausetime = 0;
         public static float starttime = 0;
         public static float endtime = 0;
+
+        protected MainScript mainScript;
+        protected Player player;
         protected bool endturn = false;
 
         public AIInterface(Player p)
@@ -25,7 +29,7 @@ namespace Assets.Scripts.AI
             mainScript = MainScript.GetInstance();
         }
 
-        public void update()
+        public void Update()
         {
             starttime += Time.deltaTime;
             if (starttime < PAUSE_START)
@@ -39,13 +43,14 @@ namespace Assets.Scripts.AI
                 {
 
                     mainScript.SwitchState(new GameplayState());
-                    mainScript.EndTurn();
+                    EventContainer.endTurn();
                 }
             }
             else
             {
+                //wait 1second so the player can follow what the AI is doing
                 if (pausetime >= PAUSE_BETWEEN_ACTIONS)
-                {//wait 1second so the player can follow what the AI is doing
+                {
                     pausetime = 0;
                     Think();
 
@@ -58,10 +63,10 @@ namespace Assets.Scripts.AI
 
         protected List<LivingObject> GetUnitsLeftToMove()
         {
-            List<LivingObject> units = new List<LivingObject>();//= GetCharactersLeftToMove();
-            foreach (LivingObject c in player.getCharacters())
+            List<LivingObject> units = new List<LivingObject>();
+            foreach (LivingObject c in player.Units)
             {
-                if (c.isWaiting == false && c.isAlive)
+                if (c.UnitTurnState.IsWaiting == false && c.IsAlive())
                 {
                     units.Add(c);
                 }
@@ -71,26 +76,24 @@ namespace Assets.Scripts.AI
         protected List<Vector2> GetMoveLocations(LivingObject c)
         {
             List<Vector2> locations = new List<Vector2>();
-            mainScript.gridScript.HideMovement();
-            locations.Add(new Vector2(c.x, c.y));
-            mainScript.gridScript.GetMovement((int)c.gameObject.transform.position.x, (int)c.gameObject.transform.position.y, locations, c.movRange, 0, c.team);
+            mainScript.gridManager.HideMovement();
+            locations.Add(new Vector2(c.GridPosition.x, c.GridPosition.y));
+            Debug.Log("TODO: GetMOVELOCATIONS");
+            //mainScript.gridManager.GetMovement((int)c.GameTransform.GameObject.transform.position.x, (int)c.GameTransform.GameObject.transform.position.y, locations, c.Stats.MoveRange, 0, c.Player.number);
             return locations;
         }
 
         protected List<CharacterAction> GetActionsForUnit(LivingObject c)
-        {//TODO not testet
+        {
             List<CharacterAction> actions = new List<CharacterAction>();
             actions.Add(CharacterAction.Wait);
-            //if (mainScript.GetAttackTargets(c).Count != 0)
-            //{
-            //        actions.Add(CharacterAction.Attack);
-            //}
             return actions;
         }
+
         protected void SetCharacterPosition(LivingObject c, Vector2 pos)
         {
-            int OldPosX = (int)c.GetPositionOnGrid().x;
-            int OldPosY = (int)c.GetPositionOnGrid().y;
+            int OldPosX = c.GridPosition.x;
+            int OldPosY = c.GridPosition.y;
             c.SetInternPosition((int)pos.x, (int)pos.y);
         }
 
@@ -100,9 +103,9 @@ namespace Assets.Scripts.AI
             {
                 case CharacterAction.Wait:
                     //Do nothing
-                    return new AIState(c.player);
+                    return new AIState(c.Player);
                 case CharacterAction.Attack:
-                    return new FightState((Character)c,action.target, new AIState(c.player));
+                    return new FightState((LivingObject)c,action.target, new AIState(c.Player));
             }
             return null;
         }
@@ -110,9 +113,9 @@ namespace Assets.Scripts.AI
         protected void SubmitMove(LivingObject character, Vector2 location, CombatAction combatAction)
         {
             GameState gameState = DoCombatAction(character, combatAction);
-            if (character.x == location.x && character.y == location.y && combatAction.type == CharacterAction.Wait)
+            if (character.GridPosition.x == location.x && character.GridPosition.y == location.y && combatAction.type == CharacterAction.Wait)
                 pausetime = PAUSE_BETWEEN_ACTIONS;
-            mainScript.SwitchState(new MovementState(mainScript, (Character)character, (int)location.x, (int)location.y, false, gameState));
+            mainScript.SwitchState(new MovementState(character, (int)location.x, (int)location.y, false, gameState));
         }
 
     }

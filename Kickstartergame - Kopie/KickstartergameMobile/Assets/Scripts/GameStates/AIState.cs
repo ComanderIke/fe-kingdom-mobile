@@ -1,9 +1,5 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using Assets.Scripts;
+using Assets.Scripts.Players;
 
 namespace Assets.Scripts.GameStates
 {
@@ -17,7 +13,6 @@ namespace Assets.Scripts.GameStates
         }
         public override void enter()
         {
-            Debug.Log("TODO AI STATE");
         }
 
         public override void exit()
@@ -27,7 +22,7 @@ namespace Assets.Scripts.GameStates
 
         public override void update()
         {
-            simpleMonsterAI.update();
+            simpleMonsterAI.Update();
         }
     }
 }

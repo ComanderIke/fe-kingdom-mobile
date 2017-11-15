@@ -18,6 +18,7 @@ namespace Assets.Scripts.Grid
             positions.Add(topLeft);
             positions.Add(topRight);
         }
+
         public Vector2 BottomLeft()
         {
             return positions[0];
@@ -34,6 +35,7 @@ namespace Assets.Scripts.Grid
         {
             return positions[3];
         }
+
         public bool Contains(Vector2 pos)
         {
             foreach(Vector2 p in positions)
@@ -45,10 +47,12 @@ namespace Assets.Scripts.Grid
             }
             return false;
         }
+
         public Vector2 CenterPos()
         {
             return new Vector2(BottomLeft().x + 0.5f, BottomLeft().y + 0.5f);
         }
+
         public override bool Equals(object obj)
         {
             if(obj is BigTile)
@@ -58,6 +62,7 @@ namespace Assets.Scripts.Grid
             }
             return base.Equals(obj);
         }
+
         public override string ToString()
         {
             return BottomLeft().x + " " + BottomLeft().y + " | " + BottomRight().x + " " + BottomRight().y + " | " + TopLeft().x + " " + TopLeft().y + " | " + TopRight().x + " " + TopRight().y; ;

@@ -12,11 +12,11 @@ namespace Assets.Scripts.Characters.Skills
             return false;
         }
 
-        public override int getDamage(Character user, bool justToShow)
+        public override int getDamage(LivingObject user, bool justToShow)
         {
             return 0;
         }
-        public virtual void Activate(Character user)
+        public virtual void Activate(LivingObject user)
         {
             inAnimation = true;
             skillTime = 0;

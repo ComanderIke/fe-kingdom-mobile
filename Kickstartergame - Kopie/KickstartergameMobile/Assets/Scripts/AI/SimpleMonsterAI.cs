@@ -1,37 +1,25 @@
 ﻿using Assets.Scripts.AI;
 using Assets.Scripts.Characters;
-using System.Collections;
+using Assets.Scripts.Players;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SimpleMonsterAI : AIInterface {
 
-
-    //InfluenceMap influenceMap;
-    //List<Goal> CurrentGoals;
     bool startTurn = true;
 
     public SimpleMonsterAI(Player p):base (p){
-        // influenceMap = new InfluenceMap(10);
-        //CurrentGoals = new List<Goal>();
 
     }
 
     public override void Think()
     {
-        if (MovableObject.lockInput)
-            return;
         startTurn = true;
-        foreach (LivingObject u in player.getCharacters())
+        foreach (LivingObject u in player.Units)
         {
-            if (u.isWaiting)
+            if (u.UnitTurnState.IsWaiting)
                 startTurn = false;
         }
-        // build influence map
-        //influenceMap.CreateMap(GameObject.Find(MainScript.MAIN_GAME_OBJ).GetComponent<MainScript>());
-        //influenceMap.Print();
-
-        // is this the start of the turn?
         if (startTurn)
         {
             StartOfTurn();
@@ -41,12 +29,11 @@ public class SimpleMonsterAI : AIInterface {
         if (units.Count > 0)
         {
             SubmitBestMoveForUnit(units[0]);
-            units[0].isWaiting = true;
+            units[0].UnitTurnState.IsWaiting = true;
         }
         else
         {
             endturn = true;
-            // EndTurn
         }
     }
 
@@ -125,57 +112,43 @@ public class SimpleMonsterAI : AIInterface {
     protected float ScoreLocationForCharacter(Vector2 location, LivingObject c)
     {
         float ret = 0;
-        WeightSet w = new WeightSet(AIBehaviour.aggressiv);
-        if (location.x == c.x && location.y == c.y)
+        WeightSet w = new WeightSet();
+        if (location.x == c.GridPosition.x && location.y == c.GridPosition.y)
         {
             ret = w.STAY;
         }
        /* switch (c.goalID)
         {
-            // case Goal.GoalType.NONE:  ret += 8f - Math.Abs(influenceMap.GetTotalInfluencePercentAt((int)location.x, (int)location.z)) * 8f; break;
             case Goal.GoalType.ATTACK: ret += GetDistanceToGoalImproval(c, new Vector2(location.x, location.z)) * w.ATTACK_GOAL.TARGET_DISTANCE_FAKTOR; break;
         }*/
-
-        // get location score based on influence, (tend towards 0)
-        //Debug.Log(c.name + " " + c.goalID + " " + location.x + "  " + location.y + " " + ret);
+        
 
         return ret;
 
     }
+
     private int GetAttackRange(Vector2 location, Vector2 target)
     {
         return (int)(Mathf.Abs(location.x - target.x) + Mathf.Abs(location.y - target.y));
     }
+
     protected float ScoreAttackForUnit(LivingObject attacker, Vector2 location, LivingObject defender)
     {
-        WeightSet w = new WeightSet(AIBehaviour.aggressiv);
+        WeightSet w = new WeightSet();
         float ret = w.ATTACK_START_WEIGHT;//start with 10 so enemies will also attack if they get more dmg themselves(Most players like Enemies attacks even if the attack doesn't do much)
         /*if (attacker.goalID == Goal.GoalType.ATTACK && attacker.goalTarget == new Vector2(location.x, location.z))
         {
             ret += w.ATTACK_GOAL.ATTACK_TARGET_BONUS;
         }*/
-        //Enemy can counter?
-        if (defender.CanAttack(GetAttackRange(location, defender.GetPositionOnGrid())))
-        {
-            // will this kill ourselves?
-            if (defender.CanKillTarget(attacker))
-            {
-                ret -= w.ATTACK_OWN_DEATH_WEIGHT + attacker.HP * w.ATTACK_OWN_DEATH_HP_MULT / 2;//AI Units dont value their live as much
-            }
-            else
-            {
-                ret -= defender.GetTotalDamageAgainstTarget(attacker) * w.RECEIVED_DAMAGE_MULT;//we dont value received damage that much
-            }
-        }
         // will this kill the target?
-        if (attacker.CanKillTarget(defender))
+        if (attacker.BattleStats.CanKillTarget(defender))
         {
             // bonus is 10, + current HP (do not want to reward too much overkill)
-            ret += w.ATTACK_KILL_BONUS_WEIGHT + defender.HP * w.ATTACK_KILL_HP_MULT;
+            ret += w.ATTACK_KILL_BONUS_WEIGHT + defender.Stats.HP * w.ATTACK_KILL_HP_MULT;
         }
         else
         {
-            ret += attacker.GetTotalDamageAgainstTarget(defender) * w.DEALT_DAMAGE_MULT;//we value dealt damage higher than received damage
+            ret += attacker.BattleStats.GetTotalDamageAgainstTarget(defender) * w.DEALT_DAMAGE_MULT;//we value dealt damage higher than received damage
         }
 
         return ret;
@@ -184,12 +157,12 @@ public class SimpleMonsterAI : AIInterface {
     protected void SubmitBestMoveForUnit(LivingObject unit)
     {
         float currentBestScore = -10000; // always want to do something
-        Vector2 currentBestMoveLocation = new Vector3(unit.x, unit.y); // by default go nowhere
+        Vector2 currentBestMoveLocation = new Vector3(unit.GridPosition.x, unit.GridPosition.y); // by default go nowhere
         CombatAction currentBestCombatAction = new CombatAction(CharacterAction.Wait, null, new Vector2()); // and do nothing
 
         // get all possible move locations for this unit
         List<Vector2> moveLocs = GetMoveLocations(unit);
-        Vector2 startLoc = new Vector2(unit.x, unit.y);
+        Vector2 startLoc = new Vector2(unit.GridPosition.x, unit.GridPosition.y);
         foreach (Vector2 loc in moveLocs)
         {
             SetCharacterPosition(unit, startLoc);
@@ -226,8 +199,6 @@ public class SimpleMonsterAI : AIInterface {
 
         }
         SetCharacterPosition(unit, startLoc);
-        // perform the determined best move/action
-        //Debug.Log(character.name + " " + currentBestMoveLocation + " " + currentBestScore+" "+ currentBestCombatAction.type);
         SubmitMove(unit, currentBestMoveLocation, currentBestCombatAction);
     }
 }

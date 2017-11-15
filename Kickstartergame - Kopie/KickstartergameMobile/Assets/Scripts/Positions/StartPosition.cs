@@ -6,11 +6,11 @@ public class StartPosition : MonoBehaviour {
     void Start () {
         GetComponentInChildren<SpriteRenderer>().enabled = false;
 	}
-    public int GetX()
+    public int GetXOnGrid()
     {
         return (int)transform.localPosition.x;
     }
-    public int GetY()
+    public int GetYOnGrid()
     {
         return (int)transform.localPosition.y;
     }

@@ -14,6 +14,7 @@ namespace Assets.Scripts.AI
         public readonly float SOURCE_DISTANCE_FAKTOR;
         public readonly float TARGET_DISTANCE_FAKTOR;
         public readonly float ATTACK_TARGET_BONUS;
+
         public GoalWeightSet()
         {
             TENSION_FAKTOR = 1;
@@ -41,23 +42,9 @@ namespace Assets.Scripts.AI
         public readonly float DEALT_DAMAGE_MULT;
         public readonly GoalWeightSet ATTACK_GOAL;
 
-        public WeightSet(AIBehaviour b)
+        public WeightSet()//TODO ADD SWITCH BEHAVIOUR
         {
-            switch (b)
-            {
-                case AIBehaviour.aggressiv:
-                    STAY = -1;
-                    break;
-                case AIBehaviour.guard:
-                    STAY = 5;
-                    break;
-                case AIBehaviour.normal:
-                    STAY = -1;
-                    break;
-                case AIBehaviour.passiv:
-                    STAY = 1000;
-                    break;
-            }
+            STAY = -1;
             ALLY_UNIT_MULT = 1;
             HEAL_ALMOST_FULL_HP = 1;
             HEAL_LOW_HP = 1;

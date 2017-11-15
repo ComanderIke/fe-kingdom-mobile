@@ -15,41 +15,20 @@ using Assets.Scripts.GameStates;
 
 [System.Serializable]
 	public class Potion : Item {
-		
-		private PotionType attribute;
-		private int effect;
-		
-	public Potion(String name, String description, int useage, PotionType attribute, int effect,Sprite sprite, GameObject go):base(name, description, useage, sprite, go) {
-			this.effect = effect;
-			this.attribute = attribute;
-          
+
+    public int Effect { get; set; }
+
+    public Potion(String name, String description, int useage,  int effect,Sprite sprite):base(name, description, useage, sprite) {
+        Effect = effect;
     }
 
-	public override void use(Character character) {
-		
-		switch(attribute){
-		case PotionType.HP:
-			//character.Heal (effect);
-			MainScript.healthPotionUsedEvent ();
-			break;
-		
-		}
-		Usage--;
-		if (Usage <= 0)
-			character.items.Remove(this);
-         
-       
-			
+	public override void use(Human character) {
+        NumberOfUses--;
+		if (NumberOfUses <= 0)
+			character.Inventory.DropItem(this);	
 	}
 		
-	public PotionType Attribute {
-		get{ return attribute;}
-		set{ attribute = value;}
-	}
-	public int Effect {
-		get{ return effect;}
-		set{ effect = value;}
-	}
+
 		
 }
 

@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Characters;
+using Assets.Scripts.Grid.PathFinding;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,8 +9,6 @@ namespace Assets.Scripts.GameStates
     {
         private int x;
         private int y;
-		public static float hellebardier_run_speed = 2.7f;
-		public static float mage_run_speed = 3f;
         public int pathCounter = 1;
         public MovementPath path;
         private MainScript mainScript;
@@ -17,24 +16,19 @@ namespace Assets.Scripts.GameStates
         private GameState targetState;
         List<Vector2> mousePath;
         bool drag;
-        public MovementState(MainScript mainScript,LivingObject c, int x, int y, bool drag,GameState targetState)
+
+        public MovementState(LivingObject c, int x, int y, bool drag,GameState targetState)
         {
-            this.mainScript = mainScript;
             this.x = x;
             this.y = y;
             this.targetState = targetState;
-            this.character = c;
             this.drag = drag;
+            mainScript = MainScript.GetInstance();
+            character = c;
         }
-        public MovementState(MainScript mainScript, LivingObject c,int x,int y, List<Vector2>path, bool drag, GameState targetState)
+        public MovementState( LivingObject c,int x,int y, bool drag, GameState targetState, List<Vector2> path):this(c, x, y, drag, targetState)
         {
-            this.mainScript = mainScript;
-            this.targetState = targetState;
-            this.character = c;
-            this.x = x;
-            this.y = y;
-            this.drag = drag;
-            this.mousePath = path;
+            mousePath = path;
         }
 
         public override void enter()
@@ -42,8 +36,7 @@ namespace Assets.Scripts.GameStates
             MouseManager.active = false;
             if (mousePath == null)
             {
-                Debug.Log("MOUSEPATH NULL");
-                if (character.x == x && character.y== y)
+                if (character.GridPosition.x == x && character.GridPosition.y== y)
                 {
                     mainScript.SwitchState(targetState);
                     return;
@@ -54,33 +47,22 @@ namespace Assets.Scripts.GameStates
             }
             if (drag)
             {
-                mainScript.gridScript.HideMovement();
+                mainScript.gridManager.HideMovement();
             }
             if ( mousePath.Count == 0)
             {
-                Debug.Log("MOUSEPATH COUNT 0"+ character.x + " " + character.y+ " "+x+ " "+y);
-                for (int i = 0; i < MouseManager.mousePath.Count; i++)
-                {
-
-                    Debug.Log(MouseManager.mousePath[i]);
-                }
-                path = mainScript.gridScript.getPath((int)character.x, (int)character.y, x, y, character.team, false, new List<int>());
-               
+                path = mainScript.gridManager.GridLogic.getPath(character.GridPosition.x, character.GridPosition.y, x, y, character.Player.ID, false, new List<int>());
                 if (path!=null)
                     path.Reverse();
-
                 pathCounter = 1;
             }
-            if(mainScript.activeCharacter is Monster)
+            if(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter is Monster)
             {
                 for (int i = 0; i < mousePath.Count; i++)
                 {
-
                     mousePath[i] = new Vector3(mousePath[i].x - 0.5f, mousePath[i].y - 0.5f, 0);
                 }
-
             }
-           
         }
 
         public override void exit()
@@ -92,11 +74,12 @@ namespace Assets.Scripts.GameStates
         {
             ContinueWalkAnimation();
         }
+
         void ContinueWalkAnimation()
         {
-            float x = character.gameObject.transform.localPosition.x;
-            float y = character.gameObject.transform.localPosition.y;
-            float z = character.gameObject.transform.localPosition.z;
+            float x = character.GameTransform.GameObject.transform.localPosition.x;
+            float y = character.GameTransform.GameObject.transform.localPosition.y;
+            float z = character.GameTransform.GameObject.transform.localPosition.z;
             float tx ;
             float ty ;
             if (mousePath != null&&mousePath.Count>0)
@@ -118,17 +101,17 @@ namespace Assets.Scripts.GameStates
                 if (x < tx)
                 {
                     if (x + value > tx)
-                        character.gameObject.transform.localPosition = new Vector3(tx, y, z);
+                        character.GameTransform.GameObject.transform.localPosition = new Vector3(tx, y, z);
                     else
-                        character.gameObject.transform.localPosition = new Vector3(x + value, y, z);
+                        character.GameTransform.GameObject.transform.localPosition = new Vector3(x + value, y, z);
 
                 }
                 else if (x > tx)
                 {
                     if (x - value < tx)
-                        character.gameObject.transform.localPosition = new Vector3(tx, y, z);
+                        character.GameTransform.GameObject.transform.localPosition = new Vector3(tx, y, z);
                     else
-                        character.gameObject.transform.localPosition = new Vector3(x - value, y, z);
+                        character.GameTransform.GameObject.transform.localPosition = new Vector3(x - value, y, z);
                 }
             }
             else if (y != ty)
@@ -137,20 +120,20 @@ namespace Assets.Scripts.GameStates
                 {
 
                     if (y - value < ty)
-                        character.gameObject.transform.localPosition = new Vector3(x, ty, z);
+                        character.GameTransform.GameObject.transform.localPosition = new Vector3(x, ty, z);
                     else
-                        character.gameObject.transform.localPosition = new Vector3(x, y-value, z);
+                        character.GameTransform.GameObject.transform.localPosition = new Vector3(x, y-value, z);
                 }
                 else if (y< ty)
                 {
 
                     if (y + value > ty)
-                        character.gameObject.transform.localPosition = new Vector3(x, ty, z);
+                        character.GameTransform.GameObject.transform.localPosition = new Vector3(x, ty, z);
                     else
-                        character.gameObject.transform.localPosition = new Vector3(x, y+value, z);
+                        character.GameTransform.GameObject.transform.localPosition = new Vector3(x, y+value, z);
                 }
             }
-            if (character.gameObject.transform.localPosition.x + offset > tx && character.gameObject.transform.localPosition.x - offset < tx && character.gameObject.transform.localPosition.y + offset > ty && character.gameObject.transform.localPosition.y - offset < ty)
+            if (character.GameTransform.GameObject.transform.localPosition.x + offset > tx && character.GameTransform.GameObject.transform.localPosition.x - offset < tx && character.GameTransform.GameObject.transform.localPosition.y + offset > ty && character.GameTransform.GameObject.transform.localPosition.y - offset < ty)
             {
                 pathCounter++;
             }
@@ -161,19 +144,19 @@ namespace Assets.Scripts.GameStates
                 character.SetPosition((int)tx, (int)ty);
                  if(MainScript.endOfMoveCharacterEvent!=null)
                     MainScript.endOfMoveCharacterEvent();
-                character.hasMoved = true;
-                if (character.player.isPlayerControlled)
+                character.UnitTurnState.HasMoved = true;
+                if (character.Player.IsHumanPlayer)
                 {
                     if (drag)
                     {
                         if (targetState is GameplayState)
-                            mainScript.ActiveCharWait();
+                            mainScript.GetSystem<UnitActionManager>().ActiveCharWait();
                         mainScript.SwitchState(targetState);
                     }
                     else
                     {
                         if (targetState is GameplayState)
-                            mainScript.ActiveCharWait();
+                            mainScript.GetSystem<UnitActionManager>().ActiveCharWait();
                         mainScript.SwitchState(targetState);
                     }
                 }
