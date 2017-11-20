@@ -1,6 +1,8 @@
 ﻿using Assets.Scripts.Characters;
+using Assets.Scripts.Commands;
 using Assets.Scripts.Engine;
 using Assets.Scripts.Events;
+using Assets.Scripts.ScriptableObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,23 +11,58 @@ using UnityEngine;
 
 namespace Assets.Scripts.GameStates
 {
-    public class UnitActionManager : EngineSystem
+    public class UnitActionManager : MonoBehaviour, EngineSystem
     {
         MainScript mainScript;
-        public UnitActionManager()
+        public PreferedMovementPath preferedPath;
+        Stack<Command> previewsActions;
+        Queue<Command> currentActions;
+
+        void Start()
         {
             mainScript = MainScript.GetInstance();
             EventContainer.endDragOverGrid += UnitMoveOnTile;
             EventContainer.endDragOverUnit += UnitMoveToOtherUnit;
+            previewsActions = new Stack<Command>();
+            currentActions = new Queue<Command>();
+            EventContainer.undo += Undo;
+            EventContainer.commandFinished += ExecuteActions;
+        }
+        private void Undo()
+        {
+            Debug.Log(previewsActions.Count);
+            previewsActions.Pop().Undo();
+        }
+        public void MoveCharacter(LivingObject c, int x, int y)
+        {
+            MoveCharacterCommand mCC = new MoveCharacterCommand(c, x, y);
+            currentActions.Enqueue(mCC);
+           // mCC.Execute();
+            //mainScript.SwitchState(new MovementState( c, x, y, drag, targetState));
+        }
+        public void MoveCharacter(LivingObject c, int x, int y, List<Vector2> path)
+        {
+            MoveCharacterCommand mCC = new MoveCharacterCommand(c, x, y,path);
+            currentActions.Enqueue(mCC);
+           // mCC.Execute();
+           // mainScript.SwitchState(new MovementState( c, x, y, path));
+        }
+        public void Fight(LivingObject attacker, LivingObject target)
+        {
+            AttackCommand mCC = new AttackCommand(attacker,target);
+            currentActions.Enqueue(mCC);
+           // mCC.Execute();
+        }
+        public void ExecuteActions()
+        {
+            //do this for each finished Command
+            if (currentActions.Count != 0)
+            {
+                Command current = currentActions.Dequeue();
+                current.Execute();
 
-        }
-        public void MoveCharacter(LivingObject c, int x, int y, bool drag, GameState targetState)
-        {
-            mainScript.SwitchState(new MovementState( c, x, y, drag, targetState));
-        }
-        public void MoveCharacter(LivingObject c, int x, int y, List<Vector2> path, bool drag, GameState targetState)
-        {
-            mainScript.SwitchState(new MovementState( c, x, y, drag, targetState, path));
+                previewsActions.Push(current);
+            }
         }
 
         public void ActiveCharWait()
@@ -45,21 +82,22 @@ namespace Assets.Scripts.GameStates
 
         public void GoToEnemy(LivingObject character, LivingObject enemy, bool drag)
         {
-            MouseManager.ResetMousePath();
-
-            if (MouseManager.oldMousePath.Count == 0 && character.Stats.AttackRanges.Contains<int>((int)(Mathf.Abs(enemy.GridPosition.x - character.GridPosition.x) + Mathf.Abs(enemy.GridPosition.y - character.GridPosition.y))))
+            EventContainer.unitMoveToEnemy();
+            if (preferedPath.path.Count == 0 && character.Stats.AttackRanges.Contains<int>((int)(Mathf.Abs(enemy.GridPosition.x - character.GridPosition.x) + Mathf.Abs(enemy.GridPosition.y - character.GridPosition.y))))
             {
                 mainScript.gridManager.HideMovement();
                 Debug.Log("Enemy is in Range:");
                 mainScript.oldPosition = new Vector2(character.GridPosition.x, character.GridPosition.y);
                 if (!drag)
                 {
-                    mainScript.SwitchState(new FightState(character, enemy, new GameplayState()));
+                    Fight(character, enemy);
+                   // mainScript.SwitchState(new FightState(character, enemy, new GameplayState()));
 
                 }
                 else
                 {
-                    mainScript.SwitchState(new FightState(character, enemy, new GameplayState()));
+                    Fight(character, enemy);
+                    //mainScript.SwitchState(new FightState(character, enemy, new GameplayState()));
                 }
                 return;
             }
@@ -77,18 +115,22 @@ namespace Assets.Scripts.GameStates
 
 
                     List<Vector2> movePath = new List<Vector2>();
-                    for (int i = 0; i < MouseManager.oldMousePath.Count; i++)
+                    for (int i = 0; i < preferedPath.path.Count; i++)
                     {
-                        movePath.Add(new Vector2(MouseManager.oldMousePath[i].x, MouseManager.oldMousePath[i].y));
+                        movePath.Add(new Vector2(preferedPath.path[i].x, preferedPath.path[i].y));
                         Debug.Log(movePath[i]);
                     }
                     if (drag)
                     {
-                        MoveCharacter(character, 0, 0, movePath, false, new FightState(character, enemy, new GameplayState()));
+                        MoveCharacter(character, 0, 0, movePath);
+                        Fight(character, enemy);// false, new FightState(character, enemy, new GameplayState()));
+                        ExecuteActions();
                     }
                     else
                     {
-                        MoveCharacter(character, 0, 0, movePath, false, new FightState(character, enemy, new GameplayState()));
+                        MoveCharacter(character, 0, 0, movePath);//, false, new FightState(character, enemy, new GameplayState()));
+                        Fight(character, enemy);
+                        ExecuteActions();
 
                     }
                     mainScript.AttackRangeFromPath = 0;
@@ -112,7 +154,8 @@ namespace Assets.Scripts.GameStates
                 if (!(selectedUnit is Monster) || (selectedUnit is Monster && !((BigTilePosition)selectedUnit.GridPosition).Position.Contains(new Vector2(x, y))))
                 {
                     selectedUnit.GridPosition.SetPosition(selectedUnit.GridPosition.x, selectedUnit.GridPosition.y);
-                    MoveCharacter(selectedUnit, x, y, MouseManager.oldMousePath, true, new GameplayState());
+                    MoveCharacter(selectedUnit, x, y);//, true, new GameplayState());
+                    ExecuteActions();
                 }
                 else
                 {

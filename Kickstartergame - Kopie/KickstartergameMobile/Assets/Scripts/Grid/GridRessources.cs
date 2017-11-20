@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.ScriptableObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,5 +20,6 @@ namespace Assets.Scripts.Grid
         public Texture skillRangeTexture;
         public Material cellMaterialValid;
         public Material cellMaterialInvalid;
+        public PreferedMovementPath preferedPath;
     }
 }

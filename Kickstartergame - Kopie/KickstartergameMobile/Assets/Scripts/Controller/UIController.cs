@@ -105,7 +105,10 @@ public class UIController : MonoBehaviour {
     {
         attacktButtonCLicked();
     }
-
+    public void UndoClicked()
+    {
+        EventContainer.undo();
+    }
     public void EndTurnClicked()
     {
         EventContainer.endTurn();

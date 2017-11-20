@@ -83,13 +83,6 @@ namespace Assets.Scripts.AI
             return locations;
         }
 
-        protected List<CharacterAction> GetActionsForUnit(LivingObject c)
-        {
-            List<CharacterAction> actions = new List<CharacterAction>();
-            actions.Add(CharacterAction.Wait);
-            return actions;
-        }
-
         protected void SetCharacterPosition(LivingObject c, Vector2 pos)
         {
             int OldPosX = c.GridPosition.x;
@@ -97,25 +90,26 @@ namespace Assets.Scripts.AI
             c.SetInternPosition((int)pos.x, (int)pos.y);
         }
 
-        private GameState DoCombatAction(LivingObject c, CombatAction action)
-        {
-            switch (action.type)
-            {
-                case CharacterAction.Wait:
-                    //Do nothing
-                    return new AIState(c.Player);
-                case CharacterAction.Attack:
-                    return new FightState((LivingObject)c,action.target, new AIState(c.Player));
-            }
-            return null;
-        }
+        //private GameState DoCombatAction(LivingObject c, CombatAction action)
+        //{
+        //    switch (action.type)
+        //    {
+        //        case CharacterAction.Wait:
+        //            //Do nothing
+        //            return new AIState(c.Player);
+        //        case CharacterAction.Attack:
+        //            return new FightState((LivingObject)c, action.target);//, new AIState(c.Player));
+        //    }
+        //    return null;
+        //}
 
-        protected void SubmitMove(LivingObject character, Vector2 location, CombatAction combatAction)
+        protected void SubmitMove(LivingObject character, Vector2 location)//, CombatAction combatAction)
         {
-            GameState gameState = DoCombatAction(character, combatAction);
-            if (character.GridPosition.x == location.x && character.GridPosition.y == location.y && combatAction.type == CharacterAction.Wait)
-                pausetime = PAUSE_BETWEEN_ACTIONS;
-            mainScript.SwitchState(new MovementState(character, (int)location.x, (int)location.y, false, gameState));
+           // TODO with COMMANDS
+           // GameState gameState = DoCombatAction(character, combatAction);
+           // if (character.GridPosition.x == location.x && character.GridPosition.y == location.y && combatAction.type == CharacterAction.Wait)
+           //     pausetime = PAUSE_BETWEEN_ACTIONS;
+           // mainScript.SwitchState(new MovementState(character, (int)location.x, (int)location.y));
         }
 
     }

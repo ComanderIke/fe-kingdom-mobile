@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Characters;
+using Assets.Scripts.Events;
 using Assets.Scripts.Grid.PathFinding;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,41 +14,33 @@ namespace Assets.Scripts.GameStates
         public MovementPath path;
         private MainScript mainScript;
         private LivingObject character;
-        private GameState targetState;
         List<Vector2> mousePath;
-        bool drag;
 
-        public MovementState(LivingObject c, int x, int y, bool drag,GameState targetState)
+        public MovementState(LivingObject c, int x, int y)
         {
             this.x = x;
             this.y = y;
-            this.targetState = targetState;
-            this.drag = drag;
             mainScript = MainScript.GetInstance();
             character = c;
         }
-        public MovementState( LivingObject c,int x,int y, bool drag, GameState targetState, List<Vector2> path):this(c, x, y, drag, targetState)
+        public MovementState( LivingObject c,int x,int y, List<Vector2> path):this(c, x, y)
         {
             mousePath = path;
         }
 
         public override void enter()
         {
-            MouseManager.active = false;
+            EventContainer.startMovingUnit();
             if (mousePath == null)
             {
                 if (character.GridPosition.x == x && character.GridPosition.y== y)
                 {
-                    mainScript.SwitchState(targetState);
+                    mainScript.SwitchState(new GameplayState());
                     return;
                 }
             }
             else {
                 pathCounter = 0;
-            }
-            if (drag)
-            {
-                mainScript.gridManager.HideMovement();
             }
             if ( mousePath.Count == 0)
             {
@@ -67,7 +60,8 @@ namespace Assets.Scripts.GameStates
 
         public override void exit()
         {
-            MouseManager.active = true;
+            EventContainer.stopMovingUnit();
+
         }
 
         public override void update()
@@ -145,26 +139,10 @@ namespace Assets.Scripts.GameStates
                  if(MainScript.endOfMoveCharacterEvent!=null)
                     MainScript.endOfMoveCharacterEvent();
                 character.UnitTurnState.HasMoved = true;
-                if (character.Player.IsHumanPlayer)
-                {
-                    if (drag)
-                    {
-                        if (targetState is GameplayState)
-                            mainScript.GetSystem<UnitActionManager>().ActiveCharWait();
-                        mainScript.SwitchState(targetState);
-                    }
-                    else
-                    {
-                        if (targetState is GameplayState)
-                            mainScript.GetSystem<UnitActionManager>().ActiveCharWait();
-                        mainScript.SwitchState(targetState);
-                    }
-                }
-                else
-                {
-
-                    mainScript.SwitchState(targetState);
-                }
+                mainScript.GetSystem<UnitActionManager>().ActiveCharWait();
+                mainScript.SwitchState(new GameplayState());
+                Debug.Log("Movement Finished!");
+                EventContainer.commandFinished();
             }
         }
     }

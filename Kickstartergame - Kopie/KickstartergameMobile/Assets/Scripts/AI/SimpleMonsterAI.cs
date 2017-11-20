@@ -156,6 +156,7 @@ public class SimpleMonsterAI : AIInterface {
 
     protected void SubmitBestMoveForUnit(LivingObject unit)
     {
+        /*
         float currentBestScore = -10000; // always want to do something
         Vector2 currentBestMoveLocation = new Vector3(unit.GridPosition.x, unit.GridPosition.y); // by default go nowhere
         CombatAction currentBestCombatAction = new CombatAction(CharacterAction.Wait, null, new Vector2()); // and do nothing
@@ -189,7 +190,7 @@ public class SimpleMonsterAI : AIInterface {
                         }
                     }
                 }
-            }*/
+            }
             if (acts.Contains(CharacterAction.Wait) && locScore > currentBestScore)
             {
                 currentBestMoveLocation = loc;
@@ -199,6 +200,6 @@ public class SimpleMonsterAI : AIInterface {
 
         }
         SetCharacterPosition(unit, startLoc);
-        SubmitMove(unit, currentBestMoveLocation, currentBestCombatAction);
+        SubmitMove(unit, currentBestMoveLocation, currentBestCombatAction);*/
     }
 }

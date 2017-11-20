@@ -34,7 +34,7 @@ public class MovableObject :  MonoBehaviour, DragAble {
     void OnMouseExit(){
         if (DragManager.IsAnyUnitDragged)
         {
-            MouseManager.DraggedExit();
+            MainScript.GetInstance().GetSystem<MouseManager>().DraggedExit();
         }
     }
      
@@ -83,23 +83,10 @@ public class MovableObject :  MonoBehaviour, DragAble {
 
     public void EndDrag()
     {
+        EventContainer.endDrag();
         FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().enabled = false;
 
-        Vector2 gridPos = RaycastManager.GetMousePositionOnGrid();
-
-        if (RaycastManager.GetLatestHit().collider.gameObject.tag == "Grid")
-        {
-            EventContainer.endDragOverGrid((int)gridPos.x, (int)gridPos.y);
-        }
-        else if (RaycastManager.GetLatestHit().collider.gameObject.GetComponent<MovableObject>() != null)
-        {
-            LivingObject draggedOverUnit = RaycastManager.GetLatestHit().collider.gameObject.GetComponent<MovableObject>().Unit;
-            EventContainer.endDragOverUnit(draggedOverUnit);
-        }
-        else
-        {
-            EventContainer.endDragOverNothing();
-        }
+       
     }
 
     public void NotDragging()

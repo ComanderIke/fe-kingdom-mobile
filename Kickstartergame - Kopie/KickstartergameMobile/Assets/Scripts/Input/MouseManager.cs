@@ -1,9 +1,11 @@
 ﻿using Assets.Scripts.Characters;
+using Assets.Scripts.Engine;
 using Assets.Scripts.Events;
 using Assets.Scripts.GameStates;
 using Assets.Scripts.Grid;
 using Assets.Scripts.Grid.PathFinding;
 using Assets.Scripts.Input;
+using Assets.Scripts.ScriptableObjects;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,19 +23,17 @@ public class CursorPosition
         this.before = before;
     }
 }
-public class MouseManager : MonoBehaviour {
+public class MouseManager : MonoBehaviour, EngineSystem {
 
-    static MainScript mainScript;
-    public static bool active = true;
-    static UXRessources ressources;
-    private static RaycastHit hit;
-    static Transform gameWorld;
-    static GameObject moveCursor;
-    public static GridInput gridInput;
-
-    //GameObject mouseCursor;
-    //private static Ray ray;
-    public static RaycastManager raycastManager;
+    MainScript mainScript;
+    public  bool active = true;
+    UXRessources ressources;
+    private  RaycastHit hit;
+    Transform gameWorld;
+    GameObject moveCursor;
+    public  GridInput gridInput;
+    public RaycastManager raycastManager;
+    public PreferedMovementPath preferedPath;
 	// Use this for initialization
 	void Start () {
         mainScript = FindObjectOfType<MainScript>();
@@ -41,12 +41,9 @@ public class MouseManager : MonoBehaviour {
         gridInput = new GridInput();
         gameWorld = GameObject.FindGameObjectWithTag("World").transform;
         ressources = FindObjectOfType<UXRessources>();
-        EventContainer.draggedOverUnit += DraggedOver;
-        EventContainer.startDrag += StartDrag;
-        EventContainer.unitDragged += CharacterDrag;
-        EventContainer.unitClickedOnActiveTile += CalculateMousePathToPositon;
-        EventContainer.monsterClickedOnActiveBigTile += CalculateMousePathToPositon;
+        
         raycastManager = new RaycastManager();
+        InitEvents();
         //mouseCursor = GameObject.Find("MouseCursor");
     }
     float updateFrequency = 0.1f;
@@ -60,7 +57,7 @@ public class MouseManager : MonoBehaviour {
         //ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Input.GetMouseButtonDown(0)&&!EventSystem.current.IsPointerOverGameObject())
         {
-            oldMousePath = new List<Vector2>(mousePath);
+            preferedPath.path = new List<Vector2>(mousePath);
             Vector2 gridPos = raycastManager.GetMousePositionOnGrid();
             hit = raycastManager.GetLatestHit();
             int x = (int)gridPos.x;
@@ -79,7 +76,7 @@ public class MouseManager : MonoBehaviour {
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            oldMousePath = new List<Vector2>(mousePath);
+            preferedPath.path = new List<Vector2>(mousePath);
             if (!gridInput.confirmClick)
             {
                 ResetMousePath();
@@ -89,21 +86,93 @@ public class MouseManager : MonoBehaviour {
 
     }
 
-    public static void StartDrag(int gridX, int gridY)
+    private void InitEvents()
+    {
+        EventContainer.draggedOverUnit += DraggedOver;
+        EventContainer.startDrag += StartDrag;
+        EventContainer.unitDragged += CharacterDrag;
+        EventContainer.unitClickedOnActiveTile += CalculateMousePathToPositon;
+        EventContainer.monsterClickedOnActiveBigTile += CalculateMousePathToPositon;
+        EventContainer.startMovingUnit += Deactivate;
+        EventContainer.stopMovingUnit += Activate;
+        EventContainer.unitMoveToEnemy += ResetMousePath;
+        EventContainer.endDrag += EndDrag;
+        EventContainer.deselectActiveCharacter += ResetMousePath;
+        EventContainer.unitClicked += UnitClicked;
+        EventContainer.enemyClicked += EnemyClicked;
+
+    }
+    void Activate()
+    {
+        active = true;
+    }
+
+    void Deactivate()
+    {
+        active = false;
+    }
+    void EndDrag()
+    {
+        Vector2 gridPos = raycastManager.GetMousePositionOnGrid();
+
+        if (raycastManager.GetLatestHit().collider.gameObject.tag == "Grid")
+        {
+            
+            EventContainer.endDragOverGrid((int)gridPos.x, (int)gridPos.y);
+        }
+        else if (raycastManager.GetLatestHit().collider.gameObject.GetComponent<MovableObject>() != null)
+        {
+            LivingObject draggedOverUnit = raycastManager.GetLatestHit().collider.gameObject.GetComponent<MovableObject>().Unit;
+            EventContainer.endDragOverUnit(draggedOverUnit);
+        }
+        else
+        {
+            EventContainer.endDragOverNothing();
+        }
+    }
+    void UnitClicked(LivingObject unit)
+    {
+
+        if (gridInput.confirmClick && gridInput.clickedField == new Vector2(currentX, currentY))
+        {
+            EventContainer.unitClickedConfirmed(unit,true);
+        }
+        else
+        {
+            gridInput.confirmClick = true;
+            gridInput.clickedField = new Vector2(currentX, currentY);
+           
+            EventContainer.unitClickedConfirmed(unit, false);
+        }
+
+    }
+    public void EnemyClicked(LivingObject unit)
+    {
+        CalculateMousePathToEnemy(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter, new Vector2(currentX, currentY));
+        DrawMousePath();
+        if (unit is Monster)
+        {
+            ShowAttackPreview(((BigTilePosition)unit.GridPosition).Position.CenterPos());
+        }
+        else
+        {
+            ShowAttackPreview(new Vector2(unit.GridPosition.x, unit.GridPosition.y));
+        }
+    }
+    public  void StartDrag(int gridX, int gridY)
     {
         currentX = gridX;
         currentY = gridY;
-        oldMousePath = new List<Vector2>(mousePath);
+        preferedPath.path = new List<Vector2>(mousePath);
     }
-    public static int currentX = -1;
-    public static int currentY = -1;
-    public static int oldX = -1;
-    public static int oldY=-1;
-    public static List<Vector2> mousePath = new List<Vector2>();
-    public static List<CursorPosition> lastPositions = new List<CursorPosition>();
-    public static List<Vector2> oldMousePath = new List<Vector2>();
-    static List<GameObject> dots = new List<GameObject>();
-    public static void ResetMousePath()
+    public  int currentX = -1;
+    public  int currentY = -1;
+    public  int oldX = -1;
+    public  int oldY=-1;
+    public  List<Vector2> mousePath = new List<Vector2>();
+    public  List<CursorPosition> lastPositions = new List<CursorPosition>();
+     List<GameObject> dots = new List<GameObject>();
+    public  void ResetMousePath()
     {
         //Debug.Log("ResetMousePath");
         foreach (GameObject dot in dots)
@@ -120,31 +189,31 @@ public class MouseManager : MonoBehaviour {
         FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().enabled = false;
         //FindObjectOfType<UXRessources>().movementFlag.SetActive(false);
     }
-    static bool nonActive = false;
-    public static void DraggedOver(LivingObject character)
+     bool nonActive = false;
+    public  void DraggedOver(LivingObject character)
     {
         //if (unitSelectionManager.SelectedCharacter != null && unitSelectionManager.SelectedCharacter != Unit)
         //{
             //TODO: Show Attack Icon or something
         //}
     }
-    public static void DraggedExit()
+    public  void DraggedExit()
     {
         //TODO: Hide Attack Icon or something
     }
-    public static bool isOldDrag(int x, int y)
+    public  bool isOldDrag(int x, int y)
     {
         
         return x == oldX && y == oldY;
     }
-    public static int GetDelta(Vector2 v, Vector2 v2)
+    public  int GetDelta(Vector2 v, Vector2 v2)
     {
         
         int xDiff = (int)Mathf.Abs(v.x - v2.x);
         int zDiff = (int)Mathf.Abs(v.y - v2.y);
         return xDiff + zDiff;
     }
-    public static Vector2 GetLastAttackPosition(LivingObject c, int xAttack, int zAttack)
+    public  Vector2 GetLastAttackPosition(LivingObject c, int xAttack, int zAttack)
     {
         for (int i = c.Stats.AttackRanges.Count - 1; i >= 0; i--)//Priotize Range Attacks
         {
@@ -159,14 +228,10 @@ public class MouseManager : MonoBehaviour {
         }
         return new Vector2(-1,-1);
     }
-    public static void CalculateMousePathToPositon(LivingObject character, int x, int y)
+    public  void CalculateMousePathToPositon(LivingObject character, int x, int y)
     {
         ResetMousePath();
         MovementPath p = mainScript.gridManager.GridLogic.getPath(character.GridPosition.x, character.GridPosition.y, x, y, character.Player.ID, false, character.Stats.AttackRanges);
-        for (int i = 0; i < p.getLength(); i++)
-        {
-            Debug.Log(p.getStep(i));
-        }
         if (p != null)
         {
             for (int i = p.getLength() - 2; i >= 0; i--)
@@ -176,16 +241,14 @@ public class MouseManager : MonoBehaviour {
         }
         DrawMousePath();
     }
-    public static void CalculateMousePathToEnemy(LivingObject character, Vector2 position)
+    public  void CalculateMousePathToEnemy(LivingObject character, Vector2 position)
     {
         ResetMousePath();
-
-        Debug.Log("from" + character.GridPosition.x + " " + character.GridPosition.y + " to " + position.x + " " + position.y + " Player.number " + character.Player.ID + " " + character.Stats.AttackRanges[0]);
         MovementPath p = mainScript.gridManager.GridLogic.getPath(character.GridPosition.x, character.GridPosition.y, (int)position.x, (int)position.y, character.Player.ID, true, character.Stats.AttackRanges);
-        for (int i = 0; i < p.getLength(); i++)
-        {
-            Debug.Log(p.getStep(i));
-        }
+        //for (int i = 0; i < p.getLength(); i++)
+        //{
+        //    Debug.Log(p.getStep(i));
+        //}
         if (p != null)
         {
             for (int i = p.getLength() - 2; i >= mainScript.AttackRangeFromPath; i--)
@@ -194,7 +257,7 @@ public class MouseManager : MonoBehaviour {
             }
         }
     }
-    public static void CalculateMousePathToÉnemy(LivingObject character, BigTile position)
+    public  void CalculateMousePathToÉnemy(LivingObject character, BigTile position)
     {
         ResetMousePath();
         Debug.Log("FUCKTESTfrom" + character.GridPosition.x + " " + character.GridPosition.y + " to " + position + " Player.number " + character.Player.ID + " " + character.Stats.AttackRanges[0]);
@@ -212,7 +275,7 @@ public class MouseManager : MonoBehaviour {
             }
         }
     }
-    public static void CalculateMousePathToPositon(LivingObject character, BigTile position)
+    public  void CalculateMousePathToPositon(LivingObject character, BigTile position)
     {
         ResetMousePath();
         MovementPath p = mainScript.gridManager.GridLogic.GetMonsterPath((Monster)character, position);
@@ -234,7 +297,7 @@ public class MouseManager : MonoBehaviour {
         DrawMousePath();
 
     }
-    public static void CharacterDrag(int x, int y, LivingObject character)
+    public  void CharacterDrag(int x, int y, LivingObject character)
     {
         if (!active)
             return;
@@ -295,16 +358,14 @@ public class MouseManager : MonoBehaviour {
         Finish(character, field, x, y);
         
     }
-    public static void ShowAttackPreview(Vector2 pos)
+    public  void ShowAttackPreview(Vector2 pos)
     {
-        Debug.Log("attackPreview " +pos.x+" "+ pos.y);
         ressources.attackPreview.SetActive(true);
         Vector3 attackPreviewPos = Camera.main.WorldToScreenPoint(new Vector3(pos.x + GridManager.GRID_X_OFFSET+0.5f, pos.y + 1.5f, -0.05f));
-        Debug.Log("attackPreview " + attackPreviewPos.x + " " + attackPreviewPos.y);
         attackPreviewPos.z = 0;
         ressources.attackPreview.transform.position = attackPreviewPos;
     }
-    public static void DraggedOnEnemy(int x, int y, Tile field,LivingObject character)
+    public void DraggedOnEnemy(int x, int y, Tile field,LivingObject character)
     {
 
         Debug.Log("ENEMY: " + character.Name);
@@ -484,7 +545,7 @@ public class MouseManager : MonoBehaviour {
             }
         }
     }
-    public static void DraggedOnActiveField(int x, int y, LivingObject character)
+    public void DraggedOnActiveField(int x, int y, LivingObject character)
     {
         if (nonActive)
         {
@@ -530,8 +591,9 @@ public class MouseManager : MonoBehaviour {
         }
         DrawMousePath();
     }
-    public static void DrawMousePath()
+    public void DrawMousePath()
     {
+        preferedPath.path = mousePath;
         //Debug.Log("DrawMousePath");
         float startX = -1;
         float startY = -1;
@@ -601,7 +663,7 @@ public class MouseManager : MonoBehaviour {
             }
         }
     }
-    public static void ArrowCurve(GameObject dot,Vector2 v, Vector2 vBefore, Vector2 vAfter)
+    public void ArrowCurve(GameObject dot,Vector2 v, Vector2 vBefore, Vector2 vAfter)
     {
         if (vBefore.x == vAfter.x)
         {
@@ -653,7 +715,7 @@ public class MouseManager : MonoBehaviour {
             }
         }
     }
-    public static void Finish(LivingObject character, Tile field, int x, int y)
+    public void Finish(LivingObject character, Tile field, int x, int y)
     {
         oldX = x;
         oldY = y;
@@ -663,7 +725,7 @@ public class MouseManager : MonoBehaviour {
             nonActive = true;
         }
     }
-    private static bool IsOutOfBounds(int x, int y)
+    private bool IsOutOfBounds(int x, int y)
     {
         return x < 0 || x >= mainScript.gridManager.grid.width || y < 0 || y >= mainScript.gridManager.grid.height;
     }

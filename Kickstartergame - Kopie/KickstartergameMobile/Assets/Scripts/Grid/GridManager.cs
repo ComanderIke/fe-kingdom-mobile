@@ -13,6 +13,7 @@ public class GridManager : MonoBehaviour {
     [SerializeField]
     public GridData grid;
     public GridBuilder GridBuilder { get; set; }
+
     [SerializeField]
     public GridRessources gridRessources;
 

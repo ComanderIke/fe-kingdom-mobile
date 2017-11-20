@@ -26,8 +26,6 @@ namespace Assets.Scripts.Characters
             if(x!=-1&&y!=-1)
                 gridScript.Tiles[x, y].character = null;
             gridScript.Tiles[newX, newY].character = character;
-            Debug.Log("OldPosition: " + x + " " + y + " " + character.Name);
-            Debug.Log("NewPosition: " +newX + " " + newY + " " + character.Name);
             x = newX;
             y = newY;
         }

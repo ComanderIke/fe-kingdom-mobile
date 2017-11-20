@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine;
 using Assets.Scripts.Battle;
 using Assets.Scripts.Characters;
+using Assets.Scripts.Events;
 
 namespace Assets.Scripts.GameStates
 {
@@ -14,14 +15,12 @@ namespace Assets.Scripts.GameStates
 
         private LivingObject attacker;
         private LivingObject defender;
-        private GameState targetState;
         private UIController uiController;
         private UnitController unitController;
 
-        public FightState(LivingObject attacker, LivingObject defender, GameState targetState)
+        public FightState(LivingObject attacker, LivingObject defender)
         {
             this.attacker = attacker;
-            this.targetState = targetState;
             this.defender = defender;
             uiController = GameObject.FindObjectOfType<UIController>();
             unitController = GameObject.FindObjectOfType<UnitController>();
@@ -62,7 +61,9 @@ namespace Assets.Scripts.GameStates
 
         private void EndFight()
         {
-            MainScript.GetInstance().SwitchState(targetState);
+            MainScript.GetInstance().SwitchState(new GameplayState());
+            Debug.Log("Fight Finished!");
+            EventContainer.commandFinished();
         }
 
         IEnumerator Attack()

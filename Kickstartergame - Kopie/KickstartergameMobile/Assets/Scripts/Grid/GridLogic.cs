@@ -2,6 +2,7 @@
 using Assets.Scripts.Events;
 using Assets.Scripts.GameStates;
 using Assets.Scripts.Grid.PathFinding;
+using Assets.Scripts.ScriptableObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace Assets.Scripts.Grid
         public Tile[,] Tiles { get; set; }
         public GridManager GridManager { get; set; }
         private GridData grid;
+
         public GridLogic(GridManager gridManager)
         {
             mainScript = MainScript.GetInstance();
@@ -38,11 +40,12 @@ namespace Assets.Scripts.Grid
                         int tx = (int)x;
                         int ty = (int)y;
                         List<Vector2> movePath = new List<Vector2>();
-                        for (int i = 0; i < MouseManager.oldMousePath.Count; i++)
+                        for (int i = 0; i < GridManager.gridRessources.preferedPath.path.Count; i++)
                         {
-                            movePath.Add(new Vector2(MouseManager.oldMousePath[i].x, MouseManager.oldMousePath[i].y));
+                            movePath.Add(new Vector2(GridManager.gridRessources.preferedPath.path[i].x, GridManager.gridRessources.preferedPath.path[i].y));
                         }
-                        mainScript.GetSystem<UnitActionManager>().MoveCharacter(selectedCharacter, x, y, movePath, false, new GameplayState());
+                        mainScript.GetSystem<UnitActionManager>().MoveCharacter(selectedCharacter, x, y, movePath);
+                        mainScript.GetSystem<UnitActionManager>().ExecuteActions();
                         mainScript.gridManager.HideMovement();
                         return;
                     }

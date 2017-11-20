@@ -23,6 +23,10 @@ namespace Assets.Scripts.Characters
         {
             HasMoved = false;
             HasAttacked = false;
+            IsWaiting = false;
+            Selected = false;
+            IsActive = false;
+            MainScript.GetInstance().GetSystem<UnitSelectionManager>().DeselectActiveCharacter();
         }
 
         public bool IsDragable()

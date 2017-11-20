@@ -5,8 +5,9 @@ using System.Text;
 
 namespace Assets.Scripts.Commands
 {
-    abstract class Command
+    public abstract class Command
     {
+        public bool finished = false;
         public abstract void Execute();
         public abstract void Undo();
     }

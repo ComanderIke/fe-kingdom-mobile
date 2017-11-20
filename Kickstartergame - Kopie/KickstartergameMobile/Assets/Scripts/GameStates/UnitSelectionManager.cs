@@ -18,12 +18,8 @@ namespace Assets.Scripts.GameStates
         public UnitSelectionManager()
         {
             mainScript = MainScript.GetInstance();
-            EventContainer.unitClicked += CharacterClicked;
+            EventContainer.unitClickedConfirmed += UnitClicked;
             EventContainer.endDragOverNothing += DeselectActiveCharacter;
-        }
-        void CharacterClicked(LivingObject c)
-        {
-            SetActiveCharacter(c, false);
         }
         void SameCharacterSelected(LivingObject c)
         {
@@ -34,7 +30,7 @@ namespace Assets.Scripts.GameStates
         {
             if (SelectedCharacter != null)
                 SelectedCharacter.UnitTurnState.Selected = false;
-            MouseManager.ResetMousePath();
+            EventContainer.deselectActiveCharacter();
             SelectedCharacter = null;
             mainScript.gridManager.HideMovement();
 
@@ -70,53 +66,37 @@ namespace Assets.Scripts.GameStates
             }
         }
 
-
-       
-
-        public void SetActiveCharacter(LivingObject c, bool switchChar)//TODO will be called by CHaracterClicked
+        public void UnitClicked(LivingObject c, bool confirm)//TODO will be called by CHaracterClicked
         {
-            if (!switchChar && SelectedCharacter != null && SelectedCharacter.GameTransform.GameObject != null && c != SelectedCharacter)
+            if (SelectedCharacter != null && SelectedCharacter.GameTransform.GameObject != null && c != SelectedCharacter)
             {
 
-                if (c.Player.ID != SelectedCharacter.Player.ID)//Clicked On Enemy
+                if (c.Player.ID != SelectedCharacter.Player.ID && confirm)//Clicked On Enemy
                 {
-                    //Enemy already in Range
-
-                    if (MouseManager.gridInput.confirmClick && MouseManager.gridInput.clickedField == new Vector2(MouseManager.currentX, MouseManager.currentY))
+                    if (confirm)
+                    {
                         mainScript.GetSystem<UnitActionManager>().GoToEnemy(SelectedCharacter, c, false);
+                    }
                     else
                     {
-                        Debug.Log(c.Name + " " + MouseManager.currentX + " " + MouseManager.currentY);
-                        MouseManager.gridInput.confirmClick = true;
-                        MouseManager.gridInput.clickedField = new Vector2(MouseManager.currentX, MouseManager.currentY);
-                        MouseManager.CalculateMousePathToEnemy(SelectedCharacter, new Vector2(MouseManager.currentX, MouseManager.currentY));
-                        MouseManager.DrawMousePath();
-                        if (c is Monster)
-                        {
-                            MouseManager.ShowAttackPreview(((BigTilePosition)c.GridPosition).Position.CenterPos());
-                        }
-                        else
-                        {
-                            MouseManager.ShowAttackPreview(new Vector2(c.GridPosition.x, c.GridPosition.y));
-                        }
+                        EventContainer.enemyClicked(c);
+                        
                     }
-
                     return;
-                }
+                 }
+
             }
             if (mainScript.GetSystem<TurnManager>().ActivePlayer.Units.Contains(c))
             {
                 if (!c.UnitTurnState.IsWaiting)
                 {
-                    if (!switchChar && SelectedCharacter != null && SelectedCharacter == c)
+                    if ( SelectedCharacter != null && SelectedCharacter == c)
                     {
                         SameCharacterSelected(c);
                     }
                     else
                     {
                         mainScript.gridManager.HideMovement();
-                        MouseManager.gridInput.confirmClick = false;
-                        MouseManager.gridInput.clickedField = new Vector2(-1, -1);
                         SelectCharacter(c);
                     }
                 }

@@ -84,7 +84,8 @@ public class MainScript : MonoBehaviour {
     {
         Systems.Add(new TurnManager());
         Systems.Add(new UnitSelectionManager());
-        Systems.Add(new UnitActionManager());
+        Systems.Add(FindObjectOfType<UnitActionManager>());
+        Systems.Add(new MouseManager());
         InitCharacters();
         gameState.enter();
     }
@@ -136,7 +137,7 @@ public class MainScript : MonoBehaviour {
         Monster monster = new Monster("Mammoth", MonsterType.Mammoth);
         turnManager.Players[1].AddUnit(monster);
 
-        cc.PlaceCharacter(1, monster, 3, 3);
+        cc.PlaceCharacter(1, monster, 3, 2);
     }
 
     public T GetSystem<T>()
