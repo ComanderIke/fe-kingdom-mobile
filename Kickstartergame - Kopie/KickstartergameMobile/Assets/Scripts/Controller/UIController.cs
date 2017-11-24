@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Characters;
+using Assets.Scripts.Engine;
 using Assets.Scripts.Events;
 using Assets.Scripts.GameStates;
 using System.Collections;
@@ -6,7 +7,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIController : MonoBehaviour {
+public class UIController : MonoBehaviour, Controller {
 
     public delegate void AttackButtonCLicked();
     public static AttackButtonCLicked attacktButtonCLicked;
@@ -34,6 +35,8 @@ public class UIController : MonoBehaviour {
     public AttackUIController attackUIController;
     [SerializeField]
     GameObject reactUI;
+    [SerializeField]
+    GameObject attackPreview;
 
     private MainScript mainScript;
 
@@ -112,5 +115,17 @@ public class UIController : MonoBehaviour {
     public void EndTurnClicked()
     {
         EventContainer.endTurn();
+    }
+    public void ShowAttackPreview(LivingObject attacker, LivingObject defender, Vector2 pos)
+    {
+        attackPreview.SetActive(true);
+        attackPreview.GetComponent<AttackPreview>().UpdateValues(attacker.BattleStats.GetDamageAgainstTarget(defender),attacker.BattleStats.GetHitAgainstTarget(defender), attacker.BattleStats.CanDoubleAttack(defender) ? 2 : 1);
+        Vector3 attackPreviewPos = Camera.main.WorldToScreenPoint(new Vector3(pos.x + GridManager.GRID_X_OFFSET + 0.5f, pos.y + 1.5f, -0.05f));
+        attackPreviewPos.z = 0;
+        attackPreview.transform.position = attackPreviewPos;
+    }
+    public void HideAttackPreview()
+    {
+        attackPreview.SetActive(false);
     }
 }

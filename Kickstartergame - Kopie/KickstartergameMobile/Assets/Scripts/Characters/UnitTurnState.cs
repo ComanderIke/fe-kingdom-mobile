@@ -1,17 +1,55 @@
-﻿using Assets.Scripts.GameStates;
+﻿using Assets.Scripts.Events;
+using Assets.Scripts.GameStates;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace Assets.Scripts.Characters
 {
     public class UnitTurnState
     {
         LivingObject unit;
-        public bool IsActive { get; set; }
-        public bool IsWaiting { get; set; }
-        public bool HasMoved { get; set; }
+        private bool isActive;
+        private bool hasMoved;
+        private bool isWaiting;
+        public bool IsActive {
+            get
+            {
+                return isActive;
+            }
+            set
+            {
+                isActive = value;
+                if(EventContainer.unitActiveChanged !=null)
+                    EventContainer.unitActiveChanged(unit, isActive);
+            }
+        }
+        public bool IsWaiting
+        {
+            get
+            {
+                return isWaiting;
+            }
+            set
+            {
+                isWaiting = value;
+                EventContainer.unitWaiting(unit, isWaiting);
+            }
+        }
+        public bool HasMoved
+        {
+            get
+            {
+                return hasMoved;
+            }
+            set
+            {
+                hasMoved = value;
+                EventContainer.unitCanMove(unit, !value);
+            }
+        }
         public bool HasAttacked { get; set; }
         public bool Selected { get; set; }
 

@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.GameStates
 {
-    public class UnitActionManager : MonoBehaviour, EngineSystem
+    public class UnitActionManager :  MonoBehaviour, EngineSystem
     {
         MainScript mainScript;
         public PreferedMovementPath preferedPath;
@@ -20,6 +20,7 @@ namespace Assets.Scripts.GameStates
 
         void Start()
         {
+            Debug.Log("InitActionManager");
             mainScript = MainScript.GetInstance();
             EventContainer.endDragOverGrid += UnitMoveOnTile;
             EventContainer.endDragOverUnit += UnitMoveToOtherUnit;
@@ -83,8 +84,9 @@ namespace Assets.Scripts.GameStates
         public void GoToEnemy(LivingObject character, LivingObject enemy, bool drag)
         {
             EventContainer.unitMoveToEnemy();
-            if (preferedPath.path.Count == 0 && character.Stats.AttackRanges.Contains<int>((int)(Mathf.Abs(enemy.GridPosition.x - character.GridPosition.x) + Mathf.Abs(enemy.GridPosition.y - character.GridPosition.y))))
+            if (preferedPath.path.Count == 0 && character.GridPosition.CanAttack(character.Stats.AttackRanges,enemy.GridPosition))
             {
+                
                 mainScript.gridManager.HideMovement();
                 Debug.Log("Enemy is in Range:");
                 mainScript.oldPosition = new Vector2(character.GridPosition.x, character.GridPosition.y);
@@ -99,6 +101,7 @@ namespace Assets.Scripts.GameStates
                     Fight(character, enemy);
                     //mainScript.SwitchState(new FightState(character, enemy, new GameplayState()));
                 }
+                ExecuteActions();
                 return;
             }
             else//go to enemy cause not in range
@@ -106,7 +109,6 @@ namespace Assets.Scripts.GameStates
                 Debug.Log("Got to Enemy!");
                 if (mainScript.gridManager.GridLogic.IsFieldAttackable(enemy.GridPosition.x, enemy.GridPosition.y))
                 {
-                    Debug.Log("Field Attackable");
                     mainScript.gridManager.HideMovement();
                     int sx = (int)character.GameTransform.GameObject.transform.position.x;
                     int sy = (int)character.GameTransform.GameObject.transform.position.y;
@@ -118,7 +120,6 @@ namespace Assets.Scripts.GameStates
                     for (int i = 0; i < preferedPath.path.Count; i++)
                     {
                         movePath.Add(new Vector2(preferedPath.path[i].x, preferedPath.path[i].y));
-                        Debug.Log(movePath[i]);
                     }
                     if (drag)
                     {
@@ -149,12 +150,13 @@ namespace Assets.Scripts.GameStates
             MainScript mainScript = MainScript.GetInstance();
             UnitSelectionManager unitSelectionManager = mainScript.GetSystem<UnitSelectionManager>();
             LivingObject selectedUnit = unitSelectionManager.SelectedCharacter;
+            Debug.Log("UnitMoveontile");
             if (mainScript.gridManager.Tiles[x, y].isActive && !(x == selectedUnit.GridPosition.x && y == selectedUnit.GridPosition.y))
             {
                 if (!(selectedUnit is Monster) || (selectedUnit is Monster && !((BigTilePosition)selectedUnit.GridPosition).Position.Contains(new Vector2(x, y))))
                 {
                     selectedUnit.GridPosition.SetPosition(selectedUnit.GridPosition.x, selectedUnit.GridPosition.y);
-                    MoveCharacter(selectedUnit, x, y);//, true, new GameplayState());
+                    MoveCharacter(selectedUnit, x, y,preferedPath.path);//, true, new GameplayState());
                     ExecuteActions();
                 }
                 else
@@ -169,6 +171,7 @@ namespace Assets.Scripts.GameStates
             }
             else
             {
+                Debug.Log("Deselect");
                 unitSelectionManager.DeselectActiveCharacter();
             }
         }

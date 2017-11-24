@@ -42,23 +42,23 @@ public class GridManager : MonoBehaviour {
             ShowMovement(c.GridPosition.x, c.GridPosition.y, c.Stats.MoveRange, c.Stats.MoveRange, new List<int>(c.Stats.AttackRanges), 0, c.Player.ID, false);
 
     }
-    private void ShowMonsterMovement(int x, int y, int range, List<int> attack, int c, int team)
+    private void ShowMonsterMovement(int x, int y, int range, List<int> attack, int c, int playerId)
     {
         if (range < 0)
         {
             return;
         }
-        GridRenderer.SetBigTileActive(new BigTile(new Vector2(x, y), new Vector2(x + 1, y), new Vector2(x, y + 1), new Vector2(x + 1, y + 1)));
-        if (GridLogic.checkMonsterField(new BigTile(new Vector2(x - 1, y), new Vector2(x, y), new Vector2(x - 1, y + 1), new Vector2(x, y + 1)), team, range))
-            ShowMonsterMovement(x - 1, y, range - 1, new List<int>(attack), c, team);
-        if (GridLogic.checkMonsterField(new BigTile(new Vector2(x + 1, y), new Vector2(x + 2, y), new Vector2(x + 1, y + 1), new Vector2(x + 2, y + 1)), team, range))
-            ShowMonsterMovement(x + 1, y, range - 1, new List<int>(attack), c, team);
-        if (GridLogic.checkMonsterField(new BigTile(new Vector2(x, y - 1), new Vector2(x + 1, y - 1), new Vector2(x, y), new Vector2(x + 1, y)), team, range))
-            ShowMonsterMovement(x, y - 1, range - 1, new List<int>(attack), c, team);
-        if (GridLogic.checkMonsterField(new BigTile(new Vector2(x, y + 1), new Vector2(x + 1, y + 1), new Vector2(x, y + 2), new Vector2(x + 1, y + 2)), team, range))
-            ShowMonsterMovement(x, y + 1, range - 1, new List<int>(attack), c, team);
+        GridRenderer.SetBigTileActive(new BigTile(new Vector2(x, y), new Vector2(x + 1, y), new Vector2(x, y + 1), new Vector2(x + 1, y + 1)), playerId,false);
+        if (GridLogic.checkMonsterField(new BigTile(new Vector2(x - 1, y), new Vector2(x, y), new Vector2(x - 1, y + 1), new Vector2(x, y + 1)), playerId, range))
+            ShowMonsterMovement(x - 1, y, range - 1, new List<int>(attack), c, playerId);
+        if (GridLogic.checkMonsterField(new BigTile(new Vector2(x + 1, y), new Vector2(x + 2, y), new Vector2(x + 1, y + 1), new Vector2(x + 2, y + 1)), playerId, range))
+            ShowMonsterMovement(x + 1, y, range - 1, new List<int>(attack), c, playerId);
+        if (GridLogic.checkMonsterField(new BigTile(new Vector2(x, y - 1), new Vector2(x + 1, y - 1), new Vector2(x, y), new Vector2(x + 1, y)), playerId, range))
+            ShowMonsterMovement(x, y - 1, range - 1, new List<int>(attack), c, playerId);
+        if (GridLogic.checkMonsterField(new BigTile(new Vector2(x, y + 1), new Vector2(x + 1, y + 1), new Vector2(x, y + 2), new Vector2(x + 1, y + 2)), playerId, range))
+            ShowMonsterMovement(x, y + 1, range - 1, new List<int>(attack), c, playerId);
     }
-    public void ShowAttack(LivingObject character, List<int> attack, bool enemy)
+    public void ShowAttack(LivingObject character, List<int> attack)
     {
         List<Tile> TilesFromWhereUCanAttack = new List<Tile>();
         foreach (Tile f in Tiles)
@@ -82,7 +82,7 @@ public class GridManager : MonoBehaviour {
             int y = f.y;
             foreach (int range in attack)
             {
-                ShowAttackRecursive(character, x, y, range, new List<int>(), enemy);
+                ShowAttackRecursive(character, x, y, range, new List<int>());
 
             }
         }
@@ -108,21 +108,15 @@ public class GridManager : MonoBehaviour {
             }
         }
     }
-    public void ShowAttackRecursive(LivingObject character, int x, int y, int range, List<int> direction, bool enemy)
+    public void ShowAttackRecursive(LivingObject character, int x, int y, int range, List<int> direction)
     {
         MeshRenderer m = Tiles[x, y].gameObject.GetComponent<MeshRenderer>();
 
 
         if (range <= 0)
         {
-            m = Tiles[x, y].gameObject.GetComponent<MeshRenderer>();
-            if (m.material.mainTexture == gridRessources.MoveTexture)
-                return;
-            m.material.mainTexture = gridRessources.AttackTexture;
-            if (enemy)
-            {
-                m.material.mainTexture = gridRessources.EnemyAttackTexture;
-            }
+            GridRenderer.SetFieldTexture(new Vector2(x, y), character.Player.ID, true);
+            
             return;
         }
         if (!direction.Contains(2))
@@ -131,7 +125,7 @@ public class GridManager : MonoBehaviour {
             { //&& AttackNodeFaster(x+1, y, c))
                 List<int> newdirection = new List<int>(direction);
                 newdirection.Add(1);
-                ShowAttackRecursive(character, x + 1, y, range - 1, newdirection, enemy);
+                ShowAttackRecursive(character, x + 1, y, range - 1, newdirection);
             }
         }
         if (!direction.Contains(1))
@@ -140,7 +134,7 @@ public class GridManager : MonoBehaviour {
             { //&& AttackNodeFaster(x - 1, y, c))
                 List<int> newdirection = new List<int>(direction);
                 newdirection.Add(2);
-                ShowAttackRecursive(character, x - 1, y, range - 1, newdirection, enemy);
+                ShowAttackRecursive(character, x - 1, y, range - 1, newdirection);
             }
         }
         if (!direction.Contains(4))
@@ -149,7 +143,7 @@ public class GridManager : MonoBehaviour {
             {// && AttackNodeFaster(x , y+1, c))
                 List<int> newdirection = new List<int>(direction);
                 newdirection.Add(3);
-                ShowAttackRecursive(character, x, y + 1, range - 1, newdirection, enemy);
+                ShowAttackRecursive(character, x, y + 1, range - 1, newdirection);
             }
         }
         if (!direction.Contains(3))
@@ -158,7 +152,7 @@ public class GridManager : MonoBehaviour {
             { //&& AttackNodeFaster(x , y-1, c))
                 List<int> newdirection = new List<int>(direction);
                 newdirection.Add(4);
-                ShowAttackRecursive(character, x, y - 1, range - 1, newdirection, enemy);
+                ShowAttackRecursive(character, x, y - 1, range - 1, newdirection);
             }
         }
 
@@ -221,7 +215,7 @@ public class GridManager : MonoBehaviour {
             ShowAttackRanges(x, z, range, new List<int>());
         }
     }
-    private void ShowMovement(int x, int y, int range, int attackIndex, List<int> attack, int c, int team, bool enemy)
+    private void ShowMovement(int x, int y, int range, int attackIndex, List<int> attack, int c, int playerId, bool enemy)
     {
         if (range < 0)
         {
@@ -229,23 +223,17 @@ public class GridManager : MonoBehaviour {
         }
         if (!enemy)
         {
-            MeshRenderer m = Tiles[x, y].gameObject.GetComponent<MeshRenderer>();
-            m.material.mainTexture = gridRessources.MoveTexture;
-            if (Tiles[x, y].character != null && Tiles[x, y].character.Player.ID != team)
-            {
-                m.material.mainTexture = gridRessources.AttackTexture;
-            }
+            GridRenderer.SetFieldTexture(new Vector2(x, y), playerId,false);
         }
-        Tiles[x, y].isActive = true;
         PathFindingManager.nodes[x, y].c = c;
         c++;
-        if (GridLogic.checkField(x - 1, y, team, range) && PathFindingManager.nodeFaster(x - 1, y, c))
-            ShowMovement(x - 1, y, range - 1, attackIndex, new List<int>(attack), c, team, enemy);
-        if (GridLogic.checkField(x + 1, y, team, range) && PathFindingManager.nodeFaster(x + 1, y, c))
-            ShowMovement(x + 1, y, range - 1, attackIndex, new List<int>(attack), c, team, enemy);
-        if (GridLogic.checkField(x, y - 1, team, range) && PathFindingManager.nodeFaster(x, y - 1, c))
-            ShowMovement(x, y - 1, range - 1, attackIndex, new List<int>(attack), c, team, enemy);
-        if (GridLogic.checkField(x, y + 1, team, range) && PathFindingManager.nodeFaster(x, y + 1, c))
-            ShowMovement(x, y + 1, range - 1, attackIndex, new List<int>(attack), c, team, enemy);
+        if (GridLogic.checkField(x - 1, y, playerId, range) && PathFindingManager.nodeFaster(x - 1, y, c))
+            ShowMovement(x - 1, y, range - 1, attackIndex, new List<int>(attack), c, playerId, enemy);
+        if (GridLogic.checkField(x + 1, y, playerId, range) && PathFindingManager.nodeFaster(x + 1, y, c))
+            ShowMovement(x + 1, y, range - 1, attackIndex, new List<int>(attack), c, playerId, enemy);
+        if (GridLogic.checkField(x, y - 1, playerId, range) && PathFindingManager.nodeFaster(x, y - 1, c))
+            ShowMovement(x, y - 1, range - 1, attackIndex, new List<int>(attack), c, playerId, enemy);
+        if (GridLogic.checkField(x, y + 1, playerId, range) && PathFindingManager.nodeFaster(x, y + 1, c))
+            ShowMovement(x, y + 1, range - 1, attackIndex, new List<int>(attack), c, playerId, enemy);
     }
 }

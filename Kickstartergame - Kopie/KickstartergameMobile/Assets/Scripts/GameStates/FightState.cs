@@ -16,25 +16,37 @@ namespace Assets.Scripts.GameStates
         private LivingObject attacker;
         private LivingObject defender;
         private UIController uiController;
-        private UnitController unitController;
+        private UnitsController unitController;
+        private int attackerDmg;
+        private int attackerHit;
 
         public FightState(LivingObject attacker, LivingObject defender)
         {
             this.attacker = attacker;
             this.defender = defender;
-            uiController = GameObject.FindObjectOfType<UIController>();
-            unitController = GameObject.FindObjectOfType<UnitController>();
+            uiController = MainScript.GetInstance().GetController<UIController>();
+            unitController = MainScript.GetInstance().GetController<UnitsController>();
         }
         
         public override void enter()
         {
             //CameraMovement.locked = true;
-            Debug.Log("FIGHT" + attacker.Name + " " + defender.Name);
+            attackerDmg = attacker.BattleStats.GetDamage();
+            attackerHit = attacker.BattleStats.GetHitAgainstTarget(defender);
             uiController.ShowFightUI(attacker, defender);
             unitController.HideUnits();
             UIController.attacktButtonCLicked += DoAttack;
+            EventContainer.attackerDmgChanged += AttackerDmgChanged;
+            EventContainer.attackerHitChanged += AttackerHitChanged;
         }
-
+        void AttackerDmgChanged(int bonusDamage)
+        {
+            attackerDmg = attacker.BattleStats.GetDamage()+bonusDamage;
+        }
+        void AttackerHitChanged(int hit)
+        {
+            attackerHit = hit;
+        }
         public override void update()
         {
         }
@@ -44,13 +56,22 @@ namespace Assets.Scripts.GameStates
             //CameraMovement.locked = false;
             uiController.HideFightUI();
             unitController.ShowUnits();
+            if (!attacker.IsAlive())
+            {
+                attacker.Die();
+            }
+            if (!defender.IsAlive())
+            {
+                defender.Die();
+            }
             UIController.attacktButtonCLicked -= EndFight;
             UIController.attacktButtonCLicked -= DoAttack;
         }
 
         private bool DoesAttackHit(LivingObject attacker, LivingObject defender)
         {
-           return attacker.BattleStats.GetHitAgainstTarget(defender) <= UnityEngine.Random.Range(1, 101);
+            int rng = UnityEngine.Random.Range(1, 101);
+           return rng <= attackerHit;
         }
 
         private void DoAttack()
@@ -62,7 +83,7 @@ namespace Assets.Scripts.GameStates
         private void EndFight()
         {
             MainScript.GetInstance().SwitchState(new GameplayState());
-            Debug.Log("Fight Finished!");
+            attacker.UnitTurnState.IsActive = false;
             EventContainer.commandFinished();
         }
 
@@ -71,7 +92,7 @@ namespace Assets.Scripts.GameStates
             yield return new WaitForSeconds(ATTACK_DELAY);
             if (DoesAttackHit(attacker, defender))
             {
-                defender.InflictDamage(attacker.BattleStats.GetDamage(), attacker);
+                defender.InflictDamage(attackerDmg, attacker);
             }
             else
             {

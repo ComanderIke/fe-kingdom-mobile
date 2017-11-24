@@ -29,6 +29,38 @@ namespace Assets.Scripts.Events
         public delegate void UnitClickedConfirmed(LivingObject unit, bool confirm);
         public static UnitClickedConfirmed unitClickedConfirmed;
 
+        #region Fight
+        public delegate void AttackerDmgChanged(int dmg);
+        public static AttackerDmgChanged attackerDmgChanged;
+        public delegate void AttackerHitChanged(int hit);
+        public static AttackerHitChanged attackerHitChanged;
+
+        #endregion
+        #region UI
+        public delegate void AttackUIVisible( bool visible);
+        public static AttackUIVisible attackUIVisible;
+        
+        #endregion
+
+        #region Unit
+        public delegate void HPValueChanged();
+        public static HPValueChanged hpValueChanged;
+
+        public delegate void UnitActiveChanged(LivingObject unit, bool active);
+        public static UnitActiveChanged unitActiveChanged;
+
+        public delegate void UnitWaiting(LivingObject unit, bool waiting);
+        public static UnitWaiting unitWaiting;
+
+        public delegate void UnitCanMove(LivingObject unit, bool canMove);
+        public static UnitCanMove unitCanMove;
+
+        public delegate void UnitDied(LivingObject unit);
+        public static UnitDied unitDied;
+
+
+        #endregion
+
         #region UnitMovement
         public delegate void UnitMoveToEnemy();
         public static UnitMoveToEnemy unitMoveToEnemy;

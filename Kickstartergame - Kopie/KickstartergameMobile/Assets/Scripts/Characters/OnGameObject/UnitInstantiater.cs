@@ -23,7 +23,7 @@ public class UnitInstantiater : MonoBehaviour {
         }
         o.name = unit.Name;
         o.transform.parent = gameObject.transform;
-        MovableObject characterScript = o.GetComponentInChildren<MovableObject>();
+        UnitController characterScript = o.GetComponentInChildren<UnitController>();
         characterScript.Unit = unit;
         unit.GameTransform.GameObject = o;
         unit.SetPosition(x, y);

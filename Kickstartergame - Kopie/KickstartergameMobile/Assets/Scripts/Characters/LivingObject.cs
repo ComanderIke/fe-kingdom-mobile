@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Characters.Attributes;
 using Assets.Scripts.Characters.Debuffs;
+using Assets.Scripts.Events;
 using Assets.Scripts.Players;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,7 @@ namespace Assets.Scripts.Characters
     
     public abstract class LivingObject
     {
-        public delegate void HPValueChanged();
-        public static HPValueChanged hpValueChanged;
+
 
         public GameTransform GameTransform { get; set; }
         public BattleStats BattleStats { get; set; }
@@ -39,8 +39,17 @@ namespace Assets.Scripts.Characters
             List<int> attackRanges = new List<int>();
             attackRanges.Add(1);
             Stats = new Stats(15, 5, 5, 5, 5, 5, 5,3,attackRanges);
+            
         }
 
+        public void EndTurn()
+        {
+            UnitTurnState.Reset();
+        }
+        public void UpdateTurn()
+        {
+            UnitTurnState.Reset();
+        }
         public void SetInternPosition(int x, int y)
         {
             GridPosition.SetPosition(x, y);
@@ -50,6 +59,13 @@ namespace Assets.Scripts.Characters
         {
             GridPosition.SetPosition(x, y);
             GameTransform.SetPosition(x, y);
+        }
+     
+        public void Die()
+        {
+            EventContainer.unitDied(this);
+            GridPosition.RemoveCharacter();
+            GameTransform.Destroy();
         }
 
         public bool CanAttack(int range)

@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Characters;
+using Assets.Scripts.Events;
 using Assets.Scripts.Utility;
 using System.Collections;
 using System.Collections.Generic;
@@ -59,16 +60,23 @@ public class AttackUIController : MonoBehaviour {
     private LivingObject defender;
 
     void Start () {
-        LivingObject.hpValueChanged += HPValueChanged;
+       
 	}
 
     void OnEnable()
     {
         OnSliderValueChanged();
         HPValueChanged();
+        EventContainer.hpValueChanged += HPValueChanged;
+        EventContainer.attackUIVisible(true);
+    }
+    private void OnDisable()
+    {
+        EventContainer.hpValueChanged -= HPValueChanged;
+        EventContainer.attackUIVisible(false);
     }
 
-	void Update () {
+    void Update () {
         allyFillAmount = Mathf.Lerp(allyFillAmount, currentAllyHPValue, Time.deltaTime * healthSpeed);
         enemyFillAmount = Mathf.Lerp(enemyFillAmount, currentEnemyHPValue, Time.deltaTime * healthSpeed);
         enemyLoseFillAmount = Mathf.Lerp(enemyLoseFillAmount, delayedEnemyHPValue, Time.deltaTime * healthLoseSpeed);
@@ -82,6 +90,10 @@ public class AttackUIController : MonoBehaviour {
         this.attacker = attacker;
         this.defender = defender;
         gameObject.SetActive(true);
+        currentAtkSliderValue = 0;
+        currentHitSliderValue = 0;
+        hitSlider.value = 0;
+        attackSlider.value = 0;
     }
 
     public void Hide()
@@ -108,11 +120,18 @@ public class AttackUIController : MonoBehaviour {
         }
         attackerSP.text = "" + attacker.Stats.SP;
         attackerSP2.text = "" + attacker.Stats.SP;
+        int hit = Mathf.Clamp(attacker.BattleStats.GetHitAgainstTarget(defender) + 10 * currentHitSliderValue, 0, 100);
+        int dmg = (attacker.BattleStats.GetDamageAgainstTarget(defender) + 1 * currentAtkSliderValue);
         attackerMaxDMG.text = "" + (attacker.BattleStats.GetDamageAgainstTarget(defender) + 3);
-        attackerDMG.text = "" + (attacker.BattleStats.GetDamageAgainstTarget(defender) + 1 * currentAtkSliderValue);
+        attackerDMG.text = "" +dmg ;
         attackerMaxHIT.text = "" + Mathf.Clamp(attacker.BattleStats.GetHitAgainstTarget(defender) + 30, 0, 100) + "%";
-        attackerHIT.text = "" + Mathf.Clamp(attacker.BattleStats.GetHitAgainstTarget(defender) + 10 * currentHitSliderValue, 0, 100) + "%";
-        Debug.Log(attacker.BattleStats.GetHitAgainstTarget(defender));
+        attackerHIT.text = "" +hit + "%";
+        if (EventContainer.attackerHitChanged!=null)
+            EventContainer.attackerHitChanged(hit);
+        if (EventContainer.attackerDmgChanged != null)
+            EventContainer.attackerDmgChanged(dmg);
+
+
     }
 
     private void HPValueChanged()

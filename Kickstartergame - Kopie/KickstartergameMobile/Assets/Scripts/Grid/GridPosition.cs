@@ -29,5 +29,37 @@ namespace Assets.Scripts.Characters
             x = newX;
             y = newY;
         }
+        protected int DeltaPos(int x2, int y2)
+        {
+            return Math.Abs(x - x2) + Math.Abs(y - y2);
+        }
+        public virtual void RemoveCharacter()
+        {
+            gridScript.Tiles[x, y] = null;
+        }
+        public virtual bool CanAttack(List<int> range, GridPosition enemyPosition)
+        {
+            if (!(enemyPosition is BigTilePosition))
+            {
+                return range.Contains(DeltaPos(enemyPosition.x, enemyPosition.y));
+            }
+            else
+            {
+                BigTilePosition bigTile = (BigTilePosition)enemyPosition;
+                if(range.Contains(DeltaPos((int)bigTile.Position.BottomLeft().x, (int)bigTile.Position.BottomLeft().y))){
+                    return true;
+                }
+                else if (range.Contains(DeltaPos((int)bigTile.Position.BottomRight().x, (int)bigTile.Position.BottomRight().y))){
+                    return true;
+                }
+                else if (range.Contains(DeltaPos((int)bigTile.Position.TopRight().x, (int)bigTile.Position.TopRight().y))){
+                    return true;
+                }
+                else if (range.Contains(DeltaPos((int)bigTile.Position.TopLeft().x, (int)bigTile.Position.TopLeft().y))){
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

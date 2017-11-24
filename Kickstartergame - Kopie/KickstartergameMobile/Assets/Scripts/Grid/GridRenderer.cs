@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Characters;
+using Assets.Scripts.GameStates;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,12 +17,12 @@ namespace Assets.Scripts.Grid
             GridManager = gridManager;
             Tiles = gridManager.Tiles;
         }
-        public void SetBigTileActive(BigTile bigTile)
+        public void SetBigTileActive(BigTile bigTile, int playerId, bool attack)
         {
-            SetFieldTexture(bigTile.BottomLeft());
-            SetFieldTexture(bigTile.BottomRight());
-            SetFieldTexture(bigTile.TopLeft());
-            SetFieldTexture(bigTile.TopRight());
+            SetFieldTexture(bigTile.BottomLeft(), playerId, attack);
+            SetFieldTexture(bigTile.BottomRight(), playerId, attack);
+            SetFieldTexture(bigTile.TopLeft(), playerId, attack);
+            SetFieldTexture(bigTile.TopRight(), playerId, attack);
         }
 
         public IEnumerator FieldAnimation()
@@ -73,11 +74,33 @@ namespace Assets.Scripts.Grid
                 Tiles[c.GridPosition.x, c.GridPosition.y].gameObject.GetComponent<MeshRenderer>().material.mainTexture = GridManager.gridRessources.StandOnTexture;
         }
 
-        private void SetFieldTexture(Vector2 pos)
+        public void SetFieldTexture(Vector2 pos, int playerId, bool attack)
         {
             MeshRenderer m = Tiles[(int)pos.x, (int)pos.y].gameObject.GetComponent<MeshRenderer>();
-            m.material.mainTexture = GridManager.gridRessources.MoveTexture;
-            Tiles[(int)pos.x, (int)pos.y].isActive = true;
+            if (attack)
+            {
+                if (m.material.mainTexture == GridManager.gridRessources.MoveTexture || m.material.mainTexture == GridManager.gridRessources.MoveTexture2)
+                    return;
+                if (MainScript.GetInstance().GetSystem<TurnManager>().ActivePlayer.ID == playerId)
+                    m.material.mainTexture = GridManager.gridRessources.AttackTexture;
+                else
+                    m.material.mainTexture = GridManager.gridRessources.EnemyAttackTexture;
+            }
+            else
+            {
+                if (MainScript.GetInstance().GetSystem<TurnManager>().ActivePlayer.ID == playerId)
+                    m.material.mainTexture = GridManager.gridRessources.MoveTexture;
+                else
+                    m.material.mainTexture = GridManager.gridRessources.MoveTexture2;
+                if (Tiles[(int)pos.x, (int)pos.y].character != null && Tiles[(int)pos.x, (int)pos.y].character.Player.ID != playerId)
+                {
+                    if (MainScript.GetInstance().GetSystem<TurnManager>().ActivePlayer.ID == playerId)
+                        m.material.mainTexture = GridManager.gridRessources.AttackTexture;
+                    else
+                        m.material.mainTexture = GridManager.gridRessources.EnemyAttackTexture;
+                }
+                Tiles[(int)pos.x, (int)pos.y].isActive = true;
+            }
         }
         
         /*===========*/

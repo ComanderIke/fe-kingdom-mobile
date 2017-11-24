@@ -11,6 +11,7 @@ namespace Assets.Scripts.Grid
     public class GridRessources
     {
         public Texture MoveTexture;
+        public Texture MoveTexture2;
         public Texture StandOnTexture;
         public Texture AttackTexture;
         public Texture EnemyAttackTexture;

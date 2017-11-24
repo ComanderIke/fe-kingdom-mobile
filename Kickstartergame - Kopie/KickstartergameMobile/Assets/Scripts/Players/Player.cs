@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Characters;
+using Assets.Scripts.Events;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,6 +20,18 @@ namespace Assets.Scripts.Players
             Name = name;
             IsHumanPlayer = isPlayerControlled;
             Units = new List<LivingObject>();
+           
+        }
+        public void Init()
+        {
+            EventContainer.unitDied += RemoveUnit;
+        }
+        void RemoveUnit(LivingObject unit)
+        {
+            if (Units.Contains(unit))
+            {
+                Units.Remove(unit);
+            }
         }
 
         public void AddUnit(LivingObject c)

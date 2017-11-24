@@ -12,7 +12,6 @@ public class UXRessources : MonoBehaviour {
     public Sprite moveArrowStart;
     public GameObject activeUnitField;
     public GameObject moveCursor;
-    public GameObject attackPreview;
 	// Use this for initialization
 	void Start () {
 		

@@ -10,5 +10,10 @@ namespace Assets.Scripts.Characters
         {
             GameObject.transform.localPosition = new Vector3(x, y, 0);
         }
+
+        public void Destroy()
+        {
+            GameObject.Destroy(GameObject);
+        }
     }
 }

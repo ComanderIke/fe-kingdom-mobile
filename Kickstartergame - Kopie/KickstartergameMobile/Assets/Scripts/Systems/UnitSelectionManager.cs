@@ -24,6 +24,7 @@ namespace Assets.Scripts.GameStates
         void SameCharacterSelected(LivingObject c)
         {
             mainScript.oldPosition = new Vector2(SelectedCharacter.GameTransform.GameObject.transform.localPosition.x, SelectedCharacter.GameTransform.GameObject.transform.localPosition.y);
+            DeselectActiveCharacter();
             Debug.Log("Same Selected");
          }
         public void DeselectActiveCharacter()
@@ -47,16 +48,17 @@ namespace Assets.Scripts.GameStates
             GridManager s = mainScript.gridManager;
             s.HideMovement();
             s.ShowMovement(c);
-            s.ShowAttack(c, new List<int>(c.Stats.AttackRanges), false);
+            s.ShowAttack(c, new List<int>(c.Stats.AttackRanges));
 
         }
 
         void EnemySelected(LivingObject c)
         {
+            Debug.Log("enemy selected " + c.Name);
             GridManager gridScript = mainScript.gridManager;
-
+            gridScript.HideMovement();
             gridScript.ShowMovement(c);
-            gridScript.ShowAttack(c, new List<int>(c.Stats.AttackRanges), false);
+            gridScript.ShowAttack(c, new List<int>(c.Stats.AttackRanges));
             gridScript.GridLogic.ResetActiveFields();
             if (SelectedCharacter != null)
             {
@@ -71,7 +73,7 @@ namespace Assets.Scripts.GameStates
             if (SelectedCharacter != null && SelectedCharacter.GameTransform.GameObject != null && c != SelectedCharacter)
             {
 
-                if (c.Player.ID != SelectedCharacter.Player.ID && confirm)//Clicked On Enemy
+                if (c.Player.ID != SelectedCharacter.Player.ID)//Clicked On Enemy
                 {
                     if (confirm)
                     {

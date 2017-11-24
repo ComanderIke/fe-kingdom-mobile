@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Events;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,6 +28,8 @@ namespace Assets.Scripts.Characters.Attributes
                 {
                     hp = 0;
                 }
+                if(EventContainer.hpValueChanged!=null)
+                    EventContainer.hpValueChanged();
             }
         }
         public int sp;

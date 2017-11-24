@@ -61,11 +61,9 @@ namespace Assets.Scripts.GameStates
                 mainScript.SwitchState(new AIState(ActivePlayer));
                 GameObject go = GameObject.Instantiate(mainScript.AITurnAnimation, new Vector3(), Quaternion.identity) as GameObject;
                 go.transform.SetParent(GameObject.Find("Canvas").transform, false);
-                //go.transform.localPosition = new Vector3();
             }
             else
             {
-                // mainScript.MoveCameraTo(activePlayer.getCharacters()[0].x, activePlayer.getCharacters()[0].z);
                 GameObject go = GameObject.Instantiate(mainScript.PlayerTurnAnimation, new Vector3(), Quaternion.identity) as GameObject;
                 go.transform.localPosition = new Vector3();
                 go.transform.SetParent(GameObject.Find("Canvas").transform, false);
@@ -83,13 +81,9 @@ namespace Assets.Scripts.GameStates
                 }
                 Debug.Log("Turn: " + TurnCount);
             }
-            //mainScript.gridScript.fields[x, z].gameObject.GetComponent<FieldClicked>().hovered = false;
             foreach (LivingObject c in ActivePlayer.Units)
             {
-                // c.UpdateTurn();
-                //c.gameObject.GetComponent<CharacterScript>().WaitAnimation(false);
-                if (ActivePlayer.IsHumanPlayer)
-                    GameObject.Instantiate(GameObject.FindObjectOfType<UXRessources>().activeUnitField, c.GameTransform.GameObject.transform.position, Quaternion.identity, c.GameTransform.GameObject.transform);
+                c.UpdateTurn();
             }
         }
 
@@ -97,7 +91,7 @@ namespace Assets.Scripts.GameStates
         {
             foreach (LivingObject c in ActivePlayer.Units)
             {
-                c.UnitTurnState.IsWaiting = false;
+                c.EndTurn();
                 //c.gameObject.GetComponent<CharacterScript>().SetSelected(false);
             }
             ActivePlayerNumber++;

@@ -29,8 +29,6 @@ namespace Assets.Scripts.GameStates
 
         }
 
-       
-
         public void CheckGameOver()
         {
             

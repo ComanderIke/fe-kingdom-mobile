@@ -93,46 +93,51 @@ public class MouseManager : MonoBehaviour, EngineSystem {
         EventContainer.unitDragged += CharacterDrag;
         EventContainer.unitClickedOnActiveTile += CalculateMousePathToPositon;
         EventContainer.monsterClickedOnActiveBigTile += CalculateMousePathToPositon;
-        EventContainer.startMovingUnit += Deactivate;
+        EventContainer.startMovingUnit += DeActivate;
         EventContainer.stopMovingUnit += Activate;
         EventContainer.unitMoveToEnemy += ResetMousePath;
         EventContainer.endDrag += EndDrag;
         EventContainer.deselectActiveCharacter += ResetMousePath;
         EventContainer.unitClicked += UnitClicked;
         EventContainer.enemyClicked += EnemyClicked;
+        EventContainer.attackUIVisible += UIActive;
 
     }
     void Activate()
     {
-        active = true;
+        UIActive(false);
+    }
+    void DeActivate()
+    {
+        UIActive(true);
+    }
+    void UIActive(bool active)
+    {
+        this.active = !active;
     }
 
-    void Deactivate()
-    {
-        active = false;
-    }
     void EndDrag()
     {
         Vector2 gridPos = raycastManager.GetMousePositionOnGrid();
-
         if (raycastManager.GetLatestHit().collider.gameObject.tag == "Grid")
         {
-            
-            EventContainer.endDragOverGrid((int)gridPos.x, (int)gridPos.y);
+           EventContainer.endDragOverGrid((int)gridPos.x, (int)gridPos.y);
         }
-        else if (raycastManager.GetLatestHit().collider.gameObject.GetComponent<MovableObject>() != null)
+        else if (raycastManager.GetLatestHit().collider.gameObject.GetComponent<UnitController>() != null)
         {
-            LivingObject draggedOverUnit = raycastManager.GetLatestHit().collider.gameObject.GetComponent<MovableObject>().Unit;
+            LivingObject draggedOverUnit = raycastManager.GetLatestHit().collider.gameObject.GetComponent<UnitController>().Unit;
             EventContainer.endDragOverUnit(draggedOverUnit);
         }
         else
         {
             EventContainer.endDragOverNothing();
         }
+        ResetMousePath();
     }
     void UnitClicked(LivingObject unit)
     {
-
+        if (!active)
+            return;
         if (gridInput.confirmClick && gridInput.clickedField == new Vector2(currentX, currentY))
         {
             EventContainer.unitClickedConfirmed(unit,true);
@@ -148,15 +153,36 @@ public class MouseManager : MonoBehaviour, EngineSystem {
     }
     public void EnemyClicked(LivingObject unit)
     {
-        CalculateMousePathToEnemy(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter, new Vector2(currentX, currentY));
+        if(mainScript.gridManager.GridLogic.IsFieldAttackable(currentX,currentY))
+            CalculateMousePathToEnemy(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter, new Vector2(currentX, currentY));
+        else
+        {
+            if(unit is Monster)
+            {
+                Vector2 bottomleft = ((BigTilePosition)unit.GridPosition).Position.BottomLeft();
+                Vector2 bottomright = ((BigTilePosition)unit.GridPosition).Position.BottomRight();
+                Vector2 topleft = ((BigTilePosition)unit.GridPosition).Position.TopLeft();
+                Vector2 topright = ((BigTilePosition)unit.GridPosition).Position.TopRight();
+                if (mainScript.gridManager.GridLogic.IsFieldAttackable((int)bottomleft.x, (int)bottomleft.y))
+                    CalculateMousePathToEnemy(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter, bottomleft);
+                else if (mainScript.gridManager.GridLogic.IsFieldAttackable((int)bottomright.x, (int)bottomright.y))
+                    CalculateMousePathToEnemy(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter, bottomright);
+                else if (mainScript.gridManager.GridLogic.IsFieldAttackable((int)topleft.x, (int)topleft.y))
+                    CalculateMousePathToEnemy(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter, topleft);
+                else if (mainScript.gridManager.GridLogic.IsFieldAttackable((int)topright.x, (int)topright.y))
+                    CalculateMousePathToEnemy(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter, topright);
+            }
+            
+        }
+
         DrawMousePath();
         if (unit is Monster)
         {
-            ShowAttackPreview(((BigTilePosition)unit.GridPosition).Position.CenterPos());
+            mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter,unit, ((BigTilePosition)unit.GridPosition).Position.CenterPos());
         }
         else
         {
-            ShowAttackPreview(new Vector2(unit.GridPosition.x, unit.GridPosition.y));
+            mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter,unit, new Vector2(unit.GridPosition.x, unit.GridPosition.y));
         }
     }
     public  void StartDrag(int gridX, int gridY)
@@ -183,7 +209,7 @@ public class MouseManager : MonoBehaviour, EngineSystem {
         mousePath.Clear();
         oldX = -1;
         oldY= -1;
-        ressources.attackPreview.SetActive(false);
+        mainScript.GetController<UIController>().HideAttackPreview();
         if (moveCursor != null)
             GameObject.Destroy(moveCursor);
         FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().enabled = false;
@@ -358,13 +384,7 @@ public class MouseManager : MonoBehaviour, EngineSystem {
         Finish(character, field, x, y);
         
     }
-    public  void ShowAttackPreview(Vector2 pos)
-    {
-        ressources.attackPreview.SetActive(true);
-        Vector3 attackPreviewPos = Camera.main.WorldToScreenPoint(new Vector3(pos.x + GridManager.GRID_X_OFFSET+0.5f, pos.y + 1.5f, -0.05f));
-        attackPreviewPos.z = 0;
-        ressources.attackPreview.transform.position = attackPreviewPos;
-    }
+ 
     public void DraggedOnEnemy(int x, int y, Tile field,LivingObject character)
     {
 
@@ -382,11 +402,11 @@ public class MouseManager : MonoBehaviour, EngineSystem {
             DrawMousePath();
             if(character is Monster)
             {
-                ShowAttackPreview(((BigTilePosition)character.GridPosition).Position.CenterPos());
+                mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter,character,((BigTilePosition)character.GridPosition).Position.CenterPos());
             }
             else
             {
-                ShowAttackPreview(new Vector2(x, y));
+                mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter,character,new Vector2(x, y));
             }
             
             return;
@@ -537,11 +557,12 @@ public class MouseManager : MonoBehaviour, EngineSystem {
             }
             if (character is Monster)
             {
-                ShowAttackPreview(((BigTilePosition)character.GridPosition).Position.CenterPos());
+
+                mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter,character,((BigTilePosition)character.GridPosition).Position.CenterPos());
             }
             else
             {
-                ShowAttackPreview(new Vector2(x, y));
+                mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter,character,new Vector2(x, y));
             }
         }
     }

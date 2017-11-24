@@ -60,6 +60,7 @@ public class MainScript : MonoBehaviour {
     public int AttackRangeFromPath;
     #endregion
     public List<EngineSystem> Systems { get; set; }
+    public List<Controller> Controllers { get; set; }
 
     private static MainScript instance;
     
@@ -71,6 +72,7 @@ public class MainScript : MonoBehaviour {
     void Start () {     
         gridManager = FindObjectOfType<GridManager>();
         Systems = new List<EngineSystem>();
+        Controllers = new List<Controller>();
     }
 
     public static MainScript GetInstance()
@@ -86,6 +88,9 @@ public class MainScript : MonoBehaviour {
         Systems.Add(new UnitSelectionManager());
         Systems.Add(FindObjectOfType<UnitActionManager>());
         Systems.Add(new MouseManager());
+        Controllers.Add(FindObjectOfType<UIController>());
+        Controllers.Add(FindObjectOfType<UnitsController>());
+        InitPlayers();
         InitCharacters();
         gameState.enter();
     }
@@ -105,7 +110,14 @@ public class MainScript : MonoBehaviour {
         gameState = state;
         state.enter();
     }
-
+    private void InitPlayers()
+    {
+        TurnManager turnManager = GetSystem<TurnManager>();
+        foreach (Player p in turnManager.Players)
+        {
+            p.Init();
+        }
+    }
     private void InitCharacters()
     {
         TurnManager turnManager = GetSystem<TurnManager>();
@@ -147,6 +159,18 @@ public class MainScript : MonoBehaviour {
             if (s is T)
             {
                 return (T)Convert.ChangeType(s, typeof(T));
+            }
+        }
+        return default(T);
+    }
+
+    public T GetController<T>()
+    {
+        foreach (Controller c in Controllers)
+        {
+            if (c is T)
+            {
+                return (T)Convert.ChangeType(c, typeof(T));
             }
         }
         return default(T);

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using Assets.Scripts.Events;
 
 public class CameraMovement : MonoBehaviour {
 
@@ -36,6 +37,7 @@ public class CameraMovement : MonoBehaviour {
 
     void Start () {
         mainScript = FindObjectOfType<MainScript>();
+        EventContainer.attackUIVisible += SetLocked;
     }
 	
 	void Update () {
@@ -85,5 +87,10 @@ public class CameraMovement : MonoBehaviour {
             this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, targetPosition, lerpTime);
         }
         #endregion
+    }
+
+    void SetLocked(bool value)
+    {
+        locked = value;
     }
 }

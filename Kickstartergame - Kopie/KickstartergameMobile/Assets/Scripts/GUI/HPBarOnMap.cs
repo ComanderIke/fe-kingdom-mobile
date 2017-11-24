@@ -2,8 +2,10 @@
 using UnityEngine.UI;
 using System.Collections;
 using Assets.Scripts.Characters;
+using Assets.Scripts.Events;
 
 public class HPBarOnMap : MonoBehaviour {
+   
     public int currentHealth;
     public int maxHealth;
 	private float fillAmount = 1;
@@ -11,16 +13,16 @@ public class HPBarOnMap : MonoBehaviour {
 	public float healthSpeed;
 	public static bool active = true;
     private Image healthImage;
+    public Color fullHPColor;
+    public Color lowHPColor;
+    public Color middleHPColor;
 	// Use this for initialization
 	void Start () {	
         healthImage = GetComponent<Image>();
 	}
-    public void SetMaxHealth(int value)
+    public void SetHealth(int value, int maxValue)
     {
-        maxHealth = value;
-    }
-    public void SetCurrentHealth(int value)
-    {
+        maxHealth = maxValue;
         currentHealth = value;
     }
     void Update () {
@@ -36,9 +38,19 @@ public class HPBarOnMap : MonoBehaviour {
         {
             fillAmount = 0;
             healthImage.fillAmount = fillAmount;
+
         }
-			
-	}
+        if (fillAmount >= 0.5f)
+        {
+            healthImage.color = Color.Lerp(middleHPColor, fullHPColor, MapValues(fillAmount,0.5f,1,0,1));
+        }
+        else
+        {
+            healthImage.color = Color.Lerp(lowHPColor, middleHPColor, MapValues(fillAmount, 0f, 0.5f, 0, 1));
+        }
+
+
+    }
 
 	private float MapValues(float x, float inMin, float inMax, float outMin, float outMax ){
 		return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;

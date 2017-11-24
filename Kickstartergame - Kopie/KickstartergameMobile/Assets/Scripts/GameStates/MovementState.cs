@@ -33,6 +33,7 @@ namespace Assets.Scripts.GameStates
             EventContainer.startMovingUnit();
             if (mousePath == null)
             {
+                Debug.Log(mousePath.Count);
                 if (character.GridPosition.x == x && character.GridPosition.y== y)
                 {
                     mainScript.SwitchState(new GameplayState());

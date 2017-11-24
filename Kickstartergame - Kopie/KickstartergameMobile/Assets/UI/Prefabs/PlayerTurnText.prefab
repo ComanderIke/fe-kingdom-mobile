@@ -21,7 +21,8 @@ GameObject:
   - component: {fileID: 224000011750406914}
   - component: {fileID: 222000012262792504}
   - component: {fileID: 114000010338788828}
-  - component: {fileID: 114000010406460814}
+  - component: {fileID: 114439133607166854}
+  - component: {fileID: 114263131829323806}
   m_Layer: 5
   m_Name: PlayerTurnText
   m_TagString: Untagged
@@ -49,12 +50,12 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: c83629f1f35449b43828181e37951520, type: 3}
-    m_FontSize: 60
+    m_Font: {fileID: 12800000, guid: c541e7d1526b80243b1192452ea48f91, type: 3}
+    m_FontSize: 140
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
-    m_MaxSize: 120
+    m_MaxSize: 160
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -62,7 +63,7 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: Player Turn
---- !u!114 &114000010406460814
+--- !u!114 &114263131829323806
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -70,10 +71,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000013423441786}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1359aeb37551d8a49b82c3d932442b18, type: 3}
+  m_Script: {fileID: 11500000, guid: 48269e5b283536943ab684acd7b52be2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyTime: 2
+--- !u!114 &114439133607166854
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013423441786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 4, y: -4}
+  m_UseGraphicAlpha: 1
 --- !u!222 &222000012262792504
 CanvasRenderer:
   m_ObjectHideFlags: 1
