@@ -18,12 +18,17 @@ namespace Assets.Scripts.Characters
         public GridPosition(LivingObject character)
         {
             this.character = character;
-            gridScript = MainScript.GetInstance().gridManager;
+            
         }
-
+        public Vector2 GetPos()
+        {
+            return new Vector2(x, y);
+        }
         public virtual void SetPosition(int newX, int newY)
         {
-            if(x!=-1&&y!=-1)
+            if(gridScript==null)
+                gridScript = MainScript.GetInstance().gridManager;
+            if (x!=-1&&y!=-1)
                 gridScript.Tiles[x, y].character = null;
             gridScript.Tiles[newX, newY].character = character;
             x = newX;
@@ -35,6 +40,8 @@ namespace Assets.Scripts.Characters
         }
         public virtual void RemoveCharacter()
         {
+            if(gridScript==null)
+                gridScript = MainScript.GetInstance().gridManager;
             gridScript.Tiles[x, y] = null;
         }
         public virtual bool CanAttack(List<int> range, GridPosition enemyPosition)

@@ -10,9 +10,16 @@ namespace Assets.Scripts.Characters
 {
     public class Monster :LivingObject
     {
+        public MonsterType Type { get; set; }
         public Monster(string name, MonsterType type) : base(name)
         {
-            GridPosition = new BigTilePosition(this);
+            Type = type;
+            if(type==MonsterType.Mammoth)
+                GridPosition = new BigTilePosition(this);
+            else
+            {
+                GridPosition = new GridPosition(this);
+            }
         }
     }
 }

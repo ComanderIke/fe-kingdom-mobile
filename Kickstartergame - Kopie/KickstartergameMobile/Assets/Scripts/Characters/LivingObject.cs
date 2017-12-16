@@ -25,6 +25,7 @@ namespace Assets.Scripts.Characters
         public List<Buff> Buffs { get; set; }
         public Sprite Sprite { get; set; }
         public GridPosition GridPosition { get; set; }
+        public MoveActions MoveActions { get; set; }
 
         public LivingObject(string name)
         {
@@ -33,6 +34,7 @@ namespace Assets.Scripts.Characters
             BattleStats = new BattleStats(this);
             UnitTurnState = new UnitTurnState(this);
             GridPosition = new GridPosition(this);
+            MoveActions = new MoveActions(this);
             GameTransform = new GameTransform();
             Buffs = new List<Buff>();
             Debuffs = new List<Debuff>();

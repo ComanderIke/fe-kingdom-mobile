@@ -45,7 +45,10 @@ namespace Assets.Scripts.Grid
                             movePath.Add(new Vector2(GridManager.gridRessources.preferedPath.path[i].x, GridManager.gridRessources.preferedPath.path[i].y));
                         }
                         mainScript.GetSystem<UnitActionManager>().MoveCharacter(selectedCharacter, x, y, movePath);
+                        EventContainer.allCommandsFinished += SwitchToGamePlayState;
+                        Debug.Log("All Commands Setup");
                         mainScript.GetSystem<UnitActionManager>().ExecuteActions();
+                        
                         mainScript.gridManager.HideMovement();
                         return;
                     }
@@ -57,9 +60,19 @@ namespace Assets.Scripts.Grid
             }
 
         }
+        private void SwitchToGamePlayState()
+        {
+            Debug.Log("Switch State Commands Delete");
+            EventContainer.allCommandsFinished -= SwitchToGamePlayState;
+            mainScript.SwitchState(new GameplayState());
+        }
         public bool IsFieldAttackable(int x, int z)
         {
             return Tiles[x, z].gameObject.GetComponent<MeshRenderer>().material.mainTexture == GridManager.gridRessources.AttackTexture;
+        }
+        public bool IsOutOfBounds(Vector2 pos)
+        {
+            return pos.x < 0 || pos.y < 0 || pos.x >= grid.width || pos.y >= grid.height;
         }
         private bool IsValidAndActive(Vector2 pos, int team)
         {
@@ -102,25 +115,25 @@ namespace Assets.Scripts.Grid
             Vector2 rightPosition = new Vector2(character.GridPosition.x + 1, character.GridPosition.y);
             Vector2 topPosition = new Vector2(character.GridPosition.x, character.GridPosition.y + 1);
             Vector2 bottomPosition = new Vector2(character.GridPosition.x, character.GridPosition.y - 1);
-            if (isValidLocation(leftPosition, character.Player.ID, character))
+            if (IsValidLocation(leftPosition, character))
             {
                 BigTile moveOption = GetMoveableBigTileFromPosition(leftPosition, character.Player.ID, character);
                 if (moveOption != null)
                     return moveOption;
             }
-            if (isValidLocation(rightPosition, character.Player.ID, character))
+            if (IsValidLocation(rightPosition, character))
             {
                 BigTile moveOption = GetMoveableBigTileFromPosition(rightPosition, character.Player.ID, character);
                 if (moveOption != null)
                     return moveOption;
             }
-            if (isValidLocation(topPosition, character.Player.ID, character))
+            if (IsValidLocation(topPosition, character))
             {
                 BigTile moveOption = GetMoveableBigTileFromPosition(topPosition, character.Player.ID, character);
                 if (moveOption != null)
                     return moveOption;
             }
-            if (isValidLocation(bottomPosition, character.Player.ID, character))
+            if (IsValidLocation(bottomPosition, character))
             {
                 BigTile moveOption = GetMoveableBigTileFromPosition(bottomPosition, character.Player.ID, character);
                 if (moveOption != null)
@@ -274,7 +287,7 @@ namespace Assets.Scripts.Grid
             MovementPath p = aStar.GetPath(((BigTilePosition)monster.GridPosition).Position, position, monster.Player.ID, adjacent, attackRanges);
             return p;
         }
-        private bool isValidLocation(Vector2 pos, int team, LivingObject character)
+        public bool IsValidLocation(Vector2 pos, LivingObject character)
         {
             bool invalid = (pos.x < 0) || (pos.y < 0) || (pos.x >= grid.width) || (pos.y >= grid.height);
 
@@ -292,10 +305,49 @@ namespace Assets.Scripts.Grid
 
             return !invalid;
         }
+        public bool IsTileAccessible(Vector2 pos, LivingObject character)
+        {
+            bool invalid = (pos.x < 0) || (pos.y < 0) || (pos.x >= grid.width) || (pos.y >= grid.height);
+
+            if (!invalid)
+            {
+                invalid = !Tiles[(int)pos.x, (int)pos.y].isAccessible;
+                if (Tiles[(int)pos.x, (int)pos.y].character != null)
+                {
+                    if (Tiles[(int)pos.x, (int)pos.y].character != character)
+                        invalid = true;
+                }
+            }
+
+            return !invalid;
+        }
+        public bool IsTileAccessible(Vector2 pos)
+        {
+            bool invalid = (pos.x < 0) || (pos.y < 0) || (pos.x >= grid.width) || (pos.y >= grid.height);
+
+            if (!invalid)
+            {
+                invalid = !Tiles[(int)pos.x, (int)pos.y].isAccessible;
+            }
+
+            return !invalid;
+        }
         private bool isMovableLocation(BigTile position, int team, LivingObject character)
         {
 
-            return isValidLocation(position.BottomLeft(), team, character) && isValidLocation(position.BottomRight(), team, character) && isValidLocation(position.TopLeft(), team, character) && isValidLocation(position.TopRight(), team, character);
+            return IsValidLocation(position.BottomLeft(), character) && IsValidLocation(position.BottomRight(), character) && IsValidLocation(position.TopLeft(), character) && IsValidLocation(position.TopRight(), character);
         }
+        public bool IsBigTileAccessible(BigTile position, LivingObject character)
+        {
+
+            return IsTileAccessible(position.BottomLeft(), character) && IsTileAccessible(position.BottomRight(), character) && IsTileAccessible(position.TopLeft(), character) && IsTileAccessible(position.TopRight(), character);
+        }
+        public bool IsBigTileAccessible(BigTile position)
+        {
+
+            return IsTileAccessible(position.BottomLeft()) && IsTileAccessible(position.BottomRight()) && IsTileAccessible(position.TopLeft()) && IsTileAccessible(position.TopRight());
+        }
+
+
     }
 }

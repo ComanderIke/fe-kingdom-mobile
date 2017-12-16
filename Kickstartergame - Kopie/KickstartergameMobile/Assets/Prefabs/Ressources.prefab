@@ -1,0 +1,110 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1869460681531346}
+  m_IsPrefabParent: 1
+--- !u!1 &1869460681531346
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4006811947231656}
+  - component: {fileID: 114930506072609910}
+  - component: {fileID: 114324041021797566}
+  - component: {fileID: 114759735211728652}
+  - component: {fileID: 114446838155691810}
+  m_Layer: 0
+  m_Name: Ressources
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4006811947231656
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1869460681531346}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.982169, y: 0.9236888, z: 0.029296875}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114324041021797566
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1869460681531346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eb6e2bc83027944683e2e80b4d121c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementFlag: {fileID: 0}
+  moveArrowDot: {fileID: 1319213402913916, guid: 75c73ce6852e7014eb55ca3c27b8f4f3,
+    type: 2}
+  moveArrowHead: {fileID: 21300000, guid: c69d1f486d1f7414ca33a10c08374fbb, type: 3}
+  moveArrowCurve: {fileID: 21300000, guid: 6932b5e0b5a3dd0428136ddb78ee7169, type: 3}
+  moveArrowStraight: {fileID: 21300000, guid: 7a7816d1bb4c9b341a04d6d0bada6e46, type: 3}
+  moveArrowStart: {fileID: 21300000, guid: 9e20b8404e6300349bf266055d840c57, type: 3}
+  activeUnitField: {fileID: 1213351082163106, guid: 497d5aa07882beb418c94983dbaa5fb4,
+    type: 2}
+  moveCursor: {fileID: 1343739282671552, guid: a98eb356c10d6254b8037cf6a3940167, type: 2}
+--- !u!114 &114446838155691810
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1869460681531346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c372ea5d59f8d46929b1437e1305ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recurveBowSprite: {fileID: 21300000, guid: 67180e93c1c2ccd459672aa0a6e5252b, type: 3}
+  bastardSwordSprite: {fileID: 21300000, guid: 67180e93c1c2ccd459672aa0a6e5252b, type: 3}
+  steelLanceSprite: {fileID: 21300000, guid: 67180e93c1c2ccd459672aa0a6e5252b, type: 3}
+  stilettoSprite: {fileID: 21300000, guid: 67180e93c1c2ccd459672aa0a6e5252b, type: 3}
+  warAxeSprite: {fileID: 21300000, guid: 67180e93c1c2ccd459672aa0a6e5252b, type: 3}
+--- !u!114 &114759735211728652
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1869460681531346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bad3a949fdf4f75428f88e93aa273983, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cursorTextures:
+  - {fileID: 2800000, guid: 8aedcbe0608aa44379186aa7791ef886, type: 3}
+--- !u!114 &114930506072609910
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1869460681531346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f16f492052d11547b6781f7133810e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swordActiveSprite: {fileID: 21300000, guid: 51c8bf6c8500f2343ad2a19170722b44, type: 3}
+  archerActiveSprite: {fileID: 21300000, guid: a881d426eebd9ef488b09b36a31461cb, type: 3}
+  axeActiveSprite: {fileID: 21300000, guid: 910ffdc2930f144428bb25402955c9f7, type: 3}
+  lancerActiveSprite: {fileID: 21300000, guid: 49b16f539b88a104393f5b0ac6233a20, type: 3}

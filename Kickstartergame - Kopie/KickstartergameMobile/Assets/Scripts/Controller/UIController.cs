@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Characters;
+﻿using Assets.Scripts.AI.AttackPatterns;
+using Assets.Scripts.Characters;
 using Assets.Scripts.Engine;
 using Assets.Scripts.Events;
 using Assets.Scripts.GameStates;
@@ -16,7 +17,7 @@ public class UIController : MonoBehaviour, Controller {
     [SerializeField]
     GameObject bottomUI;
     [SerializeField]
-    GameObject topUI;
+    TopUI topUI;
     [SerializeField]
     Image faceSpriteLeft;
     [SerializeField]
@@ -37,12 +38,16 @@ public class UIController : MonoBehaviour, Controller {
     GameObject reactUI;
     [SerializeField]
     GameObject attackPreview;
+    [SerializeField]
+    GameObject attackPattern;
 
     private MainScript mainScript;
 
 	void Start () {
         mainScript = MainScript.GetInstance();
-	}
+        EventContainer.stampedeUsed += ShowAttackPattern;
+        EventContainer.howlUsed += ShowAttackPattern;
+    }
 
     public void HideBottomUI()
     {
@@ -56,7 +61,7 @@ public class UIController : MonoBehaviour, Controller {
 
     public void HideTopUI()
     {
-        topUI.SetActive(false);
+        topUI.gameObject.SetActive(false);
     }
 
     public void ShowFightUI(LivingObject attacker, LivingObject defender)
@@ -78,10 +83,15 @@ public class UIController : MonoBehaviour, Controller {
     {
         reactUI.SetActive(false);
     }
+    public void ShowAttackPattern(LivingObject user, AttackPattern pattern )
+    {
+        attackPattern.SetActive(true);
+        attackPattern.GetComponent<AttackPatternUI>().Show(user.Name, pattern.Name);
+    }
 
     public void ShowTopUI(LivingObject c)
     {
-        topUI.SetActive(true);
+        //topUI.gameObject.SetActive(true);
 
         hpLeft.text = c.Stats.HP+" / "+c.Stats.MaxHP;
         atkLeft.text = ""+c.Stats.Attack;
@@ -89,6 +99,7 @@ public class UIController : MonoBehaviour, Controller {
         accLeft.text = "" + c.Stats.Accuracy;
         defLeft.text = "" + c.Stats.Defense;
         faceSpriteLeft.sprite = c.Sprite;
+        Debug.Log(c.Sprite);
         foreach (Image i in inventorySprites)
         {
             i.enabled = false;

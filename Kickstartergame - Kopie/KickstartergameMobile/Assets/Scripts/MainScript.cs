@@ -122,6 +122,10 @@ public class MainScript : MonoBehaviour {
     {
         TurnManager turnManager = GetSystem<TurnManager>();
         Player p = turnManager.Players[0];
+        foreach(LivingObject u in FindObjectOfType<GameData>().player.Units)
+        {
+            p.AddUnit(u);
+        }
         LivingObject filler = null;
         LivingObject filler2 = null;
         LivingObject filler3 = null;
@@ -136,20 +140,24 @@ public class MainScript : MonoBehaviour {
         filler3.Sprite = ss.archerActiveSprite;
         filler4.Sprite = ss.lancerActiveSprite;
 
-        p.AddUnit(filler);
-        p.AddUnit(filler2);
-        p.AddUnit(filler3);
-        p.AddUnit(filler4);
+        //p.AddUnit(filler);
+        //p.AddUnit(filler2);
+        //p.AddUnit(filler3);
+        //p.AddUnit(filler4);
         StartPosition[] startPositions = GameObject.FindObjectsOfType<StartPosition>();
         UnitInstantiater cc = GameObject.FindObjectOfType<UnitInstantiater>();
-        cc.PlaceCharacter(0, filler, startPositions[0].GetXOnGrid(), startPositions[0].GetYOnGrid());
-        cc.PlaceCharacter(0, filler2, startPositions[1].GetXOnGrid(), startPositions[1].GetYOnGrid());
-        cc.PlaceCharacter(0, filler3, startPositions[2].GetXOnGrid(), startPositions[2].GetYOnGrid());
-        cc.PlaceCharacter(0, filler4, startPositions[3].GetXOnGrid(), startPositions[3].GetYOnGrid());
+        cc.PlaceCharacter(0, p.Units[0], startPositions[0].GetXOnGrid(), startPositions[0].GetYOnGrid());
+        //cc.PlaceCharacter(0, filler, startPositions[0].GetXOnGrid(), startPositions[0].GetYOnGrid());
+        //cc.PlaceCharacter(0, filler2, startPositions[1].GetXOnGrid(), startPositions[1].GetYOnGrid());
+        //cc.PlaceCharacter(0, filler3, startPositions[2].GetXOnGrid(), startPositions[2].GetYOnGrid());
+        //cc.PlaceCharacter(0, filler4, startPositions[3].GetXOnGrid(), startPositions[3].GetYOnGrid());
         Monster monster = new Monster("Mammoth", MonsterType.Mammoth);
-        turnManager.Players[1].AddUnit(monster);
+        Monster saber = new Monster("Sabertooth", MonsterType.Sabertooth);
+        //turnManager.Players[1].AddUnit(monster);
+        turnManager.Players[1].AddUnit(saber);
 
-        cc.PlaceCharacter(1, monster, 3, 2);
+        //cc.PlaceCharacter(1, monster, 5, 2);
+        cc.PlaceCharacter(1, saber, 5, 2);
     }
 
     public T GetSystem<T>()

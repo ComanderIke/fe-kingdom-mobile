@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Characters;
+﻿using Assets.Scripts.AI.AttackPatterns;
+using Assets.Scripts.Characters;
 using Assets.Scripts.Grid;
 using System;
 using System.Collections.Generic;
@@ -10,15 +11,20 @@ namespace Assets.Scripts.Events
 {
     public class EventContainer
     {
-        
+
+        #region Commands
         public delegate void CommandFinished();
         public static CommandFinished commandFinished;
 
-        public delegate void EndTurn();
-        public static EndTurn endTurn;
+        public delegate void AllCommandsFinished();
+        public static AllCommandsFinished allCommandsFinished;
 
         public delegate void Undo();
         public static Undo undo;
+        #endregion
+
+        public delegate void EndTurn();
+        public static EndTurn endTurn;
 
         public delegate void DeselectActiveCharacter();
         public static DeselectActiveCharacter deselectActiveCharacter;
@@ -29,6 +35,17 @@ namespace Assets.Scripts.Events
         public delegate void UnitClickedConfirmed(LivingObject unit, bool confirm);
         public static UnitClickedConfirmed unitClickedConfirmed;
 
+        #region AttackPatterns
+        public delegate void ContinuePressed();
+        public static ContinuePressed continuePressed;
+
+        public delegate void StampedeUsed(LivingObject user, AttackPattern pattern);
+        public static StampedeUsed stampedeUsed;
+
+        public delegate void HowlUsed(LivingObject user, AttackPattern pattern);
+        public static HowlUsed howlUsed;
+        #endregion
+
         #region Fight
         public delegate void AttackerDmgChanged(int dmg);
         public static AttackerDmgChanged attackerDmgChanged;
@@ -36,6 +53,7 @@ namespace Assets.Scripts.Events
         public static AttackerHitChanged attackerHitChanged;
 
         #endregion
+        
         #region UI
         public delegate void AttackUIVisible( bool visible);
         public static AttackUIVisible attackUIVisible;

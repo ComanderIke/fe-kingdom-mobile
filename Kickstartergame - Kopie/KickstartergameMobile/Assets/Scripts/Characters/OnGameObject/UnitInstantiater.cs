@@ -8,6 +8,7 @@ public class UnitInstantiater : MonoBehaviour {
     public GameObject archer;
     public GameObject mammoth;
     public GameObject hellebardier;
+    public GameObject sabertooth;
     
     public void PlaceCharacter(int playerNumber, LivingObject unit ,int x, int y)
     {
@@ -15,16 +16,20 @@ public class UnitInstantiater : MonoBehaviour {
         string player = "Player" + (playerNumber+1);
         if (unit is Monster)
         {
-            o = Instantiate<GameObject>(mammoth);
+            if (((Monster)unit).Type == MonsterType.Mammoth)
+                o = Instantiate<GameObject>(mammoth);
+            else if (((Monster)unit).Type == MonsterType.Sabertooth)
+                o = Instantiate<GameObject>(sabertooth);
         }
         else
         {
             o = Instantiate<GameObject>(melee);
+            o.GetComponentInChildren<SpriteRenderer>().sprite = unit.Sprite;
         }
         o.name = unit.Name;
         o.transform.parent = gameObject.transform;
-        UnitController characterScript = o.GetComponentInChildren<UnitController>();
-        characterScript.Unit = unit;
+        UnitController unitController = o.GetComponentInChildren<UnitController>();
+        unitController.Unit = unit;
         unit.GameTransform.GameObject = o;
         unit.SetPosition(x, y);
     }

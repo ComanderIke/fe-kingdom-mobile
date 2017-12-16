@@ -34,6 +34,10 @@ namespace Assets.Scripts.GameStates
             Debug.Log(previewsActions.Count);
             previewsActions.Pop().Undo();
         }
+        public void AddCommand(Command c)
+        {
+            currentActions.Enqueue(c);
+        }
         public void MoveCharacter(LivingObject c, int x, int y)
         {
             MoveCharacterCommand mCC = new MoveCharacterCommand(c, x, y);
@@ -48,6 +52,11 @@ namespace Assets.Scripts.GameStates
            // mCC.Execute();
            // mainScript.SwitchState(new MovementState( c, x, y, path));
         }
+        public void PushUnit(LivingObject character, Vector2 direction)
+        {
+            PushCharacterCommand pCC = new PushCharacterCommand(character, direction);
+            currentActions.Enqueue(pCC);
+        }
         public void Fight(LivingObject attacker, LivingObject target)
         {
             AttackCommand mCC = new AttackCommand(attacker,target);
@@ -60,11 +69,21 @@ namespace Assets.Scripts.GameStates
             if (currentActions.Count != 0)
             {
                 Command current = currentActions.Dequeue();
+                if (currentActions.Count == 0)
+                {
+                    Debug.Log("All Commands Finished!");
+                    EventContainer.commandFinished += AllCommandFinished;
+                }
                 current.Execute();
-
+               
                 previewsActions.Push(current);
             }
         }
+        void AllCommandFinished()
+        {
+            EventContainer.commandFinished -= AllCommandFinished;
+            EventContainer.allCommandsFinished();
+        } 
 
         public void ActiveCharWait()
         {
@@ -101,6 +120,8 @@ namespace Assets.Scripts.GameStates
                     Fight(character, enemy);
                     //mainScript.SwitchState(new FightState(character, enemy, new GameplayState()));
                 }
+                Debug.Log("All Commands Setup");
+                EventContainer.allCommandsFinished += SwitchToGamePlayState;
                 ExecuteActions();
                 return;
             }
@@ -125,15 +146,20 @@ namespace Assets.Scripts.GameStates
                     {
                         MoveCharacter(character, 0, 0, movePath);
                         Fight(character, enemy);// false, new FightState(character, enemy, new GameplayState()));
+                        Debug.Log("All Commands Setup");
+                        EventContainer.allCommandsFinished += SwitchToGamePlayState;
                         ExecuteActions();
                     }
                     else
                     {
                         MoveCharacter(character, 0, 0, movePath);//, false, new FightState(character, enemy, new GameplayState()));
                         Fight(character, enemy);
+                        Debug.Log("All Commands Setup");
+                        EventContainer.allCommandsFinished += SwitchToGamePlayState;
                         ExecuteActions();
 
                     }
+                   
                     mainScript.AttackRangeFromPath = 0;
 
                     return;
@@ -144,7 +170,12 @@ namespace Assets.Scripts.GameStates
                 }
             }
         }
-
+        private void SwitchToGamePlayState()
+        {
+            Debug.Log("Switch State Delete Command");
+            EventContainer.allCommandsFinished -= SwitchToGamePlayState;
+            mainScript.SwitchState(new GameplayState());
+        }
         private void UnitMoveOnTile(int x, int y)
         {
             MainScript mainScript = MainScript.GetInstance();
@@ -157,7 +188,9 @@ namespace Assets.Scripts.GameStates
                 {
                     selectedUnit.GridPosition.SetPosition(selectedUnit.GridPosition.x, selectedUnit.GridPosition.y);
                     MoveCharacter(selectedUnit, x, y,preferedPath.path);//, true, new GameplayState());
+                    EventContainer.allCommandsFinished += SwitchToGamePlayState;
                     ExecuteActions();
+                    
                 }
                 else
                 {

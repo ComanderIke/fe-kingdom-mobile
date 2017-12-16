@@ -30,8 +30,8 @@ public class PlayerTurnTextAnimation : MonoBehaviour {
         }
         
         text.color = new Color(text.color.r, text.color.g, text.color.b, 1);
-        yield return new WaitForSeconds(1.0f);
-        startdelay = 1.0f;
+        yield return new WaitForSeconds(0.5f);
+        startdelay = 0.5f;
         delay = startdelay;
         alpha = 1;
         while (delay > 0)

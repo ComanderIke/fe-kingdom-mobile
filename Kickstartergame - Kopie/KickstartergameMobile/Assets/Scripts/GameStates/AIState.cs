@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Players;
+using UnityEngine;
 
 namespace Assets.Scripts.GameStates
 {
@@ -17,7 +18,7 @@ namespace Assets.Scripts.GameStates
 
         public override void exit()
         {
-			
+            Debug.Log("Exit AI State");
         }
 
         public override void update()

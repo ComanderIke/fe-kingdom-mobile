@@ -90,6 +90,7 @@ public class GridManager : MonoBehaviour {
         StartCoroutine(GridRenderer.FieldAnimation());
 
     }
+   
     public void HideMovement()
     {
         for (int i = 0; i < grid.width; i++)

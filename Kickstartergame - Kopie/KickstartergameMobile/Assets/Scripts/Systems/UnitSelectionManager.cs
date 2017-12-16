@@ -46,6 +46,7 @@ namespace Assets.Scripts.GameStates
             SelectedCharacter = c;
             c.UnitTurnState.Selected = true;
             GridManager s = mainScript.gridManager;
+            mainScript.GetController<UIController>().ShowTopUI(c);
             s.HideMovement();
             s.ShowMovement(c);
             s.ShowAttack(c, new List<int>(c.Stats.AttackRanges));

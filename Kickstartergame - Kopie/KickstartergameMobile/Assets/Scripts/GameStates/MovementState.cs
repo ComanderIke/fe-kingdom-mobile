@@ -33,7 +33,6 @@ namespace Assets.Scripts.GameStates
             EventContainer.startMovingUnit();
             if (mousePath == null)
             {
-                Debug.Log(mousePath.Count);
                 if (character.GridPosition.x == x && character.GridPosition.y== y)
                 {
                     mainScript.SwitchState(new GameplayState());
@@ -43,7 +42,7 @@ namespace Assets.Scripts.GameStates
             else {
                 pathCounter = 0;
             }
-            if ( mousePath.Count == 0)
+            if ( mousePath==null ||mousePath.Count == 0)
             {
                 path = mainScript.gridManager.GridLogic.getPath(character.GridPosition.x, character.GridPosition.y, x, y, character.Player.ID, false, new List<int>());
                 if (path!=null)
@@ -141,7 +140,7 @@ namespace Assets.Scripts.GameStates
                     MainScript.endOfMoveCharacterEvent();
                 character.UnitTurnState.HasMoved = true;
                 mainScript.GetSystem<UnitActionManager>().ActiveCharWait();
-                mainScript.SwitchState(new GameplayState());
+                //mainScript.SwitchState(new GameplayState());//TODO AISTATE
                 Debug.Log("Movement Finished!");
                 EventContainer.commandFinished();
             }

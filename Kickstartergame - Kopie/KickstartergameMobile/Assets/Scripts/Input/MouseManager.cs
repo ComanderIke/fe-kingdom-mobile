@@ -103,14 +103,17 @@ public class MouseManager : MonoBehaviour, EngineSystem {
         EventContainer.attackUIVisible += UIActive;
 
     }
+
     void Activate()
     {
         UIActive(false);
     }
+
     void DeActivate()
     {
         UIActive(true);
     }
+
     void UIActive(bool active)
     {
         this.active = !active;
@@ -134,6 +137,7 @@ public class MouseManager : MonoBehaviour, EngineSystem {
         }
         ResetMousePath();
     }
+
     void UnitClicked(LivingObject unit)
     {
         if (!active)
@@ -151,6 +155,7 @@ public class MouseManager : MonoBehaviour, EngineSystem {
         }
 
     }
+
     public void EnemyClicked(LivingObject unit)
     {
         if(mainScript.gridManager.GridLogic.IsFieldAttackable(currentX,currentY))
@@ -185,12 +190,14 @@ public class MouseManager : MonoBehaviour, EngineSystem {
             mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter,unit, new Vector2(unit.GridPosition.x, unit.GridPosition.y));
         }
     }
+
     public  void StartDrag(int gridX, int gridY)
     {
         currentX = gridX;
         currentY = gridY;
         preferedPath.path = new List<Vector2>(mousePath);
     }
+
     public  int currentX = -1;
     public  int currentY = -1;
     public  int oldX = -1;

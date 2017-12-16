@@ -1,5 +1,8 @@
 ﻿using Assets.Scripts.AI;
+using Assets.Scripts.AI.AttackPatterns;
 using Assets.Scripts.Characters;
+using Assets.Scripts.Events;
+using Assets.Scripts.GameStates;
 using Assets.Scripts.Players;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,13 +10,18 @@ using UnityEngine;
 public class SimpleMonsterAI : AIInterface {
 
     bool startTurn = true;
+    bool doingAction = false;
+    Dictionary<LivingObject, List<AttackPattern>> attackPatterns;
 
     public SimpleMonsterAI(Player p):base (p){
-
+        attackPatterns = new Dictionary<LivingObject, List<AttackPattern>>();
+        
     }
 
     public override void Think()
     {
+        if (doingAction)
+            return;
         startTurn = true;
         foreach (LivingObject u in player.Units)
         {
@@ -29,18 +37,45 @@ public class SimpleMonsterAI : AIInterface {
         if (units.Count > 0)
         {
             SubmitBestMoveForUnit(units[0]);
-            units[0].UnitTurnState.IsWaiting = true;
+            EventContainer.commandFinished += FinishedAction;
+            doingAction = true;
         }
         else
         {
             endturn = true;
         }
     }
+    void FinishedAction()
+    {
+        EventContainer.commandFinished -= FinishedAction;
+        Debug.Log("Command Finished!");
+        doingAction = false;
+    }
 
     private void StartOfTurn()
     {
         //move Camera to first character
         List<LivingObject> units = GetUnitsLeftToMove();
+        foreach(LivingObject unit in units)
+        {
+            if (unit.GridPosition is BigTilePosition)
+            {
+                List<AttackPattern> attackPattern = new List<AttackPattern>();
+                attackPattern.Add(new Stampede(unit,((BigTilePosition)unit.GridPosition).Position, new Vector2(-1, 0), 3));
+                attackPattern.Add(new Stampede(unit, ((BigTilePosition)unit.GridPosition).Position, new Vector2(1, 0), 3));
+                attackPattern.Add(new Stampede(unit, ((BigTilePosition)unit.GridPosition).Position, new Vector2(0, 1), 3));
+                attackPattern.Add(new Stampede(unit, ((BigTilePosition)unit.GridPosition).Position, new Vector2(0, -1), 3));
+                attackPatterns.Add(unit, attackPattern);
+
+            }
+            else if(((Monster)unit).Type == MonsterType.Sabertooth)
+            {
+                List<AttackPattern> attackPattern = new List<AttackPattern>();
+                attackPattern.Add(new Howl(unit, unit.GridPosition.GetPos()));
+                attackPatterns.Add(unit, attackPattern);
+            }
+        }
+        
         //mainScript.MoveCameraTo(characters[0].x, characters[0].z);
         // reset all goals
         //CurrentGoals.Clear();
@@ -156,15 +191,15 @@ public class SimpleMonsterAI : AIInterface {
 
     protected void SubmitBestMoveForUnit(LivingObject unit)
     {
-        /*
+        
         float currentBestScore = -10000; // always want to do something
-        Vector2 currentBestMoveLocation = new Vector3(unit.GridPosition.x, unit.GridPosition.y); // by default go nowhere
-        CombatAction currentBestCombatAction = new CombatAction(CharacterAction.Wait, null, new Vector2()); // and do nothing
+                                         //Vector2 currentBestMoveLocation = new Vector3(unit.GridPosition.x, unit.GridPosition.y); // by default go nowhere
+                                         //CombatAction currentBestCombatAction = new CombatAction(CharacterAction.Wait, null, new Vector2()); // and do nothing
 
         // get all possible move locations for this unit
-        List<Vector2> moveLocs = GetMoveLocations(unit);
-        Vector2 startLoc = new Vector2(unit.GridPosition.x, unit.GridPosition.y);
-        foreach (Vector2 loc in moveLocs)
+        //List<Vector2> moveLocs = GetMoveLocations(unit);
+        //Vector2 startLoc = new Vector2(unit.GridPosition.x, unit.GridPosition.y);
+        /*foreach (Vector2 loc in moveLocs)
         {
             SetCharacterPosition(unit, startLoc);
             // score this move location
@@ -201,5 +236,26 @@ public class SimpleMonsterAI : AIInterface {
         }
         SetCharacterPosition(unit, startLoc);
         SubmitMove(unit, currentBestMoveLocation, currentBestCombatAction);*/
+        List<AttackPattern> aps = attackPatterns[unit];
+        AttackPattern bestPattern = null;
+        int cnt = 0;
+        foreach(AttackPattern ap in aps)
+        {
+            if (ap.TargetCount >= cnt)
+            {
+                bestPattern = ap;
+                cnt = ap.TargetCount;
+            }
+        }
+        EventContainer.allCommandsFinished += SwitchToAIState;
+        bestPattern.Execute();
+        
+        
+    }
+    private void SwitchToAIState()
+    {
+        Debug.Log("SwitchToAIState");
+        EventContainer.allCommandsFinished -= SwitchToAIState;
+        mainScript.SwitchState(new AIState(this.player));
     }
 }
