@@ -50,7 +50,7 @@ namespace Assets.Scripts.Grid
 
         public Vector2 CenterPos()
         {
-            return new Vector2(BottomLeft().x + 0.5f, BottomLeft().y + 0.5f);
+            return new Vector2(BottomLeft().x + 1f, BottomLeft().y + 1f);
         }
 
         public override bool Equals(object obj)

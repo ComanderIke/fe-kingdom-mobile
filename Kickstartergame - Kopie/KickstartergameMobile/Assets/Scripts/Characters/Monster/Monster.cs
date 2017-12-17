@@ -11,8 +11,9 @@ namespace Assets.Scripts.Characters
     public class Monster :LivingObject
     {
         public MonsterType Type { get; set; }
-        public Monster(string name, MonsterType type) : base(name)
+        public Monster(string name, MonsterType type, Sprite sprite) : base(name, sprite)
         {
+            Sprite = sprite;
             Type = type;
             if(type==MonsterType.Mammoth)
                 GridPosition = new BigTilePosition(this);

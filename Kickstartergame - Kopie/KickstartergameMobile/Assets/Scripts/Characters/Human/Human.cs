@@ -15,9 +15,9 @@ public class Human : LivingObject{
     
     public Inventory Inventory { get; set; }
     public SkillManager SkillManager { get; set; }
-    public Weapon EquipedWeapon { get; private set; }
+    public Weapon EquipedWeapon { get; set; }
 
-    public Human(string name):base(name)
+    public Human(string name, Sprite sprite):base(name, sprite)
     {
         Inventory = new Inventory(this);
         SkillManager = new SkillManager();

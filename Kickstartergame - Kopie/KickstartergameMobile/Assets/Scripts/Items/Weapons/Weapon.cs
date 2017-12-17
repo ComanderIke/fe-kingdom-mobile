@@ -13,11 +13,11 @@ namespace Assets.Scripts.Items
         public int Dmg { get; set; }
         public int Price { get; set; }
         public int Hit { get; set; }
-        public int Range { get; set; }
+        public List<int> Range { get; set; }
         public int Crit { get; set; }
         public WeaponCategory WeaponType { get; set; }
 
-        public Weapon(string name, string description, WeaponCategory type, int dmg, int hit, int crit, int price, int range, Sprite sprite):base(name, description, 1, sprite)
+        public Weapon(string name, string description, WeaponCategory type, int dmg, int hit, int crit, int price, List<int> range, Sprite sprite):base(name, description, 1, sprite)
         {
             WeaponType = type;
             Dmg = dmg;
@@ -28,8 +28,12 @@ namespace Assets.Scripts.Items
         }
 
         public override void use(Human character)
-        { 
-            //Equip Weapon
+        {
+            character.Stats.AttackRanges.Clear();
+            character.EquipedWeapon = this;
+            foreach(int r in Range){
+                character.Stats.AttackRanges.Add(r);
+            }
         }
 
     }

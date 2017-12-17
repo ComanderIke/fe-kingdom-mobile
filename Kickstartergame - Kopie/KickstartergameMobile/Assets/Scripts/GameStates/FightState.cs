@@ -17,13 +17,14 @@ namespace Assets.Scripts.GameStates
         private LivingObject defender;
         private UIController uiController;
         private UnitsController unitController;
-        private int attackerDmg;
+        private int attackerBonusDmg;
         private int attackerHit;
 
         public FightState(LivingObject attacker, LivingObject defender)
         {
             this.attacker = attacker;
             this.defender = defender;
+            Debug.Log("FightState " + attacker.Name + " " + defender.Name);
             uiController = MainScript.GetInstance().GetController<UIController>();
             unitController = MainScript.GetInstance().GetController<UnitsController>();
         }
@@ -31,7 +32,7 @@ namespace Assets.Scripts.GameStates
         public override void enter()
         {
             //CameraMovement.locked = true;
-            attackerDmg = attacker.BattleStats.GetDamage();
+            attackerBonusDmg = 0;
             attackerHit = attacker.BattleStats.GetHitAgainstTarget(defender);
             uiController.ShowFightUI(attacker, defender);
             unitController.HideUnits();
@@ -41,7 +42,7 @@ namespace Assets.Scripts.GameStates
         }
         void AttackerDmgChanged(int bonusDamage)
         {
-            attackerDmg = attacker.BattleStats.GetDamage()+bonusDamage;
+            attackerBonusDmg = bonusDamage;
         }
         void AttackerHitChanged(int hit)
         {
@@ -92,7 +93,10 @@ namespace Assets.Scripts.GameStates
             yield return new WaitForSeconds(ATTACK_DELAY);
             if (DoesAttackHit(attacker, defender))
             {
-                defender.InflictDamage(attackerDmg, attacker);
+                Debug.Log("ATTACK " + defender.Name);
+                Debug.Log(attacker.Name+" "+attacker.BattleStats.GetDamageAgainstTarget(defender));
+                Debug.Log(attackerBonusDmg);
+                defender.InflictDamage(attacker.BattleStats.GetDamage() + attackerBonusDmg, attacker);
             }
             else
             {

@@ -27,7 +27,7 @@ namespace Assets.Scripts.Characters
         public GridPosition GridPosition { get; set; }
         public MoveActions MoveActions { get; set; }
 
-        public LivingObject(string name)
+        public LivingObject(string name, Sprite sprite)
         {
             Name = name;
             ExperienceManager = new ExperienceManager();
@@ -38,6 +38,7 @@ namespace Assets.Scripts.Characters
             GameTransform = new GameTransform();
             Buffs = new List<Buff>();
             Debuffs = new List<Debuff>();
+            Sprite = sprite;
             List<int> attackRanges = new List<int>();
             attackRanges.Add(1);
             Stats = new Stats(15, 5, 5, 5, 5, 5, 5,3,attackRanges);

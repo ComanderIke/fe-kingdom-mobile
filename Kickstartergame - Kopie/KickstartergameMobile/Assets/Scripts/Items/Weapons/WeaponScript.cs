@@ -6,22 +6,20 @@ using System.Collections.Generic;
 
 public class WeaponScript : MonoBehaviour {
 
-    public Sprite recurveBowSprite;
-    public Sprite bastardSwordSprite;
-	public Sprite steelLanceSprite;
+    public Sprite basicBowSprite;
+    public Sprite woodenSwordSprite;
+	public Sprite woodenSpearSprite;
     public Sprite stilettoSprite;
-	public Sprite warAxeSprite;
+	public Sprite woodenAxeSprite;
 
     [HideInInspector]
-    public Weapon recurveBow;
+    public Weapon basicBow;
     [HideInInspector]
-    public Weapon steelLance;
+    public Weapon woodenSpear;
     [HideInInspector]
-    public Weapon bastardSword;
-    [HideInInspector]
-    public Weapon stiletto;
+    public Weapon woodenSword;
 	[HideInInspector]
-	public Weapon warAxe;
+	public Weapon woodenAxe;
 
     public static WeaponCategory sword;
     public static WeaponCategory lance;
@@ -39,12 +37,18 @@ public class WeaponScript : MonoBehaviour {
         bow = new WeaponCategory(WeaponType.Bow);
         magic = new WeaponCategory(WeaponType.Magic);
         staff = new WeaponCategory(WeaponType.Staff );
+        List<int> meleeAttackRange = new List<int>();
+        meleeAttackRange.Add(1);
+        List<int> rangeAttackRange = new List<int>();
+        rangeAttackRange.Add(1);
+        rangeAttackRange.Add(2);
+        rangeAttackRange.Add(3);
+        rangeAttackRange.Add(4);
+        woodenSword = new Weapon("Wooden Sword", "description", WeaponCategory.sword, 1, 5, 0, 0, meleeAttackRange, woodenSwordSprite);
+        basicBow = new Weapon("Basic Bow", "description", WeaponCategory.bow, 1, -10, 0, 0, rangeAttackRange, basicBowSprite);
+        woodenAxe = new Weapon("Wooden Axe", "description", WeaponCategory.axe, 3, -10, 0, 0, meleeAttackRange, woodenAxeSprite);
+        woodenSpear = new Weapon("Wooden Spear", "description", WeaponCategory.spear, 2, 0, 0, 0, meleeAttackRange, woodenSpearSprite);
 
-		recurveBow = new Weapon("Recurvebow"," axes", bow, 4, 110, 0, 0, 0, recurveBowSprite);
-		steelLance = new Weapon("Steel Lance", " swords", lance, 8, 90, 0, 0, 0,steelLanceSprite);
-        bastardSword = new Weapon("Bastardsword"," daggers",  sword, 10, 85, 0, 0, 0, bastardSwordSprite);
-		stiletto = new Weapon("Stiletto", " magic", dagger, 11, 70, 0, 0, 0,stilettoSprite);
-		warAxe = new Weapon("Waraxe",  " lances", axe, 4, 65, 0, 0, 0, warAxeSprite);
     }
 
 }

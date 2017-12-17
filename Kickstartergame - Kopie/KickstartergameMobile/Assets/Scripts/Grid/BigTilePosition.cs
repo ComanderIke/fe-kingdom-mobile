@@ -16,6 +16,8 @@ namespace Assets.Scripts.Characters
 
         public override void SetPosition(int newX, int newY)
         {
+            if (gridScript == null)
+                gridScript = MainScript.GetInstance().gridManager;
             if (Position != null)
             {
                 gridScript.Tiles[(int)Position.BottomLeft().x, (int)Position.BottomLeft().y].character = null;

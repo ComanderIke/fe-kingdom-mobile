@@ -129,14 +129,20 @@ public class UIController : MonoBehaviour, Controller {
     }
     public void ShowAttackPreview(LivingObject attacker, LivingObject defender, Vector2 pos)
     {
+        Debug.Log("ShowAttackPreview" +pos);
         attackPreview.SetActive(true);
         attackPreview.GetComponent<AttackPreview>().UpdateValues(attacker.BattleStats.GetDamageAgainstTarget(defender),attacker.BattleStats.GetHitAgainstTarget(defender), attacker.BattleStats.CanDoubleAttack(defender) ? 2 : 1);
-        Vector3 attackPreviewPos = Camera.main.WorldToScreenPoint(new Vector3(pos.x + GridManager.GRID_X_OFFSET + 0.5f, pos.y + 1.5f, -0.05f));
+        Vector3 attackPreviewPos;
+        if (defender.GridPosition is BigTilePosition)
+          attackPreviewPos = Camera.main.WorldToScreenPoint(new Vector3(pos.x + GridManager.GRID_X_OFFSET ,pos.y + 1.0f, -0.05f));
+        else
+            attackPreviewPos = Camera.main.WorldToScreenPoint(new Vector3(pos.x + GridManager.GRID_X_OFFSET + 0.5f, pos.y + 1.0f, -0.05f));
         attackPreviewPos.z = 0;
         attackPreview.transform.position = attackPreviewPos;
     }
     public void HideAttackPreview()
     {
+        Debug.Log("Hide");
         attackPreview.SetActive(false);
     }
 }

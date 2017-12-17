@@ -130,15 +130,12 @@ public class MainScript : MonoBehaviour {
         LivingObject filler2 = null;
         LivingObject filler3 = null;
         LivingObject filler4 = null;
-        filler = new Human("Leila");
-        filler2 = new Human("Flora");
-        filler3 = new Human("Eldric");
-        filler4 = new Human("Hector");
         SpriteScript ss = GameObject.FindObjectOfType<SpriteScript>();
-        filler.Sprite = ss.swordActiveSprite;
-        filler2.Sprite = ss.axeActiveSprite;
-        filler3.Sprite = ss.archerActiveSprite;
-        filler4.Sprite = ss.lancerActiveSprite;
+        filler = new Human("Leila", ss.swordActiveSprite);
+        filler2 = new Human("Flora", ss.axeActiveSprite);
+        filler3 = new Human("Eldric",ss.archerActiveSprite);
+        filler4 = new Human("Hector", ss.lancerActiveSprite);
+      
 
         //p.AddUnit(filler);
         //p.AddUnit(filler2);
@@ -151,13 +148,13 @@ public class MainScript : MonoBehaviour {
         //cc.PlaceCharacter(0, filler2, startPositions[1].GetXOnGrid(), startPositions[1].GetYOnGrid());
         //cc.PlaceCharacter(0, filler3, startPositions[2].GetXOnGrid(), startPositions[2].GetYOnGrid());
         //cc.PlaceCharacter(0, filler4, startPositions[3].GetXOnGrid(), startPositions[3].GetYOnGrid());
-        Monster monster = new Monster("Mammoth", MonsterType.Mammoth);
-        Monster saber = new Monster("Sabertooth", MonsterType.Sabertooth);
-        //turnManager.Players[1].AddUnit(monster);
-        turnManager.Players[1].AddUnit(saber);
+        Monster monster = new Monster("Mammoth", MonsterType.Mammoth, ss.mammothSprite);
+        Monster saber = new Monster("Sabertooth", MonsterType.Sabertooth, ss.sabertoothSprite);
+        turnManager.Players[1].AddUnit(monster);
+        //turnManager.Players[1].AddUnit(saber);
 
-        //cc.PlaceCharacter(1, monster, 5, 2);
-        cc.PlaceCharacter(1, saber, 5, 2);
+        cc.PlaceCharacter(1, monster, 4, 2);
+        //cc.PlaceCharacter(1, saber, 5, 2);
     }
 
     public T GetSystem<T>()

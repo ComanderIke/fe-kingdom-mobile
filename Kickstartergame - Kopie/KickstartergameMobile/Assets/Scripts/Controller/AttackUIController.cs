@@ -15,6 +15,10 @@ public class AttackUIController : MonoBehaviour {
 
     [Header("Input Fields")]
     [SerializeField]
+    Image attackerSprite;
+    [SerializeField]
+    Image defenderSprite;
+    [SerializeField]
     private Text attackerHP;
     [SerializeField]
     private Text defenderHP;
@@ -69,6 +73,8 @@ public class AttackUIController : MonoBehaviour {
         HPValueChanged();
         EventContainer.hpValueChanged += HPValueChanged;
         EventContainer.attackUIVisible(true);
+        attackerSprite.sprite = attacker.Sprite;
+        defenderSprite.sprite = defender.Sprite;
     }
     private void OnDisable()
     {
@@ -106,6 +112,27 @@ public class AttackUIController : MonoBehaviour {
         StartCoroutine(MissTextAnimation());
     }
 
+    void UpdateHit()
+    {
+        int hit = Mathf.Clamp(attacker.BattleStats.GetHitAgainstTarget(defender) + 10 * currentHitSliderValue, 0, 100);
+        attackerMaxHIT.text = "" + Mathf.Clamp(attacker.BattleStats.GetHitAgainstTarget(defender) + hitSlider.maxValue * 10, 0, 100) + "%";
+        attackerHIT.text = "" + hit + "%";
+        if (EventContainer.attackerHitChanged != null)
+            EventContainer.attackerHitChanged(hit);
+        //attackerSP2.text = "" + attacker.Stats.SP;
+    }
+    void UpdateDamage()
+    {
+        int damage = attacker.BattleStats.GetDamage() + 1 * currentAtkSliderValue;
+        int dmg = (defender.BattleStats.GetReceivedDamage(damage));
+        int maxdmg = (defender.BattleStats.GetReceivedDamage(attacker.BattleStats.GetDamage() + (int)attackSlider.maxValue));
+        attackerMaxDMG.text = "" + maxdmg;
+        attackerDMG.text = "" + dmg;
+        attackerSP.text = "" + attacker.Stats.SP;
+        int bonusDmg = 1 * currentAtkSliderValue;
+        if (EventContainer.attackerDmgChanged != null)
+            EventContainer.attackerDmgChanged(bonusDmg);
+    }
     public void OnSliderValueChanged()
     {
         if(currentHitSliderValue != (int)hitSlider.value)
@@ -118,20 +145,10 @@ public class AttackUIController : MonoBehaviour {
             attacker.Stats.SP = attacker.Stats.SP - ((int)attackSlider.value - currentAtkSliderValue);
             currentAtkSliderValue = (int)attackSlider.value;
         }
-        attackerSP.text = "" + attacker.Stats.SP;
-        attackerSP2.text = "" + attacker.Stats.SP;
-        int hit = Mathf.Clamp(attacker.BattleStats.GetHitAgainstTarget(defender) + 10 * currentHitSliderValue, 0, 100);
-        int dmg = (attacker.BattleStats.GetDamageAgainstTarget(defender) + 1 * currentAtkSliderValue);
-        attackerMaxDMG.text = "" + (attacker.BattleStats.GetDamageAgainstTarget(defender) + 3);
-        attackerDMG.text = "" +dmg ;
-        attackerMaxHIT.text = "" + Mathf.Clamp(attacker.BattleStats.GetHitAgainstTarget(defender) + 30, 0, 100) + "%";
-        attackerHIT.text = "" +hit + "%";
-        if (EventContainer.attackerHitChanged!=null)
-            EventContainer.attackerHitChanged(hit);
-        if (EventContainer.attackerDmgChanged != null)
-            EventContainer.attackerDmgChanged(dmg);
-
-
+        attackSlider.maxValue = (int)Mathf.Clamp(attackSlider.value + attacker.Stats.SP, 0, 3);
+        hitSlider.maxValue = (int)Mathf.Clamp(hitSlider.value + attacker.Stats.SP, 0, 3);
+        UpdateHit();
+        UpdateDamage();
     }
 
     private void HPValueChanged()

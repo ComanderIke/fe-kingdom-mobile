@@ -5,6 +5,8 @@ namespace Assets.Scripts.Characters
     public class BattleStats
     {
         const int AGILITY_TO_DOUBLE = 0;
+        const int BASIC_HIT_CHANCE = 70;
+
         private LivingObject owner;
 
         public BattleStats(LivingObject owner)
@@ -47,12 +49,12 @@ namespace Assets.Scripts.Characters
                 if (c.EquipedWeapon != null)
                     hit = c.EquipedWeapon.Hit;
             }
-            return owner.Stats.Accuracy + hit;
+            return BASIC_HIT_CHANCE + owner.Stats.Accuracy + hit;
         }
 
         public int GetHitAgainstTarget(LivingObject target)
         {
-            return (int)Mathf.Clamp((GetHitRate() - target.Stats.Speed) * 10 + 50, 0, 100);
+            return (int)Mathf.Clamp((GetHitRate() - target.Stats.Speed), 0, 100);
         }
 
         public int GetDamage()
@@ -72,7 +74,10 @@ namespace Assets.Scripts.Characters
             float multiplier = 1.0f;
             return (int)(multiplier * Mathf.Clamp(GetDamage() - target.Stats.Defense, 1, Mathf.Infinity));
         }
-
+        public int GetReceivedDamage(int damage)
+        {
+            return (int)Mathf.Clamp(damage - owner.Stats.Defense, 1, Mathf.Infinity);
+        }
         public int GetTotalDamageAgainstTarget(LivingObject target)
         {
             int attacks = 1;
