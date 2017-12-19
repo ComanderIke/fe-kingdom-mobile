@@ -45,8 +45,7 @@ public class UIController : MonoBehaviour, Controller {
 
 	void Start () {
         mainScript = MainScript.GetInstance();
-        EventContainer.stampedeUsed += ShowAttackPattern;
-        EventContainer.howlUsed += ShowAttackPattern;
+        EventContainer.attackPatternUsed += ShowAttackPattern;
     }
 
     public void HideBottomUI()
@@ -142,7 +141,6 @@ public class UIController : MonoBehaviour, Controller {
     }
     public void HideAttackPreview()
     {
-        Debug.Log("Hide");
         attackPreview.SetActive(false);
     }
 }

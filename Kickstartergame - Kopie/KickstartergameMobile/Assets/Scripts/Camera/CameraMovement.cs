@@ -31,6 +31,7 @@ public class CameraMovement : MonoBehaviour {
     private Vector3 dragOrigin;
     private Vector3 oldPos;
     private Vector3 targetPosition;
+    private Vector2 targetPos;
     private Transform target;
     private MainScript mainScript;
     private bool drag = false;
@@ -65,7 +66,10 @@ public class CameraMovement : MonoBehaviour {
             lastPosition = Input.mousePosition;
         }
         if (Input.GetMouseButtonUp(0))
+        {
+            lerpTime = 0;
             drag = false;
+        }
         #endregion
 
         #region ClampCamera
@@ -83,12 +87,49 @@ public class CameraMovement : MonoBehaviour {
         if (!drag)
         {
             lerpTime = Time.deltaTime / LERP_SPEED;
-            targetPosition = new Vector3(Mathf.Round(this.transform.localPosition.x), Mathf.Round(this.transform.localPosition.y), Mathf.Round(this.transform.localPosition.z));
-            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, targetPosition, lerpTime);
+            if (targetPos.x != -1)
+            {
+                targetPosition = new Vector3(targetPos.x, targetPos.y, Mathf.Round(transform.localPosition.z));
+                transform.localPosition = Vector3.Lerp(transform.localPosition, targetPosition, lerpTime);
+                if(targetPos.x == transform.localPosition.x && targetPos.y == transform.localPosition.y)
+                {
+                    targetPos = new Vector2(-1,-1);
+                }
+            }
+            else
+            {
+                targetPosition = new Vector3(Mathf.Round(transform.localPosition.x), Mathf.Round(transform.localPosition.y), Mathf.Round(transform.localPosition.z));
+                transform.localPosition = Vector3.Lerp(transform.localPosition, targetPosition, lerpTime);
+            }
         }
         #endregion
     }
+    public void MoveCameraTo( int x, int y)
+    {
+        int deltaX =(int)transform.localPosition.x - x;
+        int deltaY = (int)transform.localPosition.y - y;
+        int targetX = (int)transform.localPosition.x;
+        int targetY = (int)transform.localPosition.y;
+        if (x > (int)transform.localPosition.x + 5 || x < (int)transform.localPosition.x )  
+        {
+            targetX = -1 * (deltaX + 5);
 
+        }
+        if (y > (int)transform.localPosition.y + 7 || y < (int)transform.localPosition.y)
+        {
+            targetY = -1 * (deltaY + 7);
+        }
+        if (targetX < (int)minX)
+            targetX = (int) minX;
+        if (targetY < (int)minY)
+            targetY = (int)minY;
+        if (targetX > (int)maxX)
+            targetX = (int)maxX;
+        if (targetY > (int)maxY)
+            targetY = (int)maxY;
+        lerpTime = 0;
+        targetPos = new Vector2(targetX, targetY);
+    }
     void SetLocked(bool value)
     {
         locked = value;

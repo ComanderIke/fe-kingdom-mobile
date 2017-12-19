@@ -10,19 +10,20 @@ using Assets.Scripts.Commands;
 using Assets.Scripts.GameStates;
 using Assets.Scripts.Events;
 using System.Collections;
+using Assets.Scripts.Characters.CharStateEffects;
 
 namespace Assets.Scripts.AI.AttackPatterns
 {
-    public class Howl : AttackPattern
+    public class Roar : AttackPattern
     {
         LivingObject unit;
         const int range = 4;
 
-        public Howl(LivingObject unit, Vector2 startPosition)
+        public Roar(LivingObject unit, Vector2 startPosition)
         {
             PossibleInjuries = new List<Injury>();
             TargetPositions = new List<Vector2>();
-            Name = "Howl";
+            Name = "Roar";
             Damage = 0;
             Hit = 100;
 
@@ -48,27 +49,15 @@ namespace Assets.Scripts.AI.AttackPatterns
         }
 
 
-        public List<Injury> PossibleInjuries { get; private set; }
+     
 
         public Vector2 StartPosition { get; private set; }
 
         public Vector2 Direction { get; private set; }
 
-        public String Name { get; private set; }
-
-        public int Damage { get; private set; }
-
-        public int Hit { get; private set; }
-
-        public int MaxTargetCount { get; private set; }
-
-        public int TargetCount { get; private set; }
-
-        public List<Vector2> TargetPositions { get; private set; }
-
-        public void EffectTarget(LivingObject target, Vector2 direction)
+        public void EffectTarget(LivingObject target)
         {
-            MainScript.GetInstance().GetSystem<UnitActionManager>().PushUnit(target, direction);
+            target.Debuffs.Add(new Fear(1));
         }
 
         void DoAction()
@@ -80,8 +69,7 @@ namespace Assets.Scripts.AI.AttackPatterns
                 if (tiles[(int)position.x, (int)position.y].character != null && StartPosition!=position)
                 {
                     //Debug.Log("Effect"+tiles[(int)position.x, (int)position.y].character);
-                    Vector2 direction = StartPosition - position;
-                    EffectTarget(tiles[(int)position.x, (int)position.y].character, direction);
+                    EffectTarget(tiles[(int)position.x, (int)position.y].character);
                 }
                 //Debug.Log(position);
             }
@@ -90,13 +78,17 @@ namespace Assets.Scripts.AI.AttackPatterns
             unit.UnitTurnState.IsWaiting = true;
         }
 
-        public void Execute()
+        public override void Execute()
         {
-            Debug.Log("Execute: Howl");
-            EventContainer.howlUsed(unit, this);
+            Debug.Log("Execute: Roar");
+            EventContainer.attackPatternUsed(unit, this);
             EventContainer.continuePressed += DoAction;
 
         }
 
+        public override void Undo()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

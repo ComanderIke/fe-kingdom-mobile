@@ -61,7 +61,7 @@ namespace Assets.Scripts.Grid
 
         public void ShowStandOnTexture(LivingObject c)
         {
-            if (c is Monster)
+            if (c.GridPosition is BigTilePosition)
             {
                 BigTilePosition bigTile = (BigTilePosition)c.GridPosition;
 

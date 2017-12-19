@@ -12,10 +12,12 @@ public class SimpleMonsterAI : AIInterface {
     bool startTurn = true;
     bool doingAction = false;
     Dictionary<LivingObject, List<AttackPattern>> attackPatterns;
+    List<Goal> CurrentGoals;
+    AttackPattern currentPattern;
 
     public SimpleMonsterAI(Player p):base (p){
         attackPatterns = new Dictionary<LivingObject, List<AttackPattern>>();
-        
+        CurrentGoals = new List<Goal>();
     }
 
     public override void Think()
@@ -37,7 +39,7 @@ public class SimpleMonsterAI : AIInterface {
         if (units.Count > 0)
         {
             SubmitBestMoveForUnit(units[0]);
-            EventContainer.commandFinished += FinishedAction;
+            EventContainer.allCommandsFinished += FinishedAction;
             doingAction = true;
         }
         else
@@ -47,7 +49,7 @@ public class SimpleMonsterAI : AIInterface {
     }
     void FinishedAction()
     {
-        EventContainer.commandFinished -= FinishedAction;
+        EventContainer.allCommandsFinished -= FinishedAction;
         Debug.Log("Command Finished!");
         doingAction = false;
     }
@@ -71,78 +73,76 @@ public class SimpleMonsterAI : AIInterface {
             else if(((Monster)unit).Type == MonsterType.Sabertooth)
             {
                 List<AttackPattern> attackPattern = new List<AttackPattern>();
-                attackPattern.Add(new Howl(unit, unit.GridPosition.GetPos()));
+                //attackPattern.Add(new Howl(unit, unit.GridPosition.GetPos()));
+                
+                attackPattern.Add(new Flee(unit));
+                attackPattern.Add(new LickWounds(unit));
                 attackPatterns.Add(unit, attackPattern);
             }
         }
         
         //mainScript.MoveCameraTo(characters[0].x, characters[0].z);
         // reset all goals
-        //CurrentGoals.Clear();
+        CurrentGoals.Clear();
 
         // reset our own unit goals from last turn, and create attack goal for enemy units
-        //foreach (Character u in player.getCharacters())
-        //{
-        //    u.ResetAiGoal();
-        //}
-        /*foreach (Character u in MainScript.players[0].getCharacters())
+        foreach (LivingObject u in player.Units)
         {
-            // enemy unit, add as goal assuming is alive
-            if (u.isAlive)
+            u.AIGoals.Clear();
+        }
+        foreach (Player p in MainScript.GetInstance().GetSystem<TurnManager>().Players)
+        {
+            if (p != player)
             {
-                // Goal g = new Goal();
-                // g.CreateGoal(Goal.GoalType.ATTACK, u.x, u.z, new WeightSet(u.behaviour), influenceMap);
-                // CurrentGoals.Add(g);
+                foreach (LivingObject u in p.Units)
+                {
+                    // enemy unit, add as goal assuming is alive
+                    if (u.IsAlive())
+                    {
+                        Goal g = new Goal(GoalType.ATTACK, u.GridPosition.x, u.GridPosition.y, new WeightSet());
+                        CurrentGoals.Add(g);
+                    }
+                }
             }
-        }*/
+        }
 
-        // Sort goals in descending order by priority
-        /*var goalsByPriority = from ug in CurrentGoals
-                              orderby ug.Priority descending
-                              select ug;
         // add all our units as potential resources for every goal
         int cnt = 0;
-        foreach (Goal g in goalsByPriority)
+        foreach (Goal g in CurrentGoals)
         {
-            foreach (Character u in player.getCharacters())
+            foreach (LivingObject u in player.Units)
             {
-                // if unit is living, friendly, and not yet assigned a goal, add it as a potential resource
-                if (u.isAlive && !u.HasAiGoal())
+                // if unit is living, friendly, and not yet assigned 4 goals, add it as a potential resource
+                if (u.IsAlive() && u.AIGoals.Count <= 4)
                 {
-                    g.AssignUnitResourceSuitability(u, new WeightSet(u.behaviour));
+                    g.AssignUnitResourceSuitability(u, new WeightSet());
                 }
-                //else
-                //{
-                //    Debug.Log(u.name + " " + u.goalID);
-                //}
             }
             // Does goal have enough potential resources
-            if (g.HasSufficientResources || cnt == goalsByPriority.Count() - 1)//Assign last goal even if not enough ressources
+            if (g.HasSufficientRessources() || cnt == CurrentGoals.Count - 1)//Assign last goal even if not enough ressources
             {
                 // Assign resources to goal
-                g.AssignGoalResources();
+                g.AssignGoalRessources();
             }
             cnt++;
-        }*/
-        //Debug.Log("GOALS:::-------------");
-        //foreach (Character u in player.getCharacters())
-        //{
-        //    Debug.Log(u.name + " " + u.goalID);
-        //}
+        }
         startTurn = false;
     }
 
-    /*private float GetDistanceToGoalImproval(Character u, Vector2 newLoc)
+    private float GetDistanceToGoalImproval(LivingObject u, Vector2 newLoc)
     {
-        //Debug.Log(u.x + " " + u.z + " " + u.goalTarget.x + " "+u.goalTarget.y);
-        float oldDistance = mainScript.GetDistance(u.x, u.z, (int)u.goalTarget.x, (int)u.goalTarget.y);
-        float newDistance = mainScript.GetDistance((int)newLoc.x, (int)newLoc.y, (int)u.goalTarget.x, (int)u.goalTarget.y);
-        //Debug.Log("old" + oldDistance);
-        //Debug.Log("newloc" + newLoc);
-        //Debug.Log("new" + newDistance);
+        float oldDistance=0;
+        float newDistance=0;
+        
+        foreach(Goal g in u.AIGoals)
+        {
+            oldDistance += mainScript.gridManager.GetDistance(u.GridPosition.x, u.GridPosition.y, g.x, g.y, u.Player.ID);
+            newDistance += mainScript.gridManager.GetDistance((int)newLoc.x, (int)newLoc.y, g.x, g.y, u.Player.ID);
+        }
+        
         // return factor representing improvement in position, protect vs divide by 0
         return (oldDistance > 0) ? (1f - newDistance / oldDistance) : (1f - newDistance);
-    }*/
+    }
 
     protected float ScoreLocationForCharacter(Vector2 location, LivingObject c)
     {
@@ -151,15 +151,14 @@ public class SimpleMonsterAI : AIInterface {
         if (location.x == c.GridPosition.x && location.y == c.GridPosition.y)
         {
             ret = w.STAY;
+            if (currentPattern.Type == AttackPatternType.Passive)
+                ret = 1000000;
         }
-       /* switch (c.goalID)
-        {
-            case Goal.GoalType.ATTACK: ret += GetDistanceToGoalImproval(c, new Vector2(location.x, location.z)) * w.ATTACK_GOAL.TARGET_DISTANCE_FAKTOR; break;
-        }*/
-        
-
+        if(currentPattern.Type == AttackPatternType.Aggressive)
+            ret += GetDistanceToGoalImproval(c, new Vector2(location.x, location.y)) * w.ATTACK_GOAL.TARGET_DISTANCE_FAKTOR;
+        else
+            ret -= GetDistanceToGoalImproval(c, new Vector2(location.x, location.y)) * w.ATTACK_GOAL.TARGET_DISTANCE_FAKTOR;
         return ret;
-
     }
 
     private int GetAttackRange(Vector2 location, Vector2 target)
@@ -191,24 +190,42 @@ public class SimpleMonsterAI : AIInterface {
 
     protected void SubmitBestMoveForUnit(LivingObject unit)
     {
-        
+        List<AttackPattern> aps = attackPatterns[unit];
+        currentPattern = null;
+        int cnt = 0;
+        foreach (AttackPattern ap in aps)
+        {
+            if (true)
+            {
+                currentPattern = ap;
+                cnt = ap.TargetCount;
+            }
+        }
+
         float currentBestScore = -10000; // always want to do something
                                          //Vector2 currentBestMoveLocation = new Vector3(unit.GridPosition.x, unit.GridPosition.y); // by default go nowhere
                                          //CombatAction currentBestCombatAction = new CombatAction(CharacterAction.Wait, null, new Vector2()); // and do nothing
 
         // get all possible move locations for this unit
-        //List<Vector2> moveLocs = GetMoveLocations(unit);
-        //Vector2 startLoc = new Vector2(unit.GridPosition.x, unit.GridPosition.y);
-        /*foreach (Vector2 loc in moveLocs)
+        List<Vector2> moveLocs = GetMoveLocations(unit);
+        Vector2 startLoc = new Vector2(unit.GridPosition.x, unit.GridPosition.y);
+        Vector2 currentBestMoveLocation = new Vector2();
+        Debug.Log("possible positions:");
+        foreach (Vector2 loc in moveLocs)
         {
             SetCharacterPosition(unit, startLoc);
             // score this move location
             float locScore = ScoreLocationForCharacter(loc, unit);
             SetCharacterPosition(unit, loc);
-
+            if (locScore  > currentBestScore)
+            {
+                currentBestMoveLocation = loc;
+                currentBestScore = locScore;
+                
+            }
             // get all possible actions at this location
 
-            List<CharacterAction> acts = GetActionsForUnit(unit);
+            //List<CharacterAction> acts = GetActionsForUnit(unit);
             /*if (acts.Contains(CharacterAction.Attack))
             {
                 List<AttackTarget> targets = mainScript.GetAttackTargets((Character)unit);
@@ -231,27 +248,21 @@ public class SimpleMonsterAI : AIInterface {
                 currentBestMoveLocation = loc;
                 currentBestScore = locScore;
                 currentBestCombatAction = new CombatAction(CharacterAction.Wait, null, new Vector2());
-            }
+            }*/
 
         }
+        Debug.Log(currentBestMoveLocation);
         SetCharacterPosition(unit, startLoc);
-        SubmitMove(unit, currentBestMoveLocation, currentBestCombatAction);*/
-        List<AttackPattern> aps = attackPatterns[unit];
-        AttackPattern bestPattern = null;
-        int cnt = 0;
-        foreach(AttackPattern ap in aps)
-        {
-            if (ap.TargetCount >= cnt)
-            {
-                bestPattern = ap;
-                cnt = ap.TargetCount;
-            }
-        }
+        SubmitMove(unit, currentBestMoveLocation);
+        unit.UnitTurnState.IsWaiting = true;
         EventContainer.allCommandsFinished += SwitchToAIState;
-        bestPattern.Execute();
+        mainScript.GetSystem<UnitActionManager>().AddCommand(currentPattern);
+        //will also execute all previous commands like Movement
+        mainScript.GetSystem<UnitActionManager>().ExecuteActions();
         
         
     }
+
     private void SwitchToAIState()
     {
         Debug.Log("SwitchToAIState");

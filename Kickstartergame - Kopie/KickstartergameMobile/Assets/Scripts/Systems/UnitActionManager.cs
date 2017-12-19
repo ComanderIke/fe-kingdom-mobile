@@ -69,6 +69,7 @@ namespace Assets.Scripts.GameStates
             if (currentActions.Count != 0)
             {
                 Command current = currentActions.Dequeue();
+                Debug.Log(current);
                 if (currentActions.Count == 0)
                 {
                     Debug.Log("All Commands Finished!");

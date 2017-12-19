@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Characters.Attributes;
+﻿using Assets.Scripts.AI;
+using Assets.Scripts.Characters.Attributes;
 using Assets.Scripts.Characters.Debuffs;
 using Assets.Scripts.Events;
 using Assets.Scripts.Players;
@@ -26,6 +27,7 @@ namespace Assets.Scripts.Characters
         public Sprite Sprite { get; set; }
         public GridPosition GridPosition { get; set; }
         public MoveActions MoveActions { get; set; }
+        public List<Goal> AIGoals { get; set; }
 
         public LivingObject(string name, Sprite sprite)
         {
@@ -40,6 +42,7 @@ namespace Assets.Scripts.Characters
             Debuffs = new List<Debuff>();
             Sprite = sprite;
             List<int> attackRanges = new List<int>();
+            AIGoals = new List<Goal>();
             attackRanges.Add(1);
             Stats = new Stats(15, 5, 5, 5, 5, 5, 5,3,attackRanges);
             
@@ -51,39 +54,6 @@ namespace Assets.Scripts.Characters
         }
         public void UpdateTurn()
         {
-            UnitTurnState.Reset();
-        }
-        public void SetInternPosition(int x, int y)
-        {
-            GridPosition.SetPosition(x, y);
-        }
-
-        public virtual void SetPosition(int x, int y)
-        {
-            GridPosition.SetPosition(x, y);
-            GameTransform.SetPosition(x, y);
-        }
-     
-        public void Die()
-        {
-            EventContainer.unitDied(this);
-            GridPosition.RemoveCharacter();
-            GameTransform.Destroy();
-        }
-
-        public bool CanAttack(int range)
-        {
-            return Stats.AttackRanges.Contains(range);
-        }
-
-        public bool IsAlive()
-        {
-            return Stats.HP > 0;
-        }
-
-        public void UpdateOnWholeTurn()
-        {
-            UnitTurnState.Reset();
             List<Debuff> debuffEnd = new List<Debuff>();
             List<CharacterState> buffEnd = new List<CharacterState>();
             foreach (Debuff d in Debuffs)
@@ -104,6 +74,44 @@ namespace Assets.Scripts.Characters
             {
                 b.Remove(this);
             }
+            UnitTurnState.Reset();
+        }
+        public void SetInternPosition(int x, int y)
+        {
+            GridPosition.SetPosition(x, y);
+        }
+
+        public virtual void SetPosition(int x, int y)
+        {
+            GridPosition.SetPosition(x, y);
+            GameTransform.SetPosition(x, y);
+        }
+     
+        public void Die()
+        {
+            EventContainer.unitDied(this);
+            GridPosition.RemoveCharacter();
+            GameTransform.Destroy();
+        }
+        public void Heal(int heal)
+        {
+            Stats.HP += heal;
+        }
+        public bool CanAttack(int range)
+        {
+            return Stats.AttackRanges.Contains(range);
+        }
+
+
+        public bool IsAlive()
+        {
+            return Stats.HP > 0;
+        }
+
+        public void UpdateOnWholeTurn()
+        {
+            UnitTurnState.Reset();
+           
         }
 
         public int InflictDamage(int dmg, LivingObject damagedealer)

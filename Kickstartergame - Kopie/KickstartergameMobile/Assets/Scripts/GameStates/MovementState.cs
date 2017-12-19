@@ -15,6 +15,7 @@ namespace Assets.Scripts.GameStates
         private MainScript mainScript;
         private LivingObject character;
         List<Vector2> mousePath;
+        bool active;
 
         public MovementState(LivingObject c, int x, int y)
         {
@@ -22,14 +23,17 @@ namespace Assets.Scripts.GameStates
             this.y = y;
             mainScript = MainScript.GetInstance();
             character = c;
+            
         }
         public MovementState( LivingObject c,int x,int y, List<Vector2> path):this(c, x, y)
         {
             mousePath = path;
+            
         }
 
         public override void enter()
         {
+            active = true;
             EventContainer.startMovingUnit();
             if (mousePath == null)
             {
@@ -66,6 +70,8 @@ namespace Assets.Scripts.GameStates
 
         public override void update()
         {
+            if (!active)
+                return;
             ContinueWalkAnimation();
         }
 
@@ -134,6 +140,7 @@ namespace Assets.Scripts.GameStates
 
             if ((path!=null&&pathCounter >= path.getLength())||(path==null&&mousePath!=null&&pathCounter>=mousePath.Count))
             {
+                active = false;
                 pathCounter = 0;
                 character.SetPosition((int)tx, (int)ty);
                  if(MainScript.endOfMoveCharacterEvent!=null)

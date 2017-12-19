@@ -39,11 +39,14 @@ namespace Assets.Scripts.Events
         public delegate void ContinuePressed();
         public static ContinuePressed continuePressed;
 
-        public delegate void StampedeUsed(LivingObject user, AttackPattern pattern);
+        public delegate void AttackPatternUsed(LivingObject user, AttackPattern pattern);
+        public static AttackPatternUsed attackPatternUsed;
+
+       /* public delegate void StampedeUsed(LivingObject user, AttackPattern pattern);
         public static StampedeUsed stampedeUsed;
 
         public delegate void HowlUsed(LivingObject user, AttackPattern pattern);
-        public static HowlUsed howlUsed;
+        public static HowlUsed howlUsed;*/
         #endregion
 
         #region Fight

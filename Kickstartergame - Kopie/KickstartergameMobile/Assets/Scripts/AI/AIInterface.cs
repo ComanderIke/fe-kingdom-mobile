@@ -1,5 +1,6 @@
 ﻿
 using Assets.Scripts.Characters;
+using Assets.Scripts.Commands;
 using Assets.Scripts.Events;
 using Assets.Scripts.GameStates;
 using Assets.Scripts.Players;
@@ -77,9 +78,7 @@ namespace Assets.Scripts.AI
         {
             List<Vector2> locations = new List<Vector2>();
             mainScript.gridManager.HideMovement();
-            locations.Add(new Vector2(c.GridPosition.x, c.GridPosition.y));
-            Debug.Log("TODO: GetMOVELOCATIONS");
-            //mainScript.gridManager.GetMovement((int)c.GameTransform.GameObject.transform.position.x, (int)c.GameTransform.GameObject.transform.position.y, locations, c.Stats.MoveRange, 0, c.Player.number);
+            locations = mainScript.gridManager.GetMovement((int)c.GameTransform.GameObject.transform.position.x, (int)c.GameTransform.GameObject.transform.position.y, c.Stats.MoveRange, c.Player.ID);
             return locations;
         }
 
@@ -103,13 +102,12 @@ namespace Assets.Scripts.AI
         //    return null;
         //}
 
-        protected void SubmitMove(LivingObject character, Vector2 location)//, CombatAction combatAction)
+        protected void SubmitMove(LivingObject character, Vector2 location)
         {
-           // TODO with COMMANDS
-           // GameState gameState = DoCombatAction(character, combatAction);
-           // if (character.GridPosition.x == location.x && character.GridPosition.y == location.y && combatAction.type == CharacterAction.Wait)
-           //     pausetime = PAUSE_BETWEEN_ACTIONS;
-           // mainScript.SwitchState(new MovementState(character, (int)location.x, (int)location.y));
+            //just adding the Command but not executing it yet
+            Debug.Log("Move Character TO " + location);
+            GameObject.FindObjectOfType<CameraMovement>().MoveCameraTo((int)location.x, (int)location.y);
+            mainScript.GetSystem<UnitActionManager>().MoveCharacter(character, (int)location.x,(int) location.y);
         }
 
     }

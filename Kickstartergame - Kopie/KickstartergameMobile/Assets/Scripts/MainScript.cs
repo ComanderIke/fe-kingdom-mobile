@@ -150,11 +150,11 @@ public class MainScript : MonoBehaviour {
         //cc.PlaceCharacter(0, filler4, startPositions[3].GetXOnGrid(), startPositions[3].GetYOnGrid());
         Monster monster = new Monster("Mammoth", MonsterType.Mammoth, ss.mammothSprite);
         Monster saber = new Monster("Sabertooth", MonsterType.Sabertooth, ss.sabertoothSprite);
-        turnManager.Players[1].AddUnit(monster);
-        //turnManager.Players[1].AddUnit(saber);
+        //turnManager.Players[1].AddUnit(monster);
+        turnManager.Players[1].AddUnit(saber);
 
-        cc.PlaceCharacter(1, monster, 4, 2);
-        //cc.PlaceCharacter(1, saber, 5, 2);
+        //cc.PlaceCharacter(1, monster, 4, 2);
+        cc.PlaceCharacter(1, saber, 5, 2);
     }
 
     public T GetSystem<T>()

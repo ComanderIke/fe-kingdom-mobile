@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Assets.Scripts.Characters;
 using Assets.Scripts.Grid;
 using Assets.Scripts.Grid.PathFinding;
+using System;
 
 public class GridManager : MonoBehaviour {
     
@@ -31,12 +32,36 @@ public class GridManager : MonoBehaviour {
         PathFindingManager = new AStar(this,grid.width, grid.height);
     }
 
+    public List<Vector2> GetMovement(int x, int y, int movRange, int playerId)
+    {
+        List<Vector2> locations = new List<Vector2>();
+        GetMovementLocations(x,y,movRange,0,playerId,locations);
+        return locations;
+    }
+    private void GetMovementLocations(int x, int y, int range, int c, int playerId, List<Vector2>locations)
+    {
+        if (range < 0)
+        {
+            return;
+        }
 
+        locations.Add(new Vector2(x, y));
+        PathFindingManager.nodes[x, y].c = c;
+        c++;
+        if (GridLogic.checkField(x - 1, y, playerId, range) && PathFindingManager.nodeFaster(x - 1, y, c))
+            GetMovementLocations(x - 1, y, range - 1, c, playerId,locations);
+        if (GridLogic.checkField(x + 1, y, playerId, range) && PathFindingManager.nodeFaster(x + 1, y, c))
+            GetMovementLocations(x + 1, y, range - 1, c, playerId, locations);
+        if (GridLogic.checkField(x, y - 1, playerId, range) && PathFindingManager.nodeFaster(x, y - 1, c))
+            GetMovementLocations(x, y - 1, range - 1, c, playerId, locations);
+        if (GridLogic.checkField(x, y + 1, playerId, range) && PathFindingManager.nodeFaster(x, y + 1, c))
+            GetMovementLocations(x, y + 1, range - 1, c, playerId, locations);
+    }
 
     public void ShowMovement(LivingObject c)
     {
        
-        if (c is Monster)
+        if (c.GridPosition is BigTilePosition)
             ShowMonsterMovement(c.GridPosition.x, c.GridPosition.y, c.Stats.MoveRange, new List<int>(c.Stats.AttackRanges), 0, c.Player.ID);
         else
             ShowMovement(c.GridPosition.x, c.GridPosition.y, c.Stats.MoveRange, c.Stats.MoveRange, new List<int>(c.Stats.AttackRanges), 0, c.Player.ID, false);
@@ -58,6 +83,9 @@ public class GridManager : MonoBehaviour {
         if (GridLogic.checkMonsterField(new BigTile(new Vector2(x, y + 1), new Vector2(x + 1, y + 1), new Vector2(x, y + 2), new Vector2(x + 1, y + 2)), playerId, range))
             ShowMonsterMovement(x, y + 1, range - 1, new List<int>(attack), c, playerId);
     }
+
+
+
     public void ShowAttack(LivingObject character, List<int> attack)
     {
         List<Tile> TilesFromWhereUCanAttack = new List<Tile>();
@@ -206,6 +234,11 @@ public class GridManager : MonoBehaviour {
 
     }
 
+    public int GetDistance(int x1, int y1, int x2, int y2, int playerId)
+    {
+        PathFindingManager.Reset();
+        return PathFindingManager.findPath(x1, y1, x2, y2, playerId, false, null).getLength();
+    }
     public void ShowAttackRange(LivingObject c)
     {
         List<LivingObject> characters = new List<LivingObject>();

@@ -35,7 +35,8 @@ public class BuffUI : MonoBehaviour {
             }
             else
             {
-                buffs.Add("Move", GameObject.Instantiate(buffPrefab, this.transform));
+                if (!buffs.ContainsKey("Move"))
+                    buffs.Add("Move", GameObject.Instantiate(buffPrefab, this.transform));
             }
         }
     }

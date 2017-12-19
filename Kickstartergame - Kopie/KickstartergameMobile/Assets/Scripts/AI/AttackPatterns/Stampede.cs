@@ -27,6 +27,7 @@ namespace Assets.Scripts.AI.AttackPatterns
             Hit = 80;
             StartPosition = startPosition;
             Direction = direction;
+            Type = AttackPatternType.Aggressive;
             this.unit = unit;
             for(int i=0; i <= range; i++)
             {
@@ -59,25 +60,16 @@ namespace Assets.Scripts.AI.AttackPatterns
                 TargetPositions.Add(bigTile.TopRight());
         }
 
-        public List<Injury> PossibleInjuries { get; private set; }
 
         public BigTile StartPosition { get; private set; }
 
         public Vector2 Direction { get; private set; }
 
-        public String Name { get; private set; }
 
-        public int Damage { get; private set; }
-
-        public int Hit { get; private set; }
-
-        public int MaxTargetCount { get; private set; }
-
-        public int TargetCount { get; private set; }
 
         public List<BigTile> TargetBigTilePositions { get; private set; }
 
-        public List<Vector2> TargetPositions { get; private set; }
+
 
         public void EffectTarget(LivingObject target)
         {
@@ -102,13 +94,17 @@ namespace Assets.Scripts.AI.AttackPatterns
             MainScript.GetInstance().GetSystem<UnitActionManager>().ExecuteActions();
             unit.UnitTurnState.IsWaiting = true;
         }
-        public void Execute()
+        public override void Execute()
         {
             Debug.Log("Execute: BigCharge");
-            EventContainer.stampedeUsed(unit, this);
+            EventContainer.attackPatternUsed(unit, this);
             EventContainer.continuePressed += DoAction;
             
         }
 
+        public override void Undo()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
