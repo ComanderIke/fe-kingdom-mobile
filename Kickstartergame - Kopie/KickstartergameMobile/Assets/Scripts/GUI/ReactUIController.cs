@@ -50,13 +50,36 @@ public class ReactUIController : MonoBehaviour {
     [SerializeField]
     private GameObject reactTutorial;
     [SerializeField]
+    private Text DodgeSPText;
+    [SerializeField]
     private Slider dodgeSlider;
+    [SerializeField]
+    private Text dodgeValueText;
+    [SerializeField]
+    private Text dodgeMaxValueText;
     [SerializeField]
     private Slider guardSlider;
     [SerializeField]
+    private Text guardSPText;
+    [SerializeField]
+    private Text guardValueText;
+    [SerializeField]
+    private Text guardMaxValueText;
+    
+    [SerializeField]
     private Slider counterAttackSlider;
     [SerializeField]
+    private Text counterAttackMaxValueText;
+    [SerializeField]
+    private Text counterAttackValueText;
+    [SerializeField]
     private Slider counterHitSlider;
+    [SerializeField]
+    private Text counterHitMaxValueText;
+    [SerializeField]
+    private Text counterHitValueText;
+    [SerializeField]
+    private Text counterSPText;
 
     private LivingObject attacker;
     private LivingObject defender;
@@ -69,6 +92,7 @@ public class ReactUIController : MonoBehaviour {
     private float enemyFillAmount = 1;
     private float bonusDmg = 0;
     private float bonusHit = 0;
+    private int StartSP;
 
     // Use this for initialization
     void Start () {
@@ -98,29 +122,88 @@ public class ReactUIController : MonoBehaviour {
         UpdateDmg();
     }
 
-
+    private int currentDodgeValue;
+    
     public void OnDodgeSliderValueChanged()
     {
-        int currentDodgeValue = (int)dodgeSlider.value;
+        if (currentDodgeValue != (int)dodgeSlider.value)
+        {
+            defender.Stats.SP = defender.Stats.SP - ((int)dodgeSlider.value - currentDodgeValue);
+            currentDodgeValue = (int)dodgeSlider.value;
+        }
+        dodgeSlider.maxValue = (int)Mathf.Clamp(dodgeSlider.value + defender.Stats.SP, 0, 3);
         bonusHit = -20 -10*currentDodgeValue;
         bonusDmg = 0;
+        DodgeSPText.text = ""+ defender.Stats.SP;
+        dodgeMaxValueText.text = "" +( -20 + -10 * (int)dodgeSlider.maxValue);
+        dodgeValueText.text = "" + bonusHit;
+        UpdateDmg();
     }
+    private int currentGuardValue;
     public void OnGuardSliderValueChanged()
     {
-        int currentDodgeValue = (int)dodgeSlider.value;
-        bonusHit = -20 - 10 * currentDodgeValue;
-        bonusDmg = 0;
+        if (currentGuardValue != (int)guardSlider.value)
+        {
+            defender.Stats.SP = defender.Stats.SP - ((int)guardSlider.value - currentGuardValue);
+            currentGuardValue = (int)guardSlider.value;
+        }
+        guardSlider.maxValue = (int)Mathf.Clamp(guardSlider.value + defender.Stats.SP, 0, 3);
+        currentGuardValue = (int)guardSlider.value;
+        bonusHit = +20 ;
+        bonusDmg = -2 - currentGuardValue;
+        guardSPText.text = "" + defender.Stats.SP;
+        guardMaxValueText.text = "" + (-2 + -(int)guardSlider.maxValue);
+        guardValueText.text = "" + bonusDmg;
+        UpdateDmg();
     }
+    private int currentCounterAttackValue;
+    private int currentCounterHitValue;
     public void OnCounterSliderValueChanged()
     {
-        int currentDodgeValue = (int)dodgeSlider.value;
-        bonusHit = -20 - 10 * currentDodgeValue;
+        if (currentCounterAttackValue != (int)counterAttackSlider.value)
+        {
+            defender.Stats.SP = defender.Stats.SP - ((int)counterAttackSlider.value - currentCounterAttackValue);
+            currentCounterAttackValue = (int)counterAttackSlider.value;
+        }
+        counterAttackSlider.maxValue = (int)Mathf.Clamp(counterAttackSlider.value + defender.Stats.SP, 0, 3);
+        currentCounterAttackValue = (int)counterAttackSlider.value;
+
+        if (currentCounterHitValue != (int)counterHitSlider.value)
+        {
+            defender.Stats.SP = defender.Stats.SP - ((int)counterHitSlider.value - currentCounterHitValue);
+            currentCounterHitValue = (int)counterHitSlider.value;
+        }
+        counterHitSlider.maxValue = (int)Mathf.Clamp(counterHitSlider.value + defender.Stats.SP, 0, 3);
+        currentCounterHitValue = (int)counterHitSlider.value;
+
+
+        bonusHit = 0;
         bonusDmg = 0;
+
+        counterSPText.text = "" + defender.Stats.SP;
+
+        int damage = defender.BattleStats.GetDamage() + 1 * currentCounterAttackValue;
+        int dmg = (attacker.BattleStats.GetReceivedDamage(damage));
+        int maxdmg = (attacker.BattleStats.GetReceivedDamage(defender.BattleStats.GetDamage() + (int)counterAttackSlider.maxValue));
+        counterAttackMaxValueText.text = "" + maxdmg;
+        counterAttackValueText.text = "" + dmg;
+        int bonusDmg2 = 1 * currentCounterAttackValue;
+        //if (EventContainer.attackerDmgChanged != null)
+        //    EventContainer.attackerDmgChanged(bonusDmg2);
+
+
+        int hit = Mathf.Clamp(defender.BattleStats.GetHitAgainstTarget(attacker) + 10 * currentCounterHitValue, 0, 100);
+        counterHitMaxValueText.text = "" + Mathf.Clamp(defender.BattleStats.GetHitAgainstTarget(attacker) + counterHitSlider.maxValue * 10, 0, 100) + "%";
+        counterHitValueText.text = "" + hit + "%";
+        //if (EventContainer.attackerHitChanged != null)
+        //    EventContainer.attackerHitChanged(hit);
+        UpdateDmg();
     }
     private void UpdateDmg()
     {
         attackerDmg.text = ""+defender.BattleStats.GetReceivedDamage(attacker.BattleStats.GetDamage());
         attackerHit.text = "" + attacker.BattleStats.GetHitAgainstTarget(defender);
+        
         if(bonusDmg==0)
             attackerBonusDmg.text = "";
         else
@@ -163,6 +246,7 @@ public class ReactUIController : MonoBehaviour {
 
     public void Show(LivingObject attacker, LivingObject defender)
     {
+        StartSP = defender.Stats.SP;
         this.attacker = attacker;
         this.defender = defender;
         gameObject.SetActive(true);
@@ -182,17 +266,21 @@ public class ReactUIController : MonoBehaviour {
     {
         this.gameObject.SetActive(false);
     }
+
     public void DodgeConfirmed()
     {
 
+        UIController.attacktButtonCLicked();
     }
     public void GuardConfirmed()
     {
 
+        UIController.attacktButtonCLicked();
     }
     public void CounterConfirmed()
     {
 
+        UIController.attacktButtonCLicked();
     }
     public void DodgeClicked()
     {
@@ -200,6 +288,7 @@ public class ReactUIController : MonoBehaviour {
         counterContainer.SetActive(false);
         guardContainer.SetActive(false);
         reactTutorial.SetActive(false);
+        defender.Stats.SP = StartSP;
         OnDodgeSliderValueChanged();
     }
     public void GuardClicked()
@@ -208,9 +297,8 @@ public class ReactUIController : MonoBehaviour {
         counterContainer.SetActive(false);
         dodgeContainer.SetActive(false);
         reactTutorial.SetActive(false);
-        bonusHit = +20;
-        bonusDmg = -2;
-        UpdateDmg();
+        defender.Stats.SP = StartSP;
+        OnGuardSliderValueChanged();
     }
     public void CounterClicked()
     {
@@ -218,9 +306,8 @@ public class ReactUIController : MonoBehaviour {
         guardContainer.SetActive(false);
         dodgeContainer.SetActive(false);
         reactTutorial.SetActive(false);
-        bonusHit = 0;
-        bonusDmg = 0;
-        UpdateDmg();
+        defender.Stats.SP = StartSP;
+        OnCounterSliderValueChanged();
     }
     #region COROUTINES
     IEnumerator DelayedHP()

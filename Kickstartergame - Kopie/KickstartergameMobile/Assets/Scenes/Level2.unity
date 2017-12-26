@@ -3341,10 +3341,21 @@ MonoBehaviour:
   healthSpeed: 3
   healthLoseSpeed: 1.5
   reactTutorial: {fileID: 1191848008}
+  DodgeSPText: {fileID: 608251245}
   dodgeSlider: {fileID: 260421385}
+  dodgeValueText: {fileID: 1322825331}
+  dodgeMaxValueText: {fileID: 620980277}
   guardSlider: {fileID: 555517608}
+  guardSPText: {fileID: 1059876288}
+  guardValueText: {fileID: 2110263759}
+  guardMaxValueText: {fileID: 1952378256}
   counterAttackSlider: {fileID: 1419806510}
+  counterAttackMaxValueText: {fileID: 1904894459}
+  counterAttackValueText: {fileID: 390829931}
   counterHitSlider: {fileID: 1098084660}
+  counterHitMaxValueText: {fileID: 1020779821}
+  counterHitValueText: {fileID: 1760626112}
+  counterSPText: {fileID: 1115991751}
 --- !u!1 &438348660
 GameObject:
   m_ObjectHideFlags: 0
@@ -5019,7 +5030,7 @@ GameObject:
   - component: {fileID: 608251246}
   - component: {fileID: 608251245}
   m_Layer: 0
-  m_Name: Text
+  m_Name: SP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5303,7 +5314,7 @@ GameObject:
   - component: {fileID: 620980278}
   - component: {fileID: 620980277}
   m_Layer: 0
-  m_Name: Text (1)
+  m_Name: MaxValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5339,7 +5350,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.78039217, g: 0.078431375, b: 0.078431375, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -5348,10 +5359,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: c541e7d1526b80243b1192452ea48f91, type: 3}
-    m_FontSize: 32
+    m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 3
+    m_MinSize: 0
     m_MaxSize: 60
     m_Alignment: 5
     m_AlignByGeometry: 0
@@ -5359,7 +5370,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 90%
+  m_Text: -60
 --- !u!222 &620980278
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9959,7 +9970,7 @@ GameObject:
   - component: {fileID: 1059876289}
   - component: {fileID: 1059876288}
   m_Layer: 0
-  m_Name: Text
+  m_Name: SP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10686,7 +10697,7 @@ GameObject:
   - component: {fileID: 1115991752}
   - component: {fileID: 1115991751}
   m_Layer: 0
-  m_Name: Text
+  m_Name: SP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12805,7 +12816,7 @@ GameObject:
   - component: {fileID: 1322825332}
   - component: {fileID: 1322825331}
   m_Layer: 0
-  m_Name: Text
+  m_Name: DodgeValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12841,7 +12852,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.78039217, g: 0.078431375, b: 0.078431375, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -12850,7 +12861,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: c541e7d1526b80243b1192452ea48f91, type: 3}
-    m_FontSize: 42
+    m_FontSize: 50
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 4
@@ -12861,7 +12872,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 60%
+  m_Text: -20
 --- !u!222 &1322825332
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19115,7 +19126,7 @@ GameObject:
   - component: {fileID: 1904894460}
   - component: {fileID: 1904894459}
   m_Layer: 0
-  m_Name: Text (1)
+  m_Name: MaxValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19365,7 +19376,7 @@ GameObject:
   - component: {fileID: 1952378257}
   - component: {fileID: 1952378256}
   m_Layer: 0
-  m_Name: Text (1)
+  m_Name: MaxValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19401,7 +19412,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.78039217, g: 0.078431375, b: 0.078431375, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -19410,7 +19421,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: c541e7d1526b80243b1192452ea48f91, type: 3}
-    m_FontSize: 42
+    m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 4
@@ -21144,7 +21155,7 @@ GameObject:
   - component: {fileID: 2110263760}
   - component: {fileID: 2110263759}
   m_Layer: 0
-  m_Name: Text
+  m_Name: Value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21180,7 +21191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.78039217, g: 0.078431375, b: 0.078431375, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -21189,7 +21200,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: c541e7d1526b80243b1192452ea48f91, type: 3}
-    m_FontSize: 46
+    m_FontSize: 50
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 4
