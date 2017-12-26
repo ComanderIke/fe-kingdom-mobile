@@ -35,7 +35,7 @@ public class UIController : MonoBehaviour, Controller {
     [SerializeField]
     public AttackUIController attackUIController;
     [SerializeField]
-    GameObject reactUI;
+    public ReactUIController reactUIController;
     [SerializeField]
     GameObject attackPreview;
     [SerializeField]
@@ -67,20 +67,20 @@ public class UIController : MonoBehaviour, Controller {
     {
         attackUIController.Show(attacker,defender);
     }
+    public void ShowReactUI(LivingObject attacker, LivingObject defender)
+    {
+        reactUIController.Show(attacker, defender);
+    }
 
     public void HideFightUI()
     {
         attackUIController.Hide() ;
     }
 
-    public void ShowReactUI()
-    {
-        reactUI.SetActive(true);
-    }
 
     public void HideReactUI()
     {
-        reactUI.SetActive(false);
+        reactUIController.Hide();
     }
     public void ShowAttackPattern(LivingObject user, AttackPattern pattern )
     {

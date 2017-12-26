@@ -39,6 +39,7 @@ public class CameraMovement : MonoBehaviour {
     void Start () {
         mainScript = FindObjectOfType<MainScript>();
         EventContainer.attackUIVisible += SetLocked;
+        EventContainer.reactUIVisible += SetLocked;
     }
 	
 	void Update () {

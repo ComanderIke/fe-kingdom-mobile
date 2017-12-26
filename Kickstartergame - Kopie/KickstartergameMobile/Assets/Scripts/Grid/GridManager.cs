@@ -38,6 +38,11 @@ public class GridManager : MonoBehaviour {
         GetMovementLocations(x,y,movRange,0,playerId,locations);
         return locations;
     }
+    public Tile GetTileFromVector2(Vector2 pos)
+    {
+        return Tiles[(int)pos.x, (int)pos.y];
+    }
+
     private void GetMovementLocations(int x, int y, int range, int c, int playerId, List<Vector2>locations)
     {
         if (range < 0)

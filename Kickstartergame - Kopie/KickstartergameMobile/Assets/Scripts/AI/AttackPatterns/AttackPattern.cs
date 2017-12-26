@@ -14,11 +14,21 @@ namespace Assets.Scripts.AI.AttackPatterns
         Defensive,
         Passive
     }
+    public enum AttackTargetType
+    {
+        NoTarget,
+        SingleEnemy,
+        SingleAlly,
+        TwoEnemies,
+        MultipleEnemies,
+        MultipleAllies
+    }
     public abstract class AttackPattern : Command
     {
         public String Name { get; protected set; }
         public int Damage { get; protected set; }
         public int Hit { get; protected set; }
+        public AttackTargetType TargetType { get; protected set; }
         public int TargetCount { get; protected set; }
         public int MaxTargetCount { get; protected set; }
         public  AttackPatternType Type { get; protected set; }

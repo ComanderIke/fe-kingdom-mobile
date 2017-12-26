@@ -34,7 +34,10 @@ namespace Assets.Scripts.GameStates
             //CameraMovement.locked = true;
             attackerBonusDmg = 0;
             attackerHit = attacker.BattleStats.GetHitAgainstTarget(defender);
-            uiController.ShowFightUI(attacker, defender);
+            if(attacker.Player.IsHumanPlayer)
+                uiController.ShowFightUI(attacker, defender);
+            if(defender.Player.IsHumanPlayer)
+                uiController.ShowReactUI(attacker, defender);
             unitController.HideUnits();
             UIController.attacktButtonCLicked += DoAttack;
             EventContainer.attackerDmgChanged += AttackerDmgChanged;
@@ -56,6 +59,7 @@ namespace Assets.Scripts.GameStates
         {
             //CameraMovement.locked = false;
             uiController.HideFightUI();
+            uiController.HideReactUI();
             unitController.ShowUnits();
             if (!attacker.IsAlive())
             {
@@ -83,6 +87,7 @@ namespace Assets.Scripts.GameStates
 
         private void EndFight()
         {
+            Debug.Log("Fight Finished!");
             MainScript.GetInstance().SwitchState(new GameplayState());
             attacker.UnitTurnState.IsActive = false;
             EventContainer.commandFinished();

@@ -110,6 +110,7 @@ public class MouseManager : MonoBehaviour, EngineSystem {
         EventContainer.unitClicked += UnitClicked;
         EventContainer.enemyClicked += EnemyClicked;
         EventContainer.attackUIVisible += UIActive;
+        EventContainer.reactUIVisible += UIActive;
 
     }
 

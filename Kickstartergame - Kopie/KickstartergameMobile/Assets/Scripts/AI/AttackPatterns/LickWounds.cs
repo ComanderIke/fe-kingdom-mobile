@@ -25,6 +25,7 @@ namespace Assets.Scripts.AI.AttackPatterns
             Name = "LickWounds";
             Damage = 0;
             Hit = 100;
+            TargetType = AttackTargetType.NoTarget;
             Type = AttackPatternType.Defensive;
             this.unit = unit;
         }

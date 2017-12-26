@@ -23,17 +23,10 @@ namespace Assets.Scripts.Events
         public static Undo undo;
         #endregion
 
+        #region TurnManagement
         public delegate void EndTurn();
         public static EndTurn endTurn;
-
-        public delegate void DeselectActiveCharacter();
-        public static DeselectActiveCharacter deselectActiveCharacter;
-
-        public delegate void EnemyClicked(LivingObject unit);
-        public static EnemyClicked enemyClicked;
-
-        public delegate void UnitClickedConfirmed(LivingObject unit, bool confirm);
-        public static UnitClickedConfirmed unitClickedConfirmed;
+        #endregion
 
         #region AttackPatterns
         public delegate void ContinuePressed();
@@ -60,7 +53,10 @@ namespace Assets.Scripts.Events
         #region UI
         public delegate void AttackUIVisible( bool visible);
         public static AttackUIVisible attackUIVisible;
-        
+
+        public delegate void ReactUIVisible(bool visible);
+        public static ReactUIVisible reactUIVisible;
+
         #endregion
 
         #region Unit
@@ -82,7 +78,7 @@ namespace Assets.Scripts.Events
 
         #endregion
 
-        #region UnitMovement
+        #region UnitActions
         public delegate void UnitMoveToEnemy();
         public static UnitMoveToEnemy unitMoveToEnemy;
 
@@ -91,9 +87,19 @@ namespace Assets.Scripts.Events
 
         public delegate void StopMovingUnit();
         public static StopMovingUnit stopMovingUnit;
+
+        public delegate void DeselectActiveCharacter();
+        public static DeselectActiveCharacter deselectActiveCharacter;
+
         #endregion
 
         #region Clicks
+        public delegate void EnemyClicked(LivingObject unit);
+        public static EnemyClicked enemyClicked;
+
+        public delegate void UnitClickedConfirmed(LivingObject unit, bool confirm);
+        public static UnitClickedConfirmed unitClickedConfirmed;
+
         public delegate void ClickedOnGrid(int x, int y, Vector2 clickedPos);
         public static ClickedOnGrid clickedOnGrid;
 

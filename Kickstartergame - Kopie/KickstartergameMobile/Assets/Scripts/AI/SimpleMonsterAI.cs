@@ -14,6 +14,7 @@ public class SimpleMonsterAI : AIInterface {
     Dictionary<LivingObject, List<AttackPattern>> attackPatterns;
     List<Goal> CurrentGoals;
     AttackPattern currentPattern;
+    List<LivingObject> currentBestTargets;
 
     public SimpleMonsterAI(Player p):base (p){
         attackPatterns = new Dictionary<LivingObject, List<AttackPattern>>();
@@ -50,7 +51,7 @@ public class SimpleMonsterAI : AIInterface {
     void FinishedAction()
     {
         EventContainer.allCommandsFinished -= FinishedAction;
-        Debug.Log("Command Finished!");
+        Debug.Log("AICommands Finished!");
         doingAction = false;
     }
 
@@ -77,6 +78,7 @@ public class SimpleMonsterAI : AIInterface {
                 
                 attackPattern.Add(new Flee(unit));
                 attackPattern.Add(new LickWounds(unit));
+                attackPattern.Add(new JumpAttack(unit));
                 attackPatterns.Add(unit, attackPattern);
             }
         }
@@ -210,6 +212,7 @@ public class SimpleMonsterAI : AIInterface {
         List<Vector2> moveLocs = GetMoveLocations(unit);
         Vector2 startLoc = new Vector2(unit.GridPosition.x, unit.GridPosition.y);
         Vector2 currentBestMoveLocation = new Vector2();
+        currentBestTargets = new List<LivingObject>();
         Debug.Log("possible positions:");
         foreach (Vector2 loc in moveLocs)
         {
@@ -217,38 +220,36 @@ public class SimpleMonsterAI : AIInterface {
             // score this move location
             float locScore = ScoreLocationForCharacter(loc, unit);
             SetCharacterPosition(unit, loc);
-            if (locScore  > currentBestScore)
+           
+            if(currentPattern.TargetType == AttackTargetType.SingleEnemy)
             {
-                currentBestMoveLocation = loc;
-                currentBestScore = locScore;
-                
-            }
-            // get all possible actions at this location
+                List<LivingObject> targets = mainScript.gridManager.GridLogic.GetAttackTargets((LivingObject)unit);
 
-            //List<CharacterAction> acts = GetActionsForUnit(unit);
-            /*if (acts.Contains(CharacterAction.Attack))
-            {
-                List<AttackTarget> targets = mainScript.GetAttackTargets((Character)unit);
-                foreach (AttackTarget t in targets)
+                foreach (LivingObject t in targets)
                 {
-                    if (t.character != null)
+                    float attackscore = ScoreAttackForUnit(unit, loc, t);
+                    if ((locScore + attackscore) > currentBestScore)
                     {
-                        float attackscore = ScoreAttackForUnit((unit, loc, t.character);
-                        if ((locScore + attackscore) > currentBestScore)
-                        {
-                            currentBestMoveLocation = loc;
-                            currentBestScore = locScore + attackscore;
-                            currentBestCombatAction = new CombatAction(CharacterAction.Attack, t.character, new Vector2());
-                        }
+                        Debug.Log("Best Location: "+loc);
+                        currentBestMoveLocation = loc;
+                        currentBestScore = locScore + attackscore;
+                        
+                        currentBestTargets.Add(t);
                     }
                 }
+                
+                if(currentBestTargets.Count!=0)
+                    currentPattern.TargetPositions.Add(currentBestTargets[0].GridPosition.GetPos());
             }
-            if (acts.Contains(CharacterAction.Wait) && locScore > currentBestScore)
+            else
             {
-                currentBestMoveLocation = loc;
-                currentBestScore = locScore;
-                currentBestCombatAction = new CombatAction(CharacterAction.Wait, null, new Vector2());
-            }*/
+                if (locScore > currentBestScore)
+                {
+                    currentBestMoveLocation = loc;
+                    currentBestScore = locScore;
+
+                }
+            }
 
         }
         Debug.Log(currentBestMoveLocation);

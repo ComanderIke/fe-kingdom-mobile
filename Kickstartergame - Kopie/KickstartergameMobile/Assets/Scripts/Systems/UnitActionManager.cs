@@ -72,7 +72,8 @@ namespace Assets.Scripts.GameStates
                 Debug.Log(current);
                 if (currentActions.Count == 0)
                 {
-                    Debug.Log("All Commands Finished!");
+                    Debug.Log(current + " Last command!");
+                    EventContainer.commandFinished = null;
                     EventContainer.commandFinished += AllCommandFinished;
                 }
                 current.Execute();
@@ -82,6 +83,7 @@ namespace Assets.Scripts.GameStates
         }
         void AllCommandFinished()
         {
+            Debug.Log("All Commands Finished!");
             EventContainer.commandFinished -= AllCommandFinished;
             EventContainer.allCommandsFinished();
         } 
