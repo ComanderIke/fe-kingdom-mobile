@@ -30,7 +30,8 @@ public class UnitController :  MonoBehaviour, DragAble {
 	}
     void HPValueChanged()
     {
-        hpBar.SetHealth(Unit.Stats.HP, Unit.Stats.MaxHP);
+        if(hpBar!=null&&Unit!=null)
+            hpBar.SetHealth(Unit.Stats.HP, Unit.Stats.MaxHP);
     }
 
     #region Renderer

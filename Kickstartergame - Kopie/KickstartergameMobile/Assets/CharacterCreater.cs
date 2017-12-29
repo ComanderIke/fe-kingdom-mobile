@@ -38,6 +38,10 @@ public class CharacterCreater : MonoBehaviour
     {
 
     }
+    public void HairStyleClicked(int colorIndex)
+    {
+
+    }
     public void SkinToneChanged(int colorIndex)
     {
 
@@ -102,5 +106,14 @@ public class CharacterCreater : MonoBehaviour
         Debug.Log(newChar);
         Debug.Log(newChar.Name);
         SceneManager.LoadScene("Level2");
+    }
+    public void MainMenuClicked()
+    {
+        StartCoroutine(DelayMenu(1.0f));
+    }
+    IEnumerator DelayMenu(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene("MainMenu");
     }
 }

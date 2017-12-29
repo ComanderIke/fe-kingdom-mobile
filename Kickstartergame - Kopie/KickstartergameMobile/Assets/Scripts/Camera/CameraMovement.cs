@@ -45,10 +45,12 @@ public class CameraMovement : MonoBehaviour {
 	void Update () {
         if (locked)
 			return;
-        
+
         #region DragCamera
+        
         if (Input.GetMouseButtonDown(0))
         {
+            Debug.Log("WTF");
             RaycastHit hit = new RaycastHit();
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Physics.Raycast(ray, out hit, Mathf.Infinity);

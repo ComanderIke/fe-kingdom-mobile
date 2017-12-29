@@ -74,6 +74,7 @@ namespace Assets.Scripts.GameStates
                 {
                     Debug.Log(current + " Last command!");
                     EventContainer.commandFinished = null;
+                    EventContainer.commandFinished += ExecuteActions;
                     EventContainer.commandFinished += AllCommandFinished;
                 }
                 current.Execute();

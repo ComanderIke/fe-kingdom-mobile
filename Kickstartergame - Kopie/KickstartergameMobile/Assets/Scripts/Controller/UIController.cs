@@ -27,6 +27,8 @@ public class UIController : MonoBehaviour, Controller {
     [SerializeField]
     Text atkLeft;
     [SerializeField]
+    Text weaponAtk;
+    [SerializeField]
     Text spdLeft;
     [SerializeField]
     Text defLeft;
@@ -97,6 +99,8 @@ public class UIController : MonoBehaviour, Controller {
         spdLeft.text = "" + c.Stats.Speed;
         accLeft.text = "" + c.Stats.Accuracy;
         defLeft.text = "" + c.Stats.Defense;
+        weaponAtk.text = "";
+        
         faceSpriteLeft.sprite = c.Sprite;
         Debug.Log(c.Sprite);
         foreach (Image i in inventorySprites)
@@ -106,6 +110,7 @@ public class UIController : MonoBehaviour, Controller {
         if (c.GetType() == typeof(Human))
         {
             Human character = (Human)c;
+            weaponAtk.text = "+" + character.EquipedWeapon.Dmg;
             for (int i = 0; i < character.Inventory.items.Count; i++)
             {
                 inventorySprites[i].sprite = character.Inventory.items[i].Sprite;

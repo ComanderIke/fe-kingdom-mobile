@@ -15,12 +15,20 @@ namespace Assets.Scripts.Characters
         {
             Sprite = sprite;
             Type = type;
-            if(type==MonsterType.Mammoth)
+            List<int> attackRanges = new List<int>();
+            attackRanges.Add(1);
+            if (type == MonsterType.Mammoth)
+            {
                 GridPosition = new BigTilePosition(this);
+                Stats = new Stats(50, 5, 15, 5, 8, 5, 5, 4, attackRanges);
+            }
             else
             {
+                Stats = new Stats(20, 5, 9, 5, 3, 6, 3, 4, attackRanges);
                 GridPosition = new GridPosition(this);
             }
+            
+            
         }
     }
 }

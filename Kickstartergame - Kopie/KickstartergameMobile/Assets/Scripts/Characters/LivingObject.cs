@@ -44,7 +44,7 @@ namespace Assets.Scripts.Characters
             List<int> attackRanges = new List<int>();
             AIGoals = new List<Goal>();
             attackRanges.Add(1);
-            Stats = new Stats(15, 5, 5, 5, 5, 5, 5,3,attackRanges);
+            Stats = new Stats(15, 5, 10, 5, 2, 5, 2,3,attackRanges);
             
         }
 

@@ -19,6 +19,7 @@ namespace Assets.Scripts.GameStates
         private UnitsController unitController;
         private int attackerBonusDmg;
         private int attackerHit;
+        private bool counter;
 
         public FightState(LivingObject attacker, LivingObject defender)
         {
@@ -32,6 +33,7 @@ namespace Assets.Scripts.GameStates
         public override void enter()
         {
             //CameraMovement.locked = true;
+            counter = false;
             attackerBonusDmg = 0;
             attackerHit = attacker.BattleStats.GetHitAgainstTarget(defender);
             if(attacker.Player.IsHumanPlayer)
@@ -42,6 +44,26 @@ namespace Assets.Scripts.GameStates
             UIController.attacktButtonCLicked += DoAttack;
             EventContainer.attackerDmgChanged += AttackerDmgChanged;
             EventContainer.attackerHitChanged += AttackerHitChanged;
+            EventContainer.counterClicked = CounterClicked;
+            EventContainer.dodgeClicked = DodgeClicked;
+            EventContainer.guardClicked = GuardClicked;
+        }
+        int counterBonusAttack = 0;
+        int counterBonusHit = 0;
+        void CounterClicked(int attack, int hit)
+        {
+            counterBonusAttack = attack;
+            counterBonusHit = hit * 10;
+            counter = true;
+        }
+        void DodgeClicked(int dodge)
+        {
+            attackerHit -= 20 + dodge * 10;
+        }
+        void GuardClicked(int guard)
+        {
+            attackerHit += 20;
+            attackerBonusDmg -= 2 + guard * 1;
         }
         void AttackerDmgChanged(int bonusDamage)
         {
@@ -73,47 +95,75 @@ namespace Assets.Scripts.GameStates
             UIController.attacktButtonCLicked -= DoAttack;
         }
 
-        private bool DoesAttackHit(LivingObject attacker, LivingObject defender)
+        private bool DoesAttackHit(LivingObject attacker, LivingObject defender, bool counter)
         {
+            if (!counter)
+                Debug.Log("Hitchance: " + attackerHit);
+            else
+                Debug.Log("Hitchance: " +(attacker.BattleStats.GetHitAgainstTarget(defender) + counterBonusHit));
+           
             int rng = UnityEngine.Random.Range(1, 101);
-           return rng <= attackerHit;
+            if (!counter)
+                return rng <= attackerHit;
+            else
+                return rng <= (attacker.BattleStats.GetHitAgainstTarget(defender) + counterBonusHit);
         }
-
         private void DoAttack()
         {
             MainScript.GetInstance().StartCoroutine(Attack());
-            MainScript.GetInstance().StartCoroutine(End());
+            
         }
 
         private void EndFight()
         {
             Debug.Log("Fight Finished!");
             MainScript.GetInstance().SwitchState(new GameplayState());
-            attacker.UnitTurnState.IsActive = false;
+            attacker.UnitTurnState.UnitTurnFinished();
             EventContainer.commandFinished();
         }
 
         IEnumerator Attack()
         {
             yield return new WaitForSeconds(ATTACK_DELAY);
-            if (DoesAttackHit(attacker, defender))
+            SingleAttack(attacker, defender, false);
+            
+            if (counter)
             {
-                Debug.Log("ATTACK " + defender.Name);
-                Debug.Log(attacker.Name+" "+attacker.BattleStats.GetDamageAgainstTarget(defender));
-                Debug.Log(attackerBonusDmg);
-                defender.InflictDamage(attacker.BattleStats.GetDamage() + attackerBonusDmg, attacker);
+                yield return new WaitForSeconds(3.0f);
+                SingleAttack(defender, attacker, true);
+            }
+            yield return new WaitForSeconds(3.5f);
+            EndFight();
+        }
+        private void SingleAttack(LivingObject attacker, LivingObject defender, bool counter)
+        {
+            if (DoesAttackHit(attacker, defender, counter))
+            {
+                if (attacker.Player.IsHumanPlayer&&!counter)
+                    uiController.attackUIController.ShowDamageText(defender.InflictDamage(attacker.BattleStats.GetDamage() + attackerBonusDmg, attacker));
+                if (defender.Player.IsHumanPlayer || counter)
+                {
+                    if (!counter)
+                        uiController.reactUIController.ShowDamageText(defender.InflictDamage(attacker.BattleStats.GetDamage() + attackerBonusDmg, attacker));
+                    else
+                        uiController.reactUIController.ShowCounterDamageText(defender.InflictDamage(attacker.BattleStats.GetDamage() + counterBonusAttack, attacker));
+                }
+                    
             }
             else
             {
-                uiController.attackUIController.ShowMissText();
+                if (attacker.Player.IsHumanPlayer && !counter)
+                    uiController.attackUIController.ShowMissText();
+                if (defender.Player.IsHumanPlayer || counter)
+                {
+                    if(!counter)
+                        uiController.reactUIController.ShowMissText();
+                    else
+                        uiController.reactUIController.ShowCounterMissText();
+                }
             }
         }
 
-        IEnumerator End()
-        {
-            yield return new WaitForSeconds(FIGHT_TIME);
-            EndFight();
-        }
        
     }
 }

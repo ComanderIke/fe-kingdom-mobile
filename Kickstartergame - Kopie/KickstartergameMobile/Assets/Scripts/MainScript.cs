@@ -136,16 +136,17 @@ public class MainScript : MonoBehaviour {
         }
         else
         {
-            LivingObject filler = null;
-            LivingObject filler2 = null;
-            LivingObject filler3 = null;
-            LivingObject filler4 = null;
+            Human filler = null;
+            Human filler2 = null;
+            Human filler3 = null;
+            Human filler4 = null;
             
             filler = new Human("Leila", ss.swordActiveSprite);
             filler2 = new Human("Flora", ss.axeActiveSprite);
             filler3 = new Human("Eldric", ss.archerActiveSprite);
             filler4 = new Human("Hector", ss.lancerActiveSprite);
-
+            filler.Inventory.AddItem(GameObject.FindObjectOfType<WeaponScript>().woodenSword);
+            filler.Inventory.UseItem(filler.Inventory.items[0]);
 
             p.AddUnit(filler);
             cc.PlaceCharacter(0, filler, startPositions[0].GetXOnGrid(), startPositions[0].GetYOnGrid());

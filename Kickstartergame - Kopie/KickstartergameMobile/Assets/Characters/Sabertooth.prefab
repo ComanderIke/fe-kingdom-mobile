@@ -121,6 +121,7 @@ GameObject:
   - component: {fileID: 224875954442043054}
   - component: {fileID: 222683603709442536}
   - component: {fileID: 114724235181113538}
+  - component: {fileID: 114893840942053720}
   m_Layer: 0
   m_Name: HPBarBackGround
   m_TagString: Untagged
@@ -223,7 +224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.25882354, g: 0.25882354, b: 0.25882354, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -271,6 +272,20 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
   m_ChildControlHeight: 1
+--- !u!114 &114893840942053720
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1996400413891094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 0.01, y: -0.01}
+  m_UseGraphicAlpha: 1
 --- !u!114 &114960604582756694
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -434,7 +449,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0.98, y: 0.05}
+  m_SizeDelta: {x: 1, y: 0.05}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224199658166467882
 RectTransform:
@@ -491,5 +506,5 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -0.411}
-  m_SizeDelta: {x: 1, y: 0.065}
+  m_SizeDelta: {x: 1, y: 0.05}
   m_Pivot: {x: 0.5, y: 0.5}

@@ -59,7 +59,9 @@ namespace Assets.Scripts.GameStates
             GridManager gridScript = mainScript.gridManager;
             gridScript.HideMovement();
             gridScript.ShowMovement(c);
+
             gridScript.ShowAttack(c, new List<int>(c.Stats.AttackRanges));
+            mainScript.GetController<UIController>().ShowTopUI(c);
             gridScript.GridLogic.ResetActiveFields();
             if (SelectedCharacter != null)
             {

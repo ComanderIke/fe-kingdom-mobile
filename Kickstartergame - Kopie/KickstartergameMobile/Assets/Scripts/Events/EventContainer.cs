@@ -57,14 +57,20 @@ namespace Assets.Scripts.Events
         public delegate void ReactUIVisible(bool visible);
         public static ReactUIVisible reactUIVisible;
 
+        public delegate void DodgeClicked(int dodge);
+        public static DodgeClicked dodgeClicked;
+
+        public delegate void GuardClicked(int guard);
+        public static GuardClicked guardClicked;
+
+        public delegate void CounterClicked(int counterAttack, int counterHit);
+        public static CounterClicked counterClicked;
+
         #endregion
 
         #region Unit
         public delegate void HPValueChanged();
         public static HPValueChanged hpValueChanged;
-
-        public delegate void UnitActiveChanged(LivingObject unit, bool active);
-        public static UnitActiveChanged unitActiveChanged;
 
         public delegate void UnitWaiting(LivingObject unit, bool waiting);
         public static UnitWaiting unitWaiting;

@@ -257,6 +257,7 @@ public class SimpleMonsterAI : AIInterface {
         SubmitMove(unit, currentBestMoveLocation);
         unit.UnitTurnState.IsWaiting = true;
         EventContainer.allCommandsFinished += SwitchToAIState;
+        Debug.Log(currentPattern);
         mainScript.GetSystem<UnitActionManager>().AddCommand(currentPattern);
         //will also execute all previous commands like Movement
         mainScript.GetSystem<UnitActionManager>().ExecuteActions();

@@ -8,6 +8,9 @@ using UnityEngine.UI;
 
 public class ReactUIController : MonoBehaviour {
     const float HP_BAR_OFFSET_DELAY = 0.005f;
+    const float MISS_TEXT_FADE_IN_SPEED = 0.12f;
+    const float MISS_TEXT_FADE_OUT_SPEED = 0.02f;
+    const float MISS_TEXT_VISIBLE_DURATION = 1.5f;
     [Header("Input Fields")]
     [SerializeField]
     private Image attackerImage;
@@ -27,6 +30,8 @@ public class ReactUIController : MonoBehaviour {
     private Text attackerBonusHit;
     [SerializeField]
     private Image attackerHPBar;
+    [SerializeField]
+    private Image attackerLosingHPBar;
     [SerializeField]
     private Image defenderHPBar;
     [SerializeField]
@@ -65,7 +70,14 @@ public class ReactUIController : MonoBehaviour {
     private Text guardValueText;
     [SerializeField]
     private Text guardMaxValueText;
-    
+    [SerializeField]
+    private Text missedText;
+    [SerializeField]
+    private Text damageText;
+    [SerializeField]
+    private Text counterMissedText;
+    [SerializeField]
+    private Text counterDamageText;
     [SerializeField]
     private Slider counterAttackSlider;
     [SerializeField]
@@ -87,8 +99,10 @@ public class ReactUIController : MonoBehaviour {
     private float currentAllyHPValue;
     private float currentEnemyHPValue;
     private float delayedAllyHPValue;
+    private float delayedEnemyHPValue;
     private float allyFillAmount = 1;
     private float allyLoseFillAmount = 1;
+    private float enemyLoseFillAmount = 1;
     private float enemyFillAmount = 1;
     private float bonusDmg = 0;
     private float bonusHit = 0;
@@ -104,9 +118,11 @@ public class ReactUIController : MonoBehaviour {
         allyFillAmount = Mathf.Lerp(allyFillAmount, currentAllyHPValue, Time.deltaTime * healthSpeed);
         enemyFillAmount = Mathf.Lerp(enemyFillAmount, currentEnemyHPValue, Time.deltaTime * healthSpeed);
         allyLoseFillAmount = Mathf.Lerp(allyLoseFillAmount, delayedAllyHPValue, Time.deltaTime * healthLoseSpeed);
+        enemyLoseFillAmount = Mathf.Lerp(enemyLoseFillAmount, delayedEnemyHPValue, Time.deltaTime * healthLoseSpeed);
         attackerHPBar.fillAmount = allyFillAmount;
         defenderHPBar.fillAmount = enemyFillAmount;
         defenderLosingHPBar.fillAmount = allyLoseFillAmount;
+        attackerLosingHPBar.fillAmount = enemyLoseFillAmount;
     }
     private void OnEnable()
     {
@@ -259,7 +275,8 @@ public class ReactUIController : MonoBehaviour {
         currentAllyHPValue = MathUtility.MapValues(attacker.Stats.HP, 0f, attacker.Stats.MaxHP, 0f, 1f);
         currentEnemyHPValue = MathUtility.MapValues(defender.Stats.HP, 0f, defender.Stats.MaxHP, 0f, 1f);
 
-        StartCoroutine(DelayedHP());
+        StartCoroutine(DelayedAllyHP());
+        StartCoroutine(DelayedEnemyHP());
     }
 
     public void Hide()
@@ -269,18 +286,36 @@ public class ReactUIController : MonoBehaviour {
 
     public void DodgeConfirmed()
     {
-
+        EventContainer.dodgeClicked(currentDodgeValue);
         UIController.attacktButtonCLicked();
     }
     public void GuardConfirmed()
     {
-
+        EventContainer.guardClicked(currentGuardValue);
         UIController.attacktButtonCLicked();
     }
     public void CounterConfirmed()
     {
-
+        EventContainer.counterClicked(currentCounterAttackValue,currentCounterHitValue);
         UIController.attacktButtonCLicked();
+    }
+    public void ShowCounterMissText()
+    {
+        StartCoroutine(TextAnimation(counterMissedText));
+    }
+    public void ShowCounterDamageText(int damage)
+    {
+        counterDamageText.text = "-" + damage;
+        StartCoroutine(TextAnimation(counterDamageText));
+    }
+    public void ShowMissText()
+    {
+        StartCoroutine(TextAnimation(missedText));
+    }
+    public void ShowDamageText(int damage)
+    {
+        damageText.text = "-" + damage;
+        StartCoroutine(TextAnimation(damageText));
     }
     public void DodgeClicked()
     {
@@ -309,14 +344,48 @@ public class ReactUIController : MonoBehaviour {
         defender.Stats.SP = StartSP;
         OnCounterSliderValueChanged();
     }
+    
     #region COROUTINES
-    IEnumerator DelayedHP()
+    IEnumerator DelayedAllyHP()
     {
         while (Mathf.Abs(enemyFillAmount - currentEnemyHPValue) >= HP_BAR_OFFSET_DELAY)
         {
             yield return null;
         }
         delayedAllyHPValue = MathUtility.MapValues(defender.Stats.HP, 0f, defender.Stats.MaxHP, 0f, 1f);
+    }
+    IEnumerator DelayedEnemyHP()
+    {
+        while (Mathf.Abs(allyFillAmount - currentAllyHPValue) >= HP_BAR_OFFSET_DELAY)
+        {
+            yield return null;
+        }
+        delayedEnemyHPValue = MathUtility.MapValues(attacker.Stats.HP, 0f, attacker.Stats.MaxHP, 0f, 1f);
+    }
+    IEnumerator TextAnimation(Text text)
+    {
+        float alpha = 0;
+        text.gameObject.SetActive(true);
+        text.color = new Color(text.color.r, text.color.g, text.color.b, alpha);
+        while (alpha < 1)
+        {
+            text.color = new Color(text.color.r, text.color.g, text.color.b, alpha);
+            alpha += MISS_TEXT_FADE_IN_SPEED;
+            yield return new WaitForSeconds(0.01f);
+        }
+        alpha = 1;
+        text.color = new Color(text.color.r, text.color.g, text.color.b, alpha);
+        yield return new WaitForSeconds(MISS_TEXT_VISIBLE_DURATION);
+        while (alpha > 0)
+        {
+            missedText.color = new Color(text.color.r, text.color.g, text.color.b, alpha);
+            alpha -= MISS_TEXT_FADE_OUT_SPEED;
+            yield return new WaitForSeconds(0.01f);
+        }
+        alpha = 0;
+        text.color = new Color(text.color.r, text.color.g, text.color.b, alpha);
+        text.gameObject.SetActive(false);
+
     }
     #endregion
 }

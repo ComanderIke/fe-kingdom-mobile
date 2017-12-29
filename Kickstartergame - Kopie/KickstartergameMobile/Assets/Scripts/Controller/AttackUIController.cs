@@ -37,6 +37,8 @@ public class AttackUIController : MonoBehaviour {
     [SerializeField]
     private Text missedText;
     [SerializeField]
+    private Text damageText;
+    [SerializeField]
     private Image attackerHPBar;
     [SerializeField]
     private Image defenderHPBar;
@@ -46,6 +48,8 @@ public class AttackUIController : MonoBehaviour {
     private Slider hitSlider;
     [SerializeField]
     private Slider attackSlider;
+    [SerializeField]
+    private GameObject attackTutorial;
     [Header("Configuration")]
     [SerializeField]
     private float healthSpeed;
@@ -70,6 +74,7 @@ public class AttackUIController : MonoBehaviour {
     void OnEnable()
     {
         OnSliderValueChanged();
+        attackTutorial.SetActive(true);
         HPValueChanged();
         EventContainer.hpValueChanged += HPValueChanged;
         EventContainer.attackUIVisible(true);
@@ -109,7 +114,12 @@ public class AttackUIController : MonoBehaviour {
 
     public void ShowMissText()
     {
-        StartCoroutine(MissTextAnimation());
+        StartCoroutine(TextAnimation(missedText));
+    }
+    public void ShowDamageText(int damage)
+    {
+        damageText.text = "-" + damage;
+        StartCoroutine(TextAnimation(damageText));
     }
 
     void UpdateHit()
@@ -145,6 +155,7 @@ public class AttackUIController : MonoBehaviour {
             attacker.Stats.SP = attacker.Stats.SP - ((int)attackSlider.value - currentAtkSliderValue);
             currentAtkSliderValue = (int)attackSlider.value;
         }
+        attackTutorial.SetActive(false);
         attackSlider.maxValue = (int)Mathf.Clamp(attackSlider.value + attacker.Stats.SP, 0, 3);
         hitSlider.maxValue = (int)Mathf.Clamp(hitSlider.value + attacker.Stats.SP, 0, 3);
         UpdateHit();
@@ -171,29 +182,29 @@ public class AttackUIController : MonoBehaviour {
         delayedEnemyHPValue = MathUtility.MapValues(defender.Stats.HP, 0f, defender.Stats.MaxHP, 0f, 1f);
     }
 
-    IEnumerator MissTextAnimation()
+    IEnumerator TextAnimation(Text text)
     {
         float alpha = 0;
-        missedText.gameObject.SetActive(true);
-        missedText.color = new Color(missedText.color.r, missedText.color.g, missedText.color.b, alpha);
+        text.gameObject.SetActive(true);
+        text.color = new Color(text.color.r, text.color.g, text.color.b, alpha);
         while (alpha < 1)
         {
-            missedText.color = new Color(missedText.color.r, missedText.color.g, missedText.color.b, alpha);
+            text.color = new Color(text.color.r, text.color.g, text.color.b, alpha);
             alpha += MISS_TEXT_FADE_IN_SPEED;
             yield return new WaitForSeconds(0.01f);
         }
         alpha = 1;
-        missedText.color = new Color(missedText.color.r, missedText.color.g, missedText.color.b, alpha);
+        text.color = new Color(text.color.r, text.color.g, text.color.b, alpha);
         yield return new WaitForSeconds(MISS_TEXT_VISIBLE_DURATION);
         while (alpha > 0)
         {
-            missedText.color = new Color(missedText.color.r, missedText.color.g, missedText.color.b, alpha);
+            text.color = new Color(text.color.r, text.color.g, text.color.b, alpha);
             alpha -= MISS_TEXT_FADE_OUT_SPEED;
             yield return new WaitForSeconds(0.01f);
         }
         alpha = 0;
-        missedText.color = new Color(missedText.color.r, missedText.color.g, missedText.color.b, alpha);
-        missedText.gameObject.SetActive(false);
+        text.color = new Color(text.color.r, text.color.g, text.color.b, alpha);
+        text.gameObject.SetActive(false);
 
     }
     #endregion

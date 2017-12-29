@@ -33,7 +33,18 @@ namespace Assets.Scripts.Players
                 Units.Remove(unit);
             }
         }
-
+        public bool IsAlive()
+        {
+            bool isAlive = false;
+            foreach(LivingObject unit in Units)
+            {
+                if (unit.IsAlive())
+                {
+                    isAlive = true;
+                }
+            }
+            return isAlive;
+        }
         public void AddUnit(LivingObject c)
         {
             if(Units==null)

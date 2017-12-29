@@ -22,8 +22,6 @@ namespace Assets.Scripts.Characters
             set
             {
                 isActive = value;
-                if(EventContainer.unitActiveChanged !=null)
-                    EventContainer.unitActiveChanged(unit, isActive);
             }
         }
         public bool IsWaiting
@@ -66,7 +64,13 @@ namespace Assets.Scripts.Characters
             IsActive = false;
             MainScript.GetInstance().GetSystem<UnitSelectionManager>().DeselectActiveCharacter();
         }
-
+        public void UnitTurnFinished()
+        {
+            IsActive = false;
+            HasMoved = true;
+            HasAttacked = true;
+            IsWaiting = true;
+        }
         public bool IsDragable()
         {
             return !IsWaiting && unit.IsAlive() && unit.Player.ID == MainScript.GetInstance().GetSystem<TurnManager>().ActivePlayerNumber;
