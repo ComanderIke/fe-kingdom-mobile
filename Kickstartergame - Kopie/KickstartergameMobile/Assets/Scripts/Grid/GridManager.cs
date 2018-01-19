@@ -27,7 +27,7 @@ public class GridManager : MonoBehaviour {
     void Start() {
         Tiles = new Tile[grid.width, grid.height];
         GridBuilder = new GridBuilder(this);
-         GridRenderer = new GridRenderer(this);
+        GridRenderer = new GridRenderer(this);
         GridLogic = new GridLogic(this);
         PathFindingManager = new AStar(this,grid.width, grid.height);
     }
@@ -126,6 +126,7 @@ public class GridManager : MonoBehaviour {
    
     public void HideMovement()
     {
+        Debug.Log(gameObject.name);
         for (int i = 0; i < grid.width; i++)
         {
             for (int j = 0; j < grid.height; j++)

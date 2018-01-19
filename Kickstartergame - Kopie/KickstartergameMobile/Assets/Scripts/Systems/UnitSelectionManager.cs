@@ -18,6 +18,7 @@ namespace Assets.Scripts.GameStates
         public UnitSelectionManager()
         {
             mainScript = MainScript.GetInstance();
+            Debug.Log("Init UnitSelectionManager!"+mainScript.name);
             EventContainer.unitClickedConfirmed += UnitClicked;
             EventContainer.endDragOverNothing += DeselectActiveCharacter;
         }
@@ -57,6 +58,8 @@ namespace Assets.Scripts.GameStates
         {
             Debug.Log("enemy selected " + c.Name);
             GridManager gridScript = mainScript.gridManager;
+            Debug.Log(mainScript.name);
+            Debug.Log(gridScript.name);
             gridScript.HideMovement();
             gridScript.ShowMovement(c);
 

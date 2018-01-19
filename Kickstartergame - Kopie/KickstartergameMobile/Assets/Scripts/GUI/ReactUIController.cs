@@ -287,17 +287,17 @@ public class ReactUIController : MonoBehaviour {
     public void DodgeConfirmed()
     {
         EventContainer.dodgeClicked(currentDodgeValue);
-        UIController.attacktButtonCLicked();
+        EventContainer.attacktButtonCLicked();
     }
     public void GuardConfirmed()
     {
         EventContainer.guardClicked(currentGuardValue);
-        UIController.attacktButtonCLicked();
+        EventContainer.attacktButtonCLicked();
     }
     public void CounterConfirmed()
     {
         EventContainer.counterClicked(currentCounterAttackValue,currentCounterHitValue);
-        UIController.attacktButtonCLicked();
+        EventContainer.attacktButtonCLicked();
     }
     public void ShowCounterMissText()
     {

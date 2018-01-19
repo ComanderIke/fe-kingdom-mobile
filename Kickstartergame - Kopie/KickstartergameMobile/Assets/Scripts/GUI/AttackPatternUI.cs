@@ -28,8 +28,9 @@ public class AttackPatternUI : MonoBehaviour {
     }
     public void Show(string userText, string NameText)
     {
-        this.User.text = userText+ " uses";
-        this.Name.text = NameText+"!";
+        gameObject.SetActive(true);
+        User.text = userText+ " uses";
+        Name.text = NameText+"!";
     }
     IEnumerator FadeOut()
     {

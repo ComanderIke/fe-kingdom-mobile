@@ -10,6 +10,7 @@ namespace Assets.Scripts.GameStates
     public class GameplayState : GameState
     {
         MainScript mainScript;
+        bool active;
 
         public GameplayState()
         {
@@ -18,17 +19,21 @@ namespace Assets.Scripts.GameStates
 
         public override void enter()
         {
-            
+            CameraMovement.locked = false;
+            mainScript.GetSystem<MouseManager>().active = true;
+            active = true;
         }
 
         public override void update()
         {
-            CheckGameOver();
+            if(active)
+                CheckGameOver();
         }
 
         public override void exit()
         {
-
+            CameraMovement.locked = true;
+            mainScript.GetSystem<MouseManager>().active = false;
         }
 
         public void CheckGameOver()
@@ -37,20 +42,21 @@ namespace Assets.Scripts.GameStates
             {
                 if (p.IsHumanPlayer && !p.IsAlive())
                 {
-                    mainScript.StartCoroutine(DelayLoadScene(2.0f));
+                    mainScript.GetController<UIController>().ShowGameOver();
+                    mainScript.GetSystem<MouseManager>().active = false;
+                    CameraMovement.locked = true;
+                    active = false;
                     return;
                 }
                 else if(!p.IsHumanPlayer && !p.IsAlive())
                 {
-                    mainScript.StartCoroutine(DelayLoadScene(2.0f));
+                    mainScript.GetController<UIController>().ShowWinScreen();
+                    mainScript.GetSystem<MouseManager>().active = false;
+                    CameraMovement.locked = true;
+                    active = false;
                     return;
                 }
             }
-        }
-        IEnumerator DelayLoadScene(float delay)
-        {
-            yield return new WaitForSeconds(delay);
-            SceneManager.LoadSceneAsync("MainMenu");
         }
 
         

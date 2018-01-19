@@ -21,11 +21,13 @@ namespace Assets.Scripts.Grid
         public GridBuilder(GridManager gridManager)
         {
             GridManager = gridManager;
+            Debug.Log("CREATE GRID! " + gridManager.grid.width+" x "+gridManager.grid.height);
             for (int i = 0; i < gridManager.grid.width; i++)
             {
                 for (int j = 0; j < gridManager.grid.height; j++)
                 {
                     gridManager.Tiles[i, j] = new Tile(i, j, CreateChild(i, j));
+                    
                 }
             }
             UpdateCells();

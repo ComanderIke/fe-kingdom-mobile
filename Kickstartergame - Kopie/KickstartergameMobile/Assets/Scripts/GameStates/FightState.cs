@@ -5,6 +5,7 @@ using UnityEngine;
 using Assets.Scripts.Battle;
 using Assets.Scripts.Characters;
 using Assets.Scripts.Events;
+using Assets.Scripts.AI.AttackReactions;
 
 namespace Assets.Scripts.GameStates
 {
@@ -34,6 +35,7 @@ namespace Assets.Scripts.GameStates
         {
             //CameraMovement.locked = true;
             counter = false;
+            react = false;
             attackerBonusDmg = 0;
             attackerHit = attacker.BattleStats.GetHitAgainstTarget(defender);
             if(attacker.Player.IsHumanPlayer)
@@ -41,7 +43,7 @@ namespace Assets.Scripts.GameStates
             if(defender.Player.IsHumanPlayer)
                 uiController.ShowReactUI(attacker, defender);
             unitController.HideUnits();
-            UIController.attacktButtonCLicked += DoAttack;
+            EventContainer.attacktButtonCLicked += DoAttack;
             EventContainer.attackerDmgChanged += AttackerDmgChanged;
             EventContainer.attackerHitChanged += AttackerHitChanged;
             EventContainer.counterClicked = CounterClicked;
@@ -91,8 +93,8 @@ namespace Assets.Scripts.GameStates
             {
                 defender.Die();
             }
-            UIController.attacktButtonCLicked -= EndFight;
-            UIController.attacktButtonCLicked -= DoAttack;
+            EventContainer.attacktButtonCLicked -= EndFight;
+            EventContainer.attacktButtonCLicked -= DoAttack;
         }
 
         private bool DoesAttackHit(LivingObject attacker, LivingObject defender, bool counter)
@@ -113,34 +115,60 @@ namespace Assets.Scripts.GameStates
             MainScript.GetInstance().StartCoroutine(Attack());
             
         }
-
-        private void EndFight()
+        IEnumerator End()
         {
+            yield return new WaitForSeconds(3.5f);
             Debug.Log("Fight Finished!");
+            EventContainer.commandFinished -= EndFight;
+            EventContainer.continuePressed = null;
             MainScript.GetInstance().SwitchState(new GameplayState());
             attacker.UnitTurnState.UnitTurnFinished();
             EventContainer.commandFinished();
         }
-
+        private void EndFight()
+        {
+            MainScript.GetInstance().StartCoroutine(End());
+        }
+        void ExecuteReaction()
+        {
+            EventContainer.continuePressed -= ExecuteReaction;
+            reaction.Execute();
+        }
+        AttackReaction reaction;
         IEnumerator Attack()
         {
             yield return new WaitForSeconds(ATTACK_DELAY);
             SingleAttack(attacker, defender, false);
-            
+            if (react&& defender is Monster){
+                Debug.Log("Start Reaction!");
+                yield return new WaitForSeconds(3.0f);
+                Monster m = (Monster)defender;
+                reaction = m.GetRandomAttackReaction();
+                reaction.TargetPositions.Add(attacker.GridPosition.GetPos());
+                uiController.attackUIController.ShowAttackReaction(defender.Name, reaction.Name);
+                EventContainer.reactionFinished += EndFight;
+                EventContainer.continuePressed += ExecuteReaction;
+               
+                yield break;
+            }
             if (counter)
             {
                 yield return new WaitForSeconds(3.0f);
                 SingleAttack(defender, attacker, true);
             }
-            yield return new WaitForSeconds(3.5f);
+            
             EndFight();
         }
+        bool react = false;
         private void SingleAttack(LivingObject attacker, LivingObject defender, bool counter)
         {
             if (DoesAttackHit(attacker, defender, counter))
             {
-                if (attacker.Player.IsHumanPlayer&&!counter)
+                if (attacker.Player.IsHumanPlayer && !counter)
+                {
+                    react = true;
                     uiController.attackUIController.ShowDamageText(defender.InflictDamage(attacker.BattleStats.GetDamage() + attackerBonusDmg, attacker));
+                }
                 if (defender.Player.IsHumanPlayer || counter)
                 {
                     if (!counter)

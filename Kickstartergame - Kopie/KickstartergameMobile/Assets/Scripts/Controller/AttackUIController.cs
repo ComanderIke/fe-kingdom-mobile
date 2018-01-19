@@ -15,6 +15,8 @@ public class AttackUIController : MonoBehaviour {
 
     [Header("Input Fields")]
     [SerializeField]
+    AttackPatternUI attackReactionUI;
+    [SerializeField]
     Image attackerSprite;
     [SerializeField]
     Image defenderSprite;
@@ -41,6 +43,8 @@ public class AttackUIController : MonoBehaviour {
     [SerializeField]
     private Image attackerHPBar;
     [SerializeField]
+    private Image attackerLosingHPBar;
+    [SerializeField]
     private Image defenderHPBar;
     [SerializeField]
     private Image defenderLosingHPBar;
@@ -50,6 +54,12 @@ public class AttackUIController : MonoBehaviour {
     private Slider attackSlider;
     [SerializeField]
     private GameObject attackTutorial;
+    [SerializeField]
+    private Text counterMissedText;
+    [SerializeField]
+    private Text counterDamageText;
+    [SerializeField]
+    private Button attackButton;
     [Header("Configuration")]
     [SerializeField]
     private float healthSpeed;
@@ -58,9 +68,11 @@ public class AttackUIController : MonoBehaviour {
 
     private float currentAllyHPValue;
     private float currentEnemyHPValue;
+    private float delayedAllyHPValue = 1;
     private float delayedEnemyHPValue=1;
     private float allyFillAmount = 1;
     private float enemyFillAmount = 1;
+    private float allyLoseFillAmount = 1;
     private float enemyLoseFillAmount = 1;
     private int currentHitSliderValue = 0;
     private int currentAtkSliderValue = 0;
@@ -81,6 +93,12 @@ public class AttackUIController : MonoBehaviour {
         attackerSprite.sprite = attacker.Sprite;
         defenderSprite.sprite = defender.Sprite;
     }
+    public void ShowAttackReaction(string user, string reactionName)
+    {
+        Debug.Log("Show Reaction");
+        
+        attackReactionUI.Show(user,reactionName);
+    }
     private void OnDisable()
     {
         EventContainer.hpValueChanged -= HPValueChanged;
@@ -91,15 +109,18 @@ public class AttackUIController : MonoBehaviour {
         allyFillAmount = Mathf.Lerp(allyFillAmount, currentAllyHPValue, Time.deltaTime * healthSpeed);
         enemyFillAmount = Mathf.Lerp(enemyFillAmount, currentEnemyHPValue, Time.deltaTime * healthSpeed);
         enemyLoseFillAmount = Mathf.Lerp(enemyLoseFillAmount, delayedEnemyHPValue, Time.deltaTime * healthLoseSpeed);
+        allyLoseFillAmount = Mathf.Lerp(allyLoseFillAmount, delayedAllyHPValue, Time.deltaTime * healthLoseSpeed);
         attackerHPBar.fillAmount = allyFillAmount;
         defenderHPBar.fillAmount = enemyFillAmount;
         defenderLosingHPBar.fillAmount = enemyLoseFillAmount;
+        attackerLosingHPBar.fillAmount = allyLoseFillAmount;
     }
     
     public void Show(LivingObject attacker, LivingObject defender)
     {
         this.attacker = attacker;
         this.defender = defender;
+        attackButton.interactable = true;
         gameObject.SetActive(true);
         currentAtkSliderValue = 0;
         currentHitSliderValue = 0;
@@ -112,6 +133,21 @@ public class AttackUIController : MonoBehaviour {
         gameObject.SetActive(false);
     }
 
+    public void AttackButtonClicked()
+    {
+        attackButton.interactable = false;
+        EventContainer.attacktButtonCLicked();
+    }
+
+    public void ShowCounterMissText()
+    {
+        StartCoroutine(TextAnimation(counterMissedText));
+    }
+    public void ShowCounterDamageText(int damage)
+    {
+        counterDamageText.text = "-" + damage;
+        StartCoroutine(TextAnimation(counterDamageText));
+    }
     public void ShowMissText()
     {
         StartCoroutine(TextAnimation(missedText));
@@ -169,11 +205,20 @@ public class AttackUIController : MonoBehaviour {
         currentAllyHPValue = MathUtility.MapValues(attacker.Stats.HP, 0f, attacker.Stats.MaxHP, 0f, 1f);
         currentEnemyHPValue = MathUtility.MapValues(defender.Stats.HP, 0f, defender.Stats.MaxHP, 0f, 1f);
 
-        StartCoroutine(DelayedHP());
+        StartCoroutine(DelayedAllyHP());
+        StartCoroutine(DelayedEnemyHP());
     }
 
     #region COROUTINES
-    IEnumerator DelayedHP()
+    IEnumerator DelayedAllyHP()
+    {
+        while (Mathf.Abs(allyFillAmount - currentAllyHPValue) >= HP_BAR_OFFSET_DELAY)
+        {
+            yield return null;
+        }
+        delayedAllyHPValue = MathUtility.MapValues(attacker.Stats.HP, 0f, attacker.Stats.MaxHP, 0f, 1f);
+    }
+    IEnumerator DelayedEnemyHP()
     {
         while (Mathf.Abs(enemyFillAmount - currentEnemyHPValue) >= HP_BAR_OFFSET_DELAY)
         {

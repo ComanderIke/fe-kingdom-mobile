@@ -10,10 +10,13 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour, Controller {
 
-    public delegate void AttackButtonCLicked();
-    public static AttackButtonCLicked attacktButtonCLicked;
+
 
     [Header("Input Fields")]
+    [SerializeField]
+    GameObject gameOverScreen;
+    [SerializeField]
+    GameObject winScreen;
     [SerializeField]
     GameObject bottomUI;
     [SerializeField]
@@ -78,7 +81,14 @@ public class UIController : MonoBehaviour, Controller {
     {
         attackUIController.Hide() ;
     }
-
+    public void ShowGameOver()
+    {
+        gameOverScreen.SetActive(true);
+    }
+    public void ShowWinScreen()
+    {
+        winScreen.SetActive(true);
+    }
 
     public void HideReactUI()
     {
@@ -119,10 +129,7 @@ public class UIController : MonoBehaviour, Controller {
         }
     }
 
-    public void SkipFightButtonClicked()
-    {
-        attacktButtonCLicked();
-    }
+    
     public void UndoClicked()
     {
         EventContainer.undo();

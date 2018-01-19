@@ -16,6 +16,9 @@ namespace Assets.Scripts.Events
         public delegate void CommandFinished();
         public static CommandFinished commandFinished;
 
+        public delegate void ReactionFinished();
+        public static ReactionFinished reactionFinished;
+
         public delegate void AllCommandsFinished();
         public static AllCommandsFinished allCommandsFinished;
 
@@ -49,8 +52,12 @@ namespace Assets.Scripts.Events
         public static AttackerHitChanged attackerHitChanged;
 
         #endregion
-        
+
         #region UI
+
+        public delegate void AttackButtonCLicked();
+        public static AttackButtonCLicked attacktButtonCLicked;
+
         public delegate void AttackUIVisible( bool visible);
         public static AttackUIVisible attackUIVisible;
 
@@ -147,5 +154,83 @@ namespace Assets.Scripts.Events
         public delegate void EndDragOverGrid(int x, int y);
         public static EndDragOverGrid endDragOverGrid;
         #endregion
-    }
+
+        public static void ResetEvents()
+        {
+            #region Commands
+            commandFinished = null;
+            allCommandsFinished = null;
+            undo = null;
+            #endregion
+
+            #region TurnManagement
+            endTurn = null;
+            #endregion
+
+            #region AttackPatterns
+            continuePressed = null;
+            attackPatternUsed = null;
+            #endregion
+
+            #region Fight
+            attackerDmgChanged = null;
+            attackerHitChanged = null;
+            #endregion
+
+            #region UI
+            attackUIVisible = null;
+
+            reactUIVisible = null;
+
+            dodgeClicked = null;
+
+            guardClicked = null;
+
+            counterClicked = null;
+            #endregion
+
+            #region UnitActions
+            unitMoveToEnemy = null;
+
+            startMovingUnit = null;
+
+            stopMovingUnit = null;
+
+            deselectActiveCharacter = null;
+
+            #endregion
+
+            #region Clicks
+            enemyClicked = null;
+
+            unitClickedConfirmed = null;
+
+            clickedOnGrid = null;
+
+            clickedOnField = null;
+
+            unitClickedOnActiveTile = null;
+
+            monsterClickedOnActiveBigTile = null;
+
+            unitClicked = null;
+            #endregion
+
+            #region DragStuff
+            draggedOverUnit = null;
+
+            startDrag = null;
+
+            unitDragged = null;
+
+            endDrag = null;
+
+            endDragOverNothing = null;
+
+            endDragOverUnit = null;
+
+            endDragOverGrid = null;
+            #endregion
+        }
+}
 }

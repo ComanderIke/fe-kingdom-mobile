@@ -5,6 +5,7 @@ using Assets.Scripts.GameStates;
 using Assets.Scripts.Characters;
 using Assets.Scripts.Engine;
 using Assets.Scripts.Players;
+using Assets.Scripts.Events;
 
 public class MainScript : MonoBehaviour {
 	
@@ -66,24 +67,39 @@ public class MainScript : MonoBehaviour {
     
     void Awake()
     {
+        EventContainer.ResetEvents();
+        instance = this;
+        Debug.Log(this.name);
+        Debug.Log(instance.name);
         gameState = new GameplayState();
     }
 
-    void Start () {     
-        gridManager = FindObjectOfType<GridManager>();
+    void Start () {
+        Debug.Log("Initialize");
+        
         Systems = new List<EngineSystem>();
         Controllers = new List<Controller>();
     }
-
+    
     public static MainScript GetInstance()
     {
         if (instance == null)
-            instance = FindObjectOfType<MainScript>();
+        {
+            Debug.Log("Instance null!");
+            
+        }
+        else if (instance.gameObject == null)
+        {
+            Debug.Log("GameObject null!");
+        }
+            
         return instance;
     }
 
     private void Initialize()
     {
+        gridManager = FindObjectOfType<GridManager>();
+        Debug.Log(gridManager.name);
         Systems.Add(new TurnManager());
         Systems.Add(new UnitSelectionManager());
         Systems.Add(FindObjectOfType<UnitActionManager>());
