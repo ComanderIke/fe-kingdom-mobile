@@ -30,7 +30,19 @@ namespace Assets.Scripts.Characters
             }
             return weaponCrit;
         }
-
+        public int GetAttackCountAgainst(LivingObject c)
+        {
+            int attackCount = 1;
+            if(owner.Stats.Speed - (c.Stats.Speed) > 0)
+            {
+                attackCount++;
+            }
+            if (owner.Stats.Speed - (c.Stats.Speed+5) >= 0)
+            {
+                attackCount++;
+            }
+            return attackCount;
+        }
         public bool CanDoubleAttack(LivingObject c)
         {
             if (owner.Stats.Speed > c.Stats.Speed + AGILITY_TO_DOUBLE)

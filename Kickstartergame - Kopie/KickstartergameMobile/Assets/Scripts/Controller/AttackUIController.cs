@@ -29,6 +29,8 @@ public class AttackUIController : MonoBehaviour {
     [SerializeField]
     private Text attackerHIT;
     [SerializeField]
+    private Text attackCountText;
+    [SerializeField]
     private Text attackerMaxDMG;
     [SerializeField]
     private Text attackerMaxHIT;
@@ -60,12 +62,21 @@ public class AttackUIController : MonoBehaviour {
     private Text counterDamageText;
     [SerializeField]
     private Button attackButton;
+    [SerializeField]
+    private GameObject fastAttackGO;
+    [SerializeField]
+    private GameObject strongAttackGO;
+    [SerializeField]
+    private GameObject idleAttackGO;
+    [SerializeField]
+    private GameObject swipeAttackGO;
     [Header("Configuration")]
     [SerializeField]
     private float healthSpeed;
     [SerializeField]
     private float healthLoseSpeed;
 
+    private int attackCount;
     private float currentAllyHPValue;
     private float currentEnemyHPValue;
     private float delayedAllyHPValue = 1;
@@ -82,16 +93,26 @@ public class AttackUIController : MonoBehaviour {
     void Start () {
        
 	}
-
+    public void SetAttackCountText()
+    {
+        
+    }
     void OnEnable()
     {
         OnSliderValueChanged();
-        attackTutorial.SetActive(true);
+       // attackTutorial.SetActive(true);
         HPValueChanged();
+        swipeAttackGO.SetActive(true);
         EventContainer.hpValueChanged += HPValueChanged;
         EventContainer.attackUIVisible(true);
+        EventContainer.swipeRightEvent += ShowStrongAttack;
+        EventContainer.swipeLeftEvent += ShowFastAttack;
+        EventContainer.swipeIdleEvent += ShowIdleAttack;
+        EventContainer.swipeLeftConfirmedEvent += AttackButtonClicked;
+        EventContainer.swipeRightConfirmedEvent += AttackButtonClicked;
         attackerSprite.sprite = attacker.Sprite;
         defenderSprite.sprite = defender.Sprite;
+        attackCount = attacker.BattleStats.GetAttackCountAgainst(defender);
     }
     public void ShowAttackReaction(string user, string reactionName)
     {
@@ -103,6 +124,11 @@ public class AttackUIController : MonoBehaviour {
     {
         EventContainer.hpValueChanged -= HPValueChanged;
         EventContainer.attackUIVisible(false);
+        EventContainer.swipeRightEvent -= ShowStrongAttack;
+        EventContainer.swipeLeftEvent -= ShowFastAttack;
+        EventContainer.swipeIdleEvent -= ShowIdleAttack;
+        EventContainer.swipeLeftConfirmedEvent -= AttackButtonClicked;
+        EventContainer.swipeRightConfirmedEvent -= AttackButtonClicked;
     }
 
     void Update () {
@@ -114,6 +140,10 @@ public class AttackUIController : MonoBehaviour {
         defenderHPBar.fillAmount = enemyFillAmount;
         defenderLosingHPBar.fillAmount = enemyLoseFillAmount;
         attackerLosingHPBar.fillAmount = allyLoseFillAmount;
+        if (attackCount == 1)
+            attackCountText.text = attackCount + " Attack";
+        else
+            attackCountText.text = attackCount+" Attacks";
     }
     
     public void Show(LivingObject attacker, LivingObject defender)
@@ -133,12 +163,48 @@ public class AttackUIController : MonoBehaviour {
         gameObject.SetActive(false);
     }
 
+    IEnumerator ActivateSwipeAttack(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        swipeAttackGO.SetActive(true);
+    }
     public void AttackButtonClicked()
     {
+        swipeAttackGO.SetActive(false);
+        
         attackButton.interactable = false;
-        EventContainer.attacktButtonCLicked();
+        if (attackCount > 0)
+        {
+            Debug.Log("StartAttack!");
+            EventContainer.attacktButtonCLicked();
+            attackCount--;
+        }
+        if(attackCount <=0)
+        {
+            swipeAttackGO.SetActive(false);
+        }
+        else
+            StartCoroutine(ActivateSwipeAttack(0.25f));
     }
 
+    void ShowFastAttack()
+    {
+        idleAttackGO.SetActive(false);
+        strongAttackGO.SetActive(false);
+        fastAttackGO.SetActive(true);
+    }
+    void ShowStrongAttack()
+    {
+        idleAttackGO.SetActive(false);
+        strongAttackGO.SetActive(true);
+        fastAttackGO.SetActive(false);
+    }
+    void ShowIdleAttack()
+    {
+        idleAttackGO.SetActive(true);
+        strongAttackGO.SetActive(false);
+        fastAttackGO.SetActive(false);
+    }
     public void ShowCounterMissText()
     {
         StartCoroutine(TextAnimation(counterMissedText));

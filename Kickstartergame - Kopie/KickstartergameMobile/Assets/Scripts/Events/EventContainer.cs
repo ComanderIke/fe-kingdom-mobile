@@ -155,6 +155,23 @@ namespace Assets.Scripts.Events
         public static EndDragOverGrid endDragOverGrid;
         #endregion
 
+        #region SwipeInteraction
+        public delegate void SwipeLeftEvent();
+        public static SwipeLeftEvent swipeLeftEvent;
+
+        public delegate void SwipeRightEvent();
+        public static SwipeRightEvent swipeRightEvent;
+
+        public delegate void SwipeIdleEvent();
+        public static SwipeIdleEvent swipeIdleEvent;
+
+        public delegate void SwipeLeftConfirmedEvent();
+        public static SwipeLeftConfirmedEvent swipeLeftConfirmedEvent;
+
+        public delegate void SwipeRightConfirmedEvent();
+        public static SwipeRightConfirmedEvent swipeRightConfirmedEvent;
+        #endregion
+
         public static void ResetEvents()
         {
             #region Commands

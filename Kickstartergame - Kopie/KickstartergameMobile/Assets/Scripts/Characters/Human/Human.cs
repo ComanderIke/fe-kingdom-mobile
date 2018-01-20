@@ -21,7 +21,10 @@ public class Human : LivingObject{
     {
         Inventory = new Inventory(this);
         SkillManager = new SkillManager();
-		Sprite = GameObject.FindObjectOfType<SpriteScript>().swordActiveSprite; 
+		Sprite = GameObject.FindObjectOfType<SpriteScript>().swordActiveSprite;
+        List<int> attackRanges = new List<int>();
+        attackRanges.Add(1);
+        Stats = new Stats(20, 5, 5, 10, 8, 5, 5, 3, attackRanges);
     }
 }
 

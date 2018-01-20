@@ -20,12 +20,14 @@ namespace Assets.Scripts.GameStates
         private UnitsController unitController;
         private int attackerBonusDmg;
         private int attackerHit;
+        private int attackCount;
         private bool counter;
 
         public FightState(LivingObject attacker, LivingObject defender)
         {
             this.attacker = attacker;
             this.defender = defender;
+            attackCount = attacker.BattleStats.GetAttackCountAgainst(defender);
             Debug.Log("FightState " + attacker.Name + " " + defender.Name);
             uiController = MainScript.GetInstance().GetController<UIController>();
             unitController = MainScript.GetInstance().GetController<UnitsController>();
@@ -112,7 +114,9 @@ namespace Assets.Scripts.GameStates
         }
         private void DoAttack()
         {
-            MainScript.GetInstance().StartCoroutine(Attack());
+            attackCount--;
+            if(attackCount>=0)
+                MainScript.GetInstance().StartCoroutine(Attack());
             
         }
         IEnumerator End()
@@ -139,7 +143,7 @@ namespace Assets.Scripts.GameStates
         {
             yield return new WaitForSeconds(ATTACK_DELAY);
             SingleAttack(attacker, defender, false);
-            if (react&& defender is Monster){
+            if (react&&attackCount==0&& defender is Monster){
                 Debug.Log("Start Reaction!");
                 yield return new WaitForSeconds(3.0f);
                 Monster m = (Monster)defender;
@@ -156,8 +160,8 @@ namespace Assets.Scripts.GameStates
                 yield return new WaitForSeconds(3.0f);
                 SingleAttack(defender, attacker, true);
             }
-            
-            EndFight();
+            if(attackCount==0)
+                EndFight();
         }
         bool react = false;
         private void SingleAttack(LivingObject attacker, LivingObject defender, bool counter)
