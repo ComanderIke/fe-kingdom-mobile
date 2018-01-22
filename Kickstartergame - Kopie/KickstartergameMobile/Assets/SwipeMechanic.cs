@@ -72,12 +72,10 @@ public class SwipeMechanic : MonoBehaviour , IPointerDownHandler, IDragHandler
         }
         if (gameObject.transform.localEulerAngles.z >= 70 && gameObject.transform.localEulerAngles.z < 180)
         {
-            gameObject.transform.localEulerAngles = new Vector3(0, 0, 90);
             EventContainer.swipeLeftEvent();
         }
         else if (gameObject.transform.localEulerAngles.z <= 290 && gameObject.transform.localEulerAngles.z > 180)
         {
-            gameObject.transform.localEulerAngles = new Vector3(0, 0, 270);
             EventContainer.swipeRightEvent();
         }
         else if(gameObject.transform.localEulerAngles.z < 70|| gameObject.transform.localEulerAngles.z > 290)
@@ -89,15 +87,27 @@ public class SwipeMechanic : MonoBehaviour , IPointerDownHandler, IDragHandler
         {
             if (gameObject.transform.localEulerAngles.z >= 70 && gameObject.transform.localEulerAngles.z < 180)
             {
-                StartCoroutine(DelaySwipeLeftActivation(0.65f));
+                StartCoroutine(DelaySwipeLeftActivation(0.15f));
 
             }
             else if (gameObject.transform.localEulerAngles.z <= 290 && gameObject.transform.localEulerAngles.z > 180)
             {
-                StartCoroutine(DelaySwipeRightActivation(0.65f));
+                StartCoroutine(DelaySwipeRightActivation(0.15f));
             }
         }
+        Clamp();
         UpdateVisuals();
+    }
+    void Clamp()
+    {
+        if (gameObject.transform.localEulerAngles.z >= 90 && gameObject.transform.localEulerAngles.z < 180)
+        {
+            gameObject.transform.localEulerAngles = new Vector3(0, 0, 90);
+        }
+        else if (gameObject.transform.localEulerAngles.z <= 270 && gameObject.transform.localEulerAngles.z > 180)
+        {
+            gameObject.transform.localEulerAngles = new Vector3(0, 0, 270);
+        }
     }
     void UpdateVisuals()
     {
@@ -123,7 +133,7 @@ public class SwipeMechanic : MonoBehaviour , IPointerDownHandler, IDragHandler
     {
         IsDragging = true;
         Vector3 delta = new Vector3(UnityEngine.Input.mousePosition.x - startPosX, UnityEngine.Input.mousePosition.y - startPosY, 0);
-        gameObject.transform.Rotate(Vector3.forward, Time.deltaTime*-delta.x);
+        gameObject.transform.Rotate(Vector3.forward, 2.0f*Time.deltaTime*-delta.x);
             
     }
 

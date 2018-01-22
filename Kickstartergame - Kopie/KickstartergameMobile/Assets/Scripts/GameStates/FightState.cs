@@ -12,7 +12,7 @@ namespace Assets.Scripts.GameStates
     class FightState : GameState
     {
         private const float FIGHT_TIME = 3.8f;
-        private const float ATTACK_DELAY = 0.25f;
+        private const float ATTACK_DELAY = 0.0f;
 
         private LivingObject attacker;
         private LivingObject defender;

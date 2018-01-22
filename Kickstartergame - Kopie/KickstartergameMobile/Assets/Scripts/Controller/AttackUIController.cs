@@ -184,7 +184,7 @@ public class AttackUIController : MonoBehaviour {
             swipeAttackGO.SetActive(false);
         }
         else
-            StartCoroutine(ActivateSwipeAttack(0.25f));
+            StartCoroutine(ActivateSwipeAttack(0.0f));
     }
 
     void ShowFastAttack()
