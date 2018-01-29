@@ -17,6 +17,7 @@ public class SwipeMechanic : MonoBehaviour , IPointerDownHandler, IDragHandler
     /*DragOffset*/
     private float startPosX;
     private float startPosY;
+    private float oldPosX;
 
     private Vector3 posBeforeDrag;
     private Quaternion rotationBeforeDrag;
@@ -123,8 +124,9 @@ public class SwipeMechanic : MonoBehaviour , IPointerDownHandler, IDragHandler
     {
         IsDragDelay = true;
         DragTime = 0;
-        startPosX = UnityEngine.Input.mousePosition.x;
-        startPosY = UnityEngine.Input.mousePosition.y;
+        startPosX = Input.mousePosition.x;
+        startPosY = Input.mousePosition.y;
+        oldPosX = -1;
         rotationBeforeDrag = gameObject.transform.localRotation;
         gameObject.GetComponent<Rigidbody2D>().angularVelocity = 0;
     }
@@ -132,21 +134,27 @@ public class SwipeMechanic : MonoBehaviour , IPointerDownHandler, IDragHandler
     public void Dragging()
     {
         IsDragging = true;
-        Vector3 delta = new Vector3(UnityEngine.Input.mousePosition.x - startPosX, UnityEngine.Input.mousePosition.y - startPosY, 0);
-        gameObject.transform.Rotate(Vector3.forward, 2.0f*Time.deltaTime*-delta.x);
-            
+        //Vector3 delta = new Vector3(UnityEngine.Input.mousePosition.x - startPosX, UnityEngine.Input.mousePosition.y - startPosY, 0);
+        //gameObject.transform.Rotate(Vector3.forward, 2.0f*Time.deltaTime*-delta.x);
+        if (oldPosX != -1)
+        {
+            float delta = Input.mousePosition.x - oldPosX;
+            gameObject.transform.Rotate(Vector3.forward, 10.0f * Time.deltaTime * -delta);
+        }
+        oldPosX = Input.mousePosition.x;
+
     }
 
     public void EndDrag()
     {
         //TODO Force cant activate this
         
-        Vector3 diff = UnityEngine.Input.mousePosition - new Vector3(startPosX, startPosY, 0);
+       /* Vector3 diff = UnityEngine.Input.mousePosition - new Vector3(startPosX, startPosY, 0);
         float force = diff.magnitude / DragTime/30.0f;
         if (diff.x > 0)
             force = -force;
         Debug.Log(force);
-        gameObject.GetComponent<Rigidbody2D>().AddTorque(force, ForceMode2D.Force);
+        gameObject.GetComponent<Rigidbody2D>().AddTorque(force, ForceMode2D.Force);*/
     }
     IEnumerator DelaySwipeRightActivation(float delay)
     {

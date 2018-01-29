@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class UIController : MonoBehaviour, Controller {
 
@@ -17,6 +18,8 @@ public class UIController : MonoBehaviour, Controller {
     GameObject gameOverScreen;
     [SerializeField]
     GameObject winScreen;
+    [SerializeField]
+    GameObject mapUI;
     [SerializeField]
     GameObject bottomUI;
     [SerializeField]
@@ -129,7 +132,15 @@ public class UIController : MonoBehaviour, Controller {
         }
     }
 
-    
+    public void ShowMapUI()
+    {
+        mapUI.SetActive(true);
+    }
+    public void HideMapUI()
+    {
+        mapUI.SetActive(false);
+    }
+
     public void UndoClicked()
     {
         EventContainer.undo();

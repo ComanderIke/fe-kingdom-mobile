@@ -40,6 +40,7 @@ namespace Assets.Scripts.GameStates
             react = false;
             attackerBonusDmg = 0;
             attackerHit = attacker.BattleStats.GetHitAgainstTarget(defender);
+            uiController.HideMapUI();
             if(attacker.Player.IsHumanPlayer)
                 uiController.ShowFightUI(attacker, defender);
             if(defender.Player.IsHumanPlayer)
@@ -84,6 +85,7 @@ namespace Assets.Scripts.GameStates
         public override void exit()
         {
             //CameraMovement.locked = false;
+            uiController.ShowMapUI();
             uiController.HideFightUI();
             uiController.HideReactUI();
             unitController.ShowUnits();

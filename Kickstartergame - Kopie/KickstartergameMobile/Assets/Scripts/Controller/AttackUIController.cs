@@ -5,15 +5,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
+using Assets.Scripts.Characters.Monsters;
 
 public class AttackUIController : MonoBehaviour {
 
-    const float HP_BAR_OFFSET_DELAY = 0.005f;
-    const float MISS_TEXT_FADE_IN_SPEED = 0.12f;
-    const float MISS_TEXT_FADE_OUT_SPEED = 0.02f;
-    const float MISS_TEXT_VISIBLE_DURATION = 1.5f;
+    public const float HP_BAR_OFFSET_DELAY = 0.005f;
+    public const float MISS_TEXT_FADE_IN_SPEED = 0.12f;
+    public const float MISS_TEXT_FADE_OUT_SPEED = 0.02f;
+    public const float MISS_TEXT_VISIBLE_DURATION = 1.5f;
 
+
+    List<AttackTargetPoint> targetPoints;
     [Header("Input Fields")]
+    [SerializeField]
+    GameObject targetPointPrefab;
+    [SerializeField]
+    Transform targetPointParent;
+    [SerializeField]
+    GameObject targetInfoObject;
+    [SerializeField]
+    GameObject chooseTargetTutorial;
     [SerializeField]
     AttackPatternUI attackReactionUI;
     [SerializeField]
@@ -89,7 +101,7 @@ public class AttackUIController : MonoBehaviour {
     private int currentAtkSliderValue = 0;
     private LivingObject attacker;
     private LivingObject defender;
-
+    private AttackTargetPoint activeTarget;
     void Start () {
        
 	}
@@ -156,6 +168,25 @@ public class AttackUIController : MonoBehaviour {
         currentHitSliderValue = 0;
         hitSlider.value = 0;
         attackSlider.value = 0;
+        foreach(Transform child in targetPointParent.GetComponentsInChildren<Transform>())
+        {
+            if(child!=targetPointParent)
+                GameObject.Destroy(child.gameObject);
+        }
+        targetPoints = new List<AttackTargetPoint>();
+        int cnt = 0;
+        if (defender is Monster)
+        {
+            Monster m = (Monster)defender;
+            foreach(TargetPoint p in m.TargetPoints)
+            {
+                GameObject instantiatedPoint = GameObject.Instantiate(targetPointPrefab, targetPointParent);
+                instantiatedPoint.transform.localPosition = new Vector3(p.XPos, p.YPos, 0);
+                instantiatedPoint.GetComponent<RectTransform>().sizeDelta = new Vector2(100 * p.Scale, 100 * p.Scale);
+                instantiatedPoint.GetComponent<AttackTargetPoint>().ID = cnt++;
+                targetPoints.Add(instantiatedPoint.GetComponent<AttackTargetPoint>());
+            }
+        }
     }
 
     public void Hide()
@@ -186,7 +217,29 @@ public class AttackUIController : MonoBehaviour {
         else
             StartCoroutine(ActivateSwipeAttack(0.0f));
     }
-
+    public void TargetPointSelected(int id)
+    {
+        chooseTargetTutorial.SetActive(false);
+        targetInfoObject.SetActive(true);
+        
+        foreach (AttackTargetPoint point in targetPoints)
+        {
+            if (id == point.ID)
+            {
+                point.PlayAnimation();
+                targetInfoObject.transform.position = new Vector3(point.transform.position.x, point.transform.position.y + 1.75f,0);
+                if(targetInfoObject.transform.localPosition.y > 653)
+                {
+                    targetInfoObject.transform.localPosition = new Vector3(targetInfoObject.transform.localPosition.x, 653, 0);
+                }
+                activeTarget = point;
+            }
+            else
+            {
+                point.StopAnimation();
+            }
+        }
+    }
     void ShowFastAttack()
     {
         idleAttackGO.SetActive(false);
@@ -216,12 +269,13 @@ public class AttackUIController : MonoBehaviour {
     }
     public void ShowMissText()
     {
-        StartCoroutine(TextAnimation(missedText));
+        activeTarget.ShowMissedText();
+        
     }
     public void ShowDamageText(int damage)
     {
-        damageText.text = "-" + damage;
-        StartCoroutine(TextAnimation(damageText));
+        activeTarget.ShowDamageText(damage);
+        
     }
 
     void UpdateHit()
