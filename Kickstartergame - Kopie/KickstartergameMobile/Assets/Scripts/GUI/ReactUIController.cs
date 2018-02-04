@@ -92,6 +92,9 @@ public class ReactUIController : MonoBehaviour {
     private Text counterHitValueText;
     [SerializeField]
     private Text counterSPText;
+    [SerializeField]
+    private GameObject infoMessage;
+
 
     private LivingObject attacker;
     private LivingObject defender;
@@ -286,6 +289,7 @@ public class ReactUIController : MonoBehaviour {
 
     public void DodgeConfirmed()
     {
+        Debug.Log("DODGE");
         EventContainer.dodgeClicked(currentDodgeValue);
         EventContainer.attacktButtonCLicked();
     }
@@ -299,6 +303,7 @@ public class ReactUIController : MonoBehaviour {
         EventContainer.counterClicked(currentCounterAttackValue,currentCounterHitValue);
         EventContainer.attacktButtonCLicked();
     }
+
     public void ShowCounterMissText()
     {
         StartCoroutine(TextAnimation(counterMissedText));
@@ -322,27 +327,21 @@ public class ReactUIController : MonoBehaviour {
         dodgeContainer.SetActive(true);
         counterContainer.SetActive(false);
         guardContainer.SetActive(false);
-        reactTutorial.SetActive(false);
-        defender.Stats.SP = StartSP;
-        OnDodgeSliderValueChanged();
+        infoMessage.SetActive(false);
     }
     public void GuardClicked()
     {
         guardContainer.SetActive(true);
         counterContainer.SetActive(false);
         dodgeContainer.SetActive(false);
-        reactTutorial.SetActive(false);
-        defender.Stats.SP = StartSP;
-        OnGuardSliderValueChanged();
+        infoMessage.SetActive(false);
     }
     public void CounterClicked()
     {
         counterContainer.SetActive(true);
         guardContainer.SetActive(false);
         dodgeContainer.SetActive(false);
-        reactTutorial.SetActive(false);
-        defender.Stats.SP = StartSP;
-        OnCounterSliderValueChanged();
+        infoMessage.SetActive(false);
     }
     
     #region COROUTINES

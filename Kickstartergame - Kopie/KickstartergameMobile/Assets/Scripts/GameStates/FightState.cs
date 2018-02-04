@@ -22,6 +22,7 @@ namespace Assets.Scripts.GameStates
         private int attackerHit;
         private int attackCount;
         private bool counter;
+        private string startMusic;
 
         public FightState(LivingObject attacker, LivingObject defender)
         {
@@ -52,6 +53,8 @@ namespace Assets.Scripts.GameStates
             EventContainer.counterClicked = CounterClicked;
             EventContainer.dodgeClicked = DodgeClicked;
             EventContainer.guardClicked = GuardClicked;
+            startMusic = GameObject.FindObjectOfType<AudioManager>().GetCurrentlyPlayedMusicTracks()[0];
+            GameObject.FindObjectOfType<AudioManager>().ChangeMusic("Fight",startMusic);
         }
         int counterBonusAttack = 0;
         int counterBonusHit = 0;
@@ -99,6 +102,7 @@ namespace Assets.Scripts.GameStates
             }
             EventContainer.attacktButtonCLicked -= EndFight;
             EventContainer.attacktButtonCLicked -= DoAttack;
+            GameObject.FindObjectOfType<AudioManager>().ChangeMusic(startMusic,"Fight",true);
         }
 
         private bool DoesAttackHit(LivingObject attacker, LivingObject defender, bool counter)
@@ -123,7 +127,7 @@ namespace Assets.Scripts.GameStates
         }
         IEnumerator End()
         {
-            yield return new WaitForSeconds(3.5f);
+            yield return new WaitForSeconds(1.0f);
             Debug.Log("Fight Finished!");
             EventContainer.commandFinished -= EndFight;
             EventContainer.continuePressed = null;
@@ -147,7 +151,7 @@ namespace Assets.Scripts.GameStates
             SingleAttack(attacker, defender, false);
             if (react&&attackCount==0&& defender is Monster){
                 Debug.Log("Start Reaction!");
-                yield return new WaitForSeconds(3.0f);
+                yield return new WaitForSeconds(1.5f);
                 Monster m = (Monster)defender;
                 reaction = m.GetRandomAttackReaction();
                 reaction.TargetPositions.Add(attacker.GridPosition.GetPos());
@@ -157,11 +161,11 @@ namespace Assets.Scripts.GameStates
                
                 yield break;
             }
-            if (counter)
-            {
-                yield return new WaitForSeconds(3.0f);
-                SingleAttack(defender, attacker, true);
-            }
+            //if (counter)
+            //{
+            //    yield return new WaitForSeconds(3.0f);
+            //    SingleAttack(defender, attacker, true);
+            //}
             if(attackCount==0)
                 EndFight();
         }

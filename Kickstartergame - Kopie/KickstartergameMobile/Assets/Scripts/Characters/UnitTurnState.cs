@@ -33,7 +33,8 @@ namespace Assets.Scripts.Characters
             set
             {
                 isWaiting = value;
-                EventContainer.unitWaiting(unit, isWaiting);
+                if(EventContainer.unitWaiting!=null)
+                    EventContainer.unitWaiting(unit, isWaiting);
             }
         }
         public bool HasMoved
@@ -45,7 +46,8 @@ namespace Assets.Scripts.Characters
             set
             {
                 hasMoved = value;
-                EventContainer.unitCanMove(unit, !value);
+                if(EventContainer.unitCanMove!=null)
+                    EventContainer.unitCanMove(unit, !value);
             }
         }
         public bool HasAttacked { get; set; }

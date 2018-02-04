@@ -99,7 +99,6 @@ public class MainScript : MonoBehaviour {
     private void Initialize()
     {
         gridManager = FindObjectOfType<GridManager>();
-        Debug.Log(gridManager.name);
         Systems.Add(new TurnManager());
         Systems.Add(new UnitSelectionManager());
         Systems.Add(FindObjectOfType<UnitActionManager>());
@@ -108,7 +107,9 @@ public class MainScript : MonoBehaviour {
         Controllers.Add(FindObjectOfType<UnitsController>());
         InitPlayers();
         InitCharacters();
+        
         gameState.enter();
+        EventContainer.startTurn();
     }
 
     void Update () {

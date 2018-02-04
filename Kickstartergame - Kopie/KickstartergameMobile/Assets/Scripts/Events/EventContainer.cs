@@ -29,6 +29,8 @@ namespace Assets.Scripts.Events
         #region TurnManagement
         public delegate void EndTurn();
         public static EndTurn endTurn;
+        public delegate void StartTurn();
+        public static StartTurn startTurn;
         #endregion
 
         #region AttackPatterns

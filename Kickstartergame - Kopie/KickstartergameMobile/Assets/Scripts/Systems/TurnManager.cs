@@ -23,6 +23,7 @@ namespace Assets.Scripts.GameStates
         {
             mainScript = MainScript.GetInstance();
             EventContainer.endTurn += EndTurn;
+            EventContainer.startTurn += StartTurn;
 
             InitPlayers();
         }
@@ -56,14 +57,18 @@ namespace Assets.Scripts.GameStates
 
         private void StartTurn()
         {
+            Debug.Log("StartTurn!");
             if (!ActivePlayer.IsHumanPlayer)
             {
+
+                GameObject.FindObjectOfType<AudioManager>().ChangeMusic("EnemyPhase", "PlayerPhase", true);
                 mainScript.SwitchState(new AIState(ActivePlayer));
                 GameObject go = GameObject.Instantiate(mainScript.AITurnAnimation, new Vector3(), Quaternion.identity) as GameObject;
                 go.transform.SetParent(GameObject.Find("Canvas").transform, false);
             }
             else
             {
+                GameObject.FindObjectOfType<AudioManager>().ChangeMusic("PlayerPhase", "EnemyPhase", true);
                 GameObject go = GameObject.Instantiate(mainScript.PlayerTurnAnimation, new Vector3(), Quaternion.identity) as GameObject;
                 go.transform.localPosition = new Vector3();
                 go.transform.SetParent(GameObject.Find("Canvas").transform, false);
