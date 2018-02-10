@@ -25,6 +25,7 @@ public class UnitInstantiater : MonoBehaviour {
         {
             o = Instantiate<GameObject>(melee);
             o.GetComponentInChildren<SpriteRenderer>().sprite = unit.Sprite;
+            
         }
         o.name = unit.Name;
         o.transform.parent = gameObject.transform;

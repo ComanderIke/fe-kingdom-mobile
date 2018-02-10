@@ -10,7 +10,14 @@ namespace Assets.Scripts.Characters
         {
             GameObject.transform.localPosition = new Vector3(x, y, 0);
         }
-
+        public void EnableCollider()
+        {
+            GameObject.GetComponent<BoxCollider>().enabled = true;
+        }
+        public void DisableCollider()
+        {
+            GameObject.GetComponent<BoxCollider>().enabled = false;
+        }
         public void Destroy()
         {
             GameObject.Destroy(GameObject);

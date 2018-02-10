@@ -10,9 +10,11 @@ public class UXRessources : MonoBehaviour {
     public Sprite moveArrowCurve;
     public Sprite moveArrowStraight;
     public Sprite moveArrowStart;
+    public Sprite standOnArrowStart;
     public GameObject activeUnitField;
     public GameObject moveCursor;
     public GameObject rangeAttackGO;
+    public GameObject attackableEnemyPrefrab;
     public Sprite rangeAttackSprite;
 	// Use this for initialization
 	void Start () {

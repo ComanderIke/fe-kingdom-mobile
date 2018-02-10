@@ -31,6 +31,7 @@ public class MouseManager : MonoBehaviour, EngineSystem {
     private  RaycastHit hit;
     Transform gameWorld;
     GameObject moveCursor;
+    GameObject moveCursorStart;
     public  GridInput gridInput;
     public RaycastManager raycastManager;
     public PreferedMovementPath preferedPath;
@@ -212,11 +213,13 @@ public class MouseManager : MonoBehaviour, EngineSystem {
 
     public  void ResetMousePath()
     {
-        //Debug.Log("ResetMousePath");
         foreach (GameObject dot in dots)
         {
             GameObject.Destroy(dot);
         }
+        LivingObject selectedCharacter = mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter;
+        //if (selectedCharacter != null)
+        //    selectedCharacter.ResetPosition();
         if (crosshair)
             Destroy(crosshair);
         dots.Clear();
@@ -226,6 +229,8 @@ public class MouseManager : MonoBehaviour, EngineSystem {
         mainScript.GetController<UIController>().HideAttackPreview();
         if (moveCursor != null)
             GameObject.Destroy(moveCursor);
+        if (moveCursorStart != null)
+            GameObject.Destroy(moveCursorStart);
         FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().enabled = false;
         //FindObjectOfType<UXRessources>().movementFlag.SetActive(false);
     }
@@ -339,6 +344,7 @@ public class MouseManager : MonoBehaviour, EngineSystem {
     }
     public  void CharacterDrag(int x, int y, LivingObject character)
     {
+        
         if (!active)
             return;
         if (mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter == null)
@@ -393,6 +399,8 @@ public class MouseManager : MonoBehaviour, EngineSystem {
         else if(x == character.GridPosition.x && y == character.GridPosition.y)
         {
             ResetMousePath();
+            DrawMousePath();
+           
             nonActive = false;
         }
         Finish(character, field, x, y);
@@ -401,7 +409,6 @@ public class MouseManager : MonoBehaviour, EngineSystem {
     public void DraggedOnEnemy(int x, int y, Tile field,LivingObject character)
     {
 
-        Debug.Log("ENEMY: " + character.Name);
         LivingObject selectedCharacter = mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter;
         if (selectedCharacter.GridPosition is BigTilePosition)
         {
@@ -434,7 +441,6 @@ public class MouseManager : MonoBehaviour, EngineSystem {
                 int yDiff = (int)Mathf.Abs(selectedCharacter.GridPosition.y - field.character.GridPosition.y);
                 if ((xDiff + yDiff) == selectedCharacter.Stats.AttackRanges[i])
                 {
-                    Debug.Log("Position: " + selectedCharacter.GridPosition);
                     // CalculateMousePathToPositon(selectedCharacter, (int)v.x, (int)v.y);
                     ResetMousePath();
                     DrawCrossHair(character);
@@ -456,7 +462,6 @@ public class MouseManager : MonoBehaviour, EngineSystem {
                     //Debug.Log(v + " "+xDiff + " "+ yDiff);
                     if ((xDiff + yDiff) == selectedCharacter.Stats.AttackRanges[i] && mainScript.gridManager.Tiles[(int)v.x, (int)v.y].isActive && mainScript.gridManager.Tiles[(int)v.x, (int)v.y].character == null)
                     {
-                        Debug.Log("Position: "+ v);
                         CalculateMousePathToPositon(selectedCharacter, (int)v.x, (int)v.y);
                         DrawCrossHair(character);
                         if (character.GridPosition is BigTilePosition)
@@ -489,11 +494,9 @@ public class MouseManager : MonoBehaviour, EngineSystem {
         
         crosshair = GameObject.Instantiate(ressources.rangeAttackGO, gameWorld);
         crosshair.transform.localPosition = new Vector3(character.GameTransform.GameObject.transform.localPosition.x+0.5f, character.GameTransform.GameObject.transform.localPosition.y+0.5f, -1f);
-        Debug.Log("CrossHair" + crosshair.transform.localPosition);
         if (character.GridPosition is BigTilePosition)
         {
             Vector2 centerPos = ((BigTilePosition)character.GridPosition).Position.CenterPos();
-            Debug.Log("CenterPos" + centerPos);
             crosshair.transform.localPosition = new Vector3(centerPos.x, centerPos.y, -1f);
             //crosshair.transform.localScale = new Vector3(.3f, .3f, .3f);
         }
@@ -568,17 +571,39 @@ public class MouseManager : MonoBehaviour, EngineSystem {
         }
         if (moveCursor != null)
             GameObject.Destroy(moveCursor);
+        if (moveCursorStart != null)
+            GameObject.Destroy(moveCursorStart);
+        if (mousePath.Count == 0)
+        {
+            moveCursor = GameObject.Instantiate(ressources.moveCursor, gameWorld);
+            moveCursor.transform.localPosition = new Vector3(selectedCharacter.GridPosition.x, selectedCharacter.GridPosition.y, moveCursor.transform.localPosition.z);
+        }
+        else
+        {
+            moveCursorStart = GameObject.Instantiate(ressources.moveArrowDot, gameWorld);
+            moveCursorStart.transform.localPosition = new Vector3(selectedCharacter.GridPosition.x + 0.5f, selectedCharacter.GridPosition.y + 0.5f, -0.03f);
+            moveCursorStart.GetComponent<SpriteRenderer>().sprite = ressources.standOnArrowStart;
+            Vector2 v = new Vector2(selectedCharacter.GridPosition.x, selectedCharacter.GridPosition.y);
+            if (v.x - mousePath[0].x > 0)
+                moveCursorStart.transform.rotation = Quaternion.Euler(0, 0, 180);
+            else if (v.x - mousePath[0].x < 0)
+                moveCursorStart.transform.rotation = Quaternion.Euler(0, 0, 0);
+            else if (v.y - mousePath[0].y > 0)
+                moveCursorStart.transform.rotation = Quaternion.Euler(0, 0, 270);
+            else if (v.y - mousePath[0].y < 0)
+                moveCursorStart.transform.rotation = Quaternion.Euler(0, 0, 90);
+        }
         for (int i=0; i < mousePath.Count; i++) 
         {
             Vector2 v = mousePath[i];
             
             GameObject dot = GameObject.Instantiate(ressources.moveArrowDot,gameWorld);
-            dot.transform.localPosition = new Vector3(v.x + 0.5f, v.y + 0.5f, -0.5f);
+            dot.transform.localPosition = new Vector3(v.x + 0.5f, v.y + 0.5f, -0.03f);
             dots.Add(dot);
             if (i == mousePath.Count - 1)
             {
                 moveCursor = GameObject.Instantiate(ressources.moveCursor, gameWorld);
-                moveCursor.transform.localPosition = new Vector3(v.x,v.y, -0.5f);
+                moveCursor.transform.localPosition = new Vector3(v.x,v.y, moveCursor.transform.localPosition.z);
                 dot.GetComponent<SpriteRenderer>().sprite = ressources.moveArrowHead;
                 if (i != 0)
                 {

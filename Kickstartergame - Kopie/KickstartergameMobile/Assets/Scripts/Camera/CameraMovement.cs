@@ -39,7 +39,7 @@ public class CameraMovement : MonoBehaviour {
     void Start () {
         mainScript = FindObjectOfType<MainScript>();
         EventContainer.attackUIVisible += SetLocked;
-        EventContainer.reactUIVisible += SetLocked;
+        //EventContainer.reactUIVisible += SetLocked; In Enemy Turn always Locked!
     }
 	
 	void Update () {

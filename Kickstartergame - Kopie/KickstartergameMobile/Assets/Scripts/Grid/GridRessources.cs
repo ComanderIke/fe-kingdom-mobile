@@ -15,6 +15,7 @@ namespace Assets.Scripts.Grid
         public Texture StandOnTexture;
         public Texture AttackTexture;
         public Texture EnemyAttackTexture;
+        public Texture AttackableEnemyTexture;
         public Texture StandardTexture;
         public Texture healTexture;
         public Texture mouseHoverTexture;

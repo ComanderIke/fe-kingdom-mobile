@@ -66,9 +66,13 @@ namespace Assets.Scripts.Input
             if (selectedCharacter != null)
             {
                 if (confirmClick && clickedField == new Vector2(x, y))
+                {
+                    selectedCharacter.ResetPosition();
                     EventContainer.clickedOnField(x, y);
+                }
                 else
                 {
+                    
                     confirmClick = true;
                     clickedField = new Vector2(x, y);
                     if (mainScript.gridManager.Tiles[x, y].isActive)
@@ -82,8 +86,13 @@ namespace Assets.Scripts.Input
                         else
                         {
                             EventContainer.unitClickedOnActiveTile(selectedCharacter, x, y);
+
+                            selectedCharacter.GameTransform.SetPosition(x, y);
+                            selectedCharacter.GameTransform.DisableCollider();
                         }
                     }
+                    else
+                        mainScript.GetSystem<UnitSelectionManager>().DeselectActiveCharacter();
                 }
             }
             else

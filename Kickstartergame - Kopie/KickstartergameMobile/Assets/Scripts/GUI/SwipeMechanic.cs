@@ -73,11 +73,11 @@ public class SwipeMechanic : MonoBehaviour , IPointerDownHandler, IDragHandler
         }
         if (gameObject.transform.localEulerAngles.z >= 70 && gameObject.transform.localEulerAngles.z < 180)
         {
-            EventContainer.swipeLeftEvent();
+            //EventContainer.swipeLeftEvent();
         }
         else if (gameObject.transform.localEulerAngles.z <= 290 && gameObject.transform.localEulerAngles.z > 180)
         {
-            EventContainer.swipeRightEvent();
+            //EventContainer.swipeRightEvent();
         }
         else if(gameObject.transform.localEulerAngles.z < 70|| gameObject.transform.localEulerAngles.z > 290)
         {

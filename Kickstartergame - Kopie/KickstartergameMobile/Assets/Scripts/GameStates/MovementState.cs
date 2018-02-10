@@ -148,7 +148,6 @@ namespace Assets.Scripts.GameStates
                 character.UnitTurnState.HasMoved = true;
                 mainScript.GetSystem<UnitActionManager>().ActiveCharWait();
                 //mainScript.SwitchState(new GameplayState());//TODO AISTATE
-                Debug.Log("Movement Finished!");
                 EventContainer.commandFinished();
             }
         }

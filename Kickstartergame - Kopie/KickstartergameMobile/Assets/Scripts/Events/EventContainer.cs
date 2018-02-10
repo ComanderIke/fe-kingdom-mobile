@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.AI.AttackPatterns;
 using Assets.Scripts.Characters;
+using Assets.Scripts.Characters.Monsters;
 using Assets.Scripts.Grid;
 using System;
 using System.Collections.Generic;
@@ -52,6 +53,8 @@ namespace Assets.Scripts.Events
         public static AttackerDmgChanged attackerDmgChanged;
         public delegate void AttackerHitChanged(int hit);
         public static AttackerHitChanged attackerHitChanged;
+        public delegate void StartAttack(AttackType attackType = null, TargetPoint attackTarget = null);
+        public static StartAttack startAttack;
 
         #endregion
 
@@ -66,14 +69,20 @@ namespace Assets.Scripts.Events
         public delegate void ReactUIVisible(bool visible);
         public static ReactUIVisible reactUIVisible;
 
-        public delegate void DodgeClicked(int dodge);
+        public delegate void DodgeClicked();
         public static DodgeClicked dodgeClicked;
 
-        public delegate void GuardClicked(int guard);
+        public delegate void GuardClicked();
         public static GuardClicked guardClicked;
 
-        public delegate void CounterClicked(int counterAttack, int counterHit);
+        public delegate void CounterClicked();
         public static CounterClicked counterClicked;
+
+        public delegate void ShowCursor(int x, int y);
+        public static ShowCursor showCursor;
+
+        public delegate void HideCursor();
+        public static HideCursor hideCursor;
 
         #endregion
 
@@ -86,6 +95,8 @@ namespace Assets.Scripts.Events
 
         public delegate void UnitCanMove(LivingObject unit, bool canMove);
         public static UnitCanMove unitCanMove;
+        public delegate void UnitShowActiveEffect(LivingObject unit, bool canMove, bool disableOthers);
+        public static UnitShowActiveEffect unitShowActiveEffect;
 
         public delegate void UnitDied(LivingObject unit);
         public static UnitDied unitDied;
@@ -158,11 +169,11 @@ namespace Assets.Scripts.Events
         #endregion
 
         #region SwipeInteraction
-        public delegate void SwipeLeftEvent();
-        public static SwipeLeftEvent swipeLeftEvent;
+        public delegate void SwipeFastEvent();
+        public static SwipeFastEvent swipeFastEvent;
 
-        public delegate void SwipeRightEvent();
-        public static SwipeRightEvent swipeRightEvent;
+        public delegate void SwipeStrongEvent();
+        public static SwipeStrongEvent swipeStrongEvent;
 
         public delegate void SwipeIdleEvent();
         public static SwipeIdleEvent swipeIdleEvent;

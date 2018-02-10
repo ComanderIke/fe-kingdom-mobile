@@ -20,6 +20,7 @@ public class ParticleSpawner : MonoBehaviour {
             Vector3 position = ps_Camera.ScreenToWorldPoint(Input.mousePosition);
             GameObject ps= GameObject.Instantiate(ps_test, position, Quaternion.identity);
             ps.layer = LayerMask.NameToLayer("FrontUI");
+            ps.AddComponent<ParticleSystemAutoDestroy>();
             foreach(Transform trans in ps.transform.GetComponentsInChildren<Transform>())
             {
                 trans.gameObject.layer = LayerMask.NameToLayer("FrontUI");

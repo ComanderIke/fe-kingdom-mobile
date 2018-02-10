@@ -39,8 +39,7 @@ public class MainScript : MonoBehaviour {
     [HideInInspector]
     public GameState gameState;
     public GameObject gameOverScreen;
-    public GameObject PlayerTurnAnimation;
-    public GameObject AITurnAnimation;
+
 	public GridManager gridManager;
 	public Camera myCamera;
     [HideInInspector]
@@ -69,8 +68,6 @@ public class MainScript : MonoBehaviour {
     {
         EventContainer.ResetEvents();
         instance = this;
-        Debug.Log(this.name);
-        Debug.Log(instance.name);
         gameState = new GameplayState();
     }
 
@@ -109,14 +106,17 @@ public class MainScript : MonoBehaviour {
         InitCharacters();
         
         gameState.enter();
+        Debug.Log("Initialize");
         EventContainer.startTurn();
     }
 
     void Update () {
         if (!init)
         {
+            Debug.Log("InitializeStart"+init);
             Initialize();
             init = true;
+            Debug.Log("InitializeEnd" + init);
         }
         gameState.update();
     }
@@ -167,11 +167,14 @@ public class MainScript : MonoBehaviour {
 
             p.AddUnit(filler);
             cc.PlaceCharacter(0, filler, startPositions[0].GetXOnGrid(), startPositions[0].GetYOnGrid());
-            //p.AddUnit(filler2);
-            //p.AddUnit(filler3);
-            //p.AddUnit(filler4);
+            p.AddUnit(filler2);
+            p.AddUnit(filler3);
+            p.AddUnit(filler4);
+            cc.PlaceCharacter(0, filler2, startPositions[1].GetXOnGrid(), startPositions[1].GetYOnGrid());
+            cc.PlaceCharacter(0, filler3, startPositions[2].GetXOnGrid(), startPositions[2].GetYOnGrid());
+            cc.PlaceCharacter(0, filler4, startPositions[3].GetXOnGrid(), startPositions[3].GetYOnGrid());
         }
-      
+
         //cc.PlaceCharacter(0, filler, startPositions[0].GetXOnGrid(), startPositions[0].GetYOnGrid());
         //cc.PlaceCharacter(0, filler2, startPositions[1].GetXOnGrid(), startPositions[1].GetYOnGrid());
         //cc.PlaceCharacter(0, filler3, startPositions[2].GetXOnGrid(), startPositions[2].GetYOnGrid());

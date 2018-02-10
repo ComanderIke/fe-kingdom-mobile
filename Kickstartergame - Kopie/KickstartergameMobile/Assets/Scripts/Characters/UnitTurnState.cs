@@ -47,7 +47,11 @@ namespace Assets.Scripts.Characters
             {
                 hasMoved = value;
                 if(EventContainer.unitCanMove!=null)
-                    EventContainer.unitCanMove(unit, !value);
+                    EventContainer.unitCanMove(unit, !hasMoved);
+                if(unit.Player.IsHumanPlayer)
+                    EventContainer.unitShowActiveEffect(unit, !hasMoved, false);
+                if(hasMoved)
+                    EventContainer.hideCursor();
             }
         }
         public bool HasAttacked { get; set; }
@@ -64,6 +68,7 @@ namespace Assets.Scripts.Characters
             IsWaiting = false;
             Selected = false;
             IsActive = false;
+            Debug.Log("Reset");
             MainScript.GetInstance().GetSystem<UnitSelectionManager>().DeselectActiveCharacter();
         }
         public void UnitTurnFinished()

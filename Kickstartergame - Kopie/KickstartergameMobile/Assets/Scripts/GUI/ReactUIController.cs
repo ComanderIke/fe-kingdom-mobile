@@ -3,6 +3,7 @@ using Assets.Scripts.Events;
 using Assets.Scripts.Utility;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -70,6 +71,14 @@ public class ReactUIController : MonoBehaviour {
     private Text guardValueText;
     [SerializeField]
     private Text guardMaxValueText;
+    [SerializeField]
+    private TextMeshProUGUI dodgeText;
+    [SerializeField]
+    private TextMeshProUGUI guardText;
+    [SerializeField]
+    private TextMeshProUGUI counterDmgText;
+    [SerializeField]
+    private TextMeshProUGUI counterHitText;
     [SerializeField]
     private Text missedText;
     [SerializeField]
@@ -221,7 +230,7 @@ public class ReactUIController : MonoBehaviour {
     private void UpdateDmg()
     {
         attackerDmg.text = ""+defender.BattleStats.GetReceivedDamage(attacker.BattleStats.GetDamage());
-        attackerHit.text = "" + attacker.BattleStats.GetHitAgainstTarget(defender);
+        attackerHit.text = "" + attacker.BattleStats.GetHitAgainstTarget(defender)+"%";
         
         if(bonusDmg==0)
             attackerBonusDmg.text = "";
@@ -269,6 +278,9 @@ public class ReactUIController : MonoBehaviour {
         this.attacker = attacker;
         this.defender = defender;
         gameObject.SetActive(true);
+        infoMessage.SetActive(true);
+        attackerBonusHit.text = "";
+        attackerBonusDmg.text = "";
     }
 
     private void HPValueChanged()
@@ -289,38 +301,35 @@ public class ReactUIController : MonoBehaviour {
 
     public void DodgeConfirmed()
     {
-        Debug.Log("DODGE");
-        EventContainer.dodgeClicked(currentDodgeValue);
-        EventContainer.attacktButtonCLicked();
+        EventContainer.dodgeClicked();
+        EventContainer.startAttack();
     }
     public void GuardConfirmed()
     {
-        EventContainer.guardClicked(currentGuardValue);
-        EventContainer.attacktButtonCLicked();
+        EventContainer.guardClicked();
+        EventContainer.startAttack();
     }
     public void CounterConfirmed()
     {
-        EventContainer.counterClicked(currentCounterAttackValue,currentCounterHitValue);
-        EventContainer.attacktButtonCLicked();
+        EventContainer.counterClicked();
+        EventContainer.startAttack();
     }
 
     public void ShowCounterMissText()
     {
-        StartCoroutine(TextAnimation(counterMissedText));
+        FindObjectOfType<PopUpTextController>().CreateDefendPopUpTextGreen("Missed", attackerImage.transform);
     }
     public void ShowCounterDamageText(int damage)
     {
-        counterDamageText.text = "-" + damage;
-        StartCoroutine(TextAnimation(counterDamageText));
+        FindObjectOfType<PopUpTextController>().CreateDefendPopUpTextRed("" + damage, attackerImage.transform);
     }
     public void ShowMissText()
     {
-        StartCoroutine(TextAnimation(missedText));
+        FindObjectOfType<PopUpTextController>().CreateDefendPopUpTextGreen("Missed", defenderImage.transform);
     }
     public void ShowDamageText(int damage)
     {
-        damageText.text = "-" + damage;
-        StartCoroutine(TextAnimation(damageText));
+        FindObjectOfType<PopUpTextController>().CreateDefendPopUpTextRed("" + damage, defenderImage.transform);
     }
     public void DodgeClicked()
     {
@@ -328,6 +337,13 @@ public class ReactUIController : MonoBehaviour {
         counterContainer.SetActive(false);
         guardContainer.SetActive(false);
         infoMessage.SetActive(false);
+        attackerHit.color = FindObjectOfType<ColorContainer>().mainGreenColor;
+        attackerDmg.color = Color.white;
+        dodgeText.text = "+ " +defender.GetType<Human>().DefenseTypes.Find(a => a.Name=="Dodge").Hit +"%";
+        attackerBonusHit.text = "";
+        attackerBonusDmg.text = "";
+        attackerDmg.text = "" + attacker.BattleStats.GetDamageAgainstTarget(defender);
+        attackerHit.text = "" + Mathf.Clamp(attacker.BattleStats.GetHitAgainstTarget(defender) + defender.GetType<Human>().DefenseTypes.Find(a => a.Name == "Dodge").Hit,0,100)+"%";
     }
     public void GuardClicked()
     {
@@ -335,6 +351,13 @@ public class ReactUIController : MonoBehaviour {
         counterContainer.SetActive(false);
         dodgeContainer.SetActive(false);
         infoMessage.SetActive(false);
+        attackerBonusHit.text = "";
+        attackerBonusDmg.text = "";
+        attackerHit.color = Color.white;
+        attackerHit.text = "" + attacker.BattleStats.GetHitAgainstTarget(defender)  + "%";
+        attackerDmg.text = "" + attacker.BattleStats.GetDamageAgainstTarget(defender, defender.GetType<Human>().DefenseTypes.Find(a => a.Name == "Guard").Atk_Mult);
+        attackerDmg.color = FindObjectOfType<ColorContainer>().mainGreenColor;
+        guardText.text = "- " + (100-(defender.GetType<Human>().DefenseTypes.Find(a => a.Name == "Guard").Atk_Mult*100)) + "% ";
     }
     public void CounterClicked()
     {
@@ -342,6 +365,14 @@ public class ReactUIController : MonoBehaviour {
         guardContainer.SetActive(false);
         dodgeContainer.SetActive(false);
         infoMessage.SetActive(false);
+        attackerHit.color = Color.white;
+        attackerDmg.color = Color.white;
+        attackerDmg.text = "" + attacker.BattleStats.GetDamageAgainstTarget(defender);
+        attackerHit.text = "" + attacker.BattleStats.GetHitAgainstTarget(defender) + "%";
+        counterHitText.text =  defender.BattleStats.GetHitAgainstTarget(attacker)+ "%";
+        counterDmgText.text = "" + defender.BattleStats.GetDamageAgainstTarget(attacker);
+        attackerBonusHit.text = "";
+        attackerBonusDmg.text = "";
     }
     
     #region COROUTINES

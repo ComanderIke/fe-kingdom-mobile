@@ -46,7 +46,6 @@ namespace Assets.Scripts.AI.AttackPatterns
 
         public override void Execute()
         {
-            Debug.Log("Execute: JumpAttack");
             EventContainer.attackPatternUsed(unit, this);
             EventContainer.continuePressed += DoAction;
 

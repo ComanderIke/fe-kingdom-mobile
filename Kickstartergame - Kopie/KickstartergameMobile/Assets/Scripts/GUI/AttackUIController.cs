@@ -16,7 +16,9 @@ public class AttackUIController : MonoBehaviour {
     public const float MISS_TEXT_VISIBLE_DURATION = 1.5f;
 
 
-    List<AttackTargetPoint> targetPoints;
+    
+    
+    #region InspectorFields
     [Header("Input Fields")]
     [SerializeField]
     Animator animator;
@@ -49,15 +51,15 @@ public class AttackUIController : MonoBehaviour {
     [SerializeField]
     private Text attackerMaxDMG;
     [SerializeField]
+    private Text strongAttackDamage;
+    [SerializeField]
+    private Text strongAttackHit;
+    [SerializeField]
     private Text attackerMaxHIT;
     [SerializeField]
     private Text attackerSP;
     [SerializeField]
     private Text attackerSP2;
-    [SerializeField]
-    private Text missedText;
-    [SerializeField]
-    private Text damageText;
     [SerializeField]
     private Image attackerHPBar;
     [SerializeField]
@@ -91,6 +93,7 @@ public class AttackUIController : MonoBehaviour {
     private float healthSpeed;
     [SerializeField]
     private float healthLoseSpeed;
+    #endregion
 
     private int attackCount;
     private float currentAllyHPValue;
@@ -105,14 +108,15 @@ public class AttackUIController : MonoBehaviour {
     private int currentAtkSliderValue = 0;
     private LivingObject attacker;
     private LivingObject defender;
-    private AttackTargetPoint activeTarget;
+    private AttackTargetPoint activeTargetPoint;
+    private TargetPoint attackTarget;
+    private List<AttackTargetPoint> targetPoints;
+    private AttackType attackType;
+
     void Start () {
        
 	}
-    public void SetAttackCountText()
-    {
-        
-    }
+
     void OnEnable()
     {
 
@@ -121,30 +125,18 @@ public class AttackUIController : MonoBehaviour {
         swipeAttackGO.SetActive(true);
         EventContainer.hpValueChanged += HPValueChanged;
         EventContainer.attackUIVisible(true);
-        EventContainer.swipeRightEvent += ShowStrongAttack;
-        EventContainer.swipeLeftEvent += ShowFastAttack;
         EventContainer.swipeIdleEvent += ShowIdleAttack;
-        EventContainer.swipeLeftConfirmedEvent += AttackButtonClicked;
-        EventContainer.swipeRightConfirmedEvent += AttackButtonClicked;
         attackerSprite.sprite = attacker.Sprite;
         defenderSprite.sprite = defender.Sprite;
         attackCount = attacker.BattleStats.GetAttackCountAgainst(defender);
     }
-    public void ShowAttackReaction(string user, string reactionName)
-    {
-        Debug.Log("Show Reaction");
-        
-        attackReactionUI.Show(user,reactionName);
-    }
+    
     private void OnDisable()
     {
         EventContainer.hpValueChanged -= HPValueChanged;
         EventContainer.attackUIVisible(false);
-        EventContainer.swipeRightEvent -= ShowStrongAttack;
-        EventContainer.swipeLeftEvent -= ShowFastAttack;
         EventContainer.swipeIdleEvent -= ShowIdleAttack;
-        EventContainer.swipeLeftConfirmedEvent -= AttackButtonClicked;
-        EventContainer.swipeRightConfirmedEvent -= AttackButtonClicked;
+
     }
 
     void Update () {
@@ -198,6 +190,12 @@ public class AttackUIController : MonoBehaviour {
         StartCoroutine(DelayHide(0.25f));
         animator.SetTrigger("Outro");
     }
+    public void ShowAttackReaction(string user, string reactionName)
+    {
+        Debug.Log("Show Reaction");
+
+        attackReactionUI.Show(user, reactionName);
+    }
     IEnumerator DelayHide(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -210,12 +208,42 @@ public class AttackUIController : MonoBehaviour {
         swipeAttackGO.SetActive(true);
         //targetPointParent.gameObject.SetActive(true);
     }
-    public void AttackButtonClicked()
+    public void SetAttackCountText()
+    {
+
+    }
+    public void StrongAttack()
+    {
+        Human human = (Human)attacker;
+        Debug.Log("Strong Attack!");
+        attackType = attacker.GetType<Human>().AttackTypes.Find(a => a.Name == "StrongAttack");
+        StartAttack(attackType);
+    }
+    public void FastAttack()
+    {
+        Human human = (Human)attacker;
+        Debug.Log("Fast Attack!");
+        attackType = attacker.GetType<Human>().AttackTypes.Find(a => a.Name == "FastAttack");
+        StartAttack(attackType);
+    }
+    public void StrongAttackPreview()
+    {
+        attackType = attacker.GetType<Human>().AttackTypes.Find(a => a.Name == "StrongAttack");
+        UpdateHit();
+        UpdateDamage();
+    }
+    public void FastAttackPreview()
+    {
+        attackType = attacker.GetType<Human>().AttackTypes.Find(a => a.Name == "FastAttack");
+        UpdateHit();
+        UpdateDamage();
+    }
+    public void StartAttack(AttackType attackType)
     {
         swipeAttackGO.SetActive(false);
         foreach (AttackTargetPoint point in targetPoints)
         {
-            if (point != activeTarget)
+            if (point != activeTargetPoint)
             {
                 point.gameObject.SetActive(false);
             }
@@ -224,13 +252,13 @@ public class AttackUIController : MonoBehaviour {
         if (attackCount > 0)
         {
             Debug.Log("StartAttack!");
-            EventContainer.attacktButtonCLicked();
+            EventContainer.startAttack(attackType, attackTarget);
             attackCount--;
         }
         if(attackCount <=0)
         {
             swipeAttackGO.SetActive(false);
-            activeTarget.gameObject.SetActive(false);
+            activeTargetPoint.gameObject.SetActive(false);
             targetInfoObject.SetActive(false);
         }
         else
@@ -246,29 +274,17 @@ public class AttackUIController : MonoBehaviour {
             if (id == point.ID)
             {
                 point.PlayAnimation();
-                activeTarget = point;
+                activeTargetPoint = point;
             }
             else
             {
                 point.StopAnimation();
             }
         }
-        TargetPoint targetp = ((Monster)defender).TargetPoints[activeTarget.ID];
-        targetName.text = targetp.Name;
-        UpdateDamage(targetp.ATK_Multiplier);
-        UpdateHit(targetp.HIT_INFLUENCE);
-    }
-    void ShowFastAttack()
-    {
-        idleAttackGO.SetActive(false);
-        strongAttackGO.SetActive(false);
-        fastAttackGO.SetActive(true);
-    }
-    void ShowStrongAttack()
-    {
-        idleAttackGO.SetActive(false);
-        strongAttackGO.SetActive(true);
-        fastAttackGO.SetActive(false);
+        attackTarget = ((Monster)defender).TargetPoints[activeTargetPoint.ID];
+        targetName.text = attackTarget.Name;
+        UpdateDamage();
+        UpdateHit();
     }
     void ShowIdleAttack()
     {
@@ -278,44 +294,75 @@ public class AttackUIController : MonoBehaviour {
     }
     public void ShowCounterMissText()
     {
-        FindObjectOfType<PopUpTextController>().CreatePopUpTextGreen("Missed", attackerSprite.transform);
+        FindObjectOfType<PopUpTextController>().CreateAttackPopUpTextGreen("Missed", attackerSprite.transform);
     }
     public void ShowCounterDamageText(int damage)
     {
-        FindObjectOfType<PopUpTextController>().CreatePopUpTextRed("" + damage, attackerSprite.transform);
+        FindObjectOfType<PopUpTextController>().CreateAttackPopUpTextRed("" + damage, attackerSprite.transform);
     }
     public void ShowMissText()
     {
         //activeTarget.ShowMissedText();
-        FindObjectOfType<PopUpTextController>().CreatePopUpTextGreen("Missed", activeTarget.transform);
+        FindObjectOfType<PopUpTextController>().CreateAttackPopUpTextGreen("Missed", activeTargetPoint.transform);
     }
     public void ShowDamageText(int damage)
     {
-        FindObjectOfType<PopUpTextController>().CreatePopUpTextRed("" + damage, activeTarget.transform);
+        FindObjectOfType<PopUpTextController>().CreateAttackPopUpTextRed("" + damage, activeTargetPoint.transform);
         //activeTarget.ShowDamageText(damage);
         
     }
 
-    void UpdateHit(int hitInfluence)
+    void UpdateHit()
     {
+        int hitInfluence = attackTarget.HIT_INFLUENCE;
+        if (attackType != null)
+            hitInfluence += attackType.Hit;
+
         int hit = Mathf.Clamp(attacker.BattleStats.GetHitAgainstTarget(defender)+hitInfluence, 0, 100);// + 10 * currentHitSliderValue, 0, 100);
        // attackerMaxHIT.text = "" + Mathf.Clamp(attacker.BattleStats.GetHitAgainstTarget(defender) + hitSlider.maxValue * 10, 0, 100) + "%";
         attackerHIT.text = "" + hit + "%";
+        if (hit >= 80)
+        {
+            attackerHIT.color = FindObjectOfType<ColorContainer>().mainGreenColor;
+        }
+        else if(hit <=40)
+        {
+            attackerHIT.color = FindObjectOfType<ColorContainer>().mainRedColor;
+        }
+        else
+        {
+            attackerHIT.color = FindObjectOfType<ColorContainer>().mainWhiteColor;
+        }
         if (EventContainer.attackerHitChanged != null)
             EventContainer.attackerHitChanged(hit);
+        if (attackType != null)
+            strongAttackHit.text = "- " + attackType.Hit + " %";
         //attackerSP2.text = "" + attacker.Stats.SP;
     }
-    void UpdateDamage(float multiploer)
+    void UpdateDamage()
     {
-        int damage = attacker.BattleStats.GetDamage() ;
-        int dmg = (int)((defender.BattleStats.GetReceivedDamage(damage)) * multiploer);
-        //int maxdmg = (defender.BattleStats.GetReceivedDamage(attacker.BattleStats.GetDamage() + (int)attackSlider.maxValue));
-        //attackerMaxDMG.text = "" + maxdmg;
+        float multiplier = attackTarget.DamageMultiplier;
+        List<float> attackMultiplier = new List<float>();
+        attackMultiplier.Add(multiplier);
+        if(attackType!=null)
+            attackMultiplier.Add(attackType.DamageMultiplier);
+        int damage = attacker.BattleStats.GetDamage(attackMultiplier);
+        int dmg = (int)((defender.BattleStats.GetReceivedDamage(damage)));
         attackerDMG.text = "" + dmg;
-        //attackerSP.text = "" + attacker.Stats.SP;
-        int bonusDmg = 0;//1 * currentAtkSliderValue;
-        if (EventContainer.attackerDmgChanged != null)
-            EventContainer.attackerDmgChanged(bonusDmg);
+        Human human =(Human) attacker;
+        strongAttackDamage.text = "+" + (attacker.BattleStats.GetDamageAgainstTarget(defender, attackMultiplier) - attacker.BattleStats.GetDamageAgainstTarget(defender, multiplier));
+        if (dmg >= 5)
+        {
+            attackerDMG.color = FindObjectOfType<ColorContainer>().mainGreenColor;
+        }
+        else if (dmg <= 1)
+        {
+            attackerDMG.color = FindObjectOfType<ColorContainer>().mainRedColor;
+        }
+        else
+        {
+            attackerDMG.color = FindObjectOfType<ColorContainer>().mainWhiteColor;
+        }
     }
 
     private void HPValueChanged()

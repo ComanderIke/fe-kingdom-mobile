@@ -3,6 +3,7 @@ using Assets.Scripts.Engine;
 using Assets.Scripts.Events;
 using Assets.Scripts.Players;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -55,24 +56,33 @@ namespace Assets.Scripts.GameStates
             ActivePlayer = Players[activePlayerNumber];
         }
 
+        IEnumerator DelayTooglePlayerInput(bool active, float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            mainScript.GetSystem<MouseManager>().active = active;
+            if(active)
+                mainScript.GetController<UIController>().ShowAllActiveUnitEffects();
+            else
+                mainScript.GetController<UIController>().HideAllActiveUnitEffects();
+            CameraMovement.locked = !active;
+        }
         private void StartTurn()
         {
-            Debug.Log("StartTurn!");
+            Debug.Log("StartTurn");
             if (!ActivePlayer.IsHumanPlayer)
             {
 
                 GameObject.FindObjectOfType<AudioManager>().ChangeMusic("EnemyPhase", "PlayerPhase", true);
                 mainScript.SwitchState(new AIState(ActivePlayer));
-                GameObject go = GameObject.Instantiate(mainScript.AITurnAnimation, new Vector3(), Quaternion.identity) as GameObject;
-                go.transform.SetParent(GameObject.Find("Canvas").transform, false);
+                mainScript.GetController<UIController>().EnemyTurnAnimation();
+                mainScript.StartCoroutine(DelayTooglePlayerInput(false,0));
             }
             else
             {
+                mainScript.StartCoroutine(DelayTooglePlayerInput(false, 0));
                 GameObject.FindObjectOfType<AudioManager>().ChangeMusic("PlayerPhase", "EnemyPhase", true);
-                GameObject go = GameObject.Instantiate(mainScript.PlayerTurnAnimation, new Vector3(), Quaternion.identity) as GameObject;
-                go.transform.localPosition = new Vector3();
-                go.transform.SetParent(GameObject.Find("Canvas").transform, false);
-
+                mainScript.GetController<UIController>().PlayerTurnAnimation();
+                mainScript.StartCoroutine(DelayTooglePlayerInput(true, PlayerTurnTextAnimation.duration+0.25f));
             }
             if (ActivePlayer.ID == 1)
             {
@@ -94,6 +104,7 @@ namespace Assets.Scripts.GameStates
 
         public void EndTurn()
         {
+            Debug.Log("EndTurn!");
             foreach (LivingObject c in ActivePlayer.Units)
             {
                 c.EndTurn();
@@ -101,9 +112,7 @@ namespace Assets.Scripts.GameStates
             }
             ActivePlayerNumber++;
             ActivePlayer = Players[ActivePlayerNumber];
-            Debug.Log(ActivePlayer.Units[0].Name);
             mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter = null;
-            Debug.Log("EndTurn" + ActivePlayerNumber);
             StartTurn();
         }
     }

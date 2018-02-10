@@ -10,7 +10,7 @@ namespace Assets.Scripts.Characters.Monsters
         public float XPos{ get; set; }
         public float YPos { get; set; }
         public string Name { get; set; }
-        public float  ATK_Multiplier { get; set; }
+        public float  DamageMultiplier { get; set; }
         public int HIT_INFLUENCE { get; set; }
         public float Scale { get; set; }
 
@@ -19,7 +19,7 @@ namespace Assets.Scripts.Characters.Monsters
             XPos = x;
             YPos = y;
             Name = name;
-            ATK_Multiplier = attackMultiplier;
+            DamageMultiplier = attackMultiplier;
             HIT_INFLUENCE = hitInfluence;
             Scale = scale;
         }

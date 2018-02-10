@@ -19,8 +19,8 @@ namespace Assets.Scripts.GameStates
 
         public override void enter()
         {
-            CameraMovement.locked = false;
-            mainScript.GetSystem<MouseManager>().active = true;
+            
+           
             active = true;
         }
 
@@ -32,8 +32,7 @@ namespace Assets.Scripts.GameStates
 
         public override void exit()
         {
-            CameraMovement.locked = true;
-            mainScript.GetSystem<MouseManager>().active = false;
+            
         }
 
         public void CheckGameOver()

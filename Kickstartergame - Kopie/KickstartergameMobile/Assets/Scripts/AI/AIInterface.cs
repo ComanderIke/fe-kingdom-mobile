@@ -105,7 +105,6 @@ namespace Assets.Scripts.AI
         protected void SubmitMove(LivingObject character, Vector2 location)
         {
             //just adding the Command but not executing it yet
-            Debug.Log("Move Character TO " + location);
             GameObject.FindObjectOfType<CameraMovement>().MoveCameraTo((int)location.x, (int)location.y);
             mainScript.GetSystem<UnitActionManager>().MoveCharacter(character, (int)location.x,(int) location.y);
         }

@@ -51,7 +51,6 @@ public class SimpleMonsterAI : AIInterface {
     void FinishedAction()
     {
         EventContainer.allCommandsFinished -= FinishedAction;
-        Debug.Log("AICommands Finished!");
         doingAction = false;
     }
 
@@ -213,7 +212,6 @@ public class SimpleMonsterAI : AIInterface {
         Vector2 startLoc = new Vector2(unit.GridPosition.x, unit.GridPosition.y);
         Vector2 currentBestMoveLocation = new Vector2();
         currentBestTargets = new List<LivingObject>();
-        Debug.Log("possible positions:");
         foreach (Vector2 loc in moveLocs)
         {
             SetCharacterPosition(unit, startLoc);
@@ -230,7 +228,6 @@ public class SimpleMonsterAI : AIInterface {
                     float attackscore = ScoreAttackForUnit(unit, loc, t);
                     if ((locScore + attackscore) > currentBestScore)
                     {
-                        Debug.Log("Best Location: "+loc);
                         currentBestMoveLocation = loc;
                         currentBestScore = locScore + attackscore;
                         
@@ -252,7 +249,6 @@ public class SimpleMonsterAI : AIInterface {
             }
 
         }
-        Debug.Log(currentBestMoveLocation);
         SetCharacterPosition(unit, startLoc);
         SubmitMove(unit, currentBestMoveLocation);
         unit.UnitTurnState.IsWaiting = true;

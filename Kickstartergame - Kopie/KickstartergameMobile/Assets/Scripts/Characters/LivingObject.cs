@@ -50,6 +50,7 @@ namespace Assets.Scripts.Characters
 
         public void EndTurn()
         {
+            Debug.Log("EndTurn");
             UnitTurnState.Reset();
         }
         public void UpdateTurn()
@@ -80,13 +81,18 @@ namespace Assets.Scripts.Characters
         {
             GridPosition.SetPosition(x, y);
         }
-
+       
         public virtual void SetPosition(int x, int y)
         {
             GridPosition.SetPosition(x, y);
+            
             GameTransform.SetPosition(x, y);
         }
-     
+        public void ResetPosition()
+        {
+            GameTransform.SetPosition(GridPosition.x,GridPosition.y);
+            GameTransform.EnableCollider();
+        }
         public void Die()
         {
             EventContainer.unitDied(this);
@@ -138,7 +144,14 @@ namespace Assets.Scripts.Characters
             }
             return inflictedDmg;
         }
+        public T GetType<T>()
+        {
+            if(this is T) { 
+                 return (T)Convert.ChangeType(this, typeof(T));
+            }
+            return default(T);
+        }
 
-        
+
     }
 }

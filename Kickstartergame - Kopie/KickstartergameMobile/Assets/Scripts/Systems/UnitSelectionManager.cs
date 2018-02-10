@@ -18,7 +18,6 @@ namespace Assets.Scripts.GameStates
         public UnitSelectionManager()
         {
             mainScript = MainScript.GetInstance();
-            Debug.Log("Init UnitSelectionManager!"+mainScript.name);
             EventContainer.unitClickedConfirmed += UnitClicked;
             EventContainer.endDragOverNothing += DeselectActiveCharacter;
         }
@@ -26,24 +25,28 @@ namespace Assets.Scripts.GameStates
         {
             mainScript.oldPosition = new Vector2(SelectedCharacter.GameTransform.GameObject.transform.localPosition.x, SelectedCharacter.GameTransform.GameObject.transform.localPosition.y);
             DeselectActiveCharacter();
-            Debug.Log("Same Selected");
          }
         public void DeselectActiveCharacter()
         {
             if (SelectedCharacter != null)
+                SelectedCharacter.ResetPosition();
+            if (SelectedCharacter != null)
                 SelectedCharacter.UnitTurnState.Selected = false;
             EventContainer.deselectActiveCharacter();
+            
             SelectedCharacter = null;
+            
             mainScript.gridManager.HideMovement();
+            mainScript.GetController<UIController>().ShowAllActiveUnitEffects();
 
         }
         void SelectCharacter(LivingObject c)
         {
-            Debug.Log("Select Character");
             if (SelectedCharacter != null)
             {
                 SelectedCharacter.UnitTurnState.Selected = false;
             }
+            
             SelectedCharacter = c;
             c.UnitTurnState.Selected = true;
             GridManager s = mainScript.gridManager;
@@ -51,7 +54,8 @@ namespace Assets.Scripts.GameStates
             s.HideMovement();
             s.ShowMovement(c);
             s.ShowAttack(c, new List<int>(c.Stats.AttackRanges));
-
+            mainScript.GetController<UIController>().HideAllActiveUnitEffects();
+            EventContainer.unitShowActiveEffect(SelectedCharacter, true, false);
         }
 
         void EnemySelected(LivingObject c)

@@ -126,7 +126,6 @@ public class GridManager : MonoBehaviour {
    
     public void HideMovement()
     {
-        Debug.Log(gameObject.name);
         for (int i = 0; i < grid.width; i++)
         {
             for (int j = 0; j < grid.height; j++)
@@ -142,6 +141,7 @@ public class GridManager : MonoBehaviour {
                 Tiles[i, j].isActive = false;
             }
         }
+        MainScript.GetInstance().GetController<UIController>().HideAttackableEnemy();
     }
     public void ShowAttackRecursive(LivingObject character, int x, int y, int range, List<int> direction)
     {

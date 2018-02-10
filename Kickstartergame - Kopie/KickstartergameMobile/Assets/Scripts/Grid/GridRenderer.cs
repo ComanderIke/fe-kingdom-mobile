@@ -82,7 +82,11 @@ namespace Assets.Scripts.Grid
                 if (m.material.mainTexture == GridManager.gridRessources.MoveTexture || m.material.mainTexture == GridManager.gridRessources.MoveTexture2)
                     return;
                 if (MainScript.GetInstance().GetSystem<TurnManager>().ActivePlayer.ID == playerId)
+                {
                     m.material.mainTexture = GridManager.gridRessources.AttackTexture;
+                    if (Tiles[(int)pos.x, (int)pos.y].character != null)
+                        MainScript.GetInstance().GetController<UIController>().ShowAttackableEnemy((int)pos.x, (int)pos.y);
+                }
                 else
                     m.material.mainTexture = GridManager.gridRessources.EnemyAttackTexture;
             }
@@ -95,7 +99,10 @@ namespace Assets.Scripts.Grid
                 if (Tiles[(int)pos.x, (int)pos.y].character != null && Tiles[(int)pos.x, (int)pos.y].character.Player.ID != playerId)
                 {
                     if (MainScript.GetInstance().GetSystem<TurnManager>().ActivePlayer.ID == playerId)
+                    {
                         m.material.mainTexture = GridManager.gridRessources.AttackTexture;
+                        MainScript.GetInstance().GetController<UIController>().ShowAttackableEnemy((int)pos.x, (int)pos.y);
+                    }
                     else
                         m.material.mainTexture = GridManager.gridRessources.EnemyAttackTexture;
                 }

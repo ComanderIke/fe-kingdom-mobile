@@ -6,6 +6,7 @@ using Assets.Scripts.Battle;
 using Assets.Scripts.Characters;
 using Assets.Scripts.Events;
 using Assets.Scripts.AI.AttackReactions;
+using Assets.Scripts.Characters.Monsters;
 
 namespace Assets.Scripts.GameStates
 {
@@ -18,11 +19,12 @@ namespace Assets.Scripts.GameStates
         private LivingObject defender;
         private UIController uiController;
         private UnitsController unitController;
-        private int attackerBonusDmg;
-        private int attackerHit;
         private int attackCount;
-        private bool counter;
         private string startMusic;
+        private AttackReaction reaction;
+        private DefenseType defense;
+        private bool isDefense;
+        private bool react;
 
         public FightState(LivingObject attacker, LivingObject defender)
         {
@@ -34,57 +36,22 @@ namespace Assets.Scripts.GameStates
             unitController = MainScript.GetInstance().GetController<UnitsController>();
         }
         
+        #region GameState
         public override void enter()
         {
-            //CameraMovement.locked = true;
-            counter = false;
             react = false;
-            attackerBonusDmg = 0;
-            attackerHit = attacker.BattleStats.GetHitAgainstTarget(defender);
-            uiController.HideMapUI();
-            if(attacker.Player.IsHumanPlayer)
-                uiController.ShowFightUI(attacker, defender);
-            if(defender.Player.IsHumanPlayer)
-                uiController.ShowReactUI(attacker, defender);
+            
+            ShowFightUI();
             unitController.HideUnits();
-            EventContainer.attacktButtonCLicked += DoAttack;
-            EventContainer.attackerDmgChanged += AttackerDmgChanged;
-            EventContainer.attackerHitChanged += AttackerHitChanged;
+            EventContainer.startAttack += DoAttack;
             EventContainer.counterClicked = CounterClicked;
             EventContainer.dodgeClicked = DodgeClicked;
             EventContainer.guardClicked = GuardClicked;
-            startMusic = GameObject.FindObjectOfType<AudioManager>().GetCurrentlyPlayedMusicTracks()[0];
-            GameObject.FindObjectOfType<AudioManager>().ChangeMusic("Fight",startMusic);
-        }
-        int counterBonusAttack = 0;
-        int counterBonusHit = 0;
-        void CounterClicked(int attack, int hit)
-        {
-            counterBonusAttack = attack;
-            counterBonusHit = hit * 10;
-            counter = true;
-        }
-        void DodgeClicked(int dodge)
-        {
-            attackerHit -= 20 + dodge * 10;
-        }
-        void GuardClicked(int guard)
-        {
-            attackerHit += 20;
-            attackerBonusDmg -= 2 + guard * 1;
-        }
-        void AttackerDmgChanged(int bonusDamage)
-        {
-            attackerBonusDmg = bonusDamage;
-        }
-        void AttackerHitChanged(int hit)
-        {
-            attackerHit = hit;
+            SetUpMusic();
         }
         public override void update()
         {
         }
-
         public override void exit()
         {
             //CameraMovement.locked = false;
@@ -101,55 +68,130 @@ namespace Assets.Scripts.GameStates
                 defender.Die();
             }
             EventContainer.attacktButtonCLicked -= EndFight;
-            EventContainer.attacktButtonCLicked -= DoAttack;
-            GameObject.FindObjectOfType<AudioManager>().ChangeMusic(startMusic,"Fight",true);
+            EventContainer.startAttack -= DoAttack;
+            GameObject.FindObjectOfType<AudioManager>().ChangeMusic(startMusic, "Fight", true);
         }
+        #endregion
 
-        private bool DoesAttackHit(LivingObject attacker, LivingObject defender, bool counter)
-        {
-            if (!counter)
-                Debug.Log("Hitchance: " + attackerHit);
-            else
-                Debug.Log("Hitchance: " +(attacker.BattleStats.GetHitAgainstTarget(defender) + counterBonusHit));
-           
-            int rng = UnityEngine.Random.Range(1, 101);
-            if (!counter)
-                return rng <= attackerHit;
-            else
-                return rng <= (attacker.BattleStats.GetHitAgainstTarget(defender) + counterBonusHit);
-        }
-        private void DoAttack()
+        #region Eventtriggered Methods
+        private void DoAttack(AttackType attackType, TargetPoint attackTarget)
         {
             attackCount--;
-            if(attackCount>=0)
-                MainScript.GetInstance().StartCoroutine(Attack());
-            
+            if (attackCount >= 0)
+                MainScript.GetInstance().StartCoroutine(Attack(attackType, attackTarget));
         }
+        private void CounterClicked()
+        {
+            Human human = (Human)defender;
+            defense = human.DefenseTypes.Find(a => a.Name == "Counter");
+        }
+        private void DodgeClicked()
+        {
+            Human human = (Human)defender;
+            defense = human.DefenseTypes.Find(a => a.Name == "Dodge");
+        }
+        private void GuardClicked()
+        {
+            Human human = (Human)defender;
+            defense = human.DefenseTypes.Find(a => a.Name == "Guard");
+        }
+        #endregion
+
+        private void ShowFightUI()
+        {
+            uiController.HideMapUI();
+            if (attacker.Player.IsHumanPlayer)
+            {
+                isDefense = false;
+                uiController.ShowFightUI(attacker, defender);
+            }
+            else if (defender.Player.IsHumanPlayer)
+            {
+                isDefense = true;
+                uiController.ShowReactUI(attacker, defender);
+            }
+        }
+        private void SetUpMusic()
+        {
+            startMusic = GameObject.FindObjectOfType<AudioManager>().GetCurrentlyPlayedMusicTracks()[0];
+            GameObject.FindObjectOfType<AudioManager>().ChangeMusic("Fight", startMusic);
+        }
+        private bool DoesAttackHit(LivingObject attacker, LivingObject defender, AttackType attackType, TargetPoint attackTarget)
+        {
+            int hit = attacker.BattleStats.GetHitAgainstTarget(defender);
+            if (defense != null)
+                hit += defense.Hit;
+            if (attackType != null)
+                hit += attackType.Hit;
+            if (attackTarget != null)
+                hit += attackTarget.HIT_INFLUENCE;
+            return UnityEngine.Random.Range(1, 101) <= hit;
+        }
+        private void EndFight()
+        {
+            MainScript.GetInstance().StartCoroutine(End());
+        }
+        private void ExecuteReaction()
+        {
+            EventContainer.continuePressed -= ExecuteReaction;
+            reaction.Execute();
+        }
+        private void SingleAttack(LivingObject attacker, LivingObject defender, AttackType attackType,TargetPoint attackTarget)
+        {
+            if (DoesAttackHit(attacker, defender, attackType, attackTarget))
+            {
+                List<float> attackModifier = new List<float>();
+                if (attackType!=null)
+                    attackModifier.Add(attackType.DamageMultiplier);
+                if(attackTarget !=null)
+                    attackModifier.Add(attackTarget.DamageMultiplier);
+                if (defense != null)
+                    attackModifier.Add(defense.Atk_Mult);
+                int damage = defender.InflictDamage(attacker.BattleStats.GetDamage(attackModifier), attacker);
+                if (attacker.Player.IsHumanPlayer)
+                {
+                    react = true;
+                    if(isDefense)
+                        uiController.reactUIController.ShowCounterDamageText(damage);
+                    else
+                        uiController.attackUIController.ShowDamageText(damage);
+                }
+                if (defender.Player.IsHumanPlayer)
+                {
+                    uiController.reactUIController.ShowDamageText(damage);
+                }  
+            }
+            else
+            {
+                if (attacker.Player.IsHumanPlayer)
+                {
+                    if(isDefense)
+                        uiController.reactUIController.ShowCounterMissText();
+                    else
+                        uiController.attackUIController.ShowMissText();
+                }
+                if (defender.Player.IsHumanPlayer)
+                {
+                    uiController.reactUIController.ShowMissText();
+                }
+            }
+        }
+
         IEnumerator End()
         {
             yield return new WaitForSeconds(1.0f);
-            Debug.Log("Fight Finished!");
             EventContainer.commandFinished -= EndFight;
             EventContainer.continuePressed = null;
             MainScript.GetInstance().SwitchState(new GameplayState());
             attacker.UnitTurnState.UnitTurnFinished();
             EventContainer.commandFinished();
         }
-        private void EndFight()
-        {
-            MainScript.GetInstance().StartCoroutine(End());
-        }
-        void ExecuteReaction()
-        {
-            EventContainer.continuePressed -= ExecuteReaction;
-            reaction.Execute();
-        }
-        AttackReaction reaction;
-        IEnumerator Attack()
+        IEnumerator Attack(AttackType attackType, TargetPoint attackTarget)
         {
             yield return new WaitForSeconds(ATTACK_DELAY);
-            SingleAttack(attacker, defender, false);
-            if (react&&attackCount==0&& defender is Monster){
+            SingleAttack(attacker, defender, attackType, attackTarget);
+            if (react && attackCount == 0 && defender is Monster)
+            {
                 Debug.Log("Start Reaction!");
                 yield return new WaitForSeconds(1.5f);
                 Monster m = (Monster)defender;
@@ -158,50 +200,17 @@ namespace Assets.Scripts.GameStates
                 uiController.attackUIController.ShowAttackReaction(defender.Name, reaction.Name);
                 EventContainer.reactionFinished += EndFight;
                 EventContainer.continuePressed += ExecuteReaction;
-               
+
                 yield break;
             }
-            //if (counter)
-            //{
-            //    yield return new WaitForSeconds(3.0f);
-            //    SingleAttack(defender, attacker, true);
-            //}
-            if(attackCount==0)
+            if (defense!=null && defense.Name=="Counter")
+            {
+                yield return new WaitForSeconds(3.0f);
+                SingleAttack(defender, attacker, null,null);
+                yield return new WaitForSeconds(1.0f);
+            }
+            if (attackCount == 0)
                 EndFight();
         }
-        bool react = false;
-        private void SingleAttack(LivingObject attacker, LivingObject defender, bool counter)
-        {
-            if (DoesAttackHit(attacker, defender, counter))
-            {
-                if (attacker.Player.IsHumanPlayer && !counter)
-                {
-                    react = true;
-                    uiController.attackUIController.ShowDamageText(defender.InflictDamage(attacker.BattleStats.GetDamage() + attackerBonusDmg, attacker));
-                }
-                if (defender.Player.IsHumanPlayer || counter)
-                {
-                    if (!counter)
-                        uiController.reactUIController.ShowDamageText(defender.InflictDamage(attacker.BattleStats.GetDamage() + attackerBonusDmg, attacker));
-                    else
-                        uiController.reactUIController.ShowCounterDamageText(defender.InflictDamage(attacker.BattleStats.GetDamage() + counterBonusAttack, attacker));
-                }
-                    
-            }
-            else
-            {
-                if (attacker.Player.IsHumanPlayer && !counter)
-                    uiController.attackUIController.ShowMissText();
-                if (defender.Player.IsHumanPlayer || counter)
-                {
-                    if(!counter)
-                        uiController.reactUIController.ShowMissText();
-                    else
-                        uiController.reactUIController.ShowCounterMissText();
-                }
-            }
-        }
-
-       
     }
 }

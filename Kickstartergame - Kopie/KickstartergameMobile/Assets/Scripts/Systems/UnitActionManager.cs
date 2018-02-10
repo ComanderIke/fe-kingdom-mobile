@@ -48,6 +48,9 @@ namespace Assets.Scripts.GameStates
         public void MoveCharacter(LivingObject c, int x, int y, List<Vector2> path)
         {
             MoveCharacterCommand mCC = new MoveCharacterCommand(c, x, y,path);
+            EventContainer.unitShowActiveEffect(c, false, false);
+            Debug.Log(c.Name + " " + c.GridPosition.x + " " + c.GridPosition.y + " " + x + " " + y);
+            EventContainer.showCursor(x, y);
             currentActions.Enqueue(mCC);
            // mCC.Execute();
            // mainScript.SwitchState(new MovementState( c, x, y, path));
@@ -69,10 +72,8 @@ namespace Assets.Scripts.GameStates
             if (currentActions.Count != 0)
             {
                 Command current = currentActions.Dequeue();
-                Debug.Log(current);
                 if (currentActions.Count == 0)
                 {
-                    Debug.Log(current + " Last command!");
                     EventContainer.commandFinished = null;
                     EventContainer.commandFinished += ExecuteActions;
                     EventContainer.commandFinished += AllCommandFinished;
@@ -84,7 +85,6 @@ namespace Assets.Scripts.GameStates
         }
         void AllCommandFinished()
         {
-            Debug.Log("All Commands Finished!");
             EventContainer.commandFinished -= AllCommandFinished;
             EventContainer.allCommandsFinished();
         } 
@@ -146,9 +146,16 @@ namespace Assets.Scripts.GameStates
                     {
                         movePath.Add(new Vector2(preferedPath.path[i].x, preferedPath.path[i].y));
                     }
+                    int xMov = 0;
+                    int yMov = 0;
+                    if (movePath != null && movePath.Count >= 1)
+                    {
+                        xMov = (int)movePath[movePath.Count - 1].x;
+                        yMov = (int)movePath[movePath.Count - 1].y;
+                    }
                     if (drag)
                     {
-                        MoveCharacter(character, 0, 0, movePath);
+                        MoveCharacter(character, xMov, yMov, movePath);
                         Fight(character, enemy);// false, new FightState(character, enemy, new GameplayState()));
                         Debug.Log("All Commands Setup");
                         EventContainer.allCommandsFinished += SwitchToGamePlayState;
@@ -156,7 +163,7 @@ namespace Assets.Scripts.GameStates
                     }
                     else
                     {
-                        MoveCharacter(character, 0, 0, movePath);//, false, new FightState(character, enemy, new GameplayState()));
+                        MoveCharacter(character, xMov, yMov, movePath);//, false, new FightState(character, enemy, new GameplayState()));
                         Fight(character, enemy);
                         Debug.Log("All Commands Setup");
                         EventContainer.allCommandsFinished += SwitchToGamePlayState;
@@ -176,7 +183,6 @@ namespace Assets.Scripts.GameStates
         }
         private void SwitchToGamePlayState()
         {
-            Debug.Log("Switch State Delete Command");
             EventContainer.allCommandsFinished -= SwitchToGamePlayState;
             mainScript.SwitchState(new GameplayState());
         }
@@ -185,7 +191,6 @@ namespace Assets.Scripts.GameStates
             MainScript mainScript = MainScript.GetInstance();
             UnitSelectionManager unitSelectionManager = mainScript.GetSystem<UnitSelectionManager>();
             LivingObject selectedUnit = unitSelectionManager.SelectedCharacter;
-            Debug.Log("UnitMoveontile");
             if (mainScript.gridManager.Tiles[x, y].isActive && !(x == selectedUnit.GridPosition.x && y == selectedUnit.GridPosition.y))
             {
                 if (!(selectedUnit is Monster) || (selectedUnit is Monster && !((BigTilePosition)selectedUnit.GridPosition).Position.Contains(new Vector2(x, y))))
@@ -208,13 +213,13 @@ namespace Assets.Scripts.GameStates
             }
             else
             {
-                Debug.Log("Deselect");
                 unitSelectionManager.DeselectActiveCharacter();
             }
         }
 
         private void UnitMoveToOtherUnit(LivingObject draggedOverUnit)
         {
+            Debug.Log("MoveToOtherUnit");
             MainScript mainScript = MainScript.GetInstance();
             UnitSelectionManager unitSelectionManager = mainScript.GetSystem<UnitSelectionManager>();
             if (draggedOverUnit.Player.ID != unitSelectionManager.SelectedCharacter.Player.ID)
