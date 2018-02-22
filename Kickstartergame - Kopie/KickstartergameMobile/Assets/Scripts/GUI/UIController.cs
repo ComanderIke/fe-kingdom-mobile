@@ -26,21 +26,8 @@ public class UIController : MonoBehaviour, Controller {
     [SerializeField]
     TopUI topUI;
     [SerializeField]
-    Image faceSpriteLeft;
-    [SerializeField]
-    Image[] inventorySprites;
-    [SerializeField]
-    TextMeshProUGUI hpLeft;
-    [SerializeField]
-    TextMeshProUGUI atkLeft;
-    [SerializeField]
-    TextMeshProUGUI weaponAtk;
-    [SerializeField]
-    TextMeshProUGUI spdLeft;
-    [SerializeField]
-    TextMeshProUGUI defLeft;
-    [SerializeField]
-    TextMeshProUGUI accLeft;
+    TopUI topUIEnemy;
+
     [SerializeField]
     public AttackUIController attackUIController;
     [SerializeField]
@@ -210,31 +197,19 @@ public class UIController : MonoBehaviour, Controller {
 
     public void ShowTopUI(LivingObject c)
     {
-        //topUI.gameObject.SetActive(true);
+        if(c.Player.ID != mainScript.GetSystem<TurnManager>().ActivePlayer.ID)
+        {
+            topUIEnemy.Show(c);
+            topUI.Hide();
+        }
+        else
+        {
+            topUIEnemy.Hide();
+            topUI.Show(c);
+        }
+       
 
-        hpLeft.text = c.Stats.HP+" / "+c.Stats.MaxHP;
-        atkLeft.text = ""+c.Stats.Attack;
-        spdLeft.text = "" + c.Stats.Speed;
-        accLeft.text = "" + c.Stats.Accuracy;
-        defLeft.text = "" + c.Stats.Defense;
-        weaponAtk.text = "";
         
-        faceSpriteLeft.sprite = c.Sprite;
-        foreach (Image i in inventorySprites)
-        {
-            i.enabled = false;
-        }
-        if (c.GetType() == typeof(Human))
-        {
-            Human character = (Human)c;
-            if(character.EquipedWeapon!=null)
-            weaponAtk.text = "+" + character.EquipedWeapon.Dmg;
-            for (int i = 0; i < character.Inventory.items.Count; i++)
-            {
-                inventorySprites[i].sprite = character.Inventory.items[i].Sprite;
-                inventorySprites[i].enabled = true;
-            }
-        }
     }
 
     public void ShowMapUI()
@@ -257,14 +232,14 @@ public class UIController : MonoBehaviour, Controller {
     public void ShowAttackPreview(LivingObject attacker, LivingObject defender, Vector2 pos)
     {
         attackPreview.SetActive(true);
-        attackPreview.GetComponent<AttackPreview>().UpdateValues(attacker.BattleStats.GetDamageAgainstTarget(defender),attacker.BattleStats.GetHitAgainstTarget(defender), attacker.BattleStats.CanDoubleAttack(defender) ? 2 : 1);
-        Vector3 attackPreviewPos;
-        if (defender.GridPosition is BigTilePosition)
-          attackPreviewPos = Camera.main.WorldToScreenPoint(new Vector3(pos.x + GridManager.GRID_X_OFFSET ,pos.y + 1.0f, -0.05f));
-        else
-            attackPreviewPos = Camera.main.WorldToScreenPoint(new Vector3(pos.x + GridManager.GRID_X_OFFSET + 0.5f, pos.y + 1.0f, -0.05f));
-        attackPreviewPos.z = 0;
-        attackPreview.transform.localPosition = new Vector3(attackPreviewPos.x-540,attackPreviewPos.y-960,0);//TODO WHY MAGIC NUMBERS?
+        attackPreview.GetComponent<AttackPreview>().UpdateValues(attacker.Stats.MaxHP,attacker.Stats.HP, defender.Stats.MaxHP, defender.Stats.HP,attacker.BattleStats.GetDamageAgainstTarget(defender),attacker.BattleStats.GetHitAgainstTarget(defender), attacker.BattleStats.GetAttackCountAgainst(defender));
+        //Vector3 attackPreviewPos;
+        //if (defender.GridPosition is BigTilePosition)
+        //  attackPreviewPos = Camera.main.WorldToScreenPoint(new Vector3(pos.x + GridManager.GRID_X_OFFSET ,pos.y + 1.0f, -0.05f));
+        //else
+        //    attackPreviewPos = Camera.main.WorldToScreenPoint(new Vector3(pos.x + GridManager.GRID_X_OFFSET + 0.5f, pos.y + 1.0f, -0.05f));
+        //attackPreviewPos.z = 0;
+        //attackPreview.transform.localPosition = new Vector3(attackPreviewPos.x-540,attackPreviewPos.y-960,0);//TODO WHY MAGIC NUMBERS?
     }
     public void HideAttackPreview()
     {

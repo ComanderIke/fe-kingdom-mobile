@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using Assets.Scripts.Characters.Monsters;
+using TMPro;
 
 public class AttackUIController : MonoBehaviour {
 
@@ -29,6 +30,8 @@ public class AttackUIController : MonoBehaviour {
     [SerializeField]
     GameObject targetInfoObject;
     [SerializeField]
+    GameObject attackTextGO;
+    [SerializeField]
     GameObject chooseTargetTutorial;
     [SerializeField]
     AttackPatternUI attackReactionUI;
@@ -37,23 +40,25 @@ public class AttackUIController : MonoBehaviour {
     [SerializeField]
     Image defenderSprite;
     [SerializeField]
-    private Text attackerHP;
+    private TextMeshProUGUI attackerHP;
     [SerializeField]
-    private Text defenderHP;
+    private TextMeshProUGUI defenderHP;
     [SerializeField]
-    private Text attackerDMG;
+    private TextMeshProUGUI attackerDMG;
     [SerializeField]
-    private Text targetName;
+    private TextMeshProUGUI targetName;
     [SerializeField]
-    private Text attackerHIT;
+    private TextMeshProUGUI attackerHIT;
     [SerializeField]
-    private Text attackCountText;
+    private TextMeshProUGUI attackCountText;
+    [SerializeField]
+    private TextMeshProUGUI attackCountTextText;
     [SerializeField]
     private Text attackerMaxDMG;
     [SerializeField]
-    private Text strongAttackDamage;
+    private TextMeshProUGUI strongAttackDamage;
     [SerializeField]
-    private Text strongAttackHit;
+    private TextMeshProUGUI strongAttackHit;
     [SerializeField]
     private Text attackerMaxHIT;
     [SerializeField]
@@ -126,7 +131,8 @@ public class AttackUIController : MonoBehaviour {
         EventContainer.hpValueChanged += HPValueChanged;
         EventContainer.attackUIVisible(true);
         EventContainer.swipeIdleEvent += ShowIdleAttack;
-        attackerSprite.sprite = attacker.Sprite;
+        
+        //attackerSprite.sprite = attacker.Sprite;
         defenderSprite.sprite = defender.Sprite;
         attackCount = attacker.BattleStats.GetAttackCountAgainst(defender);
     }
@@ -148,10 +154,11 @@ public class AttackUIController : MonoBehaviour {
         defenderHPBar.fillAmount = enemyFillAmount;
         defenderLosingHPBar.fillAmount = enemyLoseFillAmount;
         attackerLosingHPBar.fillAmount = allyLoseFillAmount;
+        attackCountText.text = "" + attackCount;
         if (attackCount == 1)
-            attackCountText.text = attackCount + " Attack";
+            attackCountTextText.text = "Attack";
         else
-            attackCountText.text = attackCount+" Attacks";
+            attackCountTextText.text = "Attacks";
     }
     
     public void Show(LivingObject attacker, LivingObject defender)
@@ -160,6 +167,8 @@ public class AttackUIController : MonoBehaviour {
         this.defender = defender;
         attackButton.interactable = true;
         gameObject.SetActive(true);
+        chooseTargetTutorial.SetActive(true);
+        swipeAttackGO.SetActive(false);
         currentAtkSliderValue = 0;
         currentHitSliderValue = 0;
         hitSlider.value = 0;
@@ -226,21 +235,35 @@ public class AttackUIController : MonoBehaviour {
         attackType = attacker.GetType<Human>().AttackTypes.Find(a => a.Name == "FastAttack");
         StartAttack(attackType);
     }
+    public void ResetAttack()
+    {
+        attackButton.gameObject.SetActive(false);
+       // attackTextGO.SetActive(false);
+    }
     public void StrongAttackPreview()
     {
         attackType = attacker.GetType<Human>().AttackTypes.Find(a => a.Name == "StrongAttack");
         UpdateHit();
         UpdateDamage();
+        attackButton.gameObject.SetActive(true);
+        //attackTextGO.SetActive(true);
     }
     public void FastAttackPreview()
     {
         attackType = attacker.GetType<Human>().AttackTypes.Find(a => a.Name == "FastAttack");
         UpdateHit();
         UpdateDamage();
+        attackButton.gameObject.SetActive(true);
+        //attackTextGO.SetActive(true);
+    }
+    public void AttackButtonCLicked()
+    {
+        StartAttack(attackType);
     }
     public void StartAttack(AttackType attackType)
     {
         swipeAttackGO.SetActive(false);
+        attackButton.gameObject.SetActive(false);
         foreach (AttackTargetPoint point in targetPoints)
         {
             if (point != activeTargetPoint)
@@ -248,7 +271,6 @@ public class AttackUIController : MonoBehaviour {
                 point.gameObject.SetActive(false);
             }
         }
-        attackButton.interactable = false;
         if (attackCount > 0)
         {
             Debug.Log("StartAttack!");
@@ -259,15 +281,16 @@ public class AttackUIController : MonoBehaviour {
         {
             swipeAttackGO.SetActive(false);
             activeTargetPoint.gameObject.SetActive(false);
-            targetInfoObject.SetActive(false);
+            //targetInfoObject.SetActive(false);
         }
         else
             StartCoroutine(ActivateSwipeAttack(0.35f));
     }
     public void TargetPointSelected(int id)
     {
+        swipeAttackGO.SetActive(true);
         chooseTargetTutorial.SetActive(false);
-        targetInfoObject.SetActive(true);
+       // targetInfoObject.SetActive(true);
         
         foreach (AttackTargetPoint point in targetPoints)
         {
@@ -336,7 +359,7 @@ public class AttackUIController : MonoBehaviour {
         if (EventContainer.attackerHitChanged != null)
             EventContainer.attackerHitChanged(hit);
         if (attackType != null)
-            strongAttackHit.text = "- " + attackType.Hit + " %";
+            strongAttackHit.text = Mathf.Clamp(attacker.BattleStats.GetHitAgainstTarget(defender)+attackType.Hit,0,100) + " %";
         //attackerSP2.text = "" + attacker.Stats.SP;
     }
     void UpdateDamage()
@@ -350,7 +373,7 @@ public class AttackUIController : MonoBehaviour {
         int dmg = (int)((defender.BattleStats.GetReceivedDamage(damage)));
         attackerDMG.text = "" + dmg;
         Human human =(Human) attacker;
-        strongAttackDamage.text = "+" + (attacker.BattleStats.GetDamageAgainstTarget(defender, attackMultiplier) - attacker.BattleStats.GetDamageAgainstTarget(defender, multiplier));
+        strongAttackDamage.text = "" + (attacker.BattleStats.GetDamageAgainstTarget(defender, attackMultiplier));
         if (dmg >= 5)
         {
             attackerDMG.color = FindObjectOfType<ColorContainer>().mainGreenColor;

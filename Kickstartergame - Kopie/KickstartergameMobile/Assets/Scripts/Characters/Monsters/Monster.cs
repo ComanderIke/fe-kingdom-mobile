@@ -35,10 +35,10 @@ namespace Assets.Scripts.Characters
                 Stats = new Stats(20, 5, 9, 5, 3, 6, 3, 4, attackRanges);
                 Reactions.Add(new NoReaction(this));
                 Reactions.Add(new RevengeStrike(this));
-                TargetPoints.Add(new TargetPoint(-285, 55, "Head", 1.5f, -20, 0.7f));
+                TargetPoints.Add(new TargetPoint(-285, 55, "Head", 1.0f, 0, 0.7f));
                 TargetPoints.Add(new TargetPoint(-44, 59, "Body", 1.0f, 0,1.4f));
-                TargetPoints.Add(new TargetPoint(-222, -85, "Front Legs", 1.0f, -20,0.6f));
-                TargetPoints.Add(new TargetPoint(101, -62, "Rear Legs", 1.0f, -20,0.6f));
+                TargetPoints.Add(new TargetPoint(-222, -85, "Front Legs", 1.0f, 0,0.6f));
+                TargetPoints.Add(new TargetPoint(101, -62, "Rear Legs", 1.0f, 0,0.6f));
                 GridPosition = new GridPosition(this);
             }
             else

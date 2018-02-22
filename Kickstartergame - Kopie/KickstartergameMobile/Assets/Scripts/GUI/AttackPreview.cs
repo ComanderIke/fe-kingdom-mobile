@@ -1,21 +1,26 @@
 ﻿using Assets.Scripts.Utility;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class AttackPreview : MonoBehaviour {
 
     [SerializeField]
-    private Text dmgText;
+    private TextMeshProUGUI hpText;
     [SerializeField]
-    private Text hitText;
+    private TextMeshProUGUI hpEnemyText;
     [SerializeField]
-    private Text attackCountText;
+    private TextMeshProUGUI dmgText;
     [SerializeField]
-    private Image dmgBar;
+    private TextMeshProUGUI hitText;
     [SerializeField]
-    private Image hitBar;
+    private TextMeshProUGUI attackCountText;
+    [SerializeField]
+    private Image HpBar;
+    [SerializeField]
+    private Image HpBarEnemy;
 	// Use this for initialization
 	void Start () {
 		
@@ -25,12 +30,14 @@ public class AttackPreview : MonoBehaviour {
 	void Update () {
 		
 	}
-    public void UpdateValues(int dmg, int hit, int attackCount)
+    public void UpdateValues(int maxHP, int hp, int maxHPEnemy, int hpEnemy, int dmg, int hit, int attackCount)
     {
         dmgText.text = "" + dmg;
-        hitText.text = "" + hit;
-        attackCountText.text = "" + attackCount;
-        dmgBar.fillAmount = MathUtility.MapValues(dmg, 0, 10, 0, 1);
-        hitBar.fillAmount = MathUtility.MapValues(hit, 0, 100, 0, 1);
+        hitText.text = "" + hit+"%";
+        attackCountText.text = " x " + attackCount;
+        hpText.text = ""+hp;
+        hpEnemyText.text = ""+hpEnemy;
+        HpBar.fillAmount = MathUtility.MapValues(hp, 0, maxHP, 0, 1);
+        HpBarEnemy.fillAmount = MathUtility.MapValues(hpEnemy, 0, maxHPEnemy, 0, 1);
     }
 }

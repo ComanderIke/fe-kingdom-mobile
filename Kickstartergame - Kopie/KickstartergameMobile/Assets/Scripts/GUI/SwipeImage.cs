@@ -28,6 +28,12 @@ public class SwipeImage : MonoBehaviour, IPointerDownHandler, IDragHandler
     [SerializeField]
     private GameObject arrowsRight;
     [SerializeField]
+    private GameObject textGO;
+    [SerializeField]
+    private GameObject gradientRight;
+    [SerializeField]
+    private GameObject gradientLeft;
+    [SerializeField]
     private Image idleImage;
     [SerializeField]
     private GameObject idleObject;
@@ -43,6 +49,9 @@ public class SwipeImage : MonoBehaviour, IPointerDownHandler, IDragHandler
     public UnityEvent fullSwipeEvent;
     [SerializeField]
     public UnityEvent fullSwipePreviewEvent;
+    [SerializeField]
+    public UnityEvent noSwipeEvent;
+
 
 
     private float maskStartWidth;
@@ -51,6 +60,7 @@ public class SwipeImage : MonoBehaviour, IPointerDownHandler, IDragHandler
     private float startPosY;
     private float oldPosX;
     private bool isActive = true;
+    private float maskStartSizeX = 0;
 
     private Vector3 posBeforeDrag;
 
@@ -84,7 +94,7 @@ public class SwipeImage : MonoBehaviour, IPointerDownHandler, IDragHandler
     {
         if (!IsDragging)
         {
-            mask.sizeDelta = Vector2.Lerp(mask.sizeDelta, new Vector2(0, mask.sizeDelta.y), 4f * Time.deltaTime);
+           // mask.sizeDelta = Vector2.Lerp(mask.sizeDelta, new Vector2(0, mask.sizeDelta.y), 4f * Time.deltaTime);
         }
         if (!isActive)
             return;
@@ -104,15 +114,22 @@ public class SwipeImage : MonoBehaviour, IPointerDownHandler, IDragHandler
 
                 EndDrag();
             }
-            if (mask.sizeDelta.x <= -675)
+            if (mask.sizeDelta.x <= -700)
             {
                 if (fullSwipePreviewEvent != null)
                     fullSwipePreviewEvent.Invoke();
             }
-            else if (mask.sizeDelta.x <= -525)
+            else if (mask.sizeDelta.x <= -550)
             {
                 if(halfSwipePreviewEvent!=null)
                     halfSwipePreviewEvent.Invoke();
+            }
+            else
+            {
+                if (noSwipeEvent != null)
+                {
+                    noSwipeEvent.Invoke();
+                }
             }
         }
         
@@ -120,13 +137,13 @@ public class SwipeImage : MonoBehaviour, IPointerDownHandler, IDragHandler
         {
             if (mask.sizeDelta.x <= -675)
             {
-                StartCoroutine(DelaySwipeStrongActivation(0.0f));
-                isActive = false;
+               // StartCoroutine(DelaySwipeStrongActivation(0.0f));
+                //isActive = false;
             }
             else if(mask.sizeDelta.x <= -525)
             {
-                StartCoroutine(DelaySwipeFastActivation(0.0f));
-                isActive = false;
+                //StartCoroutine(DelaySwipeFastActivation(0.0f));
+               // isActive = false;
             }
            
         }
@@ -134,27 +151,45 @@ public class SwipeImage : MonoBehaviour, IPointerDownHandler, IDragHandler
     }
     void UpdateVisuals()
     {
-        if(mask.sizeDelta.x < -700)
+        if(mask.sizeDelta.x < -800)
         {
             colorImage.color = fullSwipeColor;
+            if (fullSwipe)
+                fullSwipe.GetComponent<CanvasGroup>().alpha = 1;
+            if (halfSwipe && fullSwipe)
+                halfSwipe.GetComponent<CanvasGroup>().alpha = 0;
+
+            idleObject.gameObject.SetActive(false);
+            arrowsLeft.GetComponent<CanvasGroup>().alpha = 1;
+            arrowsRight.GetComponent<CanvasGroup>().alpha = 1;
+            if (textGO)
+                textGO.GetComponent<CanvasGroup>().alpha = 1;
         }
-        else if (mask.sizeDelta.x < -550)
+        else if (mask.sizeDelta.x <= -700)
         {
             if (fullSwipe)
-                fullSwipe.GetComponent<CanvasGroup>().alpha = MathUtility.MapValues(mask.sizeDelta.x, -650, -700, 0, 1);
-            if (halfSwipe&&fullSwipe)
-                halfSwipe.GetComponent<CanvasGroup>().alpha = 1-MathUtility.MapValues(mask.sizeDelta.x, -650, -700, 0, 1);
-            arrowsLeft.GetComponent<CanvasGroup>().alpha = 0;
-            arrowsRight.GetComponent<CanvasGroup>().alpha = 0;
-            colorImage.color = Color.Lerp(halfSwipeColor, fullSwipeColor, MathUtility.MapValues(mask.sizeDelta.x, -550, -700, 0, 1));
+                fullSwipe.GetComponent<CanvasGroup>().alpha = 1;// MathUtility.MapValues(mask.sizeDelta.x, -700, -750, 0, 1);
+            if (halfSwipe && fullSwipe)
+                halfSwipe.GetComponent<CanvasGroup>().alpha = 0;// 1-MathUtility.MapValues(mask.sizeDelta.x, -650, -700, 0, 1);
+
+            idleObject.gameObject.SetActive(false);
+            colorImage.color = Color.Lerp(halfSwipeColor, fullSwipeColor, MathUtility.MapValues(mask.sizeDelta.x, -600, -700, 0, 1));
+            if(textGO)
+                textGO.GetComponent<CanvasGroup>().alpha = 1;
+            arrowsLeft.GetComponent<CanvasGroup>().alpha = 1;
+            arrowsRight.GetComponent<CanvasGroup>().alpha = 1;
         }
         else if(mask.sizeDelta.x <-8f)
         {
+            if (fullSwipe)
+                fullSwipe.GetComponent<CanvasGroup>().alpha = 0;
             if (halfSwipe)
-                halfSwipe.GetComponent<CanvasGroup>().alpha = MathUtility.MapValues(mask.sizeDelta.x, -500, -550, 0, 1);
-            arrowsLeft.GetComponent<CanvasGroup>().alpha = 1-MathUtility.MapValues(mask.sizeDelta.x, -400, -500, 0, 1);
-            arrowsRight.GetComponent<CanvasGroup>().alpha = 1-MathUtility.MapValues(mask.sizeDelta.x, -400, -500, 0, 1);
+                halfSwipe.GetComponent<CanvasGroup>().alpha = MathUtility.MapValues(mask.sizeDelta.x, -550, -600, 0, 1);
+            arrowsLeft.GetComponent<CanvasGroup>().alpha = MathUtility.MapValues(mask.sizeDelta.x, -8, -150, 0, 1);
+            arrowsRight.GetComponent<CanvasGroup>().alpha = MathUtility.MapValues(mask.sizeDelta.x, -8, -150, 0, 1);
             idleObject.gameObject.SetActive(false);
+            if (textGO)
+                textGO.GetComponent<CanvasGroup>().alpha =  MathUtility.MapValues(mask.sizeDelta.x, -550, -600, 0, 1);
             //idleImage.color = new Color(0, 0, 0, 1-MathUtility.MapValues(mask.sizeDelta.x, 0, -900, 0, 1));
             colorImage.color = Color.Lerp(Color.black, halfSwipeColor, MathUtility.MapValues(mask.sizeDelta.x,0,-550,0,1));
         }
@@ -167,8 +202,10 @@ public class SwipeImage : MonoBehaviour, IPointerDownHandler, IDragHandler
             idleObject.gameObject.SetActive(true);
             idleImage.color = new Color(0, 0, 0, 1);
             colorImage.color = Color.black;
-            arrowsLeft.GetComponent<CanvasGroup>().alpha = 1;
-            arrowsRight.GetComponent<CanvasGroup>().alpha = 1;
+            arrowsLeft.GetComponent<CanvasGroup>().alpha = 0;
+            arrowsRight.GetComponent<CanvasGroup>().alpha = 0;
+            if (textGO)
+                textGO.GetComponent<CanvasGroup>().alpha = 0;
         }
       
 
@@ -179,9 +216,12 @@ public class SwipeImage : MonoBehaviour, IPointerDownHandler, IDragHandler
         DragTime = 0;
         startPosX = Input.mousePosition.x;
         startPosY = Input.mousePosition.y;
+        maskStartSizeX = mask.sizeDelta.x;
+        //Debug.Log("StartSize" + maskStartSizeX);
         oldPosX = -1;
         gameObject.GetComponent<Rigidbody2D>().angularVelocity = 0;
-        initDragFlag = true;
+        if(maskStartSizeX == 0)
+            initDragFlag = true;
     }
 
     bool initDragFlag = false;
@@ -202,6 +242,10 @@ public class SwipeImage : MonoBehaviour, IPointerDownHandler, IDragHandler
                     mask.pivot = new Vector2(0, 0.5f);
                     arrowsLeft.SetActive(true);
                     arrowsRight.SetActive(false);
+                    if (gradientLeft != null)
+                        gradientLeft.SetActive(true);
+                    if (gradientRight != null)
+                        gradientRight.SetActive(false);
                     initDragFlag = false;
                 }
                 else if(screenMaxOld > screenMaxX)
@@ -210,26 +254,37 @@ public class SwipeImage : MonoBehaviour, IPointerDownHandler, IDragHandler
                     initDragFlag = false;
                     arrowsLeft.SetActive(false);
                     arrowsRight.SetActive(true);
+                    if(gradientLeft!=null)
+                        gradientLeft.SetActive(false);
+                    if (gradientRight != null)
+                        gradientRight.SetActive(true);
                 }
                 
             }
             delta *= -1;
             if (mask.pivot.x == 0)
             {
-                if (delta >= 0)
-                    delta = 0;
+                if (maskStartSizeX +delta >= 0)
+                    delta = -maskStartSizeX;
             }
             else if (mask.pivot.x == 1)
             {
-                if (delta <= 0)
-                    delta = 0;
-                if (delta > 0)
+                if(delta<maskStartSizeX)
+                {
+                    delta = -maskStartSizeX;
+                }
+                else if (delta <= 0)
+                {
+                    //    delta = 0;
+                    delta *= -1;
+                }
+                else if (delta > 0)
                 {
                     delta *= -1;
                 }
             }
            
-            mask.sizeDelta = new Vector2(delta, mask.sizeDelta.y);
+            mask.sizeDelta = new Vector2(maskStartSizeX+delta, mask.sizeDelta.y);
         }
         oldPosX = startPosX - Input.mousePosition.x;
 

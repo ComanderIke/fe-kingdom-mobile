@@ -352,7 +352,12 @@ public class MouseManager : MonoBehaviour, EngineSystem {
             ResetMousePath();
             return;
         }
-        if (isOldDrag(x, y)|| IsOutOfBounds(x, y))
+        if(IsOutOfBounds(x, y))
+        {
+            ResetMousePath();
+            return;
+        }
+        if (isOldDrag(x, y))
         {
             return;
         }
@@ -380,6 +385,7 @@ public class MouseManager : MonoBehaviour, EngineSystem {
         //No enemy
         else
         {
+            mainScript.GetController<UIController>().HideAttackPreview();
             FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().material.mainTexture = FindObjectOfType<TextureScript>().cursorTextures[0];
             if (field.isActive)
             {
@@ -491,7 +497,7 @@ public class MouseManager : MonoBehaviour, EngineSystem {
 
     private void DrawCrossHair(LivingObject character)
     {
-        
+        /*
         crosshair = GameObject.Instantiate(ressources.rangeAttackGO, gameWorld);
         crosshair.transform.localPosition = new Vector3(character.GameTransform.GameObject.transform.localPosition.x+0.5f, character.GameTransform.GameObject.transform.localPosition.y+0.5f, -1f);
         if (character.GridPosition is BigTilePosition)
@@ -503,7 +509,7 @@ public class MouseManager : MonoBehaviour, EngineSystem {
         else
             //crosshair.transform.localScale = new Vector3(.3f, .3f, .3f);
 
-        crosshair.GetComponent<SpriteRenderer>().sprite = ressources.rangeAttackSprite;
+        crosshair.GetComponent<SpriteRenderer>().sprite = ressources.rangeAttackSprite;*/
     }
 
     public void DraggedOnActiveField(int x, int y, LivingObject character)
