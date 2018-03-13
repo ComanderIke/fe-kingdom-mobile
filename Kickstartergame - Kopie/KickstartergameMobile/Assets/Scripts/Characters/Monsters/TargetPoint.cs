@@ -13,8 +13,9 @@ namespace Assets.Scripts.Characters.Monsters
         public float  DamageMultiplier { get; set; }
         public int HIT_INFLUENCE { get; set; }
         public float Scale { get; set; }
+        public bool WeakSpot { get; set; }
 
-        public TargetPoint(float x, float y, string name, float attackMultiplier, int hitInfluence, float scale)
+        public TargetPoint(float x, float y, string name, float attackMultiplier, int hitInfluence, float scale, bool weakSpot = false)
         {
             XPos = x;
             YPos = y;
@@ -22,6 +23,7 @@ namespace Assets.Scripts.Characters.Monsters
             DamageMultiplier = attackMultiplier;
             HIT_INFLUENCE = hitInfluence;
             Scale = scale;
+            WeakSpot = weakSpot;
         }
     }
 }

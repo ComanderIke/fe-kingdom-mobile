@@ -189,6 +189,10 @@ public class AttackUIController : MonoBehaviour {
                 instantiatedPoint.transform.localPosition = new Vector3(p.XPos, p.YPos, 0);
                 instantiatedPoint.GetComponent<RectTransform>().sizeDelta = new Vector2(100 * p.Scale, 100 * p.Scale);
                 instantiatedPoint.GetComponent<AttackTargetPoint>().ID = cnt++;
+                if (p.WeakSpot)
+                    instantiatedPoint.GetComponent<AttackTargetPoint>().ShowWeak();
+                else
+                    instantiatedPoint.GetComponent<AttackTargetPoint>().HideWeak();
                 targetPoints.Add(instantiatedPoint.GetComponent<AttackTargetPoint>());
             }
         }

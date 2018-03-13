@@ -414,8 +414,9 @@ public class MouseManager : MonoBehaviour, EngineSystem {
     }
     public void DraggedOnEnemy(int x, int y, Tile field,LivingObject character)
     {
-
+        
         LivingObject selectedCharacter = mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter;
+        Debug.Log("draggedOnEnemy");
         if (selectedCharacter.GridPosition is BigTilePosition)
         {
             raycastManager.GetMousePositionOnGrid();
@@ -436,6 +437,23 @@ public class MouseManager : MonoBehaviour, EngineSystem {
             }
             
             return;
+        }
+        else
+        {
+            if(mousePath == null|| mousePath.Count==0)
+                CalculateMousePathToEnemy(selectedCharacter, new Vector2(x, y));
+            else
+            {
+                int lastMousePathPositionX = (int)mousePath[mousePath.Count - 1].x;
+                int lastMousePathPositionY = (int)mousePath[mousePath.Count - 1].y;
+                int delta = Mathf.Abs(lastMousePathPositionX - x + lastMousePathPositionY - y);
+                Debug.Log("Delta: " + delta);
+                if (!selectedCharacter.Stats.AttackRanges.Contains(delta))
+                {
+                    CalculateMousePathToEnemy(selectedCharacter, new Vector2(x, y));
+                }
+            }
+            DrawMousePath();
         }
         if (FindObjectOfType<GridManager>().GridLogic.IsFieldAttackable(x, y))
         {

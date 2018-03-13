@@ -10,17 +10,26 @@ public class AttackTargetPoint : MonoBehaviour {
     public int ID { get; set; }
     private Text missedText;
     private Text damageText;
+    public GameObject weakGO;
     // Use this for initialization
     void Start () {
         missedText = GetComponentsInChildren<Text>()[1];
         damageText = GetComponentsInChildren<Text>()[0];
         missedText.gameObject.SetActive(false);
         damageText.gameObject.SetActive(false);
+       // weakGO.SetActive(false);
         //PlayAnimation();
     }
-	
-	// Update is called once per frame
-	void Update () {
+	public void ShowWeak()
+    {
+        weakGO.SetActive(true);
+    }
+    public void HideWeak()
+    {
+        weakGO.SetActive(false);
+    }
+    // Update is called once per frame
+    void Update () {
 		
 	}
     public void OnClick()
