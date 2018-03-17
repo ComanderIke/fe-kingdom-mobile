@@ -17,6 +17,7 @@ namespace Assets.Scripts.Input
 
         public GridInput()
         {
+            clickedField = new Vector2(-1, -1);
             EventContainer.clickedOnGrid += ClickedOnGrid;
         }
 
@@ -52,7 +53,11 @@ namespace Assets.Scripts.Input
             }
             return clickedBigTile;
         }
-
+        public void Reset()
+        {
+            confirmClick = false;
+            clickedField = new Vector2(-1, -1);
+        }
         public Vector2 GetCenterPos(Vector2 clickedPos)
         {
             int centerX = (int)Mathf.Round(clickedPos.x - GridManager.GRID_X_OFFSET) - 1;
@@ -86,7 +91,7 @@ namespace Assets.Scripts.Input
                         else
                         {
                             EventContainer.unitClickedOnActiveTile(selectedCharacter, x, y);
-
+                            Debug.Log("OnACiveTileClicked!");
                             selectedCharacter.GameTransform.SetPosition(x, y);
                             selectedCharacter.GameTransform.DisableCollider();
                         }

@@ -68,7 +68,6 @@ namespace Assets.Scripts.Characters
             IsWaiting = false;
             Selected = false;
             IsActive = false;
-            Debug.Log("Reset");
             MainScript.GetInstance().GetSystem<UnitSelectionManager>().DeselectActiveCharacter();
         }
         public void UnitTurnFinished()

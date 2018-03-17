@@ -102,6 +102,7 @@ namespace Assets.Scripts.GameStates
                 selectedUnit = null;
 
             }
+            unitSelectionManager.DeselectActiveCharacter();
         }
 
         public void GoToEnemy(LivingObject character, LivingObject enemy, bool drag)

@@ -47,6 +47,7 @@ public class MouseManager : MonoBehaviour, EngineSystem {
     // Use this for initialization
     void Start () {
         mainScript = FindObjectOfType<MainScript>();
+        Debug.Log("Start" + mainScript.name);
         // hit = new RaycastHit();
         gridInput = new GridInput();
         gameWorld = GameObject.FindGameObjectWithTag("World").transform;
@@ -151,16 +152,24 @@ public class MouseManager : MonoBehaviour, EngineSystem {
 
     void UnitClicked(LivingObject unit)
     {
+        Debug.Log("Unit Clicked!");
         if (!active)
             return;
+       
         if (gridInput.confirmClick && gridInput.clickedField == new Vector2(currentX, currentY))
         {
+            Debug.Log("Unit Clicked Confirmed!");
             EventContainer.unitClickedConfirmed(unit,true);
         }
         else
         {
-            gridInput.confirmClick = true;
-            gridInput.clickedField = new Vector2(currentX, currentY);
+            Debug.Log("Unit Clicked not Confirmed!");
+            if (mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter!=null && unit.Player.ID != mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter.Player.ID)
+            {
+                Debug.Log("Unit Clicked not allied!");
+                gridInput.confirmClick = true;
+                gridInput.clickedField = new Vector2(currentX, currentY);
+            }
            
             EventContainer.unitClickedConfirmed(unit, false);
         }
@@ -210,14 +219,17 @@ public class MouseManager : MonoBehaviour, EngineSystem {
         preferedPath.path = new List<Vector2>(mousePath);
     }
 
-
-    public  void ResetMousePath()
+    public void ResetAll()
+    {
+        gridInput.Reset();
+        ResetMousePath();
+    }
+    public void ResetMousePath()
     {
         foreach (GameObject dot in dots)
         {
             GameObject.Destroy(dot);
         }
-        LivingObject selectedCharacter = mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter;
         //if (selectedCharacter != null)
         //    selectedCharacter.ResetPosition();
         if (crosshair)

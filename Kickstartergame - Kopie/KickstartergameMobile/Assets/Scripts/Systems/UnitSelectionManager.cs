@@ -52,10 +52,19 @@ namespace Assets.Scripts.GameStates
             GridManager s = mainScript.gridManager;
             mainScript.GetController<UIController>().ShowTopUI(c);
             s.HideMovement();
-            s.ShowMovement(c);
-            s.ShowAttack(c, new List<int>(c.Stats.AttackRanges));
+            if (!SelectedCharacter.UnitTurnState.HasMoved)
+            {
+                s.ShowMovement(c);
+                s.ShowAttack(c, new List<int>(c.Stats.AttackRanges));
+            } 
+            else
+            {
+                if(!SelectedCharacter.UnitTurnState.HasAttacked)
+                    mainScript.gridManager.ShowAttackRange(c);
+            }
             mainScript.GetController<UIController>().HideAllActiveUnitEffects();
-            EventContainer.unitShowActiveEffect(SelectedCharacter, true, false);
+            if (!SelectedCharacter.UnitTurnState.HasMoved)
+                EventContainer.unitShowActiveEffect(SelectedCharacter, true, false);
         }
 
         void EnemySelected(LivingObject c)
@@ -108,15 +117,33 @@ namespace Assets.Scripts.GameStates
                     }
                     else
                     {
+                        if (SelectedCharacter!=null)
+                            SelectedCharacter.ResetPosition();
+                        mainScript.GetSystem<MouseManager>().ResetAll();
                         mainScript.gridManager.HideMovement();
                         SelectCharacter(c);
                     }
                 }
-                else if (c.UnitTurnState.HasMoved && !c.UnitTurnState.HasAttacked)
+                else //if (c.UnitTurnState.HasMoved && !c.UnitTurnState.HasAttacked && c.)
                 {
-                    mainScript.gridManager.HideMovement();
-                    SelectedCharacter = c;
-                    mainScript.gridManager.ShowAttackRange(c);
+
+                    mainScript.GetController<UIController>().ShowTopUI(c);
+                    if (SelectedCharacter == null)
+                    {
+                        mainScript.GetSystem<MouseManager>().ResetAll();
+                        mainScript.gridManager.HideMovement();
+                        GridManager s = mainScript.gridManager;
+                        s.ShowMovement(c);
+                        s.ShowAttack(c, new List<int>(c.Stats.AttackRanges));
+                    }
+                    //if (SelectedCharacter != null)
+                    //    SelectedCharacter.ResetPosition();
+                    //mainScript.GetSystem<MouseManager>().ResetAll();
+                    //mainScript.gridManager.HideMovement();
+                    //DeselectActiveCharacter();
+                    ////SelectedCharacter = c;
+                    //SelectCharacter(c);
+                    //mainScript.gridManager.ShowAttackRange(c);
                 }
             }
             else

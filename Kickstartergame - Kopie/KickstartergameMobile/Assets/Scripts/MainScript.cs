@@ -99,14 +99,14 @@ public class MainScript : MonoBehaviour {
         Systems.Add(new TurnManager());
         Systems.Add(new UnitSelectionManager());
         Systems.Add(FindObjectOfType<UnitActionManager>());
-        Systems.Add(new MouseManager());
+        Systems.Add(FindObjectOfType<MouseManager>());
         Controllers.Add(FindObjectOfType<UIController>());
         Controllers.Add(FindObjectOfType<UnitsController>());
         InitPlayers();
         InitCharacters();
         
         gameState.enter();
-        Debug.Log("Initialize");
+        Debug.Log("InitializeSystems");
         EventContainer.startTurn();
     }
 
