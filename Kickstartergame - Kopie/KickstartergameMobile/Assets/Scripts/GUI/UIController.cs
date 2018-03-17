@@ -229,7 +229,7 @@ public class UIController : MonoBehaviour, Controller {
     {
         EventContainer.endTurn();
     }
-    public void ShowAttackPreview(LivingObject attacker, LivingObject defender, Vector2 pos)
+    public void ShowAttackPreview(LivingObject attacker, LivingObject defender)
     {
         attackPreview.SetActive(true);
         attackPreview.GetComponent<AttackPreview>().UpdateValues(attacker.Stats.MaxHP,attacker.Stats.HP, defender.Stats.MaxHP, defender.Stats.HP,attacker.BattleStats.GetDamageAgainstTarget(defender),attacker.BattleStats.GetHitAgainstTarget(defender), attacker.BattleStats.GetAttackCountAgainst(defender));

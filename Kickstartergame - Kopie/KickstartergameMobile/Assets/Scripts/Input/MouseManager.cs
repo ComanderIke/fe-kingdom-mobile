@@ -178,11 +178,14 @@ public class MouseManager : MonoBehaviour, EngineSystem {
 
     public void EnemyClicked(LivingObject unit)
     {
-        if(mainScript.gridManager.GridLogic.IsFieldAttackable(currentX,currentY))
+
+        Debug.Log("Enemy clicked!");
+
+        if (mainScript.gridManager.GridLogic.IsFieldAttackable(currentX,currentY))
             CalculateMousePathToEnemy(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter, new Vector2(currentX, currentY));
         else
         {
-            if(unit is Monster)
+            if(unit.GridPosition is BigTilePosition)
             {
                 Vector2 bottomleft = ((BigTilePosition)unit.GridPosition).Position.BottomLeft();
                 Vector2 bottomright = ((BigTilePosition)unit.GridPosition).Position.BottomRight();
@@ -197,19 +200,18 @@ public class MouseManager : MonoBehaviour, EngineSystem {
                 else if (mainScript.gridManager.GridLogic.IsFieldAttackable((int)topright.x, (int)topright.y))
                     CalculateMousePathToEnemy(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter, topright);
             }
-            
+            else
+            {
+                Debug.Log("Enemy not Attackable!");
+                mainScript.GetSystem<UnitSelectionManager>().DeselectActiveCharacter();
+            }
         }
 
         DrawMousePath();
         DrawCrossHair(unit);
-        if (unit.GridPosition is BigTilePosition)
-        {
-            mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter,unit, ((BigTilePosition)unit.GridPosition).Position.CenterPos());
-        }
-        else
-        {
-            mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter,unit, new Vector2(unit.GridPosition.x, unit.GridPosition.y));
-        }
+        mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter.GameTransform.SetPosition((int)mousePath[mousePath.Count-1].x, (int)mousePath[mousePath.Count - 1].y);
+        mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter,unit);
+
     }
 
     public  void StartDrag(int gridX, int gridY)
@@ -397,22 +399,23 @@ public class MouseManager : MonoBehaviour, EngineSystem {
         //No enemy
         else
         {
-            mainScript.GetController<UIController>().HideAttackPreview();
-            FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().material.mainTexture = FindObjectOfType<TextureScript>().cursorTextures[0];
-            if (field.isActive)
-            {
-                FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().enabled = true;
-                FindObjectOfType<DragCursor>().transform.position = new Vector3(x + 0.5f, y + 0.5f,0);
-            }
-            else
-            {
-                FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().enabled = false;
-            }
+            
+            //mainScript.GetController<UIController>().HideAttackPreview();
+            //FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().material.mainTexture = FindObjectOfType<TextureScript>().cursorTextures[0];
+            //if (field.isActive)
+            //{
+            //    FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().enabled = true;
+            //    FindObjectOfType<DragCursor>().transform.position = new Vector3(x + 0.5f, y + 0.5f,0);
+            //}
+            //else
+            //{
+            //    FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().enabled = false;
+            //}
         }
         //If Field is Active and not the filed currently standing on
         if (!(x == character.GridPosition.x && y == character.GridPosition.y) &&field.isActive)//&&field.character==null)
         {
-            DraggedOnActiveField(x,y,character);
+                DraggedOnActiveField(x,y,character);
         }
         else if(x == character.GridPosition.x && y == character.GridPosition.y)
         {
@@ -439,33 +442,50 @@ public class MouseManager : MonoBehaviour, EngineSystem {
             Debug.Log(nearestBigTile);
             CalculateMousePathToPositon(selectedCharacter, nearestBigTile);
             DrawMousePath();
-            if(character.GridPosition is BigTilePosition)
-            {
-                mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter,character,((BigTilePosition)character.GridPosition).Position.CenterPos());
-            }
-            else
-            {
-                mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter,character,new Vector2(x, y));
-            }
+            mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter,character);
+
             
             return;
         }
         else
         {
-            if(mousePath == null|| mousePath.Count==0)
+            if (!FindObjectOfType<GridManager>().GridLogic.IsFieldAttackable(x, y))
+                return;
+
+            if (mousePath == null || mousePath.Count == 0)
+            {
+                Debug.Log("Mousepath empty");
                 CalculateMousePathToEnemy(selectedCharacter, new Vector2(x, y));
+            }
             else
             {
                 int lastMousePathPositionX = (int)mousePath[mousePath.Count - 1].x;
                 int lastMousePathPositionY = (int)mousePath[mousePath.Count - 1].y;
-                int delta = Mathf.Abs(lastMousePathPositionX - x + lastMousePathPositionY - y);
-                Debug.Log("Delta: " + delta);
-                if (!selectedCharacter.Stats.AttackRanges.Contains(delta))
+                Tile lastMousePathField = mainScript.gridManager.GetTileFromVector2(mousePath[mousePath.Count - 1]);
+                if (lastMousePathField.character != null)
                 {
+                    Debug.Log("last Mousepath not empty");
                     CalculateMousePathToEnemy(selectedCharacter, new Vector2(x, y));
                 }
+                else
+                {
+                    int delta = Mathf.Abs(lastMousePathPositionX - x) + Mathf.Abs(lastMousePathPositionY - y);
+                    Debug.Log("Delta: " + delta + " " + x + " " + y + " " + lastMousePathPositionX + " " + lastMousePathPositionY);
+                    if (!selectedCharacter.Stats.AttackRanges.Contains(delta))
+                    {
+                        Debug.Log("last Mousepath not in attackRange");
+                        CalculateMousePathToEnemy(selectedCharacter, new Vector2(x, y));
+                    }
+                }
+
             }
-            DrawMousePath();
+            if (mousePath.Count <= selectedCharacter.Stats.MoveRange)
+                DrawMousePath();
+            else
+            {
+                Debug.Log("Not enough Movement!");
+                return;
+            }
         }
         if (FindObjectOfType<GridManager>().GridLogic.IsFieldAttackable(x, y))
         {
@@ -479,15 +499,9 @@ public class MouseManager : MonoBehaviour, EngineSystem {
                 {
                     // CalculateMousePathToPositon(selectedCharacter, (int)v.x, (int)v.y);
                     ResetMousePath();
-                    DrawCrossHair(character);
-                    if (character.GridPosition is BigTilePosition)
-                    {
-                        mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter, character, ((BigTilePosition)character.GridPosition).Position.CenterPos());
-                    }
-                    else
-                    {
-                        mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter, character, new Vector2(x, y));
-                    }
+
+                    mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter, character);
+
                     Finish(character, field, x, y);
                     return;
                 }
@@ -499,29 +513,15 @@ public class MouseManager : MonoBehaviour, EngineSystem {
                     if ((xDiff + yDiff) == selectedCharacter.Stats.AttackRanges[i] && mainScript.gridManager.Tiles[(int)v.x, (int)v.y].isActive && mainScript.gridManager.Tiles[(int)v.x, (int)v.y].character == null)
                     {
                         CalculateMousePathToPositon(selectedCharacter, (int)v.x, (int)v.y);
-                        DrawCrossHair(character);
-                        if (character.GridPosition is BigTilePosition)
-                        {
-                            mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter, character, ((BigTilePosition)character.GridPosition).Position.CenterPos());
-                        }
-                        else
-                        {
-                            mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter, character, new Vector2(x, y));
-                        }
+                        mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter, character);
                         Finish(character, field, x, y);
                         return;
                     }
                 }
                 
             }
-            if (character.GridPosition is BigTilePosition)
-            {
-                mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter,character,((BigTilePosition)character.GridPosition).Position.CenterPos());
-            }
-            else
-            {
-                mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter,character,new Vector2(x, y));
-            }
+            mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter,character);
+
         }
     }
 

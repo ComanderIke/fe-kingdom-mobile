@@ -93,6 +93,34 @@ namespace Assets.Scripts.Grid
             }
             return targets;
         }
+        public List<LivingObject> GetAttackTargetsAtGameObjectPosition(LivingObject unit)
+        {
+            int x = (int)unit.GameTransform.GetPosition().x;
+            int y = (int)unit.GameTransform.GetPosition().y;
+            List<LivingObject> targets = new List<LivingObject>();
+            foreach (int attackRange in unit.Stats.AttackRanges)
+            {
+                for (int i = -attackRange; i <= +attackRange; i++)
+                {
+                    for (int j = -attackRange; j <= attackRange; j++)
+                    {
+                        if (Math.Abs(j + i) == attackRange)
+                        {
+                            // Debug.Log("attackTargets at "+ unit.GridPosition.GetPos()+": " +(i + x) + " " + (j + y));
+                            if (IsOutOfBounds(new Vector2(x + i, y + j)))
+                                continue;
+                            LivingObject l = Tiles[i + x, j + y].character;
+                            if (l != null && l.Player.ID != unit.Player.ID)
+                            {
+
+                                targets.Add(l);
+                            }
+                        }
+                    }
+                }
+            }
+            return targets;
+        }
         public bool IsFieldAttackable(int x, int z)
         {
             return Tiles[x, z].gameObject.GetComponent<MeshRenderer>().material.mainTexture == GridManager.gridRessources.AttackTexture;

@@ -94,8 +94,10 @@ namespace Assets.Scripts.GameStates
 
                 if (c.Player.ID != SelectedCharacter.Player.ID)//Clicked On Enemy
                 {
-                    if (confirm)
+                    Debug.Log("AttackTargetsCount: "+mainScript.gridManager.GridLogic.GetAttackTargetsAtGameObjectPosition(SelectedCharacter).Count);
+                    if (confirm|| mainScript.gridManager.GridLogic.GetAttackTargetsAtGameObjectPosition(SelectedCharacter).Contains(c))
                     {
+                        SelectedCharacter.ResetPosition();
                         mainScript.GetSystem<UnitActionManager>().GoToEnemy(SelectedCharacter, c, false);
                     }
                     else

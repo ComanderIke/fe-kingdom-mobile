@@ -178,6 +178,7 @@ namespace Assets.Scripts.GameStates
                 }
                 else
                 {
+                    Debug.Log("Enemy not in Range!");
                     return;
                 }
             }
@@ -227,6 +228,11 @@ namespace Assets.Scripts.GameStates
             {
                 if (mainScript.gridManager.GridLogic.IsFieldAttackable(draggedOverUnit.GridPosition.x, draggedOverUnit.GridPosition.y))
                     GoToEnemy(unitSelectionManager.SelectedCharacter, draggedOverUnit, true);
+                else
+                {
+                    Debug.Log("enemy not in Range");
+                    unitSelectionManager.DeselectActiveCharacter();
+                }
             }
             else
             {

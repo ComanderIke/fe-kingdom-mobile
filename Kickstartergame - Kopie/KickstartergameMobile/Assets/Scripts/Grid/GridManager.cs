@@ -96,7 +96,7 @@ public class GridManager : MonoBehaviour {
         List<Tile> TilesFromWhereUCanAttack = new List<Tile>();
         foreach (Tile f in Tiles)
         {
-            if (f.isActive)
+            if (f.isActive&& f.character == null)
             {
                 TilesFromWhereUCanAttack.Add(f);
             }
