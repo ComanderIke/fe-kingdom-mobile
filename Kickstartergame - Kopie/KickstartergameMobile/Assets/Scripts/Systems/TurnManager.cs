@@ -59,12 +59,38 @@ namespace Assets.Scripts.GameStates
         IEnumerator DelayTooglePlayerInput(bool active, float delay)
         {
             yield return new WaitForSeconds(delay);
+            UnitController.lockInput = !active;
             mainScript.GetSystem<MouseManager>().active = active;
-            if(active)
+            if (active)
                 mainScript.GetController<UIController>().ShowAllActiveUnitEffects();
             else
                 mainScript.GetController<UIController>().HideAllActiveUnitEffects();
             CameraMovement.locked = !active;
+        }
+        IEnumerator DelayAIPhase( float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            mainScript.SwitchState(new AIState(ActivePlayer));
+        }
+        IEnumerator DelayTurnUpdate(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            //if (ActivePlayer.ID == 1)
+            //{
+            //    TurnCount++;
+            //    foreach (Player p in Players)
+            //    {
+            //        foreach (LivingObject liv in ActivePlayer.Units)
+            //        {
+            //            liv.UpdateOnWholeTurn();
+            //        }
+            //    }
+            //    Debug.Log("Turn: " + TurnCount);
+            //}
+            foreach (LivingObject c in ActivePlayer.Units)
+            {
+                c.UpdateTurn();
+            }
         }
         private void StartTurn()
         {
@@ -72,34 +98,22 @@ namespace Assets.Scripts.GameStates
             if (!ActivePlayer.IsHumanPlayer)
             {
 
+                Debug.Log("AITurn");
                 GameObject.FindObjectOfType<AudioManager>().ChangeMusic("EnemyPhase", "PlayerPhase", true);
-                mainScript.SwitchState(new AIState(ActivePlayer));
+               
                 mainScript.GetController<UIController>().EnemyTurnAnimation();
                 mainScript.StartCoroutine(DelayTooglePlayerInput(false,0));
+                mainScript.StartCoroutine(DelayAIPhase(PlayerTurnTextAnimation.duration + 0.25f));
             }
             else
             {
-                mainScript.StartCoroutine(DelayTooglePlayerInput(false, 0));
+                Debug.Log("PlayerTurn");
                 GameObject.FindObjectOfType<AudioManager>().ChangeMusic("PlayerPhase", "EnemyPhase", true);
                 mainScript.GetController<UIController>().PlayerTurnAnimation();
                 mainScript.StartCoroutine(DelayTooglePlayerInput(true, PlayerTurnTextAnimation.duration+0.25f));
             }
-            if (ActivePlayer.ID == 1)
-            {
-                TurnCount++;
-                foreach (Player p in Players)
-                {
-                    foreach (LivingObject liv in p.Units)
-                    {
-                        liv.UpdateOnWholeTurn();
-                    }
-                }
-                Debug.Log("Turn: " + TurnCount);
-            }
-            foreach (LivingObject c in ActivePlayer.Units)
-            {
-                c.UpdateTurn();
-            }
+            mainScript.StartCoroutine(DelayTurnUpdate( PlayerTurnTextAnimation.duration + 0.25f));
+
         }
 
         public void EndTurn()

@@ -10,7 +10,7 @@ public class CameraMovement : MonoBehaviour {
 
     public delegate void MoveToFinishedEvent();
     public static MoveToFinishedEvent moveToFinishedEvent;
-    public static bool locked=false;
+    public static bool locked=true;
 
 	public float speed;
 	public float maxX;
@@ -43,6 +43,7 @@ public class CameraMovement : MonoBehaviour {
     }
 	
 	void Update () {
+       
         if (locked)
 			return;
 
@@ -63,6 +64,7 @@ public class CameraMovement : MonoBehaviour {
 
         if (Input.GetMouseButton(0)&&drag)
         {
+           
             Vector3 delta  = Input.mousePosition - lastPosition;
             transform.Translate(-delta.x * Time.deltaTime*DRAG_SPEED,- delta.y * Time.deltaTime * DRAG_SPEED, 0);
             lastPosition = Input.mousePosition;
@@ -93,9 +95,9 @@ public class CameraMovement : MonoBehaviour {
             {
                 targetPosition = new Vector3(targetPos.x, targetPos.y, Mathf.Round(transform.localPosition.z));
                 transform.localPosition = Vector3.Lerp(transform.localPosition, targetPosition, lerpTime);
-                if(targetPos.x == transform.localPosition.x && targetPos.y == transform.localPosition.y)
+                if (targetPos.x == transform.localPosition.x && targetPos.y == transform.localPosition.y)
                 {
-                    targetPos = new Vector2(-1,-1);
+                    targetPos = new Vector2(-1, -1);
                 }
             }
             else
@@ -108,11 +110,11 @@ public class CameraMovement : MonoBehaviour {
     }
     public void MoveCameraTo( int x, int y)
     {
-        int deltaX =(int)transform.localPosition.x - x;
+        int deltaX = (int)transform.localPosition.x - x;
         int deltaY = (int)transform.localPosition.y - y;
         int targetX = (int)transform.localPosition.x;
         int targetY = (int)transform.localPosition.y;
-        if (x > (int)transform.localPosition.x + 5 || x < (int)transform.localPosition.x )  
+        if (x > (int)transform.localPosition.x + 5 || x < (int)transform.localPosition.x)
         {
             targetX = -1 * (deltaX + 5);
 
@@ -122,7 +124,7 @@ public class CameraMovement : MonoBehaviour {
             targetY = -1 * (deltaY + 7);
         }
         if (targetX < (int)minX)
-            targetX = (int) minX;
+            targetX = (int)minX;
         if (targetY < (int)minY)
             targetY = (int)minY;
         if (targetX > (int)maxX)

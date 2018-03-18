@@ -7,7 +7,7 @@ using Assets.Scripts.Input;
 
 public class UnitController :  MonoBehaviour, DragAble {
 
-    public static bool lockInput = false;
+    public static bool lockInput = true;
     public LivingObject Unit { get; set; }
     public DragManager DragManager { get; set; }
     public RaycastManager RaycastManager { get; set; }

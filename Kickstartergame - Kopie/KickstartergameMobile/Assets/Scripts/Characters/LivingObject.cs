@@ -114,11 +114,11 @@ namespace Assets.Scripts.Characters
             return Stats.HP > 0;
         }
 
-        public void UpdateOnWholeTurn()
-        {
-            UnitTurnState.Reset();
+        //public void UpdateOnWholeTurn()
+        //{
+        //    UnitTurnState.Reset();
            
-        }
+        //}
 
         public int InflictDamage(int dmg, LivingObject damagedealer)
         {

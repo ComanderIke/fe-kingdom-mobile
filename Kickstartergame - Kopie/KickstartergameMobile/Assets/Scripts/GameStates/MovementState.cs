@@ -146,7 +146,8 @@ namespace Assets.Scripts.GameStates
                  if(MainScript.endOfMoveCharacterEvent!=null)
                     MainScript.endOfMoveCharacterEvent();
                 character.UnitTurnState.HasMoved = true;
-                mainScript.GetSystem<UnitActionManager>().ActiveCharWait();
+                if(character.Player.IsHumanPlayer)
+                    mainScript.GetSystem<UnitActionManager>().ActiveCharWait();
                 //mainScript.SwitchState(new GameplayState());//TODO AISTATE
                 EventContainer.commandFinished();
             }

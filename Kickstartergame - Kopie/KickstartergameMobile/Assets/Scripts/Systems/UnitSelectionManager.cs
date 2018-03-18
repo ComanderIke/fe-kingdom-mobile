@@ -37,6 +37,7 @@ namespace Assets.Scripts.GameStates
             SelectedCharacter = null;
             
             mainScript.gridManager.HideMovement();
+            Debug.Log("Hello");
             mainScript.GetController<UIController>().ShowAllActiveUnitEffects();
 
         }

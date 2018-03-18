@@ -26,7 +26,7 @@ public class CursorPosition
 public class MouseManager : MonoBehaviour, EngineSystem {
 
     MainScript mainScript;
-    public  bool active = true;
+    public  bool active = false;
     UXRessources ressources;
     private  RaycastHit hit;
     Transform gameWorld;
@@ -62,7 +62,6 @@ public class MouseManager : MonoBehaviour, EngineSystem {
 	// Update is called once per frame
     
 	void Update () {
-        
         if (!active)
             return;
         //ray = Camera.main.ScreenPointToRay(Input.mousePosition);

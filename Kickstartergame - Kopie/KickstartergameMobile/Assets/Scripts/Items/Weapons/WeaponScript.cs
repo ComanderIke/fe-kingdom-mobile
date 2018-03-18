@@ -3,6 +3,7 @@ using System.Collections;
 using Assets.Scripts.Items;
 using Assets.Scripts.Characters;
 using System.Collections.Generic;
+using Assets.Scripts.Items.Weapons;
 
 public class WeaponScript : MonoBehaviour {
 

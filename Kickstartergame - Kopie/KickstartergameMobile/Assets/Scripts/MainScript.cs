@@ -164,6 +164,12 @@ public class MainScript : MonoBehaviour {
             filler4 = new Human("Hector", ss.lancerActiveSprite);
             filler.Inventory.AddItem(GameObject.FindObjectOfType<WeaponScript>().woodenSword);
             filler.Inventory.UseItem(filler.Inventory.items[0]);
+            filler2.Inventory.AddItem(GameObject.FindObjectOfType<WeaponScript>().woodenAxe);
+            filler2.Inventory.UseItem(filler2.Inventory.items[0]);
+            filler3.Inventory.AddItem(GameObject.FindObjectOfType<WeaponScript>().basicBow);
+            filler3.Inventory.UseItem(filler3.Inventory.items[0]);
+            filler4.Inventory.AddItem(GameObject.FindObjectOfType<WeaponScript>().woodenSpear);
+            filler4.Inventory.UseItem(filler4.Inventory.items[0]);
 
             p.AddUnit(filler);
             cc.PlaceCharacter(0, filler, startPositions[0].GetXOnGrid(), startPositions[0].GetYOnGrid());

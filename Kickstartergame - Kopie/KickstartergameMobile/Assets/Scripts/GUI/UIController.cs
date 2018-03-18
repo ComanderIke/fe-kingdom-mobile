@@ -163,7 +163,8 @@ public class UIController : MonoBehaviour, Controller {
     {
         if(attackUIController.isActiveAndEnabled)
             attackUIController.Hide();
-        ShowAllActiveUnitEffects();
+        if(mainScript.GetSystem<TurnManager>().ActivePlayer.IsHumanPlayer)
+            ShowAllActiveUnitEffects();
     }
     public void ShowGameOver()
     {
@@ -187,7 +188,8 @@ public class UIController : MonoBehaviour, Controller {
     {
         if (reactUIController.isActiveAndEnabled)
             reactUIController.Hide();
-        ShowAllActiveUnitEffects();
+        if (mainScript.GetSystem<TurnManager>().ActivePlayer.IsHumanPlayer)
+            ShowAllActiveUnitEffects();
     }
     public void ShowAttackPattern(LivingObject user, AttackPattern pattern )
     {
