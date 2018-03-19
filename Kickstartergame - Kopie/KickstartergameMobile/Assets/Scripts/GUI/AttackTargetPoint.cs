@@ -34,7 +34,7 @@ public class AttackTargetPoint : MonoBehaviour {
 	}
     public void OnClick()
     {
-        FindObjectOfType<AttackUIController>().TargetPointSelected(ID);
+        //FindObjectOfType<AttackUIController>().TargetPointSelected(ID);
         
     }
     public void PlayAnimation()

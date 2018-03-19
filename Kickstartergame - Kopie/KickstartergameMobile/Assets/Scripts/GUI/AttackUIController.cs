@@ -184,24 +184,26 @@ public class AttackUIController : MonoBehaviour {
             if(child!=targetPointParent)
                 GameObject.Destroy(child.gameObject);
         }
-       /* targetPoints = new List<AttackTargetPoint>();
-        int cnt = 0;
-        if (defender is Monster)
-        {
-            Monster m = (Monster)defender;
-            foreach(TargetPoint p in m.TargetPoints)
-            {
-                GameObject instantiatedPoint = GameObject.Instantiate(targetPointPrefab, targetPointParent);
-                instantiatedPoint.transform.localPosition = new Vector3(p.XPos, p.YPos, 0);
-                instantiatedPoint.GetComponent<RectTransform>().sizeDelta = new Vector2(100 * p.Scale, 100 * p.Scale);
-                instantiatedPoint.GetComponent<AttackTargetPoint>().ID = cnt++;
-                if (p.WeakSpot)
-                    instantiatedPoint.GetComponent<AttackTargetPoint>().ShowWeak();
-                else
-                    instantiatedPoint.GetComponent<AttackTargetPoint>().HideWeak();
-                targetPoints.Add(instantiatedPoint.GetComponent<AttackTargetPoint>());
-            }
-        }*/
+        UpdateDamage();
+        UpdateHit();
+        /* targetPoints = new List<AttackTargetPoint>();
+         int cnt = 0;
+         if (defender is Monster)
+         {
+             Monster m = (Monster)defender;
+             foreach(TargetPoint p in m.TargetPoints)
+             {
+                 GameObject instantiatedPoint = GameObject.Instantiate(targetPointPrefab, targetPointParent);
+                 instantiatedPoint.transform.localPosition = new Vector3(p.XPos, p.YPos, 0);
+                 instantiatedPoint.GetComponent<RectTransform>().sizeDelta = new Vector2(100 * p.Scale, 100 * p.Scale);
+                 instantiatedPoint.GetComponent<AttackTargetPoint>().ID = cnt++;
+                 if (p.WeakSpot)
+                     instantiatedPoint.GetComponent<AttackTargetPoint>().ShowWeak();
+                 else
+                     instantiatedPoint.GetComponent<AttackTargetPoint>().HideWeak();
+                 targetPoints.Add(instantiatedPoint.GetComponent<AttackTargetPoint>());
+             }
+         }*/
     }
 
     public void Hide()
@@ -227,10 +229,6 @@ public class AttackUIController : MonoBehaviour {
         swipeAttackGO.SetActive(true);
         //targetPointParent.gameObject.SetActive(true);
     }
-    public void SetAttackCountText()
-    {
-
-    }
     public void StrongAttack()
     {
         Human human = (Human)attacker;
@@ -250,22 +248,7 @@ public class AttackUIController : MonoBehaviour {
         attackButton.gameObject.SetActive(false);
        // attackTextGO.SetActive(false);
     }
-    public void StrongAttackPreview()
-    {
-        attackType = attacker.GetType<Human>().AttackTypes.Find(a => a.Name == "StrongAttack");
-        UpdateHit();
-        UpdateDamage();
-        attackButton.gameObject.SetActive(true);
-        //attackTextGO.SetActive(true);
-    }
-    public void FastAttackPreview()
-    {
-        attackType = attacker.GetType<Human>().AttackTypes.Find(a => a.Name == "FastAttack");
-        UpdateHit();
-        UpdateDamage();
-        attackButton.gameObject.SetActive(true);
-        //attackTextGO.SetActive(true);
-    }
+  
     public void AttackButtonCLicked()
     {
         StartAttack(attackType);
@@ -296,29 +279,29 @@ public class AttackUIController : MonoBehaviour {
         else
             StartCoroutine(ActivateSwipeAttack(0.35f));
     }
-    public void TargetPointSelected(int id)
-    {
-        swipeAttackGO.SetActive(true);
-        chooseTargetTutorial.SetActive(false);
-       // targetInfoObject.SetActive(true);
+    //public void TargetPointSelected(int id)
+    //{
+    //    swipeAttackGO.SetActive(true);
+    //    chooseTargetTutorial.SetActive(false);
+    //   // targetInfoObject.SetActive(true);
         
-        foreach (AttackTargetPoint point in targetPoints)
-        {
-            if (id == point.ID)
-            {
-                point.PlayAnimation();
-                activeTargetPoint = point;
-            }
-            else
-            {
-                point.StopAnimation();
-            }
-        }
-        attackTarget = ((Monster)defender).TargetPoints[activeTargetPoint.ID];
-        targetName.text = attackTarget.Name;
-        UpdateDamage();
-        UpdateHit();
-    }
+    //    foreach (AttackTargetPoint point in targetPoints)
+    //    {
+    //        if (id == point.ID)
+    //        {
+    //            point.PlayAnimation();
+    //            activeTargetPoint = point;
+    //        }
+    //        else
+    //        {
+    //            point.StopAnimation();
+    //        }
+    //    }
+    //    attackTarget = ((Monster)defender).TargetPoints[activeTargetPoint.ID];
+    //    targetName.text = attackTarget.Name;
+    //    UpdateDamage();
+    //    UpdateHit();
+    //}
     void ShowIdleAttack()
     {
         idleAttackGO.SetActive(true);
@@ -349,55 +332,41 @@ public class AttackUIController : MonoBehaviour {
 
     void UpdateHit()
     {
-        int hitInfluence = attackTarget.HIT_INFLUENCE;
-        if (attackType != null)
-            hitInfluence += attackType.Hit;
-
+        AttackType fastAttackType = attacker.GetType<Human>().AttackTypes.Find(a => a.Name == "FastAttack");
+        int hitInfluence = 0;// attackTarget.HIT_INFLUENCE;
+        hitInfluence += fastAttackType.Hit;
         int hit = Mathf.Clamp(attacker.BattleStats.GetHitAgainstTarget(defender)+hitInfluence, 0, 100);// + 10 * currentHitSliderValue, 0, 100);
-       // attackerMaxHIT.text = "" + Mathf.Clamp(attacker.BattleStats.GetHitAgainstTarget(defender) + hitSlider.maxValue * 10, 0, 100) + "%";
         attackerHIT.text = "" + hit + "%";
-        if (hit >= 80)
-        {
-            attackerHIT.color = FindObjectOfType<ColorContainer>().mainGreenColor;
-        }
-        else if(hit <=40)
-        {
-            attackerHIT.color = FindObjectOfType<ColorContainer>().mainRedColor;
-        }
-        else
-        {
-            attackerHIT.color = FindObjectOfType<ColorContainer>().mainWhiteColor;
-        }
+
+        AttackType strongAttackType = attacker.GetType<Human>().AttackTypes.Find(a => a.Name == "StrongAttack");
+        hitInfluence = 0;// attackTarget.HIT_INFLUENCE;
+        hitInfluence += strongAttackType.Hit;
+        hit = Mathf.Clamp(attacker.BattleStats.GetHitAgainstTarget(defender) + hitInfluence, 0, 100);// + 10 * currentHitSliderValue, 0, 100);
+        strongAttackHit.text = "" + hit + "%";
+
+
         if (EventContainer.attackerHitChanged != null)
             EventContainer.attackerHitChanged(hit);
-        if (attackType != null)
-            strongAttackHit.text = Mathf.Clamp(attacker.BattleStats.GetHitAgainstTarget(defender)+attackType.Hit,0,100) + " %";
-        //attackerSP2.text = "" + attacker.Stats.SP;
     }
     void UpdateDamage()
     {
-        float multiplier = attackTarget.DamageMultiplier;
+        AttackType fastAttackType = attacker.GetType<Human>().AttackTypes.Find(a => a.Name == "FastAttack");
+        float multiplier = 1;//attackTarget.DamageMultiplier;
         List<float> attackMultiplier = new List<float>();
         attackMultiplier.Add(multiplier);
-        if(attackType!=null)
-            attackMultiplier.Add(attackType.DamageMultiplier);
+        attackMultiplier.Add(fastAttackType.DamageMultiplier);
         int damage = attacker.BattleStats.GetDamage(attackMultiplier);
         int dmg = (int)((defender.BattleStats.GetReceivedDamage(damage)));
         attackerDMG.text = "" + dmg;
-        Human human =(Human) attacker;
-        strongAttackDamage.text = "" + (attacker.BattleStats.GetDamageAgainstTarget(defender, attackMultiplier));
-        if (dmg >= 5)
-        {
-            attackerDMG.color = FindObjectOfType<ColorContainer>().mainGreenColor;
-        }
-        else if (dmg <= 1)
-        {
-            attackerDMG.color = FindObjectOfType<ColorContainer>().mainRedColor;
-        }
-        else
-        {
-            attackerDMG.color = FindObjectOfType<ColorContainer>().mainWhiteColor;
-        }
+      
+        AttackType strongAttackType = attacker.GetType<Human>().AttackTypes.Find(a => a.Name == "StrongAttack");
+
+        attackMultiplier.Clear();
+        attackMultiplier.Add(multiplier);
+        attackMultiplier.Add(strongAttackType.DamageMultiplier);
+        damage = attacker.BattleStats.GetDamage(attackMultiplier);
+        dmg = (int)((defender.BattleStats.GetReceivedDamage(damage)));
+        strongAttackDamage.text = "" + dmg;
     }
 
     private void HPValueChanged()
