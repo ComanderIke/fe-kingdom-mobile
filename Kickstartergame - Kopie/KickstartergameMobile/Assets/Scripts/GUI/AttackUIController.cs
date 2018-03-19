@@ -93,6 +93,8 @@ public class AttackUIController : MonoBehaviour {
     private GameObject idleAttackGO;
     [SerializeField]
     private GameObject swipeAttackGO;
+    [SerializeField]
+    private GameObject frontalAttackGO;
     [Header("Configuration")]
     [SerializeField]
     private float healthSpeed;
@@ -121,17 +123,17 @@ public class AttackUIController : MonoBehaviour {
     void Start () {
        
 	}
-
+   
     void OnEnable()
     {
 
        // attackTutorial.SetActive(true);
         HPValueChanged();
-        swipeAttackGO.SetActive(true);
+        
         EventContainer.hpValueChanged += HPValueChanged;
         EventContainer.attackUIVisible(true);
         EventContainer.swipeIdleEvent += ShowIdleAttack;
-        
+        EventContainer.frontalAttackAnimationEnd += EnableSwipeAttack;
         //attackerSprite.sprite = attacker.Sprite;
         defenderSprite.sprite = defender.Sprite;
         attackCount = attacker.BattleStats.GetAttackCountAgainst(defender);
@@ -160,15 +162,19 @@ public class AttackUIController : MonoBehaviour {
         else
             attackCountTextText.text = "Attacks";
     }
-    
+
+    void EnableSwipeAttack()
+    {
+        StartCoroutine(ActivateSwipeAttack(0.3f));
+    }
     public void Show(LivingObject attacker, LivingObject defender)
     {
         this.attacker = attacker;
         this.defender = defender;
         attackButton.interactable = true;
         gameObject.SetActive(true);
-        chooseTargetTutorial.SetActive(true);
-        swipeAttackGO.SetActive(false);
+        frontalAttackGO.SetActive(true);
+        //chooseTargetTutorial.SetActive(true);
         currentAtkSliderValue = 0;
         currentHitSliderValue = 0;
         hitSlider.value = 0;
@@ -178,7 +184,7 @@ public class AttackUIController : MonoBehaviour {
             if(child!=targetPointParent)
                 GameObject.Destroy(child.gameObject);
         }
-        targetPoints = new List<AttackTargetPoint>();
+       /* targetPoints = new List<AttackTargetPoint>();
         int cnt = 0;
         if (defender is Monster)
         {
@@ -195,7 +201,7 @@ public class AttackUIController : MonoBehaviour {
                     instantiatedPoint.GetComponent<AttackTargetPoint>().HideWeak();
                 targetPoints.Add(instantiatedPoint.GetComponent<AttackTargetPoint>());
             }
-        }
+        }*/
     }
 
     public void Hide()
@@ -268,13 +274,13 @@ public class AttackUIController : MonoBehaviour {
     {
         swipeAttackGO.SetActive(false);
         attackButton.gameObject.SetActive(false);
-        foreach (AttackTargetPoint point in targetPoints)
-        {
-            if (point != activeTargetPoint)
-            {
-                point.gameObject.SetActive(false);
-            }
-        }
+        //foreach (AttackTargetPoint point in targetPoints)
+        //{
+        //    if (point != activeTargetPoint)
+        //    {
+        //        point.gameObject.SetActive(false);
+        //    }
+        //}
         if (attackCount > 0)
         {
             Debug.Log("StartAttack!");
@@ -284,7 +290,7 @@ public class AttackUIController : MonoBehaviour {
         if(attackCount <=0)
         {
             swipeAttackGO.SetActive(false);
-            activeTargetPoint.gameObject.SetActive(false);
+            //activeTargetPoint.gameObject.SetActive(false);
             //targetInfoObject.SetActive(false);
         }
         else
@@ -330,13 +336,15 @@ public class AttackUIController : MonoBehaviour {
     public void ShowMissText()
     {
         //activeTarget.ShowMissedText();
-        FindObjectOfType<PopUpTextController>().CreateAttackPopUpTextGreen("Missed", activeTargetPoint.transform);
+        //FindObjectOfType<PopUpTextController>().CreateAttackPopUpTextGreen("Missed", activeTargetPoint.transform);
+        FindObjectOfType<PopUpTextController>().CreateAttackPopUpTextGreen("Missed", targetPointParent.transform);
     }
     public void ShowDamageText(int damage)
     {
-        FindObjectOfType<PopUpTextController>().CreateAttackPopUpTextRed("" + damage, activeTargetPoint.transform);
+        //FindObjectOfType<PopUpTextController>().CreateAttackPopUpTextRed("" + damage, activeTargetPoint.transform);
+        FindObjectOfType<PopUpTextController>().CreateAttackPopUpTextRed("" + damage, targetPointParent.transform);
         //activeTarget.ShowDamageText(damage);
-        
+
     }
 
     void UpdateHit()

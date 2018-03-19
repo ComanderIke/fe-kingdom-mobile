@@ -8,9 +8,9 @@ public class PlayerTurnTextAnimation : MonoBehaviour {
 
     public TextMeshProUGUI text;
     public Image backGround;
-    const float FADE_IN_DURATION = 0.3f;
-    const float FADE_OUT_DURATION = 0.4f;
-    const float OPAQUE_DURATION = 0.8f;
+    const float FADE_IN_DURATION = 0.2f;
+    const float FADE_OUT_DURATION = 0.3f;
+    const float OPAQUE_DURATION = 0.3f;
     private float backGroundMaxAlpha = 0;
     public static float duration = FADE_IN_DURATION + OPAQUE_DURATION + FADE_OUT_DURATION;
     // Use this for initialization

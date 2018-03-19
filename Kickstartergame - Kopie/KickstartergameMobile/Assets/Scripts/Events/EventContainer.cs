@@ -62,7 +62,9 @@ namespace Assets.Scripts.Events
 
         public delegate void AttackButtonCLicked();
         public static AttackButtonCLicked attacktButtonCLicked;
-
+        public delegate void FrontalAttackAnimationEnd();
+        public static FrontalAttackAnimationEnd frontalAttackAnimationEnd;
+        
         public delegate void AttackUIVisible( bool visible);
         public static AttackUIVisible attackUIVisible;
 

@@ -52,6 +52,7 @@ public class UIController : MonoBehaviour, Controller {
         EventContainer.showCursor += SpawnTileCursor;
         EventContainer.hideCursor += HideTileCursor;
         EventContainer.unitShowActiveEffect += SpawnActiveUnitEffect;
+        
         activeUnitEffects = new Dictionary<string, GameObject>();
         attackableEnemyEffects = new List<GameObject>();
         ressources = FindObjectOfType<UXRessources>();

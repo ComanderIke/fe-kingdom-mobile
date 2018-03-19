@@ -30,9 +30,24 @@ namespace Assets.Scripts.GameStates
             mousePath = path;
             
         }
+        void FinishMovement()
+        {
 
+            if (MainScript.endOfMoveCharacterEvent != null)
+                MainScript.endOfMoveCharacterEvent();
+            character.UnitTurnState.HasMoved = true;
+            if (character.Player.IsHumanPlayer)
+                mainScript.GetSystem<UnitActionManager>().ActiveCharWait();
+            //mainScript.SwitchState(new GameplayState());//TODO AISTATE
+            EventContainer.commandFinished();
+        }
         public override void enter()
         {
+            if(character.GridPosition.x == x && character.GridPosition.y == y)
+            {
+                FinishMovement();
+                return;
+            }
             active = true;
             EventContainer.startMovingUnit();
             if (mousePath == null)
@@ -143,13 +158,7 @@ namespace Assets.Scripts.GameStates
                 active = false;
                 pathCounter = 0;
                 character.SetPosition((int)tx, (int)ty);
-                 if(MainScript.endOfMoveCharacterEvent!=null)
-                    MainScript.endOfMoveCharacterEvent();
-                character.UnitTurnState.HasMoved = true;
-                if(character.Player.IsHumanPlayer)
-                    mainScript.GetSystem<UnitActionManager>().ActiveCharWait();
-                //mainScript.SwitchState(new GameplayState());//TODO AISTATE
-                EventContainer.commandFinished();
+                FinishMovement();
             }
         }
     }

@@ -14,6 +14,10 @@ namespace Assets.Scripts.Characters
         {
             return GameObject.transform.localPosition;
         }
+        public Vector3 GetRotation()
+        {
+            return GameObject.transform.localRotation.eulerAngles;
+        }
         public void EnableCollider()
         {
             GameObject.GetComponent<BoxCollider>().enabled = true;

@@ -40,7 +40,8 @@ namespace Assets.Scripts.GameStates
         public override void enter()
         {
             react = false;
-            
+            Debug.Log(attacker.GameTransform.GetRotation());
+            Debug.Log(defender.GameTransform.GetRotation());
             ShowFightUI();
             unitController.HideUnits();
             EventContainer.startAttack += DoAttack;
