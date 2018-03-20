@@ -120,10 +120,19 @@ namespace Assets.Scripts.Characters
            
         //}
 
-        public int InflictDamage(int dmg, LivingObject damagedealer)
+        public int InflictDamage(int dmg, LivingObject damagedealer, bool magic = false)
         {
             float multiplier = 1.0f;
-            int inflictedDmg = (int)((dmg - Stats.Defense) * multiplier);
+            int inflictedDmg;
+            if (magic)
+            {
+                inflictedDmg = (int)(dmg  * multiplier);
+            }
+            else
+            {
+                inflictedDmg = (int)((dmg - Stats.Defense) * multiplier);
+            }
+            
             if (inflictedDmg <= 0)
                 inflictedDmg = 1;
             Stats.HP -= inflictedDmg;
@@ -144,6 +153,7 @@ namespace Assets.Scripts.Characters
             }
             return inflictedDmg;
         }
+
         public T GetType<T>()
         {
             if(this is T) { 

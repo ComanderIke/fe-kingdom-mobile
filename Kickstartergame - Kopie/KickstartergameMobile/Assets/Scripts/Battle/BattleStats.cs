@@ -104,9 +104,12 @@ namespace Assets.Scripts.Characters
         {
             return (int)(Mathf.Clamp(GetDamage(atkMultiplier) - target.Stats.Defense, 1, Mathf.Infinity));
         }
-        public int GetReceivedDamage(int damage)
+        public int GetReceivedDamage(int damage, bool magic = false)
         {
-            return (int)Mathf.Clamp(damage - owner.Stats.Defense, 1, Mathf.Infinity);
+            if(magic)
+                return (int)Mathf.Clamp(damage, 1, Mathf.Infinity);
+            else
+                return (int)Mathf.Clamp(damage - owner.Stats.Defense, 1, Mathf.Infinity);
         }
         public int GetTotalDamageAgainstTarget(LivingObject target)
         {

@@ -1,20 +1,18 @@
 
-using System;
+
 using UnityEngine;
 using System.Collections.Generic;
 using Assets.Scripts.Items;
 using Assets.Scripts.Characters;
-using Assets.Scripts.Characters.Skills;
-using Assets.Scripts.Characters.Debuffs;
 using Assets.Scripts.Characters.Attributes;
-using Assets.Scripts.Battle;
-
+using Assets.Scripts.Characters.SpecialAttacks;
 
 [System.Serializable]
 public class Human : LivingObject{
     
     public Inventory Inventory { get; set; }
     public SkillManager SkillManager { get; set; }
+    public SpecialAttackManager SpecialAttackManager { get; set; }
     public Weapon EquipedWeapon { get; set; }
     public List<AttackType> AttackTypes { get; set; }
     public List<DefenseType> DefenseTypes { get; set; }
@@ -22,10 +20,13 @@ public class Human : LivingObject{
     {
         Inventory = new Inventory(this);
         SkillManager = new SkillManager();
+        SpecialAttackManager = new SpecialAttackManager();
+        SpecialAttackManager.AddSpecial(new LightningStrike());
         Sprite = sprite;// GameObject.FindObjectOfType<SpriteScript>().swordActiveSprite;
         List<int> attackRanges = new List<int>();
         AttackTypes = new List<AttackType>();
         AttackTypes.Add(new AttackType("StrongAttack", 1.5f, -20,0));
+        AttackTypes.Add(new AttackType("SpecialAttack", 1.0f, 0, 0));
         AttackTypes.Add(new AttackType("FastAttack", 1.0f, 0,0));
         DefenseTypes = new List<DefenseType>();
         DefenseTypes.Add(new DefenseType("Guard", 0.7f, 0));

@@ -148,19 +148,27 @@ namespace Assets.Scripts.GameStates
                     attackModifier.Add(attackTarget.DamageMultiplier);
                 if (defense != null)
                     attackModifier.Add(defense.Atk_Mult);
-                int damage = defender.InflictDamage(attacker.BattleStats.GetDamage(attackModifier), attacker);
-                if (attacker.Player.IsHumanPlayer)
+                
+                if (attackType.Name == "SpecialAttack")
                 {
-                    react = true;
-                    if(isDefense)
-                        uiController.reactUIController.ShowCounterDamageText(damage);
-                    else
-                        uiController.attackUIController.ShowDamageText(damage);
+                    ((Human)attacker).SpecialAttackManager.equippedSpecial.UseSpecial(attacker, attacker.BattleStats.GetDamage(attackModifier), defender);
                 }
-                if (defender.Player.IsHumanPlayer)
+                else
                 {
-                    uiController.reactUIController.ShowDamageText(damage);
-                }  
+                    int damage = defender.InflictDamage(attacker.BattleStats.GetDamage(attackModifier), attacker);
+                    if (attacker.Player.IsHumanPlayer)
+                    {
+                        react = true;
+                        if (isDefense)
+                            uiController.reactUIController.ShowCounterDamageText(damage);
+                        else
+                            uiController.attackUIController.ShowDamageText(damage);
+                    }
+                    if (defender.Player.IsHumanPlayer)
+                    {
+                        uiController.reactUIController.ShowDamageText(damage);
+                    }
+                }
             }
             else
             {

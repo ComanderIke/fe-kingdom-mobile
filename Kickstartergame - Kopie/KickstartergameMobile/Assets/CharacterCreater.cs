@@ -60,7 +60,7 @@ public class CharacterCreater : MonoBehaviour
     }
     public void WeaponSelected(int weaponIndex)
     {
-        SpriteScript ss = GameObject.FindObjectOfType<SpriteScript>();
+        RessourceScript ss = GameObject.FindObjectOfType<RessourceScript>();
         selectedWeaponIndex = weaponIndex;
         if (selectedWeaponIndex == 0)
             sprite.sprite = ss.swordActiveSprite;
@@ -74,7 +74,7 @@ public class CharacterCreater : MonoBehaviour
     public void CompleteCreation()
     {
         string name = characterName.text;
-        SpriteScript ss = FindObjectOfType<SpriteScript>();
+        RessourceScript ss = FindObjectOfType<RessourceScript>();
         WeaponScript ws = FindObjectOfType<WeaponScript>();
         Human newChar = new Human(name, ss.swordActiveSprite);
        

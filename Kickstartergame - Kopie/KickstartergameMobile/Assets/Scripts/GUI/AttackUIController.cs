@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using System;
 using Assets.Scripts.Characters.Monsters;
 using TMPro;
+using Assets.Scripts.Characters.SpecialAttacks;
 
 public class AttackUIController : MonoBehaviour {
 
@@ -29,8 +30,7 @@ public class AttackUIController : MonoBehaviour {
     Transform targetPointParent;
     [SerializeField]
     GameObject targetInfoObject;
-    [SerializeField]
-    GameObject attackTextGO;
+
     [SerializeField]
     GameObject chooseTargetTutorial;
     [SerializeField]
@@ -44,27 +44,27 @@ public class AttackUIController : MonoBehaviour {
     [SerializeField]
     private TextMeshProUGUI defenderHP;
     [SerializeField]
-    private TextMeshProUGUI attackerDMG;
-    [SerializeField]
-    private TextMeshProUGUI targetName;
-    [SerializeField]
-    private TextMeshProUGUI attackerHIT;
-    [SerializeField]
     private TextMeshProUGUI attackCountText;
     [SerializeField]
     private TextMeshProUGUI attackCountTextText;
     [SerializeField]
-    private Text attackerMaxDMG;
+    private TextMeshProUGUI targetName;
+    [Header("Fast Attack")]
+    [SerializeField]
+    private TextMeshProUGUI attackerDMG;
+    [SerializeField]
+    private TextMeshProUGUI attackerHIT;
+
+    [Header("Special Attack")]
+    [SerializeField]
+    private TextMeshProUGUI specialAttackDMG;
+    [SerializeField]
+    private TextMeshProUGUI specialAttackHit;
+    [Header("Strong Attack")]
     [SerializeField]
     private TextMeshProUGUI strongAttackDamage;
     [SerializeField]
     private TextMeshProUGUI strongAttackHit;
-    [SerializeField]
-    private Text attackerMaxHIT;
-    [SerializeField]
-    private Text attackerSP;
-    [SerializeField]
-    private Text attackerSP2;
     [SerializeField]
     private Image attackerHPBar;
     [SerializeField]
@@ -74,23 +74,7 @@ public class AttackUIController : MonoBehaviour {
     [SerializeField]
     private Image defenderLosingHPBar;
     [SerializeField]
-    private Slider hitSlider;
-    [SerializeField]
-    private Slider attackSlider;
-    [SerializeField]
-    private GameObject attackTutorial;
-    [SerializeField]
-    private Text counterMissedText;
-    [SerializeField]
-    private Text counterDamageText;
-    [SerializeField]
     private Button attackButton;
-    [SerializeField]
-    private GameObject fastAttackGO;
-    [SerializeField]
-    private GameObject strongAttackGO;
-    [SerializeField]
-    private GameObject idleAttackGO;
     [SerializeField]
     private GameObject swipeAttackGO;
     [SerializeField]
@@ -132,7 +116,6 @@ public class AttackUIController : MonoBehaviour {
         
         EventContainer.hpValueChanged += HPValueChanged;
         EventContainer.attackUIVisible(true);
-        EventContainer.swipeIdleEvent += ShowIdleAttack;
         EventContainer.frontalAttackAnimationEnd += EnableSwipeAttack;
         //attackerSprite.sprite = attacker.Sprite;
         defenderSprite.sprite = defender.Sprite;
@@ -143,7 +126,6 @@ public class AttackUIController : MonoBehaviour {
     {
         EventContainer.hpValueChanged -= HPValueChanged;
         EventContainer.attackUIVisible(false);
-        EventContainer.swipeIdleEvent -= ShowIdleAttack;
 
     }
 
@@ -175,10 +157,6 @@ public class AttackUIController : MonoBehaviour {
         gameObject.SetActive(true);
         frontalAttackGO.SetActive(true);
         //chooseTargetTutorial.SetActive(true);
-        currentAtkSliderValue = 0;
-        currentHitSliderValue = 0;
-        hitSlider.value = 0;
-        attackSlider.value = 0;
         foreach(Transform child in targetPointParent.GetComponentsInChildren<Transform>())
         {
             if(child!=targetPointParent)
@@ -186,6 +164,7 @@ public class AttackUIController : MonoBehaviour {
         }
         UpdateDamage();
         UpdateHit();
+        UpdateSpecial();
         /* targetPoints = new List<AttackTargetPoint>();
          int cnt = 0;
          if (defender is Monster)
@@ -243,6 +222,13 @@ public class AttackUIController : MonoBehaviour {
         attackType = attacker.GetType<Human>().AttackTypes.Find(a => a.Name == "FastAttack");
         StartAttack(attackType);
     }
+    public void SpecialAttack()
+    {
+        Human human = (Human)attacker;
+        Debug.Log("Special Attack!");
+        attackType = attacker.GetType<Human>().AttackTypes.Find(a => a.Name == "SpecialAttack");
+        StartAttack(attackType);
+    }
     public void ResetAttack()
     {
         attackButton.gameObject.SetActive(false);
@@ -257,13 +243,7 @@ public class AttackUIController : MonoBehaviour {
     {
         swipeAttackGO.SetActive(false);
         attackButton.gameObject.SetActive(false);
-        //foreach (AttackTargetPoint point in targetPoints)
-        //{
-        //    if (point != activeTargetPoint)
-        //    {
-        //        point.gameObject.SetActive(false);
-        //    }
-        //}
+
         if (attackCount > 0)
         {
             Debug.Log("StartAttack!");
@@ -273,18 +253,17 @@ public class AttackUIController : MonoBehaviour {
         if(attackCount <=0)
         {
             swipeAttackGO.SetActive(false);
-            //activeTargetPoint.gameObject.SetActive(false);
-            //targetInfoObject.SetActive(false);
         }
         else
             StartCoroutine(ActivateSwipeAttack(0.35f));
     }
+
     //public void TargetPointSelected(int id)
     //{
     //    swipeAttackGO.SetActive(true);
     //    chooseTargetTutorial.SetActive(false);
     //   // targetInfoObject.SetActive(true);
-        
+
     //    foreach (AttackTargetPoint point in targetPoints)
     //    {
     //        if (id == point.ID)
@@ -302,12 +281,7 @@ public class AttackUIController : MonoBehaviour {
     //    UpdateDamage();
     //    UpdateHit();
     //}
-    void ShowIdleAttack()
-    {
-        idleAttackGO.SetActive(true);
-        strongAttackGO.SetActive(false);
-        fastAttackGO.SetActive(false);
-    }
+
     public void ShowCounterMissText()
     {
         FindObjectOfType<PopUpTextController>().CreateAttackPopUpTextGreen("Missed", attackerSprite.transform);
@@ -322,13 +296,16 @@ public class AttackUIController : MonoBehaviour {
         //FindObjectOfType<PopUpTextController>().CreateAttackPopUpTextGreen("Missed", activeTargetPoint.transform);
         FindObjectOfType<PopUpTextController>().CreateAttackPopUpTextGreen("Missed", targetPointParent.transform);
     }
-    public void ShowDamageText(int damage)
+    public void ShowDamageText(int damage, bool magic=false)
     {
-        //FindObjectOfType<PopUpTextController>().CreateAttackPopUpTextRed("" + damage, activeTargetPoint.transform);
-        FindObjectOfType<PopUpTextController>().CreateAttackPopUpTextRed("" + damage, targetPointParent.transform);
+        if(magic)
+            FindObjectOfType<PopUpTextController>().CreateAttackPopUpTextBlue("" + damage, targetPointParent.transform);
+        else
+            FindObjectOfType<PopUpTextController>().CreateAttackPopUpTextRed("" + damage, targetPointParent.transform);
         //activeTarget.ShowDamageText(damage);
 
     }
+
 
     void UpdateHit()
     {
@@ -345,8 +322,8 @@ public class AttackUIController : MonoBehaviour {
         strongAttackHit.text = "" + hit + "%";
 
 
-        if (EventContainer.attackerHitChanged != null)
-            EventContainer.attackerHitChanged(hit);
+        //if (EventContainer.attackerHitChanged != null)
+        //    EventContainer.attackerHitChanged(hit);
     }
     void UpdateDamage()
     {
@@ -367,6 +344,22 @@ public class AttackUIController : MonoBehaviour {
         damage = attacker.BattleStats.GetDamage(attackMultiplier);
         dmg = (int)((defender.BattleStats.GetReceivedDamage(damage)));
         strongAttackDamage.text = "" + dmg;
+    }
+    void UpdateSpecial()
+    {
+        Human humanAttacker = (Human)attacker;
+        float multiplier = 1;//attackTarget.DamageMultiplier;
+        List<float> attackMultiplier = new List<float>();
+        attackMultiplier.Add(multiplier);
+        int damage = attacker.BattleStats.GetDamage(attackMultiplier);
+        int dmg = (int)(humanAttacker.SpecialAttackManager.equippedSpecial.GetSpecialDmg(attacker, damage,defender));
+        specialAttackDMG.text = "" + dmg;
+
+        int hitInfluence = 0;// attackTarget.HIT_INFLUENCE;
+        int normalHit = attacker.BattleStats.GetHitAgainstTarget(defender)+hitInfluence;
+        
+        int hit = Mathf.Clamp(humanAttacker.SpecialAttackManager.equippedSpecial.GetSpecialHit(attacker, normalHit, defender), 0, 100);// + 10 * currentHitSliderValue, 0, 100);
+        specialAttackHit.text = "" + hit + "%";
     }
 
     private void HPValueChanged()

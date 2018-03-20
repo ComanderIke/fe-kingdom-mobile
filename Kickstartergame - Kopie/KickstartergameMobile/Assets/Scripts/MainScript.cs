@@ -141,7 +141,7 @@ public class MainScript : MonoBehaviour {
         Player p = turnManager.Players[0];
         StartPosition[] startPositions = GameObject.FindObjectsOfType<StartPosition>();
         UnitInstantiater cc = GameObject.FindObjectOfType<UnitInstantiater>();
-        SpriteScript ss = GameObject.FindObjectOfType<SpriteScript>();
+        RessourceScript ss = GameObject.FindObjectOfType<RessourceScript>();
         if (FindObjectOfType<GameData>() != null)
         {
             foreach (LivingObject u in FindObjectOfType<GameData>().player.Units)
