@@ -158,17 +158,17 @@ public class MainScript : MonoBehaviour {
             Human filler3 = null;
             Human filler4 = null;
             
-            filler = new Human("Leila", ss.swordActiveSprite);
-            filler2 = new Human("Flora", ss.axeActiveSprite);
-            filler3 = new Human("Eldric", ss.archerActiveSprite);
-            filler4 = new Human("Hector", ss.lancerActiveSprite);
-            filler.Inventory.AddItem(GameObject.FindObjectOfType<WeaponScript>().woodenSword);
+            filler = new Human("Leila", ss.sprites.GetCharacterOnMapSprites(0));
+            filler2 = new Human("Flora", ss.sprites.GetCharacterOnMapSprites(2));
+            filler3 = new Human("Eldric", ss.sprites.GetCharacterOnMapSprites(1));
+            filler4 = new Human("Hector", ss.sprites.GetCharacterOnMapSprites(3));
+            filler.Inventory.AddItem(GameObject.FindObjectOfType<DataScript>().weapons.woodenSword);
             filler.Inventory.UseItem(filler.Inventory.items[0]);
-            filler2.Inventory.AddItem(GameObject.FindObjectOfType<WeaponScript>().woodenAxe);
+            filler2.Inventory.AddItem(GameObject.FindObjectOfType<DataScript>().weapons.woodenAxe);
             filler2.Inventory.UseItem(filler2.Inventory.items[0]);
-            filler3.Inventory.AddItem(GameObject.FindObjectOfType<WeaponScript>().basicBow);
+            filler3.Inventory.AddItem(GameObject.FindObjectOfType<DataScript>().weapons.basicBow);
             filler3.Inventory.UseItem(filler3.Inventory.items[0]);
-            filler4.Inventory.AddItem(GameObject.FindObjectOfType<WeaponScript>().woodenSpear);
+            filler4.Inventory.AddItem(GameObject.FindObjectOfType<DataScript>().weapons.woodenSpear);
             filler4.Inventory.UseItem(filler4.Inventory.items[0]);
 
             p.AddUnit(filler);
@@ -185,13 +185,14 @@ public class MainScript : MonoBehaviour {
         //cc.PlaceCharacter(0, filler2, startPositions[1].GetXOnGrid(), startPositions[1].GetYOnGrid());
         //cc.PlaceCharacter(0, filler3, startPositions[2].GetXOnGrid(), startPositions[2].GetYOnGrid());
         //cc.PlaceCharacter(0, filler4, startPositions[3].GetXOnGrid(), startPositions[3].GetYOnGrid());
-        Monster monster = new Monster("Mammoth", MonsterType.Mammoth, ss.mammothSprite);
-        Monster saber = new Monster("Sabertooth", MonsterType.Sabertooth, ss.sabertoothSprite);
+        Monster monster = new Monster("Mammoth", MonsterType.Mammoth, ss.sprites.GetMonsterOnMapSprites(0));
+        Monster saber = new Monster("Sabertooth", MonsterType.Sabertooth, ss.sprites.GetMonsterOnMapSprites(1));
         //turnManager.Players[1].AddUnit(monster);
         turnManager.Players[1].AddUnit(saber);
-
+        
         //cc.PlaceCharacter(1, monster, 4, 2);
         cc.PlaceCharacter(1, saber, 5, 2);
+        saber.GridPosition.FacingLeft = true;
     }
 
     public T GetSystem<T>()

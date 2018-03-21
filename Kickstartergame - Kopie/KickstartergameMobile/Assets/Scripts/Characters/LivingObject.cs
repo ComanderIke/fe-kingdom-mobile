@@ -29,6 +29,7 @@ namespace Assets.Scripts.Characters
         public MoveActions MoveActions { get; set; }
         public List<Goal> AIGoals { get; set; }
 
+
         public LivingObject(string name, Sprite sprite)
         {
             Name = name;

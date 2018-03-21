@@ -1,0 +1,69 @@
+This document contains information on important steps that you might need to
+take when upgrading Beautiful Transitions. Please also refer the release notes.
+If you have issues that are not covered by the below then please get in 
+contact via our forums at http://www.flipwebapps.com or send an email to me 
+directly at mark_a_hewitt@yahoo.co.uk
+
+GENERAL UPGRADE NOTES
+
+- Before upgrading always take a backup copy of you project so, incase of
+  problems, you have a working baseline and can refer old settings.
+- Delete the old /FlipWebApps/BeautifulTransitions folder before upgrading to 
+  cater for possible conflicts. 
+- Read the release notes for an overview of changes.
+	
+VERSION UPGRADE NOTES
+
+v5.1
+
+- Start and Complete events are passed the underlying TransitionStep object if the 
+target method defines this. In case of issues verify that you don't need to reselect
+the targets.
+
+- If using Game Framework actions then you will need to upgrade to Game Framework v5.0.2+
+
+
+v5.0
+
+This version features a number of larger changes including some updates to the 
+API that were necessary to allow for current and future improvements. It also 
+introduces the concept of actions which greatly improves on the existing 
+functionality.
+
+- The namespace for all classes has been simplified, dropping the FlipWebApps prefix.
+Run a search replace on all files changing "using FlipWebApps.BeautifulTransitions" 
+to "using BeautifulTransitions"
+
+- The TransitionStep API introduces a new parameter 'timeUpdateMethod' that allows
+for setting whether to use game, or unscaled time. If you get compile errors
+relating to the number of parameters that constructors take then please add in this 
+extra parameter, or move to using named parameters.
+
+- TransitionStep: Progress.set is made private and ProgressUpdated 
+parameter removed - read from Progress instead, EaseValue() is made protected 
+and renamed to ValueFromProgress()
+
+- TransitionStep: Start / Complete callbacks are updated to take a TransitionStep 
+parameter for easy reference back to the calling TransitionStep. Please add this 
+parameter to call back methods.
+
+- TransitionStep: Update callback parameter is changed from float to 
+TransitionStep. Please update call back method parameters accordingly and 
+reference TransitionStep.Progress in you method.
+
+- TransitionStep: The deprecated MoveTarget transition is removed. Use the API 
+compatible Move transition instead.
+
+- TransitionStep: XxxFromOriginal() methods corrected to start from the original 
+rather than current value as per their name. Swap to use XxxFromCurrent() if 
+you want the old behaviour.
+
+- TransitionBase ValueUpdated method is removed and replaced with TransitionInUpdate 
+and TransitionOutUpdate. Rename / add methods if you need to override these
+
+- TransitionsBase TransitionXxStart / Complete methods are updated to take a 
+TransitionStep parameter for easy reference back to the calling TransitionStep. 
+Please add this parameter to any overrides.
+
+
+Upgrading to Earlier Versions - Please contact if issues.

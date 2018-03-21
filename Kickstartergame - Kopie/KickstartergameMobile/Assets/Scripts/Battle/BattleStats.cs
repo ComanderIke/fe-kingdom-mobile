@@ -7,12 +7,18 @@ namespace Assets.Scripts.Characters
     {
         const int AGILITY_TO_DOUBLE = 0;
         const int BASIC_HIT_CHANCE = 70;
+        const float FRONTAL_ATTACK_MOD = 1.5f;
+        const int SURPRISE_BONUS_HIT = 20;
 
         private LivingObject owner;
+        public float FrontalAttackModifier { get; set; }
+        public int SurpriseAttackBonusHit { get; set; }
 
         public BattleStats(LivingObject owner)
         {
             this.owner = owner;
+            FrontalAttackModifier = FRONTAL_ATTACK_MOD;
+            SurpriseAttackBonusHit = SURPRISE_BONUS_HIT;
         }
 
         public bool CanKillTarget(LivingObject target)
@@ -118,6 +124,35 @@ namespace Assets.Scripts.Characters
             if (CanDoubleAttack(target))
                 attacks = 2;
             return (int)(multiplier * attacks * Mathf.Clamp(GetDamage() - target.Stats.Defense, 0, Mathf.Infinity));
+        }
+
+        public bool IsFrontalAttack(LivingObject target)
+        {
+            int deltaX = owner.GridPosition.x - target.GridPosition.x;
+            int deltaY = owner.GridPosition.y - target.GridPosition.y;
+            if (deltaX != 0 && deltaY == 0)
+            {
+                if (deltaX == 1 && !target.GridPosition.FacingLeft)//Target right of attacker and facing right
+                    return true;
+                else if (deltaX == -1 && target.GridPosition.FacingLeft)
+                    return true;
+                return false;
+            }
+            return false;
+        }
+        public bool IsBackSideAttack(LivingObject target)
+        {
+            int deltaX = owner.GridPosition.x - target.GridPosition.x;
+            int deltaY = owner.GridPosition.y - target.GridPosition.y;
+            if (deltaX != 0 && deltaY == 0)
+            {
+                if (deltaX == 1 && target.GridPosition.FacingLeft)//Target right of attacker and facing left
+                    return true;
+                else if (deltaX ==-1 && !target.GridPosition.FacingLeft)
+                    return true;
+                return false;
+            }
+            return false;
         }
     }
 }

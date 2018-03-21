@@ -5,10 +5,10 @@ using UnityEngine;
 [System.Serializable]
 public abstract class Item {
 
-    public String Name { get; set; }
-    public Sprite Sprite { get; private set; }
-    public int NumberOfUses {  get;  protected set; }
-	public string Description { get; private set; }
+    public String Name;
+    public Sprite Sprite;
+    public int NumberOfUses;
+    public String Description;
 
 	public Item(String name, String description, int useage, Sprite sprite){
 		Name = name;

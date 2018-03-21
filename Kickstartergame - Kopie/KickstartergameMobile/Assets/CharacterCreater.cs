@@ -62,44 +62,32 @@ public class CharacterCreater : MonoBehaviour
     {
         RessourceScript ss = GameObject.FindObjectOfType<RessourceScript>();
         selectedWeaponIndex = weaponIndex;
-        if (selectedWeaponIndex == 0)
-            sprite.sprite = ss.swordActiveSprite;
-        else if (selectedWeaponIndex == 1)
-            sprite.sprite = ss.archerActiveSprite;
-        else if (selectedWeaponIndex == 2)
-            sprite.sprite = ss.axeActiveSprite;
-        else if (selectedWeaponIndex == 3)
-            sprite.sprite = ss.lancerActiveSprite;
+        sprite.sprite = ss.sprites.GetCharacterOnMapSprites(selectedWeaponIndex);
     }
     public void CompleteCreation()
     {
         string name = characterName.text;
         RessourceScript ss = FindObjectOfType<RessourceScript>();
-        WeaponScript ws = FindObjectOfType<WeaponScript>();
-        Human newChar = new Human(name, ss.swordActiveSprite);
-       
-
+        DataScript ws = FindObjectOfType<DataScript>();
+        Human newChar = new Human(name, ss.sprites.GetCharacterOnMapSprites(0));
 
         if (selectedWeaponIndex == 0)
         {
-            ws.woodenSword.use(newChar);
-            newChar.Sprite = ss.swordActiveSprite;
+            ws.weapons.woodenSword.use(newChar);
         }
         else if (selectedWeaponIndex == 1)
         {
-            ws.basicBow.use(newChar);
-            newChar.Sprite = ss.archerActiveSprite;
+            ws.weapons.basicBow.use(newChar);
         }
         else if (selectedWeaponIndex == 2)
         {
-            ws.woodenAxe.use(newChar);
-            newChar.Sprite = ss.axeActiveSprite;
+            ws.weapons.woodenAxe.use(newChar);
         }
         else if (selectedWeaponIndex == 3)
         {
-            ws.woodenSpear.use(newChar);
-            newChar.Sprite = ss.lancerActiveSprite;
+            ws.weapons.woodenSpear.use(newChar);     
         }
+        newChar.Sprite = ss.sprites.GetCharacterOnMapSprites(selectedWeaponIndex);
         FindObjectOfType<GameData>().AddUnit(newChar);
       
         newChar.Inventory.AddItem(newChar.EquipedWeapon);

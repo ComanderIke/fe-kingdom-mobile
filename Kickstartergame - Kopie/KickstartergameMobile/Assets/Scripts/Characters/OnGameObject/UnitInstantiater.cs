@@ -27,19 +27,19 @@ public class UnitInstantiater : MonoBehaviour {
         else
         {
             Human h = (Human) unit;
-            if(h.EquipedWeapon.WeaponType.type == WeaponType.Sword)
+            if(h.EquipedWeapon.WeaponType == WeaponType.Sword)
             {
                 o = Instantiate<GameObject>(melee);
 
-            }else if (h.EquipedWeapon.WeaponType.type == WeaponType.Bow)
+            }else if (h.EquipedWeapon.WeaponType == WeaponType.Bow)
             {
                 o = Instantiate<GameObject>(archer);
             }
-            else if (h.EquipedWeapon.WeaponType.type == WeaponType.Spear)
+            else if (h.EquipedWeapon.WeaponType == WeaponType.Spear)
             {
                 o = Instantiate<GameObject>(lancer);
             }
-            else if (h.EquipedWeapon.WeaponType.type == WeaponType.Axe)
+            else if (h.EquipedWeapon.WeaponType == WeaponType.Axe)
             {
                 o = Instantiate<GameObject>(axefighter);
             }

@@ -27,7 +27,7 @@ public class MouseManager : MonoBehaviour, EngineSystem {
 
     MainScript mainScript;
     public  bool active = false;
-    UXRessources ressources;
+    RessourceScript ressources;
     private  RaycastHit hit;
     Transform gameWorld;
     GameObject moveCursor;
@@ -51,7 +51,7 @@ public class MouseManager : MonoBehaviour, EngineSystem {
         // hit = new RaycastHit();
         gridInput = new GridInput();
         gameWorld = GameObject.FindGameObjectWithTag("World").transform;
-        ressources = FindObjectOfType<UXRessources>();
+        ressources = FindObjectOfType<RessourceScript>();
         
         raycastManager = new RaycastManager();
         InitEvents();
@@ -610,14 +610,14 @@ public class MouseManager : MonoBehaviour, EngineSystem {
             GameObject.Destroy(moveCursorStart);
         if (mousePath.Count == 0)
         {
-            moveCursor = GameObject.Instantiate(ressources.moveCursor, gameWorld);
+            moveCursor = GameObject.Instantiate(ressources.prefabs.moveCursor, gameWorld);
             moveCursor.transform.localPosition = new Vector3(selectedCharacter.GridPosition.x, selectedCharacter.GridPosition.y, moveCursor.transform.localPosition.z);
         }
         else
         {
-            moveCursorStart = GameObject.Instantiate(ressources.moveArrowDot, gameWorld);
+            moveCursorStart = GameObject.Instantiate(ressources.prefabs.moveArrowDot, gameWorld);
             moveCursorStart.transform.localPosition = new Vector3(selectedCharacter.GridPosition.x + 0.5f, selectedCharacter.GridPosition.y + 0.5f, -0.03f);
-            moveCursorStart.GetComponent<SpriteRenderer>().sprite = ressources.standOnArrowStart;
+            moveCursorStart.GetComponent<SpriteRenderer>().sprite = ressources.sprites.standOnArrowStart;
             Vector2 v = new Vector2(selectedCharacter.GridPosition.x, selectedCharacter.GridPosition.y);
             if (v.x - mousePath[0].x > 0)
                 moveCursorStart.transform.rotation = Quaternion.Euler(0, 0, 180);
@@ -632,14 +632,14 @@ public class MouseManager : MonoBehaviour, EngineSystem {
         {
             Vector2 v = mousePath[i];
             
-            GameObject dot = GameObject.Instantiate(ressources.moveArrowDot,gameWorld);
+            GameObject dot = GameObject.Instantiate(ressources.prefabs.moveArrowDot,gameWorld);
             dot.transform.localPosition = new Vector3(v.x + 0.5f, v.y + 0.5f, -0.03f);
             dots.Add(dot);
             if (i == mousePath.Count - 1)
             {
-                moveCursor = GameObject.Instantiate(ressources.moveCursor, gameWorld);
+                moveCursor = GameObject.Instantiate(ressources.prefabs.moveCursor, gameWorld);
                 moveCursor.transform.localPosition = new Vector3(v.x,v.y, moveCursor.transform.localPosition.z);
-                dot.GetComponent<SpriteRenderer>().sprite = ressources.moveArrowHead;
+                dot.GetComponent<SpriteRenderer>().sprite = ressources.sprites.moveArrowHead;
                 if (i != 0)
                 {
                     if (v.x - mousePath[i - 1].x > 0)
@@ -685,17 +685,17 @@ public class MouseManager : MonoBehaviour, EngineSystem {
     {
         if (vBefore.x == vAfter.x)
         {
-            dot.GetComponent<SpriteRenderer>().sprite = ressources.moveArrowStraight;
+            dot.GetComponent<SpriteRenderer>().sprite = ressources.sprites.moveArrowStraight;
             dot.transform.rotation = Quaternion.Euler(0, 0, 90);
         }
         else if (vBefore.y == vAfter.y)
         {
-            dot.GetComponent<SpriteRenderer>().sprite = ressources.moveArrowStraight;
+            dot.GetComponent<SpriteRenderer>().sprite = ressources.sprites.moveArrowStraight;
             dot.transform.rotation = Quaternion.Euler(0, 0, 0);
         }
         else
         {
-            dot.GetComponent<SpriteRenderer>().sprite = ressources.moveArrowCurve;
+            dot.GetComponent<SpriteRenderer>().sprite = ressources.sprites.moveArrowCurve;
             if (vBefore.x - vAfter.x > 0)
             {
                 if ((vBefore.y - vAfter.y > 0))

@@ -53,7 +53,7 @@ namespace Assets.Scripts.Events
         public static AttackerDmgChanged attackerDmgChanged;
         public delegate void AttackerHitChanged(int hit);
         public static AttackerHitChanged attackerHitChanged;
-        public delegate void StartAttack(AttackType attackType = null, TargetPoint attackTarget = null);
+        public delegate void StartAttack(AttackType attackType = null);
         public static StartAttack startAttack;
 
         #endregion

@@ -1,15 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BlinkTextScript : MonoBehaviour {
 
-    private Text text;
+    private TextMeshProUGUI text;
 
 	// Use this for initialization
 	void Awake () {
-        text = GetComponent<Text>();
+        text = GetComponent<TextMeshProUGUI>();
 	}
     private void OnEnable()
     {

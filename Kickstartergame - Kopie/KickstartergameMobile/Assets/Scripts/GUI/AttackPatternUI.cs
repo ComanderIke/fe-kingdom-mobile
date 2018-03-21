@@ -1,13 +1,14 @@
 ﻿using Assets.Scripts.Events;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class AttackPatternUI : MonoBehaviour {
 
-    public Text User;
-    public Text Name;
+    public TextMeshProUGUI User;
+    public TextMeshProUGUI Name;
     bool fadeout = false;
     // Use this for initialization
     void Start () {
@@ -29,7 +30,7 @@ public class AttackPatternUI : MonoBehaviour {
     public void Show(string userText, string NameText)
     {
         gameObject.SetActive(true);
-        User.text = userText+ " uses";
+        User.text = userText+ " counters with";
         Name.text = NameText+"!";
     }
     IEnumerator FadeOut()

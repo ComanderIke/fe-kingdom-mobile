@@ -44,7 +44,7 @@ public class UIController : MonoBehaviour, Controller {
     private Dictionary<string, GameObject> activeUnitEffects;
     private MainScript mainScript;
     private GameObject tileCursor;
-    private UXRessources ressources;
+    private RessourceScript ressources;
     private List<GameObject> attackableEnemyEffects;
 	void Start () {
         mainScript = MainScript.GetInstance();
@@ -55,7 +55,7 @@ public class UIController : MonoBehaviour, Controller {
         
         activeUnitEffects = new Dictionary<string, GameObject>();
         attackableEnemyEffects = new List<GameObject>();
-        ressources = FindObjectOfType<UXRessources>();
+        ressources = FindObjectOfType<RessourceScript>();
     }
     private void SpawnTileCursor(int x, int y)
     {
@@ -63,7 +63,7 @@ public class UIController : MonoBehaviour, Controller {
         {
             Debug.Log("WTF WHY CURSOR POSITIONNULL");
         }
-        tileCursor = GameObject.Instantiate(ressources.moveCursor, GameObject.FindGameObjectWithTag("World").transform);
+        tileCursor = GameObject.Instantiate(ressources.prefabs.moveCursor, GameObject.FindGameObjectWithTag("World").transform);
         tileCursor.transform.localPosition = new Vector3(x, y, tileCursor.transform.localPosition.z);
         tileCursor.name = "TileCursor";
     }
@@ -74,7 +74,7 @@ public class UIController : MonoBehaviour, Controller {
             if ((int)gameobj.transform.localPosition.x == x && (int)gameobj.transform.localPosition.y == y)
                 return;
         }
-        GameObject go = GameObject.Instantiate(ressources.attackableEnemyPrefrab, GameObject.FindGameObjectWithTag("World").transform);
+        GameObject go = GameObject.Instantiate(ressources.prefabs.attackableEnemyPrefrab, GameObject.FindGameObjectWithTag("World").transform);
         go.transform.localPosition = new Vector3(x, y, go.transform.localPosition.z);
         attackableEnemyEffects.Add(go);
     }
@@ -105,7 +105,7 @@ public class UIController : MonoBehaviour, Controller {
         
         if (spawn)
         {
-            GameObject go = GameObject.Instantiate(ressources.moveCursor, GameObject.FindGameObjectWithTag("World").transform);
+            GameObject go = GameObject.Instantiate(ressources.prefabs.moveCursor, GameObject.FindGameObjectWithTag("World").transform);
             go.transform.localPosition = new Vector3(unit.GridPosition.x, unit.GridPosition.y, go.transform.localPosition.z);
             activeUnitEffects.Add(unit.Name, go);
             go.name = "ActiveUnitEffect";

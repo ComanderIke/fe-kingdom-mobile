@@ -33,7 +33,7 @@ namespace Assets.Scripts.Characters
             else if (type == MonsterType.Sabertooth)
             {
                 Stats = new Stats(20, 5, 9, 5, 3, 6, 3, 4, attackRanges);
-                Reactions.Add(new NoReaction(this));
+                //Reactions.Add(new NoReaction(this));
                 Reactions.Add(new RevengeStrike(this));
                 TargetPoints.Add(new TargetPoint(-285, 55, "Head", 1.0f, 0, 0.7f, true));
                 TargetPoints.Add(new TargetPoint(-44, 59, "Body", 1.0f, 0,1.4f));
@@ -44,7 +44,7 @@ namespace Assets.Scripts.Characters
             else
             {
                 Stats = new Stats(20, 5, 9, 5, 3, 6, 3, 4, attackRanges);
-                Reactions.Add(new NoReaction(this));
+                //Reactions.Add(new NoReaction(this));
                 Reactions.Add(new RevengeStrike(this));
                 GridPosition = new GridPosition(this);
             }

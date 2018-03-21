@@ -25,11 +25,23 @@ namespace Assets.Scripts.GameStates
         private DefenseType defense;
         private bool isDefense;
         private bool react;
+        private bool frontAttack;
+        private bool surpriseAttack;
 
         public FightState(LivingObject attacker, LivingObject defender)
         {
             this.attacker = attacker;
             this.defender = defender;
+            frontAttack = false;
+            surpriseAttack = false;
+            if (attacker.BattleStats.IsFrontalAttack(defender))
+            {
+                frontAttack = true;
+            }
+            else if (attacker.BattleStats.IsBackSideAttack(defender))
+            {
+                surpriseAttack = true;
+            }
             attackCount = attacker.BattleStats.GetAttackCountAgainst(defender);
             Debug.Log("FightState " + attacker.Name + " " + defender.Name);
             uiController = MainScript.GetInstance().GetController<UIController>();
@@ -40,8 +52,7 @@ namespace Assets.Scripts.GameStates
         public override void enter()
         {
             react = false;
-            Debug.Log(attacker.GameTransform.GetRotation());
-            Debug.Log(defender.GameTransform.GetRotation());
+           
             ShowFightUI();
             unitController.HideUnits();
             EventContainer.startAttack += DoAttack;
@@ -75,11 +86,11 @@ namespace Assets.Scripts.GameStates
         #endregion
 
         #region Eventtriggered Methods
-        private void DoAttack(AttackType attackType, TargetPoint attackTarget)
+        private void DoAttack(AttackType attackType)
         {
             attackCount--;
             if (attackCount >= 0)
-                MainScript.GetInstance().StartCoroutine(Attack(attackType, attackTarget));
+                MainScript.GetInstance().StartCoroutine(Attack(attackType));
         }
         private void CounterClicked()
         {
@@ -117,15 +128,16 @@ namespace Assets.Scripts.GameStates
             startMusic = GameObject.FindObjectOfType<AudioManager>().GetCurrentlyPlayedMusicTracks()[0];
             GameObject.FindObjectOfType<AudioManager>().ChangeMusic("Fight", startMusic);
         }
-        private bool DoesAttackHit(LivingObject attacker, LivingObject defender, AttackType attackType, TargetPoint attackTarget)
+        private bool DoesAttackHit(LivingObject attacker, LivingObject defender, AttackType attackType)
         {
             int hit = attacker.BattleStats.GetHitAgainstTarget(defender);
             if (defense != null)
                 hit += defense.Hit;
             if (attackType != null)
                 hit += attackType.Hit;
-            if (attackTarget != null)
-                hit += attackTarget.HIT_INFLUENCE;
+            if (surpriseAttack)
+                hit += attacker.BattleStats.SurpriseAttackBonusHit;
+            Debug.Log(hit);
             return UnityEngine.Random.Range(1, 101) <= hit;
         }
         private void EndFight()
@@ -137,19 +149,19 @@ namespace Assets.Scripts.GameStates
             EventContainer.continuePressed -= ExecuteReaction;
             reaction.Execute();
         }
-        private void SingleAttack(LivingObject attacker, LivingObject defender, AttackType attackType,TargetPoint attackTarget)
+        private void SingleAttack(LivingObject attacker, LivingObject defender, AttackType attackType)
         {
-            if (DoesAttackHit(attacker, defender, attackType, attackTarget))
+            if (DoesAttackHit(attacker, defender, attackType))
             {
                 List<float> attackModifier = new List<float>();
                 if (attackType!=null)
                     attackModifier.Add(attackType.DamageMultiplier);
-                if(attackTarget !=null)
-                    attackModifier.Add(attackTarget.DamageMultiplier);
+                if(frontAttack)
+                    attackModifier.Add(attacker.BattleStats.FrontalAttackModifier);
                 if (defense != null)
                     attackModifier.Add(defense.Atk_Mult);
                 
-                if (attackType.Name == "SpecialAttack")
+                if (attackType != null&&attackType.Name == "SpecialAttack")
                 {
                     ((Human)attacker).SpecialAttackManager.equippedSpecial.UseSpecial(attacker, attacker.BattleStats.GetDamage(attackModifier), defender);
                 }
@@ -195,15 +207,21 @@ namespace Assets.Scripts.GameStates
             attacker.UnitTurnState.UnitTurnFinished();
             EventContainer.commandFinished();
         }
-        IEnumerator Attack(AttackType attackType, TargetPoint attackTarget)
+        IEnumerator Attack(AttackType attackType)
         {
             yield return new WaitForSeconds(ATTACK_DELAY);
-            SingleAttack(attacker, defender, attackType, attackTarget);
-            if (react && attackCount == 0 && defender is Monster)
+            SingleAttack(attacker, defender, attackType);
+            int reactionChance = 50;
+            if (frontAttack)
+                reactionChance = 100;
+            if (surpriseAttack)
+                reactionChance = 0;
+            if (UnityEngine.Random.Range(1, 101) <= reactionChance&& react && attackCount == 0 && defender is Monster)
             {
                 Debug.Log("Start Reaction!");
                 yield return new WaitForSeconds(1.5f);
                 Monster m = (Monster)defender;
+                
                 reaction = m.GetRandomAttackReaction();
                 reaction.TargetPositions.Add(attacker.GridPosition.GetPos());
                 uiController.attackUIController.ShowAttackReaction(defender.Name, reaction.Name);
@@ -215,7 +233,7 @@ namespace Assets.Scripts.GameStates
             if (defense!=null && defense.Name=="Counter")
             {
                 yield return new WaitForSeconds(3.0f);
-                SingleAttack(defender, attacker, null,null);
+                SingleAttack(defender, attacker, null);
                 yield return new WaitForSeconds(1.0f);
             }
             if (attackCount == 0)

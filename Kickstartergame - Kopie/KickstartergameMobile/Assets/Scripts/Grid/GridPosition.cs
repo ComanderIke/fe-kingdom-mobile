@@ -11,6 +11,21 @@ namespace Assets.Scripts.Characters
 
         public int x=-1;
         public int y=-1;
+        private bool facingLeft=false;
+        public bool FacingLeft { get
+            {
+                return facingLeft;
+            }
+            set
+            {
+                facingLeft = value;
+                if (facingLeft)
+                    character.GameTransform.SetYRotation(180);
+                else
+                    character.GameTransform.SetYRotation(0);
+            }
+
+        }
 
         protected LivingObject character;
         protected GridManager gridScript;

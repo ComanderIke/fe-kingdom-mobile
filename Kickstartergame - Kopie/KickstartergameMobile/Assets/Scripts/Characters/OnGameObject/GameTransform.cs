@@ -14,9 +14,13 @@ namespace Assets.Scripts.Characters
         {
             return GameObject.transform.localPosition;
         }
-        public Vector3 GetRotation()
+        public float GetYRotation()
         {
-            return GameObject.transform.localRotation.eulerAngles;
+            return GameObject.GetComponentInChildren<SpriteRenderer>().transform.localRotation.y;
+        }
+        public void SetYRotation(float y)
+        {
+            GameObject.GetComponentInChildren<SpriteRenderer>().transform.localRotation = new Quaternion(0, y, 0, 0);
         }
         public void EnableCollider()
         {

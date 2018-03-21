@@ -79,6 +79,8 @@ public class AttackUIController : MonoBehaviour {
     private GameObject swipeAttackGO;
     [SerializeField]
     private GameObject frontalAttackGO;
+    [SerializeField]
+    private GameObject surpriseAttackGO;
     [Header("Configuration")]
     [SerializeField]
     private float healthSpeed;
@@ -103,6 +105,8 @@ public class AttackUIController : MonoBehaviour {
     private TargetPoint attackTarget;
     private List<AttackTargetPoint> targetPoints;
     private AttackType attackType;
+    private bool frontAttack = false;
+    private bool surpriseAttack = false;
 
     void Start () {
        
@@ -153,11 +157,26 @@ public class AttackUIController : MonoBehaviour {
     {
         this.attacker = attacker;
         this.defender = defender;
+        frontAttack = false;
+        surpriseAttack = false;
         attackButton.interactable = true;
         gameObject.SetActive(true);
-        frontalAttackGO.SetActive(true);
+        Debug.Log(attacker.BattleStats.IsFrontalAttack(defender));
+        if (attacker.BattleStats.IsFrontalAttack(defender))
+        {
+            frontAttack = true;
+            frontalAttackGO.SetActive(true);
+        }
+        else if (attacker.BattleStats.IsBackSideAttack(defender))
+        {
+            surpriseAttack = true;
+            surpriseAttackGO.SetActive(true);
+        }
+        else
+            swipeAttackGO.SetActive(true);
+       
         //chooseTargetTutorial.SetActive(true);
-        foreach(Transform child in targetPointParent.GetComponentsInChildren<Transform>())
+        foreach (Transform child in targetPointParent.GetComponentsInChildren<Transform>())
         {
             if(child!=targetPointParent)
                 GameObject.Destroy(child.gameObject);
@@ -165,24 +184,6 @@ public class AttackUIController : MonoBehaviour {
         UpdateDamage();
         UpdateHit();
         UpdateSpecial();
-        /* targetPoints = new List<AttackTargetPoint>();
-         int cnt = 0;
-         if (defender is Monster)
-         {
-             Monster m = (Monster)defender;
-             foreach(TargetPoint p in m.TargetPoints)
-             {
-                 GameObject instantiatedPoint = GameObject.Instantiate(targetPointPrefab, targetPointParent);
-                 instantiatedPoint.transform.localPosition = new Vector3(p.XPos, p.YPos, 0);
-                 instantiatedPoint.GetComponent<RectTransform>().sizeDelta = new Vector2(100 * p.Scale, 100 * p.Scale);
-                 instantiatedPoint.GetComponent<AttackTargetPoint>().ID = cnt++;
-                 if (p.WeakSpot)
-                     instantiatedPoint.GetComponent<AttackTargetPoint>().ShowWeak();
-                 else
-                     instantiatedPoint.GetComponent<AttackTargetPoint>().HideWeak();
-                 targetPoints.Add(instantiatedPoint.GetComponent<AttackTargetPoint>());
-             }
-         }*/
     }
 
     public void Hide()
@@ -229,6 +230,7 @@ public class AttackUIController : MonoBehaviour {
         attackType = attacker.GetType<Human>().AttackTypes.Find(a => a.Name == "SpecialAttack");
         StartAttack(attackType);
     }
+
     public void ResetAttack()
     {
         attackButton.gameObject.SetActive(false);
@@ -247,7 +249,7 @@ public class AttackUIController : MonoBehaviour {
         if (attackCount > 0)
         {
             Debug.Log("StartAttack!");
-            EventContainer.startAttack(attackType, attackTarget);
+            EventContainer.startAttack(attackType);
             attackCount--;
         }
         if(attackCount <=0)
@@ -257,30 +259,6 @@ public class AttackUIController : MonoBehaviour {
         else
             StartCoroutine(ActivateSwipeAttack(0.35f));
     }
-
-    //public void TargetPointSelected(int id)
-    //{
-    //    swipeAttackGO.SetActive(true);
-    //    chooseTargetTutorial.SetActive(false);
-    //   // targetInfoObject.SetActive(true);
-
-    //    foreach (AttackTargetPoint point in targetPoints)
-    //    {
-    //        if (id == point.ID)
-    //        {
-    //            point.PlayAnimation();
-    //            activeTargetPoint = point;
-    //        }
-    //        else
-    //        {
-    //            point.StopAnimation();
-    //        }
-    //    }
-    //    attackTarget = ((Monster)defender).TargetPoints[activeTargetPoint.ID];
-    //    targetName.text = attackTarget.Name;
-    //    UpdateDamage();
-    //    UpdateHit();
-    //}
 
     public void ShowCounterMissText()
     {
@@ -309,14 +287,20 @@ public class AttackUIController : MonoBehaviour {
 
     void UpdateHit()
     {
+        Human humanAttacker = (Human)attacker;
+        int bonusHit = 0;
+        if (surpriseAttack)
+        {
+            bonusHit += humanAttacker.BattleStats.SurpriseAttackBonusHit;
+        }
         AttackType fastAttackType = attacker.GetType<Human>().AttackTypes.Find(a => a.Name == "FastAttack");
-        int hitInfluence = 0;// attackTarget.HIT_INFLUENCE;
+        int hitInfluence = bonusHit;// attackTarget.HIT_INFLUENCE;
         hitInfluence += fastAttackType.Hit;
         int hit = Mathf.Clamp(attacker.BattleStats.GetHitAgainstTarget(defender)+hitInfluence, 0, 100);// + 10 * currentHitSliderValue, 0, 100);
         attackerHIT.text = "" + hit + "%";
 
         AttackType strongAttackType = attacker.GetType<Human>().AttackTypes.Find(a => a.Name == "StrongAttack");
-        hitInfluence = 0;// attackTarget.HIT_INFLUENCE;
+        hitInfluence = bonusHit;// attackTarget.HIT_INFLUENCE;
         hitInfluence += strongAttackType.Hit;
         hit = Mathf.Clamp(attacker.BattleStats.GetHitAgainstTarget(defender) + hitInfluence, 0, 100);// + 10 * currentHitSliderValue, 0, 100);
         strongAttackHit.text = "" + hit + "%";
@@ -327,8 +311,14 @@ public class AttackUIController : MonoBehaviour {
     }
     void UpdateDamage()
     {
-        AttackType fastAttackType = attacker.GetType<Human>().AttackTypes.Find(a => a.Name == "FastAttack");
+        Human humanAttacker = (Human)attacker;
         float multiplier = 1;//attackTarget.DamageMultiplier;
+        if (frontAttack)
+        {
+            multiplier = humanAttacker.BattleStats.FrontalAttackModifier;
+        }
+        AttackType fastAttackType = attacker.GetType<Human>().AttackTypes.Find(a => a.Name == "FastAttack");
+        
         List<float> attackMultiplier = new List<float>();
         attackMultiplier.Add(multiplier);
         attackMultiplier.Add(fastAttackType.DamageMultiplier);
@@ -349,13 +339,22 @@ public class AttackUIController : MonoBehaviour {
     {
         Human humanAttacker = (Human)attacker;
         float multiplier = 1;//attackTarget.DamageMultiplier;
+        if (frontAttack)
+        {
+            multiplier = humanAttacker.BattleStats.FrontalAttackModifier;
+        }
+        
         List<float> attackMultiplier = new List<float>();
         attackMultiplier.Add(multiplier);
         int damage = attacker.BattleStats.GetDamage(attackMultiplier);
         int dmg = (int)(humanAttacker.SpecialAttackManager.equippedSpecial.GetSpecialDmg(attacker, damage,defender));
         specialAttackDMG.text = "" + dmg;
-
-        int hitInfluence = 0;// attackTarget.HIT_INFLUENCE;
+        int bonusHit = 0;
+        if (surpriseAttack)
+        {
+            bonusHit += humanAttacker.BattleStats.SurpriseAttackBonusHit;
+        }
+        int hitInfluence = bonusHit;// attackTarget.HIT_INFLUENCE;
         int normalHit = attacker.BattleStats.GetHitAgainstTarget(defender)+hitInfluence;
         
         int hit = Mathf.Clamp(humanAttacker.SpecialAttackManager.equippedSpecial.GetSpecialHit(attacker, normalHit, defender), 0, 100);// + 10 * currentHitSliderValue, 0, 100);

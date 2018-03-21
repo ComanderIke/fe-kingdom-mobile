@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Characters;
+using Assets.Scripts.Items.Weapons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,28 +11,29 @@ namespace Assets.Scripts.Items
     [System.Serializable]
     public class Weapon : Item
     {
-        public int Dmg { get; set; }
-        public int Price { get; set; }
-        public int Hit { get; set; }
-        public List<int> Range { get; set; }
-        public int Crit { get; set; }
-        public WeaponCategory WeaponType { get; set; }
+        public int Dmg;
+        public int Price;
+        public int Hit;
+        [Range(1,4)]
+        public int[] AttackRanges;
+        public int Crit;
+        public WeaponType WeaponType;
 
-        public Weapon(string name, string description, WeaponCategory type, int dmg, int hit, int crit, int price, List<int> range, Sprite sprite):base(name, description, 1, sprite)
+        public Weapon(string name, string description, WeaponType type, int dmg, int hit, int crit, int price, List<int> range, Sprite sprite):base(name, description, 1, sprite)
         {
             WeaponType = type;
             Dmg = dmg;
             Hit = hit;
             Crit = crit;
             Price = price;
-            Range = range;
+            AttackRanges = range.ToArray();
         }
 
         public override void use(Human character)
         {
             character.Stats.AttackRanges.Clear();
             character.EquipedWeapon = this;
-            foreach(int r in Range){
+            foreach(int r in AttackRanges){
                 character.Stats.AttackRanges.Add(r);
             }
         }
