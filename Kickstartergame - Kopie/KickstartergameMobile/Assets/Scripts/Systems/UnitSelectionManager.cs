@@ -20,6 +20,7 @@ namespace Assets.Scripts.GameStates
             mainScript = MainScript.GetInstance();
             EventContainer.unitClickedConfirmed += UnitClicked;
             EventContainer.endDragOverNothing += DeselectActiveCharacter;
+            EventContainer.deselectButtonClicked += DeselectActiveCharacter;
         }
         void SameCharacterSelected(LivingObject c)
         {
@@ -66,6 +67,7 @@ namespace Assets.Scripts.GameStates
             mainScript.GetController<UIController>().HideAllActiveUnitEffects();
             if (!SelectedCharacter.UnitTurnState.HasMoved)
                 EventContainer.unitShowActiveEffect(SelectedCharacter, true, false);
+            EventContainer.selectedActiveCharacter();
         }
 
         void EnemySelected(LivingObject c)

@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Assets.Scripts.Characters
 {
+    
     public enum MonsterType
     {
         Mammoth,

@@ -74,8 +74,6 @@ public class AttackUIController : MonoBehaviour {
     [SerializeField]
     private Image defenderLosingHPBar;
     [SerializeField]
-    private Button attackButton;
-    [SerializeField]
     private GameObject swipeAttackGO;
     [SerializeField]
     private GameObject frontalAttackGO;
@@ -151,7 +149,7 @@ public class AttackUIController : MonoBehaviour {
 
     void EnableSwipeAttack()
     {
-        StartCoroutine(ActivateSwipeAttack(0.3f));
+        StartCoroutine(ActivateSwipeAttack(0.2f));
     }
     public void Show(LivingObject attacker, LivingObject defender)
     {
@@ -159,7 +157,6 @@ public class AttackUIController : MonoBehaviour {
         this.defender = defender;
         frontAttack = false;
         surpriseAttack = false;
-        attackButton.interactable = true;
         gameObject.SetActive(true);
         Debug.Log(attacker.BattleStats.IsFrontalAttack(defender));
         if (attacker.BattleStats.IsFrontalAttack(defender))
@@ -173,7 +170,7 @@ public class AttackUIController : MonoBehaviour {
             surpriseAttackGO.SetActive(true);
         }
         else
-            swipeAttackGO.SetActive(true);
+            StartCoroutine(ActivateSwipeAttack(.3f));
        
         //chooseTargetTutorial.SetActive(true);
         foreach (Transform child in targetPointParent.GetComponentsInChildren<Transform>())
@@ -231,11 +228,6 @@ public class AttackUIController : MonoBehaviour {
         StartAttack(attackType);
     }
 
-    public void ResetAttack()
-    {
-        attackButton.gameObject.SetActive(false);
-       // attackTextGO.SetActive(false);
-    }
   
     public void AttackButtonCLicked()
     {
@@ -244,7 +236,6 @@ public class AttackUIController : MonoBehaviour {
     public void StartAttack(AttackType attackType)
     {
         swipeAttackGO.SetActive(false);
-        attackButton.gameObject.SetActive(false);
 
         if (attackCount > 0)
         {

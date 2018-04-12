@@ -193,6 +193,7 @@ public class MainScript : MonoBehaviour {
         //cc.PlaceCharacter(1, monster, 4, 2);
         cc.PlaceCharacter(1, saber, 5, 2);
         saber.GridPosition.FacingLeft = true;
+        gridManager.ShowSightRange(saber);
     }
 
     public T GetSystem<T>()

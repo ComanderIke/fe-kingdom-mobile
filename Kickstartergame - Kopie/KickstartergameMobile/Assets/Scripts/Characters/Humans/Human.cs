@@ -33,7 +33,7 @@ public class Human : LivingObject{
         DefenseTypes.Add(new DefenseType("Dodge", 1.0f, -20));
         DefenseTypes.Add(new DefenseType("Counter", 1.0f, 0));
         attackRanges.Add(1);
-        Stats = new Stats(20, 5, 4, 10, 8, 5, 5, 3, attackRanges);
+        Stats = new Stats(20, 5, 4, 10, 8, 5, 5, 2, attackRanges);
     }
 }
 

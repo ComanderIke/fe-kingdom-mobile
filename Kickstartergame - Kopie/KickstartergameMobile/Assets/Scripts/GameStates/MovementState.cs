@@ -150,14 +150,40 @@ namespace Assets.Scripts.GameStates
             }
             if (character.GameTransform.GameObject.transform.localPosition.x + offset > tx && character.GameTransform.GameObject.transform.localPosition.x - offset < tx && character.GameTransform.GameObject.transform.localPosition.y + offset > ty && character.GameTransform.GameObject.transform.localPosition.y - offset < ty)
             {
+                if(character is Human)
+                {
+                    foreach(Monster monster in mainScript.GetSystem<TurnManager>().Players[1].Units)
+                    {
+                        if (!monster.attentionWaked && monster.CanSeePosition((int)tx,(int)ty))
+                        {
+                            Debug.Log("WTF:" + tx + " " + ty);
+                            monster.MonsterAttentionWaked();
+                        }
+                    }
+                }
                 pathCounter++;
             }
 
             if ((path!=null&&pathCounter >= path.getLength())||(path==null&&mousePath!=null&&pathCounter>=mousePath.Count))
             {
+                
+                
                 active = false;
                 pathCounter = 0;
                 character.SetPosition((int)tx, (int)ty);
+                if (character is Human)
+                {
+                    foreach (Monster monster in mainScript.GetSystem<TurnManager>().Players[1].Units)
+                    {
+                        mainScript.gridManager.ShowSightRange(monster);
+                        if (!monster.attentionWaked && monster.CanSeePosition((int)tx, (int)ty))
+                        {
+                            Debug.Log("WTF:" + tx + " " + ty);
+                            monster.MonsterAttentionWaked();
+                        }
+
+                    }
+                }
                 FinishMovement();
             }
         }

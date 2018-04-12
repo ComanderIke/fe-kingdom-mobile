@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using BeautifulTransitions.Scripts.Transitions.Components;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -9,8 +10,8 @@ public class PlayerTurnTextAnimation : MonoBehaviour {
     public TextMeshProUGUI text;
     public Image backGround;
     const float FADE_IN_DURATION = 0.2f;
-    const float FADE_OUT_DURATION = 0.3f;
-    const float OPAQUE_DURATION = 0.3f;
+    const float FADE_OUT_DURATION = 0.4f;
+    const float OPAQUE_DURATION = 0.4f;
     private float backGroundMaxAlpha = 0;
     public static float duration = FADE_IN_DURATION + OPAQUE_DURATION + FADE_OUT_DURATION;
     // Use this for initialization
@@ -42,6 +43,7 @@ public class PlayerTurnTextAnimation : MonoBehaviour {
         yield return new WaitForSeconds(OPAQUE_DURATION);
         delay = FADE_OUT_DURATION;
         alpha = 1;
+        gameObject.transform.parent.GetComponent<TransitionBase>().TransitionOut();
         while (delay > 0)
         {
             text.color = new Color(text.color.r, text.color.g, text.color.b, alpha);

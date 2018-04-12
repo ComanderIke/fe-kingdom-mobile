@@ -77,6 +77,9 @@ namespace Assets.Scripts.Events
         public delegate void GuardClicked();
         public static GuardClicked guardClicked;
 
+        public delegate void DeselectButtonClicked();
+        public static DeselectButtonClicked deselectButtonClicked;
+
         public delegate void CounterClicked();
         public static CounterClicked counterClicked;
 
@@ -118,6 +121,11 @@ namespace Assets.Scripts.Events
 
         public delegate void DeselectActiveCharacter();
         public static DeselectActiveCharacter deselectActiveCharacter;
+
+        public delegate void SelectActiveCharacter();
+        public static SelectActiveCharacter selectedActiveCharacter;
+
+        
 
         #endregion
 
@@ -219,6 +227,8 @@ namespace Assets.Scripts.Events
             guardClicked = null;
 
             counterClicked = null;
+
+            deselectButtonClicked = null;
             #endregion
 
             #region UnitActions
@@ -230,6 +240,7 @@ namespace Assets.Scripts.Events
 
             deselectActiveCharacter = null;
 
+            selectedActiveCharacter = null;
             #endregion
 
             #region Clicks

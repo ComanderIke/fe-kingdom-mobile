@@ -7,6 +7,8 @@ public class RessourceScript : MonoBehaviour {
 
     public Sprites sprites;
     public Prefabs prefabs;
+    public ParticleSystems particles;
     public Textures textures;
+
 
 }

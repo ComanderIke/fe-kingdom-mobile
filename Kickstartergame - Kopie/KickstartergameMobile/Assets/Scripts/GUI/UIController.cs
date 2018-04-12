@@ -40,6 +40,8 @@ public class UIController : MonoBehaviour, Controller {
     GameObject playerTurnAnimation;
     [SerializeField]
     GameObject aiTurnAnimation;
+    [SerializeField]
+    Button deselectButton;
 
     private Dictionary<string, GameObject> activeUnitEffects;
     private MainScript mainScript;
@@ -52,10 +54,24 @@ public class UIController : MonoBehaviour, Controller {
         EventContainer.showCursor += SpawnTileCursor;
         EventContainer.hideCursor += HideTileCursor;
         EventContainer.unitShowActiveEffect += SpawnActiveUnitEffect;
-        
+        EventContainer.selectedActiveCharacter += ShowDeselectButton;
+        EventContainer.deselectActiveCharacter += HideDeselectButton;
+
         activeUnitEffects = new Dictionary<string, GameObject>();
         attackableEnemyEffects = new List<GameObject>();
         ressources = FindObjectOfType<RessourceScript>();
+    }
+    void ShowDeselectButton()
+    {
+        deselectButton.gameObject.SetActive(true);
+    }
+    void HideDeselectButton()
+    {
+        deselectButton.gameObject.SetActive(false);
+    }
+    public void DeselectButtonClicked()
+    {
+        EventContainer.deselectButtonClicked();
     }
     private void SpawnTileCursor(int x, int y)
     {

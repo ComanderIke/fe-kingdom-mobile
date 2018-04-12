@@ -3,6 +3,7 @@ using Assets.Scripts.AI.AttackReactions;
 using Assets.Scripts.Characters.Attributes;
 using Assets.Scripts.Characters.Monsters;
 using Assets.Scripts.Grid;
+using Assets.Scripts.Grid.PathFinding;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,11 +52,24 @@ namespace Assets.Scripts.Characters
             
             
         }
+        public bool attentionWaked;
+        public bool CanSeePosition(int x, int y)
+        {
+            return MainScript.GetInstance().gridManager.PositionVisible(this, x,y);
 
+        }
         public AttackReaction GetRandomAttackReaction()
         {
             int rng = UnityEngine.Random.Range(0, Reactions.Count);
             return Reactions[rng];
+        }
+        public void MonsterAttentionWaked()
+        {
+            Debug.Log("AttentionWaked!");
+            attentionWaked = true;
+            RessourceScript rs = GameObject.FindObjectOfType<RessourceScript>();
+            GameObject.Instantiate(rs.particles.enemyAttention,this.GameTransform.GameObject.transform);
+            MainScript.GetInstance().gridManager.ShowSightRange(this);
         }
     }
 }
