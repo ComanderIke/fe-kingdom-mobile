@@ -426,55 +426,117 @@ public class MouseManager : MonoBehaviour, EngineSystem {
         Finish(character, field, x, y);
         
     }
-    public void DraggedOnEnemy(int x, int y, Tile field,LivingObject character)
+    //TODO not used because no playable BigCharacters yet
+    private void BigCharacterDraggedOnEnemy(LivingObject selectedCharacter, int x, int y, LivingObject enemy)
+    {
+        
+        //raycastManager.GetMousePositionOnGrid();
+        //hit = raycastManager.GetLatestHit();
+        //Vector2 centerPos = gridInput.GetCenterPos(hit.point);
+        //BigTile clickedBigTile = gridInput.GetClickedBigTile((int)centerPos.x, (int)centerPos.y, x, y);
+        //BigTile nearestBigTile = mainScript.gridManager.GridLogic.GetNearestBigTileFromEnemy(enemy);
+        //Debug.Log(nearestBigTile);
+        //CalculateMousePathToPositon(selectedCharacter, nearestBigTile);
+        //DrawMousePath();
+        //mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter, enemy);
+    }
+    private void CalculateMousePathToAttackField(LivingObject selectedCharacter, int x, int y)
+    {
+       
+        List<Vector2> moveLocations = new List<Vector2>();
+        
+        MainScript.GetInstance().gridManager.GridLogic.GetMoveLocations(selectedCharacter.GridPosition.x,selectedCharacter.GridPosition.y, moveLocations, selectedCharacter.Stats.MoveRange,0,selectedCharacter.Player.ID);
+        moveLocations.Insert(0,new Vector2(selectedCharacter.GridPosition.x, selectedCharacter.GridPosition.y));
+        foreach (Vector2 loc in moveLocations)
+        {
+            int currentX = (int)loc.x;
+            int currentY = (int)loc.y;
+            Tile currentField = mainScript.gridManager.GetTileFromVector2(loc);
+            Debug.Log(loc);
+            foreach (int ar in selectedCharacter.Stats.AttackRanges)
+            {
+                int delta = Mathf.Abs(currentX - x) + Mathf.Abs(currentY - y);
+                Debug.Log("Delta: " + delta);
+                if (selectedCharacter.Stats.AttackRanges.Contains(delta))
+                {
+                    if (currentField.character == null|| currentField.character==selectedCharacter)
+                    {
+                        Debug.Log("Delta: " + delta );
+                        Debug.Log("AttackPosition found: " +currentX +" "+ currentY);
+                        CalculateMousePathToPositon(selectedCharacter, currentX, currentY);
+                        return;
+                    }
+                }
+            }
+        }
+        Debug.Log("No AttackPosition Found!");
+    }
+    public void DraggedOnEnemy(int x, int y, Tile field,LivingObject enemy)
     {
         
         LivingObject selectedCharacter = mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter;
         Debug.Log("draggedOnEnemy");
         if (selectedCharacter.GridPosition is BigTilePosition)
         {
-            raycastManager.GetMousePositionOnGrid();
-            hit=raycastManager.GetLatestHit();
-            Vector2 centerPos = gridInput.GetCenterPos(hit.point);
-            BigTile clickedBigTile = gridInput.GetClickedBigTile((int)centerPos.x, (int)centerPos.y, x, y);
-            BigTile nearestBigTile = mainScript.gridManager.GridLogic.GetNearestBigTileFromEnemy(character);
-            Debug.Log(nearestBigTile);
-            CalculateMousePathToPositon(selectedCharacter, nearestBigTile);
-            DrawMousePath();
-            mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter,character);
-
-            
-            return;
+            BigCharacterDraggedOnEnemy(selectedCharacter, x,y,enemy);
         }
         else
         {
             if (!FindObjectOfType<GridManager>().GridLogic.IsFieldAttackable(x, y))
                 return;
-
+            //CalculateMousePathToEnemy(selectedCharacter, new Vector2(x, y));
             if (mousePath == null || mousePath.Count == 0)
             {
                 Debug.Log("Mousepath empty");
-                CalculateMousePathToEnemy(selectedCharacter, new Vector2(x, y));
+                //CalculateMousePathToEnemy(selectedCharacter, new Vector2(x, y));
+                CalculateMousePathToAttackField(selectedCharacter, x, y);
             }
             else
             {
-                int lastMousePathPositionX = (int)mousePath[mousePath.Count - 1].x;
-                int lastMousePathPositionY = (int)mousePath[mousePath.Count - 1].y;
-                Tile lastMousePathField = mainScript.gridManager.GetTileFromVector2(mousePath[mousePath.Count - 1]);
-                if (lastMousePathField.character != null)
+                bool foundAttackPosition = false;
+                int attackPositionIndex = -1;
+                for (int i = mousePath.Count - 1; i >= 0; i--)
                 {
-                    Debug.Log("last Mousepath not empty");
-                    CalculateMousePathToEnemy(selectedCharacter, new Vector2(x, y));
+                    int lastMousePathPositionX = (int)mousePath[i].x;
+                    int lastMousePathPositionY = (int)mousePath[i].y;
+                    Tile lastMousePathField = mainScript.gridManager.GetTileFromVector2(mousePath[i]);
+                    int delta = Mathf.Abs(lastMousePathPositionX - x) + Mathf.Abs(lastMousePathPositionY - y);
+                    if (selectedCharacter.Stats.AttackRanges.Contains(delta))
+                    {
+                        if (lastMousePathField.character == null)
+                        {
+                            Debug.Log("Valid AttackPosition!");
+                            attackPositionIndex = i;
+                            foundAttackPosition = true;
+                            break;
+                        }
+                    }
+                    
+                    //if (lastMousePathField.character != null)
+                    //{
+                    //    Debug.Log("last Mousepath not empty");
+                    //    CalculateMousePathToEnemy(selectedCharacter, new Vector2(x, y));
+                    //}
+                    //else
+                    //{
+                    //    int delta = Mathf.Abs(lastMousePathPositionX - x) + Mathf.Abs(lastMousePathPositionY - y);
+                    //    Debug.Log("Delta: " + delta + " " + x + " " + y + " " + lastMousePathPositionX + " " + lastMousePathPositionY);
+                    //    if (!selectedCharacter.Stats.AttackRanges.Contains(delta))
+                    //    {
+                    //        Debug.Log("last Mousepath not in attackRange");
+                    //        CalculateMousePathToEnemy(selectedCharacter, new Vector2(x, y));
+                    //    }
+                    //}
+                }
+                if (foundAttackPosition)
+                {
+
+                    mousePath.RemoveRange(attackPositionIndex + 1, mousePath.Count - (attackPositionIndex + 1));
                 }
                 else
                 {
-                    int delta = Mathf.Abs(lastMousePathPositionX - x) + Mathf.Abs(lastMousePathPositionY - y);
-                    Debug.Log("Delta: " + delta + " " + x + " " + y + " " + lastMousePathPositionX + " " + lastMousePathPositionY);
-                    if (!selectedCharacter.Stats.AttackRanges.Contains(delta))
-                    {
-                        Debug.Log("last Mousepath not in attackRange");
-                        CalculateMousePathToEnemy(selectedCharacter, new Vector2(x, y));
-                    }
+                    Debug.Log("No AttackPosition found!");
+                    CalculateMousePathToEnemy(selectedCharacter, new Vector2(x, y));
                 }
 
             }
@@ -485,45 +547,45 @@ public class MouseManager : MonoBehaviour, EngineSystem {
                 Debug.Log("Not enough Movement!");
                 return;
             }
+            // DraggedOnAttackableField(selectedCharacter, x, y, field, enemy);
         }
-        if (FindObjectOfType<GridManager>().GridLogic.IsFieldAttackable(x, y))
+        
+    }
+    private void DraggedOnAttackableField(LivingObject selectedCharacter, int x, int y, Tile field,LivingObject enemy)
+    {
+        bool reset = true;
+        for (int i = selectedCharacter.Stats.AttackRanges.Count - 1; i >= 0; i--)
         {
-            bool reset = true;
-            for (int i = selectedCharacter.Stats.AttackRanges.Count - 1; i >= 0; i--)
+            //Debug.Log(i);
+            int xDiff = (int)Mathf.Abs(selectedCharacter.GridPosition.x - field.character.GridPosition.x);
+            int yDiff = (int)Mathf.Abs(selectedCharacter.GridPosition.y - field.character.GridPosition.y);
+            if ((xDiff + yDiff) == selectedCharacter.Stats.AttackRanges[i])
             {
-                //Debug.Log(i);
-                int xDiff = (int)Mathf.Abs(selectedCharacter.GridPosition.x - field.character.GridPosition.x);
-                int yDiff = (int)Mathf.Abs(selectedCharacter.GridPosition.y - field.character.GridPosition.y);
-                if ((xDiff + yDiff) == selectedCharacter.Stats.AttackRanges[i])
+                // CalculateMousePathToPositon(selectedCharacter, (int)v.x, (int)v.y);
+                ResetMousePath();
+
+                mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter, enemy);
+
+                Finish(enemy, field, x, y);
+                return;
+            }
+            foreach (Vector2 v in mousePath)
+            {
+                xDiff = (int)Mathf.Abs(v.x - field.character.GridPosition.x);
+                yDiff = (int)Mathf.Abs(v.y - field.character.GridPosition.y);
+                //Debug.Log(v + " "+xDiff + " "+ yDiff);
+                if ((xDiff + yDiff) == selectedCharacter.Stats.AttackRanges[i] && mainScript.gridManager.Tiles[(int)v.x, (int)v.y].isActive && mainScript.gridManager.Tiles[(int)v.x, (int)v.y].character == null)
                 {
-                    // CalculateMousePathToPositon(selectedCharacter, (int)v.x, (int)v.y);
-                    ResetMousePath();
-
-                    mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter, character);
-
-                    Finish(character, field, x, y);
+                    CalculateMousePathToPositon(selectedCharacter, (int)v.x, (int)v.y);
+                    mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter, enemy);
+                    Finish(enemy, field, x, y);
                     return;
                 }
-                foreach (Vector2 v in mousePath)
-                {
-                    xDiff = (int)Mathf.Abs(v.x - field.character.GridPosition.x);
-                    yDiff = (int)Mathf.Abs(v.y - field.character.GridPosition.y);
-                    //Debug.Log(v + " "+xDiff + " "+ yDiff);
-                    if ((xDiff + yDiff) == selectedCharacter.Stats.AttackRanges[i] && mainScript.gridManager.Tiles[(int)v.x, (int)v.y].isActive && mainScript.gridManager.Tiles[(int)v.x, (int)v.y].character == null)
-                    {
-                        CalculateMousePathToPositon(selectedCharacter, (int)v.x, (int)v.y);
-                        mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter, character);
-                        Finish(character, field, x, y);
-                        return;
-                    }
-                }
-                
             }
-            mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter,character);
 
         }
+        mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter, enemy);
     }
-
     private void DrawCrossHair(LivingObject character)
     {
         /*
@@ -590,6 +652,10 @@ public class MouseManager : MonoBehaviour, EngineSystem {
     public void DrawMousePath()
     {
         preferedPath.path = mousePath;
+        foreach(GameObject dot in dots)
+        {
+            GameObject.Destroy(dot);
+        }
         //Debug.Log("DrawMousePath");
         float startX = -1;
         float startY = -1;

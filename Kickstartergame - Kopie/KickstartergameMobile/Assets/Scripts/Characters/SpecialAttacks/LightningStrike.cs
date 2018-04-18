@@ -31,7 +31,13 @@ namespace Assets.Scripts.Characters.SpecialAttacks
             if (user.Player.IsHumanPlayer)
             {
                 uiController.attackUIController.ShowDamageText(dmg);
+                GameObject.FindObjectOfType<AllySpriteController>().StartAttackAnimation();
+                GameObject.FindObjectOfType<EnemySpriteController>().ShakeAnimation(10 + 1f * dmg);
+                GameObject.FindObjectOfType<EnemySpriteController>().StartBlinkAnimation();
                 uiController.attackUIController.ShowDamageText(dmg2, true);
+                GameObject.FindObjectOfType<AllySpriteController>().StartAttackAnimation();
+                GameObject.FindObjectOfType<EnemySpriteController>().ShakeAnimation(10 + 1f * dmg2);
+                GameObject.FindObjectOfType<EnemySpriteController>().StartBlinkAnimation();
             }
         }
     }

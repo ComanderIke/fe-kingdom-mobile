@@ -2,6 +2,7 @@
 using Assets.Scripts.Events;
 using UnityEngine;
 using System.Collections;
+using System;
 
 namespace Assets.Scripts.AI.AttackReactions
 {
@@ -28,8 +29,11 @@ namespace Assets.Scripts.AI.AttackReactions
         {
             if (DoesAttackHit(attacker, defender))
             {
-                MainScript.GetInstance().GetController<UIController>().attackUIController.ShowCounterDamageText(defender.InflictDamage(attacker.BattleStats.GetDamage(), attacker));
-
+                int damage = defender.InflictDamage(attacker.BattleStats.GetDamage(), attacker);
+                MainScript.GetInstance().GetController<UIController>().attackUIController.ShowCounterDamageText(damage);
+                GameObject.FindObjectOfType<EnemySpriteController>().StartAttackAnimation();
+                GameObject.FindObjectOfType<AllySpriteController>().ShakeAnimation(10 + 1f * damage);
+                GameObject.FindObjectOfType<AllySpriteController>().StartBlinkAnimation();
             }
             else
             {

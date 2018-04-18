@@ -17,11 +17,11 @@ public class AttackPatternUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetMouseButtonDown(0) && !fadeout)
-        {
-            fadeout = true;
-            StartCoroutine(FadeOut());
-        }
+        //if (Input.GetMouseButtonDown(0) && !fadeout)
+        //{
+        //    fadeout = true;
+        //    StartCoroutine(FadeOut());
+        //}
 	}
     void OnEnable()
     {
@@ -29,13 +29,15 @@ public class AttackPatternUI : MonoBehaviour {
     }
     public void Show(string userText, string NameText)
     {
-        gameObject.SetActive(true);
-        User.text = userText+ " counters with";
-        Name.text = NameText+"!";
+        //gameObject.SetActive(true);
+        //User.text = userText+ " counters with";
+        //Name.text = NameText+"!";
+        MainScript.GetInstance().StartCoroutine(FadeOut(0.1f));
+        
     }
-    IEnumerator FadeOut()
+    IEnumerator FadeOut(float delay)
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(delay);
         fadeout = false;
         EventContainer.continuePressed();
         gameObject.SetActive(false);

@@ -172,12 +172,25 @@ namespace Assets.Scripts.GameStates
                     {
                         react = true;
                         if (isDefense)
+                        {
+                            GameObject.FindObjectOfType<EnemySpriteController>().StartAttackAnimation();
+                            GameObject.FindObjectOfType<AllySpriteController>().ShakeAnimation(10 + 1f * damage);
+                            GameObject.FindObjectOfType<AllySpriteController>().StartBlinkAnimation();
                             uiController.reactUIController.ShowCounterDamageText(damage);
+                        }
                         else
+                        {
+                            GameObject.FindObjectOfType<AllySpriteController>().StartAttackAnimation();
+                            GameObject.FindObjectOfType<EnemySpriteController>().ShakeAnimation(10 + 1f * damage);
+                            GameObject.FindObjectOfType<EnemySpriteController>().StartBlinkAnimation();
                             uiController.attackUIController.ShowDamageText(damage);
+                        }
                     }
                     if (defender.Player.IsHumanPlayer)
                     {
+                        GameObject.FindObjectOfType<AllySpriteController>().StartAttackAnimation();
+                        GameObject.FindObjectOfType<EnemySpriteController>().ShakeAnimation(10 + 1f * damage);
+                        GameObject.FindObjectOfType<EnemySpriteController>().StartBlinkAnimation();
                         uiController.reactUIController.ShowDamageText(damage);
                     }
                 }
@@ -196,6 +209,7 @@ namespace Assets.Scripts.GameStates
                     uiController.reactUIController.ShowMissText();
                 }
             }
+            
         }
 
         IEnumerator End()
@@ -211,6 +225,11 @@ namespace Assets.Scripts.GameStates
         {
             yield return new WaitForSeconds(ATTACK_DELAY);
             SingleAttack(attacker, defender, attackType);
+            if (!defender.IsAlive())
+            {
+                EndFight();
+                yield break;
+            }
             int reactionChance = 50;
             if (frontAttack)
                 reactionChance = 100;
