@@ -2,7 +2,12 @@
 using System.Collections;
 using UnityEngine.UI;
 using Assets.Scripts.Events;
-
+[System.Serializable]
+public enum CameraType
+{
+    WorldMap,
+    GridMap
+}
 public class CameraMovement : MonoBehaviour {
 
     const float LERP_SPEED = 0.1f;
@@ -12,6 +17,7 @@ public class CameraMovement : MonoBehaviour {
     public static MoveToFinishedEvent moveToFinishedEvent;
     public static bool locked=true;
 
+    public CameraType camType;
 	public float speed;
 	public float maxX;
 	public float minX;
@@ -34,9 +40,12 @@ public class CameraMovement : MonoBehaviour {
     private Vector2 targetPos;
     private Transform target;
     private MainScript mainScript;
+   
     private bool drag = false;
 
     void Start () {
+        if (camType == CameraType.WorldMap)
+            locked = false;
         mainScript = FindObjectOfType<MainScript>();
         EventContainer.attackUIVisible += SetLocked;
         //EventContainer.reactUIVisible += SetLocked; In Enemy Turn always Locked!
@@ -88,7 +97,7 @@ public class CameraMovement : MonoBehaviour {
         #endregion
 
         #region SmoothSnapToGrid
-        if (!drag)
+        if (!drag && camType == CameraType.GridMap)
         {
             lerpTime = Time.deltaTime / LERP_SPEED;
             if (targetPos.x != -1)
