@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.AI;
 using Assets.Scripts.Characters.Attributes;
 using Assets.Scripts.Characters.Debuffs;
+using Assets.Scripts.Dialogs;
 using Assets.Scripts.Events;
 using Assets.Scripts.Players;
 using System;
@@ -10,7 +11,7 @@ using UnityEngine;
 namespace Assets.Scripts.Characters
 {
     
-    public abstract class LivingObject
+    public abstract class LivingObject : SpeakableObject
     {
 
 
@@ -162,7 +163,14 @@ namespace Assets.Scripts.Characters
             }
             return default(T);
         }
-
-
+        //Interface SpeakableObject
+        public void ShowSpeechBubble(string text)
+        {
+            SpeechBubble sb = this.GameTransform.UnitController.SpeechBubble;
+            if (sb)
+                sb.Show(text);
+            else
+                Debug.Log("No SpeechBubble Component!");
+        }
     }
 }

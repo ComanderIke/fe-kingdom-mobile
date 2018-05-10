@@ -9,5 +9,7 @@ using Assets.Scripts.Ressources;
 public class DataScript : MonoBehaviour {
 
     public Weapons weapons;
+    public DialogData dialogTexts;
+    
 
 }

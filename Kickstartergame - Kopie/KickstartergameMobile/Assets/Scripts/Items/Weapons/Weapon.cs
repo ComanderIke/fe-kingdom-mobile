@@ -9,23 +9,22 @@ using UnityEngine;
 namespace Assets.Scripts.Items
 {
     [System.Serializable]
+    [CreateAssetMenu(menuName="GameData/Weapon", fileName ="weapon")]
     public class Weapon : Item
     {
         public int Dmg;
-        public int Price;
         public int Hit;
         [Range(1,4)]
         public int[] AttackRanges;
         public int Crit;
         public WeaponType WeaponType;
 
-        public Weapon(string name, string description, WeaponType type, int dmg, int hit, int crit, int price, List<int> range, Sprite sprite):base(name, description, 1, sprite)
+        public Weapon(string name, string description, WeaponType type, int dmg, int hit, int crit, List<int> range, Sprite sprite):base(name, description, 1, sprite)
         {
             WeaponType = type;
             Dmg = dmg;
             Hit = hit;
             Crit = crit;
-            Price = price;
             AttackRanges = range.ToArray();
         }
 

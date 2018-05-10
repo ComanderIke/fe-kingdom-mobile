@@ -94,10 +94,10 @@ public class AudioManager : MonoBehaviour {
     }
     // Update is called once per frame
     void Update () {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            ChangeMusic(sounds[1].name, sounds[0].name);
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    ChangeMusic(sounds[1].name, sounds[0].name);
+        //}
 	}
 
     public List<string> GetCurrentlyPlayedMusicTracks()

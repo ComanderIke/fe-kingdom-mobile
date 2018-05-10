@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 
 [System.Serializable]
-public abstract class Item {
+public abstract class Item :ScriptableObject{
 
     public String Name;
     public Sprite Sprite;

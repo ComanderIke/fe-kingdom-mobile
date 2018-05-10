@@ -12,5 +12,6 @@ namespace Assets.Scripts.Ressources
         [Header("BattleMapEffects")]
         public GameObject enemyAttention;
         public GameObject enemyAttention2;
+        public GameObject enemyField;
     }
 }

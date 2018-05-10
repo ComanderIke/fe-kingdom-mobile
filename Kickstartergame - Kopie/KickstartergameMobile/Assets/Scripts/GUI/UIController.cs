@@ -48,7 +48,8 @@ public class UIController : MonoBehaviour, Controller {
     private GameObject tileCursor;
     private RessourceScript ressources;
     private List<GameObject> attackableEnemyEffects;
-	void Start () {
+    private List<GameObject> attackableFieldEffects;
+    void Start () {
         mainScript = MainScript.GetInstance();
         EventContainer.attackPatternUsed += ShowAttackPattern;
         EventContainer.showCursor += SpawnTileCursor;
@@ -59,6 +60,7 @@ public class UIController : MonoBehaviour, Controller {
 
         activeUnitEffects = new Dictionary<string, GameObject>();
         attackableEnemyEffects = new List<GameObject>();
+        attackableFieldEffects = new List<GameObject>();
         ressources = FindObjectOfType<RessourceScript>();
     }
     void ShowDeselectButton()
@@ -248,8 +250,30 @@ public class UIController : MonoBehaviour, Controller {
     {
         EventContainer.endTurn();
     }
+    public void ShowAttackableField(int x, int y)
+    {
+        Debug.Log("ShowAttackableField!");
+        foreach (GameObject gameobj in attackableFieldEffects)
+        {
+            if ((int)gameobj.transform.localPosition.x == x && (int)gameobj.transform.localPosition.y == y)
+                return;
+        }
+        GameObject go = GameObject.Instantiate(ressources.particles.enemyField, GameObject.FindGameObjectWithTag("World").transform);
+        go.transform.localPosition = new Vector3(x+0.5f, y+0.5f, go.transform.localPosition.z-0.1f);
+        attackableFieldEffects.Add(go);
+    }
+    public void HideAttackableField()
+    {
+        Debug.Log("hideAttackableField!");
+        foreach (GameObject go in attackableFieldEffects)
+        {
+            Destroy(go);
+        }
+        attackableFieldEffects.Clear();
+    }
     public void ShowAttackPreview(LivingObject attacker, LivingObject defender)
     {
+        ShowAttackableEnemy((int)defender.GridPosition.x, (int)defender.GridPosition.y);
         attackPreview.SetActive(true);
         attackPreview.GetComponent<AttackPreview>().UpdateValues(attacker.Stats.MaxHP,attacker.Stats.HP, defender.Stats.MaxHP, defender.Stats.HP,attacker.BattleStats.GetDamageAgainstTarget(defender),attacker.BattleStats.GetHitAgainstTarget(defender), attacker.BattleStats.GetAttackCountAgainst(defender));
         //Vector3 attackPreviewPos;
@@ -260,8 +284,10 @@ public class UIController : MonoBehaviour, Controller {
         //attackPreviewPos.z = 0;
         //attackPreview.transform.localPosition = new Vector3(attackPreviewPos.x-540,attackPreviewPos.y-960,0);//TODO WHY MAGIC NUMBERS?
     }
+    
     public void HideAttackPreview()
     {
+        HideAttackableEnemy();
         attackPreview.SetActive(false);
     }
 }

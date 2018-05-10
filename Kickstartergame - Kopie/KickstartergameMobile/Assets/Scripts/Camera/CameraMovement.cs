@@ -147,4 +147,57 @@ public class CameraMovement : MonoBehaviour {
     {
         locked = value;
     }
+    int zoom = 0;
+    int maxzoom = 4;
+    public float zoomLevel0X;
+    public float zoomLevel0Y;
+    public float zoomLevel1X;
+    public float zoomLevel1Y;
+    public float zoomLevel2X;
+    public float zoomLevel2Y;
+    public float zoomLevel3X;
+    public float zoomLevel3Y;
+    public float zoomLevel4X;
+    public float zoomLevel4Y;
+    public void ZoomToogle()
+    {
+        zoom ++;
+        if (zoom > maxzoom)
+            zoom = 0;
+        if (zoom==0)
+        {
+            Camera.main.orthographicSize = 5.32f;
+            Camera.main.transform.localPosition = new Vector3(zoomLevel0X, zoomLevel0Y, Camera.main.transform.localPosition.z);
+            maxX = 6;
+            maxY = 6;
+        }
+        else if(zoom==1)
+        {
+            Camera.main.orthographicSize = 6.2f;
+            Camera.main.transform.localPosition = new Vector3(zoomLevel1X, zoomLevel1Y, Camera.main.transform.localPosition.z);
+            maxX = 5;
+            maxY = 5;
+        }
+        else if (zoom == 2)
+        {
+            Camera.main.orthographicSize = 7.1f;
+            Camera.main.transform.localPosition = new Vector3(zoomLevel2X, zoomLevel2Y, Camera.main.transform.localPosition.z);
+            maxX = 4;
+            maxY = 4;
+        }
+        else if (zoom == 3)
+        {
+            Camera.main.orthographicSize = 7.9f;
+            Camera.main.transform.localPosition = new Vector3(zoomLevel3X, zoomLevel3Y, Camera.main.transform.localPosition.z);
+            maxX = 3;
+            maxY = 3;
+        }
+        else if (zoom == 4)
+        {
+            Camera.main.orthographicSize = 8.9f;
+            Camera.main.transform.localPosition = new Vector3(zoomLevel4X, zoomLevel4Y, Camera.main.transform.localPosition.z);
+            maxX = 2;
+            maxY = 2;
+        }
+    }
 }

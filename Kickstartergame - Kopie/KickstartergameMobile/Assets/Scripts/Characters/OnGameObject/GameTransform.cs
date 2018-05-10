@@ -6,6 +6,14 @@ namespace Assets.Scripts.Characters
     {
         public GameObject GameObject { get; set; }
 
+        public UnitController UnitController
+        {
+            get
+            {
+                return GameObject.GetComponent<UnitController>();
+            }
+        }
+
         public void SetPosition(int x, int y)
         {
             GameObject.transform.localPosition = new Vector3(x, y, 0);
@@ -30,6 +38,7 @@ namespace Assets.Scripts.Characters
         {
             GameObject.GetComponent<BoxCollider>().enabled = false;
         }
+        
         public void Destroy()
         {
             GameObject.Destroy(GameObject);

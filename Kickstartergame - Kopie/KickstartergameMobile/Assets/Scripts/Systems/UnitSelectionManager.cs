@@ -34,7 +34,7 @@ namespace Assets.Scripts.GameStates
             if (SelectedCharacter != null)
                 SelectedCharacter.UnitTurnState.Selected = false;
             EventContainer.deselectActiveCharacter();
-            
+            mainScript.GetController<UIController>().HideAttackableField();
             SelectedCharacter = null;
             
             mainScript.gridManager.HideMovement();

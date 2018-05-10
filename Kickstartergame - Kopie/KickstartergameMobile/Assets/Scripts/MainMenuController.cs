@@ -38,7 +38,8 @@ public class MainMenuController : MonoBehaviour {
     IEnumerator DelayStart(float delay)
     {
         yield return new WaitForSeconds(delay);
-        SceneManager.LoadScene("CharacterCreater");
+        //SceneManager.LoadScene("CharacterCreater");
+        SceneManager.LoadScene("Intro");
     }
     IEnumerator DelayQuit(float delay)
     {

@@ -381,30 +381,6 @@ public class AttackUIController : MonoBehaviour {
         delayedEnemyHPValue = MathUtility.MapValues(defender.Stats.HP, 0f, defender.Stats.MaxHP, 0f, 1f);
     }
 
-    IEnumerator TextAnimation(Text text)
-    {
-        float alpha = 0;
-        text.gameObject.SetActive(true);
-        text.color = new Color(text.color.r, text.color.g, text.color.b, alpha);
-        while (alpha < 1)
-        {
-            text.color = new Color(text.color.r, text.color.g, text.color.b, alpha);
-            alpha += MISS_TEXT_FADE_IN_SPEED;
-            yield return new WaitForSeconds(0.01f);
-        }
-        alpha = 1;
-        text.color = new Color(text.color.r, text.color.g, text.color.b, alpha);
-        yield return new WaitForSeconds(MISS_TEXT_VISIBLE_DURATION);
-        while (alpha > 0)
-        {
-            text.color = new Color(text.color.r, text.color.g, text.color.b, alpha);
-            alpha -= MISS_TEXT_FADE_OUT_SPEED;
-            yield return new WaitForSeconds(0.01f);
-        }
-        alpha = 0;
-        text.color = new Color(text.color.r, text.color.g, text.color.b, alpha);
-        text.gameObject.SetActive(false);
-
-    }
+  
     #endregion
 }

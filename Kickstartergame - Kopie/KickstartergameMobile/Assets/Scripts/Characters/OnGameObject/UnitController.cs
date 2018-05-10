@@ -11,12 +11,18 @@ public class UnitController :  MonoBehaviour, DragAble {
     public LivingObject Unit { get; set; }
     public DragManager DragManager { get; set; }
     public RaycastManager RaycastManager { get; set; }
+    public SpeechBubble SpeechBubble { get; set; }
+    
     private HPBarOnMap hpBar;
 
     private void Start()
     {
+       
         DragManager = new DragManager(this);
         RaycastManager = new RaycastManager();
+        SpeechBubble = GetComponentInChildren<SpeechBubble>();
+        if(SpeechBubble)
+            this.SpeechBubble.gameObject.SetActive(false);
         EventContainer.hpValueChanged += HPValueChanged;
         EventContainer.unitWaiting+= SetWaitingSprite;
         hpBar = GetComponentInChildren<HPBarOnMap>();
