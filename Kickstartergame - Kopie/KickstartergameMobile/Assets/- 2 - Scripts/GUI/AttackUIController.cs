@@ -23,18 +23,8 @@ public class AttackUIController : MonoBehaviour {
     #region InspectorFields
     [Header("Input Fields")]
     [SerializeField]
-    Animator animator;
-    [SerializeField]
-    GameObject targetPointPrefab;
-    [SerializeField]
     Transform targetPointParent;
-    [SerializeField]
-    GameObject targetInfoObject;
 
-    [SerializeField]
-    GameObject chooseTargetTutorial;
-    [SerializeField]
-    AttackPatternUI attackReactionUI;
     [SerializeField]
     Image attackerSprite;
     [SerializeField]
@@ -45,10 +35,7 @@ public class AttackUIController : MonoBehaviour {
     private TextMeshProUGUI defenderHP;
     [SerializeField]
     private TextMeshProUGUI attackCountText;
-    [SerializeField]
-    private TextMeshProUGUI attackCountTextText;
-    [SerializeField]
-    private TextMeshProUGUI targetName;
+
     [Header("Fast Attack")]
     [SerializeField]
     private TextMeshProUGUI attackerDMG;
@@ -74,7 +61,7 @@ public class AttackUIController : MonoBehaviour {
     [SerializeField]
     private Image defenderLosingHPBar;
     [SerializeField]
-    private GameObject swipeAttackGO;
+    private GameObject AttackContainer;
     [SerializeField]
     private GameObject frontalAttackGO;
     [SerializeField]
@@ -95,13 +82,9 @@ public class AttackUIController : MonoBehaviour {
     private float enemyFillAmount = 1;
     private float allyLoseFillAmount = 1;
     private float enemyLoseFillAmount = 1;
-    private int currentHitSliderValue = 0;
-    private int currentAtkSliderValue = 0;
     private LivingObject attacker;
     private LivingObject defender;
-    private AttackTargetPoint activeTargetPoint;
     private TargetPoint attackTarget;
-    private List<AttackTargetPoint> targetPoints;
     private AttackType attackType;
     private bool frontAttack = false;
     private bool surpriseAttack = false;
@@ -140,11 +123,10 @@ public class AttackUIController : MonoBehaviour {
         defenderHPBar.fillAmount = enemyFillAmount;
         defenderLosingHPBar.fillAmount = enemyLoseFillAmount;
         attackerLosingHPBar.fillAmount = allyLoseFillAmount;
-        attackCountText.text = "" + attackCount;
         if (attackCount == 1)
-            attackCountTextText.text = "Attack";
+            attackCountText.text = attackCount+" Attack";
         else
-            attackCountTextText.text = "Attacks";
+            attackCountText.text = attackCount + " Attacks";
     }
 
     void EnableSwipeAttack()
@@ -186,13 +168,7 @@ public class AttackUIController : MonoBehaviour {
     public void Hide()
     {
         StartCoroutine(DelayHide(0.25f));
-        animator.SetTrigger("Outro");
-    }
-    public void ShowAttackReaction(string user, string reactionName)
-    {
-        Debug.Log("Show Reaction");
-
-        attackReactionUI.Show(user, reactionName);
+        
     }
     IEnumerator DelayHide(float delay)
     {
@@ -203,26 +179,23 @@ public class AttackUIController : MonoBehaviour {
     IEnumerator ActivateSwipeAttack(float delay)
     {
         yield return new WaitForSeconds(delay);
-        swipeAttackGO.SetActive(true);
+        AttackContainer.SetActive(true);
         //targetPointParent.gameObject.SetActive(true);
     }
     public void StrongAttack()
     {
-        Human human = (Human)attacker;
         Debug.Log("Strong Attack!");
         attackType = attacker.GetType<Human>().AttackTypes.Find(a => a.Name == "StrongAttack");
         StartAttack(attackType);
     }
     public void FastAttack()
     {
-        Human human = (Human)attacker;
         Debug.Log("Fast Attack!");
         attackType = attacker.GetType<Human>().AttackTypes.Find(a => a.Name == "FastAttack");
         StartAttack(attackType);
     }
     public void SpecialAttack()
     {
-        Human human = (Human)attacker;
         Debug.Log("Special Attack!");
         attackType = attacker.GetType<Human>().AttackTypes.Find(a => a.Name == "SpecialAttack");
         StartAttack(attackType);
@@ -235,7 +208,7 @@ public class AttackUIController : MonoBehaviour {
     }
     public void StartAttack(AttackType attackType)
     {
-        swipeAttackGO.SetActive(false);
+        AttackContainer.SetActive(false);
 
         if (attackCount > 0)
         {
@@ -245,7 +218,7 @@ public class AttackUIController : MonoBehaviour {
         }
         if(attackCount <=0)
         {
-            swipeAttackGO.SetActive(false);
+            AttackContainer.SetActive(false);
         }
         else
             StartCoroutine(ActivateSwipeAttack(0.35f));

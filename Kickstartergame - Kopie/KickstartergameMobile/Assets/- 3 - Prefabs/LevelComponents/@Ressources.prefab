@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1699920664620074}
+  m_IsPrefabAsset: 1
+--- !u!1 &1699920664620074
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4544302069542064}
+  - component: {fileID: 114093702865352864}
+  m_Layer: 0
+  m_Name: '@Ressources'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4544302069542064
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1699920664620074}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114093702865352864
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1699920664620074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f16f492052d11547b6781f7133810e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+    monsterOnMapSprites:
+    - {fileID: 21300000, guid: 67f8e74db7af428478aa06f9244ea220, type: 3}
+    - {fileID: 21300000, guid: c62e91f5a64a047408adefdb4b2f402b, type: 3}
+    characterOnMapSprites:
+    - {fileID: 21300000, guid: 51c8bf6c8500f2343ad2a19170722b44, type: 3}
+    - {fileID: 21300000, guid: 32bd0c64d95c8d4499867c8251f476d1, type: 3}
+    - {fileID: 21300000, guid: 910ffdc2930f144428bb25402955c9f7, type: 3}
+    - {fileID: 21300000, guid: 162df2d9b9bc50844a529b61086890e7, type: 3}
+    specialAttackSprites:
+    - {fileID: 21300000, guid: ec7c376fd9d4cf04199745b69f733f61, type: 3}
+    moveArrowHead: {fileID: 21300000, guid: b5cb32467fda7a34090619956b57efcb, type: 3}
+    moveArrowCurve: {fileID: 21300000, guid: 76d2ad6fe6776ca44bda91c7086d2f00, type: 3}
+    moveArrowStraight: {fileID: 21300000, guid: 1055d213114633746ba197635aeb6330,
+      type: 3}
+    moveArrowStart: {fileID: 21300000, guid: d120e82d4fa94b247bc0bf7458a68973, type: 3}
+    standOnArrowStart: {fileID: 21300000, guid: 06aaaef2b416e67448bd3a60a7bb8c45,
+      type: 3}
+  prefabs:
+    specialAttackPrefabs:
+    - {fileID: 1124953497037570, guid: d7067ff8cf1acd94e9a18b49bb1b76c8, type: 2}
+    moveArrowDot: {fileID: 1319213402913916, guid: 75c73ce6852e7014eb55ca3c27b8f4f3,
+      type: 2}
+    activeUnitField: {fileID: 1343739282671552, guid: a98eb356c10d6254b8037cf6a3940167,
+      type: 2}
+    moveCursor: {fileID: 1343739282671552, guid: a98eb356c10d6254b8037cf6a3940167,
+      type: 2}
+    attackableEnemyPrefrab: {fileID: 1570401513223414, guid: 168381a3e8a7a1c49945e40e61a1622b,
+      type: 2}
+  particles:
+    enemyAttention: {fileID: 1683129729397082, guid: 85433b0e96bc7544787a0777a2f59ad2,
+      type: 2}
+    enemyAttention2: {fileID: 1683129729397082, guid: 1133ae6b933be9d4ea4df8ac0dfd3dc0,
+      type: 2}
+    enemyField: {fileID: 1524441938995702, guid: f8b320a3e860f0b4daf9c5864ed7bec5,
+      type: 2}
+  textures:
+    cursorTextures:
+    - {fileID: 2800000, guid: 8aedcbe0608aa44379186aa7791ef886, type: 3}

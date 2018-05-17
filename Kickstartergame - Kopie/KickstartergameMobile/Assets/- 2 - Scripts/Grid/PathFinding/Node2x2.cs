@@ -33,5 +33,18 @@ namespace Assets.Scripts.Grid
             }
             return base.Equals(obj);
         }
+
+        public override int GetHashCode()
+        {
+            var hashCode = 1085674238;
+            hashCode = hashCode * -1521134295 + EqualityComparer<BigTile>.Default.GetHashCode(Position);
+            hashCode = hashCode * -1521134295 + c.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<Node2x2>.Default.GetHashCode(parent);
+            hashCode = hashCode * -1521134295 + cost.GetHashCode();
+            hashCode = hashCode * -1521134295 + costfromStart.GetHashCode();
+            hashCode = hashCode * -1521134295 + check.GetHashCode();
+            hashCode = hashCode * -1521134295 + depth.GetHashCode();
+            return hashCode;
+        }
     }
 }

@@ -15,11 +15,11 @@ public class MusicData : ScriptableObject
 
     [Range(0f, 1f)]
     public float volume = 1;
-
     [Range(.1f, 3f)]
     public float pitch = 1;
     public bool loop;
     public bool freshRestart;
+
     [HideInInspector]
     public AudioSource source;
     [HideInInspector]

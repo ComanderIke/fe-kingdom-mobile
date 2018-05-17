@@ -19,45 +19,13 @@ namespace Assets.Scripts.Grid
         }
         public void SetBigTileActive(BigTile bigTile, int playerId, bool attack)
         {
-            SetFieldTexture(bigTile.BottomLeft(), playerId, attack);
-            SetFieldTexture(bigTile.BottomRight(), playerId, attack);
-            SetFieldTexture(bigTile.TopLeft(), playerId, attack);
-            SetFieldTexture(bigTile.TopRight(), playerId, attack);
+            SetFieldMaterial(bigTile.BottomLeft(), playerId, attack);
+            SetFieldMaterial(bigTile.BottomRight(), playerId, attack);
+            SetFieldMaterial(bigTile.TopLeft(), playerId, attack);
+            SetFieldMaterial(bigTile.TopRight(), playerId, attack);
         }
 
-        public IEnumerator FieldAnimation()
-        {
-            float scale = 0.9f;
-            List<GameObject> animFields = new List<GameObject>();
-
-            foreach (Tile f in Tiles)
-            {
-                MeshRenderer m = f.gameObject.GetComponent<MeshRenderer>();
-                if (f.isActive || m.material.mainTexture == GridManager.gridRessources.AttackTexture)
-                {
-                    animFields.Add(f.gameObject);
-                }
-            }
-            foreach (GameObject go in animFields)
-            {
-                go.transform.localScale = new Vector3(scale, scale, scale);
-            }
-            yield return new WaitForSeconds(0.15f);
-            while (scale <= 1)
-            {
-                foreach (GameObject go in animFields)
-                {
-                    go.transform.localScale = new Vector3(scale, scale, scale);
-                }
-                scale += 0.01f;
-                yield return new WaitForSeconds(0.02f);
-            }
-            scale = 1;
-            foreach (GameObject go in animFields)
-            {
-                go.transform.localScale = new Vector3(scale, scale, scale);
-            }
-        }
+      
 
         public void ShowStandOnTexture(LivingObject c)
         {
@@ -65,48 +33,47 @@ namespace Assets.Scripts.Grid
             {
                 BigTilePosition bigTile = (BigTilePosition)c.GridPosition;
 
-                Tiles[(int)bigTile.Position.BottomLeft().x, (int)bigTile.Position.BottomLeft().y].gameObject.GetComponent<MeshRenderer>().material.mainTexture = GridManager.gridRessources.StandOnTexture;
-                Tiles[(int)bigTile.Position.BottomRight().x, (int)bigTile.Position.BottomRight().y].gameObject.GetComponent<MeshRenderer>().material.mainTexture = GridManager.gridRessources.StandOnTexture;
-                Tiles[(int)bigTile.Position.TopLeft().x, (int)bigTile.Position.TopLeft().y].gameObject.GetComponent<MeshRenderer>().material.mainTexture = GridManager.gridRessources.StandOnTexture;
-                Tiles[(int)bigTile.Position.TopRight().x, (int)bigTile.Position.TopRight().y].gameObject.GetComponent<MeshRenderer>().material.mainTexture = GridManager.gridRessources.StandOnTexture;
+                Tiles[(int)bigTile.Position.BottomLeft().x, (int)bigTile.Position.BottomLeft().y].gameObject.GetComponent<MeshRenderer>().material = GridManager.gridRessources.cellMaterialStandOn;
+                Tiles[(int)bigTile.Position.BottomRight().x, (int)bigTile.Position.BottomRight().y].gameObject.GetComponent<MeshRenderer>().material = GridManager.gridRessources.cellMaterialStandOn;
+                Tiles[(int)bigTile.Position.TopLeft().x, (int)bigTile.Position.TopLeft().y].gameObject.GetComponent<MeshRenderer>().material = GridManager.gridRessources.cellMaterialStandOn;
+                Tiles[(int)bigTile.Position.TopRight().x, (int)bigTile.Position.TopRight().y].gameObject.GetComponent<MeshRenderer>().material = GridManager.gridRessources.cellMaterialStandOn;
             }
             else
-                Tiles[c.GridPosition.x, c.GridPosition.y].gameObject.GetComponent<MeshRenderer>().material.mainTexture = GridManager.gridRessources.StandOnTexture;
+                Tiles[c.GridPosition.x, c.GridPosition.y].gameObject.GetComponent<MeshRenderer>().material = GridManager.gridRessources.cellMaterialStandOn;
         }
 
-        public void SetFieldTexture(Vector2 pos, int playerId, bool attack)
+        public void SetFieldMaterial(Vector2 pos, int playerId, bool attack)
         {
             MeshRenderer m = Tiles[(int)pos.x, (int)pos.y].gameObject.GetComponent<MeshRenderer>();
             if (attack)
             {
-                if (m.material.mainTexture == GridManager.gridRessources.MoveTexture || m.material.mainTexture == GridManager.gridRessources.MoveTexture2)
+                //not using sharedMaterial here create Material instances which will cause much higher baches
+                if (m.sharedMaterial==GridManager.gridRessources.cellMaterialMovement)
                     return;
                 if (MainScript.GetInstance().GetSystem<TurnSystem>().ActivePlayer.ID == playerId)
                 {
-                    m.material.mainTexture = GridManager.gridRessources.AttackTexture;
+                    m.material = GridManager.gridRessources.cellMaterialAttack;
                     if (Tiles[(int)pos.x, (int)pos.y].character != null&& Tiles[(int)pos.x, (int)pos.y].character.Player.ID!=playerId)
                         MainScript.GetInstance().GetSystem<UISystem>().ShowAttackableField((int)pos.x, (int)pos.y);
                     // MainScript.GetInstance().GetController<UIController>().ShowAttackableEnemy((int)pos.x, (int)pos.y);
                 }
                 else
-                    m.material.mainTexture = GridManager.gridRessources.EnemyAttackTexture;
+                    m.material = GridManager.gridRessources.cellMaterialEnemyAttack;
             }
             else
             {
-                if (MainScript.GetInstance().GetSystem<TurnSystem>().ActivePlayer.ID == playerId)
-                    m.material.mainTexture = GridManager.gridRessources.MoveTexture;
-                else
-                    m.material.mainTexture = GridManager.gridRessources.MoveTexture2;
+                m.material = GridManager.gridRessources.cellMaterialMovement;
+ 
                 if (Tiles[(int)pos.x, (int)pos.y].character != null && Tiles[(int)pos.x, (int)pos.y].character.Player.ID != playerId)
                 {
                     if (MainScript.GetInstance().GetSystem<TurnSystem>().ActivePlayer.ID == playerId)
                     {
-                        m.material.mainTexture = GridManager.gridRessources.AttackTexture;
+                        m.material = GridManager.gridRessources.cellMaterialAttack;
                         MainScript.GetInstance().GetSystem<UISystem>().ShowAttackableField((int)pos.x, (int)pos.y);
                         // MainScript.GetInstance().GetController<UIController>().ShowAttackableEnemy((int)pos.x, (int)pos.y);
                     }
                     else
-                        m.material.mainTexture = GridManager.gridRessources.EnemyAttackTexture;
+                        m.material = GridManager.gridRessources.cellMaterialEnemyAttack;
                 }
                 Tiles[(int)pos.x, (int)pos.y].isActive = true;
             }

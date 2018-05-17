@@ -35,10 +35,6 @@ namespace Assets.Scripts.Grid
                 {
                     if (Tiles[x, y].isActive)
                     {
-                        int sx = (int)selectedCharacter.GameTransform.GameObject.transform.position.x;
-                        int sy = (int)selectedCharacter.GameTransform.GameObject.transform.position.y;
-                        int tx = (int)x;
-                        int ty = (int)y;
                         List<Vector2> movePath = new List<Vector2>();
                         for (int i = 0; i < GridManager.gridRessources.preferedPath.path.Count; i++)
                         {
@@ -123,7 +119,7 @@ namespace Assets.Scripts.Grid
         }
         public bool IsFieldAttackable(int x, int z)
         {
-            return Tiles[x, z].gameObject.GetComponent<MeshRenderer>().material.mainTexture == GridManager.gridRessources.AttackTexture;
+            return Tiles[x, z].gameObject.GetComponent<MeshRenderer>().material == GridManager.gridRessources.cellMaterialAttack;
         }
         public bool IsOutOfBounds(Vector2 pos)
         {

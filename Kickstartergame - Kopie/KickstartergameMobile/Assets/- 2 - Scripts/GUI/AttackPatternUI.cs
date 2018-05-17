@@ -3,26 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class AttackPatternUI : MonoBehaviour {
+public class AttackPatternUI : MonoBehaviour
+{
 
     public TextMeshProUGUI User;
     public TextMeshProUGUI Name;
-    bool fadeout = false;
     // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    void Start()
+    {
+
+    }
+    // Update is called once per frame
+    void Update()
+    {
         //if (Input.GetMouseButtonDown(0) && !fadeout)
         //{
         //    fadeout = true;
         //    StartCoroutine(FadeOut());
         //}
-	}
+    }
     void OnEnable()
     {
         //StartCoroutine(FadeOut());
@@ -33,12 +33,11 @@ public class AttackPatternUI : MonoBehaviour {
         //User.text = userText+ " counters with";
         //Name.text = NameText+"!";
         MainScript.GetInstance().StartCoroutine(FadeOut(0.1f));
-        
+
     }
     IEnumerator FadeOut(float delay)
     {
         yield return new WaitForSeconds(delay);
-        fadeout = false;
         EventContainer.continuePressed();
         gameObject.SetActive(false);
     }

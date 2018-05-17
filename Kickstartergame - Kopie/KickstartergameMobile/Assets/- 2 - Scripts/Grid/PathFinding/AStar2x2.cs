@@ -13,8 +13,6 @@ namespace Assets.Scripts.Grid
         private PathFindingNode[,] accesibilities;
         private ArrayList closed;
         private ArrayList open;
-        private BigTile start;
-        private BigTile end;
         private List<Node2x2> nodes;
         private int gridWidth;
         private int gridHeight;
@@ -28,8 +26,7 @@ namespace Assets.Scripts.Grid
         }
         public MovementPath GetPath(BigTile start, BigTile end)
         {
-            this.start = start;
-            this.end = end;
+
             open = new ArrayList();
             closed = new ArrayList();
             nodes = new List<Node2x2>();
@@ -37,8 +34,7 @@ namespace Assets.Scripts.Grid
         }
         public MovementPath GetPath(BigTile start, BigTile end, int team, bool adjacent, List<int>attackRanges)
         {
-            this.start = start;
-            this.end = end;
+
             open = new ArrayList();
             closed = new ArrayList();
             nodes = new List<Node2x2>();

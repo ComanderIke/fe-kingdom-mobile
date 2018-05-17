@@ -67,5 +67,10 @@ namespace Assets.Scripts.Grid
         {
             return BottomLeft().x + " " + BottomLeft().y + " | " + BottomRight().x + " " + BottomRight().y + " | " + TopLeft().x + " " + TopLeft().y + " | " + TopRight().x + " " + TopRight().y; ;
         }
+
+        public override int GetHashCode()
+        {
+            return -1378504013 + EqualityComparer<List<Vector2>>.Default.GetHashCode(positions);
+        }
     }
 }

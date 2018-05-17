@@ -84,8 +84,6 @@ namespace Assets.Scripts.AI
 
         protected void SetCharacterPosition(LivingObject c, Vector2 pos)
         {
-            int OldPosX = c.GridPosition.x;
-            int OldPosY = c.GridPosition.y;
             c.SetInternPosition((int)pos.x, (int)pos.y);
         }
 
@@ -105,7 +103,7 @@ namespace Assets.Scripts.AI
         protected void SubmitMove(LivingObject character, Vector2 location)
         {
             //just adding the Command but not executing it yet
-            mainScript.GetSystem<CameraSystem>().MoveCameraTo((int)location.x, (int)location.y);
+            //mainScript.GetSystem<CameraSystem>().MoveCameraTo((int)location.x, (int)location.y);
             mainScript.GetSystem<UnitActionSystem>().MoveCharacter(character, (int)location.x,(int) location.y);
         }
 

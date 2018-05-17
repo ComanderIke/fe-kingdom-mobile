@@ -203,6 +203,7 @@ namespace Assets.Scripts.Events
 
             #region TurnManagement
             endTurn = null;
+            startTurn = null;
             #endregion
 
             #region AttackPatterns

@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CursorAnimationBlinkController : MonoBehaviour {
-    float totalFrames = 60;
-    float frameNumber = 0;
     Animator animator;
   // Use this for initialization
   CursorAnimationBlinkController[] controllers;
+    AnimationTimer timer;
     void Start()
     {
         animator = GetComponent<Animator>();
         animator.enabled=false;
-        animator.SetFloat("NormTime", FindObjectOfType<AnimationTimer>().normalizedTime);
+        timer = FindObjectOfType<AnimationTimer>();
+        animator.SetFloat("NormTime", timer.normalizedTime);
 
         animator.enabled = true;
     }
     void Update()
     {
-        animator.SetFloat("NormTime", FindObjectOfType<AnimationTimer>().normalizedTime);
+        animator.SetFloat("NormTime", timer.normalizedTime);
 
     }
 }

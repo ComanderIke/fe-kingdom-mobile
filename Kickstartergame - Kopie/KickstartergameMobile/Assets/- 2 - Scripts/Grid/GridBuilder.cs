@@ -81,7 +81,7 @@ namespace Assets.Scripts.Grid
                     MeshRenderer meshRenderer = cell.GetComponent<MeshRenderer>();
                     MeshFilter meshFilter = cell.GetComponent<MeshFilter>();
 
-                    meshRenderer.material = blockedFields[x, z] ? GridManager.gridRessources.cellMaterialInvalid : GridManager.gridRessources.cellMaterialValid;
+                    meshRenderer.material = blockedFields[x, z] ? GridManager.gridRessources.cellMaterialInvalid : GridManager.gridRessources.cellMaterialStandard;
                     if (blockedFields[x, z])
                     {
                         GridManager.Tiles[x, z].isAccessible = false;
