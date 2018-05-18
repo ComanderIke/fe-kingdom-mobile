@@ -17,7 +17,7 @@ public class GameData : MonoBehaviour {
 	void Update () {
 		
 	}
-    public void AddUnit(LivingObject unit)
+    public void AddUnit(Unit unit)
     {
         player.AddUnit(unit);
     }

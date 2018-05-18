@@ -9,7 +9,7 @@ namespace Assets.Scripts.Characters
     {
         public BigTile Position { get; set; }
 
-        public BigTilePosition(LivingObject o) : base(o)
+        public BigTilePosition(Unit o) : base(o)
         {
 
         }
@@ -17,7 +17,7 @@ namespace Assets.Scripts.Characters
         public override void SetPosition(int newX, int newY)
         {
             if (gridScript == null)
-                gridScript = MainScript.GetInstance().GetSystem<GridSystem>();
+                gridScript = MainScript.instance.GetSystem<GridSystem>();
             if (Position != null)
             {
                 gridScript.Tiles[(int)Position.BottomLeft().x, (int)Position.BottomLeft().y].character = null;

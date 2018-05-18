@@ -1,21 +1,18 @@
 ﻿using Assets.Scripts.Characters;
 using Assets.Scripts.Commands;
-using Assets.Scripts.Events;
 using Assets.Scripts.GameStates;
 using Assets.Scripts.Injuries;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace Assets.Scripts.AI.AttackPatterns
 {
     public class JumpAttack : AttackPattern
     {
-        LivingObject unit;
+        Unit unit;
 
-        public JumpAttack(LivingObject unit)
+        public JumpAttack(Unit unit)
         {
             PossibleInjuries = new List<Injury>();
             TargetPositions = new List<Vector2>();
@@ -37,8 +34,8 @@ namespace Assets.Scripts.AI.AttackPatterns
         void DoAction()
         {
             
-            MainScript.GetInstance().GetSystem<UnitActionSystem>().AddCommand(new AttackCommand(unit, MainScript.GetInstance().GetSystem<GridSystem>().GetTileFromVector2(TargetPositions[0]).character));
-            MainScript.GetInstance().GetSystem<UnitActionSystem>().ExecuteActions();
+            MainScript.instance.GetSystem<UnitActionSystem>().AddCommand(new AttackCommand(unit, MainScript.instance.GetSystem<GridSystem>().GetTileFromVector2(TargetPositions[0]).character));
+            MainScript.instance.GetSystem<UnitActionSystem>().ExecuteActions();
             unit.UnitTurnState.IsWaiting = true;
             //EventContainer.commandFinished();
             
@@ -46,8 +43,8 @@ namespace Assets.Scripts.AI.AttackPatterns
 
         public override void Execute()
         {
-            EventContainer.attackPatternUsed(unit, this);
-            EventContainer.continuePressed += DoAction;
+            AttackPattern.onAttackPatternUsed(unit, this);
+            UISystem.onContinuePressed += DoAction;
 
         }
 

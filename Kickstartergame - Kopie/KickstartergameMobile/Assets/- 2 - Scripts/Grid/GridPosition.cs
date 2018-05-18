@@ -27,10 +27,10 @@ namespace Assets.Scripts.Characters
 
         }
 
-        protected LivingObject character;
+        protected Unit character;
         protected GridSystem gridScript;
 
-        public GridPosition(LivingObject character)
+        public GridPosition(Unit character)
         {
             this.character = character;
             
@@ -42,7 +42,7 @@ namespace Assets.Scripts.Characters
         public virtual void SetPosition(int newX, int newY)
         {
             if(gridScript==null)
-                gridScript = MainScript.GetInstance().GetSystem<GridSystem>();
+                gridScript = MainScript.instance.GetSystem<GridSystem>();
             if (x!=-1&&y!=-1)
                 gridScript.Tiles[x, y].character = null;
             gridScript.Tiles[newX, newY].character = character;
@@ -56,7 +56,7 @@ namespace Assets.Scripts.Characters
         public virtual void RemoveCharacter()
         {
             if(gridScript==null)
-                gridScript = MainScript.GetInstance().GetSystem<GridSystem>();
+                gridScript = MainScript.instance.GetSystem<GridSystem>();
             gridScript.Tiles[x, y] = null;
         }
         public virtual bool CanAttack(List<int> range, GridPosition enemyPosition)

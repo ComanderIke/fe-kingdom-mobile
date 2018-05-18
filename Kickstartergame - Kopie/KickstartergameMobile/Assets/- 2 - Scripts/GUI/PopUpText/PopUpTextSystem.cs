@@ -17,6 +17,7 @@ public class PopUpTextSystem : MonoBehaviour, EngineSystem {
     [SerializeField]
     private Canvas defendCanvas;
 
+ 
 
     public void CreateAttackPopUpTextRed(string text, Transform location)
     {

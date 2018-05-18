@@ -23,7 +23,6 @@ namespace Assets.Scripts.Grid
         {
             GridManager = gridManager;
             this.gridTransform = gridTransform;
-            Debug.Log("CREATE GRID! " + gridManager.grid.width+" x "+gridManager.grid.height);
             for (int i = 0; i < gridManager.grid.width; i++)
             {
                 for (int j = 0; j < gridManager.grid.height; j++)

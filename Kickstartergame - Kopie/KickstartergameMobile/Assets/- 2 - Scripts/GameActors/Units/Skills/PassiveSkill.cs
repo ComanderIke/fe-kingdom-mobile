@@ -13,7 +13,7 @@ namespace Assets.Scripts.Characters.Skills
             return false;
         }
 
-        public override int getDamage(LivingObject user, bool justToShow)
+        public override int getDamage(Unit user, bool justToShow)
         {
             return 0;
         }

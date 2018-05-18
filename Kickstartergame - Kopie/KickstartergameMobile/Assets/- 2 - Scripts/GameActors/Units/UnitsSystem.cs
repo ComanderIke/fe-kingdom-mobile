@@ -1,7 +1,4 @@
 ﻿using Assets.Scripts.Engine;
-using Assets.Scripts.Events;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitsSystem : MonoBehaviour, EngineSystem {

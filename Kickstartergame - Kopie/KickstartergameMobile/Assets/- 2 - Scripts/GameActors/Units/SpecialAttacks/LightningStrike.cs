@@ -13,19 +13,19 @@ namespace Assets.Scripts.Characters.SpecialAttacks
 
         }
 
-        public override int GetSpecialDmg(LivingObject user, int normalAttackDamage, LivingObject defender)
+        public override int GetSpecialDmg(Unit user, int normalAttackDamage, Unit defender)
         {
             return defender.BattleStats.GetReceivedDamage(normalAttackDamage)+defender.BattleStats.GetReceivedDamage(normalAttackDamage/2, true);
         }
 
-        public override int GetSpecialHit(LivingObject user, int normalHitRate, LivingObject defender)
+        public override int GetSpecialHit(Unit user, int normalHitRate, Unit defender)
         {
             return normalHitRate;
         }
 
-        public override void UseSpecial(LivingObject user, int normalAttackDamage, LivingObject defender)
+        public override void UseSpecial(Unit user, int normalAttackDamage, Unit defender)
         {
-            UISystem uiController = MainScript.GetInstance().GetSystem<UISystem>();
+            UISystem uiController = MainScript.instance.GetSystem<UISystem>();
             int dmg=defender.InflictDamage(normalAttackDamage, user);
             int dmg2= defender.InflictDamage(normalAttackDamage/2, user, true);
             if (user.Player.IsHumanPlayer)

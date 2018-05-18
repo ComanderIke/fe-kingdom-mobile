@@ -11,7 +11,7 @@ public abstract class CameraMixin : MonoBehaviour
     private bool locked;
     private void Start()
     {
-        cameraSystem = MainScript.GetInstance().GetSystem<CameraSystem>();
+        cameraSystem = MainScript.instance.GetSystem<CameraSystem>();
 
     }
     public bool IsLocked()

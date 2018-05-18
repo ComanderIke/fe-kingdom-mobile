@@ -1,19 +1,45 @@
 ﻿using Assets.Scripts.AI.AttackPatterns;
 using Assets.Scripts.Characters;
 using Assets.Scripts.Engine;
-using Assets.Scripts.Events;
 using Assets.Scripts.GameStates;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
-using TMPro;
 using UnityEngine.Events;
 
 public class UISystem : MonoBehaviour, EngineSystem {
 
+    #region Events
+    public delegate void OnContinuePressed();
+    public static OnContinuePressed onContinuePressed;
 
+    public delegate void oOnFrontalAttackAnimationEnd();
+    public static oOnFrontalAttackAnimationEnd onFrontalAttackAnimationEnd;
+
+    public delegate void OnAttackUIVisible(bool visible);
+    public static OnAttackUIVisible onAttackUIVisible;
+
+    public delegate void OnReactUIVisible(bool visible);
+    public static OnReactUIVisible onReactUIVisible;
+
+    public delegate void OnDodgeClicked();
+    public static OnDodgeClicked onDodgeClicked;
+
+    public delegate void OnGuardClicked();
+    public static OnGuardClicked onGuardClicked;
+
+    public delegate void OnDeselectButtonClicked();
+    public static OnDeselectButtonClicked onDeselectButtonClicked;
+
+    public delegate void OnCounterClicked();
+    public static OnCounterClicked onCounterClicked;
+
+    public delegate void OnShowCursor(int x, int y);
+    public static OnShowCursor onShowCursor;
+
+    public delegate void OnHideCursor();
+    public static OnHideCursor onHideCursor;
+    #endregion
 
     [Header("Input Fields")]
     [SerializeField]
@@ -53,20 +79,19 @@ public class UISystem : MonoBehaviour, EngineSystem {
     private List<GameObject> attackableEnemyEffects;
     private List<GameObject> attackableFieldEffects;
     void Start () {
-        mainScript = MainScript.GetInstance();
-        EventContainer.attackPatternUsed += ShowAttackPattern;
-        EventContainer.showCursor += SpawnTileCursor;
-        EventContainer.hideCursor += HideTileCursor;
-        EventContainer.unitShowActiveEffect += SpawnActiveUnitEffect;
-        EventContainer.selectedActiveCharacter += ShowDeselectButton;
-        EventContainer.deselectActiveCharacter += HideDeselectButton;
+        mainScript = MainScript.instance;
+        AttackPattern.onAttackPatternUsed += ShowAttackPattern;
+        UISystem.onShowCursor += SpawnTileCursor;
+        UISystem.onHideCursor += HideTileCursor;
+        Unit.onUnitShowActiveEffect += SpawnActiveUnitEffect;
+        UnitActionSystem.onSelectedCharacter += ShowDeselectButton;
+        UnitActionSystem.onDeselectCharacter += HideDeselectButton;
 
         activeUnitEffects = new Dictionary<string, GameObject>();
         attackableEnemyEffects = new List<GameObject>();
         attackableFieldEffects = new List<GameObject>();
         ressources = FindObjectOfType<RessourceScript>();
     }
-
 
     void ShowDeselectButton()
     {
@@ -113,7 +138,7 @@ public class UISystem : MonoBehaviour, EngineSystem {
     {
         Destroy(tileCursor);
     }
-    private void SpawnActiveUnitEffect(LivingObject unit, bool spawn, bool disableOthers)
+    private void SpawnActiveUnitEffect(Unit unit, bool spawn, bool disableOthers)
     {
         //foreach (KeyValuePair<string, GameObject> pair in activeUnitEffects)
         //{
@@ -173,12 +198,12 @@ public class UISystem : MonoBehaviour, EngineSystem {
         topUI.gameObject.SetActive(false);
     }
 
-    public void ShowFightUI(LivingObject attacker, LivingObject defender)
+    public void ShowFightUI(Unit attacker, Unit defender)
     {
         HideAllActiveUnitEffects();
         attackUIController.Show(attacker,defender);
     }
-    public void ShowReactUI(LivingObject attacker, LivingObject defender)
+    public void ShowReactUI(Unit attacker, Unit defender)
     {
         HideAllActiveUnitEffects();
         reactUIController.Show(attacker, defender);
@@ -216,13 +241,13 @@ public class UISystem : MonoBehaviour, EngineSystem {
         if (mainScript.GetSystem<TurnSystem>().ActivePlayer.IsHumanPlayer)
             ShowAllActiveUnitEffects();
     }
-    public void ShowAttackPattern(LivingObject user, AttackPattern pattern )
+    public void ShowAttackPattern(Unit user, AttackPattern pattern )
     {
         attackPattern.SetActive(true);
         attackPattern.GetComponent<AttackPatternUI>().Show(user.Name, pattern.Name);
     }
 
-    public void ShowTopUI(LivingObject c)
+    public void ShowTopUI(Unit c)
     {
         if(c.Player.ID != mainScript.GetSystem<TurnSystem>().ActivePlayer.ID)
         {
@@ -250,15 +275,14 @@ public class UISystem : MonoBehaviour, EngineSystem {
 
     public void UndoClicked()
     {
-        EventContainer.undo();
+        UnitActionSystem.onUndo();
     }
     public void EndTurnClicked()
     {
-        EventContainer.endTurn();
+        TurnSystem.onEndTurn();
     }
     public void ShowAttackableField(int x, int y)
     {
-        Debug.Log("ShowAttackableField!");
         foreach (GameObject gameobj in attackableFieldEffects)
         {
             if ((int)gameobj.transform.localPosition.x == x && (int)gameobj.transform.localPosition.y == y)
@@ -277,7 +301,7 @@ public class UISystem : MonoBehaviour, EngineSystem {
         }
         attackableFieldEffects.Clear();
     }
-    public void ShowAttackPreview(LivingObject attacker, LivingObject defender)
+    public void ShowAttackPreview(Unit attacker, Unit defender)
     {
         ShowAttackableEnemy((int)defender.GridPosition.x, (int)defender.GridPosition.y);
         attackPreview.SetActive(true);
@@ -295,5 +319,19 @@ public class UISystem : MonoBehaviour, EngineSystem {
     {
         HideAttackableEnemy();
         attackPreview.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        onAttackUIVisible = null;
+        onReactUIVisible = null;
+        onDodgeClicked = null;
+        onGuardClicked = null;
+        onCounterClicked = null;
+        onDeselectButtonClicked = null;
+        onFrontalAttackAnimationEnd = null;
+        onHideCursor = null;
+        onShowCursor = null;
+        onContinuePressed = null;
     }
 }

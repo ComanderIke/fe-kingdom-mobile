@@ -8,7 +8,7 @@ using Assets.Scripts.Characters.Attributes;
 using Assets.Scripts.Characters.SpecialAttacks;
 
 [System.Serializable]
-public class Human : LivingObject{
+public class Human : Unit{
     
     public Inventory Inventory { get; set; }
     public SkillManager SkillManager { get; set; }

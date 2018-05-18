@@ -9,11 +9,11 @@ namespace Assets.Scripts.AI.AttackReactions
 {
     public abstract class AttackReaction
     {
-        public LivingObject User  { get; set; }
+        public Unit User  { get; set; }
         public string Name { get; set; }
         public List<Vector2> TargetPositions { get; set; }
 
-        protected AttackReaction(LivingObject unit)
+        protected AttackReaction(Unit unit)
         {
             User = unit;
             TargetPositions = new List<Vector2>();

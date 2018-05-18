@@ -16,18 +16,18 @@ namespace Assets.Scripts.AI
         public int x { get; set; }
         public int y { get; set; }
         public int Priority { get; set; }
-        public List<LivingObject> AssignedUnits { get; set; }
-        public List<LivingObject> PotentialUnits { get; set; }
+        public List<Unit> AssignedUnits { get; set; }
+        public List<Unit> PotentialUnits { get; set; }
 
         public Goal(GoalType type, int x, int y, WeightSet w)
         {
             Type = type;
             this.x = x;
             this.y = y;
-            AssignedUnits = new List<LivingObject>();
-            PotentialUnits = new List<LivingObject>();
+            AssignedUnits = new List<Unit>();
+            PotentialUnits = new List<Unit>();
         }
-        public void AssignUnitResourceSuitability(LivingObject unit, WeightSet weightSet)
+        public void AssignUnitResourceSuitability(Unit unit, WeightSet weightSet)
         {
             PotentialUnits.Add(unit);
         }
@@ -37,7 +37,7 @@ namespace Assets.Scripts.AI
         }
         public void AssignGoalRessources()
         {
-            foreach (LivingObject unit in PotentialUnits)
+            foreach (Unit unit in PotentialUnits)
             {
                 AssignedUnits.Add(unit);
                 unit.AIGoals.Add(this);

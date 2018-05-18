@@ -64,7 +64,7 @@ public class GridSystem : MonoBehaviour, EngineSystem {
             GetMovementLocations(x, y + 1, range - 1, c, playerId, locations);
     }
 
-    public void ShowMovement(LivingObject c)
+    public void ShowMovement(Unit c)
     {
        
         if (c.GridPosition is BigTilePosition)
@@ -92,7 +92,7 @@ public class GridSystem : MonoBehaviour, EngineSystem {
 
 
 
-    public void ShowAttack(LivingObject character, List<int> attack)
+    public void ShowAttack(Unit character, List<int> attack)
     {
         List<Tile> TilesFromWhereUCanAttack = new List<Tile>();
         foreach (Tile f in Tiles)
@@ -142,9 +142,11 @@ public class GridSystem : MonoBehaviour, EngineSystem {
                 Tiles[i, j].isActive = false;
             }
         }
-        MainScript.GetInstance().GetSystem<UISystem>().HideAttackableEnemy();
+
+        MainScript.instance.GetSystem<UISystem>().HideAttackableEnemy();
     }
-    public void ShowAttackRecursive(LivingObject character, int x, int y, int range, List<int> direction)
+
+    public void ShowAttackRecursive(Unit character, int x, int y, int range, List<int> direction)
     {
         if (range <= 0)
         {
@@ -242,7 +244,7 @@ public class GridSystem : MonoBehaviour, EngineSystem {
         PathFindingManager.Reset();
         return PathFindingManager.findPath(x1, y1, x2, y2, playerId, false, null).getLength();
     }
-    public void ShowAttackRange(LivingObject c)
+    public void ShowAttackRange(Unit c)
     {
         int x = c.GridPosition.x;
         int z = c.GridPosition.y;
@@ -251,7 +253,7 @@ public class GridSystem : MonoBehaviour, EngineSystem {
             ShowAttackRanges(x, z, range, new List<int>());
         }
     }
-    public bool PositionVisible(LivingObject c, int x, int y)
+    public bool PositionVisible(Unit c, int x, int y)
     {
         ShowSightRange(c);
         Vector2 vector = new Vector2(x-c.GridPosition.x, y-c.GridPosition.y);
@@ -265,7 +267,7 @@ public class GridSystem : MonoBehaviour, EngineSystem {
         //sightRange.Clear();
         //FindObjectOfType<GenerateQuads>().GenerateMesh(sightRange);
     }
-    public void ShowSightRange(LivingObject c)
+    public void ShowSightRange(Unit c)
     {
         Debug.Log("ShowSightRange");
         sightRange = new List<Vector2>();
@@ -304,7 +306,7 @@ public class GridSystem : MonoBehaviour, EngineSystem {
             ShowMovement(x, y + 1, range - 1, attackIndex, new List<int>(attack), c, playerId, enemy);
     }
     List<Vector2> sightRange;
-    public void ShowSightRange2(LivingObject character, List<int> attack)
+    public void ShowSightRange2(Unit character, List<int> attack)
     {
         List<Vector2> TilesFromWhereUCanAttack = new List<Vector2>();
         foreach (Vector2 f in sightRange)
@@ -334,7 +336,7 @@ public class GridSystem : MonoBehaviour, EngineSystem {
         }
 
     }
-    public void ShowSight2Recursive(LivingObject character, int x, int y, int range, List<int> direction)
+    public void ShowSight2Recursive(Unit character, int x, int y, int range, List<int> direction)
     {
 
 

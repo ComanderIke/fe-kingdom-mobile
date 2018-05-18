@@ -12,12 +12,12 @@ namespace Assets.Scripts.Characters.Skills
         public PositionTargetSkill()
         {
         }
-        public virtual void Activate(LivingObject user, Vector3 target)
+        public virtual void Activate(Unit user, Vector3 target)
         {
             inAnimation = true;
             skillTime = 0;
         }
-        public virtual void Effect(LivingObject user, Vector3 target)
+        public virtual void Effect(Unit user, Vector3 target)
         {
 
         }

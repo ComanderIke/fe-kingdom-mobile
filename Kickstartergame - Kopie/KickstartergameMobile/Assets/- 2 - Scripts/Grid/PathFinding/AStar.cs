@@ -117,10 +117,10 @@ namespace Assets.Scripts.Grid.PathFinding
 
                                     isAdjacent = true;
 
-                                    MainScript m = MainScript.GetInstance();
-                                    if (m.AttackRangeFromPath < r)
+                                    MainScript m = MainScript.instance;
+                                    if (m.GetSystem<InputSystem>().AttackRangeFromPath < r)
                                     {
-                                        m.AttackRangeFromPath = r;
+                                        m.GetSystem<InputSystem>().AttackRangeFromPath = r;
                                         // break;
                                     }
                                 }
@@ -169,7 +169,7 @@ namespace Assets.Scripts.Grid.PathFinding
         }
         public MovementPath getPath(int x, int y, int x2, int y2, int team, bool toadjacentPos, List<int> range)
         {
-            MainScript.GetInstance().AttackRangeFromPath = 0;
+            MainScript.instance.GetSystem<InputSystem>().AttackRangeFromPath = 0;
             nodes = new Node[width, height];
             closed = new ArrayList();
             open = new ArrayList();

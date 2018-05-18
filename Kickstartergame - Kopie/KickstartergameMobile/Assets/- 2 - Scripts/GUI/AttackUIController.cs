@@ -1,14 +1,12 @@
 ﻿using Assets.Scripts.Characters;
-using Assets.Scripts.Events;
 using Assets.Scripts.Utility;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
 using Assets.Scripts.Characters.Monsters;
 using TMPro;
-using Assets.Scripts.Characters.SpecialAttacks;
+using Assets.Scripts.GameStates;
 
 public class AttackUIController : MonoBehaviour {
 
@@ -82,8 +80,8 @@ public class AttackUIController : MonoBehaviour {
     private float enemyFillAmount = 1;
     private float allyLoseFillAmount = 1;
     private float enemyLoseFillAmount = 1;
-    private LivingObject attacker;
-    private LivingObject defender;
+    private Unit attacker;
+    private Unit defender;
     private TargetPoint attackTarget;
     private AttackType attackType;
     private bool frontAttack = false;
@@ -98,10 +96,10 @@ public class AttackUIController : MonoBehaviour {
 
        // attackTutorial.SetActive(true);
         HPValueChanged();
-        
-        EventContainer.hpValueChanged += HPValueChanged;
-        EventContainer.attackUIVisible(true);
-        EventContainer.frontalAttackAnimationEnd += EnableSwipeAttack;
+
+        Unit.onHpValueChanged += HPValueChanged;
+        UISystem.onAttackUIVisible(true);
+        UISystem.onFrontalAttackAnimationEnd += EnableSwipeAttack;
         //attackerSprite.sprite = attacker.Sprite;
         defenderSprite.sprite = defender.Sprite;
         attackCount = attacker.BattleStats.GetAttackCountAgainst(defender);
@@ -109,8 +107,8 @@ public class AttackUIController : MonoBehaviour {
     
     private void OnDisable()
     {
-        EventContainer.hpValueChanged -= HPValueChanged;
-        EventContainer.attackUIVisible(false);
+        Unit.onHpValueChanged -= HPValueChanged;
+        UISystem.onAttackUIVisible(false);
 
     }
 
@@ -133,7 +131,7 @@ public class AttackUIController : MonoBehaviour {
     {
         StartCoroutine(ActivateSwipeAttack(0.2f));
     }
-    public void Show(LivingObject attacker, LivingObject defender)
+    public void Show(Unit attacker, Unit defender)
     {
         this.attacker = attacker;
         this.defender = defender;
@@ -213,7 +211,7 @@ public class AttackUIController : MonoBehaviour {
         if (attackCount > 0)
         {
             Debug.Log("StartAttack!");
-            EventContainer.startAttack(attackType);
+            FightState.onStartAttack(attackType);
             attackCount--;
         }
         if(attackCount <=0)
@@ -226,24 +224,24 @@ public class AttackUIController : MonoBehaviour {
 
     public void ShowCounterMissText()
     {
-        MainScript.GetInstance().GetSystem<PopUpTextSystem>().CreateAttackPopUpTextGreen("Missed", attackerSprite.transform);
+        MainScript.instance.GetSystem<PopUpTextSystem>().CreateAttackPopUpTextGreen("Missed", attackerSprite.transform);
     }
     public void ShowCounterDamageText(int damage)
     {
-        MainScript.GetInstance().GetSystem<PopUpTextSystem>().CreateAttackPopUpTextRed("" + damage, attackerSprite.transform);
+        MainScript.instance.GetSystem<PopUpTextSystem>().CreateAttackPopUpTextRed("" + damage, attackerSprite.transform);
     }
     public void ShowMissText()
     {
         //activeTarget.ShowMissedText();
         //FindObjectOfType<PopUpTextController>().CreateAttackPopUpTextGreen("Missed", activeTargetPoint.transform);
-        MainScript.GetInstance().GetSystem<PopUpTextSystem>().CreateAttackPopUpTextGreen("Missed", targetPointParent.transform);
+        MainScript.instance.GetSystem<PopUpTextSystem>().CreateAttackPopUpTextGreen("Missed", targetPointParent.transform);
     }
     public void ShowDamageText(int damage, bool magic=false)
     {
         if(magic)
-            MainScript.GetInstance().GetSystem<PopUpTextSystem>().CreateAttackPopUpTextBlue("" + damage, targetPointParent.transform);
+            MainScript.instance.GetSystem<PopUpTextSystem>().CreateAttackPopUpTextBlue("" + damage, targetPointParent.transform);
         else
-            MainScript.GetInstance().GetSystem<PopUpTextSystem>().CreateAttackPopUpTextRed("" + damage, targetPointParent.transform);
+            MainScript.instance.GetSystem<PopUpTextSystem>().CreateAttackPopUpTextRed("" + damage, targetPointParent.transform);
         //activeTarget.ShowDamageText(damage);
 
     }

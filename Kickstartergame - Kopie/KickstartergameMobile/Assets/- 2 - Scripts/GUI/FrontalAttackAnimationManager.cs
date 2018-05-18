@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Events;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 
 public class FrontalAttackAnimationManager : MonoBehaviour {
@@ -13,7 +11,7 @@ public class FrontalAttackAnimationManager : MonoBehaviour {
     IEnumerator DisableObject(float delay)
     {
         yield return new WaitForSeconds(delay);
-        EventContainer.frontalAttackAnimationEnd();
+        UISystem.onFrontalAttackAnimationEnd();
         gameObject.SetActive(false);
     }
 }

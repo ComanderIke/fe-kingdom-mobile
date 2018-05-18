@@ -11,7 +11,7 @@ namespace Assets.Scripts.Grid
     public class Tile
     {
         public GameObject gameObject;
-        public LivingObject character;
+        public Unit character;
         public int movementCost = 1;
         public int x;
         public int y;

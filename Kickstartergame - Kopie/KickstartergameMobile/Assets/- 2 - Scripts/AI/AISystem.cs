@@ -2,7 +2,6 @@
 using Assets.Scripts.AI.AttackPatterns;
 using Assets.Scripts.Characters;
 using Assets.Scripts.Engine;
-using Assets.Scripts.Events;
 using Assets.Scripts.GameStates;
 using Assets.Scripts.Players;
 using System.Collections.Generic;
@@ -12,13 +11,13 @@ public class AISystem : AIInterface, EngineSystem {
 
     bool startTurn = true;
     bool doingAction = false;
-    Dictionary<LivingObject, List<AttackPattern>> attackPatterns;
+    Dictionary<Unit, List<AttackPattern>> attackPatterns;
     List<Goal> CurrentGoals;
     AttackPattern currentPattern;
-    List<LivingObject> currentBestTargets;
+    List<Unit> currentBestTargets;
 
     public AISystem(Player p):base (p){
-        attackPatterns = new Dictionary<LivingObject, List<AttackPattern>>();
+        attackPatterns = new Dictionary<Unit, List<AttackPattern>>();
         CurrentGoals = new List<Goal>();
     }
 
@@ -27,7 +26,7 @@ public class AISystem : AIInterface, EngineSystem {
         if (doingAction)
             return;
         startTurn = true;
-        foreach (LivingObject u in player.Units)
+        foreach (Unit u in player.Units)
         {
             if (u.UnitTurnState.IsWaiting)
                 startTurn = false;
@@ -37,11 +36,11 @@ public class AISystem : AIInterface, EngineSystem {
             StartOfTurn();
         }
 
-        List<LivingObject> units = GetUnitsLeftToMove();
+        List<Unit> units = GetUnitsLeftToMove();
         if (units.Count > 0)
         {
             SubmitBestMoveForUnit(units[0]);
-            EventContainer.allCommandsFinished += FinishedAction;
+            UnitActionSystem.onAllCommandsFinished += FinishedAction;
             doingAction = true;
         }
         else
@@ -51,15 +50,15 @@ public class AISystem : AIInterface, EngineSystem {
     }
     void FinishedAction()
     {
-        EventContainer.allCommandsFinished -= FinishedAction;
+        UnitActionSystem.onAllCommandsFinished -= FinishedAction;
         doingAction = false;
     }
 
     private void StartOfTurn()
     {
         //move Camera to first character
-        List<LivingObject> units = GetUnitsLeftToMove();
-        foreach(LivingObject unit in units)
+        List<Unit> units = GetUnitsLeftToMove();
+        foreach(Unit unit in units)
         {
             if (unit.GridPosition is BigTilePosition)
             {
@@ -88,15 +87,15 @@ public class AISystem : AIInterface, EngineSystem {
         CurrentGoals.Clear();
 
         // reset our own unit goals from last turn, and create attack goal for enemy units
-        foreach (LivingObject u in player.Units)
+        foreach (Unit u in player.Units)
         {
             u.AIGoals.Clear();
         }
-        foreach (Player p in MainScript.GetInstance().GetSystem<TurnSystem>().Players)
+        foreach (Player p in MainScript.instance.GetSystem<TurnSystem>().Players)
         {
             if (p != player)
             {
-                foreach (LivingObject u in p.Units)
+                foreach (Unit u in p.Units)
                 {
                     // enemy unit, add as goal assuming is alive
                     if (u.IsAlive())
@@ -112,7 +111,7 @@ public class AISystem : AIInterface, EngineSystem {
         int cnt = 0;
         foreach (Goal g in CurrentGoals)
         {
-            foreach (LivingObject u in player.Units)
+            foreach (Unit u in player.Units)
             {
                 // if unit is living, friendly, and not yet assigned 4 goals, add it as a potential resource
                 if (u.IsAlive() && u.AIGoals.Count <= 4)
@@ -131,7 +130,7 @@ public class AISystem : AIInterface, EngineSystem {
         startTurn = false;
     }
 
-    private float GetDistanceToGoalImproval(LivingObject u, Vector2 newLoc)
+    private float GetDistanceToGoalImproval(Unit u, Vector2 newLoc)
     {
         float oldDistance=0;
         float newDistance=0;
@@ -146,7 +145,7 @@ public class AISystem : AIInterface, EngineSystem {
         return (oldDistance > 0) ? (1f - newDistance / oldDistance) : (1f - newDistance);
     }
 
-    protected float ScoreLocationForCharacter(Vector2 location, LivingObject c)
+    protected float ScoreLocationForCharacter(Vector2 location, Unit c)
     {
         float ret = 0;
         WeightSet w = new WeightSet();
@@ -168,7 +167,7 @@ public class AISystem : AIInterface, EngineSystem {
         return (int)(Mathf.Abs(location.x - target.x) + Mathf.Abs(location.y - target.y));
     }
 
-    protected float ScoreAttackForUnit(LivingObject attacker, Vector2 location, LivingObject defender)
+    protected float ScoreAttackForUnit(Unit attacker, Vector2 location, Unit defender)
     {
         WeightSet w = new WeightSet();
         float ret = w.ATTACK_START_WEIGHT;//start with 10 so enemies will also attack if they get more dmg themselves(Most players like Enemies attacks even if the attack doesn't do much)
@@ -190,7 +189,7 @@ public class AISystem : AIInterface, EngineSystem {
         return ret;
     }
 
-    protected void SubmitBestMoveForUnit(LivingObject unit)
+    protected void SubmitBestMoveForUnit(Unit unit)
     {
         List<AttackPattern> aps = attackPatterns[unit];
         currentPattern = null;
@@ -212,7 +211,7 @@ public class AISystem : AIInterface, EngineSystem {
         List<Vector2> moveLocs = GetMoveLocations(unit);
         Vector2 startLoc = new Vector2(unit.GridPosition.x, unit.GridPosition.y);
         Vector2 currentBestMoveLocation = new Vector2();
-        currentBestTargets = new List<LivingObject>();
+        currentBestTargets = new List<Unit>();
         foreach (Vector2 loc in moveLocs)
         {
             SetCharacterPosition(unit, startLoc);
@@ -222,9 +221,9 @@ public class AISystem : AIInterface, EngineSystem {
            
             if(currentPattern.TargetType == AttackTargetType.SingleEnemy)
             {
-                List<LivingObject> targets = mainScript.GetSystem<GridSystem>().GridLogic.GetAttackTargets((LivingObject)unit);
+                List<Unit> targets = mainScript.GetSystem<GridSystem>().GridLogic.GetAttackTargets((Unit)unit);
 
-                foreach (LivingObject t in targets)
+                foreach (Unit t in targets)
                 {
                     float attackscore = ScoreAttackForUnit(unit, loc, t);
                     if ((locScore + attackscore) > currentBestScore)
@@ -253,7 +252,7 @@ public class AISystem : AIInterface, EngineSystem {
         SetCharacterPosition(unit, startLoc);
         SubmitMove(unit, currentBestMoveLocation);
         unit.UnitTurnState.IsWaiting = true;
-        EventContainer.allCommandsFinished += SwitchToAIState;
+        UnitActionSystem.onAllCommandsFinished += SwitchToAIState;
         Debug.Log(currentPattern);
         mainScript.GetSystem<UnitActionSystem>().AddCommand(currentPattern);
         //will also execute all previous commands like Movement
@@ -265,7 +264,7 @@ public class AISystem : AIInterface, EngineSystem {
     private void SwitchToAIState()
     {
         Debug.Log("SwitchToAIState");
-        EventContainer.allCommandsFinished -= SwitchToAIState;
+        UnitActionSystem.onAllCommandsFinished -= SwitchToAIState;
         mainScript.SwitchState(new AIState(this.player));
     }
 }

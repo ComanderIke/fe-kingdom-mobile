@@ -1,16 +1,11 @@
-﻿using Assets.Scripts.Events;
-using Assets.Scripts.GameStates;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using Assets.Scripts.GameStates;
+
 
 namespace Assets.Scripts.Characters
 {
     public class UnitTurnState
     {
-        LivingObject unit;
+        Unit unit;
         private bool isActive;
         private bool hasMoved;
         private bool isWaiting;
@@ -33,8 +28,8 @@ namespace Assets.Scripts.Characters
             set
             {
                 isWaiting = value;
-                if(EventContainer.unitWaiting!=null)
-                    EventContainer.unitWaiting(unit, isWaiting);
+                if(Unit.onUnitWaiting!=null)
+                    Unit.onUnitWaiting(unit, isWaiting);
             }
         }
         public bool HasMoved
@@ -46,18 +41,18 @@ namespace Assets.Scripts.Characters
             set
             {
                 hasMoved = value;
-                if(EventContainer.unitCanMove!=null)
-                    EventContainer.unitCanMove(unit, !hasMoved);
+                if(Unit.onUnitCanMove!=null)
+                    Unit.onUnitCanMove(unit, !hasMoved);
                 if(unit.Player.IsHumanPlayer)
-                    EventContainer.unitShowActiveEffect(unit, !hasMoved, false);
+                    Unit.onUnitShowActiveEffect(unit, !hasMoved, false);
                 if(hasMoved)
-                    EventContainer.hideCursor();
+                    UISystem.onHideCursor();
             }
         }
         public bool HasAttacked { get; set; }
         public bool Selected { get; set; }
 
-        public UnitTurnState(LivingObject unit)
+        public UnitTurnState(Unit unit)
         {
             this.unit = unit;
         }
@@ -79,7 +74,7 @@ namespace Assets.Scripts.Characters
         }
         public bool IsDragable()
         {
-            return !IsWaiting && unit.IsAlive() && unit.Player.ID == MainScript.GetInstance().GetSystem<TurnSystem>().ActivePlayerNumber;
+            return !IsWaiting && unit.IsAlive() && unit.Player.ID == MainScript.instance.GetSystem<TurnSystem>().ActivePlayerNumber;
         }
     }
 }

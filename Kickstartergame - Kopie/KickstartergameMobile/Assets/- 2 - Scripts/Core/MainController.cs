@@ -26,6 +26,7 @@ public class MainController : MonoBehaviour {
             }
         }
     }
+
     private void Awake()
     {
         Object.DontDestroyOnLoad(gameObject);

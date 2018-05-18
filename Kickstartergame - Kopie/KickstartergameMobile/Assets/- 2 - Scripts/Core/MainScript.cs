@@ -5,59 +5,31 @@ using Assets.Scripts.GameStates;
 using Assets.Scripts.Characters;
 using Assets.Scripts.Engine;
 using Assets.Scripts.Players;
-using Assets.Scripts.Events;
 
 public class MainScript : MonoBehaviour {
 	
-    #region EVENTS
-    public delegate void WinLevelEvent();
-    public static WinLevelEvent winLevelEvent;
-
-	public delegate void MoveCharacterEvent(LivingObject character,int x, int z);
-	public static MoveCharacterEvent moveCharacterEvent;
-	public delegate void EndOfMoveCharacterEvent();
-	public static EndOfMoveCharacterEvent endOfMoveCharacterEvent;
-
-	public delegate void FightEvent(LivingObject attacker, LivingObject defender);
-	public static FightEvent fightEvent;
-	public delegate void EndOfFightEvent();
-	public static EndOfFightEvent endOfFightEvent;
-
-	public delegate void MoveCamEvent(Vector3 position);
-	public static MoveCamEvent moveCamEvent;
-	public delegate void EndOfMoveCam();
-	public static EndOfMoveCam endOfMoveCam;
-
-    #endregion
-
     private const float TIME_LIMIT = 60;
     private const double START_TURN_DELAY = 0.3f;
 
-    #region fields
+    public static MainScript instance;
 
     [HideInInspector]
     public GameState gameState;
-	[HideInInspector]
-	public Vector2 oldPosition;
-
-    bool init = false;
-	[HideInInspector]
-    public int AttackRangeFromPath;
-    #endregion
     public List<EngineSystem> Systems { get; set; }
 
-    private static MainScript instance;
-    
+    private bool init = false;
+
     void Awake()
     {
-        EventContainer.ResetEvents();
         instance = this;
         gameState = new GameplayState();
+        Debug.Log("Initialize");
+        AddSystems();
+      
     }
 
-    void Start () {
-        Debug.Log("Initialize");
-        
+    private void AddSystems()
+    {
         Systems = new List<EngineSystem>();
         Systems.Add(FindObjectOfType<UISystem>());
         Systems.Add(FindObjectOfType<GridSystem>());
@@ -69,33 +41,17 @@ public class MainScript : MonoBehaviour {
         Systems.Add(FindObjectOfType<InputSystem>());
         Systems.Add(FindObjectOfType<UnitsSystem>());
         Systems.Add(FindObjectOfType<TurnSystem>());
-        Systems.Add(new UnitSelectionSystem());
+        Systems.Add(FindObjectOfType<UnitSelectionSystem>());
     }
     
-    public static MainScript GetInstance()
-    {
-        if (instance == null)
-        {
-            Debug.Log("Instance null!");
-            
-        }
-        else if (instance.gameObject == null)
-        {
-            Debug.Log("GameObject null!");
-        }
-            
-        return instance;
-    }
 
     private void Initialize()
     {
-        
-        InitPlayers();
-        InitCharacters();
-        
+
+        InitSystems();
+        LevelConfig();
         gameState.Enter();
-        Debug.Log("InitializeSystems");
-        EventContainer.startTurn();
+        TurnSystem.onStartTurn();
     }
 
     void Update () {
@@ -113,75 +69,50 @@ public class MainScript : MonoBehaviour {
         gameState = state;
         state.Enter();
     }
-    private void InitPlayers()
+    private void InitSystems()
     {
-        TurnSystem turnManager = GetSystem<TurnSystem>();
-        foreach (Player p in turnManager.Players)
-        {
-            p.Init();
-        }
+       GetSystem<TurnSystem>().Init();
     }
-    private void InitCharacters()
+    private void LevelConfig()
     {
         TurnSystem turnManager = GetSystem<TurnSystem>();
-        Player p = turnManager.Players[0];
-        StartPosition[] startPositions = GameObject.FindObjectsOfType<StartPosition>();
-        UnitInstantiater cc = GameObject.FindObjectOfType<UnitInstantiater>();
-        RessourceScript ss = GameObject.FindObjectOfType<RessourceScript>();
+        Player player = turnManager.GetRealPlayer();
+        StartPosition[] startPositions = FindObjectsOfType<StartPosition>();
+        UnitInstantiator unitInstantiator = FindObjectOfType<UnitInstantiator>();
+        RessourceScript resources = FindObjectOfType<RessourceScript>();
+        DataScript data = FindObjectOfType<DataScript>();
         if (FindObjectOfType<GameData>() != null)
         {
-            foreach (LivingObject u in FindObjectOfType<GameData>().player.Units)
-            {
-                p.AddUnit(u);
-            }
-           
-            cc.PlaceCharacter(0, p.Units[0], startPositions[0].GetXOnGrid(), startPositions[0].GetYOnGrid());
+            LoadGameData();
         }
         else
-        {
-            Human filler = null;
-            Human filler2 = null;
-            Human filler3 = null;
-            Human filler4 = null;
-            
-            filler = new Human("Leila", ss.sprites.GetCharacterOnMapSprites(0));
-            filler2 = new Human("Flora", ss.sprites.GetCharacterOnMapSprites(2));
-            filler3 = new Human("Eldric", ss.sprites.GetCharacterOnMapSprites(1));
-            filler4 = new Human("Hector", ss.sprites.GetCharacterOnMapSprites(3));
-            filler.Inventory.AddItem(GameObject.FindObjectOfType<DataScript>().weapons.woodenSword);
-            filler.Inventory.UseItem(filler.Inventory.items[0]);
-            filler2.Inventory.AddItem(GameObject.FindObjectOfType<DataScript>().weapons.woodenAxe);
-            filler2.Inventory.UseItem(filler2.Inventory.items[0]);
-            filler3.Inventory.AddItem(GameObject.FindObjectOfType<DataScript>().weapons.basicBow);
-            filler3.Inventory.UseItem(filler3.Inventory.items[0]);
-            filler4.Inventory.AddItem(GameObject.FindObjectOfType<DataScript>().weapons.woodenSpear);
-            filler4.Inventory.UseItem(filler4.Inventory.items[0]);
-
-            p.AddUnit(filler);
-            cc.PlaceCharacter(0, filler, startPositions[0].GetXOnGrid(), startPositions[0].GetYOnGrid());
-            p.AddUnit(filler2);
-            p.AddUnit(filler3);
-            p.AddUnit(filler4);
-            cc.PlaceCharacter(0, filler2, startPositions[1].GetXOnGrid(), startPositions[1].GetYOnGrid());
-            cc.PlaceCharacter(0, filler3, startPositions[2].GetXOnGrid(), startPositions[2].GetYOnGrid());
-            cc.PlaceCharacter(0, filler4, startPositions[3].GetXOnGrid(), startPositions[3].GetYOnGrid());
+        {   
+            Human unit1 = new Human("Leila", resources.sprites.GetCharacterOnMapSprites(0));
+            Human unit2 = new Human("Flora", resources.sprites.GetCharacterOnMapSprites(2));
+            Human unit3 = new Human("Eldric", resources.sprites.GetCharacterOnMapSprites(1));
+            Human unit4 = new Human("Hector", resources.sprites.GetCharacterOnMapSprites(3));
+            unit1.Inventory.AddItem(data.weapons.woodenSword);
+            unit2.Inventory.AddItem(data.weapons.woodenAxe);
+            unit3.Inventory.AddItem(data.weapons.basicBow);
+            unit4.Inventory.AddItem(data.weapons.woodenSpear);
+            player.AddUnit(unit1);
+            player.AddUnit(unit2);
+            player.AddUnit(unit3);
+            player.AddUnit(unit4);
+            unitInstantiator.PlaceCharacter(0, unit1, startPositions[0].GetXOnGrid(), startPositions[0].GetYOnGrid());
+            unitInstantiator.PlaceCharacter(0, unit2, startPositions[1].GetXOnGrid(), startPositions[1].GetYOnGrid());
+            unitInstantiator.PlaceCharacter(0, unit3, startPositions[2].GetXOnGrid(), startPositions[2].GetYOnGrid());
+            unitInstantiator.PlaceCharacter(0, unit4, startPositions[3].GetXOnGrid(), startPositions[3].GetYOnGrid());
         }
-
-        //cc.PlaceCharacter(0, filler, startPositions[0].GetXOnGrid(), startPositions[0].GetYOnGrid());
-        //cc.PlaceCharacter(0, filler2, startPositions[1].GetXOnGrid(), startPositions[1].GetYOnGrid());
-        //cc.PlaceCharacter(0, filler3, startPositions[2].GetXOnGrid(), startPositions[2].GetYOnGrid());
-        //cc.PlaceCharacter(0, filler4, startPositions[3].GetXOnGrid(), startPositions[3].GetYOnGrid());
-        //Monster monster = new Monster("Mammoth", MonsterType.Mammoth, ss.sprites.GetMonsterOnMapSprites(0));
-        Monster saber = new Monster("Sabertooth", MonsterType.Sabertooth, ss.sprites.GetMonsterOnMapSprites(1));
-        //turnManager.Players[1].AddUnit(monster);
+        Monster saber = new Monster("Sabertooth", MonsterType.Sabertooth, resources.sprites.GetMonsterOnMapSprites(1));
         turnManager.Players[1].AddUnit(saber);
-        
-        //cc.PlaceCharacter(1, monster, 4, 2);
-        cc.PlaceCharacter(1, saber, 5, 2);
+        unitInstantiator.PlaceCharacter(1, saber, 5, 2);
         saber.GridPosition.FacingLeft = true;
-        //gridManager.ShowSightRange(saber);
     }
-
+    private void LoadGameData()
+    {
+        //TODO
+    }
     public T GetSystem<T>()
     {
         foreach(EngineSystem s in Systems)

@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Events;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -32,13 +30,13 @@ public class AttackPatternUI : MonoBehaviour
         //gameObject.SetActive(true);
         //User.text = userText+ " counters with";
         //Name.text = NameText+"!";
-        MainScript.GetInstance().StartCoroutine(FadeOut(0.1f));
+        MainScript.instance.StartCoroutine(FadeOut(0.1f));
 
     }
     IEnumerator FadeOut(float delay)
     {
         yield return new WaitForSeconds(delay);
-        EventContainer.continuePressed();
+        UISystem.onContinuePressed();
         gameObject.SetActive(false);
     }
 }

@@ -1,23 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Assets.Scripts.Injuries;
 using UnityEngine;
 using Assets.Scripts.Grid;
 using Assets.Scripts.Characters;
 using Assets.Scripts.Commands;
 using Assets.Scripts.GameStates;
-using Assets.Scripts.Events;
-using System.Collections;
 
 namespace Assets.Scripts.AI.AttackPatterns
 {
     public class Stampede : AttackPattern
     {
-        LivingObject unit;
+        Unit unit;
 
-        public Stampede(LivingObject unit, BigTile startPosition, Vector2 direction, int range)
+        public Stampede(Unit unit, BigTile startPosition, Vector2 direction, int range)
         {
             PossibleInjuries = new List<Injury>();
             TargetPositions = new List<Vector2>();
@@ -38,7 +34,7 @@ namespace Assets.Scripts.AI.AttackPatterns
             }
             foreach(Vector2 pos in TargetPositions)
             {
-                if (MainScript.GetInstance().GetSystem<GridSystem>().Tiles[(int)pos.x, (int)pos.y].character != null && MainScript.GetInstance().GetSystem<GridSystem>().Tiles[(int)pos.x, (int)pos.y].character != unit && MainScript.GetInstance().GetSystem<GridSystem>().Tiles[(int)pos.x, (int)pos.y].character.Player.ID != unit.Player.ID)
+                if (MainScript.instance.GetSystem<GridSystem>().Tiles[(int)pos.x, (int)pos.y].character != null && MainScript.instance.GetSystem<GridSystem>().Tiles[(int)pos.x, (int)pos.y].character != unit && MainScript.instance.GetSystem<GridSystem>().Tiles[(int)pos.x, (int)pos.y].character.Player.ID != unit.Player.ID)
                     TargetCount++;
             }
            // possibleInjuries.Add(new Injury);
@@ -46,7 +42,7 @@ namespace Assets.Scripts.AI.AttackPatterns
 
         private void AddBigTileToTargetPositions(BigTile bigTile)
         {
-            if (!MainScript.GetInstance().GetSystem<GridSystem>().GridLogic.IsBigTileAccessible(bigTile))
+            if (!MainScript.instance.GetSystem<GridSystem>().GridLogic.IsBigTileAccessible(bigTile))
                 return;
             if (!TargetBigTilePositions.Contains(bigTile))
                 TargetBigTilePositions.Add(bigTile);
@@ -71,15 +67,15 @@ namespace Assets.Scripts.AI.AttackPatterns
 
 
 
-        public void EffectTarget(LivingObject target)
+        public void EffectTarget(Unit target)
         {
 
-            MainScript.GetInstance().GetSystem<UnitActionSystem>().PushUnit(target, Direction);
+            MainScript.instance.GetSystem<UnitActionSystem>().PushUnit(target, Direction);
 
         }
         void DoAction()
         {
-            Tile[,] tiles = MainScript.GetInstance().GetSystem<GridSystem>().Tiles;
+            Tile[,] tiles = MainScript.instance.GetSystem<GridSystem>().Tiles;
             foreach (Vector2 position in TargetPositions)
             {
 
@@ -90,15 +86,15 @@ namespace Assets.Scripts.AI.AttackPatterns
                 }
                 //Debug.Log(position);
             }
-            MainScript.GetInstance().GetSystem<UnitActionSystem>().AddCommand(new StampedeCommand(unit, TargetBigTilePositions));
-            MainScript.GetInstance().GetSystem<UnitActionSystem>().ExecuteActions();
+            MainScript.instance.GetSystem<UnitActionSystem>().AddCommand(new StampedeCommand(unit, TargetBigTilePositions));
+            MainScript.instance.GetSystem<UnitActionSystem>().ExecuteActions();
             unit.UnitTurnState.IsWaiting = true;
         }
         public override void Execute()
         {
             Debug.Log("Execute: BigCharge");
-            EventContainer.attackPatternUsed(unit, this);
-            EventContainer.continuePressed += DoAction;
+            AttackPattern.onAttackPatternUsed(unit, this);
+            UISystem.onContinuePressed += DoAction;
             
         }
 

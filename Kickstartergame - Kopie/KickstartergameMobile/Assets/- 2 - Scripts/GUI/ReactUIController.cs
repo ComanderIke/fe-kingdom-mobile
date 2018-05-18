@@ -1,8 +1,7 @@
 ﻿using Assets.Scripts.Characters;
-using Assets.Scripts.Events;
+using Assets.Scripts.GameStates;
 using Assets.Scripts.Utility;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -45,8 +44,8 @@ public class ReactUIController : MonoBehaviour {
     private TextMeshProUGUI counterDmgText;
 
 
-    private LivingObject attacker;
-    private LivingObject defender;
+    private Unit attacker;
+    private Unit defender;
 
     private float currentAllyHPValue;
     private float currentEnemyHPValue;
@@ -56,14 +55,7 @@ public class ReactUIController : MonoBehaviour {
     private float allyLoseFillAmount = 1;
     private float enemyLoseFillAmount = 1;
     private float enemyFillAmount = 1;
-
-
-    // Use this for initialization
-    void Start () {
-		
-	}
 	
-	// Update is called once per frame
 	void Update () {
         allyFillAmount = Mathf.Lerp(allyFillAmount, currentAllyHPValue, Time.deltaTime * healthSpeed);
         enemyFillAmount = Mathf.Lerp(enemyFillAmount, currentEnemyHPValue, Time.deltaTime * healthSpeed);
@@ -74,11 +66,12 @@ public class ReactUIController : MonoBehaviour {
         defenderLosingHPBar.fillAmount = allyLoseFillAmount;
         attackerLosingHPBar.fillAmount = enemyLoseFillAmount;
     }
+
     private void OnEnable()
     {
         HPValueChanged();
-        EventContainer.hpValueChanged += HPValueChanged;
-        EventContainer.reactUIVisible(true);
+        Unit.onHpValueChanged += HPValueChanged;
+        UISystem.onReactUIVisible(true);
         attackerImage.sprite = attacker.Sprite;
         defenderImage.sprite = defender.Sprite;
         UpdateDmg();
@@ -92,40 +85,37 @@ public class ReactUIController : MonoBehaviour {
     private void UpdateDmg()
     {
         attackerDmg.text = ""+defender.BattleStats.GetReceivedDamage(attacker.BattleStats.GetDamage())+ " incoming damage";
-        
     }
 
     private void OnDisable()
     {
-        EventContainer.hpValueChanged -= HPValueChanged;
-        EventContainer.reactUIVisible(false);
+        Unit.onHpValueChanged -= HPValueChanged;
+        UISystem.onReactUIVisible(false);
     }
 
     public void ShowCounterMissText()
     {
-        MainScript.GetInstance().GetSystem<PopUpTextSystem>().CreateAttackPopUpTextGreen("Missed", attackerImage.transform);
+        MainScript.instance.GetSystem<PopUpTextSystem>().CreateAttackPopUpTextGreen("Missed", attackerImage.transform);
     }
     public void ShowCounterDamageText(int damage)
     {
-        MainScript.GetInstance().GetSystem<PopUpTextSystem>().CreateAttackPopUpTextRed("" + damage, attackerImage.transform);
+        MainScript.instance.GetSystem<PopUpTextSystem>().CreateAttackPopUpTextRed("" + damage, attackerImage.transform);
     }
     public void ShowMissText()
     {
-        //activeTarget.ShowMissedText();
-        //FindObjectOfType<PopUpTextController>().CreateAttackPopUpTextGreen("Missed", activeTargetPoint.transform);
-        MainScript.GetInstance().GetSystem<PopUpTextSystem>().CreateAttackPopUpTextGreen("Missed", targetPointParent.transform);
+        MainScript.instance.GetSystem<PopUpTextSystem>().CreateAttackPopUpTextGreen("Missed", targetPointParent.transform);
     }
     public void ShowDamageText(int damage, bool magic = false)
     {
         if (magic)
-            MainScript.GetInstance().GetSystem<PopUpTextSystem>().CreateAttackPopUpTextBlue("" + damage, targetPointParent.transform);
+            MainScript.instance.GetSystem<PopUpTextSystem>().CreateAttackPopUpTextBlue("" + damage, targetPointParent.transform);
         else
-            MainScript.GetInstance().GetSystem<PopUpTextSystem>().CreateAttackPopUpTextRed("" + damage, targetPointParent.transform);
-        //activeTarget.ShowDamageText(damage);
+            MainScript.instance.GetSystem<PopUpTextSystem>().CreateAttackPopUpTextRed("" + damage, targetPointParent.transform);
+
 
     }
 
-    public void Show(LivingObject attacker, LivingObject defender)
+    public void Show(Unit attacker, Unit defender)
     {
         this.attacker = attacker;
         this.defender = defender;
@@ -150,37 +140,20 @@ public class ReactUIController : MonoBehaviour {
 
     public void DodgeConfirmed()
     {
-        EventContainer.dodgeClicked();
-        EventContainer.startAttack();
+        UISystem.onDodgeClicked();
+        FightState.onStartAttack();
     }
     public void GuardConfirmed()
     {
-        EventContainer.guardClicked();
-        EventContainer.startAttack();
+        UISystem.onGuardClicked();
+        FightState.onStartAttack();
     }
     public void CounterConfirmed()
     {
-        EventContainer.counterClicked();
-        EventContainer.startAttack();
+        UISystem.onCounterClicked();
+        FightState.onStartAttack();
     }
 
-
-
-    public void DodgeClicked()
-    {
-
-       
-       
-    }
-    public void GuardClicked()
-    {
-
-       
-    }
-    public void CounterClicked()
-    {
-        
-    }
     
     #region COROUTINES
     IEnumerator DelayedAllyHP()

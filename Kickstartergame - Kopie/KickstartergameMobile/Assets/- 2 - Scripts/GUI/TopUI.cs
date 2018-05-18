@@ -32,7 +32,7 @@ public class TopUI : MonoBehaviour {
 	void Update () {
 		
 	}
-    public void Show(LivingObject c)
+    public void Show(Unit c)
     {
         gameObject.SetActive(true);
         hp.text = c.Stats.HP + " / " + c.Stats.MaxHP;

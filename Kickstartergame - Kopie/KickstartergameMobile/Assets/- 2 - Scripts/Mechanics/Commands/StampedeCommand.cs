@@ -1,11 +1,8 @@
 ﻿using Assets.Scripts.Characters;
-using Assets.Scripts.Events;
 using Assets.Scripts.GameStates;
 using Assets.Scripts.Grid;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace Assets.Scripts.Commands
@@ -13,8 +10,8 @@ namespace Assets.Scripts.Commands
     class StampedeCommand : Command
     {
         List<BigTile> bigTiles;
-        LivingObject unit;
-        public StampedeCommand(LivingObject unit, List<BigTile> bigTiles)
+        Unit unit;
+        public StampedeCommand(Unit unit, List<BigTile> bigTiles)
         {
             this.bigTiles = bigTiles;
             this.unit = unit;
@@ -30,15 +27,15 @@ namespace Assets.Scripts.Commands
                 endPosition = bigTiles[index];
                 index -= 1;
             }
-            while (!MainScript.GetInstance().GetSystem<GridSystem>().GridLogic.IsBigTileAccessible(endPosition, unit) && index >= 0);
+            while (!MainScript.instance.GetSystem<GridSystem>().GridLogic.IsBigTileAccessible(endPosition, unit) && index >= 0);
             Debug.Log("EndPosition: " + endPosition);
-            if (MainScript.GetInstance().GetSystem<GridSystem>().GridLogic.IsBigTileAccessible(endPosition, unit))
+            if (MainScript.instance.GetSystem<GridSystem>().GridLogic.IsBigTileAccessible(endPosition, unit))
             {
                 new MoveCharacterCommand(unit, (int)endPosition.BottomLeft().x, (int)endPosition.BottomLeft().y).Execute();
             }
             else
             {
-                EventContainer.commandFinished();
+                UnitActionSystem.onCommandFinished();
             }
                 
         }

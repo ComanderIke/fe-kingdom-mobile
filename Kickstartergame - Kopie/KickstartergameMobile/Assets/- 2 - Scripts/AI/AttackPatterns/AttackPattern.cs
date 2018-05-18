@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Commands;
+﻿using Assets.Scripts.Characters;
+using Assets.Scripts.Commands;
 using Assets.Scripts.Injuries;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,10 @@ namespace Assets.Scripts.AI.AttackPatterns
     }
     public abstract class AttackPattern : Command
     {
+
+        public delegate void OnAttackPatternUsed(Unit user, AttackPattern pattern);
+        public static OnAttackPatternUsed onAttackPatternUsed;
+
         public String Name { get; protected set; }
         public int Damage { get; protected set; }
         public int Hit { get; protected set; }

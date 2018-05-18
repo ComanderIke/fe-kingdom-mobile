@@ -11,12 +11,12 @@ namespace Assets.Scripts.Characters.Skills
         public SingleTargetSkill()
         {
         }
-        public virtual void Activate(LivingObject user, LivingObject target)
+        public virtual void Activate(Unit user, Unit target)
         {
             inAnimation = true;
             skillTime = 0;
         }
-        public virtual void Effect(LivingObject user, LivingObject target)
+        public virtual void Effect(Unit user, Unit target)
         {
 
         }

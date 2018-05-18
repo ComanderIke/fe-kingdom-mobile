@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Items;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,11 @@ namespace Assets.Scripts.Characters
         public void AddItem(Item i)
         {
             items.Add(i);
+            if(i is Weapon)
+            {
+                if(owner.EquipedWeapon==null)
+                    ((Weapon)i).Equip(owner);
+            }
         }
 
         public void DropItem(Item i)

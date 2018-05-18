@@ -34,13 +34,23 @@ namespace Assets.Scripts.Items
         public override void Use(Human character)
         {
             base.Use(character);
+            //character.Stats.AttackRanges.Clear();
+            //character.EquipedWeapon = this;
+            //foreach(int r in AttackRanges){
+            //    character.Stats.AttackRanges.Add(r);
+            //}
+        }
+        public void Equip(Human character)
+        {
+            base.Use(character);
             character.Stats.AttackRanges.Clear();
             character.EquipedWeapon = this;
-            foreach(int r in AttackRanges){
+            foreach (int r in AttackRanges)
+            {
                 character.Stats.AttackRanges.Add(r);
             }
         }
-        public void OnAttack(LivingObject attacker, LivingObject defender)
+        public void OnAttack(Unit attacker, Unit defender)
         {
             foreach(WeaponMixin mixin in weaponMixins)
             {

@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Characters;
-using Assets.Scripts.Events;
 using Assets.Scripts.Grid.PathFinding;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,19 +12,19 @@ namespace Assets.Scripts.GameStates
         public int pathCounter = 1;
         public MovementPath path;
         private MainScript mainScript;
-        private LivingObject character;
+        private Unit character;
         List<Vector2> mousePath;
         bool active;
 
-        public MovementState(LivingObject c, int x, int y)
+        public MovementState(Unit c, int x, int y)
         {
             this.x = x;
             this.y = y;
-            mainScript = MainScript.GetInstance();
+            mainScript = MainScript.instance;
             character = c;
             
         }
-        public MovementState( LivingObject c,int x,int y, List<Vector2> path):this(c, x, y)
+        public MovementState( Unit c,int x,int y, List<Vector2> path):this(c, x, y)
         {
             mousePath = path;
             
@@ -33,13 +32,12 @@ namespace Assets.Scripts.GameStates
         void FinishMovement()
         {
 
-            if (MainScript.endOfMoveCharacterEvent != null)
-                MainScript.endOfMoveCharacterEvent();
+
             character.UnitTurnState.HasMoved = true;
             if (character.Player.IsHumanPlayer)
                 mainScript.GetSystem<UnitActionSystem>().ActiveCharWait();
             //mainScript.SwitchState(new GameplayState());//TODO AISTATE
-            EventContainer.commandFinished();
+            UnitActionSystem.onCommandFinished();
         }
         public override void Enter()
         {
@@ -49,7 +47,7 @@ namespace Assets.Scripts.GameStates
                 return;
             }
             active = true;
-            EventContainer.startMovingUnit();
+            UnitActionSystem.onStartMovingUnit();
             if (mousePath == null)
             {
                 if (character.GridPosition.x == x && character.GridPosition.y== y)
@@ -79,7 +77,7 @@ namespace Assets.Scripts.GameStates
 
         public override void Exit()
         {
-            EventContainer.stopMovingUnit();
+            UnitActionSystem.onStopMovingUnit();
 
         }
 

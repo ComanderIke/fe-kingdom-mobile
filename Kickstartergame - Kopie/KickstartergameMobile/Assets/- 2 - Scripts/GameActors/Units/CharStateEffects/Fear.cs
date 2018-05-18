@@ -14,7 +14,7 @@ namespace Assets.Scripts.Characters.CharStateEffects
         {
 
         }
-        public override bool TakeEffect(LivingObject c)
+        public override bool TakeEffect(Unit c)
         {
             Debug.Log("Take Effect " + c.Name);
             originmove = c.Stats.MoveRange;
@@ -22,7 +22,7 @@ namespace Assets.Scripts.Characters.CharStateEffects
             return base.TakeEffect(c);
 
         }
-        public override void Remove(LivingObject c)
+        public override void Remove(Unit c)
         {
             c.Stats.MoveRange = originmove;
             base.TakeEffect(c);

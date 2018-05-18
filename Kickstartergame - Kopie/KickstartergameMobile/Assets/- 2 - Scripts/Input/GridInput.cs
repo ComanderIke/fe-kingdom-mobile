@@ -1,11 +1,6 @@
 ﻿using Assets.Scripts.Characters;
-using Assets.Scripts.Events;
 using Assets.Scripts.GameStates;
 using Assets.Scripts.Grid;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace Assets.Scripts.Input
@@ -18,13 +13,13 @@ namespace Assets.Scripts.Input
         public GridInput()
         {
             clickedField = new Vector2(-1, -1);
-            EventContainer.clickedOnGrid += ClickedOnGrid;
+            InputSystem.onClickedGrid += ClickedOnGrid;
         }
 
         public BigTile GetClickedBigTile(int centerX, int centerY, int x, int y)
         {
-            MainScript mainScript = MainScript.GetInstance();
-            LivingObject selectedCharacter = mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter;
+            MainScript mainScript = MainScript.instance;
+            Unit selectedCharacter = mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter;
             GridLogic gridLogic = mainScript.GetSystem<GridSystem>().GridLogic;
             BigTile clickedBigTile = new BigTile(new Vector2(centerX, centerY), new Vector2(centerX + 1, centerY), new Vector2(centerX, centerY + 1), new Vector2(centerX + 1, centerY + 1));
 
@@ -66,14 +61,14 @@ namespace Assets.Scripts.Input
         }
         private void ClickedOnGrid(int x, int y, Vector2 clickedPos)
         {
-            MainScript mainScript = MainScript.GetInstance();
-            LivingObject selectedCharacter = mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter;
+            MainScript mainScript = MainScript.instance;
+            Unit selectedCharacter = mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter;
             if (selectedCharacter != null)
             {
                 if (confirmClick && clickedField == new Vector2(x, y))
                 {
                     selectedCharacter.ResetPosition();
-                    EventContainer.clickedOnField(x, y);
+                    InputSystem.onClickedField(x, y);
                 }
                 else
                 {
@@ -86,12 +81,11 @@ namespace Assets.Scripts.Input
                         {
                             Vector2 centerPos = GetCenterPos(clickedPos);
                             BigTile clickedBigTile = GetClickedBigTile((int)centerPos.x, (int)centerPos.y, x, y);
-                            EventContainer.monsterClickedOnActiveBigTile(selectedCharacter, clickedBigTile);
+                            InputSystem.onClickedMovableBigTile(selectedCharacter, clickedBigTile);
                         }
                         else
                         {
-                            EventContainer.unitClickedOnActiveTile(selectedCharacter, x, y);
-                            Debug.Log("OnACiveTileClicked!");
+                            InputSystem.onClickedMovableTile(selectedCharacter, x, y);
                             selectedCharacter.GameTransform.SetPosition(x, y);
                             selectedCharacter.GameTransform.DisableCollider();
                         }
@@ -101,7 +95,7 @@ namespace Assets.Scripts.Input
                 }
             }
             else
-                EventContainer.clickedOnField(x, y);
+                InputSystem.onClickedField(x, y);
         }
     }
 }

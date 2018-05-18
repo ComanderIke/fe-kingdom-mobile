@@ -11,18 +11,18 @@ namespace Assets.Scripts.Characters
         const float FRONTAL_ATTACK_MOD = 1.5f;
         const int SURPRISE_BONUS_HIT = 20;
 
-        private LivingObject owner;
+        private Unit owner;
         public float FrontalAttackModifier { get; set; }
         public int SurpriseAttackBonusHit { get; set; }
 
-        public BattleStats(LivingObject owner)
+        public BattleStats(Unit owner)
         {
             this.owner = owner;
             FrontalAttackModifier = FRONTAL_ATTACK_MOD;
             SurpriseAttackBonusHit = SURPRISE_BONUS_HIT;
         }
 
-        public bool CanKillTarget(LivingObject target, float attackMultiplier)
+        public bool CanKillTarget(Unit target, float attackMultiplier)
         {
             return GetDamageAgainstTarget(target, attackMultiplier) >= target.Stats.HP;
         }
@@ -38,7 +38,7 @@ namespace Assets.Scripts.Characters
             }
             return weaponCrit;
         }
-        public int GetAttackCountAgainst(LivingObject c)
+        public int GetAttackCountAgainst(Unit c)
         {
             int attackCount = 1;
             if(owner.Stats.Speed - (c.Stats.Speed) > 0)
@@ -51,7 +51,7 @@ namespace Assets.Scripts.Characters
             }
             return attackCount;
         }
-        public bool CanDoubleAttack(LivingObject c)
+        public bool CanDoubleAttack(Unit c)
         {
             if (owner.Stats.Speed > c.Stats.Speed + AGILITY_TO_DOUBLE)
             {
@@ -72,7 +72,7 @@ namespace Assets.Scripts.Characters
             return BASIC_HIT_CHANCE + owner.Stats.Accuracy + hit;
         }
 
-        public int GetHitAgainstTarget(LivingObject target)
+        public int GetHitAgainstTarget(Unit target)
         {
             return (int)Mathf.Clamp((GetHitRate() - target.Stats.Speed), 0, 100);
         }
@@ -103,11 +103,11 @@ namespace Assets.Scripts.Characters
             return (int)Mathf.Clamp(attack, 0, Mathf.Infinity);
         }
 
-        public int GetDamageAgainstTarget(LivingObject target, float atkMultiplier=1.0f)
+        public int GetDamageAgainstTarget(Unit target, float atkMultiplier=1.0f)
         {
             return (int)(Mathf.Clamp(GetDamage(atkMultiplier) - target.Stats.Defense, 1, Mathf.Infinity));
         }
-        public int GetDamageAgainstTarget(LivingObject target,List<float>atkMultiplier)
+        public int GetDamageAgainstTarget(Unit target,List<float>atkMultiplier)
         {
             return (int)(Mathf.Clamp(GetDamage(atkMultiplier) - target.Stats.Defense, 1, Mathf.Infinity));
         }
@@ -118,7 +118,7 @@ namespace Assets.Scripts.Characters
             else
                 return (int)Mathf.Clamp(damage - owner.Stats.Defense, 1, Mathf.Infinity);
         }
-        public int GetTotalDamageAgainstTarget(LivingObject target)
+        public int GetTotalDamageAgainstTarget(Unit target)
         {
             int attacks = 1;
             float multiplier = 1.0f;
@@ -127,7 +127,7 @@ namespace Assets.Scripts.Characters
             return (int)(multiplier * attacks * Mathf.Clamp(GetDamage() - target.Stats.Defense, 0, Mathf.Infinity));
         }
 
-        public bool IsFrontalAttack(LivingObject target)
+        public bool IsFrontalAttack(Unit target)
         {
             int deltaX = owner.GridPosition.x - target.GridPosition.x;
             int deltaY = owner.GridPosition.y - target.GridPosition.y;
@@ -141,7 +141,7 @@ namespace Assets.Scripts.Characters
             }
             return false;
         }
-        public bool IsBackSideAttack(LivingObject target)
+        public bool IsBackSideAttack(Unit target)
         {
             int deltaX = owner.GridPosition.x - target.GridPosition.x;
             int deltaY = owner.GridPosition.y - target.GridPosition.y;
@@ -156,7 +156,7 @@ namespace Assets.Scripts.Characters
             return false;
         }
 
-        public AttackData CreateAttackData(LivingObject target,DefenseType defenseType, AttackType attackType, List<float>attackMultipliers, List<AttackAttributes> attackAttributes)
+        public AttackData CreateAttackData(Unit target,DefenseType defenseType, AttackType attackType, List<float>attackMultipliers, List<AttackAttributes> attackAttributes)
         {
             float attackMultiplier = 1.0f;
             attackMultipliers.Add(attackType.DamageMultiplier);

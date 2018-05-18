@@ -1,31 +1,28 @@
 ﻿using Assets.Scripts.Characters;
 using Assets.Scripts.Engine;
-using Assets.Scripts.Events;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace Assets.Scripts.GameStates
 {
-    public class UnitSelectionSystem : EngineSystem
+    public class UnitSelectionSystem : MonoBehaviour, EngineSystem
     {
         MainScript mainScript;
-        public LivingObject SelectedCharacter { get; set; }
+        public Unit SelectedCharacter { get; set; }
 
 
-        public UnitSelectionSystem()
+        void Start()
         {
-            mainScript = MainScript.GetInstance();
-            EventContainer.unitClickedConfirmed += UnitClicked;
-            EventContainer.endDragOverNothing += DeselectActiveCharacter;
+            mainScript = MainScript.instance;
+            InputSystem.onUnitClickedConfirmed += UnitClicked;
+            InputSystem.onEndDragOverNothing += DeselectActiveCharacter;
             mainScript.GetSystem<UISystem>().onDeselectClicked.AddListener(DeselectActiveCharacter);
             //EventContainer.deselectButtonClicked += DeselectActiveCharacter;
         }
-        void SameCharacterSelected(LivingObject c)
+       
+        void SameCharacterSelected(Unit c)
         {
-            mainScript.oldPosition = new Vector2(SelectedCharacter.GameTransform.GameObject.transform.localPosition.x, SelectedCharacter.GameTransform.GameObject.transform.localPosition.y);
+            
             DeselectActiveCharacter();
          }
         public void DeselectActiveCharacter()
@@ -34,16 +31,15 @@ namespace Assets.Scripts.GameStates
                 SelectedCharacter.ResetPosition();
             if (SelectedCharacter != null)
                 SelectedCharacter.UnitTurnState.Selected = false;
-            EventContainer.deselectActiveCharacter();
+            UnitActionSystem.onDeselectCharacter();
             mainScript.GetSystem<UISystem>().HideAttackableField();
             SelectedCharacter = null;
             
             mainScript.GetSystem<GridSystem>().HideMovement();
-            Debug.Log("Hello");
             mainScript.GetSystem<UISystem>().ShowAllActiveUnitEffects();
 
         }
-        void SelectCharacter(LivingObject c)
+        void SelectCharacter(Unit c)
         {
             if (SelectedCharacter != null)
             {
@@ -67,11 +63,11 @@ namespace Assets.Scripts.GameStates
             }
             mainScript.GetSystem<UISystem>().HideAllActiveUnitEffects();
             if (!SelectedCharacter.UnitTurnState.HasMoved)
-                EventContainer.unitShowActiveEffect(SelectedCharacter, true, false);
-            EventContainer.selectedActiveCharacter();
+                Unit.onUnitShowActiveEffect(SelectedCharacter, true, false);
+            UnitActionSystem.onSelectedCharacter();
         }
 
-        void EnemySelected(LivingObject c)
+        void EnemySelected(Unit c)
         {
             Debug.Log("enemy selected " + c.Name);
             GridSystem gridScript = mainScript.GetSystem<GridSystem>();
@@ -91,14 +87,13 @@ namespace Assets.Scripts.GameStates
             }
         }
 
-        public void UnitClicked(LivingObject c, bool confirm)//TODO will be called by CHaracterClicked
+        public void UnitClicked(Unit c, bool confirm)//TODO will be called by CHaracterClicked
         {
             if (SelectedCharacter != null && SelectedCharacter.GameTransform.GameObject != null && c != SelectedCharacter)
             {
 
                 if (c.Player.ID != SelectedCharacter.Player.ID)//Clicked On Enemy
                 {
-                    Debug.Log("AttackTargetsCount: "+mainScript.GetSystem<GridSystem>().GridLogic.GetAttackTargetsAtGameObjectPosition(SelectedCharacter).Count);
                     if (confirm|| mainScript.GetSystem<GridSystem>().GridLogic.GetAttackTargetsAtGameObjectPosition(SelectedCharacter).Contains(c))
                     {
                         SelectedCharacter.ResetPosition();
@@ -106,7 +101,7 @@ namespace Assets.Scripts.GameStates
                     }
                     else
                     {
-                        EventContainer.enemyClicked(c);
+                        InputSystem.onEnemyClicked(c);
                         
                     }
                     return;

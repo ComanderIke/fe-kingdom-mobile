@@ -24,7 +24,7 @@ public class SpeechBubbleSystem : MonoBehaviour, EngineSystem {
 	void Update () {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            ShowSpeechBubble(MainScript.GetInstance().GetSystem<TurnSystem>().ActivePlayer.Units[(int)Random.Range(0,4)], "This is a test!");
+            ShowSpeechBubble(MainScript.instance.GetSystem<TurnSystem>().ActivePlayer.Units[(int)Random.Range(0,4)], "This is a test!");
         }
         if (timer == 0)
         {
@@ -43,6 +43,7 @@ public class SpeechBubbleSystem : MonoBehaviour, EngineSystem {
         }
 
     }
+ 
     public void ShowSpeechBubble(SpeakableObject speakableObject, string text)
     {
         SpeechBubbleData speechBubbleData = new SpeechBubbleData();

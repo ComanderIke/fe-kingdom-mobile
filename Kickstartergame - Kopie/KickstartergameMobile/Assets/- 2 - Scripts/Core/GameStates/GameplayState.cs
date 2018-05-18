@@ -15,7 +15,7 @@ namespace Assets.Scripts.GameStates
         bool active;
         public GameplayState()
         {
-            mainScript = MainScript.GetInstance();
+            mainScript = MainScript.instance;
             
         }
 

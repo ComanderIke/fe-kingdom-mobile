@@ -1,24 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Assets.Scripts.Injuries;
 using UnityEngine;
-using Assets.Scripts.Grid;
 using Assets.Scripts.Characters;
-using Assets.Scripts.Commands;
-using Assets.Scripts.GameStates;
-using Assets.Scripts.Events;
-using System.Collections;
-using Assets.Scripts.Characters.CharStateEffects;
 
 namespace Assets.Scripts.AI.AttackPatterns
 {
     public class Flee : AttackPattern
     {
-        LivingObject unit;
+        Unit unit;
 
-        public Flee(LivingObject unit)
+        public Flee(Unit unit)
         {
             PossibleInjuries = new List<Injury>();
             TargetPositions = new List<Vector2>();
@@ -49,8 +41,8 @@ namespace Assets.Scripts.AI.AttackPatterns
         public override void Execute()
         {
             Debug.Log("Execute: Flee");
-            EventContainer.attackPatternUsed(unit, this);
-            EventContainer.continuePressed += DoAction;
+            AttackPattern.onAttackPatternUsed(unit, this);
+            UISystem.onContinuePressed += DoAction;
 
         }
 

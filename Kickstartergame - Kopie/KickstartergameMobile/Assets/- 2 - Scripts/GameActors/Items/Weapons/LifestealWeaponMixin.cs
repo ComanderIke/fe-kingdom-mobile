@@ -10,7 +10,7 @@ namespace Assets.Scripts.Items.Weapons
     [CreateAssetMenu(menuName = "GameData/Weapons/Mixins/LifeSteal", fileName = "Lifesteal")]
     public class LifestealWeaponMixin : WeaponMixin
     {
-        public override void OnAttack(LivingObject attacker, LivingObject defender)
+        public override void OnAttack(Unit attacker, Unit defender)
         {
             throw new NotImplementedException();
         }

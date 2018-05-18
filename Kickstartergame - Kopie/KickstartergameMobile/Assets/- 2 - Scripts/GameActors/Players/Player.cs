@@ -1,7 +1,5 @@
 ﻿using Assets.Scripts.Characters;
-using Assets.Scripts.Events;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Assets.Scripts.Players
 {
@@ -12,21 +10,21 @@ namespace Assets.Scripts.Players
         public int ID;
         public string Name;
         public bool IsHumanPlayer;
-        public List<LivingObject> Units;
+        public List<Unit> Units;
 
         public Player(int number, string name, bool isPlayerControlled)
         {
             ID = number;
             Name = name;
             IsHumanPlayer = isPlayerControlled;
-            Units = new List<LivingObject>();
+            Units = new List<Unit>();
            
         }
         public void Init()
         {
-            EventContainer.unitDied += RemoveUnit;
+            Unit.onUnitDied += RemoveUnit;
         }
-        void RemoveUnit(LivingObject unit)
+        void RemoveUnit(Unit unit)
         {
             if (Units.Contains(unit))
             {
@@ -36,7 +34,7 @@ namespace Assets.Scripts.Players
         public bool IsAlive()
         {
             bool isAlive = false;
-            foreach(LivingObject unit in Units)
+            foreach(Unit unit in Units)
             {
                 if (unit.IsAlive())
                 {
@@ -45,10 +43,10 @@ namespace Assets.Scripts.Players
             }
             return isAlive;
         }
-        public void AddUnit(LivingObject c)
+        public void AddUnit(Unit c)
         {
             if(Units==null)
-                Units = new List<LivingObject>();
+                Units = new List<Unit>();
             c.Player = this;
             c.Player.ID = ID;
             Units.Add(c);

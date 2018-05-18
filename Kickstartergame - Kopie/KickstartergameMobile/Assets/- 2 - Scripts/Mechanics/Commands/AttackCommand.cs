@@ -9,16 +9,16 @@ namespace Assets.Scripts.Commands
 {
     public class AttackCommand : Command
     {
-        LivingObject attacker;
-        LivingObject target;
-        public AttackCommand(LivingObject attacker, LivingObject target)
+        Unit attacker;
+        Unit target;
+        public AttackCommand(Unit attacker, Unit target)
         {
             this.attacker = attacker;
             this.target = target;
         }
         public override void Execute()
         {
-            MainScript.GetInstance().SwitchState(new FightState(attacker,target));
+            MainScript.instance.SwitchState(new FightState(attacker,target));
         }
 
         public override void Undo()

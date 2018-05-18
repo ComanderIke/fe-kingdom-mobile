@@ -1,12 +1,8 @@
 ﻿using Assets.Scripts.Characters;
-using Assets.Scripts.Events;
 using Assets.Scripts.GameStates;
 using Assets.Scripts.Grid.PathFinding;
-using Assets.Scripts.ScriptableObjects;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace Assets.Scripts.Grid
@@ -20,15 +16,15 @@ namespace Assets.Scripts.Grid
 
         public GridLogic(GridSystem gridManager)
         {
-            mainScript = MainScript.GetInstance();
+            mainScript = MainScript.instance;
             GridManager = gridManager;
             Tiles = gridManager.Tiles;
             grid = gridManager.grid;
-            EventContainer.clickedOnField += FieldClicked;
+            InputSystem.onClickedField += FieldClicked;
         }
         public void FieldClicked(int x, int y)
         {
-            LivingObject selectedCharacter = mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter;
+            Unit selectedCharacter = mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter;
             if (Tiles[x, y].character == null)
             {
                 if (selectedCharacter != null)
@@ -41,7 +37,7 @@ namespace Assets.Scripts.Grid
                             movePath.Add(new Vector2(GridManager.gridRessources.preferedPath.path[i].x, GridManager.gridRessources.preferedPath.path[i].y));
                         }
                         mainScript.GetSystem<UnitActionSystem>().MoveCharacter(selectedCharacter, x, y, movePath);
-                        EventContainer.allCommandsFinished += SwitchToGamePlayState;
+                        UnitActionSystem.onAllCommandsFinished += SwitchToGamePlayState;
                         Debug.Log("All Commands Setup");
                         mainScript.GetSystem<UnitActionSystem>().ExecuteActions();
                         
@@ -59,14 +55,14 @@ namespace Assets.Scripts.Grid
         private void SwitchToGamePlayState()
         {
             Debug.Log("Switch State Commands Delete");
-            EventContainer.allCommandsFinished -= SwitchToGamePlayState;
+            UnitActionSystem.onAllCommandsFinished -= SwitchToGamePlayState;
             mainScript.SwitchState(new GameplayState());
         }
-        public List<LivingObject> GetAttackTargets(LivingObject unit)
+        public List<Unit> GetAttackTargets(Unit unit)
         {
             int x = unit.GridPosition.x;
             int y = unit.GridPosition.y;
-            List<LivingObject> targets = new List<LivingObject>();
+            List<Unit> targets = new List<Unit>();
             foreach(int attackRange in unit.Stats.AttackRanges)
             {
                 for(int i = -attackRange; i <= +attackRange; i++)
@@ -77,7 +73,7 @@ namespace Assets.Scripts.Grid
                            // Debug.Log("attackTargets at "+ unit.GridPosition.GetPos()+": " +(i + x) + " " + (j + y));
                             if (IsOutOfBounds(new Vector2(x + i, y + j)))
                                 continue;
-                            LivingObject l = Tiles[i + x, j + y].character;
+                            Unit l = Tiles[i + x, j + y].character;
                             if (l != null && l.Player.ID != unit.Player.ID)
                             {
                                 
@@ -89,11 +85,11 @@ namespace Assets.Scripts.Grid
             }
             return targets;
         }
-        public List<LivingObject> GetAttackTargetsAtGameObjectPosition(LivingObject unit)
+        public List<Unit> GetAttackTargetsAtGameObjectPosition(Unit unit)
         {
             int x = (int)unit.GameTransform.GetPosition().x;
             int y = (int)unit.GameTransform.GetPosition().y;
-            List<LivingObject> targets = new List<LivingObject>();
+            List<Unit> targets = new List<Unit>();
             foreach (int attackRange in unit.Stats.AttackRanges)
             {
                 for (int i = -attackRange; i <= +attackRange; i++)
@@ -105,7 +101,7 @@ namespace Assets.Scripts.Grid
                             // Debug.Log("attackTargets at "+ unit.GridPosition.GetPos()+": " +(i + x) + " " + (j + y));
                             if (IsOutOfBounds(new Vector2(x + i, y + j)))
                                 continue;
-                            LivingObject l = Tiles[i + x, j + y].character;
+                            Unit l = Tiles[i + x, j + y].character;
                             if (l != null && l.Player.ID != unit.Player.ID)
                             {
 
@@ -119,7 +115,8 @@ namespace Assets.Scripts.Grid
         }
         public bool IsFieldAttackable(int x, int z)
         {
-            return Tiles[x, z].gameObject.GetComponent<MeshRenderer>().material == GridManager.gridRessources.cellMaterialAttack;
+            Debug.Log(x+" "+z+" "+Tiles[x, z].gameObject.GetComponent<MeshRenderer>().sharedMaterial.name + " " + GridManager.gridRessources.cellMaterialAttack.name);
+            return Tiles[x, z].gameObject.GetComponent<MeshRenderer>().sharedMaterial == GridManager.gridRessources.cellMaterialAttack;
         }
         public bool IsOutOfBounds(Vector2 pos)
         {
@@ -144,7 +141,7 @@ namespace Assets.Scripts.Grid
             return IsValidAndActive(position.BottomLeft(), team) && IsValidAndActive(position.BottomRight(), team) && IsValidAndActive(position.TopLeft(), team) && IsValidAndActive(position.TopRight(), team);
         }
 
-        public BigTile GetMoveableBigTileFromPosition(Vector2 position, int team, LivingObject character)
+        public BigTile GetMoveableBigTileFromPosition(Vector2 position, int team, Unit character)
         {
             BigTile leftTop = new BigTile(new Vector2(position.x - 1, position.y), new Vector2(position.x, position.y), new Vector2(position.x - 1, position.y + 1), new Vector2(position.x, position.y + 1));
             BigTile leftBottom = new BigTile(new Vector2(position.x - 1, position.y - 1), new Vector2(position.x, position.y - 1), new Vector2(position.x - 1, position.y), new Vector2(position.x, position.y));
@@ -160,7 +157,7 @@ namespace Assets.Scripts.Grid
                 return rightBottom;
             return null;
         }
-        public BigTile GetNearestBigTileFromEnemy(LivingObject character)
+        public BigTile GetNearestBigTileFromEnemy(Unit character)
         {
             Vector2 leftPosition = new Vector2(character.GridPosition.x - 1, character.GridPosition.y);
             Vector2 rightPosition = new Vector2(character.GridPosition.x + 1, character.GridPosition.y);
@@ -275,7 +272,7 @@ namespace Assets.Scripts.Grid
         }
         public MovementPath getPath(int x, int y, int x2, int y2, int team, bool toadjacentPos, List<int> range)
         {
-            MainScript.GetInstance().AttackRangeFromPath = 0;
+            MainScript.instance.GetSystem<InputSystem>().AttackRangeFromPath = 0;
 
             GridManager.PathFindingManager.Reset();
             
@@ -283,7 +280,7 @@ namespace Assets.Scripts.Grid
         }
         public MovementPath GetMonsterPath(Monster monster, BigTile position)
         {
-            MainScript.GetInstance().AttackRangeFromPath = 0;
+            MainScript.instance.GetSystem<InputSystem>().AttackRangeFromPath = 0;
             PathFindingNode[,] nodes = new PathFindingNode[grid.width, grid.height];
             for (int x = 0; x < grid.width; x++)
             {
@@ -322,7 +319,7 @@ namespace Assets.Scripts.Grid
         #endregion
         public MovementPath GetMonsterPath(Monster monster, BigTile position, bool adjacent, List<int> attackRanges)
         {
-            MainScript.GetInstance().AttackRangeFromPath = 0;
+            MainScript.instance.GetSystem<InputSystem>().AttackRangeFromPath = 0;
             PathFindingNode[,] nodes = new PathFindingNode[grid.width, grid.height];
             for (int x = 0; x < grid.width; x++)
             {
@@ -338,7 +335,7 @@ namespace Assets.Scripts.Grid
             MovementPath p = aStar.GetPath(((BigTilePosition)monster.GridPosition).Position, position, monster.Player.ID, adjacent, attackRanges);
             return p;
         }
-        public bool IsValidLocation(Vector2 pos, LivingObject character)
+        public bool IsValidLocation(Vector2 pos, Unit character)
         {
             bool invalid = (pos.x < 0) || (pos.y < 0) || (pos.x >= grid.width) || (pos.y >= grid.height);
 
@@ -356,7 +353,7 @@ namespace Assets.Scripts.Grid
 
             return !invalid;
         }
-        public bool IsTileAccessible(Vector2 pos, LivingObject character)
+        public bool IsTileAccessible(Vector2 pos, Unit character)
         {
             bool invalid = (pos.x < 0) || (pos.y < 0) || (pos.x >= grid.width) || (pos.y >= grid.height);
 
@@ -383,12 +380,12 @@ namespace Assets.Scripts.Grid
 
             return !invalid;
         }
-        private bool isMovableLocation(BigTile position, int team, LivingObject character)
+        private bool isMovableLocation(BigTile position, int team, Unit character)
         {
 
             return IsValidLocation(position.BottomLeft(), character) && IsValidLocation(position.BottomRight(), character) && IsValidLocation(position.TopLeft(), character) && IsValidLocation(position.TopRight(), character);
         }
-        public bool IsBigTileAccessible(BigTile position, LivingObject character)
+        public bool IsBigTileAccessible(BigTile position, Unit character)
         {
 
             return IsTileAccessible(position.BottomLeft(), character) && IsTileAccessible(position.BottomRight(), character) && IsTileAccessible(position.TopLeft(), character) && IsTileAccessible(position.TopRight(), character);

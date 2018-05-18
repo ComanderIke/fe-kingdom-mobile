@@ -13,14 +13,14 @@ namespace Assets.Scripts.AI
 
         public AI_GameData()
         {
-            gridManager=MainScript.GetInstance().GetSystem<GridSystem>();
+            gridManager=MainScript.instance.GetSystem<GridSystem>();
         }
 
-        public List<LivingObject> GetAttackTargets(LivingObject c)
+        public List<Unit> GetAttackTargets(Unit c)
         {
             int x = c.GridPosition.x;
             int z = c.GridPosition.y;
-            List<LivingObject> characters = new List<LivingObject>();
+            List<Unit> characters = new List<Unit>();
             foreach (int range in c.Stats.AttackRanges)
             {
                 GetAttackableCharacters(c, x, z, range, characters, new List<int>());
@@ -28,9 +28,9 @@ namespace Assets.Scripts.AI
             return characters;
         }
 
-        public List<LivingObject> GetAttackableTargetsAtLocation(Vector3 location, LivingObject character)
+        public List<Unit> GetAttackableTargetsAtLocation(Vector3 location, Unit character)
         {
-            List<LivingObject> attackTargets = new List<LivingObject>();
+            List<Unit> attackTargets = new List<Unit>();
             int x = (int)location.x;
             int z = (int)location.z;
             foreach (int range in character.Stats.AttackRanges)
@@ -40,16 +40,16 @@ namespace Assets.Scripts.AI
             return attackTargets;
         }
       
-        public void GetAttackableCharacters(LivingObject character, int x, int y, int range, List<LivingObject> characters, List<int> direction)
+        public void GetAttackableCharacters(Unit character, int x, int y, int range, List<Unit> characters, List<int> direction)
         {
             if (range <= 0)
             {
-                LivingObject c = gridManager.Tiles[x, y].character;
+                Unit c = gridManager.Tiles[x, y].character;
 
                 if (c != null && c.Player.ID != character.Player.ID && c.IsAlive())
                 {
                     bool contains = false;
-                    foreach (LivingObject a in characters)
+                    foreach (Unit a in characters)
                     {
                         if (a == c)
                         {

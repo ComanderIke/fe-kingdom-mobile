@@ -1,16 +1,13 @@
 ﻿using Assets.Scripts.Characters;
 using Assets.Scripts.Engine;
-using Assets.Scripts.Events;
 using Assets.Scripts.GameStates;
 using Assets.Scripts.Grid;
 using Assets.Scripts.Grid.PathFinding;
 using Assets.Scripts.Input;
 using Assets.Scripts.ScriptableObjects;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class CursorPosition
 {
@@ -24,6 +21,53 @@ public class CursorPosition
     }
 }
 public class InputSystem : MonoBehaviour, EngineSystem {
+
+
+    #region ClickEvents
+    public delegate void OnEnemyClicked(Unit unit);
+    public static OnEnemyClicked onEnemyClicked;
+
+    public delegate void OnUnitClickedConfirmed(Unit unit, bool confirm);
+    public static OnUnitClickedConfirmed onUnitClickedConfirmed;
+
+    public delegate void OnClickedGrid(int x, int y, Vector2 clickedPos);
+    public static OnClickedGrid onClickedGrid;
+
+    public delegate void OnClickedField(int x, int y);
+    public static OnClickedField onClickedField;
+
+    public delegate void OnClickedMovableTile(Unit unit, int x, int y);
+    public static OnClickedMovableTile onClickedMovableTile;
+
+    public delegate void OnClickedMovableBigTile(Unit unit, BigTile position);
+    public static OnClickedMovableBigTile onClickedMovableBigTile;
+
+    public delegate void OnUnitClicked(Unit character);
+    public static OnUnitClicked onUnitClicked;
+    #endregion
+
+    #region DragEvents
+    public delegate void OnDraggedOverUnit(Unit unit);
+    public static OnDraggedOverUnit onDraggedOverUnit;
+
+    public delegate void OnStartDrag(int gridX, int gridY);
+    public static OnStartDrag onStartDrag;
+
+    public delegate void OnUnitDragged(int x, int y, Unit character);
+    public static OnUnitDragged onUnitDragged;
+
+    public delegate void OnEndDrag();
+    public static OnEndDrag onEndDrag;
+
+    public delegate void OnEndDragOverNothing();
+    public static OnEndDragOverNothing onEndDragOverNothing;
+
+    public delegate void OnEndDragOverUnit(Unit character);
+    public static OnEndDragOverUnit onEndDragOverUnit;
+
+    public delegate void OnEndDragOverGrid(int x, int y);
+    public static OnEndDragOverGrid onEndDragOverGrid;
+    #endregion
 
     MainScript mainScript;
     [HideInInspector]
@@ -44,6 +88,8 @@ public class InputSystem : MonoBehaviour, EngineSystem {
     bool nonActive = false;
     public List<CursorPosition> lastPositions = new List<CursorPosition>();
     List<GameObject> dots = new List<GameObject>();
+    [HideInInspector]
+    public int AttackRangeFromPath;
     // Use this for initialization
     void Start () {
         currentX = -1;
@@ -51,7 +97,6 @@ public class InputSystem : MonoBehaviour, EngineSystem {
         oldX = -1;
         oldY = -1;
         mainScript = FindObjectOfType<MainScript>();
-        Debug.Log("Start" + mainScript.name);
         // hit = new RaycastHit();
         gridInput = new GridInput();
         gameWorld = GameObject.FindGameObjectWithTag("World").transform;
@@ -61,9 +106,10 @@ public class InputSystem : MonoBehaviour, EngineSystem {
         InitEvents();
         //mouseCursor = GameObject.Find("MouseCursor");
     }
-	// Update is called once per frame
-    
-	void Update () {
+  
+    // Update is called once per frame
+
+    void Update () {
         if (!active)
             return;
         //ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -82,7 +128,7 @@ public class InputSystem : MonoBehaviour, EngineSystem {
                 if (hit.collider.tag == "Grid")
                 {
                     ResetMousePath();
-                    EventContainer.clickedOnGrid(x, y, hit.point);
+                    onClickedGrid(x, y, hit.point);
                 }
             }
         }
@@ -100,20 +146,19 @@ public class InputSystem : MonoBehaviour, EngineSystem {
 
     private void InitEvents()
     {
-        EventContainer.draggedOverUnit += DraggedOver;
-        EventContainer.startDrag += StartDrag;
-        EventContainer.unitDragged += CharacterDrag;
-        EventContainer.unitClickedOnActiveTile += CalculateMousePathToPositon;
-        EventContainer.monsterClickedOnActiveBigTile += CalculateMousePathToPositon;
-        EventContainer.startMovingUnit += DeActivate;
-        EventContainer.stopMovingUnit += Activate;
-        EventContainer.unitMoveToEnemy += ResetMousePath;
-        EventContainer.endDrag += EndDrag;
-        EventContainer.deselectActiveCharacter += ResetMousePath;
-        EventContainer.unitClicked += UnitClicked;
-        EventContainer.enemyClicked += EnemyClicked;
-        EventContainer.attackUIVisible += UIActive;
-        EventContainer.reactUIVisible += UIActive;
+        onDraggedOverUnit += DraggedOver;
+        onStartDrag += StartDrag;
+        onClickedMovableTile += CalculateMousePathToPositon;
+        onClickedMovableBigTile += CalculateMousePathToPositon;
+        UnitActionSystem.onStartMovingUnit += DeActivate;
+        UnitActionSystem.onStopMovingUnit += Activate;
+        UnitActionSystem.onUnitMoveToEnemy += ResetMousePath;
+        onEndDrag += EndDrag;
+        UnitActionSystem.onDeselectCharacter += ResetMousePath;
+        onUnitClicked += UnitClicked;
+        onEnemyClicked += EnemyClicked;
+        UISystem.onAttackUIVisible += UIActive;
+        UISystem.onReactUIVisible += UIActive;
 
     }
 
@@ -137,21 +182,21 @@ public class InputSystem : MonoBehaviour, EngineSystem {
         Vector2 gridPos = raycastManager.GetMousePositionOnGrid();
         if (raycastManager.GetLatestHit().collider.gameObject.tag == "Grid")
         {
-           EventContainer.endDragOverGrid((int)gridPos.x, (int)gridPos.y);
+           onEndDragOverGrid((int)gridPos.x, (int)gridPos.y);
         }
         else if (raycastManager.GetLatestHit().collider.gameObject.GetComponent<UnitController>() != null)
         {
-            LivingObject draggedOverUnit = raycastManager.GetLatestHit().collider.gameObject.GetComponent<UnitController>().Unit;
-            EventContainer.endDragOverUnit(draggedOverUnit);
+            Unit draggedOverUnit = raycastManager.GetLatestHit().collider.gameObject.GetComponent<UnitController>().Unit;
+            onEndDragOverUnit(draggedOverUnit);
         }
         else
         {
-            EventContainer.endDragOverNothing();
+            onEndDragOverNothing();
         }
         ResetMousePath();
     }
 
-    void UnitClicked(LivingObject unit)
+    void UnitClicked(Unit unit)
     {
         Debug.Log("Unit Clicked!");
         if (!active)
@@ -160,7 +205,7 @@ public class InputSystem : MonoBehaviour, EngineSystem {
         if (gridInput.confirmClick && gridInput.clickedField == new Vector2(currentX, currentY))
         {
             Debug.Log("Unit Clicked Confirmed!");
-            EventContainer.unitClickedConfirmed(unit,true);
+            onUnitClickedConfirmed(unit,true);
         }
         else
         {
@@ -172,12 +217,12 @@ public class InputSystem : MonoBehaviour, EngineSystem {
                 gridInput.clickedField = new Vector2(currentX, currentY);
             }
            
-            EventContainer.unitClickedConfirmed(unit, false);
+            onUnitClickedConfirmed(unit, false);
         }
 
     }
 
-    public void EnemyClicked(LivingObject unit)
+    public void EnemyClicked(Unit unit)
     {
 
         Debug.Log("Enemy clicked!");
@@ -252,7 +297,7 @@ public class InputSystem : MonoBehaviour, EngineSystem {
         //FindObjectOfType<UXRessources>().movementFlag.SetActive(false);
     }
     
-    public  void DraggedOver(LivingObject character)
+    public  void DraggedOver(Unit character)
     {
         //if (unitSelectionManager.SelectedCharacter != null && unitSelectionManager.SelectedCharacter != Unit)
         //{
@@ -275,7 +320,7 @@ public class InputSystem : MonoBehaviour, EngineSystem {
         int zDiff = (int)Mathf.Abs(v.y - v2.y);
         return xDiff + zDiff;
     }
-    public  Vector2 GetLastAttackPosition(LivingObject c, int xAttack, int zAttack)
+    public  Vector2 GetLastAttackPosition(Unit c, int xAttack, int zAttack)
     {
         for (int i = c.Stats.AttackRanges.Count - 1; i >= 0; i--)//Priotize Range Attacks
         {
@@ -290,7 +335,7 @@ public class InputSystem : MonoBehaviour, EngineSystem {
         }
         return new Vector2(-1,-1);
     }
-    public  void CalculateMousePathToPositon(LivingObject character, int x, int y)
+    public  void CalculateMousePathToPositon(Unit character, int x, int y)
     {
         ResetMousePath();
         MovementPath p = mainScript.GetSystem<GridSystem>().GridLogic.getPath(character.GridPosition.x, character.GridPosition.y, x, y, character.Player.ID, false, character.Stats.AttackRanges);
@@ -303,23 +348,19 @@ public class InputSystem : MonoBehaviour, EngineSystem {
         }
         DrawMousePath();
     }
-    public  void CalculateMousePathToEnemy(LivingObject character, Vector2 position)
+    public  void CalculateMousePathToEnemy(Unit character, Vector2 position)
     {
         ResetMousePath();
         MovementPath p = mainScript.GetSystem<GridSystem>().GridLogic.getPath(character.GridPosition.x, character.GridPosition.y, (int)position.x, (int)position.y, character.Player.ID, true, character.Stats.AttackRanges);
-        //for (int i = 0; i < p.getLength(); i++)
-        //{
-        //    Debug.Log(p.getStep(i));
-        //}
         if (p != null)
         {
-            for (int i = p.getLength() - 2; i >= mainScript.AttackRangeFromPath; i--)
+            for (int i = p.getLength() - 2; i >= AttackRangeFromPath; i--)
             {
                 mousePath.Add(new Vector2(p.getStep(i).getX(), p.getStep(i).getY()));
             }
         }
     }
-    public  void CalculateMousePathToÉnemy(LivingObject character, BigTile position)
+    public  void CalculateMousePathToÉnemy(Unit character, BigTile position)
     {
         ResetMousePath();
         Debug.Log("FUCKTESTfrom" + character.GridPosition.x + " " + character.GridPosition.y + " to " + position + " Player.number " + character.Player.ID + " " + character.Stats.AttackRanges[0]);
@@ -331,13 +372,13 @@ public class InputSystem : MonoBehaviour, EngineSystem {
             {
                 Debug.Log(p.getStep(i));
             }
-            for (int i = p.getLength() - 2; i >= mainScript.AttackRangeFromPath; i--)
+            for (int i = p.getLength() - 2; i >= AttackRangeFromPath; i--)
             {
                 mousePath.Add(new Vector2(p.getStep(i).getX(), p.getStep(i).getY()));
             }
         }
     }
-    public  void CalculateMousePathToPositon(LivingObject character, BigTile position)
+    public  void CalculateMousePathToPositon(Unit character, BigTile position)
     {
         ResetMousePath();
         MovementPath p = mainScript.GetSystem<GridSystem>().GridLogic.GetMonsterPath((Monster)character, position);
@@ -359,7 +400,7 @@ public class InputSystem : MonoBehaviour, EngineSystem {
         DrawMousePath();
 
     }
-    public  void CharacterDrag(int x, int y, LivingObject character)
+    public  void CharacterDrag(int x, int y, Unit character)
     {
         
         if (!active)
@@ -420,7 +461,7 @@ public class InputSystem : MonoBehaviour, EngineSystem {
         
     }
     //TODO not used because no playable BigCharacters yet
-    private void BigCharacterDraggedOnEnemy(LivingObject selectedCharacter, int x, int y, LivingObject enemy)
+    private void BigCharacterDraggedOnEnemy(Unit selectedCharacter, int x, int y, Unit enemy)
     {
         
         //raycastManager.GetMousePositionOnGrid();
@@ -433,12 +474,12 @@ public class InputSystem : MonoBehaviour, EngineSystem {
         //DrawMousePath();
         //mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter, enemy);
     }
-    private void CalculateMousePathToAttackField(LivingObject selectedCharacter, int x, int y)
+    private void CalculateMousePathToAttackField(Unit selectedCharacter, int x, int y)
     {
        
         List<Vector2> moveLocations = new List<Vector2>();
         
-        MainScript.GetInstance().GetSystem<GridSystem>().GridLogic.GetMoveLocations(selectedCharacter.GridPosition.x,selectedCharacter.GridPosition.y, moveLocations, selectedCharacter.Stats.MoveRange,0,selectedCharacter.Player.ID);
+        MainScript.instance.GetSystem<GridSystem>().GridLogic.GetMoveLocations(selectedCharacter.GridPosition.x,selectedCharacter.GridPosition.y, moveLocations, selectedCharacter.Stats.MoveRange,0,selectedCharacter.Player.ID);
         moveLocations.Insert(0,new Vector2(selectedCharacter.GridPosition.x, selectedCharacter.GridPosition.y));
         foreach (Vector2 loc in moveLocations)
         {
@@ -464,10 +505,10 @@ public class InputSystem : MonoBehaviour, EngineSystem {
         }
         Debug.Log("No AttackPosition Found!");
     }
-    public void DraggedOnEnemy(int x, int y, Tile field,LivingObject enemy)
+    public void DraggedOnEnemy(int x, int y, Tile field,Unit enemy)
     {
         
-        LivingObject selectedCharacter = mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter;
+        Unit selectedCharacter = mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter;
         Debug.Log("draggedOnEnemy");
         if (selectedCharacter.GridPosition is BigTilePosition)
         {
@@ -548,7 +589,7 @@ public class InputSystem : MonoBehaviour, EngineSystem {
         }
         
     }
-    private void DraggedOnAttackableField(LivingObject selectedCharacter, int x, int y, Tile field,LivingObject enemy)
+    private void DraggedOnAttackableField(Unit selectedCharacter, int x, int y, Tile field,Unit enemy)
     {
         throw new System.Exception("FUCK");
         //bool reset = true;
@@ -584,7 +625,7 @@ public class InputSystem : MonoBehaviour, EngineSystem {
         //}
         //mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter, enemy);
     }
-    private void DrawCrossHair(LivingObject character)
+    private void DrawCrossHair(Unit character)
     {
         /*
         crosshair = GameObject.Instantiate(ressources.rangeAttackGO, gameWorld);
@@ -601,13 +642,13 @@ public class InputSystem : MonoBehaviour, EngineSystem {
         crosshair.GetComponent<SpriteRenderer>().sprite = ressources.rangeAttackSprite;*/
     }
 
-    public void DraggedOnActiveField(int x, int y, LivingObject character)
+    public void DraggedOnActiveField(int x, int y, Unit character)
     {
         if (nonActive)
         {
             ResetMousePath();
         }
-        LivingObject selectedCharacter = mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter;
+        Unit selectedCharacter = mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter;
         if (selectedCharacter is Monster)
         {
             raycastManager.GetMousePositionOnGrid();//just to shoot Ray
@@ -657,7 +698,7 @@ public class InputSystem : MonoBehaviour, EngineSystem {
         //Debug.Log("DrawMousePath");
         float startX = -1;
         float startY = -1;
-        LivingObject selectedCharacter = mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter;
+        Unit selectedCharacter = mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter;
         if (selectedCharacter is Monster)
         {
             startX = ((BigTilePosition)selectedCharacter.GridPosition).Position.CenterPos().x;
@@ -665,7 +706,7 @@ public class InputSystem : MonoBehaviour, EngineSystem {
         }
         else
         {
-            startX= selectedCharacter.GridPosition.x;
+            startX = selectedCharacter.GridPosition.x;
             startY = selectedCharacter.GridPosition.y;
         }
         if (moveCursor != null)
@@ -797,7 +838,7 @@ public class InputSystem : MonoBehaviour, EngineSystem {
             }
         }
     }
-    public void Finish(LivingObject character, Tile field, int x, int y)
+    public void Finish(Unit character, Tile field, int x, int y)
     {
         oldX = x;
         oldY = y;
@@ -810,6 +851,24 @@ public class InputSystem : MonoBehaviour, EngineSystem {
     private bool IsOutOfBounds(int x, int y)
     {
         return x < 0 || x >= mainScript.GetSystem<GridSystem>().grid.width || y < 0 || y >= mainScript.GetSystem<GridSystem>().grid.height;
+    }
+    void OnDestroy()
+    {
+        onEnemyClicked = null;
+        onUnitClickedConfirmed = null;
+        onClickedGrid = null;
+        onClickedField = null;
+        onClickedMovableTile = null;
+        onClickedMovableBigTile = null;
+        onUnitClicked = null;
+
+        onDraggedOverUnit = null;
+        onStartDrag = null;
+        onUnitDragged = null;
+        onEndDrag = null;
+        onEndDragOverNothing = null;
+        onEndDragOverUnit = null;
+        onEndDragOverGrid = null;
     }
 }
 

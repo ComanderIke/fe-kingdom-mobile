@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Characters
 {
-    public class Monster :LivingObject
+    public class Monster :Unit
     {
         public MonsterType Type { get; set; }
         public List<AttackReaction> Reactions { get; set; }
@@ -55,7 +55,7 @@ namespace Assets.Scripts.Characters
         public bool attentionWaked;
         public bool CanSeePosition(int x, int y)
         {
-            return MainScript.GetInstance().GetSystem<GridSystem>().PositionVisible(this, x,y);
+            return MainScript.instance.GetSystem<GridSystem>().PositionVisible(this, x,y);
 
         }
         public AttackReaction GetRandomAttackReaction()
@@ -69,7 +69,7 @@ namespace Assets.Scripts.Characters
             attentionWaked = true;
             RessourceScript rs = GameObject.FindObjectOfType<RessourceScript>();
             GameObject.Instantiate(rs.particles.enemyAttention,this.GameTransform.GameObject.transform);
-            MainScript.GetInstance().GetSystem<GridSystem>().ShowSightRange(this);
+            MainScript.instance.GetSystem<GridSystem>().ShowSightRange(this);
         }
     }
 }

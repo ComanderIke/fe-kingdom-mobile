@@ -11,7 +11,7 @@ namespace Assets.Scripts.Characters.Debuffs
         {
 
         }
-        public override void Remove(LivingObject c)
+        public override void Remove(Unit c)
         {
             c.Buffs.Remove(this);
         }

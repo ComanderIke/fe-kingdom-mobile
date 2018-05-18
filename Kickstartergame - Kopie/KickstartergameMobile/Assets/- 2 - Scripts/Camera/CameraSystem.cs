@@ -1,7 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.UI;
-using Assets.Scripts.Events;
 using Assets.Scripts.Engine;
 using System.Collections.Generic;
 using System;
@@ -22,6 +19,12 @@ public class CameraSystem : MonoBehaviour, EngineSystem {
     void Start () {
         mixins = new List<CameraMixin>();
     }
+
+    public void Init()
+    {
+
+    }
+
     public T AddMixin<T>()
     {
 

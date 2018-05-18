@@ -10,7 +10,7 @@ namespace Assets.Scripts.Items
     [CreateAssetMenu(menuName = "GameData/Items/Mixins/Healing", fileName = "Healing")]
     public class HealingItemMixin : ItemMixin
     {
-        public override void Use(LivingObject character)
+        public override void Use(Unit character)
         {
             throw new NotImplementedException();
         }

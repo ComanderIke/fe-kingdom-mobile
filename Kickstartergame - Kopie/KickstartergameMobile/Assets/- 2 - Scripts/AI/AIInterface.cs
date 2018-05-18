@@ -1,11 +1,8 @@
 ﻿
 using Assets.Scripts.Characters;
-using Assets.Scripts.Commands;
-using Assets.Scripts.Events;
 using Assets.Scripts.GameStates;
 using Assets.Scripts.Players;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scripts.AI
@@ -27,7 +24,7 @@ namespace Assets.Scripts.AI
         public AIInterface(Player p)
         {
             this.player = p;
-            mainScript = MainScript.GetInstance();
+            mainScript = MainScript.instance;
         }
 
         public void Update()
@@ -44,7 +41,7 @@ namespace Assets.Scripts.AI
                 {
 
                     mainScript.SwitchState(new GameplayState());
-                    EventContainer.endTurn();
+                    TurnSystem.onEndTurn();
                 }
             }
             else
@@ -62,10 +59,10 @@ namespace Assets.Scripts.AI
 
         public abstract void Think();
 
-        protected List<LivingObject> GetUnitsLeftToMove()
+        protected List<Unit> GetUnitsLeftToMove()
         {
-            List<LivingObject> units = new List<LivingObject>();
-            foreach (LivingObject c in player.Units)
+            List<Unit> units = new List<Unit>();
+            foreach (Unit c in player.Units)
             {
                 if (c.UnitTurnState.IsWaiting == false && c.IsAlive())
                 {
@@ -74,7 +71,7 @@ namespace Assets.Scripts.AI
             }
             return units;
         }
-        protected List<Vector2> GetMoveLocations(LivingObject c)
+        protected List<Vector2> GetMoveLocations(Unit c)
         {
             List<Vector2> locations = new List<Vector2>();
             mainScript.GetSystem<GridSystem>().HideMovement();
@@ -82,7 +79,7 @@ namespace Assets.Scripts.AI
             return locations;
         }
 
-        protected void SetCharacterPosition(LivingObject c, Vector2 pos)
+        protected void SetCharacterPosition(Unit c, Vector2 pos)
         {
             c.SetInternPosition((int)pos.x, (int)pos.y);
         }
@@ -100,7 +97,7 @@ namespace Assets.Scripts.AI
         //    return null;
         //}
 
-        protected void SubmitMove(LivingObject character, Vector2 location)
+        protected void SubmitMove(Unit character, Vector2 location)
         {
             //just adding the Command but not executing it yet
             //mainScript.GetSystem<CameraSystem>().MoveCameraTo((int)location.x, (int)location.y);

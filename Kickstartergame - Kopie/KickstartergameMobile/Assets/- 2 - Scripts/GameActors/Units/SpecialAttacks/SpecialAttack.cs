@@ -19,8 +19,8 @@ namespace Assets.Scripts.Characters.SpecialAttacks
             Cooldown = cooldown;
             SpecialAttackVisual = new SpecialAttackVisual(iconSpriteId, animationId);
         }
-        public abstract void UseSpecial(LivingObject user,int normalAttackDamage, LivingObject defender);
-        public abstract int GetSpecialDmg(LivingObject user, int normalHitRate, LivingObject defender);
-        public abstract int GetSpecialHit(LivingObject user, int normalAttackDamage, LivingObject defender);
+        public abstract void UseSpecial(Unit user,int normalAttackDamage, Unit defender);
+        public abstract int GetSpecialDmg(Unit user, int normalHitRate, Unit defender);
+        public abstract int GetSpecialHit(Unit user, int normalAttackDamage, Unit defender);
     }
 }

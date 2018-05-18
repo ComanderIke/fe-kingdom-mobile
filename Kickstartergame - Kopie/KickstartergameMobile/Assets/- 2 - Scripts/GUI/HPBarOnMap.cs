@@ -2,7 +2,6 @@
 using UnityEngine.UI;
 using System.Collections;
 using Assets.Scripts.Characters;
-using Assets.Scripts.Events;
 
 public class HPBarOnMap : MonoBehaviour {
    

@@ -27,7 +27,7 @@ namespace Assets.Scripts.Grid
 
       
 
-        public void ShowStandOnTexture(LivingObject c)
+        public void ShowStandOnTexture(Unit c)
         {
             if (c.GridPosition is BigTilePosition)
             {
@@ -50,11 +50,11 @@ namespace Assets.Scripts.Grid
                 //not using sharedMaterial here create Material instances which will cause much higher baches
                 if (m.sharedMaterial==GridManager.gridRessources.cellMaterialMovement)
                     return;
-                if (MainScript.GetInstance().GetSystem<TurnSystem>().ActivePlayer.ID == playerId)
+                if (MainScript.instance.GetSystem<TurnSystem>().ActivePlayer.ID == playerId)
                 {
                     m.material = GridManager.gridRessources.cellMaterialAttack;
                     if (Tiles[(int)pos.x, (int)pos.y].character != null&& Tiles[(int)pos.x, (int)pos.y].character.Player.ID!=playerId)
-                        MainScript.GetInstance().GetSystem<UISystem>().ShowAttackableField((int)pos.x, (int)pos.y);
+                        MainScript.instance.GetSystem<UISystem>().ShowAttackableField((int)pos.x, (int)pos.y);
                     // MainScript.GetInstance().GetController<UIController>().ShowAttackableEnemy((int)pos.x, (int)pos.y);
                 }
                 else
@@ -66,10 +66,10 @@ namespace Assets.Scripts.Grid
  
                 if (Tiles[(int)pos.x, (int)pos.y].character != null && Tiles[(int)pos.x, (int)pos.y].character.Player.ID != playerId)
                 {
-                    if (MainScript.GetInstance().GetSystem<TurnSystem>().ActivePlayer.ID == playerId)
+                    if (MainScript.instance.GetSystem<TurnSystem>().ActivePlayer.ID == playerId)
                     {
                         m.material = GridManager.gridRessources.cellMaterialAttack;
-                        MainScript.GetInstance().GetSystem<UISystem>().ShowAttackableField((int)pos.x, (int)pos.y);
+                        MainScript.instance.GetSystem<UISystem>().ShowAttackableField((int)pos.x, (int)pos.y);
                         // MainScript.GetInstance().GetController<UIController>().ShowAttackableEnemy((int)pos.x, (int)pos.y);
                     }
                     else

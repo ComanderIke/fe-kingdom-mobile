@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Assets.Scripts.Commands
 {
+
     public abstract class Command
     {
         public bool finished = false;

@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
-using Assets.Scripts.Battle;
 using Assets.Scripts.Characters;
-using Assets.Scripts.Events;
 using Assets.Scripts.AI.AttackReactions;
-using Assets.Scripts.Characters.Monsters;
 
 namespace Assets.Scripts.GameStates
 {
     class FightState : GameState
     {
+        public delegate void OnStartAttack(AttackType attackType = null);
+        public static OnStartAttack onStartAttack;
+
         private const float FIGHT_TIME = 3.8f;
         private const float ATTACK_DELAY = 0.0f;
 
-        private LivingObject attacker;
-        private LivingObject defender;
+        private Unit attacker;
+        private Unit defender;
         private UISystem uiController;
         private UnitsSystem unitController;
         private int attackCount;
@@ -28,7 +27,7 @@ namespace Assets.Scripts.GameStates
         private bool frontAttack;
         private bool surpriseAttack;
 
-        public FightState(LivingObject attacker, LivingObject defender)
+        public FightState(Unit attacker, Unit defender)
         {
             this.attacker = attacker;
             this.defender = defender;
@@ -44,8 +43,8 @@ namespace Assets.Scripts.GameStates
             }
             attackCount = attacker.BattleStats.GetAttackCountAgainst(defender);
             Debug.Log("FightState " + attacker.Name + " " + defender.Name);
-            uiController = MainScript.GetInstance().GetSystem<UISystem>();
-            unitController = MainScript.GetInstance().GetSystem<UnitsSystem>();
+            uiController = MainScript.instance.GetSystem<UISystem>();
+            unitController = MainScript.instance.GetSystem<UnitsSystem>();
         }
         
         #region GameState
@@ -55,10 +54,10 @@ namespace Assets.Scripts.GameStates
            
             ShowFightUI();
             unitController.HideUnits();
-            EventContainer.startAttack += DoAttack;
-            EventContainer.counterClicked = CounterClicked;
-            EventContainer.dodgeClicked = DodgeClicked;
-            EventContainer.guardClicked = GuardClicked;
+            onStartAttack += DoAttack;
+            UISystem.onCounterClicked = CounterClicked;
+            UISystem.onDodgeClicked = DodgeClicked;
+            UISystem.onGuardClicked = GuardClicked;
             SetUpMusic();
         }
         public override void Update()
@@ -79,8 +78,8 @@ namespace Assets.Scripts.GameStates
             {
                 defender.Die();
             }
-            EventContainer.startAttack -= DoAttack;
-            MainScript.GetInstance().GetSystem<AudioSystem>().ChangeMusic(startMusic, "BattleTheme", true);
+            onStartAttack -= DoAttack;
+            MainScript.instance.GetSystem<AudioSystem>().ChangeMusic(startMusic, "BattleTheme", true);
         }
         #endregion
 
@@ -89,7 +88,7 @@ namespace Assets.Scripts.GameStates
         {
             attackCount--;
             if (attackCount >= 0)
-                MainScript.GetInstance().StartCoroutine(Attack(attackType));
+                MainScript.instance.StartCoroutine(Attack(attackType));
         }
         private void CounterClicked()
         {
@@ -124,10 +123,10 @@ namespace Assets.Scripts.GameStates
         }
         private void SetUpMusic()
         {
-            startMusic = MainScript.GetInstance().GetSystem<AudioSystem>().GetCurrentlyPlayedMusicTracks()[0];
-            MainScript.GetInstance().GetSystem<AudioSystem>().ChangeMusic("BattleTheme", startMusic);
+            startMusic = MainScript.instance.GetSystem<AudioSystem>().GetCurrentlyPlayedMusicTracks()[0];
+            MainScript.instance.GetSystem<AudioSystem>().ChangeMusic("BattleTheme", startMusic);
         }
-        private bool DoesAttackHit(LivingObject attacker, LivingObject defender, AttackType attackType)
+        private bool DoesAttackHit(Unit attacker, Unit defender, AttackType attackType)
         {
             int hit = attacker.BattleStats.GetHitAgainstTarget(defender);
             if (defense != null)
@@ -141,14 +140,14 @@ namespace Assets.Scripts.GameStates
         }
         private void EndFight()
         {
-            MainScript.GetInstance().StartCoroutine(End());
+            MainScript.instance.StartCoroutine(End());
         }
         private void ExecuteReaction()
         {
-            EventContainer.continuePressed -= ExecuteReaction;
+            UISystem.onContinuePressed -= ExecuteReaction;
             reaction.Execute();
         }
-        private void SingleAttack(LivingObject attacker, LivingObject defender, AttackType attackType)
+        private void SingleAttack(Unit attacker, Unit defender, AttackType attackType)
         {
             if (DoesAttackHit(attacker, defender, attackType))
             {
@@ -214,11 +213,11 @@ namespace Assets.Scripts.GameStates
         IEnumerator End()
         {
             yield return new WaitForSeconds(1.0f);
-            EventContainer.commandFinished -= EndFight;
-            EventContainer.continuePressed = null;
-            MainScript.GetInstance().SwitchState(new GameplayState());
+            UnitActionSystem.onCommandFinished -= EndFight;
+            UISystem.onContinuePressed = null;
+            MainScript.instance.SwitchState(new GameplayState());
             attacker.UnitTurnState.UnitTurnFinished();
-            EventContainer.commandFinished();
+            UnitActionSystem.onCommandFinished();
         }
         IEnumerator Attack(AttackType attackType)
         {
@@ -243,8 +242,8 @@ namespace Assets.Scripts.GameStates
                 reaction = m.GetRandomAttackReaction();
                 reaction.TargetPositions.Add(attacker.GridPosition.GetPos());
                 //uiController.attackUIController.ShowAttackReaction(defender.Name, reaction.Name);
-                EventContainer.reactionFinished += EndFight;
-                EventContainer.continuePressed += ExecuteReaction;
+                UnitActionSystem.onReactionFinished += EndFight;
+                UISystem.onContinuePressed += ExecuteReaction;
 
                 yield break;
             }

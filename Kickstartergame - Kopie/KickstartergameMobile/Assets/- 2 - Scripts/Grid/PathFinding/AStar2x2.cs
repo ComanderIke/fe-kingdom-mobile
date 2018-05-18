@@ -22,7 +22,7 @@ namespace Assets.Scripts.Grid
             this.accesibilities = accesibilities;
             this.gridWidth = accesibilities.GetLength(0);
             this.gridHeight = accesibilities.GetLength(1);
-            fields= MainScript.GetInstance().GetSystem<GridSystem>().Tiles;
+            fields= MainScript.instance.GetSystem<GridSystem>().Tiles;
         }
         public MovementPath GetPath(BigTile start, BigTile end)
         {
@@ -236,10 +236,10 @@ namespace Assets.Scripts.Grid
 
                                     isAdjacent = true;
 
-                                    MainScript m = MainScript.GetInstance();
-                                    if (m.AttackRangeFromPath < r)
+                                    MainScript m = MainScript.instance;
+                                    if (m.GetSystem<InputSystem>().AttackRangeFromPath < r)
                                     {
-                                        m.AttackRangeFromPath = r;
+                                        m.GetSystem<InputSystem>().AttackRangeFromPath = r;
                                         // break;
                                     }
                                 }

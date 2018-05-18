@@ -14,13 +14,13 @@ namespace Assets.Scripts.Characters.Debuffs
         {
             this.slow = slow;
         }
-        public override bool TakeEffect(LivingObject c)
+        public override bool TakeEffect(Unit c)
         {
             c.Stats.MoveRange -= slow;
             return base.TakeEffect(c);
 
         }
-        public override void Remove(LivingObject c)
+        public override void Remove(Unit c)
         {
             base.TakeEffect(c);
         }

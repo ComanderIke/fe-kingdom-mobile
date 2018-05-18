@@ -11,6 +11,6 @@ namespace Assets.Scripts.Items.Weapons
     public abstract class WeaponMixin : ScriptableObject
     {
         public new string name;
-        public abstract void OnAttack(LivingObject attacker, LivingObject defender);
+        public abstract void OnAttack(Unit attacker, Unit defender);
     }
 }

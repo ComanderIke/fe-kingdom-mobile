@@ -8,9 +8,9 @@ namespace Assets.Scripts.Characters
 {
     public class MoveActions
     {
-        LivingObject unit;
+        Unit unit;
 
-        public MoveActions(LivingObject unit)
+        public MoveActions(Unit unit)
         {
             this.unit = unit;
         }
@@ -18,12 +18,12 @@ namespace Assets.Scripts.Characters
         public void Push(Vector2 direction)
         {
             Vector2 pos = new Vector2(unit.GridPosition.x + direction.x, (unit.GridPosition.y + direction.y));
-            if (MainScript.GetInstance().GetSystem<GridSystem>().GridLogic.IsTileAccessible(pos)){
-                if(MainScript.GetInstance().GetSystem<GridSystem>().Tiles[(int)pos.x, (int)pos.y].character != null)
+            if (MainScript.instance.GetSystem<GridSystem>().GridLogic.IsTileAccessible(pos)){
+                if(MainScript.instance.GetSystem<GridSystem>().Tiles[(int)pos.x, (int)pos.y].character != null)
                 {
-                    MainScript.GetInstance().GetSystem<GridSystem>().Tiles[(int)pos.x, (int)pos.y].character.MoveActions.Push(direction);
+                    MainScript.instance.GetSystem<GridSystem>().Tiles[(int)pos.x, (int)pos.y].character.MoveActions.Push(direction);
                 }
-                if (MainScript.GetInstance().GetSystem<GridSystem>().GridLogic.IsTileAccessible(pos, unit))
+                if (MainScript.instance.GetSystem<GridSystem>().GridLogic.IsTileAccessible(pos, unit))
                     unit.SetPosition((int)pos.x, (int)pos.y);
             }
         }

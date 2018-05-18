@@ -1,6 +1,4 @@
 ﻿using Assets.Scripts.Characters;
-using Assets.Scripts.Events;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,11 +6,11 @@ public class BuffUI : MonoBehaviour {
 
     [SerializeField]
     GameObject buffPrefab;
-    LivingObject unit;
+    Unit unit;
     // Use this for initialization
     Dictionary<string,GameObject> buffs;
 	void Start () {
-        EventContainer.unitCanMove += UnitMoveState;
+        Unit.onUnitCanMove += UnitMoveState;
         buffs = new Dictionary<string, GameObject>();
         unit = transform.parent.parent.GetComponent<UnitController>().Unit;
     }
@@ -21,7 +19,7 @@ public class BuffUI : MonoBehaviour {
 	void Update () {
         
 	}
-    void UnitMoveState(LivingObject unit, bool canMove)
+    void UnitMoveState(Unit unit, bool canMove)
     {
         if (this.unit == unit)
         {

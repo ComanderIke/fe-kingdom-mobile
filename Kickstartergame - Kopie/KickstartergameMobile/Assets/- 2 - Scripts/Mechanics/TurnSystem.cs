@@ -1,12 +1,8 @@
 ﻿using Assets.Scripts.Characters;
 using Assets.Scripts.Engine;
-using Assets.Scripts.Events;
 using Assets.Scripts.Players;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace Assets.Scripts.GameStates
@@ -14,21 +10,17 @@ namespace Assets.Scripts.GameStates
     public class TurnSystem : MonoBehaviour, EngineSystem
     {
 
+        #region Events
+        public delegate void OnEndTurn();
+        public static OnEndTurn onEndTurn;
+        public delegate void OnStartTurn();
+        public static OnStartTurn onStartTurn;
+        #endregion
         private MainScript mainScript;
         private int activePlayerNumber;
         public int TurnCount { get; set; }
         public Player ActivePlayer { get; set; }
         public List<Player> Players { get; set; }
-
-        void Start()
-        {
-            mainScript = MainScript.GetInstance();
-            EventContainer.endTurn += EndTurn;
-            EventContainer.startTurn += StartTurn;
-
-            InitPlayers();
-        }
-       
         public int ActivePlayerNumber
         {
             get
@@ -43,7 +35,23 @@ namespace Assets.Scripts.GameStates
                     activePlayerNumber = value;
             }
         }
+        void Start()
+        {
+            mainScript = MainScript.instance;
+            onEndTurn += EndTurn;
+            onStartTurn += StartTurn;
 
+            InitPlayers();
+        }
+       
+       
+        public void Init()
+        {
+            foreach (Player p in Players)
+            {
+                p.Init();
+            }
+        }
         private void InitPlayers()
         {
             Players = new List<Player>();
@@ -55,7 +63,10 @@ namespace Assets.Scripts.GameStates
             activePlayerNumber = 0;
             ActivePlayer = Players[activePlayerNumber];
         }
-
+        public Player GetRealPlayer()
+        {
+            return Players[0];
+        }
         IEnumerator DelayTooglePlayerInput(bool active, float delay)
         {
             yield return new WaitForSeconds(delay);
@@ -86,14 +97,13 @@ namespace Assets.Scripts.GameStates
             //    }
             //    Debug.Log("Turn: " + TurnCount);
             //}
-            foreach (LivingObject c in ActivePlayer.Units)
+            foreach (Unit c in ActivePlayer.Units)
             {
                 c.UpdateTurn();
             }
         }
         private void StartTurn()
         {
-            Debug.Log("StartTurn");
             if (!ActivePlayer.IsHumanPlayer)
             {
 
@@ -118,7 +128,7 @@ namespace Assets.Scripts.GameStates
         public void EndTurn()
         {
             Debug.Log("EndTurn!");
-            foreach (LivingObject c in ActivePlayer.Units)
+            foreach (Unit c in ActivePlayer.Units)
             {
                 c.EndTurn();
                 //c.gameObject.GetComponent<CharacterScript>().SetSelected(false);
@@ -128,5 +138,12 @@ namespace Assets.Scripts.GameStates
             mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter = null;
             StartTurn();
         }
+        void OnDestroy()
+        {
+            onEndTurn = null;
+            onStartTurn = null;
+        }
+
+
     }
 }

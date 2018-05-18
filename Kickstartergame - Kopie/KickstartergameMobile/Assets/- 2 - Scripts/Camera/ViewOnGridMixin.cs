@@ -15,6 +15,7 @@ public class ViewOnGridMixin : CameraMixin
     {
         camera = Camera.main;
     }
+
     void Update()
     {
         if (currentZoom != zoom)

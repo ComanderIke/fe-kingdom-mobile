@@ -54,8 +54,8 @@ namespace Assets.Scripts.Characters.Skills
             if (CurrentCooldown != 0)
                 CurrentCooldown -= 1;
         }
-        public abstract int getDamage(LivingObject user, bool justToShow);
-        public bool CanUseSkill(LivingObject user)
+        public abstract int getDamage(Unit user, bool justToShow);
+        public bool CanUseSkill(Unit user)
         {
             if (CurrentCooldown == 0)
                 return true;

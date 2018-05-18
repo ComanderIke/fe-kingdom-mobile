@@ -1,14 +1,12 @@
 ﻿using UnityEngine;
-using Assets.Scripts.GameStates;
 using UnityEngine.EventSystems;
 using Assets.Scripts.Characters;
-using Assets.Scripts.Events;
 using Assets.Scripts.Input;
 
 public class UnitController :  MonoBehaviour, DragAble {
 
     public static bool lockInput = true;
-    public LivingObject Unit { get; set; }
+    public Unit Unit { get; set; }
     public DragManager DragManager { get; set; }
     public RaycastManager RaycastManager { get; set; }
     public SpeechBubble SpeechBubble { get; set; }
@@ -23,8 +21,8 @@ public class UnitController :  MonoBehaviour, DragAble {
         SpeechBubble = GetComponentInChildren<SpeechBubble>();
         if(SpeechBubble)
             this.SpeechBubble.gameObject.SetActive(false);
-        EventContainer.hpValueChanged += HPValueChanged;
-        EventContainer.unitWaiting+= SetWaitingSprite;
+        Unit.onHpValueChanged += HPValueChanged;
+        Unit.onUnitWaiting+= SetWaitingSprite;
         hpBar = GetComponentInChildren<HPBarOnMap>();
         HPValueChanged();
     }
@@ -41,7 +39,7 @@ public class UnitController :  MonoBehaviour, DragAble {
     }
 
     #region Renderer
-    void SetWaitingSprite(LivingObject unit, bool waiting)
+    void SetWaitingSprite(Unit unit, bool waiting)
     {
         if (unit == Unit)
         {
@@ -57,14 +55,14 @@ public class UnitController :  MonoBehaviour, DragAble {
     void OnMouseEnter(){
 		if (!EventSystem.current.IsPointerOverGameObject ()) {
 
-            EventContainer.draggedOverUnit(Unit);
+            InputSystem.onDraggedOverUnit(Unit);
         }
     }
 
     void OnMouseExit(){
         if (DragManager.IsAnyUnitDragged)
         {
-            MainScript.GetInstance().GetSystem<InputSystem>().DraggedExit();
+            MainScript.instance.GetSystem<InputSystem>().DraggedExit();
         }
     }
      
@@ -106,26 +104,26 @@ public class UnitController :  MonoBehaviour, DragAble {
     {
         
         Vector2 gridPos = RaycastManager.GetMousePositionOnGrid();
-        EventContainer.startDrag((int)gridPos.x, (int)gridPos.y);
+        InputSystem.onStartDrag((int)gridPos.x, (int)gridPos.y);
         
         if (!EventSystem.current.IsPointerOverGameObject())
         {
-            EventContainer.unitClicked(Unit);
+            InputSystem.onUnitClicked(Unit);
         }
     }
 
     public void Dragging()
     {
-        EventContainer.unitShowActiveEffect(Unit, false, true);
+        Unit.onUnitShowActiveEffect(Unit, false, true);
         GetComponent<BoxCollider>().enabled = false;
         Vector2 gridPos = RaycastManager.GetMousePositionOnGrid();
-        EventContainer.unitDragged((int)gridPos.x, (int)gridPos.y, Unit);
+        InputSystem.onUnitDragged((int)gridPos.x, (int)gridPos.y, Unit);
     }
 
     public void EndDrag()
     {
-        EventContainer.unitShowActiveEffect(Unit, true, false);
-        EventContainer.endDrag();
+        Unit.onUnitShowActiveEffect(Unit, true, false);
+        InputSystem.onEndDrag();
         //FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().enabled = false;
         gameObject.GetComponent<BoxCollider>().enabled = true;
 

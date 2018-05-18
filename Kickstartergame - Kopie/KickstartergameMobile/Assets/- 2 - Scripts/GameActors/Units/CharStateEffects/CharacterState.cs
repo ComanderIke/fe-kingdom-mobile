@@ -16,7 +16,7 @@ namespace Assets.Scripts.Characters.Debuffs
             this.duration = duration;
             currduration = duration;
         }
-        public virtual bool TakeEffect(LivingObject c)
+        public virtual bool TakeEffect(Unit c)
         {
             if (currduration > 0)
             {
@@ -27,6 +27,6 @@ namespace Assets.Scripts.Characters.Debuffs
             return false;
 
         }
-        public abstract void Remove(LivingObject c);
+        public abstract void Remove(Unit c);
     }
 }

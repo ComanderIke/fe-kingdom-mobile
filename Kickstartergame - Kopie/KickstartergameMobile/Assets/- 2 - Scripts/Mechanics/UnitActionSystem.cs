@@ -1,18 +1,47 @@
 ﻿using Assets.Scripts.Characters;
 using Assets.Scripts.Commands;
 using Assets.Scripts.Engine;
-using Assets.Scripts.Events;
 using Assets.Scripts.ScriptableObjects;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace Assets.Scripts.GameStates
 {
     public class UnitActionSystem :  MonoBehaviour, EngineSystem
     {
+
+        #region Events
+        public delegate void OnCommandFinished();
+        public static OnCommandFinished onCommandFinished;
+
+        public delegate void OnReactionFinished();
+        public static OnReactionFinished onReactionFinished;
+
+        public delegate void OnAllCommandsFinished();
+        public static OnAllCommandsFinished onAllCommandsFinished;
+
+        public delegate void OnUndo();
+        public static OnUndo onUndo;
+
+        #region UnitActions
+        public delegate void OnUnitMoveToEnemy();
+        public static OnUnitMoveToEnemy onUnitMoveToEnemy;
+
+        public delegate void OnStartMovingUnit();
+        public static OnStartMovingUnit onStartMovingUnit;
+
+        public delegate void OnStopMovingUnit();
+        public static OnStopMovingUnit onStopMovingUnit;
+
+        public delegate void OnDeselectCharacter();
+        public static OnDeselectCharacter onDeselectCharacter;
+
+        public delegate void OnSelectCharacter();
+        public static OnSelectCharacter onSelectedCharacter;
+        #endregion
+
+        #endregion
+
         MainScript mainScript;
         public PreferedMovementPath preferedPath;
         Stack<Command> previewsActions;
@@ -20,15 +49,15 @@ namespace Assets.Scripts.GameStates
 
         void Start()
         {
-            Debug.Log("InitActionManager");
-            mainScript = MainScript.GetInstance();
-            EventContainer.endDragOverGrid += UnitMoveOnTile;
-            EventContainer.endDragOverUnit += UnitMoveToOtherUnit;
+            mainScript = MainScript.instance;
+            InputSystem.onEndDragOverGrid += UnitMoveOnTile;
+            InputSystem.onEndDragOverUnit += UnitMoveToOtherUnit;
             previewsActions = new Stack<Command>();
             currentActions = new Queue<Command>();
-            EventContainer.undo += Undo;
-            EventContainer.commandFinished += ExecuteActions;
+            UnitActionSystem.onUndo += Undo;
+            UnitActionSystem.onCommandFinished += ExecuteActions;
         }
+
         private void Undo()
         {
             Debug.Log(previewsActions.Count);
@@ -38,29 +67,29 @@ namespace Assets.Scripts.GameStates
         {
             currentActions.Enqueue(c);
         }
-        public void MoveCharacter(LivingObject c, int x, int y)
+        public void MoveCharacter(Unit c, int x, int y)
         {
             MoveCharacterCommand mCC = new MoveCharacterCommand(c, x, y);
             currentActions.Enqueue(mCC);
            // mCC.Execute();
             //mainScript.SwitchState(new MovementState( c, x, y, drag, targetState));
         }
-        public void MoveCharacter(LivingObject c, int x, int y, List<Vector2> path)
+        public void MoveCharacter(Unit c, int x, int y, List<Vector2> path)
         {
             MoveCharacterCommand mCC = new MoveCharacterCommand(c, x, y,path);
-            EventContainer.unitShowActiveEffect(c, false, false);
+            Unit.onUnitShowActiveEffect(c, false, false);
             Debug.Log(c.Name + " " + c.GridPosition.x + " " + c.GridPosition.y + " " + x + " " + y);
-            EventContainer.showCursor(x, y);
+            UISystem.onShowCursor(x, y);
             currentActions.Enqueue(mCC);
            // mCC.Execute();
            // mainScript.SwitchState(new MovementState( c, x, y, path));
         }
-        public void PushUnit(LivingObject character, Vector2 direction)
+        public void PushUnit(Unit character, Vector2 direction)
         {
             PushCharacterCommand pCC = new PushCharacterCommand(character, direction);
             currentActions.Enqueue(pCC);
         }
-        public void Fight(LivingObject attacker, LivingObject target)
+        public void Fight(Unit attacker, Unit target)
         {
             AttackCommand mCC = new AttackCommand(attacker,target);
             currentActions.Enqueue(mCC);
@@ -74,9 +103,9 @@ namespace Assets.Scripts.GameStates
                 Command current = currentActions.Dequeue();
                 if (currentActions.Count == 0)
                 {
-                    EventContainer.commandFinished = null;
-                    EventContainer.commandFinished += ExecuteActions;
-                    EventContainer.commandFinished += AllCommandFinished;
+                    UnitActionSystem.onCommandFinished = null;
+                    UnitActionSystem.onCommandFinished += ExecuteActions;
+                    UnitActionSystem.onCommandFinished += AllCommandFinished;
                 }
                 current.Execute();
                
@@ -85,15 +114,15 @@ namespace Assets.Scripts.GameStates
         }
         void AllCommandFinished()
         {
-            EventContainer.commandFinished -= AllCommandFinished;
-            EventContainer.allCommandsFinished();
+            UnitActionSystem.onCommandFinished -= AllCommandFinished;
+            UnitActionSystem.onAllCommandsFinished();
         } 
 
         public void ActiveCharWait()
         {
-            MainScript mainScript = MainScript.GetInstance();
+           
             UnitSelectionSystem unitSelectionManager = mainScript.GetSystem<UnitSelectionSystem>();
-            LivingObject selectedUnit = unitSelectionManager.SelectedCharacter;
+            Unit selectedUnit = unitSelectionManager.SelectedCharacter;
             if (selectedUnit != null && !selectedUnit.UnitTurnState.IsWaiting)
             {
                 mainScript.GetSystem<GridSystem>().HideMovement();
@@ -105,15 +134,15 @@ namespace Assets.Scripts.GameStates
             unitSelectionManager.DeselectActiveCharacter();
         }
 
-        public void GoToEnemy(LivingObject character, LivingObject enemy, bool drag)
+        public void GoToEnemy(Unit character, Unit enemy, bool drag)
         {
-            EventContainer.unitMoveToEnemy();
+            onUnitMoveToEnemy();
             if (preferedPath.path.Count == 0 && character.GridPosition.CanAttack(character.Stats.AttackRanges,enemy.GridPosition))
             {
                 
                 mainScript.GetSystem<GridSystem>().HideMovement();
                 Debug.Log("Enemy is in Range:");
-                mainScript.oldPosition = new Vector2(character.GridPosition.x, character.GridPosition.y);
+                
                 if (!drag)
                 {
                     Fight(character, enemy);
@@ -126,7 +155,7 @@ namespace Assets.Scripts.GameStates
                     //mainScript.SwitchState(new FightState(character, enemy, new GameplayState()));
                 }
                 Debug.Log("All Commands Setup");
-                EventContainer.allCommandsFinished += SwitchToGamePlayState;
+                UnitActionSystem.onAllCommandsFinished += SwitchToGamePlayState;
                 ExecuteActions();
                 return;
             }
@@ -154,7 +183,7 @@ namespace Assets.Scripts.GameStates
                         MoveCharacter(character, xMov, yMov, movePath);
                         Fight(character, enemy);// false, new FightState(character, enemy, new GameplayState()));
                         Debug.Log("All Commands Setup");
-                        EventContainer.allCommandsFinished += SwitchToGamePlayState;
+                        UnitActionSystem.onAllCommandsFinished += SwitchToGamePlayState;
                         ExecuteActions();
                     }
                     else
@@ -162,12 +191,12 @@ namespace Assets.Scripts.GameStates
                         MoveCharacter(character, xMov, yMov, movePath);//, false, new FightState(character, enemy, new GameplayState()));
                         Fight(character, enemy);
                         Debug.Log("All Commands Setup");
-                        EventContainer.allCommandsFinished += SwitchToGamePlayState;
+                        UnitActionSystem.onAllCommandsFinished += SwitchToGamePlayState;
                         ExecuteActions();
 
                     }
                    
-                    mainScript.AttackRangeFromPath = 0;
+                    mainScript.GetSystem<InputSystem>().AttackRangeFromPath = 0;
 
                     return;
                 }
@@ -180,21 +209,21 @@ namespace Assets.Scripts.GameStates
         }
         private void SwitchToGamePlayState()
         {
-            EventContainer.allCommandsFinished -= SwitchToGamePlayState;
+            UnitActionSystem.onAllCommandsFinished -= SwitchToGamePlayState;
             mainScript.SwitchState(new GameplayState());
         }
         private void UnitMoveOnTile(int x, int y)
         {
-            MainScript mainScript = MainScript.GetInstance();
+  
             UnitSelectionSystem unitSelectionManager = mainScript.GetSystem<UnitSelectionSystem>();
-            LivingObject selectedUnit = unitSelectionManager.SelectedCharacter;
+            Unit selectedUnit = unitSelectionManager.SelectedCharacter;
             if (mainScript.GetSystem<GridSystem>().Tiles[x, y].isActive && !(x == selectedUnit.GridPosition.x && y == selectedUnit.GridPosition.y))
             {
                 if (!(selectedUnit is Monster) || (selectedUnit is Monster && !((BigTilePosition)selectedUnit.GridPosition).Position.Contains(new Vector2(x, y))))
                 {
                     selectedUnit.GridPosition.SetPosition(selectedUnit.GridPosition.x, selectedUnit.GridPosition.y);
                     MoveCharacter(selectedUnit, x, y,preferedPath.path);//, true, new GameplayState());
-                    EventContainer.allCommandsFinished += SwitchToGamePlayState;
+                    UnitActionSystem.onAllCommandsFinished += SwitchToGamePlayState;
                     ExecuteActions();
                     
                 }
@@ -214,10 +243,9 @@ namespace Assets.Scripts.GameStates
             }
         }
 
-        private void UnitMoveToOtherUnit(LivingObject draggedOverUnit)
+        private void UnitMoveToOtherUnit(Unit draggedOverUnit)
         {
             Debug.Log("MoveToOtherUnit");
-            MainScript mainScript = MainScript.GetInstance();
             UnitSelectionSystem unitSelectionManager = mainScript.GetSystem<UnitSelectionSystem>();
             if (draggedOverUnit.Player.ID != unitSelectionManager.SelectedCharacter.Player.ID)
             {
@@ -234,7 +262,19 @@ namespace Assets.Scripts.GameStates
                 unitSelectionManager.DeselectActiveCharacter();
             }
         }
+        void OnDestroy()
+        {
+            onReactionFinished = null;
+            onCommandFinished = null;
+            onAllCommandsFinished = null;
+            onUndo = null;
 
+            onUnitMoveToEnemy = null;
+            onStartMovingUnit = null;
+            onStopMovingUnit = null;
+            onDeselectCharacter = null;
+            onSelectedCharacter = null;
+        }
 
     }
 }
