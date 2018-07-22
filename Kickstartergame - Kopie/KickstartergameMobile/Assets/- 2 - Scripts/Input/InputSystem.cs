@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Characters;
+﻿using Assets.__2___Scripts.Mechanics;
+using Assets.Scripts.Characters;
 using Assets.Scripts.Engine;
 using Assets.Scripts.GameStates;
 using Assets.Scripts.Grid;
@@ -148,6 +149,7 @@ public class InputSystem : MonoBehaviour, EngineSystem {
     {
         onDraggedOverUnit += DraggedOver;
         onStartDrag += StartDrag;
+        onUnitDragged += CharacterDrag;
         onClickedMovableTile += CalculateMousePathToPositon;
         onClickedMovableBigTile += CalculateMousePathToPositon;
         UnitActionSystem.onStartMovingUnit += DeActivate;
@@ -227,8 +229,8 @@ public class InputSystem : MonoBehaviour, EngineSystem {
 
         Debug.Log("Enemy clicked!");
 
-        if (mainScript.GetSystem<GridSystem>().GridLogic.IsFieldAttackable(currentX,currentY))
-            CalculateMousePathToEnemy(mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter, new Vector2(currentX, currentY));
+        if (mainScript.GetSystem<MapSystem>().GridLogic.IsFieldAttackable(unit.GridPosition.x,unit.GridPosition.y))
+            CalculateMousePathToEnemy(mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter, new Vector2(unit.GridPosition.x, unit.GridPosition.y));
         else
         {
             if(unit.GridPosition is BigTilePosition)
@@ -237,13 +239,13 @@ public class InputSystem : MonoBehaviour, EngineSystem {
                 Vector2 bottomright = ((BigTilePosition)unit.GridPosition).Position.BottomRight();
                 Vector2 topleft = ((BigTilePosition)unit.GridPosition).Position.TopLeft();
                 Vector2 topright = ((BigTilePosition)unit.GridPosition).Position.TopRight();
-                if (mainScript.GetSystem<GridSystem>().GridLogic.IsFieldAttackable((int)bottomleft.x, (int)bottomleft.y))
+                if (mainScript.GetSystem<MapSystem>().GridLogic.IsFieldAttackable((int)bottomleft.x, (int)bottomleft.y))
                     CalculateMousePathToEnemy(mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter, bottomleft);
-                else if (mainScript.GetSystem<GridSystem>().GridLogic.IsFieldAttackable((int)bottomright.x, (int)bottomright.y))
+                else if (mainScript.GetSystem<MapSystem>().GridLogic.IsFieldAttackable((int)bottomright.x, (int)bottomright.y))
                     CalculateMousePathToEnemy(mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter, bottomright);
-                else if (mainScript.GetSystem<GridSystem>().GridLogic.IsFieldAttackable((int)topleft.x, (int)topleft.y))
+                else if (mainScript.GetSystem<MapSystem>().GridLogic.IsFieldAttackable((int)topleft.x, (int)topleft.y))
                     CalculateMousePathToEnemy(mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter, topleft);
-                else if (mainScript.GetSystem<GridSystem>().GridLogic.IsFieldAttackable((int)topright.x, (int)topright.y))
+                else if (mainScript.GetSystem<MapSystem>().GridLogic.IsFieldAttackable((int)topright.x, (int)topright.y))
                     CalculateMousePathToEnemy(mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter, topright);
             }
             else
@@ -327,7 +329,7 @@ public class InputSystem : MonoBehaviour, EngineSystem {
             for (int j = lastPositions.Count - 1; j >= 0; j--)
             {
             
-                if (GetDelta(lastPositions[j].position, new Vector2(xAttack, zAttack))== c.Stats.AttackRanges[i]&&mainScript.GetSystem<GridSystem>().Tiles[(int)lastPositions[j].position.x, (int)lastPositions[j].position.y].character==null)
+                if (GetDelta(lastPositions[j].position, new Vector2(xAttack, zAttack))== c.Stats.AttackRanges[i]&&mainScript.GetSystem<MapSystem>().Tiles[(int)lastPositions[j].position.x, (int)lastPositions[j].position.y].character==null)
                 {
                     return lastPositions[j].position;
                 }
@@ -338,7 +340,7 @@ public class InputSystem : MonoBehaviour, EngineSystem {
     public  void CalculateMousePathToPositon(Unit character, int x, int y)
     {
         ResetMousePath();
-        MovementPath p = mainScript.GetSystem<GridSystem>().GridLogic.getPath(character.GridPosition.x, character.GridPosition.y, x, y, character.Player.ID, false, character.Stats.AttackRanges);
+        MovementPath p = mainScript.GetSystem<MoveSystem>().getPath(character.GridPosition.x, character.GridPosition.y, x, y, character.Player.ID, false, character.Stats.AttackRanges);
         if (p != null)
         {
             for (int i = p.getLength() - 2; i >= 0; i--)
@@ -351,7 +353,7 @@ public class InputSystem : MonoBehaviour, EngineSystem {
     public  void CalculateMousePathToEnemy(Unit character, Vector2 position)
     {
         ResetMousePath();
-        MovementPath p = mainScript.GetSystem<GridSystem>().GridLogic.getPath(character.GridPosition.x, character.GridPosition.y, (int)position.x, (int)position.y, character.Player.ID, true, character.Stats.AttackRanges);
+        MovementPath p = mainScript.GetSystem<MoveSystem>().getPath(character.GridPosition.x, character.GridPosition.y, (int)position.x, (int)position.y, character.Player.ID, true, character.Stats.AttackRanges);
         if (p != null)
         {
             for (int i = p.getLength() - 2; i >= AttackRangeFromPath; i--)
@@ -364,7 +366,7 @@ public class InputSystem : MonoBehaviour, EngineSystem {
     {
         ResetMousePath();
         Debug.Log("FUCKTESTfrom" + character.GridPosition.x + " " + character.GridPosition.y + " to " + position + " Player.number " + character.Player.ID + " " + character.Stats.AttackRanges[0]);
-        MovementPath p = mainScript.GetSystem<GridSystem>().GridLogic.GetMonsterPath((Monster)character, position, true, character.Stats.AttackRanges);
+        MovementPath p = mainScript.GetSystem<MapSystem>().GridLogic.GetMonsterPath((Monster)character, position, true, character.Stats.AttackRanges);
         
         if (p != null)
         {
@@ -381,7 +383,7 @@ public class InputSystem : MonoBehaviour, EngineSystem {
     public  void CalculateMousePathToPositon(Unit character, BigTile position)
     {
         ResetMousePath();
-        MovementPath p = mainScript.GetSystem<GridSystem>().GridLogic.GetMonsterPath((Monster)character, position);
+        MovementPath p = mainScript.GetSystem<MoveSystem>().GetMonsterPath((Monster)character, position);
         if (p != null)
         {
             Debug.Log(p.getLength());
@@ -422,7 +424,7 @@ public class InputSystem : MonoBehaviour, EngineSystem {
         currentX = x;
         currentY = y;
         
-        Tile field = mainScript.GetSystem<GridSystem>().Tiles[x, y];
+        Tile field = mainScript.GetSystem<MapSystem>().Tiles[x, y];
         if (field.isActive && field.character == null)
         {
             lastPositions.Add(new CursorPosition(new Vector2(x, y),null));
@@ -479,13 +481,13 @@ public class InputSystem : MonoBehaviour, EngineSystem {
        
         List<Vector2> moveLocations = new List<Vector2>();
         
-        MainScript.instance.GetSystem<GridSystem>().GridLogic.GetMoveLocations(selectedCharacter.GridPosition.x,selectedCharacter.GridPosition.y, moveLocations, selectedCharacter.Stats.MoveRange,0,selectedCharacter.Player.ID);
+        MainScript.instance.GetSystem<MapSystem>().GridLogic.GetMoveLocations(selectedCharacter.GridPosition.x,selectedCharacter.GridPosition.y, moveLocations, selectedCharacter.Stats.MoveRange,0,selectedCharacter.Player.ID);
         moveLocations.Insert(0,new Vector2(selectedCharacter.GridPosition.x, selectedCharacter.GridPosition.y));
         foreach (Vector2 loc in moveLocations)
         {
             int currentX = (int)loc.x;
             int currentY = (int)loc.y;
-            Tile currentField = mainScript.GetSystem<GridSystem>().GetTileFromVector2(loc);
+            Tile currentField = mainScript.GetSystem<MapSystem>().GetTileFromVector2(loc);
             Debug.Log(loc);
             foreach (int ar in selectedCharacter.Stats.AttackRanges)
             {
@@ -516,7 +518,7 @@ public class InputSystem : MonoBehaviour, EngineSystem {
         }
         else
         {
-            if (!FindObjectOfType<GridSystem>().GridLogic.IsFieldAttackable(x, y))
+            if (!FindObjectOfType<MapSystem>().GridLogic.IsFieldAttackable(x, y))
                 return;
             //CalculateMousePathToEnemy(selectedCharacter, new Vector2(x, y));
             if (mousePath == null || mousePath.Count == 0)
@@ -533,7 +535,7 @@ public class InputSystem : MonoBehaviour, EngineSystem {
                 {
                     int lastMousePathPositionX = (int)mousePath[i].x;
                     int lastMousePathPositionY = (int)mousePath[i].y;
-                    Tile lastMousePathField = mainScript.GetSystem<GridSystem>().GetTileFromVector2(mousePath[i]);
+                    Tile lastMousePathField = mainScript.GetSystem<MapSystem>().GetTileFromVector2(mousePath[i]);
                     int delta = Mathf.Abs(lastMousePathPositionX - x) + Mathf.Abs(lastMousePathPositionY - y);
                     if (selectedCharacter.Stats.AttackRanges.Contains(delta))
                     {
@@ -677,7 +679,7 @@ public class InputSystem : MonoBehaviour, EngineSystem {
         if (mousePath.Count > character.Stats.MoveRange || contains || (Mathf.Abs(oldX - x) + Mathf.Abs(oldY - y) > 1))
         {
             mousePath.Clear();
-            MovementPath p = mainScript.GetSystem<GridSystem>().GridLogic.getPath(character.GridPosition.x, character.GridPosition.y, x, y, character.Player.ID, false, character.Stats.AttackRanges);
+            MovementPath p = mainScript.GetSystem<MoveSystem>().getPath(character.GridPosition.x, character.GridPosition.y, x, y, character.Player.ID, false, character.Stats.AttackRanges);
             if (p != null)
             {
                 for (int i = p.getLength() - 2; i >= 0; i--)
@@ -850,7 +852,7 @@ public class InputSystem : MonoBehaviour, EngineSystem {
     }
     private bool IsOutOfBounds(int x, int y)
     {
-        return x < 0 || x >= mainScript.GetSystem<GridSystem>().grid.width || y < 0 || y >= mainScript.GetSystem<GridSystem>().grid.height;
+        return x < 0 || x >= mainScript.GetSystem<MapSystem>().grid.width || y < 0 || y >= mainScript.GetSystem<MapSystem>().grid.height;
     }
     void OnDestroy()
     {

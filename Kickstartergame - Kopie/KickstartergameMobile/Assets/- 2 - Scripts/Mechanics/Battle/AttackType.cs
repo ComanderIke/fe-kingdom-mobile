@@ -2,18 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
-public class AttackType
+using UnityEngine;
+[CreateAssetMenu(menuName ="GameData/Unit/AttackType", fileName ="AttackType")]
+public class AttackType : ScriptableObject
 {
-    public int Hit { get; set; }
-    public float DamageMultiplier { get; set; }
-    public string Name { get; set; }
-    public int SpeedPenalty { get; set; }
-    public AttackType(string Name, float DamageMultiplier, int Hit, int SpeedPenalty)
-    {
-        this.Name = Name;
-        this.DamageMultiplier = DamageMultiplier;
-        this.Hit = Hit;
-        this.SpeedPenalty = SpeedPenalty;
-    }
+    public int Hit;
+    public float DamageMultiplier;
+    public int SpeedPenalty;
 }

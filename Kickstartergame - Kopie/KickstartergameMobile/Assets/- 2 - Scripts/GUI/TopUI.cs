@@ -35,7 +35,7 @@ public class TopUI : MonoBehaviour {
     public void Show(Unit c)
     {
         gameObject.SetActive(true);
-        hp.text = c.Stats.HP + " / " + c.Stats.MaxHP;
+        hp.text = c.HP + " / " + c.Stats.MaxHP;
         atk.text = "" + c.Stats.Attack;
         spd.text = "" + c.Stats.Speed;
         acc.text = "" + c.Stats.Accuracy;

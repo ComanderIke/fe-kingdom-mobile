@@ -11,8 +11,8 @@ namespace Assets.Scripts.Grid.PathFinding
         public Node[,] nodes;
         private int width;
         private int height;
-        GridSystem gridManager;
-        public AStar(GridSystem gridManager, int width, int height)
+        global::MapSystem gridManager;
+        public AStar(global::MapSystem gridManager, int width, int height)
         {
             this.gridManager = gridManager;
             this.width = width;
@@ -26,7 +26,7 @@ namespace Assets.Scripts.Grid.PathFinding
                 }
             }
         }
-        public void Reset()
+        private void Reset()
         {
             nodes = new Node[width, height];
             closed = new ArrayList();
@@ -59,12 +59,7 @@ namespace Assets.Scripts.Grid.PathFinding
         {
             return open.Contains(node);
         }
-        public bool nodeFaster(int x, int y, int c)
-        {
-            if (nodes[x, y].c < c)
-                return false;
-            return true;
-        }
+
 
         private void removeFromClosed(Node node)
         {
@@ -170,16 +165,7 @@ namespace Assets.Scripts.Grid.PathFinding
         public MovementPath getPath(int x, int y, int x2, int y2, int team, bool toadjacentPos, List<int> range)
         {
             MainScript.instance.GetSystem<InputSystem>().AttackRangeFromPath = 0;
-            nodes = new Node[width, height];
-            closed = new ArrayList();
-            open = new ArrayList();
-            for (int i = 0; i < width; i++)
-            {
-                for (int j = 0; j < height; j++)
-                {
-                    nodes[i, j] = new Node(i, j, 1000);
-                }
-            }
+            Reset();
 
             return findPath(x, y, x2, y2, team, toadjacentPos, range);
         }

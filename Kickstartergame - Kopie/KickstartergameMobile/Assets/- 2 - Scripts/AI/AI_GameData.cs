@@ -9,11 +9,11 @@ namespace Assets.Scripts.AI
 {
     public class AI_GameData
     {
-        private GridSystem gridManager;
+        private MapSystem gridManager;
 
         public AI_GameData()
         {
-            gridManager=MainScript.instance.GetSystem<GridSystem>();
+            gridManager = MainScript.instance.GetSystem<MapSystem>();
         }
 
         public List<Unit> GetAttackTargets(Unit c)

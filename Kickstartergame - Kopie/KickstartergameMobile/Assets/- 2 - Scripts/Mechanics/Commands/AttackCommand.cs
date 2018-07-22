@@ -18,7 +18,7 @@ namespace Assets.Scripts.Commands
         }
         public override void Execute()
         {
-            MainScript.instance.SwitchState(new FightState(attacker,target));
+            MainScript.instance.GameStateManager.SwitchState(new BattleState(attacker,target));
         }
 
         public override void Undo()

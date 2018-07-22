@@ -27,9 +27,9 @@ namespace Assets.Scripts.Commands
                 endPosition = bigTiles[index];
                 index -= 1;
             }
-            while (!MainScript.instance.GetSystem<GridSystem>().GridLogic.IsBigTileAccessible(endPosition, unit) && index >= 0);
+            while (!MainScript.instance.GetSystem<global::MapSystem>().GridLogic.IsBigTileAccessible(endPosition, unit) && index >= 0);
             Debug.Log("EndPosition: " + endPosition);
-            if (MainScript.instance.GetSystem<GridSystem>().GridLogic.IsBigTileAccessible(endPosition, unit))
+            if (MainScript.instance.GetSystem<global::MapSystem>().GridLogic.IsBigTileAccessible(endPosition, unit))
             {
                 new MoveCharacterCommand(unit, (int)endPosition.BottomLeft().x, (int)endPosition.BottomLeft().y).Execute();
             }

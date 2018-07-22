@@ -8,7 +8,7 @@ namespace Assets.Scripts.Characters
     
     public enum MonsterType
     {
-        Mammoth,
-        Sabertooth
+        MeleeAttacker2x2,
+        MeleeAttacker
     }
 }

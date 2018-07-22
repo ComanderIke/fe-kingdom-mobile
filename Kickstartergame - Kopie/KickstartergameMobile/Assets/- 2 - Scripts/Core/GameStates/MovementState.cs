@@ -1,189 +1,100 @@
-﻿using Assets.Scripts.Characters;
+﻿using Assets.__2___Scripts.Mechanics;
+using Assets.Scripts.Characters;
+using Assets.Scripts.GameStates;
 using Assets.Scripts.Grid.PathFinding;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts.GameStates
+public class MovementState : GameState<NextStateTrigger>
 {
-    class MovementState : GameState
+    private readonly int x;
+    private readonly int y;
+    public int pathCounter = 0;
+    public MovementPath path;
+    private MainScript mainScript;
+    private Unit unit;
+    List<Vector2> mousePath;
+    bool active;
+
+    public MovementState(Unit c, int x, int y, List<Vector2> path = null)
     {
-        private int x;
-        private int y;
-        public int pathCounter = 1;
-        public MovementPath path;
-        private MainScript mainScript;
-        private Unit character;
-        List<Vector2> mousePath;
-        bool active;
+        mousePath = path;
+        this.x = x;
+        this.y = y;
+        mainScript = MainScript.instance;
+        unit = c;
+        pathCounter = 0;
+    }
 
-        public MovementState(Unit c, int x, int y)
+    public override void Enter()
+    {
+        if (unit.GridPosition.x == x && unit.GridPosition.y == y)//already on Destination
         {
-            this.x = x;
-            this.y = y;
-            mainScript = MainScript.instance;
-            character = c;
-            
+            FinishMovement();
+            return;
         }
-        public MovementState( Unit c,int x,int y, List<Vector2> path):this(c, x, y)
+        active = true;
+        UnitActionSystem.onStartMovingUnit();
+        if (mousePath == null || mousePath.Count == 0)
         {
-            mousePath = path;
-            
+            path = mainScript.GetSystem<MoveSystem>().getPath(unit.GridPosition.x, unit.GridPosition.y, x, y, unit.Player.ID, false, new List<int>());
+            if (path != null)
+                path.Reverse();
         }
-        void FinishMovement()
+        else
         {
-
-
-            character.UnitTurnState.HasMoved = true;
-            if (character.Player.IsHumanPlayer)
-                mainScript.GetSystem<UnitActionSystem>().ActiveCharWait();
-            //mainScript.SwitchState(new GameplayState());//TODO AISTATE
-            UnitActionSystem.onCommandFinished();
-        }
-        public override void Enter()
-        {
-            if(character.GridPosition.x == x && character.GridPosition.y == y)
+            path = new MovementPath();
+            for (int i = 0; i < mousePath.Count; i++)
             {
-                FinishMovement();
-                return;
-            }
-            active = true;
-            UnitActionSystem.onStartMovingUnit();
-            if (mousePath == null)
-            {
-                if (character.GridPosition.x == x && character.GridPosition.y== y)
-                {
-                    mainScript.SwitchState(new GameplayState());
-                    return;
-                }
-            }
-            else {
-                pathCounter = 0;
-            }
-            if ( mousePath==null ||mousePath.Count == 0)
-            {
-                path = mainScript.GetSystem<GridSystem>().GridLogic.getPath(character.GridPosition.x, character.GridPosition.y, x, y, character.Player.ID, false, new List<int>());
-                if (path!=null)
-                    path.Reverse();
-                pathCounter = 1;
-            }
-            if(mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter is Monster)
-            {
-                for (int i = 0; i < mousePath.Count; i++)
-                {
-                    mousePath[i] = new Vector3(mousePath[i].x - 0.5f, mousePath[i].y - 0.5f, 0);
-                }
-            }
-        }
-
-        public override void Exit()
-        {
-            UnitActionSystem.onStopMovingUnit();
-
-        }
-
-        public override void Update()
-        {
-            if (!active)
-                return;
-            ContinueWalkAnimation();
-        }
-
-        void ContinueWalkAnimation()
-        {
-            float x = character.GameTransform.GameObject.transform.localPosition.x;
-            float y = character.GameTransform.GameObject.transform.localPosition.y;
-            float z = character.GameTransform.GameObject.transform.localPosition.z;
-            float tx ;
-            float ty ;
-            if (mousePath != null&&mousePath.Count>0)
-            {
-                tx = mousePath[pathCounter].x;
-                ty = mousePath[pathCounter].y;
-
-            }
-            else
-            {
-               tx = path.getStep(pathCounter).getX();
-               ty = path.getStep(pathCounter).getY();
-            }
-            float walkspeed = 5f;
-            float value = walkspeed * Time.deltaTime;
-            float offset = 0.005f;
-            if (x != tx)
-            {
-                if (x < tx)
-                {
-                    if (x + value > tx)
-                        character.GameTransform.GameObject.transform.localPosition = new Vector3(tx, y, z);
-                    else
-                        character.GameTransform.GameObject.transform.localPosition = new Vector3(x + value, y, z);
-
-                }
-                else if (x > tx)
-                {
-                    if (x - value < tx)
-                        character.GameTransform.GameObject.transform.localPosition = new Vector3(tx, y, z);
-                    else
-                        character.GameTransform.GameObject.transform.localPosition = new Vector3(x - value, y, z);
-                }
-            }
-            else if (y != ty)
-            {
-                if (y > ty)
-                {
-
-                    if (y - value < ty)
-                        character.GameTransform.GameObject.transform.localPosition = new Vector3(x, ty, z);
-                    else
-                        character.GameTransform.GameObject.transform.localPosition = new Vector3(x, y-value, z);
-                }
-                else if (y< ty)
-                {
-
-                    if (y + value > ty)
-                        character.GameTransform.GameObject.transform.localPosition = new Vector3(x, ty, z);
-                    else
-                        character.GameTransform.GameObject.transform.localPosition = new Vector3(x, y+value, z);
-                }
-            }
-            if (character.GameTransform.GameObject.transform.localPosition.x + offset > tx && character.GameTransform.GameObject.transform.localPosition.x - offset < tx && character.GameTransform.GameObject.transform.localPosition.y + offset > ty && character.GameTransform.GameObject.transform.localPosition.y - offset < ty)
-            {
-                if(character is Human)
-                {
-                    foreach(Monster monster in mainScript.GetSystem<TurnSystem>().Players[1].Units)
-                    {
-                        if (!monster.attentionWaked && monster.CanSeePosition((int)tx,(int)ty))
-                        {
-                            Debug.Log("WTF:" + tx + " " + ty);
-                            monster.MonsterAttentionWaked();
-                        }
-                    }
-                }
-                pathCounter++;
-            }
-
-            if ((path!=null&&pathCounter >= path.getLength())||(path==null&&mousePath!=null&&pathCounter>=mousePath.Count))
-            {
-                
-                
-                active = false;
-                pathCounter = 0;
-                character.SetPosition((int)tx, (int)ty);
-                if (character is Human)
-                {
-                    foreach (Monster monster in mainScript.GetSystem<TurnSystem>().Players[1].Units)
-                    {
-                        mainScript.GetSystem<GridSystem>().ShowSightRange(monster);
-                        if (!monster.attentionWaked && monster.CanSeePosition((int)tx, (int)ty))
-                        {
-                            Debug.Log("WTF:" + tx + " " + ty);
-                            monster.MonsterAttentionWaked();
-                        }
-
-                    }
-                }
-                FinishMovement();
+                path.prependStep(mousePath[i].x, mousePath[i].y);
             }
         }
     }
+
+    public override GameState<NextStateTrigger> Update()
+    {
+        if (!active)
+            return null;
+        MoveUnit();
+        return nextState;
+    }
+
+    void MoveUnit()
+    {
+        float x = unit.GameTransform.GameObject.transform.localPosition.x;
+        float y = unit.GameTransform.GameObject.transform.localPosition.y;
+        float z = unit.GameTransform.GameObject.transform.localPosition.z;
+        float tx = path.getStep(pathCounter).getX();
+        float ty = path.getStep(pathCounter).getY();
+        float walkspeed = 5f;
+        float value = walkspeed * Time.deltaTime;
+        float offset = 0.05f;
+        x = (x + offset > tx && x - offset < tx) || (x == tx) ? tx : x + (x < tx ? value : -value);
+        y = (y + offset > ty && y - offset < ty) || (y == ty) ? ty : y + (y < ty ? value : -value);
+        unit.GameTransform.GameObject.transform.localPosition = new Vector3(x, y, z);
+
+        if (x == tx && y == ty)
+        {
+            pathCounter++;
+        }
+
+        if (pathCounter >= path.getLength())
+        {
+            active = false;
+            FinishMovement();
+        }
+    }
+    public override void Exit()
+    {
+        unit.SetPosition(x, y);
+        UnitActionSystem.onStopMovingUnit();
+    }
+    void FinishMovement()
+    {
+        unit.UnitTurnState.HasMoved = true;
+        if (unit.Player.IsPlayerControlled)
+            mainScript.GetSystem<UnitActionSystem>().ActiveCharWait();
+        UnitActionSystem.onCommandFinished();
+    }
 }
+

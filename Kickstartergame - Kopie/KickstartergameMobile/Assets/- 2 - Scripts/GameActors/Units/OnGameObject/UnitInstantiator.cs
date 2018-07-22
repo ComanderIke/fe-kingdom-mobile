@@ -18,9 +18,9 @@ public class UnitInstantiator : MonoBehaviour {
         GameObject o = null;
         if (unit is Monster)
         {
-            if (((Monster)unit).Type == MonsterType.Mammoth)
+            if (((Monster)unit).Type == MonsterType.MeleeAttacker2x2)
                 o = Instantiate<GameObject>(mammoth);
-            else if (((Monster)unit).Type == MonsterType.Sabertooth)
+            else if (((Monster)unit).Type == MonsterType.MeleeAttacker)
                 o = Instantiate<GameObject>(sabertooth);
         }
         else
@@ -42,10 +42,11 @@ public class UnitInstantiator : MonoBehaviour {
             {
                 o = Instantiate<GameObject>(axefighter);
             }
-
-            o.GetComponentInChildren<SpriteRenderer>().sprite = unit.Sprite;
             
         }
+        o.GetComponentInChildren<SpriteRenderer>().sprite = unit.Sprite;
+        o.GetComponentInChildren<SpriteRenderer>().sortingOrder = 3;
+
         o.name = unit.Name;
         o.transform.parent = gameObject.transform;
         UnitController unitController = o.GetComponentInChildren<UnitController>();

@@ -3,22 +3,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace Assets.Scripts.Characters
 {
-    public class Inventory
+    [CreateAssetMenu(menuName ="GameData/Inventory", fileName ="Inventory")]
+    public class Inventory :ScriptableObject
     {
         public const int MAX_ITEMS = 6;
-
-        private Human owner;
+        [HideInInspector]
+        public Human owner;
         public List<Item> items;
 
-        public Inventory(Human owner)
-        {
-            this.owner = owner;
-            items = new List<Item>();
-            items.Capacity = MAX_ITEMS;
-        }
 
         public void AddItem(Item i)
         {

@@ -72,8 +72,12 @@ public class ReactUIController : MonoBehaviour {
         HPValueChanged();
         Unit.onHpValueChanged += HPValueChanged;
         UISystem.onReactUIVisible(true);
+        BattleSystem.onAllyMisses += ShowCounterMissText;
+        BattleSystem.onEnemyMisses += ShowMissText;
+        BattleSystem.onEnemyTakesDamage += ShowCounterDamageText;
+        BattleSystem.onAllyTakesDamage += ShowDamageText;
         attackerImage.sprite = attacker.Sprite;
-        defenderImage.sprite = defender.Sprite;
+        //defenderImage.sprite = defender.Sprite;
         UpdateDmg();
     }
 
@@ -91,13 +95,17 @@ public class ReactUIController : MonoBehaviour {
     {
         Unit.onHpValueChanged -= HPValueChanged;
         UISystem.onReactUIVisible(false);
+        BattleSystem.onAllyMisses -= ShowCounterMissText;
+        BattleSystem.onEnemyMisses -= ShowMissText;
+        BattleSystem.onEnemyTakesDamage -= ShowCounterDamageText;
+        BattleSystem.onAllyTakesDamage -= ShowDamageText;
     }
 
     public void ShowCounterMissText()
     {
         MainScript.instance.GetSystem<PopUpTextSystem>().CreateAttackPopUpTextGreen("Missed", attackerImage.transform);
     }
-    public void ShowCounterDamageText(int damage)
+    public void ShowCounterDamageText(int damage, bool magic=false)
     {
         MainScript.instance.GetSystem<PopUpTextSystem>().CreateAttackPopUpTextRed("" + damage, attackerImage.transform);
     }
@@ -124,10 +132,10 @@ public class ReactUIController : MonoBehaviour {
 
     private void HPValueChanged()
     {
-        defenderHP.text = defender.Stats.HP + " / " + defender.Stats.MaxHP;
-        attackerHP.text = attacker.Stats.HP + " / " + attacker.Stats.MaxHP;
-        currentAllyHPValue = MathUtility.MapValues(attacker.Stats.HP, 0f, attacker.Stats.MaxHP, 0f, 1f);
-        currentEnemyHPValue = MathUtility.MapValues(defender.Stats.HP, 0f, defender.Stats.MaxHP, 0f, 1f);
+        defenderHP.text = defender.HP + " / " + defender.Stats.MaxHP;
+        attackerHP.text = attacker.HP + " / " + attacker.Stats.MaxHP;
+        currentAllyHPValue = MathUtility.MapValues(attacker.HP, 0f, attacker.Stats.MaxHP, 0f, 1f);
+        currentEnemyHPValue = MathUtility.MapValues(defender.HP, 0f, defender.Stats.MaxHP, 0f, 1f);
 
         StartCoroutine(DelayedAllyHP());
         StartCoroutine(DelayedEnemyHP());
@@ -141,17 +149,17 @@ public class ReactUIController : MonoBehaviour {
     public void DodgeConfirmed()
     {
         UISystem.onDodgeClicked();
-        FightState.onStartAttack();
+        BattleSystem.onStartAttack();
     }
     public void GuardConfirmed()
     {
         UISystem.onGuardClicked();
-        FightState.onStartAttack();
+        BattleSystem.onStartAttack();
     }
     public void CounterConfirmed()
     {
         UISystem.onCounterClicked();
-        FightState.onStartAttack();
+        BattleSystem.onStartAttack();
     }
 
     
@@ -162,7 +170,7 @@ public class ReactUIController : MonoBehaviour {
         {
             yield return null;
         }
-        delayedAllyHPValue = MathUtility.MapValues(defender.Stats.HP, 0f, defender.Stats.MaxHP, 0f, 1f);
+        delayedAllyHPValue = MathUtility.MapValues(defender.HP, 0f, defender.Stats.MaxHP, 0f, 1f);
     }
     IEnumerator DelayedEnemyHP()
     {
@@ -170,7 +178,7 @@ public class ReactUIController : MonoBehaviour {
         {
             yield return null;
         }
-        delayedEnemyHPValue = MathUtility.MapValues(attacker.Stats.HP, 0f, attacker.Stats.MaxHP, 0f, 1f);
+        delayedEnemyHPValue = MathUtility.MapValues(attacker.HP, 0f, attacker.Stats.MaxHP, 0f, 1f);
     }
    
     #endregion

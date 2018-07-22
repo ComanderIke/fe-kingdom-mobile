@@ -34,8 +34,8 @@ namespace Assets.Scripts.GameStates
             UnitActionSystem.onDeselectCharacter();
             mainScript.GetSystem<UISystem>().HideAttackableField();
             SelectedCharacter = null;
-            
-            mainScript.GetSystem<GridSystem>().HideMovement();
+
+            mainScript.GetSystem<global::MapSystem>().HideMovement();
             mainScript.GetSystem<UISystem>().ShowAllActiveUnitEffects();
 
         }
@@ -48,7 +48,7 @@ namespace Assets.Scripts.GameStates
             
             SelectedCharacter = c;
             c.UnitTurnState.Selected = true;
-            GridSystem s = mainScript.GetSystem<GridSystem>();
+            global::MapSystem s = mainScript.GetSystem<global::MapSystem>();
             mainScript.GetSystem<UISystem>().ShowTopUI(c);
             s.HideMovement();
             if (!SelectedCharacter.UnitTurnState.HasMoved)
@@ -59,7 +59,7 @@ namespace Assets.Scripts.GameStates
             else
             {
                 if(!SelectedCharacter.UnitTurnState.HasAttacked)
-                    mainScript.GetSystem<GridSystem>().ShowAttackRange(c);
+                    s.ShowAttack(c, new List<int>(c.Stats.AttackRanges));
             }
             mainScript.GetSystem<UISystem>().HideAllActiveUnitEffects();
             if (!SelectedCharacter.UnitTurnState.HasMoved)
@@ -70,7 +70,7 @@ namespace Assets.Scripts.GameStates
         void EnemySelected(Unit c)
         {
             Debug.Log("enemy selected " + c.Name);
-            GridSystem gridScript = mainScript.GetSystem<GridSystem>();
+            global::MapSystem gridScript = mainScript.GetSystem<global::MapSystem>();
             Debug.Log(mainScript.name);
             Debug.Log(gridScript.name);
             gridScript.HideMovement();
@@ -94,7 +94,7 @@ namespace Assets.Scripts.GameStates
 
                 if (c.Player.ID != SelectedCharacter.Player.ID)//Clicked On Enemy
                 {
-                    if (confirm|| mainScript.GetSystem<GridSystem>().GridLogic.GetAttackTargetsAtGameObjectPosition(SelectedCharacter).Contains(c))
+                    if (confirm || mainScript.GetSystem<global::MapSystem>().GridLogic.GetAttackTargetsAtGameObjectPosition(SelectedCharacter).Contains(c))
                     {
                         SelectedCharacter.ResetPosition();
                         mainScript.GetSystem<UnitActionSystem>().GoToEnemy(SelectedCharacter, c, false);
@@ -108,7 +108,7 @@ namespace Assets.Scripts.GameStates
                  }
 
             }
-            if (mainScript.GetSystem<TurnSystem>().ActivePlayer.Units.Contains(c))
+            if (mainScript.PlayerManager.ActivePlayer.Units.Contains(c))
             {
                 if (!c.UnitTurnState.IsWaiting)
                 {
@@ -121,7 +121,7 @@ namespace Assets.Scripts.GameStates
                         if (SelectedCharacter!=null)
                             SelectedCharacter.ResetPosition();
                         mainScript.GetSystem<InputSystem>().ResetAll();
-                        mainScript.GetSystem<GridSystem>().HideMovement();
+                        mainScript.GetSystem<global::MapSystem>().HideMovement();
                         SelectCharacter(c);
                     }
                 }
@@ -132,8 +132,8 @@ namespace Assets.Scripts.GameStates
                     if (SelectedCharacter == null)
                     {
                         mainScript.GetSystem<InputSystem>().ResetAll();
-                        mainScript.GetSystem<GridSystem>().HideMovement();
-                        GridSystem s = mainScript.GetSystem<GridSystem>();
+                        mainScript.GetSystem<global::MapSystem>().HideMovement();
+                        global::MapSystem s = mainScript.GetSystem<global::MapSystem>();
                         s.ShowMovement(c);
                         s.ShowAttack(c, new List<int>(c.Stats.AttackRanges));
                     }

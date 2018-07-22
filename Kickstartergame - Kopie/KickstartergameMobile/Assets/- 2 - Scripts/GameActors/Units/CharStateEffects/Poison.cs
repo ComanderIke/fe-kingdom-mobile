@@ -1,28 +1,25 @@
-﻿using System;
+﻿using Assets.Scripts.Characters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
-namespace Assets.Scripts.Characters.Debuffs
+[CreateAssetMenu(menuName="GameData/Unit/Debuffs/Poison", fileName="Poison")]
+[System.Serializable]
+public class Poison : Debuff
 {
-    [System.Serializable]
-    public class Poison : Debuff
+    public int slow;
+
+    public override bool TakeEffect(Unit c)
     {
-        private int slow;
+        c.Stats.MoveRange -= slow;
+        return base.TakeEffect(c);
 
-        public Poison(int duration, int slow):base(duration)
-        {
-            this.slow = slow;
-        }
-        public override bool TakeEffect(Unit c)
-        {
-            c.Stats.MoveRange -= slow;
-            return base.TakeEffect(c);
-
-        }
-        public override void Remove(Unit c)
-        {
-            base.TakeEffect(c);
-        }
+    }
+    public override void Remove(Unit c)
+    {
+        base.TakeEffect(c);
     }
 }
+

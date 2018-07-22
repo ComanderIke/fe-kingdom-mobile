@@ -1,32 +1,32 @@
-﻿using System;
+﻿using Assets.Scripts.Characters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
-namespace Assets.Scripts.Characters.Debuffs
+
+[System.Serializable]
+public abstract class CharacterState : ScriptableObject
 {
-    [System.Serializable]
-    public abstract class CharacterState
+    public int duration;
+    private int currduration;
+
+    public virtual bool TakeEffect(Unit c)
     {
-        protected int duration;
-        protected int currduration;
-
-        public CharacterState(int duration)
+        if (currduration > 0)
         {
-            this.duration = duration;
-            currduration = duration;
+            currduration -= 1;
         }
-        public virtual bool TakeEffect(Unit c)
-        {
-            if (currduration > 0)
-            {
-                currduration -= 1;
-            }
-            else
-                return true;
-            return false;
+        else
+            return true;
+        return false;
 
-        }
-        public abstract void Remove(Unit c);
+    }
+    public abstract void Remove(Unit c);
+    private void OnEnable()
+    {
+        currduration = duration;
     }
 }
+

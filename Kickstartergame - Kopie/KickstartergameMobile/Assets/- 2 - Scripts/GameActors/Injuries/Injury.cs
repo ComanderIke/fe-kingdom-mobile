@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using UnityEngine;
 
-namespace Assets.Scripts.Injuries
+[System.Serializable]
+public abstract class Injury : ScriptableObject
 {
-    public abstract class Injury
-    {
-    }
 }
+

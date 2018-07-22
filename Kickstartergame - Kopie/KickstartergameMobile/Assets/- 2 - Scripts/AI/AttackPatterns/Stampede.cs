@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Assets.Scripts.Injuries;
 using UnityEngine;
 using Assets.Scripts.Grid;
 using Assets.Scripts.Characters;
@@ -34,7 +33,7 @@ namespace Assets.Scripts.AI.AttackPatterns
             }
             foreach(Vector2 pos in TargetPositions)
             {
-                if (MainScript.instance.GetSystem<GridSystem>().Tiles[(int)pos.x, (int)pos.y].character != null && MainScript.instance.GetSystem<GridSystem>().Tiles[(int)pos.x, (int)pos.y].character != unit && MainScript.instance.GetSystem<GridSystem>().Tiles[(int)pos.x, (int)pos.y].character.Player.ID != unit.Player.ID)
+                if (MainScript.instance.GetSystem<global::MapSystem>().Tiles[(int)pos.x, (int)pos.y].character != null && MainScript.instance.GetSystem<global::MapSystem>().Tiles[(int)pos.x, (int)pos.y].character != unit && MainScript.instance.GetSystem<global::MapSystem>().Tiles[(int)pos.x, (int)pos.y].character.Player.ID != unit.Player.ID)
                     TargetCount++;
             }
            // possibleInjuries.Add(new Injury);
@@ -42,7 +41,7 @@ namespace Assets.Scripts.AI.AttackPatterns
 
         private void AddBigTileToTargetPositions(BigTile bigTile)
         {
-            if (!MainScript.instance.GetSystem<GridSystem>().GridLogic.IsBigTileAccessible(bigTile))
+            if (!MainScript.instance.GetSystem<global::MapSystem>().GridLogic.IsBigTileAccessible(bigTile))
                 return;
             if (!TargetBigTilePositions.Contains(bigTile))
                 TargetBigTilePositions.Add(bigTile);
@@ -75,7 +74,7 @@ namespace Assets.Scripts.AI.AttackPatterns
         }
         void DoAction()
         {
-            Tile[,] tiles = MainScript.instance.GetSystem<GridSystem>().Tiles;
+            Tile[,] tiles = MainScript.instance.GetSystem<global::MapSystem>().Tiles;
             foreach (Vector2 position in TargetPositions)
             {
 
@@ -93,8 +92,7 @@ namespace Assets.Scripts.AI.AttackPatterns
         public override void Execute()
         {
             Debug.Log("Execute: BigCharge");
-            AttackPattern.onAttackPatternUsed(unit, this);
-            UISystem.onContinuePressed += DoAction;
+            DoAction();
             
         }
 

@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
-namespace Assets.Scripts.Grid
+public class Grid
 {
-    [System.Serializable]
-    public class GridData
+    public int width;
+    public int height;
+
+    public Grid(int width, int height)
     {
-        public int width;
-        public int height;
+        this.width = width;
+        this.height = height;
     }
-
-
 }
+
+
+

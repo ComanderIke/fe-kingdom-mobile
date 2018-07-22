@@ -66,34 +66,19 @@ public class CharacterCreater : MonoBehaviour
     }
     public void CompleteCreation()
     {
-        string name = characterName.text;
-        RessourceScript ss = FindObjectOfType<RessourceScript>();
-        DataScript ws = FindObjectOfType<DataScript>();
-        Human newChar = new Human(name, ss.sprites.GetCharacterOnMapSprites(0));
+        //string name = characterName.text;
+        //RessourceScript ss = FindObjectOfType<RessourceScript>();
+        //DataScript ws = FindObjectOfType<DataScript>();
+        //Human newChar = new Human(name, ss.sprites.GetCharacterOnMapSprites(0), ws.unitData.DefaultStats);
 
-        if (selectedWeaponIndex == 0)
-        {
-            ws.weapons.woodenSword.Use(newChar);
-        }
-        else if (selectedWeaponIndex == 1)
-        {
-            ws.weapons.basicBow.Use(newChar);
-        }
-        else if (selectedWeaponIndex == 2)
-        {
-            ws.weapons.woodenAxe.Use(newChar);
-        }
-        else if (selectedWeaponIndex == 3)
-        {
-            ws.weapons.woodenSpear.Use(newChar);     
-        }
-        newChar.Sprite = ss.sprites.GetCharacterOnMapSprites(selectedWeaponIndex);
-        FindObjectOfType<GameData>().AddUnit(newChar);
+
+        //newChar.Sprite = ss.sprites.GetCharacterOnMapSprites(selectedWeaponIndex);
+        //FindObjectOfType<GameData>().AddUnit(newChar);
       
-        newChar.Inventory.AddItem(newChar.EquipedWeapon);
-        Debug.Log(newChar);
-        Debug.Log(newChar.Name);
-        SceneManager.LoadScene("Level2");
+        //newChar.Inventory.AddItem(newChar.EquipedWeapon);
+        //Debug.Log(newChar);
+        //Debug.Log(newChar.Name);
+        //SceneManager.LoadScene("Level2");
     }
     public void MainMenuClicked()
     {

@@ -9,12 +9,6 @@ namespace Assets.Scripts.Ressources
     [System.Serializable]
     public class Weapons
     {
-        public Weapon basicBow;
-
-        public Weapon woodenSpear;
-
-        public Weapon woodenSword;
-
-        public Weapon woodenAxe;
+        
     }
 }

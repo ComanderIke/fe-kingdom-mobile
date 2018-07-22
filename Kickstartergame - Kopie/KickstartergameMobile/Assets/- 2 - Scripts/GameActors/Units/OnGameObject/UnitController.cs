@@ -6,12 +6,14 @@ using Assets.Scripts.Input;
 public class UnitController :  MonoBehaviour, DragAble {
 
     public static bool lockInput = true;
-    public Unit Unit { get; set; }
+
+    public Unit Unit;
     public DragManager DragManager { get; set; }
     public RaycastManager RaycastManager { get; set; }
     public SpeechBubble SpeechBubble { get; set; }
     
-    private HPBarOnMap hpBar;
+    private StatsBarOnMap hpBar;
+    private StatsBarOnMap spBar;
 
     private void Start()
     {
@@ -22,9 +24,12 @@ public class UnitController :  MonoBehaviour, DragAble {
         if(SpeechBubble)
             this.SpeechBubble.gameObject.SetActive(false);
         Unit.onHpValueChanged += HPValueChanged;
+        Unit.onSpValueChanged += SPValueChanged;
         Unit.onUnitWaiting+= SetWaitingSprite;
-        hpBar = GetComponentInChildren<HPBarOnMap>();
+        hpBar = GetComponentsInChildren<StatsBarOnMap>()[0];
+        spBar = GetComponentsInChildren<StatsBarOnMap>()[1];
         HPValueChanged();
+        SPValueChanged();
     }
 
     void Update () {
@@ -35,7 +40,12 @@ public class UnitController :  MonoBehaviour, DragAble {
     void HPValueChanged()
     {
         if(hpBar!=null&&Unit!=null)
-            hpBar.SetHealth(Unit.Stats.HP, Unit.Stats.MaxHP);
+            hpBar.SetHealth(Unit.HP, Unit.Stats.MaxHP);
+    }
+    void SPValueChanged()
+    {
+        if (spBar != null && Unit != null)
+            spBar.SetHealth(Unit.SP, Unit.Stats.MaxSP);
     }
 
     #region Renderer

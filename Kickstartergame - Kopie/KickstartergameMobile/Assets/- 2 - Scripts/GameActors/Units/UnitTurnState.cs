@@ -43,7 +43,7 @@ namespace Assets.Scripts.Characters
                 hasMoved = value;
                 if(Unit.onUnitCanMove!=null)
                     Unit.onUnitCanMove(unit, !hasMoved);
-                if(unit.Player.IsHumanPlayer)
+                if(unit.Player.IsPlayerControlled)
                     Unit.onUnitShowActiveEffect(unit, !hasMoved, false);
                 if(hasMoved)
                     UISystem.onHideCursor();
@@ -74,7 +74,7 @@ namespace Assets.Scripts.Characters
         }
         public bool IsDragable()
         {
-            return !IsWaiting && unit.IsAlive() && unit.Player.ID == MainScript.instance.GetSystem<TurnSystem>().ActivePlayerNumber;
+            return !IsWaiting && unit.IsAlive() && unit.Player.ID == MainScript.instance.PlayerManager.ActivePlayerNumber;
         }
     }
 }

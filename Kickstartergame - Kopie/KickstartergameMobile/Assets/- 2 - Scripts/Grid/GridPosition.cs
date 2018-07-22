@@ -28,7 +28,7 @@ namespace Assets.Scripts.Characters
         }
 
         protected Unit character;
-        protected GridSystem gridScript;
+        protected global::MapSystem gridScript;
 
         public GridPosition(Unit character)
         {
@@ -42,7 +42,7 @@ namespace Assets.Scripts.Characters
         public virtual void SetPosition(int newX, int newY)
         {
             if(gridScript==null)
-                gridScript = MainScript.instance.GetSystem<GridSystem>();
+                gridScript = MainScript.instance.GetSystem<MapSystem>();
             if (x!=-1&&y!=-1)
                 gridScript.Tiles[x, y].character = null;
             gridScript.Tiles[newX, newY].character = character;
@@ -56,8 +56,12 @@ namespace Assets.Scripts.Characters
         public virtual void RemoveCharacter()
         {
             if(gridScript==null)
-                gridScript = MainScript.instance.GetSystem<GridSystem>();
+                gridScript = MainScript.instance.GetSystem<MapSystem>();
             gridScript.Tiles[x, y] = null;
+        }
+        public int GetManhattenDistance(int x2, int y2)
+        {
+            return Math.Abs(x - x2) + Math.Abs(y - y2);
         }
         public virtual bool CanAttack(List<int> range, GridPosition enemyPosition)
         {

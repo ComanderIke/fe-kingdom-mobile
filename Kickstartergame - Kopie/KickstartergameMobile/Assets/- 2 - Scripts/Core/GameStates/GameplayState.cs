@@ -9,10 +9,9 @@ using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.GameStates
 {
-    public class GameplayState : GameState
+    public class GameplayState : GameState<NextStateTrigger>
     {
         MainScript mainScript;
-        bool active;
         public GameplayState()
         {
             mainScript = MainScript.instance;
@@ -23,15 +22,16 @@ namespace Assets.Scripts.GameStates
         {
             mainScript.GetSystem<CameraSystem>().AddMixin<DragCameraMixin>();
             mainScript.GetSystem<CameraSystem>().AddMixin<SnapCameraMixin>();
-            mainScript.GetSystem<CameraSystem>().AddMixin<ClampCameraMixin>().BoundsBorder(1).GridHeight(12).GridWidth(10).Locked(true);
-            mainScript.GetSystem<CameraSystem>().AddMixin<ViewOnGridMixin>();
-            active = true;
+            int height = mainScript.GetSystem<MapSystem>().grid.height;
+            int width = mainScript.GetSystem<MapSystem>().grid.width;
+            mainScript.GetSystem<CameraSystem>().AddMixin<ClampCameraMixin>().BoundsBorder(1).GridHeight(height).GridWidth(width).Locked(true);
+            mainScript.GetSystem<CameraSystem>().AddMixin<ViewOnGridMixin>().zoom=0;
         }
 
-        public override void Update()
+        public override GameState<NextStateTrigger> Update()
         {
-            if(active)
-                CheckGameOver();
+            CheckGameOver();
+            return nextState;
         }
 
         public override void Exit()
@@ -44,21 +44,21 @@ namespace Assets.Scripts.GameStates
 
         public void CheckGameOver()
         {
-            foreach(Player p in mainScript.GetSystem<TurnSystem>().Players)
+            foreach(Army p in mainScript.PlayerManager.Players)
             {
-                if (p.IsHumanPlayer && !p.IsAlive())
+                if (p.IsPlayerControlled && !p.IsAlive())
                 {
                     mainScript.GetSystem<UISystem>().ShowGameOver();
                     mainScript.GetSystem<InputSystem>().active = false;
-                    active = false;
+                    mainScript.GameStateManager.Feed(NextStateTrigger.GameOver);
+                    
                     return;
                 }
-                else if(!p.IsHumanPlayer && !p.IsAlive())
+                else if(!p.IsPlayerControlled && !p.IsAlive())
                 {
                     mainScript.GetSystem<UISystem>().ShowWinScreen();
                     mainScript.GetSystem<InputSystem>().active = false;
-
-                    active = false;
+                    mainScript.GameStateManager.Feed(NextStateTrigger.PlayerWon);
                     return;
                 }
             }

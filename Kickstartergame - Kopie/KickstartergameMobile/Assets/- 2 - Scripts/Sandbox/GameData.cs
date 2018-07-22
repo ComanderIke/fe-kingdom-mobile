@@ -6,10 +6,10 @@ using UnityEngine;
 
 public class GameData : MonoBehaviour {
 
-    public Player player;
+    public Army player;
 	// Use this for initialization
 	void Start () {
-        player = new Player(0, "Player 1", true);
+        player = new Army(0, "Player 1", true);
         DontDestroyOnLoad(this.gameObject);
 	}
 	

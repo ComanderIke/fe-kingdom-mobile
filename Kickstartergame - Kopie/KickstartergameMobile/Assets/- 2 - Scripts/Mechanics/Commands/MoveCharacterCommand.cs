@@ -31,10 +31,7 @@ namespace Assets.Scripts.Commands
         }
         public override void Execute()
         {
-            if(path==null)
-                MainScript.instance.SwitchState(new MovementState(unit, x, y));
-            else
-                MainScript.instance.SwitchState(new MovementState(unit, x, y,path));
+           MainScript.instance.GameStateManager.SwitchState(new MovementState(unit, x, y,path));
         }
 
         public override void Undo()

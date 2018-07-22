@@ -67,22 +67,13 @@ namespace Assets.Scripts.GameStates
         {
             currentActions.Enqueue(c);
         }
-        public void MoveCharacter(Unit c, int x, int y)
-        {
-            MoveCharacterCommand mCC = new MoveCharacterCommand(c, x, y);
-            currentActions.Enqueue(mCC);
-           // mCC.Execute();
-            //mainScript.SwitchState(new MovementState( c, x, y, drag, targetState));
-        }
-        public void MoveCharacter(Unit c, int x, int y, List<Vector2> path)
+
+        public void MoveCharacter(Unit c, int x, int y, List<Vector2> path=null)
         {
             MoveCharacterCommand mCC = new MoveCharacterCommand(c, x, y,path);
             Unit.onUnitShowActiveEffect(c, false, false);
-            Debug.Log(c.Name + " " + c.GridPosition.x + " " + c.GridPosition.y + " " + x + " " + y);
             UISystem.onShowCursor(x, y);
             currentActions.Enqueue(mCC);
-           // mCC.Execute();
-           // mainScript.SwitchState(new MovementState( c, x, y, path));
         }
         public void PushUnit(Unit character, Vector2 direction)
         {
@@ -125,7 +116,7 @@ namespace Assets.Scripts.GameStates
             Unit selectedUnit = unitSelectionManager.SelectedCharacter;
             if (selectedUnit != null && !selectedUnit.UnitTurnState.IsWaiting)
             {
-                mainScript.GetSystem<GridSystem>().HideMovement();
+                mainScript.GetSystem<global::MapSystem>().HideMovement();
                 selectedUnit.UnitTurnState.IsWaiting = true;
                 selectedUnit.UnitTurnState.Selected = false;
                 selectedUnit = null;
@@ -139,8 +130,8 @@ namespace Assets.Scripts.GameStates
             onUnitMoveToEnemy();
             if (preferedPath.path.Count == 0 && character.GridPosition.CanAttack(character.Stats.AttackRanges,enemy.GridPosition))
             {
-                
-                mainScript.GetSystem<GridSystem>().HideMovement();
+
+                mainScript.GetSystem<global::MapSystem>().HideMovement();
                 Debug.Log("Enemy is in Range:");
                 
                 if (!drag)
@@ -162,9 +153,9 @@ namespace Assets.Scripts.GameStates
             else//go to enemy cause not in range
             {
                 Debug.Log("Got to Enemy!");
-                if (mainScript.GetSystem<GridSystem>().GridLogic.IsFieldAttackable(enemy.GridPosition.x, enemy.GridPosition.y))
+                if (mainScript.GetSystem<global::MapSystem>().GridLogic.IsFieldAttackable(enemy.GridPosition.x, enemy.GridPosition.y))
                 {
-                    mainScript.GetSystem<GridSystem>().HideMovement();
+                    mainScript.GetSystem<global::MapSystem>().HideMovement();
 
                     List<Vector2> movePath = new List<Vector2>();
                     for (int i = 0; i < preferedPath.path.Count; i++)
@@ -195,7 +186,7 @@ namespace Assets.Scripts.GameStates
                         ExecuteActions();
 
                     }
-                   
+
                     mainScript.GetSystem<InputSystem>().AttackRangeFromPath = 0;
 
                     return;
@@ -210,19 +201,19 @@ namespace Assets.Scripts.GameStates
         private void SwitchToGamePlayState()
         {
             UnitActionSystem.onAllCommandsFinished -= SwitchToGamePlayState;
-            mainScript.SwitchState(new GameplayState());
+            mainScript.GameStateManager.SwitchState(GameStateManager.GameplayState);
         }
         private void UnitMoveOnTile(int x, int y)
         {
   
             UnitSelectionSystem unitSelectionManager = mainScript.GetSystem<UnitSelectionSystem>();
             Unit selectedUnit = unitSelectionManager.SelectedCharacter;
-            if (mainScript.GetSystem<GridSystem>().Tiles[x, y].isActive && !(x == selectedUnit.GridPosition.x && y == selectedUnit.GridPosition.y))
+            if (mainScript.GetSystem<global::MapSystem>().Tiles[x, y].isActive && !(x == selectedUnit.GridPosition.x && y == selectedUnit.GridPosition.y))
             {
                 if (!(selectedUnit is Monster) || (selectedUnit is Monster && !((BigTilePosition)selectedUnit.GridPosition).Position.Contains(new Vector2(x, y))))
                 {
                     selectedUnit.GridPosition.SetPosition(selectedUnit.GridPosition.x, selectedUnit.GridPosition.y);
-                    MoveCharacter(selectedUnit, x, y,preferedPath.path);//, true, new GameplayState());
+                    MoveCharacter(selectedUnit, x, y, preferedPath.path);//, true, new GameplayState());
                     UnitActionSystem.onAllCommandsFinished += SwitchToGamePlayState;
                     ExecuteActions();
                     
@@ -233,9 +224,9 @@ namespace Assets.Scripts.GameStates
                 }
 
             }
-            else if (mainScript.GetSystem<GridSystem>().Tiles[x, y].character != null && mainScript.GetSystem<GridSystem>().Tiles[x, y].character.Player.ID != selectedUnit.Player.ID)
+            else if (mainScript.GetSystem<global::MapSystem>().Tiles[x, y].character != null && mainScript.GetSystem<global::MapSystem>().Tiles[x, y].character.Player.ID != selectedUnit.Player.ID)
             {
-                GoToEnemy(selectedUnit, mainScript.GetSystem<GridSystem>().Tiles[x, y].character, true);
+                GoToEnemy(selectedUnit, mainScript.GetSystem<global::MapSystem>().Tiles[x, y].character, true);
             }
             else
             {
@@ -249,7 +240,7 @@ namespace Assets.Scripts.GameStates
             UnitSelectionSystem unitSelectionManager = mainScript.GetSystem<UnitSelectionSystem>();
             if (draggedOverUnit.Player.ID != unitSelectionManager.SelectedCharacter.Player.ID)
             {
-                if (mainScript.GetSystem<GridSystem>().GridLogic.IsFieldAttackable(draggedOverUnit.GridPosition.x, draggedOverUnit.GridPosition.y))
+                if (mainScript.GetSystem<global::MapSystem>().GridLogic.IsFieldAttackable(draggedOverUnit.GridPosition.x, draggedOverUnit.GridPosition.y))
                     GoToEnemy(unitSelectionManager.SelectedCharacter, draggedOverUnit, true);
                 else
                 {

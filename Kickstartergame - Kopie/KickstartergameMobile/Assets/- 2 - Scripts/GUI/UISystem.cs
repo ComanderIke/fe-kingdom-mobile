@@ -63,8 +63,6 @@ public class UISystem : MonoBehaviour, EngineSystem {
     [SerializeField]
     GameObject attackPreview;
     [SerializeField]
-    GameObject attackPattern;
-    [SerializeField]
     GameObject playerTurnAnimation;
     [SerializeField]
     GameObject aiTurnAnimation;
@@ -80,7 +78,6 @@ public class UISystem : MonoBehaviour, EngineSystem {
     private List<GameObject> attackableFieldEffects;
     void Start () {
         mainScript = MainScript.instance;
-        AttackPattern.onAttackPatternUsed += ShowAttackPattern;
         UISystem.onShowCursor += SpawnTileCursor;
         UISystem.onHideCursor += HideTileCursor;
         Unit.onUnitShowActiveEffect += SpawnActiveUnitEffect;
@@ -213,7 +210,7 @@ public class UISystem : MonoBehaviour, EngineSystem {
     {
         if(attackUIController.isActiveAndEnabled)
             attackUIController.Hide();
-        if(mainScript.GetSystem<TurnSystem>().ActivePlayer.IsHumanPlayer)
+        if(mainScript.PlayerManager.ActivePlayer.IsPlayerControlled)
             ShowAllActiveUnitEffects();
     }
     public void ShowGameOver()
@@ -238,18 +235,13 @@ public class UISystem : MonoBehaviour, EngineSystem {
     {
         if (reactUIController.isActiveAndEnabled)
             reactUIController.Hide();
-        if (mainScript.GetSystem<TurnSystem>().ActivePlayer.IsHumanPlayer)
+        if (mainScript.PlayerManager.ActivePlayer.IsPlayerControlled)
             ShowAllActiveUnitEffects();
-    }
-    public void ShowAttackPattern(Unit user, AttackPattern pattern )
-    {
-        attackPattern.SetActive(true);
-        attackPattern.GetComponent<AttackPatternUI>().Show(user.Name, pattern.Name);
     }
 
     public void ShowTopUI(Unit c)
     {
-        if(c.Player.ID != mainScript.GetSystem<TurnSystem>().ActivePlayer.ID)
+        if(c.Player.ID != mainScript.PlayerManager.ActivePlayer.ID)
         {
             topUIEnemy.Show(c);
             topUI.Hide();
@@ -305,7 +297,7 @@ public class UISystem : MonoBehaviour, EngineSystem {
     {
         ShowAttackableEnemy((int)defender.GridPosition.x, (int)defender.GridPosition.y);
         attackPreview.SetActive(true);
-        attackPreview.GetComponent<AttackPreview>().UpdateValues(attacker.Stats.MaxHP,attacker.Stats.HP, defender.Stats.MaxHP, defender.Stats.HP,attacker.BattleStats.GetDamageAgainstTarget(defender),attacker.BattleStats.GetHitAgainstTarget(defender), attacker.BattleStats.GetAttackCountAgainst(defender));
+        attackPreview.GetComponent<AttackPreview>().UpdateValues(attacker.Stats.MaxHP,attacker.HP, defender.Stats.MaxHP, defender.HP,attacker.BattleStats.GetDamageAgainstTarget(defender),attacker.BattleStats.GetHitAgainstTarget(defender), attacker.BattleStats.GetAttackCountAgainst(defender));
         //Vector3 attackPreviewPos;
         //if (defender.GridPosition is BigTilePosition)
         //  attackPreviewPos = Camera.main.WorldToScreenPoint(new Vector3(pos.x + GridManager.GRID_X_OFFSET ,pos.y + 1.0f, -0.05f));

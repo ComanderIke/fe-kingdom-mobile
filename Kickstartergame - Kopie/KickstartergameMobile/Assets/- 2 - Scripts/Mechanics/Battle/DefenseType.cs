@@ -2,18 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
-
-public class DefenseType
+[CreateAssetMenu(menuName = "GameData/Unit/DefenseType", fileName = "DefenseType")]
+public class DefenseType: ScriptableObject
 {
-    public string Name { get; set; }
-    public int Hit { get; set; }
-    public float DamageMultiplier { get; set; }
+    public int Hit;
+    public float DamageMultiplier;
 
-    public DefenseType(string Name, float Atk_Mult, int Hit)
-    {
-        this.Name = Name;
-        this.DamageMultiplier = Atk_Mult;
-        this.Hit = Hit;
-    }
+
 }

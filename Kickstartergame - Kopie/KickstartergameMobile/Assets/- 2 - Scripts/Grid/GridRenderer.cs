@@ -1,87 +1,86 @@
 ﻿using Assets.Scripts.Characters;
 using Assets.Scripts.GameStates;
+using Assets.Scripts.Grid;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts.Grid
+
+public class GridRenderer
 {
-    public class GridRenderer
+
+    public MapSystem GridManager { get; set; }
+    public Tile[,] Tiles { get; set; }
+
+    public GridRenderer(global::MapSystem gridManager)
     {
+        GridManager = gridManager;
+        Tiles = gridManager.Tiles;
+    }
 
-        public GridSystem GridManager { get; set; }
-        public Tile[,] Tiles { get; set; }
+    public void SetBigTileActive(BigTile bigTile, int playerId, bool attack)
+    {
+        SetFieldMaterial(bigTile.BottomLeft(), playerId, attack);
+        SetFieldMaterial(bigTile.BottomRight(), playerId, attack);
+        SetFieldMaterial(bigTile.TopLeft(), playerId, attack);
+        SetFieldMaterial(bigTile.TopRight(), playerId, attack);
+    }
 
-        public GridRenderer (GridSystem gridManager)
+    public void ShowStandOnTexture(Unit c)
+    {
+        if (c.GridPosition is BigTilePosition)
         {
-            GridManager = gridManager;
-            Tiles = gridManager.Tiles;
+            BigTilePosition bigTile = (BigTilePosition)c.GridPosition;
+
+            Tiles[(int)bigTile.Position.BottomLeft().x, (int)bigTile.Position.BottomLeft().y].gameObject.GetComponent<MeshRenderer>().material = GridManager.gridRessources.cellMaterialStandOn;
+            Tiles[(int)bigTile.Position.BottomRight().x, (int)bigTile.Position.BottomRight().y].gameObject.GetComponent<MeshRenderer>().material = GridManager.gridRessources.cellMaterialStandOn;
+            Tiles[(int)bigTile.Position.TopLeft().x, (int)bigTile.Position.TopLeft().y].gameObject.GetComponent<MeshRenderer>().material = GridManager.gridRessources.cellMaterialStandOn;
+            Tiles[(int)bigTile.Position.TopRight().x, (int)bigTile.Position.TopRight().y].gameObject.GetComponent<MeshRenderer>().material = GridManager.gridRessources.cellMaterialStandOn;
         }
-        public void SetBigTileActive(BigTile bigTile, int playerId, bool attack)
-        {
-            SetFieldMaterial(bigTile.BottomLeft(), playerId, attack);
-            SetFieldMaterial(bigTile.BottomRight(), playerId, attack);
-            SetFieldMaterial(bigTile.TopLeft(), playerId, attack);
-            SetFieldMaterial(bigTile.TopRight(), playerId, attack);
-        }
+        else
+            Tiles[c.GridPosition.x, c.GridPosition.y].gameObject.GetComponent<MeshRenderer>().material = GridManager.gridRessources.cellMaterialStandOn;
+    }
 
-      
-
-        public void ShowStandOnTexture(Unit c)
+    public void SetFieldMaterial(Vector2 pos, int playerId, bool attack)
+    {
+        MeshRenderer m = Tiles[(int)pos.x, (int)pos.y].gameObject.GetComponent<MeshRenderer>();
+        if (attack)
         {
-            if (c.GridPosition is BigTilePosition)
+            //not using sharedMaterial here create Material instances which will cause much higher baches
+            if (m.sharedMaterial == GridManager.gridRessources.cellMaterialMovement)
+                return;
+            if (MainScript.instance.PlayerManager.ActivePlayer.ID == playerId)
             {
-                BigTilePosition bigTile = (BigTilePosition)c.GridPosition;
-
-                Tiles[(int)bigTile.Position.BottomLeft().x, (int)bigTile.Position.BottomLeft().y].gameObject.GetComponent<MeshRenderer>().material = GridManager.gridRessources.cellMaterialStandOn;
-                Tiles[(int)bigTile.Position.BottomRight().x, (int)bigTile.Position.BottomRight().y].gameObject.GetComponent<MeshRenderer>().material = GridManager.gridRessources.cellMaterialStandOn;
-                Tiles[(int)bigTile.Position.TopLeft().x, (int)bigTile.Position.TopLeft().y].gameObject.GetComponent<MeshRenderer>().material = GridManager.gridRessources.cellMaterialStandOn;
-                Tiles[(int)bigTile.Position.TopRight().x, (int)bigTile.Position.TopRight().y].gameObject.GetComponent<MeshRenderer>().material = GridManager.gridRessources.cellMaterialStandOn;
+                m.material = GridManager.gridRessources.cellMaterialAttack;
+                if (Tiles[(int)pos.x, (int)pos.y].character != null && Tiles[(int)pos.x, (int)pos.y].character.Player.ID != playerId)
+                    MainScript.instance.GetSystem<UISystem>().ShowAttackableField((int)pos.x, (int)pos.y);
+                // MainScript.GetInstance().GetController<UIController>().ShowAttackableEnemy((int)pos.x, (int)pos.y);
             }
             else
-                Tiles[c.GridPosition.x, c.GridPosition.y].gameObject.GetComponent<MeshRenderer>().material = GridManager.gridRessources.cellMaterialStandOn;
+                m.material = GridManager.gridRessources.cellMaterialEnemyAttack;
         }
-
-        public void SetFieldMaterial(Vector2 pos, int playerId, bool attack)
+        else
         {
-            MeshRenderer m = Tiles[(int)pos.x, (int)pos.y].gameObject.GetComponent<MeshRenderer>();
-            if (attack)
+            m.material = GridManager.gridRessources.cellMaterialMovement;
+
+            if (Tiles[(int)pos.x, (int)pos.y].character != null && Tiles[(int)pos.x, (int)pos.y].character.Player.ID != playerId)
             {
-                //not using sharedMaterial here create Material instances which will cause much higher baches
-                if (m.sharedMaterial==GridManager.gridRessources.cellMaterialMovement)
-                    return;
-                if (MainScript.instance.GetSystem<TurnSystem>().ActivePlayer.ID == playerId)
+                if (MainScript.instance.PlayerManager.ActivePlayer.ID == playerId)
                 {
                     m.material = GridManager.gridRessources.cellMaterialAttack;
-                    if (Tiles[(int)pos.x, (int)pos.y].character != null&& Tiles[(int)pos.x, (int)pos.y].character.Player.ID!=playerId)
-                        MainScript.instance.GetSystem<UISystem>().ShowAttackableField((int)pos.x, (int)pos.y);
+                    MainScript.instance.GetSystem<UISystem>().ShowAttackableField((int)pos.x, (int)pos.y);
                     // MainScript.GetInstance().GetController<UIController>().ShowAttackableEnemy((int)pos.x, (int)pos.y);
                 }
                 else
                     m.material = GridManager.gridRessources.cellMaterialEnemyAttack;
             }
-            else
-            {
-                m.material = GridManager.gridRessources.cellMaterialMovement;
- 
-                if (Tiles[(int)pos.x, (int)pos.y].character != null && Tiles[(int)pos.x, (int)pos.y].character.Player.ID != playerId)
-                {
-                    if (MainScript.instance.GetSystem<TurnSystem>().ActivePlayer.ID == playerId)
-                    {
-                        m.material = GridManager.gridRessources.cellMaterialAttack;
-                        MainScript.instance.GetSystem<UISystem>().ShowAttackableField((int)pos.x, (int)pos.y);
-                        // MainScript.GetInstance().GetController<UIController>().ShowAttackableEnemy((int)pos.x, (int)pos.y);
-                    }
-                    else
-                        m.material = GridManager.gridRessources.cellMaterialEnemyAttack;
-                }
-                Tiles[(int)pos.x, (int)pos.y].isActive = true;
-            }
+            Tiles[(int)pos.x, (int)pos.y].isActive = true;
         }
-        
-        /*===========*/
-
-        
-       
     }
+
+
+    
+
+
+
 }

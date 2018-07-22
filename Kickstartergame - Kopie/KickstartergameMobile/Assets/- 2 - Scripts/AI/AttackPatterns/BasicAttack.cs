@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Assets.Scripts.Injuries;
 using UnityEngine;
 using Assets.Scripts.Characters;
 using Assets.Scripts.Commands;
@@ -47,8 +46,7 @@ namespace Assets.Scripts.AI.AttackPatterns
         public override void Execute()
         {
             Debug.Log("Execute: BasicAttack");
-            AttackPattern.onAttackPatternUsed(unit, this);
-            UISystem.onContinuePressed += DoAction;
+            DoAction();
 
         }
 

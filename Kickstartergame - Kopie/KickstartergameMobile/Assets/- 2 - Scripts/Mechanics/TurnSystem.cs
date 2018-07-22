@@ -17,56 +17,31 @@ namespace Assets.Scripts.GameStates
         public static OnStartTurn onStartTurn;
         #endregion
         private MainScript mainScript;
-        private int activePlayerNumber;
+        private PlayerManager playerManager;
+        
         public int TurnCount { get; set; }
-        public Player ActivePlayer { get; set; }
-        public List<Player> Players { get; set; }
-        public int ActivePlayerNumber
-        {
-            get
-            {
-                return activePlayerNumber;
-            }
-            set
-            {
-                if (value >= Players.Count)
-                    ActivePlayerNumber = 0;
-                else
-                    activePlayerNumber = value;
-            }
-        }
+        
+        
+
+        
         void Start()
         {
             mainScript = MainScript.instance;
             onEndTurn += EndTurn;
             onStartTurn += StartTurn;
-
+            playerManager = mainScript.PlayerManager;
             InitPlayers();
         }
        
        
-        public void Init()
-        {
-            foreach (Player p in Players)
-            {
-                p.Init();
-            }
-        }
+ 
         private void InitPlayers()
         {
-            Players = new List<Player>();
-            PlayerConfig transform = GameObject.FindObjectOfType<PlayerConfig>();
-            foreach (Player p in transform.players)
-            {
-                Players.Add(p);
-            }
-            activePlayerNumber = 0;
-            ActivePlayer = Players[activePlayerNumber];
+           
+            playerManager.ActivePlayerNumber = 0;
+            playerManager.ActivePlayer = mainScript.PlayerManager.Players[playerManager.ActivePlayerNumber];
         }
-        public Player GetRealPlayer()
-        {
-            return Players[0];
-        }
+       
         IEnumerator DelayTooglePlayerInput(bool active, float delay)
         {
             yield return new WaitForSeconds(delay);
@@ -80,7 +55,7 @@ namespace Assets.Scripts.GameStates
         IEnumerator DelayAIPhase( float delay)
         {
             yield return new WaitForSeconds(delay);
-            mainScript.SwitchState(new AIState(ActivePlayer));
+            mainScript.GameStateManager.Feed(NextStateTrigger.StartAITurn);
         }
         IEnumerator DelayTurnUpdate(float delay)
         {
@@ -97,14 +72,14 @@ namespace Assets.Scripts.GameStates
             //    }
             //    Debug.Log("Turn: " + TurnCount);
             //}
-            foreach (Unit c in ActivePlayer.Units)
+            foreach (Unit c in playerManager.ActivePlayer.Units)
             {
                 c.UpdateTurn();
             }
         }
         private void StartTurn()
         {
-            if (!ActivePlayer.IsHumanPlayer)
+            if (!playerManager.ActivePlayer.IsPlayerControlled)
             {
 
                 Debug.Log("AITurn");
@@ -128,13 +103,13 @@ namespace Assets.Scripts.GameStates
         public void EndTurn()
         {
             Debug.Log("EndTurn!");
-            foreach (Unit c in ActivePlayer.Units)
+            foreach (Unit c in playerManager.ActivePlayer.Units)
             {
                 c.EndTurn();
                 //c.gameObject.GetComponent<CharacterScript>().SetSelected(false);
             }
-            ActivePlayerNumber++;
-            ActivePlayer = Players[ActivePlayerNumber];
+            playerManager.ActivePlayerNumber++;
+            
             mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter = null;
             StartTurn();
         }

@@ -28,7 +28,7 @@ namespace Assets.Scripts.Characters.SpecialAttacks
             UISystem uiController = MainScript.instance.GetSystem<UISystem>();
             int dmg=defender.InflictDamage(normalAttackDamage, user);
             int dmg2= defender.InflictDamage(normalAttackDamage/2, user, true);
-            if (user.Player.IsHumanPlayer)
+            if (user.Player.IsPlayerControlled)
             {
                 uiController.attackUIController.ShowDamageText(dmg);
                 GameObject.FindObjectOfType<AllySpriteController>().StartAttackAnimation();

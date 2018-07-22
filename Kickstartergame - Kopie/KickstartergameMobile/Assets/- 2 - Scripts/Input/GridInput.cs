@@ -20,7 +20,7 @@ namespace Assets.Scripts.Input
         {
             MainScript mainScript = MainScript.instance;
             Unit selectedCharacter = mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter;
-            GridLogic gridLogic = mainScript.GetSystem<GridSystem>().GridLogic;
+            GridLogic gridLogic = mainScript.GetSystem<global::MapSystem>().GridLogic;
             BigTile clickedBigTile = new BigTile(new Vector2(centerX, centerY), new Vector2(centerX + 1, centerY), new Vector2(centerX, centerY + 1), new Vector2(centerX + 1, centerY + 1));
 
             if (!gridLogic.IsValidAndActive(clickedBigTile, selectedCharacter.Player.ID))
@@ -55,7 +55,7 @@ namespace Assets.Scripts.Input
         }
         public Vector2 GetCenterPos(Vector2 clickedPos)
         {
-            int centerX = (int)Mathf.Round(clickedPos.x - GridSystem.GRID_X_OFFSET) - 1;
+            int centerX = (int)Mathf.Round(clickedPos.x - global::MapSystem.GRID_X_OFFSET) - 1;
             int centerY = (int)Mathf.Round(clickedPos.y) - 1;
             return new Vector2(centerX, centerY);
         }
@@ -75,7 +75,7 @@ namespace Assets.Scripts.Input
                     
                     confirmClick = true;
                     clickedField = new Vector2(x, y);
-                    if (mainScript.GetSystem<GridSystem>().Tiles[x, y].isActive)
+                    if (mainScript.GetSystem<global::MapSystem>().Tiles[x, y].isActive)
                     {
                         if (selectedCharacter is Monster)
                         {

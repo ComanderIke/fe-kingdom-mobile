@@ -1,89 +1,29 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
-
-namespace Assets.Scripts.Characters.Attributes
+[System.Serializable]
+[CreateAssetMenu(menuName = "GameData/Unit/Stats",fileName ="UnitStats")]
+public class Stats : ScriptableObject
 {
-    [System.Serializable]
-    public class Stats
+    public int MaxHP;
+    public int Speed;
+    public int Defense;
+    public int Attack;
+    public int Accuracy;
+    public int Spirit;
+    public int MaxSP;
+    public int MoveRange;
+    public List<int> AttackRanges;
+
+    public int GetMaxAttackRange()
     {
-        public int hp;
-        public int HP
+        int max = 0;
+        foreach (int attack in AttackRanges)
         {
-            get
-            {
-                return hp;
-            }
-            set
-            {
-                if (value > MaxHP)
-                    hp = MaxHP;
-                else
-                {
-                    hp = value;
-                }
-                if (hp <= 0)
-                {
-                    hp = 0;
-                }
-                if(Unit.onHpValueChanged!=null)
-                    Unit.onHpValueChanged();
-            }
+            if (attack > max)
+                max = attack;
         }
-        public int sp;
-        public int SP
-        {
-            get
-            {
-                return sp;
-            }
-            set
-            {
-                if (value > MaxSP)
-                    sp = MaxSP;
-                else
-                {
-                    sp = value;
-                }
-                if (sp <= 0)
-                {
-                    sp = 0;
-                }
-            }
-        }
-        public int MaxHP { get; set; }
-        public int Speed { get; set; }
-        public int Defense { get; set; }
-        public int Attack { get; set; }
-        public int Accuracy { get; set; }
-        public int Spirit { get; set; }
-        public int MaxSP { get; set; }
-        public int MoveRange { get; set; }
-        public List<int> AttackRanges { get; set; }
-
-        public Stats(int hp, int sp, int attack, int speed, int defense, int accuracy, int spirit, int moveRange, List<int>attackRanges)
-        {
-            MaxHP = hp;
-            Attack = attack;
-            Speed = speed;
-            Defense = defense;
-            Accuracy = accuracy;
-            Spirit = spirit;
-            MaxSP = sp;
-            HP = MaxHP;
-            SP = MaxSP;
-            MoveRange = moveRange;
-            AttackRanges = attackRanges;
-        }
-
-        public int GetMaxAttackRange()
-        {
-            int max = 0;
-            foreach (int attack in AttackRanges)
-            {
-                if (attack > max)
-                    max = attack;
-            }
-            return max;
-        }
+        return max;
     }
 }
+

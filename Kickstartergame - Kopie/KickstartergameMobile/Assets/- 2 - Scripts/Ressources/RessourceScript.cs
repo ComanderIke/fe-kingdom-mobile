@@ -9,6 +9,7 @@ public class RessourceScript : MonoBehaviour {
     public Prefabs prefabs;
     public ParticleSystems particles;
     public Textures textures;
+    public Materials materials;
     
 
 

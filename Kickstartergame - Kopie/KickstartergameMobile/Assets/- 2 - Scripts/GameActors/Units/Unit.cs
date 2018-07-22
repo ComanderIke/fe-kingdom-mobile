@@ -1,6 +1,4 @@
 ﻿using Assets.Scripts.AI;
-using Assets.Scripts.Characters.Attributes;
-using Assets.Scripts.Characters.Debuffs;
 using Assets.Scripts.Dialogs;
 using Assets.Scripts.Players;
 using System;
@@ -10,17 +8,23 @@ using UnityEngine;
 namespace Assets.Scripts.Characters
 {
     
-    public abstract class Unit : SpeakableObject
+    public abstract class Unit : ScriptableObject, SpeakableObject
     {
         #region Events
         public delegate void OnHPValueChanged();
         public static OnHPValueChanged onHpValueChanged;
+
+        public delegate void OnSPValueChanged();
+        public static OnSPValueChanged onSpValueChanged;
 
         public delegate void OnUnitWaiting(Unit unit, bool waiting);
         public static OnUnitWaiting onUnitWaiting;
 
         public delegate void OnUnitCanMove(Unit unit, bool canMove);
         public static OnUnitCanMove onUnitCanMove;
+
+
+
         public delegate void OnUnitShowActiveEffect(Unit unit, bool canMove, bool disableOthers);
         public static OnUnitShowActiveEffect onUnitShowActiveEffect;
 
@@ -28,25 +32,74 @@ namespace Assets.Scripts.Characters
         public static OnUnitDied onUnitDied;
         #endregion
 
+        public String Name;
         public GameTransform GameTransform { get; set; }
         public BattleStats BattleStats { get; set; }
         public UnitTurnState UnitTurnState { get; set; }
         public ExperienceManager ExperienceManager { get; set; }
-        public Stats Stats { get; set; }
-        public StatsGrowth StatsGrowth { get; set; }
-        public String Name { get; set; }
-        public Player Player { get; set; }
+        [HideInInspector]
+        public int hp;
+        public int HP
+        {
+            get
+            {
+                return hp;
+            }
+            set
+            {
+                if (value > Stats.MaxHP)
+                    hp = Stats.MaxHP;
+                else
+                {
+                    hp = value;
+                }
+                if (hp <= 0)
+                {
+                    hp = 0;
+                }
+                if (Unit.onHpValueChanged != null)
+                    Unit.onHpValueChanged();
+            }
+        }
+        [HideInInspector]
+        public int sp;
+        
+        public int SP
+        {
+            get
+            {
+                return sp;
+            }
+            set
+            {
+                if (value > Stats.MaxSP)
+                    sp = Stats.MaxSP;
+                else
+                {
+                    sp = value;
+                }
+                if (sp <= 0)
+                {
+                    sp = 0;
+                }
+                if (Unit.onSpValueChanged != null)
+                    Unit.onSpValueChanged();
+            }
+        }
+        public Stats Stats;
+
+        public AIAgent Agent { get; set; }
+        public Army Player { get; set; }
         public List<Debuff> Debuffs { get; set; }
         public List<Buff> Buffs { get; set; }
-        public Sprite Sprite { get; set; }
+        public Sprite Sprite;
         public GridPosition GridPosition { get; set; }
         public MoveActions MoveActions { get; set; }
-        public List<Goal> AIGoals { get; set; }
 
 
-        public Unit(string name, Sprite sprite)
+
+        public void OnEnable()
         {
-            Name = name;
             ExperienceManager = new ExperienceManager();
             BattleStats = new BattleStats(this);
             UnitTurnState = new UnitTurnState(this);
@@ -55,17 +108,16 @@ namespace Assets.Scripts.Characters
             GameTransform = new GameTransform();
             Buffs = new List<Buff>();
             Debuffs = new List<Debuff>();
-            Sprite = sprite;
             List<int> attackRanges = new List<int>();
-            AIGoals = new List<Goal>();
-            attackRanges.Add(1);
-            Stats = new Stats(15, 5, 10, 5, 2, 5, 2,2,attackRanges);
+            Agent = new AIAgent();
             
+            attackRanges.Add(1);
+            HP = Stats.MaxHP;
+            SP = Stats.MaxSP;
         }
 
         public void EndTurn()
         {
-            Debug.Log("EndTurn");
             UnitTurnState.Reset();
         }
         public void UpdateTurn()
@@ -92,11 +144,14 @@ namespace Assets.Scripts.Characters
             }
             UnitTurnState.Reset();
         }
+        public bool IsActive()
+        {
+            return UnitTurnState.IsWaiting==false;
+        }
         public void SetInternPosition(int x, int y)
         {
             GridPosition.SetPosition(x, y);
-        }
-       
+        } 
         public virtual void SetPosition(int x, int y)
         {
             GridPosition.SetPosition(x, y);
@@ -116,25 +171,16 @@ namespace Assets.Scripts.Characters
         }
         public void Heal(int heal)
         {
-            Stats.HP += heal;
+            HP += heal;
         }
         public bool CanAttack(int range)
         {
             return Stats.AttackRanges.Contains(range);
         }
-
-
         public bool IsAlive()
         {
-            return Stats.HP > 0;
+            return HP > 0;
         }
-
-        //public void UpdateOnWholeTurn()
-        //{
-        //    UnitTurnState.Reset();
-           
-        //}
-
         public int InflictDamage(int dmg, Unit damagedealer, bool magic = false)
         {
             float multiplier = 1.0f;
@@ -150,10 +196,9 @@ namespace Assets.Scripts.Characters
             
             if (inflictedDmg <= 0)
                 inflictedDmg = 1;
-            Stats.HP -= inflictedDmg;
+            HP -= inflictedDmg;
             return inflictedDmg;
         }
-
         public T GetType<T>()
         {
             if(this is T) { 

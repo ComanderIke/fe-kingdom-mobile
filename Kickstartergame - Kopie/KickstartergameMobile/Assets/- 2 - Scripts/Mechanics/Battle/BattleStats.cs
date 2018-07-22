@@ -24,7 +24,7 @@ namespace Assets.Scripts.Characters
 
         public bool CanKillTarget(Unit target, float attackMultiplier)
         {
-            return GetDamageAgainstTarget(target, attackMultiplier) >= target.Stats.HP;
+            return GetDamageAgainstTarget(target, attackMultiplier) >= target.HP;
         }
 
         public int GetCrit()
@@ -174,7 +174,7 @@ namespace Assets.Scripts.Characters
             int hitchance = GetHitAgainstTarget(target) + defenseType.Hit + attackType.Hit + (attackAttributes.Contains(AttackAttributes.SurpriseAttack) ? 0 : SurpriseAttackBonusHit);
 
             bool didConnect = UnityEngine.Random.Range(1, 101) <= hitchance;
-            if (dmg >= target.Stats.HP)
+            if (dmg >= target.HP)
             {
                 attackAttributes.Add(AttackAttributes.Lethal);
             }

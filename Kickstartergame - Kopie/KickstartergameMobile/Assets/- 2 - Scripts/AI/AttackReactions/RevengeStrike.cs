@@ -20,23 +20,22 @@ namespace Assets.Scripts.AI.AttackReactions
         IEnumerator Revenge()
         {
             yield return new WaitForSeconds(0.25f);
-            Attack(User, MainScript.instance.GetSystem<GridSystem>().GetTileFromVector2(TargetPositions[0]).character);
+            Attack(User, MainScript.instance.GetSystem<global::MapSystem>().GetTileFromVector2(TargetPositions[0]).character);
             yield return new WaitForSeconds(3.5f);
             UnitActionSystem.onReactionFinished();
         }
         private void Attack(Unit attacker, Unit defender)
         {
-            if (DoesAttackHit(attacker, defender))
+            if (BattleSystem.DoesAttackHit(attacker, defender))
             {
                 int damage = defender.InflictDamage(attacker.BattleStats.GetDamage(), attacker);
-                MainScript.instance.GetSystem<UISystem>().attackUIController.ShowCounterDamageText(damage);
-                GameObject.FindObjectOfType<EnemySpriteController>().StartAttackAnimation();
-                GameObject.FindObjectOfType<AllySpriteController>().ShakeAnimation(10 + 1f * damage);
-                GameObject.FindObjectOfType<AllySpriteController>().StartBlinkAnimation();
+                BattleSystem.onAllyTakesDamage(damage);
+                BattleSystem.PlayEnemyAttackAnimation(damage);
             }
             else
             {
-                MainScript.instance.GetSystem<UISystem>().attackUIController.ShowCounterMissText();
+                BattleSystem.PlayEnemyAttackAnimation();
+                BattleSystem.onEnemyMisses();
             }
         }
         private bool DoesAttackHit(Unit attacker, Unit defender)

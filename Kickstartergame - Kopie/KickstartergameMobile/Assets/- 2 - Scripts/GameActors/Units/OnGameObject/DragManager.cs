@@ -79,7 +79,7 @@ namespace Assets.Scripts.Characters
                 Vector3 curPos = new Vector3(UnityEngine.Input.mousePosition.x - deltaPosX, UnityEngine.Input.mousePosition.y - deltaPosY, 0);
                 Vector3 worldPos = Camera.main.ScreenToWorldPoint(curPos);
                 worldPos.z = 0;
-                worldPos.x -= GridSystem.GRID_X_OFFSET;
+                worldPos.x -= global::MapSystem.GRID_X_OFFSET;
                 DragObject.GetTransform().localPosition = Vector3.Lerp(DragObject.GetTransform().localPosition, worldPos, Time.deltaTime * DRAG_FOLLOW_SPEED);
                 DragObject.Dragging();
             }

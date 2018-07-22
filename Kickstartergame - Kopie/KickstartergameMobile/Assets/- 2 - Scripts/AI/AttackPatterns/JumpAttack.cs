@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.Characters;
 using Assets.Scripts.Commands;
 using Assets.Scripts.GameStates;
-using Assets.Scripts.Injuries;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,18 +32,22 @@ namespace Assets.Scripts.AI.AttackPatterns
 
         void DoAction()
         {
-            
-            MainScript.instance.GetSystem<UnitActionSystem>().AddCommand(new AttackCommand(unit, MainScript.instance.GetSystem<GridSystem>().GetTileFromVector2(TargetPositions[0]).character));
-            MainScript.instance.GetSystem<UnitActionSystem>().ExecuteActions();
+            if (TargetPositions != null && TargetPositions.Count != 0)
+            {
+                MainScript.instance.GetSystem<UnitActionSystem>().AddCommand(new AttackCommand(unit, MainScript.instance.GetSystem<global::MapSystem>().GetTileFromVector2(TargetPositions[0]).character));
+                MainScript.instance.GetSystem<UnitActionSystem>().ExecuteActions();
+                
+            }
             unit.UnitTurnState.IsWaiting = true;
+            //
+            
             //EventContainer.commandFinished();
             
         }
 
         public override void Execute()
         {
-            AttackPattern.onAttackPatternUsed(unit, this);
-            UISystem.onContinuePressed += DoAction;
+           DoAction();
 
         }
 

@@ -22,7 +22,7 @@ namespace Assets.Scripts.Grid
             this.accesibilities = accesibilities;
             this.gridWidth = accesibilities.GetLength(0);
             this.gridHeight = accesibilities.GetLength(1);
-            fields= MainScript.instance.GetSystem<GridSystem>().Tiles;
+            fields = MainScript.instance.GetSystem<global::MapSystem>().Tiles;
         }
         public MovementPath GetPath(BigTile start, BigTile end)
         {

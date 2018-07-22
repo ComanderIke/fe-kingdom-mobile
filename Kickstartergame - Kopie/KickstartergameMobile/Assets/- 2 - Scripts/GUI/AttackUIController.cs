@@ -100,6 +100,10 @@ public class AttackUIController : MonoBehaviour {
         Unit.onHpValueChanged += HPValueChanged;
         UISystem.onAttackUIVisible(true);
         UISystem.onFrontalAttackAnimationEnd += EnableSwipeAttack;
+        BattleSystem.onAllyMisses += ShowMissText;
+        BattleSystem.onEnemyMisses += ShowCounterMissText;
+        BattleSystem.onEnemyTakesDamage += ShowDamageText;
+        BattleSystem.onAllyTakesDamage += ShowCounterDamageText;
         //attackerSprite.sprite = attacker.Sprite;
         defenderSprite.sprite = defender.Sprite;
         attackCount = attacker.BattleStats.GetAttackCountAgainst(defender);
@@ -108,6 +112,10 @@ public class AttackUIController : MonoBehaviour {
     private void OnDisable()
     {
         Unit.onHpValueChanged -= HPValueChanged;
+        BattleSystem.onAllyMisses -= ShowMissText;
+        BattleSystem.onEnemyMisses -= ShowCounterMissText;
+        BattleSystem.onEnemyTakesDamage -= ShowDamageText;
+        BattleSystem.onAllyTakesDamage -= ShowCounterDamageText;
         UISystem.onAttackUIVisible(false);
 
     }
@@ -183,19 +191,19 @@ public class AttackUIController : MonoBehaviour {
     public void StrongAttack()
     {
         Debug.Log("Strong Attack!");
-        attackType = attacker.GetType<Human>().AttackTypes.Find(a => a.Name == "StrongAttack");
+        attackType = attacker.GetType<Human>().AttackTypes.Find(a => a.name == "StrongAttack");
         StartAttack(attackType);
     }
     public void FastAttack()
     {
         Debug.Log("Fast Attack!");
-        attackType = attacker.GetType<Human>().AttackTypes.Find(a => a.Name == "FastAttack");
+        attackType = attacker.GetType<Human>().AttackTypes.Find(a => a.name == "FastAttack");
         StartAttack(attackType);
     }
     public void SpecialAttack()
     {
         Debug.Log("Special Attack!");
-        attackType = attacker.GetType<Human>().AttackTypes.Find(a => a.Name == "SpecialAttack");
+        attackType = attacker.GetType<Human>().AttackTypes.Find(a => a.name == "SpecialAttack");
         StartAttack(attackType);
     }
 
@@ -211,7 +219,7 @@ public class AttackUIController : MonoBehaviour {
         if (attackCount > 0)
         {
             Debug.Log("StartAttack!");
-            FightState.onStartAttack(attackType);
+            BattleSystem.onStartAttack(attackType);
             attackCount--;
         }
         if(attackCount <=0)
@@ -226,7 +234,7 @@ public class AttackUIController : MonoBehaviour {
     {
         MainScript.instance.GetSystem<PopUpTextSystem>().CreateAttackPopUpTextGreen("Missed", attackerSprite.transform);
     }
-    public void ShowCounterDamageText(int damage)
+    public void ShowCounterDamageText(int damage, bool magic = false)
     {
         MainScript.instance.GetSystem<PopUpTextSystem>().CreateAttackPopUpTextRed("" + damage, attackerSprite.transform);
     }
@@ -255,13 +263,13 @@ public class AttackUIController : MonoBehaviour {
         {
             bonusHit += humanAttacker.BattleStats.SurpriseAttackBonusHit;
         }
-        AttackType fastAttackType = attacker.GetType<Human>().AttackTypes.Find(a => a.Name == "FastAttack");
+        AttackType fastAttackType = attacker.GetType<Human>().AttackTypes.Find(a => a.name == "FastAttack");
         int hitInfluence = bonusHit;// attackTarget.HIT_INFLUENCE;
         hitInfluence += fastAttackType.Hit;
         int hit = Mathf.Clamp(attacker.BattleStats.GetHitAgainstTarget(defender)+hitInfluence, 0, 100);// + 10 * currentHitSliderValue, 0, 100);
         attackerHIT.text = "" + hit + "%";
 
-        AttackType strongAttackType = attacker.GetType<Human>().AttackTypes.Find(a => a.Name == "StrongAttack");
+        AttackType strongAttackType = attacker.GetType<Human>().AttackTypes.Find(a => a.name == "StrongAttack");
         hitInfluence = bonusHit;// attackTarget.HIT_INFLUENCE;
         hitInfluence += strongAttackType.Hit;
         hit = Mathf.Clamp(attacker.BattleStats.GetHitAgainstTarget(defender) + hitInfluence, 0, 100);// + 10 * currentHitSliderValue, 0, 100);
@@ -279,7 +287,7 @@ public class AttackUIController : MonoBehaviour {
         {
             multiplier = humanAttacker.BattleStats.FrontalAttackModifier;
         }
-        AttackType fastAttackType = attacker.GetType<Human>().AttackTypes.Find(a => a.Name == "FastAttack");
+        AttackType fastAttackType = attacker.GetType<Human>().AttackTypes.Find(a => a.name == "FastAttack");
         
         List<float> attackMultiplier = new List<float>();
         attackMultiplier.Add(multiplier);
@@ -288,7 +296,7 @@ public class AttackUIController : MonoBehaviour {
         int dmg = (int)((defender.BattleStats.GetReceivedDamage(damage)));
         attackerDMG.text = "" + dmg;
       
-        AttackType strongAttackType = attacker.GetType<Human>().AttackTypes.Find(a => a.Name == "StrongAttack");
+        AttackType strongAttackType = attacker.GetType<Human>().AttackTypes.Find(a => a.name == "StrongAttack");
 
         attackMultiplier.Clear();
         attackMultiplier.Add(multiplier);
@@ -325,10 +333,10 @@ public class AttackUIController : MonoBehaviour {
 
     private void HPValueChanged()
     {
-        defenderHP.text = defender.Stats.HP + " / " + defender.Stats.MaxHP;
-        attackerHP.text = attacker.Stats.HP + " / " + attacker.Stats.MaxHP;
-        currentAllyHPValue = MathUtility.MapValues(attacker.Stats.HP, 0f, attacker.Stats.MaxHP, 0f, 1f);
-        currentEnemyHPValue = MathUtility.MapValues(defender.Stats.HP, 0f, defender.Stats.MaxHP, 0f, 1f);
+        defenderHP.text = defender.HP + " / " + defender.Stats.MaxHP;
+        attackerHP.text = attacker.HP + " / " + attacker.Stats.MaxHP;
+        currentAllyHPValue = MathUtility.MapValues(attacker.HP, 0f, attacker.Stats.MaxHP, 0f, 1f);
+        currentEnemyHPValue = MathUtility.MapValues(defender.HP, 0f, defender.Stats.MaxHP, 0f, 1f);
 
         StartCoroutine(DelayedAllyHP());
         StartCoroutine(DelayedEnemyHP());
@@ -341,7 +349,7 @@ public class AttackUIController : MonoBehaviour {
         {
             yield return null;
         }
-        delayedAllyHPValue = MathUtility.MapValues(attacker.Stats.HP, 0f, attacker.Stats.MaxHP, 0f, 1f);
+        delayedAllyHPValue = MathUtility.MapValues(attacker.HP, 0f, attacker.Stats.MaxHP, 0f, 1f);
     }
     IEnumerator DelayedEnemyHP()
     {
@@ -349,7 +357,7 @@ public class AttackUIController : MonoBehaviour {
         {
             yield return null;
         }
-        delayedEnemyHPValue = MathUtility.MapValues(defender.Stats.HP, 0f, defender.Stats.MaxHP, 0f, 1f);
+        delayedEnemyHPValue = MathUtility.MapValues(defender.HP, 0f, defender.Stats.MaxHP, 0f, 1f);
     }
 
   

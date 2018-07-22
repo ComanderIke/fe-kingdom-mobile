@@ -1,11 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MainController : MonoBehaviour {
 
     private static MainController mainController;
+    public GameObject loadingScreen;
+    public Slider slider;
+    public float minLoadTime = 5f;
+    private float loadTime = 0;
 
     private string currentSceneName;
     private string nextSceneName;
@@ -71,17 +76,25 @@ public class MainController : MonoBehaviour {
     {
         sceneLoadTask = SceneManager.LoadSceneAsync(nextSceneName);
         sceneState = SceneState.Load;
+        loadingScreen.SetActive(true);
+        slider.value = 0;
+        loadTime = 0;
     }
 
     // show the loading screen until it's loaded
     void UpdateSceneLoad()
     {
-        if (sceneLoadTask.isDone)
+        if (sceneLoadTask.isDone && loadTime>=minLoadTime)
         {
             sceneState = SceneState.Unload;
+            slider.value = 0;
+            loadingScreen.SetActive(false);
         }
         else
         {
+            float progress = Mathf.Clamp01(loadTime / minLoadTime);//sceneLoadTask.progress / .9f);
+            slider.value = progress;
+            loadTime += Time.deltaTime;
             // Update Scene Loading Progress
             // LoadingScreen etc..
         }
