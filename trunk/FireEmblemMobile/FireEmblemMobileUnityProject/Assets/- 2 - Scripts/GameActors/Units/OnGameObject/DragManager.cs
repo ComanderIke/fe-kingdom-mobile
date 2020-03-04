@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Characters
+namespace Assets.GameActors.Units.OnGameObject
 {
     public class DragManager
     {
@@ -9,28 +9,30 @@ namespace Assets.Scripts.Characters
         const float DRAG_FOLLOW_SPEED = 13;
         public static bool IsAnyUnitDragged = false;
 
+        public bool IsDraggingBeforeDelay { get; set; }
         public bool IsDragging { get; set; }
         public float DragTime { get; set; }
         public bool IsDragDelay { get; set; }
-        public DragAble DragObject { get; set; }
+        public IDragAble DragObject { get; set; }
         /*DragOffset*/
         private float deltaPosX;
         private float deltaPosY;
 
         private Vector3 posBeforeDrag;
 
-        public DragManager(DragAble dragObject)
+        public DragManager(IDragAble dragObject)
         {
-            IsDragging = false;
+            IsDraggingBeforeDelay = false;
             IsDragDelay = true;
+            IsDragging = false;
             DragObject = dragObject;
         }
 
         public void Update()
         {
-            if (IsDragging)
+            if (IsDraggingBeforeDelay)
             {
-                if (UnityEngine.Input.GetMouseButton(0))
+                if (Input.GetMouseButton(0))
                 {
                     DragTime += Time.deltaTime;
                     if (DragTime >= DRAG_DELAY)
@@ -41,13 +43,13 @@ namespace Assets.Scripts.Characters
                 }
                 else
                 {
-                    IsDragging = false;
+                    IsDraggingBeforeDelay = false;
                 }
-                if (UnityEngine.Input.GetMouseButtonUp(0))
+                if (Input.GetMouseButtonUp(0))
                 {
                     if (!IsDragDelay)
                     {
-                        IsDragging = false;
+                        IsDraggingBeforeDelay = false;
                         IsAnyUnitDragged = false;
                         EndDrag();
                     }
@@ -61,25 +63,27 @@ namespace Assets.Scripts.Characters
 
         public void StartDrag()
         {
+            IsDragging = false;
             IsDragDelay = true;
             DragTime = 0;
             Vector3 dist = Camera.main.WorldToScreenPoint(DragObject.GetTransform().position);
-            deltaPosX = UnityEngine.Input.mousePosition.x - dist.x;
-            deltaPosY = UnityEngine.Input.mousePosition.y - dist.y;
+            deltaPosX = Input.mousePosition.x - dist.x;
+            deltaPosY = Input.mousePosition.y - dist.y;
             posBeforeDrag = DragObject.GetTransform().localPosition;
             DragObject.StartDrag();
         }
 
         public void Dragging()
         {
-            IsDragging = true;
-
+            IsDraggingBeforeDelay = true;
+           
             if (!IsDragDelay)
             {
-                Vector3 curPos = new Vector3(UnityEngine.Input.mousePosition.x - deltaPosX, UnityEngine.Input.mousePosition.y - deltaPosY, 0);
+                IsDragging = true;
+                Vector3 curPos = new Vector3(Input.mousePosition.x - deltaPosX, Input.mousePosition.y - deltaPosY, 0);
                 Vector3 worldPos = Camera.main.ScreenToWorldPoint(curPos);
                 worldPos.z = 0;
-                worldPos.x -= global::MapSystem.GRID_X_OFFSET;
+                worldPos.x -= Map.MapSystem.GRID_X_OFFSET;
                 DragObject.GetTransform().localPosition = Vector3.Lerp(DragObject.GetTransform().localPosition, worldPos, Time.deltaTime * DRAG_FOLLOW_SPEED);
                 DragObject.Dragging();
             }
@@ -87,6 +91,7 @@ namespace Assets.Scripts.Characters
 
         public void EndDrag()
         {
+            IsDragging = false;
             DragObject.GetTransform().localPosition = posBeforeDrag;
             DragObject.EndDrag();
         }

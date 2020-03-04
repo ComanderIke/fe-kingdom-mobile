@@ -1,24 +1,22 @@
-
 using System;
 using System.Collections.Generic;
+using Assets.GameActors.Units.Humans;
 using UnityEngine;
 
-[System.Serializable]
-public abstract class Item :ScriptableObject{
-
-    [Header("ItemAttributes")]
-    public Sprite Sprite;
-    public int NumberOfUses;
-    public String Description;
-    public List<ItemMixin> mixins;
-
-	public virtual void Use(Human character)
+namespace Assets.GameActors.Items
+{
+    [Serializable]
+    public abstract class Item : ScriptableObject
     {
-        foreach(ItemMixin mixin in mixins)
+        public string Description;
+        public List<ItemMixin> Mixins;
+        public int NumberOfUses;
+
+        [Header("ItemAttributes")] public Sprite Sprite;
+
+        public virtual void Use(Human character)
         {
-            mixin.Use(character);
+            foreach (var mixin in Mixins) mixin.Use(character);
         }
     }
 }
-
-

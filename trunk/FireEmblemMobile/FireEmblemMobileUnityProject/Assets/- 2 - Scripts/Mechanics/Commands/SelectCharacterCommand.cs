@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Assets.Scripts.Commands
+﻿namespace Assets.Mechanics.Commands
 {
-    class SelectCharacterCommand
+    public class SelectCharacterCommand
     {
     }
 }

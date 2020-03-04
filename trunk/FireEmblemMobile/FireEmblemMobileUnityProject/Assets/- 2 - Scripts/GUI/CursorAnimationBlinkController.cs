@@ -1,24 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Assets.Utility;
 using UnityEngine;
 
-public class CursorAnimationBlinkController : MonoBehaviour {
-    Animator animator;
-  // Use this for initialization
-  CursorAnimationBlinkController[] controllers;
-    AnimationTimer timer;
-    void Start()
+namespace Assets.GUI
+{
+    public class CursorAnimationBlinkController : MonoBehaviour
     {
-        animator = GetComponent<Animator>();
-        animator.enabled=false;
-        timer = FindObjectOfType<AnimationTimer>();
-        animator.SetFloat("NormTime", timer.normalizedTime);
+        private Animator animator;
+        private readonly CursorAnimationBlinkController[] controllers;
+        private AnimationTimer timer;
 
-        animator.enabled = true;
-    }
-    void Update()
-    {
-        animator.SetFloat("NormTime", timer.normalizedTime);
+        private void Start()
+        {
+            animator = GetComponent<Animator>();
+            animator.enabled = false;
+            timer = FindObjectOfType<AnimationTimer>();
+            animator.SetFloat("NormTime", timer.NormalizedTime);
+            animator.enabled = true;
+        }
 
+        private void Update()
+        {
+            animator.SetFloat("NormTime", timer.NormalizedTime);
+        }
     }
 }

@@ -1,11 +1,13 @@
+using System;
+using Assets.GameActors.Units;
 using UnityEngine;
-using Assets.Scripts.Characters;
 
-[System.Serializable]
-public abstract class ItemMixin : ScriptableObject {
-    public new string name;
-	public abstract void Use(Unit character);
-		
+namespace Assets.GameActors.Items
+{
+    [Serializable]
+    public abstract class ItemMixin : ScriptableObject
+    {
+        public string Name;
+        public abstract void Use(Unit character);
+    }
 }
-
-

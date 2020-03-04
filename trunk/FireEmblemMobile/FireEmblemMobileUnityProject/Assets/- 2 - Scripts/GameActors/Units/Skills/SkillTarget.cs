@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Assets.Scripts.Characters.Skills
+namespace Assets.GameActors.Units.Skills
 {
-    [System.Serializable]
+    [Serializable]
     public enum SkillTarget
     {
-        Enemy, Ally, Position, None
+        Enemy,
+        Ally,
+        Position,
+        None
     }
 }

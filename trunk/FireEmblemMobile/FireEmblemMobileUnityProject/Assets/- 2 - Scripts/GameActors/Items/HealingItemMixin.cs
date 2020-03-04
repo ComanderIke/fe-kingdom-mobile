@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Assets.Scripts.Characters;
+using Assets.GameActors.Units;
 using UnityEngine;
 
-namespace Assets.Scripts.Items
+namespace Assets.GameActors.Items
 {
     [CreateAssetMenu(menuName = "GameData/Items/Mixins/Healing", fileName = "Healing")]
     public class HealingItemMixin : ItemMixin

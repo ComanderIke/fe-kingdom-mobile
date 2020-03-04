@@ -1,61 +1,49 @@
-﻿using Assets.Scripts.GameStates;
+﻿using Assets.Core;
+using Assets.GUI;
+using UnityEngine;
 
-
-namespace Assets.Scripts.Characters
+namespace Assets.GameActors.Units
 {
     public class UnitTurnState
     {
-        Unit unit;
-        private bool isActive;
+        private readonly Unit unit;
         private bool hasMoved;
         private bool isWaiting;
-        public bool IsActive {
-            get
-            {
-                return isActive;
-            }
-            set
-            {
-                isActive = value;
-            }
-        }
-        public bool IsWaiting
-        {
-            get
-            {
-                return isWaiting;
-            }
-            set
-            {
-                isWaiting = value;
-                if(Unit.onUnitWaiting!=null)
-                    Unit.onUnitWaiting(unit, isWaiting);
-            }
-        }
-        public bool HasMoved
-        {
-            get
-            {
-                return hasMoved;
-            }
-            set
-            {
-                hasMoved = value;
-                if(Unit.onUnitCanMove!=null)
-                    Unit.onUnitCanMove(unit, !hasMoved);
-                if(unit.Player.IsPlayerControlled)
-                    Unit.onUnitShowActiveEffect(unit, !hasMoved, false);
-                if(hasMoved)
-                    UISystem.onHideCursor();
-            }
-        }
-        public bool HasAttacked { get; set; }
-        public bool Selected { get; set; }
 
         public UnitTurnState(Unit unit)
         {
             this.unit = unit;
         }
+
+        public bool IsActive { get; set; }
+
+        public bool IsWaiting
+        {
+            get => isWaiting;
+            set
+            {
+                isWaiting = value;
+                Unit.UnitWaiting?.Invoke(unit, isWaiting);
+            }
+        }
+
+        public bool HasMoved
+        {
+            get => hasMoved;
+            set
+            {
+                hasMoved = value;
+                unit.UnitCanMove?.Invoke(unit, !hasMoved);
+                if (unit.Player.IsPlayerControlled)
+                    Unit.UnitShowActiveEffect(unit, !hasMoved, false);
+                if (hasMoved)
+                    UiSystem.OnHideCursor();
+            }
+        }
+
+        public bool HasAttacked { get; set; }
+        public bool Selected { get; set; }
+
         public void Reset()
         {
             HasMoved = false;
@@ -63,8 +51,8 @@ namespace Assets.Scripts.Characters
             IsWaiting = false;
             Selected = false;
             IsActive = false;
-           // MainScript.GetInstance().GetSystem<UnitSelectionManager>().DeselectActiveCharacter();
         }
+
         public void UnitTurnFinished()
         {
             IsActive = false;
@@ -72,9 +60,11 @@ namespace Assets.Scripts.Characters
             HasAttacked = true;
             IsWaiting = true;
         }
+
         public bool IsDragable()
         {
-            return !IsWaiting && unit.IsAlive() && unit.Player.ID == MainScript.instance.PlayerManager.ActivePlayerNumber;
+            return !IsWaiting && unit.IsAlive() &&
+                   unit.Player.Id == MainScript.Instance.PlayerManager.ActivePlayerNumber;
         }
     }
 }

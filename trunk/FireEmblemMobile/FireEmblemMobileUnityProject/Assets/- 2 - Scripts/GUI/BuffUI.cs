@@ -1,27 +1,26 @@
-﻿using Assets.Scripts.Characters;
+﻿using Assets.GameActors.Units;
+using Assets.GameActors.Units.OnGameObject;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuffUI : MonoBehaviour {
-
-    [SerializeField]
-    GameObject buffPrefab;
-    Unit unit;
-    // Use this for initialization
-    Dictionary<string,GameObject> buffs;
-	void Start () {
-        Unit.onUnitCanMove += UnitMoveState;
-        buffs = new Dictionary<string, GameObject>();
-        unit = transform.parent.parent.GetComponent<UnitController>().Unit;
-    }
-	
-	// Update is called once per frame
-	void Update () {
-        
-	}
-    void UnitMoveState(Unit unit, bool canMove)
+namespace Assets.GUI
+{
+    public class BuffUi : MonoBehaviour
     {
-        if (this.unit == unit)
+        [SerializeField] private GameObject buffPrefab = default;
+        private Dictionary<string, GameObject> buffs;
+
+        private void Start()
+        {
+            buffs = new Dictionary<string, GameObject>();
+        }
+
+        public void Initialize(Unit unit)
+        {
+            unit.UnitCanMove += UnitMoveState;
+        }
+
+        private void UnitMoveState(Unit unit, bool canMove)
         {
             if (canMove)
             {
@@ -34,7 +33,7 @@ public class BuffUI : MonoBehaviour {
             else
             {
                 if (!buffs.ContainsKey("Move"))
-                    buffs.Add("Move", GameObject.Instantiate(buffPrefab, this.transform));
+                    buffs.Add("Move", Instantiate(buffPrefab, transform));
             }
         }
     }

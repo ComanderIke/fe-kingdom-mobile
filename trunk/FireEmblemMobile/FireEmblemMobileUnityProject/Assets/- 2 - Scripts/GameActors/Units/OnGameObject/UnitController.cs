@@ -1,157 +1,194 @@
-﻿using UnityEngine;
+﻿using Assets.Core;
+using Assets.GameInput;
+using Assets.GUI;
+using Assets.Mechanics.Dialogs;
+using UnityEngine;
 using UnityEngine.EventSystems;
-using Assets.Scripts.Characters;
-using Assets.Scripts.Input;
 
-public class UnitController :  MonoBehaviour, DragAble {
-
-    public static bool lockInput = true;
-
-    public Unit Unit;
-    public DragManager DragManager { get; set; }
-    public RaycastManager RaycastManager { get; set; }
-    public SpeechBubble SpeechBubble { get; set; }
-    
-    private StatsBarOnMap hpBar;
-    private StatsBarOnMap spBar;
-    private bool dragStarted = false;
-    private bool dragInitiated = false;
-
-    private void Start()
+namespace Assets.GameActors.Units.OnGameObject
+{
+    public class UnitController : MonoBehaviour, IDragAble
     {
-       
-        DragManager = new DragManager(this);
-        RaycastManager = new RaycastManager();
-        SpeechBubble = GetComponentInChildren<SpeechBubble>();
-        if(SpeechBubble)
-            this.SpeechBubble.gameObject.SetActive(false);
-        Unit.onHpValueChanged += HPValueChanged;
-        Unit.onSpValueChanged += SPValueChanged;
-        Unit.onUnitWaiting+= SetWaitingSprite;
-        hpBar = GetComponentsInChildren<StatsBarOnMap>()[0];
-        spBar = GetComponentsInChildren<StatsBarOnMap>()[1];
-        HPValueChanged();
-        SPValueChanged();
-    }
+        public static bool LockInput = true;
+        private bool dragInitiated;
+        private bool dragStarted;
+        private bool doubleClick;
+        private StatsBarOnMap hpBar;
+        private StatsBarOnMap spBar;
+        private float timerForDoubleClick;
+        private const float DOUBLE_CLICK_TIME = 0.4f;
 
-    void Update () {
-        if (lockInput)
-            return;
-        DragManager.Update();
-	}
-    void HPValueChanged()
-    {
-        if(hpBar!=null&&Unit!=null)
-            hpBar.SetHealth(Unit.HP, Unit.Stats.MaxHP);
-    }
-    void SPValueChanged()
-    {
-        if (spBar != null && Unit != null)
-            spBar.SetHealth(Unit.SP, Unit.Stats.MaxSP);
-    }
+        public Unit Unit;
+        public DragManager DragManager { get; set; }
+        public RaycastManager RaycastManager { get; set; }
 
-    #region Renderer
-    void SetWaitingSprite(Unit unit, bool waiting)
-    {
-        if (unit == Unit)
+        private void Start()
         {
-            if (!waiting)
-                GetComponentInChildren<SpriteRenderer>().color = Color.white;
-            else
-                GetComponentInChildren<SpriteRenderer>().color = Color.grey;
+            DragManager = new DragManager(this);
+            RaycastManager = new RaycastManager();
+            Unit.HpValueChanged += HpValueChanged;
+            Unit.SpValueChanged += SpValueChanged;
+            Unit.UnitWaiting += SetWaitingSprite;
+            hpBar = GetComponentsInChildren<StatsBarOnMap>()[0];
+            spBar = GetComponentsInChildren<StatsBarOnMap>()[1];
+            HpValueChanged();
+            SpValueChanged();
         }
-    }
-    #endregion
 
-    #region MouseInteraction
-    void OnMouseEnter(){
-		if (!EventSystem.current.IsPointerOverGameObject ()) {
-
-            InputSystem.onDraggedOverUnit(Unit);
-        }
-    }
-
-    void OnMouseExit(){
-        if (DragManager.IsAnyUnitDragged)
+        private void Update()
         {
-            MainScript.instance.GetSystem<InputSystem>().DraggedExit();
+            if (LockInput)
+                return;
+            DragManager.Update();
         }
-    }
-     
-    void OnMouseDrag()
-    {
-        if (lockInput)
-            return;
-        if (!EventSystem.current.IsPointerOverGameObject() && (dragStarted||dragInitiated))
+
+        private void HpValueChanged()
         {
-            dragStarted = false;
-            dragInitiated = true;
-            if (Unit.UnitTurnState.IsDragable())
+            if (hpBar != null && Unit != null)
+                hpBar.SetHealth(Unit.Hp, Unit.Stats.MaxHp);
+        }
+
+        private void SpValueChanged()
+        {
+            if (spBar != null && Unit != null)
+                spBar.SetHealth(Unit.Sp, Unit.Stats.MaxSp);
+        }
+
+        #region Renderer
+
+        private void SetWaitingSprite(Unit unit, bool waiting)
+        {
+            if (unit == Unit)
             {
-                DragManager.Dragging();
+                GetComponentInChildren<SpriteRenderer>().color = !waiting ? Color.white : Color.grey;
             }
         }
-    }
 
-    void OnMouseDown()
-    {
-        dragStarted = false;
-        dragInitiated = false;
-        if (!Unit.IsAlive())
-            return;
-        if (lockInput)
-            return;
-       
-        if (!EventSystem.current.IsPointerOverGameObject())
+        #endregion
+
+        #region MouseInteraction
+
+        private void OnMouseEnter()
         {
-            DragManager.StartDrag();
+            if (!EventSystem.current.IsPointerOverGameObject()) InputSystem.OnDraggedOverUnit(Unit);
         }
-    }
-    #endregion
 
-    #region INTERFACE DragAble
-    public Transform GetTransform()
-    {
-        return transform;
-    }
-
-    public void StartDrag()
-    {
-
-        dragStarted = true;
-        Vector2 gridPos = RaycastManager.GetMousePositionOnGrid();
-        InputSystem.onStartDrag((int)gridPos.x, (int)gridPos.y);
-        
-        if (!EventSystem.current.IsPointerOverGameObject())
+        private void OnMouseExit()
         {
-            InputSystem.onUnitClicked(Unit);
+            if (DragManager.IsAnyUnitDragged) MainScript.Instance.GetSystem<InputSystem>().DraggedExit();
         }
-    }
 
-    public void Dragging()
-    {
-        Unit.onUnitShowActiveEffect(Unit, false, true);
-        GetComponent<BoxCollider>().enabled = false;
-        Vector2 gridPos = RaycastManager.GetMousePositionOnGrid();
-        if(RaycastManager.ConnectedLatestHit())
-            InputSystem.onUnitDragged((int)gridPos.x, (int)gridPos.y, Unit);
-    }
+        private void OnMouseDrag()
+        {
+            if (LockInput)
+                return;
+            if (!EventSystem.current.IsPointerOverGameObject() && (dragStarted || dragInitiated))
+            {
+                dragStarted = false;
+                dragInitiated = true;
+                if (Unit.UnitTurnState.IsDragable()) DragManager.Dragging();
+            }
+        }
 
-    public void EndDrag()
-    {
-        dragStarted = false;
-        dragInitiated = false;
-        Unit.onUnitShowActiveEffect(Unit, true, false);
-        InputSystem.onEndDrag();
-        //FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().enabled = false;
-        gameObject.GetComponent<BoxCollider>().enabled = true;
-        
+        private bool unitSelectedBeforeClicking = false;
+        private void OnMouseDown()
+        {
 
-    }
+            dragStarted = false;
+            dragInitiated = false;
+            doubleClick = false;
+            
+            if (!Unit.IsAlive())
+                return;
+            if (LockInput)
+                return;
 
-    public void NotDragging()
-    {
-        
+            if (!EventSystem.current.IsPointerOverGameObject())
+            {
+                //Debug.Log(Time.time-timerForDoubleClick);
+                if (timerForDoubleClick != 0 &&  Time.time - timerForDoubleClick < DOUBLE_CLICK_TIME)
+                {
+                   
+                    timerForDoubleClick = 0;
+                    unitSelectedBeforeClicking = Unit.UnitTurnState.Selected;
+                    doubleClick = true;
+                }
+                else
+                {
+                    timerForDoubleClick = Time.time;
+                    DragManager.StartDrag();
+                }
+
+                
+            }
+        }
+        private void OnMouseUp()
+        {
+            if (DragManager.IsDragging)
+            {
+                dragStarted = false;
+                dragInitiated = false;
+                Unit.UnitShowActiveEffect(Unit, true, false);
+                InputSystem.OnEndDrag();
+                gameObject.GetComponent<BoxCollider>().enabled = true;
+            }
+            else if (unitSelectedBeforeClicking)
+            {
+                Debug.Log(doubleClick);
+                if (!EventSystem.current.IsPointerOverGameObject()) InputSystem.OnUnitClicked(Unit, doubleClick);
+            }
+
+            if (doubleClick)
+            {
+                doubleClick = false;
+                Debug.Log("DOUBLE CLICK");
+            }
+        }
+
+        #endregion
+
+        #region INTERFACE DragAble
+
+        public Transform GetTransform()
+        {
+            return transform;
+        }
+
+        public void StartDrag()
+        {
+            dragStarted = true;
+            var gridPos = RaycastManager.GetMousePositionOnGrid();
+            InputSystem.OnStartDrag((int) gridPos.x, (int) gridPos.y);
+            //Debug.Log("STARTDRAG");
+            unitSelectedBeforeClicking = Unit.UnitTurnState.Selected;
+            if (!Unit.UnitTurnState.Selected)//If unit is already selected wait for MouseUp/DragEnd to invoke OnUnitClicked
+                if (!EventSystem.current.IsPointerOverGameObject()) InputSystem.OnUnitClicked(Unit);
+        }
+
+        public void Dragging()
+        {
+            //Debug.Log("DRAGGING");
+            Unit.UnitShowActiveEffect(Unit, false, true);
+            GetComponent<BoxCollider>().enabled = false;
+            var gridPos = RaycastManager.GetMousePositionOnGrid();
+            if (RaycastManager.ConnectedLatestHit())
+                InputSystem.OnUnitDragged((int) gridPos.x, (int) gridPos.y, Unit);
+        }
+
+        public void EndDrag()
+        {
+            //dragStarted = false;
+            //dragInitiated = false;
+            //Unit.UnitShowActiveEffect(Unit, true, false);
+            //InputSystem.OnEndDrag();
+            ////FindObjectOfType<DragCursor>().GetComponentInChildren<MeshRenderer>().enabled = false;
+            //gameObject.GetComponent<BoxCollider>().enabled = true;
+        }
+
+        public void NotDragging()
+        {
+        }
+
+        #endregion
     }
-    #endregion
 }

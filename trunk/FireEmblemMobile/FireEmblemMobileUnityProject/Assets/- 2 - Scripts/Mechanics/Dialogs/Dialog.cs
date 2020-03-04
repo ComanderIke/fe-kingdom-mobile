@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
-using System.Collections;
-
-namespace Assets.Scripts.Dialogs
+﻿namespace Assets.Mechanics.Dialogs
 {
-    class Dialog
-    {
-        /*
+	public class Dialog
+	{
+		/*
 		private int characterindex;
 		private int stringindex = 0;
 		private int letterindex = 0;
@@ -97,6 +90,5 @@ namespace Assets.Scripts.Dialogs
 			else { speed = 0.03f; }
 		}
         */
-    }
-    
+	}
 }

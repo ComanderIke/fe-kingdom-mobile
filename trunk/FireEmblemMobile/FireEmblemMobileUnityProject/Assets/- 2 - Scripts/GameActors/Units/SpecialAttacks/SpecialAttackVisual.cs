@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.Scripts.Characters.SpecialAttacks
+namespace Assets.GameActors.Units.SpecialAttacks
 {
     public class SpecialAttackVisual
     {
+        public SpecialAttackVisual(Sprite icon, GameObject animation)
+        {
+            Icon = icon;
+            Animation = animation;
+        }
+
         public Sprite Icon { get; set; }
         public GameObject Animation { get; set; }
-
-        public SpecialAttackVisual(int iconId, int AnimationId)
-        {
-        }
     }
 }

@@ -1,15 +1,10 @@
-﻿using Assets.Scripts.Characters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-
-public abstract class Debuff : CharacterState
+﻿namespace Assets.GameActors.Units.CharStateEffects
 {
-    public override void Remove(Unit c)
+    public abstract class Debuff : CharacterState
     {
-        c.Debuffs.Remove(this);
+        public override void Remove(Unit unit)
+        {
+            unit.Debuffs.Remove(this);
+        }
     }
 }
-

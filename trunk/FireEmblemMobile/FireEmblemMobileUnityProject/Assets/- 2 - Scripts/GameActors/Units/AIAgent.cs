@@ -1,17 +1,19 @@
-﻿
-using Assets.Scripts.AI;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Assets.AI;
 using UnityEngine;
 
-public class AIAgent
+namespace Assets.GameActors.Units
 {
-    public List<Goal> AIGoals { get; set; }
-    public WeightSet WeightSet { get; set; }
-
-    public AIAgent()
+    public class AIAgent
     {
-        AIGoals = new List<Goal>();
-        WeightSet = new WeightSet();//TODO fix Warning Assets.Scripts.AI.WeightSet must be instantiated using the ScriptableObject.CreateInstance method instead of new WeightSet.
-        //Debug.Log("TODO Asigning WeightSets!");
+        public AIAgent()
+        {
+            AIGoals = new List<Goal>();
+            WeightSet = ScriptableObject.CreateInstance<WeightSet>();
+            //TODO Assigning WeightSets!
+        }
+
+        public List<Goal> AIGoals { get; set; }
+        public WeightSet WeightSet { get; set; }
     }
 }

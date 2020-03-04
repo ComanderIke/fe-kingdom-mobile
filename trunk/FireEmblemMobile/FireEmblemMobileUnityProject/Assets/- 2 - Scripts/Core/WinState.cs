@@ -1,20 +1,22 @@
-﻿using Assets.Scripts.GameStates;
+﻿using Assets.Core.GameStates;
 using UnityEngine;
 
-public class WinState : GameState<NextStateTrigger>
+namespace Assets.Core
 {
-    public override void Enter()
+    public class WinState : GameState<NextStateTrigger>
     {
-        Debug.Log("Player Won");
-    }
+        public override void Enter()
+        {
+            Debug.Log("Player Won");
+        }
 
-    public override void Exit()
-    {
-        
-    }
+        public override void Exit()
+        {
+        }
 
-    public override GameState<NextStateTrigger> Update()
-    {
-        return nextState;
+        public override GameState<NextStateTrigger> Update()
+        {
+            return NextState;
+        }
     }
 }

@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Assets.Scripts.Dialogs
+﻿namespace Assets.Mechanics.Dialogs
 {
-    public interface SpeakableObject
+    public interface ISpeakableObject
     {
         void ShowSpeechBubble(string text);
-
-        
     }
 }

@@ -1,25 +1,26 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class ParticleSystemAutoDestroy : MonoBehaviour {
+namespace Assets.Utility
+{
+    public class ParticleSystemAutoDestroy : MonoBehaviour {
 
-    private ParticleSystem ps;
+        private ParticleSystem ps;
 
-
-    public void Start()
-    {
-        ps = GetComponent<ParticleSystem>();
-        if(ps==null)
-            ps = GetComponentInChildren<ParticleSystem>();
-    }
-
-    public void Update()
-    {
-        if (ps)
+        public void Start()
         {
-            if (!ps.IsAlive())
+            ps = GetComponent<ParticleSystem>();
+            if(ps==null)
+                ps = GetComponentInChildren<ParticleSystem>();
+        }
+
+        public void Update()
+        {
+            if (ps)
             {
-                Destroy(gameObject);
+                if (!ps.IsAlive())
+                {
+                    Destroy(gameObject);
+                }
             }
         }
     }

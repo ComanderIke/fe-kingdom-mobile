@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Assets.Scripts.Characters;
+using Assets.GameActors.Units;
 using UnityEngine;
 
-namespace Assets.Scripts.Items.Weapons
+namespace Assets.GameActors.Items.Weapons
 {
     [CreateAssetMenu(menuName = "GameData/Weapons/Mixins/LifeSteal", fileName = "Lifesteal")]
     public class LifestealWeaponMixin : WeaponMixin

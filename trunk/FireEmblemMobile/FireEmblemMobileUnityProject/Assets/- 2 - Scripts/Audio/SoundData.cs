@@ -1,32 +1,26 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 using UnityEngine;
-using UnityEngine.Audio;
 
-
-[System.Serializable]
-[CreateAssetMenu(menuName = "GameData/Audio/Sound", fileName = "Sound")]
-public class SoundData :ScriptableObject
+namespace Assets.Audio
 {
+    [Serializable]
+    [CreateAssetMenu(menuName = "GameData/Audio/Sound", fileName = "Sound")]
+    public class SoundData : ScriptableObject
+    {
+        public AudioClip Clip;
 
-    public new string name;
+        [HideInInspector] public bool FadingIn;
 
-    public AudioClip clip;
+        [HideInInspector] public bool FadingOut;
 
-    [Range(0f,1f)]
-    public float volume;
-    [Range(.1f, 3f)]
-    public float pitch;
-    public bool loop;
+        public bool Loop;
 
-    [HideInInspector]
-    public AudioSource source;
-    [HideInInspector]
-    public bool fadingIn;
-    [HideInInspector]
-    public bool fadingOut;
+        public string Name;
+
+        [Range(.1f, 3f)] public float Pitch;
+
+        [HideInInspector] public AudioSource Source;
+
+        [Range(0f, 1f)] public float Volume;
+    }
 }
-

@@ -1,40 +1,44 @@
-﻿using Assets.Scripts.Characters;
-using Assets.Scripts.GameStates;
+﻿using Assets.Core;
+using Assets.GameActors.Units;
 using System;
 using System.Collections;
 using UnityEngine;
 
-namespace Assets.Scripts.Commands
+namespace Assets.Mechanics.Commands
 {
-    class PushCharacterCommand : Command
+    internal class PushCharacterCommand : Command
     {
-        private Unit unit;
+        private readonly Unit unit;
         private Vector2 direction;
 
-        public PushCharacterCommand(Unit unit,Vector2 direction)
+        public PushCharacterCommand(Unit unit, Vector2 direction)
         {
             this.unit = unit;
             this.direction = direction;
         }
+
         public override void Execute()
         {
-            Vector2 pos = new Vector2(unit.GridPosition.x + direction.x, (unit.GridPosition.y + direction.y));
-            if (MainScript.instance.GetSystem<global::MapSystem>().GridLogic.IsTileAccessible(pos))
+            var pos = new Vector2(unit.GridPosition.X + direction.x, (unit.GridPosition.Y + direction.y));
+            if (MainScript.Instance.GetSystem<Map.MapSystem>().GridLogic.IsTileAccessible(pos))
             {
-                if (MainScript.instance.GetSystem<global::MapSystem>().Tiles[(int)pos.x, (int)pos.y].character != null)
+                if (MainScript.Instance.GetSystem<Map.MapSystem>().Tiles[(int) pos.x, (int) pos.y].Unit != null)
                 {
-                    MainScript.instance.GetSystem<global::MapSystem>().Tiles[(int)pos.x, (int)pos.y].character.MoveActions.Push(direction);
+                    MainScript.Instance.GetSystem<Map.MapSystem>().Tiles[(int) pos.x, (int) pos.y].Unit.MoveActions
+                        .Push(direction);
                 }
-                if (MainScript.instance.GetSystem<global::MapSystem>().GridLogic.IsTileAccessible(pos, unit))
-                    unit.SetPosition((int)pos.x, (int)pos.y);
-            }
-            MainScript.instance.StartCoroutine(Delay());
 
+                if (MainScript.Instance.GetSystem<Map.MapSystem>().GridLogic.IsTileAccessible(pos, unit))
+                    unit.SetPosition((int) pos.x, (int) pos.y);
+            }
+
+            MainScript.Instance.StartCoroutine(Delay());
         }
-        IEnumerator Delay()
+
+        private static IEnumerator Delay()
         {
             yield return new WaitForSeconds(0.0f);
-            UnitActionSystem.onCommandFinished();
+            UnitActionSystem.OnCommandFinished();
         }
 
         public override void Undo()

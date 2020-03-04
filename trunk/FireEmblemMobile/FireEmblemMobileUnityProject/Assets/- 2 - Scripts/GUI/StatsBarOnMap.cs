@@ -1,57 +1,53 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
-using Assets.Scripts.Characters;
 
-public class StatsBarOnMap : MonoBehaviour {
-   
-    public int currentHealth;
-    public int maxHealth;
-	private float fillAmount = 1;
-	private float currentValue;
-	public float healthSpeed;
-	public static bool active = true;
-    private Image healthImage;
-    public Color fullHPColor;
-    public Color lowHPColor;
-    public Color middleHPColor;
-	// Use this for initialization
-	void Start () {	
-        healthImage = GetComponent<Image>();
-	}
-    public void SetHealth(int value, int maxValue)
+namespace Assets.GUI
+{
+    public class StatsBarOnMap : MonoBehaviour
     {
-        maxHealth = maxValue;
-        currentHealth = value;
+        public int CurrentHealth;
+        public int MaxHealth;
+        private float fillAmount = 1;
+        private float currentValue;
+        public float HealthSpeed;
+        public static bool Active = true;
+        private Image healthImage;
+        public Color FullHpColor;
+        public Color LowHpColor;
+        public Color MiddleHpColor;
+
+        private void Start()
+        {
+            healthImage = GetComponent<Image>();
+        }
+
+        public void SetHealth(int value, int maxValue)
+        {
+            MaxHealth = maxValue;
+            CurrentHealth = value;
+        }
+
+        private void Update()
+        {
+            //TODO Optimize
+            if (CurrentHealth != 0)
+            {
+                currentValue = MapValues(CurrentHealth, 0f, MaxHealth, 0f, 1f);
+                fillAmount = Mathf.Lerp(fillAmount, currentValue, Time.deltaTime * HealthSpeed);
+                gameObject.transform.localScale = new Vector3(fillAmount, 1, 1);
+            }
+            else
+            {
+                fillAmount = 0;
+                healthImage.fillAmount = fillAmount;
+            }
+
+            healthImage.color = fillAmount >= 0.5f ? Color.Lerp(MiddleHpColor, FullHpColor, MapValues(fillAmount, 0.5f, 1, 0, 1)) : Color.Lerp(LowHpColor, MiddleHpColor, MapValues(fillAmount, 0f, 0.5f, 0, 1));
+        }
+
+        private static float MapValues(float x, float inMin, float inMax, float outMin, float outMax)
+        {
+            return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+        }
     }
-    void Update () {
-		//TODO Optimize
-        if (currentHealth != 0)
-        {
-            currentValue = MapValues(currentHealth, 0f, maxHealth, 0f, 1f);
-
-            fillAmount = Mathf.Lerp(fillAmount, currentValue, Time.deltaTime * healthSpeed);
-            this.gameObject.transform.localScale = new Vector3(fillAmount, 1, 1);
-        }
-        else
-        {
-            fillAmount = 0;
-            healthImage.fillAmount = fillAmount;
-
-        }
-        if (fillAmount >= 0.5f)
-        {
-            healthImage.color = Color.Lerp(middleHPColor, fullHPColor, MapValues(fillAmount,0.5f,1,0,1));
-        }
-        else
-        {
-            healthImage.color = Color.Lerp(lowHPColor, middleHPColor, MapValues(fillAmount, 0f, 0.5f, 0, 1));
-        }
-
-
-    }
-
-	private float MapValues(float x, float inMin, float inMax, float outMin, float outMax ){
-		return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
-	}
 }

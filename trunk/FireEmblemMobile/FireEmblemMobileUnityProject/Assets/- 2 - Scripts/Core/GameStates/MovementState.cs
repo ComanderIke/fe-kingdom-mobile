@@ -1,100 +1,98 @@
-﻿using Assets.__2___Scripts.Mechanics;
-using Assets.Scripts.Characters;
-using Assets.Scripts.GameStates;
-using Assets.Scripts.Grid.PathFinding;
+﻿using Assets.GameActors.Units;
+using Assets.Grid.PathFinding;
+using Assets.Mechanics;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovementState : GameState<NextStateTrigger>
+namespace Assets.Core.GameStates
 {
-    private readonly int x;
-    private readonly int y;
-    public int pathCounter = 0;
-    public MovementPath path;
-    private MainScript mainScript;
-    private Unit unit;
-    List<Vector2> mousePath;
-    bool active;
-
-    public MovementState(Unit c, int x, int y, List<Vector2> path = null)
+    public class MovementState : GameState<NextStateTrigger>
     {
-        mousePath = path;
-        this.x = x;
-        this.y = y;
-        mainScript = MainScript.instance;
-        unit = c;
-        pathCounter = 0;
-    }
+        private readonly int x;
+        private readonly int y;
+        private bool active;
+        private readonly MainScript mainScript;
+        private readonly List<Vector2> mousePath;
+        public MovementPath Path;
+        public int PathCounter;
+        private readonly Unit unit;
 
-    public override void Enter()
-    {
-        if (unit.GridPosition.x == x && unit.GridPosition.y == y)//already on Destination
+        public MovementState(Unit c, int x, int y, List<Vector2> path = null)
         {
-            FinishMovement();
-            return;
+            mousePath = path;
+            this.x = x;
+            this.y = y;
+            mainScript = MainScript.Instance;
+            unit = c;
+            PathCounter = 0;
         }
-        active = true;
-        UnitActionSystem.onStartMovingUnit();
-        if (mousePath == null || mousePath.Count == 0)
+
+        public override void Enter()
         {
-            path = mainScript.GetSystem<MoveSystem>().getPath(unit.GridPosition.x, unit.GridPosition.y, x, y, unit.Player.ID, false, new List<int>());
-            if (path != null)
-                path.Reverse();
-        }
-        else
-        {
-            path = new MovementPath();
-            for (int i = 0; i < mousePath.Count; i++)
+            if (unit.GridPosition.X == x && unit.GridPosition.Y == y) //already on Destination
             {
-                path.prependStep(mousePath[i].x, mousePath[i].y);
+                FinishMovement();
+                return;
+            }
+
+            active = true;
+            UnitActionSystem.OnStartMovingUnit();
+            if (mousePath == null || mousePath.Count == 0)
+            {
+                Path = mainScript.GetSystem<MoveSystem>().GetPath(unit.GridPosition.X, unit.GridPosition.Y, x, y,
+                    unit.Player.Id, false, new List<int>());
+                Path?.Reverse();
+            }
+            else
+            {
+                Path = new MovementPath();
+                for (var i = 0; i < mousePath.Count; i++) Path.PrependStep(mousePath[i].x, mousePath[i].y);
             }
         }
-    }
 
-    public override GameState<NextStateTrigger> Update()
-    {
-        if (!active)
-            return null;
-        MoveUnit();
-        return nextState;
-    }
-
-    void MoveUnit()
-    {
-        float x = unit.GameTransform.GameObject.transform.localPosition.x;
-        float y = unit.GameTransform.GameObject.transform.localPosition.y;
-        float z = unit.GameTransform.GameObject.transform.localPosition.z;
-        float tx = path.getStep(pathCounter).getX();
-        float ty = path.getStep(pathCounter).getY();
-        float walkspeed = 5f;
-        float value = walkspeed * Time.deltaTime;
-        float offset = 0.05f;
-        x = (x + offset > tx && x - offset < tx) || (x == tx) ? tx : x + (x < tx ? value : -value);
-        y = (y + offset > ty && y - offset < ty) || (y == ty) ? ty : y + (y < ty ? value : -value);
-        unit.GameTransform.GameObject.transform.localPosition = new Vector3(x, y, z);
-
-        if (x == tx && y == ty)
+        public override GameState<NextStateTrigger> Update()
         {
-            pathCounter++;
+            if (!active)
+                return null;
+            MoveUnit();
+            return NextState;
         }
 
-        if (pathCounter >= path.getLength())
+        private void MoveUnit()
         {
-            active = false;
-            FinishMovement();
+            float x = unit.GameTransform.GameObject.transform.localPosition.x;
+            float y = unit.GameTransform.GameObject.transform.localPosition.y;
+            float z = unit.GameTransform.GameObject.transform.localPosition.z;
+            float tx = Path.GetStep(PathCounter).GetX();
+            float ty = Path.GetStep(PathCounter).GetY();
+            var walkSpeed = 5f;
+            float value = walkSpeed * Time.deltaTime;
+            var offset = 0.05f;
+            x = x + offset > tx && x - offset < tx || x == tx ? tx : x + (x < tx ? value : -value);
+            y = y + offset > ty && y - offset < ty || y == ty ? ty : y + (y < ty ? value : -value);
+            unit.GameTransform.GameObject.transform.localPosition = new Vector3(x, y, z);
+
+            if (x == tx && y == ty) PathCounter++;
+
+            if (PathCounter >= Path.GetLength())
+            {
+                active = false;
+                FinishMovement();
+            }
         }
-    }
-    public override void Exit()
-    {
-        unit.SetPosition(x, y);
-        UnitActionSystem.onStopMovingUnit();
-    }
-    void FinishMovement()
-    {
-        unit.UnitTurnState.HasMoved = true;
-        if (unit.Player.IsPlayerControlled)
-            mainScript.GetSystem<UnitActionSystem>().ActiveCharWait();
-        UnitActionSystem.onCommandFinished();
+
+        public override void Exit()
+        {
+            unit.SetPosition(x, y);
+            UnitActionSystem.OnStopMovingUnit();
+        }
+
+        private void FinishMovement()
+        {
+            unit.UnitTurnState.HasMoved = true;
+            if (unit.Player.IsPlayerControlled)
+                mainScript.GetSystem<UnitActionSystem>().ActiveCharWait();
+            UnitActionSystem.OnCommandFinished();
+        }
     }
 }
-

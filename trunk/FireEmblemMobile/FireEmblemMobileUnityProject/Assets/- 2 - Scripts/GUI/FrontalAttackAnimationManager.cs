@@ -1,17 +1,20 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class FrontalAttackAnimationManager : MonoBehaviour {
-
-	// Use this for initialization
-	void OnEnable () {
-        StartCoroutine(DisableObject(GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.length*2f));
-	}
-	
-    IEnumerator DisableObject(float delay)
+namespace Assets.GUI
+{
+    public class FrontalAttackAnimationManager : MonoBehaviour
     {
-        yield return new WaitForSeconds(delay);
-        UISystem.onFrontalAttackAnimationEnd();
-        gameObject.SetActive(false);
+        private void OnEnable()
+        {
+            StartCoroutine(DisableObject(GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.length * 2f));
+        }
+
+        private IEnumerator DisableObject(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            UiSystem.OnFrontalAttackAnimationEnd();
+            gameObject.SetActive(false);
+        }
     }
 }

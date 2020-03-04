@@ -4,7 +4,8 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -12,17 +13,17 @@ MonoBehaviour:
   m_Name: DemoArcher
   m_EditorClassIdentifier: 
   Name: Eldric
-  hp: 30
-  sp: 30
   Stats: {fileID: 11400000, guid: 25c05c01280a83b4286f5e929bb9c3bd, type: 2}
-  Sprite: {fileID: 21300004, guid: 4b17d9b83798892488b77532dce0a703, type: 3}
+  CharacterSpriteSet:
+    FaceSprite: {fileID: 21300000, guid: abbbf3349130e6443b5f1b2a37c191ac, type: 3}
+    MapSprite: {fileID: 21300004, guid: 4b17d9b83798892488b77532dce0a703, type: 3}
+  Class: {fileID: 11400000, guid: c9fb62633f511e34e9f6889cbde27e91, type: 2}
+  EquippedWeapon: {fileID: 0}
   Inventory: {fileID: 0}
-  EquipedWeapon: {fileID: 11400000, guid: ac568134ab31f5845a903f4e89d7324a, type: 2}
-  AttackTypes:
-  - {fileID: 11400000, guid: 6ec365b8c8252aa40955cc065e7287bb, type: 2}
-  - {fileID: 11400000, guid: 85d228515ac5e344990af0a1e6df0fe9, type: 2}
-  - {fileID: 11400000, guid: 54398fe55084c7549b18d2712ce837b0, type: 2}
-  DefenseTypes:
-  - {fileID: 11400000, guid: 1e651eb1d9cc9324088d02f7a8b1bee4, type: 2}
-  - {fileID: 11400000, guid: 448f1987453039447b05edf414cb5590, type: 2}
-  - {fileID: 11400000, guid: d76d4344919c5c34ebf6001dd740b21f, type: 2}
+  weaponProficiencyLevels:
+  - E
+  - E
+  - E
+  - D
+  - E
+  - E

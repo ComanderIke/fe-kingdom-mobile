@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
-
-
-public class Grid
+﻿namespace Assets.Grid
 {
-    public int width;
-    public int height;
-
-    public Grid(int width, int height)
+    public class GridData
     {
-        this.width = width;
-        this.height = height;
+        public int Width;
+        public int Height;
+
+        public GridData(int width, int height)
+        {
+            this.Width = width;
+            this.Height = height;
+        }
     }
 }
-
-
-

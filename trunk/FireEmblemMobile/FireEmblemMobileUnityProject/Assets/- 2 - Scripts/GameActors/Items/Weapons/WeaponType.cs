@@ -1,12 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-
-[System.Serializable]
-public enum WeaponType
+namespace Assets.GameActors.Items.Weapons
 {
-    Sword, Dagger, Magic, Bow, Staff, Spear, Axe
+    [Serializable]
+    public enum WeaponType
+    {
+        Sword,
+        Magic,
+        Bow,
+        Staff,
+        Spear,
+        Axe
+    }
 }
-

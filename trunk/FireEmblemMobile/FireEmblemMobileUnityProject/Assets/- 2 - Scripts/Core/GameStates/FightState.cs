@@ -1,77 +1,63 @@
-﻿using System.Collections.Generic;
-using System.Collections;
+﻿using Assets.Audio;
+using Assets.GameActors.Units;
+using Assets.GUI;
+using Assets.Mechanics;
 using UnityEngine;
-using Assets.Scripts.Characters;
-using Assets.Scripts.AI.AttackReactions;
-using Assets.Scripts.GameStates;
 
-public class BattleState : GameState<NextStateTrigger>
+namespace Assets.Core.GameStates
 {
-
-    private Unit attacker;
-    private Unit defender;
-    private UISystem uiController;
-    private UnitsSystem unitController;
-
-    private string startMusic;
-    public BattleSystem fightSystem;
-
-    public BattleState(Unit attacker, Unit defender)
+    public class BattleState : GameState<NextStateTrigger>
     {
-        this.attacker = attacker;
-        this.defender = defender;
+        private readonly Unit attacker;
+        private readonly Unit defender;
+        public BattleSystem FightSystem;
 
-        Debug.Log("FightState " + attacker.Name + " " + defender.Name);
-        uiController = MainScript.instance.GetSystem<UISystem>();
-        unitController = MainScript.instance.GetSystem<UnitsSystem>();
-    }
+        private string startMusic;
+        private readonly UiSystem uiController;
+        private readonly UnitsSystem unitController;
 
-    public override void Enter()
-    {
-        fightSystem = new BattleSystem(attacker, defender);
-        ShowFightUI();
-        unitController.HideUnits();
-        BattleSystem.onStartAttack += fightSystem.DoAttack;
-        UISystem.onCounterClicked = fightSystem.Counter;
-        UISystem.onDodgeClicked = fightSystem.Dodge;
-        UISystem.onGuardClicked = fightSystem.Guard;
-        SetUpMusic();
-    }
-    public override GameState<NextStateTrigger> Update()
-    {
-        return nextState;
-    }
-
-    public override void Exit()
-    {
-        uiController.ShowMapUI();
-        uiController.HideFightUI();
-        uiController.HideReactUI();
-        unitController.ShowUnits();
-
-        BattleSystem.onStartAttack -= fightSystem.DoAttack;
-        MainScript.instance.GetSystem<AudioSystem>().ChangeMusic(startMusic, "BattleTheme", true);
-    }
-
-
-
-    private void ShowFightUI()
-    {
-        uiController.HideMapUI();
-        if (!fightSystem.isDefense)
+        public BattleState(Unit attacker, Unit defender)
         {
-            uiController.ShowFightUI(attacker, defender);
+            this.attacker = attacker;
+            this.defender = defender;
+
+            Debug.Log("FightState " + attacker.Name + " " + defender.Name);
+            uiController = MainScript.Instance.GetSystem<UiSystem>();
+            unitController = MainScript.Instance.GetSystem<UnitsSystem>();
         }
-        else
+
+        public override void Enter()
         {
-            uiController.ShowReactUI(attacker, defender);
+            FightSystem = new BattleSystem(attacker, defender);
+            ShowFightUi();
+            unitController.HideUnits();
+            BattleSystem.OnStartAttack += FightSystem.DoAttack;
+            SetUpMusic();
+        }
+
+        public override GameState<NextStateTrigger> Update()
+        {
+            return NextState;
+        }
+
+        public override void Exit()
+        {
+            uiController.HideFightUi();
+            unitController.ShowUnits();
+
+            BattleSystem.OnStartAttack -= FightSystem.DoAttack;
+            MainScript.Instance.GetSystem<AudioSystem>().ChangeMusic(startMusic, "BattleTheme", true);
+        }
+
+        private void ShowFightUi()
+        {
+            uiController.ShowFightUi(attacker, defender);
+        }
+
+        private void SetUpMusic()
+        {
+            startMusic = MainScript.Instance.GetSystem<AudioSystem>().GetCurrentlyPlayedMusicTracks()[0];
+            MainScript.Instance.GetSystem<AudioSystem>().ChangeMusic("BattleTheme", startMusic);
         }
     }
-    private void SetUpMusic()
-    {
-        startMusic = MainScript.instance.GetSystem<AudioSystem>().GetCurrentlyPlayedMusicTracks()[0];
-        MainScript.instance.GetSystem<AudioSystem>().ChangeMusic("BattleTheme", startMusic);
-    }
-
 }
-

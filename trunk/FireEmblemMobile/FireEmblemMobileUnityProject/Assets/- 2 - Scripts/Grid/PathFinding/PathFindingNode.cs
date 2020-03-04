@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Assets.Scripts.Grid
+﻿namespace Assets.Grid.PathFinding
 {
     public class PathFindingNode
     {
-        public int X { get; private set; }
-        public int Y { get; private set; }
-        public bool Accesible { get; private set; }
-        public PathFindingNode(int x, int y, bool accesible)
+        public int X { get; }
+        public int Y { get; }
+        public bool Accessible { get; }
+
+        public PathFindingNode(int x, int y, bool accessible)
         {
             X = x;
             Y = y;
-            Accesible = accesible;
+            Accessible = accessible;
         }
     }
 }

@@ -1,30 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Assets.Utility;
 using UnityEngine;
 
-public class ScreenParticleSystem : MonoBehaviour {
+namespace Assets.GUI
+{
+    public class ScreenParticleSystem : MonoBehaviour
+    {
+        [SerializeField] private readonly GameObject psTest = default;
+        [SerializeField] private readonly Camera psCamera = default;
 
-    [SerializeField]
-    private GameObject ps_test;
-    [SerializeField]
-    private Camera ps_Camera;
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        if (Input.GetMouseButtonDown(0))
+        private void Update()
         {
-            Vector3 position = ps_Camera.ScreenToWorldPoint(Input.mousePosition);
-            GameObject ps= GameObject.Instantiate(ps_test, position, Quaternion.identity);
-            ps.layer = LayerMask.NameToLayer("FrontUI");
-            ps.AddComponent<ParticleSystemAutoDestroy>();
-            foreach(Transform trans in ps.transform.GetComponentsInChildren<Transform>())
+            if (Input.GetMouseButtonDown(0))
             {
-                trans.gameObject.layer = LayerMask.NameToLayer("FrontUI");
+                var position = psCamera.ScreenToWorldPoint(Input.mousePosition);
+                var ps = Instantiate(psTest, position, Quaternion.identity);
+                ps.layer = LayerMask.NameToLayer("FrontUI");
+                ps.AddComponent<ParticleSystemAutoDestroy>();
+                foreach (var trans in ps.transform.GetComponentsInChildren<Transform>())
+                {
+                    trans.gameObject.layer = LayerMask.NameToLayer("FrontUI");
+                }
             }
         }
-	}
+    }
 }

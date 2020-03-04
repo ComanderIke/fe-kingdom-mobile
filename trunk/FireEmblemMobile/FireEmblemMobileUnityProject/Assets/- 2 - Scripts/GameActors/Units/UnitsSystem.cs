@@ -1,31 +1,26 @@
-﻿using Assets.Scripts.Engine;
+﻿using Assets.Core;
+using Assets.GameActors.Units.OnGameObject;
 using UnityEngine;
 
-public class UnitsSystem : MonoBehaviour, EngineSystem {
-
-    private UnitController[] units;
-
-    void Start()
+namespace Assets.GameActors.Units
+{
+    public class UnitsSystem : MonoBehaviour, IEngineSystem
     {
-        units = FindObjectsOfType<UnitController>();
-        
-    }
+        private UnitController[] units;
 
-
-    public void ShowUnits()
-    {
-
-        foreach(UnitController unit in units)
+        private void Start()
         {
-            unit.gameObject.SetActive(true);
+            units = FindObjectsOfType<UnitController>();
         }
-    }
 
-    public void HideUnits()
-    {
-        foreach (UnitController unit in units)
+        public void ShowUnits()
         {
-            unit.gameObject.SetActive(false);
+            foreach (var unit in units) unit.gameObject.SetActive(true);
+        }
+
+        public void HideUnits()
+        {
+            foreach (var unit in units) unit.gameObject.SetActive(false);
         }
     }
 }

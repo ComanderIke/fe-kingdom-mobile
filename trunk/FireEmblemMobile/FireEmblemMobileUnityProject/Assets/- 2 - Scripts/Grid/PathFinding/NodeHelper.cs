@@ -1,42 +1,42 @@
-﻿using Assets.Scripts.Grid;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-public class NodeHelper
+﻿namespace Assets.Grid.PathFinding
 {
-    int width;
-    int height;
-    public NodeHelper(int width, int height)
+    public class NodeHelper
     {
-        this.width = width;
-        this.height = height;
-        nodes = new Node[width, height];
-        for (int i = 0; i < width; i++)
+        private readonly int width;
+        private readonly int height;
+
+        public NodeHelper(int width, int height)
         {
-            for (int j = 0; j < height; j++)
+            this.width = width;
+            this.height = height;
+            Nodes = new Node[width, height];
+            for (int i = 0; i < width; i++)
             {
-                nodes[i, j] = new Node(i, j, 1000);
+                for (int j = 0; j < height; j++)
+                {
+                    Nodes[i, j] = new Node(i, j, 1000);
+                }
             }
         }
-    }
-    public Node[,] nodes;
 
-    public bool nodeFaster(int x, int y, int c)
-    {
-        if (nodes[x, y].c < c)
-            return false;
-        return true;
-    }
-    public void Reset()
-    {
-        nodes = new Node[width, height];
-        for (int i = 0; i < width; i++)
+        public Node[,] Nodes;
+
+        public bool NodeFaster(int x, int y, int c)
         {
-            for (int j = 0; j < height; j++)
+            if (Nodes[x, y].C < c)
+                return false;
+            return true;
+        }
+
+        public void Reset()
+        {
+            Nodes = new Node[width, height];
+            for (int i = 0; i < width; i++)
             {
-                nodes[i, j] = new Node(i, j, 1000);
+                for (int j = 0; j < height; j++)
+                {
+                    Nodes[i, j] = new Node(i, j, 1000);
+                }
             }
         }
     }

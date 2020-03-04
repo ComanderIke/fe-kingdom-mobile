@@ -1,67 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
-namespace Assets.Scripts.Characters.Skills
+namespace Assets.GameActors.Units.Skills
 {
-    [System.Serializable]
+    [Serializable]
     public abstract class Skill
     {
-        const int MAX_LEVEL = 10;
-        public String name;
-        public String description;
-        public int Level;
-        public int CurrentCooldown;
-        public int Cooldown;
-		public int CooldownReduction = 0;
-        public List<int> AttackRanges;
-        public int manacost;
-        public Sprite sprite;
-        public Sprite sprite_hovered;
-		public Sprite sprite_lvlup;
-		public Sprite sprite_lvlup_pressed;
-        public Sprite sprite_disabled;
-        public SkillTarget target;
-        public GameObject animationObject;
-        protected float skillTime = 0;
-        protected bool inAnimation = false;
-        protected float animationTime = 0.0f;
-        public Skill()
+        private const int MAX_LEVEL = 10;
+
+        protected Skill()
         {
             AttackRanges = new List<int>();
         }
+
+        public GameObject AnimationObject { get; private set; }
+
+        public List<int> AttackRanges { get; private set; }
+
+        public int Cooldown { get; private set; }
+
+        public int CooldownReduction { get; private set; } = 0;
+
+        public int CurrentCooldown { get; private set; }
+
+        public string Description { get; private set; }
+
+        public int Level { get; private set; }
+
+        public string Name { get; private set; }
+
+        public SkillTarget Target { get; private set; }
+
+        public SkillSpriteSet SpriteSet { get; }
+
         public abstract bool CanTargetCharacters();
+
         public virtual void Update()
         {
-            if (inAnimation)
-            {
-                skillTime += Time.deltaTime;
-                if (skillTime > animationTime)
-                {
-                    inAnimation = false;
-                }
+        }
 
-            }
-        }
-        public bool IsInAnimation()
-        {
-            return inAnimation;
-        }
-        public virtual void UpdateCD()
+        public virtual void UpdateCd()
         {
             if (CurrentCooldown != 0)
                 CurrentCooldown -= 1;
         }
-        public abstract int getDamage(Unit user, bool justToShow);
+
+        public abstract int GetDamage(Unit user, bool justToShow);
+
         public bool CanUseSkill(Unit user)
         {
-            if (CurrentCooldown == 0)
-                return true;
-            return false;
+            return CurrentCooldown == 0;
         }
-        private bool OnCoolDown()
+
+        public bool OnCoolDown()
         {
             return CurrentCooldown != 0;
         }

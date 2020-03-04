@@ -1,32 +1,28 @@
-﻿using Assets.Scripts.Characters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 using UnityEngine;
 
-
-[System.Serializable]
-public abstract class CharacterState : ScriptableObject
+namespace Assets.GameActors.Units.CharStateEffects
 {
-    public int duration;
-    private int currduration;
-
-    public virtual bool TakeEffect(Unit c)
+    [Serializable]
+    public abstract class CharacterState : ScriptableObject
     {
-        if (currduration > 0)
+        private int currentDuration;
+        public int Duration;
+
+        public virtual bool TakeEffect(Unit unit)
         {
-            currduration -= 1;
+            if (currentDuration > 0)
+                currentDuration -= 1;
+            else
+                return true;
+            return false;
         }
-        else
-            return true;
-        return false;
 
-    }
-    public abstract void Remove(Unit c);
-    private void OnEnable()
-    {
-        currduration = duration;
+        public abstract void Remove(Unit unit);
+
+        private void OnEnable()
+        {
+            currentDuration = Duration;
+        }
     }
 }
-

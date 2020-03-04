@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Assets.Core;
+using Assets.Map;
 using UnityEngine;
 
-namespace Assets.Scripts.Characters
+namespace Assets.GameActors.Units
 {
     public class MoveActions
     {
-        Unit unit;
+        private readonly Unit unit;
 
         public MoveActions(Unit unit)
         {
@@ -17,13 +15,13 @@ namespace Assets.Scripts.Characters
 
         public void Push(Vector2 direction)
         {
-            Vector2 pos = new Vector2(unit.GridPosition.x + direction.x, (unit.GridPosition.y + direction.y));
-            if (MainScript.instance.GetSystem<global::MapSystem>().GridLogic.IsTileAccessible(pos)){
-                if(MainScript.instance.GetSystem<global::MapSystem>().Tiles[(int)pos.x, (int)pos.y].character != null)
-                {
-                    MainScript.instance.GetSystem<global::MapSystem>().Tiles[(int)pos.x, (int)pos.y].character.MoveActions.Push(direction);
-                }
-                if (MainScript.instance.GetSystem<global::MapSystem>().GridLogic.IsTileAccessible(pos, unit))
+            var pos = new Vector2(unit.GridPosition.X + direction.x, unit.GridPosition.Y + direction.y);
+            if (MainScript.Instance.GetSystem<MapSystem>().GridLogic.IsTileAccessible(pos))
+            {
+                if (MainScript.Instance.GetSystem<MapSystem>().Tiles[(int)pos.x, (int)pos.y].Unit != null)
+                    MainScript.Instance.GetSystem<MapSystem>().Tiles[(int)pos.x, (int)pos.y].Unit.MoveActions
+                        .Push(direction);
+                if (MainScript.Instance.GetSystem<MapSystem>().GridLogic.IsTileAccessible(pos, unit))
                     unit.SetPosition((int)pos.x, (int)pos.y);
             }
         }

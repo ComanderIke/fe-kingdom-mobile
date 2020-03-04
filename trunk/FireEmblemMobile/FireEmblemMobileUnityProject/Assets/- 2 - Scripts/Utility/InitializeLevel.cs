@@ -1,28 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class InitializeLevel : MonoBehaviour {
+namespace Assets.Utility
+{
+    public class InitializeLevel : MonoBehaviour {
 
-    public GameObject ressourcePrefab;
-    public GameObject gameDataPrefab;
-    public GameObject audioPrefab;
-	// Use this for initialization
-	void Awake () {
-        if (GameObject.Find("RessourceScript") == null)
-        {
-            GameObject go = GameObject.Instantiate(ressourcePrefab);
-            go.name = "RessourceScript";
-        }
-        if (GameObject.Find("GameData") == null)
-        {
-            GameObject go = GameObject.Instantiate(gameDataPrefab);
-            go.name = "GameData";
+        public GameObject ResourcePrefab;
+        public GameObject GameDataPrefab;
+        public GameObject AudioPrefab;
+        // Use this for initialization
+        void Awake () {
+            if (GameObject.Find("ResourceScript") == null)
+            {
+                var go = Instantiate(ResourcePrefab);
+                go.name = "ResourceScript";
+            }
+            if (GameObject.Find("GameData") == null)
+            {
+                var go = Instantiate(GameDataPrefab);
+                go.name = "GameData";
+            }
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

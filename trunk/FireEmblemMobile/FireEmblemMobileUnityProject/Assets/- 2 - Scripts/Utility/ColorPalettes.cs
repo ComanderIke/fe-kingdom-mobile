@@ -1,20 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class ColorPalettes : MonoBehaviour {
+namespace Assets.Utility
+{
+    public class ColorPalettes : MonoBehaviour {
 
-    public Color mainGreenColor;
-    public Color mainRedColor;
-    public Color mainWhiteColor;
-    public Color []colors;
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+        public Color MainGreenColor;
+        public Color MainRedColor;
+        public Color MainWhiteColor;
+        public Color[] SixGradeColors;
+    }
 }

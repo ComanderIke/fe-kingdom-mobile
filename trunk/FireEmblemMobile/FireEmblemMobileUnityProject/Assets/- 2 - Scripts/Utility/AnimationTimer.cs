@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 
-public class AnimationTimer : MonoBehaviour
+namespace Assets.Utility
 {
-    public float normalizedTime;
-
-    void Update()
+    public class AnimationTimer : MonoBehaviour
     {
-        normalizedTime += Time.deltaTime;
-        normalizedTime = normalizedTime % 1.0f;
+        public float NormalizedTime;
+
+        void Update()
+        {
+            NormalizedTime += Time.deltaTime;
+            NormalizedTime = NormalizedTime % 1.0f;
+        }
     }
 }

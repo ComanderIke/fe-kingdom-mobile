@@ -1,13 +1,11 @@
-﻿using Assets.Scripts.Characters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Assets.GameActors.Units;
 using UnityEngine;
 
-public abstract class WeaponMixin : ScriptableObject
+namespace Assets.GameActors.Items.Weapons
 {
-    public new string name;
-    public abstract void OnAttack(Unit attacker, Unit defender);
+    public abstract class WeaponMixin : ScriptableObject
+    {
+        public string Name;
+        public abstract void OnAttack(Unit attacker, Unit defender);
+    }
 }
-

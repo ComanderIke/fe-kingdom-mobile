@@ -1,66 +1,128 @@
-﻿using Assets.Scripts.Characters;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Linq;
+using Assets.GameActors.Units;
+using Assets.GameActors.Units.Humans;
+using Assets.GameResources;
+using Assets.Utility;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TopUI : MonoBehaviour {
-
-    [SerializeField]
-    Image faceSprite;
-    [SerializeField]
-    Image[] inventorySprites;
-    [SerializeField]
-    TextMeshProUGUI hp;
-    [SerializeField]
-    TextMeshProUGUI atk;
-    [SerializeField]
-    TextMeshProUGUI weaponAtk;
-    [SerializeField]
-    TextMeshProUGUI spd;
-    [SerializeField]
-    TextMeshProUGUI def;
-    [SerializeField]
-    TextMeshProUGUI acc;
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-    public void Show(Unit c)
+namespace Assets.GUI
+{
+    public class TopUi : MonoBehaviour
     {
-        gameObject.SetActive(true);
-        hp.text = c.HP + " / " + c.Stats.MaxHP;
-        atk.text = "" + c.Stats.Attack;
-        spd.text = "" + c.Stats.Speed;
-        acc.text = "" + c.Stats.Accuracy;
-        def.text = "" + c.Stats.Defense;
-        weaponAtk.text = "";
+        [SerializeField] private TextMeshProUGUI characterName = default;
+        [SerializeField] private TextMeshProUGUI level = default;
+        [SerializeField] private FilledBarController expBar = default;
+        [SerializeField] private TextMeshProUGUI str = default;
+        [SerializeField] private TextMeshProUGUI spd = default;
+        [SerializeField] private TextMeshProUGUI mag = default;
+        [SerializeField] private TextMeshProUGUI def = default;
+        [SerializeField] private TextMeshProUGUI skl = default;
+        [SerializeField] private TextMeshProUGUI res = default;
+        [SerializeField] private TextMeshProUGUI hp = default;
+        [SerializeField] private FilledBarController hpBar = default;
+        [SerializeField] private TextMeshProUGUI sp = default;
+        [SerializeField] private FilledBarController spBar = default;
+        [SerializeField] private Image characterSprite = default;
+        [SerializeField] private Image classSprite = default;
+        [SerializeField] private Image[] motivationSprites = default;
+        [SerializeField] private TextMeshProUGUI atk = default;
+        [SerializeField] private Image equippedWeaponSprite = default;
+        [SerializeField] private Image[] weaponProficiencyGradients = default;
+        [SerializeField] private TextMeshProUGUI[] weaponProficiencyLevels = default;
+        [SerializeField] private Image[] skillSprites = default;
+        [SerializeField] private Image[] inventorySprites = default;
 
-        //faceSpriteLeft.sprite = c.Sprite;
-        foreach (Image i in inventorySprites)
+        public void Show(Unit c)
         {
-            i.enabled = false;
-        }
-        if (c.GetType() == typeof(Human))
-        {
-            Human character = (Human)c;
-            if (character.EquipedWeapon != null)
-                weaponAtk.text = "+" + character.EquipedWeapon.Dmg;
-            for (int i = 0; i < character.Inventory.items.Count; i++)
+            gameObject.SetActive(true);
+            characterName.text = c.Name;
+            level.text = "" + c.ExperienceManager.Level;
+            expBar.SetFillAmount((c.ExperienceManager.Exp*1.0f)/ c.ExperienceManager.NextLevelExp);
+           
+            str.text = "" + c.Stats.Str;
+            spd.text = "" + c.Stats.Spd;
+            mag.text = "" + c.Stats.Mag;
+            skl.text = "" + c.Stats.Skl;
+            def.text = "" + c.Stats.Def;
+            res.text = "" + c.Stats.Res;
+            hpBar.SetFillAmount((c.Hp * 1.0f) / c.Stats.MaxHp);
+            hp.text = c.Hp + "/" + c.Stats.MaxHp;
+            spBar.SetFillAmount((c.Sp * 1.0f) / c.Stats.MaxSp);
+            sp.text = c.Sp + "/" + c.Stats.MaxSp;
+            atk.text = "" + c.BattleStats.GetAttackDamage();
+            characterSprite.sprite = c.CharacterSpriteSet.FaceSprite;
+           
+            foreach (var motivationSprite in motivationSprites)
             {
-                inventorySprites[i].sprite = character.Inventory.items[i].Sprite;
-                inventorySprites[i].enabled = true;
+                motivationSprite.gameObject.SetActive(false);
             }
+            switch (c.Motivation)
+            {
+                case Motivation.Tired:
+                    motivationSprites[0].gameObject.SetActive(true);
+                    break;
+                case Motivation.Negative: motivationSprites[1].gameObject.SetActive(true); break;
+                case Motivation.Neutral: motivationSprites[2].gameObject.SetActive(true); break;
+                case Motivation.Positive: motivationSprites[3].gameObject.SetActive(true); break;
+                case Motivation.Happy: motivationSprites[4].gameObject.SetActive(true); break;
+            }
+
+            if (c is Human human)
+            {
+                classSprite.sprite = human.Class.Sprite;
+                var sixColors =FindObjectOfType<ColorPalettes>().SixGradeColors;
+                if(human.EquippedWeapon!=null)
+                    equippedWeaponSprite.sprite = human.EquippedWeapon.Sprite;
+                for (int i = 0; i < human.WeaponProficiencies().Count; i++)
+                {
+                    string weaponProficiencyLvl = human.WeaponProficiencies().Values.ElementAt(i);
+                    weaponProficiencyLevels[i].text = weaponProficiencyLvl;
+                    
+                    switch (weaponProficiencyLvl)
+                    {
+                        case "E":
+                            weaponProficiencyGradients[i].color = sixColors[0];
+                            weaponProficiencyLevels[i].color = new Color(sixColors[0].r, sixColors[0].g, sixColors[0].b,1); break;
+                        case "D":
+                            weaponProficiencyGradients[i].color = sixColors[1];
+                            weaponProficiencyLevels[i].color = new Color(sixColors[1].r, sixColors[1].g, sixColors[1].b, 1); break;
+                        case "C":
+                            weaponProficiencyGradients[i].color = sixColors[2];
+                            weaponProficiencyLevels[i].color = new Color(sixColors[2].r, sixColors[2].g, sixColors[2].b, 1); break;
+                        case "B":
+                            weaponProficiencyGradients[i].color = sixColors[3];
+                            weaponProficiencyLevels[i].color = new Color(sixColors[3].r, sixColors[3].g, sixColors[3].b, 1); break;
+                        case "A":
+                            weaponProficiencyGradients[i].color = sixColors[4];
+                            weaponProficiencyLevels[i].color = new Color(sixColors[4].r, sixColors[4].g, sixColors[4].b, 1); break;
+                        case "S":
+                            weaponProficiencyGradients[i].color = sixColors[5];
+                            weaponProficiencyLevels[i].color = new Color(sixColors[5].r, sixColors[5].g, sixColors[5].b, 1); break;
+                    }
+                    
+                }
+                for (int i = 0; i < human.SkillManager.Skills.Count; i++)
+                {
+                    skillSprites[i].sprite = human.SkillManager.Skills[i].SpriteSet.Sprite;
+                }
+                for (int i = 0; i < human.Inventory.Items.Count; i++)
+                {
+                    inventorySprites[i].sprite = human.Inventory.Items[i].Sprite;
+                }
+            }
+
+
+
+              
+               
+         
         }
-    }
-    public void Hide()
-    {
-        gameObject.SetActive(false);
+
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

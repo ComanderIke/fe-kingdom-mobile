@@ -1,202 +1,202 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Assets.Core;
 using UnityEngine;
-using System;
-using Assets.Scripts.Engine;
 
-public class AudioSystem : MonoBehaviour, EngineSystem {
+namespace Assets.Audio
+{
+    public class AudioSystem : MonoBehaviour, IEngineSystem
+    {
+        public static AudioSystem Instance;
 
-    public SoundData[] sounds;
-    public MusicData[] music;
-    [HideInInspector]
-    private List<MusicData> currentlyPlayedMusic;
+        [HideInInspector] private List<MusicData> currentlyPlayedMusic;
 
-    public static AudioSystem instance;
+        public MusicData[] Music;
 
-	void Awake () {
+        public SoundData[] Sounds;
 
-        if (instance == null)
-            instance = this;
-        else
+        private void Awake()
         {
-            Destroy(gameObject);
-            return;
-        }
-
-        DontDestroyOnLoad(gameObject);
-
-		foreach(SoundData s in sounds)
-        {
-            s.source = gameObject.AddComponent<AudioSource>();
-            s.source.clip = s.clip;
-            s.source.volume = s.volume;
-            s.source.pitch = s.pitch;
-            s.source.loop = s.loop;
-        }
-        foreach (MusicData m in music)
-        {
-            m.source = gameObject.AddComponent<AudioSource>();
-            m.source.clip = m.clip;
-            m.source.volume = m.volume;
-            m.source.pitch = m.pitch;
-            m.source.loop = m.loop;
-        }
-        currentlyPlayedMusic = new List<MusicData>();
-        PlayMusic("PlayerTheme",0,1);
-
-    }
-
-
-
-    public void PlaySound(string name, float delay = 0, float fadeDuration = -1.0f)
-    {
-        SoundData s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null)
-        {
-            Debug.LogWarning("Sound no found!");
-
-            return;
-        }
-        
-        if(fadeDuration!=-1.0f)
-            FadeIn(name, fadeDuration, delay);
-        else
-            s.source.Play();
-    }
-
-    public void PlayMusic(string name, float delay = 0, float fadeDuration = -1.0f)
-    {
-        MusicData m = Array.Find(music, music => music.name == name);
-        if (m == null)
-        {
-            Debug.LogWarning("Sound no found!");
-
-            return;
-        }
-        currentlyPlayedMusic.Add(m);
-        if (fadeDuration != -1.0f)
-            FadeIn(name, fadeDuration, delay);
-        else
-        {
-            m.source.Play();
-        }
-    }
-
-    public void StopSound(string name)
-    {
-        SoundData s = Array.Find(sounds, sound => sound.name == name);
-        s.source.Stop();
-    }
-
-    public void StopMusic(string name)
-    {
-        MusicData m = Array.Find(music, music => music.name == name);
-        currentlyPlayedMusic.Remove(m);
-        m.source.Stop();
-    }
-
-    public void ChangeMusic(string newMusicName, string currentMusicName, bool freshRestart = false,float  fadeOutDuration=1.0f, float fadeInDelay = 0.5f, float fadeInDuration=1.0f)
-    {
-        FadeOut(currentMusicName, fadeOutDuration, freshRestart);
-        PlayMusic(newMusicName, fadeInDelay, fadeInDuration);
-    }
-
-    public List<string> GetCurrentlyPlayedMusicTracks()
-    {
-        List<string> musicNames = new List<string>();
-        foreach(MusicData m in currentlyPlayedMusic)
-        {
-            musicNames.Add(m.name);
-        }
-        return musicNames;
-    }
-
-    public void FadeIn(string name, float duration, float delay=0)
-    {
-        StartCoroutine(FadeInCoroutine(name, duration, delay));
-    }
-
-    public void FadeOut(string name, float duration, bool freshRestart=false)
-    {
-        StartCoroutine(FadeOutCoroutine(name, duration, freshRestart));
-    }
-
-    IEnumerator FadeInCoroutine(string name, float duration, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        SoundData s = Array.Find(sounds, sound => sound.name == name);
-        
-        if (s != null)
-        {
-            s.fadingIn = true;
-            s.fadingOut = false;
-            s.source.Play();
-            float maxVolume = s.volume;
-            float volume = 0;
-            s.source.volume = volume;
-            while (s.source.volume < maxVolume && s.fadingIn)
+            if (Instance == null)
             {
-                volume += 0.1f / duration;
-                s.source.volume = volume;
-                yield return new WaitForSeconds(0.1f);
+                Instance = this;
             }
-        }
-        else
-        {
-            MusicData m = Array.Find(music, music => music.name == name);
-
-            m.fadingIn = true;
-            m.fadingOut = false;
-            m.source.Play();
-            float maxVolume = m.volume;
-            float volume = 0;
-            m.source.volume = volume;
-            while (m.source.volume < maxVolume && m.fadingIn)
-            {
-                volume += 0.1f / duration;
-                m.source.volume = volume;
-                yield return new WaitForSeconds(0.1f);
-            }
-        }
-    }
-
-    IEnumerator FadeOutCoroutine(string name, float duration, bool freshRestart)
-    {
-        SoundData s = Array.Find(sounds, sound => sound.name == name);
-        if (s != null)
-        {
-            s.fadingIn = false;
-            s.fadingOut = true;
-            float volume = s.source.volume;
-            s.volume = volume;
-            while (s.source.volume > 0 && s.fadingOut)
-            {
-
-                volume -= 0.1f / duration;
-                s.source.volume = volume;
-                yield return new WaitForSeconds(0.1f);
-            }
-            s.source.Stop();
-        }
-        else
-        {
-            MusicData m = Array.Find(music, music => music.name == name);
-            m.fadingIn = false;
-            m.fadingOut = true;
-            float volume = m.source.volume;
-            m.volume = volume;
-            while (m.source.volume > 0 && m.fadingOut)
-            {
-
-                volume -= 0.1f / duration;
-                m.source.volume = volume;
-                yield return new WaitForSeconds(0.1f);
-            }
-            if (freshRestart)
-                m.source.Stop();
             else
-                m.source.Pause();
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            DontDestroyOnLoad(gameObject);
+
+            foreach (var s in Sounds)
+            {
+                s.Source = gameObject.AddComponent<AudioSource>();
+                s.Source.clip = s.Clip;
+                s.Source.volume = s.Volume;
+                s.Source.pitch = s.Pitch;
+                s.Source.loop = s.Loop;
+            }
+
+            foreach (var m in Music)
+            {
+                m.Source = gameObject.AddComponent<AudioSource>();
+                m.Source.clip = m.Clip;
+                m.Source.volume = m.Volume;
+                m.Source.pitch = m.Pitch;
+                m.Source.loop = m.Loop;
+            }
+
+            currentlyPlayedMusic = new List<MusicData>();
+            PlayMusic("PlayerTheme", 0, 1);
+        }
+
+        public void PlaySound(string name, float delay = 0, float fadeDuration = -1.0f)
+        {
+            var s = Array.Find(Sounds, sound => sound.Name == name);
+            if (s == null)
+            {
+                Debug.LogWarning("Sound no found!");
+
+                return;
+            }
+
+            if (fadeDuration != -1.0f)
+                FadeIn(name, fadeDuration, delay);
+            else
+                s.Source.Play();
+        }
+
+        public void PlayMusic(string name, float delay = 0, float fadeDuration = -1.0f)
+        {
+            var m = Array.Find(Music, music => music.Name == name);
+            if (m == null)
+            {
+                Debug.LogWarning("Sound no found!");
+
+                return;
+            }
+
+            currentlyPlayedMusic.Add(m);
+            if (fadeDuration != -1.0f)
+                FadeIn(name, fadeDuration, delay);
+            else
+                m.Source.Play();
+        }
+
+        public void StopSound(string name)
+        {
+            var s = Array.Find(Sounds, sound => sound.Name == name);
+            s.Source.Stop();
+        }
+
+        public void StopMusic(string name)
+        {
+            var m = Array.Find(Music, music => music.Name == name);
             currentlyPlayedMusic.Remove(m);
+            m.Source.Stop();
+        }
+
+        public void ChangeMusic(string newMusicName, string currentMusicName, bool freshRestart = false,
+            float fadeOutDuration = 1.0f, float fadeInDelay = 0.5f, float fadeInDuration = 1.0f)
+        {
+            FadeOut(currentMusicName, fadeOutDuration, freshRestart);
+            PlayMusic(newMusicName, fadeInDelay, fadeInDuration);
+        }
+
+        public List<string> GetCurrentlyPlayedMusicTracks()
+        {
+            var musicNames = new List<string>();
+            foreach (var m in currentlyPlayedMusic) musicNames.Add(m.Name);
+            return musicNames;
+        }
+
+        public void FadeIn(string name, float duration, float delay = 0)
+        {
+            StartCoroutine(FadeInCoroutine(name, duration, delay));
+        }
+
+        public void FadeOut(string name, float duration, bool freshRestart = false)
+        {
+            StartCoroutine(FadeOutCoroutine(name, duration, freshRestart));
+        }
+        private IEnumerator FadeInCoroutine(string name, float duration, float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            var s = Array.Find(Sounds, sound => sound.Name == name);
+
+            if (s != null)
+            {
+                s.FadingIn = true;
+                s.FadingOut = false;
+                s.Source.Play();
+                float maxVolume = s.Volume;
+                float volume = 0;
+                s.Source.volume = volume;
+                while (s.Source.volume < maxVolume && s.FadingIn)
+                {
+                    volume += 0.1f / duration;
+                    s.Source.volume = volume;
+                    yield return new WaitForSeconds(0.1f);
+                }
+            }
+            else
+            {
+                var m = Array.Find(Music, music => music.Name == name);
+                m.FadingIn = true;
+                m.FadingOut = false;
+                m.Source.Play();
+                float maxVolume = m.Volume;
+                float volume = 0;
+                m.Source.volume = volume;
+                while (m.Source.volume < maxVolume && m.FadingIn)
+                {
+                    volume += 0.1f / duration;
+                    m.Source.volume = volume;
+                    yield return new WaitForSeconds(0.1f);
+                }
+            }
+        }
+
+        private IEnumerator FadeOutCoroutine(string name, float duration, bool freshRestart)
+        {
+            var s = Array.Find(Sounds, sound => sound.Name == name);
+            if (s != null)
+            {
+                s.FadingIn = false;
+                s.FadingOut = true;
+                float volume = s.Source.volume;
+                s.Volume = volume;
+                while (s.Source.volume > 0 && s.FadingOut)
+                {
+                    volume -= 0.1f / duration;
+                    s.Source.volume = volume;
+                    yield return new WaitForSeconds(0.1f);
+                }
+
+                s.Source.Stop();
+            }
+            else
+            {
+                var m = Array.Find(Music, music => music.Name == name);
+                m.FadingIn = false;
+                m.FadingOut = true;
+                float volume = m.Source.volume;
+                m.Volume = volume;
+                while (m.Source.volume > 0 && m.FadingOut)
+                {
+                    volume -= 0.1f / duration;
+                    m.Source.volume = volume;
+                    yield return new WaitForSeconds(0.1f);
+                }
+
+                if (freshRestart)
+                    m.Source.Stop();
+                else
+                    m.Source.Pause();
+                currentlyPlayedMusic.Remove(m);
+            }
         }
     }
 }

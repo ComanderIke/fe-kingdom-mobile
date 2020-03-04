@@ -1,37 +1,37 @@
-﻿using Assets.Scripts.Characters;
-using Assets.Scripts.GameStates;
-using System;
+﻿using Assets.Core;
+using Assets.Core.GameStates;
+using Assets.GameActors.Units;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
-namespace Assets.Scripts.Commands
+namespace Assets.Mechanics.Commands
 {
-    class MoveCharacterCommand : Command
+    internal class MoveCharacterCommand : Command
     {
-        private Unit unit;
-        private int x;
-        private int y;
-        private int oldX;
-        private int oldY;
-        private List<Vector2> path;
-        
+        private readonly Unit unit;
+        private readonly int x;
+        private readonly int y;
+        private readonly int oldX;
+        private readonly int oldY;
+        private readonly List<Vector2> path;
+
         public MoveCharacterCommand(Unit unit, int x, int y)
         {
             this.unit = unit;
-            oldX = unit.GridPosition.x;
-            oldY = unit.GridPosition.y;
+            oldX = unit.GridPosition.X;
+            oldY = unit.GridPosition.Y;
             this.x = x;
             this.y = y;
         }
-        public MoveCharacterCommand(Unit unit, int x, int y, List<Vector2> path):this(unit,x,y)
+
+        public MoveCharacterCommand(Unit unit, int x, int y, List<Vector2> path) : this(unit, x, y)
         {
             this.path = path;
         }
+
         public override void Execute()
         {
-           MainScript.instance.GameStateManager.SwitchState(new MovementState(unit, x, y,path));
+            MainScript.Instance.GameStateManager.SwitchState(new MovementState(unit, x, y, path));
         }
 
         public override void Undo()

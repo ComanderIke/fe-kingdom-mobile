@@ -1,28 +1,21 @@
-﻿using Assets.Scripts.GameStates;
-using Assets.Scripts.Players;
-using System;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
-
-public class GameOverState : GameState<NextStateTrigger>
+namespace Assets.Core.GameStates
 {
+    public class GameOverState : GameState<NextStateTrigger>
+    {
+        public override void Enter()
+        {
+            Debug.Log("Game Over");
+        }
 
-    public GameOverState()
-    {
-       
-    }
-    public override void Enter()
-    {
-        Debug.Log("Game Over");
-    }
+        public override void Exit()
+        {
+        }
 
-    public override void Exit()
-    {
-    }
-
-    public override GameState<NextStateTrigger> Update()
-    {
-        return nextState;
+        public override GameState<NextStateTrigger> Update()
+        {
+            return NextState;
+        }
     }
 }

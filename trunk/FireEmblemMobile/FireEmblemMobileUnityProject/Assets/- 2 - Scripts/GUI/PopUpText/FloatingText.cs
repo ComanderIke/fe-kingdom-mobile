@@ -1,19 +1,22 @@
 ﻿using TMPro;
 using UnityEngine;
 
-public class FloatingText : MonoBehaviour {
-
-    public Animator animator;
-    [SerializeField]
-    private TextMeshProUGUI damageText;
-
-    void Start()
+namespace Assets.GUI.PopUpText
+{
+    public class FloatingText : MonoBehaviour
     {
-        AnimatorClipInfo[] clipInfo = animator.GetCurrentAnimatorClipInfo(0);
-        Destroy(gameObject, clipInfo[0].clip.length);
-    }
-    public void SetText(string text)
-    {
-        damageText.text = text;
+        public Animator Animator;
+        [SerializeField] private readonly TextMeshProUGUI damageText;
+
+        private void Start()
+        {
+            var clipInfo = Animator.GetCurrentAnimatorClipInfo(0);
+            Destroy(gameObject, clipInfo[0].clip.length);
+        }
+
+        public void SetText(string text)
+        {
+            damageText.text = text;
+        }
     }
 }

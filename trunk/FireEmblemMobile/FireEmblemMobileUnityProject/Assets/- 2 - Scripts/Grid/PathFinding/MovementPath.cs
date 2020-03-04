@@ -1,32 +1,31 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections;
 
-namespace Assets.Scripts.Grid.PathFinding
+namespace Assets.Grid.PathFinding
 {
     [System.Serializable]
     public class MovementPath
     {
-        private ArrayList steps = new ArrayList();
+        private readonly ArrayList steps = new ArrayList();
 
         public MovementPath()
         {
-
         }
-        public int getLength()
+
+        public int GetLength()
         {
             return steps.Count;
         }
-        public Step getStep(int index)
+
+        public Step GetStep(int index)
         {
-            return (Step)steps[index];
+            return (Step) steps[index];
         }
-        public void prependStep(float x, float y)
+
+        public void PrependStep(float x, float y)
         {
             steps.Add(new Step(x, y));
         }
+
         public void Reverse()
         {
             steps.Reverse();

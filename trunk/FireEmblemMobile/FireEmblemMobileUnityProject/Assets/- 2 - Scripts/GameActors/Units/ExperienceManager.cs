@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Assets.Scripts.Characters
+﻿namespace Assets.GameActors.Units
 {
     public class ExperienceManager
     {
@@ -11,13 +6,15 @@ namespace Assets.Scripts.Characters
         private const int EXP_PER_KILL = 40;
         private const int EXP_PER_BATTLE = 0;
 
-        public int Level { get; set; }
-        public int Exp { get; set; }
-
         public ExperienceManager()
         {
             Level = 1;
+            NextLevelExp = MAX_EXP;
         }
+
+        public int NextLevelExp { get; set; }
+        public int Level { get; set; }
+        public int Exp { get; set; }
 
         public void AddExp(int exp)
         {
@@ -36,7 +33,7 @@ namespace Assets.Scripts.Characters
 
         public void GetExpForKill()
         {
-           AddExp(EXP_PER_KILL);
+            AddExp(EXP_PER_KILL);
         }
     }
 }

@@ -1,42 +1,29 @@
-﻿using Assets.Scripts.Characters.Skills;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Assets.GameActors.Units.Skills;
 
-namespace Assets.Scripts.Characters
+namespace Assets.GameActors.Units.Humans
 {
     public class SkillManager
     {
-        public List<Skill> skills;
+        public List<Skill> Skills;
 
         public SkillManager()
         {
-            skills = new List<Skill>();
+            Skills = new List<Skill>();
         }
 
         public bool HasSkill<T>()
         {
-            foreach (Skill s in skills)
-            {
-                if (s is T)
-                {
-                    return true;
-                }
-            }
-            return false;
+            return Skills.OfType<T>().Any();
         }
 
         public T GetSkill<T>()
         {
-            foreach (Skill s in skills)
-            {
-                if (s is T)
-                {
-                    return (T)Convert.ChangeType(s, typeof(T));
-                }
-            }
-            return default(T);
+            foreach (var s in Skills.OfType<T>())
+                return (T) Convert.ChangeType(s, typeof(T));
+            return default;
         }
     }
 }

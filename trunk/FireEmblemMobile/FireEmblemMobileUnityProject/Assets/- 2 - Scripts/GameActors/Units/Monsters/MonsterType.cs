@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Assets.Scripts.Characters
+﻿namespace Assets.GameActors.Units.Monsters
 {
-    
     public enum MonsterType
     {
-        MeleeAttacker2x2,
-        MeleeAttacker
+        BigMonster,
+        NormalMonster
     }
 }

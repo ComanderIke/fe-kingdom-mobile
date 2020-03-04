@@ -1,173 +1,187 @@
-﻿using UnityEngine;
+﻿using Assets.Core;
+using Assets.GameInput;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Assets.Map;
+using UnityEngine;
 
-namespace Assets.Scripts.Grid.PathFinding
+namespace Assets.Grid.PathFinding
 {
     public class AStar
     {
         private ArrayList closed;
         private ArrayList open;
-        public Node[,] nodes;
-        private int width;
-        private int height;
-        global::MapSystem gridManager;
-        public AStar(global::MapSystem gridManager, int width, int height)
+        public Node[,] Nodes;
+        private readonly int width;
+        private readonly int height;
+        private readonly MapSystem gridManager;
+
+        public AStar(MapSystem gridManager, int width, int height)
         {
             this.gridManager = gridManager;
             this.width = width;
             this.height = height;
-            nodes = new Node[width, height];
+            Nodes = new Node[width, height];
             for (int i = 0; i < width; i++)
             {
                 for (int j = 0; j < height; j++)
                 {
-                    nodes[i, j] = new Node(i, j, 1000);
+                    Nodes[i, j] = new Node(i, j, 1000);
                 }
             }
         }
+
         private void Reset()
         {
-            nodes = new Node[width, height];
+            Nodes = new Node[width, height];
             closed = new ArrayList();
             open = new ArrayList();
             for (int i = 0; i < width; i++)
             {
                 for (int j = 0; j < height; j++)
                 {
-                    nodes[i, j] = new Node(i, j, 1000);
+                    Nodes[i, j] = new Node(i, j, 1000);
                 }
             }
         }
-        private void addToClosed(Node node)
+
+        private void AddToClosed(Node node)
         {
             closed.Add(node);
         }
-        private void addToOpen(Node node)
+
+        private void AddToOpen(Node node)
         {
             open.Add(node);
         }
+
         private bool InClosedList(Node node)
         {
             return closed.Contains(node);
         }
-        private Node getFirstInOpen()
+
+        private Node GetFirstInOpen()
         {
-            return (Node)open[0];
+            return (Node) open[0];
         }
+
         private bool InOpenList(Node node)
         {
             return open.Contains(node);
         }
 
-
-        private void removeFromClosed(Node node)
+        private void RemoveFromClosed(Node node)
         {
             closed.Remove(node);
         }
 
-        private void removeFromOpen(Node node)
+        private void RemoveFromOpen(Node node)
         {
             open.Remove(node);
         }
-       
-        public MovementPath findPath(int sx, int sy, int tx, int ty, int team, bool toadjacentPos, List<int> range)
+
+        public MovementPath FindPath(int sx, int sy, int tx, int ty, int team, bool toAdjacentPos, List<int> range)
         {
-            nodes[sx, sy].costfromStart = 0;
-            nodes[sx, sy].depth = 0;
+            Nodes[sx, sy].CostFromStart = 0;
+            Nodes[sx, sy].Depth = 0;
             closed.Clear();
             open.Clear();
-            open.Add(nodes[sx, sy]);
-            nodes[tx, ty].parent = null;
+            open.Add(Nodes[sx, sy]);
+            Nodes[tx, ty].Parent = null;
             int maxDepth = 0;
             int maxSearchDistance = 100;
             while ((maxDepth < maxSearchDistance) && (open.Count != 0))
             {
-                Node current = getFirstInOpen();
-                if (current == nodes[tx, ty])
+                var current = GetFirstInOpen();
+                if (current == Nodes[tx, ty])
                 {
                     break;
                 }
-                removeFromOpen(current);
-                addToClosed(current);
+
+                RemoveFromOpen(current);
+                AddToClosed(current);
                 for (int x = -1; x < 2; x++)
                 {
                     for (int y = -1; y < 2; y++)
                     {
                         if (x == 0 && y == 0)
                             continue;
-                        if (x != 0 && y != 0)   //no diagonal movement
+                        if (x != 0 && y != 0) //no diagonal movement
                             continue;
-                        int xp = x + current.x;
-                        int yp = y + current.y;
+                        int xp = x + current.X;
+                        int yp = y + current.Y;
                         bool isAdjacent = false;
-                        if (toadjacentPos)
+                        if (toAdjacentPos)
                         {
-                            int delta = Mathf.Abs(xp - nodes[tx, ty].x) + Mathf.Abs(yp - nodes[tx, ty].y);
+                            int delta = Mathf.Abs(xp - Nodes[tx, ty].X) + Mathf.Abs(yp - Nodes[tx, ty].Y);
                             range.Reverse();
-                            foreach (int r in range)
+                            foreach (int r in range.Where(r => delta == r))
                             {
-                                if (delta == r)
+                                isAdjacent = true;
+
+                                if (MainScript.Instance.GetSystem<InputSystem>().AttackRangeFromPath < r)
                                 {
-
-                                    isAdjacent = true;
-
-                                    MainScript m = MainScript.instance;
-                                    if (m.GetSystem<InputSystem>().AttackRangeFromPath < r)
-                                    {
-                                        m.GetSystem<InputSystem>().AttackRangeFromPath = r;
-                                        // break;
-                                    }
+                                    MainScript.Instance.GetSystem<InputSystem>().AttackRangeFromPath = r;
+                                    // break;
                                 }
                             }
+
                             range.Reverse();
                         }
-                        if (gridManager.GridLogic.IsValidLocation(team, sx, sy, xp, yp, isAdjacent) || (xp == tx && yp == ty))
+
+                        if (gridManager.GridLogic.IsValidLocation(team, sx, sy, xp, yp, isAdjacent) ||
+                            (xp == tx && yp == ty))
                         {
-                            int nextStepCost = current.costfromStart + 1;
-                            Node neighbour = nodes[xp, yp];
-                            if (nextStepCost < neighbour.costfromStart)
+                            int nextStepCost = current.CostFromStart + 1;
+                            var neighbor = Nodes[xp, yp];
+                            if (nextStepCost < neighbor.CostFromStart)
                             {
-                                if (InOpenList(neighbour))
+                                if (InOpenList(neighbor))
                                 {
-                                    removeFromOpen(neighbour);
+                                    RemoveFromOpen(neighbor);
                                 }
-                                if (InClosedList(neighbour))
+
+                                if (InClosedList(neighbor))
                                 {
-                                    removeFromClosed(neighbour);
+                                    RemoveFromClosed(neighbor);
                                 }
                             }
-                            if (!InOpenList(neighbour) && !InClosedList(neighbour))
+
+                            if (!InOpenList(neighbor) && !InClosedList(neighbor))
                             {
-                                neighbour.costfromStart = nextStepCost;
-                                maxDepth = Mathf.Max(maxDepth, neighbour.setParent(current));
-                                addToOpen(neighbour);
+                                neighbor.CostFromStart = nextStepCost;
+                                maxDepth = Mathf.Max(maxDepth, neighbor.SetParent(current));
+                                AddToOpen(neighbor);
                             }
                         }
                     }
                 }
             }
-            if (nodes[tx, ty].parent == null)
+
+            if (Nodes[tx, ty].Parent == null)
             {
                 return null;
             }
-            MovementPath path = new MovementPath();
-            Node target = nodes[tx, ty];
-            while (target != nodes[sx, sy])
-            {
-                path.prependStep(target.x, target.y);
-                target = target.parent;
-            }
-            path.prependStep(sx, sy);
-            return path;
 
+            var path = new MovementPath();
+            var target = Nodes[tx, ty];
+            while (target != Nodes[sx, sy])
+            {
+                path.PrependStep(target.X, target.Y);
+                target = target.Parent;
+            }
+
+            path.PrependStep(sx, sy);
+            return path;
         }
-        public MovementPath getPath(int x, int y, int x2, int y2, int team, bool toadjacentPos, List<int> range)
+
+        public MovementPath GetPath(int x, int y, int x2, int y2, int team, bool toAdjacentPos, List<int> range)
         {
-            MainScript.instance.GetSystem<InputSystem>().AttackRangeFromPath = 0;
+            MainScript.Instance.GetSystem<InputSystem>().AttackRangeFromPath = 0;
             Reset();
 
-            return findPath(x, y, x2, y2, team, toadjacentPos, range);
+            return FindPath(x, y, x2, y2, team, toAdjacentPos, range);
         }
     }
 }

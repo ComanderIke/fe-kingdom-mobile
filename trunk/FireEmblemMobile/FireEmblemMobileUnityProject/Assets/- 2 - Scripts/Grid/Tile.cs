@@ -1,29 +1,24 @@
-﻿using Assets.Scripts.Characters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Assets.GameActors.Units;
 using UnityEngine;
 
-namespace Assets.Scripts.Grid
+namespace Assets.Grid
 {
     [System.Serializable]
     public class Tile
     {
-        public GameObject gameObject;
-        public Unit character;
-        public int movementCost = 1;
-        public int x;
-        public int y;
-        public bool isActive = false;
-        public bool isAccessible = true;
+        public GameObject GameObject;
+        public Unit Unit;
+        public int MovementCost = 1;
+        public int X;
+        public int Y;
+        public bool IsActive = false;
+        public bool IsAccessible = true;
 
         public Tile(int i, int j, GameObject gameObject)
         {
-            this.gameObject = gameObject;
-            x = i;
-            y = j;
+            this.GameObject = gameObject;
+            X = i;
+            Y = j;
         }
-
     }
 }

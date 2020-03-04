@@ -1,46 +1,37 @@
-﻿using Assets.Scripts.Characters.SpecialAttacks;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Assets.GameActors.Units.SpecialAttacks;
 
-
-public class SpecialAttackManager
+namespace Assets.GameActors.Units.Humans
 {
-    public List<SpecialAttack> specials;
-    public SpecialAttack equippedSpecial;
+    public class SpecialAttackManager
+    {
+        public SpecialAttack EquippedSpecial;
+        public List<SpecialAttack> Specials;
 
-    public SpecialAttackManager()
-    {
-        specials = new List<SpecialAttack>();
-    }
-    public void AddSpecial(SpecialAttack special)
-    {
-        specials.Add(special);
-        if (specials.Count == 1)
-            equippedSpecial = special;
-    }
-    public bool HasSpecial<T>()
-    {
-        foreach (SpecialAttack s in specials)
+        public SpecialAttackManager()
         {
-            if (s is T)
-            {
-                return true;
-            }
+            Specials = new List<SpecialAttack>();
         }
-        return false;
-    }
 
-    public T GetSpecial<T>()
-    {
-        foreach (SpecialAttack s in specials)
+        public void AddSpecial(SpecialAttack special)
         {
-            if (s is T)
-            {
-                return (T)Convert.ChangeType(s, typeof(T));
-            }
+            Specials.Add(special);
+            if (Specials.Count == 1)
+                EquippedSpecial = special;
         }
-        return default(T);
+
+        public bool HasSpecial<T>()
+        {
+            return Specials.OfType<T>().Any();
+        }
+
+        public T GetSpecial<T>()
+        {
+            foreach (var s in Specials.OfType<T>())
+                return (T) Convert.ChangeType(s, typeof(T));
+            return default;
+        }
     }
 }

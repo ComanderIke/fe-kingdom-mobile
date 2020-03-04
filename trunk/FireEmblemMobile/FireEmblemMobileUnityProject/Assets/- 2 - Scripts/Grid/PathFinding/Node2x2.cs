@@ -1,49 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace Assets.Scripts.Grid
+namespace Assets.Grid.PathFinding
 {
-    public class Node2x2
+    public class Node2X2
     {
         public BigTile Position { get; set; }
-        public int c;
-        public Node2x2 parent;
-        public int cost;
-        public int costfromStart;
-        public bool check = false;
-        public int depth;
-        public Node2x2(BigTile pos, int c)
+        public int C;
+        public Node2X2 Parent;
+        public int Cost;
+        public int CostFromStart;
+        public bool Check = false;
+        public int Depth;
+        public Node2X2(BigTile pos, int c)
         {
-            this.Position = pos;
-            this.c = c;
+            Position = pos;
+            C = c;
         }
-        public int setParent(Node2x2 parent)
+        public int SetParent(Node2X2 parent)
         {
-            depth = parent.depth + 1;
-            this.parent = parent;
-            return depth;
+            Depth = parent.Depth + 1;
+            Parent = parent;
+            return Depth;
         }
         public override bool Equals(object obj)
         {
-            if(obj is Node2x2)
-            {
-                return ((Node2x2)obj).Position.Equals(Position);
-            }
-            return base.Equals(obj);
+            return obj is Node2X2 node2X2 ? node2X2.Position.Equals(Position) : base.Equals(obj);
         }
 
         public override int GetHashCode()
         {
             var hashCode = 1085674238;
             hashCode = hashCode * -1521134295 + EqualityComparer<BigTile>.Default.GetHashCode(Position);
-            hashCode = hashCode * -1521134295 + c.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<Node2x2>.Default.GetHashCode(parent);
-            hashCode = hashCode * -1521134295 + cost.GetHashCode();
-            hashCode = hashCode * -1521134295 + costfromStart.GetHashCode();
-            hashCode = hashCode * -1521134295 + check.GetHashCode();
-            hashCode = hashCode * -1521134295 + depth.GetHashCode();
+            hashCode = hashCode * -1521134295 + C.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<Node2X2>.Default.GetHashCode(Parent);
+            hashCode = hashCode * -1521134295 + Cost.GetHashCode();
+            hashCode = hashCode * -1521134295 + CostFromStart.GetHashCode();
+            hashCode = hashCode * -1521134295 + Check.GetHashCode();
+            hashCode = hashCode * -1521134295 + Depth.GetHashCode();
             return hashCode;
         }
     }

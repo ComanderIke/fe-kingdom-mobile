@@ -1,337 +1,338 @@
-﻿using Assets.Scripts.AI.AttackPatterns;
-using Assets.Scripts.Characters;
-using Assets.Scripts.Engine;
-using Assets.Scripts.GameStates;
+﻿using Assets.Core;
+using Assets.GameActors.Units;
+using Assets.GameResources;
+using Assets.Mechanics;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
-public class UISystem : MonoBehaviour, EngineSystem {
-
-    #region Events
-    public delegate void OnContinuePressed();
-    public static OnContinuePressed onContinuePressed;
-
-    public delegate void oOnFrontalAttackAnimationEnd();
-    public static oOnFrontalAttackAnimationEnd onFrontalAttackAnimationEnd;
-
-    public delegate void OnAttackUIVisible(bool visible);
-    public static OnAttackUIVisible onAttackUIVisible;
-
-    public delegate void OnReactUIVisible(bool visible);
-    public static OnReactUIVisible onReactUIVisible;
-
-    public delegate void OnDodgeClicked();
-    public static OnDodgeClicked onDodgeClicked;
-
-    public delegate void OnGuardClicked();
-    public static OnGuardClicked onGuardClicked;
-
-    public delegate void OnDeselectButtonClicked();
-    public static OnDeselectButtonClicked onDeselectButtonClicked;
-
-    public delegate void OnCounterClicked();
-    public static OnCounterClicked onCounterClicked;
-
-    public delegate void OnShowCursor(int x, int y);
-    public static OnShowCursor onShowCursor;
-
-    public delegate void OnHideCursor();
-    public static OnHideCursor onHideCursor;
-    #endregion
-
-    [Header("Input Fields")]
-    [SerializeField]
-    GameObject gameOverScreen;
-    [SerializeField]
-    GameObject winScreen;
-    [SerializeField]
-    GameObject mapUI;
-    [SerializeField]
-    GameObject bottomUI;
-    [SerializeField]
-    TopUI topUI;
-    [SerializeField]
-    TopUI topUIEnemy;
-    [SerializeField]
-    Canvas mainCanvas;
-    [SerializeField]
-    public AttackUIController attackUIController;
-    [SerializeField]
-    public ReactUIController reactUIController;
-    [SerializeField]
-    GameObject attackPreview;
-    [SerializeField]
-    GameObject playerTurnAnimation;
-    [SerializeField]
-    GameObject aiTurnAnimation;
-    [SerializeField]
-    Button deselectButton;
-    public UnityEvent onDeselectClicked;
-
-    private Dictionary<string, GameObject> activeUnitEffects;
-    private MainScript mainScript;
-    private GameObject tileCursor;
-    private RessourceScript ressources;
-    private List<GameObject> attackableEnemyEffects;
-    private List<GameObject> attackableFieldEffects;
-    void Start () {
-        mainScript = MainScript.instance;
-        UISystem.onShowCursor += SpawnTileCursor;
-        UISystem.onHideCursor += HideTileCursor;
-        Unit.onUnitShowActiveEffect += SpawnActiveUnitEffect;
-        UnitActionSystem.onSelectedCharacter += ShowDeselectButton;
-        UnitActionSystem.onDeselectCharacter += HideDeselectButton;
-
-        activeUnitEffects = new Dictionary<string, GameObject>();
-        attackableEnemyEffects = new List<GameObject>();
-        attackableFieldEffects = new List<GameObject>();
-        ressources = FindObjectOfType<RessourceScript>();
-    }
-
-    void ShowDeselectButton()
+namespace Assets.GUI
+{
+    public class UiSystem : MonoBehaviour, IEngineSystem
     {
-        deselectButton.gameObject.SetActive(true);
-    }
-    void HideDeselectButton()
-    {
-        deselectButton.gameObject.SetActive(false);
-    }
-    public void DeselectButtonClicked()
-    {
-        onDeselectClicked.Invoke();
-        //EventContainer.deselectButtonClicked();
-    }
-    private void SpawnTileCursor(int x, int y)
-    {
-        if(x==0 && y == 0)
+        #region Events
+
+        public delegate void OnContinuePressedEvent();
+
+        public static OnContinuePressedEvent OnContinuePressed;
+
+        public delegate void OOnFrontalAttackAnimationEndEvent();
+
+        public static OOnFrontalAttackAnimationEndEvent OnFrontalAttackAnimationEnd;
+
+        public delegate void OnAttackUiVisibleEvent(bool visible);
+
+        public static OnAttackUiVisibleEvent OnAttackUiVisible;
+
+        public delegate void OnDeselectButtonClickedEvent();
+
+        public static OnDeselectButtonClickedEvent OnDeselectButtonClicked;
+
+        public delegate void OnShowCursorEvent(int x, int y);
+
+        public static OnShowCursorEvent OnShowCursor;
+
+        public delegate void OnHideCursorEvent();
+
+        public static OnHideCursorEvent OnHideCursor;
+
+
+        #endregion
+        [SerializeField] private Canvas mainCanvas = default;
+        [Header("Screens")]
+        [SerializeField] public AttackUiController AttackUiController;
+        [SerializeField] private GameObject winScreen = default;
+        [SerializeField] private GameObject gameOverScreen = default;
+
+
+        [Header("UI Sections")]
+        [SerializeField] private GameObject bottomUi = default;
+        [SerializeField] private TopUi topUi = default;
+        [SerializeField] private TopUi topUiEnemy = default;
+        [SerializeField] private GameObject attackPreview = default;
+        [Header("Buttons")]
+        [SerializeField] private Button deselectButton = default;
+
+
+        [Header("Animations")]
+        [SerializeField] private GameObject playerTurnAnimation = default;
+        [SerializeField] private GameObject aiTurnAnimation = default;
+
+        private Dictionary<string, GameObject> activeUnitEffects;
+        private MainScript mainScript;
+        private GameObject tileCursor;
+        private ResourceScript resources;
+        private List<GameObject> attackableEnemyEffects;
+        private List<GameObject> attackableFieldEffects;
+
+        private void Start()
         {
-            Debug.Log("WTF WHY CURSOR POSITIONNULL");
+            mainScript = MainScript.Instance;
+            OnShowCursor += SpawnTileCursor;
+            OnHideCursor += HideTileCursor;
+            Unit.UnitShowActiveEffect += SpawnActiveUnitEffect;
+            UnitActionSystem.OnSelectedCharacter += ShowDeselectButton;
+            UnitActionSystem.OnDeselectCharacter += HideDeselectButton;
+
+            activeUnitEffects = new Dictionary<string, GameObject>();
+            attackableEnemyEffects = new List<GameObject>();
+            attackableFieldEffects = new List<GameObject>();
+            resources = FindObjectOfType<ResourceScript>();
         }
-        tileCursor = GameObject.Instantiate(ressources.prefabs.moveCursor, GameObject.FindGameObjectWithTag("World").transform);
-        tileCursor.transform.localPosition = new Vector3(x, y, tileCursor.transform.localPosition.z);
-        tileCursor.name = "TileCursor";
-    }
-    public void ShowAttackableEnemy(int x, int y)
-    {
-        foreach(GameObject gameobj in attackableEnemyEffects)
+
+        private void ShowDeselectButton()
         {
-            if ((int)gameobj.transform.localPosition.x == x && (int)gameobj.transform.localPosition.y == y)
+            deselectButton.gameObject.SetActive(true);
+        }
+
+        private void HideDeselectButton()
+        {
+            deselectButton.gameObject.SetActive(false);
+        }
+
+        public void DeselectButtonClicked()
+        {
+            OnDeselectButtonClicked();
+            //EventContainer.deselectButtonClicked();
+        }
+
+        private void SpawnTileCursor(int x, int y)
+        {
+            if (x == 0 && y == 0)
+            {
+                Debug.Log("WTF WHY CURSOR POSITION NULL");
+            }
+
+            tileCursor = Instantiate(resources.Prefabs.MoveCursor, GameObject.FindGameObjectWithTag("World").transform);
+            tileCursor.transform.localPosition = new Vector3(x, y, tileCursor.transform.localPosition.z);
+            tileCursor.name = "TileCursor";
+        }
+
+        public void ShowAttackableEnemy(int x, int y)
+        {
+            if (attackableEnemyEffects.Any(gameObj => (int) gameObj.transform.localPosition.x == x && (int) gameObj.transform.localPosition.y == y))
+            {
                 return;
+            }
+
+            var go = Instantiate(resources.Prefabs.AttackableEnemyPrefab,
+                GameObject.FindGameObjectWithTag("World").transform);
+            go.transform.localPosition = new Vector3(x, y, go.transform.localPosition.z);
+            attackableEnemyEffects.Add(go);
         }
-        GameObject go = GameObject.Instantiate(ressources.prefabs.attackableEnemyPrefrab, GameObject.FindGameObjectWithTag("World").transform);
-        go.transform.localPosition = new Vector3(x, y, go.transform.localPosition.z);
-        attackableEnemyEffects.Add(go);
-    }
-    public void HideAttackableEnemy() {
-        foreach(GameObject go in attackableEnemyEffects)
+
+        public void HideAttackableEnemy()
         {
-            Destroy(go);
+            foreach (var go in attackableEnemyEffects)
+            {
+                Destroy(go);
+            }
+
+            attackableEnemyEffects.Clear();
         }
-        attackableEnemyEffects.Clear();
-    }
-    private void HideTileCursor()
-    {
-        Destroy(tileCursor);
-    }
-    private void SpawnActiveUnitEffect(Unit unit, bool spawn, bool disableOthers)
-    {
-        //foreach (KeyValuePair<string, GameObject> pair in activeUnitEffects)
-        //{
-        //    pair.Value.SetActive(true);
-        //}
-        if (activeUnitEffects.ContainsKey(unit.Name))
-        {
-            GameObject go = activeUnitEffects[unit.Name];
 
-            activeUnitEffects.Remove(unit.Name);
-            Destroy(go);
+        private void HideTileCursor()
+        {
+            Destroy(tileCursor);
         }
-        
-        if (spawn)
+
+        private void SpawnActiveUnitEffect(Unit unit, bool spawn, bool disableOthers)
         {
-            GameObject go = GameObject.Instantiate(ressources.prefabs.moveCursor, GameObject.FindGameObjectWithTag("World").transform);
-            go.transform.localPosition = new Vector3(unit.GridPosition.x, unit.GridPosition.y, go.transform.localPosition.z);
-            activeUnitEffects.Add(unit.Name, go);
-            go.name = "ActiveUnitEffect";
-           
+            //foreach (KeyValuePair<string, GameObject> pair in activeUnitEffects)
+            //{
+            //    pair.Value.SetActive(true);
+            //}
+            if (activeUnitEffects.ContainsKey(unit.Name))
+            {
+                var go = activeUnitEffects[unit.Name];
+
+                activeUnitEffects.Remove(unit.Name);
+                Destroy(go);
+            }
+
+            if (spawn)
+            {
+                var go = Instantiate(resources.Prefabs.MoveCursor,
+                    GameObject.FindGameObjectWithTag("World").transform);
+                go.transform.localPosition =
+                    new Vector3(unit.GridPosition.X, unit.GridPosition.Y, go.transform.localPosition.z);
+                activeUnitEffects.Add(unit.Name, go);
+                go.name = "ActiveUnitEffect";
+            }
+            else
+            {
+                if (disableOthers)
+                    foreach (var pair in activeUnitEffects)
+                    {
+                        pair.Value.SetActive(false);
+                    }
+            }
         }
-        else
+
+        public void HideAllActiveUnitEffects()
         {
-            if(disableOthers)
-                foreach(KeyValuePair<string, GameObject> pair in activeUnitEffects)
-                {
-                    pair.Value.SetActive(false);
-                }
+            foreach (var pair in activeUnitEffects)
+            {
+                pair.Value.SetActive(false);
+            }
         }
-    }
-    public void HideAllActiveUnitEffects()
-    {
-        foreach (KeyValuePair<string, GameObject> pair in activeUnitEffects)
+
+        public void ShowAllActiveUnitEffects()
         {
-            pair.Value.SetActive(false);
+            foreach (var pair in activeUnitEffects)
+            {
+                pair.Value.SetActive(true);
+            }
         }
-    }
-    public void ShowAllActiveUnitEffects()
-    {
-        foreach (KeyValuePair<string, GameObject> pair in activeUnitEffects)
+
+        public int GetUiHeight()
         {
-            pair.Value.SetActive(true);
+            return (int) (topUi.GetComponent<RectTransform>().rect.height +
+                          bottomUi.GetComponent<RectTransform>().rect.height);
         }
-    }
-    public int GetUIHeight()
-    {
-        return (int)(topUI.GetComponent<RectTransform>().rect.height+ bottomUI.GetComponent<RectTransform>().rect.height);
-    }
-    public int GetReferenceHeight()
-    {
-        return (int)mapUI.GetComponent<CanvasScaler>().referenceResolution.y;
-    }
-    public void HideBottomUI()
-    {
-        bottomUI.SetActive(false);
-    }
 
-    public void ShowBottomUI()
-    {
-        bottomUI.SetActive(true);
-    }
-
-    public void HideTopUI()
-    {
-        topUI.gameObject.SetActive(false);
-    }
-
-    public void ShowFightUI(Unit attacker, Unit defender)
-    {
-        HideAllActiveUnitEffects();
-        attackUIController.Show(attacker,defender);
-    }
-    public void ShowReactUI(Unit attacker, Unit defender)
-    {
-        HideAllActiveUnitEffects();
-        reactUIController.Show(attacker, defender);
-    }
-
-    public void HideFightUI()
-    {
-        if(attackUIController.isActiveAndEnabled)
-            attackUIController.Hide();
-        if(mainScript.PlayerManager.ActivePlayer.IsPlayerControlled)
-            ShowAllActiveUnitEffects();
-    }
-    public void ShowGameOver()
-    {
-        gameOverScreen.SetActive(true);
-    }
-    public void ShowWinScreen()
-    {
-        winScreen.SetActive(true);
-    }
-    public void PlayerTurnAnimation()
-    {
-
-        Instantiate(playerTurnAnimation, new Vector3(), Quaternion.identity, mainCanvas.transform).transform.localPosition = new Vector3();
-    }
-    public void EnemyTurnAnimation()
-    {
-        HideAllActiveUnitEffects();
-        Instantiate(aiTurnAnimation, new Vector3(), Quaternion.identity, mainCanvas.transform).transform.localPosition = new Vector3();
-    }
-    public void HideReactUI()
-    {
-        if (reactUIController.isActiveAndEnabled)
-            reactUIController.Hide();
-        if (mainScript.PlayerManager.ActivePlayer.IsPlayerControlled)
-            ShowAllActiveUnitEffects();
-    }
-
-    public void ShowTopUI(Unit c)
-    {
-        if(c.Player.ID != mainScript.PlayerManager.ActivePlayer.ID)
+        public int GetReferenceHeight()
         {
-            topUIEnemy.Show(c);
-            topUI.Hide();
+            return (int) mainCanvas.GetComponent<CanvasScaler>().referenceResolution.y;
         }
-        else
+
+        public void HideBottomUi()
         {
-            topUIEnemy.Hide();
-            topUI.Show(c);
+            bottomUi.SetActive(false);
         }
-       
 
-        
-    }
-
-    public void ShowMapUI()
-    {
-        mapUI.SetActive(true);
-    }
-    public void HideMapUI()
-    {
-        mapUI.SetActive(false);
-    }
-
-    public void UndoClicked()
-    {
-        UnitActionSystem.onUndo();
-    }
-    public void EndTurnClicked()
-    {
-        TurnSystem.onEndTurn();
-    }
-    public void ShowAttackableField(int x, int y)
-    {
-        foreach (GameObject gameobj in attackableFieldEffects)
+        public void ShowBottomUi()
         {
-            if ((int)gameobj.transform.localPosition.x == x && (int)gameobj.transform.localPosition.y == y)
+            bottomUi.SetActive(true);
+        }
+
+        public void HideTopUi()
+        {
+            Debug.Log("Hide TopUi");
+            topUi.gameObject.SetActive(false);
+        }
+
+        public void ShowFightUi(Unit attacker, Unit defender)
+        {
+            HideAllActiveUnitEffects();
+            AttackUiController.Show(attacker, defender);
+        }
+
+        public void HideFightUi()
+        {
+            if (AttackUiController.isActiveAndEnabled)
+                AttackUiController.Hide();
+            if (mainScript.PlayerManager.ActivePlayer.IsPlayerControlled)
+                ShowAllActiveUnitEffects();
+        }
+
+        public void ShowGameOver()
+        {
+            gameOverScreen.SetActive(true);
+        }
+
+        public void ShowWinScreen()
+        {
+            winScreen.SetActive(true);
+        }
+
+        public void PlayerTurnAnimation()
+        {
+            Instantiate(playerTurnAnimation, new Vector3(), Quaternion.identity, mainCanvas.transform).transform
+                .localPosition = new Vector3();
+        }
+
+        public void EnemyTurnAnimation()
+        {
+            HideAllActiveUnitEffects();
+            Instantiate(aiTurnAnimation, new Vector3(), Quaternion.identity, mainCanvas.transform).transform
+                .localPosition = new Vector3();
+        }
+
+        public void ShowTopUi(Unit c)
+        {
+            
+            if (c.Player.Id != mainScript.PlayerManager.ActivePlayer.Id)
+            {
+                topUiEnemy.Show(c);
+
+                topUi.Hide();
+            }
+            else
+            {
+                topUiEnemy.Hide();
+
+                topUi.Show(c);
+            }
+        }
+
+
+        public void UndoClicked()
+        {
+            UnitActionSystem.OnUndo();
+        }
+
+        public void EndTurnClicked()
+        {
+            TurnSystem.OnEndTurn();
+        }
+
+        public void ShowAttackableField(int x, int y)
+        {
+            if (attackableFieldEffects.Any(gameObj => (int) gameObj.transform.localPosition.x == x && (int) gameObj.transform.localPosition.y == y))
+            {
                 return;
-        }
-        GameObject go = GameObject.Instantiate(ressources.particles.enemyField, GameObject.FindGameObjectWithTag("World").transform);
-        go.transform.localPosition = new Vector3(x+0.5f, y+0.5f, go.transform.localPosition.z-0.1f);
-        attackableFieldEffects.Add(go);
-    }
-    public void HideAttackableField()
-    {
-        Debug.Log("hideAttackableField!");
-        foreach (GameObject go in attackableFieldEffects)
-        {
-            Destroy(go);
-        }
-        attackableFieldEffects.Clear();
-    }
-    public void ShowAttackPreview(Unit attacker, Unit defender)
-    {
-        ShowAttackableEnemy((int)defender.GridPosition.x, (int)defender.GridPosition.y);
-        attackPreview.SetActive(true);
-        attackPreview.GetComponent<AttackPreview>().UpdateValues(attacker.Stats.MaxHP,attacker.HP, defender.Stats.MaxHP, defender.HP,attacker.BattleStats.GetDamageAgainstTarget(defender),attacker.BattleStats.GetHitAgainstTarget(defender), attacker.BattleStats.GetAttackCountAgainst(defender));
-        //Vector3 attackPreviewPos;
-        //if (defender.GridPosition is BigTilePosition)
-        //  attackPreviewPos = Camera.main.WorldToScreenPoint(new Vector3(pos.x + GridManager.GRID_X_OFFSET ,pos.y + 1.0f, -0.05f));
-        //else
-        //    attackPreviewPos = Camera.main.WorldToScreenPoint(new Vector3(pos.x + GridManager.GRID_X_OFFSET + 0.5f, pos.y + 1.0f, -0.05f));
-        //attackPreviewPos.z = 0;
-        //attackPreview.transform.localPosition = new Vector3(attackPreviewPos.x-540,attackPreviewPos.y-960,0);//TODO WHY MAGIC NUMBERS?
-    }
-    
-    public void HideAttackPreview()
-    {
-        HideAttackableEnemy();
-        attackPreview.SetActive(false);
-    }
+            }
 
-    private void OnDestroy()
-    {
-        onAttackUIVisible = null;
-        onReactUIVisible = null;
-        onDodgeClicked = null;
-        onGuardClicked = null;
-        onCounterClicked = null;
-        onDeselectButtonClicked = null;
-        onFrontalAttackAnimationEnd = null;
-        onHideCursor = null;
-        onShowCursor = null;
-        onContinuePressed = null;
+            var go = Instantiate(resources.Particles.EnemyField,
+                GameObject.FindGameObjectWithTag("World").transform);
+            go.transform.localPosition = new Vector3(x + 0.5f, y + 0.5f, go.transform.localPosition.z - 0.1f);
+            attackableFieldEffects.Add(go);
+        }
+
+        public void HideAttackableField()
+        {
+            Debug.Log("hideAttackableField!");
+            foreach (var go in attackableFieldEffects)
+            {
+                Destroy(go);
+            }
+
+            attackableFieldEffects.Clear();
+        }
+
+        public void ShowAttackPreview(Unit attacker, Unit defender)
+        {
+            ShowAttackableEnemy(defender.GridPosition.X, defender.GridPosition.Y);
+            attackPreview.SetActive(true);
+            attackPreview.GetComponent<AttackPreview>().UpdateValues(attacker.Stats.MaxHp, attacker.Hp,
+                defender.Stats.MaxHp, defender.Hp, attacker.BattleStats.GetDamageAgainstTarget(defender),
+                attacker.BattleStats.GetAttackCountAgainst(defender));
+            //Vector3 attackPreviewPos;
+            //if (defender.GridPosition is BigTilePosition)
+            //  attackPreviewPos = Camera.main.WorldToScreenPoint(new Vector3(pos.x + GridManager.GRID_X_OFFSET ,pos.y + 1.0f, -0.05f));
+            //else
+            //    attackPreviewPos = Camera.main.WorldToScreenPoint(new Vector3(pos.x + GridManager.GRID_X_OFFSET + 0.5f, pos.y + 1.0f, -0.05f));
+            //attackPreviewPos.z = 0;
+            //attackPreview.transform.localPosition = new Vector3(attackPreviewPos.x-540,attackPreviewPos.y-960,0);//TODO WHY MAGIC NUMBERS?
+        }
+
+        public void HideAttackPreview()
+        {
+            HideAttackableEnemy();
+            attackPreview.SetActive(false);
+        }
+
+        private void OnDestroy()
+        {
+            OnAttackUiVisible = null;
+            OnDeselectButtonClicked = null;
+            OnFrontalAttackAnimationEnd = null;
+            OnHideCursor = null;
+            OnShowCursor = null;
+            OnContinuePressed = null;
+        }
     }
 }

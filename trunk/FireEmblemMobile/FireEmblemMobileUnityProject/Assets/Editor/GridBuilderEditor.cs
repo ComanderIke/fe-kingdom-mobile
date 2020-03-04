@@ -1,36 +1,37 @@
-﻿using Assets.Scripts.Grid;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Assets.GameResources;
+using Assets.Grid;
+using Assets.Map;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(MapSystem))]
-public class GridBuilderEditor : Editor
+namespace Assets.Editor
 {
-    private MapSystem mytarget;
-    private MapData mapData;
-    private void OnEnable()
+    [CustomEditor(typeof(MapSystem))]
+    public class GridBuilderEditor : UnityEditor.Editor
     {
-        this.mytarget = (MapSystem)target;
-        mapData = GameObject.FindObjectOfType<DataScript>().mapData;
-    }
-
-    public override void OnInspectorGUI()
-    {
-        mapData.width = EditorGUILayout.IntSlider("Width:", mapData.width, 6, 24);
-        mapData.height = EditorGUILayout.IntSlider("Height:", mapData.height, 8, 24);
-        if (GUILayout.Button("Build Grid"))
+        private MapSystem mytarget;
+        private MapData mapData;
+        private void OnEnable()
         {
-            int width = mapData.width;
-            int height = mapData.height;
-            mytarget.GridBuilder = new GridBuilder();
-            mytarget.GridBuilder.Build(width, height, mytarget.gridTransform);
+            mytarget = (MapSystem)target;
+            mapData = FindObjectOfType<DataScript>().MapData;
         }
-        base.OnInspectorGUI();
+
+        public override void OnInspectorGUI()
+        {
+            mapData.Width = EditorGUILayout.IntSlider("Width:", mapData.Width, 6, 24);
+            mapData.Height = EditorGUILayout.IntSlider("Height:", mapData.Height, 8, 24);
+            if (GUILayout.Button("Build Grid"))
+            {
+                int width = mapData.Width;
+                int height = mapData.Height;
+                mytarget.GridBuilder = new GridBuilder();
+                mytarget.GridBuilder.Build(width, height, mytarget.GridTransform);
+            }
+            base.OnInspectorGUI();
+        }
+
+
     }
-
-
 }
 

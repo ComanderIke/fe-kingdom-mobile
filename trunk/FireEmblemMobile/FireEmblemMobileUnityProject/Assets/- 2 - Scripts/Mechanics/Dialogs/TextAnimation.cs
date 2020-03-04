@@ -1,49 +1,51 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class TextAnimation : MonoBehaviour {
-
-    private int letterindex = 0;
-    string text;
-    public TextMeshProUGUI textMesh;
-    const float speed = 0.03f;
-    IEnumerator enumerator;
-    // Use this for initialization
-    void Awake () {
-        textMesh = GetComponent<TextMeshProUGUI>();
-	}
-	public void StartAnimation()
+namespace Assets.Mechanics.Dialogs
+{
+    public class TextAnimation : MonoBehaviour
     {
-        letterindex = 0;
-        text = textMesh.text;
-        textMesh.text = "";
-        
-        enumerator = DisplayTimer();
-        StartCoroutine(enumerator);
+        private int letterIndex = 0;
+        private string text;
+        public TextMeshProUGUI TextMesh;
+        private const float SPEED = 0.03f;
+        private IEnumerator enumerator;
 
-    }
-    IEnumerator DisplayTimer()
-    {
-        while (true)
+        private void Awake()
         {
-            yield return new WaitForSeconds(speed);
-            if (letterindex > text.Length)
+            TextMesh = GetComponent<TextMeshProUGUI>();
+        }
+
+        public void StartAnimation()
+        {
+            letterIndex = 0;
+            text = TextMesh.text;
+            TextMesh.text = "";
+
+            enumerator = DisplayTimer();
+            StartCoroutine(enumerator);
+        }
+
+        private IEnumerator DisplayTimer()
+        {
+            while (true)
             {
-                continue;
+                yield return new WaitForSeconds(SPEED);
+                if (letterIndex > text.Length)
+                {
+                    continue;
+                }
+
+                TextMesh.text = text.Substring(0, letterIndex);
+                letterIndex++;
+                GetComponent<AudioSource>().Play();
             }
-            textMesh.text = text.Substring(0, letterindex);
-            letterindex++;
-            GetComponent<AudioSource>().Play();
+        }
+
+        public void StopAnimation()
+        {
+            StopCoroutine(enumerator);
         }
     }
-    public void StopAnimation()
-    {
-        StopCoroutine(enumerator);
-    }
-    // Update is called once per frame
-    void Update () {
-		
-	}
 }

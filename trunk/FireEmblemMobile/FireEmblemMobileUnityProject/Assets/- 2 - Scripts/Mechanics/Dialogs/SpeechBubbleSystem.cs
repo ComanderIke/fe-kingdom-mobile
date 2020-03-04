@@ -1,54 +1,50 @@
-﻿using Assets.Scripts.Dialogs;
-using Assets.Scripts.Engine;
-using Assets.Scripts.GameStates;
-using System.Collections;
+﻿using Assets.Core;
 using System.Collections.Generic;
 using UnityEngine;
 
-struct SpeechBubbleData
+namespace Assets.Mechanics.Dialogs
 {
-    public SpeakableObject speakAbleObject;
-    public string text;
-}
-public class SpeechBubbleSystem : MonoBehaviour, EngineSystem {
-    const float SPEECH_BUBBLE_LIFE_TIME = 2.0f;
-    Queue<SpeechBubbleData> queue;
-    float timer = 0;
+    public class SpeechBubbleSystem : MonoBehaviour, IEngineSystem
+    {
+        private const float SPEECH_BUBBLE_LIFE_TIME = 2.0f;
+        private Queue<SpeechBubbleData> queue;
+        private float timer = 0;
 
-	// Use this for initialization
-	void Start () {
-        queue = new Queue<SpeechBubbleData>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        if (Input.GetKeyDown(KeyCode.Space))
+        private void Start()
         {
-            ShowSpeechBubble(MainScript.instance.PlayerManager.ActivePlayer.Units[(int)Random.Range(0,4)], "This is a test!");
+            queue = new Queue<SpeechBubbleData>();
         }
-        if (timer == 0)
+
+        private void Update()
         {
-            if (queue.Count > 0)
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                SpeechBubbleData data = queue.Dequeue();
-                data.speakAbleObject.ShowSpeechBubble(data.text);
-                timer = SPEECH_BUBBLE_LIFE_TIME;
+                ShowSpeechBubble(MainScript.Instance.PlayerManager.ActivePlayer.Units[Random.Range(0, 4)],
+                    "This is a test!");
+            }
+
+            if (timer == 0)
+            {
+                if (queue.Count > 0)
+                {
+                    var data = queue.Dequeue();
+                    data.SpeakAbleObject.ShowSpeechBubble(data.Text);
+                    timer = SPEECH_BUBBLE_LIFE_TIME;
+                }
+            }
+
+            if (timer > 0)
+            {
+                timer -= Time.deltaTime;
+                if (timer < 0)
+                    timer = 0;
             }
         }
-        if(timer > 0)
-        {
-            timer -= Time.deltaTime;
-            if (timer < 0)
-                timer = 0;
-        }
 
-    }
- 
-    public void ShowSpeechBubble(SpeakableObject speakableObject, string text)
-    {
-        SpeechBubbleData speechBubbleData = new SpeechBubbleData();
-        speechBubbleData.text = text;
-        speechBubbleData.speakAbleObject = speakableObject;
-        queue.Enqueue(speechBubbleData);
+        public void ShowSpeechBubble(ISpeakableObject speakableObject, string text)
+        {
+            var speechBubbleData = new SpeechBubbleData {Text = text, SpeakAbleObject = speakableObject};
+            queue.Enqueue(speechBubbleData);
+        }
     }
 }

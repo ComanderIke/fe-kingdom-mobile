@@ -1,44 +1,39 @@
-﻿using Assets.Scripts.Players;
-using System;
+﻿using Assets.GameActors.Players;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
-public class PlayerManager
+namespace Assets.Manager
 {
-    public List<Army> Players { get; set; }
-    public Army ActivePlayer { get; set; }
-    private int activePlayerNumber;
-    public int ActivePlayerNumber
+    public class PlayerManager
     {
-        get
-        {
-            return activePlayerNumber;
-        }
-        set
-        {
-            if (value >= Players.Count)
-                activePlayerNumber = 0;
-            else
-                activePlayerNumber = value;
-            ActivePlayer = Players[activePlayerNumber];
-        }
-    }
+        public List<Faction> Players { get; set; }
+        public Faction ActivePlayer { get; set; }
+        private int activePlayerNumber;
 
-    public PlayerManager()
-    {
-        Players = new List<Army>();
-        PlayerConfig transform = GameObject.FindObjectOfType<PlayerConfig>();
-        foreach (Army p in transform.armys)
+        public int ActivePlayerNumber
         {
-            Players.Add(p);
-            p.Init();
+            get => activePlayerNumber;
+            set
+            {
+                activePlayerNumber = value >= Players.Count ? 0 : value;
+                ActivePlayer = Players[activePlayerNumber];
+            }
         }
-    }
-    public Army GetRealPlayer()
-    {
-        return Players[0];
+
+        public PlayerManager()
+        {
+            Players = new List<Faction>();
+            var transform = Object.FindObjectOfType<PlayerConfig>();
+            foreach (var p in transform.Factions)
+            {
+                Players.Add(p);
+                p.Init();
+            }
+        }
+
+        public Faction GetRealPlayer()
+        {
+            return Players[0];
+        }
     }
 }
-

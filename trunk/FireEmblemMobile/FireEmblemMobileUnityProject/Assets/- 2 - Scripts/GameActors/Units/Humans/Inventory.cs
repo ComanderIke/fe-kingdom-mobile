@@ -1,43 +1,35 @@
-﻿using Assets.Scripts.Items;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
+using Assets.GameActors.Items;
+using Assets.GameActors.Items.Weapons;
 using UnityEngine;
 
-namespace Assets.Scripts.Characters
+namespace Assets.GameActors.Units.Humans
 {
-    [CreateAssetMenu(menuName ="GameData/Inventory", fileName ="Inventory")]
-    public class Inventory :ScriptableObject
+    [CreateAssetMenu(menuName = "GameData/Inventory", fileName = "Inventory")]
+    public class Inventory : ScriptableObject
     {
         public const int MAX_ITEMS = 6;
-        [HideInInspector]
-        public Human owner;
-        public List<Item> items;
+        public List<Item> Items;
 
+        [HideInInspector] public Human Owner;
 
         public void AddItem(Item i)
         {
-            items.Add(i);
-            if(i is Weapon)
-            {
-                if(owner.EquipedWeapon==null)
-                    ((Weapon)i).Equip(owner);
-            }
+            Items.Add(i);
+            if (i is Weapon weapon)
+                if (Owner.EquippedWeapon == null)
+                    weapon.Equip(Owner);
         }
 
         public void DropItem(Item i)
         {
-            items.Remove(i);
+            Items.Remove(i);
         }
 
         public void UseItem(Item i)
         {
-            i.Use(owner);
-            if (i.NumberOfUses <= 0)
-            {
-                items.Remove(i);
-            }
+            i.Use(Owner);
+            if (i.NumberOfUses <= 0) Items.Remove(i);
         }
     }
 }

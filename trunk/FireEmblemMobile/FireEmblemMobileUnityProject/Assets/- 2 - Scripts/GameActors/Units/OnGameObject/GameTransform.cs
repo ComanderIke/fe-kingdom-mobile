@@ -1,18 +1,12 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Characters
+namespace Assets.GameActors.Units.OnGameObject
 {
     public class GameTransform
     {
         public GameObject GameObject { get; set; }
 
-        public UnitController UnitController
-        {
-            get
-            {
-                return GameObject.GetComponent<UnitController>();
-            }
-        }
+        public UnitController UnitController => GameObject.GetComponent<UnitController>();
 
         public void SetPosition(int x, int y)
         {
@@ -41,7 +35,7 @@ namespace Assets.Scripts.Characters
         
         public void Destroy()
         {
-            GameObject.Destroy(GameObject);
+            Object.Destroy(GameObject);
         }
     }
 }

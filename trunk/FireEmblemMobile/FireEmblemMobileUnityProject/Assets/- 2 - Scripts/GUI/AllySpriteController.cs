@@ -1,29 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class AllySpriteController : MonoBehaviour {
-
-    public Animator maskBlinkAnimator;
-    public Animator spriteAnimator;
-    // Use this for initialization
-    void Start()
+namespace Assets.GUI
+{
+    public class AllySpriteController : MonoBehaviour
     {
+        public Animator MaskBlinkAnimator;
+        public Animator SpriteAnimator;
 
-    }
+        public void StartBlinkAnimation()
+        {
+            MaskBlinkAnimator.SetTrigger("Play");
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    public void StartBlinkAnimation()
-    {
-        maskBlinkAnimator.SetTrigger("Play");
-    }
-    public void StartAttackAnimation()
-    {
-        spriteAnimator.SetTrigger("Attack");
+        public void StartAttackAnimation()
+        {
+            SpriteAnimator.SetTrigger("Attack");
+        }
     }
 }

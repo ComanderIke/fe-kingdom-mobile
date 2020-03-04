@@ -1,242 +1,242 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using Assets.Scripts.Characters;
-using Assets.Scripts.Grid;
-using Assets.Scripts.Grid.PathFinding;
+﻿using Assets.Core;
+using Assets.GameActors.Units;
+using Assets.GameResources;
+using Assets.Grid;
+using Assets.Grid.PathFinding;
+using Assets.GUI;
 using System;
-using Assets.Scripts.Engine;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
-[Serializable]
-public class MapSystem :MonoBehaviour, EngineSystem{
-
-
- 
-    public const float GRID_X_OFFSET = 0.0f;
-    public string mapName;
-    public Grid grid;
-    public GridBuilder GridBuilder { get; set; }
-    public Transform gridTransform;
-    public GridRessources gridRessources;
-    public Tile[,] Tiles { get; set; }
-    public GridRenderer GridRenderer { get; set; }
-    public GridLogic GridLogic { get; set; }
-    public NodeHelper nodeHelper;
-
-
-
-    void Start() {
-
-        MapData mapData = FindObjectOfType<DataScript>().mapData;
-        mapName = mapData.name;
-        grid = new Grid(mapData.width, mapData.height);
-
-        Tiles = new Tile[grid.width, grid.height];
-        GridBuilder = new GridBuilder();
-        Tiles = GridBuilder.Build(grid.width, grid.height, gridTransform);
-        GridRenderer = new GridRenderer(this);
-        GridLogic = new GridLogic(this);
-        nodeHelper = new NodeHelper(grid.width, grid.height);
-    }
-
-    public Tile GetTileFromVector2(Vector2 pos)
+namespace Assets.Map
+{
+    [Serializable]
+    public class MapSystem : MonoBehaviour, IEngineSystem
     {
-        return Tiles[(int)pos.x, (int)pos.y];
-    }
+        public const float GRID_X_OFFSET = 0.0f;
+        public string MapName;
+        public GridData GridData;
+        public GridBuilder GridBuilder { get; set; }
+        public Transform GridTransform;
+        public GridResources GridResources;
+        public Tile[,] Tiles { get; set; }
+        public GridRenderer GridRenderer { get; set; }
+        public GridLogic GridLogic { get; set; }
+        public NodeHelper NodeHelper;
 
-
-    public void ShowMovement(Unit c)
-    {
-
-        if (c.GridPosition is BigTilePosition)
-            ShowMonsterMovement(c.GridPosition.x, c.GridPosition.y, c.Stats.MoveRange, new List<int>(c.Stats.AttackRanges), 0, c.Player.ID);
-        else
-            ShowMovement(c.GridPosition.x, c.GridPosition.y, c.Stats.MoveRange, c.Stats.MoveRange, new List<int>(c.Stats.AttackRanges), 0, c.Player.ID, false);
-
-    }
-    private void ShowMonsterMovement(int x, int y, int range, List<int> attack, int c, int playerId)
-    {
-        if (range < 0)
+        private void Start()
         {
-            return;
+            var mapData = FindObjectOfType<DataScript>().MapData;
+            MapName = mapData.Name;
+            GridData = new GridData(mapData.Width, mapData.Height);
+
+            Tiles = new Tile[GridData.Width, GridData.Height];
+            GridBuilder = new GridBuilder();
+            Tiles = GridBuilder.Build(GridData.Width, GridData.Height, GridTransform);
+            GridRenderer = new GridRenderer(this);
+            GridLogic = new GridLogic(this);
+            NodeHelper = new NodeHelper(GridData.Width, GridData.Height);
         }
-        GridRenderer.SetBigTileActive(new BigTile(new Vector2(x, y), new Vector2(x + 1, y), new Vector2(x, y + 1), new Vector2(x + 1, y + 1)), playerId, false);
-        if (GridLogic.checkMonsterField(new BigTile(new Vector2(x - 1, y), new Vector2(x, y), new Vector2(x - 1, y + 1), new Vector2(x, y + 1)), playerId, range))
-            ShowMonsterMovement(x - 1, y, range - 1, new List<int>(attack), c, playerId);
-        if (GridLogic.checkMonsterField(new BigTile(new Vector2(x + 1, y), new Vector2(x + 2, y), new Vector2(x + 1, y + 1), new Vector2(x + 2, y + 1)), playerId, range))
-            ShowMonsterMovement(x + 1, y, range - 1, new List<int>(attack), c, playerId);
-        if (GridLogic.checkMonsterField(new BigTile(new Vector2(x, y - 1), new Vector2(x + 1, y - 1), new Vector2(x, y), new Vector2(x + 1, y)), playerId, range))
-            ShowMonsterMovement(x, y - 1, range - 1, new List<int>(attack), c, playerId);
-        if (GridLogic.checkMonsterField(new BigTile(new Vector2(x, y + 1), new Vector2(x + 1, y + 1), new Vector2(x, y + 2), new Vector2(x + 1, y + 2)), playerId, range))
-            ShowMonsterMovement(x, y + 1, range - 1, new List<int>(attack), c, playerId);
-    }
 
-
-
-    public void ShowAttack(Unit character, List<int> attack)
-    {
-        List<Tile> TilesFromWhereUCanAttack = new List<Tile>();
-        foreach (Tile f in Tiles)
+        public Tile GetTileFromVector2(Vector2 pos)
         {
-            if (f.isActive && (f.character == null || f.character == character))
+            return Tiles[(int) pos.x, (int) pos.y];
+        }
+
+        public void ShowMovement(Unit c)
+        {
+            if (c.GridPosition is BigTilePosition)
+                ShowMonsterMovement(c.GridPosition.X, c.GridPosition.Y, c.Stats.Mov,
+                    new List<int>(c.Stats.AttackRanges), 0, c.Player.Id);
+            else
+                ShowMovement(c.GridPosition.X, c.GridPosition.Y, c.Stats.Mov, c.Stats.Mov,
+                    new List<int>(c.Stats.AttackRanges), 0, c.Player.Id, false);
+        }
+
+        private void ShowMonsterMovement(int x, int y, int range, List<int> attack, int c, int playerId)
+        {
+            if (range < 0)
             {
-                TilesFromWhereUCanAttack.Add(f);
+                return;
             }
+
+            GridRenderer.SetBigTileActive(
+                new BigTile(new Vector2(x, y), new Vector2(x + 1, y), new Vector2(x, y + 1), new Vector2(x + 1, y + 1)),
+                playerId, false);
+            if (GridLogic.CheckMonsterField(
+                new BigTile(new Vector2(x - 1, y), new Vector2(x, y), new Vector2(x - 1, y + 1), new Vector2(x, y + 1)),
+                playerId, range))
+                ShowMonsterMovement(x - 1, y, range - 1, new List<int>(attack), c, playerId);
+            if (GridLogic.CheckMonsterField(
+                new BigTile(new Vector2(x + 1, y), new Vector2(x + 2, y), new Vector2(x + 1, y + 1),
+                    new Vector2(x + 2, y + 1)), playerId, range))
+                ShowMonsterMovement(x + 1, y, range - 1, new List<int>(attack), c, playerId);
+            if (GridLogic.CheckMonsterField(
+                new BigTile(new Vector2(x, y - 1), new Vector2(x + 1, y - 1), new Vector2(x, y), new Vector2(x + 1, y)),
+                playerId, range))
+                ShowMonsterMovement(x, y - 1, range - 1, new List<int>(attack), c, playerId);
+            if (GridLogic.CheckMonsterField(
+                new BigTile(new Vector2(x, y + 1), new Vector2(x + 1, y + 1), new Vector2(x, y + 2),
+                    new Vector2(x + 1, y + 2)), playerId, range))
+                ShowMonsterMovement(x, y + 1, range - 1, new List<int>(attack), c, playerId);
         }
-        nodeHelper.Reset();
-        foreach (Tile f in TilesFromWhereUCanAttack)
+
+        public void ShowAttack(Unit character, List<int> attack)
         {
+            var tilesFromWhereUCanAttack = (from Tile f in Tiles where f.IsActive && (f.Unit == null || f.Unit == character) select f).ToList();
 
-            int x = f.x;
-            int y = f.y;
-            foreach (int range in attack)
+            NodeHelper.Reset();
+            foreach (var f in tilesFromWhereUCanAttack)
             {
-                ShowAttackRecursive(character, x, y, range, new List<int>());
-
-            }
-        }
-        GridRenderer.ShowStandOnTexture(character);
-        //StartCoroutine(GridRenderer.FieldAnimation());
-
-    }
-
-    public void HideMovement()
-    {
-        for (int i = 0; i < grid.width; i++)
-        {
-            for (int j = 0; j < grid.height; j++)
-            {
-                MeshRenderer m = Tiles[i, j].gameObject.GetComponent<MeshRenderer>();
-                if (Tiles[i, j].isAccessible)
-                    m.material = gridRessources.cellMaterialStandard;
-                else
+                int x = f.X;
+                int y = f.Y;
+                foreach (int range in attack)
                 {
-                    m.material = gridRessources.cellMaterialInvalid;
+                    ShowAttackRecursive(character, x, y, range, new List<int>());
                 }
-                Tiles[i, j].isActive = false;
+            }
+
+            GridRenderer.ShowStandOnTexture(character);
+            //StartCoroutine(GridRenderer.FieldAnimation());
+        }
+
+        public void HideMovement()
+        {
+            for (int i = 0; i < GridData.Width; i++)
+            {
+                for (int j = 0; j < GridData.Height; j++)
+                {
+                    var m = Tiles[i, j].GameObject.GetComponent<MeshRenderer>();
+                    m.material = Tiles[i, j].IsAccessible ? GridResources.CellMaterialStandard : GridResources.CellMaterialInvalid;
+
+                    Tiles[i, j].IsActive = false;
+                }
+            }
+
+            NodeHelper.Reset();
+            MainScript.Instance.GetSystem<UiSystem>().HideAttackableEnemy();
+        }
+
+        public void ShowAttackRecursive(Unit character, int x, int y, int range, List<int> direction)
+        {
+            if (range <= 0)
+            {
+                GridRenderer.SetFieldMaterial(new Vector2(x, y), character.Player.Id, true);
+
+                return;
+            }
+
+            if (!direction.Contains(2))
+            {
+                if (GridLogic.CheckAttackField(x + 1, y))
+                {
+                    //&& AttackNodeFaster(x+1, y, c))
+                    var newDirection = new List<int>(direction) {1};
+                    ShowAttackRecursive(character, x + 1, y, range - 1, newDirection);
+                }
+            }
+
+            if (!direction.Contains(1))
+            {
+                if (GridLogic.CheckAttackField(x - 1, y))
+                {
+                    //&& AttackNodeFaster(x - 1, y, c))
+                    var newDirection = new List<int>(direction) {2};
+                    ShowAttackRecursive(character, x - 1, y, range - 1, newDirection);
+                }
+            }
+
+            if (!direction.Contains(4))
+            {
+                if (GridLogic.CheckAttackField(x, y + 1))
+                {
+                    // && AttackNodeFaster(x , y+1, c))
+                    var newDirection = new List<int>(direction) {3};
+                    ShowAttackRecursive(character, x, y + 1, range - 1, newDirection);
+                }
+            }
+
+            if (!direction.Contains(3))
+            {
+                if (GridLogic.CheckAttackField(x, y - 1))
+                {
+                    //&& AttackNodeFaster(x , y-1, c))
+                    var newDirection = new List<int>(direction) {4};
+                    ShowAttackRecursive(character, x, y - 1, range - 1, newDirection);
+                }
             }
         }
-        nodeHelper.Reset();
-        MainScript.instance.GetSystem<UISystem>().HideAttackableEnemy();
+        //public void ShowAttackRanges(int x, int y, int range, List<int> direction)
+        //{
+        //    if (range <= 0)
+        //    {
+        //        MeshRenderer m = Tiles[x, y].gameObject.GetComponent<MeshRenderer>();
+        //        m.material = gridRessources.cellMaterialAttack;
+        //        return;
+        //    }
+        //    if (!direction.Contains(2))
+        //    {
+        //        if (GridLogic.CheckAttackField(x + 1, y))
+        //        {
+        //            List<int> newdirection = new List<int>(direction);
+        //            newdirection.Add(1);
+        //            ShowAttackRanges(x + 1, y, range - 1, newdirection);
+        //        }
+        //    }
+        //    if (!direction.Contains(1))
+        //    {
+        //        if (GridLogic.CheckAttackField(x - 1, y))
+        //        {
+        //            List<int> newdirection = new List<int>(direction);
+        //            newdirection.Add(2);
+        //            ShowAttackRanges(x - 1, y, range - 1, newdirection);
+        //        }
+        //    }
+        //    if (!direction.Contains(4))
+        //    {
+        //        if (GridLogic.CheckAttackField(x, y + 1))
+        //        {
+        //            List<int> newdirection = new List<int>(direction);
+        //            newdirection.Add(3);
+        //            ShowAttackRanges(x, y + 1, range - 1, newdirection);
+        //        }
+        //    }
+        //    if (!direction.Contains(3))
+        //    {
+        //        if (GridLogic.CheckAttackField(x, y - 1))
+        //        {
+        //            List<int> newdirection = new List<int>(direction);
+        //            newdirection.Add(4);
+        //            ShowAttackRanges(x, y - 1, range - 1, newdirection);
+        //        }
+        //    }
+
+        //}
+
+        private void ShowMovement(int x, int y, int range, int attackIndex, IReadOnlyCollection<int> attack, int c, int playerId,
+            bool enemy)
+        {
+            if (range < 0)
+            {
+                return;
+            }
+
+            if (!enemy)
+            {
+                GridRenderer.SetFieldMaterial(new Vector2(x, y), playerId, false);
+            }
+
+            NodeHelper.Nodes[x, y].C = c;
+            c++;
+            if (GridLogic.CheckField(x - 1, y, playerId, range) && NodeHelper.NodeFaster(x - 1, y, c))
+                ShowMovement(x - 1, y, range - 1, attackIndex, new List<int>(attack), c, playerId, enemy);
+            if (GridLogic.CheckField(x + 1, y, playerId, range) && NodeHelper.NodeFaster(x + 1, y, c))
+                ShowMovement(x + 1, y, range - 1, attackIndex, new List<int>(attack), c, playerId, enemy);
+            if (GridLogic.CheckField(x, y - 1, playerId, range) && NodeHelper.NodeFaster(x, y - 1, c))
+                ShowMovement(x, y - 1, range - 1, attackIndex, new List<int>(attack), c, playerId, enemy);
+            if (GridLogic.CheckField(x, y + 1, playerId, range) && NodeHelper.NodeFaster(x, y + 1, c))
+                ShowMovement(x, y + 1, range - 1, attackIndex, new List<int>(attack), c, playerId, enemy);
+        }
     }
-
-    public void ShowAttackRecursive(Unit character, int x, int y, int range, List<int> direction)
-    {
-        if (range <= 0)
-        {
-            GridRenderer.SetFieldMaterial(new Vector2(x, y), character.Player.ID, true);
-
-            return;
-        }
-        if (!direction.Contains(2))
-        {
-            if (GridLogic.CheckAttackField(x + 1, y))
-            { //&& AttackNodeFaster(x+1, y, c))
-                List<int> newdirection = new List<int>(direction);
-                newdirection.Add(1);
-                ShowAttackRecursive(character, x + 1, y, range - 1, newdirection);
-            }
-        }
-        if (!direction.Contains(1))
-        {
-            if (GridLogic.CheckAttackField(x - 1, y))
-            { //&& AttackNodeFaster(x - 1, y, c))
-                List<int> newdirection = new List<int>(direction);
-                newdirection.Add(2);
-                ShowAttackRecursive(character, x - 1, y, range - 1, newdirection);
-            }
-        }
-        if (!direction.Contains(4))
-        {
-            if (GridLogic.CheckAttackField(x, y + 1))
-            {// && AttackNodeFaster(x , y+1, c))
-                List<int> newdirection = new List<int>(direction);
-                newdirection.Add(3);
-                ShowAttackRecursive(character, x, y + 1, range - 1, newdirection);
-            }
-        }
-        if (!direction.Contains(3))
-        {
-            if (GridLogic.CheckAttackField(x, y - 1))
-            { //&& AttackNodeFaster(x , y-1, c))
-                List<int> newdirection = new List<int>(direction);
-                newdirection.Add(4);
-                ShowAttackRecursive(character, x, y - 1, range - 1, newdirection);
-            }
-        }
-
-    }
-    //public void ShowAttackRanges(int x, int y, int range, List<int> direction)
-    //{
-    //    if (range <= 0)
-    //    {
-    //        MeshRenderer m = Tiles[x, y].gameObject.GetComponent<MeshRenderer>();
-    //        m.material = gridRessources.cellMaterialAttack;
-    //        return;
-    //    }
-    //    if (!direction.Contains(2))
-    //    {
-    //        if (GridLogic.CheckAttackField(x + 1, y))
-    //        {
-    //            List<int> newdirection = new List<int>(direction);
-    //            newdirection.Add(1);
-    //            ShowAttackRanges(x + 1, y, range - 1, newdirection);
-    //        }
-    //    }
-    //    if (!direction.Contains(1))
-    //    {
-    //        if (GridLogic.CheckAttackField(x - 1, y))
-    //        {
-    //            List<int> newdirection = new List<int>(direction);
-    //            newdirection.Add(2);
-    //            ShowAttackRanges(x - 1, y, range - 1, newdirection);
-    //        }
-    //    }
-    //    if (!direction.Contains(4))
-    //    {
-    //        if (GridLogic.CheckAttackField(x, y + 1))
-    //        {
-    //            List<int> newdirection = new List<int>(direction);
-    //            newdirection.Add(3);
-    //            ShowAttackRanges(x, y + 1, range - 1, newdirection);
-    //        }
-    //    }
-    //    if (!direction.Contains(3))
-    //    {
-    //        if (GridLogic.CheckAttackField(x, y - 1))
-    //        {
-    //            List<int> newdirection = new List<int>(direction);
-    //            newdirection.Add(4);
-    //            ShowAttackRanges(x, y - 1, range - 1, newdirection);
-    //        }
-    //    }
-
-    //}
-
-    private void ShowMovement(int x, int y, int range, int attackIndex, List<int> attack, int c, int playerId, bool enemy)
-    {
-        if (range < 0)
-        {
-            return;
-        }
-        if (!enemy)
-        {
-            GridRenderer.SetFieldMaterial(new Vector2(x, y), playerId, false);
-        }
-        nodeHelper.nodes[x, y].c = c;
-        c++;
-        if (GridLogic.checkField(x - 1, y, playerId, range) && nodeHelper.nodeFaster(x - 1, y, c))
-            ShowMovement(x - 1, y, range - 1, attackIndex, new List<int>(attack), c, playerId, enemy);
-        if (GridLogic.checkField(x + 1, y, playerId, range) && nodeHelper.nodeFaster(x + 1, y, c))
-            ShowMovement(x + 1, y, range - 1, attackIndex, new List<int>(attack), c, playerId, enemy);
-        if (GridLogic.checkField(x, y - 1, playerId, range) && nodeHelper.nodeFaster(x, y - 1, c))
-            ShowMovement(x, y - 1, range - 1, attackIndex, new List<int>(attack), c, playerId, enemy);
-        if (GridLogic.checkField(x, y + 1, playerId, range) && nodeHelper.nodeFaster(x, y + 1, c))
-            ShowMovement(x, y + 1, range - 1, attackIndex, new List<int>(attack), c, playerId, enemy);
-    }
-
-
-
-
-
 }

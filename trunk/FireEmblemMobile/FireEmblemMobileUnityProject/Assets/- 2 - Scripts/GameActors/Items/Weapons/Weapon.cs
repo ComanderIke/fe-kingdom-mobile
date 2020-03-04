@@ -1,46 +1,39 @@
-﻿using Assets.Scripts.Characters;
-using Assets.Scripts.Items.Weapons;
+﻿using Assets.GameActors.Units;
+using Assets.GameActors.Units.Humans;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
-
-[System.Serializable]
-[CreateAssetMenu(menuName = "GameData/Weapons/Weapon", fileName = "Weapon")]
-public class Weapon : Item
+namespace Assets.GameActors.Items.Weapons
 {
-    [Header("WeaponAttribtues")]
-    public int Dmg;
-    public int Hit;
-    [Range(1, 4)]
-    public int[] AttackRanges;
-    public int Crit;
-    public WeaponType WeaponType;
-    public List<WeaponMixin> weaponMixins;
+    [Serializable]
+    [CreateAssetMenu(menuName = "GameData/Weapons/Weapon", fileName = "Weapon")]
+    public class Weapon : Item
+    {
+        [Range(1, 4)] public int[] AttackRanges;
 
-    public override void Use(Human character)
-    {
-        base.Use(character);
-    }
-    public void Equip(Human character)
-    {
-        base.Use(character);
-        character.Stats.AttackRanges.Clear();
-        character.EquipedWeapon = this;
-        foreach (int r in AttackRanges)
+
+        [Header("WeaponAttributes")] public int Dmg;
+
+        public List<WeaponMixin> WeaponMixins;
+        public WeaponType WeaponType;
+
+        public override void Use(Human character)
         {
-            character.Stats.AttackRanges.Add(r);
+            base.Use(character);
+        }
+
+        public void Equip(Human character)
+        {
+            base.Use(character);
+            character.Stats.AttackRanges.Clear();
+            character.EquippedWeapon = this;
+            foreach (int r in AttackRanges) character.Stats.AttackRanges.Add(r);
+        }
+
+        public void OnAttack(Unit attacker, Unit defender)
+        {
+            foreach (var mixin in WeaponMixins) mixin.OnAttack(attacker, defender);
         }
     }
-    public void OnAttack(Unit attacker, Unit defender)
-    {
-        foreach (WeaponMixin mixin in weaponMixins)
-        {
-            mixin.OnAttack(attacker, defender);
-        }
-    }
-
 }
-

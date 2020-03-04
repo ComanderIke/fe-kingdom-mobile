@@ -1,43 +1,27 @@
-﻿using Assets.Scripts.Utility;
-using System.Collections;
-using System.Collections.Generic;
+﻿using Assets.Utility;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AttackPreview : MonoBehaviour {
-
-    [SerializeField]
-    private TextMeshProUGUI hpText;
-    [SerializeField]
-    private TextMeshProUGUI hpEnemyText;
-    [SerializeField]
-    private TextMeshProUGUI dmgText;
-    [SerializeField]
-    private TextMeshProUGUI hitText;
-    [SerializeField]
-    private TextMeshProUGUI attackCountText;
-    [SerializeField]
-    private Image HpBar;
-    [SerializeField]
-    private Image HpBarEnemy;
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-    public void UpdateValues(int maxHP, int hp, int maxHPEnemy, int hpEnemy, int dmg, int hit, int attackCount)
+namespace Assets.GUI
+{
+    public class AttackPreview : MonoBehaviour
     {
-        dmgText.text = "" + dmg;
-        hitText.text = "" + hit+"%";
-        attackCountText.text = " x " + attackCount;
-        hpText.text = ""+hp;
-        hpEnemyText.text = ""+hpEnemy;
-        HpBar.fillAmount = MathUtility.MapValues(hp, 0, maxHP, 0, 1);
-        HpBarEnemy.fillAmount = MathUtility.MapValues(hpEnemy, 0, maxHPEnemy, 0, 1);
+        [SerializeField] private TextMeshProUGUI hpText = default;
+        [SerializeField] private TextMeshProUGUI hpEnemyText = default;
+        [SerializeField] private TextMeshProUGUI dmgText = default;
+        [SerializeField] private TextMeshProUGUI attackCountText = default;
+        [SerializeField] private Image hpBar = default;
+        [SerializeField] private Image hpBarEnemy = default;
+
+        public void UpdateValues(int maxHp, int hp, int maxHpEnemy, int hpEnemy, int dmg, int attackCount)
+        {
+            dmgText.text = "" + dmg;
+            attackCountText.text = " x " + attackCount;
+            hpText.text = "" + hp;
+            hpEnemyText.text = "" + hpEnemy;
+            hpBar.fillAmount = MathUtility.MapValues(hp, 0, maxHp, 0, 1);
+            hpBarEnemy.fillAmount = MathUtility.MapValues(hpEnemy, 0, maxHpEnemy, 0, 1);
+        }
     }
 }
