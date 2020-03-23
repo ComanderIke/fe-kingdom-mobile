@@ -20,28 +20,28 @@ namespace Assets.GameInput
 
         public BigTile GetClickedBigTile(int centerX, int centerY, int x, int y)
         {
-            var mainScript = MainScript.Instance;
+            var mainScript = GridGameManager.Instance;
             var selectedCharacter = mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter;
             var gridLogic = mainScript.GetSystem<MapSystem>().GridLogic;
             var clickedBigTile = new BigTile(new Vector2(centerX, centerY), new Vector2(centerX + 1, centerY),
                 new Vector2(centerX, centerY + 1), new Vector2(centerX + 1, centerY + 1));
 
-            if (!gridLogic.IsValidAndActive(clickedBigTile, selectedCharacter.Player.Id))
+            if (!gridLogic.IsValidAndActive(clickedBigTile, selectedCharacter.Faction.Id))
             {
                 clickedBigTile = new BigTile(new Vector2(x, y), new Vector2(x + 1, y), new Vector2(x, y + 1),
                     new Vector2(x + 1, y + 1));
 
-                if (!gridLogic.IsValidAndActive(clickedBigTile, selectedCharacter.Player.Id))
+                if (!gridLogic.IsValidAndActive(clickedBigTile, selectedCharacter.Faction.Id))
                 {
                     clickedBigTile = new BigTile(new Vector2(x - 1, y), new Vector2(x, y), new Vector2(x - 1, y + 1),
                         new Vector2(x, y + 1));
 
-                    if (!gridLogic.IsValidAndActive(clickedBigTile, selectedCharacter.Player.Id))
+                    if (!gridLogic.IsValidAndActive(clickedBigTile, selectedCharacter.Faction.Id))
                     {
                         clickedBigTile = new BigTile(new Vector2(x, y - 1), new Vector2(x + 1, y - 1),
                             new Vector2(x, y), new Vector2(x + 1, y));
 
-                        if (!gridLogic.IsValidAndActive(clickedBigTile, selectedCharacter.Player.Id))
+                        if (!gridLogic.IsValidAndActive(clickedBigTile, selectedCharacter.Faction.Id))
                             clickedBigTile = new BigTile(new Vector2(x - 1, y - 1), new Vector2(x, y - 1),
                                 new Vector2(x - 1, y), new Vector2(x, y));
                     }
@@ -66,7 +66,7 @@ namespace Assets.GameInput
 
         private void ClickedOnGrid(int x, int y, Vector2 clickedPos)
         {
-            var mainScript = MainScript.Instance;
+            var mainScript = GridGameManager.Instance;
             var selectedCharacter = mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter;
             if (selectedCharacter != null)
             {

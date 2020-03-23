@@ -13,7 +13,7 @@ namespace Assets.Core.GameStates
 
         public override void Enter()
         {
-            brain = new Brain(MainScript.Instance.PlayerManager.ActivePlayer);
+            brain = new Brain(GridGameManager.Instance.FactionManager.ActiveFaction);
         }
 
         public override void Exit()
@@ -35,7 +35,7 @@ namespace Assets.Core.GameStates
                 else
                 {
                     TurnSystem.OnEndTurn();
-                    MainScript.Instance.GameStateManager.Feed(NextStateTrigger.AISystemFinished);
+                    GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.AISystemFinished);
                 }
             }
 

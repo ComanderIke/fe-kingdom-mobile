@@ -13,7 +13,7 @@ namespace Assets.AI
 
         public AIGameData()
         {
-            gridManager = MainScript.Instance.GetSystem<MapSystem>();
+            gridManager = GridGameManager.Instance.GetSystem<MapSystem>();
         }
 
         public List<Unit> GetAttackTargets(Unit c)
@@ -41,7 +41,7 @@ namespace Assets.AI
             var unit = gridManager.Tiles[x, y].Unit;
             if (range <= 0)
             {
-                if (unit != null && unit.Player.Id != character.Player.Id && unit.IsAlive() &&
+                if (unit != null && unit.Faction.Id != character.Faction.Id && unit.IsAlive() &&
                     characters.All(a => a != unit)) characters.Add(unit);
                 return;
             }

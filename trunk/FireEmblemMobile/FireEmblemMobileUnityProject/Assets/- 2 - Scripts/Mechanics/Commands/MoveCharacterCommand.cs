@@ -31,7 +31,7 @@ namespace Assets.Mechanics.Commands
 
         public override void Execute()
         {
-            MainScript.Instance.GameStateManager.SwitchState(new MovementState(unit, x, y, path));
+            GameStateManager.MovementState.StartMovement(unit, x, y, path);
         }
 
         public override void Undo()

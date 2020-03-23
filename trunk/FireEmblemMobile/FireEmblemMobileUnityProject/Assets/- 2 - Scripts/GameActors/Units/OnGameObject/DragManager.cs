@@ -52,6 +52,7 @@ namespace Assets.GameActors.Units.OnGameObject
                         IsDraggingBeforeDelay = false;
                         IsAnyUnitDragged = false;
                         EndDrag();
+                        Debug.Log("ENDDRAGMANAGER");
                     }
                 }
              }

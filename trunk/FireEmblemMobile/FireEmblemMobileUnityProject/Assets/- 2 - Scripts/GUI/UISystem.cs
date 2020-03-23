@@ -24,7 +24,7 @@ namespace Assets.GUI
 
         public delegate void OnAttackUiVisibleEvent(bool visible);
 
-        public static OnAttackUiVisibleEvent OnAttackUiVisible;
+        public static OnAttackUiVisibleEvent OnAttackAnimationActive;
 
         public delegate void OnDeselectButtonClickedEvent();
 
@@ -42,7 +42,7 @@ namespace Assets.GUI
         #endregion
         [SerializeField] private Canvas mainCanvas = default;
         [Header("Screens")]
-        [SerializeField] public AttackUiController AttackUiController;
+        [SerializeField] public BattleRenderer BattleRenderer;
         [SerializeField] private GameObject winScreen = default;
         [SerializeField] private GameObject gameOverScreen = default;
 
@@ -50,7 +50,6 @@ namespace Assets.GUI
         [Header("UI Sections")]
         [SerializeField] private GameObject bottomUi = default;
         [SerializeField] private TopUi topUi = default;
-        [SerializeField] private TopUi topUiEnemy = default;
         [SerializeField] private GameObject attackPreview = default;
         [Header("Buttons")]
         [SerializeField] private Button deselectButton = default;
@@ -61,7 +60,7 @@ namespace Assets.GUI
         [SerializeField] private GameObject aiTurnAnimation = default;
 
         private Dictionary<string, GameObject> activeUnitEffects;
-        private MainScript mainScript;
+        private GridGameManager gridGameManager;
         private GameObject tileCursor;
         private ResourceScript resources;
         private List<GameObject> attackableEnemyEffects;
@@ -69,7 +68,7 @@ namespace Assets.GUI
 
         private void Start()
         {
-            mainScript = MainScript.Instance;
+            gridGameManager = GridGameManager.Instance;
             OnShowCursor += SpawnTileCursor;
             OnHideCursor += HideTileCursor;
             Unit.UnitShowActiveEffect += SpawnActiveUnitEffect;
@@ -112,6 +111,7 @@ namespace Assets.GUI
 
         public void ShowAttackableEnemy(int x, int y)
         {
+            Debug.Log("SHOW ATTACKABLE ENEMY");
             if (attackableEnemyEffects.Any(gameObj => (int) gameObj.transform.localPosition.x == x && (int) gameObj.transform.localPosition.y == y))
             {
                 return;
@@ -217,14 +217,14 @@ namespace Assets.GUI
         public void ShowFightUi(Unit attacker, Unit defender)
         {
             HideAllActiveUnitEffects();
-            AttackUiController.Show(attacker, defender);
+            ShowAttackPreview(attacker, defender);
         }
 
         public void HideFightUi()
         {
-            if (AttackUiController.isActiveAndEnabled)
-                AttackUiController.Hide();
-            if (mainScript.PlayerManager.ActivePlayer.IsPlayerControlled)
+            if (BattleRenderer.isActiveAndEnabled)
+                BattleRenderer.Hide();
+            if (gridGameManager.FactionManager.ActiveFaction.IsPlayerControlled)
                 ShowAllActiveUnitEffects();
         }
 
@@ -253,19 +253,7 @@ namespace Assets.GUI
 
         public void ShowTopUi(Unit c)
         {
-            
-            if (c.Player.Id != mainScript.PlayerManager.ActivePlayer.Id)
-            {
-                topUiEnemy.Show(c);
-
-                topUi.Hide();
-            }
-            else
-            {
-                topUiEnemy.Hide();
-
-                topUi.Show(c);
-            }
+            topUi.Show(c);
         }
 
 
@@ -305,11 +293,10 @@ namespace Assets.GUI
 
         public void ShowAttackPreview(Unit attacker, Unit defender)
         {
-            ShowAttackableEnemy(defender.GridPosition.X, defender.GridPosition.Y);
+            
             attackPreview.SetActive(true);
-            attackPreview.GetComponent<AttackPreview>().UpdateValues(attacker.Stats.MaxHp, attacker.Hp,
-                defender.Stats.MaxHp, defender.Hp, attacker.BattleStats.GetDamageAgainstTarget(defender),
-                attacker.BattleStats.GetAttackCountAgainst(defender));
+
+            attackPreview.GetComponent<AttackPreviewUI>().UpdateValues(gridGameManager.GetSystem<BattleSystem>().GetBattlePreview(attacker, defender), attacker.CharacterSpriteSet.FaceSprite, defender.CharacterSpriteSet.FaceSprite);
             //Vector3 attackPreviewPos;
             //if (defender.GridPosition is BigTilePosition)
             //  attackPreviewPos = Camera.main.WorldToScreenPoint(new Vector3(pos.x + GridManager.GRID_X_OFFSET ,pos.y + 1.0f, -0.05f));
@@ -327,7 +314,7 @@ namespace Assets.GUI
 
         private void OnDestroy()
         {
-            OnAttackUiVisible = null;
+            OnAttackAnimationActive = null;
             OnDeselectButtonClicked = null;
             OnFrontalAttackAnimationEnd = null;
             OnHideCursor = null;

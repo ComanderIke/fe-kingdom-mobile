@@ -11,8 +11,11 @@ namespace Assets.GUI
 {
     public class TopUi : MonoBehaviour
     {
+        [SerializeField] private GameObject characterScreen = default;
+        [SerializeField] private Image topUiEnemy = default;
         [SerializeField] private TextMeshProUGUI characterName = default;
         [SerializeField] private TextMeshProUGUI level = default;
+        [SerializeField] private TextMeshProUGUI levelEnemy = default;
         [SerializeField] private FilledBarController expBar = default;
         [SerializeField] private TextMeshProUGUI str = default;
         [SerializeField] private TextMeshProUGUI spd = default;
@@ -33,11 +36,23 @@ namespace Assets.GUI
         [SerializeField] private TextMeshProUGUI[] weaponProficiencyLevels = default;
         [SerializeField] private Image[] skillSprites = default;
         [SerializeField] private Image[] inventorySprites = default;
+        private ColorManager colorManager;
 
+        void Start()
+        {
+            colorManager = FindObjectOfType<ColorManager>();
+        }
         public void Show(Unit c)
         {
-            gameObject.SetActive(true);
+            characterScreen.SetActive(true);
+            
+            topUiEnemy.gameObject.SetActive(!c.Faction.IsPlayerControlled);
+            expBar.gameObject.SetActive(c.Faction.IsPlayerControlled);
+
             characterName.text = c.Name;
+            level.gameObject.SetActive(c.Faction.IsPlayerControlled);
+            levelEnemy.gameObject.SetActive(!c.Faction.IsPlayerControlled);
+            levelEnemy.text= "" + c.ExperienceManager.Level;
             level.text = "" + c.ExperienceManager.Level;
             expBar.SetFillAmount((c.ExperienceManager.Exp*1.0f)/ c.ExperienceManager.NextLevelExp);
            
@@ -48,6 +63,8 @@ namespace Assets.GUI
             def.text = "" + c.Stats.Def;
             res.text = "" + c.Stats.Res;
             hpBar.SetFillAmount((c.Hp * 1.0f) / c.Stats.MaxHp);
+
+            hpBar.SetColor(c.Faction.Id == 0 ? colorManager.MainGreenColor : colorManager.MainRedColor);
             hp.text = c.Hp + "/" + c.Stats.MaxHp;
             spBar.SetFillAmount((c.Sp * 1.0f) / c.Stats.MaxSp);
             sp.text = c.Sp + "/" + c.Stats.MaxSp;
@@ -58,21 +75,22 @@ namespace Assets.GUI
             {
                 motivationSprite.gameObject.SetActive(false);
             }
-            switch (c.Motivation)
-            {
-                case Motivation.Tired:
-                    motivationSprites[0].gameObject.SetActive(true);
-                    break;
-                case Motivation.Negative: motivationSprites[1].gameObject.SetActive(true); break;
-                case Motivation.Neutral: motivationSprites[2].gameObject.SetActive(true); break;
-                case Motivation.Positive: motivationSprites[3].gameObject.SetActive(true); break;
-                case Motivation.Happy: motivationSprites[4].gameObject.SetActive(true); break;
-            }
+            if(c.Faction.IsPlayerControlled)
+                switch (c.Motivation)
+                {
+                    case Motivation.Tired:
+                        motivationSprites[0].gameObject.SetActive(true);
+                        break;
+                    case Motivation.Negative: motivationSprites[1].gameObject.SetActive(true); break;
+                    case Motivation.Neutral: motivationSprites[2].gameObject.SetActive(true); break;
+                    case Motivation.Positive: motivationSprites[3].gameObject.SetActive(true); break;
+                    case Motivation.Happy: motivationSprites[4].gameObject.SetActive(true); break;
+                }
 
             if (c is Human human)
             {
                 classSprite.sprite = human.Class.Sprite;
-                var sixColors =FindObjectOfType<ColorPalettes>().SixGradeColors;
+                var sixColors =colorManager.SixGradeColors;
                 if(human.EquippedWeapon!=null)
                     equippedWeaponSprite.sprite = human.EquippedWeapon.Sprite;
                 for (int i = 0; i < human.WeaponProficiencies().Count; i++)
@@ -122,7 +140,7 @@ namespace Assets.GUI
 
         public void Hide()
         {
-            gameObject.SetActive(false);
+            characterScreen.SetActive(false);
         }
     }
 }

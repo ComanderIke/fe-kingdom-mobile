@@ -39,7 +39,7 @@ namespace Assets.Grid
         public virtual void SetPosition(int newX, int newY)
         {
             if (GridScript == null)
-                GridScript = MainScript.Instance.GetSystem<MapSystem>();
+                GridScript = GridGameManager.Instance.GetSystem<MapSystem>();
             if (X != -1 && Y != -1)
                 GridScript.Tiles[X, Y].Unit = null;
             GridScript.Tiles[newX, newY].Unit = Character;
@@ -55,7 +55,7 @@ namespace Assets.Grid
         public virtual void RemoveCharacter()
         {
             if (GridScript == null)
-                GridScript = MainScript.Instance.GetSystem<MapSystem>();
+                GridScript = GridGameManager.Instance.GetSystem<MapSystem>();
             GridScript.Tiles[X, Y].Unit = null;
         }
 

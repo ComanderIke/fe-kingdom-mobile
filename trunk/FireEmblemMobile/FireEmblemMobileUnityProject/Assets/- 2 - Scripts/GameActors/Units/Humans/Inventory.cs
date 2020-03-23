@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Assets.GameActors.Items;
 using Assets.GameActors.Items.Weapons;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine;
 namespace Assets.GameActors.Units.Humans
 {
     [CreateAssetMenu(menuName = "GameData/Inventory", fileName = "Inventory")]
-    public class Inventory : ScriptableObject
+    public class Inventory : ScriptableObject, ICloneable
     {
         public const int MAX_ITEMS = 6;
         public List<Item> Items;
@@ -30,6 +31,17 @@ namespace Assets.GameActors.Units.Humans
         {
             i.Use(Owner);
             if (i.NumberOfUses <= 0) Items.Remove(i);
+        }
+
+        public object Clone()
+        {
+            var clone = (Inventory)this.MemberwiseClone();
+            clone.Items = new List<Item>();
+            foreach (Item i in Items)
+            {
+                clone.Items.Add((Item)i.Clone());
+            }
+            return clone;
         }
     }
 }

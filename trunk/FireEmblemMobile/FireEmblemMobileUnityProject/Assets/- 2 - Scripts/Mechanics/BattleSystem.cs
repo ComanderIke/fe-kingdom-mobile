@@ -1,6 +1,9 @@
-﻿using Assets.Core;
+﻿using System;
+using Assets.Core;
 using Assets.GameActors.Units;
+using Assets.GameActors.Units.Humans;
 using Assets.GUI;
+using Assets.Mechanics.Battle;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,129 +16,100 @@ namespace Assets.Mechanics
 
         public static OnStartAttackEvent OnStartAttack;
 
-        public delegate void OnAllyTakesDamageEvent(int damage, bool magic = false);
-
-        public static OnAllyTakesDamageEvent OnAllyTakesDamage;
-
-        public delegate void OnEnemyTakesDamageEvent(int damage, bool magic = false);
-
-        public static OnEnemyTakesDamageEvent OnEnemyTakesDamage;
-
         private const float FIGHT_TIME = 3.8f;
         private const float ATTACK_DELAY = 0.0f;
         private readonly Unit attacker;
         private readonly Unit defender;
-        private readonly bool frontAttack;
-        private readonly bool surpriseAttack;
         private int attackCount;
+        private bool battleStarted;
         private readonly UiSystem uiController;
-
-        public BattleSystem(Unit attacker, Unit defender)
+        private BattleSimulation battleSimulation;
+        private int attackerAttackCount;
+        private int defenderAttackCount;
+        private int currentAttackIndex;
+        public BattleSystem()
+        {
+            battleStarted = false;
+        }
+        public BattleSystem(Unit attacker, Unit defender):base()
         {
             this.attacker = attacker;
             this.defender = defender;
-            uiController = MainScript.Instance.GetSystem<UiSystem>();
-            if (attacker.BattleStats.IsFrontalAttack(defender))
-            {
-                frontAttack = true;
-            }
-            else if (attacker.BattleStats.IsBackSideAttack(defender))
-            {
-                surpriseAttack = true;
-            }
+            uiController = GridGameManager.Instance.GetSystem<UiSystem>();
 
-            attackCount = attacker.BattleStats.GetAttackCountAgainst(defender);
         }
 
-        public void DoAttack()
+        public void StartBattle()
         {
-            attackCount--;
-            if (attackCount >= 0)
-                MainScript.Instance.StartCoroutine(Attack());
+            battleSimulation = new BattleSimulation(attacker,defender);
+            battleSimulation.StartBattle();
+            battleStarted = true;
+            currentAttackIndex = 0;
+            attackerAttackCount = attacker.BattleStats.GetAttackCountAgainst(defender);
+            defenderAttackCount = defender.BattleStats.GetAttackCountAgainst(attacker);
         }
 
-        private List<float> GetAttackModifiers()
+        public void ContinueBattle()
         {
-            var attackModifiers = new List<float>();
-            if (frontAttack)
-                attackModifiers.Add(attacker.BattleStats.FrontalAttackModifier);
-            return attackModifiers;
+            Debug.Log(currentAttackIndex);
+            ContinueBattle(battleSimulation.AttackSequence[currentAttackIndex]);
+        }
+        private void ContinueBattle(bool attackerAttacking)
+        {
+           
+            if (attackerAttacking)
+                DoAttack(attacker, defender);
+            else
+                DoAttack(defender, attacker);
+            currentAttackIndex++;
         }
 
-        public static void PlayAllyAttackAnimation(int damage = 0)
+        public static bool DoAttack(Unit attacker, Unit defender)
         {
-            Object.FindObjectOfType<AllySpriteController>().StartAttackAnimation();
-            if (damage != 0)
+            defender.Hp -= attacker.BattleStats.GetDamageAgainstTarget(defender);
+            defender.Sp -= attacker.BattleStats.GetTotalSpDamageAgainstTarget(defender);
+            if (attacker is Human humanAttacker && humanAttacker.EquippedWeapon != null)
             {
-                Object.FindObjectOfType<EnemySpriteController>().StartBlinkAnimation();
+                attacker.Sp -= humanAttacker.EquippedWeapon.Weight;
             }
+            if (defender is Human humanDefender && humanDefender.EquippedWeapon != null)
+            {
+                defender.Sp -= humanDefender.EquippedWeapon.Weight;
+            }
+            return defender.Hp > 0;
         }
 
-        public static void PlayEnemyAttackAnimation(int damage = 0)
+        public bool[] GetAttackSequence()
         {
-            Object.FindObjectOfType<EnemySpriteController>().StartAttackAnimation();
-            if (damage != 0)
-            {
-                Object.FindObjectOfType<AllySpriteController>().StartBlinkAnimation();
-            }
+            return battleStarted ? battleSimulation.AttackSequence.ToArray() : null;
         }
+  
 
-        private void SingleAttack(Unit attacker, Unit defender)
+        public void EndBattle()
         {
-            var attackModifier = GetAttackModifiers();
-
-            int damage = defender.InflictDamage(attacker.BattleStats.GetDamage(attackModifier), attacker);
-            if (attacker.Player.IsPlayerControlled)
-            {
-                PlayAllyAttackAnimation(damage);
-                OnEnemyTakesDamage(damage);
-            }
-
-            if (defender.Player.IsPlayerControlled)
-            {
-                PlayEnemyAttackAnimation(damage);
-                OnAllyTakesDamage(damage);
-            }
-        }
-
-        private IEnumerator Attack()
-        {
-            yield return new WaitForSeconds(ATTACK_DELAY);
-            SingleAttack(attacker, defender);
-            if (!defender.IsAlive())
-            {
-                EndFight();
-                yield break;
-            }
-
-            yield return new WaitForSeconds(1.5f);
-            if (attackCount == 0)
-                EndFight();
-        }
-
-        private IEnumerator End()
-        {
-            yield return new WaitForSeconds(1.0f);
             if (!attacker.IsAlive())
             {
                 attacker.Die();
             }
-
             if (!defender.IsAlive())
             {
                 defender.Die();
             }
-
-            UnitActionSystem.OnCommandFinished -= EndFight;
-            UiSystem.OnContinuePressed = null;
-            MainScript.Instance.GameStateManager.SwitchState(GameStateManager.GameplayState);
+            GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.BattleEnded);
             attacker.UnitTurnState.UnitTurnFinished();
             UnitActionSystem.OnCommandFinished();
         }
 
-        private void EndFight()
+        public BattlePreview GetBattlePreview(Unit attacker, Unit defender)
         {
-            MainScript.Instance.StartCoroutine(End());
+            var battlePreview = new BattlePreview();
+            battleSimulation = new BattleSimulation(attacker, defender);
+            battleSimulation.StartBattle();
+
+            battlePreview.Attacker = new BattlePreviewStats(attacker.BattleStats.GetDamage(), attacker.Stats.Spd, defender.BattleStats.IsPhysical(), defender.BattleStats.IsPhysical() ? attacker.Stats.Def : attacker.Stats.Res, attacker.Stats.Skl, attacker.BattleStats.GetDamageAgainstTarget(defender), attacker.BattleStats.GetAttackCountAgainst(defender), attacker.Hp, attacker.Stats.MaxHp, battleSimulation.Attacker.Hp, battleSimulation.DefenderDamage, attacker.Sp, attacker.Stats.MaxSp, battleSimulation.Attacker.Sp, battleSimulation.DefenderSpDamage);
+
+            battlePreview.Defender = new BattlePreviewStats(defender.BattleStats.GetDamage(), defender.Stats.Spd, attacker.BattleStats.IsPhysical(), attacker.BattleStats.IsPhysical() ? defender.Stats.Def : defender.Stats.Res, defender.Stats.Skl, defender.BattleStats.GetDamageAgainstTarget(attacker), defender.BattleStats.GetAttackCountAgainst(attacker), defender.Hp, defender.Stats.MaxHp, battleSimulation.Defender.Hp, battleSimulation.AttackerDamage, defender.Sp, defender.Stats.MaxSp, battleSimulation.Defender.Sp, battleSimulation.AttackerSpDamage);
+            return battlePreview;
         }
     }
 }

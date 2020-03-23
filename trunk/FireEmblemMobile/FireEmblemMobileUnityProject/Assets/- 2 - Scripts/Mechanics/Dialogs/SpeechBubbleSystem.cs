@@ -19,7 +19,7 @@ namespace Assets.Mechanics.Dialogs
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                ShowSpeechBubble(MainScript.Instance.PlayerManager.ActivePlayer.Units[Random.Range(0, 4)],
+                ShowSpeechBubble(GridGameManager.Instance.FactionManager.ActiveFaction.Units[Random.Range(0, 4)],
                     "This is a test!");
             }
 

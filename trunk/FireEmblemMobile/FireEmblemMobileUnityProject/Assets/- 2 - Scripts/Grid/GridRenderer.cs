@@ -51,12 +51,12 @@ namespace Assets.Grid
                 //not using sharedMaterial here create Material instances which will cause much higher baches
                 if (meshRenderer.sharedMaterial == GridManager.GridResources.CellMaterialMovement)
                     return;
-                if (MainScript.Instance.PlayerManager.ActivePlayer.Id == playerId)
+                if (GridGameManager.Instance.FactionManager.ActiveFaction.Id == playerId)
                 {
                     meshRenderer.material = GridManager.GridResources.CellMaterialAttack;
                     if (Tiles[(int) pos.x, (int) pos.y].Unit != null &&
-                        Tiles[(int) pos.x, (int) pos.y].Unit.Player.Id != playerId)
-                        MainScript.Instance.GetSystem<UiSystem>().ShowAttackableField((int) pos.x, (int) pos.y);
+                        Tiles[(int) pos.x, (int) pos.y].Unit.Faction.Id != playerId)
+                        GridGameManager.Instance.GetSystem<UiSystem>().ShowAttackableField((int) pos.x, (int) pos.y);
                     // MainScript.GetInstance().GetController<UIController>().ShowAttackableEnemy((int)pos.x, (int)pos.y);
                 }
                 else
@@ -67,12 +67,12 @@ namespace Assets.Grid
                 meshRenderer.material = GridManager.GridResources.CellMaterialMovement;
 
                 if (Tiles[(int) pos.x, (int) pos.y].Unit != null &&
-                    Tiles[(int) pos.x, (int) pos.y].Unit.Player.Id != playerId)
+                    Tiles[(int) pos.x, (int) pos.y].Unit.Faction.Id != playerId)
                 {
-                    if (MainScript.Instance.PlayerManager.ActivePlayer.Id == playerId)
+                    if (GridGameManager.Instance.FactionManager.ActiveFaction.Id == playerId)
                     {
                         meshRenderer.material = GridManager.GridResources.CellMaterialAttack;
-                        MainScript.Instance.GetSystem<UiSystem>().ShowAttackableField((int) pos.x, (int) pos.y);
+                        GridGameManager.Instance.GetSystem<UiSystem>().ShowAttackableField((int) pos.x, (int) pos.y);
                         // MainScript.GetInstance().GetController<UIController>().ShowAttackableEnemy((int)pos.x, (int)pos.y);
                     }
                     else

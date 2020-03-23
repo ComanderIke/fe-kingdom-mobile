@@ -34,7 +34,7 @@ namespace Assets.GameActors.Units
             {
                 hasMoved = value;
                 unit.UnitCanMove?.Invoke(unit, !hasMoved);
-                if (unit.Player.IsPlayerControlled)
+                if (unit.Faction.IsPlayerControlled)
                     Unit.UnitShowActiveEffect(unit, !hasMoved, false);
                 if (hasMoved)
                     UiSystem.OnHideCursor();
@@ -64,7 +64,7 @@ namespace Assets.GameActors.Units
         public bool IsDragable()
         {
             return !IsWaiting && unit.IsAlive() &&
-                   unit.Player.Id == MainScript.Instance.PlayerManager.ActivePlayerNumber;
+                   unit.Faction.Id == GridGameManager.Instance.FactionManager.ActivePlayerNumber;
         }
     }
 }

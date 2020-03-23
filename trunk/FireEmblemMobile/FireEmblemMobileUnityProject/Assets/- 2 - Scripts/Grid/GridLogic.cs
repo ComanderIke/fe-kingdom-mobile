@@ -13,14 +13,14 @@ namespace Assets.Grid
 {
     public class GridLogic
     {
-        private readonly MainScript mainScript;
+        private readonly GridGameManager gridGameManager;
         public Tile[,] Tiles { get; set; }
         public MapSystem GridManager { get; set; }
         private readonly GridData gridData;
 
         public GridLogic(MapSystem gridManager)
         {
-            mainScript = MainScript.Instance;
+            gridGameManager = GridGameManager.Instance;
             GridManager = gridManager;
             Tiles = gridManager.Tiles;
             gridData = gridManager.GridData;
@@ -29,7 +29,7 @@ namespace Assets.Grid
 
         public void FieldClicked(int x, int y)
         {
-            var selectedCharacter = mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter;
+            var selectedCharacter = gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter;
             if (Tiles[x, y].Unit == null)
             {
                 if (selectedCharacter != null)
@@ -43,12 +43,12 @@ namespace Assets.Grid
                                 GridManager.GridResources.PreferredPath.Path[i].y));
                         }
 
-                        mainScript.GetSystem<UnitActionSystem>().MoveCharacter(selectedCharacter, x, y, movePath);
+                        gridGameManager.GetSystem<UnitActionSystem>().MoveCharacter(selectedCharacter, x, y, movePath);
                         UnitActionSystem.OnAllCommandsFinished += SwitchToGamePlayState;
                         Debug.Log("All Commands Setup");
-                        mainScript.GetSystem<UnitActionSystem>().ExecuteActions();
+                        gridGameManager.GetSystem<UnitActionSystem>().ExecuteActions();
 
-                        mainScript.GetSystem<MapSystem>().HideMovement();
+                        gridGameManager.GetSystem<MapSystem>().HideMovement();
                         return;
                     }
                     else
@@ -64,7 +64,7 @@ namespace Assets.Grid
         {
             Debug.Log("Switch State Commands Delete");
             UnitActionSystem.OnAllCommandsFinished -= SwitchToGamePlayState;
-            mainScript.GameStateManager.SwitchState(GameStateManager.GameplayState);
+            gridGameManager.GameStateManager.SwitchState(GameStateManager.GameplayState);
         }
 
         public List<Unit> GetAttackTargets(Unit unit)
@@ -84,7 +84,7 @@ namespace Assets.Grid
                             if (IsOutOfBounds(new Vector2(x + i, y + j)))
                                 continue;
                             var unitOnTile = Tiles[i + x, j + y].Unit;
-                            if (unitOnTile != null && unitOnTile.Player.Id != unit.Player.Id)
+                            if (unitOnTile != null && unitOnTile.Faction.Id != unit.Faction.Id)
                             {
                                 targets.Add(unitOnTile);
                             }
@@ -113,7 +113,7 @@ namespace Assets.Grid
                             if (IsOutOfBounds(new Vector2(x + i, y + j)))
                                 continue;
                             var unitOnTile = Tiles[i + x, j + y].Unit;
-                            if (unitOnTile != null && unitOnTile.Player.Id != unit.Player.Id)
+                            if (unitOnTile != null && unitOnTile.Faction.Id != unit.Faction.Id)
                             {
                                 targets.Add(unitOnTile);
                             }
@@ -145,7 +145,7 @@ namespace Assets.Grid
             {
                 invalid = !Tiles[(int) pos.x, (int) pos.y].IsAccessible;
                 if (Tiles[(int) pos.x, (int) pos.y].Unit != null)
-                    if (Tiles[(int) pos.x, (int) pos.y].Unit.Player.Id == team)
+                    if (Tiles[(int) pos.x, (int) pos.y].Unit.Faction.Id == team)
                         invalid = false;
                 if (!Tiles[(int) pos.x, (int) pos.y].IsActive)
                     invalid = true;
@@ -191,28 +191,28 @@ namespace Assets.Grid
             var bottomPosition = new Vector2(character.GridPosition.X, character.GridPosition.Y - 1);
             if (IsValidLocation(leftPosition, character))
             {
-                var moveOption = GetMoveableBigTileFromPosition(leftPosition, character.Player.Id, character);
+                var moveOption = GetMoveableBigTileFromPosition(leftPosition, character.Faction.Id, character);
                 if (moveOption != null)
                     return moveOption;
             }
 
             if (IsValidLocation(rightPosition, character))
             {
-                var moveOption = GetMoveableBigTileFromPosition(rightPosition, character.Player.Id, character);
+                var moveOption = GetMoveableBigTileFromPosition(rightPosition, character.Faction.Id, character);
                 if (moveOption != null)
                     return moveOption;
             }
 
             if (IsValidLocation(topPosition, character))
             {
-                var moveOption = GetMoveableBigTileFromPosition(topPosition, character.Player.Id, character);
+                var moveOption = GetMoveableBigTileFromPosition(topPosition, character.Faction.Id, character);
                 if (moveOption != null)
                     return moveOption;
             }
 
             if (IsValidLocation(bottomPosition, character))
             {
-                var moveOption = GetMoveableBigTileFromPosition(bottomPosition, character.Player.Id, character);
+                var moveOption = GetMoveableBigTileFromPosition(bottomPosition, character.Faction.Id, character);
                 if (moveOption != null)
                     return moveOption;
             }
@@ -229,7 +229,7 @@ namespace Assets.Grid
                 {
                     if (field.Unit == null)
                         return true;
-                    if (field.Unit.Player.Id == team)
+                    if (field.Unit.Faction.Id == team)
                         return true;
                 }
                 else
@@ -276,7 +276,7 @@ namespace Assets.Grid
                 //    invalid = true;
                 if (Tiles[x, y].Unit != null)
                 {
-                    if (Tiles[x, y].Unit.Player.Id != team)
+                    if (Tiles[x, y].Unit.Faction.Id != team)
                     {
                         invalid = true;
                     }
@@ -330,14 +330,14 @@ namespace Assets.Grid
 
         public MovementPath GetMonsterPath(Monster monster, BigTile position, bool adjacent, List<int> attackRanges)
         {
-            MainScript.Instance.GetSystem<InputSystem>().AttackRangeFromPath = 0;
+            GridGameManager.Instance.GetSystem<InputSystem>().AttackRangeFromPath = 0;
             var nodes = new PathFindingNode[gridData.Width, gridData.Height];
             for (int x = 0; x < gridData.Width; x++)
             {
                 for (int y = 0; y < gridData.Height; y++)
                 {
                     bool isAccessible = Tiles[x, y].IsAccessible;
-                    if (Tiles[x, y].Unit != null && Tiles[x, y].Unit.Player.Id != monster.Player.Id)
+                    if (Tiles[x, y].Unit != null && Tiles[x, y].Unit.Faction.Id != monster.Faction.Id)
                         isAccessible = false;
                     nodes[x, y] = new PathFindingNode(x, y, isAccessible);
                 }
@@ -345,7 +345,7 @@ namespace Assets.Grid
 
             var aStar = new AStar2X2(nodes);
             var p = aStar.GetPath(((BigTilePosition) monster.GridPosition).Position, position,
-                monster.Player.Id, adjacent, attackRanges);
+                monster.Faction.Id, adjacent, attackRanges);
             return p;
         }
 

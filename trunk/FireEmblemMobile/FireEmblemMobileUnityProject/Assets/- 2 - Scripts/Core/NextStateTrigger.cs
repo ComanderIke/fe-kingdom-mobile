@@ -5,6 +5,10 @@
         AISystemFinished,
         StartAITurn,
         GameOver,
-        PlayerWon
+        PlayerWon,
+        BattleEnded,
+        BattleStarted,
+        FinishedMovement,
+        MoveUnit
     }
 }

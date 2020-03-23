@@ -5,7 +5,7 @@ using Assets.GameActors.Units.Skills;
 
 namespace Assets.GameActors.Units.Humans
 {
-    public class SkillManager
+    public class SkillManager : ICloneable
     {
         public List<Skill> Skills;
 
@@ -24,6 +24,17 @@ namespace Assets.GameActors.Units.Humans
             foreach (var s in Skills.OfType<T>())
                 return (T) Convert.ChangeType(s, typeof(T));
             return default;
+        }
+
+        public object Clone()
+        {
+            var clone = (SkillManager)this.MemberwiseClone();
+            clone.Skills = new List<Skill>();
+            foreach (Skill skill in Skills)
+            {
+                clone.Skills.Add(skill);
+            }
+            return clone;
         }
     }
 }

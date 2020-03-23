@@ -7,7 +7,7 @@ namespace Assets.GameActors.Units.Attributes
 {
     [Serializable]
     [CreateAssetMenu(menuName = "GameData/Unit/Stats", fileName = "UnitStats")]
-    public class Stats : ScriptableObject
+    public class Stats : ScriptableObject, ICloneable
     {
         public List<int> AttackRanges;
         public int Def;
@@ -23,6 +23,26 @@ namespace Assets.GameActors.Units.Attributes
         public int GetMaxAttackRange()
         {
             return AttackRanges.Max();
+        }
+
+        public object Clone()
+        {
+            Stats stats = CreateInstance<Stats>();
+            stats.AttackRanges = new List<int>();
+            foreach (int i in AttackRanges)
+            {
+                stats.AttackRanges.Add(i);
+            }
+            stats.Def = Def;
+            stats.MaxHp = MaxHp;
+            stats.MaxSp = MaxSp;
+            stats.Mag = Mag;
+            stats.Mov = Mov;
+            stats.Res = Res;
+            stats.Skl = Skl;
+            stats.Spd = Spd;
+            stats.Str = Str;
+            return stats;
         }
     }
 }

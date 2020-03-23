@@ -75,14 +75,29 @@ namespace Assets.Mechanics.Battle
 
         public int GetDamageAgainstTarget(Unit target, float atkMultiplier = 1.0f)
         {
-            return (int) (Mathf.Clamp(GetDamage(atkMultiplier) - target.Stats.Def, 1, Mathf.Infinity));
+            var atkMulti = new List<float> { atkMultiplier };
+            if (target.Sp <= 0)
+                atkMulti.Add(2.0f);
+            return GetDamageAgainstTarget(target, atkMulti);
+
         }
 
         public int GetDamageAgainstTarget(Unit target, List<float> atkMultiplier)
         {
+            if (target.Sp <= 0)
+                atkMultiplier.Add(2);
             return (int) (Mathf.Clamp(GetDamage(atkMultiplier) - target.Stats.Def, 1, Mathf.Infinity));
         }
 
+        public bool IsPhysical()
+        {
+            if (owner is Human human && human.EquippedWeapon != null)
+            {
+                return human.EquippedWeapon.WeaponType != WeaponType.Magic;
+            }
+
+            return true;
+        }
         public int GetAttackDamage()
         {
             if (owner is Human human && human.EquippedWeapon != null)
@@ -172,6 +187,11 @@ namespace Assets.Mechanics.Battle
 
             var attackData = new AttackData(owner, dmg, attackMultiplier, attackAttributes);
             return attackData;
+        }
+
+        public int GetTotalSpDamageAgainstTarget(Unit attacker)
+        {
+            return Math.Max(Math.Abs(owner.Stats.Skl - attacker.Stats.Skl),1);
         }
     }
 }

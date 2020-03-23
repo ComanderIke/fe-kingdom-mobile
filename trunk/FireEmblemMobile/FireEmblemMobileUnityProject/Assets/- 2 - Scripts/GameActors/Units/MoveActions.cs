@@ -16,12 +16,12 @@ namespace Assets.GameActors.Units
         public void Push(Vector2 direction)
         {
             var pos = new Vector2(unit.GridPosition.X + direction.x, unit.GridPosition.Y + direction.y);
-            if (MainScript.Instance.GetSystem<MapSystem>().GridLogic.IsTileAccessible(pos))
+            if (GridGameManager.Instance.GetSystem<MapSystem>().GridLogic.IsTileAccessible(pos))
             {
-                if (MainScript.Instance.GetSystem<MapSystem>().Tiles[(int)pos.x, (int)pos.y].Unit != null)
-                    MainScript.Instance.GetSystem<MapSystem>().Tiles[(int)pos.x, (int)pos.y].Unit.MoveActions
+                if (GridGameManager.Instance.GetSystem<MapSystem>().Tiles[(int)pos.x, (int)pos.y].Unit != null)
+                    GridGameManager.Instance.GetSystem<MapSystem>().Tiles[(int)pos.x, (int)pos.y].Unit.MoveActions
                         .Push(direction);
-                if (MainScript.Instance.GetSystem<MapSystem>().GridLogic.IsTileAccessible(pos, unit))
+                if (GridGameManager.Instance.GetSystem<MapSystem>().GridLogic.IsTileAccessible(pos, unit))
                     unit.SetPosition((int)pos.x, (int)pos.y);
             }
         }

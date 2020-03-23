@@ -28,7 +28,7 @@ namespace Assets.GameInput
         private RaycastHit hit;
         public List<CursorPosition> LastPositions = new List<CursorPosition>();
 
-        private MainScript mainScript;
+        private GridGameManager gridGameManager;
         private GameObject moveCursor;
         private GameObject moveCursorStart;
         private bool nonActive;
@@ -44,7 +44,7 @@ namespace Assets.GameInput
             currentY = -1;
             oldX = -1;
             oldY = -1;
-            mainScript = FindObjectOfType<MainScript>();
+            gridGameManager = FindObjectOfType<GridGameManager>();
 
             GridInput = new GridInput();
             gameWorld = GameObject.FindGameObjectWithTag("World").transform;
@@ -56,6 +56,10 @@ namespace Assets.GameInput
 
         private void Update()
         {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Debug.Log("CLICKED!");
+            }
             if (!Active)
                 return;
             if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
@@ -79,6 +83,7 @@ namespace Assets.GameInput
             else if (Input.GetMouseButtonUp(0))
             {
                 PreferredPath.Path = new List<Vector2>(mousePath);
+                Debug.Log(mousePath.Count);
                 if (!GridInput.ConfirmClick) ResetMousePath();
             }
         }
@@ -97,20 +102,20 @@ namespace Assets.GameInput
             UnitActionSystem.OnDeselectCharacter += ResetMousePath;
             OnUnitClicked += UnitClicked;
             OnEnemyClicked += EnemyClicked;
-            UiSystem.OnAttackUiVisible += UiActive;
+            UiSystem.OnAttackAnimationActive += SetInputActive;
         }
 
         private void Activate()
         {
-            UiActive(false);
+            SetInputActive(false);
         }
 
         private void DeActivate()
         {
-            UiActive(true);
+            SetInputActive(true);
         }
 
-        private void UiActive(bool active)
+        private void SetInputActive(bool active)
         {
             Active = !active;
         }
@@ -150,7 +155,7 @@ namespace Assets.GameInput
                 return;
             if (doubleClicked)
             {
-                mainScript.GetSystem<UnitActionSystem>().ActiveCharWait();
+                gridGameManager.GetSystem<UnitActionSystem>().ActiveCharWait();
                 return;
             }
             if (GridInput.ConfirmClick && GridInput.ClickedField == new Vector2(currentX, currentY))
@@ -161,8 +166,8 @@ namespace Assets.GameInput
             else
             {
                 Debug.Log("Unit Clicked not Confirmed!");
-                if (mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter != null && unit.Player.Id !=
-                    mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter.Player.Id)
+                if (gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter != null && unit.Faction.Id !=
+                    gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter.Faction.Id)
                 {
                     Debug.Log("Unit Clicked not allied!");
                     GridInput.ConfirmClick = true;
@@ -177,9 +182,9 @@ namespace Assets.GameInput
         {
             Debug.Log("Enemy clicked!");
 
-            if (mainScript.GetSystem<MapSystem>().GridLogic.IsFieldAttackable(unit.GridPosition.X, unit.GridPosition.Y))
+            if (gridGameManager.GetSystem<MapSystem>().GridLogic.IsFieldAttackable(unit.GridPosition.X, unit.GridPosition.Y))
             {
-                CalculateMousePathToEnemy(mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter,
+                CalculateMousePathToEnemy(gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter,
                     new Vector2(unit.GridPosition.X, unit.GridPosition.Y));
             }
             else
@@ -190,37 +195,39 @@ namespace Assets.GameInput
                     var bottomRight = ((BigTilePosition)unit.GridPosition).Position.BottomRight();
                     var topLeft = ((BigTilePosition)unit.GridPosition).Position.TopLeft();
                     var topRight = ((BigTilePosition)unit.GridPosition).Position.TopRight();
-                    if (mainScript.GetSystem<MapSystem>().GridLogic
+                    if (gridGameManager.GetSystem<MapSystem>().GridLogic
                         .IsFieldAttackable((int)bottomLeft.x, (int)bottomLeft.y))
-                        CalculateMousePathToEnemy(mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter,
+                        CalculateMousePathToEnemy(gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter,
                             bottomLeft);
-                    else if (mainScript.GetSystem<MapSystem>().GridLogic
+                    else if (gridGameManager.GetSystem<MapSystem>().GridLogic
                         .IsFieldAttackable((int)bottomRight.x, (int)bottomRight.y))
-                        CalculateMousePathToEnemy(mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter,
+                        CalculateMousePathToEnemy(gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter,
                             bottomRight);
-                    else if (mainScript.GetSystem<MapSystem>().GridLogic
+                    else if (gridGameManager.GetSystem<MapSystem>().GridLogic
                         .IsFieldAttackable((int)topLeft.x, (int)topLeft.y))
-                        CalculateMousePathToEnemy(mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter,
+                        CalculateMousePathToEnemy(gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter,
                             topLeft);
-                    else if (mainScript.GetSystem<MapSystem>().GridLogic
+                    else if (gridGameManager.GetSystem<MapSystem>().GridLogic
                         .IsFieldAttackable((int)topRight.x, (int)topRight.y))
-                        CalculateMousePathToEnemy(mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter,
+                        CalculateMousePathToEnemy(gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter,
                             topRight);
                 }
                 else
                 {
                     Debug.Log("Enemy not Attackable!");
-                    mainScript.GetSystem<UnitSelectionSystem>().DeselectActiveCharacter();
+                    gridGameManager.GetSystem<UnitSelectionSystem>().DeselectActiveCharacter();
+                    return;
                 }
             }
 
             DrawMousePath();
             if (mousePath.Count >= 1)
             {
-                mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter.GameTransform
+                gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter.GameTransform
                     .SetPosition((int)mousePath[mousePath.Count - 1].x, (int)mousePath[mousePath.Count - 1].y);
-                mainScript.GetSystem<UiSystem>()
-                    .ShowAttackPreview(mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter, unit);
+                gridGameManager.GetSystem<UiSystem>()
+                    .ShowAttackPreview(gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter, unit);
+                gridGameManager.GetSystem<UiSystem>().ShowAttackableEnemy(unit.GridPosition.X, unit.GridPosition.Y);
             }
         }
 
@@ -245,7 +252,7 @@ namespace Assets.GameInput
             mousePath.Clear();
             oldX = -1;
             oldY = -1;
-            mainScript.GetSystem<UiSystem>().HideAttackPreview();
+            gridGameManager.GetSystem<UiSystem>().HideAttackPreview();
 
             if (moveCursor != null)
                 Destroy(moveCursor);
@@ -283,7 +290,7 @@ namespace Assets.GameInput
             for (int i = c.Stats.AttackRanges.Count - 1; i >= 0; i--) //Prioritize Range Attacks
                 for (int j = LastPositions.Count - 1; j >= 0; j--)
                     if (GetDelta(LastPositions[j].Position, new Vector2(xAttack, zAttack)) == c.Stats.AttackRanges[i] &&
-                        mainScript.GetSystem<MapSystem>().Tiles[(int)LastPositions[j].Position.x,
+                        gridGameManager.GetSystem<MapSystem>().Tiles[(int)LastPositions[j].Position.x,
                             (int)LastPositions[j].Position.y].Unit == null)
                         return LastPositions[j].Position;
 
@@ -293,8 +300,8 @@ namespace Assets.GameInput
         public void CalculateMousePathToPosition(Unit character, int x, int y)
         {
             ResetMousePath();
-            var p = mainScript.GetSystem<MoveSystem>().GetPath(character.GridPosition.X,
-                character.GridPosition.Y, x, y, character.Player.Id, false, character.Stats.AttackRanges);
+            var p = gridGameManager.GetSystem<MoveSystem>().GetPath(character.GridPosition.X,
+                character.GridPosition.Y, x, y, character.Faction.Id, false, character.Stats.AttackRanges);
             if (p != null)
                 for (int i = p.GetLength() - 2; i >= 0; i--)
                     mousePath.Add(new Vector2(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
@@ -305,8 +312,8 @@ namespace Assets.GameInput
         public void CalculateMousePathToEnemy(Unit character, Vector2 position)
         {
             ResetMousePath();
-            var p = mainScript.GetSystem<MoveSystem>().GetPath(character.GridPosition.X,
-                character.GridPosition.Y, (int)position.x, (int)position.y, character.Player.Id, true,
+            var p = gridGameManager.GetSystem<MoveSystem>().GetPath(character.GridPosition.X,
+                character.GridPosition.Y, (int)position.x, (int)position.y, character.Faction.Id, true,
                 character.Stats.AttackRanges);
             if (p != null)
                 for (int i = p.GetLength() - 2; i >= AttackRangeFromPath; i--)
@@ -316,7 +323,7 @@ namespace Assets.GameInput
         public void CalculateMousePathToEnemy(Unit character, BigTile position)
         {
             ResetMousePath();
-            var p = mainScript.GetSystem<MapSystem>().GridLogic
+            var p = gridGameManager.GetSystem<MapSystem>().GridLogic
                 .GetMonsterPath((Monster)character, position, true, character.Stats.AttackRanges);
 
             if (p != null)
@@ -331,7 +338,7 @@ namespace Assets.GameInput
         public void CalculateMousePathToPosition(Unit character, BigTile position)
         {
             ResetMousePath();
-            var movementPath = mainScript.GetSystem<MoveSystem>().GetMonsterPath((Monster)character, position);
+            var movementPath = gridGameManager.GetSystem<MoveSystem>().GetMonsterPath((Monster)character, position);
             if (movementPath != null)
             {
                 Debug.Log(movementPath.GetLength());
@@ -349,7 +356,7 @@ namespace Assets.GameInput
         {
             if (!Active)
                 return;
-            if (mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter == null)
+            if (gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter == null)
             {
                 ResetMousePath();
                 return;
@@ -366,7 +373,7 @@ namespace Assets.GameInput
             currentX = x;
             currentY = y;
 
-            var field = mainScript.GetSystem<MapSystem>().Tiles[x, y];
+            var field = gridGameManager.GetSystem<MapSystem>().Tiles[x, y];
             if (field.IsActive && field.Unit == null)
             {
                 LastPositions.Add(new CursorPosition(new Vector2(x, y), null));
@@ -376,7 +383,7 @@ namespace Assets.GameInput
             }
 
             //Dragged on Enemy
-            if (field.Unit != null && field.Unit.Player.Id != character.Player.Id)
+            if (field.Unit != null && field.Unit.Faction.Id != character.Faction.Id)
                 DraggedOnEnemy(x, y, field, field.Unit);
             //No enemy
 
@@ -415,15 +422,15 @@ namespace Assets.GameInput
         {
             var moveLocations = new List<Vector2>();
 
-            MainScript.Instance.GetSystem<MapSystem>().GridLogic.GetMoveLocations(selectedCharacter.GridPosition.X,
+            GridGameManager.Instance.GetSystem<MapSystem>().GridLogic.GetMoveLocations(selectedCharacter.GridPosition.X,
                 selectedCharacter.GridPosition.Y, moveLocations, selectedCharacter.Stats.Mov, 0,
-                selectedCharacter.Player.Id);
+                selectedCharacter.Faction.Id);
             moveLocations.Insert(0, new Vector2(selectedCharacter.GridPosition.X, selectedCharacter.GridPosition.Y));
             foreach (var loc in moveLocations)
             {
                 var locX = (int)loc.x;
                 var locY = (int)loc.y;
-                var currentField = mainScript.GetSystem<MapSystem>().GetTileFromVector2(loc);
+                var currentField = gridGameManager.GetSystem<MapSystem>().GetTileFromVector2(loc);
                 Debug.Log(loc);
                 foreach (int unused in selectedCharacter.Stats.AttackRanges)
                 {
@@ -445,7 +452,7 @@ namespace Assets.GameInput
 
         public void DraggedOnEnemy(int x, int y, Tile field, Unit enemy)
         {
-            var selectedCharacter = mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter;
+            var selectedCharacter = gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter;
             Debug.Log("draggedOnEnemy");
             if (selectedCharacter.GridPosition is BigTilePosition)
             {
@@ -470,7 +477,7 @@ namespace Assets.GameInput
                     {
                         var lastMousePathPositionX = (int)mousePath[i].x;
                         var lastMousePathPositionY = (int)mousePath[i].y;
-                        var lastMousePathField = mainScript.GetSystem<MapSystem>().GetTileFromVector2(mousePath[i]);
+                        var lastMousePathField = gridGameManager.GetSystem<MapSystem>().GetTileFromVector2(mousePath[i]);
                         int delta = Mathf.Abs(lastMousePathPositionX - x) + Mathf.Abs(lastMousePathPositionY - y);
                         if (selectedCharacter.Stats.AttackRanges.Contains(delta))
                             if (lastMousePathField.Unit == null)
@@ -512,8 +519,9 @@ namespace Assets.GameInput
                 if (mousePath != null && mousePath.Count <= selectedCharacter.Stats.Mov)
                 {
                     DrawMousePath();
-                    mainScript.GetSystem<UiSystem>()
-                        .ShowAttackPreview(mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter, enemy);
+                    gridGameManager.GetSystem<UiSystem>()
+                        .ShowAttackPreview(gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter, enemy);
+                    gridGameManager.GetSystem<UiSystem>().ShowAttackableEnemy(x, y);
                 }
                 else
                 {
@@ -565,7 +573,7 @@ namespace Assets.GameInput
         {
             if (nonActive) ResetMousePath();
 
-            var selectedCharacter = mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter;
+            var selectedCharacter = gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter;
             if (selectedCharacter is Monster)
             {
                 RaycastManager.GetMousePositionOnGrid(); //just to shoot Ray
@@ -587,8 +595,8 @@ namespace Assets.GameInput
             if (mousePath.Count > character.Stats.Mov || contains || Mathf.Abs(oldX - x) + Mathf.Abs(oldY - y) > 1)
             {
                 mousePath.Clear();
-                var p = mainScript.GetSystem<MoveSystem>().GetPath(character.GridPosition.X,
-                    character.GridPosition.Y, x, y, character.Player.Id, false, character.Stats.AttackRanges);
+                var p = gridGameManager.GetSystem<MoveSystem>().GetPath(character.GridPosition.X,
+                    character.GridPosition.Y, x, y, character.Faction.Id, false, character.Stats.AttackRanges);
                 if (p != null)
                     for (int i = p.GetLength() - 2; i >= 0; i--)
                         mousePath.Add(new Vector2(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
@@ -599,13 +607,13 @@ namespace Assets.GameInput
 
         public void DrawMousePath()
         {
-            PreferredPath.Path = mousePath;
+            PreferredPath.Path = new List<Vector2>(mousePath);
             foreach (var dot in dots) Destroy(dot);
 
             //Debug.Log("DrawMousePath");
             float startX = -1;
             float startY = -1;
-            var selectedCharacter = mainScript.GetSystem<UnitSelectionSystem>().SelectedCharacter;
+            var selectedCharacter = gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter;
             if (selectedCharacter is Monster)
             {
                 startX = ((BigTilePosition)selectedCharacter.GridPosition).Position.CenterPos().x;
@@ -759,8 +767,8 @@ namespace Assets.GameInput
 
         private bool IsOutOfBounds(int x, int y)
         {
-            return x < 0 || x >= mainScript.GetSystem<MapSystem>().GridData.Width || y < 0 ||
-                   y >= mainScript.GetSystem<MapSystem>().GridData.Height;
+            return x < 0 || x >= gridGameManager.GetSystem<MapSystem>().GridData.Width || y < 0 ||
+                   y >= gridGameManager.GetSystem<MapSystem>().GridData.Height;
         }
 
         private void OnDestroy()

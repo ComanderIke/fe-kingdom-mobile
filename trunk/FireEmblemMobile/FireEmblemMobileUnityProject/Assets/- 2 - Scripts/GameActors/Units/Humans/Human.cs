@@ -1,6 +1,6 @@
+using Assets.GameActors.Items.Weapons;
 using System;
 using System.Collections.Generic;
-using Assets.GameActors.Items.Weapons;
 using UnityEngine;
 
 namespace Assets.GameActors.Units.Humans
@@ -50,6 +50,16 @@ namespace Assets.GameActors.Units.Humans
                 default:
                     throw new ArgumentOutOfRangeException(nameof(weaponType), weaponType, null);
             }
+        }
+
+        protected override void HandleCloned(Unit clone)
+        {
+            base.HandleCloned(clone);
+            var human = (Human) clone;
+            human.EquippedWeapon = (Weapon)EquippedWeapon?.Clone();
+            human.Inventory = (Inventory)Inventory.Clone();
+            human.Class = Class;
+            human.SkillManager = (SkillManager) SkillManager.Clone();
         }
         public Dictionary<WeaponType,string> WeaponProficiencies()
         {

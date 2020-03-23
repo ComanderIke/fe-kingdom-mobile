@@ -17,7 +17,7 @@ namespace Assets.Grid
         public override void SetPosition(int newX, int newY)
         {
             if (GridScript == null)
-                GridScript = MainScript.Instance.GetSystem<Map.MapSystem>();
+                GridScript = GridGameManager.Instance.GetSystem<Map.MapSystem>();
             if (Position != null)
             {
                 GridScript.Tiles[(int) Position.BottomLeft().x, (int) Position.BottomLeft().y].Unit = null;

@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Assets.GameActors.Units
 {
-    public abstract class Unit : ScriptableObject, ISpeakableObject
+    public abstract class Unit : ScriptableObject, ISpeakableObject, ICloneable
     {
         [HideInInspector] private int hp;
 
@@ -53,7 +53,7 @@ namespace Assets.GameActors.Units
         }
 
         public AIAgent Agent { get; private set; }
-        public Faction Player { get; set; }
+        public Faction Faction { get; set; }
         public List<Debuff> Debuffs { get; private set; }
         public List<Buff> Buffs { get; private set; }
         public GridPosition GridPosition { get; set; }
@@ -61,7 +61,7 @@ namespace Assets.GameActors.Units
         public MoveActions MoveActions { get; private set; }
         public Motivation Motivation { get; internal set; }
 
-        
+
 
         //Interface SpeakableObject
         public void ShowSpeechBubble(string text)
@@ -168,6 +168,32 @@ namespace Assets.GameActors.Units
         public override string ToString()
         {
             return Name + " HP: " + Hp + "/" + Stats.MaxHp;
+        }
+
+        public object Clone()
+        {
+            var clone = (Unit) this.MemberwiseClone();
+            HandleCloned(clone);
+            return clone;
+        }
+
+        protected virtual void HandleCloned(Unit clone)
+        {
+            clone.ExperienceManager = new ExperienceManager();
+            clone.BattleStats = new BattleStats(clone);
+            clone.UnitTurnState = new UnitTurnState(clone);
+            clone.GridPosition = new GridPosition(clone);
+            clone.MoveActions = new MoveActions(clone);
+            clone.GameTransform = new GameTransform();
+            clone.Buffs = new List<Buff>();
+            clone.Debuffs = new List<Debuff>();
+            clone.Agent = new AIAgent();
+
+            clone.Hp = this.Hp;
+            clone.Sp = this.Sp;
+            clone.Stats = (Stats)Stats.Clone();
+            clone.Motivation = Motivation;
+            //Only for
         }
 
         #region Events

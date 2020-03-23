@@ -1,21 +1,11 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &100100000
-Prefab:
-  m_ObjectHideFlags: 1
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications: []
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1961367458926910}
-  m_IsPrefabAsset: 1
 --- !u!1 &1961367458926910
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4744530050386504}
@@ -29,11 +19,12 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &4744530050386504
 Transform:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1961367458926910}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -42,27 +33,45 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &114417611292314510
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1961367458926910}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86c372ea5d59f8d46929b1437e1305ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CameraData: {fileID: 11400000, guid: 56213ea3954c421409c4d9af039507c3, type: 2}
+  MapData: {fileID: 11400000, guid: a51338f5097662940b7ecffecfb70a71, type: 2}
+  DialogTexts:
+    StartFight: {fileID: 0}
+    EndFight: {fileID: 0}
+    Missed: {fileID: 0}
+    HighDamage: {fileID: 0}
+    Injured: {fileID: 0}
+    Healing: {fileID: 0}
+    LongFight: {fileID: 0}
+    SkillUsed: {fileID: 0}
+    KillingBlow: {fileID: 0}
+  UnitData:
+    defaultStats: {fileID: 11400000, guid: 25c05c01280a83b4286f5e929bb9c3bd, type: 2}
+    swordFighterStats: {fileID: 11400000, guid: 25c05c01280a83b4286f5e929bb9c3bd,
+      type: 2}
+    archerStats: {fileID: 11400000, guid: 25c05c01280a83b4286f5e929bb9c3bd, type: 2}
+    axeFighterStats: {fileID: 11400000, guid: 25c05c01280a83b4286f5e929bb9c3bd, type: 2}
+    spearFighterStats: {fileID: 11400000, guid: 25c05c01280a83b4286f5e929bb9c3bd,
+      type: 2}
   weapons:
-    basicBow: {fileID: 11400000, guid: ac568134ab31f5845a903f4e89d7324a, type: 2}
-    woodenSpear: {fileID: 11400000, guid: 6544be2bd6f106249ac554cd1e9029ee, type: 2}
-    woodenSword: {fileID: 11400000, guid: 36a3c23465f75d6439de53d96dd0085b, type: 2}
-    woodenAxe: {fileID: 11400000, guid: 81a61bb498fb6f94fad85f4f09ea6524, type: 2}
-  dialogTexts:
-    startFight: {fileID: 11400000, guid: d8e8b50e7529b6242807ad9e2dbc8e47, type: 2}
-    endFight: {fileID: 11400000, guid: 70fd8f5299564434c9c1aefe052275fd, type: 2}
-    missed: {fileID: 11400000, guid: 84792f60ee52d0d4aabf0b4f66984043, type: 2}
-    highDamage: {fileID: 11400000, guid: f107b5374349c2541a067ee915d46f7f, type: 2}
-    injured: {fileID: 11400000, guid: cc2f75d8808e9eb43a52df845493c26c, type: 2}
-    healing: {fileID: 11400000, guid: 73f31811a7131e94583cc387b58abb36, type: 2}
-    longFight: {fileID: 11400000, guid: bcf3f28129c5a644cab099a34da05572, type: 2}
-    skillUsed: {fileID: 11400000, guid: 4857a52e3120eb7419fdb50c18c7a7fa, type: 2}
-    killingBlow: {fileID: 11400000, guid: fc540e48071ca9a48bfc993aa9936070, type: 2}
+  - {fileID: 11400000, guid: 81a61bb498fb6f94fad85f4f09ea6524, type: 2}
+  - {fileID: 11400000, guid: ac568134ab31f5845a903f4e89d7324a, type: 2}
+  - {fileID: 11400000, guid: 6544be2bd6f106249ac554cd1e9029ee, type: 2}
+  - {fileID: 11400000, guid: 36a3c23465f75d6439de53d96dd0085b, type: 2}
+  humans:
+  - {fileID: 11400000, guid: 0919802465d902648810a0746a36b1d2, type: 2}
+  - {fileID: 11400000, guid: 07e1c43a84c71a4478ab6f9de79a1283, type: 2}
+  - {fileID: 11400000, guid: 6e06a08df4bcaf14f874bd9ca895d6cf, type: 2}
+  - {fileID: 11400000, guid: b3a22f580f9faf3468d23a0da664bddd, type: 2}
+  monster:
+  - {fileID: 11400000, guid: c17627050e93dcc48a6da0c00b18f90b, type: 2}

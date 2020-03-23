@@ -2,6 +2,7 @@
 using Assets.Core.GameStates;
 using Assets.GameActors.Units;
 using System;
+using UnityEngine;
 
 namespace Assets.Mechanics.Commands
 {
@@ -18,7 +19,9 @@ namespace Assets.Mechanics.Commands
 
         public override void Execute()
         {
-            MainScript.Instance.GameStateManager.SwitchState(new BattleState(attacker, target));
+            Debug.Log("Execute Attack Command!");
+            GameStateManager.BattleState.SetParticipants(attacker, target);
+            GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.BattleStarted);
         }
 
         public override void Undo()

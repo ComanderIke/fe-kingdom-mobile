@@ -20,19 +20,19 @@ namespace Assets.Mechanics.Commands
         public override void Execute()
         {
             var pos = new Vector2(unit.GridPosition.X + direction.x, (unit.GridPosition.Y + direction.y));
-            if (MainScript.Instance.GetSystem<Map.MapSystem>().GridLogic.IsTileAccessible(pos))
+            if (GridGameManager.Instance.GetSystem<Map.MapSystem>().GridLogic.IsTileAccessible(pos))
             {
-                if (MainScript.Instance.GetSystem<Map.MapSystem>().Tiles[(int) pos.x, (int) pos.y].Unit != null)
+                if (GridGameManager.Instance.GetSystem<Map.MapSystem>().Tiles[(int) pos.x, (int) pos.y].Unit != null)
                 {
-                    MainScript.Instance.GetSystem<Map.MapSystem>().Tiles[(int) pos.x, (int) pos.y].Unit.MoveActions
+                    GridGameManager.Instance.GetSystem<Map.MapSystem>().Tiles[(int) pos.x, (int) pos.y].Unit.MoveActions
                         .Push(direction);
                 }
 
-                if (MainScript.Instance.GetSystem<Map.MapSystem>().GridLogic.IsTileAccessible(pos, unit))
+                if (GridGameManager.Instance.GetSystem<Map.MapSystem>().GridLogic.IsTileAccessible(pos, unit))
                     unit.SetPosition((int) pos.x, (int) pos.y);
             }
 
-            MainScript.Instance.StartCoroutine(Delay());
+            GridGameManager.Instance.StartCoroutine(Delay());
         }
 
         private static IEnumerator Delay()

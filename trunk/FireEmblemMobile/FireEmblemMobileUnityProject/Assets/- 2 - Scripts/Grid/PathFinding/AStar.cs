@@ -120,9 +120,9 @@ namespace Assets.Grid.PathFinding
                             {
                                 isAdjacent = true;
 
-                                if (MainScript.Instance.GetSystem<InputSystem>().AttackRangeFromPath < r)
+                                if (GridGameManager.Instance.GetSystem<InputSystem>().AttackRangeFromPath < r)
                                 {
-                                    MainScript.Instance.GetSystem<InputSystem>().AttackRangeFromPath = r;
+                                    GridGameManager.Instance.GetSystem<InputSystem>().AttackRangeFromPath = r;
                                     // break;
                                 }
                             }
@@ -178,7 +178,7 @@ namespace Assets.Grid.PathFinding
 
         public MovementPath GetPath(int x, int y, int x2, int y2, int team, bool toAdjacentPos, List<int> range)
         {
-            MainScript.Instance.GetSystem<InputSystem>().AttackRangeFromPath = 0;
+            GridGameManager.Instance.GetSystem<InputSystem>().AttackRangeFromPath = 0;
             Reset();
 
             return FindPath(x, y, x2, y2, team, toAdjacentPos, range);

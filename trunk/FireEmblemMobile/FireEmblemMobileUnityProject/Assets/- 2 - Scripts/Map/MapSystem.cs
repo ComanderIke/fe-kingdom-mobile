@@ -48,10 +48,10 @@ namespace Assets.Map
         {
             if (c.GridPosition is BigTilePosition)
                 ShowMonsterMovement(c.GridPosition.X, c.GridPosition.Y, c.Stats.Mov,
-                    new List<int>(c.Stats.AttackRanges), 0, c.Player.Id);
+                    new List<int>(c.Stats.AttackRanges), 0, c.Faction.Id);
             else
                 ShowMovement(c.GridPosition.X, c.GridPosition.Y, c.Stats.Mov, c.Stats.Mov,
-                    new List<int>(c.Stats.AttackRanges), 0, c.Player.Id, false);
+                    new List<int>(c.Stats.AttackRanges), 0, c.Faction.Id, false);
         }
 
         private void ShowMonsterMovement(int x, int y, int range, List<int> attack, int c, int playerId)
@@ -115,14 +115,14 @@ namespace Assets.Map
             }
 
             NodeHelper.Reset();
-            MainScript.Instance.GetSystem<UiSystem>().HideAttackableEnemy();
+            GridGameManager.Instance.GetSystem<UiSystem>().HideAttackableEnemy();
         }
 
         public void ShowAttackRecursive(Unit character, int x, int y, int range, List<int> direction)
         {
             if (range <= 0)
             {
-                GridRenderer.SetFieldMaterial(new Vector2(x, y), character.Player.Id, true);
+                GridRenderer.SetFieldMaterial(new Vector2(x, y), character.Faction.Id, true);
 
                 return;
             }

@@ -56,14 +56,14 @@ namespace Assets.Mechanics
 
         #endregion
 
-        private MainScript mainScript;
+        private GridGameManager gridGameManager;
         public PreferredMovementPath PreferredPath;
         private Stack<Command> previewsActions;
         private Queue<Command> currentActions;
 
         private void Start()
         {
-            mainScript = MainScript.Instance;
+            gridGameManager = GridGameManager.Instance;
             InputSystem.OnEndDragOverGrid += UnitMoveOnTile;
             InputSystem.OnEndDragOverUnit += UnitMoveToOtherUnit;
             previewsActions = new Stack<Command>();
@@ -131,11 +131,11 @@ namespace Assets.Mechanics
 
         public void ActiveCharWait()
         {
-            var unitSelectionManager = mainScript.GetSystem<UnitSelectionSystem>();
+            var unitSelectionManager = gridGameManager.GetSystem<UnitSelectionSystem>();
             var selectedUnit = unitSelectionManager.SelectedCharacter;
             if (selectedUnit != null && !selectedUnit.UnitTurnState.IsWaiting)
             {
-                mainScript.GetSystem<Map.MapSystem>().HideMovement();
+                gridGameManager.GetSystem<Map.MapSystem>().HideMovement();
                 selectedUnit.UnitTurnState.IsWaiting = true;
                 selectedUnit.UnitTurnState.Selected = false;
                 selectedUnit.UnitTurnState.HasMoved = true;
@@ -150,7 +150,7 @@ namespace Assets.Mechanics
             if (PreferredPath.Path.Count == 0 &&
                 character.GridPosition.CanAttack(character.Stats.AttackRanges, enemy.GridPosition))
             {
-                mainScript.GetSystem<Map.MapSystem>().HideMovement();
+                gridGameManager.GetSystem<Map.MapSystem>().HideMovement();
                 Debug.Log("Enemy is in Range:");
 
                 if (!drag)
@@ -172,10 +172,10 @@ namespace Assets.Mechanics
             else //go to enemy cause not in range
             {
                 Debug.Log("Got to Enemy!");
-                if (mainScript.GetSystem<Map.MapSystem>().GridLogic
+                if (gridGameManager.GetSystem<Map.MapSystem>().GridLogic
                     .IsFieldAttackable(enemy.GridPosition.X, enemy.GridPosition.Y))
                 {
-                    mainScript.GetSystem<Map.MapSystem>().HideMovement();
+                    gridGameManager.GetSystem<Map.MapSystem>().HideMovement();
 
                     var movePath = new List<Vector2>();
                     for (int i = 0; i < PreferredPath.Path.Count; i++)
@@ -190,7 +190,7 @@ namespace Assets.Mechanics
                         xMov = (int) movePath[movePath.Count - 1].x;
                         yMov = (int) movePath[movePath.Count - 1].y;
                     }
-
+               
                     if (drag)
                     {
                         MoveCharacter(character, xMov, yMov, movePath);
@@ -209,7 +209,7 @@ namespace Assets.Mechanics
                         ExecuteActions();
                     }
 
-                    mainScript.GetSystem<InputSystem>().AttackRangeFromPath = 0;
+                    gridGameManager.GetSystem<InputSystem>().AttackRangeFromPath = 0;
 
                     return;
                 }
@@ -224,15 +224,15 @@ namespace Assets.Mechanics
         private void SwitchToGamePlayState()
         {
             OnAllCommandsFinished -= SwitchToGamePlayState;
-            mainScript.GameStateManager.SwitchState(GameStateManager.GameplayState);
+            gridGameManager.GameStateManager.SwitchState(GameStateManager.GameplayState);
         }
 
         private void UnitMoveOnTile(int x, int y)
         {
-            var unitSelectionManager = mainScript.GetSystem<UnitSelectionSystem>();
+            var unitSelectionManager = gridGameManager.GetSystem<UnitSelectionSystem>();
             var selectedUnit = unitSelectionManager.SelectedCharacter;
             //Debug.Log("TEST: "+mainScript.GetSystem<Map.MapSystem>().Tiles[x, y]);
-            if (mainScript.GetSystem<Map.MapSystem>().Tiles[x, y].IsActive &&
+            if (gridGameManager.GetSystem<Map.MapSystem>().Tiles[x, y].IsActive &&
                 !(x == selectedUnit.GridPosition.X && y == selectedUnit.GridPosition.Y))
             {
                 if (!(selectedUnit is Monster) || !((BigTilePosition) selectedUnit.GridPosition).Position.Contains(
@@ -248,10 +248,10 @@ namespace Assets.Mechanics
                     unitSelectionManager.DeselectActiveCharacter();
                 }
             }
-            else if (mainScript.GetSystem<Map.MapSystem>().Tiles[x, y].Unit != null &&
-                     mainScript.GetSystem<Map.MapSystem>().Tiles[x, y].Unit.Player.Id != selectedUnit.Player.Id)
+            else if (gridGameManager.GetSystem<Map.MapSystem>().Tiles[x, y].Unit != null &&
+                     gridGameManager.GetSystem<Map.MapSystem>().Tiles[x, y].Unit.Faction.Id != selectedUnit.Faction.Id)
             {
-                GoToEnemy(selectedUnit, mainScript.GetSystem<Map.MapSystem>().Tiles[x, y].Unit, true);
+                GoToEnemy(selectedUnit, gridGameManager.GetSystem<Map.MapSystem>().Tiles[x, y].Unit, true);
             }
             else
             {
@@ -262,10 +262,10 @@ namespace Assets.Mechanics
         private void UnitMoveToOtherUnit(Unit draggedOverUnit)
         {
             Debug.Log("MoveToOtherUnit");
-            var unitSelectionManager = mainScript.GetSystem<UnitSelectionSystem>();
-            if (draggedOverUnit.Player.Id != unitSelectionManager.SelectedCharacter.Player.Id)
+            var unitSelectionManager = gridGameManager.GetSystem<UnitSelectionSystem>();
+            if (draggedOverUnit.Faction.Id != unitSelectionManager.SelectedCharacter.Faction.Id)
             {
-                if (mainScript.GetSystem<Map.MapSystem>().GridLogic.IsFieldAttackable(draggedOverUnit.GridPosition.X,
+                if (gridGameManager.GetSystem<Map.MapSystem>().GridLogic.IsFieldAttackable(draggedOverUnit.GridPosition.X,
                     draggedOverUnit.GridPosition.Y))
                     GoToEnemy(unitSelectionManager.SelectedCharacter, draggedOverUnit, true);
                 else

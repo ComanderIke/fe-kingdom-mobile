@@ -9,15 +9,21 @@ namespace Assets.GameActors.Units.OnGameObject
 {
     public class UnitController : MonoBehaviour, IDragAble
     {
+        public delegate void OnAnimationEndedEvent();
+
+        public OnAnimationEndedEvent OnAnimationEnded;
+        public delegate void OnAttackAnimationConnectedEvent();
+
+        public OnAttackAnimationConnectedEvent OnAttackAnimationConnected;
         public static bool LockInput = true;
         private bool dragInitiated;
         private bool dragStarted;
         private bool doubleClick;
-        private StatsBarOnMap hpBar;
-        private StatsBarOnMap spBar;
+        [SerializeField] private StatsBarOnMap hpBar;
+        [SerializeField] private StatsBarOnMap spBar;
         private float timerForDoubleClick;
         private const float DOUBLE_CLICK_TIME = 0.4f;
-
+        [SerializeField] private Animator animator;
         public Unit Unit;
         public DragManager DragManager { get; set; }
         public RaycastManager RaycastManager { get; set; }
@@ -29,8 +35,7 @@ namespace Assets.GameActors.Units.OnGameObject
             Unit.HpValueChanged += HpValueChanged;
             Unit.SpValueChanged += SpValueChanged;
             Unit.UnitWaiting += SetWaitingSprite;
-            hpBar = GetComponentsInChildren<StatsBarOnMap>()[0];
-            spBar = GetComponentsInChildren<StatsBarOnMap>()[1];
+
             HpValueChanged();
             SpValueChanged();
         }
@@ -75,7 +80,7 @@ namespace Assets.GameActors.Units.OnGameObject
 
         private void OnMouseExit()
         {
-            if (DragManager.IsAnyUnitDragged) MainScript.Instance.GetSystem<InputSystem>().DraggedExit();
+            if (DragManager.IsAnyUnitDragged) GridGameManager.Instance.GetSystem<InputSystem>().DraggedExit();
         }
 
         private void OnMouseDrag()
@@ -124,11 +129,15 @@ namespace Assets.GameActors.Units.OnGameObject
         }
         private void OnMouseUp()
         {
+            
             if (DragManager.IsDragging)
             {
+                DragManager.Update();// Update Dragmanager because he should notice first when MouseUp happens
                 dragStarted = false;
                 dragInitiated = false;
                 Unit.UnitShowActiveEffect(Unit, true, false);
+                Debug.Log("ENDDRAGUNIT");
+               
                 InputSystem.OnEndDrag();
                 gameObject.GetComponent<BoxCollider>().enabled = true;
             }
@@ -189,6 +198,53 @@ namespace Assets.GameActors.Units.OnGameObject
         {
         }
 
+        #endregion
+
+        #region Animations
+
+        public void AttackConnected()
+        {
+            OnAttackAnimationConnected?.Invoke();
+            Debug.Log("Attack Connected!");
+        }
+        public void AnimationEnded()
+        {
+            OnAnimationEnded?.Invoke();
+            Debug.Log("Attack Finished!");
+        }
+
+        public void BattleAnimationUp()
+        {
+            animator.SetTrigger("BattleAnimationUp");
+        }
+        public void BattleAnimationDown()
+        {
+            animator.SetTrigger("BattleAnimationDown");
+        }
+        public void BattleAnimationLeft()
+        {
+            animator.SetTrigger("BattleAnimationLeft");
+        }
+        public void BattleAnimationRight()
+        {
+            animator.SetTrigger("BattleAnimationRight");
+        }
+        public void BattleAnimationDownLeft()
+        {
+            animator.SetTrigger("BattleAnimationDownLeft");
+        }
+        public void BattleAnimationDownRight()
+        {
+            animator.SetTrigger("BattleAnimationDownRight");
+        }
+        public void BattleAnimationUpLeft()
+        {
+            animator.SetTrigger("BattleAnimationUpLeft");
+        }
+        public void BattleAnimationUpRight()
+        {
+            animator.SetTrigger("BattleAnimationUpRight");
+        }
         #endregion
     }
 }

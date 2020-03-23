@@ -22,7 +22,7 @@ namespace Assets.Grid.PathFinding
             this.accessibilities = accessibilities;
             gridWidth = accessibilities.GetLength(0);
             gridHeight = accessibilities.GetLength(1);
-            fields = MainScript.Instance.GetSystem<Map.MapSystem>().Tiles;
+            fields = GridGameManager.Instance.GetSystem<Map.MapSystem>().Tiles;
         }
 
         public MovementPath GetPath(BigTile start, BigTile end)
@@ -84,7 +84,7 @@ namespace Assets.Grid.PathFinding
                 invalid = !accessibilities[(int) pos.x, (int) pos.y].Accessible;
                 if (fields[(int) pos.x, (int) pos.y].Unit != null)
                 {
-                    if (fields[(int) pos.x, (int) pos.y].Unit.Player.Id != team)
+                    if (fields[(int) pos.x, (int) pos.y].Unit.Faction.Id != team)
                     {
                         invalid = true;
                     }
@@ -258,7 +258,7 @@ namespace Assets.Grid.PathFinding
                             {
                                 isAdjacent = true;
 
-                                MainScript m = MainScript.Instance;
+                                GridGameManager m = GridGameManager.Instance;
                                 if (m.GetSystem<InputSystem>().AttackRangeFromPath < r)
                                 {
                                     m.GetSystem<InputSystem>().AttackRangeFromPath = r;

@@ -46,14 +46,14 @@ namespace Assets.GameActors.Players
         {
             if (Units == null)
                 Units = new List<Unit>();
-            unit.Player = this;
-            unit.Player.Id = Id;
+            unit.Faction = this;
+            unit.Faction.Id = Id;
             Units.Add(unit);
         }
 
         public List<Faction> GetOpponentFactions()
         {
-            return MainScript.Instance.PlayerManager.Players.Where(faction => faction.Id != Id).ToList();
+            return GridGameManager.Instance.FactionManager.Factions.Where(faction => faction.Id != Id).ToList();
         }
 
         public override string ToString()

@@ -59,20 +59,20 @@ namespace Assets.Mechanics
 
         public MovementPath GetPath(int x, int y, int x2, int y2, int team, bool toAdjacentPos, List<int> range)
         {
-            MainScript.Instance.GetSystem<InputSystem>().AttackRangeFromPath = 0;
+            GridGameManager.Instance.GetSystem<InputSystem>().AttackRangeFromPath = 0;
             return PathFindingManager.GetPath(x, y, x2, y2, team, toAdjacentPos, range);
         }
 
         public MovementPath GetMonsterPath(Monster monster, BigTile position)
         {
-            MainScript.Instance.GetSystem<InputSystem>().AttackRangeFromPath = 0;
+            GridGameManager.Instance.GetSystem<InputSystem>().AttackRangeFromPath = 0;
             var nodes = new PathFindingNode[mapSystem.GridData.Width, mapSystem.GridData.Height];
             for (int x = 0; x < mapSystem.GridData.Width; x++)
             {
                 for (int y = 0; y < mapSystem.GridData.Height; y++)
                 {
                     bool isAccessible = mapSystem.Tiles[x, y].IsAccessible;
-                    if (mapSystem.Tiles[x, y].Unit != null && mapSystem.Tiles[x, y].Unit.Player.Id != monster.Player.Id)
+                    if (mapSystem.Tiles[x, y].Unit != null && mapSystem.Tiles[x, y].Unit.Faction.Id != monster.Faction.Id)
                         isAccessible = false;
                     nodes[x, y] = new PathFindingNode(x, y, isAccessible);
                 }

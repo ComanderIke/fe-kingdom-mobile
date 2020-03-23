@@ -11,7 +11,7 @@ namespace Assets.GameCamera
 
         private void Start()
         {
-            CameraSystem = MainScript.Instance.GetSystem<CameraSystem>();
+            CameraSystem = GridGameManager.Instance.GetSystem<CameraSystem>();
         }
 
         public bool IsLocked()

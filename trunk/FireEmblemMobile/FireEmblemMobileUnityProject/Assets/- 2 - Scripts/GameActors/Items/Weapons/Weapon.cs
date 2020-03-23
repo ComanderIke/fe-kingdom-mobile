@@ -14,9 +14,11 @@ namespace Assets.GameActors.Items.Weapons
 
 
         [Header("WeaponAttributes")] public int Dmg;
+        public int Weight;
 
         public List<WeaponMixin> WeaponMixins;
         public WeaponType WeaponType;
+
 
         public override void Use(Human character)
         {
