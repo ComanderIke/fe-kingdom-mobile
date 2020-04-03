@@ -25,7 +25,7 @@ namespace Assets.Core
         public void Feed(TFeed input)
         {
             var nextState = currentState.Feed(input);
-            Debug.Log("Feed "+input+" Next State: "+nextState);
+            //Debug.Log("Feed "+input+" Next State: "+nextState);
             SwitchState(nextState);
         }
 

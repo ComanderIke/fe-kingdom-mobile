@@ -101,16 +101,42 @@ namespace Assets.Map
             //StartCoroutine(GridRenderer.FieldAnimation());
         }
 
-        public void HideMovement()
+        public void ShowAttackFromPosition(Unit character, int x, int y)
+        {
+            foreach (int range in character.Stats.AttackRanges)
+            {
+                ShowAttackRecursive(character, x, y, range, new List<int>());
+            }
+            GridRenderer.ShowStandOnTexture(character);
+        }
+
+        public void HideMovement(List<Vector2> ignorePositions = null)
         {
             for (int i = 0; i < GridData.Width; i++)
             {
                 for (int j = 0; j < GridData.Height; j++)
                 {
-                    var m = Tiles[i, j].GameObject.GetComponent<MeshRenderer>();
-                    m.material = Tiles[i, j].IsAccessible ? GridResources.CellMaterialStandard : GridResources.CellMaterialInvalid;
+                    bool ignore = false;
+                    if(ignorePositions != null)
+                        foreach (Vector2 v in ignorePositions)
+                        {
+                            int x = (int)v.x;
+                            int y = (int)v.y;
+                            if (i == x && j == y)
+                            {
+                                ignore = true;
+                            }
+                        }
 
-                    Tiles[i, j].IsActive = false;
+                    if (!ignore)
+                    {
+                        var m = Tiles[i, j].GameObject.GetComponent<MeshRenderer>();
+                        m.material = Tiles[i, j].IsAccessible
+                            ? GridResources.CellMaterialStandard
+                            : GridResources.CellMaterialInvalid;
+
+                        Tiles[i, j].IsActive = false;
+                    }
                 }
             }
 

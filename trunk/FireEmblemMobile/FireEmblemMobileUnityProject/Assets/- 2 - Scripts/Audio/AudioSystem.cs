@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Core;
 using UnityEngine;
 
@@ -107,9 +108,7 @@ namespace Assets.Audio
 
         public List<string> GetCurrentlyPlayedMusicTracks()
         {
-            var musicNames = new List<string>();
-            foreach (var m in currentlyPlayedMusic) musicNames.Add(m.Name);
-            return musicNames;
+            return currentlyPlayedMusic.Select(m => m.Name).ToList();
         }
 
         public void FadeIn(string name, float duration, float delay = 0)

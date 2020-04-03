@@ -18,8 +18,9 @@ namespace Assets.GameActors.Units.Humans
         {
             Items.Add(i);
             if (i is Weapon weapon)
-                if (Owner.EquippedWeapon == null)
-                    weapon.Equip(Owner);
+            {
+                Owner?.AutoEquip();
+            }
         }
 
         public void DropItem(Item i)

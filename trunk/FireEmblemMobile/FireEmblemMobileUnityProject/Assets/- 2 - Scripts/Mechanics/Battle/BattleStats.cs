@@ -10,7 +10,7 @@ namespace Assets.Mechanics.Battle
 {
     public class BattleStats
     {
-        private const int AGILITY_TO_DOUBLE = 0;
+        private const int AGILITY_TO_DOUBLE = 5;
         private const float FRONTAL_ATTACK_MOD = 1.5f;
 
         private readonly Unit owner;
@@ -30,12 +30,12 @@ namespace Assets.Mechanics.Battle
         public int GetAttackCountAgainst(Unit c)
         {
             int attackCount = 1;
-            if (owner.Stats.Spd - (c.Stats.Spd) > 0)
-            {
-                attackCount++;
-            }
+            //if (owner.Stats.Spd - (c.Stats.Spd) > 0)
+            //{
+            //    attackCount++;
+            //}
 
-            if (owner.Stats.Spd - (c.Stats.Spd + 5) >= 0)
+            if (owner.Stats.Spd - (c.Stats.Spd + AGILITY_TO_DOUBLE) >= 0)
             {
                 attackCount++;
             }
@@ -45,7 +45,7 @@ namespace Assets.Mechanics.Battle
 
         public bool CanDoubleAttack(Unit c)
         {
-            return owner.Stats.Spd > c.Stats.Spd + AGILITY_TO_DOUBLE;
+            return owner.Stats.Spd >= c.Stats.Spd + AGILITY_TO_DOUBLE;
         }
 
         public int GetDamage(float attackModifier)
@@ -191,7 +191,7 @@ namespace Assets.Mechanics.Battle
 
         public int GetTotalSpDamageAgainstTarget(Unit attacker)
         {
-            return Math.Max(Math.Abs(owner.Stats.Skl - attacker.Stats.Skl),1);
+            return Math.Max(owner.Stats.Skl - attacker.Stats.Skl,1);
         }
     }
 }

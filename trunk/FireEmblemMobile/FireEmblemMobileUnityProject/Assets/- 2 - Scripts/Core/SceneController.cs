@@ -80,6 +80,7 @@ namespace Assets.Core
         private void UpdateScenePreload()
         {
             sceneLoadTask = SceneManager.LoadSceneAsync(nextSceneName);
+            sceneLoadTask.allowSceneActivation = false;
             sceneState = SceneState.Load;
             LoadingScreen.SetActive(true);
             progressBar.fillAmount = 0;
@@ -91,7 +92,11 @@ namespace Assets.Core
         // show the loading screen until it's loaded
         private void UpdateSceneLoad()
         {
-            if (sceneLoadTask.isDone && loadTime >= MinLoadTime)
+            if (loadTime >= MinLoadTime)
+            {
+                sceneLoadTask.allowSceneActivation = true;
+            }
+            if (sceneLoadTask.isDone)
             {
                 sceneState = SceneState.Unload;
                 progressBar.fillAmount = 0;

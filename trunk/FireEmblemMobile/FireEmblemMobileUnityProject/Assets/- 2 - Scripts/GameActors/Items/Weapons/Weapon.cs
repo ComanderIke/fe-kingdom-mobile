@@ -25,13 +25,7 @@ namespace Assets.GameActors.Items.Weapons
             base.Use(character);
         }
 
-        public void Equip(Human character)
-        {
-            base.Use(character);
-            character.Stats.AttackRanges.Clear();
-            character.EquippedWeapon = this;
-            foreach (int r in AttackRanges) character.Stats.AttackRanges.Add(r);
-        }
+      
 
         public void OnAttack(Unit attacker, Unit defender)
         {

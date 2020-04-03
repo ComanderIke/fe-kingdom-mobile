@@ -56,10 +56,6 @@ namespace Assets.GameInput
 
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                Debug.Log("CLICKED!");
-            }
             if (!Active)
                 return;
             if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
@@ -83,7 +79,6 @@ namespace Assets.GameInput
             else if (Input.GetMouseButtonUp(0))
             {
                 PreferredPath.Path = new List<Vector2>(mousePath);
-                Debug.Log(mousePath.Count);
                 if (!GridInput.ConfirmClick) ResetMousePath();
             }
         }
@@ -169,7 +164,6 @@ namespace Assets.GameInput
                 if (gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter != null && unit.Faction.Id !=
                     gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter.Faction.Id)
                 {
-                    Debug.Log("Unit Clicked not allied!");
                     GridInput.ConfirmClick = true;
                     GridInput.ClickedField = new Vector2(currentX, currentY);
                 }
@@ -435,11 +429,9 @@ namespace Assets.GameInput
                 foreach (int unused in selectedCharacter.Stats.AttackRanges)
                 {
                     int delta = Mathf.Abs(locX - x) + Mathf.Abs(locY - y);
-                    Debug.Log("Delta: " + delta);
                     if (selectedCharacter.Stats.AttackRanges.Contains(delta))
                         if (currentField.Unit == null || currentField.Unit == selectedCharacter)
                         {
-                            Debug.Log("Delta: " + delta);
                             Debug.Log("AttackPosition found: " + locX + " " + locY);
                             CalculateMousePathToPosition(selectedCharacter, locX, locY);
                             return;

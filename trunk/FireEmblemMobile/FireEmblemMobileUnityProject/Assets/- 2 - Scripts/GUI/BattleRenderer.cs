@@ -33,12 +33,12 @@ namespace Assets.GUI
         private void OnEnable()
         {
             
-            UiSystem.OnAttackAnimationActive(true);
+            UiSystem.OnAttackAnimationActive?.Invoke(true);
         }
 
         private void OnDisable()
         {
-            UiSystem.OnAttackAnimationActive(false);
+            UiSystem.OnAttackAnimationActive?.Invoke(false);
         }
 
         public void Show(Unit attacker, Unit defender, bool[] attackSequence)

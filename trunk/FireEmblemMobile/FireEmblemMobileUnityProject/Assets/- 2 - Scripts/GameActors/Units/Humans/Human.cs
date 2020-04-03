@@ -1,6 +1,8 @@
 using Assets.GameActors.Items.Weapons;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Assets.GameActors.Items;
 using UnityEngine;
 
 namespace Assets.GameActors.Units.Humans
@@ -31,8 +33,7 @@ namespace Assets.GameActors.Units.Humans
             base.OnEnable();
             if (Inventory == null)
                 Inventory = Instantiate(CreateInstance<Inventory>());
-            else
-                Inventory.Owner = this;
+            Inventory.Owner = this;
             SkillManager = new SkillManager();
             SpecialAttackManager = new SpecialAttackManager();
         }
@@ -74,6 +75,32 @@ namespace Assets.GameActors.Units.Humans
             };
 
             return dict;
+        }
+
+        public bool CanUseWeapon(Weapon w)
+        {
+            Debug.Log("TODO");
+            if (true)
+                return true;
+            else
+                return false;
+        }
+
+        public void Equip(Weapon w)
+        {
+            
+            Stats.AttackRanges.Clear();
+            EquippedWeapon = w;
+            foreach (int r in w.AttackRanges) Stats.AttackRanges.Add(r);
+            Debug.Log("Equip " + w.name + " on " + Name + " " + w.AttackRanges.Length+" "+ Stats.AttackRanges.Count);
+        }
+        public void AutoEquip()
+        {
+           
+            if (EquippedWeapon == null)
+            {
+                Equip((Weapon)Inventory.Items.First(a=> a is Weapon weapon && CanUseWeapon(weapon)));
+            }
         }
     }
 }

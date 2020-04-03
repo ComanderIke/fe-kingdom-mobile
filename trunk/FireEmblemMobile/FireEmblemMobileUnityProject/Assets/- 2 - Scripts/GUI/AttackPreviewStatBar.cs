@@ -27,7 +27,7 @@ namespace Assets.GUI
 
         public void UpdateValues(int maxHp, int currentHp, int afterBattleHp,List<int> incomingDamage)
         {
-            filledBarController.SetFillAmount((currentHp*1.0f)/maxHp);
+            filledBarController.SetFillAmount((afterBattleHp * 1.0f)/maxHp);
             float width = GetComponent<RectTransform>().rect.width;
             float sumIncDamage = incomingDamage.Sum();
             foreach (GameObject go in incDamageMarkers)
@@ -35,6 +35,7 @@ namespace Assets.GUI
                 Destroy(go);
             }
 
+          
             incDamageMarkers.Clear();
             for (int i = 0; i < incomingDamage.Count - 1; i++)
             {

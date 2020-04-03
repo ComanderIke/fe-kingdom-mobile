@@ -107,9 +107,9 @@ namespace Assets.Grid
                 {
                     for (int j = -attackRange; j <= attackRange; j++)
                     {
-                        if (Math.Abs(j + i) == attackRange)
+                        if (Math.Abs(j + i) == attackRange||Math.Abs(j)+Math.Abs(i) == attackRange)
                         {
-                            // Debug.Log("attackTargets at "+ unit.GridPosition.GetPos()+": " +(i + x) + " " + (j + y));
+                            //Debug.Log("attackTargets at ["+ x+", "+y+"]: [" +(i + x) + ", " + (j + y)+"]");
                             if (IsOutOfBounds(new Vector2(x + i, y + j)))
                                 continue;
                             var unitOnTile = Tiles[i + x, j + y].Unit;
@@ -121,14 +121,20 @@ namespace Assets.Grid
                     }
                 }
             }
-
+            //Debug.Log("Attackable Targets at Position: [" + x + " ," + y + "] and AttackRange of: ");
+            //foreach (int attackRange in unit.Stats.AttackRanges)
+            //{
+            //    Debug.Log(attackRange +", ");
+            //}
+            //foreach (Unit target in targets)
+            //{
+            //    Debug.Log(target.Name + " [" + target.GridPosition.X + ", " + target.GridPosition.Y+"]");
+            //}
             return targets;
         }
 
         public bool IsFieldAttackable(int x, int z)
         {
-            Debug.Log(x + " " + z + " " + Tiles[x, z].GameObject.GetComponent<MeshRenderer>().sharedMaterial.name +
-                      " " + GridManager.GridResources.CellMaterialAttack.name);
             return Tiles[x, z].GameObject.GetComponent<MeshRenderer>().sharedMaterial ==
                    GridManager.GridResources.CellMaterialAttack;
         }

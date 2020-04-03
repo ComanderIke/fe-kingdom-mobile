@@ -71,6 +71,12 @@ namespace Assets.GameActors.Units
 
         public void OnEnable()
         {
+           
+        }
+
+        public void Initialize()
+        {
+           
             ExperienceManager = new ExperienceManager();
             BattleStats = new BattleStats(this);
             UnitTurnState = new UnitTurnState(this);
@@ -80,7 +86,7 @@ namespace Assets.GameActors.Units
             Buffs = new List<Buff>();
             Debuffs = new List<Debuff>();
             Agent = new AIAgent();
-
+            Stats = Stats == null ? CreateInstance<Stats>() : Instantiate(Stats);
             Hp = Stats.MaxHp;
             Sp = Stats.MaxSp;
         }

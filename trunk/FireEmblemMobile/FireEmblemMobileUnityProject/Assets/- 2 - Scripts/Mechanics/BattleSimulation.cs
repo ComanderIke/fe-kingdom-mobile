@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assets.GameActors.Items.Weapons;
 using Assets.GameActors.Units;
 using Assets.GameActors.Units.Humans;
+using UnityEngine;
 
 namespace Assets.Mechanics
 {
@@ -32,22 +34,31 @@ namespace Assets.Mechanics
             {
                 AttackerDamage.Add(Math.Min(defender.Hp, damage));
                 AttackerSpDamage.Add(Math.Min(defender.Sp, spDamage));
+                if (attacker is Human humanAttacker && humanAttacker.EquippedWeapon != null)
+                {
+                    attacker.Sp -= humanAttacker.EquippedWeapon.Weight;
+                    DefenderSpDamage.Add(Math.Min(attacker.Sp, humanAttacker.EquippedWeapon.Weight));
+
+                }
             }
             else
             {
-                DefenderDamage.Add(Math.Min(attacker.Hp, damage));
-                DefenderSpDamage.Add(Math.Min(attacker.Sp, spDamage));
+                DefenderDamage.Add(Math.Min(defender.Hp, damage));
+                DefenderSpDamage.Add(Math.Min(defender.Sp, spDamage));
+                if (attacker is Human humanAttacker && humanAttacker.EquippedWeapon != null)
+                {
+                    attacker.Sp -= humanAttacker.EquippedWeapon.Weight;
+                    AttackerSpDamage.Add(Math.Min(attacker.Sp, humanAttacker.EquippedWeapon.Weight));
+                }
             }
             defender.Hp -= damage;
             defender.Sp -= spDamage;
-            if (attacker is Human humanAttacker && humanAttacker.EquippedWeapon != null)
-            {
-                attacker.Sp -= humanAttacker.EquippedWeapon.Weight;
-            }
-            if (defender is Human humanDefender && humanDefender.EquippedWeapon != null)
-            {
-                defender.Sp -= humanDefender.EquippedWeapon.Weight;
-            }
+            Debug.Log("TODO: WeaponWeight!");
+           
+            //if (defender is Human humanDefender && humanDefender.EquippedWeapon != null)
+            //{
+            //    defender.Sp -= humanDefender.EquippedWeapon.Weight;
+            //}
             return defender.Hp > 0;
         }
         public void StartBattle()

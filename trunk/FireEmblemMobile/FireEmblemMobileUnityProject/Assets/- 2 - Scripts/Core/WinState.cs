@@ -21,7 +21,6 @@ namespace Assets.Core
         public override GameState<NextStateTrigger> Update()
         {
             time += Time.deltaTime;
-            Debug.Log("UPDATE: "+time);
             if (time >= DELAY)
             {
                 if (Input.GetMouseButtonDown(0))

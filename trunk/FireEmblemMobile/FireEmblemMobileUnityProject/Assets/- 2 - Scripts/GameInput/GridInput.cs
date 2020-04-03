@@ -1,4 +1,5 @@
-﻿using Assets.Core;
+﻿using System.Collections.Generic;
+using Assets.Core;
 using Assets.GameActors.Units.Monsters;
 using Assets.Grid;
 using Assets.Map;
@@ -92,6 +93,11 @@ namespace Assets.GameInput
                             InputSystem.OnClickedMovableTile(selectedCharacter, x, y);
                             selectedCharacter.GameTransform.SetPosition(x, y);
                             selectedCharacter.GameTransform.DisableCollider();
+                            mainScript.GetSystem<MapSystem>().HideMovement(new List<Vector2>(){new Vector2(x,y)});
+                            
+                            mainScript.GetSystem<MapSystem>().ShowAttackFromPosition(selectedCharacter,x,y);
+
+
                         }
                     }
                     else

@@ -18,7 +18,6 @@ namespace Assets.Mechanics
         public MoveSystem(MapSystem mapSystem)
         {
             this.mapSystem = mapSystem;
-            Debug.Log(mapSystem.GridData);
             nodeHelper = new NodeHelper(mapSystem.GridData.Width, mapSystem.GridData.Height);
             PathFindingManager = new AStar(mapSystem, mapSystem.GridData.Width, mapSystem.GridData.Height);
         }

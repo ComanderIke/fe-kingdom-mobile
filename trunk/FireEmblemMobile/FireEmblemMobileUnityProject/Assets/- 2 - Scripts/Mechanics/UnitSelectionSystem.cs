@@ -3,7 +3,9 @@ using Assets.GameActors.Units;
 using Assets.GameInput;
 using Assets.GUI;
 using System.Collections.Generic;
+using Assets.GameActors.Units.Humans;
 using UnityEngine;
+using Assets.Map;
 
 namespace Assets.Mechanics
 {
@@ -55,6 +57,7 @@ namespace Assets.Mechanics
             if (!SelectedCharacter.UnitTurnState.HasMoved)
             {
                 s.ShowMovement(c);
+                Debug.Log("RANGE COUNT: "+c.Name+" "+c.Stats.AttackRanges.Count+" "+(c as Human).EquippedWeapon.AttackRanges.Length);
                 s.ShowAttack(c, new List<int>(c.Stats.AttackRanges));
             }
             else
@@ -89,19 +92,32 @@ namespace Assets.Mechanics
 
         public void UnitClicked(Unit c, bool confirm) //TODO will be called by CHaracterClicked
         {
+            Debug.Log("Unit Clicked! Confirmed: " +confirm);
             if (SelectedCharacter != null && SelectedCharacter.GameTransform.GameObject != null &&
                 c != SelectedCharacter)
             {
                 if (c.Faction.Id != SelectedCharacter.Faction.Id) //Clicked On Enemy
                 {
-                    if (confirm || gridGameManager.GetSystem<Map.MapSystem>().GridLogic
-                        .GetAttackTargetsAtGameObjectPosition(SelectedCharacter).Contains(c))
+                    if (confirm)
                     {
+                        Debug.Log("Attack Enemy Clicked!");
                         SelectedCharacter.ResetPosition();
                         gridGameManager.GetSystem<UnitActionSystem>().GoToEnemy(SelectedCharacter, c, false);
                     }
+                    else if (gridGameManager.GetSystem<Map.MapSystem>().GridLogic
+                        .GetAttackTargetsAtGameObjectPosition(SelectedCharacter).Contains(c))//Character has been moved but not confirmed the move
+                    {
+                        Debug.Log("AttackEnemy2 Clicked!");
+                        gridGameManager.GetSystem<UiSystem>()
+                    .ShowAttackPreview(gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter, c);
+                        gridGameManager.GetSystem<UiSystem>().ShowAttackableEnemy(c.GridPosition.X, c.GridPosition.Y);
+                        //SelectedCharacter.ResetPosition();
+                        //gridGameManager.GetSystem<UnitActionSystem>().GoToEnemy(SelectedCharacter, c, false);
+
+                    }
                     else
                     {
+                        Debug.Log("Enemy Clicked!");
                         InputSystem.OnEnemyClicked(c);
                     }
 

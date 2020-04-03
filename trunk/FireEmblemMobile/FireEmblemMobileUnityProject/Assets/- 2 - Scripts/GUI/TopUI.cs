@@ -40,7 +40,9 @@ namespace Assets.GUI
 
         void Start()
         {
+            
             colorManager = FindObjectOfType<ColorManager>();
+
         }
         public void Show(Unit c)
         {
@@ -63,7 +65,7 @@ namespace Assets.GUI
             def.text = "" + c.Stats.Def;
             res.text = "" + c.Stats.Res;
             hpBar.SetFillAmount((c.Hp * 1.0f) / c.Stats.MaxHp);
-
+            Debug.Log("Faction: "+c.Faction.Id+" "+colorManager);
             hpBar.SetColor(c.Faction.Id == 0 ? colorManager.MainGreenColor : colorManager.MainRedColor);
             hp.text = c.Hp + "/" + c.Stats.MaxHp;
             spBar.SetFillAmount((c.Sp * 1.0f) / c.Stats.MaxSp);

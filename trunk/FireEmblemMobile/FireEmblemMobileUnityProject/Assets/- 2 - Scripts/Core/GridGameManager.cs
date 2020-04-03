@@ -95,6 +95,15 @@ namespace Assets.Core
                 var unit2 = DataScript.Instance.GetHuman("Flora");
                 var unit3 = DataScript.Instance.GetHuman("Eldric");
                 var unit4 = DataScript.Instance.GetHuman("Hector");
+                unit1.Initialize();
+                unit2.Initialize();
+                unit3.Initialize();
+                unit4.Initialize();
+                unit4.Inventory.AddItem(DataScript.Instance.GetWeapon("Iron Sword"));
+                unit3.Inventory.AddItem(DataScript.Instance.GetWeapon("Iron Bow"));
+                unit1.Inventory.AddItem(DataScript.Instance.GetWeapon("Steel Bow"));
+                unit2.Inventory.AddItem(DataScript.Instance.GetWeapon("Fire"));
+                Debug.Log(unit4.Stats.MaxHp); Debug.Log(unit3.Stats.MaxHp); Debug.Log(unit2.Stats.MaxHp);
                 Player.Instance.Units = new List<Unit>
                 {
                     unit1,
@@ -104,6 +113,7 @@ namespace Assets.Core
                 };
             }
             Debug.Log("LevelConfig");
+           
             FactionManager.Factions[0].Units = Player.Instance.Units;
             FactionManager.Factions[0].Name = Player.Instance.Name;
             int[] indexes = new int [FactionManager.Factions.Count];
@@ -113,6 +123,7 @@ namespace Assets.Core
                     if (spawn.Unit != null)
                     {
                         var unit = Instantiate(spawn.Unit) as Unit;
+                        unit.Initialize();
                         faction.AddUnit(unit);
                         unitInstantiator.PlaceCharacter(unit, spawn.X, spawn.Y);
                         Debug.Log("Spawn Unit"+unit.name +" "+spawn.X+" "+spawn.Y);
@@ -120,9 +131,10 @@ namespace Assets.Core
                     else if(faction.Units.Count!=0 && indexes[faction.Id]< faction.Units.Count)
                     {
                         var unit = faction.Units[indexes[faction.Id]++];
+                        unit.Initialize();
                         unit.Faction = faction;
                         unitInstantiator.PlaceCharacter(unit, spawn.X, spawn.Y);
-                        Debug.Log("Spawn Unit"+ unit.name + " " + spawn.X + " " + spawn.Y);
+                        Debug.Log("Spawn Unit"+ unit.name + " " + spawn.X + " " + spawn.Y+" ");
                     }
                 }
             Debug.Log("Destroy Spawner");
