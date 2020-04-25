@@ -20,6 +20,10 @@ namespace Assets.GameActors.Units.Attributes
         public int Spd;
         public int Str;
 
+        public int[] GetStatArray()
+        {
+            return new int[] { MaxHp, MaxSp, Str, Mag, Skl, Spd, Def, Res };
+        }
         public int GetMaxAttackRange()
         {
             return AttackRanges.Max();

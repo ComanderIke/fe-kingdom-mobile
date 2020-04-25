@@ -19,9 +19,11 @@ namespace Assets.GameActors.Units
         public string Name;
 
         [HideInInspector] private int sp;
-
+        public delegate void OnUnitLevelUpEvent(string name, int levelBefore, int levelAfter, int[] stats, int[] statIncreases);
+        public static OnUnitLevelUpEvent OnUnitLevelUp;
 
         public Stats Stats;
+        public Growths Growths;
 
         public CharacterSpriteSet CharacterSpriteSet;
 
@@ -73,11 +75,15 @@ namespace Assets.GameActors.Units
         {
            
         }
-
+        void OnDestroy()
+        {
+            ExperienceManager.OnLevelUp -= LevelUp;
+        }
         public void Initialize()
         {
            
             ExperienceManager = new ExperienceManager();
+            ExperienceManager.OnLevelUp += LevelUp;
             BattleStats = new BattleStats(this);
             UnitTurnState = new UnitTurnState(this);
             GridPosition = new GridPosition(this);
@@ -87,10 +93,48 @@ namespace Assets.GameActors.Units
             Debuffs = new List<Debuff>();
             Agent = new AIAgent();
             Stats = Stats == null ? CreateInstance<Stats>() : Instantiate(Stats);
+            Growths = Growths == null ? CreateInstance<Growths>() : Instantiate(Growths);
             Hp = Stats.MaxHp;
             Sp = Stats.MaxSp;
         }
-
+        private void LevelUp(int levelBefore, int levelAfter)
+        {
+           
+            int[] statIncreases=CalculateStatIncreases();
+            OnUnitLevelUp?.Invoke(Name, levelBefore, levelAfter, Stats.GetStatArray(), statIncreases);
+            Stats.MaxHp += statIncreases[0];
+            Stats.MaxSp += statIncreases[1];
+            Stats.Str += statIncreases[2];
+            Stats.Mag += statIncreases[3];
+            Stats.Spd += statIncreases[4];
+            Stats.Skl += statIncreases[5];
+            Stats.Def += statIncreases[6];
+            Stats.Res += statIncreases[7];
+        }
+        private int[] CalculateStatIncreases()
+        {
+            int[] growths = Growths.GetGrowthsArray();
+            int[] increaseAmount = new int[growths.Length];
+            for (int i = 0; i < growths.Length; i++)
+            {
+                increaseAmount[i] = Method(growths[i]);
+            }
+            return increaseAmount;
+        }
+        private int Method(int Growth)
+        {
+            int rngNumber = (int)(UnityEngine.Random.value * 100f);
+            if (Growth > 100)
+            {
+                return 1 + Method(Growth - 100);
+            }
+            if (rngNumber <= Growth)
+            {
+                return 1;
+            }
+            return 0;
+            
+        }
         public void EndTurn()
         {
             UnitTurnState.Reset();
@@ -198,6 +242,7 @@ namespace Assets.GameActors.Units
             clone.Hp = this.Hp;
             clone.Sp = this.Sp;
             clone.Stats = (Stats)Stats.Clone();
+            clone.Growths = (Growths)Growths.Clone();
             clone.Motivation = Motivation;
             //Only for
         }

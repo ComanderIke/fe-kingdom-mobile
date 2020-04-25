@@ -137,7 +137,8 @@ namespace Assets.Core
                         Debug.Log("Spawn Unit"+ unit.name + " " + spawn.X + " " + spawn.Y+" ");
                     }
                 }
-            Debug.Log("Destroy Spawner");
+           
+                Debug.Log("Destroy Spawner");
             foreach (var spawn in spawner)
             {
                 Destroy(spawn.gameObject);

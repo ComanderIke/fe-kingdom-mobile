@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Assets.GameInput;
 
 namespace Assets.GUI
 {
@@ -32,13 +33,12 @@ namespace Assets.GUI
 
         private void OnEnable()
         {
-            
-            UiSystem.OnAttackAnimationActive?.Invoke(true);
+            InputSystem.OnSetActive?.Invoke(false);
         }
 
         private void OnDisable()
         {
-            UiSystem.OnAttackAnimationActive?.Invoke(false);
+            InputSystem.OnSetActive?.Invoke(true);
         }
 
         public void Show(Unit attacker, Unit defender, bool[] attackSequence)

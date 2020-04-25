@@ -1,6 +1,7 @@
 ﻿using Assets.Core;
 using Assets.Core.GameStates;
 using Assets.GameActors.Units;
+using Assets.Grid;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,18 +14,18 @@ namespace Assets.Mechanics.Commands
         private readonly int y;
         private readonly int oldX;
         private readonly int oldY;
-        private readonly List<Vector2> path;
+        private readonly List<GridPosition> path;
 
-        public MoveCharacterCommand(Unit unit, int x, int y)
+        public MoveCharacterCommand(Unit unit, GridPosition destination)
         {
             this.unit = unit;
             oldX = unit.GridPosition.X;
             oldY = unit.GridPosition.Y;
-            this.x = x;
-            this.y = y;
+            this.x = destination.X;
+            this.y = destination.Y;
         }
 
-        public MoveCharacterCommand(Unit unit, int x, int y, List<Vector2> path) : this(unit, x, y)
+        public MoveCharacterCommand(Unit unit, GridPosition destination, List<GridPosition> path) : this(unit, destination)
         {
             this.path = path;
         }

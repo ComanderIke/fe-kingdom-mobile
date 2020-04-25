@@ -1,14 +1,17 @@
 ﻿using Assets.Core;
+using Assets.GameActors.Players;
 using Assets.GameActors.Units;
 using Assets.GameActors.Units.Monsters;
 using Assets.GameActors.Units.OnGameObject;
 using Assets.GameResources;
 using Assets.Grid;
 using Assets.GUI;
+using Assets.Manager;
 using Assets.Map;
 using Assets.Mechanics;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -16,242 +19,267 @@ namespace Assets.GameInput
 {
     public class InputSystem : MonoBehaviour, IEngineSystem
     {
-        private readonly List<GameObject> dots = new List<GameObject>();
-        private readonly List<Vector2> mousePath = new List<Vector2>();
-        [HideInInspector] public bool Active;
+        public bool Active;
 
-        [HideInInspector] public int AttackRangeFromPath;
-        private int currentX = -1;
-        private int currentY = -1;
-        private Transform gameWorld;
-        public GridInput GridInput;
-        private RaycastHit hit;
-        public List<CursorPosition> LastPositions = new List<CursorPosition>();
+        private readonly List<Vector2> dragPath = new List<Vector2>();          // tracks the path a unit is dragged along the grid.
+        public List<CursorPosition> LastPositions = new List<CursorPosition>(); /* tracks the last positions the cursor was on,
+                                                                                in order to determine the latest possible attack Position. */
+        public List<Vector2> MovementPath = new List<Vector2>();                // stores the path a unit is moving along the grid.
+
+        [HideInInspector] public int AttackRangeFromPath;                       /* Very Complicated to Refactor! 
+                                                                                This is used to store the Position from where a Unit will Attack.
+                                                                                this changes based on AttackRange of the unit 
+                                                                                and based on the prefered movementPath. */
 
         private GridGameManager gridGameManager;
-        private GameObject moveCursor;
-        private GameObject moveCursorStart;
-        private bool nonActive;
-        private int oldX = -1;
-        private int oldY = -1;
-        public PreferredMovementPath PreferredPath;
         public RaycastManager RaycastManager;
-        private ResourceScript resources;
+        private PlayerInputFeedback playerInputFeedback;
+        private GameplayInput gameplayInput;
+
+        private int lastDragPosX = -1;
+        private int lastDragPosY = -1;
 
         private void Start()
         {
-            currentX = -1;
-            currentY = -1;
-            oldX = -1;
-            oldY = -1;
-            gridGameManager = FindObjectOfType<GridGameManager>();
-
-            GridInput = new GridInput();
-            gameWorld = GameObject.FindGameObjectWithTag("World").transform;
-            resources = FindObjectOfType<ResourceScript>();
-
+            gridGameManager = GridGameManager.Instance;
+            playerInputFeedback = new PlayerInputFeedback();
+            gameplayInput = new GameplayInput();
             RaycastManager = new RaycastManager();
             InitEvents();
         }
+        private void InitEvents()
+        {
+            OnSetActive += SetInputActive;
 
+            OnUnitClicked += UnitClicked;
+            OnUnitDoubleClicked += UnitDoubleClicked;
+
+            OnStartDrag += StartDrag;
+            OnUnitDragged += CharacterDrag;
+            OnDraggedOverUnit += DraggedOver;
+            OnEndDrag += DragEnded;
+        }
         private void Update()
         {
             if (!Active)
                 return;
-            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())// player clicked on a non UI Object 
             {
-                PreferredPath.Path = new List<Vector2>(mousePath);
-                var gridPos = RaycastManager.GetMousePositionOnGrid();
-                hit = RaycastManager.GetLatestHit();
-                var x = (int)gridPos.x;
-                var y = (int)gridPos.y;
-                currentX = x;
-                currentY = y;
-                //Debug.Log("CLICKED ON: "+hit.collider.tag+" "+hit.collider.gameObject.transform.parent.name);
-                if (hit.collider != null)
-                    if (hit.collider.tag == "Grid")
-                    {
-                        ResetMousePath();
-                        Debug.Log("Grid clicked:" + x + " " + y + " " + hit.point + " " + gridPos);
-                        OnClickedGrid(x, y, hit.point);
-                    }
+                CheckClickOnGrid(); /*checks if player clicked on an empty grid tile
+                                    Clicks on Characters will be managed by the UnitController */
             }
-            else if (Input.GetMouseButtonUp(0))
+        }
+        private void CheckClickOnGrid()
+        {
+            var gridPos = RaycastManager.GetMousePositionOnGrid();
+            RaycastHit hit = RaycastManager.GetLatestHit();
+            var x = (int)gridPos.x;
+            var y = (int)gridPos.y;
+            if( hit.collider != null && hit.collider.tag == TagManager.GridTag)
             {
-                PreferredPath.Path = new List<Vector2>(mousePath);
-                if (!GridInput.ConfirmClick) ResetMousePath();
+                ResetDrag();
+                Debug.Log("Grid clicked:" + x + " " + y + " " + hit.point + " " + gridPos);
+                GridClicked(x, y);
             }
         }
 
-        private void InitEvents()
-        {
-            OnDraggedOverUnit += DraggedOver;
-            OnStartDrag += StartDrag;
-            OnUnitDragged += CharacterDrag;
-            OnClickedMovableTile += CalculateMousePathToPosition;
-            OnClickedMovableBigTile += CalculateMousePathToPosition;
-            UnitActionSystem.OnStartMovingUnit += DeActivate;
-            UnitActionSystem.OnStopMovingUnit += Activate;
-            UnitActionSystem.OnUnitMoveToEnemy += ResetMousePath;
-            OnEndDrag += EndDrag;
-            UnitActionSystem.OnDeselectCharacter += ResetMousePath;
-            OnUnitClicked += UnitClicked;
-            OnEnemyClicked += EnemyClicked;
-            UiSystem.OnAttackAnimationActive += SetInputActive;
-        }
-
-        private void Activate()
-        {
-            SetInputActive(false);
-        }
-
-        private void DeActivate()
-        {
-            SetInputActive(true);
-        }
-
-        private void SetInputActive(bool active)
+        public void SetInputActive(bool active)
         {
             Active = !active;
         }
 
-        private void EndDrag()
+        private void DragEnded()
         {
             var gridPos = RaycastManager.GetMousePositionOnGrid();
             if (RaycastManager.ConnectedLatestHit())
             {
                 var latestHit = RaycastManager.GetLatestHit();
-                if (latestHit.collider.gameObject.CompareTag("Grid"))
+                if (latestHit.collider.gameObject.CompareTag(TagManager.GridTag)) //Dragged on Grid
                 {
-                    OnEndDragOverGrid((int)gridPos.x, (int)gridPos.y);
+                    UnitDraggedOnGrid((int)gridPos.x, (int)gridPos.y);
                 }
-                else if (latestHit.collider.gameObject.GetComponent<UnitController>() != null)
+                else if (latestHit.collider.gameObject.CompareTag(TagManager.UnitTag))//Dragged on Unit
                 {
                     var draggedOverUnit = latestHit.collider.gameObject.GetComponent<UnitController>().Unit;
-                    OnEndDragOverUnit(draggedOverUnit);
+                    UnitDraggedOnUnit(draggedOverUnit);
                 }
                 else
                 {
-                    OnEndDragOverNothing();
+                    OnDragCanceled();
                 }
             }
             else
             {
-                OnEndDragOverNothing();
+                OnDragCanceled();
             }
-
-            ResetMousePath();
+            ResetDrag();
         }
 
-        private void UnitClicked(Unit unit, bool doubleClicked = false)
+        private void UnitDoubleClicked(Unit unit)
         {
-            Debug.Log(doubleClicked ? "Unit DoubleClicked!" : "Unit Clicked!");
+            Debug.Log("Unit Double Clicked!");
             if (!Active)
                 return;
-            if (doubleClicked)
-            {
-                gridGameManager.GetSystem<UnitActionSystem>().ActiveCharWait();
+            gameplayInput.Wait(unit);
+        }
+        private void UnitClicked(Unit unit)
+        {
+            Debug.Log("Unit Clicked!");
+            if (!Active)
                 return;
-            }
-            if (GridInput.ConfirmClick && GridInput.ClickedField == new Vector2(currentX, currentY))
-            {
-                Debug.Log("Unit Clicked Confirmed!");
-                OnUnitClickedConfirmed(unit, true);
-            }
-            else
-            {
-                Debug.Log("Unit Clicked not Confirmed!");
-                if (gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter != null && unit.Faction.Id !=
-                    gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter.Faction.Id)
-                {
-                    GridInput.ConfirmClick = true;
-                    GridInput.ClickedField = new Vector2(currentX, currentY);
-                }
 
-                OnUnitClickedConfirmed(unit, false);
+            if (unit.Faction.Id == gridGameManager.FactionManager.ActiveFaction.Id) // Player Unit Clicked
+            {
+                gameplayInput.SelectUnit(unit);
+            }
+            else {
+                EnemyClicked(unit);
             }
         }
-
-        public void EnemyClicked(Unit unit)
+        private void EnemyClicked(Unit unit)
         {
             Debug.Log("Enemy clicked!");
-
-            if (gridGameManager.GetSystem<MapSystem>().GridLogic.IsFieldAttackable(unit.GridPosition.X, unit.GridPosition.Y))
+            var selectedCharacter = gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter;
+            if (selectedCharacter == null)
             {
-                CalculateMousePathToEnemy(gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter,
-                    new Vector2(unit.GridPosition.X, unit.GridPosition.Y));
+                Debug.Log("TODO Select Enemy!");
+                Debug.Log("TODO Show Enemy Range!");
             }
             else
             {
-                if (unit.GridPosition is BigTilePosition)
+                if (gridGameManager.GetSystem<MapSystem>().GridLogic.IsFieldAttackable(unit.GridPosition.X, unit.GridPosition.Y))
                 {
-                    var bottomLeft = ((BigTilePosition)unit.GridPosition).Position.BottomLeft();
-                    var bottomRight = ((BigTilePosition)unit.GridPosition).Position.BottomRight();
-                    var topLeft = ((BigTilePosition)unit.GridPosition).Position.TopLeft();
-                    var topRight = ((BigTilePosition)unit.GridPosition).Position.TopRight();
-                    if (gridGameManager.GetSystem<MapSystem>().GridLogic
-                        .IsFieldAttackable((int)bottomLeft.x, (int)bottomLeft.y))
-                        CalculateMousePathToEnemy(gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter,
-                            bottomLeft);
-                    else if (gridGameManager.GetSystem<MapSystem>().GridLogic
-                        .IsFieldAttackable((int)bottomRight.x, (int)bottomRight.y))
-                        CalculateMousePathToEnemy(gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter,
-                            bottomRight);
-                    else if (gridGameManager.GetSystem<MapSystem>().GridLogic
-                        .IsFieldAttackable((int)topLeft.x, (int)topLeft.y))
-                        CalculateMousePathToEnemy(gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter,
-                            topLeft);
-                    else if (gridGameManager.GetSystem<MapSystem>().GridLogic
-                        .IsFieldAttackable((int)topRight.x, (int)topRight.y))
-                        CalculateMousePathToEnemy(gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter,
-                            topRight);
+                    CalculateMousePathToEnemy(selectedCharacter, new Vector2(unit.GridPosition.X, unit.GridPosition.Y));
+                    DrawMousePath();
+                    if (dragPath.Count >= 1)
+                    {
+                        gameplayInput.CheckAttackPreview(selectedCharacter, unit, 
+                            new GridPosition((int)dragPath[dragPath.Count - 1].x, (int)dragPath[dragPath.Count - 1].y));
+                    }
                 }
                 else
                 {
                     Debug.Log("Enemy not Attackable!");
-                    gridGameManager.GetSystem<UnitSelectionSystem>().DeselectActiveCharacter();
+                    Debug.Log("TODO Select Enemy! Without showing his range!");
+                }
+            }
+        }
+        public void GoToEnemy(Unit character, Unit enemy, bool drag, List<Vector2> movePath)
+        {
+            character.ResetPosition();
+            ResetDrag();
+            if ((movePath == null || movePath.Count == 0) &&
+                character.GridPosition.CanAttack(character.Stats.AttackRanges, enemy.GridPosition))
+            {
+                gridGameManager.GetSystem<Map.MapSystem>().HideMovement();
+                Debug.Log("Enemy is in Range:");
+                gameplayInput.AttackUnit(character, enemy);
+
+                return;
+            }
+            else //go to enemy cause not in range
+            {
+                if (movePath == null)
+                {
+                    Debug.LogError("MovePath was null");
+                    return;
+                }
+                Debug.Log("Got to Enemy!");
+                if (gridGameManager.GetSystem<Map.MapSystem>().GridLogic
+                    .IsFieldAttackable(enemy.GridPosition.X, enemy.GridPosition.Y))
+                {
+                    gridGameManager.GetSystem<Map.MapSystem>().HideMovement();
+
+                    int xMov = 0;
+                    int yMov = 0;
+                    if (movePath.Count >= 1)
+                    {
+                        xMov = (int)movePath[movePath.Count - 1].x;
+                        yMov = (int)movePath[movePath.Count - 1].y;
+                    }
+                    gameplayInput.MoveUnit(character, new GridPosition(xMov, yMov), GridPosition.GetFromVectorList(movePath));
+                    gameplayInput.AttackUnit(character, enemy);
+                    Debug.Log("TODO? Works only for melee?");
+
+                    gridGameManager.GetSystem<InputSystem>().AttackRangeFromPath = 0;
+
+                    return;
+                }
+                else
+                {
+                    Debug.Log("Enemy not in Range!");
                     return;
                 }
             }
+        }
+      
 
-            DrawMousePath();
-            if (mousePath.Count >= 1)
+        public void GridClicked(int x, int y)
+        {
+            var selectedCharacter = gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter;
+            if (gridGameManager.GetSystem<MapSystem>().GridLogic.IsFieldFreeAndActive(x, y))
             {
-                gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter.GameTransform
-                    .SetPosition((int)mousePath[mousePath.Count - 1].x, (int)mousePath[mousePath.Count - 1].y);
-                gridGameManager.GetSystem<UiSystem>()
-                    .ShowAttackPreview(gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter, unit);
-                gridGameManager.GetSystem<UiSystem>().ShowAttackableEnemy(unit.GridPosition.X, unit.GridPosition.Y);
+                var movePath = gridGameManager.GetSystem<InputSystem>().MovementPath;
+                gridGameManager.GetSystem<MapSystem>().HideMovement();
+                gameplayInput.MoveUnit(selectedCharacter, new GridPosition(x, y), GridPosition.GetFromVectorList(movePath));
+                gameplayInput.ExecuteInputActions(() => gridGameManager.GameStateManager.SwitchState(GameStateManager.GameplayState));
             }
         }
+        private void UnitDraggedOnGrid(int x, int y)
+        {
+            var unitSelectionManager = gridGameManager.GetSystem<UnitSelectionSystem>();
+            var selectedUnit = unitSelectionManager.SelectedCharacter;
+            //Debug.Log("TEST: "+mainScript.GetSystem<Map.MapSystem>().Tiles[x, y]);
+            if (gridGameManager.GetSystem<Map.MapSystem>().Tiles[x, y].IsActive &&
+                !(x == selectedUnit.GridPosition.X && y == selectedUnit.GridPosition.Y))
+            {
 
+                selectedUnit.GridPosition.SetPosition(selectedUnit.GridPosition.X, selectedUnit.GridPosition.Y);
+
+                gameplayInput.MoveUnit(selectedUnit, new GridPosition(x, y), GridPosition.GetFromVectorList(MovementPath));
+                gameplayInput.ExecuteInputActions(()=>gridGameManager.GameStateManager.SwitchState(GameStateManager.GameplayState));
+
+            }
+            else if (gridGameManager.GetSystem<Map.MapSystem>().Tiles[x, y].Unit != null &&
+                     gridGameManager.GetSystem<Map.MapSystem>().Tiles[x, y].Unit.Faction.Id != selectedUnit.Faction.Id)
+            {
+                GoToEnemy(selectedUnit, gridGameManager.GetSystem<Map.MapSystem>().Tiles[x, y].Unit, true, MovementPath);
+            }
+            else
+            {
+                unitSelectionManager.DeselectActiveCharacter();
+            }
+        }
+        private void UnitDraggedOnUnit(Unit draggedOverUnit)
+        {
+            Debug.Log("MoveToOtherUnit");
+            var unitSelectionManager = gridGameManager.GetSystem<UnitSelectionSystem>();
+            if (draggedOverUnit.Faction.Id != unitSelectionManager.SelectedCharacter.Faction.Id)
+            {
+                if (gridGameManager.GetSystem<Map.MapSystem>().GridLogic.IsFieldAttackable(draggedOverUnit.GridPosition.X,
+                    draggedOverUnit.GridPosition.Y))
+                    GoToEnemy(unitSelectionManager.SelectedCharacter, draggedOverUnit, true, MovementPath);
+                else
+                {
+                    Debug.Log("enemy not in Range");
+                    gameplayInput.DeselectUnit();
+                }
+            }
+            else
+            {
+                gameplayInput.DeselectUnit();
+            }
+        }
         public void StartDrag(int gridX, int gridY)
         {
-            currentX = gridX;
-            currentY = gridY;
-            PreferredPath.Path = new List<Vector2>(mousePath);
         }
 
-        public void ResetAll()
+        public void ResetDrag()
         {
-            GridInput.Reset();
-            ResetMousePath();
-        }
-
-        public void ResetMousePath()
-        {
-            foreach (var dot in dots) Destroy(dot);
-
-            dots.Clear();
-            mousePath.Clear();
-            oldX = -1;
-            oldY = -1;
-            gridGameManager.GetSystem<UiSystem>().HideAttackPreview();
-
-            if (moveCursor != null)
-                Destroy(moveCursor);
-            if (moveCursorStart != null)
-                Destroy(moveCursorStart);
+            dragPath.Clear();
+            lastDragPosX = -1;
+            lastDragPosY = -1;
+            OnDragReset?.Invoke();
         }
 
         public void DraggedOver(Unit character)
@@ -269,7 +297,7 @@ namespace Assets.GameInput
 
         public bool IsOldDrag(int x, int y)
         {
-            return x == oldX && y == oldY;
+            return x == lastDragPosX && y == lastDragPosY;
         }
 
         public int GetDelta(Vector2 v, Vector2 v2)
@@ -293,56 +321,49 @@ namespace Assets.GameInput
 
         public void CalculateMousePathToPosition(Unit character, int x, int y)
         {
-            ResetMousePath();
+            ResetDrag();
             var p = gridGameManager.GetSystem<MoveSystem>().GetPath(character.GridPosition.X,
                 character.GridPosition.Y, x, y, character.Faction.Id, false, character.Stats.AttackRanges);
             if (p != null)
                 for (int i = p.GetLength() - 2; i >= 0; i--)
-                    mousePath.Add(new Vector2(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
-
+                    dragPath.Add(new Vector2(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
+            MovementPath = new List<Vector2>(dragPath);
             DrawMousePath();
         }
-
+        private void DrawMousePath()
+        {
+            int startX = gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter.GridPosition.X;
+            int startY = gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter.GridPosition.Y;
+            playerInputFeedback.DrawMovementPath(dragPath, startX, startY);
+        }
+        
         public void CalculateMousePathToEnemy(Unit character, Vector2 position)
         {
-            ResetMousePath();
+            ResetDrag();
             var p = gridGameManager.GetSystem<MoveSystem>().GetPath(character.GridPosition.X,
                 character.GridPosition.Y, (int)position.x, (int)position.y, character.Faction.Id, true,
                 character.Stats.AttackRanges);
             if (p != null)
                 for (int i = p.GetLength() - 2; i >= AttackRangeFromPath; i--)
-                    mousePath.Add(new Vector2(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
+                    dragPath.Add(new Vector2(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
+            MovementPath = new List<Vector2>(dragPath);
         }
 
-        public void CalculateMousePathToEnemy(Unit character, BigTile position)
-        {
-            ResetMousePath();
-            var p = gridGameManager.GetSystem<MapSystem>().GridLogic
-                .GetMonsterPath((Monster)character, position, true, character.Stats.AttackRanges);
-
-            if (p != null)
-            {
-                for (var i = 0; i < p.GetLength(); i++) Debug.Log(p.GetStep(i));
-
-                for (int i = p.GetLength() - 2; i >= AttackRangeFromPath; i--)
-                    mousePath.Add(new Vector2(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
-            }
-        }
 
         public void CalculateMousePathToPosition(Unit character, BigTile position)
         {
-            ResetMousePath();
+            ResetDrag();
             var movementPath = gridGameManager.GetSystem<MoveSystem>().GetMonsterPath((Monster)character, position);
             if (movementPath != null)
             {
                 Debug.Log(movementPath.GetLength());
                 Debug.Log(movementPath.GetStep(0).GetX() + " " + movementPath.GetStep(0).GetY());
                 for (int i = movementPath.GetLength() - 2; i >= 0; i--)
-                    mousePath.Add(new Vector2(movementPath.GetStep(i).GetX(), movementPath.GetStep(i).GetY()));
+                    dragPath.Add(new Vector2(movementPath.GetStep(i).GetX(), movementPath.GetStep(i).GetY()));
             }
 
             Debug.Log("======");
-
+            MovementPath = new List<Vector2>(dragPath);
             DrawMousePath();
         }
 
@@ -352,20 +373,19 @@ namespace Assets.GameInput
                 return;
             if (gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter == null)
             {
-                ResetMousePath();
+                ResetDrag();
                 return;
             }
 
             if (IsOutOfBounds(x, y)) //TODO: could be redundant since unitcontroller checks this already?
             {
-                ResetMousePath();
+                ResetDrag();
                 return;
             }
 
             if (IsOldDrag(x, y)) return;
 
-            currentX = x;
-            currentY = y;
+
 
             var field = gridGameManager.GetSystem<MapSystem>().Tiles[x, y];
             if (field.IsActive && field.Unit == null)
@@ -389,27 +409,11 @@ namespace Assets.GameInput
             }
             else if (x == character.GridPosition.X && y == character.GridPosition.Y)
             {
-                ResetMousePath();
+                ResetDrag();
                 DrawMousePath();
-
-                nonActive = false;
             }
 
             Finish(character, field, x, y);
-        }
-
-        //TODO not used because no playable BigCharacters yet
-        private void BigCharacterDraggedOnEnemy(Unit selectedCharacter, int x, int y, Unit enemy)
-        {
-            //raycastManager.GetMousePositionOnGrid();
-            //hit = raycastManager.GetLatestHit();
-            //Vector2 centerPos = gridInput.GetCenterPos(hit.point);
-            //BigTile clickedBigTile = gridInput.GetClickedBigTile((int)centerPos.x, (int)centerPos.y, x, y);
-            //BigTile nearestBigTile = mainScript.gridManager.GridLogic.GetNearestBigTileFromEnemy(enemy);
-            //Debug.Log(nearestBigTile);
-            //CalculateMousePathToPositon(selectedCharacter, nearestBigTile);
-            //DrawMousePath();
-            //mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter, enemy);
         }
 
         private void CalculateMousePathToAttackField(Unit selectedCharacter, int x, int y)
@@ -446,16 +450,12 @@ namespace Assets.GameInput
         {
             var selectedCharacter = gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter;
             Debug.Log("draggedOnEnemy");
-            if (selectedCharacter.GridPosition is BigTilePosition)
-            {
-                BigCharacterDraggedOnEnemy(selectedCharacter, x, y, enemy);
-            }
-            else
+            if (!(selectedCharacter.GridPosition is BigTilePosition))
             {
                 if (!FindObjectOfType<MapSystem>().GridLogic.IsFieldAttackable(x, y))
                     return;
                 //CalculateMousePathToEnemy(selectedCharacter, new Vector2(x, y));
-                if (mousePath == null || mousePath.Count == 0)
+                if (dragPath == null || dragPath.Count == 0)
                 {
                     Debug.Log("Mousepath empty");
                     //CalculateMousePathToEnemy(selectedCharacter, new Vector2(x, y));
@@ -465,11 +465,11 @@ namespace Assets.GameInput
                 {
                     var foundAttackPosition = false;
                     int attackPositionIndex = -1;
-                    for (int i = mousePath.Count - 1; i >= 0; i--)
+                    for (int i = dragPath.Count - 1; i >= 0; i--)
                     {
-                        var lastMousePathPositionX = (int)mousePath[i].x;
-                        var lastMousePathPositionY = (int)mousePath[i].y;
-                        var lastMousePathField = gridGameManager.GetSystem<MapSystem>().GetTileFromVector2(mousePath[i]);
+                        var lastMousePathPositionX = (int)dragPath[i].x;
+                        var lastMousePathPositionY = (int)dragPath[i].y;
+                        var lastMousePathField = gridGameManager.GetSystem<MapSystem>().GetTileFromVector2(dragPath[i]);
                         int delta = Mathf.Abs(lastMousePathPositionX - x) + Mathf.Abs(lastMousePathPositionY - y);
                         if (selectedCharacter.Stats.AttackRanges.Contains(delta))
                             if (lastMousePathField.Unit == null)
@@ -480,26 +480,11 @@ namespace Assets.GameInput
                                 break;
                             }
 
-                        //if (lastMousePathField.character != null)
-                        //{
-                        //    Debug.Log("last Mousepath not empty");
-                        //    CalculateMousePathToEnemy(selectedCharacter, new Vector2(x, y));
-                        //}
-                        //else
-                        //{
-                        //    int delta = Mathf.Abs(lastMousePathPositionX - x) + Mathf.Abs(lastMousePathPositionY - y);
-                        //    Debug.Log("Delta: " + delta + " " + x + " " + y + " " + lastMousePathPositionX + " " + lastMousePathPositionY);
-                        //    if (!selectedCharacter.Stats.AttackRanges.Contains(delta))
-                        //    {
-                        //        Debug.Log("last Mousepath not in attackRange");
-                        //        CalculateMousePathToEnemy(selectedCharacter, new Vector2(x, y));
-                        //    }
-                        //}
                     }
 
                     if (foundAttackPosition)
                     {
-                        mousePath.RemoveRange(attackPositionIndex + 1, mousePath.Count - (attackPositionIndex + 1));
+                        dragPath.RemoveRange(attackPositionIndex + 1, dragPath.Count - (attackPositionIndex + 1));
                     }
                     else
                     {
@@ -508,7 +493,7 @@ namespace Assets.GameInput
                     }
                 }
 
-                if (mousePath != null && mousePath.Count <= selectedCharacter.Stats.Mov)
+                if (dragPath != null && dragPath.Count <= selectedCharacter.Stats.Mov)
                 {
                     DrawMousePath();
                     gridGameManager.GetSystem<UiSystem>()
@@ -523,238 +508,37 @@ namespace Assets.GameInput
                 // DraggedOnAttackableField(selectedCharacter, x, y, field, enemy);
             }
         }
-
-        private void DraggedOnAttackableField(Unit selectedCharacter, int x, int y, Tile field, Unit enemy)
+        public Vector2 GetCenterPos(Vector2 clickedPos)
         {
-            throw new Exception("FUCK");
-            //bool reset = true;
-            //for (int i = selectedCharacter.Stats.AttackRanges.Count - 1; i >= 0; i--)
-            //{
-            //    //Debug.Log(i);
-            //    int xDiff = (int)Mathf.Abs(selectedCharacter.GridPosition.x - field.character.GridPosition.x);
-            //    int yDiff = (int)Mathf.Abs(selectedCharacter.GridPosition.y - field.character.GridPosition.y);
-            //    if ((xDiff + yDiff) == selectedCharacter.Stats.AttackRanges[i])
-            //    {
-            //        // CalculateMousePathToPositon(selectedCharacter, (int)v.x, (int)v.y);
-            //        ResetMousePath();
-
-            //        mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter, enemy);
-
-            //        Finish(enemy, field, x, y);
-            //        return;
-            //    }
-            //    foreach (Vector2 v in mousePath)
-            //    {
-            //        xDiff = (int)Mathf.Abs(v.x - field.character.GridPosition.x);
-            //        yDiff = (int)Mathf.Abs(v.y - field.character.GridPosition.y);
-            //        //Debug.Log(v + " "+xDiff + " "+ yDiff);
-            //        if ((xDiff + yDiff) == selectedCharacter.Stats.AttackRanges[i] && mainScript.gridManager.Tiles[(int)v.x, (int)v.y].isActive && mainScript.gridManager.Tiles[(int)v.x, (int)v.y].character == null)
-            //        {
-            //            CalculateMousePathToPositon(selectedCharacter, (int)v.x, (int)v.y);
-            //            mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter, enemy);
-            //            Finish(enemy, field, x, y);
-            //            return;
-            //        }
-            //    }
-
-            //}
-            //mainScript.GetController<UIController>().ShowAttackPreview(mainScript.GetSystem<UnitSelectionManager>().SelectedCharacter, enemy);
+            int centerX = (int)Mathf.Round(clickedPos.x - MapSystem.GRID_X_OFFSET) - 1;
+            int centerY = (int)Mathf.Round(clickedPos.y) - 1;
+            return new Vector2(centerX, centerY);
         }
-
         public void DraggedOnActiveField(int x, int y, Unit character)
         {
-            if (nonActive) ResetMousePath();
 
             var selectedCharacter = gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter;
-            if (selectedCharacter is Monster)
+            bool contains = dragPath.Contains(new Vector2(x, y));
+
+            dragPath.Add(new Vector2(x, y));
+
+            if (dragPath.Count > character.Stats.Mov || contains || Mathf.Abs(lastDragPosX - x) + Mathf.Abs(lastDragPosY - y) > 1)
             {
-                RaycastManager.GetMousePositionOnGrid(); //just to shoot Ray
-                hit = RaycastManager.GetLatestHit();
-                var centerPos = GridInput.GetCenterPos(hit.point);
-                var clickedBigTile = GridInput.GetClickedBigTile((int)centerPos.x, (int)centerPos.y, x, y);
-                CalculateMousePathToPosition(selectedCharacter, clickedBigTile);
-                DrawMousePath();
-                return;
-            }
-
-            nonActive = false;
-            bool contains = mousePath.Contains(new Vector2(x, y));
-
-            mousePath.Add(new Vector2(x, y));
-            foreach (var dot in dots) Destroy(dot);
-
-            dots.Clear();
-            if (mousePath.Count > character.Stats.Mov || contains || Mathf.Abs(oldX - x) + Mathf.Abs(oldY - y) > 1)
-            {
-                mousePath.Clear();
+                dragPath.Clear();
                 var p = gridGameManager.GetSystem<MoveSystem>().GetPath(character.GridPosition.X,
                     character.GridPosition.Y, x, y, character.Faction.Id, false, character.Stats.AttackRanges);
                 if (p != null)
                     for (int i = p.GetLength() - 2; i >= 0; i--)
-                        mousePath.Add(new Vector2(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
+                        dragPath.Add(new Vector2(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
             }
-
+            MovementPath = new List<Vector2>(dragPath);
             DrawMousePath();
-        }
-
-        public void DrawMousePath()
-        {
-            PreferredPath.Path = new List<Vector2>(mousePath);
-            foreach (var dot in dots) Destroy(dot);
-
-            //Debug.Log("DrawMousePath");
-            float startX = -1;
-            float startY = -1;
-            var selectedCharacter = gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter;
-            if (selectedCharacter is Monster)
-            {
-                startX = ((BigTilePosition)selectedCharacter.GridPosition).Position.CenterPos().x;
-                startY = ((BigTilePosition)selectedCharacter.GridPosition).Position.CenterPos().y;
-            }
-            else
-            {
-                startX = selectedCharacter.GridPosition.X;
-                startY = selectedCharacter.GridPosition.Y;
-            }
-
-            if (moveCursor != null)
-                Destroy(moveCursor);
-            if (moveCursorStart != null)
-                Destroy(moveCursorStart);
-            if (mousePath.Count == 0)
-            {
-                moveCursor = Instantiate(resources.Prefabs.MoveCursor, gameWorld);
-                moveCursor.transform.localPosition = new Vector3(selectedCharacter.GridPosition.X,
-                    selectedCharacter.GridPosition.Y, moveCursor.transform.localPosition.z);
-            }
-            else
-            {
-                moveCursorStart = Instantiate(resources.Prefabs.MoveArrowDot, gameWorld);
-                moveCursorStart.transform.localPosition = new Vector3(selectedCharacter.GridPosition.X + 0.5f,
-                    selectedCharacter.GridPosition.Y + 0.5f, -0.03f);
-                moveCursorStart.GetComponent<SpriteRenderer>().sprite = resources.Sprites.StandOnArrowStart;
-                var v = new Vector2(selectedCharacter.GridPosition.X, selectedCharacter.GridPosition.Y);
-                if (v.x - mousePath[0].x > 0)
-                    moveCursorStart.transform.rotation = Quaternion.Euler(0, 0, 180);
-                else if (v.x - mousePath[0].x < 0)
-                    moveCursorStart.transform.rotation = Quaternion.Euler(0, 0, 0);
-                else if (v.y - mousePath[0].y > 0)
-                    moveCursorStart.transform.rotation = Quaternion.Euler(0, 0, 270);
-                else if (v.y - mousePath[0].y < 0)
-                    moveCursorStart.transform.rotation = Quaternion.Euler(0, 0, 90);
-            }
-
-            for (var i = 0; i < mousePath.Count; i++)
-            {
-                var v = mousePath[i];
-
-                var dot = Instantiate(resources.Prefabs.MoveArrowDot, gameWorld);
-                dot.transform.localPosition = new Vector3(v.x + 0.5f, v.y + 0.5f, -0.03f);
-                dots.Add(dot);
-                if (i == mousePath.Count - 1)
-                {
-                    moveCursor = Instantiate(resources.Prefabs.MoveCursor, gameWorld);
-                    moveCursor.transform.localPosition = new Vector3(v.x, v.y, moveCursor.transform.localPosition.z);
-                    dot.GetComponent<SpriteRenderer>().sprite = resources.Sprites.MoveArrowHead;
-                    if (i != 0)
-                    {
-                        if (v.x - mousePath[i - 1].x > 0)
-                            dot.transform.rotation = Quaternion.Euler(0, 0, 180);
-                        else if (v.x - mousePath[i - 1].x < 0)
-                            dot.transform.rotation = Quaternion.Euler(0, 0, 0);
-                        else if (v.y - mousePath[i - 1].y > 0)
-                            dot.transform.rotation = Quaternion.Euler(0, 0, 270);
-                        else if (v.y - mousePath[i - 1].y < 0)
-                            dot.transform.rotation = Quaternion.Euler(0, 0, 90);
-                    }
-                    else
-                    {
-                        if (v.x - startX > 0)
-                            dot.transform.rotation = Quaternion.Euler(0, 0, 180);
-                        else if (v.x - startX < 0)
-                            dot.transform.rotation = Quaternion.Euler(0, 0, 0);
-                        else if (v.y - startY > 0)
-                            dot.transform.rotation = Quaternion.Euler(0, 0, 270);
-                        else if (v.y - startY < 0)
-                            dot.transform.rotation = Quaternion.Euler(0, 0, 90);
-                    }
-                }
-                else
-                {
-                    var vAfter = mousePath[i + 1];
-                    Vector2 vBefore;
-                    if (i != 0)
-                    {
-                        vBefore = mousePath[i - 1];
-                        ArrowCurve(dot, v, vBefore, vAfter);
-                    }
-                    else
-                    {
-                        vBefore = new Vector2(startX, startY);
-                        ArrowCurve(dot, v, vBefore, vAfter);
-                    }
-                }
-            }
-        }
-
-        public void ArrowCurve(GameObject dot, Vector2 v, Vector2 vBefore, Vector2 vAfter)
-        {
-            if (vBefore.x == vAfter.x)
-            {
-                dot.GetComponent<SpriteRenderer>().sprite = resources.Sprites.MoveArrowStraight;
-                dot.transform.rotation = Quaternion.Euler(0, 0, 90);
-            }
-            else if (vBefore.y == vAfter.y)
-            {
-                dot.GetComponent<SpriteRenderer>().sprite = resources.Sprites.MoveArrowStraight;
-                dot.transform.rotation = Quaternion.Euler(0, 0, 0);
-            }
-            else
-            {
-                dot.GetComponent<SpriteRenderer>().sprite = resources.Sprites.MoveArrowCurve;
-                if (vBefore.x - vAfter.x > 0)
-                {
-                    if (vBefore.y - vAfter.y > 0)
-                    {
-                        if (vBefore.x == v.x)
-                            dot.transform.rotation = Quaternion.Euler(0, 0, 90);
-                        else
-                            dot.transform.rotation = Quaternion.Euler(0, 0, 270);
-                    }
-
-                    else
-                    {
-                        if (vBefore.x == v.x)
-                            dot.transform.rotation = Quaternion.Euler(0, 0, 180);
-                        else
-                            dot.transform.rotation = Quaternion.Euler(0, 0, 0);
-                    }
-                }
-                else if (vBefore.x - vAfter.x < 0)
-                {
-                    if (vBefore.y - vAfter.y > 0)
-                    {
-                        if (vBefore.x == v.x)
-                            dot.transform.rotation = Quaternion.Euler(0, 0, 0);
-                        else
-                            dot.transform.rotation = Quaternion.Euler(0, 0, 180);
-                    }
-                    else
-                    {
-                        if (vBefore.x == v.x)
-                            dot.transform.rotation = Quaternion.Euler(0, 0, 270);
-                        else
-                            dot.transform.rotation = Quaternion.Euler(0, 0, 90);
-                    }
-                }
-            }
         }
 
         public void Finish(Unit character, Tile field, int x, int y)
         {
-            oldX = x;
-            oldY = y;
-            nonActive = !field.IsActive && !(x == character.GridPosition.X && y == character.GridPosition.Y);
+            lastDragPosX = x;
+            lastDragPosY = y;
         }
 
         private bool IsOutOfBounds(int x, int y)
@@ -765,84 +549,43 @@ namespace Assets.GameInput
 
         private void OnDestroy()
         {
-            OnEnemyClicked = null;
-            OnUnitClickedConfirmed = null;
-            OnClickedGrid = null;
-            OnClickedField = null;
-            OnClickedMovableTile = null;
-            OnClickedMovableBigTile = null;
             OnUnitClicked = null;
-
             OnDraggedOverUnit = null;
             OnStartDrag = null;
             OnUnitDragged = null;
             OnEndDrag = null;
-            OnEndDragOverNothing = null;
-            OnEndDragOverUnit = null;
-            OnEndDragOverGrid = null;
+            OnDragCanceled = null;
+            OnDragReset = null;
+            OnUnitDoubleClicked = null;
         }
 
         #region ClickEvents
 
-        public delegate void OnEnemyClickedEvent(Unit unit);
-
-        public static OnEnemyClickedEvent OnEnemyClicked;
-
-        public delegate void OnUnitClickedConfirmedEvent(Unit unit, bool confirm);
-
-        public static OnUnitClickedConfirmedEvent OnUnitClickedConfirmed;
-
-        public delegate void OnClickedGridEvent(int x, int y, Vector2 clickedPos);
-
-        public static OnClickedGridEvent OnClickedGrid;
-
-        public delegate void OnClickedFieldEvent(int x, int y);
-
-        public static OnClickedFieldEvent OnClickedField;
-
-        public delegate void OnClickedMovableTileEvent(Unit unit, int x, int y);
-
-        public static OnClickedMovableTileEvent OnClickedMovableTile;
-
-        public delegate void OnClickedMovableBigTileEvent(Unit unit, BigTile position);
-
-        public static OnClickedMovableBigTileEvent OnClickedMovableBigTile;
-
-        public delegate void OnUnitClickedEvent(Unit character, bool doubleClick = false);
+        public delegate void OnUnitClickedEvent(Unit character);
 
         public static OnUnitClickedEvent OnUnitClicked;
+        public static OnUnitClickedEvent OnUnitDoubleClicked;
 
         #endregion
 
         #region DragEvents
 
-        public delegate void OnDraggedOverUnitEvent(Unit unit);
-
-        public static OnDraggedOverUnitEvent OnDraggedOverUnit;
-
         public delegate void OnStartDragEvent(int gridX, int gridY);
-
         public static OnStartDragEvent OnStartDrag;
 
         public delegate void OnUnitDraggedEvent(int x, int y, Unit character);
-
         public static OnUnitDraggedEvent OnUnitDragged;
 
-        public delegate void OnEndDragEvent();
+        public delegate void OnDraggedOverUnitEvent(Unit unit);
+        public static OnDraggedOverUnitEvent OnDraggedOverUnit;
 
-        public static OnEndDragEvent OnEndDrag;
+        public static Action OnEndDrag;
 
-        public delegate void OnEndDragOverNothingEvent();
+        public static Action OnDragCanceled;
 
-        public static OnEndDragOverNothingEvent OnEndDragOverNothing;
+        public static Action OnDragReset;
 
-        public delegate void OnEndDragOverUnitEvent(Unit character);
-
-        public static OnEndDragOverUnitEvent OnEndDragOverUnit;
-
-        public delegate void OnEndDragOverGridEvent(int x, int y);
-
-        public static OnEndDragOverGridEvent OnEndDragOverGrid;
+        public static Action<bool> OnSetActive;
 
         #endregion
     }

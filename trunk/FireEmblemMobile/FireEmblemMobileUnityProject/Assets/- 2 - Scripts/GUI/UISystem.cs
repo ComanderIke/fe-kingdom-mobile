@@ -1,10 +1,12 @@
 ﻿using Assets.Core;
 using Assets.GameActors.Units;
+using Assets.GameInput;
 using Assets.GameResources;
 using Assets.Mechanics;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Analytics;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
@@ -45,6 +47,7 @@ namespace Assets.GUI
         [SerializeField] public BattleRenderer BattleRenderer;
         [SerializeField] private GameObject winScreen = default;
         [SerializeField] private GameObject gameOverScreen = default;
+        [SerializeField] private LevelUpScreenController levelUpScreen = default;
 
 
         [Header("UI Sections")]
@@ -53,11 +56,13 @@ namespace Assets.GUI
         [SerializeField] private GameObject attackPreview = default;
         [Header("Buttons")]
         [SerializeField] private Button deselectButton = default;
+        
 
 
         [Header("Animations")]
         [SerializeField] private GameObject playerTurnAnimation = default;
         [SerializeField] private GameObject aiTurnAnimation = default;
+       
 
         private Dictionary<string, GameObject> activeUnitEffects;
         private GridGameManager gridGameManager;
@@ -74,7 +79,9 @@ namespace Assets.GUI
             Unit.UnitShowActiveEffect += SpawnActiveUnitEffect;
             UnitActionSystem.OnSelectedCharacter += ShowDeselectButton;
             UnitActionSystem.OnDeselectCharacter += HideDeselectButton;
-
+            UnitActionSystem.OnCheckAttackPreview += ShowAttackPreview;
+            Unit.OnUnitLevelUp += ShowLevelUpScreen;
+            InputSystem.OnDragReset += HideAttackPreview;
             activeUnitEffects = new Dictionary<string, GameObject>();
             attackableEnemyEffects = new List<GameObject>();
             attackableFieldEffects = new List<GameObject>();
@@ -91,6 +98,11 @@ namespace Assets.GUI
             deselectButton.gameObject.SetActive(false);
         }
 
+        public void ShowLevelUpScreen(string name, int levelBefore, int levelAfter, int [] stats, int[] statIncreases)
+        {
+            AnimationQueue.Add(() => levelUpScreen.Show(name, levelBefore, levelAfter, stats, statIncreases));
+            
+        }
         public void DeselectButtonClicked()
         {
             OnDeselectButtonClicked();
@@ -293,7 +305,7 @@ namespace Assets.GUI
 
         public void ShowAttackPreview(Unit attacker, Unit defender)
         {
-            
+            ShowAttackableEnemy(defender.GridPosition.X, defender.GridPosition.Y);
             attackPreview.SetActive(true);
 
             attackPreview.GetComponent<AttackPreviewUI>().UpdateValues(gridGameManager.GetSystem<BattleSystem>().GetBattlePreview(attacker, defender), attacker.CharacterSpriteSet.FaceSprite, defender.CharacterSpriteSet.FaceSprite);

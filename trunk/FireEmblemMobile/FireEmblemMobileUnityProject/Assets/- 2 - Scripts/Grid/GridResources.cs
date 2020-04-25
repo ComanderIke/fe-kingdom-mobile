@@ -16,6 +16,5 @@ namespace Assets.Grid
         public Material CellMaterialInvalid;
         public Material CellMaterialStandOn;
         public Material CellMaterialAttackableEnemy;
-        public PreferredMovementPath PreferredPath;
     }
 }

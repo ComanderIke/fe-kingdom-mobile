@@ -3,6 +3,7 @@ using Assets.GameActors.Units;
 using Assets.Map;
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Grid
@@ -26,6 +27,12 @@ namespace Assets.Grid
         protected Unit Character;
         protected MapSystem GridScript;
 
+        public GridPosition(int x, int y)
+        {
+            this.X = x;
+            this.Y = y;
+            Character = null;
+        }
         public GridPosition(Unit character)
         {
             this.Character = character;
@@ -96,6 +103,16 @@ namespace Assets.Grid
             }
 
             return false;
+        }
+
+        public static List<GridPosition> GetFromVectorList(List<Vector2> movePath)
+        {
+            List<GridPosition> ret = new List<GridPosition>();
+            for(int i=0; i < movePath.Count; i++)
+            {
+                ret.Add(new GridPosition((int)movePath[i].x, (int)movePath[i].y));
+            }
+            return ret;
         }
     }
 }

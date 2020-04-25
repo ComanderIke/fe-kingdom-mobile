@@ -5,6 +5,7 @@ using Assets.GameInput;
 using Assets.Grid;
 using Assets.GUI;
 using Assets.Mechanics.Commands;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,31 +19,16 @@ namespace Assets.Mechanics
 
         public static OnCommandFinishedEvent OnCommandFinished;
 
-        public delegate void OnReactionFinishedEvent();
-
-        public static OnReactionFinishedEvent OnReactionFinished;
-
-        public delegate void OnAllCommandsFinishedEvent();
-
-        public static OnAllCommandsFinishedEvent OnAllCommandsFinished;
+        public static Action OnAllCommandsFinished;
 
         public delegate void OnUndoEvent();
 
         public static OnUndoEvent OnUndo;
 
+        public delegate void OnCheckAttackPreviewEvent(Unit u, Unit target);
+        public static OnCheckAttackPreviewEvent OnCheckAttackPreview;
+
         #region UnitActions
-
-        public delegate void OnUnitMoveToEnemyEvent();
-
-        public static OnUnitMoveToEnemyEvent OnUnitMoveToEnemy;
-
-        public delegate void OnStartMovingUnitEvent();
-
-        public static OnStartMovingUnitEvent OnStartMovingUnit;
-
-        public delegate void OnStopMovingUnitEvent();
-
-        public static OnStopMovingUnitEvent OnStopMovingUnit;
 
         public delegate void OnDeselectCharacterEvent();
 
@@ -57,16 +43,22 @@ namespace Assets.Mechanics
         #endregion
 
         private GridGameManager gridGameManager;
-        public PreferredMovementPath PreferredPath;
-        private Stack<Command> previewsActions;
+        private Stack<Command> lastActions;
         private Queue<Command> currentActions;
+        private GameplayInput gameplayInput;
 
         private void Start()
         {
+            gameplayInput = new GameplayInput();
             gridGameManager = GridGameManager.Instance;
-            InputSystem.OnEndDragOverGrid += UnitMoveOnTile;
-            InputSystem.OnEndDragOverUnit += UnitMoveToOtherUnit;
-            previewsActions = new Stack<Command>();
+            
+            
+            GameplayInput.OnWait += Wait;
+            GameplayInput.OnAttackUnit += Fight;
+            GameplayInput.OnMoveUnit += MoveCharacter;
+            GameplayInput.OnCheckAttackPreview += CheckAttackPreview;
+            GameplayInput.OnExecuteInputActions += ExecuteActions;
+            lastActions = new Stack<Command>();
             currentActions = new Queue<Command>();
             OnUndo += Undo;
             OnCommandFinished += ExecuteActions;
@@ -74,8 +66,8 @@ namespace Assets.Mechanics
 
         private void Undo()
         {
-            Debug.Log(previewsActions.Count);
-            previewsActions.Pop().Undo();
+            Debug.Log("Undo: " + lastActions.Count);
+            lastActions.Pop().Undo();
         }
 
         public void AddCommand(Command c)
@@ -83,30 +75,8 @@ namespace Assets.Mechanics
             currentActions.Enqueue(c);
         }
 
-        public void MoveCharacter(Unit c, int x, int y, List<Vector2> path = null)
-        {
-            var mCc = new MoveCharacterCommand(c, x, y, path);
-            Unit.UnitShowActiveEffect(c, false, false);
-            UiSystem.OnShowCursor(x, y);
-            currentActions.Enqueue(mCc);
-        }
-
-        public void PushUnit(Unit character, Vector2 direction)
-        {
-            var pCc = new PushCharacterCommand(character, direction);
-            currentActions.Enqueue(pCc);
-        }
-
-        public void Fight(Unit attacker, Unit target)
-        {
-            var mCc = new AttackCommand(attacker, target);
-            currentActions.Enqueue(mCc);
-            // mCC.Execute();
-        }
-
         public void ExecuteActions()
         {
-            //do this for each finished Command
             if (currentActions.Count != 0)
             {
                 var current = currentActions.Dequeue();
@@ -114,181 +84,54 @@ namespace Assets.Mechanics
                 {
                     OnCommandFinished = null;
                     OnCommandFinished += ExecuteActions;
-                    OnCommandFinished += AllCommandFinished;
+                    OnCommandFinished += AllCommandsFinished;
                 }
 
                 current.Execute();
 
-                previewsActions.Push(current);
+                lastActions.Push(current);
             }
         }
 
-        private void AllCommandFinished()
+        private void AllCommandsFinished()
         {
-            OnCommandFinished -= AllCommandFinished;
-            OnAllCommandsFinished();
+            OnCommandFinished -= AllCommandsFinished;
+            OnAllCommandsFinished?.Invoke();
+            OnAllCommandsFinished = null;
         }
 
-        public void ActiveCharWait()
+        #region GameplayCommands
+        public void Wait(Unit unit)
         {
-            var unitSelectionManager = gridGameManager.GetSystem<UnitSelectionSystem>();
-            var selectedUnit = unitSelectionManager.SelectedCharacter;
-            if (selectedUnit != null && !selectedUnit.UnitTurnState.IsWaiting)
-            {
-                gridGameManager.GetSystem<Map.MapSystem>().HideMovement();
-                selectedUnit.UnitTurnState.IsWaiting = true;
-                selectedUnit.UnitTurnState.Selected = false;
-                selectedUnit.UnitTurnState.HasMoved = true;
-            }
-
-            unitSelectionManager.DeselectActiveCharacter();
+            var mCc = new WaitCommand(unit);
+            currentActions.Enqueue(mCc);
         }
-
-        public void GoToEnemy(Unit character, Unit enemy, bool drag)
+        public void Fight(Unit attacker, Unit target)
         {
-            OnUnitMoveToEnemy();
-            if (PreferredPath.Path.Count == 0 &&
-                character.GridPosition.CanAttack(character.Stats.AttackRanges, enemy.GridPosition))
-            {
-                gridGameManager.GetSystem<Map.MapSystem>().HideMovement();
-                Debug.Log("Enemy is in Range:");
-
-                if (!drag)
-                {
-                    Fight(character, enemy);
-                    // mainScript.SwitchState(new FightState(character, enemy, new GameplayState()));
-                }
-                else
-                {
-                    Fight(character, enemy);
-                    //mainScript.SwitchState(new FightState(character, enemy, new GameplayState()));
-                }
-
-                Debug.Log("All Commands Setup");
-                OnAllCommandsFinished += SwitchToGamePlayState;
-                ExecuteActions();
-                return;
-            }
-            else //go to enemy cause not in range
-            {
-                Debug.Log("Got to Enemy!");
-                if (gridGameManager.GetSystem<Map.MapSystem>().GridLogic
-                    .IsFieldAttackable(enemy.GridPosition.X, enemy.GridPosition.Y))
-                {
-                    gridGameManager.GetSystem<Map.MapSystem>().HideMovement();
-
-                    var movePath = new List<Vector2>();
-                    for (int i = 0; i < PreferredPath.Path.Count; i++)
-                    {
-                        movePath.Add(new Vector2(PreferredPath.Path[i].x, PreferredPath.Path[i].y));
-                    }
-
-                    int xMov = 0;
-                    int yMov = 0;
-                    if (movePath.Count >= 1)
-                    {
-                        xMov = (int) movePath[movePath.Count - 1].x;
-                        yMov = (int) movePath[movePath.Count - 1].y;
-                    }
-               
-                    if (drag)
-                    {
-                        MoveCharacter(character, xMov, yMov, movePath);
-                        Fight(character, enemy); // false, new FightState(character, enemy, new GameplayState()));
-                        Debug.Log("All Commands Setup");
-                        OnAllCommandsFinished += SwitchToGamePlayState;
-                        ExecuteActions();
-                    }
-                    else
-                    {
-                        MoveCharacter(character, xMov, yMov,
-                            movePath); //, false, new FightState(character, enemy, new GameplayState()));
-                        Fight(character, enemy);
-                        Debug.Log("All Commands Setup");
-                        OnAllCommandsFinished += SwitchToGamePlayState;
-                        ExecuteActions();
-                    }
-
-                    gridGameManager.GetSystem<InputSystem>().AttackRangeFromPath = 0;
-
-                    return;
-                }
-                else
-                {
-                    Debug.Log("Enemy not in Range!");
-                    return;
-                }
-            }
+            var mCc = new AttackCommand(attacker, target);
+            currentActions.Enqueue(mCc);
         }
-
-        private void SwitchToGamePlayState()
+        public void CheckAttackPreview(Unit u, Unit target, GridPosition attackPosition)
         {
-            OnAllCommandsFinished -= SwitchToGamePlayState;
-            gridGameManager.GameStateManager.SwitchState(GameStateManager.GameplayState);
+            gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter.GameTransform
+                            .SetPosition(attackPosition.X, attackPosition.Y);
+            OnCheckAttackPreview?.Invoke(u, target);
         }
-
-        private void UnitMoveOnTile(int x, int y)
+        public void MoveCharacter(Unit c, GridPosition destination, List<GridPosition> path = null)
         {
-            var unitSelectionManager = gridGameManager.GetSystem<UnitSelectionSystem>();
-            var selectedUnit = unitSelectionManager.SelectedCharacter;
-            //Debug.Log("TEST: "+mainScript.GetSystem<Map.MapSystem>().Tiles[x, y]);
-            if (gridGameManager.GetSystem<Map.MapSystem>().Tiles[x, y].IsActive &&
-                !(x == selectedUnit.GridPosition.X && y == selectedUnit.GridPosition.Y))
-            {
-                if (!(selectedUnit is Monster) || !((BigTilePosition) selectedUnit.GridPosition).Position.Contains(
-                    new Vector2(x, y)))
-                {
-                    selectedUnit.GridPosition.SetPosition(selectedUnit.GridPosition.X, selectedUnit.GridPosition.Y);
-                    MoveCharacter(selectedUnit, x, y, PreferredPath.Path); //, true, new GameplayState());
-                    OnAllCommandsFinished += SwitchToGamePlayState;
-                    ExecuteActions();
-                }
-                else
-                {
-                    unitSelectionManager.DeselectActiveCharacter();
-                }
-            }
-            else if (gridGameManager.GetSystem<Map.MapSystem>().Tiles[x, y].Unit != null &&
-                     gridGameManager.GetSystem<Map.MapSystem>().Tiles[x, y].Unit.Faction.Id != selectedUnit.Faction.Id)
-            {
-                GoToEnemy(selectedUnit, gridGameManager.GetSystem<Map.MapSystem>().Tiles[x, y].Unit, true);
-            }
-            else
-            {
-                unitSelectionManager.DeselectActiveCharacter();
-            }
+            var mCc = new MoveCharacterCommand(c, destination, path);
+            Unit.UnitShowActiveEffect(c, false, false);
+            UiSystem.OnShowCursor(destination.X, destination.Y);
+            currentActions.Enqueue(mCc);
         }
-
-        private void UnitMoveToOtherUnit(Unit draggedOverUnit)
-        {
-            Debug.Log("MoveToOtherUnit");
-            var unitSelectionManager = gridGameManager.GetSystem<UnitSelectionSystem>();
-            if (draggedOverUnit.Faction.Id != unitSelectionManager.SelectedCharacter.Faction.Id)
-            {
-                if (gridGameManager.GetSystem<Map.MapSystem>().GridLogic.IsFieldAttackable(draggedOverUnit.GridPosition.X,
-                    draggedOverUnit.GridPosition.Y))
-                    GoToEnemy(unitSelectionManager.SelectedCharacter, draggedOverUnit, true);
-                else
-                {
-                    Debug.Log("enemy not in Range");
-                    unitSelectionManager.DeselectActiveCharacter();
-                }
-            }
-            else
-            {
-                unitSelectionManager.DeselectActiveCharacter();
-            }
-        }
+        #endregion
 
         private void OnDestroy()
         {
-            OnReactionFinished = null;
             OnCommandFinished = null;
             OnAllCommandsFinished = null;
             OnUndo = null;
-            OnUnitMoveToEnemy = null;
-            OnStartMovingUnit = null;
-            OnStopMovingUnit = null;
+
             OnDeselectCharacter = null;
             OnSelectedCharacter = null;
         }

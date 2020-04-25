@@ -4,6 +4,8 @@ using Assets.Grid.PathFinding;
 using Assets.Mechanics;
 using System.Collections.Generic;
 using UnityEngine;
+using Assets.Grid;
+using Assets.GameInput;
 
 namespace Assets.Core.GameStates
 {
@@ -13,7 +15,7 @@ namespace Assets.Core.GameStates
         private int y;
         private bool active;
         private readonly GridGameManager gridGameManager;
-        private List<Vector2> mousePath;
+        private List<GridPosition> mousePath;
         public MovementPath Path;
         public int PathCounter;
         private Unit unit;
@@ -24,7 +26,7 @@ namespace Assets.Core.GameStates
             PathCounter = 0;
         }
 
-        public void StartMovement(Unit c, int x, int y, List<Vector2> path = null)
+        public void StartMovement(Unit c, int x, int y, List<GridPosition> path = null)
         {
             mousePath = path;
             this.x = x;
@@ -44,7 +46,7 @@ namespace Assets.Core.GameStates
             }
 
             active = true;
-            UnitActionSystem.OnStartMovingUnit();
+            InputSystem.OnSetActive(false);
             if (mousePath == null || mousePath.Count == 0)
             {
                 Path = gridGameManager.GetSystem<MoveSystem>().GetPath(unit.GridPosition.X, unit.GridPosition.Y, x, y,
@@ -54,7 +56,7 @@ namespace Assets.Core.GameStates
             else
             {
                 Path = new MovementPath();
-                for (var i = 0; i < mousePath.Count; i++) Path.PrependStep(mousePath[i].x, mousePath[i].y);
+                for (var i = 0; i < mousePath.Count; i++) Path.PrependStep(mousePath[i].X, (int)mousePath[i].Y);
             }
             //Debug.Log("EndEnterMoveState" + Path.GetLength());
         }
@@ -98,15 +100,14 @@ namespace Assets.Core.GameStates
         {
             unit.SetPosition(x, y);
             Debug.Log("Unit moved to x: "+x+" y: "+y);
-            UnitActionSystem.OnStopMovingUnit();
+            InputSystem.OnSetActive(true);
         }
 
         private void FinishMovement()
         {
             Debug.Log("Finished Movement!");
             unit.UnitTurnState.HasMoved = true;
-            if (unit.Faction.IsPlayerControlled)
-                gridGameManager.GetSystem<UnitActionSystem>().ActiveCharWait();
+            //gridGameManager.GetSystem<UnitActionSystem>().ActiveCharWait();
             GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.FinishedMovement);
             UnitActionSystem.OnCommandFinished();
            

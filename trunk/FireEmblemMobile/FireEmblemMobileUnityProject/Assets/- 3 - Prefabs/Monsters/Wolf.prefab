@@ -45,6 +45,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -4843,6 +4844,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -4977,6 +4979,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffc1f205162cfcb45812632490514beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dynamicColor: 0
   hpBar: {fileID: 114960604582756694}
   losingHpBar: {fileID: 2823746159640570098}
 --- !u!1 &1315798148882224
@@ -4993,7 +4996,7 @@ GameObject:
   - component: {fileID: 6942394565247047183}
   m_Layer: 0
   m_Name: Wolf
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5029,6 +5032,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hpBar: {fileID: 114425206823056264}
   spBar: {fileID: 114073647182550106}
+  expBar: {fileID: 0}
   animator: {fileID: 6942394565247047183}
   Unit: {fileID: 11400000, guid: c17627050e93dcc48a6da0c00b18f90b, type: 2}
 --- !u!65 &65051844201243300
@@ -5313,6 +5317,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffc1f205162cfcb45812632490514beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dynamicColor: 0
   hpBar: {fileID: 114990910892805224}
   losingHpBar: {fileID: 5438964935370346937}
 --- !u!1 &1774168360452738
@@ -10079,6 +10084,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -10529,5 +10535,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffc1f205162cfcb45812632490514beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dynamicColor: 0
   hpBar: {fileID: 5438964935370346937}
   losingHpBar: {fileID: 114990910892805224}

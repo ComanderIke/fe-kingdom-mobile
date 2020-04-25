@@ -24,48 +24,11 @@ namespace Assets.Grid
             GridManager = gridManager;
             Tiles = gridManager.Tiles;
             gridData = gridManager.GridData;
-            InputSystem.OnClickedField += FieldClicked;
+           
         }
 
-        public void FieldClicked(int x, int y)
-        {
-            var selectedCharacter = gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter;
-            if (Tiles[x, y].Unit == null)
-            {
-                if (selectedCharacter != null)
-                {
-                    if (Tiles[x, y].IsActive)
-                    {
-                        var movePath = new List<Vector2>();
-                        for (int i = 0; i < GridManager.GridResources.PreferredPath.Path.Count; i++)
-                        {
-                            movePath.Add(new Vector2(GridManager.GridResources.PreferredPath.Path[i].x,
-                                GridManager.GridResources.PreferredPath.Path[i].y));
-                        }
+       
 
-                        gridGameManager.GetSystem<UnitActionSystem>().MoveCharacter(selectedCharacter, x, y, movePath);
-                        UnitActionSystem.OnAllCommandsFinished += SwitchToGamePlayState;
-                        Debug.Log("All Commands Setup");
-                        gridGameManager.GetSystem<UnitActionSystem>().ExecuteActions();
-
-                        gridGameManager.GetSystem<MapSystem>().HideMovement();
-                        return;
-                    }
-                    else
-                    {
-                        // clicked on Field where he cant walk to
-                        //Do nothing
-                    }
-                }
-            }
-        }
-
-        private void SwitchToGamePlayState()
-        {
-            Debug.Log("Switch State Commands Delete");
-            UnitActionSystem.OnAllCommandsFinished -= SwitchToGamePlayState;
-            gridGameManager.GameStateManager.SwitchState(GameStateManager.GameplayState);
-        }
 
         public List<Unit> GetAttackTargets(Unit unit)
         {
@@ -297,6 +260,10 @@ namespace Assets.Grid
             return !invalid;
         }
 
+        public bool IsFieldFreeAndActive(int x, int y)
+        {
+            return Tiles[x, y].Unit == null && Tiles[x, y].IsActive;
+        }
         public void ResetActiveFields()
         {
             GridManager.NodeHelper.Reset();
@@ -333,27 +300,6 @@ namespace Assets.Grid
         }
 
         #endregion
-
-        public MovementPath GetMonsterPath(Monster monster, BigTile position, bool adjacent, List<int> attackRanges)
-        {
-            GridGameManager.Instance.GetSystem<InputSystem>().AttackRangeFromPath = 0;
-            var nodes = new PathFindingNode[gridData.Width, gridData.Height];
-            for (int x = 0; x < gridData.Width; x++)
-            {
-                for (int y = 0; y < gridData.Height; y++)
-                {
-                    bool isAccessible = Tiles[x, y].IsAccessible;
-                    if (Tiles[x, y].Unit != null && Tiles[x, y].Unit.Faction.Id != monster.Faction.Id)
-                        isAccessible = false;
-                    nodes[x, y] = new PathFindingNode(x, y, isAccessible);
-                }
-            }
-
-            var aStar = new AStar2X2(nodes);
-            var p = aStar.GetPath(((BigTilePosition) monster.GridPosition).Position, position,
-                monster.Faction.Id, adjacent, attackRanges);
-            return p;
-        }
 
         public bool IsValidLocation(Vector2 pos, Unit character)
         {

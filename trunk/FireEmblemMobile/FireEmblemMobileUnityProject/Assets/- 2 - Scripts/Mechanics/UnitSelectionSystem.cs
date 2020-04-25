@@ -13,13 +13,18 @@ namespace Assets.Mechanics
     {
         private GridGameManager gridGameManager;
         public Unit SelectedCharacter { get; set; }
+        private GameplayInput GameplayInput { get; set; }
 
         private void Start()
         {
+            GameplayInput = new GameplayInput();
             gridGameManager = GridGameManager.Instance;
-            InputSystem.OnUnitClickedConfirmed += UnitClicked;
-            InputSystem.OnEndDragOverNothing += DeselectActiveCharacter;
+            //InputSystem.OnUnitClickedConfirmed += UnitClicked;
+            InputSystem.OnDragCanceled += DeselectActiveCharacter;
             UiSystem.OnDeselectButtonClicked+=DeselectActiveCharacter;
+            GameplayInput.OnSelectUnit += SelectUnit;
+            GameplayInput.OnDeselectUnit += DeselectActiveCharacter;
+            
             //EventContainer.deselectButtonClicked += DeselectActiveCharacter;
         }
 
@@ -90,41 +95,9 @@ namespace Assets.Mechanics
             }
         }
 
-        public void UnitClicked(Unit c, bool confirm) //TODO will be called by CHaracterClicked
+      
+        private void SelectUnit(Unit c)
         {
-            Debug.Log("Unit Clicked! Confirmed: " +confirm);
-            if (SelectedCharacter != null && SelectedCharacter.GameTransform.GameObject != null &&
-                c != SelectedCharacter)
-            {
-                if (c.Faction.Id != SelectedCharacter.Faction.Id) //Clicked On Enemy
-                {
-                    if (confirm)
-                    {
-                        Debug.Log("Attack Enemy Clicked!");
-                        SelectedCharacter.ResetPosition();
-                        gridGameManager.GetSystem<UnitActionSystem>().GoToEnemy(SelectedCharacter, c, false);
-                    }
-                    else if (gridGameManager.GetSystem<Map.MapSystem>().GridLogic
-                        .GetAttackTargetsAtGameObjectPosition(SelectedCharacter).Contains(c))//Character has been moved but not confirmed the move
-                    {
-                        Debug.Log("AttackEnemy2 Clicked!");
-                        gridGameManager.GetSystem<UiSystem>()
-                    .ShowAttackPreview(gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter, c);
-                        gridGameManager.GetSystem<UiSystem>().ShowAttackableEnemy(c.GridPosition.X, c.GridPosition.Y);
-                        //SelectedCharacter.ResetPosition();
-                        //gridGameManager.GetSystem<UnitActionSystem>().GoToEnemy(SelectedCharacter, c, false);
-
-                    }
-                    else
-                    {
-                        Debug.Log("Enemy Clicked!");
-                        InputSystem.OnEnemyClicked(c);
-                    }
-
-                    return;
-                }
-            }
-
             if (gridGameManager.FactionManager.ActiveFaction.Units.Contains(c))
             {
                 if (!c.UnitTurnState.IsWaiting)
@@ -137,7 +110,7 @@ namespace Assets.Mechanics
                     {
                         if (SelectedCharacter != null)
                             SelectedCharacter.ResetPosition();
-                        gridGameManager.GetSystem<InputSystem>().ResetAll();
+                        gridGameManager.GetSystem<InputSystem>().ResetDrag();
                         gridGameManager.GetSystem<Map.MapSystem>().HideMovement();
                         SelectCharacter(c);
                     }
@@ -147,7 +120,7 @@ namespace Assets.Mechanics
                     gridGameManager.GetSystem<UiSystem>().ShowTopUi(c);
                     if (SelectedCharacter == null)
                     {
-                        gridGameManager.GetSystem<InputSystem>().ResetAll();
+                        gridGameManager.GetSystem<InputSystem>().ResetDrag();
                         gridGameManager.GetSystem<Map.MapSystem>().HideMovement();
                         var s = gridGameManager.GetSystem<Map.MapSystem>();
                         s.ShowMovement(c);

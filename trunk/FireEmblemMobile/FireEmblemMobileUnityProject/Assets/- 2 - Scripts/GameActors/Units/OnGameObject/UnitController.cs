@@ -21,6 +21,7 @@ namespace Assets.GameActors.Units.OnGameObject
         private bool doubleClick;
         [SerializeField] private StatsBarOnMap hpBar;
         [SerializeField] private StatsBarOnMap spBar;
+        [SerializeField] private ExpBarController expBar;
         private float timerForDoubleClick;
         private const float DOUBLE_CLICK_TIME = 0.4f;
         [SerializeField] private Animator animator;
@@ -34,10 +35,18 @@ namespace Assets.GameActors.Units.OnGameObject
             RaycastManager = new RaycastManager();
             Unit.HpValueChanged += HpValueChanged;
             Unit.SpValueChanged += SpValueChanged;
+            Unit.ExperienceManager.OnExpGained += ExpValueChanged;
             Unit.UnitWaiting += SetWaitingSprite;
-
+           
             HpValueChanged();
             SpValueChanged();
+        }
+        void Destroy()
+        {
+            Unit.HpValueChanged -= HpValueChanged;
+            Unit.SpValueChanged -= SpValueChanged;
+            Unit.ExperienceManager.OnExpGained -= ExpValueChanged;
+            Unit.UnitWaiting -= SetWaitingSprite;
         }
 
         private void Update()
@@ -57,6 +66,14 @@ namespace Assets.GameActors.Units.OnGameObject
         {
             if (spBar != null && Unit != null)
                 spBar.SetHealth(Unit.Sp, Unit.Stats.MaxSp);
+        }
+        private void ExpValueChanged(int currentExp, int expGained)
+        {
+            if (expBar != null && Unit != null)
+            {
+                AnimationQueue.Add(()=>expBar.Show(currentExp, expGained));
+                
+            }
         }
 
         #region Renderer
@@ -144,7 +161,13 @@ namespace Assets.GameActors.Units.OnGameObject
             else if (unitSelectedBeforeClicking)
             {
                 Debug.Log(doubleClick);
-                if (!EventSystem.current.IsPointerOverGameObject()) InputSystem.OnUnitClicked(Unit, doubleClick);
+                if (!EventSystem.current.IsPointerOverGameObject())
+                {
+                    if(doubleClick)
+                        InputSystem.OnUnitDoubleClicked(Unit);
+                    else
+                        InputSystem.OnUnitClicked(Unit);
+                }
             }
 
             if (doubleClick)

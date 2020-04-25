@@ -31,6 +31,7 @@ namespace Assets.GameActors.Units.OnGameObject
             unitController.Unit = unit;
             unit.GameTransform.GameObject = unitGameObject;
             unit.SetPosition(x, y);
+            
             //For Performance
             unitGameObject.GetComponentInChildren<Canvas>().worldCamera =
                 GameObject.FindGameObjectWithTag("UICamera").GetComponent<Camera>();
