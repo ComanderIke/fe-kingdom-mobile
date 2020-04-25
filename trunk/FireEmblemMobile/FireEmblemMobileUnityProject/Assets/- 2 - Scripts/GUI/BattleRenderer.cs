@@ -62,10 +62,10 @@ namespace Assets.GUI
         private void StartBattleAnimation()
         {
             attackSequenceIndex = 0;
-            attacker.GameTransform.UnitController.OnAttackAnimationConnected += AttackConnected;
-            defender.GameTransform.UnitController.OnAttackAnimationConnected += AttackConnected;
-            attacker.GameTransform.UnitController.OnAnimationEnded += ContinueBattleAnimation;
-            defender.GameTransform.UnitController.OnAnimationEnded += ContinueBattleAnimation;
+            attacker.GameTransform.UnitAnimator.OnAttackAnimationConnected += AttackConnected;
+            defender.GameTransform.UnitAnimator.OnAttackAnimationConnected += AttackConnected;
+            attacker.GameTransform.UnitAnimator.OnAnimationEnded += ContinueBattleAnimation;
+            defender.GameTransform.UnitAnimator.OnAnimationEnded += ContinueBattleAnimation;
             ContinueBattleAnimation();
         }
 
@@ -89,52 +89,52 @@ namespace Assets.GUI
             if (attackSequence[attackSequenceIndex])
             {
                 if(attacker.GridPosition.X > defender.GridPosition.X && attacker.GridPosition.Y == defender.GridPosition.Y)
-                    attacker.GameTransform.UnitController.BattleAnimationLeft();
+                    attacker.GameTransform.UnitAnimator.BattleAnimationLeft();
                 if (attacker.GridPosition.X < defender.GridPosition.X && attacker.GridPosition.Y == defender.GridPosition.Y)
-                    attacker.GameTransform.UnitController.BattleAnimationRight();
+                    attacker.GameTransform.UnitAnimator.BattleAnimationRight();
                 if (attacker.GridPosition.X == defender.GridPosition.X && attacker.GridPosition.Y < defender.GridPosition.Y)
-                    attacker.GameTransform.UnitController.BattleAnimationUp();
+                    attacker.GameTransform.UnitAnimator.BattleAnimationUp();
                 if (attacker.GridPosition.X == defender.GridPosition.X && attacker.GridPosition.Y > defender.GridPosition.Y)
-                    attacker.GameTransform.UnitController.BattleAnimationDown();
+                    attacker.GameTransform.UnitAnimator.BattleAnimationDown();
 
                 if (attacker.GridPosition.X > defender.GridPosition.X && attacker.GridPosition.Y > defender.GridPosition.Y)
-                    attacker.GameTransform.UnitController.BattleAnimationDownLeft();
+                    attacker.GameTransform.UnitAnimator.BattleAnimationDownLeft();
                 if (attacker.GridPosition.X > defender.GridPosition.X && attacker.GridPosition.Y < defender.GridPosition.Y)
-                    attacker.GameTransform.UnitController.BattleAnimationUpLeft();
+                    attacker.GameTransform.UnitAnimator.BattleAnimationUpLeft();
                 if (attacker.GridPosition.X < defender.GridPosition.X && attacker.GridPosition.Y < defender.GridPosition.Y)
-                    attacker.GameTransform.UnitController.BattleAnimationUpRight();
+                    attacker.GameTransform.UnitAnimator.BattleAnimationUpRight();
                 if (attacker.GridPosition.X < defender.GridPosition.X && attacker.GridPosition.Y > defender.GridPosition.Y)
-                    attacker.GameTransform.UnitController.BattleAnimationDownRight();
+                    attacker.GameTransform.UnitAnimator.BattleAnimationDownRight();
           
             }
             else
             {
                 if (attacker.GridPosition.X > defender.GridPosition.X && attacker.GridPosition.Y == defender.GridPosition.Y)
-                    defender.GameTransform.UnitController.BattleAnimationRight();
+                    defender.GameTransform.UnitAnimator.BattleAnimationRight();
                 if (attacker.GridPosition.X < defender.GridPosition.X && attacker.GridPosition.Y == defender.GridPosition.Y)
-                    defender.GameTransform.UnitController.BattleAnimationLeft();
+                    defender.GameTransform.UnitAnimator.BattleAnimationLeft();
                 if (attacker.GridPosition.X == defender.GridPosition.X && attacker.GridPosition.Y < defender.GridPosition.Y)
-                    defender.GameTransform.UnitController.BattleAnimationDown();
+                    defender.GameTransform.UnitAnimator.BattleAnimationDown();
                 if (attacker.GridPosition.X == defender.GridPosition.X && attacker.GridPosition.Y > defender.GridPosition.Y)
-                    defender.GameTransform.UnitController.BattleAnimationUp();
+                    defender.GameTransform.UnitAnimator.BattleAnimationUp();
                 if (attacker.GridPosition.X > defender.GridPosition.X && attacker.GridPosition.Y > defender.GridPosition.Y)
-                    defender.GameTransform.UnitController.BattleAnimationUpRight();
+                    defender.GameTransform.UnitAnimator.BattleAnimationUpRight();
                 if (attacker.GridPosition.X > defender.GridPosition.X && attacker.GridPosition.Y < defender.GridPosition.Y)
-                    defender.GameTransform.UnitController.BattleAnimationDownRight();
+                    defender.GameTransform.UnitAnimator.BattleAnimationDownRight();
                 if (attacker.GridPosition.X < defender.GridPosition.X && attacker.GridPosition.Y < defender.GridPosition.Y)
-                    defender.GameTransform.UnitController.BattleAnimationDownLeft();
+                    defender.GameTransform.UnitAnimator.BattleAnimationDownLeft();
                 if (attacker.GridPosition.X < defender.GridPosition.X && attacker.GridPosition.Y > defender.GridPosition.Y)
-                    defender.GameTransform.UnitController.BattleAnimationUpLeft();
+                    defender.GameTransform.UnitAnimator.BattleAnimationUpLeft();
             }
 
             attackSequenceIndex++;
         }
         private void EndBattleAnimation()
         {
-            attacker.GameTransform.UnitController.OnAttackAnimationConnected -= AttackConnected;
-            defender.GameTransform.UnitController.OnAttackAnimationConnected -= AttackConnected;
-            attacker.GameTransform.UnitController.OnAnimationEnded -= ContinueBattleAnimation;
-            defender.GameTransform.UnitController.OnAnimationEnded -= ContinueBattleAnimation;
+            attacker.GameTransform.UnitAnimator.OnAttackAnimationConnected -= AttackConnected;
+            defender.GameTransform.UnitAnimator.OnAttackAnimationConnected -= AttackConnected;
+            attacker.GameTransform.UnitAnimator.OnAnimationEnded -= ContinueBattleAnimation;
+            defender.GameTransform.UnitAnimator.OnAnimationEnded -= ContinueBattleAnimation;
             OnFinished?.Invoke();
             Hide();
         }

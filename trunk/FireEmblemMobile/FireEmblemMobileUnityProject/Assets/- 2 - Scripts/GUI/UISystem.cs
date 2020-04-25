@@ -3,6 +3,7 @@ using Assets.GameActors.Units;
 using Assets.GameInput;
 using Assets.GameResources;
 using Assets.Mechanics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -16,32 +17,13 @@ namespace Assets.GUI
     {
         #region Events
 
-        public delegate void OnContinuePressedEvent();
-
-        public static OnContinuePressedEvent OnContinuePressed;
-
-        public delegate void OOnFrontalAttackAnimationEndEvent();
-
-        public static OOnFrontalAttackAnimationEndEvent OnFrontalAttackAnimationEnd;
-
-        public delegate void OnAttackUiVisibleEvent(bool visible);
-
-        public static OnAttackUiVisibleEvent OnAttackAnimationActive;
-
-        public delegate void OnDeselectButtonClickedEvent();
-
-        public static OnDeselectButtonClickedEvent OnDeselectButtonClicked;
-
         public delegate void OnShowCursorEvent(int x, int y);
 
         public static OnShowCursorEvent OnShowCursor;
 
-        public delegate void OnHideCursorEvent();
-
-        public static OnHideCursorEvent OnHideCursor;
-
-
+        public static Action OnHideCursor;
         #endregion
+
         [SerializeField] private Canvas mainCanvas = default;
         [Header("Screens")]
         [SerializeField] public BattleRenderer BattleRenderer;
@@ -56,16 +38,9 @@ namespace Assets.GUI
         [SerializeField] private GameObject attackPreview = default;
         [Header("Buttons")]
         [SerializeField] private Button deselectButton = default;
-        
 
-
-        [Header("Animations")]
-        [SerializeField] private GameObject playerTurnAnimation = default;
-        [SerializeField] private GameObject aiTurnAnimation = default;
-       
-
-        private Dictionary<string, GameObject> activeUnitEffects;
         private GridGameManager gridGameManager;
+        private GameplayInput gameplayInput;
         private GameObject tileCursor;
         private ResourceScript resources;
         private List<GameObject> attackableEnemyEffects;
@@ -74,20 +49,30 @@ namespace Assets.GUI
         private void Start()
         {
             gridGameManager = GridGameManager.Instance;
+            gameplayInput = new GameplayInput();
             OnShowCursor += SpawnTileCursor;
             OnHideCursor += HideTileCursor;
-            Unit.UnitShowActiveEffect += SpawnActiveUnitEffect;
-            UnitActionSystem.OnSelectedCharacter += ShowDeselectButton;
-            UnitActionSystem.OnDeselectCharacter += HideDeselectButton;
+            
+            UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
+            UnitSelectionSystem.OnDeselectCharacter += HideDeselectButton;
+            UnitSelectionSystem.OnDeselectCharacter += HideAttackableField;
+            UnitSelectionSystem.OnEnemySelected += ShowTopUi;
+            UnitSelectionSystem.OnSelectedInActiveCharacter += ShowTopUi;
+
             UnitActionSystem.OnCheckAttackPreview += ShowAttackPreview;
             Unit.OnUnitLevelUp += ShowLevelUpScreen;
             InputSystem.OnDragReset += HideAttackPreview;
-            activeUnitEffects = new Dictionary<string, GameObject>();
+            
             attackableEnemyEffects = new List<GameObject>();
             attackableFieldEffects = new List<GameObject>();
             resources = FindObjectOfType<ResourceScript>();
         }
 
+        private void SelectedCharacter(Unit u)
+        {
+            ShowDeselectButton();
+            ShowTopUi(u);
+        }
         private void ShowDeselectButton()
         {
             deselectButton.gameObject.SetActive(true);
@@ -105,7 +90,7 @@ namespace Assets.GUI
         }
         public void DeselectButtonClicked()
         {
-            OnDeselectButtonClicked();
+            gameplayInput.DeselectUnit();
             //EventContainer.deselectButtonClicked();
         }
 
@@ -150,54 +135,9 @@ namespace Assets.GUI
             Destroy(tileCursor);
         }
 
-        private void SpawnActiveUnitEffect(Unit unit, bool spawn, bool disableOthers)
-        {
-            //foreach (KeyValuePair<string, GameObject> pair in activeUnitEffects)
-            //{
-            //    pair.Value.SetActive(true);
-            //}
-            if (activeUnitEffects.ContainsKey(unit.Name))
-            {
-                var go = activeUnitEffects[unit.Name];
+       
 
-                activeUnitEffects.Remove(unit.Name);
-                Destroy(go);
-            }
-
-            if (spawn)
-            {
-                var go = Instantiate(resources.Prefabs.MoveCursor,
-                    GameObject.FindGameObjectWithTag("World").transform);
-                go.transform.localPosition =
-                    new Vector3(unit.GridPosition.X, unit.GridPosition.Y, go.transform.localPosition.z);
-                activeUnitEffects.Add(unit.Name, go);
-                go.name = "ActiveUnitEffect";
-            }
-            else
-            {
-                if (disableOthers)
-                    foreach (var pair in activeUnitEffects)
-                    {
-                        pair.Value.SetActive(false);
-                    }
-            }
-        }
-
-        public void HideAllActiveUnitEffects()
-        {
-            foreach (var pair in activeUnitEffects)
-            {
-                pair.Value.SetActive(false);
-            }
-        }
-
-        public void ShowAllActiveUnitEffects()
-        {
-            foreach (var pair in activeUnitEffects)
-            {
-                pair.Value.SetActive(true);
-            }
-        }
+     
 
         public int GetUiHeight()
         {
@@ -228,7 +168,7 @@ namespace Assets.GUI
 
         public void ShowFightUi(Unit attacker, Unit defender)
         {
-            HideAllActiveUnitEffects();
+            
             ShowAttackPreview(attacker, defender);
         }
 
@@ -236,8 +176,7 @@ namespace Assets.GUI
         {
             if (BattleRenderer.isActiveAndEnabled)
                 BattleRenderer.Hide();
-            if (gridGameManager.FactionManager.ActiveFaction.IsPlayerControlled)
-                ShowAllActiveUnitEffects();
+            
         }
 
         public void ShowGameOver()
@@ -250,18 +189,7 @@ namespace Assets.GUI
             winScreen.SetActive(true);
         }
 
-        public void PlayerTurnAnimation()
-        {
-            Instantiate(playerTurnAnimation, new Vector3(), Quaternion.identity, mainCanvas.transform).transform
-                .localPosition = new Vector3();
-        }
-
-        public void EnemyTurnAnimation()
-        {
-            HideAllActiveUnitEffects();
-            Instantiate(aiTurnAnimation, new Vector3(), Quaternion.identity, mainCanvas.transform).transform
-                .localPosition = new Vector3();
-        }
+       
 
         public void ShowTopUi(Unit c)
         {
@@ -271,12 +199,12 @@ namespace Assets.GUI
 
         public void UndoClicked()
         {
-            UnitActionSystem.OnUndo();
+            UnitActionSystem.TriggerUndo?.Invoke();
         }
 
         public void EndTurnClicked()
         {
-            TurnSystem.OnEndTurn();
+            TurnSystem.OnTriggerEndTurn();
         }
 
         public void ShowAttackableField(int x, int y)
@@ -326,12 +254,8 @@ namespace Assets.GUI
 
         private void OnDestroy()
         {
-            OnAttackAnimationActive = null;
-            OnDeselectButtonClicked = null;
-            OnFrontalAttackAnimationEnd = null;
             OnHideCursor = null;
             OnShowCursor = null;
-            OnContinuePressed = null;
         }
     }
 }

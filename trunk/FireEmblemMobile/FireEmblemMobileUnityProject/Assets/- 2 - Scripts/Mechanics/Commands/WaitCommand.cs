@@ -21,7 +21,7 @@ namespace Assets.Mechanics.Commands
             var unitSelectionManager = GridGameManager.Instance.GetSystem<UnitSelectionSystem>();
             if (unit != null && !unit.UnitTurnState.IsWaiting)
             {
-                GridGameManager.Instance.GetSystem<Map.MapSystem>().HideMovement();
+                GridGameManager.Instance.GetSystem<Map.MapSystem>().HideMovementRangeOnGrid();
                 unit.UnitTurnState.IsWaiting = true;
                 unit.UnitTurnState.Selected = false;
                 unit.UnitTurnState.HasMoved = true;

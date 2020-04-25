@@ -65,7 +65,7 @@ namespace Assets.Core
             GameStateManager = new GameStateManager();
             GameStateManager.Init();
             Systems.Add(new MoveSystem(GetSystem<MapSystem>()));
-            TurnSystem.OnStartTurn();
+            GetSystem<TurnSystem>().StartTurn();
         }
 
         private void Update()

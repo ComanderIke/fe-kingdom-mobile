@@ -5,6 +5,7 @@ using Assets.GameActors.Units.OnGameObject;
 using Assets.GameInput;
 using Assets.GUI;
 using Assets.Manager;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -14,13 +15,12 @@ namespace Assets.Mechanics
     {
         #region Events
 
-        public delegate void OnEndTurnEvent();
 
-        public static OnEndTurnEvent OnEndTurn;
+        public static Action OnTriggerEndTurn;
 
-        public delegate void OnStartTurnEvent();
+        public static event Action OnEndTurn;
 
-        public static OnStartTurnEvent OnStartTurn;
+        public static event Action OnStartTurn;
 
         #endregion
 
@@ -32,8 +32,7 @@ namespace Assets.Mechanics
         private void Start()
         {
             gridGameManager = GridGameManager.Instance;
-            OnEndTurn += EndTurn;
-            OnStartTurn += StartTurn;
+            OnTriggerEndTurn += EndTurn;
             factionManager = gridGameManager.FactionManager;
             InitPlayers();
         }
@@ -44,65 +43,26 @@ namespace Assets.Mechanics
             factionManager.ActiveFaction = gridGameManager.FactionManager.Factions[factionManager.ActivePlayerNumber];
         }
 
-        private IEnumerator DelayTogglePlayerInput(bool active, float delay)
-        {
-            yield return new WaitForSeconds(delay);
-            UnitController.LockInput = !active;
-            gridGameManager.GetSystem<InputSystem>().Active = active;
-            if (active)
-                gridGameManager.GetSystem<UiSystem>().ShowAllActiveUnitEffects();
-            else
-                gridGameManager.GetSystem<UiSystem>().HideAllActiveUnitEffects();
-        }
-
-        private IEnumerator DelayAIPhase(float delay)
-        {
-            yield return new WaitForSeconds(delay);
-            gridGameManager.GameStateManager.Feed(NextStateTrigger.StartAITurn);
-        }
-
-        private IEnumerator DelayTurnUpdate(float delay)
-        {
-            yield return new WaitForSeconds(delay);
-            Debug.Log("Update Turn");
-            //if (ActivePlayer.ID == 1)
-            //{
-            //    TurnCount++;
-            //    foreach (Player p in Players)
-            //    {
-            //        foreach (LivingObject liv in ActivePlayer.Units)
-            //        {
-            //            liv.UpdateOnWholeTurn();
-            //        }
-            //    }
-            //    Debug.Log("Turn: " + TurnCount);
-            //}
-            foreach (var c in factionManager.ActiveFaction.Units)
-            {
-                c.UpdateTurn();
-            }
-        }
-
-        private void StartTurn()
+        public void StartTurn()
         {
             if (!factionManager.ActiveFaction.IsPlayerControlled)
             {
                 Debug.Log("AITurn");
-                gridGameManager.GetSystem<AudioSystem>().ChangeMusic("EnemyTheme", "PlayerTheme", true);
-
-                gridGameManager.GetSystem<UiSystem>().EnemyTurnAnimation();
-                gridGameManager.StartCoroutine(DelayTogglePlayerInput(false, 0));
-                gridGameManager.StartCoroutine(DelayAIPhase(PlayerTurnTextAnimation.Duration + 0.25f));
+                UnitController.LockInput = true;
+                InputSystem.OnSetActive(false);
+                gridGameManager.GameStateManager.Feed(NextStateTrigger.StartAITurn);
             }
             else
             {
                 Debug.Log("PlayerTurn");
-                gridGameManager.GetSystem<AudioSystem>().ChangeMusic("PlayerTheme", "EnemyTheme", true);
-                gridGameManager.GetSystem<UiSystem>().PlayerTurnAnimation();
-                gridGameManager.StartCoroutine(DelayTogglePlayerInput(true, PlayerTurnTextAnimation.Duration + 0.25f));
+                UnitController.LockInput = !false;
+                InputSystem.OnSetActive(true);
             }
-
-            gridGameManager.StartCoroutine(DelayTurnUpdate(PlayerTurnTextAnimation.Duration + 0.25f));
+            OnStartTurn?.Invoke();
+            foreach (var c in factionManager.ActiveFaction.Units)
+            {
+                c.UpdateTurn();
+            }
         }
 
         public void EndTurn()
@@ -117,12 +77,13 @@ namespace Assets.Mechanics
             factionManager.ActivePlayerNumber++;
 
             gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter = null;
+            OnEndTurn?.Invoke();
             StartTurn();
         }
 
         private void OnDestroy()
         {
-            OnEndTurn = null;
+            OnTriggerEndTurn = null;
             OnStartTurn = null;
         }
     }

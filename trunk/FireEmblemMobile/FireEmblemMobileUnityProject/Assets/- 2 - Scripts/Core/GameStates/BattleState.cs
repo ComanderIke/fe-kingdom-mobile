@@ -2,12 +2,16 @@
 using Assets.GameActors.Units;
 using Assets.GUI;
 using Assets.Mechanics;
+using System;
 using UnityEngine;
 
 namespace Assets.Core.GameStates
 {
     public class BattleState : GameState<NextStateTrigger>
     {
+        public static Action OnEnter;
+        public static Action OnExit;
+
         private Unit attacker;
         private Unit defender;
         public BattleSystem BattleSystem;
@@ -41,6 +45,7 @@ namespace Assets.Core.GameStates
             ShowFightVisuals(BattleSystem.GetAttackSequence());
            
             SetUpMusic();
+            OnEnter?.Invoke();
         }
 
         public override GameState<NextStateTrigger> Update()
@@ -56,6 +61,7 @@ namespace Assets.Core.GameStates
             BattleRenderer.OnAttackConnected -= BattleSystem.ContinueBattle;
             BattleRenderer.OnFinished -= BattleSystem.EndBattle;
             GridGameManager.Instance.GetSystem<AudioSystem>().ChangeMusic(startMusic, "BattleTheme", true);
+            OnExit?.Invoke();
         }
 
         private void ShowFightVisuals(bool [] attackSequence)

@@ -15,44 +15,23 @@ namespace Assets.Mechanics
     {
         #region Events
 
-        public delegate void OnCommandFinishedEvent();
+        public static Action OnCommandFinished;
 
-        public static OnCommandFinishedEvent OnCommandFinished;
+        public static event Action OnAllCommandsFinished;
 
-        public static Action OnAllCommandsFinished;
-
-        public delegate void OnUndoEvent();
-
-        public static OnUndoEvent OnUndo;
+        public static event Action OnUndo;
+        public static Action TriggerUndo;
 
         public delegate void OnCheckAttackPreviewEvent(Unit u, Unit target);
-        public static OnCheckAttackPreviewEvent OnCheckAttackPreview;
-
-        #region UnitActions
-
-        public delegate void OnDeselectCharacterEvent();
-
-        public static OnDeselectCharacterEvent OnDeselectCharacter;
-
-        public delegate void OnSelectCharacterEvent();
-
-        public static OnSelectCharacterEvent OnSelectedCharacter;
+        public static event OnCheckAttackPreviewEvent OnCheckAttackPreview;
 
         #endregion
 
-        #endregion
-
-        private GridGameManager gridGameManager;
         private Stack<Command> lastActions;
         private Queue<Command> currentActions;
-        private GameplayInput gameplayInput;
 
         private void Start()
         {
-            gameplayInput = new GameplayInput();
-            gridGameManager = GridGameManager.Instance;
-            
-            
             GameplayInput.OnWait += Wait;
             GameplayInput.OnAttackUnit += Fight;
             GameplayInput.OnMoveUnit += MoveCharacter;
@@ -60,12 +39,13 @@ namespace Assets.Mechanics
             GameplayInput.OnExecuteInputActions += ExecuteActions;
             lastActions = new Stack<Command>();
             currentActions = new Queue<Command>();
-            OnUndo += Undo;
             OnCommandFinished += ExecuteActions;
+            TriggerUndo += Undo;
         }
 
-        private void Undo()
+        public void Undo()
         {
+            OnUndo?.Invoke();
             Debug.Log("Undo: " + lastActions.Count);
             lastActions.Pop().Undo();
         }
@@ -86,9 +66,7 @@ namespace Assets.Mechanics
                     OnCommandFinished += ExecuteActions;
                     OnCommandFinished += AllCommandsFinished;
                 }
-
                 current.Execute();
-
                 lastActions.Push(current);
             }
         }
@@ -113,8 +91,6 @@ namespace Assets.Mechanics
         }
         public void CheckAttackPreview(Unit u, Unit target, GridPosition attackPosition)
         {
-            gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter.GameTransform
-                            .SetPosition(attackPosition.X, attackPosition.Y);
             OnCheckAttackPreview?.Invoke(u, target);
         }
         public void MoveCharacter(Unit c, GridPosition destination, List<GridPosition> path = null)
@@ -131,9 +107,6 @@ namespace Assets.Mechanics
             OnCommandFinished = null;
             OnAllCommandsFinished = null;
             OnUndo = null;
-
-            OnDeselectCharacter = null;
-            OnSelectedCharacter = null;
         }
     }
 }

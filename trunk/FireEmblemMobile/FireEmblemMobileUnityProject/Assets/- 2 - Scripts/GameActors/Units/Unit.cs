@@ -6,6 +6,7 @@ using Assets.GameActors.Units.Attributes;
 using Assets.GameActors.Units.CharStateEffects;
 using Assets.GameActors.Units.OnGameObject;
 using Assets.Grid;
+using Assets.Mechanics;
 using Assets.Mechanics.Battle;
 using Assets.Mechanics.Dialogs;
 using UnityEngine;
@@ -96,7 +97,9 @@ namespace Assets.GameActors.Units
             Growths = Growths == null ? CreateInstance<Growths>() : Instantiate(Growths);
             Hp = Stats.MaxHp;
             Sp = Stats.MaxSp;
+            
         }
+       
         private void LevelUp(int levelBefore, int levelAfter)
         {
            

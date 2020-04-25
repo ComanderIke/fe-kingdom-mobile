@@ -2,6 +2,7 @@
 using Assets.GameInput;
 using Assets.GUI;
 using Assets.Mechanics.Dialogs;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,25 +10,33 @@ namespace Assets.GameActors.Units.OnGameObject
 {
     public class UnitController : MonoBehaviour, IDragAble
     {
-        public delegate void OnAnimationEndedEvent();
+        public delegate void OnUnitDraggedEvent(int x, int y, Unit character);
+        public static event OnUnitDraggedEvent OnUnitDragged;
+        public delegate void OnStartDragEvent(int gridX, int gridY);
+        public static event OnStartDragEvent OnStartDrag;
+        public delegate void OnDraggedOverUnitEvent(Unit unit);
+        public static event OnDraggedOverUnitEvent OnDraggedOverUnit;
+        public static event Action OnEndDrag;
+        public delegate void OnUnitClickedEvent(Unit character);
+        public static event OnUnitClickedEvent OnUnitClicked;
+        public static event OnUnitClickedEvent OnUnitDoubleClicked;
 
-        public OnAnimationEndedEvent OnAnimationEnded;
-        public delegate void OnAttackAnimationConnectedEvent();
 
-        public OnAttackAnimationConnectedEvent OnAttackAnimationConnected;
+
+
+        [SerializeField] private StatsBarOnMap hpBar;
+        [SerializeField] private StatsBarOnMap spBar;
+        [SerializeField] private ExpBarController expBar;
+        public Unit Unit;
+        public DragManager DragManager { get; set; }
+        public RaycastManager RaycastManager { get; set; }
+
         public static bool LockInput = true;
         private bool dragInitiated;
         private bool dragStarted;
         private bool doubleClick;
-        [SerializeField] private StatsBarOnMap hpBar;
-        [SerializeField] private StatsBarOnMap spBar;
-        [SerializeField] private ExpBarController expBar;
         private float timerForDoubleClick;
         private const float DOUBLE_CLICK_TIME = 0.4f;
-        [SerializeField] private Animator animator;
-        public Unit Unit;
-        public DragManager DragManager { get; set; }
-        public RaycastManager RaycastManager { get; set; }
 
         private void Start()
         {
@@ -37,7 +46,7 @@ namespace Assets.GameActors.Units.OnGameObject
             Unit.SpValueChanged += SpValueChanged;
             Unit.ExperienceManager.OnExpGained += ExpValueChanged;
             Unit.UnitWaiting += SetWaitingSprite;
-           
+   
             HpValueChanged();
             SpValueChanged();
         }
@@ -48,7 +57,7 @@ namespace Assets.GameActors.Units.OnGameObject
             Unit.ExperienceManager.OnExpGained -= ExpValueChanged;
             Unit.UnitWaiting -= SetWaitingSprite;
         }
-
+        
         private void Update()
         {
             if (LockInput)
@@ -92,12 +101,7 @@ namespace Assets.GameActors.Units.OnGameObject
 
         private void OnMouseEnter()
         {
-            if (!EventSystem.current.IsPointerOverGameObject()) InputSystem.OnDraggedOverUnit(Unit);
-        }
-
-        private void OnMouseExit()
-        {
-            if (DragManager.IsAnyUnitDragged) GridGameManager.Instance.GetSystem<InputSystem>().DraggedExit();
+            if (!EventSystem.current.IsPointerOverGameObject()) OnDraggedOverUnit(Unit);
         }
 
         private void OnMouseDrag()
@@ -155,7 +159,7 @@ namespace Assets.GameActors.Units.OnGameObject
                 Unit.UnitShowActiveEffect(Unit, true, false);
                 Debug.Log("ENDDRAGUNIT");
                
-                InputSystem.OnEndDrag();
+                OnEndDrag();
                 gameObject.GetComponent<BoxCollider>().enabled = true;
             }
             else if (unitSelectedBeforeClicking)
@@ -164,9 +168,9 @@ namespace Assets.GameActors.Units.OnGameObject
                 if (!EventSystem.current.IsPointerOverGameObject())
                 {
                     if(doubleClick)
-                        InputSystem.OnUnitDoubleClicked(Unit);
+                        OnUnitDoubleClicked(Unit);
                     else
-                        InputSystem.OnUnitClicked(Unit);
+                        OnUnitClicked(Unit);
                 }
             }
 
@@ -190,11 +194,11 @@ namespace Assets.GameActors.Units.OnGameObject
         {
             dragStarted = true;
             var gridPos = RaycastManager.GetMousePositionOnGrid();
-            InputSystem.OnStartDrag((int) gridPos.x, (int) gridPos.y);
+            OnStartDrag((int) gridPos.x, (int) gridPos.y);
             //Debug.Log("STARTDRAG");
             unitSelectedBeforeClicking = Unit.UnitTurnState.Selected;
             if (!Unit.UnitTurnState.Selected)//If unit is already selected wait for MouseUp/DragEnd to invoke OnUnitClicked
-                if (!EventSystem.current.IsPointerOverGameObject()) InputSystem.OnUnitClicked(Unit);
+                if (!EventSystem.current.IsPointerOverGameObject()) OnUnitClicked(Unit);
         }
 
         public void Dragging()
@@ -204,7 +208,7 @@ namespace Assets.GameActors.Units.OnGameObject
             GetComponent<BoxCollider>().enabled = false;
             var gridPos = RaycastManager.GetMousePositionOnGrid();
             if (RaycastManager.ConnectedLatestHit())
-                InputSystem.OnUnitDragged((int) gridPos.x, (int) gridPos.y, Unit);
+                OnUnitDragged((int) gridPos.x, (int) gridPos.y, Unit);
         }
 
         public void EndDrag()
@@ -223,51 +227,5 @@ namespace Assets.GameActors.Units.OnGameObject
 
         #endregion
 
-        #region Animations
-
-        public void AttackConnected()
-        {
-            OnAttackAnimationConnected?.Invoke();
-            Debug.Log("Attack Connected!");
-        }
-        public void AnimationEnded()
-        {
-            OnAnimationEnded?.Invoke();
-            Debug.Log("Attack Finished!");
-        }
-
-        public void BattleAnimationUp()
-        {
-            animator.SetTrigger("BattleAnimationUp");
-        }
-        public void BattleAnimationDown()
-        {
-            animator.SetTrigger("BattleAnimationDown");
-        }
-        public void BattleAnimationLeft()
-        {
-            animator.SetTrigger("BattleAnimationLeft");
-        }
-        public void BattleAnimationRight()
-        {
-            animator.SetTrigger("BattleAnimationRight");
-        }
-        public void BattleAnimationDownLeft()
-        {
-            animator.SetTrigger("BattleAnimationDownLeft");
-        }
-        public void BattleAnimationDownRight()
-        {
-            animator.SetTrigger("BattleAnimationDownRight");
-        }
-        public void BattleAnimationUpLeft()
-        {
-            animator.SetTrigger("BattleAnimationUpLeft");
-        }
-        public void BattleAnimationUpRight()
-        {
-            animator.SetTrigger("BattleAnimationUpRight");
-        }
-        #endregion
     }
 }

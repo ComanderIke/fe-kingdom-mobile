@@ -34,7 +34,7 @@ namespace Assets.Core.GameStates
                 }
                 else
                 {
-                    TurnSystem.OnEndTurn();
+                    TurnSystem.OnTriggerEndTurn();
                     GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.AISystemFinished);
                 }
             }

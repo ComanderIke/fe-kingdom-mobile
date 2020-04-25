@@ -4,6 +4,7 @@ using Assets.GameResources;
 using Assets.Grid;
 using Assets.Grid.PathFinding;
 using Assets.GUI;
+using Assets.Mechanics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,14 +38,41 @@ namespace Assets.Map
             GridRenderer = new GridRenderer(this);
             GridLogic = new GridLogic(this);
             NodeHelper = new NodeHelper(GridData.Width, GridData.Height);
+            UnitSelectionSystem.OnDeselectCharacter += HideMovementRangeOnGrid;
+            UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
+            UnitSelectionSystem.OnEnemySelected += OnEnemySelected;
+            UnitSelectionSystem.OnSelectedInActiveCharacter += OnEnemySelected;
+
         }
 
+        private void OnEnemySelected(Unit u)
+        {
+            HideMovementRangeOnGrid();
+            ShowMovementRangeOnGrid(u);
+
+            ShowAttackRangeOnGrid(u, new List<int>(u.Stats.AttackRanges));
+            GridLogic.ResetActiveFields();
+        }
         public Tile GetTileFromVector2(Vector2 pos)
         {
             return Tiles[(int) pos.x, (int) pos.y];
         }
+        private void SelectedCharacter(Unit u)
+        {
+            HideMovementRangeOnGrid();
+            if (!u.UnitTurnState.HasMoved)
+            {
+                ShowMovementRangeOnGrid(u);
+                ShowAttackRangeOnGrid(u, new List<int>(u.Stats.AttackRanges));
+            }
+            else
+            {
+                if (!u.UnitTurnState.HasAttacked)
+                    ShowAttackRangeOnGrid(u, new List<int>(u.Stats.AttackRanges));
+            }
+        }
 
-        public void ShowMovement(Unit c)
+        public void ShowMovementRangeOnGrid(Unit c)
         {
             if (c.GridPosition is BigTilePosition)
                 ShowMonsterMovement(c.GridPosition.X, c.GridPosition.Y, c.Stats.Mov,
@@ -82,7 +110,7 @@ namespace Assets.Map
                 ShowMonsterMovement(x, y + 1, range - 1, new List<int>(attack), c, playerId);
         }
 
-        public void ShowAttack(Unit character, List<int> attack)
+        public void ShowAttackRangeOnGrid(Unit character, List<int> attack)
         {
             var tilesFromWhereUCanAttack = (from Tile f in Tiles where f.IsActive && (f.Unit == null || f.Unit == character) select f).ToList();
 
@@ -109,8 +137,11 @@ namespace Assets.Map
             }
             GridRenderer.ShowStandOnTexture(character);
         }
-
-        public void HideMovement(List<Vector2> ignorePositions = null)
+        public void HideMovementRangeOnGrid()//In Order to work with ActionEvent!!!
+        {
+            HideMovementRangeOnGrid(null);
+        }
+        public void HideMovementRangeOnGrid(List<Vector2> ignorePositions)
         {
             for (int i = 0; i < GridData.Width; i++)
             {

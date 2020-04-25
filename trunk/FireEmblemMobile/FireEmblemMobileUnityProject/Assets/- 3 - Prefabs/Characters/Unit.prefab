@@ -508,6 +508,7 @@ GameObject:
   - component: {fileID: 114108881387644174}
   - component: {fileID: 65892163502751776}
   - component: {fileID: 962006525075103870}
+  - component: {fileID: -5080425089187104667}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Untagged
@@ -546,7 +547,6 @@ MonoBehaviour:
   hpBar: {fileID: 114342459637513084}
   spBar: {fileID: 114153627789507970}
   expBar: {fileID: 1052306922027457461}
-  animator: {fileID: 962006525075103870}
   Unit: {fileID: 0}
 --- !u!65 &65892163502751776
 BoxCollider:
@@ -580,6 +580,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-5080425089187104667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942422009465046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d305034671b30d74d9615599c6229e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 962006525075103870}
 --- !u!1 &1956382129533642
 GameObject:
   m_ObjectHideFlags: 0
