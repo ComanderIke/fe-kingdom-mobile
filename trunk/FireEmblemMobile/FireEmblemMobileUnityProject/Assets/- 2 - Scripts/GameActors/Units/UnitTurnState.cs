@@ -34,10 +34,9 @@ namespace Assets.GameActors.Units
             {
                 hasMoved = value;
                 unit.UnitCanMove?.Invoke(unit, !hasMoved);
-                if (unit.Faction.IsPlayerControlled)
-                    Unit.UnitShowActiveEffect(unit, !hasMoved, false);
+                
                 if (hasMoved)
-                    UiSystem.OnHideCursor();
+                    UiSystem.OnHideCursor?.Invoke();
             }
         }
 

@@ -6,11 +6,11 @@ namespace Assets.GameActors.Units
 {
     public class UnitsSystem : MonoBehaviour, IEngineSystem
     {
-        private UnitController[] units;
+        private UnitInputController[] units;
 
         private void Start()
         {
-            units = FindObjectsOfType<UnitController>();
+            units = FindObjectsOfType<UnitInputController>();
         }
 
         public void ShowUnits()

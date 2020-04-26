@@ -40,7 +40,7 @@ namespace Assets.Core.GameStates
             BattleSystem.StartBattle();
             BattleRenderer.OnAttackConnected += BattleSystem.ContinueBattle;
             BattleRenderer.OnFinished += BattleSystem.EndBattle;
-            GridGameManager.Instance.GetSystem<UiSystem>().HideAttackableEnemy();
+            
             Debug.Log("ENTER FIGHTSTATE");
             ShowFightVisuals(BattleSystem.GetAttackSequence());
            

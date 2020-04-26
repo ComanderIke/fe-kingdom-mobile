@@ -33,7 +33,7 @@ namespace Assets.Mechanics
 
         private void SameCharacterSelected()
         {
-            DeselectActiveCharacter();
+            SelectCharacter(SelectedCharacter);
         }
 
         public void DeselectActiveCharacter()
@@ -72,6 +72,7 @@ namespace Assets.Mechanics
 
         private void SelectInActiveCharacter(Unit c)
         {
+            Debug.Log("SelectInactiveCharacter");
             OnSelectedInActiveCharacter?.Invoke(c);
         }
         private void SelectUnit(Unit c)

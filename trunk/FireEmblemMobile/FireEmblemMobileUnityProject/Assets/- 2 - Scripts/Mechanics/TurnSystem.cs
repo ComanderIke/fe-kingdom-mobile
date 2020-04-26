@@ -48,14 +48,14 @@ namespace Assets.Mechanics
             if (!factionManager.ActiveFaction.IsPlayerControlled)
             {
                 Debug.Log("AITurn");
-                UnitController.LockInput = true;
+                UnitInputController.LockInput = true;
                 InputSystem.OnSetActive(false);
                 gridGameManager.GameStateManager.Feed(NextStateTrigger.StartAITurn);
             }
             else
             {
                 Debug.Log("PlayerTurn");
-                UnitController.LockInput = !false;
+                UnitInputController.LockInput = false;
                 InputSystem.OnSetActive(true);
             }
             OnStartTurn?.Invoke();

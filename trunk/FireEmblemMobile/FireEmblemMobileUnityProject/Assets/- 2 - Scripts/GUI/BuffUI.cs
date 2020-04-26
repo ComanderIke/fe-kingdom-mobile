@@ -10,14 +10,14 @@ namespace Assets.GUI
         [SerializeField] private GameObject buffPrefab = default;
         private Dictionary<string, GameObject> buffs;
 
-        private void Start()
+        private void OnEnable()
         {
             buffs = new Dictionary<string, GameObject>();
         }
 
         public void Initialize(Unit unit)
         {
-            unit.UnitCanMove += UnitMoveState;
+            
         }
 
         private void UnitMoveState(Unit unit, bool canMove)

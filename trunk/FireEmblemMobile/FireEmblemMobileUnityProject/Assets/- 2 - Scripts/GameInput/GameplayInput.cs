@@ -23,24 +23,29 @@ public class GameplayInput : IGameInput
     public static CheckAttackPreviewEvent OnCheckAttackPreview;
     public void AttackUnit(Unit u, Unit attackTarget)
     {
+        Debug.Log("GameInput: Attack Unit: " + u.name+" Target: " +attackTarget.name);
         OnAttackUnit?.Invoke(u, attackTarget);
     }
     public void DeselectUnit()
     {
+        Debug.Log("GameInput: Deselect Unit");
         OnDeselectUnit?.Invoke();
     }
 
     public void MoveUnit(Unit u, GridPosition position, List<GridPosition> movePath)
     {
+        Debug.Log("GameInput: Move Unit: " + u.name +" to [" +position.X +"/"+position.Y+"]");
         OnMoveUnit?.Invoke(u, position, movePath);
     }
 
     public void SelectUnit(Unit u)
     {
+        Debug.Log("GameInput: Select Unit: " + u.name);
         OnSelectUnit?.Invoke(u);
     }
     public void Wait(Unit u)
     {
+        Debug.Log("GameInput: Wait Unit: " + u.name);
         OnWait?.Invoke(u);
     }
 

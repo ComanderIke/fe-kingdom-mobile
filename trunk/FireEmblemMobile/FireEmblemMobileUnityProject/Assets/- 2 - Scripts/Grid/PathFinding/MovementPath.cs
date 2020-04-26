@@ -11,6 +11,10 @@ namespace Assets.Grid.PathFinding
         {
         }
 
+        public void Remove(int index)
+        {
+            steps.RemoveAt(index);
+        }
         public int GetLength()
         {
             return steps.Count;

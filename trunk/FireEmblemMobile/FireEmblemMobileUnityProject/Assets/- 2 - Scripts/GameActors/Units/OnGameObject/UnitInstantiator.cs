@@ -22,13 +22,12 @@ namespace Assets.GameActors.Units.OnGameObject
             unitGameObject.name = unit.Name;
             unitGameObject.transform.parent = gameObject.transform;
             unitGameObject.layer = LayerMask.NameToLayer("Characters");
-            var statsBarOnMaps = unitGameObject.GetComponentsInChildren<StatsBarOnMap>().Where( a => a.dynamicColor);
-            foreach (var statBar in statsBarOnMaps)
-            {
-                statBar.GetComponent<Image>().color = ColorManager.Instance.GetFactionColor(unit.Faction.Id);
-            }
-            var unitController = unitGameObject.GetComponentInChildren<UnitController>();
+            
+            var unitController = unitGameObject.GetComponentInChildren<UnitInputController>();
             unitController.Unit = unit;
+            var unitRenderer = unitGameObject.GetComponentInChildren<UnitRenderer>();
+            unitRenderer.Unit = unit;
+            unitRenderer.Init();
             unit.GameTransform.GameObject = unitGameObject;
             unit.SetPosition(x, y);
             

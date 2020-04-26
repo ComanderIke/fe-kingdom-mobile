@@ -11,6 +11,7 @@ using Assets.Core.GameStates;
 using Assets.Core;
 using Assets.Manager;
 using Assets.Audio;
+using System.Linq;
 
 public class PlayerInputFeedback :MonoBehaviour
 {
@@ -25,29 +26,71 @@ public class PlayerInputFeedback :MonoBehaviour
     
     [SerializeField] private GameObject playerTurnAnimation = default;
     [SerializeField] private GameObject aiTurnAnimation = default;
-    void Start ()
+    private List<GameObject> attackableEnemyEffects;
+    private List<GameObject> attackableFieldEffects;
+    private void Start ()
     {
         instantiatedMovePath = new List<GameObject>();
-    
         resources = FindObjectOfType<ResourceScript>();
         activeUnitEffects = new Dictionary<string, GameObject>();
         gridGameManager = GridGameManager.Instance;
-        InputSystem.OnDragReset += HideMoventPath;
+        attackableEnemyEffects = new List<GameObject>();
+        attackableFieldEffects = new List<GameObject>();
+        //InputSystem.OnDragReset += HideMovementPath;
         InputSystem.OnMovementPathUpdated += DrawMovementPath;
+        //InputSystem.OnMovementPathUpdated += OnMovementPathUpdated;
+        InputSystem.OnDraggedOnActiveField += HideAttackableEnemy;
         UnitSelectionSystem.OnDeselectCharacter += ShowAllActiveUnitEffects;
+        UnitSelectionSystem.OnDeselectCharacter += HideMovementPath;
         UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
+        UnitSelectionSystem.OnDeselectCharacter += HideAttackableField;
         InputSystem.OnSetActive += InputActive;
+        InputSystem.OnDragReset += HideAttackableEnemy;
         BattleState.OnEnter += HideAllActiveUnitEffects;
+        BattleState.OnEnter += HideAttackableEnemy;
         BattleState.OnExit += OnExitBattleState;
         TurnSystem.OnStartTurn += OnStartTurn;
+        Unit.OnUnitActiveStateUpdated += OnActiveUnitStateUpdate;
+        MovementState.OnEnter += HideAttackableField;
+        BattleState.OnEnter += HideAttackableField;
+        MovementState.OnEnter += HideAllActiveUnitEffects;
+        MovementState.OnMovementFinished += HideMovementPath;
+        UnitActionSystem.OnCheckAttackPreview += OnCheckAttackPreview;
+        MovementState.OnMovementFinished += HideAttackableEnemy;
+        GridRenderer.OnRenderEnemyTile += OnRenderEnemyTile;
+     
     }
-  
+    //private void OnMovementPathUpdated(List<Vector2> mousePath, int startX, int startY)
+    //{
+    //    HideAttackableEnemy();
+    //}
+    private void OnActiveUnitStateUpdate(Unit u, bool canMove, bool disableOthers)
+    {
+        HideActiveUnitEffect(u);
+        if (disableOthers)
+            HideAllActiveUnitEffects();
+        if (canMove)
+        {
+            SpawnActiveUnitEffect(u);
+        }
+       
+        
+        
+    }
+    private void OnRenderEnemyTile(int x, int y, Unit enemy, int playerId)
+    {
+        if (enemy != null && enemy.Faction.Id != playerId)
+            ShowAttackableField(x, y);
+    }
+    private void OnCheckAttackPreview(Unit u, Unit defender)
+    {
+        HideAttackableEnemy();
+        ShowAttackableEnemy(defender.GridPosition.X, defender.GridPosition.Y);
+    }
     private void OnStartTurn()
     {
-        
         if (!gridGameManager.FactionManager.ActiveFaction.IsPlayerControlled)
         {
-            Debug.Log("AITurn");
             gridGameManager.GetSystem<AudioSystem>().ChangeMusic("EnemyTheme", "PlayerTheme", true);
 
             EnemyTurnAnimation();
@@ -56,18 +99,60 @@ public class PlayerInputFeedback :MonoBehaviour
         }
         else
         {
-            Debug.Log("PlayerTurn");
             gridGameManager.GetSystem<AudioSystem>().ChangeMusic("PlayerTheme", "EnemyTheme", true);
             PlayerTurnAnimation();
         }
         
+    }
+    public void ShowAttackableEnemy(int x, int y)
+    {
+        if (attackableEnemyEffects.Any(gameObj => (int)gameObj.transform.localPosition.x == x && (int)gameObj.transform.localPosition.y == y))
+        {
+            return;
+        }
+
+        var go = Instantiate(resources.Prefabs.AttackableEnemyPrefab,
+            GameObject.FindGameObjectWithTag("World").transform);
+        go.transform.localPosition = new Vector3(x, y, go.transform.localPosition.z);
+        attackableEnemyEffects.Add(go);
+    }
+    public void ShowAttackableField(int x, int y)
+    {
+        if (attackableFieldEffects.Any(gameObj => (int)gameObj.transform.localPosition.x == x && (int)gameObj.transform.localPosition.y == y))
+        {
+            return;
+        }
+
+        var go = Instantiate(resources.Particles.EnemyField,
+            GameObject.FindGameObjectWithTag("World").transform);
+        go.transform.localPosition = new Vector3(x + 0.5f, y + 0.5f, go.transform.localPosition.z - 0.1f);
+        attackableFieldEffects.Add(go);
+    }
+
+    public void HideAttackableField()
+    {
+        foreach (var go in attackableFieldEffects)
+        {
+            Destroy(go);
+        }
+
+        attackableFieldEffects.Clear();
+    }
+
+    public void HideAttackableEnemy()
+    {
+        foreach (var go in attackableEnemyEffects)
+        {
+            Destroy(go);
+        }
+
+        attackableEnemyEffects.Clear();
     }
     public void PlayerTurnAnimation()
     {
         Instantiate(playerTurnAnimation, new Vector3(), Quaternion.identity, uiContainer).transform
             .localPosition = new Vector3();
     }
-
     public void EnemyTurnAnimation()
     {
 
@@ -89,40 +174,32 @@ public class PlayerInputFeedback :MonoBehaviour
     private void SelectedCharacter(Unit u)
     {
         HideAllActiveUnitEffects();
-        if (!u.UnitTurnState.HasMoved)
-            SpawnActiveUnitEffect(u, true, false);
+        if (u.Ap != 0)
+        {
+            SpawnActiveUnitEffect(u);
+        }
     }
-    private void SpawnActiveUnitEffect(Unit unit, bool spawn, bool disableOthers)
+    private void HideActiveUnitEffect(Unit unit)
     {
-        //foreach (KeyValuePair<string, GameObject> pair in activeUnitEffects)
-        //{
-        //    pair.Value.SetActive(true);
-        //}
         if (activeUnitEffects.ContainsKey(unit.Name))
         {
-            var go = activeUnitEffects[unit.Name];
+            var gob = activeUnitEffects[unit.Name];
 
             activeUnitEffects.Remove(unit.Name);
-            GameObject.Destroy(go);
+            GameObject.Destroy(gob);
         }
-
-        if (spawn)
-        {
-            var go = GameObject.Instantiate(resources.Prefabs.MoveCursor,
-                GameObject.FindGameObjectWithTag("World").transform);
-            go.transform.localPosition =
-                new Vector3(unit.GridPosition.X, unit.GridPosition.Y, go.transform.localPosition.z);
-            activeUnitEffects.Add(unit.Name, go);
-            go.name = "ActiveUnitEffect";
-        }
-        else
-        {
-            if (disableOthers)
-                foreach (var pair in activeUnitEffects)
-                {
-                    pair.Value.SetActive(false);
-                }
-        }
+    }
+private void SpawnActiveUnitEffect(Unit unit)
+{
+        HideActiveUnitEffect(unit);
+        //Debug.Log("Spawn ActiveUnitEffect: [" + unit.GridPosition.X+"/"+ unit.GridPosition.Y+"]");
+       
+        var go = GameObject.Instantiate(resources.Prefabs.MoveCursor,
+            GameObject.FindGameObjectWithTag("World").transform);
+        go.transform.localPosition =
+            new Vector3(unit.GridPosition.X, unit.GridPosition.Y, go.transform.localPosition.z);
+        activeUnitEffects.Add(unit.Name, go);
+        go.name = "ActiveUnitEffect";
     }
     public void HideAllActiveUnitEffects()
     {
@@ -131,7 +208,6 @@ public class PlayerInputFeedback :MonoBehaviour
             pair.Value.SetActive(false);
         }
     }
-
     public void ShowAllActiveUnitEffects()
     {
         foreach (var pair in activeUnitEffects)
@@ -141,7 +217,7 @@ public class PlayerInputFeedback :MonoBehaviour
     }
     public void DrawMovementPath(List<Vector2> mousePath, int startX, int startY)
     {
-        HideMoventPath();
+        HideMovementPath();
         instantiatedMovePath = new List<GameObject>();
         if (moveCursor != null)
             GameObject.Destroy(moveCursor);
@@ -222,8 +298,7 @@ public class PlayerInputFeedback :MonoBehaviour
             instantiatedMovePath.Add(dot);
         }
     }
-
-    public void HideMoventPath()
+    public void HideMovementPath()
     {
         for(int i=0; i< instantiatedMovePath.Count; i++)
         {

@@ -53,7 +53,6 @@ namespace Assets.Mechanics
             }
             defender.Hp -= damage;
             defender.Sp -= spDamage;
-            Debug.Log("TODO: WeaponWeight!");
            
             //if (defender is Human humanDefender && humanDefender.EquippedWeapon != null)
             //{

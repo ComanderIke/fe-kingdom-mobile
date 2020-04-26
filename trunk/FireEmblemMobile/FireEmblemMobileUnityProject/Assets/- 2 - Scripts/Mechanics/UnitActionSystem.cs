@@ -96,7 +96,7 @@ namespace Assets.Mechanics
         public void MoveCharacter(Unit c, GridPosition destination, List<GridPosition> path = null)
         {
             var mCc = new MoveCharacterCommand(c, destination, path);
-            Unit.UnitShowActiveEffect(c, false, false);
+            
             UiSystem.OnShowCursor(destination.X, destination.Y);
             currentActions.Enqueue(mCc);
         }

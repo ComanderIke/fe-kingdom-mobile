@@ -11,6 +11,8 @@ namespace Assets.Core.GameStates
 {
     public class MovementState : GameState<NextStateTrigger>
     {
+        public static event Action OnMovementFinished;
+        public static event Action OnEnter;
         private int x;
         private int y;
         private bool active;
@@ -38,13 +40,12 @@ namespace Assets.Core.GameStates
 
         public override void Enter()
         {
-            //Debug.Log("EnterMoveState");
             if (unit.GridPosition.X == x && unit.GridPosition.Y == y) //already on Destination
             {
                 FinishMovement();
                 return;
             }
-
+            OnEnter?.Invoke();
             active = true;
             InputSystem.OnSetActive(false);
             if (mousePath == null || mousePath.Count == 0)
@@ -52,15 +53,29 @@ namespace Assets.Core.GameStates
                 Path = gridGameManager.GetSystem<MoveSystem>().GetPath(unit.GridPosition.X, unit.GridPosition.Y, x, y,
                     unit.Faction.Id, false, new List<int>());
                 Path?.Reverse();
+                
             }
             else
             {
                 Path = new MovementPath();
                 for (var i = 0; i < mousePath.Count; i++) Path.PrependStep(mousePath[i].X, (int)mousePath[i].Y);
             }
-            //Debug.Log("EndEnterMoveState" + Path.GetLength());
-        }
+            /*remove first Step if it is the same position as the unit is on*/
 
+            if (Path.GetStep(0).GetX() == unit.GridPosition.X&& Path.GetStep(0).GetY() == unit.GridPosition.Y)
+            {
+                //Debug.Log("Remove: [" + Path.GetStep(0).GetX() + "/" + Path.GetStep(0).GetY() + "]");
+                Path.Remove(0);
+            }
+            //PrintMovementPath();
+        }
+        private void PrintMovementPath()
+        {
+            for(int i=0; i < Path.GetLength(); i++)
+            {
+                Debug.Log("["+Path.GetStep(i).GetX() +"/" +Path.GetStep(i).GetY()+"]");
+            }
+        }
         public override GameState<NextStateTrigger> Update()
         {
             if (!active)
@@ -75,7 +90,6 @@ namespace Assets.Core.GameStates
             float x = unit.GameTransform.GameObject.transform.localPosition.x;
             float y = unit.GameTransform.GameObject.transform.localPosition.y;
             float z = unit.GameTransform.GameObject.transform.localPosition.z;
-            //Debug.Log("WTF"+Path.GetLength()+" "+PathCounter);
             float tx = Path.GetStep(PathCounter).GetX();
             float ty = Path.GetStep(PathCounter).GetY();
             //Debug.Log("Moving to x: " + tx + " y: " + ty+ " "+x+" "+y);
@@ -99,18 +113,19 @@ namespace Assets.Core.GameStates
         public override void Exit()
         {
             unit.SetPosition(x, y);
-            Debug.Log("Unit moved to x: "+x+" y: "+y);
+            unit.UnitTurnState.HasMoved = true;
+            unit.Ap -= Path.GetLength();
             InputSystem.OnSetActive(true);
+            OnMovementFinished?.Invoke();
         }
 
         private void FinishMovement()
         {
-            Debug.Log("Finished Movement!");
-            unit.UnitTurnState.HasMoved = true;
-            //gridGameManager.GetSystem<UnitActionSystem>().ActiveCharWait();
             GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.FinishedMovement);
             UnitActionSystem.OnCommandFinished();
            
+
+
         }
     }
 }

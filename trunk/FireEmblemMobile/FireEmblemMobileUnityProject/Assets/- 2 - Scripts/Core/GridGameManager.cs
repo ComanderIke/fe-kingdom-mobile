@@ -103,7 +103,6 @@ namespace Assets.Core
                 unit3.Inventory.AddItem(DataScript.Instance.GetWeapon("Iron Bow"));
                 unit1.Inventory.AddItem(DataScript.Instance.GetWeapon("Steel Bow"));
                 unit2.Inventory.AddItem(DataScript.Instance.GetWeapon("Fire"));
-                Debug.Log(unit4.Stats.MaxHp); Debug.Log(unit3.Stats.MaxHp); Debug.Log(unit2.Stats.MaxHp);
                 Player.Instance.Units = new List<Unit>
                 {
                     unit1,

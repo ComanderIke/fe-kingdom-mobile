@@ -1,4 +1,5 @@
 ﻿using Assets.Core;
+using Assets.Core.GameStates;
 using Assets.GameActors.Units;
 using Assets.GameResources;
 using Assets.Grid;
@@ -42,6 +43,7 @@ namespace Assets.Map
             UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
             UnitSelectionSystem.OnEnemySelected += OnEnemySelected;
             UnitSelectionSystem.OnSelectedInActiveCharacter += OnEnemySelected;
+            MovementState.OnMovementFinished += HideMovementRangeOnGrid;
 
         }
 
@@ -60,25 +62,29 @@ namespace Assets.Map
         private void SelectedCharacter(Unit u)
         {
             HideMovementRangeOnGrid();
-            if (!u.UnitTurnState.HasMoved)
+            if (u.Ap!=0)
             {
                 ShowMovementRangeOnGrid(u);
                 ShowAttackRangeOnGrid(u, new List<int>(u.Stats.AttackRanges));
             }
             else
             {
+               
                 if (!u.UnitTurnState.HasAttacked)
+                {
+                    Debug.Log("HERE");
                     ShowAttackRangeOnGrid(u, new List<int>(u.Stats.AttackRanges));
+                }
             }
         }
 
         public void ShowMovementRangeOnGrid(Unit c)
         {
             if (c.GridPosition is BigTilePosition)
-                ShowMonsterMovement(c.GridPosition.X, c.GridPosition.Y, c.Stats.Mov,
+                ShowMonsterMovement(c.GridPosition.X, c.GridPosition.Y, c.Ap,
                     new List<int>(c.Stats.AttackRanges), 0, c.Faction.Id);
             else
-                ShowMovement(c.GridPosition.X, c.GridPosition.Y, c.Stats.Mov, c.Stats.Mov,
+                ShowMovement(c.GridPosition.X, c.GridPosition.Y, c.Ap, c.Ap,
                     new List<int>(c.Stats.AttackRanges), 0, c.Faction.Id, false);
         }
 
@@ -112,8 +118,8 @@ namespace Assets.Map
 
         public void ShowAttackRangeOnGrid(Unit character, List<int> attack)
         {
-            var tilesFromWhereUCanAttack = (from Tile f in Tiles where f.IsActive && (f.Unit == null || f.Unit == character) select f).ToList();
-
+            var tilesFromWhereUCanAttack = (from Tile f in Tiles where (f.X == character.GridPosition.X && f.Y== character.GridPosition.Y) || (f.IsActive && (f.Unit == null || f.Unit == character)) select f).ToList();
+            Debug.Log(tilesFromWhereUCanAttack.Count);
             NodeHelper.Reset();
             foreach (var f in tilesFromWhereUCanAttack)
             {
@@ -172,7 +178,7 @@ namespace Assets.Map
             }
 
             NodeHelper.Reset();
-            GridGameManager.Instance.GetSystem<UiSystem>().HideAttackableEnemy();
+           
         }
 
         public void ShowAttackRecursive(Unit character, int x, int y, int range, List<int> direction)

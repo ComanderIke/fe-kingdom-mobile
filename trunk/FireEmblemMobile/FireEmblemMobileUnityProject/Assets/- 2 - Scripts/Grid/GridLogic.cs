@@ -250,9 +250,10 @@ namespace Assets.Grid
                         invalid = true;
                     }
 
-                    if (isAdjacent) //TODO passthrough should be ok but not stopping on it
+                    if (isAdjacent) 
                     {
-                        invalid = true;
+                        //Do nothing will be checked with attackRange Later
+                        //Passthrough is ok but not stopping on it
                     }
                 }
             }

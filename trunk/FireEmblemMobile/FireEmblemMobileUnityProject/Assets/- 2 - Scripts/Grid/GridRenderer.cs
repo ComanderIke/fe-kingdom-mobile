@@ -1,13 +1,17 @@
 ﻿using Assets.Core;
+using Assets.GameActors.Players;
 using Assets.GameActors.Units;
 using Assets.GUI;
 using Assets.Map;
+using System;
 using UnityEngine;
 
 namespace Assets.Grid
 {
     public class GridRenderer
     {
+        public delegate void OnRenderEnemyTileEvent(int x, int y, Unit enemy, int playerId);
+        public static event OnRenderEnemyTileEvent OnRenderEnemyTile;
         public MapSystem GridManager { get; set; }
         public Tile[,] Tiles { get; set; }
 
@@ -42,7 +46,20 @@ namespace Assets.Grid
                 Tiles[c.GridPosition.X, c.GridPosition.Y].GameObject.GetComponent<MeshRenderer>().material =
                     GridManager.GridResources.CellMaterialStandOn;
         }
-
+        private void SetAttackFieldMaterial(Vector2 pos, int playerId)
+        {
+            var meshRenderer = Tiles[(int)pos.x, (int)pos.y].GameObject.GetComponent<MeshRenderer>();
+            if (GridGameManager.Instance.FactionManager.ActiveFaction.Id == playerId)
+            {
+                meshRenderer.material = GridManager.GridResources.CellMaterialAttack;
+                OnRenderEnemyTile?.Invoke((int)pos.x, (int)pos.y, Tiles[(int)pos.x, (int)pos.y].Unit, playerId);
+            }
+            else
+            {
+                meshRenderer.material = GridManager.GridResources.CellMaterialEnemyAttack;
+                OnRenderEnemyTile?.Invoke((int)pos.x, (int)pos.y, Tiles[(int)pos.x, (int)pos.y].Unit, playerId);
+            }
+        }
         public void SetFieldMaterial(Vector2 pos, int playerId, bool attack)
         {
             var meshRenderer = Tiles[(int) pos.x, (int) pos.y].GameObject.GetComponent<MeshRenderer>();
@@ -51,16 +68,7 @@ namespace Assets.Grid
                 //not using sharedMaterial here create Material instances which will cause much higher baches
                 if (meshRenderer.sharedMaterial == GridManager.GridResources.CellMaterialMovement)
                     return;
-                if (GridGameManager.Instance.FactionManager.ActiveFaction.Id == playerId)
-                {
-                    meshRenderer.material = GridManager.GridResources.CellMaterialAttack;
-                    if (Tiles[(int) pos.x, (int) pos.y].Unit != null &&
-                        Tiles[(int) pos.x, (int) pos.y].Unit.Faction.Id != playerId)
-                        GridGameManager.Instance.GetSystem<UiSystem>().ShowAttackableField((int) pos.x, (int) pos.y);
-                    // MainScript.GetInstance().GetController<UIController>().ShowAttackableEnemy((int)pos.x, (int)pos.y);
-                }
-                else
-                    meshRenderer.material = GridManager.GridResources.CellMaterialEnemyAttack;
+                SetAttackFieldMaterial(pos, playerId);
             }
             else
             {
@@ -69,14 +77,7 @@ namespace Assets.Grid
                 if (Tiles[(int) pos.x, (int) pos.y].Unit != null &&
                     Tiles[(int) pos.x, (int) pos.y].Unit.Faction.Id != playerId)
                 {
-                    if (GridGameManager.Instance.FactionManager.ActiveFaction.Id == playerId)
-                    {
-                        meshRenderer.material = GridManager.GridResources.CellMaterialAttack;
-                        GridGameManager.Instance.GetSystem<UiSystem>().ShowAttackableField((int) pos.x, (int) pos.y);
-                        // MainScript.GetInstance().GetController<UIController>().ShowAttackableEnemy((int)pos.x, (int)pos.y);
-                    }
-                    else
-                        meshRenderer.material = GridManager.GridResources.CellMaterialEnemyAttack;
+                    SetAttackFieldMaterial(pos, playerId);
                 }
 
                 Tiles[(int) pos.x, (int) pos.y].IsActive = true;

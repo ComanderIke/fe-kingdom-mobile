@@ -6,7 +6,7 @@ namespace Assets.GameActors.Units.OnGameObject
     {
         public GameObject GameObject { get; set; }
 
-        public UnitController UnitController => GameObject.GetComponent<UnitController>();
+        public UnitInputController UnitController => GameObject.GetComponent<UnitInputController>();
         public UnitAnimator UnitAnimator => GameObject.GetComponent<UnitAnimator>();
 
         public void SetPosition(int x, int y)

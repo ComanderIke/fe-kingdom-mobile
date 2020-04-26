@@ -112,7 +112,7 @@ namespace Assets.Grid.PathFinding
                         int xp = x + current.X;
                         int yp = y + current.Y;
                         bool isAdjacent = false;
-                        if (toAdjacentPos)
+                        if (toAdjacentPos && gridManager.GridLogic.IsTileAccessible(new Vector2(x,y)))
                         {
                             int delta = Mathf.Abs(xp - Nodes[tx, ty].X) + Mathf.Abs(yp - Nodes[tx, ty].Y);
                             range.Reverse();

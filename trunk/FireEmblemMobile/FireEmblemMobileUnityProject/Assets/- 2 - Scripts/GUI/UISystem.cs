@@ -43,8 +43,7 @@ namespace Assets.GUI
         private GameplayInput gameplayInput;
         private GameObject tileCursor;
         private ResourceScript resources;
-        private List<GameObject> attackableEnemyEffects;
-        private List<GameObject> attackableFieldEffects;
+
 
         private void Start()
         {
@@ -55,7 +54,7 @@ namespace Assets.GUI
             
             UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
             UnitSelectionSystem.OnDeselectCharacter += HideDeselectButton;
-            UnitSelectionSystem.OnDeselectCharacter += HideAttackableField;
+            
             UnitSelectionSystem.OnEnemySelected += ShowTopUi;
             UnitSelectionSystem.OnSelectedInActiveCharacter += ShowTopUi;
 
@@ -63,8 +62,7 @@ namespace Assets.GUI
             Unit.OnUnitLevelUp += ShowLevelUpScreen;
             InputSystem.OnDragReset += HideAttackPreview;
             
-            attackableEnemyEffects = new List<GameObject>();
-            attackableFieldEffects = new List<GameObject>();
+           
             resources = FindObjectOfType<ResourceScript>();
         }
 
@@ -106,29 +104,7 @@ namespace Assets.GUI
             tileCursor.name = "TileCursor";
         }
 
-        public void ShowAttackableEnemy(int x, int y)
-        {
-            Debug.Log("SHOW ATTACKABLE ENEMY");
-            if (attackableEnemyEffects.Any(gameObj => (int) gameObj.transform.localPosition.x == x && (int) gameObj.transform.localPosition.y == y))
-            {
-                return;
-            }
 
-            var go = Instantiate(resources.Prefabs.AttackableEnemyPrefab,
-                GameObject.FindGameObjectWithTag("World").transform);
-            go.transform.localPosition = new Vector3(x, y, go.transform.localPosition.z);
-            attackableEnemyEffects.Add(go);
-        }
-
-        public void HideAttackableEnemy()
-        {
-            foreach (var go in attackableEnemyEffects)
-            {
-                Destroy(go);
-            }
-
-            attackableEnemyEffects.Clear();
-        }
 
         private void HideTileCursor()
         {
@@ -207,33 +183,11 @@ namespace Assets.GUI
             TurnSystem.OnTriggerEndTurn();
         }
 
-        public void ShowAttackableField(int x, int y)
-        {
-            if (attackableFieldEffects.Any(gameObj => (int) gameObj.transform.localPosition.x == x && (int) gameObj.transform.localPosition.y == y))
-            {
-                return;
-            }
-
-            var go = Instantiate(resources.Particles.EnemyField,
-                GameObject.FindGameObjectWithTag("World").transform);
-            go.transform.localPosition = new Vector3(x + 0.5f, y + 0.5f, go.transform.localPosition.z - 0.1f);
-            attackableFieldEffects.Add(go);
-        }
-
-        public void HideAttackableField()
-        {
-            Debug.Log("hideAttackableField!");
-            foreach (var go in attackableFieldEffects)
-            {
-                Destroy(go);
-            }
-
-            attackableFieldEffects.Clear();
-        }
+       
 
         public void ShowAttackPreview(Unit attacker, Unit defender)
         {
-            ShowAttackableEnemy(defender.GridPosition.X, defender.GridPosition.Y);
+            
             attackPreview.SetActive(true);
 
             attackPreview.GetComponent<AttackPreviewUI>().UpdateValues(gridGameManager.GetSystem<BattleSystem>().GetBattlePreview(attacker, defender), attacker.CharacterSpriteSet.FaceSprite, defender.CharacterSpriteSet.FaceSprite);
@@ -248,7 +202,7 @@ namespace Assets.GUI
 
         public void HideAttackPreview()
         {
-            HideAttackableEnemy();
+            
             attackPreview.SetActive(false);
         }
 

@@ -12,7 +12,7 @@ namespace Assets.GameResources
         public Sprite MoveArrowStraight;
         public Sprite MoveArrowStart;
         public Sprite StandOnArrowStart;
-
+        public Sprite WolfClaw;
         public Sprite GetMonsterOnMapSprites(int spriteId)
         {
             if (spriteId >= 0 && spriteId < MonsterOnMapSprites.Length)

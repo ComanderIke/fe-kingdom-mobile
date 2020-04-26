@@ -7,6 +7,7 @@ namespace Assets.Utility
         public Color MainGreenColor;
         public Color MainRedColor;
         public Color MainWhiteColor;
+        public Color MainGreyColor;
         public Color[] SixGradeColors;
         public Color[] FactionColors;
         public static ColorManager Instance;

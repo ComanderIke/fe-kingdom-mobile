@@ -20,6 +20,7 @@ namespace Assets.GameActors.Units
         public string Name;
 
         [HideInInspector] private int sp;
+        [HideInInspector] private int ap;
         public delegate void OnUnitLevelUpEvent(string name, int levelBefore, int levelAfter, int[] stats, int[] statIncreases);
         public static OnUnitLevelUpEvent OnUnitLevelUp;
 
@@ -52,6 +53,17 @@ namespace Assets.GameActors.Units
                 sp = value > Stats.MaxSp ? Stats.MaxSp : value;
                 if (sp <= 0) sp = 0;
                 SpValueChanged?.Invoke();
+            }
+        }
+        public int Ap
+        {
+            get => ap;
+            set
+            {
+                ap = value > Stats.Mov ? Stats.Mov : value;
+                if (ap <= 0) ap = 0;
+                ApValueChanged?.Invoke();
+                OnUnitActiveStateUpdated?.Invoke(this, ap != 0, false);
             }
         }
 
@@ -97,6 +109,7 @@ namespace Assets.GameActors.Units
             Growths = Growths == null ? CreateInstance<Growths>() : Instantiate(Growths);
             Hp = Stats.MaxHp;
             Sp = Stats.MaxSp;
+            Ap = Stats.Mov;
             
         }
        
@@ -149,6 +162,7 @@ namespace Assets.GameActors.Units
             var buffEnd = Buffs.Where(b => b.TakeEffect(this)).ToList();
             foreach (var d in debuffEnd) d.Remove(this);
             foreach (var b in buffEnd) b.Remove(this);
+            Ap = Stats.Mov;
             UnitTurnState.Reset();
         }
 
@@ -244,6 +258,7 @@ namespace Assets.GameActors.Units
 
             clone.Hp = this.Hp;
             clone.Sp = this.Sp;
+            clone.Ap = this.Ap;
             clone.Stats = (Stats)Stats.Clone();
             clone.Growths = (Growths)Growths.Clone();
             clone.Motivation = Motivation;
@@ -252,13 +267,10 @@ namespace Assets.GameActors.Units
 
         #region Events
 
-        public delegate void OnHpValueChanged();
 
-        public static OnHpValueChanged HpValueChanged;
-
-        public delegate void OnSpValueChanged();
-
-        public static OnSpValueChanged SpValueChanged;
+        public static event Action HpValueChanged;
+        public static event Action SpValueChanged;
+        public static event Action ApValueChanged;
 
         public delegate void OnUnitWaiting(Unit unit, bool waiting);
 
@@ -270,7 +282,7 @@ namespace Assets.GameActors.Units
 
         public delegate void OnUnitShowActiveEffect(Unit unit, bool canMove, bool disableOthers);
 
-        public static OnUnitShowActiveEffect UnitShowActiveEffect;
+        public static OnUnitShowActiveEffect OnUnitActiveStateUpdated;
 
         public delegate void OnUnitDied(Unit unit);
 

@@ -11,6 +11,7 @@ namespace Assets.GameActors.Units.Humans
     [CreateAssetMenu(menuName = "GameData/Human", fileName = "Human")]
     public class Human : Unit
     {
+        public static event Action OnEquippedWeapon;
         public RpgClass Class;
 
         public Weapon EquippedWeapon;
@@ -79,11 +80,7 @@ namespace Assets.GameActors.Units.Humans
 
         public bool CanUseWeapon(Weapon w)
         {
-            Debug.Log("TODO");
-            if (true)
-                return true;
-            else
-                return false;
+            return true;
         }
 
         public void Equip(Weapon w)
@@ -93,6 +90,7 @@ namespace Assets.GameActors.Units.Humans
             EquippedWeapon = w;
             foreach (int r in w.AttackRanges) Stats.AttackRanges.Add(r);
             Debug.Log("Equip " + w.name + " on " + Name + " " + w.AttackRanges.Length+" "+ Stats.AttackRanges.Count);
+            OnEquippedWeapon?.Invoke();
         }
         public void AutoEquip()
         {

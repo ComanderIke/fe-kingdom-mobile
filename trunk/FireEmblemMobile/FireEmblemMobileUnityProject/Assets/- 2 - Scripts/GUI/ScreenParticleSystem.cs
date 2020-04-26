@@ -5,14 +5,15 @@ namespace Assets.GUI
 {
     public class ScreenParticleSystem : MonoBehaviour
     {
-        [SerializeField] private readonly GameObject psTest = default;
-        [SerializeField] private readonly Camera psCamera = default;
+        [SerializeField] private GameObject psTest = default;
+        [SerializeField] private Camera psCamera = default;
 
         private void Update()
         {
             if (Input.GetMouseButtonDown(0))
             {
-                var position = psCamera.ScreenToWorldPoint(Input.mousePosition);
+                var position = psCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1));
+                //position.z = 1;
                 var ps = Instantiate(psTest, position, Quaternion.identity);
                 ps.layer = LayerMask.NameToLayer("FrontUI");
                 ps.AddComponent<ParticleSystemAutoDestroy>();
@@ -20,6 +21,7 @@ namespace Assets.GUI
                 {
                     trans.gameObject.layer = LayerMask.NameToLayer("FrontUI");
                 }
+                ps.GetComponent<ParticleSystem>().Play(true);
             }
         }
     }

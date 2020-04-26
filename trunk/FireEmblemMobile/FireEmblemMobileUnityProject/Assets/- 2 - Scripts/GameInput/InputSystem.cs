@@ -26,6 +26,7 @@ namespace Assets.GameInput
         public static Action<bool> OnSetActive;
 
         public static event Action OnDragReset;
+        public static event Action OnDraggedOnActiveField;
         #endregion
 
         public bool Active { get; private set; }
@@ -62,12 +63,12 @@ namespace Assets.GameInput
         {
             OnSetActive += SetInputActive;
 
-            UnitController.OnUnitClicked += UnitClicked;
-            UnitController.OnUnitDoubleClicked += UnitDoubleClicked;
-            UnitController.OnStartDrag += StartDrag;
-            UnitController.OnDraggedOverUnit += DraggedOver;
-            UnitController.OnEndDrag += DragEnded;
-            UnitController.OnUnitDragged += CharacterDrag;
+            UnitInputController.OnUnitClicked += UnitClicked;
+            UnitInputController.OnUnitDoubleClicked += UnitDoubleClicked;
+            UnitInputController.OnStartDrag += StartDrag;
+            UnitInputController.OnDraggedOverUnit += DraggedOver;
+            UnitInputController.OnEndDrag += DragEnded;
+            UnitInputController.OnUnitDragged += CharacterDrag;
             UnitSelectionSystem.OnSelectedCharacter += OnSelectedCharacter;
             UnitSelectionSystem.OnSelectedInActiveCharacter += OnSelectedCharacter;
         }
@@ -94,14 +95,14 @@ namespace Assets.GameInput
             if( hit.collider != null && hit.collider.tag == TagManager.GridTag)
             {
                 ResetDrag();
-                Debug.Log("Grid clicked:" + x + " " + y + " " + hit.point + " " + gridPos);
+                Debug.Log("Player Input: Grid clicked: " + x + " " + y);
                 GridClicked(x, y);
             }
         }
 
         public void SetInputActive(bool active)
         {
-            Active = !active;
+            Active = active;
         }
 
         private void DragEnded()
@@ -116,7 +117,7 @@ namespace Assets.GameInput
                 }
                 else if (latestHit.collider.gameObject.CompareTag(TagManager.UnitTag))//Dragged on Unit
                 {
-                    var draggedOverUnit = latestHit.collider.gameObject.GetComponent<UnitController>().Unit;
+                    var draggedOverUnit = latestHit.collider.gameObject.GetComponent<UnitInputController>().Unit;
                     UnitEndDragOnUnit(draggedOverUnit);
                 }
                 else
@@ -133,17 +134,16 @@ namespace Assets.GameInput
 
         private void UnitDoubleClicked(Unit unit)
         {
-            Debug.Log("Unit Double Clicked!");
+            Debug.Log("Player Input: Unit double clicked: " + unit.name);
             if (!Active)
                 return;
             gameplayInput.Wait(unit);
         }
         private void UnitClicked(Unit unit)
         {
-            Debug.Log("Unit Clicked!");
+            Debug.Log("Player Input: Unit clicked: " +unit.name );
             if (!Active)
                 return;
-
             if (unit.Faction.Id == gridGameManager.FactionManager.ActiveFaction.Id) // Player Unit Clicked
             {
                 gameplayInput.SelectUnit(unit);
@@ -193,6 +193,8 @@ namespace Assets.GameInput
         {
             if (gridGameManager.GetSystem<MapSystem>().GridLogic.IsFieldFreeAndActive(x, y))
             {
+                if (MovementPath == null || MovementPath.Count == 0)
+                    CalculateMousePathToPosition(SelectedCharacter,  x,  y);
                 gameplayInput.MoveUnit(SelectedCharacter, new GridPosition(x, y), GridPosition.GetFromVectorList(MovementPath));
                 gameplayInput.ExecuteInputActions(() => gridGameManager.GameStateManager.SwitchState(GameStateManager.GameplayState));
             }
@@ -209,7 +211,7 @@ namespace Assets.GameInput
 
         private void UnitEndDragOnUnit(Unit draggedOverUnit)
         {
-            Debug.Log("DraggedOnUnit");
+            Debug.Log("Dragged ended on unit: " + draggedOverUnit.name);
             if (draggedOverUnit.Faction.Id != gridGameManager.FactionManager.ActiveFaction.Id)//Enemy
             {
                 if (gridGameManager.GetSystem<Map.MapSystem>().GridLogic.IsFieldAttackable(draggedOverUnit.GridPosition.X,
@@ -224,13 +226,14 @@ namespace Assets.GameInput
             }
             else
             {
+                Debug.Log("DraggedOnFriendlyUnit");
                 gameplayInput.DeselectUnit();
             }
         }
         private void AttackEnemy(Unit character, Unit enemy, List<Vector2> movePath)
         {
             character.ResetPosition();
-            ResetDrag();
+            //ResetDrag();
             gridGameManager.GetSystem<Map.MapSystem>().HideMovementRangeOnGrid();
             /* Enemy is in attackRange already */
             if ((movePath == null || movePath.Count == 0) &&
@@ -243,7 +246,7 @@ namespace Assets.GameInput
             }
             else if(movePath!=null) //go to enemy cause not in range
             {
-                Debug.Log("Got to Enemy!");
+                Debug.Log("Got to Enemy!" + movePath.Count);
 
                 int xMov = 0;
                 int yMov = 0;
@@ -264,6 +267,7 @@ namespace Assets.GameInput
         public void ResetDrag()
         {
             dragPath.Clear();
+            MovementPath.Clear();
             lastDragPosX = -1;
             lastDragPosY = -1;
             confirmAttackTarget = null;
@@ -331,6 +335,7 @@ namespace Assets.GameInput
                 for (int i = p.GetLength() - 2; i >= AttackRangeFromPath; i--)
                     dragPath.Add(new Vector2(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
             MovementPath = new List<Vector2>(dragPath);
+            UpdatedMovementPath();
         }
         /* Calculates a Path from one character to a position that is in attackRange from x and y*/
         /* Not sure if better then CalculateMousePathToEnemy. Probably not needed */
@@ -378,7 +383,7 @@ namespace Assets.GameInput
             {
                 LastPositions.Add(new CursorPosition(new Vector2(x, y), null));
 
-                if (LastPositions.Count > character.Stats.Mov)
+                if (LastPositions.Count > character.Ap)
                     LastPositions.RemoveAt(0);
             }
 
@@ -397,22 +402,22 @@ namespace Assets.GameInput
                 ResetDrag();
                 UpdatedMovementPath();
             }
-
+            UpdatedMovementPath();
             lastDragPosX = x;
             lastDragPosY = y;
         }
 
         public void DraggedOnEnemy(int x, int y, Unit enemy)
         {
-
-            Debug.Log("draggedOnEnemy");
+            
+            Debug.Log("Dragged on enemy: " + enemy.name +" at ["+x+"/"+y+"]");
             if (!FindObjectOfType<MapSystem>().GridLogic.IsFieldAttackable(x, y))
                 return;
             //CalculateMousePathToEnemy(selectedCharacter, new Vector2(x, y));
             if (dragPath == null || dragPath.Count == 0)
             {
-                Debug.Log("Mousepath empty");
-                CalculateMousePathToEnemy(enemy, new Vector2(x, y));
+                //Debug.Log("Mousepath empty");
+                CalculateMousePathToEnemy(SelectedCharacter, new Vector2(x, y));
                 //CalculateMousePathToAttackField(SelectedCharacter, x, y);
             }
             else //enemy is Adjacent from StartPosition. Search for suitable AttackPosition
@@ -428,7 +433,7 @@ namespace Assets.GameInput
                     if (SelectedCharacter.Stats.AttackRanges.Contains(delta))
                         if (lastMousePathField.Unit == null)
                         {
-                            Debug.Log("Valid AttackPosition!");
+                            //Debug.Log("Valid AttackPosition!");
                             attackPositionIndex = i;
                             foundAttackPosition = true;
                             break;
@@ -438,33 +443,48 @@ namespace Assets.GameInput
                 if (foundAttackPosition)//Removes Parts of the drag Path to make it end at the correct attackPosition;
                 {
                     dragPath.RemoveRange(attackPositionIndex + 1, dragPath.Count - (attackPositionIndex + 1));
+                    UpdatedMovementPath();
                 }
                 else
                 {
-                    Debug.Log("No suitable AttackPosition found in dragPath!");
+                    //Debug.Log("No suitable AttackPosition found in dragPath!");
                     CalculateMousePathToEnemy(SelectedCharacter, new Vector2(x, y));
                 }
             }
 
-            if (dragPath != null && dragPath.Count <= SelectedCharacter.Stats.Mov)
+            if (dragPath != null && dragPath.Count <= SelectedCharacter.Ap)
             {
                 UpdatedMovementPath();
                 gameplayInput.CheckAttackPreview(SelectedCharacter, enemy, new GridPosition(x, y));
             }
             else
             {
-                Debug.Log("Not enough Movement!");
+                //Debug.Log("Not enough Movement!");
             }
         }
 
+        private bool IsFieldAdjacent(float x, float y, float x2, float y2)
+        {
+            return Mathf.Abs(x - x2) + Mathf.Abs(y - y2) > 1;
+        }
+        private bool IsLastActiveFieldAdjacent(float x, float y, Unit character)
+        {
+            if (dragPath.Count >= 2 && IsFieldAdjacent(dragPath[dragPath.Count - 2].x, dragPath[dragPath.Count - 2].y, x, y))
+                return true;
+            if (dragPath.Count == 1 && IsFieldAdjacent(character.GridPosition.X, character.GridPosition.Y, x, y))
+                return true;
+            if (IsFieldAdjacent(lastDragPosX, lastDragPosY, x, y))
+                return true;
+            return false;
+        }
         public void DraggedOnActiveField(int x, int y, Unit character)
         {
             bool contains = dragPath.Contains(new Vector2(x, y));
 
             dragPath.Add(new Vector2(x, y));
-
+            
             //Create new MovementPath if dragPath is to long or other conditions apply
-            if (dragPath.Count > character.Stats.Mov || contains || Mathf.Abs(lastDragPosX - x) + Mathf.Abs(lastDragPosY - y) > 1)
+            if (dragPath.Count > character.Ap || contains || IsLastActiveFieldAdjacent(x,y,character))
             {
                 dragPath.Clear();
                 var p = gridGameManager.GetSystem<MoveSystem>().GetPath(character.GridPosition.X,
@@ -474,6 +494,7 @@ namespace Assets.GameInput
                         dragPath.Add(new Vector2(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
             }
             MovementPath = new List<Vector2>(dragPath);
+            OnDraggedOnActiveField?.Invoke();
             UpdatedMovementPath();
         }
 

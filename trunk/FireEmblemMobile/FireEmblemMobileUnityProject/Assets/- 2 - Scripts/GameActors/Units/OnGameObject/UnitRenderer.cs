@@ -1,0 +1,115 @@
+﻿using Assets.Core;
+using Assets.GameActors.Units.Humans;
+using Assets.GameInput;
+using Assets.GameResources;
+using Assets.GUI;
+using Assets.Mechanics.Dialogs;
+using Assets.Utility;
+using System;
+using TMPro;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
+namespace Assets.GameActors.Units.OnGameObject
+{
+    public class UnitRenderer : MonoBehaviour
+    {
+
+        [SerializeField] private StatsBarOnMap hpBar;
+        [SerializeField] private StatsBarOnMap spBar;
+        [SerializeField] private ExpBarController expBar;
+        [SerializeField] private TextMeshProUGUI ApText;
+        [SerializeField] private Image EquippedItemIcon;
+        [SerializeField] private Image EquippedItemBackground;
+        public Unit Unit;
+
+        private void Start()
+        {
+            Unit.HpValueChanged += HpValueChanged;
+            Unit.SpValueChanged += SpValueChanged;
+            Unit.ExperienceManager.OnExpGained += ExpValueChanged;
+            Unit.UnitWaiting += SetWaitingSprite;
+            Unit.ApValueChanged += ApValueChanged;
+            Human.OnEquippedWeapon += OnEquippedWeapon;
+            HpValueChanged();
+            SpValueChanged();
+        }
+        public void Init()
+        {
+           hpBar.GetComponent<Image>().color = ColorManager.Instance.GetFactionColor(Unit.Faction.Id);
+            //spBar.GetComponent<Image>().color = ColorManager.Instance.GetFactionColor(Unit.Faction.Id);
+           ApText.color = ColorManager.Instance.GetFactionColor(Unit.Faction.Id);
+           HpValueChanged();
+           SpValueChanged();
+           OnEquippedWeapon();
+        }
+        void Destroy()
+        {
+            Unit.HpValueChanged -= HpValueChanged;
+            Unit.SpValueChanged -= SpValueChanged;
+            Unit.ExperienceManager.OnExpGained -= ExpValueChanged;
+            Unit.UnitWaiting -= SetWaitingSprite;
+            Unit.ApValueChanged -= ApValueChanged;
+            Human.OnEquippedWeapon -= OnEquippedWeapon;
+        }
+        private void OnEquippedWeapon()
+        {
+            EquippedItemBackground.color = ColorManager.Instance.GetFactionColor(Unit.Faction.Id);
+            if (Unit is Human human) {
+                if (human.EquippedWeapon != null)
+                {
+                    EquippedItemIcon.sprite = human.EquippedWeapon.Sprite;
+                    
+                }
+                else
+                {
+                    EquippedItemIcon.sprite = null;
+                }
+                    
+            }
+            else
+            {
+                EquippedItemIcon.sprite = FindObjectOfType<ResourceScript>().Sprites.WolfClaw;
+            }
+        }
+        private void HpValueChanged()
+        {
+            if (hpBar != null && Unit != null)
+                hpBar.SetHealth(Unit.Hp, Unit.Stats.MaxHp);
+        }
+        private void ApValueChanged()
+        {
+            if (ApText != null && Unit != null)
+                ApText.text=""+Unit.Ap;
+            if(Unit.Ap==0)
+                ApText.color = ColorManager.Instance.MainGreyColor;
+            else
+                ApText.color = ColorManager.Instance.GetFactionColor(Unit.Faction.Id);
+        }
+        private void SpValueChanged()
+        {
+            if (spBar != null && Unit != null)
+                spBar.SetHealth(Unit.Sp, Unit.Stats.MaxSp);
+        }
+        private void ExpValueChanged(int currentExp, int expGained)
+        {
+            if (expBar != null && Unit != null)
+            {
+                AnimationQueue.Add(()=>expBar.Show(currentExp, expGained));
+                
+            }
+        }
+
+        private void SetWaitingSprite(Unit unit, bool waiting)
+        {
+            if (unit == Unit)
+            {
+                GetComponentInChildren<SpriteRenderer>().color = !waiting ? Color.white : Color.grey;
+            }
+        }
+
+
+
+    }
+}
