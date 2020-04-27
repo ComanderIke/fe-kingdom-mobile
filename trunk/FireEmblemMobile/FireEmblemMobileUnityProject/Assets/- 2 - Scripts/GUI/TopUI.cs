@@ -16,7 +16,7 @@ namespace Assets.GUI
         [SerializeField] private TextMeshProUGUI characterName = default;
         [SerializeField] private TextMeshProUGUI level = default;
         [SerializeField] private TextMeshProUGUI levelEnemy = default;
-        [SerializeField] private FilledBarController expBar = default;
+        [SerializeField] private ExpBarController expBar = default;
         [SerializeField] private TextMeshProUGUI str = default;
         [SerializeField] private TextMeshProUGUI spd = default;
         [SerializeField] private TextMeshProUGUI mag = default;
@@ -50,14 +50,15 @@ namespace Assets.GUI
             
             topUiEnemy.gameObject.SetActive(!c.Faction.IsPlayerControlled);
             expBar.gameObject.SetActive(c.Faction.IsPlayerControlled);
-
+           
             characterName.text = c.Name;
             level.gameObject.SetActive(c.Faction.IsPlayerControlled);
             levelEnemy.gameObject.SetActive(!c.Faction.IsPlayerControlled);
             levelEnemy.text= "" + c.ExperienceManager.Level;
             level.text = "" + c.ExperienceManager.Level;
-            expBar.SetFillAmount((c.ExperienceManager.Exp*1.0f)/ c.ExperienceManager.NextLevelExp);
-           
+            expBar.SetText(c.ExperienceManager.Exp);
+            expBar.SetFillAmount(c.ExperienceManager.Exp);
+
             str.text = "" + c.Stats.Str;
             spd.text = "" + c.Stats.Spd;
             mag.text = "" + c.Stats.Mag;

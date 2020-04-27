@@ -7,12 +7,15 @@ namespace Assets.GameResources
     public class Prefabs
     {
         public GameObject ActiveUnitField;
+        public GameObject ActiveUnitFieldAlternate;
         public GameObject AttackableEnemyPrefab;
 
         [Header("CharacterMovement")] public GameObject MoveArrowDot;
 
         public GameObject MoveCursor;
         public GameObject MoveCursorViolet;
+
+        public GameObject attackIconPrefab;
 
     }
 }

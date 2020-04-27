@@ -12,11 +12,14 @@ using Assets.Core;
 using Assets.Manager;
 using Assets.Audio;
 using System.Linq;
+using Assets.GUI;
 
-public class PlayerInputFeedback :MonoBehaviour
+public class PlayerInputFeedback : MonoBehaviour
 {
     [SerializeField] private Transform uiContainer = default;
     [SerializeField] private Transform worldContainer = default;
+    [SerializeField] private ExpBarController expBarController = default;
+    [SerializeField] private Canvas MainCanvas = default;
     private ResourceScript resources;
     private GameObject moveCursor;
     private GameObject moveCursorStart;
@@ -26,6 +29,7 @@ public class PlayerInputFeedback :MonoBehaviour
     
     [SerializeField] private GameObject playerTurnAnimation = default;
     [SerializeField] private GameObject aiTurnAnimation = default;
+   
     private List<GameObject> attackableEnemyEffects;
     private List<GameObject> attackableFieldEffects;
     private void Start ()
@@ -36,14 +40,15 @@ public class PlayerInputFeedback :MonoBehaviour
         gridGameManager = GridGameManager.Instance;
         attackableEnemyEffects = new List<GameObject>();
         attackableFieldEffects = new List<GameObject>();
+        PlayerTurnTextAnimation.OnStarted += TurnAnimationStarted;
+        PlayerTurnTextAnimation.OnFinished += TurnAnimationFinished;
         //InputSystem.OnDragReset += HideMovementPath;
         InputSystem.OnMovementPathUpdated += DrawMovementPath;
         //InputSystem.OnMovementPathUpdated += OnMovementPathUpdated;
         InputSystem.OnDraggedOnActiveField += HideAttackableEnemy;
-        UnitSelectionSystem.OnDeselectCharacter += ShowAllActiveUnitEffects;
-        UnitSelectionSystem.OnDeselectCharacter += HideMovementPath;
+        UnitSelectionSystem.OnDeselectCharacter += DeselectedCharacter;
         UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
-        UnitSelectionSystem.OnDeselectCharacter += HideAttackableField;
+
         InputSystem.OnSetActive += InputActive;
         InputSystem.OnDragReset += HideAttackableEnemy;
         BattleState.OnEnter += HideAllActiveUnitEffects;
@@ -58,7 +63,43 @@ public class PlayerInputFeedback :MonoBehaviour
         UnitActionSystem.OnCheckAttackPreview += OnCheckAttackPreview;
         MovementState.OnMovementFinished += HideAttackableEnemy;
         GridRenderer.OnRenderEnemyTile += OnRenderEnemyTile;
-     
+        Unit.OnExpGained += ExpGained;
+        InputSystem.OnInputActivated += InputActivated;
+
+
+    }
+    private void DeselectedCharacter()
+    {
+        ShowAllActiveUnitEffects();
+        HideMovementPath();
+        HideAttackableField();
+        HideAttackableEnemy();
+    }
+    bool setActiveUnitEffectsWhenInputIsActive = false;
+    private void InputActivated()
+    {
+        if (setActiveUnitEffectsWhenInputIsActive)
+            ShowAllActiveUnitEffects();
+        setActiveUnitEffectsWhenInputIsActive = false;
+    }
+    bool InputActiveState;
+    private void ExpGained(Unit unit, int currentExp, int expGained)
+    {
+        AnimationQueue.Add(() => { 
+            InputSystem.OnSetActive(false, this); 
+            expBarController.Show(currentExp, expGained);
+        }, ()=> InputSystem.OnSetActive(true, this));
+        //AnimationQueue.OnAllAnimationsEnded += SetInputToOldState;
+    }
+    private void TurnAnimationStarted()
+    {
+        InputActiveState = InputSystem.Active;
+        InputSystem.OnSetActive(false, this);
+    }
+    private void TurnAnimationFinished()
+    {
+        //Set to State Before TurnAnimationStarted
+        InputSystem.OnSetActive(InputActiveState, this);
     }
     //private void OnMovementPathUpdated(List<Vector2> mousePath, int startX, int startY)
     //{
@@ -66,6 +107,8 @@ public class PlayerInputFeedback :MonoBehaviour
     //}
     private void OnActiveUnitStateUpdate(Unit u, bool canMove, bool disableOthers)
     {
+        if (u.Faction!=null&&u.Faction.Id != gridGameManager.FactionManager.GetPlayerControlledFaction().Id)
+            return;
         HideActiveUnitEffect(u);
         if (disableOthers)
             HideAllActiveUnitEffects();
@@ -123,9 +166,9 @@ public class PlayerInputFeedback :MonoBehaviour
             return;
         }
 
-        var go = Instantiate(resources.Particles.EnemyField,
+        var go = Instantiate(resources.Prefabs.attackIconPrefab,
             GameObject.FindGameObjectWithTag("World").transform);
-        go.transform.localPosition = new Vector3(x + 0.5f, y + 0.5f, go.transform.localPosition.z - 0.1f);
+        go.transform.localPosition = new Vector3(x + 0.5f, y + 0.5f, go.transform.localPosition.z);
         attackableFieldEffects.Add(go);
     }
 
@@ -164,7 +207,7 @@ public class PlayerInputFeedback :MonoBehaviour
         if (GridGameManager.Instance.FactionManager.ActiveFaction.IsPlayerControlled)
             ShowAllActiveUnitEffects();
     }
-    private void InputActive(bool active)
+    private void InputActive(bool active, object caller)
     {
         if (active)
             ShowAllActiveUnitEffects();
@@ -189,27 +232,37 @@ public class PlayerInputFeedback :MonoBehaviour
             GameObject.Destroy(gob);
         }
     }
-private void SpawnActiveUnitEffect(Unit unit)
-{
+    private void SpawnActiveUnitEffect(Unit unit)
+    {
         HideActiveUnitEffect(unit);
         //Debug.Log("Spawn ActiveUnitEffect: [" + unit.GridPosition.X+"/"+ unit.GridPosition.Y+"]");
-       
-        var go = GameObject.Instantiate(resources.Prefabs.MoveCursor,
+
+        var go = GameObject.Instantiate(resources.Prefabs.ActiveUnitField,
             GameObject.FindGameObjectWithTag("World").transform);
         go.transform.localPosition =
             new Vector3(unit.GridPosition.X, unit.GridPosition.Y, go.transform.localPosition.z);
         activeUnitEffects.Add(unit.Name, go);
+
         go.name = "ActiveUnitEffect";
     }
     public void HideAllActiveUnitEffects()
     {
+        setActiveUnitEffectsWhenInputIsActive = false;
         foreach (var pair in activeUnitEffects)
         {
             pair.Value.SetActive(false);
         }
+        InputSystem.OnInputActivated -= ShowAllActiveUnitEffects;
     }
     public void ShowAllActiveUnitEffects()
     {
+        if (!InputSystem.Active)
+        {
+            InputSystem.OnInputActivated += ShowAllActiveUnitEffects;
+            return;
+        }
+        InputSystem.OnInputActivated -= ShowAllActiveUnitEffects;
+        //Debug.Log("ShowAllActiveUnitEffects "+activeUnitEffects.Count);
         foreach (var pair in activeUnitEffects)
         {
             pair.Value.SetActive(true);
@@ -228,6 +281,10 @@ private void SpawnActiveUnitEffect(Unit unit)
             moveCursor = GameObject.Instantiate(resources.Prefabs.MoveCursor, worldContainer);
             moveCursor.transform.localPosition = new Vector3(startX,
                 startY, moveCursor.transform.localPosition.z);
+            moveCursorStart = GameObject.Instantiate(resources.Prefabs.MoveArrowDot, worldContainer);
+            moveCursorStart.transform.localPosition = new Vector3(startX + 0.5f,
+                startY + 0.5f, -0.03f);
+            moveCursorStart.GetComponent<SpriteRenderer>().sprite = resources.Sprites.StandOnArrowStartNeutral;
         }
         else
         {

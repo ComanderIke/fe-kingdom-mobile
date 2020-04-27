@@ -3,6 +3,7 @@ using Assets.GameActors.Units.Humans;
 using Assets.GameInput;
 using Assets.GameResources;
 using Assets.GUI;
+using Assets.Manager;
 using Assets.Mechanics.Dialogs;
 using Assets.Utility;
 using System;
@@ -18,7 +19,7 @@ namespace Assets.GameActors.Units.OnGameObject
 
         [SerializeField] private StatsBarOnMap hpBar;
         [SerializeField] private StatsBarOnMap spBar;
-        [SerializeField] private ExpBarController expBar;
+
         [SerializeField] private TextMeshProUGUI ApText;
         [SerializeField] private Image EquippedItemIcon;
         [SerializeField] private Image EquippedItemBackground;
@@ -28,7 +29,6 @@ namespace Assets.GameActors.Units.OnGameObject
         {
             Unit.HpValueChanged += HpValueChanged;
             Unit.SpValueChanged += SpValueChanged;
-            Unit.ExperienceManager.OnExpGained += ExpValueChanged;
             Unit.UnitWaiting += SetWaitingSprite;
             Unit.ApValueChanged += ApValueChanged;
             Human.OnEquippedWeapon += OnEquippedWeapon;
@@ -39,16 +39,15 @@ namespace Assets.GameActors.Units.OnGameObject
         {
            hpBar.GetComponent<Image>().color = ColorManager.Instance.GetFactionColor(Unit.Faction.Id);
             //spBar.GetComponent<Image>().color = ColorManager.Instance.GetFactionColor(Unit.Faction.Id);
-           ApText.color = ColorManager.Instance.GetFactionColor(Unit.Faction.Id);
            HpValueChanged();
            SpValueChanged();
+            ApValueChanged();
            OnEquippedWeapon();
         }
         void Destroy()
         {
             Unit.HpValueChanged -= HpValueChanged;
             Unit.SpValueChanged -= SpValueChanged;
-            Unit.ExperienceManager.OnExpGained -= ExpValueChanged;
             Unit.UnitWaiting -= SetWaitingSprite;
             Unit.ApValueChanged -= ApValueChanged;
             Human.OnEquippedWeapon -= OnEquippedWeapon;
@@ -82,24 +81,28 @@ namespace Assets.GameActors.Units.OnGameObject
         {
             if (ApText != null && Unit != null)
                 ApText.text=""+Unit.Ap;
-            if(Unit.Ap==0)
+            ApText.color = ColorManager.Instance.GetFactionColor(Unit.Faction.Id);
+            if (Unit.Faction.Id != GridGameManager.Instance.FactionManager.ActiveFaction.Id)
+            {
+               
+                ApText.transform.GetChild(0).gameObject.SetActive(false);
+            }
+            else if (Unit.Ap == 0)
+            {
                 ApText.color = ColorManager.Instance.MainGreyColor;
+                ApText.transform.GetChild(0).gameObject.SetActive(false);
+            }
             else
-                ApText.color = ColorManager.Instance.GetFactionColor(Unit.Faction.Id);
+            {
+                ApText.transform.GetChild(0).gameObject.SetActive(true);
+            }
         }
         private void SpValueChanged()
         {
             if (spBar != null && Unit != null)
                 spBar.SetHealth(Unit.Sp, Unit.Stats.MaxSp);
         }
-        private void ExpValueChanged(int currentExp, int expGained)
-        {
-            if (expBar != null && Unit != null)
-            {
-                AnimationQueue.Add(()=>expBar.Show(currentExp, expGained));
-                
-            }
-        }
+      
 
         private void SetWaitingSprite(Unit unit, bool waiting)
         {

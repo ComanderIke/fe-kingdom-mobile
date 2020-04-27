@@ -12,6 +12,7 @@ namespace Assets.GameResources
         public Sprite MoveArrowStraight;
         public Sprite MoveArrowStart;
         public Sprite StandOnArrowStart;
+        public Sprite StandOnArrowStartNeutral;
         public Sprite WolfClaw;
         public Sprite GetMonsterOnMapSprites(int spriteId)
         {

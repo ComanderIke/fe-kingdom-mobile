@@ -91,6 +91,7 @@ namespace Assets.Grid.PathFinding
             Nodes[tx, ty].Parent = null;
             int maxDepth = 0;
             int maxSearchDistance = 100;
+            bool finished = false;
             while ((maxDepth < maxSearchDistance) && (open.Count != 0))
             {
                 var current = GetFirstInOpen();
@@ -105,6 +106,7 @@ namespace Assets.Grid.PathFinding
                 {
                     for (int y = -1; y < 2; y++)
                     {
+                        
                         if (x == 0 && y == 0)
                             continue;
                         if (x != 0 && y != 0) //no diagonal movement
@@ -112,27 +114,31 @@ namespace Assets.Grid.PathFinding
                         int xp = x + current.X;
                         int yp = y + current.Y;
                         bool isAdjacent = false;
-                        if (toAdjacentPos && gridManager.GridLogic.IsTileAccessible(new Vector2(x,y)))
+                        if (toAdjacentPos && gridManager.GridLogic.IsTileAccessible(new Vector2(xp, yp)) && gridManager.GridLogic.IsTileFree(new Vector2(xp, yp)))
                         {
                             int delta = Mathf.Abs(xp - Nodes[tx, ty].X) + Mathf.Abs(yp - Nodes[tx, ty].Y);
                             range.Reverse();
                             foreach (int r in range.Where(r => delta == r))
                             {
                                 isAdjacent = true;
-
-                                if (GridGameManager.Instance.GetSystem<InputSystem>().AttackRangeFromPath < r)
-                                {
-                                    GridGameManager.Instance.GetSystem<InputSystem>().AttackRangeFromPath = r;
-                                    // break;
-                                }
+                                
+                                //if (GridGameManager.Instance.GetSystem<InputSystem>().AttackRangeFromPath < r)
+                                //{
+                                    Debug.Log("AttackRange " + r + " " +tx+" "+ty+" "+ xp + " " + yp);
+                                    //GridGameManager.Instance.GetSystem<InputSystem>().AttackRangeFromPath = r;
+                                    tx = xp;
+                                    ty = yp;
+                                    finished = true;
+                                    break;
+                                //}
                             }
-
                             range.Reverse();
                         }
-
+                       
                         if (gridManager.GridLogic.IsValidLocation(team, sx, sy, xp, yp, isAdjacent) ||
                             (xp == tx && yp == ty))
                         {
+                           
                             int nextStepCost = current.CostFromStart + 1;
                             var neighbor = Nodes[xp, yp];
                             if (nextStepCost < neighbor.CostFromStart)
@@ -154,13 +160,26 @@ namespace Assets.Grid.PathFinding
                                 maxDepth = Mathf.Max(maxDepth, neighbor.SetParent(current));
                                 AddToOpen(neighbor);
                             }
+                            if (finished)
+                            {
+                                break;
+                            }
                         }
                     }
+                    if (finished)
+                    {
+                        break;
+                    }
+                }
+                if (finished)
+                {
+                    break;
                 }
             }
 
             if (Nodes[tx, ty].Parent == null)
             {
+                Debug.Log("Parent null");
                 return null;
             }
 
@@ -178,7 +197,7 @@ namespace Assets.Grid.PathFinding
 
         public MovementPath GetPath(int x, int y, int x2, int y2, int team, bool toAdjacentPos, List<int> range)
         {
-            GridGameManager.Instance.GetSystem<InputSystem>().AttackRangeFromPath = 0;
+            //GridGameManager.Instance.GetSystem<InputSystem>().AttackRangeFromPath = 0;
             Reset();
 
             return FindPath(x, y, x2, y2, team, toAdjacentPos, range);

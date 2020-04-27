@@ -50,7 +50,7 @@ namespace Assets.Core.GameStates
                 if (p.IsPlayerControlled && !p.IsAlive())
                 {
                     gridGameManager.GetSystem<UiSystem>().ShowGameOver();
-                    InputSystem.OnSetActive(false);
+                    InputSystem.OnSetActive(false, this);
                     gridGameManager.GameStateManager.Feed(NextStateTrigger.GameOver);
 
                     return;
@@ -58,7 +58,7 @@ namespace Assets.Core.GameStates
                 else if (!p.IsPlayerControlled && !p.IsAlive())
                 {
                     gridGameManager.GetSystem<UiSystem>().ShowWinScreen();
-                    InputSystem.OnSetActive(false);
+                    InputSystem.OnSetActive(false, this);
                     gridGameManager.GameStateManager.Feed(NextStateTrigger.PlayerWon);
                     return;
                 }

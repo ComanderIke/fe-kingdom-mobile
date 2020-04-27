@@ -349,6 +349,11 @@ namespace Assets.Grid
 
             return !invalid;
         }
+        public bool IsTileFree(Vector2 pos)
+        {
+            return Tiles[(int)pos.x, (int)pos.y].Unit == null;
+        }
+
 
         private bool IsMovableLocation(BigTile position, int team, Unit character)
         {

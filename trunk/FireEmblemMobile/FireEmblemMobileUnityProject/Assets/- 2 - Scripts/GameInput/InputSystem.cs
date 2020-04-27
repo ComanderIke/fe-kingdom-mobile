@@ -17,36 +17,42 @@ using UnityEngine.EventSystems;
 
 namespace Assets.GameInput
 {
+
     public class InputSystem : MonoBehaviour, IEngineSystem
     {
         #region Events
         public delegate void OnMovementPathUpdatedEvent(List<Vector2> mousePath, int startX, int startY);
         public static event OnMovementPathUpdatedEvent OnMovementPathUpdated;
 
-        public static Action<bool> OnSetActive;
+        public static Action<bool, object> OnSetActive;
+        public static event Action OnInputActivated;
 
         public static event Action OnDragReset;
         public static event Action OnDraggedOnActiveField;
         #endregion
 
-        public bool Active { get; private set; }
+        public static bool Active { get; private set; }
 
         private readonly List<Vector2> dragPath = new List<Vector2>();          // tracks the path a unit is dragged along the grid.
         public List<CursorPosition> LastPositions = new List<CursorPosition>(); /* tracks the last positions the cursor was on,
                                                                                 in order to determine the latest possible attack Position. */
         public List<Vector2> MovementPath = new List<Vector2>();                // stores the path a unit is moving along the grid.
 
-        [HideInInspector] public int AttackRangeFromPath;                       /* Very Complicated to Refactor! 
-                                                                                This is used to store the Position from where a Unit will Attack.
-                                                                                this changes based on AttackRange of the unit 
-                                                                                and based on the prefered movementPath. */
+        //[HideInInspector] public int AttackRangeFromPath;                       /* Very Complicated to Refactor! 
+        //                                                                        This is used to store the Position from where a Unit will Attack.
+        //                                                                        this changes based on AttackRange of the unit 
+        //                                                                        and based on the prefered movementPath. */
 
         private GridGameManager gridGameManager;
         public RaycastManager RaycastManager;
         private GameplayInput gameplayInput;
 
+        private List<object> inputActivationRequests = new List<object>();
+        private object lastInputActivationCaller = null;
         private int lastDragPosX = -1;
         private int lastDragPosY = -1;
+        private int selectedTileX = -1;
+        private int selectedTileY = -1;
         private Unit confirmAttackTarget = null;                                /* stores the last attackPreview Target in order to 
                                                                                 determine if the same target is clicked again, 
                                                                                 which will result in an AttackAction */
@@ -54,6 +60,7 @@ namespace Assets.GameInput
         private Unit SelectedCharacter { get => gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter; }
         private void Start()
         {
+            Active = true;
             gridGameManager = GridGameManager.Instance;
             gameplayInput = new GameplayInput();
             RaycastManager = new RaycastManager();
@@ -71,6 +78,7 @@ namespace Assets.GameInput
             UnitInputController.OnUnitDragged += CharacterDrag;
             UnitSelectionSystem.OnSelectedCharacter += OnSelectedCharacter;
             UnitSelectionSystem.OnSelectedInActiveCharacter += OnSelectedCharacter;
+
         }
         private void OnSelectedCharacter(Unit u)
         {
@@ -94,15 +102,38 @@ namespace Assets.GameInput
             var y = (int)gridPos.y;
             if( hit.collider != null && hit.collider.tag == TagManager.GridTag)
             {
-                ResetDrag();
+                //ResetDrag();
                 Debug.Log("Player Input: Grid clicked: " + x + " " + y);
                 GridClicked(x, y);
             }
         }
 
-        public void SetInputActive(bool active)
+        public void SetInputActive(bool active, object caller)
         {
-            Active = active;
+
+            bool contains = false;
+            foreach(object obj in inputActivationRequests)
+            {
+                if(obj == caller)
+                {
+                    contains = true;
+                    break;
+                }
+            }
+            if(active&&contains)
+                inputActivationRequests.Remove(caller);
+            if (!contains&&!active)
+                inputActivationRequests.Add(caller);
+
+            Active=inputActivationRequests.Count == 0;
+
+            if (Active)
+            {
+                OnInputActivated?.Invoke();
+                Debug.Log("Input Activated!");
+            }
+            else
+                Debug.Log("Input Deactivated!");
         }
 
         private void DragEnded()
@@ -146,7 +177,14 @@ namespace Assets.GameInput
                 return;
             if (unit.Faction.Id == gridGameManager.FactionManager.ActiveFaction.Id) // Player Unit Clicked
             {
-                gameplayInput.SelectUnit(unit);
+                if (unit.GetGameTransformPosition().x == selectedTileX && unit.GetGameTransformPosition().y == selectedTileY)//Confirm Move
+                {
+                    GridClicked(selectedTileX, selectedTileY);
+                }
+                else
+                {
+                    gameplayInput.SelectUnit(unit);
+                }
             }
             else {
                 EnemyClicked(unit);
@@ -159,6 +197,7 @@ namespace Assets.GameInput
             {
                 Debug.Log("TODO Select Enemy!");
                 Debug.Log("TODO Show Enemy Range!");
+                gameplayInput.SelectUnit(unit);
             }
             else
             {
@@ -166,14 +205,32 @@ namespace Assets.GameInput
                 {
                     if (confirmAttackTarget!=unit)
                     {
-                        CalculateMousePathToEnemy(SelectedCharacter, new Vector2(unit.GridPosition.X, unit.GridPosition.Y));
-                        UpdatedMovementPath();
-                        if (dragPath.Count >= 1)
+                        if (SelectedCharacter.GridPosition.CanAttack(SelectedCharacter.Stats.AttackRanges, unit.GridPosition))
                         {
-                            //Set the Sprite to the AttackPosition
-                            SelectedCharacter.GameTransform.SetPosition((int)dragPath[dragPath.Count - 1].x, (int)dragPath[dragPath.Count - 1].y);
+                            MovementPath.Clear();
+                            UpdatedMovementPath();
                             gameplayInput.CheckAttackPreview(SelectedCharacter, unit,
-                                new GridPosition((int)dragPath[dragPath.Count - 1].x, (int)dragPath[dragPath.Count - 1].y));
+                                   new GridPosition(SelectedCharacter.GridPosition.X, SelectedCharacter.GridPosition.Y));
+                        }
+                        else
+                        {
+                            CalculateMousePathToEnemy(SelectedCharacter, new Vector2(unit.GridPosition.X, unit.GridPosition.Y));
+                            if (MovementPath.Count >= 1)
+                            {
+                                //Debug.Log("Here!");
+                                //Set the Sprite to the AttackPosition
+                                //SelectedCharacter.GameTransform.SetPosition((int)dragPath[dragPath.Count - 1].x, (int)dragPath[dragPath.Count - 1].y);
+                                SelectedCharacter.SetGameTransformPosition((int)MovementPath[MovementPath.Count - 1].x, (int)MovementPath[MovementPath.Count - 1].y);
+                                gameplayInput.CheckAttackPreview(SelectedCharacter, unit,
+                                    new GridPosition((int)MovementPath[MovementPath.Count - 1].x, (int)MovementPath[MovementPath.Count - 1].y));
+                            }
+                            else
+                            {
+                                //Debug.Log("HERE");
+                                //Debug.Log("Here!"+ SelectedCharacter.GridPosition.X+","+SelectedCharacter.GridPosition.Y);
+                                gameplayInput.CheckAttackPreview(SelectedCharacter, unit,
+                                   new GridPosition(SelectedCharacter.GridPosition.X, SelectedCharacter.GridPosition.Y));
+                            }
                         }
                         confirmAttackTarget = unit;
                     }
@@ -184,6 +241,8 @@ namespace Assets.GameInput
                 }
                 else
                 {
+                    //gameplayInput.DeselectUnit();
+                    gameplayInput.ViewUnit(unit);
                     Debug.Log("Enemy not Attackable!");
                     Debug.Log("TODO Select Enemy! Without showing his range!");
                 }
@@ -193,12 +252,27 @@ namespace Assets.GameInput
         {
             if (gridGameManager.GetSystem<MapSystem>().GridLogic.IsFieldFreeAndActive(x, y))
             {
-                if (MovementPath == null || MovementPath.Count == 0)
-                    CalculateMousePathToPosition(SelectedCharacter,  x,  y);
-                gameplayInput.MoveUnit(SelectedCharacter, new GridPosition(x, y), GridPosition.GetFromVectorList(MovementPath));
-                gameplayInput.ExecuteInputActions(() => gridGameManager.GameStateManager.SwitchState(GameStateManager.GameplayState));
+                
+                if(selectedTileX == x && selectedTileY == y)
+                {
+                    selectedTileX = -1;
+                    selectedTileY = -1;
+                    gameplayInput.MoveUnit(SelectedCharacter, new GridPosition(x, y), GridPosition.GetFromVectorList(MovementPath));
+                    gameplayInput.ExecuteInputActions(() => gridGameManager.GameStateManager.SwitchState(GameStateManager.GameplayState));
+                }
+                else
+                {
+                    CalculateMousePathToPosition(SelectedCharacter, x, y);
+                    SelectedCharacter.SetGameTransformPosition(x, y);
+                    selectedTileX = x;
+                    selectedTileY = y;
+                }
             }
             else if(SelectedCharacter != null)
+            {
+                gameplayInput.DeselectUnit();
+            }
+            else
             {
                 gameplayInput.DeselectUnit();
             }
@@ -206,6 +280,8 @@ namespace Assets.GameInput
 
         private void UnitEndDragOnGrid(int x, int y)
         {
+            selectedTileX = x;
+            selectedTileY = y;
             GridClicked(x, y);
         }
 
@@ -248,19 +324,17 @@ namespace Assets.GameInput
             {
                 Debug.Log("Got to Enemy!" + movePath.Count);
 
-                int xMov = 0;
-                int yMov = 0;
+            
                 if (movePath.Count >= 1)
                 {
-                    xMov = (int)movePath[movePath.Count - 1].x;
-                    yMov = (int)movePath[movePath.Count - 1].y;
+                    int xMov = (int)movePath[movePath.Count - 1].x;
+                    int yMov = (int)movePath[movePath.Count - 1].y;
+                    gameplayInput.MoveUnit(character, new GridPosition(xMov, yMov), GridPosition.GetFromVectorList(movePath));
                 }
-                gameplayInput.MoveUnit(character, new GridPosition(xMov, yMov), GridPosition.GetFromVectorList(movePath));
                 gameplayInput.AttackUnit(character, enemy);
                 gameplayInput.ExecuteInputActions(() => gridGameManager.GameStateManager.SwitchState(GameStateManager.GameplayState));
                 
-                Debug.Log("TODO? Works only for melee?");
-                AttackRangeFromPath = 0;
+                //AttackRangeFromPath = 0;//No Idea why this is here!
             }
         }
       
@@ -270,6 +344,8 @@ namespace Assets.GameInput
             MovementPath.Clear();
             lastDragPosX = -1;
             lastDragPosY = -1;
+            selectedTileX = -1;
+            selectedTileY = -1;
             confirmAttackTarget = null;
             OnDragReset?.Invoke();
         }
@@ -322,7 +398,7 @@ namespace Assets.GameInput
         {
             int startX = SelectedCharacter.GridPosition.X;
             int startY = SelectedCharacter.GridPosition.Y;
-            OnMovementPathUpdated?.Invoke(dragPath, startX, startY);
+            OnMovementPathUpdated?.Invoke(MovementPath, startX, startY);
         }
         /* Calculates a Path from one character to another including Attack Range */
         public void CalculateMousePathToEnemy(Unit character, Vector2 position)
@@ -331,11 +407,28 @@ namespace Assets.GameInput
             var p = gridGameManager.GetSystem<MoveSystem>().GetPath(character.GridPosition.X,
                 character.GridPosition.Y, (int)position.x, (int)position.y, character.Faction.Id, true,
                 character.Stats.AttackRanges);
-            if (p != null)
-                for (int i = p.GetLength() - 2; i >= AttackRangeFromPath; i--)
-                    dragPath.Add(new Vector2(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
-            MovementPath = new List<Vector2>(dragPath);
+            MovementPath = new List<Vector2>();
+            p.Reverse();
+            for (int i = 1; i < p.GetLength(); i++)
+            {
+                //Debug.Log(new Vector2(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
+                MovementPath.Add(new Vector2(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
+            }
+            //Debug.Log(AttackRangeFromPath);
+            //if (p != null)
+            //    for (int i = p.GetLength() - 2; i >= AttackRangeFromPath; i--)
+            //        dragPath.Add(new Vector2(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
+            //MovementPath = new List<Vector2>(p);
+            //PrintMovementPath();
             UpdatedMovementPath();
+        }
+        private void PrintMovementPath()
+        {
+            Debug.Log("Movement Path: ");
+            for(int i= 0; i< MovementPath.Count; i++)
+            {
+                Debug.Log(MovementPath[i]);
+            }
         }
         /* Calculates a Path from one character to a position that is in attackRange from x and y*/
         /* Not sure if better then CalculateMousePathToEnemy. Probably not needed */
@@ -414,21 +507,28 @@ namespace Assets.GameInput
             if (!FindObjectOfType<MapSystem>().GridLogic.IsFieldAttackable(x, y))
                 return;
             //CalculateMousePathToEnemy(selectedCharacter, new Vector2(x, y));
-            if (dragPath == null || dragPath.Count == 0)
+            if (MovementPath == null || MovementPath.Count == 0)
             {
                 //Debug.Log("Mousepath empty");
-                CalculateMousePathToEnemy(SelectedCharacter, new Vector2(x, y));
+                if (SelectedCharacter.GridPosition.CanAttack(SelectedCharacter.Stats.AttackRanges, enemy.GridPosition))
+                {
+                    gameplayInput.CheckAttackPreview(SelectedCharacter, enemy, SelectedCharacter.GridPosition);
+                }
+                else
+                {
+                    CalculateMousePathToEnemy(SelectedCharacter, new Vector2(x, y));
+                }
                 //CalculateMousePathToAttackField(SelectedCharacter, x, y);
             }
-            else //enemy is Adjacent from StartPosition. Search for suitable AttackPosition
+            else // Search for suitable AttackPosition
             {
                 var foundAttackPosition = false;
                 int attackPositionIndex = -1;
-                for (int i = dragPath.Count - 1; i >= 0; i--)//Search for suitable Position from already dragged over tiles
+                for (int i = MovementPath.Count - 1; i >= 0; i--)//Search for suitable Position from already dragged over tiles
                 {
-                    var lastMousePathPositionX = (int)dragPath[i].x;
-                    var lastMousePathPositionY = (int)dragPath[i].y;
-                    var lastMousePathField = gridGameManager.GetSystem<MapSystem>().GetTileFromVector2(dragPath[i]);
+                    var lastMousePathPositionX = (int)MovementPath[i].x;
+                    var lastMousePathPositionY = (int)MovementPath[i].y;
+                    var lastMousePathField = gridGameManager.GetSystem<MapSystem>().GetTileFromVector2(MovementPath[i]);
                     int delta = Mathf.Abs(lastMousePathPositionX - x) + Mathf.Abs(lastMousePathPositionY - y);
                     if (SelectedCharacter.Stats.AttackRanges.Contains(delta))
                         if (lastMousePathField.Unit == null)
@@ -442,17 +542,29 @@ namespace Assets.GameInput
 
                 if (foundAttackPosition)//Removes Parts of the drag Path to make it end at the correct attackPosition;
                 {
-                    dragPath.RemoveRange(attackPositionIndex + 1, dragPath.Count - (attackPositionIndex + 1));
+                    MovementPath.RemoveRange(attackPositionIndex + 1, MovementPath.Count - (attackPositionIndex + 1));
                     UpdatedMovementPath();
                 }
                 else
                 {
-                    //Debug.Log("No suitable AttackPosition found in dragPath!");
-                    CalculateMousePathToEnemy(SelectedCharacter, new Vector2(x, y));
+
+                    int delta = Mathf.Abs(SelectedCharacter.GridPosition.X - x) + Mathf.Abs(SelectedCharacter.GridPosition.Y - y);
+                    if (SelectedCharacter.Stats.AttackRanges.Contains(delta))
+                    {
+                        //Debug.Log("HERe" + delta);
+                        gameplayInput.CheckAttackPreview(SelectedCharacter, enemy, SelectedCharacter.GridPosition);
+                        MovementPath.Clear();
+                        UpdatedMovementPath();
+                    }
+                    else
+                    {
+                        Debug.Log("No suitable AttackPosition found in dragPath!");
+                        CalculateMousePathToEnemy(SelectedCharacter, new Vector2(x, y));
+                    }
                 }
             }
 
-            if (dragPath != null && dragPath.Count <= SelectedCharacter.Ap)
+            if (MovementPath != null && MovementPath.Count <= SelectedCharacter.Ap)
             {
                 UpdatedMovementPath();
                 gameplayInput.CheckAttackPreview(SelectedCharacter, enemy, new GridPosition(x, y));

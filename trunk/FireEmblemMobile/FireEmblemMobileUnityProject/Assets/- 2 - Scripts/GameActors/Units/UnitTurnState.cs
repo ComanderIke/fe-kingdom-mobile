@@ -34,9 +34,7 @@ namespace Assets.GameActors.Units
             {
                 hasMoved = value;
                 unit.UnitCanMove?.Invoke(unit, !hasMoved);
-                
-                if (hasMoved)
-                    UiSystem.OnHideCursor?.Invoke();
+               
             }
         }
 

@@ -23,6 +23,8 @@ namespace Assets.GameActors.Units
         [HideInInspector] private int ap;
         public delegate void OnUnitLevelUpEvent(string name, int levelBefore, int levelAfter, int[] stats, int[] statIncreases);
         public static OnUnitLevelUpEvent OnUnitLevelUp;
+        public delegate void OnExpGainedEvent(Unit unit, int expBefore, int expGained);
+        public static event OnExpGainedEvent OnExpGained;
 
         public Stats Stats;
         public Growths Growths;
@@ -110,7 +112,12 @@ namespace Assets.GameActors.Units
             Hp = Stats.MaxHp;
             Sp = Stats.MaxSp;
             Ap = Stats.Mov;
+            ExperienceManager.OnExpGained += ExpGained;
             
+        }
+        private void ExpGained(int expBefore, int expGained)
+        {
+            OnExpGained?.Invoke(this, expBefore, expGained);
         }
        
         private void LevelUp(int levelBefore, int levelAfter)
@@ -181,6 +188,14 @@ namespace Assets.GameActors.Units
             GridPosition.SetPosition(x, y);
 
             GameTransform.SetPosition(x, y);
+        }
+        public virtual void SetGameTransformPosition(int x, int y)
+        {
+            GameTransform.SetPosition(x, y);
+        }
+        public virtual Vector2 GetGameTransformPosition()
+        {
+            return GameTransform.GetPosition();
         }
 
         public void ResetPosition()
@@ -256,9 +271,10 @@ namespace Assets.GameActors.Units
             clone.Debuffs = new List<Debuff>();
             clone.Agent = new AIAgent();
 
-            clone.Hp = this.Hp;
-            clone.Sp = this.Sp;
-            clone.Ap = this.Ap;
+            clone.hp = this.hp;
+            clone.sp = this.sp;
+            clone.ap = this.ap;
+          
             clone.Stats = (Stats)Stats.Clone();
             clone.Growths = (Growths)Growths.Clone();
             clone.Motivation = Motivation;

@@ -52,7 +52,6 @@ namespace Assets.Mechanics
 
         public void ContinueBattle()
         {
-            Debug.Log(currentAttackIndex);
             ContinueBattle(battleSimulation.AttackSequence[currentAttackIndex]);
         }
         private void ContinueBattle(bool attackerAttacking)

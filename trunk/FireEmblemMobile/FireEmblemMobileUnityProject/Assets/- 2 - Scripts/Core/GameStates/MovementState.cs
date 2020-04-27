@@ -47,7 +47,7 @@ namespace Assets.Core.GameStates
             }
             OnEnter?.Invoke();
             active = true;
-            InputSystem.OnSetActive(false);
+            InputSystem.OnSetActive(false, this);
             if (mousePath == null || mousePath.Count == 0)
             {
                 Path = gridGameManager.GetSystem<MoveSystem>().GetPath(unit.GridPosition.X, unit.GridPosition.Y, x, y,
@@ -68,6 +68,7 @@ namespace Assets.Core.GameStates
                 Path.Remove(0);
             }
             //PrintMovementPath();
+            FinishMovement();
         }
         private void PrintMovementPath()
         {
@@ -86,7 +87,7 @@ namespace Assets.Core.GameStates
 
         private void MoveUnit()
         {
-           
+          
             float x = unit.GameTransform.GameObject.transform.localPosition.x;
             float y = unit.GameTransform.GameObject.transform.localPosition.y;
             float z = unit.GameTransform.GameObject.transform.localPosition.z;
@@ -105,22 +106,23 @@ namespace Assets.Core.GameStates
 
             if (PathCounter >= Path.GetLength())
             {
-                active = false;
                 FinishMovement();
             }
         }
 
         public override void Exit()
         {
+            Debug.Log("Set Position: "+x+" "+y);
             unit.SetPosition(x, y);
             unit.UnitTurnState.HasMoved = true;
             unit.Ap -= Path.GetLength();
-            InputSystem.OnSetActive(true);
+            InputSystem.OnSetActive(true, this);
             OnMovementFinished?.Invoke();
         }
 
         private void FinishMovement()
         {
+            active = false;
             GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.FinishedMovement);
             UnitActionSystem.OnCommandFinished();
            

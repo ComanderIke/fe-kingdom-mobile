@@ -15,6 +15,7 @@ namespace Assets.Grid
         public Material CellMaterialMovement;
         public Material CellMaterialInvalid;
         public Material CellMaterialStandOn;
+        public Material CellMaterialAlly;
         public Material CellMaterialAttackableEnemy;
     }
 }

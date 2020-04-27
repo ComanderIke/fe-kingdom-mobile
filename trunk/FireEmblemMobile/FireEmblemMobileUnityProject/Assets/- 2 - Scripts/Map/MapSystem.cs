@@ -119,7 +119,6 @@ namespace Assets.Map
         public void ShowAttackRangeOnGrid(Unit character, List<int> attack)
         {
             var tilesFromWhereUCanAttack = (from Tile f in Tiles where (f.X == character.GridPosition.X && f.Y== character.GridPosition.Y) || (f.IsActive && (f.Unit == null || f.Unit == character)) select f).ToList();
-            Debug.Log(tilesFromWhereUCanAttack.Count);
             NodeHelper.Reset();
             foreach (var f in tilesFromWhereUCanAttack)
             {

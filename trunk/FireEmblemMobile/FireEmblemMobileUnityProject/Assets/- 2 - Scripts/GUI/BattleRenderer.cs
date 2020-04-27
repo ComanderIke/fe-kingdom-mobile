@@ -33,12 +33,12 @@ namespace Assets.GUI
 
         private void OnEnable()
         {
-            InputSystem.OnSetActive?.Invoke(false);
+            InputSystem.OnSetActive?.Invoke(false,this);
         }
 
         private void OnDisable()
         {
-            InputSystem.OnSetActive?.Invoke(true);
+            InputSystem.OnSetActive?.Invoke(true, this);
         }
 
         public void Show(Unit attacker, Unit defender, bool[] attackSequence)
@@ -48,10 +48,10 @@ namespace Assets.GUI
 
             gameObject.SetActive(true);
             this.attackSequence = attackSequence;
-            foreach (bool b in attackSequence)
-            {
-                Debug.Log(b);
-            }
+            //foreach (bool b in attackSequence)
+            //{
+            //    Debug.Log(b);
+            //}
             StartCoroutine(DelayAction(StartBattleAnimation, DELAY));
         }
         IEnumerator DelayAction(Action callback, float delay)

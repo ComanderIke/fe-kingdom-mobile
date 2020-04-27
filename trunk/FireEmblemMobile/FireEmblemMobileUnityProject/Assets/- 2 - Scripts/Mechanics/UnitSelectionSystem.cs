@@ -29,6 +29,7 @@ namespace Assets.Mechanics
 
             GameplayInput.OnSelectUnit += SelectUnit;
             GameplayInput.OnDeselectUnit += DeselectActiveCharacter;
+            TurnSystem.OnEndTurn += DeselectActiveCharacter;
         }
 
         private void SameCharacterSelected()

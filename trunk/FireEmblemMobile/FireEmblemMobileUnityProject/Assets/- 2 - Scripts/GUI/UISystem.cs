@@ -16,12 +16,6 @@ namespace Assets.GUI
     public class UiSystem : MonoBehaviour, IEngineSystem
     {
         #region Events
-
-        public delegate void OnShowCursorEvent(int x, int y);
-
-        public static OnShowCursorEvent OnShowCursor;
-
-        public static Action OnHideCursor;
         #endregion
 
         [SerializeField] private Canvas mainCanvas = default;
@@ -49,8 +43,6 @@ namespace Assets.GUI
         {
             gridGameManager = GridGameManager.Instance;
             gameplayInput = new GameplayInput();
-            OnShowCursor += SpawnTileCursor;
-            OnHideCursor += HideTileCursor;
             
             UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
             UnitSelectionSystem.OnDeselectCharacter += HideDeselectButton;
@@ -61,6 +53,7 @@ namespace Assets.GUI
             UnitActionSystem.OnCheckAttackPreview += ShowAttackPreview;
             Unit.OnUnitLevelUp += ShowLevelUpScreen;
             InputSystem.OnDragReset += HideAttackPreview;
+            GameplayInput.OnViewUnit += ShowTopUi;
             
            
             resources = FindObjectOfType<ResourceScript>();
@@ -83,7 +76,10 @@ namespace Assets.GUI
 
         public void ShowLevelUpScreen(string name, int levelBefore, int levelAfter, int [] stats, int[] statIncreases)
         {
-            AnimationQueue.Add(() => levelUpScreen.Show(name, levelBefore, levelAfter, stats, statIncreases));
+            AnimationQueue.Add(()=> { 
+                InputSystem.OnSetActive(false, this);
+                levelUpScreen.Show(name, levelBefore, levelAfter, stats, statIncreases); },
+                ()=> InputSystem.OnSetActive(true, this));
             
         }
         public void DeselectButtonClicked()
@@ -208,8 +204,7 @@ namespace Assets.GUI
 
         private void OnDestroy()
         {
-            OnHideCursor = null;
-            OnShowCursor = null;
+
         }
     }
 }

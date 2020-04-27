@@ -259,11 +259,12 @@ namespace Assets.Grid.PathFinding
                                 isAdjacent = true;
 
                                 GridGameManager m = GridGameManager.Instance;
-                                if (m.GetSystem<InputSystem>().AttackRangeFromPath < r)
-                                {
-                                    m.GetSystem<InputSystem>().AttackRangeFromPath = r;
-                                    // break;
-                                }
+                                Debug.Log("TODO");
+                                //if (m.GetSystem<InputSystem>().AttackRangeFromPath < r)
+                                //{
+                                //    m.GetSystem<InputSystem>().AttackRangeFromPath = r;
+                                //    // break;
+                                //}
                             }
 
                             attackRanges.Reverse();

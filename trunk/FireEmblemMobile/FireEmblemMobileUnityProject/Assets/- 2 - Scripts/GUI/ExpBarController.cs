@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -19,10 +20,13 @@ public class ExpBarController : MonoBehaviour
         this.currentExp = currentExp;
         this.addedExp = addedExp;
         text.text = ""+currentExp;
-        LeanTween.scale(this.gameObject, new Vector3(3, 3, 1), 0.6f).setEaseOutQuad().setOnComplete(ShowTextAnimation);
-        LeanTween.move(this.gameObject, new Vector3(3, 4, this.transform.position.z), 0.6f).setEaseOutQuad();
-        oldPosition = this.transform.position;
         
+        LeanTween.scale(this.gameObject, new Vector3(3, 3, 1), 0.6f).setEaseOutQuad().setOnComplete(ShowTextAnimation);
+        LeanTween.moveLocal(this.gameObject, new Vector3(0, -Screen.height/2+transform.parent.GetComponent<RectTransform>().rect.height/2, 0), 0.6f).setEaseOutQuad();
+        
+        oldPosition = this.transform.localPosition;
+        Debug.Log(oldPosition);
+
     }
     void ShowTextAnimation()
     {
@@ -43,8 +47,18 @@ public class ExpBarController : MonoBehaviour
     }
     void Hide()
     {
-        LeanTween.scale(this.gameObject, new Vector3(0, 0, 0), 0.4f).setEaseOutQuad().setDelay(0.5f);
-        LeanTween.move(this.gameObject, oldPosition, 0.4f).setEaseOutQuad().setDelay(0.5f)
-            .setOnComplete(() => AnimationQueue.OnAnimationEnded?.Invoke());
+        LeanTween.scale(this.gameObject, new Vector3(1, 1, 1), 0.4f).setEaseOutQuad().setDelay(0.5f);
+        LeanTween.moveLocal(this.gameObject, oldPosition, 0.4f).setEaseOutQuad().setDelay(0.5f)
+            .setOnComplete(() => { AnimationQueue.OnAnimationEnded?.Invoke(); });
+    }
+
+    public void SetText(int exp)
+    {
+        text.text = "" + (exp);
+    }
+
+    public void SetFillAmount(int expVal)
+    {
+        fill.fillAmount = (expVal) / 100f;
     }
 }

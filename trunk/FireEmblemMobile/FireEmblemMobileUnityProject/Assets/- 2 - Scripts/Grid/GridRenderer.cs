@@ -65,15 +65,17 @@ namespace Assets.Grid
             var meshRenderer = Tiles[(int) pos.x, (int) pos.y].GameObject.GetComponent<MeshRenderer>();
             if (attack)
             {
-                //not using sharedMaterial here create Material instances which will cause much higher baches
-                if (meshRenderer.sharedMaterial == GridManager.GridResources.CellMaterialMovement)
+                //not using sharedMaterial here create Material instances which will cause much higher batches
+                if (meshRenderer.sharedMaterial == GridManager.GridResources.CellMaterialMovement|| meshRenderer.sharedMaterial == GridManager.GridResources.CellMaterialAlly)
                     return;
                 SetAttackFieldMaterial(pos, playerId);
             }
             else
             {
-                meshRenderer.material = GridManager.GridResources.CellMaterialMovement;
-
+                if(Tiles[(int)pos.x, (int)pos.y].Unit!=null&& Tiles[(int)pos.x, (int)pos.y].Unit.Faction.Id == playerId)
+                    meshRenderer.material = GridManager.GridResources.CellMaterialAlly;
+                else
+                    meshRenderer.material = GridManager.GridResources.CellMaterialMovement;
                 if (Tiles[(int) pos.x, (int) pos.y].Unit != null &&
                     Tiles[(int) pos.x, (int) pos.y].Unit.Faction.Id != playerId)
                 {

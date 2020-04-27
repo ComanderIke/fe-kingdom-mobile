@@ -58,13 +58,13 @@ namespace Assets.Mechanics
 
         public MovementPath GetPath(int x, int y, int x2, int y2, int team, bool toAdjacentPos, List<int> range)
         {
-            GridGameManager.Instance.GetSystem<InputSystem>().AttackRangeFromPath = 0;
+            //GridGameManager.Instance.GetSystem<InputSystem>().AttackRangeFromPath = 0;
             return PathFindingManager.GetPath(x, y, x2, y2, team, toAdjacentPos, range);
         }
 
         public MovementPath GetMonsterPath(Monster monster, BigTile position)
         {
-            GridGameManager.Instance.GetSystem<InputSystem>().AttackRangeFromPath = 0;
+            //GridGameManager.Instance.GetSystem<InputSystem>().AttackRangeFromPath = 0;
             var nodes = new PathFindingNode[mapSystem.GridData.Width, mapSystem.GridData.Height];
             for (int x = 0; x < mapSystem.GridData.Width; x++)
             {

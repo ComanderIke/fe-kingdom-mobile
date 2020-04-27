@@ -25,7 +25,6 @@ namespace Assets.GameActors.Units.OnGameObject
         public DragManager DragManager { get; set; }
         public RaycastManager RaycastManager { get; set; }
 
-        public static bool LockInput = true;
         private bool dragInitiated;
         private bool dragStarted;
         private bool doubleClick;
@@ -41,7 +40,7 @@ namespace Assets.GameActors.Units.OnGameObject
 
         private void Update()
         {
-            if (LockInput)
+            if (!InputSystem.Active)
                 return;
             DragManager.Update();
         }
@@ -56,7 +55,7 @@ namespace Assets.GameActors.Units.OnGameObject
 
         private void OnMouseDrag()
         {
-            if (LockInput)
+            if (!InputSystem.Active)
                 return;
             if (!EventSystem.current.IsPointerOverGameObject() && (dragStarted || dragInitiated))
             {
@@ -73,11 +72,11 @@ namespace Assets.GameActors.Units.OnGameObject
             dragStarted = false;
             dragInitiated = false;
             doubleClick = false;
-            
+            if (!InputSystem.Active)
+                return;
             if (!Unit.IsAlive())
                 return;
-            if (LockInput)
-                return;
+           
 
             if (!EventSystem.current.IsPointerOverGameObject())
             {

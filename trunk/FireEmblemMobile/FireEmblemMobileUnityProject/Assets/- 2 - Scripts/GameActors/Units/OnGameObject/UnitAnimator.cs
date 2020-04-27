@@ -18,12 +18,12 @@ namespace Assets.GameActors.Units.OnGameObject
         public void AttackConnected()
         {
             OnAttackAnimationConnected?.Invoke();
-            Debug.Log("Attack Connected!");
+            //Debug.Log("Attack Connected!");
         }
         public void AnimationEnded()
         {
             OnAnimationEnded?.Invoke();
-            Debug.Log("Attack Finished!");
+            //Debug.Log("Attack Finished!");
         }
 
         public void BattleAnimationUp()

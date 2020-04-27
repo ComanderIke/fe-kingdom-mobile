@@ -122,22 +122,23 @@ namespace Assets.Core
                     if (spawn.Unit != null)
                     {
                         var unit = Instantiate(spawn.Unit) as Unit;
-                        unit.Initialize();
                         faction.AddUnit(unit);
+                        unit.Initialize();
+                       
                         unitInstantiator.PlaceCharacter(unit, spawn.X, spawn.Y);
                         Debug.Log("Spawn Unit"+unit.name +" "+spawn.X+" "+spawn.Y);
                     }
                     else if(faction.Units.Count!=0 && indexes[faction.Id]< faction.Units.Count)
                     {
                         var unit = faction.Units[indexes[faction.Id]++];
-                        unit.Initialize();
                         unit.Faction = faction;
+                        unit.Initialize();
+                       
                         unitInstantiator.PlaceCharacter(unit, spawn.X, spawn.Y);
                         Debug.Log("Spawn Unit"+ unit.name + " " + spawn.X + " " + spawn.Y+" ");
                     }
                 }
            
-                Debug.Log("Destroy Spawner");
             foreach (var spawn in spawner)
             {
                 Destroy(spawn.gameObject);
