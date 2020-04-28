@@ -5,10 +5,12 @@ using Assets.GameActors.Players;
 using Assets.GameActors.Units.Attributes;
 using Assets.GameActors.Units.CharStateEffects;
 using Assets.GameActors.Units.OnGameObject;
+using Assets.GameResources;
 using Assets.Grid;
 using Assets.Mechanics;
 using Assets.Mechanics.Battle;
 using Assets.Mechanics.Dialogs;
+using Assets.SerializedData;
 using UnityEngine;
 
 namespace Assets.GameActors.Units
@@ -25,6 +27,12 @@ namespace Assets.GameActors.Units
         public static OnUnitLevelUpEvent OnUnitLevelUp;
         public delegate void OnExpGainedEvent(Unit unit, int expBefore, int expGained);
         public static event OnExpGainedEvent OnExpGained;
+        public delegate void OnBuffEvent(Buff buff);
+        public delegate void OnDebuffEvent(Debuff debuff);
+        public event OnBuffEvent OnBuffAdded;
+        public event OnDebuffEvent OnDebuffAdded;
+        public event OnBuffEvent OnBuffRemoved;
+        public event OnDebuffEvent OnDebuffRemoved;
 
         public Stats Stats;
         public Growths Growths;
@@ -71,8 +79,9 @@ namespace Assets.GameActors.Units
 
         public AIAgent Agent { get; private set; }
         public Faction Faction { get; set; }
-        public List<Debuff> Debuffs { get; private set; }
-        public List<Buff> Buffs { get; private set; }
+        private List<Debuff> Debuffs { get; set; }
+        private List<Buff> Buffs { get; set; }
+
         public GridPosition GridPosition { get; set; }
 
         public MoveActions MoveActions { get; private set; }
@@ -85,7 +94,26 @@ namespace Assets.GameActors.Units
         {
             Debug.Log("TODO ADD GAME FEATURE???");
         }
-
+        public void AddBuff(Buff buff)
+        {
+            Buffs.Add(buff);
+            OnBuffAdded?.Invoke(buff);
+        }
+        public void AddDebuff(Debuff debuff)
+        {
+            Debuffs.Add(debuff);
+            OnDebuffAdded?.Invoke(debuff);
+        }
+        public void RemoveBuff(Buff buff)
+        {
+            Buffs.Remove(buff);
+            OnBuffRemoved?.Invoke(buff);
+        }
+        public void RemoveDebuff(Debuff debuff)
+        {
+            Debuffs.Remove(debuff);
+            OnDebuffRemoved?.Invoke(debuff);
+        }
         public void OnEnable()
         {
            
@@ -113,7 +141,15 @@ namespace Assets.GameActors.Units
             Sp = Stats.MaxSp;
             Ap = Stats.Mov;
             ExperienceManager.OnExpGained += ExpGained;
+            UnitTurnState.OnHasAttacked += HasAttacked;
             
+        }
+        private void HasAttacked(bool value)
+        {
+            if(value)
+                AddDebuff(DataScript.Instance.CharacterStateData.CantAttack);
+            else
+                RemoveDebuff(DataScript.Instance.CharacterStateData.CantAttack);
         }
         private void ExpGained(int expBefore, int expGained)
         {

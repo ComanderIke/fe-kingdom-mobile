@@ -80,21 +80,23 @@ namespace Assets.GameActors.Units.OnGameObject
         private void ApValueChanged()
         {
             if (ApText != null && Unit != null)
-                ApText.text=""+Unit.Ap;
-            ApText.color = ColorManager.Instance.GetFactionColor(Unit.Faction.Id);
-            if (Unit.Faction.Id != GridGameManager.Instance.FactionManager.ActiveFaction.Id)
             {
-               
-                ApText.transform.GetChild(0).gameObject.SetActive(false);
-            }
-            else if (Unit.Ap == 0)
-            {
-                ApText.color = ColorManager.Instance.MainGreyColor;
-                ApText.transform.GetChild(0).gameObject.SetActive(false);
-            }
-            else
-            {
-                ApText.transform.GetChild(0).gameObject.SetActive(true);
+                ApText.text = "" + Unit.Ap;
+                ApText.color = ColorManager.Instance.GetFactionColor(Unit.Faction.Id);
+                if (Unit.Faction.Id != GridGameManager.Instance.FactionManager.ActiveFaction.Id)
+                {
+
+                    ApText.transform.GetChild(0).gameObject.SetActive(false);
+                }
+                else if (Unit.Ap == 0)
+                {
+                    ApText.color = ColorManager.Instance.MainGreyColor;
+                    ApText.transform.GetChild(0).gameObject.SetActive(false);
+                }
+                else
+                {
+                    ApText.transform.GetChild(0).gameObject.SetActive(true);
+                }
             }
         }
         private void SpValueChanged()

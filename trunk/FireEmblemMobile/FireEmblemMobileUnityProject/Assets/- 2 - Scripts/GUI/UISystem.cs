@@ -1,4 +1,5 @@
 ﻿using Assets.Core;
+using Assets.Core.GameStates;
 using Assets.GameActors.Units;
 using Assets.GameInput;
 using Assets.GameResources;
@@ -24,9 +25,11 @@ namespace Assets.GUI
         [SerializeField] private GameObject winScreen = default;
         [SerializeField] private GameObject gameOverScreen = default;
         [SerializeField] private LevelUpScreenController levelUpScreen = default;
-
+     
 
         [Header("UI Sections")]
+        [SerializeField] private CanvasGroup fadeImage = default;
+
         [SerializeField] private GameObject bottomUi = default;
         [SerializeField] private TopUi topUi = default;
         [SerializeField] private GameObject attackPreview = default;
@@ -54,11 +57,23 @@ namespace Assets.GUI
             Unit.OnUnitLevelUp += ShowLevelUpScreen;
             InputSystem.OnDragReset += HideAttackPreview;
             GameplayInput.OnViewUnit += ShowTopUi;
-            
-           
+            Unit.OnExpGained += ExpGained;
+            InputSystem.OnInputActivated += FadeOut;
+            InputSystem.OnInputDeactivated += FadeIn;
             resources = FindObjectOfType<ResourceScript>();
         }
-
+        private void FadeIn()
+        {
+            LeanTween.alphaCanvas(fadeImage, 1f, 0.2f).setEaseOutQuad();
+        }
+        private void FadeOut()
+        {
+            LeanTween.alphaCanvas(fadeImage, 0.0f, 0.2f).setEaseInQuad();
+        }
+        private void ExpGained(Unit unit, int exp, int exp2)
+        {
+            ShowTopUi(unit);
+        }
         private void SelectedCharacter(Unit u)
         {
             ShowDeselectButton();
@@ -165,6 +180,7 @@ namespace Assets.GUI
 
         public void ShowTopUi(Unit c)
         {
+            HideAttackPreview();
             topUi.Show(c);
         }
 

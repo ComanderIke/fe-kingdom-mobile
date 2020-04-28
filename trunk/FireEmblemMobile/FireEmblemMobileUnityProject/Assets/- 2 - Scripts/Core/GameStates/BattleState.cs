@@ -41,7 +41,7 @@ namespace Assets.Core.GameStates
             BattleRenderer.OnAttackConnected += BattleSystem.ContinueBattle;
             BattleRenderer.OnFinished += BattleSystem.EndBattle;
             
-            Debug.Log("ENTER FIGHTSTATE");
+            //Debug.Log("ENTER FIGHTSTATE");
             ShowFightVisuals(BattleSystem.GetAttackSequence());
            
             SetUpMusic();
@@ -56,8 +56,10 @@ namespace Assets.Core.GameStates
         public override void Exit()
         {
             HideFightVisuals();
+            attacker.UnitTurnState.HasAttacked = true;
             attacker = null;
             defender = null;
+
             BattleRenderer.OnAttackConnected -= BattleSystem.ContinueBattle;
             BattleRenderer.OnFinished -= BattleSystem.EndBattle;
             GridGameManager.Instance.GetSystem<AudioSystem>().ChangeMusic(startMusic, "BattleTheme", true);

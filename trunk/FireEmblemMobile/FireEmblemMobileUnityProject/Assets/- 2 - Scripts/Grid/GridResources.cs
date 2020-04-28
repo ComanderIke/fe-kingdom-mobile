@@ -11,8 +11,9 @@ namespace Assets.Grid
         public Texture SkillRangeTexture;
         public Material CellMaterialStandard;
         public Material CellMaterialAttack;
-        public Material CellMaterialEnemyAttack;
+        public Material CellMaterialSoftAttack;
         public Material CellMaterialMovement;
+        public Material CellMaterialSoftMovement;
         public Material CellMaterialInvalid;
         public Material CellMaterialStandOn;
         public Material CellMaterialAlly;

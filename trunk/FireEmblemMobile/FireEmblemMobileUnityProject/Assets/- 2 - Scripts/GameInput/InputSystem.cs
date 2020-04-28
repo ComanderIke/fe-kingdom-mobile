@@ -26,6 +26,7 @@ namespace Assets.GameInput
 
         public static Action<bool, object> OnSetActive;
         public static event Action OnInputActivated;
+        public static event Action OnInputDeactivated;
 
         public static event Action OnDragReset;
         public static event Action OnDraggedOnActiveField;
@@ -107,10 +108,10 @@ namespace Assets.GameInput
                 GridClicked(x, y);
             }
         }
-
+        
         public void SetInputActive(bool active, object caller)
         {
-
+            bool oldActive = Active;
             bool contains = false;
             foreach(object obj in inputActivationRequests)
             {
@@ -120,20 +121,24 @@ namespace Assets.GameInput
                     break;
                 }
             }
-            if(active&&contains)
+            if(active && contains)
                 inputActivationRequests.Remove(caller);
             if (!contains&&!active)
                 inputActivationRequests.Add(caller);
 
-            Active=inputActivationRequests.Count == 0;
-
-            if (Active)
+            Active = inputActivationRequests.Count == 0;
+            if (Active != oldActive)
             {
-                OnInputActivated?.Invoke();
-                Debug.Log("Input Activated!");
+                if (Active)
+                {
+                    OnInputActivated?.Invoke();
+                    //Debug.Log("Input Activated!");
+                }
+                else
+                {
+                    OnInputDeactivated?.Invoke();
+                }
             }
-            else
-                Debug.Log("Input Deactivated!");
         }
 
         private void DragEnded()
@@ -168,7 +173,12 @@ namespace Assets.GameInput
             Debug.Log("Player Input: Unit double clicked: " + unit.name);
             if (!Active)
                 return;
-            gameplayInput.Wait(unit);
+            if(unit.Faction.Id== gridGameManager.FactionManager.ActivePlayerNumber)
+                gameplayInput.Wait(unit);
+            else//If enemy proceed as if it was a normal click
+            {
+                UnitClicked(unit);
+            }
         }
         private void UnitClicked(Unit unit)
         {
@@ -205,8 +215,22 @@ namespace Assets.GameInput
                 {
                     if (confirmAttackTarget!=unit)
                     {
-                        if (SelectedCharacter.GridPosition.CanAttack(SelectedCharacter.Stats.AttackRanges, unit.GridPosition))
+                        selectedTileX = -1;
+                        selectedTileY = -1;
+                        GridPosition gridPos = new GridPosition((int)SelectedCharacter.GetGameTransformPosition().x, (int)SelectedCharacter.GetGameTransformPosition().y);
+                        if (gridPos.CanAttack(SelectedCharacter.Stats.AttackRanges, unit.GridPosition))
                         {
+                            //MovementPath.Clear();
+                            //UpdatedMovementPath();
+                           
+                            gameplayInput.CheckAttackPreview(SelectedCharacter, unit,
+                                   gridPos);
+                        }
+                        else if (SelectedCharacter.GridPosition.CanAttack(SelectedCharacter.Stats.AttackRanges, unit.GridPosition))
+                        {
+                            SelectedCharacter.ResetPosition();
+                            selectedTileX = -1;
+                            selectedTileY = -1;
                             MovementPath.Clear();
                             UpdatedMovementPath();
                             gameplayInput.CheckAttackPreview(SelectedCharacter, unit,
@@ -214,6 +238,7 @@ namespace Assets.GameInput
                         }
                         else
                         {
+                            SelectedCharacter.ResetPosition();
                             CalculateMousePathToEnemy(SelectedCharacter, new Vector2(unit.GridPosition.X, unit.GridPosition.Y));
                             if (MovementPath.Count >= 1)
                             {
@@ -292,17 +317,20 @@ namespace Assets.GameInput
             {
                 if (gridGameManager.GetSystem<Map.MapSystem>().GridLogic.IsFieldAttackable(draggedOverUnit.GridPosition.X,
                     draggedOverUnit.GridPosition.Y))
+                {
+                    
                     AttackEnemy(SelectedCharacter, draggedOverUnit, MovementPath);
+                }
                 else
                 {
-                    Debug.Log("enemy not in Range");
+                    //Debug.Log("enemy not in Range");
                     Debug.Log("TODO Select Enemy! Without showing his range!");
                     gameplayInput.DeselectUnit();
                 }
             }
             else
             {
-                Debug.Log("DraggedOnFriendlyUnit");
+                //Debug.Log("DraggedOnFriendlyUnit");
                 gameplayInput.DeselectUnit();
             }
         }
@@ -315,14 +343,14 @@ namespace Assets.GameInput
             if ((movePath == null || movePath.Count == 0) &&
                 character.GridPosition.CanAttack(character.Stats.AttackRanges, enemy.GridPosition))
             {
-                
-                Debug.Log("Enemy is in Range:");
+
+                //Debug.Log("Enemy is in Range:");
                 gameplayInput.AttackUnit(character, enemy);
                 gameplayInput.ExecuteInputActions(() => gridGameManager.GameStateManager.SwitchState(GameStateManager.GameplayState));
             }
             else if(movePath!=null) //go to enemy cause not in range
             {
-                Debug.Log("Got to Enemy!" + movePath.Count);
+                //Debug.Log("Got to Enemy!" + movePath.Count);
 
             
                 if (movePath.Count >= 1)

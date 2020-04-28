@@ -8,6 +8,7 @@ namespace Assets.GameActors.Units.CharStateEffects
     {
         private int currentDuration;
         public int Duration;
+        public GameObject Visual;
 
         public virtual bool TakeEffect(Unit unit)
         {

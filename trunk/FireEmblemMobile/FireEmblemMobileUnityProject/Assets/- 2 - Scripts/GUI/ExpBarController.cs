@@ -11,28 +11,34 @@ public class ExpBarController : MonoBehaviour
     Vector3 oldPosition;
     public TextMeshProUGUI text;
     public Image fill;
+    public GameObject glow;
     int currentExp;
     int addedExp;
     float textspeed = 3;
+    public float AnimateInDuration=0.25f;
+    public float AnimateStayDuration = 0.45f;
+    public float AnimateOutDuration = 0.2f;
     // Start is called before the first frame update
     public void Show(int currentExp, int addedExp)
     {
         this.currentExp = currentExp;
         this.addedExp = addedExp;
         text.text = ""+currentExp;
-        
-        LeanTween.scale(this.gameObject, new Vector3(3, 3, 1), 0.6f).setEaseOutQuad().setOnComplete(ShowTextAnimation);
-        LeanTween.moveLocal(this.gameObject, new Vector3(0, -Screen.height/2+transform.parent.GetComponent<RectTransform>().rect.height/2, 0), 0.6f).setEaseOutQuad();
+
+        //LeanTween.color(this.gameObject, Color.white, 0.1f).setEaseOutQuad();
+        LeanTween.alphaCanvas(glow.GetComponent<CanvasGroup>(), 1, 1.0f).setLoopPingPong(1);
+        LeanTween.scale(this.gameObject, new Vector3(1.4f, 1.4f, 1), AnimateInDuration).setDelay(0.25f).setEaseSpring().setOnComplete(ShowTextAnimation);
+        //LeanTween.moveLocal(this.gameObject, new Vector3(0, -Screen.height/2+transform.parent.GetComponent<RectTransform>().rect.height/2, 0), AnimateInDuration).setEaseOutQuad();
         
         oldPosition = this.transform.localPosition;
-        Debug.Log(oldPosition);
 
     }
+  
     void ShowTextAnimation()
     {
         int exp = currentExp;
         float fillAmount = 0;
-        LeanTween.value(this.gameObject, 0, addedExp, 1).setOnUpdate((float val) =>
+        LeanTween.value(this.gameObject, 0, addedExp, Math.Max(addedExp / 100f*1.5f, 0.4f)).setEaseOutQuad().setOnUpdate((float val) =>
         {
             
             int intVal = (int)val;
@@ -43,12 +49,12 @@ public class ExpBarController : MonoBehaviour
             fillAmount =  (expVal) /100f;
             fill.fillAmount = fillAmount;
 
-        }).setOnComplete(Hide).setDelay(0.15f);
+        }).setOnComplete(Hide).setDelay(0.10f);
     }
     void Hide()
     {
-        LeanTween.scale(this.gameObject, new Vector3(1, 1, 1), 0.4f).setEaseOutQuad().setDelay(0.5f);
-        LeanTween.moveLocal(this.gameObject, oldPosition, 0.4f).setEaseOutQuad().setDelay(0.5f)
+        LeanTween.scale(this.gameObject, new Vector3(1, 1, 1), AnimateOutDuration).setEaseInQuad().setDelay(AnimateStayDuration);
+        LeanTween.moveLocal(this.gameObject, oldPosition, AnimateOutDuration).setEaseInQuad().setDelay(AnimateStayDuration)
             .setOnComplete(() => { AnimationQueue.OnAnimationEnded?.Invoke(); });
     }
 

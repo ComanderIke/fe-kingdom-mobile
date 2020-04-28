@@ -7,6 +7,7 @@ using Assets.GameActors.Units.Humans;
 using UnityEngine;
 using Assets.Map;
 using System;
+using Assets.Core.GameStates;
 
 namespace Assets.Mechanics
 {
@@ -30,6 +31,7 @@ namespace Assets.Mechanics
             GameplayInput.OnSelectUnit += SelectUnit;
             GameplayInput.OnDeselectUnit += DeselectActiveCharacter;
             TurnSystem.OnEndTurn += DeselectActiveCharacter;
+            BattleState.OnExit += DeselectActiveCharacter;
         }
 
         private void SameCharacterSelected()

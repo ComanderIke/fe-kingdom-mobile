@@ -99,7 +99,7 @@ namespace Assets.Mechanics
             DistributeExperience();
 
             GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.BattleEnded);
-            attacker.UnitTurnState.UnitTurnFinished();
+            
             UnitActionSystem.OnCommandFinished();
         }
         private void DistributeExperience()

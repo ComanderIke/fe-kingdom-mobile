@@ -4,7 +4,7 @@
     {
         public override void Remove(Unit unit)
         {
-            unit.Debuffs.Remove(this);
+            unit.RemoveDebuff(this);
         }
     }
 }

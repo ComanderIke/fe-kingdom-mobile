@@ -10,12 +10,12 @@ namespace Assets.GameResources
 {
     public class DataScript : MonoBehaviour
     {
-
         public CameraData CameraData;
         public MapData MapData;
         public UiData UiData;
         public DialogData DialogTexts;
         public UnitData UnitData;
+        public CharacterStateData CharacterStateData;
 
         public static DataScript Instance;
         [SerializeField] private List<Weapon> weapons = default;

@@ -4,7 +4,7 @@
     {
         public override void Remove(Unit unit)
         {
-            unit.Buffs.Remove(this);
+            unit.RemoveBuff(this);
         }
     }
 }

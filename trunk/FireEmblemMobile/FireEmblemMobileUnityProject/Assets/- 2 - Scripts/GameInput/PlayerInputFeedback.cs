@@ -60,13 +60,18 @@ public class PlayerInputFeedback : MonoBehaviour
         BattleState.OnEnter += HideAttackableField;
         MovementState.OnEnter += HideAllActiveUnitEffects;
         MovementState.OnMovementFinished += HideMovementPath;
+        BattleState.OnEnter += HideMovementPath;
         UnitActionSystem.OnCheckAttackPreview += OnCheckAttackPreview;
         MovementState.OnMovementFinished += HideAttackableEnemy;
         GridRenderer.OnRenderEnemyTile += OnRenderEnemyTile;
         Unit.OnExpGained += ExpGained;
         InputSystem.OnInputActivated += InputActivated;
+        UnitSelectionSystem.OnEnemySelected += EnemySelected;
 
 
+    }
+    private void EnemySelected(Unit u) {
+        HideAllActiveUnitEffects();
     }
     private void DeselectedCharacter()
     {

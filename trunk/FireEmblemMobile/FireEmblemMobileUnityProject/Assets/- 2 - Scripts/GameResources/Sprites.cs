@@ -14,6 +14,7 @@ namespace Assets.GameResources
         public Sprite StandOnArrowStart;
         public Sprite StandOnArrowStartNeutral;
         public Sprite WolfClaw;
+        public Sprite CantAttackIcon;
         public Sprite GetMonsterOnMapSprites(int spriteId)
         {
             if (spriteId >= 0 && spriteId < MonsterOnMapSprites.Length)

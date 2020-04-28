@@ -110,7 +110,7 @@ namespace Assets.GameActors.Units.OnGameObject
                 OnEndDrag();
                 gameObject.GetComponent<BoxCollider>().enabled = true;
             }
-            else if (unitSelectedBeforeClicking)
+            else if (unitSelectedBeforeClicking||(Unit.Faction.Id != GridGameManager.Instance.FactionManager.ActivePlayerNumber&&doubleClick))
             {
                 if (!EventSystem.current.IsPointerOverGameObject())
                 {

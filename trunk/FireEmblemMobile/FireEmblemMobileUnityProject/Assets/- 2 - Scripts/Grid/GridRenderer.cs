@@ -46,40 +46,44 @@ namespace Assets.Grid
                 Tiles[c.GridPosition.X, c.GridPosition.Y].GameObject.GetComponent<MeshRenderer>().material =
                     GridManager.GridResources.CellMaterialStandOn;
         }
-        private void SetAttackFieldMaterial(Vector2 pos, int playerId)
+        private void SetAttackFieldMaterial(Vector2 pos, int playerId, bool soft)
         {
             var meshRenderer = Tiles[(int)pos.x, (int)pos.y].GameObject.GetComponent<MeshRenderer>();
-            if (GridGameManager.Instance.FactionManager.ActiveFaction.Id == playerId)
+            if (soft)
+                meshRenderer.material = GridManager.GridResources.CellMaterialSoftAttack;
+            else
             {
                 meshRenderer.material = GridManager.GridResources.CellMaterialAttack;
                 OnRenderEnemyTile?.Invoke((int)pos.x, (int)pos.y, Tiles[(int)pos.x, (int)pos.y].Unit, playerId);
             }
-            else
-            {
-                meshRenderer.material = GridManager.GridResources.CellMaterialEnemyAttack;
-                OnRenderEnemyTile?.Invoke((int)pos.x, (int)pos.y, Tiles[(int)pos.x, (int)pos.y].Unit, playerId);
-            }
+            
+   
         }
-        public void SetFieldMaterial(Vector2 pos, int playerId, bool attack)
+        public void SetFieldMaterial(Vector2 pos, int playerId, bool attack, bool soft=false)
         {
             var meshRenderer = Tiles[(int) pos.x, (int) pos.y].GameObject.GetComponent<MeshRenderer>();
             if (attack)
             {
                 //not using sharedMaterial here create Material instances which will cause much higher batches
-                if (meshRenderer.sharedMaterial == GridManager.GridResources.CellMaterialMovement|| meshRenderer.sharedMaterial == GridManager.GridResources.CellMaterialAlly)
+                if (meshRenderer.sharedMaterial == GridManager.GridResources.CellMaterialSoftMovement || meshRenderer.sharedMaterial == GridManager.GridResources.CellMaterialMovement|| meshRenderer.sharedMaterial == GridManager.GridResources.CellMaterialAlly)
                     return;
-                SetAttackFieldMaterial(pos, playerId);
+                SetAttackFieldMaterial(pos, playerId, soft);
             }
             else
             {
-                if(Tiles[(int)pos.x, (int)pos.y].Unit!=null&& Tiles[(int)pos.x, (int)pos.y].Unit.Faction.Id == playerId)
+                if (Tiles[(int)pos.x, (int)pos.y].Unit != null && Tiles[(int)pos.x, (int)pos.y].Unit.Faction.Id == playerId)
                     meshRenderer.material = GridManager.GridResources.CellMaterialAlly;
                 else
-                    meshRenderer.material = GridManager.GridResources.CellMaterialMovement;
+                {
+                    if(soft)
+                        meshRenderer.material = GridManager.GridResources.CellMaterialSoftMovement;
+                    else
+                        meshRenderer.material = GridManager.GridResources.CellMaterialMovement;
+                }
                 if (Tiles[(int) pos.x, (int) pos.y].Unit != null &&
                     Tiles[(int) pos.x, (int) pos.y].Unit.Faction.Id != playerId)
                 {
-                    SetAttackFieldMaterial(pos, playerId);
+                    SetAttackFieldMaterial(pos, playerId,soft);
                 }
 
                 Tiles[(int) pos.x, (int) pos.y].IsActive = true;

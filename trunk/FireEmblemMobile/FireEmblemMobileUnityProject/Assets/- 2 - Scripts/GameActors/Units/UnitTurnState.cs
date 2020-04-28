@@ -1,15 +1,18 @@
 ﻿using Assets.Core;
 using Assets.GUI;
+using System;
+using System.Runtime.ExceptionServices;
 using UnityEngine;
 
 namespace Assets.GameActors.Units
 {
     public class UnitTurnState
     {
+        public event Action<bool> OnHasAttacked; 
         private readonly Unit unit;
         private bool hasMoved;
         private bool isWaiting;
-
+        private bool hasAttacked;
         public UnitTurnState(Unit unit)
         {
             this.unit = unit;
@@ -38,7 +41,12 @@ namespace Assets.GameActors.Units
             }
         }
 
-        public bool HasAttacked { get; set; }
+        public bool HasAttacked { get => hasAttacked; set
+            {
+                hasAttacked = value;
+                OnHasAttacked?.Invoke(hasAttacked);
+            }
+        }
         public bool Selected { get; set; }
 
         public void Reset()

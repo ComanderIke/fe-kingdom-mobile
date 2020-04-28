@@ -112,7 +112,6 @@ namespace Assets.Core.GameStates
 
         public override void Exit()
         {
-            Debug.Log("Set Position: "+x+" "+y);
             unit.SetPosition(x, y);
             unit.UnitTurnState.HasMoved = true;
             unit.Ap -= Path.GetLength();

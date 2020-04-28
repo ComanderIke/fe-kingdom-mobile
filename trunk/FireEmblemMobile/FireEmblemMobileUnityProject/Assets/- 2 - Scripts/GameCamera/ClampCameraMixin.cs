@@ -17,9 +17,10 @@ namespace Assets.GameCamera
         private float referenceHeight;
         private float uiHeight;
         private float verticalExtent;
-
+        bool init = false;
         private void Start()
         {
+            Debug.Log("Never called?");
             camera = Camera.main;
             cameraSettings = DataScript.Instance.CameraData;
             UpdateBounds();
@@ -27,6 +28,14 @@ namespace Assets.GameCamera
 
         private void LateUpdate()
         {
+            if (!init)
+            {
+                init = true;
+                camera = Camera.main;
+                cameraSettings = DataScript.Instance.CameraData;
+                UpdateBounds();
+            }
+            //Debug.Log("MinX: " + minX + " " + maxX + " " + minY + " " + maxY);
             if (camera.orthographicSize != verticalExtent) UpdateBounds();
 
             if (transform.localPosition.x < minX ||
