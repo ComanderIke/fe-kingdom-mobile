@@ -36,8 +36,9 @@ namespace Assets.Mechanics
                 AttackerSpDamage.Add(Math.Min(defender.Sp, spDamage));
                 if (attacker is Human humanAttacker && humanAttacker.EquippedWeapon != null)
                 {
-                    attacker.Sp -= humanAttacker.EquippedWeapon.Weight;
-                    DefenderSpDamage.Add(Math.Min(attacker.Sp, humanAttacker.EquippedWeapon.Weight));
+                    //DefenderSpDamage.Add(Math.Min(attacker.Sp, humanAttacker.EquippedWeapon.Weight));
+                    //attacker.Sp -= humanAttacker.EquippedWeapon.Weight;
+                    
 
                 }
             }
@@ -47,8 +48,9 @@ namespace Assets.Mechanics
                 DefenderSpDamage.Add(Math.Min(defender.Sp, spDamage));
                 if (attacker is Human humanAttacker && humanAttacker.EquippedWeapon != null)
                 {
-                    attacker.Sp -= humanAttacker.EquippedWeapon.Weight;
-                    AttackerSpDamage.Add(Math.Min(attacker.Sp, humanAttacker.EquippedWeapon.Weight));
+                    //AttackerSpDamage.Add(Math.Min(attacker.Sp, humanAttacker.EquippedWeapon.Weight));
+                    //attacker.Sp -= humanAttacker.EquippedWeapon.Weight;
+                   
                 }
             }
             defender.Hp -= damage;

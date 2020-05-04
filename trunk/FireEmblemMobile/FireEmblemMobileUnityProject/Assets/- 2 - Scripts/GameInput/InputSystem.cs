@@ -29,6 +29,7 @@ namespace Assets.GameInput
         public static event Action OnInputDeactivated;
 
         public static event Action OnDragReset;
+        public static event Action OnDragOverTile;
         public static event Action OnDraggedOnActiveField;
         #endregion
 
@@ -497,7 +498,7 @@ namespace Assets.GameInput
                 ResetDrag();
                 return;
             }
-
+            OnDragOverTile?.Invoke();
             /* store latest correct Positions */
             var field = gridGameManager.GetSystem<MapSystem>().Tiles[x, y];
             if (field.IsActive && field.Unit == null)
@@ -507,7 +508,7 @@ namespace Assets.GameInput
                 if (LastPositions.Count > character.Ap)
                     LastPositions.RemoveAt(0);
             }
-
+            
             //Dragged on Enemy
             if (field.Unit != null && field.Unit.Faction.Id != character.Faction.Id)
                 DraggedOnEnemy(x, y, field.Unit);

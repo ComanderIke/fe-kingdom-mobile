@@ -113,6 +113,7 @@ namespace Assets.Core.GameStates
         public override void Exit()
         {
             unit.SetPosition(x, y);
+            unit.UnitTurnState.Selected = false;
             unit.UnitTurnState.HasMoved = true;
             unit.Ap -= Path.GetLength();
             InputSystem.OnSetActive(true, this);

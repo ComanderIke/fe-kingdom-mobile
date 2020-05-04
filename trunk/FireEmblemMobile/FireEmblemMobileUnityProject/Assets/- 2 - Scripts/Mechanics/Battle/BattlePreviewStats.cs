@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using Assets.GameActors.Units;
+using System.Collections.Generic;
 
 namespace Assets.Mechanics.Battle
 {
     public class BattlePreviewStats
     {
+        public Unit unit{ get; set; }
         public int Attack { get; set; }
         public int Speed { get; set; }
         public bool IsPhysical { get; set; }

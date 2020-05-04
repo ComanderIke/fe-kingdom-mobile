@@ -20,7 +20,6 @@ namespace Assets.GameCamera
         bool init = false;
         private void Start()
         {
-            Debug.Log("Never called?");
             camera = Camera.main;
             cameraSettings = DataScript.Instance.CameraData;
             UpdateBounds();

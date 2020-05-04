@@ -1,5 +1,8 @@
-﻿using Assets.Mechanics.Battle;
+﻿using Assets.GameActors.Units;
+using Assets.Mechanics.Battle;
 using Assets.Utility;
+using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +11,11 @@ namespace Assets.GUI
 {
     public class AttackPreviewUI : MonoBehaviour
     {
+
+        [SerializeField] private CanvasGroup canvas = default;
+
         [Header("Left")]
+        [SerializeField] private GameObject left = default;
         [SerializeField] private TextMeshProUGUI atkValue = default;
         [SerializeField] private TextMeshProUGUI spdValue = default;
         [SerializeField] private TextMeshProUGUI defLabel = default;
@@ -20,6 +27,7 @@ namespace Assets.GUI
         [SerializeField] private AttackPreviewStatBar hpBar = default;
         [SerializeField] private AttackPreviewStatBar spBar = default;
         [Header("Right")]
+        [SerializeField] private GameObject right = default;
         [SerializeField] private TextMeshProUGUI atkValueRight = default;
         [SerializeField] private TextMeshProUGUI spdValueRight = default;
         [SerializeField] private TextMeshProUGUI defLabelRight = default;
@@ -31,13 +39,25 @@ namespace Assets.GUI
         [SerializeField] private AttackPreviewStatBar hpBarRight = default;
         [SerializeField] private AttackPreviewStatBar spBarRight = default;
 
-        public void UpdateValues ( BattlePreview battlePreview, Sprite attackerSprite, Sprite defenderSprite)
+        public void UpdateValues (Unit attacker, Unit defender, BattlePreview battlePreview, Sprite attackerSprite, Sprite defenderSprite)
         {
+            RectTransform rectTransform = GetComponent<RectTransform>();
+            float yPos = Camera.main.WorldToScreenPoint(new Vector3(defender.GridPosition.X, defender.GridPosition.Y + 1f, 0)).y;
+            if (yPos - (Screen.height / 2) >= Screen.height / 2 - (306) - rectTransform.rect.height)//306 is UiHeight and height of this object
+            { 
+                yPos = Camera.main.WorldToScreenPoint(new Vector3(defender.GridPosition.X, defender.GridPosition.Y , 0)).y;
+                yPos -= rectTransform.rect.height;
+            }
+            else
+            {
+            }
+
+            Show(yPos);
             atkValue.text= "" + battlePreview.Attacker.Attack;
-            spdValue.text = "" + battlePreview.Attacker.Speed;
-            defLabel.text = battlePreview.Attacker.IsPhysical ? "Def" : "Res";
-            defValue.text = "" + battlePreview.Attacker.Defense;
-            sklValue.text = "" + battlePreview.Attacker.Skill;
+            //spdValue.text = "" + battlePreview.Attacker.Speed;
+            //defLabel.text = battlePreview.Attacker.IsPhysical ? "Def" : "Res";
+            //defValue.text = "" + battlePreview.Attacker.Defense;
+            //sklValue.text = "" + battlePreview.Attacker.Skill;
             faceSpriteLeft.sprite = attackerSprite;
             dmgValue.text = "" + battlePreview.Attacker.Damage;
             attackCount.SetActive(battlePreview.Attacker.AttackCount>1);
@@ -45,16 +65,55 @@ namespace Assets.GUI
             spBar.UpdateValues(battlePreview.Attacker.MaxSp, battlePreview.Attacker.CurrentSp, battlePreview.Attacker.AfterBattleSp, battlePreview.Attacker.IncomingSpDamage);
 
             atkValueRight.text = "" + battlePreview.Defender.Attack;
-            spdValueRight.text = "" + battlePreview.Defender.Speed;
-            defLabelRight.text = battlePreview.Defender.IsPhysical ? "Def" : "Res";
-            defValueRight.text = "" + battlePreview.Defender.Defense;
-            sklValueRight.text = "" + battlePreview.Defender.Skill;
+            //spdValueRight.text = "" + battlePreview.Defender.Speed;
+            //defLabelRight.text = battlePreview.Defender.IsPhysical ? "Def" : "Res";
+            //defValueRight.text = "" + battlePreview.Defender.Defense;
+            //sklValueRight.text = "" + battlePreview.Defender.Skill;
             faceSpriteRight.sprite = defenderSprite;
             dmgValueRight.text = "" + battlePreview.Defender.Damage;
             attackCountRight.SetActive(battlePreview.Defender.AttackCount > 1);
             hpBarRight.UpdateValues(battlePreview.Defender.MaxHp, battlePreview.Defender.CurrentHp, battlePreview.Defender.AfterBattleHp, battlePreview.Defender.IncomingDamage);
             spBarRight.UpdateValues(battlePreview.Defender.MaxSp, battlePreview.Defender.CurrentSp, battlePreview.Defender.AfterBattleSp, battlePreview.Defender.IncomingSpDamage);
 
+        }
+        float yPos;
+        public void Show(float yPos)
+        {
+            
+            gameObject.SetActive(true);
+            ClearTweens();
+            foreach(var comp in GetComponentsInChildren<UILoopPingPongFade>())
+            {
+                comp.StartAnimation();
+            }
+            RectTransform rectTransform = GetComponent<RectTransform>();
+            canvas.alpha = 0;
+            LeanTween.alphaCanvas(canvas, 1, 0.3f).setEaseOutQuad();
+            left.transform.localPosition = new Vector3(-rectTransform.rect.width, 0, 0);
+            right.transform.localPosition = new Vector3(rectTransform.rect.width, 0, 0);
+            
+            transform.localPosition = new Vector3(transform.localPosition.x, yPos - Screen.height / 2, transform.localPosition.z);
+            LeanTween.moveLocalX(left, -rectTransform.rect.width / 2, 0.3f).setEaseOutQuad();
+            LeanTween.moveLocalX(right, rectTransform.rect.width / 2, 0.3f).setEaseOutQuad();
+        }
+        private void ClearTweens()
+        {
+
+            LeanTween.cancel(gameObject);
+            LeanTween.cancel(left);
+            LeanTween.cancel(right);
+
+        }
+       
+        public void Hide()
+        {
+            ClearTweens();
+ 
+            RectTransform rectTransform = GetComponent<RectTransform>();
+            LeanTween.alphaCanvas(canvas, 0, 0.2f).setEaseOutQuad();
+
+            LeanTween.moveLocalX(left, -rectTransform.rect.width, 0.2f).setEaseOutQuad();
+            LeanTween.moveLocalX(right, rectTransform.rect.width, 0.2f).setEaseOutQuad().setOnComplete(()=>gameObject.SetActive(false));
         }
     }
 }

@@ -55,6 +55,7 @@ namespace Assets.GUI
 
             UnitActionSystem.OnCheckAttackPreview += ShowAttackPreview;
             Unit.OnUnitLevelUp += ShowLevelUpScreen;
+            InputSystem.OnDragOverTile += HideAttackPreview;
             InputSystem.OnDragReset += HideAttackPreview;
             GameplayInput.OnViewUnit += ShowTopUi;
             Unit.OnExpGained += ExpGained;
@@ -199,10 +200,10 @@ namespace Assets.GUI
 
         public void ShowAttackPreview(Unit attacker, Unit defender)
         {
-            
-            attackPreview.SetActive(true);
 
-            attackPreview.GetComponent<AttackPreviewUI>().UpdateValues(gridGameManager.GetSystem<BattleSystem>().GetBattlePreview(attacker, defender), attacker.CharacterSpriteSet.FaceSprite, defender.CharacterSpriteSet.FaceSprite);
+            
+
+            attackPreview.GetComponent<AttackPreviewUI>().UpdateValues(attacker, defender, gridGameManager.GetSystem<BattleSystem>().GetBattlePreview(attacker, defender), attacker.CharacterSpriteSet.FaceSprite, defender.CharacterSpriteSet.FaceSprite);
             //Vector3 attackPreviewPos;
             //if (defender.GridPosition is BigTilePosition)
             //  attackPreviewPos = Camera.main.WorldToScreenPoint(new Vector3(pos.x + GridManager.GRID_X_OFFSET ,pos.y + 1.0f, -0.05f));
@@ -214,8 +215,8 @@ namespace Assets.GUI
 
         public void HideAttackPreview()
         {
+            attackPreview.GetComponent<AttackPreviewUI>().Hide();
             
-            attackPreview.SetActive(false);
         }
 
         private void OnDestroy()

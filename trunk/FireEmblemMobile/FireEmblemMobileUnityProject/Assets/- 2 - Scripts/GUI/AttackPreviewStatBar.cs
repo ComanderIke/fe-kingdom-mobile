@@ -24,9 +24,10 @@ namespace Assets.GUI
         private List<GameObject> incDamageMarkers = new List<GameObject>();
         //[SerializeField] private TextMeshProUGUI maxValue = default;
         private ColorManager colorManager;
-
+  
         public void UpdateValues(int maxHp, int currentHp, int afterBattleHp,List<int> incomingDamage)
         {
+            incomingDamage.Reverse();
             filledBarController.SetFillAmount((afterBattleHp * 1.0f)/maxHp);
             float width = GetComponent<RectTransform>().rect.width;
             float sumIncDamage = incomingDamage.Sum();
@@ -35,22 +36,25 @@ namespace Assets.GUI
                 Destroy(go);
             }
 
-          
+            //Debug.Log(maxHp+" "+ currentHp+ " "+ afterBattleHp+": "+sumIncDamage);
             incDamageMarkers.Clear();
+            float sumBefore = 0;
             for (int i = 0; i < incomingDamage.Count - 1; i++)
             {
-
-                float xOffset = (incomingDamage[i] * 1.0f) / maxHp;
+                //Debug.Log(incomingDamage[i]);
+                float xOffset = (incomingDamage[i] * 1.0f) / maxHp+sumBefore;
+                sumBefore += xOffset;
                 GameObject go = GameObject.Instantiate(incDamageBarPrefab, incDamageSection);
                 go.GetComponent<RectTransform>().anchoredPosition = new Vector2(xOffset * width, 0);
                 go.GetComponent<Image>().color = incDamageSection.GetComponent<Image>().color;
                 incDamageMarkers.Add(go);
             }
+            //Debug.Log(incomingDamage[incomingDamage.Count - 1]);
             float value = (sumIncDamage * 1.0f) / maxHp;
             float value2 =  (maxHp*1.0f-currentHp)/maxHp;
-           
             incDamageSection.anchoredPosition = new Vector2(value2 * -width, incDamageSection.anchoredPosition.y);
             incDamageSection.sizeDelta = new Vector2(Math.Max(MIN_WIDTH,(int)(value* width)),incDamageSection.sizeDelta.y);
+         
             //valueBeforeMarker.SetActive(afterBattleHp != currentHp);
 
             //incomingDamageText.text = "-" + incomingDamage;
