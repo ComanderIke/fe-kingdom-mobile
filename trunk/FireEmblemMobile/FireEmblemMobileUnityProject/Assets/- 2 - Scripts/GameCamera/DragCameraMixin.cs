@@ -6,7 +6,7 @@ namespace Assets.GameCamera
 {
     public class DragCameraMixin : CameraMixin
     {
-        private const float DRAG_SPEED = 0.15f;
+        private const float DRAG_SPEED = 0.08f;
         private bool drag;
         private Vector3 lastPosition;
 

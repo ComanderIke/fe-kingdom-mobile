@@ -281,6 +281,7 @@ namespace Assets.GameInput
                 
                 if(selectedTileX == x && selectedTileY == y)
                 {
+ 
                     selectedTileX = -1;
                     selectedTileY = -1;
                     gameplayInput.MoveUnit(SelectedCharacter, new GridPosition(x, y), GridPosition.GetFromVectorList(MovementPath));
@@ -292,14 +293,29 @@ namespace Assets.GameInput
                     SelectedCharacter.SetGameTransformPosition(x, y);
                     selectedTileX = x;
                     selectedTileY = y;
+                    
                 }
+
             }
             else if(SelectedCharacter != null)
             {
-                gameplayInput.DeselectUnit();
+                if (SelectedCharacter.GridPosition.X == x && y == SelectedCharacter.GridPosition.Y)
+                {
+                    selectedTileX = -1;
+                    selectedTileY = -1;
+                    SelectedCharacter.ResetPosition();
+                    ResetDrag();
+                    gameplayInput.DeselectUnit();
+                    
+                }
+                else
+                {
+                    gameplayInput.DeselectUnit();
+                }
             }
             else
             {
+
                 gameplayInput.DeselectUnit();
             }
         }

@@ -34,26 +34,26 @@ namespace Assets.Grid
             if (c.GridPosition is BigTilePosition bigTile)
             {
                 Tiles[(int) bigTile.Position.BottomLeft().x, (int) bigTile.Position.BottomLeft().y].GameObject
-                    .GetComponent<MeshRenderer>().material = GridManager.GridResources.CellMaterialStandOn;
+                    .GetComponent<SpriteRenderer>().sprite = GridManager.GridResources.GridSpriteStandOn;
                 Tiles[(int) bigTile.Position.BottomRight().x, (int) bigTile.Position.BottomRight().y].GameObject
-                    .GetComponent<MeshRenderer>().material = GridManager.GridResources.CellMaterialStandOn;
+                    .GetComponent<SpriteRenderer>().sprite = GridManager.GridResources.GridSpriteStandOn;
                 Tiles[(int) bigTile.Position.TopLeft().x, (int) bigTile.Position.TopLeft().y].GameObject
-                    .GetComponent<MeshRenderer>().material = GridManager.GridResources.CellMaterialStandOn;
+                    .GetComponent<SpriteRenderer>().sprite = GridManager.GridResources.GridSpriteStandOn;
                 Tiles[(int) bigTile.Position.TopRight().x, (int) bigTile.Position.TopRight().y].GameObject
-                    .GetComponent<MeshRenderer>().material = GridManager.GridResources.CellMaterialStandOn;
+                    .GetComponent<SpriteRenderer>().sprite = GridManager.GridResources.GridSpriteStandOn;
             }
             else
-                Tiles[c.GridPosition.X, c.GridPosition.Y].GameObject.GetComponent<MeshRenderer>().material =
-                    GridManager.GridResources.CellMaterialStandOn;
+                Tiles[c.GridPosition.X, c.GridPosition.Y].GameObject.GetComponent<SpriteRenderer>().sprite =
+                    GridManager.GridResources.GridSpriteStandOn;
         }
         private void SetAttackFieldMaterial(Vector2 pos, int playerId, bool soft)
         {
-            var meshRenderer = Tiles[(int)pos.x, (int)pos.y].GameObject.GetComponent<MeshRenderer>();
+            var meshRenderer = Tiles[(int)pos.x, (int)pos.y].GameObject.GetComponent<SpriteRenderer>();
             if (soft)
-                meshRenderer.material = GridManager.GridResources.CellMaterialSoftAttack;
+                meshRenderer.sprite = GridManager.GridResources.GridAttackSpriteEnemy;
             else
             {
-                meshRenderer.material = GridManager.GridResources.CellMaterialAttack;
+                meshRenderer.sprite = GridManager.GridResources.GridAttackSprite;
                 OnRenderEnemyTile?.Invoke((int)pos.x, (int)pos.y, Tiles[(int)pos.x, (int)pos.y].Unit, playerId);
             }
             
@@ -61,24 +61,24 @@ namespace Assets.Grid
         }
         public void SetFieldMaterial(Vector2 pos, int playerId, bool attack, bool soft=false)
         {
-            var meshRenderer = Tiles[(int) pos.x, (int) pos.y].GameObject.GetComponent<MeshRenderer>();
+            var meshRenderer = Tiles[(int) pos.x, (int) pos.y].GameObject.GetComponent<SpriteRenderer>();
             if (attack)
             {
                 //not using sharedMaterial here create Material instances which will cause much higher batches
-                if (meshRenderer.sharedMaterial == GridManager.GridResources.CellMaterialSoftMovement || meshRenderer.sharedMaterial == GridManager.GridResources.CellMaterialMovement|| meshRenderer.sharedMaterial == GridManager.GridResources.CellMaterialAlly)
+                if (meshRenderer.sprite == GridManager.GridResources.GridMoveSpriteEnemy || meshRenderer.sprite == GridManager.GridResources.GridMoveSprite|| meshRenderer.sprite == GridManager.GridResources.GridSpriteAlly)
                     return;
                 SetAttackFieldMaterial(pos, playerId, soft);
             }
             else
             {
                 if (Tiles[(int)pos.x, (int)pos.y].Unit != null && Tiles[(int)pos.x, (int)pos.y].Unit.Faction.Id == playerId)
-                    meshRenderer.material = GridManager.GridResources.CellMaterialAlly;
+                    meshRenderer.sprite = GridManager.GridResources.GridSpriteAlly;
                 else
                 {
                     if(soft)
-                        meshRenderer.material = GridManager.GridResources.CellMaterialSoftMovement;
+                        meshRenderer.sprite = GridManager.GridResources.GridMoveSpriteEnemy;
                     else
-                        meshRenderer.material = GridManager.GridResources.CellMaterialMovement;
+                        meshRenderer.sprite = GridManager.GridResources.GridMoveSprite;
                 }
                 if (Tiles[(int) pos.x, (int) pos.y].Unit != null &&
                     Tiles[(int) pos.x, (int) pos.y].Unit.Faction.Id != playerId)

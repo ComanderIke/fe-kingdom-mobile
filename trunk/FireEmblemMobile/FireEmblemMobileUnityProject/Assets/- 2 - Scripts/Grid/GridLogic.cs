@@ -98,8 +98,8 @@ namespace Assets.Grid
 
         public bool IsFieldAttackable(int x, int z)
         {
-            return Tiles[x, z].GameObject.GetComponent<MeshRenderer>().sharedMaterial ==
-                   GridManager.GridResources.CellMaterialAttack;
+            return Tiles[x, z].GameObject.GetComponent<SpriteRenderer>().sprite ==
+                   GridManager.GridResources.GridAttackSprite;
         }
 
         public bool IsOutOfBounds(Vector2 pos)

@@ -11,7 +11,7 @@ namespace Assets.Core.GameStates
 {
     public class MovementState : GameState<NextStateTrigger>
     {
-        public static event Action OnMovementFinished;
+        public static event Action<Unit> OnMovementFinished;
         public static event Action OnEnter;
         private int x;
         private int y;
@@ -117,7 +117,7 @@ namespace Assets.Core.GameStates
             unit.UnitTurnState.HasMoved = true;
             unit.Ap -= Path.GetLength();
             InputSystem.OnSetActive(true, this);
-            OnMovementFinished?.Invoke();
+            OnMovementFinished?.Invoke(unit);
         }
 
         private void FinishMovement()

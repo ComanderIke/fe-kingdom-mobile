@@ -25,6 +25,7 @@ namespace Assets.Core
 
         public static GridGameManager Instance;
 
+        public static event Action OnStartGame;
         private bool init;
 
         public List<IEngineSystem> Systems { get; set; }
@@ -54,6 +55,7 @@ namespace Assets.Core
                 FindObjectOfType<InputSystem>(),
                 FindObjectOfType<UnitsSystem>(),
                 FindObjectOfType<TurnSystem>(),
+                FindObjectOfType<FogOfWarSystem>(),
                 new BattleSystem(),
                 FindObjectOfType<UnitSelectionSystem>()
             };
@@ -65,6 +67,7 @@ namespace Assets.Core
             GameStateManager = new GameStateManager();
             GameStateManager.Init();
             Systems.Add(new MoveSystem(GetSystem<MapSystem>()));
+            OnStartGame?.Invoke();
             GetSystem<TurnSystem>().StartTurn();
         }
 

@@ -41,6 +41,7 @@ namespace Assets.GUI
 
         public void UpdateValues (Unit attacker, Unit defender, BattlePreview battlePreview, Sprite attackerSprite, Sprite defenderSprite)
         {
+            
             RectTransform rectTransform = GetComponent<RectTransform>();
             float yPos = Camera.main.WorldToScreenPoint(new Vector3(defender.GridPosition.X, defender.GridPosition.Y + 1f, 0)).y;
             if (yPos - (Screen.height / 2) >= Screen.height / 2 - (306) - rectTransform.rect.height)//306 is UiHeight and height of this object
@@ -53,28 +54,48 @@ namespace Assets.GUI
             }
 
             Show(yPos);
-            atkValue.text= "" + battlePreview.Attacker.Attack;
+            faceSpriteLeft.sprite = attackerSprite;
+            faceSpriteRight.sprite = defenderSprite;
+            if (!defender.IsVisible)
+            {
+                dmgValue.text = "?";
+                dmgValueRight.text = "?";
+                hpBar.UpdateValues(battlePreview.Attacker.MaxHp, battlePreview.Attacker.CurrentHp, -1, new List<int>());
+                spBar.UpdateValues(battlePreview.Attacker.MaxSp, battlePreview.Attacker.CurrentSp, -1, new List<int>());
+                attackCount.SetActive(false);
+                attackCountRight.SetActive(false);
+                hpBarRight.UpdateValues(battlePreview.Defender.MaxHp, battlePreview.Defender.CurrentHp, -1, new List<int>());
+                spBarRight.UpdateValues(battlePreview.Defender.MaxSp, battlePreview.Defender.CurrentSp, -1, new List<int>());
+                faceSpriteRight.color = new Color(0, 0, 0, 1);
+            }
+            else
+            {
+                dmgValue.text = "" + battlePreview.Attacker.Damage;
+                attackCount.SetActive(battlePreview.Attacker.AttackCount > 1);
+                hpBar.UpdateValues(battlePreview.Attacker.MaxHp, battlePreview.Attacker.CurrentHp, battlePreview.Attacker.AfterBattleHp, battlePreview.Attacker.IncomingDamage);
+                spBar.UpdateValues(battlePreview.Attacker.MaxSp, battlePreview.Attacker.CurrentSp, battlePreview.Attacker.AfterBattleSp, battlePreview.Attacker.IncomingSpDamage);
+                dmgValueRight.text = "" + battlePreview.Defender.Damage;
+                attackCountRight.SetActive(battlePreview.Defender.AttackCount > 1);
+                hpBarRight.UpdateValues(battlePreview.Defender.MaxHp, battlePreview.Defender.CurrentHp, battlePreview.Defender.AfterBattleHp, battlePreview.Defender.IncomingDamage);
+                spBarRight.UpdateValues(battlePreview.Defender.MaxSp, battlePreview.Defender.CurrentSp, battlePreview.Defender.AfterBattleSp, battlePreview.Defender.IncomingSpDamage);
+                faceSpriteRight.color = new Color(1, 1, 1, 1);
+            }
+
             //spdValue.text = "" + battlePreview.Attacker.Speed;
             //defLabel.text = battlePreview.Attacker.IsPhysical ? "Def" : "Res";
             //defValue.text = "" + battlePreview.Attacker.Defense;
             //sklValue.text = "" + battlePreview.Attacker.Skill;
-            faceSpriteLeft.sprite = attackerSprite;
-            dmgValue.text = "" + battlePreview.Attacker.Damage;
-            attackCount.SetActive(battlePreview.Attacker.AttackCount>1);
-            hpBar.UpdateValues(battlePreview.Attacker.MaxHp, battlePreview.Attacker.CurrentHp, battlePreview.Attacker.AfterBattleHp, battlePreview.Attacker.IncomingDamage);
-            spBar.UpdateValues(battlePreview.Attacker.MaxSp, battlePreview.Attacker.CurrentSp, battlePreview.Attacker.AfterBattleSp, battlePreview.Attacker.IncomingSpDamage);
-
-            atkValueRight.text = "" + battlePreview.Defender.Attack;
+           
+            
+            
+            
+            
             //spdValueRight.text = "" + battlePreview.Defender.Speed;
             //defLabelRight.text = battlePreview.Defender.IsPhysical ? "Def" : "Res";
             //defValueRight.text = "" + battlePreview.Defender.Defense;
             //sklValueRight.text = "" + battlePreview.Defender.Skill;
-            faceSpriteRight.sprite = defenderSprite;
-            dmgValueRight.text = "" + battlePreview.Defender.Damage;
-            attackCountRight.SetActive(battlePreview.Defender.AttackCount > 1);
-            hpBarRight.UpdateValues(battlePreview.Defender.MaxHp, battlePreview.Defender.CurrentHp, battlePreview.Defender.AfterBattleHp, battlePreview.Defender.IncomingDamage);
-            spBarRight.UpdateValues(battlePreview.Defender.MaxSp, battlePreview.Defender.CurrentSp, battlePreview.Defender.AfterBattleSp, battlePreview.Defender.IncomingSpDamage);
-
+            
+          
         }
         float yPos;
         public void Show(float yPos)

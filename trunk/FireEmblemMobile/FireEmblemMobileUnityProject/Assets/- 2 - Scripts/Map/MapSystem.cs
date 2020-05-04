@@ -34,7 +34,7 @@ namespace Assets.Map
             GridData = new GridData(mapData.Width, mapData.Height);
 
             Tiles = new Tile[GridData.Width, GridData.Height];
-            GridBuilder = new GridBuilder();
+            GridBuilder = new GridBuilder(GridResources.GridSprite);
             Tiles = GridBuilder.Build(GridData.Width, GridData.Height, GridTransform);
             GridRenderer = new GridRenderer(this);
             GridLogic = new GridLogic(this);
@@ -43,10 +43,9 @@ namespace Assets.Map
             UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
             UnitSelectionSystem.OnEnemySelected += OnEnemySelected;
             UnitSelectionSystem.OnSelectedInActiveCharacter += OnEnemySelected;
-            MovementState.OnMovementFinished += HideMovementRangeOnGrid;
+            MovementState.OnMovementFinished += (Unit u) => HideMovementRangeOnGrid();
 
         }
-
         private void OnEnemySelected(Unit u)
         {
             HideMovementRangeOnGrid();
@@ -163,10 +162,10 @@ namespace Assets.Map
 
                     if (!ignore)
                     {
-                        var m = Tiles[i, j].GameObject.GetComponent<MeshRenderer>();
-                        m.material = Tiles[i, j].IsAccessible
-                            ? GridResources.CellMaterialStandard
-                            : GridResources.CellMaterialInvalid;
+                        var m = Tiles[i, j].GameObject.GetComponent<SpriteRenderer>();
+                        m.sprite = Tiles[i, j].IsAccessible
+                            ? GridResources.GridSprite
+                            : GridResources.GridSpriteInvalid;
 
                         Tiles[i, j].IsActive = false;
                     }

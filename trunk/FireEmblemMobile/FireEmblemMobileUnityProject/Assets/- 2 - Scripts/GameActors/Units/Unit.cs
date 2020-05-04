@@ -35,6 +35,7 @@ namespace Assets.GameActors.Units
         public event OnDebuffEvent OnDebuffRemoved;
 
         public Stats Stats;
+        public bool IsVisible;
         public Growths Growths;
 
         public CharacterSpriteSet CharacterSpriteSet;
@@ -238,6 +239,7 @@ namespace Assets.GameActors.Units
         {
             GameTransform.SetPosition(GridPosition.X, GridPosition.Y);
             GameTransform.EnableCollider();
+            GameTransform.EnableLight();
         }
 
         public void Die()

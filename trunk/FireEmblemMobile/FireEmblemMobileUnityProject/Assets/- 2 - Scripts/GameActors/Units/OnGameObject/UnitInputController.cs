@@ -5,6 +5,8 @@ using Assets.Mechanics.Dialogs;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Experimental.Rendering;
+using UnityEngine.Experimental.Rendering.Universal;
 
 namespace Assets.GameActors.Units.OnGameObject
 {
@@ -24,6 +26,8 @@ namespace Assets.GameActors.Units.OnGameObject
         public Unit Unit;
         public DragManager DragManager { get; set; }
         public RaycastManager RaycastManager { get; set; }
+        public Light2D light;
+        
 
         private bool dragInitiated;
         private bool dragStarted;
@@ -31,7 +35,7 @@ namespace Assets.GameActors.Units.OnGameObject
         private float timerForDoubleClick;
         private const float DOUBLE_CLICK_TIME = 0.4f;
         private bool unitSelectedBeforeClicking = false;
-
+        
         private void Start()
         {
             DragManager = new DragManager(this);
@@ -109,6 +113,8 @@ namespace Assets.GameActors.Units.OnGameObject
                
                 OnEndDrag();
                 gameObject.GetComponent<BoxCollider>().enabled = true;
+                light.transform.SetParent(transform);
+                light.transform.localPosition = new Vector3(0.5f, 0.5f, 0);
             }
             else if (unitSelectedBeforeClicking||(Unit.Faction.Id != GridGameManager.Instance.FactionManager.ActivePlayerNumber&&doubleClick))
             {
@@ -150,7 +156,9 @@ namespace Assets.GameActors.Units.OnGameObject
         public void Dragging()
         {
             Unit.OnUnitActiveStateUpdated(Unit, false, true);
-            GetComponent<BoxCollider>().enabled = false;
+            light.transform.SetParent(null);
+
+
             var gridPos = RaycastManager.GetMousePositionOnGrid();
             if (RaycastManager.ConnectedLatestHit())
                 OnUnitDragged((int) gridPos.x, (int) gridPos.y, Unit);

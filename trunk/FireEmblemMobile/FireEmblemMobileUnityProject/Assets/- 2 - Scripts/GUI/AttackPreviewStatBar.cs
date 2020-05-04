@@ -28,7 +28,10 @@ namespace Assets.GUI
         public void UpdateValues(int maxHp, int currentHp, int afterBattleHp,List<int> incomingDamage)
         {
             incomingDamage.Reverse();
-            filledBarController.SetFillAmount((afterBattleHp * 1.0f)/maxHp);
+            if(afterBattleHp == -1)
+                filledBarController.SetFillAmount((currentHp * 1.0f)/maxHp);
+            else
+                filledBarController.SetFillAmount((afterBattleHp * 1.0f) / maxHp);
             float width = GetComponent<RectTransform>().rect.width;
             float sumIncDamage = incomingDamage.Sum();
             foreach (GameObject go in incDamageMarkers)
@@ -54,17 +57,26 @@ namespace Assets.GUI
             float value2 =  (maxHp*1.0f-currentHp)/maxHp;
             incDamageSection.anchoredPosition = new Vector2(value2 * -width, incDamageSection.anchoredPosition.y);
             incDamageSection.sizeDelta = new Vector2(Math.Max(MIN_WIDTH,(int)(value* width)),incDamageSection.sizeDelta.y);
-         
+
             //valueBeforeMarker.SetActive(afterBattleHp != currentHp);
 
             //incomingDamageText.text = "-" + incomingDamage;
-            valueAfterText.text="" + afterBattleHp;
-            var textColor = Color.white;
-            if (colorManager == null)
-                colorManager = FindObjectOfType<ColorManager>();
-            if (value2 > 0.75f)
-                textColor = colorManager.MainRedColor; ;
-            valueAfterText.color = textColor;
+            if (afterBattleHp == -1)
+            {
+                valueAfterText.text = "?";
+                valueAfterText.color = Color.white;
+            }
+            else
+            {
+                valueAfterText.text = "" + afterBattleHp;
+                var textColor = Color.white;
+                if (colorManager == null)
+                    colorManager = FindObjectOfType<ColorManager>();
+                if (value2 > 0.75f)
+                    textColor = colorManager.MainRedColor; ;
+                valueAfterText.color = textColor;
+            }
+            
             currentValue.text = "" + currentHp;
         }
     }

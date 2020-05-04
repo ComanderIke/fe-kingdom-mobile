@@ -19,10 +19,14 @@ namespace Assets.GameActors.Units.OnGameObject
 
         [SerializeField] private StatsBarOnMap hpBar;
         [SerializeField] private StatsBarOnMap spBar;
+        [SerializeField] private GameObject pointLight;
 
         [SerializeField] private TextMeshProUGUI ApText;
         [SerializeField] private Image EquippedItemIcon;
         [SerializeField] private Image EquippedItemBackground;
+        [SerializeField] private GameObject spriteMask;
+        [SerializeField] private CanvasGroup alphaCanvas;
+        [SerializeField] private SpriteRenderer sprite;
         public Unit Unit;
 
         private void Start()
@@ -43,6 +47,15 @@ namespace Assets.GameActors.Units.OnGameObject
            SpValueChanged();
             ApValueChanged();
            OnEquippedWeapon();
+            if(Unit.Faction.Id != GridGameManager.Instance.FactionManager.ActivePlayerNumber)
+            {
+                pointLight.SetActive(false);
+                //spriteMask.SetActive(false);
+            }
+            else {
+                pointLight.SetActive(true);
+                //spriteMask.SetActive(true);
+            }
         }
         void Destroy()
         {
@@ -51,6 +64,19 @@ namespace Assets.GameActors.Units.OnGameObject
             Unit.UnitWaiting -= SetWaitingSprite;
             Unit.ApValueChanged -= ApValueChanged;
             Human.OnEquippedWeapon -= OnEquippedWeapon;
+        }
+        public void SetVisible(bool visible)
+        {
+            if (visible)
+            {
+                alphaCanvas.alpha = 1;
+                sprite.color = new Color(1, 1, 1, 1);
+            }
+            else
+            {
+                alphaCanvas.alpha = 0f;
+                sprite.color = new Color(0, 0, 0,1f);
+            }
         }
         private void OnEquippedWeapon()
         {

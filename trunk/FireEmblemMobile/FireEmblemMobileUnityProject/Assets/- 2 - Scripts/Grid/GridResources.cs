@@ -9,14 +9,14 @@ namespace Assets.Grid
         public Texture HealTexture;
         public Texture MouseHoverTexture;
         public Texture SkillRangeTexture;
-        public Material CellMaterialStandard;
-        public Material CellMaterialAttack;
-        public Material CellMaterialSoftAttack;
-        public Material CellMaterialMovement;
-        public Material CellMaterialSoftMovement;
-        public Material CellMaterialInvalid;
-        public Material CellMaterialStandOn;
-        public Material CellMaterialAlly;
-        public Material CellMaterialAttackableEnemy;
+        public Sprite GridSprite;
+        public Sprite GridAttackSprite;
+        public Sprite GridAttackSpriteEnemy;
+        public Sprite GridMoveSprite;
+        public Sprite GridMoveSpriteEnemy;
+        public Sprite GridSpriteInvalid;
+        public Sprite GridSpriteStandOn;
+        public Sprite GridSpriteAlly;
+        public Sprite GridSpriteAttackAbleEnemy;
     }
 }

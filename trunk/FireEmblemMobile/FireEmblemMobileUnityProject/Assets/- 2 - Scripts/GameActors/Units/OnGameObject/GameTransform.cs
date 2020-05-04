@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 namespace Assets.GameActors.Units.OnGameObject
 {
@@ -28,6 +29,11 @@ namespace Assets.GameActors.Units.OnGameObject
         public void EnableCollider()
         {
             GameObject.GetComponent<BoxCollider>().enabled = true;
+        }
+        public void EnableLight()
+        {
+            UnitController.light.transform.SetParent(GameObject.transform);
+            UnitController.light.transform.localPosition = new Vector3(0.5f, 0.5f, 0);
         }
         public void DisableCollider()
         {

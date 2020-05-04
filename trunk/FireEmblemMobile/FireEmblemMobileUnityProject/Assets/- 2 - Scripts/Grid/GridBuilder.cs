@@ -18,11 +18,12 @@ namespace Assets.Grid
         private readonly Material cellMaterialStandard;
         private readonly Material cellMaterialInvalid;
         private Tile[,] tiles;
-
-        public GridBuilder()
+        private Sprite GridSprite;
+        public GridBuilder(Sprite sprite)
         {
             cellMaterialInvalid = Object.FindObjectOfType<ResourceScript>().Materials.CellMaterialInValid;
             cellMaterialStandard = Object.FindObjectOfType<ResourceScript>().Materials.CellMaterialValid;
+            GridSprite = sprite;
         }
 
         public Tile[,] Build(int width, int height, Transform gridTransform)
@@ -56,36 +57,38 @@ namespace Assets.Grid
                 layer = CELL_LAYER, tag = CELL_TAG, name = CELL_NAME + " " + xvalue + " " + yvalue
             };
             go.transform.parent = gridTransform.transform;
-            go.transform.localPosition = new Vector3(xvalue, yvalue, 0);
+            go.transform.localPosition = new Vector3(xvalue+0.5f, yvalue+0.5f, 0);
             go.transform.localRotation = Quaternion.identity;
-            go.AddComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-            var meshObj = CreateMesh();
-            go.AddComponent<MeshFilter>().mesh = meshObj;
-            go.GetComponent<MeshFilter>().sharedMesh.bounds =
-                new Bounds(new Vector3(0, 0, 0), new Vector3(500, 500, 500)); //this is important!
-            go.AddComponent<BoxCollider>().center = new Vector3(0.5f, 0.5f, 0);
+            go.AddComponent<SpriteRenderer>().sortingLayerName="Grid";
+            go.GetComponent<SpriteRenderer>().sprite = GridSprite;
+            //go.AddComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            ////var meshObj = CreateMesh();
+            //go.AddComponent<MeshFilter>().mesh = meshObj;
+            //go.GetComponent<MeshFilter>().sharedMesh.bounds =
+            //    new Bounds(new Vector3(0, 0, 0), new Vector3(500, 500, 500)); //this is important!
+            go.AddComponent<BoxCollider>().center = new Vector3(0.0f, 0.0f, 0);
             go.GetComponent<BoxCollider>().size = new Vector3(1, 1, 0.1f);
             go.layer = LayerMask.NameToLayer("Grid");
             return go;
         }
 
-        private static Mesh CreateMesh()
-        {
-            var mesh = new Mesh
-            {
-                name = CELL_NAME,
-                vertices = new Vector3[] {Vector3.zero, Vector3.zero, Vector3.zero, Vector3.zero},
-                triangles = new int[] {0, 1, 2, 2, 1, 3},
-                normals = new Vector3[] {Vector3.up, Vector3.up, Vector3.up, Vector3.up},
-                uv = new Vector2[] {new Vector2(1, 1), new Vector2(1, 0), new Vector2(0, 1), new Vector2(0, 0)}
-            };
-            return mesh;
-        }
+        //private static Mesh CreateMesh()
+        //{
+        //    var mesh = new Mesh
+        //    {
+        //        name = CELL_NAME,
+        //        vertices = new Vector3[] {Vector3.zero, Vector3.zero, Vector3.zero, Vector3.zero},
+        //        triangles = new int[] {0, 1, 2, 2, 1, 3},
+        //        normals = new Vector3[] {Vector3.up, Vector3.up, Vector3.up, Vector3.up},
+        //        uv = new Vector2[] {new Vector2(1, 1), new Vector2(1, 0), new Vector2(0, 1), new Vector2(0, 0)}
+        //    };
+        //    return mesh;
+        //}
 
-        private Vector3 MeshVertex(int x, int y, float minus)
-        {
-            return new Vector3(x * CellSize, y * CellSize, 0);
-        }
+        //private Vector3 MeshVertex(int x, int y, float minus)
+        //{
+        //    return new Vector3(x * CellSize, y * CellSize, 0);
+        //}
 
         private void UpdateCells()
         {
@@ -95,8 +98,8 @@ namespace Assets.Grid
                 for (int x = 0; x < width; x++)
                 {
                     var cell = tiles[x, z].GameObject;
-                    var meshRenderer = cell.GetComponent<MeshRenderer>();
-                    var meshFilter = cell.GetComponent<MeshFilter>();
+                    var meshRenderer = cell.GetComponent<SpriteRenderer>();
+                    //var meshFilter = cell.GetComponent<MeshFilter>();
 
                     meshRenderer.material = BlockedFields[x, z] ? cellMaterialInvalid : cellMaterialStandard;
                     if (BlockedFields[x, z])
@@ -104,21 +107,21 @@ namespace Assets.Grid
                         tiles[x, z].IsAccessible = false;
                     }
 
-                    UpdateMesh(meshFilter.sharedMesh, x, z);
+                    //UpdateMesh(meshFilter.sharedMesh, x, z);
                 }
             }
         }
 
-        private void UpdateMesh(Mesh mesh, int x, int y)
-        {
-            mesh.vertices = new Vector3[]
-            {
-                MeshVertex(0, 0, 0),
-                MeshVertex(0, 1, 0),
-                MeshVertex(1, 0, 0),
-                MeshVertex(1, 1, 0),
-            };
-        }
+        //private void UpdateMesh(Mesh mesh, int x, int y)
+        //{
+        //    mesh.vertices = new Vector3[]
+        //    {
+        //        MeshVertex(0, 0, 0),
+        //        MeshVertex(0, 1, 0),
+        //        MeshVertex(1, 0, 0),
+        //        MeshVertex(1, 1, 0),
+        //    };
+        //}
 
         private void GetBlockedFields()
         {

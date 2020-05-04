@@ -25,7 +25,7 @@ namespace Assets.Editor
             {
                 int width = mapData.Width;
                 int height = mapData.Height;
-                mytarget.GridBuilder = new GridBuilder();
+                mytarget.GridBuilder = new GridBuilder(mytarget.GridResources.GridSprite);
                 mytarget.GridBuilder.Build(width, height, mytarget.GridTransform);
             }
             base.OnInspectorGUI();
