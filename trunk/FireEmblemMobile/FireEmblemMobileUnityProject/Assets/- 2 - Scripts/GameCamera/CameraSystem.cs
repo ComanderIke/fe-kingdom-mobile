@@ -1,4 +1,5 @@
-﻿using Assets.Core;
+﻿
+using Assets.GameEngine;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace Assets.GameCamera
         public static OnMoveToFinishedEvent MoveToFinishedEvent;
 
         private List<CameraMixin> mixins;
-
+        public CameraData CameraData;
         private void Start()
         {
             mixins = new List<CameraMixin>();

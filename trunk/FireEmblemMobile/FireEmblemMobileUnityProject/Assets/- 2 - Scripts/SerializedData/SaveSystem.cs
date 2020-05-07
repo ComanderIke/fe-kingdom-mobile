@@ -1,8 +1,6 @@
 ﻿using System.IO;
 using System.Net.Mime;
 using System.Runtime.Serialization.Formatters.Binary;
-using Assets.Core;
-using Assets.GameActors.Players;
 using UnityEngine;
 
 namespace Assets.SerializedData
@@ -44,18 +42,16 @@ namespace Assets.SerializedData
             }
         }
 
-        public static void SaveGame(string filename)
+        public static void SaveGame(string filename, PlayerData playerData, GameProgress gameProgress)
         {
            
-            var data = new GameData(Player.Instance, GameManager.Instance.GameProgress);
+            var data = new GameData(playerData, gameProgress);
             SaveData(filename,data);
         }
 
-        public static void LoadGame(string filename)
+        public static GameData LoadGame(string filename)
         {
-            var data = LoadData(Application.persistentDataPath + "/saves/"+filename);
-            Player.Instance.LoadPlayer(data.Player);
-            GameManager.Instance.GameProgress = data.GameProgress;
+            return LoadData(Application.persistentDataPath + "/saves/" + filename);
         }
     }
 }

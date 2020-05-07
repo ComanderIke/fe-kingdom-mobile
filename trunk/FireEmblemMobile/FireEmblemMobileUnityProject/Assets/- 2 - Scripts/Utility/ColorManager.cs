@@ -9,7 +9,8 @@ namespace Assets.Utility
         public Color MainWhiteColor;
         public Color MainGreyColor;
         public Color[] SixGradeColors;
-        public Color[] FactionColors;
+        public Color[] FactionColors; 
+        public Color[] FactionUIBackgroundColors;
         public static ColorManager Instance;
 
         void Awake()

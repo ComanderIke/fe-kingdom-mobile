@@ -1,5 +1,4 @@
-﻿using Assets.Core;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.GameCamera
 {
@@ -11,7 +10,7 @@ namespace Assets.GameCamera
 
         private void Start()
         {
-            CameraSystem = GridGameManager.Instance.GetSystem<CameraSystem>();
+            CameraSystem = GetComponent<CameraSystem>();
         }
 
         public bool IsLocked()

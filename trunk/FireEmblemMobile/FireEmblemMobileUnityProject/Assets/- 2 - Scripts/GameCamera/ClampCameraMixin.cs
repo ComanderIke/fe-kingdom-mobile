@@ -1,8 +1,8 @@
-﻿using Assets.GameResources;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.GameCamera
 {
+    
     public class ClampCameraMixin : CameraMixin
     {
         private new Camera camera;
@@ -21,7 +21,7 @@ namespace Assets.GameCamera
         private void Start()
         {
             camera = Camera.main;
-            cameraSettings = DataScript.Instance.CameraData;
+            cameraSettings = GetComponent<CameraSystem>().CameraData;
             UpdateBounds();
         }
 
@@ -31,7 +31,7 @@ namespace Assets.GameCamera
             {
                 init = true;
                 camera = Camera.main;
-                cameraSettings = DataScript.Instance.CameraData;
+                cameraSettings = GetComponent<CameraSystem>().CameraData;
                 UpdateBounds();
             }
             //Debug.Log("MinX: " + minX + " " + maxX + " " + minY + " " + maxY);

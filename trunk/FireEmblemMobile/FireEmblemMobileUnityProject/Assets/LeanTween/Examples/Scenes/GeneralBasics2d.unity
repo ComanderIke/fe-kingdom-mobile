@@ -96,6 +96,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 0
 --- !u!196 &5
@@ -223,6 +224,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 400000, guid: 0b4ce6f9ebfb948a58b5b05397daaaea, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.45553255
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 0b4ce6f9ebfb948a58b5b05397daaaea, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: .325025737
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 0b4ce6f9ebfb948a58b5b05397daaaea, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.46029758
+      objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 0b4ce6f9ebfb948a58b5b05397daaaea, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.00970554
@@ -283,18 +296,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -4.63402319
       objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 0b4ce6f9ebfb948a58b5b05397daaaea, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -4.45553255
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 0b4ce6f9ebfb948a58b5b05397daaaea, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: .325025737
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 0b4ce6f9ebfb948a58b5b05397daaaea, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1.46029758
-      objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: 0b4ce6f9ebfb948a58b5b05397daaaea, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.33777189
@@ -348,8 +349,9 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 845694183}
   m_Enabled: 1
-  serializedVersion: 9
+  serializedVersion: 10
   m_Type: 1
+  m_Shape: 0
   m_Color: {r: 0.49357226, g: 0.0066273054, b: 0.8880597, a: 1}
   m_Intensity: 0.26
   m_Range: 10
@@ -439,8 +441,9 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 888025164}
   m_Enabled: 1
-  serializedVersion: 9
+  serializedVersion: 10
   m_Type: 1
+  m_Shape: 0
   m_Color: {r: 0.9924851, g: 1, b: 0.73134327, a: 1}
   m_Intensity: 0.28
   m_Range: 10
@@ -584,8 +587,9 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1430064998}
   m_Enabled: 1
-  serializedVersion: 9
+  serializedVersion: 10
   m_Type: 1
+  m_Shape: 0
   m_Color: {r: 0.49357226, g: 0.0066273054, b: 0.8880597, a: 1}
   m_Intensity: 0.26
   m_Range: 10
@@ -675,8 +679,9 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1487996144}
   m_Enabled: 1
-  serializedVersion: 9
+  serializedVersion: 10
   m_Type: 2
+  m_Shape: 0
   m_Color: {r: 1, g: 0.9361236, b: 0.86567163, a: 1}
   m_Intensity: 1.58
   m_Range: 49.01
@@ -771,8 +776,9 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1589894912}
   m_Enabled: 1
-  serializedVersion: 9
+  serializedVersion: 10
   m_Type: 1
+  m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 0.08
   m_Range: 10
@@ -916,8 +922,9 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1681816811}
   m_Enabled: 1
-  serializedVersion: 9
+  serializedVersion: 10
   m_Type: 1
+  m_Shape: 0
   m_Color: {r: 0.49357226, g: 0.0066273054, b: 0.8880597, a: 1}
   m_Intensity: 0.26
   m_Range: 10
@@ -978,7 +985,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1713412973}
   - component: {fileID: 1713412974}
-  - component: {fileID: 1713412976}
   - component: {fileID: 1713412977}
   - component: {fileID: 1713412975}
   - component: {fileID: 1713412978}
@@ -1048,14 +1054,6 @@ Camera:
   m_StereoSeparation: 0.022
 --- !u!81 &1713412975
 AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1713412972}
-  m_Enabled: 1
---- !u!92 &1713412976
-Behaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1230,8 +1228,9 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1991876556}
   m_Enabled: 1
-  serializedVersion: 9
+  serializedVersion: 10
   m_Type: 1
+  m_Shape: 0
   m_Color: {r: 0.9772466, g: 1, b: 0.18656719, a: 1}
   m_Intensity: 0.28
   m_Range: 10

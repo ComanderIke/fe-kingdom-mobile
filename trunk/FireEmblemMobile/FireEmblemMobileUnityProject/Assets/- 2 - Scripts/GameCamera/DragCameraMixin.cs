@@ -1,5 +1,5 @@
-﻿using Assets.Core;
-using Assets.GameActors.Units.OnGameObject;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.GameCamera
@@ -9,7 +9,12 @@ namespace Assets.GameCamera
         private const float DRAG_SPEED = 0.08f;
         private bool drag;
         private Vector3 lastPosition;
+        public List<string> excludeColliderTags = new List<string>();
 
+        public void AddColliderTags(string tag)
+        {
+            excludeColliderTags.Add(tag);
+        }
         private void Update()
         {
             if (Input.GetMouseButtonDown(0))
@@ -17,9 +22,7 @@ namespace Assets.GameCamera
                 var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 Physics.Raycast(ray, out var hit, Mathf.Infinity);
                 if (hit.collider != null)
-                    if (hit.collider.gameObject.tag != TagManager.UnitTag 
-                        || hit.collider.gameObject.GetComponent<UnitInputController>().Unit.Faction.Id 
-                            != GridGameManager.Instance.FactionManager.ActivePlayerNumber)
+                    if (!excludeColliderTags.Contains(hit.collider.gameObject.tag))
                     {
                         lastPosition = Input.mousePosition;
                         drag = true;

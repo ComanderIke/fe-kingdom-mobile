@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Core;
+using Assets.GameEngine;
 using UnityEngine;
 
 namespace Assets.Audio

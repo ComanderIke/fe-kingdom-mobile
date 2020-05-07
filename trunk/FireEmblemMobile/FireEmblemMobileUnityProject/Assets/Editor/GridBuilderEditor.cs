@@ -1,4 +1,5 @@
-﻿using Assets.GameResources;
+﻿
+using Assets.GameResources;
 using Assets.Grid;
 using Assets.Map;
 using UnityEditor;
@@ -25,7 +26,7 @@ namespace Assets.Editor
             {
                 int width = mapData.Width;
                 int height = mapData.Height;
-                mytarget.GridBuilder = new GridBuilder(mytarget.GridResources.GridSprite);
+                mytarget.GridBuilder = new GridBuilder(mytarget.GridResources.GridSprite, mytarget.GridResources.CellMaterialValid, mytarget.GridResources.CellMaterialInvalid);
                 mytarget.GridBuilder.Build(width, height, mytarget.GridTransform);
             }
             base.OnInspectorGUI();
