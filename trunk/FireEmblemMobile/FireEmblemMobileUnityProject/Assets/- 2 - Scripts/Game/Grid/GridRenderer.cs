@@ -44,8 +44,8 @@ namespace Assets.Grid
                 meshRenderer.sprite = GridManager.GridResources.GridAttackSprite;
                 OnRenderEnemyTile?.Invoke((int)pos.x, (int)pos.y, Tiles[(int)pos.x, (int)pos.y].Unit, playerId);
             }
-            
-   
+            Tiles[(int)pos.x, (int)pos.y].IsAttackable = true;
+
         }
         public void SetFieldMaterial(Vector2 pos, int playerId, bool attack, bool soft=false)
         {

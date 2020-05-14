@@ -124,7 +124,7 @@ namespace Assets.Grid.PathFinding
                                 
                                 //if (GridGameManager.Instance.GetSystem<InputSystem>().AttackRangeFromPath < r)
                                 //{
-                                    Debug.Log("AttackRange " + r + " " +tx+" "+ty+" "+ xp + " " + yp);
+                                    //Debug.Log("AttackRange " + r + " " +tx+" "+ty+" "+ xp + " " + yp);
                                     //GridGameManager.Instance.GetSystem<InputSystem>().AttackRangeFromPath = r;
                                     tx = xp;
                                     ty = yp;

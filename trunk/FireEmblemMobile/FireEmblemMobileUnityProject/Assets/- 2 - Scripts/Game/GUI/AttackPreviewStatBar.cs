@@ -18,39 +18,47 @@ namespace Assets.GUI
         [SerializeField] private TextMeshProUGUI valueAfterText = default;
         //[SerializeField] private TextMeshProUGUI incomingDamageText = default;
         [SerializeField] private TextMeshProUGUI currentValue = default;
+        [SerializeField] private TextMeshProUGUI Arrow = default;
 
         [SerializeField] private GameObject incDamageBarPrefab = default;
         
-        private List<GameObject> incDamageMarkers = new List<GameObject>();
+        private List<RectTransform> incDamageMarkers = new List<RectTransform>();
         //[SerializeField] private TextMeshProUGUI maxValue = default;
         private ColorManager colorManager;
-  
-        public void UpdateValues(int maxHp, int currentHp, int afterBattleHp,List<int> incomingDamage)
+        private RectTransform rectTransform;
+        public void UpdateValues(int maxHp, int currentHp, int afterBattleHp,List<int> incomingDamage, bool ShowHP = false)
         {
             incomingDamage.Reverse();
             if(afterBattleHp == -1)
                 filledBarController.SetFillAmount((currentHp * 1.0f)/maxHp);
             else
                 filledBarController.SetFillAmount((afterBattleHp * 1.0f) / maxHp);
-            float width = GetComponent<RectTransform>().rect.width;
+            if (rectTransform == null)
+                rectTransform = GetComponent<RectTransform>();
+            float width = rectTransform.rect.width;
             float sumIncDamage = incomingDamage.Sum();
-            foreach (GameObject go in incDamageMarkers)
-            {
-                Destroy(go);
-            }
-
+            
             //Debug.Log(maxHp+" "+ currentHp+ " "+ afterBattleHp+": "+sumIncDamage);
-            incDamageMarkers.Clear();
             float sumBefore = 0;
             for (int i = 0; i < incomingDamage.Count - 1; i++)
             {
                 //Debug.Log(incomingDamage[i]);
                 float xOffset = (incomingDamage[i] * 1.0f) / maxHp+sumBefore;
                 sumBefore += xOffset;
-                GameObject go = GameObject.Instantiate(incDamageBarPrefab, incDamageSection);
-                go.GetComponent<RectTransform>().anchoredPosition = new Vector2(xOffset * width, 0);
-                go.GetComponent<Image>().color = incDamageSection.GetComponent<Image>().color;
-                incDamageMarkers.Add(go);
+                //RectTransform go;
+                //if (i < incDamageMarkers.Count)
+                //{
+                //    go = incDamageMarkers[i];
+                //    go.gameObject.SetActive(true);
+
+                //}
+                //else
+                //{
+                //    go = Instantiate(incDamageBarPrefab, incDamageSection).GetComponent<RectTransform>();
+                //    incDamageMarkers.Add(go);
+                //}
+                //go.anchoredPosition = new Vector2(xOffset * width, 0);
+                
             }
             //Debug.Log(incomingDamage[incomingDamage.Count - 1]);
             float value = (sumIncDamage * 1.0f) / maxHp;
@@ -59,25 +67,72 @@ namespace Assets.GUI
             incDamageSection.sizeDelta = new Vector2(Math.Max(MIN_WIDTH,(int)(value* width)),incDamageSection.sizeDelta.y);
 
             //valueBeforeMarker.SetActive(afterBattleHp != currentHp);
-
             //incomingDamageText.text = "-" + incomingDamage;
             if (afterBattleHp == -1)
             {
                 valueAfterText.text = "?";
                 valueAfterText.color = Color.white;
+                if (!ShowHP)
+                {
+                    currentValue.gameObject.SetActive(false);
+                    Arrow.gameObject.SetActive(false);
+                }
+                else {
+                    currentValue.gameObject.SetActive(true);
+                    Arrow.gameObject.SetActive(true);
+                }
+                LeanTween.cancel(valueAfterText.gameObject);
             }
             else
             {
+                
                 valueAfterText.text = "" + afterBattleHp;
                 var textColor = Color.white;
                 if (colorManager == null)
                     colorManager = FindObjectOfType<ColorManager>();
                 if (value2 > 0.75f)
-                    textColor = colorManager.MainRedColor; ;
+                    textColor = colorManager.MainRedColor;
                 valueAfterText.color = textColor;
+                if (afterBattleHp == 0)
+                {
+                    valueAfterText.color = colorManager.MainRedColor;
+
+                    if (!LeanTween.isTweening(valueAfterText.gameObject.GetComponent<RectTransform>()))
+                    {
+                        valueAfterText.gameObject.transform.localScale = Vector3.one;
+                        LeanTween.scale(valueAfterText.gameObject.GetComponent<RectTransform>(), Vector3.one * 1.3f, 0.5f).setLoopPingPong();
+                    }
+                    else
+                    {
+                        valueAfterText.gameObject.transform.localScale = Vector3.one;
+                        LeanTween.resume(valueAfterText.gameObject);
+                    }
+                 }
+                else
+                {
+                    LeanTween.cancel(valueAfterText.gameObject);
+                }
+                if (afterBattleHp == currentHp)
+                {
+                    currentValue.gameObject.SetActive(false);
+                    Arrow.gameObject.SetActive(false);
+                }
+                else {
+                    currentValue.gameObject.SetActive(true);
+                    Arrow.gameObject.SetActive(true);
+                }
+
             }
             
             currentValue.text = "" + currentHp;
+        }
+        private void OnDisable()
+        {
+            for (int i = 0; i < incDamageMarkers.Count; i++)
+            {
+                incDamageMarkers[i].gameObject.SetActive(false);
+            }
+            LeanTween.pause(valueAfterText.gameObject);
         }
     }
 }

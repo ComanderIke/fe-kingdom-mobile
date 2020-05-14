@@ -4,10 +4,15 @@ namespace Assets.Utility
 {
     public class AnimationTimer : MonoBehaviour
     {
+        public static AnimationTimer Instance;
         public float NormalizedTime;
         public float AnimationTimeBlinkSpritesDuration;
         public float AnimationTimeBlinkSprites;
 
+        private void Awake()
+        {
+            Instance = this;
+        }
         void Update()
         {
             NormalizedTime += Time.deltaTime;

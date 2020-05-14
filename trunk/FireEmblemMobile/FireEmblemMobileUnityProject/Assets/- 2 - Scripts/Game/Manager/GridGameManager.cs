@@ -35,7 +35,7 @@ namespace Assets.Game.Manager
         {
             Instance = this;
 
-            Debug.Log("Initialize");
+            //Debug.Log("Initialize");
             AddSystems();
             FactionManager = new FactionManager();
         }
@@ -91,7 +91,7 @@ namespace Assets.Game.Manager
 
             if (Player.Instance.Units == null || Player.Instance.Units.Count == 0)
             {
-                Debug.Log("Create Demo Characters");
+                //Debug.Log("Create Demo Characters");
                 var unit1 = DataScript.Instance.GetHuman("Leila");
                 var unit2 = DataScript.Instance.GetHuman("Flora");
                 var unit3 = DataScript.Instance.GetHuman("Eldric");
@@ -112,7 +112,7 @@ namespace Assets.Game.Manager
                     unit4
                 };
             }
-            Debug.Log("LevelConfig");
+            //Debug.Log("LevelConfig");
            
             FactionManager.Factions[0].Units = Player.Instance.Units;
             FactionManager.Factions[0].Name = Player.Instance.Name;
@@ -127,7 +127,7 @@ namespace Assets.Game.Manager
                         unit.Initialize();
                        
                         unitInstantiator.PlaceCharacter(unit, spawn.X, spawn.Y);
-                        Debug.Log("Spawn Unit"+unit.name +" "+spawn.X+" "+spawn.Y);
+                        //Debug.Log("Spawn Unit"+unit.name +" "+spawn.X+" "+spawn.Y);
                     }
                     else if(faction.Units.Count!=0 && indexes[faction.Id]< faction.Units.Count)
                     {
@@ -136,7 +136,7 @@ namespace Assets.Game.Manager
                         unit.Initialize();
                        
                         unitInstantiator.PlaceCharacter(unit, spawn.X, spawn.Y);
-                        Debug.Log("Spawn Unit"+ unit.name + " " + spawn.X + " " + spawn.Y+" ");
+                        //Debug.Log("Spawn Unit"+ unit.name + " " + spawn.X + " " + spawn.Y+" ");
                     }
                 }
            

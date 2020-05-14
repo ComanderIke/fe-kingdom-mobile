@@ -169,6 +169,7 @@ namespace Assets.Map
                             : GridResources.GridSpriteInvalid;
 
                         Tiles[i, j].IsActive = false;
+                        Tiles[i, j].IsAttackable = false;
                     }
                 }
             }

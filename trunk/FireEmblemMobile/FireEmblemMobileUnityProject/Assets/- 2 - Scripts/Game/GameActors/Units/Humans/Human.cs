@@ -89,7 +89,7 @@ namespace Assets.GameActors.Units.Humans
             Stats.AttackRanges.Clear();
             EquippedWeapon = w;
             foreach (int r in w.AttackRanges) Stats.AttackRanges.Add(r);
-            Debug.Log("Equip " + w.name + " on " + Name + " " + w.AttackRanges.Length+" "+ Stats.AttackRanges.Count);
+            //Debug.Log("Equip " + w.name + " on " + Name + " " + w.AttackRanges.Length+" "+ Stats.AttackRanges.Count);
             OnEquippedWeapon?.Invoke();
         }
         public void AutoEquip()

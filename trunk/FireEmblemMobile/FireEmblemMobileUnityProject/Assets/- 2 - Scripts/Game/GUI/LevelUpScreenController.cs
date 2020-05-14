@@ -45,6 +45,15 @@ public class LevelUpScreenController : MonoBehaviour
         hpText.text = "" + stats[0];
         spText.text = "" +stats[1];
         resText.text = "" + stats[7];
+
+        strAddedText.text = "";
+        spdAddedText.text = "";
+        defAddedText.text = "";
+        sklAddedText.text = "";
+        magAddedText.text = "";
+        hpAddedText.text = "";
+        spAddedText.text = "";
+        resAddedText.text = "";
         //for(int i=0; i < statsIncreases.Length; i++)
         //{
         //    Debug.Log(statsIncreases[i] + ", ");

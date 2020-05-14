@@ -15,6 +15,7 @@ namespace Assets.GameActors.Units.OnGameObject
         {
             var unitGameObject = Instantiate(UnitNormal);
             unitGameObject.GetComponentInChildren<SpriteRenderer>().sprite = unit.CharacterSpriteSet.MapSprite;
+            
             unitGameObject.GetComponentInChildren<BuffUi>()?.Initialize(unit);
             unitGameObject.name = unit.Name;
             unitGameObject.transform.parent = gameObject.transform;

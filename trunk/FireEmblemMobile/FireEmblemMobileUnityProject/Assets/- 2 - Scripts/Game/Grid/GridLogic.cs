@@ -99,8 +99,7 @@ namespace Assets.Grid
 
         public bool IsFieldAttackable(int x, int z)
         {
-            return Tiles[x, z].GameObject.GetComponent<SpriteRenderer>().sprite ==
-                   GridManager.GridResources.GridAttackSprite;
+            return Tiles[x, z].IsAttackable;
         }
 
         public bool IsOutOfBounds(Vector2 pos)
@@ -274,6 +273,7 @@ namespace Assets.Grid
                 for (int j = 0; j < gridData.Height; j++)
                 {
                     Tiles[i, j].IsActive = false;
+                    Tiles[i, j].IsAttackable = false;
                 }
             }
         }

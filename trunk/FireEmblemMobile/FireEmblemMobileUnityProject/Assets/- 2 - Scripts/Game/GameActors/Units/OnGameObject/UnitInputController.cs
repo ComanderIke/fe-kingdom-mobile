@@ -54,7 +54,15 @@ namespace Assets.GameActors.Units.OnGameObject
             if(DragManager.IsAnyUnitDragged)
                 if (!EventSystem.current.IsPointerOverGameObject()) OnDraggedOverUnit(Unit);
         }
-
+        public void DeParentLight()
+        {
+            light.transform.SetParent(null);
+        }
+        public void ResetLight()
+        {
+            light.transform.SetParent(transform);
+            light.transform.localPosition = new Vector3(0.5f, 0.5f, 0);
+        }
         private void OnMouseDrag()
         {
             if (!InputSystem.Active)
@@ -148,18 +156,26 @@ namespace Assets.GameActors.Units.OnGameObject
             OnStartDrag((int) gridPos.x, (int) gridPos.y);
             unitSelectedBeforeClicking = Unit.UnitTurnState.Selected;
             if (!Unit.UnitTurnState.Selected)//If unit is already selected wait for MouseUp/DragEnd to invoke OnUnitClicked
-                if (!EventSystem.current.IsPointerOverGameObject()) OnUnitClicked(Unit);
+                if (!EventSystem.current.IsPointerOverGameObject())
+                {
+                    Unit.OnUnitActiveStateUpdated(Unit, false, true); 
+                    light.transform.SetParent(null);
+                    OnUnitClicked(Unit);
+                }
         }
 
-        public void Dragging()
+        public void Dragging(float xPos, float yPos)//Performance!!!
         {
-            Unit.OnUnitActiveStateUpdated(Unit, false, true);
-            light.transform.SetParent(null);
+            //Unit.OnUnitActiveStateUpdated(Unit, false, true); Performance Problem
+            //light.transform.SetParent(null); Performance
 
 
-            var gridPos = RaycastManager.GetMousePositionOnGrid();
+            var gridPos = RaycastManager.GetMousePositionOnGrid();//Is also done in Dragmanager dragging performance problem!!
             if (RaycastManager.ConnectedLatestHit())
-                OnUnitDragged((int) gridPos.x, (int) gridPos.y, Unit);
+            {
+                OnUnitDragged((int)gridPos.x, (int)gridPos.y, Unit);
+                //OnUnitDragged((int)Math.Floor(xPos), (int)Math.Floor(yPos), Unit);
+            }
         }
 
         public void EndDrag()

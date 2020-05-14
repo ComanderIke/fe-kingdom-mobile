@@ -133,18 +133,18 @@ namespace Assets.GameInput
                 inputActivationRequests.Add(caller);
 
             Active = inputActivationRequests.Count == 0;
-            Debug.Log("Input: "+Active+ " "+inputActivationRequests.Count+ " "+caller.ToString());
+            //Debug.Log("Input: "+Active+ " "+inputActivationRequests.Count+ " "+caller.ToString());
             if (Active != oldActive)
             {
                 if (Active)
                 {
                     OnInputActivated?.Invoke();
-                    Debug.Log("Input Activated!");
+                    //Debug.Log("Input Activated!");
                 }
                 else
                 {
                     OnInputDeactivated?.Invoke();
-                    Debug.Log("Input Deactivated!");
+                    //Debug.Log("Input Deactivated!");
                 }
             }
         }
@@ -178,7 +178,7 @@ namespace Assets.GameInput
 
         private void UnitDoubleClicked(Unit unit)
         {
-            Debug.Log("Player Input: Unit double clicked: " + unit.name);
+            //Debug.Log("Player Input: Unit double clicked: " + unit.name);
             if (!Active)
                 return;
             if(unit.Faction.Id== gridGameManager.FactionManager.ActivePlayerNumber)
@@ -190,7 +190,7 @@ namespace Assets.GameInput
         }
         private void UnitClicked(Unit unit)
         {
-            Debug.Log("Player Input: Unit clicked: " +unit.name );
+            //Debug.Log("Player Input: Unit clicked: " +unit.name );
             if (!Active)
                 return;
             if (unit.Faction.Id == gridGameManager.FactionManager.ActiveFaction.Id) // Player Unit Clicked
@@ -210,11 +210,9 @@ namespace Assets.GameInput
         }
         private void EnemyClicked(Unit unit)
         {
-            Debug.Log("Enemy clicked!");
+            //Debug.Log("Enemy clicked!");
             if (SelectedCharacter == null)
             {
-                Debug.Log("TODO Select Enemy!");
-                Debug.Log("TODO Show Enemy Range!");
                 gameplayInput.SelectUnit(unit);
             }
             else
@@ -276,8 +274,8 @@ namespace Assets.GameInput
                 {
                     //gameplayInput.DeselectUnit();
                     gameplayInput.ViewUnit(unit);
-                    Debug.Log("Enemy not Attackable!");
-                    Debug.Log("TODO Select Enemy! Without showing his range!");
+                    //Debug.Log("Enemy not Attackable!");
+                    //Debug.Log("TODO Select Enemy! Without showing his range!");
                 }
             }
         }
@@ -336,7 +334,7 @@ namespace Assets.GameInput
 
         private void UnitEndDragOnUnit(Unit draggedOverUnit)
         {
-            Debug.Log("Dragged ended on unit: " + draggedOverUnit.name);
+            //Debug.Log("Dragged ended on unit: " + draggedOverUnit.name);
             if (draggedOverUnit.Faction.Id != gridGameManager.FactionManager.ActiveFaction.Id)//Enemy
             {
                 if (gridGameManager.GetSystem<Map.MapSystem>().GridLogic.IsFieldAttackable(draggedOverUnit.GridPosition.X,
@@ -348,7 +346,7 @@ namespace Assets.GameInput
                 else
                 {
                     //Debug.Log("enemy not in Range");
-                    Debug.Log("TODO Select Enemy! Without showing his range!");
+                    //Debug.Log("TODO Select Enemy! Without showing his range!");
                     gameplayInput.DeselectUnit();
                 }
             }
@@ -514,14 +512,19 @@ namespace Assets.GameInput
         }*/
         public void CharacterDrag(int x, int y, Unit character)
         {
+
             if (!Active || IsOldDrag(x, y))
                 return;
+            lastDragPosX = x;
+            lastDragPosY = y;
             if (SelectedCharacter == null|| IsOutOfBounds(x, y))
             {
                 ResetDrag();
                 return;
             }
+
             OnDragOverTile?.Invoke();
+           
             /* store latest correct Positions */
             var field = gridGameManager.GetSystem<MapSystem>().Tiles[x, y];
             if (field.IsActive && field.Unit == null)
@@ -532,10 +535,12 @@ namespace Assets.GameInput
                     LastPositions.RemoveAt(0);
             }
             
+            
             //Dragged on Enemy
             if (field.Unit != null && field.Unit.Faction.Id != character.Faction.Id)
                 DraggedOnEnemy(x, y, field.Unit);
 
+            
             //If Field is Active and not the field currently standing on
             if (!(x == character.GridPosition.X && y == character.GridPosition.Y) && field.IsActive)
             {
@@ -545,7 +550,6 @@ namespace Assets.GameInput
             {
                 /*Dragged On StartPosition*/
                 ResetDrag();
-                UpdatedMovementPath();
             }
             UpdatedMovementPath();
             lastDragPosX = x;
@@ -555,8 +559,8 @@ namespace Assets.GameInput
         public void DraggedOnEnemy(int x, int y, Unit enemy)
         {
             
-            Debug.Log("Dragged on enemy: " + enemy.name +" at ["+x+"/"+y+"]");
-            if (!FindObjectOfType<MapSystem>().GridLogic.IsFieldAttackable(x, y))
+            //Debug.Log("Dragged on enemy: " + enemy.name +" at ["+x+"/"+y+"]");
+            if (!gridGameManager.GetSystem<MapSystem>().GridLogic.IsFieldAttackable(x, y))
                 return;
             //CalculateMousePathToEnemy(selectedCharacter, new Vector2(x, y));
             if (MovementPath == null || MovementPath.Count == 0)
@@ -572,7 +576,7 @@ namespace Assets.GameInput
                 }
                 //CalculateMousePathToAttackField(SelectedCharacter, x, y);
             }
-            else // Search for suitable AttackPosition
+            else  // Search for suitable AttackPosition
             {
                 var foundAttackPosition = false;
                 int attackPositionIndex = -1;
@@ -610,7 +614,7 @@ namespace Assets.GameInput
                     }
                     else
                     {
-                        Debug.Log("No suitable AttackPosition found in dragPath!");
+                        //Debug.Log("No suitable AttackPosition found in dragPath!");
                         CalculateMousePathToEnemy(SelectedCharacter, new Vector2(x, y));
                     }
                 }
@@ -659,7 +663,7 @@ namespace Assets.GameInput
             }
             MovementPath = new List<Vector2>(dragPath);
             OnDraggedOnActiveField?.Invoke();
-            UpdatedMovementPath();
+          
         }
 
         public Vector2 GetCenterPos(Vector2 clickedPos)

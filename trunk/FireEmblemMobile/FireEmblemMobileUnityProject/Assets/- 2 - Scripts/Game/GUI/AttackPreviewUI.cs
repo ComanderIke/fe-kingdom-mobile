@@ -23,7 +23,8 @@ namespace Assets.GUI
         [SerializeField] private TextMeshProUGUI sklValue = default;
         [SerializeField] private Image faceSpriteLeft = default;
         [SerializeField] private TextMeshProUGUI dmgValue = default;
-        [SerializeField] private GameObject attackCount = default;
+        [SerializeField] private TextMeshProUGUI attackCount = default;
+        [SerializeField] private GameObject attackCountX = default;
         [SerializeField] private AttackPreviewStatBar hpBar = default;
         [SerializeField] private AttackPreviewStatBar spBar = default;
         [Header("Right")]
@@ -35,22 +36,29 @@ namespace Assets.GUI
         [SerializeField] private TextMeshProUGUI sklValueRight = default;
         [SerializeField] private Image faceSpriteRight = default;
         [SerializeField] private TextMeshProUGUI dmgValueRight = default;
-        [SerializeField] private GameObject attackCountRight = default;
+        [SerializeField] private TextMeshProUGUI attackCountRight = default;
+        [SerializeField] private GameObject attackCountRightX = default;
         [SerializeField] private AttackPreviewStatBar hpBarRight = default;
         [SerializeField] private AttackPreviewStatBar spBarRight = default;
-
+        private RectTransform rectTransform;
+        private Camera Camera;
+        private bool visible = false;
         public void UpdateValues (Unit attacker, Unit defender, BattlePreview battlePreview, Sprite attackerSprite, Sprite defenderSprite)
         {
             
-            RectTransform rectTransform = GetComponent<RectTransform>();
-            float yPos = Camera.main.WorldToScreenPoint(new Vector3(defender.GridPosition.X, defender.GridPosition.Y + 1f, 0)).y;
+            if(rectTransform==null)
+                rectTransform = GetComponent<RectTransform>();
+            if (Camera == null)
+                Camera = Camera.main;
+            float yPos = 0;
             if (yPos - (Screen.height / 2) >= Screen.height / 2 - (306) - rectTransform.rect.height)//306 is UiHeight and height of this object
             { 
-                yPos = Camera.main.WorldToScreenPoint(new Vector3(defender.GridPosition.X, defender.GridPosition.Y , 0)).y;
+                yPos = Camera.WorldToScreenPoint(new Vector3(defender.GridPosition.X, defender.GridPosition.Y , 0)).y;
                 yPos -= rectTransform.rect.height;
             }
             else
             {
+                yPos = Camera.WorldToScreenPoint(new Vector3(defender.GridPosition.X, defender.GridPosition.Y + 1f, 0)).y;
             }
 
             Show(yPos);
@@ -60,10 +68,14 @@ namespace Assets.GUI
             {
                 dmgValue.text = "?";
                 dmgValueRight.text = "?";
-                hpBar.UpdateValues(battlePreview.Attacker.MaxHp, battlePreview.Attacker.CurrentHp, -1, new List<int>());
-                spBar.UpdateValues(battlePreview.Attacker.MaxSp, battlePreview.Attacker.CurrentSp, -1, new List<int>());
-                attackCount.SetActive(false);
-                attackCountRight.SetActive(false);
+                attackCount.text = "";
+                attackCountRight.text = "";
+                hpBar.UpdateValues(battlePreview.Attacker.MaxHp, battlePreview.Attacker.CurrentHp, -1, new List<int>(), true);
+                spBar.UpdateValues(battlePreview.Attacker.MaxSp, battlePreview.Attacker.CurrentSp, -1, new List<int>(), true);
+                attackCountX.SetActive(false);
+                attackCountRightX.SetActive(false);
+                attackCount.gameObject.SetActive(false);
+                attackCountRight.gameObject.SetActive(false);
                 hpBarRight.UpdateValues(battlePreview.Defender.MaxHp, battlePreview.Defender.CurrentHp, -1, new List<int>());
                 spBarRight.UpdateValues(battlePreview.Defender.MaxSp, battlePreview.Defender.CurrentSp, -1, new List<int>());
                 faceSpriteRight.color = new Color(0, 0, 0, 1);
@@ -71,11 +83,15 @@ namespace Assets.GUI
             else
             {
                 dmgValue.text = "" + battlePreview.Attacker.Damage;
-                attackCount.SetActive(battlePreview.Attacker.AttackCount > 1);
+                attackCountX.SetActive(battlePreview.Attacker.AttackCount > 1);
+                attackCount.gameObject.SetActive(battlePreview.Attacker.AttackCount > 1);
+                attackCount.text = "" + battlePreview.Attacker.AttackCount;
                 hpBar.UpdateValues(battlePreview.Attacker.MaxHp, battlePreview.Attacker.CurrentHp, battlePreview.Attacker.AfterBattleHp, battlePreview.Attacker.IncomingDamage);
                 spBar.UpdateValues(battlePreview.Attacker.MaxSp, battlePreview.Attacker.CurrentSp, battlePreview.Attacker.AfterBattleSp, battlePreview.Attacker.IncomingSpDamage);
                 dmgValueRight.text = "" + battlePreview.Defender.Damage;
-                attackCountRight.SetActive(battlePreview.Defender.AttackCount > 1);
+                attackCountRightX.SetActive(battlePreview.Defender.AttackCount > 1);
+                attackCountRight.gameObject.SetActive(battlePreview.Defender.AttackCount > 1);
+                attackCountRight.text = "" + battlePreview.Defender.AttackCount;
                 hpBarRight.UpdateValues(battlePreview.Defender.MaxHp, battlePreview.Defender.CurrentHp, battlePreview.Defender.AfterBattleHp, battlePreview.Defender.IncomingDamage);
                 spBarRight.UpdateValues(battlePreview.Defender.MaxSp, battlePreview.Defender.CurrentSp, battlePreview.Defender.AfterBattleSp, battlePreview.Defender.IncomingSpDamage);
                 faceSpriteRight.color = new Color(1, 1, 1, 1);
@@ -86,28 +102,17 @@ namespace Assets.GUI
             //defValue.text = "" + battlePreview.Attacker.Defense;
             //sklValue.text = "" + battlePreview.Attacker.Skill;
            
-            
-            
-            
-            
             //spdValueRight.text = "" + battlePreview.Defender.Speed;
             //defLabelRight.text = battlePreview.Defender.IsPhysical ? "Def" : "Res";
             //defValueRight.text = "" + battlePreview.Defender.Defense;
             //sklValueRight.text = "" + battlePreview.Defender.Skill;
-            
-          
         }
-        float yPos;
         public void Show(float yPos)
         {
-            
+            visible = true;
             gameObject.SetActive(true);
             ClearTweens();
-            foreach(var comp in GetComponentsInChildren<UILoopPingPongFade>())
-            {
-                comp.StartAnimation();
-            }
-            RectTransform rectTransform = GetComponent<RectTransform>();
+
             canvas.alpha = 0;
             LeanTween.alphaCanvas(canvas, 1, 0.3f).setEaseOutQuad();
             left.transform.localPosition = new Vector3(-rectTransform.rect.width, 0, 0);
@@ -119,18 +124,17 @@ namespace Assets.GUI
         }
         private void ClearTweens()
         {
-
             LeanTween.cancel(gameObject);
             LeanTween.cancel(left);
             LeanTween.cancel(right);
-
         }
        
         public void Hide()
         {
+            if (!visible)
+                return;
+            visible = false;
             ClearTweens();
- 
-            RectTransform rectTransform = GetComponent<RectTransform>();
             LeanTween.alphaCanvas(canvas, 0, 0.2f).setEaseOutQuad();
 
             LeanTween.moveLocalX(left, -rectTransform.rect.width, 0.2f).setEaseOutQuad();

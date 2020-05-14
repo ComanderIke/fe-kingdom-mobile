@@ -13,6 +13,7 @@ using Assets.GUI;
 using Assets.Game.GameStates;
 using Assets.Game.Manager;
 using Assets.Audio;
+using Assets.GameActors.Units.OnGameObject;
 
 public class PlayerInputFeedback : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class PlayerInputFeedback : MonoBehaviour
     private ResourceScript resources;
     private GameObject moveCursor;
     private GameObject moveCursorStart;
-    private List<GameObject> instantiatedMovePath;
+    private List<GameObject> instantiatedMovePath= new List<GameObject>();
     private Dictionary<string, GameObject> activeUnitEffects;
     private GridGameManager gridGameManager;
     
@@ -67,8 +68,23 @@ public class PlayerInputFeedback : MonoBehaviour
         Unit.OnExpGained += ExpGained;
         InputSystem.OnInputActivated += InputActivated;
         UnitSelectionSystem.OnEnemySelected += EnemySelected;
+        BattleRenderer.OnAttackConnected += SlashAnimation;
+        Unit.OnUnitDamaged += UnitDamaged;
 
-
+    }
+    private void UnitDamaged(Unit unit , int damage)
+    {
+        DamagePopUp.Create(unit.GameTransform.GetCenterPosition(), damage, Color.red);
+    }
+    private void SlashAnimation(Unit attacker, Unit defender)
+    {
+        Vector3 spawnPos = defender.GameTransform.GetPosition();
+        spawnPos.x += 0.5f;
+        spawnPos.y += 0.5f;//Spawn in Middle of GridCell
+        if(attacker.Faction.Id==0)
+            Instantiate(resources.Prefabs.slashBlue, spawnPos, Quaternion.identity);
+        else
+            Instantiate(resources.Prefabs.slashRed, spawnPos, Quaternion.identity);
     }
     private void EnemySelected(Unit u) {
         HideAllActiveUnitEffects();
@@ -119,10 +135,8 @@ public class PlayerInputFeedback : MonoBehaviour
         {
             SpawnActiveUnitEffect(u);
         }
-
-
-
     }
+
     private void OnRenderEnemyTile(int x, int y, Unit enemy, int playerId)
     {
         if (enemy != null && enemy.Faction.Id != playerId)
@@ -154,6 +168,8 @@ public class PlayerInputFeedback : MonoBehaviour
     {
         if (attackableEnemyEffects.Any(gameObj => (int)gameObj.transform.localPosition.x == x && (int)gameObj.transform.localPosition.y == y))
         {
+            attackableEnemyEffects.Find(gameObj => (int)gameObj.transform.localPosition.x == x && (int)gameObj.transform.localPosition.y == y)
+                .SetActive(true);
             return;
         }
 
@@ -166,6 +182,8 @@ public class PlayerInputFeedback : MonoBehaviour
     {
         if (attackableFieldEffects.Any(gameObj => (int)gameObj.transform.localPosition.x == x && (int)gameObj.transform.localPosition.y == y))
         {
+            attackableFieldEffects.Find(gameObj => (int)gameObj.transform.localPosition.x == x && (int)gameObj.transform.localPosition.y == y)
+                .SetActive(true);
             return;
         }
 
@@ -179,20 +197,20 @@ public class PlayerInputFeedback : MonoBehaviour
     {
         foreach (var go in attackableFieldEffects)
         {
-            Destroy(go);
+            go.SetActive(false);
         }
 
-        attackableFieldEffects.Clear();
+        //attackableFieldEffects.Clear();
     }
 
     public void HideAttackableEnemy()
     {
         foreach (var go in attackableEnemyEffects)
         {
-            Destroy(go);
+            go.SetActive(false);
         }
 
-        attackableEnemyEffects.Clear();
+        //attackableEnemyEffects.Clear();
     }
     public void PlayerTurnAnimation()
     {
@@ -227,18 +245,18 @@ public class PlayerInputFeedback : MonoBehaviour
     }
     private void HideActiveUnitEffect(Unit unit)
     {
-        if (activeUnitEffects.ContainsKey(unit.Name))
-        {
-            var gob = activeUnitEffects[unit.Name];
-
-            activeUnitEffects.Remove(unit.Name);
-            GameObject.Destroy(gob);
-        }
+        //if (activeUnitEffects.ContainsKey(unit.Name))
+        //{
+        //    var gob = activeUnitEffects[unit.Name];
+        //    gob.SetActive(false);
+        //    //activeUnitEffects.Remove(unit.Name);
+        //    //GameObject.Destroy(gob);
+        //}
     }
     private void SpawnActiveUnitEffect(Unit unit)
     {
-        HideActiveUnitEffect(unit);
-        //Debug.Log("Spawn ActiveUnitEffect: [" + unit.GridPosition.X+"/"+ unit.GridPosition.Y+"]");
+        //HideActiveUnitEffect(unit);
+        //Debug.Log("Spawn ActiveUnitEffect: [" + unit.GridPosition.X + "/" + unit.GridPosition.Y + "]");
 
         //var go = GameObject.Instantiate(resources.Prefabs.ActiveUnitField,
         //    GameObject.FindGameObjectWithTag("World").transform);
@@ -250,48 +268,62 @@ public class PlayerInputFeedback : MonoBehaviour
     }
     public void HideAllActiveUnitEffects()
     {
-        setActiveUnitEffectsWhenInputIsActive = false;
-        foreach (var pair in activeUnitEffects)
-        {
-            pair.Value.SetActive(false);
-        }
-        InputSystem.OnInputActivated -= ShowAllActiveUnitEffects;
+        //setActiveUnitEffectsWhenInputIsActive = false;
+        //foreach (var pair in activeUnitEffects)
+        //{
+        //    pair.Value.SetActive(false);
+        //}
+        //InputSystem.OnInputActivated -= ShowAllActiveUnitEffects;
     }
     public void ShowAllActiveUnitEffects()
     {
-        if (!InputSystem.Active)
-        {
-            InputSystem.OnInputActivated += ShowAllActiveUnitEffects;
-            return;
-        }
-        InputSystem.OnInputActivated -= ShowAllActiveUnitEffects;
-        //Debug.Log("ShowAllActiveUnitEffects "+activeUnitEffects.Count);
-        foreach (var pair in activeUnitEffects)
-        {
-            pair.Value.SetActive(true);
-        }
+        //if (!InputSystem.Active)
+        //{
+        //    InputSystem.OnInputActivated += ShowAllActiveUnitEffects;
+        //    return;
+        //}
+        //InputSystem.OnInputActivated -= ShowAllActiveUnitEffects;
+        ////Debug.Log("ShowAllActiveUnitEffects "+activeUnitEffects.Count);
+        //foreach (var pair in activeUnitEffects)
+        //{
+        //    pair.Value.SetActive(true);
+        //}
     }
+    private bool MovementPathVisible = false;
     public void DrawMovementPath(List<Vector2> mousePath, int startX, int startY)
     {
         HideMovementPath();
-        instantiatedMovePath = new List<GameObject>();
-        if (moveCursor != null)
-            GameObject.Destroy(moveCursor);
-        if (moveCursorStart != null)
-            GameObject.Destroy(moveCursorStart);
+        MovementPathVisible = true;
+ 
         if (mousePath.Count == 0)
         {
-            moveCursor = GameObject.Instantiate(resources.Prefabs.MoveCursor, worldContainer);
+            if (moveCursor == null)
+            {
+                moveCursor = GameObject.Instantiate(resources.Prefabs.MoveCursor, worldContainer);
+                moveCursor.name = "MoveCursor";
+            }
             moveCursor.transform.localPosition = new Vector3(startX,
                 startY, moveCursor.transform.localPosition.z);
-            moveCursorStart = GameObject.Instantiate(resources.Prefabs.MoveArrowDot, worldContainer);
+            moveCursor.SetActive(true);
+            if (moveCursorStart == null)
+            {
+                moveCursorStart = GameObject.Instantiate(resources.Prefabs.MoveArrowDot, worldContainer);
+                moveCursorStart.name = "MoveCursorStart";
+            }
+            moveCursorStart.SetActive(true);
             moveCursorStart.transform.localPosition = new Vector3(startX + 0.5f,
                 startY + 0.5f, -0.03f);
             moveCursorStart.GetComponent<SpriteRenderer>().sprite = resources.Sprites.StandOnArrowStartNeutral;
         }
         else
         {
-            moveCursorStart = GameObject.Instantiate(resources.Prefabs.MoveArrowDot, worldContainer);
+            if (moveCursorStart == null)
+            {
+                moveCursorStart = GameObject.Instantiate(resources.Prefabs.MoveArrowDot, worldContainer);
+                moveCursorStart.name = "MoveCursorStart";
+            }
+          
+            moveCursorStart.SetActive(true);
             moveCursorStart.transform.localPosition = new Vector3(startX + 0.5f,
                 startY + 0.5f, -0.03f);
             moveCursorStart.GetComponent<SpriteRenderer>().sprite = resources.Sprites.StandOnArrowStart;
@@ -305,18 +337,33 @@ public class PlayerInputFeedback : MonoBehaviour
             else if (v.y - mousePath[0].y < 0)
                 moveCursorStart.transform.rotation = Quaternion.Euler(0, 0, 90);
         }
-
         for (var i = 0; i < mousePath.Count; i++)
         {
             var v = mousePath[i];
-
-            var dot = GameObject.Instantiate(resources.Prefabs.MoveArrowDot, worldContainer);
+            GameObject dot = null;
+            if (i >= instantiatedMovePath.Count)
+            {
+                dot = Instantiate(resources.Prefabs.MoveArrowDot, worldContainer);
+                instantiatedMovePath.Add(dot);
+            }
+            else
+            {
+                dot = instantiatedMovePath[i];
+                dot.SetActive(true);
+            }
             dot.transform.localPosition = new Vector3(v.x + 0.5f, v.y + 0.5f, -0.03f);
+            SpriteRenderer dotSpriteRenderer = dot.GetComponent<SpriteRenderer>();
             if (i == mousePath.Count - 1)
             {
-                moveCursor = GameObject.Instantiate(resources.Prefabs.MoveCursor, worldContainer);
+                if (moveCursor == null)
+                {
+                    moveCursor = Instantiate(resources.Prefabs.MoveCursor, worldContainer);
+                    moveCursor.name = "MoveCursor";
+                }
+                moveCursor.SetActive(true);
                 moveCursor.transform.localPosition = new Vector3(v.x, v.y, moveCursor.transform.localPosition.z);
-                dot.GetComponent<SpriteRenderer>().sprite = resources.Sprites.MoveArrowHead;
+                
+                dotSpriteRenderer.sprite = resources.Sprites.MoveArrowHead;
                 if (i != 0)
                 {
                     if (v.x - mousePath[i - 1].x > 0)
@@ -347,44 +394,47 @@ public class PlayerInputFeedback : MonoBehaviour
                 if (i != 0)
                 {
                     vBefore = mousePath[i - 1];
-                    DrawCurvedMovementPathSection(dot, v, vBefore, vAfter);
+                    DrawCurvedMovementPathSection(dot, dotSpriteRenderer, v, vBefore, vAfter);
                 }
                 else
                 {
                     vBefore = new Vector2(startX, startY);
-                    DrawCurvedMovementPathSection(dot, v, vBefore, vAfter);
+                    DrawCurvedMovementPathSection(dot, dotSpriteRenderer, v, vBefore, vAfter);
                 }
             }
-            instantiatedMovePath.Add(dot);
+            
         }
     }
     public void HideMovementPath()
     {
+        if (!MovementPathVisible)
+            return;
+        MovementPathVisible = false;
         for(int i=0; i< instantiatedMovePath.Count; i++)
         {
-            GameObject.Destroy(instantiatedMovePath[i]);
+            instantiatedMovePath[i].SetActive(false);
         }
-        instantiatedMovePath.Clear();
+        //instantiatedMovePath.Clear();
         if (moveCursor != null)
-            GameObject.Destroy(moveCursor);
+            moveCursor.SetActive(false);//GameObject.Destroy(moveCursor);
         if (moveCursorStart != null)
-            GameObject.Destroy(moveCursorStart);
+            moveCursorStart.SetActive(false);
     }
-    public void DrawCurvedMovementPathSection(GameObject dot, Vector2 v, Vector2 vBefore, Vector2 vAfter)
+    public void DrawCurvedMovementPathSection(GameObject dot, SpriteRenderer sr, Vector2 v, Vector2 vBefore, Vector2 vAfter)
     {
         if (vBefore.x == vAfter.x)
         {
-            dot.GetComponent<SpriteRenderer>().sprite = resources.Sprites.MoveArrowStraight;
+            sr.sprite = resources.Sprites.MoveArrowStraight;
             dot.transform.rotation = Quaternion.Euler(0, 0, 90);
         }
         else if (vBefore.y == vAfter.y)
         {
-            dot.GetComponent<SpriteRenderer>().sprite = resources.Sprites.MoveArrowStraight;
+            sr.sprite = resources.Sprites.MoveArrowStraight;
             dot.transform.rotation = Quaternion.Euler(0, 0, 0);
         }
         else
         {
-            dot.GetComponent<SpriteRenderer>().sprite = resources.Sprites.MoveArrowCurve;
+            sr.sprite = resources.Sprites.MoveArrowCurve;
             if (vBefore.x - vAfter.x > 0)
             {
                 if (vBefore.y - vAfter.y > 0)

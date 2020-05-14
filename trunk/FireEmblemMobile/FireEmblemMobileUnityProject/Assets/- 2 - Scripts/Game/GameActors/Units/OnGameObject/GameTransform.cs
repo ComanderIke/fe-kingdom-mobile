@@ -14,6 +14,11 @@ namespace Assets.GameActors.Units.OnGameObject
         {
             GameObject.transform.localPosition = new Vector3(x, y, 0);
         }
+        public Vector3 GetCenterPosition()
+        {
+            return GameObject.transform.localPosition+ new Vector3(0.5f,0.5f,0);
+        }
+        
         public Vector3 GetPosition()
         {
             return GameObject.transform.localPosition;
@@ -30,10 +35,14 @@ namespace Assets.GameActors.Units.OnGameObject
         {
             GameObject.GetComponent<BoxCollider>().enabled = true;
         }
+        public void DeParentLight()
+        {
+            UnitController.DeParentLight();
+           
+        }
         public void EnableLight()
         {
-            UnitController.light.transform.SetParent(GameObject.transform);
-            UnitController.light.transform.localPosition = new Vector3(0.5f, 0.5f, 0);
+            UnitController.ResetLight();
         }
         public void DisableCollider()
         {

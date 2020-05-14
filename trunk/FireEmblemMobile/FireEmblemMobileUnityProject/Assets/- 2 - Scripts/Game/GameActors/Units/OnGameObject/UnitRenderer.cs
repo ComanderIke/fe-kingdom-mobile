@@ -52,13 +52,13 @@ namespace Assets.GameActors.Units.OnGameObject
             {
                 pointLight.SetActive(false);
                 Color color = Color.blue;
-                
-                
+                GetComponentInChildren<SpriteRenderer>().flipX = true;
+
                 //spriteMask.SetActive(false);
             }
             else {
-                //pointLight.SetActive(true);
-               
+                pointLight.SetActive(true);
+                GetComponentInChildren<SpriteRenderer>().flipX = false;
                 //spriteMask.SetActive(true);
             }
         }

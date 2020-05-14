@@ -67,9 +67,15 @@ namespace Assets.GUI
             res.text = "" + c.Stats.Res;
             hpBar.SetFillAmount((c.Hp * 1.0f) / c.Stats.MaxHp);
             hpBar.SetColor(c.Faction.Id == 0 ? colorManager.MainGreenColor : colorManager.MainRedColor);
-            hp.text = c.Hp + "/" + c.Stats.MaxHp;
+            if(c.Hp==c.Stats.MaxHp)
+                hp.text = ""+c.Hp;
+            else
+                hp.text = c.Hp + "/" + c.Stats.MaxHp;
             spBar.SetFillAmount((c.Sp * 1.0f) / c.Stats.MaxSp);
-            sp.text = c.Sp + "/" + c.Stats.MaxSp;
+            if (c.Sp == c.Stats.MaxSp)
+                sp.text = ""+c.Sp;
+            else
+                sp.text = c.Sp + "/" + c.Stats.MaxSp;
             atk.text = "" + c.BattleStats.GetAttackDamage();
             characterSprite.sprite = c.CharacterSpriteSet.FaceSprite;
            

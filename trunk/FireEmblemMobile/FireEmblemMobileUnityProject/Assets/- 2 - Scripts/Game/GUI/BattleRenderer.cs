@@ -22,7 +22,7 @@ namespace Assets.GUI
         public delegate void OnFinishedEvent();
 
         public static OnFinishedEvent OnFinished;
-        public delegate void OnAttackConnectedEvent();
+        public delegate void OnAttackConnectedEvent(Unit attacker, Unit defender);
 
         public static OnAttackConnectedEvent OnAttackConnected;
 
@@ -63,16 +63,20 @@ namespace Assets.GUI
         private void StartBattleAnimation()
         {
             attackSequenceIndex = 0;
-            attacker.GameTransform.UnitAnimator.OnAttackAnimationConnected += AttackConnected;
-            defender.GameTransform.UnitAnimator.OnAttackAnimationConnected += AttackConnected;
+            attacker.GameTransform.UnitAnimator.OnAttackAnimationConnected += AttackerAttackConnected;
+            defender.GameTransform.UnitAnimator.OnAttackAnimationConnected += DefenderAttackConnected;
             attacker.GameTransform.UnitAnimator.OnAnimationEnded += ContinueBattleAnimation;
             defender.GameTransform.UnitAnimator.OnAnimationEnded += ContinueBattleAnimation;
             ContinueBattleAnimation();
         }
 
-        private void AttackConnected()
+        private void AttackerAttackConnected()
         {
-            OnAttackConnected();
+            OnAttackConnected(attacker, defender);
+        }
+        private void DefenderAttackConnected()
+        {
+            OnAttackConnected(defender, attacker);
         }
         private void ContinueBattleAnimation()
         {
@@ -132,8 +136,8 @@ namespace Assets.GUI
         }
         private void EndBattleAnimation()
         {
-            attacker.GameTransform.UnitAnimator.OnAttackAnimationConnected -= AttackConnected;
-            defender.GameTransform.UnitAnimator.OnAttackAnimationConnected -= AttackConnected;
+            attacker.GameTransform.UnitAnimator.OnAttackAnimationConnected -= AttackerAttackConnected;
+            defender.GameTransform.UnitAnimator.OnAttackAnimationConnected -= DefenderAttackConnected;
             attacker.GameTransform.UnitAnimator.OnAnimationEnded -= ContinueBattleAnimation;
             defender.GameTransform.UnitAnimator.OnAnimationEnded -= ContinueBattleAnimation;
             OnFinished?.Invoke();

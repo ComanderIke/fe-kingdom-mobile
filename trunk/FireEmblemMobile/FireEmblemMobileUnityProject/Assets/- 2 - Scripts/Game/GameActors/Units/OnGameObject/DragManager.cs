@@ -17,6 +17,7 @@ namespace Assets.GameActors.Units.OnGameObject
         /*DragOffset*/
         private float deltaPosX;
         private float deltaPosY;
+        private Camera camera = Camera.main;
 
         private Vector3 posBeforeDrag;
 
@@ -66,7 +67,7 @@ namespace Assets.GameActors.Units.OnGameObject
             IsDragging = false;
             IsDragDelay = true;
             DragTime = 0;
-            Vector3 dist = Camera.main.WorldToScreenPoint(DragObject.GetTransform().position);
+            Vector3 dist = camera.WorldToScreenPoint(DragObject.GetTransform().position);
             deltaPosX = Input.mousePosition.x - dist.x;
             deltaPosY = Input.mousePosition.y - dist.y;
             posBeforeDrag = DragObject.GetTransform().localPosition;
@@ -81,11 +82,11 @@ namespace Assets.GameActors.Units.OnGameObject
             {
                 IsDragging = true;
                 Vector3 curPos = new Vector3(Input.mousePosition.x - deltaPosX, Input.mousePosition.y - deltaPosY, 0);
-                Vector3 worldPos = Camera.main.ScreenToWorldPoint(curPos);
+                Vector3 worldPos = camera.ScreenToWorldPoint(curPos);
                 worldPos.z = 0;
                 worldPos.x -= Map.MapSystem.GRID_X_OFFSET;
                 DragObject.GetTransform().localPosition = Vector3.Lerp(DragObject.GetTransform().localPosition, worldPos, Time.deltaTime * DRAG_FOLLOW_SPEED);
-                DragObject.Dragging();
+                DragObject.Dragging(worldPos.x, worldPos.y);
             }
         }
 

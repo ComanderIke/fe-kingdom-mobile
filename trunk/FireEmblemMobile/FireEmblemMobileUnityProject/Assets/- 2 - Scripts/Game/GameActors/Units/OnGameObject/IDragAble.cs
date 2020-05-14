@@ -8,6 +8,6 @@ namespace Assets.GameActors.Units.OnGameObject
         void StartDrag();
         void EndDrag();
         void NotDragging();
-        void Dragging();
+        void Dragging(float x, float y);
     }
 }

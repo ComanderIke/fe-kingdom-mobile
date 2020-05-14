@@ -31,6 +31,8 @@ namespace Assets.GameActors.Units
         public event OnDebuffEvent OnDebuffAdded;
         public event OnBuffEvent OnBuffRemoved;
         public event OnDebuffEvent OnDebuffRemoved;
+        public delegate void OnUnitDamagedEvent(Unit unit, int damage);
+        public static event OnUnitDamagedEvent OnUnitDamaged;
 
         public Stats Stats;
         public bool IsVisible;
@@ -48,7 +50,9 @@ namespace Assets.GameActors.Units
             get => hp;
             set
             {
+                
                 hp = value > Stats.MaxHp ? Stats.MaxHp : value;
+                
                 if (hp <= 0) hp = 0;
                 HpValueChanged?.Invoke();
             }
@@ -219,11 +223,12 @@ namespace Assets.GameActors.Units
         public virtual void SetPosition(int x, int y)
         {
             GridPosition.SetPosition(x, y);
-
+            GameTransform.EnableLight();
             GameTransform.SetPosition(x, y);
         }
         public virtual void SetGameTransformPosition(int x, int y)
         {
+            GameTransform.DeParentLight();
             GameTransform.SetPosition(x, y);
         }
         public virtual Vector2 GetGameTransformPosition()
@@ -260,19 +265,11 @@ namespace Assets.GameActors.Units
             return Hp > 0;
         }
 
-        public int InflictDamage(int dmg, Unit damageDealer, bool magic = false)
+        public int InflictDamage(int dmg, Unit damageDealer)
         {
-            var multiplier = 1.0f;
-            int inflictedDmg;
-            if (magic)
-                inflictedDmg = (int) (dmg * multiplier);
-            else
-                inflictedDmg = (int) ((dmg - Stats.Def) * multiplier);
-
-            if (inflictedDmg <= 0)
-                inflictedDmg = 1;
-            Hp -= inflictedDmg;
-            return inflictedDmg;
+            Hp -= dmg;
+            OnUnitDamaged?.Invoke(this, dmg);
+            return dmg;
         }
 
         public T GetType<T>()

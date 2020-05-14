@@ -48,13 +48,13 @@ namespace Assets.Mechanics
         {
             if (!factionManager.ActiveFaction.IsPlayerControlled)
             {
-                Debug.Log("AITurn");
+                //Debug.Log("AITurn");
                 InputSystem.OnSetActive?.Invoke(false, this);
                 gridGameManager.GameStateManager.Feed(NextStateTrigger.StartAITurn);
             }
             else
             {
-                Debug.Log("PlayerTurn");
+                //Debug.Log("PlayerTurn");
                 InputSystem.OnSetActive?.Invoke(true, this);
             }
             OnStartTurn?.Invoke();
@@ -66,7 +66,7 @@ namespace Assets.Mechanics
 
         public void EndTurn()
         {
-            Debug.Log("EndTurn!");
+            //Debug.Log("EndTurn!");
             foreach (var c in factionManager.ActiveFaction.Units)
             {
                 c.EndTurn();

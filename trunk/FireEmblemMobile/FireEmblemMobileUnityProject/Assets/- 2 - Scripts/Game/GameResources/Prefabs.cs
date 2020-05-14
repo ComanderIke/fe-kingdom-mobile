@@ -16,6 +16,10 @@ namespace Assets.GameResources
         public GameObject MoveCursorViolet;
 
         public GameObject attackIconPrefab;
+        [Header("Battle")]
+        public GameObject slashRed;
+        public GameObject slashBlue;
+        public GameObject DamagePopUptext;
 
     }
 }

@@ -202,17 +202,7 @@ namespace Assets.GUI
 
         public void ShowAttackPreview(Unit attacker, Unit defender)
         {
-
-            
-
             attackPreview.GetComponent<AttackPreviewUI>().UpdateValues(attacker, defender, gridGameManager.GetSystem<BattleSystem>().GetBattlePreview(attacker, defender), attacker.CharacterSpriteSet.FaceSprite, defender.CharacterSpriteSet.FaceSprite);
-            //Vector3 attackPreviewPos;
-            //if (defender.GridPosition is BigTilePosition)
-            //  attackPreviewPos = Camera.main.WorldToScreenPoint(new Vector3(pos.x + GridManager.GRID_X_OFFSET ,pos.y + 1.0f, -0.05f));
-            //else
-            //    attackPreviewPos = Camera.main.WorldToScreenPoint(new Vector3(pos.x + GridManager.GRID_X_OFFSET + 0.5f, pos.y + 1.0f, -0.05f));
-            //attackPreviewPos.z = 0;
-            //attackPreview.transform.localPosition = new Vector3(attackPreviewPos.x-540,attackPreviewPos.y-960,0);//TODO WHY MAGIC NUMBERS?
         }
 
         public void HideAttackPreview()

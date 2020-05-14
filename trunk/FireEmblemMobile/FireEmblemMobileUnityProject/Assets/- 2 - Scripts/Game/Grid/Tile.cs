@@ -13,6 +13,7 @@ namespace Assets.Grid
         public int Y;
         public bool IsActive = false;
         public bool IsAccessible = true;
+        public bool IsAttackable = false;
 
         public Tile(int i, int j, GameObject gameObject)
         {

@@ -18,9 +18,16 @@ public class FogController : MonoBehaviour
     void Update()
     {
         transform.position = new Vector3(transform.position.x + Time.deltaTime * speed, transform.position.y, transform.position.z);
-        if (Mathf.Abs(startPos - transform.position.x) > length/2)
-            transform.position = new Vector3(transform.position.x-length, transform.position.y, transform.position.z);
-        
+        if (startPos - transform.position.x > length / 2)
+        {
+            transform.position = new Vector3(transform.position.x + length, transform.position.y, transform.position.z);
+        }
+        else if (transform.position.x - startPos > length / 2)
+        {
+            transform.position = new Vector3(transform.position.x - length, transform.position.y, transform.position.z);
+        }
+            
+       
     }
 
   

@@ -52,7 +52,7 @@ namespace Assets.Mechanics
             defenderAttackCount = defender.BattleStats.GetAttackCountAgainst(attacker);
         }
 
-        public void ContinueBattle()
+        public void ContinueBattle(Unit Attacker, Unit defender)
         {
             ContinueBattle(battleSimulation.AttackSequence[currentAttackIndex]);
         }
@@ -68,7 +68,7 @@ namespace Assets.Mechanics
 
         public static bool DoAttack(Unit attacker, Unit defender)
         {
-            defender.Hp -= attacker.BattleStats.GetDamageAgainstTarget(defender);
+            defender.InflictDamage(attacker.BattleStats.GetDamageAgainstTarget(defender), defender);
             defender.Sp -= attacker.BattleStats.GetTotalSpDamageAgainstTarget(defender);
             if (attacker is Human humanAttacker && humanAttacker.EquippedWeapon != null)
             {
