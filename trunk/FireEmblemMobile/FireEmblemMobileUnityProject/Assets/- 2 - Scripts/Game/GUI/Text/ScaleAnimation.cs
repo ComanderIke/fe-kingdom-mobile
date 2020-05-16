@@ -19,9 +19,8 @@ public class ScaleAnimation : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnDisable()
     {
-        
+        LeanTween.pause(gameObject);
     }
 }

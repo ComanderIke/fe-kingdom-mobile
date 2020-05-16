@@ -17,10 +17,16 @@ namespace Assets.GameCamera
         }
         private void Update()
         {
+            if (Input.GetMouseButton(0) && drag)
+            {
+                var delta = Input.mousePosition - lastPosition;
+                transform.Translate(-delta.x * Time.deltaTime * DRAG_SPEED, -delta.y * Time.deltaTime * DRAG_SPEED, 0);
+                lastPosition = Input.mousePosition;
+            }
             if (Input.GetMouseButtonDown(0))
             {
-                var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                Physics.Raycast(ray, out var hit, Mathf.Infinity);
+                var ray = CameraSystem.Camera.ScreenPointToRay(Input.mousePosition);
+                var hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
                 if (hit.collider != null)
                     if (!excludeColliderTags.Contains(hit.collider.gameObject.tag))
                     {
@@ -30,12 +36,7 @@ namespace Assets.GameCamera
                     }
             }
 
-            if (Input.GetMouseButton(0) && drag)
-            {
-                var delta = Input.mousePosition - lastPosition;
-                transform.Translate(-delta.x * Time.deltaTime * DRAG_SPEED, -delta.y * Time.deltaTime * DRAG_SPEED, 0);
-                lastPosition = Input.mousePosition; 
-            }
+           
 
             if (Input.GetMouseButtonUp(0))
             {

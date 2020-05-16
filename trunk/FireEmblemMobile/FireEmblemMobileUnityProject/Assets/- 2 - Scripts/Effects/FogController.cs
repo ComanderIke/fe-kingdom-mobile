@@ -10,7 +10,7 @@ public class FogController : MonoBehaviour
     public float speed = 1;
     void Start()
     {
-        length = transform.GetChild(0).GetComponent<SpriteRenderer>().bounds.size.x;
+        length = transform.GetComponent<SpriteRenderer>().bounds.size.x;
         startPos = transform.position.x;
     }
 

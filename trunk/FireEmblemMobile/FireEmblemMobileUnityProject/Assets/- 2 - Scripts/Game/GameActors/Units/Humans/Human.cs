@@ -65,17 +65,19 @@ namespace Assets.GameActors.Units.Humans
         }
         public Dictionary<WeaponType,string> WeaponProficiencies()
         {
-            var dict = new Dictionary<WeaponType, string>
-            {
-                { WeaponType.Sword, GetWeaponProficiency(WeaponType.Sword) },
-                { WeaponType.Spear, GetWeaponProficiency(WeaponType.Spear) },
-                { WeaponType.Axe, GetWeaponProficiency(WeaponType.Axe) },
-                { WeaponType.Bow, GetWeaponProficiency(WeaponType.Bow) },
-                { WeaponType.Magic, GetWeaponProficiency(WeaponType.Magic) },
-                { WeaponType.Staff, GetWeaponProficiency(WeaponType.Staff) }
-            };
+            //PERFORMANCE PROBLEM!!!
+            //var dict = new Dictionary<WeaponType, string>
+            //{
+            //    { WeaponType.Sword, GetWeaponProficiency(WeaponType.Sword) },
+            //    { WeaponType.Spear, GetWeaponProficiency(WeaponType.Spear) },
+            //    { WeaponType.Axe, GetWeaponProficiency(WeaponType.Axe) },
+            //    { WeaponType.Bow, GetWeaponProficiency(WeaponType.Bow) },
+            //    { WeaponType.Magic, GetWeaponProficiency(WeaponType.Magic) },
+            //    { WeaponType.Staff, GetWeaponProficiency(WeaponType.Staff) }
+            //};
 
-            return dict;
+            //return dict;
+            return null;
         }
 
         public bool CanUseWeapon(Weapon w)

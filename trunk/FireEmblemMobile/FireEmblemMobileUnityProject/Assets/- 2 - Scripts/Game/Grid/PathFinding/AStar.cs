@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Map;
 using UnityEngine;
+using System;
 
 namespace Assets.Grid.PathFinding
 {
@@ -30,6 +31,8 @@ namespace Assets.Grid.PathFinding
                     Nodes[i, j] = new Node(i, j, 1000);
                 }
             }
+            closed = new ArrayList();
+            open = new ArrayList();
         }
 
         private void Reset()

@@ -118,7 +118,7 @@ namespace Assets.GameActors.Units.OnGameObject
                 Unit.OnUnitActiveStateUpdated(Unit, true, false);
                
                 OnEndDrag();
-                gameObject.GetComponent<BoxCollider>().enabled = true;
+                gameObject.GetComponent<BoxCollider2D>().enabled = true;
                 light.transform.SetParent(transform);
                 light.transform.localPosition = new Vector3(0.5f, 0.5f, 0);
             }

@@ -13,6 +13,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using Assets.GameEngine;
 using Assets.Game.Manager;
+using UnityEngine.EventSystems;
 
 namespace Assets.GUI
 {
@@ -34,7 +35,7 @@ namespace Assets.GUI
 
         [SerializeField] private GameObject bottomUi = default;
         [SerializeField] private TopUi topUi = default;
-        [SerializeField] private GameObject attackPreview = default;
+        [SerializeField] private AttackPreviewUI attackPreview = default;
         [Header("Buttons")]
         [SerializeField] private Button deselectButton = default;
 
@@ -59,11 +60,19 @@ namespace Assets.GUI
             Unit.OnUnitLevelUp += ShowLevelUpScreen;
             InputSystem.OnDragOverTile += HideAttackPreview;
             InputSystem.OnDragReset += HideAttackPreview;
+            
             GameplayInput.OnViewUnit += ShowTopUi;
             Unit.OnExpGained += ExpGained;
             InputSystem.OnInputActivated += FadeOut;
             InputSystem.OnInputDeactivated += FadeIn;
             resources = FindObjectOfType<ResourceScript>();
+            var pointer = new PointerEventData(EventSystem.current); // pointer event for Execute Verhindert LagSpike bei erstem click
+            ExecuteEvents.Execute(deselectButton.gameObject, pointer, ExecuteEvents.pointerEnterHandler);
+            ExecuteEvents.Execute(deselectButton.gameObject, pointer, ExecuteEvents.submitHandler);
+            ExecuteEvents.Execute(deselectButton.gameObject, pointer, ExecuteEvents.pointerDownHandler);
+            ExecuteEvents.Execute(deselectButton.gameObject, pointer, ExecuteEvents.pointerUpHandler);
+            HideDeselectButton();//Start with Button ACtive for Performance Reasons
+            attackPreview.Hide();
         }
         private void FadeIn()
         {
@@ -202,12 +211,12 @@ namespace Assets.GUI
 
         public void ShowAttackPreview(Unit attacker, Unit defender)
         {
-            attackPreview.GetComponent<AttackPreviewUI>().UpdateValues(attacker, defender, gridGameManager.GetSystem<BattleSystem>().GetBattlePreview(attacker, defender), attacker.CharacterSpriteSet.FaceSprite, defender.CharacterSpriteSet.FaceSprite);
+            attackPreview.UpdateValues(attacker, defender, gridGameManager.GetSystem<BattleSystem>().GetBattlePreview(attacker, defender), attacker.CharacterSpriteSet.FaceSprite, defender.CharacterSpriteSet.FaceSprite);
         }
 
         public void HideAttackPreview()
         {
-            attackPreview.GetComponent<AttackPreviewUI>().Hide();
+            attackPreview.Hide();
             
         }
 

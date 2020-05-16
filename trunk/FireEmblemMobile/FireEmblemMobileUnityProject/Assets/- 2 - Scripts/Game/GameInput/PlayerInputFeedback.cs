@@ -70,7 +70,18 @@ public class PlayerInputFeedback : MonoBehaviour
         UnitSelectionSystem.OnEnemySelected += EnemySelected;
         BattleRenderer.OnAttackConnected += SlashAnimation;
         Unit.OnUnitDamaged += UnitDamaged;
-
+        InstantiateGameObjects();//Performance Do this on Start
+        DrawMovementPath(new List<Vector2>() {new Vector2(1,0), new Vector2(2, 0), new Vector2(3, 0) },0,0);
+        HideMovementPath();
+    }
+    private void InstantiateGameObjects()
+    {
+        ShowAttackableField(0, 0);
+        ShowAttackableField(0, 1);
+        ShowAttackableField(0, 2);
+        ShowAttackableField(0, 3);
+        ShowAttackableField(0, 4);
+        HideAttackableField();
     }
     private void UnitDamaged(Unit unit , int damage)
     {
@@ -180,15 +191,17 @@ public class PlayerInputFeedback : MonoBehaviour
     }
     public void ShowAttackableField(int x, int y)
     {
-        if (attackableFieldEffects.Any(gameObj => (int)gameObj.transform.localPosition.x == x && (int)gameObj.transform.localPosition.y == y))
+        //Debug.Log("Show Attackable Field: "+x+" " +y );
+        if (attackableFieldEffects.Any(gameObj => !gameObj.activeSelf||(gameObj.transform.localPosition.x-0.5f==x && gameObj.transform.localPosition.y-0.5f == y)))
         {
-            attackableFieldEffects.Find(gameObj => (int)gameObj.transform.localPosition.x == x && (int)gameObj.transform.localPosition.y == y)
-                .SetActive(true);
+            GameObject go2 = attackableFieldEffects.Find(gameObj => gameObj.transform.localPosition.x - 0.5f == x && gameObj.transform.localPosition.y - 0.5f == y||!gameObj.activeSelf);
+            go2.transform.localPosition = new Vector3(x + 0.5f, y + 0.5f, go2.transform.localPosition.z);
+            go2.SetActive(true);
             return;
         }
-
+       
         var go = Instantiate(resources.Prefabs.attackIconPrefab,
-            GameObject.FindGameObjectWithTag("World").transform);
+            null);
         go.transform.localPosition = new Vector3(x + 0.5f, y + 0.5f, go.transform.localPosition.z);
         attackableFieldEffects.Add(go);
     }
@@ -198,6 +211,7 @@ public class PlayerInputFeedback : MonoBehaviour
         foreach (var go in attackableFieldEffects)
         {
             go.SetActive(false);
+            
         }
 
         //attackableFieldEffects.Clear();

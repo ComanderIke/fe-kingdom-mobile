@@ -7,14 +7,13 @@ namespace Assets.GUI
 {
     public class StatsBarOnMap : MonoBehaviour
     {
-        public const float HP_BAR_OFFSET_DELAY = 0.005f;
+        public const float HP_BAR_OFFSET_DELAY = 0.1f;
         private int currentHealth;
         private int maxHealth;
         private float fillAmount = 1;
 
 
-        private float healthSpeed = 10f;
-        private float healthLoseSpeed = 10f;
+        private float healthSpeed = 1f;
 
         private float currentHpValue = 1;
         private float delayedHpValue = 1;
@@ -29,20 +28,27 @@ namespace Assets.GUI
             maxHealth = maxValue;
             currentHealth = value;
             currentHpValue = MathUtility.MapValues(currentHealth, 0f, maxHealth, 0f, 1f);
-
+            time = 0;
             //Debug.Log("value: "+value +" " +maxValue+ "CV "+currentHpValue);
-            if(isActiveAndEnabled)
+            if (isActiveAndEnabled)
                 StartCoroutine(DelayedHp());
         }
-
+        float time = 0;
+        float loseTime = 0;
         private void Update()
         {
             //NEW
             //Debug.Log(currentHpValue); 
-            fillAmount = Mathf.Lerp(fillAmount, currentHpValue, Time.deltaTime * healthSpeed);
-            loseFillAmount = Mathf.Lerp(loseFillAmount, delayedHpValue, Time.deltaTime * healthLoseSpeed);
-            hpBar.fillAmount = fillAmount;
-            losingHpBar.fillAmount = loseFillAmount;
+            time += Time.deltaTime*healthSpeed;
+            loseTime += Time.deltaTime * healthSpeed;
+            if (fillAmount != currentHpValue|| loseFillAmount != delayedHpValue)
+            {
+                //Debug.Log("Update Healthbar" + fillAmount+" "+currentHpValue+" "+loseFillAmount+" "+ delayedHpValue+" "+time+" "+ Mathf.Clamp(time, 0f,1f ));
+                fillAmount = Mathf.Lerp(fillAmount, currentHpValue, Mathf.Clamp(time,0,1));
+                loseFillAmount = Mathf.Lerp(loseFillAmount, delayedHpValue, Mathf.Clamp(loseTime, 0, 1));
+                hpBar.fillAmount = fillAmount;
+                losingHpBar.fillAmount = loseFillAmount;
+            }
         }
         private IEnumerator DelayedHp()
         {
@@ -50,7 +56,7 @@ namespace Assets.GUI
             {
                 yield return null;
             }
-
+            loseTime = 0;
             delayedHpValue = MathUtility.MapValues(currentHealth, 0f, maxHealth, 0f, 1f);
         }
         private static float MapValues(float x, float inMin, float inMax, float outMin, float outMax)

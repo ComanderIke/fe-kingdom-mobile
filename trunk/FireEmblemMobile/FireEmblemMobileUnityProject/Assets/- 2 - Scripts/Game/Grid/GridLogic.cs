@@ -113,11 +113,12 @@ namespace Assets.Grid
             if (!invalid)
             {
                 invalid = !Tiles[(int) pos.x, (int) pos.y].IsAccessible;
+                if (!Tiles[(int)pos.x, (int)pos.y].IsActive)
+                    invalid = true;
                 if (Tiles[(int) pos.x, (int) pos.y].Unit != null)
                     if (Tiles[(int) pos.x, (int) pos.y].Unit.Faction.Id == team)
                         invalid = false;
-                if (!Tiles[(int) pos.x, (int) pos.y].IsActive)
-                    invalid = true;
+          
             }
 
             return !invalid;

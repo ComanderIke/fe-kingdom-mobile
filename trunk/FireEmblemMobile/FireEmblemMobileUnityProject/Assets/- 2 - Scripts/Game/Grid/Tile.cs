@@ -14,12 +14,14 @@ namespace Assets.Grid
         public bool IsActive = false;
         public bool IsAccessible = true;
         public bool IsAttackable = false;
+        public SpriteRenderer spriteRenderer;
 
         public Tile(int i, int j, GameObject gameObject)
         {
             this.GameObject = gameObject;
             X = i;
             Y = j;
+            spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         }
     }
 }

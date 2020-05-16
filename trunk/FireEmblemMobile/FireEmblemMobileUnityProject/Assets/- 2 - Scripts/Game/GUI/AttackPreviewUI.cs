@@ -11,8 +11,8 @@ namespace Assets.GUI
 {
     public class AttackPreviewUI : MonoBehaviour
     {
-
-        [SerializeField] private CanvasGroup canvas = default;
+        [SerializeField] private Canvas canvas = default;
+        [SerializeField] private CanvasGroup canvasGroup = default;
 
         [Header("Left")]
         [SerializeField] private GameObject left = default;
@@ -40,9 +40,12 @@ namespace Assets.GUI
         [SerializeField] private GameObject attackCountRightX = default;
         [SerializeField] private AttackPreviewStatBar hpBarRight = default;
         [SerializeField] private AttackPreviewStatBar spBarRight = default;
+        RawImageUVOffsetAnimation[] uvAnimations;
+        UILoopPingPongFade[] fadeAnimations;
+        ScaleAnimation[] scaleAnimations;
         private RectTransform rectTransform;
         private Camera Camera;
-        private bool visible = false;
+        private bool visible = true;
         public void UpdateValues (Unit attacker, Unit defender, BattlePreview battlePreview, Sprite attackerSprite, Sprite defenderSprite)
         {
             
@@ -50,15 +53,12 @@ namespace Assets.GUI
                 rectTransform = GetComponent<RectTransform>();
             if (Camera == null)
                 Camera = Camera.main;
-            float yPos = 0;
-            if (yPos - (Screen.height / 2) >= Screen.height / 2 - (306) - rectTransform.rect.height)//306 is UiHeight and height of this object
-            { 
+            float yPos = Camera.WorldToScreenPoint(new Vector3(defender.GridPosition.X, defender.GridPosition.Y+1f, 0)).y;
+
+            if (yPos >= Screen.height - (306) - rectTransform.rect.height)//306 is UiHeight and height of this object
+            {
                 yPos = Camera.WorldToScreenPoint(new Vector3(defender.GridPosition.X, defender.GridPosition.Y , 0)).y;
                 yPos -= rectTransform.rect.height;
-            }
-            else
-            {
-                yPos = Camera.WorldToScreenPoint(new Vector3(defender.GridPosition.X, defender.GridPosition.Y + 1f, 0)).y;
             }
 
             Show(yPos);
@@ -110,11 +110,23 @@ namespace Assets.GUI
         public void Show(float yPos)
         {
             visible = true;
-            gameObject.SetActive(true);
+            canvas.enabled = true;
+            foreach (var animation in uvAnimations)
+            {
+                animation.enabled = true;
+            }
+            foreach (var animation in fadeAnimations)
+            {
+                animation.enabled = true;
+            }
+            foreach (var animation in scaleAnimations)
+            {
+                animation.enabled = true;
+            }
             ClearTweens();
 
-            canvas.alpha = 0;
-            LeanTween.alphaCanvas(canvas, 1, 0.3f).setEaseOutQuad();
+            canvasGroup.alpha = 0;
+            LeanTween.alphaCanvas(canvasGroup, 1, 0.3f).setEaseOutQuad();
             left.transform.localPosition = new Vector3(-rectTransform.rect.width, 0, 0);
             right.transform.localPosition = new Vector3(rectTransform.rect.width, 0, 0);
             
@@ -128,17 +140,42 @@ namespace Assets.GUI
             LeanTween.cancel(left);
             LeanTween.cancel(right);
         }
+        void OnEnable()
+        {
+            if (uvAnimations == null)
+                uvAnimations = GetComponentsInChildren<RawImageUVOffsetAnimation>();
+            if (fadeAnimations == null)
+                fadeAnimations = GetComponentsInChildren<UILoopPingPongFade>();
+            if (scaleAnimations == null)
+                scaleAnimations = GetComponentsInChildren<ScaleAnimation>();
+        }
        
         public void Hide()
         {
             if (!visible)
                 return;
+            if (rectTransform == null)
+                rectTransform = GetComponent<RectTransform>();
             visible = false;
             ClearTweens();
-            LeanTween.alphaCanvas(canvas, 0, 0.2f).setEaseOutQuad();
+            LeanTween.alphaCanvas(canvasGroup, 0, 0.2f).setEaseOutQuad();
 
             LeanTween.moveLocalX(left, -rectTransform.rect.width, 0.2f).setEaseOutQuad();
-            LeanTween.moveLocalX(right, rectTransform.rect.width, 0.2f).setEaseOutQuad().setOnComplete(()=>gameObject.SetActive(false));
+            LeanTween.moveLocalX(right, rectTransform.rect.width, 0.2f).setEaseOutQuad().setOnComplete(() => {
+                canvas.enabled = false;
+                foreach(var animation in uvAnimations)
+                {
+                    animation.enabled = false;
+                }
+                foreach (var animation in fadeAnimations)
+                {
+                    animation.enabled = false;
+                }
+                foreach (var animation in scaleAnimations)
+                {
+                    animation.enabled = false;
+                }
+            }) ;
         }
     }
 }

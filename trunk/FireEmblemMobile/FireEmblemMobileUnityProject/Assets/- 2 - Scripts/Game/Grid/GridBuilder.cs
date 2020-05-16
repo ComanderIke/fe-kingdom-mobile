@@ -60,13 +60,14 @@ namespace Assets.Grid
             go.transform.localRotation = Quaternion.identity;
             go.AddComponent<SpriteRenderer>().sortingLayerName="Grid";
             go.GetComponent<SpriteRenderer>().sprite = GridSprite;
+            go.GetComponent<SpriteRenderer>().sortingOrder = 1;
             //go.AddComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             ////var meshObj = CreateMesh();
             //go.AddComponent<MeshFilter>().mesh = meshObj;
             //go.GetComponent<MeshFilter>().sharedMesh.bounds =
             //    new Bounds(new Vector3(0, 0, 0), new Vector3(500, 500, 500)); //this is important!
-            go.AddComponent<BoxCollider>().center = new Vector3(0.0f, 0.0f, 0);
-            go.GetComponent<BoxCollider>().size = new Vector3(1, 1, 0.1f);
+            go.AddComponent<BoxCollider2D>();
+            go.GetComponent<BoxCollider2D>().size = new Vector3(1, 1);
             go.layer = LayerMask.NameToLayer("Grid");
             return go;
         }
@@ -130,8 +131,8 @@ namespace Assets.Grid
                 for (int x = 0; x < width; x++)
                 {
                     var origin = new Vector3(x * CellSize + (CellSize / 2), y * CellSize + (CellSize / 2), -5);
-                    if (Physics.Raycast(gridTransform.TransformPoint(origin), Vector3.forward, out _,
-                        Mathf.Infinity, LayerMask.GetMask(BLOCK_FIELD_LAYER)))
+                    if (Physics2D.GetRayIntersection(new Ray(gridTransform.TransformPoint(origin), Vector3.forward),Mathf.Infinity, LayerMask.GetMask(BLOCK_FIELD_LAYER))
+                        .collider!=null)
                     {
                         BlockedFields[x, y] = true;
                     }

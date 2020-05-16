@@ -11,12 +11,12 @@ namespace Assets.GUI
 {
     public class TopUi : MonoBehaviour
     {
-        [SerializeField] private GameObject characterScreen = default;
+        [SerializeField] private Canvas characterScreen = default;
         [SerializeField] private Image topUiEnemy = default;
         [SerializeField] private TextMeshProUGUI characterName = default;
         [SerializeField] private TextMeshProUGUI level = default;
-        [SerializeField] private TextMeshProUGUI levelEnemy = default;
         [SerializeField] private ExpBarController expBar = default;
+        [SerializeField] private TextMeshProUGUI expLabel = default;
         [SerializeField] private TextMeshProUGUI str = default;
         [SerializeField] private TextMeshProUGUI spd = default;
         [SerializeField] private TextMeshProUGUI mag = default;
@@ -38,6 +38,7 @@ namespace Assets.GUI
         [SerializeField] private Image[] inventorySprites = default;
         private ColorManager colorManager;
 
+
         void Start()
         {
             
@@ -46,15 +47,18 @@ namespace Assets.GUI
         }
         public void Show(Unit c)
         {
-            characterScreen.SetActive(true);
+            if (colorManager == null)
+            {
+                colorManager = FindObjectOfType<ColorManager>();
+            }
+            characterScreen.enabled = true;
             
-            topUiEnemy.gameObject.SetActive(!c.Faction.IsPlayerControlled);
+            
+            //topUiEnemy.gameObject.SetActive(!c.Faction.IsPlayerControlled);
             expBar.gameObject.SetActive(c.Faction.IsPlayerControlled);
-           
+            expLabel.gameObject.SetActive(c.Faction.IsPlayerControlled);
+
             characterName.text = c.Name;
-            level.gameObject.SetActive(c.Faction.IsPlayerControlled);
-            levelEnemy.gameObject.SetActive(!c.Faction.IsPlayerControlled);
-            levelEnemy.text= "" + c.ExperienceManager.Level;
             level.text = "" + c.ExperienceManager.Level;
             expBar.SetText(c.ExperienceManager.Exp);
             expBar.SetFillAmount(c.ExperienceManager.Exp);
@@ -76,7 +80,7 @@ namespace Assets.GUI
                 sp.text = ""+c.Sp;
             else
                 sp.text = c.Sp + "/" + c.Stats.MaxSp;
-            atk.text = "" + c.BattleStats.GetAttackDamage();
+            //atk.text = "" + c.BattleStats.GetAttackDamage();
             characterSprite.sprite = c.CharacterSpriteSet.FaceSprite;
            
             foreach (var motivationSprite in motivationSprites)
@@ -98,37 +102,37 @@ namespace Assets.GUI
             if (c is Human human)
             {
                 classSprite.sprite = human.Class.Sprite;
-                var sixColors =colorManager.SixGradeColors;
-                if(human.EquippedWeapon!=null)
-                    equippedWeaponSprite.sprite = human.EquippedWeapon.Sprite;
-                for (int i = 0; i < human.WeaponProficiencies().Count; i++)
-                {
-                    string weaponProficiencyLvl = human.WeaponProficiencies().Values.ElementAt(i);
-                    weaponProficiencyLevels[i].text = weaponProficiencyLvl;
-                    
-                    switch (weaponProficiencyLvl)
-                    {
-                        case "E":
-                            weaponProficiencyGradients[i].color = sixColors[0];
-                            weaponProficiencyLevels[i].color = new Color(sixColors[0].r, sixColors[0].g, sixColors[0].b,1); break;
-                        case "D":
-                            weaponProficiencyGradients[i].color = sixColors[1];
-                            weaponProficiencyLevels[i].color = new Color(sixColors[1].r, sixColors[1].g, sixColors[1].b, 1); break;
-                        case "C":
-                            weaponProficiencyGradients[i].color = sixColors[2];
-                            weaponProficiencyLevels[i].color = new Color(sixColors[2].r, sixColors[2].g, sixColors[2].b, 1); break;
-                        case "B":
-                            weaponProficiencyGradients[i].color = sixColors[3];
-                            weaponProficiencyLevels[i].color = new Color(sixColors[3].r, sixColors[3].g, sixColors[3].b, 1); break;
-                        case "A":
-                            weaponProficiencyGradients[i].color = sixColors[4];
-                            weaponProficiencyLevels[i].color = new Color(sixColors[4].r, sixColors[4].g, sixColors[4].b, 1); break;
-                        case "S":
-                            weaponProficiencyGradients[i].color = sixColors[5];
-                            weaponProficiencyLevels[i].color = new Color(sixColors[5].r, sixColors[5].g, sixColors[5].b, 1); break;
-                    }
-                    
-                }
+                //var sixColors =colorManager.SixGradeColors;
+                //if(human.EquippedWeapon!=null)
+                //    equippedWeaponSprite.sprite = human.EquippedWeapon.Sprite;
+                //for (int i = 0; i < human.WeaponProficiencies().Count; i++)
+                //{
+                //    string weaponProficiencyLvl = human.WeaponProficiencies().Values.ElementAt(i);
+                //    weaponProficiencyLevels[i].text = weaponProficiencyLvl;
+
+                //    switch (weaponProficiencyLvl)
+                //    {
+                //        case "E":
+                //            weaponProficiencyGradients[i].color = sixColors[0];
+                //            weaponProficiencyLevels[i].color = new Color(sixColors[0].r, sixColors[0].g, sixColors[0].b, 1); break;
+                //        case "D":
+                //            weaponProficiencyGradients[i].color = sixColors[1];
+                //            weaponProficiencyLevels[i].color = new Color(sixColors[1].r, sixColors[1].g, sixColors[1].b, 1); break;
+                //        case "C":
+                //            weaponProficiencyGradients[i].color = sixColors[2];
+                //            weaponProficiencyLevels[i].color = new Color(sixColors[2].r, sixColors[2].g, sixColors[2].b, 1); break;
+                //        case "B":
+                //            weaponProficiencyGradients[i].color = sixColors[3];
+                //            weaponProficiencyLevels[i].color = new Color(sixColors[3].r, sixColors[3].g, sixColors[3].b, 1); break;
+                //        case "A":
+                //            weaponProficiencyGradients[i].color = sixColors[4];
+                //            weaponProficiencyLevels[i].color = new Color(sixColors[4].r, sixColors[4].g, sixColors[4].b, 1); break;
+                //        case "S":
+                //            weaponProficiencyGradients[i].color = sixColors[5];
+                //            weaponProficiencyLevels[i].color = new Color(sixColors[5].r, sixColors[5].g, sixColors[5].b, 1); break;
+                //    }
+
+                //}
                 for (int i = 0; i < human.SkillManager.Skills.Count; i++)
                 {
                     skillSprites[i].sprite = human.SkillManager.Skills[i].SpriteSet.Sprite;
@@ -148,7 +152,7 @@ namespace Assets.GUI
 
         public void Hide()
         {
-            characterScreen.SetActive(false);
+            characterScreen.enabled = false;
         }
     }
 }

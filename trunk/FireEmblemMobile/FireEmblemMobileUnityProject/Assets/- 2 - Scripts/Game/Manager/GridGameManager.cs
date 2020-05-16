@@ -11,11 +11,16 @@ using Assets.GameCamera;
 using Assets.GameEngine;
 using Assets.GameInput;
 using Assets.GameResources;
+using Assets.Grid;
+using Assets.Grid.PathFinding;
 using Assets.GUI;
 using Assets.GUI.PopUpText;
 using Assets.Map;
 using Assets.Mechanics;
+using Assets.Mechanics.Battle;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Assets.Game.Manager
 {
@@ -38,6 +43,46 @@ namespace Assets.Game.Manager
             //Debug.Log("Initialize");
             AddSystems();
             FactionManager = new FactionManager();
+            Application.targetFrameRate = 60;
+            JITHelper.PreJitAll<MapSystem>();
+            JITHelper.PreJitAll<UiSystem>();
+            JITHelper.PreJitAll<GridLogic>();
+            JITHelper.PreJitAll<GridRenderer>();
+            JITHelper.PreJitAll<InputSystem>();
+            JITHelper.PreJitAll<UnitInputController>();
+            JITHelper.PreJitAll<PlayerInputFeedback>();
+            JITHelper.PreJitAll<TopUi>();
+            JITHelper.PreJitAll<NodeHelper>();
+            JITHelper.PreJitAll<DragManager>();
+            JITHelper.PreJitAll<FilledBarController>();
+            //JITHelper.PreJitAll<Unit>(); Does crash because of IClonealbe or ScriptableObject
+            JITHelper.PreJitAll<BattleStats>();
+            JITHelper.PreJitAll<ExpBarController>();
+            JITHelper.PreJitAll<Image>();
+            JITHelper.PreJitAll<ExperienceManager>();
+            JITHelper.PreJitAll<AttackPreviewStatBar>();
+            JITHelper.PreJitAll<AttackPreviewUI>();
+            JITHelper.PreJitAll<CursorAnimationBlinkController>();
+            JITHelper.PreJitAll<BattleSimulation>();
+            JITHelper.PreJitAll<BattleSystem>();
+            JITHelper.PreJitAll<UILoopPingPongFade>();
+            JITHelper.PreJitAll<RawImageUVOffsetAnimation>();
+            JITHelper.PreJitAll<AStar>();
+            
+            //JITHelper.PreJitAll<String>();
+            //JITHelper.PreJitAll<GameObject>();
+            //var method = typeof(MapSystem).GetMethod("HideMovementRangeOnGrid", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            //if (method != null)
+            //{
+            //    method.MethodHandle.GetFunctionPointer();
+            //    Debug.Log("JIT Compilation Complete");
+            //}
+            //method = typeof(MapSystem).GetMethod("ShowMovementRangeOnGrid", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            //if (method != null)
+            //{
+            //    method.MethodHandle.GetFunctionPointer();
+            //    Debug.Log("JIT Compilation Complete");
+            //}
         }
 
         private void AddSystems()
@@ -144,6 +189,14 @@ namespace Assets.Game.Manager
             {
                 Destroy(spawn.gameObject);
             }
+            GetSystem<UiSystem>().ShowAttackPreview(FactionManager.Factions[0].Units[0], FactionManager.Factions[1].Units[0]);
+            GetSystem<UiSystem>().HideAttackPreview();
+            GameplayInput input = new GameplayInput();
+            input.SelectUnit(FactionManager.Factions[0].Units[0]);
+            input.DeselectUnit();
+            
+            
+            //GetSystem<BattleSystem>().GetBattlePreview(FactionManager.Factions[0].Units[0], FactionManager.Factions[1].Units[0]);
         }
 
         public T GetSystem<T>()

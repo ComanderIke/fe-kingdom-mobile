@@ -4,19 +4,23 @@ namespace Assets.GameInput
 {
     public class RaycastManager
     {
-        private RaycastHit hit;
+        private RaycastHit2D hit;
         private bool connected;
         private Camera camera = Camera.main;
         public Vector2 GetMousePositionOnGrid()
         {
-            var ray = camera.ScreenPointToRay(Input.mousePosition);
-            hit = new RaycastHit();
-            connected = Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Grid","Characters"));//TODO 10 Grid Layer Mask
+            Vector3 point = camera.ScreenToWorldPoint(Input.mousePosition);
+            hit = new RaycastHit2D();
+            hit= Physics2D.GetRayIntersection(new Ray(point, Vector3.forward),Mathf.Infinity, LayerMask.GetMask("Grid","Characters"));//TODO 10 Grid Layer Mask
             int x = (int)Mathf.Floor(hit.point.x - Map.MapSystem.GRID_X_OFFSET);
             int y = (int)Mathf.Floor(hit.point.y);
+            if (hit.collider != null)
+                connected = true;
+            else
+                connected = false;
             return new Vector2(x, y);
         }
-        public RaycastHit GetLatestHit()
+        public RaycastHit2D GetLatestHit()
         {
             return hit;
         }

@@ -6,8 +6,6 @@ namespace Assets.GUI
 {
     public class CursorAnimationBlinkController : MonoBehaviour
     {
-        private Animator animator;
-        private readonly CursorAnimationBlinkController[] controllers;
    
         private SpriteRenderer spriteRenderer;
         //public float duration = 1;

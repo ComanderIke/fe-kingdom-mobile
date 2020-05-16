@@ -31,12 +31,12 @@ namespace Assets.Grid
 
         public void ShowStandOnTexture(Unit c)
         {
-            Tiles[c.GridPosition.X, c.GridPosition.Y].GameObject.GetComponent<SpriteRenderer>().sprite =
+            Tiles[c.GridPosition.X, c.GridPosition.Y].spriteRenderer.sprite =
                     GridManager.GridResources.GridSpriteStandOn;
         }
         private void SetAttackFieldMaterial(Vector2 pos, int playerId, bool soft)
         {
-            var meshRenderer = Tiles[(int)pos.x, (int)pos.y].GameObject.GetComponent<SpriteRenderer>();
+            var meshRenderer = Tiles[(int)pos.x, (int)pos.y].spriteRenderer;
             if (soft)
                 meshRenderer.sprite = GridManager.GridResources.GridAttackSpriteEnemy;
             else
@@ -49,32 +49,41 @@ namespace Assets.Grid
         }
         public void SetFieldMaterial(Vector2 pos, int playerId, bool attack, bool soft=false)
         {
-            var meshRenderer = Tiles[(int) pos.x, (int) pos.y].GameObject.GetComponent<SpriteRenderer>();
+            var meshRenderer = Tiles[(int) pos.x, (int) pos.y].spriteRenderer;
             if (attack)
             {
                 //not using sharedMaterial here create Material instances which will cause much higher batches
-                if (meshRenderer.sprite == GridManager.GridResources.GridMoveSpriteEnemy || meshRenderer.sprite == GridManager.GridResources.GridMoveSprite|| meshRenderer.sprite == GridManager.GridResources.GridSpriteAlly)
+                if (Tiles[(int)pos.x, (int)pos.y].IsAttackable||meshRenderer.sprite == GridManager.GridResources.GridMoveSpriteEnemy || Tiles[(int)pos.x, (int)pos.y].IsActive)
                     return;
                 SetAttackFieldMaterial(pos, playerId, soft);
             }
             else
             {
+                if (Tiles[(int)pos.x, (int)pos.y].IsAttackable || Tiles[(int)pos.x, (int)pos.y].IsActive || meshRenderer.sprite == GridManager.GridResources.GridMoveSpriteEnemy)
+                    return;
                 if (Tiles[(int)pos.x, (int)pos.y].Unit != null && Tiles[(int)pos.x, (int)pos.y].Unit.Faction.Id == playerId)
+                {
                     meshRenderer.sprite = GridManager.GridResources.GridSpriteAlly;
+                    Tiles[(int)pos.x, (int)pos.y].IsActive = true;
+                }
                 else
                 {
-                    if(soft)
+                    if (soft)
                         meshRenderer.sprite = GridManager.GridResources.GridMoveSpriteEnemy;
                     else
+                    {
                         meshRenderer.sprite = GridManager.GridResources.GridMoveSprite;
+                        Tiles[(int)pos.x, (int)pos.y].IsActive = true;
+                    }
+
                 }
                 if (Tiles[(int) pos.x, (int) pos.y].Unit != null &&
-                    Tiles[(int) pos.x, (int) pos.y].Unit.Faction.Id != playerId)
+                    Tiles[(int) pos.x, (int) pos.y].Unit.Faction.Id != playerId&&!Tiles[(int)pos.x, (int)pos.y].IsAttackable)
                 {
                     SetAttackFieldMaterial(pos, playerId,soft);
                 }
 
-                Tiles[(int) pos.x, (int) pos.y].IsActive = true;
+                
             }
         }
     }

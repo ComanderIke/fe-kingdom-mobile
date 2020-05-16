@@ -24,7 +24,6 @@ namespace Assets.GUI
         
         private List<RectTransform> incDamageMarkers = new List<RectTransform>();
         //[SerializeField] private TextMeshProUGUI maxValue = default;
-        private ColorManager colorManager;
         private RectTransform rectTransform;
         public void UpdateValues(int maxHp, int currentHp, int afterBattleHp,List<int> incomingDamage, bool ShowHP = false)
         {
@@ -72,59 +71,51 @@ namespace Assets.GUI
             {
                 valueAfterText.text = "?";
                 valueAfterText.color = Color.white;
-                if (!ShowHP)
+                if (ShowHP)
                 {
-                    currentValue.gameObject.SetActive(false);
-                    Arrow.gameObject.SetActive(false);
+                    valueAfterText.text = "?<"+currentHp;
                 }
-                else {
-                    currentValue.gameObject.SetActive(true);
-                    Arrow.gameObject.SetActive(true);
-                }
+
                 LeanTween.cancel(valueAfterText.gameObject);
             }
             else
             {
                 
-                valueAfterText.text = "" + afterBattleHp;
+                
                 var textColor = Color.white;
-                if (colorManager == null)
-                    colorManager = FindObjectOfType<ColorManager>();
                 if (value2 > 0.75f)
-                    textColor = colorManager.MainRedColor;
+                    textColor = ColorManager.Instance.MainRedColor;
                 valueAfterText.color = textColor;
                 if (afterBattleHp == 0)
                 {
-                    valueAfterText.color = colorManager.MainRedColor;
+                    //valueAfterText.color = colorManager.MainRedColor;
 
-                    if (!LeanTween.isTweening(valueAfterText.gameObject.GetComponent<RectTransform>()))
-                    {
-                        valueAfterText.gameObject.transform.localScale = Vector3.one;
-                        LeanTween.scale(valueAfterText.gameObject.GetComponent<RectTransform>(), Vector3.one * 1.3f, 0.5f).setLoopPingPong();
-                    }
-                    else
-                    {
-                        valueAfterText.gameObject.transform.localScale = Vector3.one;
-                        LeanTween.resume(valueAfterText.gameObject);
-                    }
+                    //if (!LeanTween.isTweening(valueAfterText.gameObject.GetComponent<RectTransform>()))
+                    //{
+                    //    valueAfterText.gameObject.transform.localScale = Vector3.one;
+                    //    LeanTween.scale(valueAfterText.gameObject.GetComponent<RectTransform>(), Vector3.one * 1.3f, 0.5f).setLoopPingPong();
+                    //}
+                    //else
+                    //{
+                    //    valueAfterText.gameObject.transform.localScale = Vector3.one;
+                    //    LeanTween.resume(valueAfterText.gameObject);
+                    //}
                  }
                 else
                 {
-                    LeanTween.cancel(valueAfterText.gameObject);
+                    //LeanTween.cancel(valueAfterText.gameObject);
                 }
                 if (afterBattleHp == currentHp)
                 {
-                    currentValue.gameObject.SetActive(false);
-                    Arrow.gameObject.SetActive(false);
+                    valueAfterText.text = "" + afterBattleHp;
+
                 }
                 else {
-                    currentValue.gameObject.SetActive(true);
-                    Arrow.gameObject.SetActive(true);
+                    valueAfterText.text = "" + afterBattleHp+"<"+ currentHp;
                 }
 
             }
             
-            currentValue.text = "" + currentHp;
         }
         private void OnDisable()
         {

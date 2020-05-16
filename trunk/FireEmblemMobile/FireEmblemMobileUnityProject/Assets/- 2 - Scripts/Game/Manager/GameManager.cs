@@ -4,6 +4,9 @@ using System.Linq;
 using Assets.Audio;
 using Assets.Game;
 using Assets.GameEngine;
+using Assets.Grid;
+using Assets.GUI;
+using Assets.Map;
 using Assets.SerializedData;
 using UnityEngine;
 
@@ -34,6 +37,7 @@ namespace Assets.Game.Manager
                 return;
             }
             _instance.AddSystems();
+            
         }
         private void AddSystems()
         {

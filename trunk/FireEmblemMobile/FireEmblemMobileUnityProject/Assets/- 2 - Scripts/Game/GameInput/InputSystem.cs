@@ -104,7 +104,7 @@ namespace Assets.GameInput
         private void CheckClickOnGrid()
         {
             var gridPos = RaycastManager.GetMousePositionOnGrid();
-            RaycastHit hit = RaycastManager.GetLatestHit();
+            RaycastHit2D hit = RaycastManager.GetLatestHit();
             var x = (int)gridPos.x;
             var y = (int)gridPos.y;
             if( hit.collider != null && hit.collider.tag == TagManager.GridTag)
@@ -315,12 +315,13 @@ namespace Assets.GameInput
                 }
                 else
                 {
+                    ResetDrag();
                     gameplayInput.DeselectUnit();
                 }
             }
             else
             {
-
+                ResetDrag();
                 gameplayInput.DeselectUnit();
             }
         }

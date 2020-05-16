@@ -11,7 +11,7 @@ namespace Assets.GameCamera
         public delegate void OnMoveToFinishedEvent();
 
         public static OnMoveToFinishedEvent MoveToFinishedEvent;
-
+        public Camera Camera;
         private List<CameraMixin> mixins;
         public CameraData CameraData;
         private void Start()
