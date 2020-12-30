@@ -189,8 +189,6 @@ namespace Assets.Game.Manager
             {
                 Destroy(spawn.gameObject);
             }
-            GetSystem<UiSystem>().ShowAttackPreview(FactionManager.Factions[0].Units[0], FactionManager.Factions[1].Units[0]);
-            GetSystem<UiSystem>().HideAttackPreview();
             GameplayInput input = new GameplayInput();
             input.SelectUnit(FactionManager.Factions[0].Units[0]);
             input.DeselectUnit();

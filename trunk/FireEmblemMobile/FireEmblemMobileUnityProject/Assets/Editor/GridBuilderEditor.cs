@@ -21,7 +21,7 @@ namespace Assets.Editor
         public override void OnInspectorGUI()
         {
             mapData.Width = EditorGUILayout.IntSlider("Width:", mapData.Width, 6, 24);
-            mapData.Height = EditorGUILayout.IntSlider("Height:", mapData.Height, 8, 24);
+            mapData.Height = EditorGUILayout.IntSlider("Height:", mapData.Height, 6, 24);
             if (GUILayout.Button("Build Grid"))
             {
                 int width = mapData.Width;
