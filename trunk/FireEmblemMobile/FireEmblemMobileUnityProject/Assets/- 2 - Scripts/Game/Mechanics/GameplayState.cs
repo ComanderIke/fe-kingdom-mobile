@@ -29,8 +29,8 @@ namespace Assets.Game.GameStates
             int width = gridGameManager.GetSystem<MapSystem>().GridData.Width;
             int uiHeight = gridGameManager.GetSystem<UiSystem>().GetUiHeight();
             int referenceHeight = gridGameManager.GetSystem<UiSystem>().GetReferenceHeight();
-            gridGameManager.GetSystem<CameraSystem>().AddMixin<ClampCameraMixin>().GridHeight(height).GridWidth(width)
-                .UiHeight(uiHeight).ReferenceHeight(referenceHeight).Locked(false);
+            //gridGameManager.GetSystem<CameraSystem>().AddMixin<ClampCameraMixin>().GridHeight(height).GridWidth(width)
+            //    .UiHeight(uiHeight).ReferenceHeight(referenceHeight).Locked(false);
             gridGameManager.GetSystem<CameraSystem>().AddMixin<ViewOnGridMixin>().Zoom = 0;
         }
 
@@ -44,7 +44,7 @@ namespace Assets.Game.GameStates
         {
             gridGameManager.GetSystem<CameraSystem>().RemoveMixin<DragCameraMixin>();
             //gridGameManager.GetSystem<CameraSystem>().RemoveMixin<SnapCameraMixin>();
-            gridGameManager.GetSystem<CameraSystem>().RemoveMixin<ClampCameraMixin>();
+            //gridGameManager.GetSystem<CameraSystem>().RemoveMixin<ClampCameraMixin>();
             gridGameManager.GetSystem<CameraSystem>().RemoveMixin<ViewOnGridMixin>();
         }
 

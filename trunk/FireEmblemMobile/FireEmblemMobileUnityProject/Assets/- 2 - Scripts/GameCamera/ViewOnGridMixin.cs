@@ -13,6 +13,7 @@ namespace Assets.GameCamera
         private void Start()
         {
             camera = Camera.main;
+            Zoom = 0;
             //uiCamera = GameObject.FindGameObjectWithTag("UICamera").GetComponent<Camera>();
         }
 
