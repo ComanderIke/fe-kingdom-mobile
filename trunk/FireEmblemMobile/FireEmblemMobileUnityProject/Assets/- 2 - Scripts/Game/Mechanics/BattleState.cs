@@ -30,7 +30,7 @@ namespace Assets.Game.GameStates
             unitController = GridGameManager.Instance.GetSystem<UnitsSystem>();
             battleRenderer = uiController.BattleRenderer;
         }
-
+//test
         public void SetParticipants(Unit attacker, Unit defender)
         {
             this.attacker = attacker;
