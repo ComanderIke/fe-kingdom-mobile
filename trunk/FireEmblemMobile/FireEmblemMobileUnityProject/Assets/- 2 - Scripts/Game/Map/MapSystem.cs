@@ -47,7 +47,7 @@ namespace Assets.Map
             MovementState.OnMovementFinished += (Unit u) => HideMovementRangeOnGrid();
             AStar PathFindingManager = new AStar(this, GridData.Width, GridData.Height);
             PathFindingManager.FindPath(0, 0, 3, 3, 1, true, new List<int>(1));//Do For JIT Performance thingy
-
+            //test
         }
         private void OnEnemySelected(Unit u)
         {
