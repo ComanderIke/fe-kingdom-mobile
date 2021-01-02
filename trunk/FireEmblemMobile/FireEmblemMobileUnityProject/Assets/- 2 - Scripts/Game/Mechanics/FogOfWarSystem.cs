@@ -1,13 +1,8 @@
 ﻿using UnityEngine;
-using UnityEditor;
 using System.Collections.Generic;
 using Assets.GameActors.Units;
-using Assets.Mechanics;
-using UnityEngine.PlayerLoop;
 using Assets.GameActors.Players;
-using UnityEngine.Rendering;
 using Assets.GameActors.Units.OnGameObject;
-using System;
 using Assets.GameEngine;
 using Assets.Game.GameStates;
 using Assets.Game.Manager;

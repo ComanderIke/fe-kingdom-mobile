@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Core;
 using Assets.Game.Manager;
 using Assets.GameActors.Units;
-using Assets.Mechanics;
 
 namespace Assets.GameActors.Players
 {

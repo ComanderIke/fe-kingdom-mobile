@@ -1,6 +1,5 @@
 ﻿using Assets.Game.Manager;
 using Assets.GameInput;
-using Assets.Mechanics;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;

@@ -1,15 +1,8 @@
-﻿using Assets.Core;
-using Assets.GameEngine.GameStates;
-using Assets.GameActors.Units;
+﻿using Assets.GameActors.Units;
 using Assets.GameInput;
 using Assets.GameResources;
 using Assets.Mechanics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Analytics;
-using UnityEngine.Events;
 using UnityEngine.UI;
 using Assets.GameEngine;
 using Assets.Game.Manager;

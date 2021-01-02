@@ -1,12 +1,11 @@
-﻿using Assets.Audio;
-using Assets.Game.Manager;
+﻿using Assets.Game.Manager;
 using Assets.GameActors.Units;
 using Assets.GameEngine;
 using Assets.GameEngine.GameStates;
 using Assets.GUI;
 using Assets.Mechanics;
 using System;
-using UnityEngine;
+using Assets.Audio;
 
 namespace Assets.Game.GameStates
 {

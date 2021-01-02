@@ -1,5 +1,4 @@
-﻿using Assets.GameInput;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Grid
 {

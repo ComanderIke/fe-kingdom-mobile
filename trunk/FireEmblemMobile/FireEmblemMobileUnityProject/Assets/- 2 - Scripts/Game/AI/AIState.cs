@@ -1,5 +1,4 @@
-﻿using Assets.AI;
-using Assets.Game.Manager;
+﻿using Assets.Game.Manager;
 using Assets.GameEngine;
 using Assets.GameEngine.GameStates;
 using Assets.Mechanics;

@@ -1,10 +1,5 @@
-﻿using Assets.Core;
-using Assets.Game.Manager;
-using Assets.GUI;
-using Assets.Mechanics;
+﻿using Assets.Game.Manager;
 using System;
-using System.Runtime.ExceptionServices;
-using UnityEngine;
 
 namespace Assets.GameActors.Units
 {

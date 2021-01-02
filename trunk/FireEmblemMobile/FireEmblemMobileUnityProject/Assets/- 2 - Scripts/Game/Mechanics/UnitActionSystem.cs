@@ -1,10 +1,6 @@
-﻿using Assets.Core;
-using Assets.GameActors.Units;
-using Assets.GameActors.Units.Monsters;
+﻿using Assets.GameActors.Units;
 using Assets.GameEngine;
-using Assets.GameInput;
 using Assets.Grid;
-using Assets.GUI;
 using Assets.Mechanics.Commands;
 using System;
 using System.Collections.Generic;

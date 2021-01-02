@@ -7,7 +7,6 @@ using Assets.GameActors.Units.CharStateEffects;
 using Assets.GameActors.Units.OnGameObject;
 using Assets.GameResources;
 using Assets.Grid;
-using Assets.Mechanics;
 using Assets.Mechanics.Battle;
 using UnityEngine;
 

@@ -1,10 +1,7 @@
-﻿
-using Assets.Game;
-using Assets.Game.Manager;
+﻿using Assets.Game.Manager;
 using Assets.GameActors.Units;
 using Assets.Grid;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Assets.Mechanics.Commands
 {

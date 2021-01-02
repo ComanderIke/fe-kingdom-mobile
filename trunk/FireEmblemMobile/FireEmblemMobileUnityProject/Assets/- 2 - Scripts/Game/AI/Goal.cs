@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using Assets.GameActors.Units;
-
-namespace Assets.AI
+﻿namespace Assets.AI
 {
     public class Goal
     {

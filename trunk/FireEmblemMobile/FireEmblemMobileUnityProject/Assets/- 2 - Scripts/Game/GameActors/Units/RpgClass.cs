@@ -1,5 +1,4 @@
-﻿using System.Net.Mime;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.GameActors.Units
 {

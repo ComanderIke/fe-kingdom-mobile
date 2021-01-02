@@ -1,9 +1,5 @@
-﻿using Assets.Core;
-using Assets.GameActors.Players;
-using Assets.GameActors.Units;
-using Assets.GUI;
+﻿using Assets.GameActors.Units;
 using Assets.Map;
-using System;
 using UnityEngine;
 
 namespace Assets.Grid

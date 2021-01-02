@@ -1,5 +1,4 @@
 ﻿using Assets.GameActors.Players;
-using Assets.GameActors.Units;
 using UnityEngine;
 
 namespace Assets.GUI.Base

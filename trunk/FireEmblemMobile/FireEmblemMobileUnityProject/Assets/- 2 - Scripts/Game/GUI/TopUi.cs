@@ -1,7 +1,5 @@
-﻿using System.Linq;
-using Assets.GameActors.Units;
+﻿using Assets.GameActors.Units;
 using Assets.GameActors.Units.Humans;
-using Assets.GameResources;
 using Assets.Utility;
 using TMPro;
 using UnityEngine;

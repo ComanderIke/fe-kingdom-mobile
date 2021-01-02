@@ -1,10 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-using Assets.GameActors.Units;
-using UnityEngine;
-
-namespace Assets.AI
+﻿namespace Assets.AI
 {
     public class AIGameData
     {

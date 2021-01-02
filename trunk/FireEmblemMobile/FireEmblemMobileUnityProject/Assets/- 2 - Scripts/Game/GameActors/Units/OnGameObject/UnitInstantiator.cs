@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using Assets.Grid;
-using Assets.GUI;
-using UnityEngine.UI;
+﻿using Assets.GUI;
 using UnityEngine;
 
 namespace Assets.GameActors.Units.OnGameObject

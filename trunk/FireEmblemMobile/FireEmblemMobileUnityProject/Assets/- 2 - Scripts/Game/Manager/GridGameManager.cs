@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Audio;
-using Assets.Game;
 using Assets.GameActors;
 using Assets.GameActors.Players;
 using Assets.GameActors.Units;
@@ -19,7 +18,6 @@ using Assets.Map;
 using Assets.Mechanics;
 using Assets.Mechanics.Battle;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Assets.Game.Manager

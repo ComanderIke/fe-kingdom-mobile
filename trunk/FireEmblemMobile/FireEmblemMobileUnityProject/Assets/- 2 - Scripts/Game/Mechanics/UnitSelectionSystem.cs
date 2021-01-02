@@ -1,11 +1,5 @@
-﻿using Assets.Core;
-using Assets.GameActors.Units;
-using Assets.GameInput;
-using Assets.GUI;
-using System.Collections.Generic;
-using Assets.GameActors.Units.Humans;
+﻿using Assets.GameActors.Units;
 using UnityEngine;
-using Assets.Map;
 using System;
 using Assets.GameEngine;
 using Assets.Game.Manager;

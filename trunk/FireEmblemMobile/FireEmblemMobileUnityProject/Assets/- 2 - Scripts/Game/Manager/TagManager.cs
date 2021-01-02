@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using UnityEditor;
-namespace Assets.Game.Manager
+﻿namespace Assets.Game.Manager
 {
     public class TagManager
     {

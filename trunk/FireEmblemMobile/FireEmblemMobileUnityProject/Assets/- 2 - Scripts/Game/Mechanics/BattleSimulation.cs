@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Assets.GameActors.Items.Weapons;
 using Assets.GameActors.Units;
 using Assets.GameActors.Units.Humans;
-using UnityEngine;
 
 namespace Assets.Mechanics
 {

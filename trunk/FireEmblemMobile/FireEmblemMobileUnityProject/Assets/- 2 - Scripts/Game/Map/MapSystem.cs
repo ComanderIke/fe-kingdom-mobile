@@ -3,7 +3,6 @@ using Assets.GameActors.Units;
 using Assets.GameResources;
 using Assets.Grid;
 using Assets.Grid.PathFinding;
-using Assets.GUI;
 using Assets.Mechanics;
 using System;
 using System.Collections.Generic;

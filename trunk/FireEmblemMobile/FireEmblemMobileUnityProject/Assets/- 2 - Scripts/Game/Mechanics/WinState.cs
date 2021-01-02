@@ -1,8 +1,6 @@
-﻿
-using Assets.Core;
+﻿using Assets.Core;
 using Assets.GameEngine;
 using Assets.GameEngine.GameStates;
-using Assets.GameInput;
 using UnityEngine;
 
 namespace Assets.Game.GameStates

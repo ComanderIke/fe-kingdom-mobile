@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using UnityEditor;
-using Assets.GameActors.Units;
+﻿using Assets.GameActors.Units;
 using Assets.Grid;
 using Assets.GameActors.Items;
 using System.Collections.Generic;

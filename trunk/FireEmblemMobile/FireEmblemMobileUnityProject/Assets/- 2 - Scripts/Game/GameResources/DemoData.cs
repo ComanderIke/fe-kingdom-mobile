@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Assets.GameActors.Players;
+﻿using Assets.GameActors.Players;
 using Assets.GameActors.Units;
 using UnityEngine;
 

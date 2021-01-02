@@ -1,5 +1,4 @@
-﻿using Assets.Core;
-using Assets.GameActors.Units.OnGameObject;
+﻿using Assets.GameActors.Units.OnGameObject;
 using Assets.GameEngine;
 using UnityEngine;
 

@@ -2,7 +2,6 @@
 using Assets.Game.GameStates;
 using Assets.GameEngine;
 using Assets.GameEngine.GameStates;
-using Assets.Mechanics;
 
 namespace Assets.Game.Manager
 {

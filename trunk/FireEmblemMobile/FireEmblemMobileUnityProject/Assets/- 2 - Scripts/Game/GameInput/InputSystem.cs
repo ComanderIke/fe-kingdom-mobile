@@ -1,18 +1,12 @@
-﻿using Assets.Core;
-using Assets.Game.Manager;
-using Assets.GameActors.Players;
+﻿using Assets.Game.Manager;
 using Assets.GameActors.Units;
-using Assets.GameActors.Units.Monsters;
 using Assets.GameActors.Units.OnGameObject;
 using Assets.GameEngine;
-using Assets.GameResources;
 using Assets.Grid;
-using Assets.GUI;
 using Assets.Map;
 using Assets.Mechanics;
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

@@ -1,13 +1,7 @@
-﻿using Assets.Audio;
-using Assets.Core;
-using Assets.Game.Manager;
-using Assets.GameActors.Units;
-using Assets.GameActors.Units.OnGameObject;
+﻿using Assets.Game.Manager;
 using Assets.GameEngine;
 using Assets.GameInput;
-using Assets.GUI;
 using System;
-using System.Collections;
 using UnityEngine;
 
 namespace Assets.Mechanics

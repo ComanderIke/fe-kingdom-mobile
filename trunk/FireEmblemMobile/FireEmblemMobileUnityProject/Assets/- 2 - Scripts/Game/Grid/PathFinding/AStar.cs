@@ -1,11 +1,8 @@
-﻿using Assets.Core;
-using Assets.GameInput;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Map;
 using UnityEngine;
-using System;
 
 namespace Assets.Grid.PathFinding
 {

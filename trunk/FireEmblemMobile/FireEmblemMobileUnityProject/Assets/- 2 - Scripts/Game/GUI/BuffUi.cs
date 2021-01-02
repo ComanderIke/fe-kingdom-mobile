@@ -1,9 +1,7 @@
 ﻿using Assets.GameActors.Units;
 using Assets.GameActors.Units.CharStateEffects;
-using Assets.GameActors.Units.OnGameObject;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Assets.GUI
 {

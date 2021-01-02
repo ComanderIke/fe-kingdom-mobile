@@ -1,14 +1,10 @@
 ﻿using Assets.Game.Manager;
 using Assets.GameActors.Units.Humans;
-using Assets.GameInput;
 using Assets.GameResources;
 using Assets.GUI;
-using Assets.Mechanics;
 using Assets.Utility;
-using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Assets.GameActors.Units.OnGameObject

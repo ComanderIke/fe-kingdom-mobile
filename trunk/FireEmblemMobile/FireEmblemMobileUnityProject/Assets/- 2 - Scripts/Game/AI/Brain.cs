@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-
-namespace Assets.AI
+﻿namespace Assets.AI
 {
     public class Brain
     {

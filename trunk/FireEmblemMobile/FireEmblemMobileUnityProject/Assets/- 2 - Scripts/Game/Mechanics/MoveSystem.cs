@@ -1,8 +1,4 @@
-﻿using Assets.Core;
-using Assets.GameActors.Units.Monsters;
-using Assets.GameEngine;
-using Assets.GameInput;
-using Assets.Grid;
+﻿using Assets.GameEngine;
 using Assets.Grid.PathFinding;
 using Assets.Map;
 using System.Collections.Generic;

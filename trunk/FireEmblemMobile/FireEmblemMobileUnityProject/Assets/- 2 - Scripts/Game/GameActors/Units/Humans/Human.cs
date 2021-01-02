@@ -2,7 +2,6 @@ using Assets.GameActors.Items.Weapons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.GameActors.Items;
 using UnityEngine;
 
 namespace Assets.GameActors.Units.Humans

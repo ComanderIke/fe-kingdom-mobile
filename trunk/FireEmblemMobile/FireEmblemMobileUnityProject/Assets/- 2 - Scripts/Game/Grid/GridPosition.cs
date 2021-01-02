@@ -1,10 +1,8 @@
-﻿using Assets.Core;
-using Assets.Game.Manager;
+﻿using Assets.Game.Manager;
 using Assets.GameActors.Units;
 using Assets.Map;
 using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Grid

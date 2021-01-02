@@ -1,15 +1,8 @@
 ﻿using System;
-using Assets.Core;
 using Assets.GameActors.Units;
-using Assets.GameActors.Units.Humans;
 using Assets.GUI.PopUpText;
-using Assets.Mechanics;
-using Assets.Utility;
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using Assets.GameInput;
 using Assets.Game.Manager;
 

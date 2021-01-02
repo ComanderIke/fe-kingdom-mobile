@@ -1,13 +1,8 @@
-﻿using System;
-using Assets.Core;
-using Assets.GameActors.Units;
+﻿using Assets.GameActors.Units;
 using Assets.GameActors.Units.Humans;
 using Assets.GUI;
 using Assets.Mechanics.Battle;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using JetBrains.Annotations;
 using Assets.GameEngine;
 using Assets.Game.Manager;
 

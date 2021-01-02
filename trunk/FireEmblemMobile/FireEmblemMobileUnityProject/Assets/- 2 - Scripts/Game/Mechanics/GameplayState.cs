@@ -6,8 +6,6 @@ using Assets.GameEngine.GameStates;
 using Assets.GameInput;
 using Assets.GUI;
 using Assets.Map;
-using Assets.Mechanics;
-using UnityEngine;
 
 namespace Assets.Game.GameStates
 {

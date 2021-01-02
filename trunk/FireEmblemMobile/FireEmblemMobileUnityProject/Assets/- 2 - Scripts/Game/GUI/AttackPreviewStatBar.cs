@@ -4,7 +4,6 @@ using System.Linq;
 using Assets.Utility;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Assets.GUI
 {
