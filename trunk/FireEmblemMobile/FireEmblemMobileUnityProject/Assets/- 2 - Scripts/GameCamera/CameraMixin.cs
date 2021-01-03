@@ -5,13 +5,8 @@ namespace GameCamera
     [RequireComponent(typeof(CameraSystem))]
     public abstract class CameraMixin : MonoBehaviour
     {
-        protected CameraSystem CameraSystem;
+        protected internal CameraSystem CameraSystem;
         private bool locked;
-
-        private void Start()
-        {
-            CameraSystem = GetComponent<CameraSystem>();
-        }
 
         public bool IsLocked()
         {

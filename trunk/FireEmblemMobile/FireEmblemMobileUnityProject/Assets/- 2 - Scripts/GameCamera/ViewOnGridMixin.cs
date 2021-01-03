@@ -1,48 +1,41 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace GameCamera
 {
     public class ViewOnGridMixin : CameraMixin
     {
-        private new Camera camera;
         private int currentZoom = -1;
-        //private Camera uiCamera;
 
-        [Range(0, 3)] public int Zoom = 0;
-
-        private void Start()
-        {
-            camera = Camera.main;
-            Zoom = 0;
-            //uiCamera = GameObject.FindGameObjectWithTag("UICamera").GetComponent<Camera>();
-        }
+        [Range(0, 3)] public int zoom = 0;
+        
 
         private void Update()
         {
-            if (currentZoom != Zoom)
+            if (currentZoom != zoom)
             {
-                currentZoom = Zoom;
-                switch (Zoom)
+                currentZoom = zoom;
+                var cam = CameraSystem.camera;
+                switch (zoom)
                 {
                     case 0:
-                        camera.orthographicSize = 3f;
-                        //uiCamera.orthographicSize = 5.32f;
-                        camera.transform.localPosition = new Vector3(3, 4.38f, camera.transform.localPosition.z);
+                        cam.orthographicSize = 3f;
+
+                        cam.transform.localPosition = new Vector3(5.33f, 3f, cam.transform.localPosition.z);
                         break;
                     case 1:
-                        camera.orthographicSize = 4f;
-                        //uiCamera.orthographicSize = 7.1f;
-                        camera.transform.localPosition = new Vector3(4, 5.85f, camera.transform.localPosition.z);
+                        cam.orthographicSize = 4f;
+  
+                        cam.transform.localPosition = new Vector3(6, 3f, cam.transform.localPosition.z);
                         break;
                     case 2:
-                        camera.orthographicSize =5f;
-                        //uiCamera.orthographicSize = 8.9f;
-                        camera.transform.localPosition = new Vector3(5, 7.37f, camera.transform.localPosition.z);
+                        cam.orthographicSize = 5f;
+    
+                        cam.transform.localPosition = new Vector3(7, 4f, cam.transform.localPosition.z);
                         break;
                     case 3:
-                        camera.orthographicSize = 6f;
-                        //uiCamera.orthographicSize = 10.72f;
-                        camera.transform.localPosition = new Vector3(6, 8.87f, camera.transform.localPosition.z);
+                        cam.orthographicSize = 6f;
+                        cam.transform.localPosition = new Vector3(9, 5f, cam.transform.localPosition.z);
                         break;
                 }
             }

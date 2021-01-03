@@ -30,7 +30,7 @@ namespace Game.Mechanics
           //  int referenceHeight = gridGameManager.GetSystem<UiSystem>().GetReferenceHeight();
             cameraSystem.AddMixin<ClampCameraMixin>().Construct(width, height);
                 //.UiHeight(uiHeight).ReferenceHeight(referenceHeight);
-            cameraSystem.AddMixin<ViewOnGridMixin>().Zoom = 0;
+            cameraSystem.AddMixin<ViewOnGridMixin>().zoom = 0;
         }
 
         public override GameState<NextStateTrigger> Update()

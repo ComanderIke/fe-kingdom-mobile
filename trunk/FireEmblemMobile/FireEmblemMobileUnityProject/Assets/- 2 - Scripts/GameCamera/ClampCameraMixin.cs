@@ -11,14 +11,18 @@ namespace GameCamera
         private float maxY;
         private float minX;
         private float minY;
+        private int width;
+        private int height;
 
         public void Construct(int width, int height)
         {
-            SetBounds(width, height);
+            this.width = width;
+            this.height = height;
         }
 
         private void LateUpdate()
         {
+            SetBounds(width, height);
             var pos = transform.localPosition;
             if (pos.x < minX || pos.x > maxX || pos.y < minY || pos.y > maxY)
             {
@@ -29,11 +33,13 @@ namespace GameCamera
 
         private void SetBounds(int width, int height)
         {
-            
-            minX = -CameraSystem.cameraData.CameraBoundsBorder;
-            maxX = width + CameraSystem.cameraData.CameraBoundsBorder;
-            minY = -CameraSystem.cameraData.CameraBoundsBorder;
-            maxY = height + CameraSystem.cameraData.CameraBoundsBorder;
+            var orthographicSize = CameraSystem.camera.orthographicSize;
+            var aspect = CameraSystem.camera.aspect;
+            var horizontalDelta = orthographicSize * 2 * aspect - orthographicSize * 2 * 1920/1080;
+            minX = -CameraSystem.cameraData.cameraBoundsBorder.x + horizontalDelta / 2;
+            maxX = width + CameraSystem.cameraData.cameraBoundsBorder.x - orthographicSize * 2 * aspect + horizontalDelta / 2;
+            minY = -CameraSystem.cameraData.cameraBoundsBorder.y;
+            maxY = height + CameraSystem.cameraData.cameraBoundsBorder.y- orthographicSize * 2;
         }
     }
 }
