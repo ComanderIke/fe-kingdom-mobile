@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.GameActors.Units.SpecialAttacks;
+using Game.GameActors.Units.SpecialAttacks;
 
-namespace Assets.GameActors.Units.Humans
+namespace Game.GameActors.Units.Humans
 {
     public class SpecialAttackManager
     {

@@ -1,7 +1,7 @@
-﻿using Assets.Core;
+﻿using Menu;
 using UnityEngine;
 
-namespace Assets.GUI.Base
+namespace Game.GUI.Base
 {
     public class BottomBarController : MonoBehaviour
     {

@@ -1,24 +1,27 @@
-﻿using Assets.GameActors.Players;
-using Assets.GameActors.Units;
+﻿using Game.GameActors.Players;
+using Game.GameActors.Units;
 using UnityEngine;
 
-public class DemoData : MonoBehaviour
+namespace Game.GameResources
 {
-    public Unit[] demoUnits;
-    // Start is called before the first frame update
-    void Start()
+    public class DemoData : MonoBehaviour
     {
-        foreach (var unit in demoUnits)
+        public Unit[] demoUnits;
+        // Start is called before the first frame update
+        void Start()
         {
-            var unitInst = Instantiate(unit);
-            Player.Instance.Units.Add(unitInst);
+            foreach (var unit in demoUnits)
+            {
+                var unitInst = Instantiate(unit);
+                Player.Instance.Units.Add(unitInst);
+            }
+        
         }
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
+        // Update is called once per frame
+        void Update()
+        {
         
+        }
     }
 }

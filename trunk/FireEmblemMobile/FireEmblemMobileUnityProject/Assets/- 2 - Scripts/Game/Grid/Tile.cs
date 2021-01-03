@@ -1,7 +1,7 @@
-﻿using Assets.GameActors.Units;
+﻿using Game.GameActors.Units;
 using UnityEngine;
 
-namespace Assets.Grid
+namespace Game.Grid
 {
     [System.Serializable]
     public class Tile

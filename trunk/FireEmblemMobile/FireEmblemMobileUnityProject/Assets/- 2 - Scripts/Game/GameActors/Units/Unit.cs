@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.GameActors.Players;
-using Assets.GameActors.Units.Attributes;
-using Assets.GameActors.Units.CharStateEffects;
-using Assets.GameActors.Units.OnGameObject;
-using Assets.GameResources;
-using Assets.Grid;
-using Assets.Mechanics.Battle;
+using Game.AI;
+using Game.GameActors.Players;
+using Game.GameActors.Units.Attributes;
+using Game.GameActors.Units.CharStateEffects;
+using Game.GameActors.Units.OnGameObject;
+using Game.GameResources;
+using Game.Grid;
+using Game.Mechanics.Battle;
 using UnityEngine;
 
-namespace Assets.GameActors.Units
+namespace Game.GameActors.Units
 {
     public abstract class Unit : ScriptableObject, ICloneable
     {
@@ -121,13 +122,13 @@ namespace Assets.GameActors.Units
         }
         void OnDestroy()
         {
-            ExperienceManager.OnLevelUp -= LevelUp;
+            ExperienceManager.LevelUp -= LevelUp;
         }
         public void Initialize()
         {
            
             ExperienceManager = new ExperienceManager();
-            ExperienceManager.OnLevelUp += LevelUp;
+            ExperienceManager.LevelUp += LevelUp;
             BattleStats = new BattleStats(this);
             UnitTurnState = new UnitTurnState(this);
             GridPosition = new GridPosition(this);
@@ -140,7 +141,7 @@ namespace Assets.GameActors.Units
             Hp = Stats.MaxHp;
             Sp = Stats.MaxSp;
             Ap = Stats.Mov;
-            ExperienceManager.OnExpGained += ExpGained;
+            ExperienceManager.ExpGained += ExpGained;
             UnitTurnState.OnHasAttacked += HasAttacked;
             
         }

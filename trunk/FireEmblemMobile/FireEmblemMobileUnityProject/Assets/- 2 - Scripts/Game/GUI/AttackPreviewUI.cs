@@ -1,12 +1,12 @@
-﻿using Assets.GameActors.Units;
-using Assets.Mechanics.Battle;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Game.GameActors.Units;
+using Game.GUI.Text;
+using Game.Mechanics.Battle;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-namespace Assets.GUI
+namespace Game.GUI
 {
     public class AttackPreviewUI : MonoBehaviour
     {

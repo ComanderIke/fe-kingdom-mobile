@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Mechanics.Dialogs
+namespace Unused.Dialogs
 {
     public class SpeechBubbleSystem : MonoBehaviour
     {

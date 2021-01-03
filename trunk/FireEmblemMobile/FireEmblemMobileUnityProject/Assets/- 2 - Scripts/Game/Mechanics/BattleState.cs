@@ -1,13 +1,12 @@
-﻿using Assets.Game.Manager;
-using Assets.GameActors.Units;
-using Assets.GameEngine;
-using Assets.GameEngine.GameStates;
-using Assets.GUI;
-using Assets.Mechanics;
-using System;
-using Assets.Audio;
+﻿using System;
+using Audio;
+using Game.GameActors.Units;
+using Game.GUI;
+using Game.Manager;
+using GameEngine;
+using GameEngine.GameStates;
 
-namespace Assets.Game.GameStates
+namespace Game.Mechanics
 {
     public class BattleState : GameState<NextStateTrigger>
     {
@@ -19,15 +18,15 @@ namespace Assets.Game.GameStates
         public BattleSystem BattleSystem;
 
         private string startMusic;
-        private readonly UiSystem uiController;
-        private readonly UnitsSystem unitController;
-        private readonly BattleRenderer battleRenderer;
+        //private readonly UiSystem uiController;//TODO bad Dependency?
+        private readonly UnitsSystem unitController;//TODO bad Dependency?
+       // private readonly BattleRenderer battleRenderer;
 
         public BattleState()
         {
-            uiController = GridGameManager.Instance.GetSystem<UiSystem>();
+           // uiController = GridGameManager.Instance.GetSystem<UiSystem>();
             unitController = GridGameManager.Instance.GetSystem<UnitsSystem>();
-            battleRenderer = uiController.BattleRenderer;
+            //battleRenderer = uiController.BattleRenderer;//TODO bad dependency
         }
 //test
         public void SetParticipants(Unit attacker, Unit defender)
@@ -44,7 +43,7 @@ namespace Assets.Game.GameStates
             BattleRenderer.OnFinished += BattleSystem.EndBattle;
             
             //Debug.Log("ENTER FIGHTSTATE");
-            ShowFightVisuals(BattleSystem.GetAttackSequence());
+           // ShowFightVisuals(BattleSystem.GetAttackSequence());
            
             SetUpMusic();
             OnEnter?.Invoke();
@@ -57,7 +56,7 @@ namespace Assets.Game.GameStates
 
         public override void Exit()
         {
-            HideFightVisuals();
+            // HideFightVisuals();
             attacker.UnitTurnState.HasAttacked = true;
             attacker = null;
             defender = null;
@@ -68,16 +67,16 @@ namespace Assets.Game.GameStates
             OnExit?.Invoke();
         }
 
-        private void ShowFightVisuals(bool [] attackSequence)
-        {
-            uiController.ShowFightUi(attacker, defender);
-            battleRenderer.Show(attacker, defender, attackSequence);
-        }
-        private void HideFightVisuals()
-        {
-            uiController.HideFightUi();
-            battleRenderer.Hide();
-        }
+        // private void ShowFightVisuals(bool [] attackSequence)
+        // {
+        //    uiController.ShowFightUi(attacker, defender);
+        //    battleRenderer.Show(attacker, defender, attackSequence);
+        // }
+        // private void HideFightVisuals()
+        // {
+        //     uiController.HideFightUi();
+        //     battleRenderer.Hide();
+        // }
 
         private void SetUpMusic()
         {

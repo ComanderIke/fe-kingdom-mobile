@@ -1,9 +1,9 @@
-﻿using Assets.AI;
-using Assets.Game.GameStates;
-using Assets.GameEngine;
-using Assets.GameEngine.GameStates;
+﻿using Game.AI;
+using Game.Mechanics;
+using GameEngine;
+using GameEngine.GameStates;
 
-namespace Assets.Game.Manager
+namespace Game.Manager
 {
     public class GameStateManager
     {

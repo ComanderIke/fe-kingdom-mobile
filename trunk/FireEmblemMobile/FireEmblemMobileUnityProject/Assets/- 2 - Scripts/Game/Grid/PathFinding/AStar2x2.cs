@@ -1,10 +1,10 @@
-﻿using Assets.Game.Manager;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Game.Manager;
 using UnityEngine;
 
-namespace Assets.Grid.PathFinding
+namespace Game.Grid.PathFinding
 {
     public class AStar2X2
     {

@@ -1,18 +1,21 @@
-﻿using Assets.GameActors.Units;
-using Assets.Grid;
-using Assets.GameActors.Items;
+﻿using System;
 using System.Collections.Generic;
-using System;
+using Game.GameActors.Items;
+using Game.GameActors.Units;
+using Game.Grid;
 
-public interface IGameInput
+namespace Game.GameInput
 {
-    void SelectUnit(Unit u);
-    void MoveUnit(Unit u, GridPosition position, List<GridPosition> path);
-    void CheckAttackPreview(Unit u, Unit attackTarget, GridPosition attackPosition);
-    void AttackUnit(Unit u, Unit attackTarget);
-    void DeselectUnit();
-    void UseItem(Item i);
+    public interface IGameInput
+    {
+        void SelectUnit(Unit u);
+        void MoveUnit(Unit u, GridPosition position, List<GridPosition> path);
+        void CheckAttackPreview(Unit u, Unit attackTarget, GridPosition attackPosition);
+        void AttackUnit(Unit u, Unit attackTarget);
+        void DeselectUnit();
+        void UseItem(Item i);
     
-    void ExecuteInputActions(Action after);
+        void ExecuteInputActions(Action after);
     
+    }
 }

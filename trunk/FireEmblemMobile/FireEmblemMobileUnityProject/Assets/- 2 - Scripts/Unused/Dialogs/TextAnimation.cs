@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace Assets.Mechanics.Dialogs
+namespace Unused.Dialogs
 {
     public class TextAnimation : MonoBehaviour
     {

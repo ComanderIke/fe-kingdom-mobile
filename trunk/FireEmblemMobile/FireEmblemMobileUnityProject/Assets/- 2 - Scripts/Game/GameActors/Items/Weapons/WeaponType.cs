@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assets.GameActors.Items.Weapons
+namespace Game.GameActors.Items.Weapons
 {
     [Serializable]
     public enum WeaponType

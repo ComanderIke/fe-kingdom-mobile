@@ -1,9 +1,7 @@
-using UnityEngine;
 using UnityEditor;
-using System.Collections;
-using LetterboxCamera;
+using UnityEngine;
 
-namespace LetterboxCamera
+namespace Auto_Letterbox.Editor
 {
 
     /* ForceCameraRatioEditor.cs
@@ -13,7 +11,7 @@ namespace LetterboxCamera
      * Originally made by Milo Keeble, source can be found on Github @ https://github.com/Ragepyro/EditorFileMaker */
 
     [CustomEditor(typeof(ForceCameraRatio))]
-    public class ForceCameraRatioEditor : Editor
+    public class ForceCameraRatioEditor : UnityEditor.Editor
     {
         /// <summary>
         /// Create a ForceCameraRatio Object in the current scene

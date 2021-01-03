@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Grid
+namespace Game.Grid
 {
     public class GridBuilder
     {
@@ -18,6 +18,7 @@ namespace Assets.Grid
         private readonly Material cellMaterialInvalid;
         private Tile[,] tiles;
         private Sprite GridSprite;
+        
         public GridBuilder(Sprite sprite, Material cellMaterial, Material cellMaterialInvalid)
         {
             this.cellMaterialInvalid = cellMaterialInvalid;

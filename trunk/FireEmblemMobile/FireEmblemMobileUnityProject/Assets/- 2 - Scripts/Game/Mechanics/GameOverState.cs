@@ -1,8 +1,8 @@
-﻿using Assets.GameEngine;
-using Assets.GameEngine.GameStates;
+﻿using GameEngine;
+using GameEngine.GameStates;
 using UnityEngine;
 
-namespace Assets.Game.GameStates
+namespace Game.Mechanics
 {
     public class GameOverState : GameState<NextStateTrigger>
     {

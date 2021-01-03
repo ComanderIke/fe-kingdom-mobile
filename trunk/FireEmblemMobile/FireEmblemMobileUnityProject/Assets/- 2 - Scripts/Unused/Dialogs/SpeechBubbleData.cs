@@ -1,4 +1,4 @@
-﻿namespace Assets.Mechanics.Dialogs
+﻿namespace Unused.Dialogs
 {
     public struct SpeechBubbleData
     {

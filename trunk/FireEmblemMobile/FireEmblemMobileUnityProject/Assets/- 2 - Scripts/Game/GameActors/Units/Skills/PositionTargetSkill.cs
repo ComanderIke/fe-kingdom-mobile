@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Assets.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills
 {
     [Serializable]
     public abstract class PositionTargetSkill : Skill

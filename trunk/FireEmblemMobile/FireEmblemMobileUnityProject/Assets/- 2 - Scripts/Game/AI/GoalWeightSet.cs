@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Assets.AI
+namespace Game.AI
 {
     //public GoalWeightSet()
     //{

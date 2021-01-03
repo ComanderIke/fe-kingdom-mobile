@@ -1,4 +1,4 @@
-﻿namespace Assets.SerializedData
+﻿namespace SerializedData
 {
     public class PlayerData
     {

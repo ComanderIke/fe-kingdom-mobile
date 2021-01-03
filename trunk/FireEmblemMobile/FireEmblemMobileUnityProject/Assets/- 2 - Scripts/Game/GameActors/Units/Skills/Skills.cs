@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills
 {
     [Serializable]
     public abstract class Skill

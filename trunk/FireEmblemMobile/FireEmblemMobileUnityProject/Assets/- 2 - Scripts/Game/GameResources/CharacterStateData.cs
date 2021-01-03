@@ -1,6 +1,6 @@
-﻿using Assets.GameActors.Units.CharStateEffects;
+﻿using Game.GameActors.Units.CharStateEffects;
 
-namespace Assets.GameResources
+namespace Game.GameResources
 {
     [System.Serializable]
     public class CharacterStateData

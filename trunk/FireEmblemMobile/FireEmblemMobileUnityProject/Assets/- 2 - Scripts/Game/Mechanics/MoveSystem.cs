@@ -1,10 +1,10 @@
-﻿using Assets.GameEngine;
-using Assets.Grid.PathFinding;
-using Assets.Map;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Game.Grid.PathFinding;
+using Game.Map;
+using GameEngine;
 using UnityEngine;
 
-namespace Assets.Mechanics
+namespace Game.Mechanics
 {
     public class MoveSystem : IEngineSystem
     {

@@ -1,12 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using Object = System.Object;
 
-namespace Assets.Utility
+namespace Utility
 {
-    using System;
-    using System.IO;
-    using System.Runtime.Serialization;
-    using System.Runtime.Serialization.Formatters.Binary;
-
     /// <summary>
     /// Reference Article http://www.codeproject.com/KB/tips/SerializedObjectCloner.aspx
     /// Provides a method for performing a deep copy of an object.

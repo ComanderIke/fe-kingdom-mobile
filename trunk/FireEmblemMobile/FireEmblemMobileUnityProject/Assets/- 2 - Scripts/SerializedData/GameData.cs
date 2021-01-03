@@ -1,6 +1,6 @@
 ﻿
 
-namespace Assets.SerializedData
+namespace SerializedData
 {
     [System.Serializable]
     public class GameData

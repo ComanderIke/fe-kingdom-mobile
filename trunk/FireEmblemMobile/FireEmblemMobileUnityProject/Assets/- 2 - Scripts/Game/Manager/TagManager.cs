@@ -1,4 +1,4 @@
-﻿namespace Assets.Game.Manager
+﻿namespace Game.Manager
 {
     public class TagManager
     {

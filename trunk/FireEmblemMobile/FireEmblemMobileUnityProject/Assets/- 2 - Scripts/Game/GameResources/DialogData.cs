@@ -1,4 +1,4 @@
-﻿namespace Assets.GameResources
+﻿namespace Game.GameResources
 {
     [System.Serializable]
     public class DialogData

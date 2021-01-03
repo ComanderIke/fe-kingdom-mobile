@@ -1,4 +1,4 @@
-﻿namespace Assets.GameActors.Units.Monsters
+﻿namespace Game.GameActors.Units.Monsters
 {
     public enum MonsterType
     {

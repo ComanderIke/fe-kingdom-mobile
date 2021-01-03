@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills
 {
     public class SkillSpriteSet
     {

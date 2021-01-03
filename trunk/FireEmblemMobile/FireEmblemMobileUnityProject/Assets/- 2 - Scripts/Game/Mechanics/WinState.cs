@@ -1,9 +1,9 @@
-﻿using Assets.Core;
-using Assets.GameEngine;
-using Assets.GameEngine.GameStates;
+﻿using GameEngine;
+using GameEngine.GameStates;
+using Menu;
 using UnityEngine;
 
-namespace Assets.Game.GameStates
+namespace Game.Mechanics
 {
     public class WinState : GameState<NextStateTrigger>
     {

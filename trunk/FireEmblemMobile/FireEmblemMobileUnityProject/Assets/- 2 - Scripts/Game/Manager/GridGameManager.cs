@@ -1,26 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Audio;
-using Assets.GameActors;
-using Assets.GameActors.Players;
-using Assets.GameActors.Units;
-using Assets.GameActors.Units.OnGameObject;
-using Assets.GameCamera;
-using Assets.GameEngine;
-using Assets.GameInput;
-using Assets.GameResources;
-using Assets.Grid;
-using Assets.Grid.PathFinding;
-using Assets.GUI;
-using Assets.GUI.PopUpText;
-using Assets.Map;
-using Assets.Mechanics;
-using Assets.Mechanics.Battle;
+using Audio;
+using Game.GameActors;
+using Game.GameActors.Players;
+using Game.GameActors.Units;
+using Game.GameActors.Units.OnGameObject;
+using Game.GameInput;
+using Game.GameResources;
+using Game.Grid;
+using Game.Grid.PathFinding;
+using Game.GUI;
+using Game.GUI.PopUpText;
+using Game.Map;
+using Game.Mechanics;
+using Game.Mechanics.Battle;
+using GameCamera;
+using GameEngine;
 using UnityEngine;
 using UnityEngine.UI;
+using Utility;
 
-namespace Assets.Game.Manager
+namespace Game.Manager
 {
     public class GridGameManager : MonoBehaviour
     {

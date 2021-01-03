@@ -1,4 +1,4 @@
-﻿namespace Assets.GameActors.Units
+﻿namespace Game.GameActors.Units
 {
     public enum Motivation
     {

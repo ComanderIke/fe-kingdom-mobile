@@ -2,10 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.GameEngine;
+using GameEngine;
 using UnityEngine;
 
-namespace Assets.Audio
+namespace Audio
 {
     public class AudioSystem : MonoBehaviour, IEngineSystem
     {

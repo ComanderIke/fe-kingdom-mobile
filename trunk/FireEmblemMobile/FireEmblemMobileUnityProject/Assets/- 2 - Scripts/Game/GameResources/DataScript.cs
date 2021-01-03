@@ -1,11 +1,11 @@
-﻿using Assets.GameActors.Items.Weapons;
-using Assets.GameActors.Units.Humans;
-using Assets.GameActors.Units.Monsters;
-using Assets.Map;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Game.GameActors.Items.Weapons;
+using Game.GameActors.Units.Humans;
+using Game.GameActors.Units.Monsters;
+using Game.Map;
 using UnityEngine;
 
-namespace Assets.GameResources
+namespace Game.GameResources
 {
     public class DataScript : MonoBehaviour
     {

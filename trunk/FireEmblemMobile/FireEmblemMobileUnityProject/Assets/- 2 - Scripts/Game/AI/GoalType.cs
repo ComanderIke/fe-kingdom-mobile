@@ -1,4 +1,4 @@
-﻿namespace Assets.AI
+﻿namespace Game.AI
 {
     public enum GoalType
     {

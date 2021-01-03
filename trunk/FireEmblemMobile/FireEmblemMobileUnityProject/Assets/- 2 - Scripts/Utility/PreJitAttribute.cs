@@ -1,12 +1,13 @@
-﻿using UnityEngine;
-using UnityEditor;
-using System;
+﻿using System;
 
-[AttributeUsage(AttributeTargets.Method)]
-public class PreJitAttribute : Attribute
+namespace Utility
 {
-    public PreJitAttribute()
+    [AttributeUsage(AttributeTargets.Method)]
+    public class PreJitAttribute : Attribute
     {
+        public PreJitAttribute()
+        {
 
+        }
     }
 }

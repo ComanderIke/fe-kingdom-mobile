@@ -1,23 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
-public class FPS : MonoBehaviour
+namespace Utility
 {
-
-    [SerializeField] private TextMeshProUGUI _fpsText;
-    [SerializeField] private float _hudRefreshRate = 1f;
-
-    private float _timer;
-
-    private void Update()
+    public class FPS : MonoBehaviour
     {
-        if (Time.unscaledTime > _timer)
+
+        [SerializeField] private TextMeshProUGUI _fpsText;
+        [SerializeField] private float _hudRefreshRate = 1f;
+
+        private float _timer;
+
+        private void Update()
         {
-            int fps = (int)(1f / Time.unscaledDeltaTime);
-            _fpsText.text = "FPS: " + fps;
-            _timer = Time.unscaledTime + _hudRefreshRate;
+            if (Time.unscaledTime > _timer)
+            {
+                int fps = (int)(1f / Time.unscaledDeltaTime);
+                _fpsText.text = "FPS: " + fps;
+                _timer = Time.unscaledTime + _hudRefreshRate;
+            }
         }
     }
 }

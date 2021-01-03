@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.SerializedData
+namespace Menu
 {
     public class SaveManager
     {

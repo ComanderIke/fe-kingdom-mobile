@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.GameActors.Units
+namespace Game.GameActors.Units
 {
     [System.Serializable]
     public class CharacterSpriteSet

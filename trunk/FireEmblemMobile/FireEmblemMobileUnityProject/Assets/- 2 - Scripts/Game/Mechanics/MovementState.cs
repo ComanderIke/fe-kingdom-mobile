@@ -1,16 +1,15 @@
 ﻿using System;
-using Assets.GameActors.Units;
-using Assets.Grid.PathFinding;
-using Assets.Mechanics;
 using System.Collections.Generic;
+using Game.GameActors.Units;
+using Game.GameInput;
+using Game.Grid;
+using Game.Grid.PathFinding;
+using Game.Manager;
+using GameEngine;
+using GameEngine.GameStates;
 using UnityEngine;
-using Assets.Grid;
-using Assets.GameInput;
-using Assets.GameEngine.GameStates;
-using Assets.GameEngine;
-using Assets.Game.Manager;
 
-namespace Assets.Game.GameStates
+namespace Game.Mechanics
 {
     public class MovementState : GameState<NextStateTrigger>
     {

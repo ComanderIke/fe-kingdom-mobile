@@ -1,8 +1,8 @@
 ﻿using System;
-using Assets.GameActors.Units;
+using Game.GameActors.Units;
 using UnityEngine;
 
-namespace Assets.GameActors.Items
+namespace Game.GameActors.Items
 {
     [CreateAssetMenu(menuName = "GameData/Items/Mixins/Healing", fileName = "Healing")]
     public class HealingItemMixin : ItemMixin

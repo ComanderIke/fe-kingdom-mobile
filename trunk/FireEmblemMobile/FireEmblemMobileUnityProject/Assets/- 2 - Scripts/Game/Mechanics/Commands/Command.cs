@@ -1,4 +1,4 @@
-﻿namespace Assets.Mechanics.Commands
+﻿namespace Game.Mechanics.Commands
 {
     public abstract class Command
     {

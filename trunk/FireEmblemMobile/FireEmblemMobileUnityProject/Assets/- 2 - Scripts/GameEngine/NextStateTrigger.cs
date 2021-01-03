@@ -1,4 +1,4 @@
-﻿namespace Assets.GameEngine
+﻿namespace GameEngine
 {
     public enum NextStateTrigger
     {

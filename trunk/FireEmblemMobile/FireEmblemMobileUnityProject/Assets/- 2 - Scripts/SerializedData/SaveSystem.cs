@@ -1,9 +1,8 @@
 ﻿using System.IO;
-using System.Net.Mime;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
-namespace Assets.SerializedData
+namespace SerializedData
 {
     public class SaveSystem
     {

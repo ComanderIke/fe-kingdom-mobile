@@ -1,16 +1,16 @@
-﻿using Assets.Game.Manager;
-using Assets.GameActors.Units;
-using Assets.GameActors.Units.OnGameObject;
-using Assets.GameEngine;
-using Assets.Grid;
-using Assets.Map;
-using Assets.Mechanics;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Game.GameActors.Units;
+using Game.GameActors.Units.OnGameObject;
+using Game.Grid;
+using Game.Manager;
+using Game.Map;
+using Game.Mechanics;
+using GameEngine;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Assets.GameInput
+namespace Game.GameInput
 {
 
     public class InputSystem : MonoBehaviour, IEngineSystem

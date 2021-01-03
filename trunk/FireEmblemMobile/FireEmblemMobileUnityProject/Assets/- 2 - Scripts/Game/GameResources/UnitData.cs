@@ -1,7 +1,7 @@
-﻿using Assets.GameActors.Units.Attributes;
+﻿using Game.GameActors.Units.Attributes;
 using UnityEngine;
 
-namespace Assets.GameResources
+namespace Game.GameResources
 {
     [System.Serializable]
     public class UnitData

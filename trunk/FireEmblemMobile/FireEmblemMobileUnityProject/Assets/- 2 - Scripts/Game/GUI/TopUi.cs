@@ -1,11 +1,11 @@
-﻿using Assets.GameActors.Units;
-using Assets.GameActors.Units.Humans;
-using Assets.Utility;
+﻿using Game.GameActors.Units;
+using Game.GameActors.Units.Humans;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Utility;
 
-namespace Assets.GUI
+namespace Game.GUI
 {
     public class TopUi : MonoBehaviour
     {

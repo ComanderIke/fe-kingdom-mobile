@@ -1,12 +1,13 @@
-﻿using Assets.GameActors.Units;
-using Assets.GameEngine;
-using Assets.Grid;
-using Assets.Mechanics.Commands;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Game.GameActors.Units;
+using Game.GameInput;
+using Game.Grid;
+using Game.Mechanics.Commands;
+using GameEngine;
 using UnityEngine;
 
-namespace Assets.Mechanics
+namespace Game.Mechanics
 {
     public class UnitActionSystem : MonoBehaviour, IEngineSystem
     {

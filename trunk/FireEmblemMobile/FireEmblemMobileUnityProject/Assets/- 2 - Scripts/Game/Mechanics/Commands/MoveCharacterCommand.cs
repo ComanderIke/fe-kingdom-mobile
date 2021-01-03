@@ -1,9 +1,9 @@
-﻿using Assets.Game.Manager;
-using Assets.GameActors.Units;
-using Assets.Grid;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Game.GameActors.Units;
+using Game.Grid;
+using Game.Manager;
 
-namespace Assets.Mechanics.Commands
+namespace Game.Mechanics.Commands
 {
     internal class MoveCharacterCommand : Command
     {

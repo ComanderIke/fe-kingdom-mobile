@@ -1,10 +1,10 @@
-﻿using Assets.Game.Manager;
-using Assets.GameActors.Units;
-using Assets.GameEngine;
-using System;
+﻿using System;
+using Game.GameActors.Units;
+using Game.Manager;
+using GameEngine;
 using UnityEngine;
 
-namespace Assets.Mechanics.Commands
+namespace Game.Mechanics.Commands
 {
     public class AttackCommand : Command
     {

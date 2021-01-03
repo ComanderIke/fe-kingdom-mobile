@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.GameActors.Players
+namespace Game.GameActors.Players
 {
     public class PlayerConfig : MonoBehaviour
     {

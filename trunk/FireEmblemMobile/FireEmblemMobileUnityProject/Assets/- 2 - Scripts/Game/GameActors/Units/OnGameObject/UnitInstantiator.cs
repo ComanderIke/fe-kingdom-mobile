@@ -1,7 +1,7 @@
-﻿using Assets.GUI;
+﻿using Game.GUI;
 using UnityEngine;
 
-namespace Assets.GameActors.Units.OnGameObject
+namespace Game.GameActors.Units.OnGameObject
 {
     public class UnitInstantiator : MonoBehaviour
     {

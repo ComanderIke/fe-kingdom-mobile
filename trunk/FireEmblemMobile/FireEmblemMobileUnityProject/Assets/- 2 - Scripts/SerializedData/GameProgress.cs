@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.SerializedData
+namespace SerializedData
 {
     [Serializable]
     public class GameProgress

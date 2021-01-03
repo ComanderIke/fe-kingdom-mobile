@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Assets.GameEngine.GameStates
+namespace GameEngine.GameStates
 {
     [Serializable]
     public abstract class GameState<TFeed>

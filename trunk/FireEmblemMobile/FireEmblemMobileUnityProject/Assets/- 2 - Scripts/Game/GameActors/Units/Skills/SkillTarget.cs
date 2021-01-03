@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assets.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills
 {
     [Serializable]
     public enum SkillTarget

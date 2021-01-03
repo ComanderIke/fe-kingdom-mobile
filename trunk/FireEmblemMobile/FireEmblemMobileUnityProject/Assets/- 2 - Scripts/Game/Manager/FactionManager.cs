@@ -1,8 +1,8 @@
-﻿using Assets.GameActors.Players;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Game.GameActors.Players;
 using UnityEngine;
 
-namespace Assets.Game.Manager
+namespace Game.Manager
 {
     public class FactionManager
     {

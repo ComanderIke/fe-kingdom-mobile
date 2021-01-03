@@ -1,12 +1,12 @@
 ﻿using System;
-using Assets.GameActors.Units;
-using Assets.GUI.PopUpText;
 using System.Collections;
+using Game.GameActors.Units;
+using Game.GameInput;
+using Game.GUI.PopUpText;
+using Game.Manager;
 using UnityEngine;
-using Assets.GameInput;
-using Assets.Game.Manager;
 
-namespace Assets.GUI
+namespace Game.GUI
 {
     public class BattleRenderer : MonoBehaviour
     {

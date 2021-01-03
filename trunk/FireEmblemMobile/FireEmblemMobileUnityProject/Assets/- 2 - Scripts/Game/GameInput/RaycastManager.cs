@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.GameInput
+namespace Game.GameInput
 {
     public class RaycastManager
     {

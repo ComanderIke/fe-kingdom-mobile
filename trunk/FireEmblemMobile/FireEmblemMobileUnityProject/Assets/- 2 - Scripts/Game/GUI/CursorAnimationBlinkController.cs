@@ -1,8 +1,8 @@
-﻿using Assets.Utility;
-using System;
+﻿using System;
 using UnityEngine;
+using Utility;
 
-namespace Assets.GUI
+namespace Game.GUI
 {
     public class CursorAnimationBlinkController : MonoBehaviour
     {

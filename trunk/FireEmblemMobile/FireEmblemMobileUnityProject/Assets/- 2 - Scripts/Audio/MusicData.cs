@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Assets.Audio
+namespace Audio
 {
     [Serializable]
     [CreateAssetMenu(menuName = "GameData/Audio/Music", fileName = "Music")]

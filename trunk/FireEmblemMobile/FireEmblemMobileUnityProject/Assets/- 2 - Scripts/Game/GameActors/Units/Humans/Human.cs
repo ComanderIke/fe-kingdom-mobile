@@ -1,10 +1,10 @@
-using Assets.GameActors.Items.Weapons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Game.GameActors.Items.Weapons;
 using UnityEngine;
 
-namespace Assets.GameActors.Units.Humans
+namespace Game.GameActors.Units.Humans
 {
     [Serializable]
     [CreateAssetMenu(menuName = "GameData/Human", fileName = "Human")]

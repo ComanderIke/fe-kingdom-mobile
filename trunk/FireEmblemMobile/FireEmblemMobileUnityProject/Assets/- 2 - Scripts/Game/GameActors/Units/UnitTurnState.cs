@@ -1,7 +1,7 @@
-﻿using Assets.Game.Manager;
-using System;
+﻿using System;
+using Game.Manager;
 
-namespace Assets.GameActors.Units
+namespace Game.GameActors.Units
 {
     public class UnitTurnState
     {

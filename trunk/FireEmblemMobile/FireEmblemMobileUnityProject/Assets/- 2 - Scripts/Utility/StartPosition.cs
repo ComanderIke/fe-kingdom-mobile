@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Utility
+namespace Utility
 {
     public class StartPosition : MonoBehaviour {
 

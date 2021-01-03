@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-namespace Assets.Grid
+namespace Game.Grid
 {
     public class BigTile
     {

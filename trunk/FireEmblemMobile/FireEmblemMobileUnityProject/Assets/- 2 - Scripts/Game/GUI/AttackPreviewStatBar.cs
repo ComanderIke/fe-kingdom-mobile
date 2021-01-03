@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Utility;
 using TMPro;
 using UnityEngine;
+using Utility;
 
-namespace Assets.GUI
+namespace Game.GUI
 {
     [System.Serializable]
     public class AttackPreviewStatBar : MonoBehaviour

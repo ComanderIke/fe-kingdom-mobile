@@ -1,4 +1,4 @@
-﻿namespace Assets.Grid
+﻿namespace Game.Grid
 {
     public class GridData
     {

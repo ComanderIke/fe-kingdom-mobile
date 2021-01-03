@@ -1,7 +1,7 @@
-﻿using Assets.GameActors.Players;
+﻿using Game.GameActors.Players;
 using UnityEngine;
 
-namespace Assets.GUI.Base
+namespace Game.GUI.Base
 {
     public class UnitListController : MonoBehaviour
     {

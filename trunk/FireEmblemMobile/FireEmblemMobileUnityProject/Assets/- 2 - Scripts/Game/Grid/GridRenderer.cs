@@ -1,8 +1,8 @@
-﻿using Assets.GameActors.Units;
-using Assets.Map;
+﻿using Game.GameActors.Units;
+using Game.Map;
 using UnityEngine;
 
-namespace Assets.Grid
+namespace Game.Grid
 {
     public class GridRenderer
     {

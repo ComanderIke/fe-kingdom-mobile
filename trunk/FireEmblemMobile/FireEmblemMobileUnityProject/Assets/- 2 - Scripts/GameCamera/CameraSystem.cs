@@ -1,19 +1,18 @@
-﻿
-using Assets.GameEngine;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using GameEngine;
 using UnityEngine;
 
-namespace Assets.GameCamera
+namespace GameCamera
 {
     public class CameraSystem : MonoBehaviour, IEngineSystem
     {
         public delegate void OnMoveToFinishedEvent();
 
         public static OnMoveToFinishedEvent MoveToFinishedEvent;
-        public Camera Camera;
+        public new Camera camera;
         private List<CameraMixin> mixins;
-        public CameraData CameraData;
+        public CameraData cameraData;
         private void Start()
         {
             mixins = new List<CameraMixin>();

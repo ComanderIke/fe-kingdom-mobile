@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Assets.GameActors.Units;
-using Assets.GameActors.Units.Humans;
+using Game.GameActors.Units;
+using Game.GameActors.Units.Humans;
 
-namespace Assets.Mechanics
+namespace Game.Mechanics
 {
     public class BattleSimulation
     {

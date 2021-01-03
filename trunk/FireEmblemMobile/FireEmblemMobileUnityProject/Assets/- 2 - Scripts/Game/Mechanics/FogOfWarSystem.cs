@@ -1,67 +1,69 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
-using Assets.GameActors.Units;
-using Assets.GameActors.Players;
-using Assets.GameActors.Units.OnGameObject;
-using Assets.GameEngine;
-using Assets.Game.GameStates;
-using Assets.Game.Manager;
+﻿using System.Collections.Generic;
+using Game.GameActors.Players;
+using Game.GameActors.Units;
+using Game.GameActors.Units.OnGameObject;
+using Game.Manager;
+using GameEngine;
+using UnityEngine;
 
-public class FogOfWarSystem : MonoBehaviour, IEngineSystem
+namespace Game.Mechanics
 {
-    List<Unit> PlayerUnits;
-    private GridGameManager gridGameManager;
-    public int sightRange = 2;
-    void Start() {
-        gridGameManager = GridGameManager.Instance;
-        GridGameManager.OnStartGame += UpdateFogOfWar;
-        MovementState.OnMovementFinished += (Unit u) =>UpdateFogOfWar();
-    }
-    public void UpdateFogOfWar()
+    public class FogOfWarSystem : MonoBehaviour, IEngineSystem
     {
-        foreach (Unit updateUnit in gridGameManager.FactionManager.GetPlayerControlledFaction().Units)
+        List<Unit> PlayerUnits;
+        private GridGameManager gridGameManager;
+        public int sightRange = 2;
+        void Start() {
+            gridGameManager = GridGameManager.Instance;
+            GridGameManager.OnStartGame += UpdateFogOfWar;
+            MovementState.OnMovementFinished += (Unit u) =>UpdateFogOfWar();
+        }
+        public void UpdateFogOfWar()
         {
-            foreach (Faction faction in gridGameManager.FactionManager.Factions)
+            foreach (Unit updateUnit in gridGameManager.FactionManager.GetPlayerControlledFaction().Units)
             {
-                if (faction.Id == updateUnit.Faction.Id)
-                    continue;
-                foreach (Unit unit in faction.Units)
+                foreach (Faction faction in gridGameManager.FactionManager.Factions)
                 {
-                    unit.IsVisible = false;
+                    if (faction.Id == updateUnit.Faction.Id)
+                        continue;
+                    foreach (Unit unit in faction.Units)
+                    {
+                        unit.IsVisible = false;
+                    }
                 }
             }
-        }
-        foreach (Unit updateUnit in gridGameManager.FactionManager.GetPlayerControlledFaction().Units)
-        {
-            foreach (Faction faction in gridGameManager.FactionManager.Factions)
+            foreach (Unit updateUnit in gridGameManager.FactionManager.GetPlayerControlledFaction().Units)
             {
-                if (faction.Id == updateUnit.Faction.Id)
-                    continue;
-                foreach (Unit unit in faction.Units)
+                foreach (Faction faction in gridGameManager.FactionManager.Factions)
                 {
-                    if (unit.IsVisible)
+                    if (faction.Id == updateUnit.Faction.Id)
                         continue;
-                    CheckUnits(updateUnit, unit);
+                    foreach (Unit unit in faction.Units)
+                    {
+                        if (unit.IsVisible)
+                            continue;
+                        CheckUnits(updateUnit, unit);
                         
-                }
-            } 
+                    }
+                } 
+            }
         }
-    }
-    private void CheckUnits(Unit playerUnit, Unit enemyUnit)
-    {
-        int delta = (int)Mathf.Abs(playerUnit.GridPosition.X - enemyUnit.GridPosition.X)+ (int)Mathf.Abs(playerUnit.GridPosition.Y - enemyUnit.GridPosition.Y);
-        if(delta <= sightRange)
+        private void CheckUnits(Unit playerUnit, Unit enemyUnit)
         {
-            SetVisible(enemyUnit, true);
+            int delta = (int)Mathf.Abs(playerUnit.GridPosition.X - enemyUnit.GridPosition.X)+ (int)Mathf.Abs(playerUnit.GridPosition.Y - enemyUnit.GridPosition.Y);
+            if(delta <= sightRange)
+            {
+                SetVisible(enemyUnit, true);
+            }
+            else
+            {
+                SetVisible(enemyUnit, false);
+            }
         }
-        else
+        private void SetVisible(Unit unit, bool visible)
         {
-            SetVisible(enemyUnit, false);
+            unit.IsVisible = visible;
+            unit.GameTransform.GameObject.GetComponent<UnitRenderer>().SetVisible(visible);
         }
-    }
-    private void SetVisible(Unit unit, bool visible)
-    {
-        unit.IsVisible = visible;
-        unit.GameTransform.GameObject.GetComponent<UnitRenderer>().SetVisible(visible);
     }
 }

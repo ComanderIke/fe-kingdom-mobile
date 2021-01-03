@@ -1,11 +1,11 @@
-﻿using Assets.GameActors.Units;
+﻿using System;
+using Game.GameActors.Units;
+using Game.GameInput;
+using Game.Manager;
+using GameEngine;
 using UnityEngine;
-using System;
-using Assets.GameEngine;
-using Assets.Game.Manager;
-using Assets.Game.GameStates;
 
-namespace Assets.Mechanics
+namespace Game.Mechanics
 {
     public class UnitSelectionSystem : MonoBehaviour, IEngineSystem
     {

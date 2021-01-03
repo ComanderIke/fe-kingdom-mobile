@@ -1,9 +1,9 @@
 ﻿using System.Collections;
-using Assets.Utility;
 using UnityEngine;
 using UnityEngine.UI;
+using Utility;
 
-namespace Assets.GUI
+namespace Game.GUI
 {
     public class StatsBarOnMap : MonoBehaviour
     {

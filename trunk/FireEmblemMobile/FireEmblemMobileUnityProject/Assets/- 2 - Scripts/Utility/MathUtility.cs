@@ -1,4 +1,4 @@
-﻿namespace Assets.Utility
+﻿namespace Utility
 {
     public class MathUtility
     {

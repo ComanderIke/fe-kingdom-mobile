@@ -1,16 +1,15 @@
-﻿using Assets.GameEngine;
-using Assets.GameActors.Units;
-using Assets.GameResources;
-using Assets.Grid;
-using Assets.Grid.PathFinding;
-using Assets.Mechanics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Game.GameActors.Units;
+using Game.GameResources;
+using Game.Grid;
+using Game.Grid.PathFinding;
+using Game.Mechanics;
+using GameEngine;
 using UnityEngine;
-using Assets.Game.GameStates;
 
-namespace Assets.Map
+namespace Game.Map
 {
     [Serializable]
     public class MapSystem : MonoBehaviour, IEngineSystem

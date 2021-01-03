@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Assets.GameActors.Units.Attributes
+namespace Game.GameActors.Units.Attributes
 {
     [Serializable]
     [CreateAssetMenu(menuName = "GameData/Unit/Stats", fileName = "UnitStats")]

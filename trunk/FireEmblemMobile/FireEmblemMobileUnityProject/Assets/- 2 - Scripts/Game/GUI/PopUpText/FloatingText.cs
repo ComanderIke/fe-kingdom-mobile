@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-namespace Assets.GUI.PopUpText
+namespace Game.GUI.PopUpText
 {
     public class FloatingText : MonoBehaviour
     {

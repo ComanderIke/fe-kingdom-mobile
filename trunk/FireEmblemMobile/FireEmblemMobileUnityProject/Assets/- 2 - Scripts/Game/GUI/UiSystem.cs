@@ -1,14 +1,15 @@
-﻿using Assets.GameActors.Units;
-using Assets.GameInput;
-using Assets.GameResources;
-using Assets.Mechanics;
+﻿using Game.GameActors.Units;
+using Game.GameInput;
+using Game.GameResources;
+using Game.Manager;
+using Game.Mechanics;
+using GameEngine;
 using UnityEngine;
-using UnityEngine.UI;
-using Assets.GameEngine;
-using Assets.Game.Manager;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using Utility;
 
-namespace Assets.GUI
+namespace Game.GUI
 {
     public class UiSystem : MonoBehaviour, IEngineSystem
     {

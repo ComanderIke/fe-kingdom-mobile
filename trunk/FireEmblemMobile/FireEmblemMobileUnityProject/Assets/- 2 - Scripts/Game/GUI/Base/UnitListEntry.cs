@@ -1,9 +1,9 @@
-﻿using Assets.GameActors.Units;
+﻿using Game.GameActors.Units;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.GUI.Base
+namespace Game.GUI.Base
 {
     public class UnitListEntry : MonoBehaviour
     {

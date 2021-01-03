@@ -1,9 +1,7 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using LetterboxCamera;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-namespace LetterboxCamera
+namespace Auto_Letterbox
 {
     /* ForceCameraRatio.cs
      *

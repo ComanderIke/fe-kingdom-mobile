@@ -1,13 +1,13 @@
-﻿using Assets.Game.Manager;
-using Assets.GameActors.Units.Humans;
-using Assets.GameResources;
-using Assets.GUI;
-using Assets.Utility;
+﻿using Game.GameActors.Units.Humans;
+using Game.GameResources;
+using Game.GUI;
+using Game.Manager;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Utility;
 
-namespace Assets.GameActors.Units.OnGameObject
+namespace Game.GameActors.Units.OnGameObject
 {
     public class UnitRenderer : MonoBehaviour
     {

@@ -1,11 +1,10 @@
-﻿
-using Assets.GameResources;
-using Assets.Grid;
-using Assets.Map;
+﻿using Game.GameResources;
+using Game.Grid;
+using Game.Map;
 using UnityEditor;
 using UnityEngine;
 
-namespace Assets.Editor
+namespace Editor
 {
     [CustomEditor(typeof(MapSystem))]
     public class GridBuilderEditor : UnityEditor.Editor

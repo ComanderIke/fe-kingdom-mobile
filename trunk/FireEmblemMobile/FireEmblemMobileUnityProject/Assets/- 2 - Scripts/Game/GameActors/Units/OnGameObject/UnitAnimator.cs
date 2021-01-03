@@ -1,9 +1,7 @@
-﻿
-using System;
+﻿using System;
 using UnityEngine;
 
-
-namespace Assets.GameActors.Units.OnGameObject
+namespace Game.GameActors.Units.OnGameObject
 {
     public class UnitAnimator : MonoBehaviour
     {

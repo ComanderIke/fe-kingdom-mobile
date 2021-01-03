@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.GUI
+namespace Game.GUI.Text
 {
     public class BattleTextAnimation : MonoBehaviour
     {

@@ -1,7 +1,7 @@
-﻿using Assets.GameActors.Units;
+﻿using Game.GameActors.Units;
 using UnityEngine;
 
-namespace Assets.GameActors.Items.Weapons
+namespace Game.GameActors.Items.Weapons
 {
     public abstract class WeaponMixin : ScriptableObject
     {

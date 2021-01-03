@@ -1,9 +1,9 @@
-﻿using Assets.GameActors.Units;
-using Assets.GameActors.Units.CharStateEffects;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Game.GameActors.Units;
+using Game.GameActors.Units.CharStateEffects;
 using UnityEngine;
 
-namespace Assets.GUI
+namespace Game.GUI
 {
     public class BuffUi : MonoBehaviour
     {

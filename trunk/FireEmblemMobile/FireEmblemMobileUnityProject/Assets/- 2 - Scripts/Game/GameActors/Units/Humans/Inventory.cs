@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Assets.GameActors.Items;
-using Assets.GameActors.Items.Weapons;
+using Game.GameActors.Items;
+using Game.GameActors.Items.Weapons;
 using UnityEngine;
 
-namespace Assets.GameActors.Units.Humans
+namespace Game.GameActors.Units.Humans
 {
     [CreateAssetMenu(menuName = "GameData/Inventory", fileName = "Inventory")]
     public class Inventory : ScriptableObject, ICloneable

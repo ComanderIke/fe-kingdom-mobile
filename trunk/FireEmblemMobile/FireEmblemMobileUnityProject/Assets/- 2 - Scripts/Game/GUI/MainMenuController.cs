@@ -1,10 +1,10 @@
 ﻿using System.IO;
-using Assets.Core;
+using Menu;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.GUI
+namespace Game.GUI
 {
     public class MainMenuController : MonoBehaviour
     {

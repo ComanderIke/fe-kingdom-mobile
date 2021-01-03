@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.GameActors.Units.Skills;
+using Game.GameActors.Units.Skills;
 
-namespace Assets.GameActors.Units.Humans
+namespace Game.GameActors.Units.Humans
 {
     public class SkillManager : ICloneable
     {

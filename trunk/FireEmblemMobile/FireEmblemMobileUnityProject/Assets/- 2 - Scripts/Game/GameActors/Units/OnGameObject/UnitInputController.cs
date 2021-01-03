@@ -1,11 +1,11 @@
-﻿using Assets.Game.Manager;
-using Assets.GameInput;
-using System;
+﻿using System;
+using Game.GameInput;
+using Game.Manager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Experimental.Rendering.Universal;
 
-namespace Assets.GameActors.Units.OnGameObject
+namespace Game.GameActors.Units.OnGameObject
 {
     public class UnitInputController : MonoBehaviour, IDragAble
     {
@@ -114,7 +114,7 @@ namespace Assets.GameActors.Units.OnGameObject
                 DragManager.Update();// Update Dragmanager because he should notice first when MouseUp happens
                 dragStarted = false;
                 dragInitiated = false;
-                Unit.OnUnitActiveStateUpdated(Unit, true, false);
+                Unit.OnUnitActiveStateUpdated?.Invoke(Unit, true, false);
                
                 OnEndDrag();
                 gameObject.GetComponent<BoxCollider2D>().enabled = true;
@@ -157,7 +157,7 @@ namespace Assets.GameActors.Units.OnGameObject
             if (!Unit.UnitTurnState.Selected)//If unit is already selected wait for MouseUp/DragEnd to invoke OnUnitClicked
                 if (!EventSystem.current.IsPointerOverGameObject())
                 {
-                    Unit.OnUnitActiveStateUpdated(Unit, false, true); 
+                    Unit.OnUnitActiveStateUpdated?.Invoke(Unit, false, true); 
                     light.transform.SetParent(null);
                     OnUnitClicked(Unit);
                 }

@@ -1,93 +1,39 @@
-﻿using UnityEngine;
+﻿using ICSharpCode.NRefactory.Ast;
+using UnityEngine;
 
-namespace Assets.GameCamera
+namespace GameCamera
 {
     
     public class ClampCameraMixin : CameraMixin
     {
-        private new Camera camera;
-        private CameraData cameraSettings;
-        private int gridHeight;
-        private int gridWidth;
-        private float horizontalExtent;
+ 
         private float maxX;
         private float maxY;
         private float minX;
         private float minY;
-        private float referenceHeight;
-        private float uiHeight;
-        private float verticalExtent;
-        bool init = false;
-        private void Start()
+
+        public void Construct(int width, int height)
         {
-            camera = Camera.main;
-            cameraSettings = GetComponent<CameraSystem>().CameraData;
-            UpdateBounds();
+            SetBounds(width, height);
         }
 
         private void LateUpdate()
         {
-            if (!init)
+            var pos = transform.localPosition;
+            if (pos.x < minX || pos.x > maxX || pos.y < minY || pos.y > maxY)
             {
-                init = true;
-                camera = Camera.main;
-                cameraSettings = GetComponent<CameraSystem>().CameraData;
-                UpdateBounds();
-            }
-            //Debug.Log("MinX: " + minX + " " + maxX + " " + minY + " " + maxY);
-            if (camera.orthographicSize != verticalExtent) UpdateBounds();
-
-            if (transform.localPosition.x < minX ||
-                transform.localPosition.x > maxX ||
-                transform.localPosition.y < minY ||
-                transform.localPosition.y > maxY)
-                transform.localPosition = new Vector3(
-                    Mathf.Clamp(transform.localPosition.x, minX, maxX),
-                    Mathf.Clamp(transform.localPosition.y, minY, maxY),
-                    transform.localPosition.z);
-        }
-
-        private void UpdateBounds()
-        {
-            if (cameraSettings.CameraBoundsBorder > 0)
-            {
-                //Debug.Log("UpdateCameraBounds: " + uiHeight + " " + referenceHeight);
-                verticalExtent = camera.orthographicSize;
-                horizontalExtent = verticalExtent * Screen.width / Screen.height;
-                float verticalExtentWithoutGui = verticalExtent *
-                                                 ((Screen.height - uiHeight * Screen.height / referenceHeight) /
-                                                  Screen
-                                                      .height); //GUI takes some space1385 are the number of pixels for NonGUI
-                minX = -cameraSettings.CameraBoundsBorder;
-                maxX = gridWidth - 2 * horizontalExtent + cameraSettings.CameraBoundsBorder;
-                minY = -cameraSettings.CameraBoundsBorder;
-                maxY = gridHeight - 2 * verticalExtentWithoutGui - 1 + 1 + cameraSettings.CameraBoundsBorder;
-                //Debug.Log("MinX: " + minX + " " + maxX + " " + minY + " " + maxY);
+                transform.localPosition = new Vector3(Mathf.Clamp(pos.x, minX, maxX),
+                    Mathf.Clamp(pos.y, minY, maxY), pos.z);
             }
         }
 
-        public ClampCameraMixin GridHeight(int gridHeight)
+        private void SetBounds(int width, int height)
         {
-            this.gridHeight = gridHeight;
-            return this;
-        }
-
-        public ClampCameraMixin GridWidth(int gridWidth)
-        {
-            this.gridWidth = gridWidth;
-            return this;
-        }
-
-        public ClampCameraMixin UiHeight(int uiHeight)
-        {
-            this.uiHeight = uiHeight;
-            return this;
-        }
-
-        public ClampCameraMixin ReferenceHeight(int referenceHeight)
-        {
-            this.referenceHeight = referenceHeight;
-            return this;
+            
+            minX = -CameraSystem.cameraData.CameraBoundsBorder;
+            maxX = width + CameraSystem.cameraData.CameraBoundsBorder;
+            minY = -CameraSystem.cameraData.CameraBoundsBorder;
+            maxY = height + CameraSystem.cameraData.CameraBoundsBorder;
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.GUI
+namespace Game.GUI
 {
     public class FilledBarController : MonoBehaviour
     {

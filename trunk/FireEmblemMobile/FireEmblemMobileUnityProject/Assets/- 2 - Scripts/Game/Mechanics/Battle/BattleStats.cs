@@ -1,12 +1,12 @@
-﻿using Assets.GameActors.Units;
-using Assets.GameActors.Units.Humans;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.GameActors.Items.Weapons;
+using Game.GameActors.Items.Weapons;
+using Game.GameActors.Units;
+using Game.GameActors.Units.Humans;
 using UnityEngine;
 
-namespace Assets.Mechanics.Battle
+namespace Game.Mechanics.Battle
 {
     public class BattleStats
     {

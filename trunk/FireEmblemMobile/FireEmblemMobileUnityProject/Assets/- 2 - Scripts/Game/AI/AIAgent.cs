@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Assets.AI;
 using UnityEngine;
 
-namespace Assets.GameActors.Units
+namespace Game.AI
 {
     public class AIAgent
     {

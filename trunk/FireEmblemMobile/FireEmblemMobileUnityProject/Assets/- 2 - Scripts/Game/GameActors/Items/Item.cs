@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Assets.GameActors.Units.Humans;
+using Game.GameActors.Units.Humans;
 using UnityEngine;
 
-namespace Assets.GameActors.Items
+namespace Game.GameActors.Items
 {
     [Serializable]
     public abstract class Item : ScriptableObject, ICloneable

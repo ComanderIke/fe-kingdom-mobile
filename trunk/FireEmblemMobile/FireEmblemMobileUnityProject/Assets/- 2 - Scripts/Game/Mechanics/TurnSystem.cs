@@ -1,10 +1,10 @@
-﻿using Assets.Game.Manager;
-using Assets.GameEngine;
-using Assets.GameInput;
-using System;
+﻿using System;
+using Game.GameInput;
+using Game.Manager;
+using GameEngine;
 using UnityEngine;
 
-namespace Assets.Mechanics
+namespace Game.Mechanics
 {
     public class TurnSystem : MonoBehaviour, IEngineSystem
     {

@@ -1,11 +1,10 @@
-﻿using Assets.Game.Manager;
-using Assets.GameEngine;
-using Assets.GameEngine.GameStates;
-using Assets.Mechanics;
+﻿using Game.Manager;
+using Game.Mechanics;
+using GameEngine;
+using GameEngine.GameStates;
 using UnityEngine;
 
-
-namespace Assets.AI
+namespace Game.AI
 {
     public class AIState : GameState<NextStateTrigger>
     {

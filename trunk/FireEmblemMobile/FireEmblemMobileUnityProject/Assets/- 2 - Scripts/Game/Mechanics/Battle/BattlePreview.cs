@@ -1,4 +1,4 @@
-﻿namespace Assets.Mechanics.Battle
+﻿namespace Game.Mechanics.Battle
 {
     public class BattlePreview
     {

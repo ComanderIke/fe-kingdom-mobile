@@ -1,8 +1,9 @@
-﻿using Assets.GameActors.Units;
+﻿using Game.GameActors.Units;
 using UnityEngine;
 
-namespace Assets.GameActors
+namespace Game.GameActors
 {
+    [ExecuteInEditMode]
     public class UnitSpawner : MonoBehaviour
     {
 
@@ -10,5 +11,11 @@ namespace Assets.GameActors
         public int FactionId;
         public int X => (int) transform.localPosition.x;
         public int Y => (int)transform.localPosition.y;
+
+        void Update()
+        {
+            transform.localPosition = new Vector3((int) transform.localPosition.x, (int) transform.localPosition.y,
+                (int) transform.localPosition.z);
+        }
     }
 }

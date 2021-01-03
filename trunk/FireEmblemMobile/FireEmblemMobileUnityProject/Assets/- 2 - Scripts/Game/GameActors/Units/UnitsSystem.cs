@@ -1,8 +1,8 @@
-﻿using Assets.GameActors.Units.OnGameObject;
-using Assets.GameEngine;
+﻿using Game.GameActors.Units.OnGameObject;
+using GameEngine;
 using UnityEngine;
 
-namespace Assets.GameActors.Units
+namespace Game.GameActors.Units
 {
     public class UnitsSystem : MonoBehaviour, IEngineSystem
     {

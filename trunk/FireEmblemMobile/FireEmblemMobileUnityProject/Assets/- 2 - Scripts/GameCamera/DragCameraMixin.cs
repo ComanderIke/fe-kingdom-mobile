@@ -1,47 +1,43 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using GameEngine.Input;
+using GameEngine.Tools;
 using UnityEngine;
 
-namespace Assets.GameCamera
+namespace GameCamera
 {
     public class DragCameraMixin : CameraMixin
     {
-        private const float DRAG_SPEED = 0.08f;
-        private bool drag;
-        private Vector3 lastPosition;
-        public List<string> excludeColliderTags = new List<string>();
+        private IDragPerformer DragPerformer { get; set; }
+        private IRayProvider RayProvider { get; set; }
+        private IHitChecker HitChecker { get; set; }
+        private IInputProvider InputProvider { get; set; }
 
-        public void AddColliderTags(string tag)
+        public void Construct(IDragPerformer dragPerformer, IRayProvider rayProvider, IHitChecker hitChecker,
+            IInputProvider inputProvider)
         {
-            excludeColliderTags.Add(tag);
+            DragPerformer = dragPerformer;
+            RayProvider = rayProvider;
+            HitChecker = hitChecker;
+            InputProvider = inputProvider;
         }
-        private void Update()
+
+        private void LateUpdate()
         {
-            if (Input.GetMouseButton(0) && drag)
+            if (InputProvider.InputPressed())
             {
-                var delta = Input.mousePosition - lastPosition;
-                transform.Translate(-delta.x * Time.deltaTime * DRAG_SPEED, -delta.y * Time.deltaTime * DRAG_SPEED, 0);
-                lastPosition = Input.mousePosition;
+                DragPerformer.Drag(transform,InputProvider.InputPosition());
             }
-            if (Input.GetMouseButtonDown(0))
+            if (InputProvider.InputPressedDown())
             {
-                var ray = CameraSystem.Camera.ScreenPointToRay(Input.mousePosition);
-                var hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
-                if (hit.collider != null)
-                    if (!excludeColliderTags.Contains(hit.collider.gameObject.tag))
-                    {
-                        lastPosition = Input.mousePosition;
-                        drag = true;
-                        //CameraSystem.DeactivateOtherMixins(this);
-                    }
+                var ray = RayProvider.CreateRay(InputProvider.InputPosition());
+                if (HitChecker.CheckHit(ray))
+                {
+                    DragPerformer.StartDrag(transform,InputProvider.InputPosition());
+                }
             }
-
-           
-
-            if (Input.GetMouseButtonUp(0))
+            if (InputProvider.InputPressedUp())
             {
+                DragPerformer.EndDrag(transform);
                 CameraSystem.ActivateMixins();
-                drag = false;
             }
         }
     }

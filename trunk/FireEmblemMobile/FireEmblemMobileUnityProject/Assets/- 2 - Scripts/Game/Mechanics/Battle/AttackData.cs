@@ -1,7 +1,7 @@
-﻿using Assets.GameActors.Units;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Game.GameActors.Units;
 
-namespace Assets.Mechanics.Battle
+namespace Game.Mechanics.Battle
 {
     public class AttackData
     {

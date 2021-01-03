@@ -1,13 +1,14 @@
-﻿
-using Assets.Game.Manager;
-using Assets.GameCamera;
-using Assets.GameEngine;
-using Assets.GameEngine.GameStates;
-using Assets.GameInput;
-using Assets.GUI;
-using Assets.Map;
+﻿using Game.GameInput;
+using Game.GUI;
+using Game.Manager;
+using Game.Map;
+using GameCamera;
+using GameEngine;
+using GameEngine.GameStates;
+using GameEngine.Input;
+using GameEngine.Tools;
 
-namespace Assets.Game.GameStates
+namespace Game.Mechanics
 {
     public class GameplayState : GameState<NextStateTrigger>
     {
@@ -20,16 +21,16 @@ namespace Assets.Game.GameStates
 
         public override void Enter()
         {
-            gridGameManager.GetSystem<CameraSystem>().AddMixin<DragCameraMixin>().AddColliderTags(TagManager.UnitTag);
-            
-            //gridGameManager.GetSystem<CameraSystem>().AddMixin<SnapCameraMixin>();
+            var cameraSystem  = gridGameManager.GetSystem<CameraSystem>();
+            cameraSystem.AddMixin<DragCameraMixin>().Construct(new WorldPosDragPerformer(1f, cameraSystem.camera),
+                new ScreenPointToRayProvider(cameraSystem.camera), new HitChecker(TagManager.UnitTag),new MouseInputProvider());
             int height = gridGameManager.GetSystem<MapSystem>().GridData.Height;
             int width = gridGameManager.GetSystem<MapSystem>().GridData.Width;
-            int uiHeight = gridGameManager.GetSystem<UiSystem>().GetUiHeight();
-            int referenceHeight = gridGameManager.GetSystem<UiSystem>().GetReferenceHeight();
-            //gridGameManager.GetSystem<CameraSystem>().AddMixin<ClampCameraMixin>().GridHeight(height).GridWidth(width)
-            //    .UiHeight(uiHeight).ReferenceHeight(referenceHeight).Locked(false);
-            gridGameManager.GetSystem<CameraSystem>().AddMixin<ViewOnGridMixin>().Zoom = 0;
+           // int uiHeight = gridGameManager.GetSystem<UiSystem>().GetUiHeight();
+          //  int referenceHeight = gridGameManager.GetSystem<UiSystem>().GetReferenceHeight();
+            cameraSystem.AddMixin<ClampCameraMixin>().Construct(width, height);
+                //.UiHeight(uiHeight).ReferenceHeight(referenceHeight);
+            cameraSystem.AddMixin<ViewOnGridMixin>().Zoom = 0;
         }
 
         public override GameState<NextStateTrigger> Update()

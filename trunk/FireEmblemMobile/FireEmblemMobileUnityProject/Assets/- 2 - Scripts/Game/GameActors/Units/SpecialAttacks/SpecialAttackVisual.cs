@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.GameActors.Units.SpecialAttacks
+namespace Game.GameActors.Units.SpecialAttacks
 {
     public class SpecialAttackVisual
     {

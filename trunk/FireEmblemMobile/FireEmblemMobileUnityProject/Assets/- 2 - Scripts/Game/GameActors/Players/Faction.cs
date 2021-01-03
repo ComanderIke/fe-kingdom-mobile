@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Game.Manager;
-using Assets.GameActors.Units;
+using Game.GameActors.Units;
+using Game.Manager;
 
-namespace Assets.GameActors.Players
+namespace Game.GameActors.Players
 {
     [Serializable]
     public class Faction

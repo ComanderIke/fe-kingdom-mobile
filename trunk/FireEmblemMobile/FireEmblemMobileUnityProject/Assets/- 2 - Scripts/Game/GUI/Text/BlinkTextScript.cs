@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace Assets.GUI
+namespace Game.GUI.Text
 {
     public class BlinkTextScript : MonoBehaviour
     {

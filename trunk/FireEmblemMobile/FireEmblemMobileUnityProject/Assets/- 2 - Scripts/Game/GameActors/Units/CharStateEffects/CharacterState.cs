@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Assets.GameActors.Units.CharStateEffects
+namespace Game.GameActors.Units.CharStateEffects
 {
     [Serializable]
     public abstract class CharacterState : ScriptableObject

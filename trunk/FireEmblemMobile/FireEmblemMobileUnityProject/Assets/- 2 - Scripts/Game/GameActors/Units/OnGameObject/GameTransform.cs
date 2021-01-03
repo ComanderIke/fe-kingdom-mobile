@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.GameActors.Units.OnGameObject
+namespace Game.GameActors.Units.OnGameObject
 {
     public class GameTransform
     {

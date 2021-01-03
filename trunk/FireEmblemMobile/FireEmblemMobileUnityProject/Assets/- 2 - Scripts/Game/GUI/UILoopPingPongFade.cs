@@ -1,31 +1,33 @@
 ﻿using UnityEngine;
 
-
-public class UILoopPingPongFade : MonoBehaviour
+namespace Game.GUI
 {
-    public float maxAlpha= 1;
-    public float minAlpha = 0;
-    public float duration = 0.8f;
-    private CanvasGroup CanvasGroup;
-    // Start is called before the first frame update
+    public class UILoopPingPongFade : MonoBehaviour
+    {
+        public float maxAlpha= 1;
+        public float minAlpha = 0;
+        public float duration = 0.8f;
+        private CanvasGroup CanvasGroup;
+        // Start is called before the first frame update
 
-    public void OnEnable()
-    {
-        if (CanvasGroup == null)
-            CanvasGroup = GetComponent<CanvasGroup>();
-        if (LeanTween.isTweening(gameObject))
+        public void OnEnable()
         {
-            CanvasGroup.alpha = minAlpha;
-            LeanTween.resume(this.gameObject);
+            if (CanvasGroup == null)
+                CanvasGroup = GetComponent<CanvasGroup>();
+            if (LeanTween.isTweening(gameObject))
+            {
+                CanvasGroup.alpha = minAlpha;
+                LeanTween.resume(this.gameObject);
+            }
+            else
+            {
+                CanvasGroup.alpha = minAlpha;
+                LeanTween.alphaCanvas(CanvasGroup, maxAlpha, duration).setLoopPingPong();
+            }
         }
-        else
+        private void OnDisable()
         {
-            CanvasGroup.alpha = minAlpha;
-            LeanTween.alphaCanvas(CanvasGroup, maxAlpha, duration).setLoopPingPong();
+            LeanTween.pause(this.gameObject);
         }
-    }
-    private void OnDisable()
-    {
-        LeanTween.pause(this.gameObject);
     }
 }

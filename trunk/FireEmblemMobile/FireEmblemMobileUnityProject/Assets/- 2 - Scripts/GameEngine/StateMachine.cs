@@ -1,7 +1,6 @@
-﻿using Assets.GameEngine.GameStates;
-using UnityEngine;
+﻿using GameEngine.GameStates;
 
-namespace Assets.GameEngine
+namespace GameEngine
 {
     public class StateMachine<TFeed>
     {

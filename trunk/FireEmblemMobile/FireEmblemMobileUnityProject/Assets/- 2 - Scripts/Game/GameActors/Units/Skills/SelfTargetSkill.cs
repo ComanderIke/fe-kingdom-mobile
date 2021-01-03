@@ -1,4 +1,4 @@
-﻿namespace Assets.GameActors.Units.Skills
+﻿namespace Game.GameActors.Units.Skills
 {
     public abstract class SelfTargetSkill : Skill
     {

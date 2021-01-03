@@ -1,4 +1,4 @@
-﻿namespace Assets.Grid.PathFinding
+﻿namespace Game.Grid.PathFinding
 {
     public class PathFindingNode
     {

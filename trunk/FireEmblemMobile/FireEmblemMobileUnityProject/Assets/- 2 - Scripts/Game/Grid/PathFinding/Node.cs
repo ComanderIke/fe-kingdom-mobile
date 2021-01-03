@@ -1,4 +1,4 @@
-﻿namespace Assets.Grid.PathFinding
+﻿namespace Game.Grid.PathFinding
 {
     [System.Serializable]
     public class Node

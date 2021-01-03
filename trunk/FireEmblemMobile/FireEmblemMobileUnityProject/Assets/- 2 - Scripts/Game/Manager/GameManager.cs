@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Audio;
-using Assets.GameEngine;
-using Assets.SerializedData;
+using Audio;
+using GameEngine;
+using SerializedData;
 using UnityEngine;
 
-namespace Assets.Game.Manager
+namespace Game.Manager
 {
     public class GameManager : MonoBehaviour
     {

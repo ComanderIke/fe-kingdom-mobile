@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Assets.GameActors.Units.Attributes
+namespace Game.GameActors.Units.Attributes
 {
     [Serializable]
     [CreateAssetMenu(menuName = "GameData/Unit/Growths", fileName = "UnitGrowths")]

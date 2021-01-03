@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.GameCamera
+namespace GameCamera
 {
     [RequireComponent(typeof(CameraSystem))]
     public abstract class CameraMixin : MonoBehaviour

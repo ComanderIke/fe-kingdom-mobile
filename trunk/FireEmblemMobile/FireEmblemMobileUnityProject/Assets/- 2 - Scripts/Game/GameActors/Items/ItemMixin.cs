@@ -1,8 +1,8 @@
 using System;
-using Assets.GameActors.Units;
+using Game.GameActors.Units;
 using UnityEngine;
 
-namespace Assets.GameActors.Items
+namespace Game.GameActors.Items
 {
     [Serializable]
     public abstract class ItemMixin : ScriptableObject

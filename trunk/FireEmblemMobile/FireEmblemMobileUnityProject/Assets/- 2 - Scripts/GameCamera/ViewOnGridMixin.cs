@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.GameCamera
+namespace GameCamera
 {
     public class ViewOnGridMixin : CameraMixin
     {

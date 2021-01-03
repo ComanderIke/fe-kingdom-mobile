@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Assets.GameActors.Items;
-using Assets.GameActors.Units;
+using Game.GameActors.Items;
+using Game.GameActors.Units;
 using UnityEngine;
 
-namespace Assets.GameActors.Players
+namespace Game.GameActors.Players
 {
 
     [System.Serializable]

@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace Assets.Grid.PathFinding
+namespace Game.Grid.PathFinding
 {
     [System.Serializable]
     public class MovementPath

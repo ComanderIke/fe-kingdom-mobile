@@ -1,11 +1,11 @@
-﻿using Assets.Game.Manager;
-using Assets.GameActors.Units;
-using Assets.Map;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Game.GameActors.Units;
+using Game.Manager;
+using Game.Map;
 using UnityEngine;
 
-namespace Assets.Grid
+namespace Game.Grid
 {
     public class GridPosition
     {

@@ -1,12 +1,12 @@
-﻿using Assets.GameActors.Units;
-using Assets.GameActors.Units.Humans;
-using Assets.GUI;
-using Assets.Mechanics.Battle;
+﻿using Game.GameActors.Units;
+using Game.GameActors.Units.Humans;
+using Game.GUI;
+using Game.Manager;
+using Game.Mechanics.Battle;
+using GameEngine;
 using UnityEngine;
-using Assets.GameEngine;
-using Assets.Game.Manager;
 
-namespace Assets.Mechanics
+namespace Game.Mechanics
 {
     public class BattleSystem : IEngineSystem
     {
@@ -114,8 +114,8 @@ namespace Assets.Mechanics
         {
             int levelDifference = expReceiver.ExperienceManager.Level - enemyFought.ExperienceManager.Level;
             bool killEXP = !enemyFought.IsAlive();
-            int expLeft = enemyFought.ExperienceManager.EXPLeftToDrain;
-            int maxEXPDrain = enemyFought.ExperienceManager.MaxEXPToDrain;
+            int expLeft = enemyFought.ExperienceManager.ExpLeftToDrain;
+            int maxEXPDrain = ExperienceManager.MAX_EXP_TO_DRAIN;
             float chipExpPercent = 0.2f;
             float killExpPercent = 1.0f;
             int exp =(int)( killEXP == true ? killExpPercent * maxEXPDrain : chipExpPercent * maxEXPDrain);
@@ -127,9 +127,9 @@ namespace Assets.Mechanics
             {
                 exp = expLeft - maxEXPDrain / 5;
             }
-            enemyFought.ExperienceManager.EXPLeftToDrain -= exp;
-            if (enemyFought.ExperienceManager.EXPLeftToDrain < 0)
-                enemyFought.ExperienceManager.EXPLeftToDrain = 0;
+            enemyFought.ExperienceManager.ExpLeftToDrain -= exp;
+            if (enemyFought.ExperienceManager.ExpLeftToDrain < 0)
+                enemyFought.ExperienceManager.ExpLeftToDrain = 0;
             if (levelDifference < 0)
             {
                 exp = (int)(exp * (1f + ((levelDifference * -1) / 10f)));

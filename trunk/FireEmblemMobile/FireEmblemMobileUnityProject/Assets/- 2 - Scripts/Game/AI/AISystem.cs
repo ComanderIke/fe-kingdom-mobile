@@ -1,8 +1,8 @@
 ﻿
 
-using Assets.GameEngine;
+using GameEngine;
 
-namespace Assets.AI
+namespace Game.AI
 {
     public class AISystem : IEngineSystem
     {

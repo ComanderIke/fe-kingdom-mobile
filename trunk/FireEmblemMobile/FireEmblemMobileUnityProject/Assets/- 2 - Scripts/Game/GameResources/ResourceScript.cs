@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.GameResources
+namespace Game.GameResources
 {
     public class ResourceScript : MonoBehaviour {
 

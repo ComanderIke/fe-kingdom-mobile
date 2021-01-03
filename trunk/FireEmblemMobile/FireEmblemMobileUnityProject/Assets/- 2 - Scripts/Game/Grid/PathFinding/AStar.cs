@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Map;
+using Game.Map;
 using UnityEngine;
 
-namespace Assets.Grid.PathFinding
+namespace Game.Grid.PathFinding
 {
     public class AStar
     {
