@@ -16,7 +16,6 @@ namespace GameEngine.Tools
         }
         public void Drag(Transform transform, Vector3 dragDestination)
         {
-           
             if (!startedDrag)
                 return;
             var delta = camera.ScreenToWorldPoint(dragDestination) - camera.ScreenToWorldPoint(lastPosition);//screen to world must be calculated here otherwise lastPosition has worldPosition of 1 frame before instead of mousePosition of 1 frame before!!!

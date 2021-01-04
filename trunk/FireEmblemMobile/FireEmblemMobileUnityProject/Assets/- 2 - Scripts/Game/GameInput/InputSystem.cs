@@ -284,7 +284,7 @@ namespace Game.GameInput
                     selectedTileX = -1;
                     selectedTileY = -1;
                     gameplayInput.MoveUnit(SelectedCharacter, new GridPosition(x, y), GridPosition.GetFromVectorList(MovementPath));
-                    gameplayInput.ExecuteInputActions(() => gridGameManager.GameStateManager.SwitchState(GameStateManager.GameplayState));
+                    //gameplayInput.ExecuteInputActions(() => gridGameManager.GameStateManager.SwitchState(GameStateManager.GameplayState));
                 }
                 else
                 {
@@ -363,7 +363,7 @@ namespace Game.GameInput
 
                 //Debug.Log("Enemy is in Range:");
                 gameplayInput.AttackUnit(character, enemy);
-                gameplayInput.ExecuteInputActions(() => gridGameManager.GameStateManager.SwitchState(GameStateManager.GameplayState));
+               // gameplayInput.ExecuteInputActions(() => gridGameManager.GameStateManager.SwitchState(GameStateManager.GameplayState));
             }
             else if(movePath!=null) //go to enemy cause not in range
             {
@@ -377,7 +377,7 @@ namespace Game.GameInput
                     gameplayInput.MoveUnit(character, new GridPosition(xMov, yMov), GridPosition.GetFromVectorList(movePath));
                 }
                 gameplayInput.AttackUnit(character, enemy);
-                gameplayInput.ExecuteInputActions(() => gridGameManager.GameStateManager.SwitchState(GameStateManager.GameplayState));
+                //gameplayInput.ExecuteInputActions(() => gridGameManager.GameStateManager.SwitchState(GameStateManager.GameplayState));
                 
                 //AttackRangeFromPath = 0;//No Idea why this is here!
             }

@@ -2,6 +2,7 @@
 using Game.Mechanics;
 using GameEngine;
 using GameEngine.GameStates;
+using UnityEngine;
 
 namespace Game.Manager
 {
@@ -43,12 +44,14 @@ namespace Game.Manager
             MovementState.AddTransition(GameplayState, NextStateTrigger.FinishedMovement);//TODO NOT WORKING FOR AI
             BattleState.AddTransition(GameplayState, NextStateTrigger.BattleEnded);
         }
-        public void SwitchState(GameState<NextStateTrigger> nextState)
-        {
-            stateMachine.SwitchState(nextState);
-        }
+        // public void SwitchState(GameState<NextStateTrigger> nextState)
+        // {
+        //     Debug.Log("Switch State: "+nextState);
+        //     stateMachine.SwitchState(nextState);
+        // }
         public void Feed(NextStateTrigger trigger)
         {
+            Debug.Log("Feed State: "+trigger);
             stateMachine.Feed(trigger);
         }
     

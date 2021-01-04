@@ -1,5 +1,4 @@
-﻿using ICSharpCode.NRefactory.Ast;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace GameCamera
 {
