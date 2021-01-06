@@ -8,15 +8,15 @@ namespace Game.Mechanics
 {
     public class MoveSystem : IEngineSystem
     {
-        private readonly MapSystem mapSystem;
+        private readonly GridSystem gridSystem;
         private AStar PathFindingManager { get; set; }
         private readonly NodeHelper nodeHelper;
 
-        public MoveSystem(MapSystem mapSystem)
+        public MoveSystem(GridSystem gridSystem)
         {
-            this.mapSystem = mapSystem;
-            nodeHelper = new NodeHelper(mapSystem.GridData.Width, mapSystem.GridData.Height);
-            PathFindingManager = new AStar(mapSystem, mapSystem.GridData.Width, mapSystem.GridData.Height);
+            this.gridSystem = gridSystem;
+            nodeHelper = new NodeHelper(gridSystem.GridData.width, gridSystem.GridData.height);
+            PathFindingManager = new AStar(gridSystem, gridSystem.GridData.width, gridSystem.GridData.height);
         }
 
         public List<Vector2> GetMovement(int x, int y, int movRange, int playerId)
@@ -37,13 +37,13 @@ namespace Game.Mechanics
             locations.Add(new Vector2(x, y));
             nodeHelper.Nodes[x, y].C = c;
             c++;
-            if (mapSystem.GridLogic.CheckField(x - 1, y, playerId, range) && nodeHelper.NodeFaster(x - 1, y, c))
+            if (gridSystem.GridLogic.CheckField(x - 1, y, playerId, range) && nodeHelper.NodeFaster(x - 1, y, c))
                 GetMovementLocations(x - 1, y, range - 1, c, playerId, locations);
-            if (mapSystem.GridLogic.CheckField(x + 1, y, playerId, range) && nodeHelper.NodeFaster(x + 1, y, c))
+            if (gridSystem.GridLogic.CheckField(x + 1, y, playerId, range) && nodeHelper.NodeFaster(x + 1, y, c))
                 GetMovementLocations(x + 1, y, range - 1, c, playerId, locations);
-            if (mapSystem.GridLogic.CheckField(x, y - 1, playerId, range) && nodeHelper.NodeFaster(x, y - 1, c))
+            if (gridSystem.GridLogic.CheckField(x, y - 1, playerId, range) && nodeHelper.NodeFaster(x, y - 1, c))
                 GetMovementLocations(x, y - 1, range - 1, c, playerId, locations);
-            if (mapSystem.GridLogic.CheckField(x, y + 1, playerId, range) && nodeHelper.NodeFaster(x, y + 1, c))
+            if (gridSystem.GridLogic.CheckField(x, y + 1, playerId, range) && nodeHelper.NodeFaster(x, y + 1, c))
                 GetMovementLocations(x, y + 1, range - 1, c, playerId, locations);
         }
 

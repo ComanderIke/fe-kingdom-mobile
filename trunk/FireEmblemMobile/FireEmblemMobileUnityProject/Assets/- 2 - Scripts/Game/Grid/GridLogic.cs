@@ -11,10 +11,10 @@ namespace Game.Grid
     {
         private readonly GridGameManager gridGameManager;
         public Tile[,] Tiles { get; set; }
-        public MapSystem GridManager { get; set; }
+        public GridSystem GridManager { get; set; }
         private readonly GridData gridData;
 
-        public GridLogic(MapSystem gridManager)
+        public GridLogic(GridSystem gridManager)
         {
             gridGameManager = GridGameManager.Instance;
             GridManager = gridManager;
@@ -99,12 +99,12 @@ namespace Game.Grid
 
         public bool IsOutOfBounds(Vector2 pos)
         {
-            return pos.x < 0 || pos.y < 0 || pos.x >= gridData.Width || pos.y >= gridData.Height;
+            return pos.x < 0 || pos.y < 0 || pos.x >= gridData.width || pos.y >= gridData.height;
         }
 
         private bool IsValidAndActive(Vector2 pos, int team)
         {
-            bool invalid = (pos.x < 0) || (pos.y < 0) || (pos.x >= gridData.Width) || (pos.y >= gridData.Height);
+            bool invalid = (pos.x < 0) || (pos.y < 0) || (pos.x >= gridData.width) || (pos.y >= gridData.height);
             if (!invalid)
             {
                 invalid = !Tiles[(int) pos.x, (int) pos.y].IsAccessible;
@@ -187,7 +187,7 @@ namespace Game.Grid
 
         public bool CheckField(int x, int y, int team, int range)
         {
-            if (x >= 0 && y >= 0 && x < gridData.Width && y < gridData.Height)
+            if (x >= 0 && y >= 0 && x < gridData.width && y < gridData.height)
             {
                 var field = Tiles[x, y];
                 if (field.IsAccessible)
@@ -210,7 +210,7 @@ namespace Game.Grid
 
         public bool CheckAttackField(int x, int y)
         {
-            return x >= 0 && y >= 0 && x < gridData.Width && y < gridData.Height;
+            return x >= 0 && y >= 0 && x < gridData.width && y < gridData.height;
         }
 
         public bool CheckMonsterField(BigTile bigTile, int team, int range)
@@ -228,7 +228,7 @@ namespace Game.Grid
 
         public bool IsValidLocation(int team, int sx, int sy, int x, int y, bool isAdjacent)
         {
-            bool invalid = (x < 0) || (y < 0) || (x >= gridData.Width) || (y >= gridData.Height);
+            bool invalid = (x < 0) || (y < 0) || (x >= gridData.width) || (y >= gridData.height);
             if ((!invalid) && ((sx != x) || (sy != y)))
             {
                 invalid = !Tiles[x, y].IsAccessible;
@@ -264,9 +264,9 @@ namespace Game.Grid
         public void ResetActiveFields()
         {
             GridManager.NodeHelper.Reset();
-            for (int i = 0; i < gridData.Width; i++)
+            for (int i = 0; i < gridData.width; i++)
             {
-                for (int j = 0; j < gridData.Height; j++)
+                for (int j = 0; j < gridData.height; j++)
                 {
                     Tiles[i, j].IsActive = false;
                     Tiles[i, j].IsAttackable = false;
@@ -301,7 +301,7 @@ namespace Game.Grid
 
         public bool IsValidLocation(Vector2 pos, Unit character)
         {
-            bool invalid = (pos.x < 0) || (pos.y < 0) || (pos.x >= gridData.Width) || (pos.y >= gridData.Height);
+            bool invalid = (pos.x < 0) || (pos.y < 0) || (pos.x >= gridData.width) || (pos.y >= gridData.height);
 
             if (!invalid)
             {
@@ -320,7 +320,7 @@ namespace Game.Grid
 
         public bool IsTileAccessible(Vector2 pos, Unit character)
         {
-            bool invalid = (pos.x < 0) || (pos.y < 0) || (pos.x >= gridData.Width) || (pos.y >= gridData.Height);
+            bool invalid = (pos.x < 0) || (pos.y < 0) || (pos.x >= gridData.width) || (pos.y >= gridData.height);
 
             if (!invalid)
             {
@@ -337,7 +337,7 @@ namespace Game.Grid
 
         public bool IsTileAccessible(Vector2 pos)
         {
-            bool invalid = (pos.x < 0) || (pos.y < 0) || (pos.x >= gridData.Width) || (pos.y >= gridData.Height);
+            bool invalid = (pos.x < 0) || (pos.y < 0) || (pos.x >= gridData.width) || (pos.y >= gridData.height);
 
             if (!invalid)
             {

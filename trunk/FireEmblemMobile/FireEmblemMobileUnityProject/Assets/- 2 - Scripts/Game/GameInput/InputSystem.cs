@@ -211,7 +211,7 @@ namespace Game.GameInput
             }
             else
             {
-                if (gridGameManager.GetSystem<MapSystem>().GridLogic.IsFieldAttackable(unit.GridPosition.X, unit.GridPosition.Y))
+                if (gridGameManager.GetSystem<GridSystem>().GridLogic.IsFieldAttackable(unit.GridPosition.X, unit.GridPosition.Y))
                 {
                     if (confirmAttackTarget!=unit)
                     {
@@ -275,7 +275,7 @@ namespace Game.GameInput
         }
         public void GridClicked(int x, int y)
         {
-            if (gridGameManager.GetSystem<MapSystem>().GridLogic.IsFieldFreeAndActive(x, y))
+            if (gridGameManager.GetSystem<GridSystem>().GridLogic.IsFieldFreeAndActive(x, y))
             {
                 
                 if(selectedTileX == x && selectedTileY == y)
@@ -332,7 +332,7 @@ namespace Game.GameInput
             //Debug.Log("Dragged ended on unit: " + draggedOverUnit.name);
             if (draggedOverUnit.Faction.Id != gridGameManager.FactionManager.ActiveFaction.Id)//Enemy
             {
-                if (gridGameManager.GetSystem<Map.MapSystem>().GridLogic.IsFieldAttackable(draggedOverUnit.GridPosition.X,
+                if (gridGameManager.GetSystem<Map.GridSystem>().GridLogic.IsFieldAttackable(draggedOverUnit.GridPosition.X,
                     draggedOverUnit.GridPosition.Y))
                 {
                     
@@ -355,7 +355,7 @@ namespace Game.GameInput
         {
             character.ResetPosition();
             //ResetDrag();
-            gridGameManager.GetSystem<Map.MapSystem>().HideMovementRangeOnGrid();
+            gridGameManager.GetSystem<Map.GridSystem>().HideMovementRangeOnGrid();
             /* Enemy is in attackRange already */
             if ((movePath == null || movePath.Count == 0) &&
                 character.GridPosition.CanAttack(character.Stats.AttackRanges, enemy.GridPosition))
@@ -421,7 +421,7 @@ namespace Game.GameInput
             for (int i = c.Stats.AttackRanges.Count - 1; i >= 0; i--) //Prioritize Range Attacks
                 for (int j = LastPositions.Count - 1; j >= 0; j--)
                     if (GetDelta(LastPositions[j].Position, new Vector2(xAttack, zAttack)) == c.Stats.AttackRanges[i] &&
-                        gridGameManager.GetSystem<MapSystem>().Tiles[(int)LastPositions[j].Position.x,
+                        gridGameManager.GetSystem<GridSystem>().Tiles[(int)LastPositions[j].Position.x,
                             (int)LastPositions[j].Position.y].Unit == null)
                         return LastPositions[j].Position;
 
@@ -521,7 +521,7 @@ namespace Game.GameInput
             OnDragOverTile?.Invoke();
            
             /* store latest correct Positions */
-            var field = gridGameManager.GetSystem<MapSystem>().Tiles[x, y];
+            var field = gridGameManager.GetSystem<GridSystem>().Tiles[x, y];
             if (field.IsActive && field.Unit == null)
             {
                 LastPositions.Add(new CursorPosition(new Vector2(x, y), null));
@@ -555,7 +555,7 @@ namespace Game.GameInput
         {
             
             //Debug.Log("Dragged on enemy: " + enemy.name +" at ["+x+"/"+y+"]");
-            if (!gridGameManager.GetSystem<MapSystem>().GridLogic.IsFieldAttackable(x, y))
+            if (!gridGameManager.GetSystem<GridSystem>().GridLogic.IsFieldAttackable(x, y))
                 return;
             //CalculateMousePathToEnemy(selectedCharacter, new Vector2(x, y));
             if (MovementPath == null || MovementPath.Count == 0)
@@ -579,7 +579,7 @@ namespace Game.GameInput
                 {
                     var lastMousePathPositionX = (int)MovementPath[i].x;
                     var lastMousePathPositionY = (int)MovementPath[i].y;
-                    var lastMousePathField = gridGameManager.GetSystem<MapSystem>().GetTileFromVector2(MovementPath[i]);
+                    var lastMousePathField = gridGameManager.GetSystem<GridSystem>().GetTileFromVector2(MovementPath[i]);
                     int delta = Mathf.Abs(lastMousePathPositionX - x) + Mathf.Abs(lastMousePathPositionY - y);
                     if (SelectedCharacter.Stats.AttackRanges.Contains(delta))
                         if (lastMousePathField.Unit == null)
@@ -663,15 +663,15 @@ namespace Game.GameInput
 
         public Vector2 GetCenterPos(Vector2 clickedPos)
         {
-            int centerX = (int)Mathf.Round(clickedPos.x - MapSystem.GRID_X_OFFSET) - 1;
+            int centerX = (int)Mathf.Round(clickedPos.x - GridSystem.GRID_X_OFFSET) - 1;
             int centerY = (int)Mathf.Round(clickedPos.y) - 1;
             return new Vector2(centerX, centerY);
         }
 
         private bool IsOutOfBounds(int x, int y)
         {
-            return x < 0 || x >= gridGameManager.GetSystem<MapSystem>().GridData.Width || y < 0 ||
-                   y >= gridGameManager.GetSystem<MapSystem>().GridData.Height;
+            return x < 0 || x >= gridGameManager.GetSystem<GridSystem>().GridData.width || y < 0 ||
+                   y >= gridGameManager.GetSystem<GridSystem>().GridData.height;
         }
 
         private void OnDestroy()

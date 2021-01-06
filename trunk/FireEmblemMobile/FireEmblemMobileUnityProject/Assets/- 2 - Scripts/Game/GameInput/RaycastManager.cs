@@ -12,7 +12,7 @@ namespace Game.GameInput
             Vector3 point = camera.ScreenToWorldPoint(Input.mousePosition);
             hit = new RaycastHit2D();
             hit= Physics2D.GetRayIntersection(new Ray(point, Vector3.forward),Mathf.Infinity, LayerMask.GetMask("Grid","Characters"));//TODO 10 Grid Layer Mask
-            int x = (int)Mathf.Floor(hit.point.x - Map.MapSystem.GRID_X_OFFSET);
+            int x = (int)Mathf.Floor(hit.point.x - Map.GridSystem.GRID_X_OFFSET);
             int y = (int)Mathf.Floor(hit.point.y);
             if (hit.collider != null)
                 connected = true;

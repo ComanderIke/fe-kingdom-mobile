@@ -43,7 +43,7 @@ namespace Game.Manager
             AddSystems();
             FactionManager = new FactionManager();
             Application.targetFrameRate = 60;
-            JITHelper.PreJitAll<MapSystem>();
+            JITHelper.PreJitAll<GridSystem>();
             JITHelper.PreJitAll<UiSystem>();
             JITHelper.PreJitAll<GridLogic>();
             JITHelper.PreJitAll<GridRenderer>();
@@ -90,7 +90,7 @@ namespace Game.Manager
             {
                 FindObjectOfType<UiSystem>(),
                 FindObjectOfType<CameraSystem>(),
-                FindObjectOfType<MapSystem>(),
+                FindObjectOfType<GridSystem>(),
                 FindObjectOfType<AudioSystem>(),
                 FindObjectOfType<PopUpTextSystem>(),
                 FindObjectOfType<UnitActionSystem>(),
@@ -108,7 +108,7 @@ namespace Game.Manager
             LevelConfig();
             GameStateManager = new GameStateManager();
             GameStateManager.Init();
-            Systems.Add(new MoveSystem(GetSystem<MapSystem>()));
+            Systems.Add(new MoveSystem(GetSystem<GridSystem>()));
             OnStartGame?.Invoke();
             GetSystem<TurnSystem>().StartTurn();
         }

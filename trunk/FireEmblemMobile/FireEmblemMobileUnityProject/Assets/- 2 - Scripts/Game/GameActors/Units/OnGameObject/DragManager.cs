@@ -84,7 +84,7 @@ namespace Game.GameActors.Units.OnGameObject
                 Vector3 curPos = new Vector3(Input.mousePosition.x - deltaPosX, Input.mousePosition.y - deltaPosY, 0);
                 Vector3 worldPos = camera.ScreenToWorldPoint(curPos);
                 worldPos.z = 0;
-                worldPos.x -= Map.MapSystem.GRID_X_OFFSET;
+                worldPos.x -= Map.GridSystem.GRID_X_OFFSET;
                 DragObject.GetTransform().localPosition = Vector3.Lerp(DragObject.GetTransform().localPosition, worldPos, Time.deltaTime * DRAG_FOLLOW_SPEED);
                 DragObject.Dragging(worldPos.x, worldPos.y);
             }

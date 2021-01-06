@@ -24,7 +24,7 @@ namespace Game.Grid
         }
 
         protected Unit Character;
-        protected MapSystem GridScript;
+        protected GridSystem GridScript;
 
         public GridPosition(int x, int y)
         {
@@ -45,7 +45,7 @@ namespace Game.Grid
         public virtual void SetPosition(int newX, int newY)
         {
             if (GridScript == null)
-                GridScript = GridGameManager.Instance.GetSystem<MapSystem>();
+                GridScript = GridGameManager.Instance.GetSystem<GridSystem>();
             if (X != -1 && Y != -1)
                 GridScript.Tiles[X, Y].Unit = null;
             GridScript.Tiles[newX, newY].Unit = Character;
@@ -61,7 +61,7 @@ namespace Game.Grid
         public virtual void RemoveCharacter()
         {
             if (GridScript == null)
-                GridScript = GridGameManager.Instance.GetSystem<MapSystem>();
+                GridScript = GridGameManager.Instance.GetSystem<GridSystem>();
             GridScript.Tiles[X, Y].Unit = null;
         }
 

@@ -6,27 +6,25 @@ using UnityEngine;
 
 namespace Editor
 {
-    [CustomEditor(typeof(MapSystem))]
+    [CustomEditor(typeof(GridBuilder))]
     public class GridBuilderEditor : UnityEditor.Editor
     {
-        private MapSystem mytarget;
-        private MapData mapData;
+        
+        private GridBuilder mytarget;
+        private int width = 6;
+        private int height = 6;
         private void OnEnable()
         {
-            mytarget = (MapSystem)target;
-            mapData = FindObjectOfType<DataScript>().MapData;
+            mytarget = (GridBuilder)target;
         }
 
         public override void OnInspectorGUI()
         {
-            mapData.Width = EditorGUILayout.IntSlider("Width:", mapData.Width, 6, 24);
-            mapData.Height = EditorGUILayout.IntSlider("Height:", mapData.Height, 6, 24);
+            mytarget.gridData.width = EditorGUILayout.IntSlider("Width:", mytarget.gridData.width, 6, 24);
+            mytarget.gridData.height = EditorGUILayout.IntSlider("Height:", mytarget.gridData.height, 6, 24);
             if (GUILayout.Button("Build Grid"))
             {
-                int width = mapData.Width;
-                int height = mapData.Height;
-                mytarget.GridBuilder = new GridBuilder(mytarget.GridResources.GridSprite, mytarget.GridResources.CellMaterialValid, mytarget.GridResources.CellMaterialInvalid);
-                mytarget.GridBuilder.Build(width, height, mytarget.GridTransform);
+                mytarget.Build(mytarget.gridData.width, mytarget.gridData.height);
             }
             base.OnInspectorGUI();
         }

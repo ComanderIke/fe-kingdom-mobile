@@ -7,19 +7,22 @@ using Game.Grid;
 using Game.Grid.PathFinding;
 using Game.Mechanics;
 using GameEngine;
+using UnityEditor.VersionControl;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game.Map
 {
     [Serializable]
-    public class MapSystem : MonoBehaviour, IEngineSystem
+    [RequireComponent(typeof(GridBuilder))]
+    public class GridSystem : MonoBehaviour, IEngineSystem
     {
         public const float GRID_X_OFFSET = 0.0f;
         public string MapName;
-        public GridData GridData;
-        public GridBuilder GridBuilder { get; set; }
-        public Transform GridTransform;
+        [FormerlySerializedAs("GridBuilder")] [SerializeField]
+        private GridBuilder gridBuilder;
         public GridResources GridResources;
+        public GridData GridData;
         public Tile[,] Tiles { get; set; }
         public GridRenderer GridRenderer { get; set; }
         public GridLogic GridLogic { get; set; }
@@ -27,26 +30,22 @@ namespace Game.Map
 
         private void Start()
         {
-            var mapData = FindObjectOfType<DataScript>().MapData;
-            MapName = mapData.Name;
-            GridData = new GridData(mapData.Width, mapData.Height);
 
-            Tiles = new Tile[GridData.Width, GridData.Height];
-           
-            GridBuilder = new GridBuilder(GridResources.GridSprite, GridResources.CellMaterialValid, GridResources.CellMaterialInvalid);
-            Tiles = GridBuilder.Build(GridData.Width, GridData.Height, GridTransform);
+            Tiles = GetComponent<GridBuilder>().GetTiles();
+            
             GridRenderer = new GridRenderer(this);
             GridLogic = new GridLogic(this);
-            NodeHelper = new NodeHelper(GridData.Width, GridData.Height);
+            NodeHelper = new NodeHelper(GridData.width, GridData.height);
             UnitSelectionSystem.OnDeselectCharacter += HideMovementRangeOnGrid;
             UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
             UnitSelectionSystem.OnEnemySelected += OnEnemySelected;
             UnitSelectionSystem.OnSelectedInActiveCharacter += OnEnemySelected;
             MovementState.OnMovementFinished += (Unit u) => HideMovementRangeOnGrid();
-            AStar PathFindingManager = new AStar(this, GridData.Width, GridData.Height);
+            AStar PathFindingManager = new AStar(this, GridData.width, GridData.height);
             PathFindingManager.FindPath(0, 0, 3, 3, 1, true, new List<int>(1));//Do For JIT Performance thingy
             //test
         }
+        [ContextMenu("Test")]
         private void OnEnemySelected(Unit u)
         {
             HideMovementRangeOnGrid();
@@ -126,9 +125,9 @@ namespace Game.Map
             if (!gridVisible)
                 return;
             gridVisible = false;
-            for (int i = 0; i < GridData.Width; i++)
+            for (int i = 0; i < GridData.width; i++)
             {
-                for (int j = 0; j < GridData.Height; j++)
+                for (int j = 0; j < GridData.height; j++)
                 {
                     bool ignore = false;
                     if(ignorePositions != null)

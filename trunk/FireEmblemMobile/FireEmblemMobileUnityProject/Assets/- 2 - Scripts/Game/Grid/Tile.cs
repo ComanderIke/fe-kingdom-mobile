@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace Game.Grid
 {
-    [System.Serializable]
     public class Tile
     {
         public GameObject GameObject;
@@ -15,12 +14,14 @@ namespace Game.Grid
         public bool IsAccessible = true;
         public bool IsAttackable = false;
         public SpriteRenderer spriteRenderer;
+        public TileType TileType;
 
-        public Tile(int i, int j, GameObject gameObject)
+        public Tile(int i, int j, TileType tileType, GameObject gameObject)
         {
             this.GameObject = gameObject;
             X = i;
             Y = j;
+            TileType = tileType;
             spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         }
     }

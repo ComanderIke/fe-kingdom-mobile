@@ -21,7 +21,7 @@ namespace Game.Grid.PathFinding
             this.accessibilities = accessibilities;
             gridWidth = accessibilities.GetLength(0);
             gridHeight = accessibilities.GetLength(1);
-            fields = GridGameManager.Instance.GetSystem<Map.MapSystem>().Tiles;
+            fields = GridGameManager.Instance.GetSystem<Map.GridSystem>().Tiles;
         }
 
         public MovementPath GetPath(BigTile start, BigTile end)

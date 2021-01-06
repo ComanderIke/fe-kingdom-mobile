@@ -26,8 +26,8 @@ namespace Game.Mechanics
             var cameraSystem  = gridGameManager.GetSystem<CameraSystem>();
             cameraSystem.AddMixin<DragCameraMixin>().Construct(new WorldPosDragPerformer(1f, cameraSystem.camera),
                 new ScreenPointToRayProvider(cameraSystem.camera), new HitChecker(TagManager.UnitTag),new MouseInputProvider());
-            int height = gridGameManager.GetSystem<MapSystem>().GridData.Height;
-            int width = gridGameManager.GetSystem<MapSystem>().GridData.Width;
+            int height = gridGameManager.GetSystem<GridSystem>().GridData.height;
+            int width = gridGameManager.GetSystem<GridSystem>().GridData.width;
             cameraSystem.AddMixin<ClampCameraMixin>().Construct(width, height);
             cameraSystem.AddMixin<ViewOnGridMixin>().zoom = 0;
         }

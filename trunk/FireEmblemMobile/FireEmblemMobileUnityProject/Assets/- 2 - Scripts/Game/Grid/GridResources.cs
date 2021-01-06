@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game.Grid
 {
@@ -17,7 +18,6 @@ namespace Game.Grid
         public Sprite GridSpriteStandOn;
         public Sprite GridSpriteAlly;
         public Sprite GridSpriteAttackAbleEnemy;
-        public Material CellMaterialValid;
-        public Material CellMaterialInvalid;
+        public Material GridMaterial;
     }
 }

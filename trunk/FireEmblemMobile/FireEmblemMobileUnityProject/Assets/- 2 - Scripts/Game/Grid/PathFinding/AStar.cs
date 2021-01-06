@@ -13,9 +13,9 @@ namespace Game.Grid.PathFinding
         public Node[,] Nodes;
         private readonly int width;
         private readonly int height;
-        private readonly MapSystem gridManager;
+        private readonly GridSystem gridManager;
 
-        public AStar(MapSystem gridManager, int width, int height)
+        public AStar(GridSystem gridManager, int width, int height)
         {
             this.gridManager = gridManager;
             this.width = width;

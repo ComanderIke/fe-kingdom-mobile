@@ -9,7 +9,6 @@ namespace Game.GameResources
 {
     public class DataScript : MonoBehaviour
     {
-        public MapData MapData;
         public UiData UiData;
         public DialogData DialogTexts;
         public UnitData UnitData;

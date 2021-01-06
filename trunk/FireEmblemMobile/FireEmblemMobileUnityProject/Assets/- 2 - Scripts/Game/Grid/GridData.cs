@@ -1,14 +1,13 @@
-﻿namespace Game.Grid
-{
-    public class GridData
-    {
-        public int Width;
-        public int Height;
+﻿using UnityEngine;
+using UnityEngine.Serialization;
 
-        public GridData(int width, int height)
-        {
-            this.Width = width;
-            this.Height = height;
-        }
+namespace Game.Grid
+{
+    [CreateAssetMenu(menuName = "Map/GridData", fileName = "GridData")]
+    public class GridData :ScriptableObject
+    {
+        public int width;
+        public int height;
+
     }
 }
