@@ -47,22 +47,19 @@ namespace Game.Grid
             if (GridScript == null)
                 GridScript = GridGameManager.Instance.GetSystem<GridSystem>();
             if (X != -1 && Y != -1)
-                GridScript.Tiles[X, Y].Unit = null;
-            GridScript.Tiles[newX, newY].Unit = Character;
+                GridScript.Tiles[X, Y].Actor = null;
+            GridScript.Tiles[newX, newY].Actor = Character;
             X = newX;
             Y = newY;
         }
 
-        protected int DeltaPos(int x2, int y2)
-        {
-            return Math.Abs(X - x2) + Math.Abs(Y - y2);
-        }
+      
 
         public virtual void RemoveCharacter()
         {
             if (GridScript == null)
                 GridScript = GridGameManager.Instance.GetSystem<GridSystem>();
-            GridScript.Tiles[X, Y].Unit = null;
+            GridScript.Tiles[X, Y].Actor = null;
         }
 
         public int GetManhattanDistance(int x2, int y2)
@@ -70,10 +67,7 @@ namespace Game.Grid
             return Math.Abs(X - x2) + Math.Abs(Y - y2);
         }
 
-        public virtual bool CanAttack(List<int> range, GridPosition enemyPosition)
-        {
-            return range.Contains(DeltaPos(enemyPosition.X, enemyPosition.Y));
-        }
+        
 
         public static List<GridPosition> GetFromVectorList(List<Vector2> movePath)
         {

@@ -8,7 +8,6 @@ namespace Game.Grid
         private const string CELL_NAME = "Grid Cell";
         private const string CELL_TAG = "Grid";
         private const int CELL_LAYER = 10;
-        private const string BLOCK_FIELD_LAYER = "BlockField";
 
         public GridData gridData;
         private int width;
@@ -16,12 +15,13 @@ namespace Game.Grid
         private Tile[,] tiles;
         public Sprite gridSprite;
         private TileTypeAnalyzer tileTypeAnalyzerAnalyzer;
-
+        [SerializeField]
+        private TileSprites standardSpriteSet;
         [SerializeField]
         private TileType baseTile;
         public Material gridMaterial;
         public Transform gridTransform;
-        
+        private bool initialized;
         public void Build(int width, int height)
         {
             foreach (var transform in gridTransform.GetComponentsInChildren<Transform>())
@@ -42,27 +42,33 @@ namespace Game.Grid
         }
         public Tile[,] GetTiles()
         {
+            if(!initialized)
+                InitTiles();
+            return tiles;
+        }
+
+        private void InitTiles()
+        {
             width = gridData.width;
             height = gridData.height;
             tiles = new Tile[width, height];
-
             for (int i = 0; i < width; i++)
             {
                 for (int j = 0; j < height; j++)
                 {
-                    var cell = gridTransform.GetChild(i * width + j).gameObject;
+                    var cell = gridTransform.GetChild(i * height + j).gameObject;
                     var tileData = cell.GetComponent<TileData>();
                     if (tileData == null)
                     {
                         cell.AddComponent<TileData>().tileType = default;
                     }
-
-                    tiles[i, j] = new Tile(i, j, tileData.tileType, cell);
+                    //Debug.Log("i: "+i +" j: " +j +""+cell.gameObject.name);
+                    //Debug.Log(gridResources.sprites);
+                    tiles[i, j] = new Tile(i, j, tileData.tileType, new SpriteTileRenderer(cell.GetComponent<SpriteRenderer>(), standardSpriteSet));
                 }
             }
 
-
-            return tiles;
+            initialized = true;
         }
 
         private GameObject CreateGridTileGameObject(int x, int y)

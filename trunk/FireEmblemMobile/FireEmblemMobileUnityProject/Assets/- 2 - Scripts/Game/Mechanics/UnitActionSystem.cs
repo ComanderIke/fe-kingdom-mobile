@@ -20,7 +20,7 @@ namespace Game.Mechanics
         public static event Action OnUndo;
         public static Action TriggerUndo;
 
-        public delegate void OnCheckAttackPreviewEvent(Unit u, Unit target);
+        public delegate void OnCheckAttackPreviewEvent(IBattleActor u, IBattleActor target);
         public static event OnCheckAttackPreviewEvent OnCheckAttackPreview;
 
         #endregion
@@ -87,7 +87,7 @@ namespace Game.Mechanics
             var mCc = new AttackCommand(attacker, target);
             currentActions.Enqueue(mCc);
         }
-        public void CheckAttackPreview(Unit u, Unit target, GridPosition attackPosition)
+        public void CheckAttackPreview(IBattleActor u, IBattleActor target, GridPosition attackPosition)
         {
             OnCheckAttackPreview?.Invoke(u, target);
         }

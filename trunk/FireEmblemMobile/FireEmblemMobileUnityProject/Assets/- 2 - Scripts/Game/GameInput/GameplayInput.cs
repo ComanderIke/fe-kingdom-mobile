@@ -20,7 +20,7 @@ namespace Game.GameInput
         public static event MoveUnitEvent OnMoveUnit;
         public delegate void AttackUnitEvent(Unit u, Unit attackTarget);
         public static event AttackUnitEvent OnAttackUnit;
-        public delegate void CheckAttackPreviewEvent(Unit u, Unit attackTarget, GridPosition attackPosition);
+        public delegate void CheckAttackPreviewEvent(IBattleActor u, IBattleActor attackTarget, GridPosition attackPosition);
         public static event CheckAttackPreviewEvent OnCheckAttackPreview;
         public void AttackUnit(Unit u, Unit attackTarget)
         {
@@ -65,7 +65,7 @@ namespace Game.GameInput
             OnExecuteInputActions?.Invoke();
         }
 
-        public void CheckAttackPreview(Unit u, Unit attackTarget, GridPosition attackPosition)
+        public void CheckAttackPreview(IBattleActor u, IBattleActor attackTarget, GridPosition attackPosition)
         {
             OnCheckAttackPreview?.Invoke(u, attackTarget, attackPosition);
         }

@@ -43,14 +43,14 @@ namespace Game.GameInput
             PlayerTurnTextAnimation.OnStarted += TurnAnimationStarted;
             PlayerTurnTextAnimation.OnFinished += TurnAnimationFinished;
             //InputSystem.OnDragReset += HideMovementPath;
-            InputSystem.OnMovementPathUpdated += DrawMovementPath;
+            GridInputSystem.OnMovementPathUpdated += DrawMovementPath;
             //InputSystem.OnMovementPathUpdated += OnMovementPathUpdated;
-            InputSystem.OnDraggedOnActiveField += HideAttackableEnemy;
+            GridInputSystem.OnDraggedOnActiveField += HideAttackableEnemy;
             UnitSelectionSystem.OnDeselectCharacter += DeselectedCharacter;
             UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
 
-            InputSystem.OnSetActive += InputActive;
-            InputSystem.OnDragReset += HideAttackableEnemy;
+            GridInputSystem.OnSetActive += InputActive;
+            GridInputSystem.OnDragReset += HideAttackableEnemy;
             BattleState.OnEnter += HideAllActiveUnitEffects;
             BattleState.OnEnter += HideAttackableEnemy;
             BattleState.OnExit += OnExitBattleState;
@@ -61,11 +61,11 @@ namespace Game.GameInput
             MovementState.OnEnter += HideAllActiveUnitEffects;
             MovementState.OnMovementFinished += (Unit u)=>HideMovementPath();
             BattleState.OnEnter += HideMovementPath;
-            UnitActionSystem.OnCheckAttackPreview += OnCheckAttackPreview;
+           // UnitActionSystem.OnCheckAttackPreview += OnCheckAttackPreview;
             MovementState.OnMovementFinished += (Unit u)=>HideAttackableEnemy();
             GridRenderer.OnRenderEnemyTile += OnRenderEnemyTile;
             Unit.OnExpGained += ExpGained;
-            InputSystem.OnInputActivated += InputActivated;
+            GridInputSystem.OnInputActivated += InputActivated;
             UnitSelectionSystem.OnEnemySelected += EnemySelected;
             BattleRenderer.OnAttackConnected += SlashAnimation;
             Unit.OnUnitDamaged += UnitDamaged;
@@ -116,19 +116,19 @@ namespace Game.GameInput
         private void ExpGained(Unit unit, int currentExp, int expGained)
         {
             AnimationQueue.Add(() => { 
-                InputSystem.OnSetActive(false, this); 
+                GridInputSystem.OnSetActive(false, this); 
                 expBarController.Show(currentExp, expGained);
-            }, ()=> InputSystem.OnSetActive(true, this));
+            }, ()=> GridInputSystem.OnSetActive(true, this));
             //AnimationQueue.OnAllAnimationsEnded += SetInputToOldState;
         }
         private void TurnAnimationStarted()
         {
-            InputSystem.OnSetActive(false, this);
+            GridInputSystem.OnSetActive(false, this);
         }
         private void TurnAnimationFinished()
         {
             //Set to State Before TurnAnimationStarted
-            InputSystem.OnSetActive(true, this);
+            GridInputSystem.OnSetActive(true, this);
         }
         //private void OnMovementPathUpdated(List<Vector2> mousePath, int startX, int startY)
         //{
@@ -251,10 +251,7 @@ namespace Game.GameInput
         private void SelectedCharacter(Unit u)
         {
             HideAllActiveUnitEffects();
-            if (u.Ap != 0)
-            {
-                SpawnActiveUnitEffect(u);
-            }
+            SpawnActiveUnitEffect(u);
         }
         private void HideActiveUnitEffect(Unit unit)
         {

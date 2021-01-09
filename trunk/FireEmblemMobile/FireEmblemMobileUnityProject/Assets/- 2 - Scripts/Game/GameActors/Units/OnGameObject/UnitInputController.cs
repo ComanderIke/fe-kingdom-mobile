@@ -4,26 +4,28 @@ using Game.Manager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Experimental.Rendering.Universal;
+using UnityEngine.Serialization;
 
 namespace Game.GameActors.Units.OnGameObject
 {
     public class UnitInputController : MonoBehaviour, IDragAble
     {
-        public delegate void OnUnitDraggedEvent(int x, int y, Unit character);
-        public static event OnUnitDraggedEvent OnUnitDragged;
-        public delegate void OnStartDragEvent(int gridX, int gridY);
-        public static event OnStartDragEvent OnStartDrag;
-        public delegate void OnDraggedOverUnitEvent(Unit unit);
-        public static event OnDraggedOverUnitEvent OnDraggedOverUnit;
-        public static event Action OnEndDrag;
-        public delegate void OnUnitClickedEvent(Unit character);
-        public static event OnUnitClickedEvent OnUnitClicked;
-        public static event OnUnitClickedEvent OnUnitDoubleClicked;
+        // public delegate void OnUnitDraggedEvent(int x, int y, Unit character);
+        // public static event OnUnitDraggedEvent OnUnitDragged;
+        // public delegate void OnStartDragEvent(IGridActor actor);
+        // public static event OnStartDragEvent OnStartDrag;
+        // public delegate void OnDraggedOverUnitEvent(Unit unit);
+        // public static event OnDraggedOverUnitEvent OnDraggedOverUnit;
+        // public static event Action OnEndDrag;
+        // public delegate void OnUnitClickedEvent(Unit character);
+        // public static event OnUnitClickedEvent OnUnitClicked;
+        // public static event OnUnitClickedEvent OnUnitDoubleClicked;
 
-        public Unit Unit;
-        public DragManager DragManager { get; set; }
-        public RaycastManager RaycastManager { get; set; }
-        public Light2D light;
+        public Unit unit;
+        private DragManager DragManager { get; set; }
+        private RaycastManager RaycastManager { get; set; }
+        private IUnitInputReceiver InputReceiver { get; set; }
+        public new Light2D light;
         
 
         private bool dragInitiated;
@@ -37,11 +39,12 @@ namespace Game.GameActors.Units.OnGameObject
         {
             DragManager = new DragManager(this);
             RaycastManager = new RaycastManager();
+            InputReceiver = FindObjectOfType<GridInputSystem>();
         }
 
         private void Update()
         {
-            if (!InputSystem.Active)
+            if (!GridInputSystem.Active)
                 return;
             DragManager.Update();
         }
@@ -51,7 +54,10 @@ namespace Game.GameActors.Units.OnGameObject
         private void OnMouseEnter()
         {
             if(DragManager.IsAnyUnitDragged)
-                if (!EventSystem.current.IsPointerOverGameObject()) OnDraggedOverUnit(Unit);
+                if (!EventSystem.current.IsPointerOverGameObject())
+                {
+                    InputReceiver.DraggedOverActor(unit);
+                }
         }
         public void DeParentLight()
         {
@@ -64,13 +70,13 @@ namespace Game.GameActors.Units.OnGameObject
         }
         private void OnMouseDrag()
         {
-            if (!InputSystem.Active)
+            if (!GridInputSystem.Active)
                 return;
             if (!EventSystem.current.IsPointerOverGameObject() && (dragStarted || dragInitiated))
             {
                 dragStarted = false;
                 dragInitiated = true;
-                if (Unit.UnitTurnState.IsDragable()) DragManager.Dragging();
+                if (unit.UnitTurnState.IsDragable()) DragManager.Dragging();
             }
         }
 
@@ -81,9 +87,9 @@ namespace Game.GameActors.Units.OnGameObject
             dragStarted = false;
             dragInitiated = false;
             doubleClick = false;
-            if (!InputSystem.Active)
+            if (!GridInputSystem.Active)
                 return;
-            if (!Unit.IsAlive())
+            if (!unit.IsAlive())
                 return;
            
 
@@ -94,7 +100,7 @@ namespace Game.GameActors.Units.OnGameObject
                 {
                    
                     timerForDoubleClick = 0;
-                    unitSelectedBeforeClicking = Unit.UnitTurnState.Selected;
+                    unitSelectedBeforeClicking = unit.UnitTurnState.Selected;
                     doubleClick = true;
                 }
                 else
@@ -114,21 +120,25 @@ namespace Game.GameActors.Units.OnGameObject
                 DragManager.Update();// Update Dragmanager because he should notice first when MouseUp happens
                 dragStarted = false;
                 dragInitiated = false;
-                Unit.OnUnitActiveStateUpdated?.Invoke(Unit, true, false);
-               
-                OnEndDrag();
+                Unit.OnUnitActiveStateUpdated?.Invoke(unit, true, false);
+                var gridPos = RaycastManager.GetMousePositionOnGrid();
+                if (RaycastManager.ConnectedLatestHit())
+                {
+                    InputReceiver.ActorDragEnded(unit, (int)gridPos.x, (int)gridPos.y);
+                }
+
                 gameObject.GetComponent<BoxCollider2D>().enabled = true;
                 light.transform.SetParent(transform);
                 light.transform.localPosition = new Vector3(0.5f, 0.5f, 0);
             }
-            else if (unitSelectedBeforeClicking||(Unit.Faction.Id != GridGameManager.Instance.FactionManager.ActivePlayerNumber&&doubleClick))
+            else if (unitSelectedBeforeClicking||(unit.Faction.Id != GridGameManager.Instance.FactionManager.ActivePlayerNumber&&doubleClick))
             {
                 if (!EventSystem.current.IsPointerOverGameObject())
                 {
                     if(doubleClick)
-                        OnUnitDoubleClicked(Unit);
+                        InputReceiver.ActorDoubleClicked(unit);
                     else
-                        OnUnitClicked(Unit);
+                        InputReceiver.ActorClicked(unit);
                 }
             }
 
@@ -151,29 +161,23 @@ namespace Game.GameActors.Units.OnGameObject
         public void StartDrag()
         {
             dragStarted = true;
-            var gridPos = RaycastManager.GetMousePositionOnGrid();
-            OnStartDrag((int) gridPos.x, (int) gridPos.y);
-            unitSelectedBeforeClicking = Unit.UnitTurnState.Selected;
-            if (!Unit.UnitTurnState.Selected)//If unit is already selected wait for MouseUp/DragEnd to invoke OnUnitClicked
+            InputReceiver.StartDraggingActor(unit);
+            unitSelectedBeforeClicking = unit.UnitTurnState.Selected;
+            if (!unit.UnitTurnState.Selected)
                 if (!EventSystem.current.IsPointerOverGameObject())
                 {
-                    Unit.OnUnitActiveStateUpdated?.Invoke(Unit, false, true); 
+                    Unit.OnUnitActiveStateUpdated?.Invoke(unit, false, true); 
                     light.transform.SetParent(null);
-                    OnUnitClicked(Unit);
+                    InputReceiver.ActorClicked(unit);
                 }
         }
 
-        public void Dragging(float xPos, float yPos)//Performance!!!
+        public void Dragging(float xPos, float yPos)
         {
-            //Unit.OnUnitActiveStateUpdated(Unit, false, true); Performance Problem
-            //light.transform.SetParent(null); Performance
-
-
-            var gridPos = RaycastManager.GetMousePositionOnGrid();//Is also done in Dragmanager dragging performance problem!!
+            var gridPos = RaycastManager.GetMousePositionOnGrid();
             if (RaycastManager.ConnectedLatestHit())
             {
-                OnUnitDragged((int)gridPos.x, (int)gridPos.y, Unit);
-                //OnUnitDragged((int)Math.Floor(xPos), (int)Math.Floor(yPos), Unit);
+                InputReceiver.ActorDragged(unit, (int)gridPos.x, (int)gridPos.y);
             }
         }
 

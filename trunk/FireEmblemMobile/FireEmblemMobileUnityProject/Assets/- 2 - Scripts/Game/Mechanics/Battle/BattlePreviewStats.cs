@@ -5,7 +5,7 @@ namespace Game.Mechanics.Battle
 {
     public class BattlePreviewStats
     {
-        public Unit unit{ get; set; }
+        public Unit Unit{ get; set; }
         public int Attack { get; set; }
         public int Speed { get; set; }
         public bool IsPhysical { get; set; }

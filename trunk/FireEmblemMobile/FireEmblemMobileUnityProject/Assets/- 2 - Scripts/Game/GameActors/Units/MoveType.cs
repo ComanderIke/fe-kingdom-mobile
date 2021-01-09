@@ -10,7 +10,8 @@ namespace Game.GameActors.Units
         public Dictionary<TerrainType, int> movementCosts;
 
         public int baseMovement = 3;
-
-        private List<TerrainType> TerrainTypes;
+        
+        
+        
     }
 }

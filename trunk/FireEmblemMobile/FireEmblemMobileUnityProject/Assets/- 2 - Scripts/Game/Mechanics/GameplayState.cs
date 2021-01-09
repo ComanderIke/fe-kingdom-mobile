@@ -40,12 +40,10 @@ namespace Game.Mechanics
 
         public override void Exit()
         {
-            Debug.Log("Exit GameplayState");
             var cameraSystem  = gridGameManager.GetSystem<CameraSystem>();
             cameraSystem.RemoveMixin<DragCameraMixin>();
             cameraSystem.RemoveMixin<ClampCameraMixin>();
             cameraSystem.RemoveMixin<ViewOnGridMixin>();
-            Debug.Log("Removed Mixins");
         }
 
         public void CheckGameOver()
@@ -55,16 +53,16 @@ namespace Game.Mechanics
             {
                 if (p.IsPlayerControlled && !p.IsAlive())
                 {
-                    gridGameManager.GetSystem<UiSystem>().ShowGameOver();
-                    InputSystem.OnSetActive?.Invoke(false, this);
+                    gridGameManager.GetSystem<UiSystem>()?.ShowGameOver();
+                    GridInputSystem.OnSetActive?.Invoke(false, this);
                     gridGameManager.GameStateManager.Feed(NextStateTrigger.GameOver);
 
                     return;
                 }
                 else if (!p.IsPlayerControlled && !p.IsAlive())
                 {
-                    gridGameManager.GetSystem<UiSystem>().ShowWinScreen();
-                    InputSystem.OnSetActive?.Invoke(false, this);
+                    gridGameManager.GetSystem<UiSystem>()?.ShowWinScreen();
+                    GridInputSystem.OnSetActive?.Invoke(false, this);
                     gridGameManager.GameStateManager.Feed(NextStateTrigger.PlayerWon);
                     return;
                 }

@@ -23,7 +23,7 @@ namespace Game.Map
         private GridBuilder gridBuilder;
         public GridResources GridResources;
         public GridData GridData;
-        public Tile[,] Tiles { get; set; }
+        private Tile[,] Tiles { get; set; }
         public GridRenderer GridRenderer { get; set; }
         public GridLogic GridLogic { get; set; }
         public NodeHelper NodeHelper;
@@ -36,20 +36,18 @@ namespace Game.Map
             GridRenderer = new GridRenderer(this);
             GridLogic = new GridLogic(this);
             NodeHelper = new NodeHelper(GridData.width, GridData.height);
-            UnitSelectionSystem.OnDeselectCharacter += HideMovementRangeOnGrid;
+            UnitSelectionSystem.OnDeselectCharacter += HideMoveRange;
             UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
             UnitSelectionSystem.OnEnemySelected += OnEnemySelected;
             UnitSelectionSystem.OnSelectedInActiveCharacter += OnEnemySelected;
-            MovementState.OnMovementFinished += (Unit u) => HideMovementRangeOnGrid();
+            MovementState.OnMovementFinished += (Unit u) => HideMoveRange();
             AStar PathFindingManager = new AStar(this, GridData.width, GridData.height);
-            PathFindingManager.FindPath(0, 0, 3, 3, 1, true, new List<int>(1));//Do For JIT Performance thingy
-            //test
         }
         [ContextMenu("Test")]
         private void OnEnemySelected(Unit u)
         {
-            HideMovementRangeOnGrid();
-            ShowMovementRangeOnGrid(u, true);
+            HideMoveRange();
+            ShowMovementRangeOnGrid(u);
 
             ShowAttackRangeOnGrid(u, new List<int>(u.Stats.AttackRanges), true);
             GridLogic.ResetActiveFields();
@@ -60,40 +58,25 @@ namespace Game.Map
         }
         private void SelectedCharacter(Unit u)
         {
-            HideMovementRangeOnGrid();
-            if (u.Ap!=0)
-            {
-                ShowMovementRangeOnGrid(u);
-                if (!u.UnitTurnState.HasAttacked)
-                    ShowAttackRangeOnGrid(u, new List<int>(u.Stats.AttackRanges));
-            }
-            else
-            {
-               
-                if (!u.UnitTurnState.HasAttacked)
-                {
-                    //Debug.Log("HERE");
-                    ShowAttackRangeOnGrid(u, new List<int>(u.Stats.AttackRanges));
-                }
-            }
+            HideMoveRange();
+
+            ShowMovementRangeOnGrid(u);
+            //if (!u.UnitTurnState.HasAttacked)
+            //    ShowAttackRangeOnGrid(u, new List<int>(u.Stats.AttackRanges));
+
         }
 
-        public void ShowMovementRangeOnGrid(Unit c, bool soft=false)
+        public void ShowMovementRangeOnGrid(IGridActor c)
         {
-            gridVisible = true;
-            ShowMovement(c.GridPosition.X, c.GridPosition.Y, c.Ap, c.Ap,
-                    new List<int>(c.Stats.AttackRanges), 0, c.Faction.Id, soft);
+            ShowMovement(c.GridPosition.X, c.GridPosition.Y, c.MovementRage, 0, c);
         }
 
       
 
         public void ShowAttackRangeOnGrid(Unit character, List<int> attack, bool soft=false)
         {
-            gridVisible = true;
-            var tilesFromWhereUCanAttack = (from Tile f in Tiles where (f.X == character.GridPosition.X && f.Y== character.GridPosition.Y) || (f.IsActive && (f.Unit == null || f.Unit == character)) select f);
-         
             NodeHelper.Reset();
-            foreach (var f in tilesFromWhereUCanAttack)
+            foreach (var f in GridLogic.TilesFromWhereYouCanAttack(character))
             {
                 int x = f.X;
                 int y = f.Y;
@@ -103,8 +86,7 @@ namespace Game.Map
                 }
             }
 
-            GridRenderer.ShowStandOnTexture(character);
-            //StartCoroutine(GridRenderer.FieldAnimation());
+            GridRenderer.ShowStandOnVisual(character);
         }
 
         public void ShowAttackFromPosition(Unit character, int x, int y)
@@ -113,56 +95,25 @@ namespace Game.Map
             {
                 ShowAttackRecursive(character, x, y, range, new List<int>());
             }
-            GridRenderer.ShowStandOnTexture(character);
+            GridRenderer.ShowStandOnVisual(character);
         }
-        bool gridVisible = false;
-        public void HideMovementRangeOnGrid()//In Order to work with ActionEvent!!!
+        public void HideMoveRange()//In Order to work with ActionEvent!!!
         {
-            HideMovementRangeOnGrid(null);
-        }
-        private void HideMovementRangeOnGrid(List<Vector2> ignorePositions)
-        {
-            if (!gridVisible)
-                return;
-            gridVisible = false;
             for (int i = 0; i < GridData.width; i++)
             {
                 for (int j = 0; j < GridData.height; j++)
                 {
-                    bool ignore = false;
-                    if(ignorePositions != null)
-                        foreach (Vector2 v in ignorePositions)
-                        {
-                            int x = (int)v.x;
-                            int y = (int)v.y;
-                            if (i == x && j == y)
-                            {
-                                ignore = true;
-                            }
-                        }
-
-                    if (!ignore)
-                    {
-                        var m = Tiles[i, j].GameObject.GetComponent<SpriteRenderer>();
-                        m.sprite = Tiles[i, j].IsAccessible
-                            ? GridResources.GridSprite
-                            : GridResources.GridSpriteInvalid;
-
-                        Tiles[i, j].IsActive = false;
-                        Tiles[i, j].IsAttackable = false;
-                    }
+                    Tiles[i, j].Reset();
                 }
             }
 
             NodeHelper.Reset();
-           
         }
-
         public void ShowAttackRecursive(Unit character, int x, int y, int range, List<int> direction, bool soft=false)
         {
             if (range <= 0)
             {
-                GridRenderer.SetFieldMaterial(new Vector2(x, y), character.Faction.Id, true, soft);
+                GridRenderer.SetFieldMaterialAttack(new Vector2(x, y), character.Faction.Id);
 
                 return;
             }
@@ -203,25 +154,45 @@ namespace Game.Map
                 }
             }
         }
-        private void ShowMovement(int x, int y, int range, int attackIndex, List<int> attack, int c, int playerId, bool soft)
+        private void ShowMovement(int x, int y, int range, int c, IGridActor unit)
         {
             if (range < 0)
             {
                 return;
             }
 
-            GridRenderer.SetFieldMaterial(new Vector2(x, y), playerId, false, soft);
+            GridRenderer.SetFieldMaterial(new Vector2(x, y), unit.FactionId);
 
             NodeHelper.Nodes[x, y].C = c;
             c++;
-            if (GridLogic.CheckField(x - 1, y, playerId, range) && NodeHelper.NodeFaster(x - 1, y, c))
-                ShowMovement(x - 1, y, range - 1, attackIndex, new List<int>(attack), c, playerId, soft);
-            if (GridLogic.CheckField(x + 1, y, playerId, range) && NodeHelper.NodeFaster(x + 1, y, c))
-                ShowMovement(x + 1, y, range - 1, attackIndex, new List<int>(attack), c, playerId, soft);
-            if (GridLogic.CheckField(x, y - 1, playerId, range) && NodeHelper.NodeFaster(x, y - 1, c))
-                ShowMovement(x, y - 1, range - 1, attackIndex, new List<int>(attack), c, playerId, soft);
-            if (GridLogic.CheckField(x, y + 1, playerId, range) && NodeHelper.NodeFaster(x, y + 1, c))
-                ShowMovement(x, y + 1, range - 1, attackIndex, new List<int>(attack), c, playerId, soft);
+            if (GridLogic.CheckField(x - 1, y, unit, range) && NodeHelper.NodeFaster(x - 1, y, c))
+                ShowMovement(x - 1, y, range - 1, c, unit);
+            if (GridLogic.CheckField(x + 1, y, unit, range) && NodeHelper.NodeFaster(x + 1, y, c))
+                ShowMovement(x + 1, y, range - 1, c, unit);
+            if (GridLogic.CheckField(x, y - 1, unit, range) && NodeHelper.NodeFaster(x, y - 1, c))
+                ShowMovement(x, y - 1, range - 1, c, unit);
+            if (GridLogic.CheckField(x, y + 1, unit, range) && NodeHelper.NodeFaster(x, y + 1, c))
+                ShowMovement(x, y + 1, range - 1, c, unit);
         }
+
+        public bool IsTileMoveableAndActive(int x, int y)
+        {
+            return GridLogic.IsMoveableAndActive(x,y);
+        }
+        public bool IsAttackableAndActive(int x, int y)
+        {
+            return GridLogic.IsAttackableAndActive(x,y);
+        }
+        public bool IsOutOfBounds(int x, int y)
+        {
+            return x < 0 || x >= GridData.width || y < 0 ||
+                   y >= GridData.height;
+        }
+
+        public Tile GetTile(int x, int y)
+        {
+            return Tiles[x, y];
+        }
+
     }
 }

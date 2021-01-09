@@ -8,79 +8,30 @@ namespace Game.Grid
     {
         public delegate void OnRenderEnemyTileEvent(int x, int y, Unit enemy, int playerId);
         public static event OnRenderEnemyTileEvent OnRenderEnemyTile;
-        public GridSystem GridManager { get; set; }
-        public Tile[,] Tiles { get; set; }
+        private Tile[,] Tiles { get; set; }
 
         public GridRenderer(GridSystem gridManager)
         {
-            GridManager = gridManager;
             Tiles = gridManager.Tiles;
         }
+        
 
-        public void SetBigTileActive(BigTile bigTile, int playerId, bool attack)
+        public void ShowStandOnVisual(Unit c)
         {
-            SetFieldMaterial(bigTile.BottomLeft(), playerId, attack);
-            SetFieldMaterial(bigTile.BottomRight(), playerId, attack);
-            SetFieldMaterial(bigTile.TopLeft(), playerId, attack);
-            SetFieldMaterial(bigTile.TopRight(), playerId, attack);
+            Tiles[c.GridPosition.X, c.GridPosition.Y].TileRenderer.StandOnVisual();
         }
-
-        public void ShowStandOnTexture(Unit c)
+       
+        public void SetFieldMaterial(Vector2 pos, int playerId)
         {
-            Tiles[c.GridPosition.X, c.GridPosition.Y].spriteRenderer.sprite =
-                    GridManager.GridResources.GridSpriteStandOn;
-        }
-        private void SetAttackFieldMaterial(Vector2 pos, int playerId, bool soft)
-        {
-            var meshRenderer = Tiles[(int)pos.x, (int)pos.y].spriteRenderer;
-            if (soft)
-                meshRenderer.sprite = GridManager.GridResources.GridAttackSpriteEnemy;
-            else
-            {
-                meshRenderer.sprite = GridManager.GridResources.GridAttackSprite;
-                OnRenderEnemyTile?.Invoke((int)pos.x, (int)pos.y, Tiles[(int)pos.x, (int)pos.y].Unit, playerId);
-            }
-            Tiles[(int)pos.x, (int)pos.y].IsAttackable = true;
+            Tiles[(int) pos.x, (int) pos.y].SetMaterial(playerId);
+           
 
         }
-        public void SetFieldMaterial(Vector2 pos, int playerId, bool attack, bool soft=false)
+        public void SetFieldMaterialAttack(Vector2 pos, int playerId)
         {
-            var meshRenderer = Tiles[(int) pos.x, (int) pos.y].spriteRenderer;
-            if (attack)
-            {
-                //not using sharedMaterial here create Material instances which will cause much higher batches
-                if (Tiles[(int)pos.x, (int)pos.y].IsAttackable||meshRenderer.sprite == GridManager.GridResources.GridMoveSpriteEnemy || Tiles[(int)pos.x, (int)pos.y].IsActive)
-                    return;
-                SetAttackFieldMaterial(pos, playerId, soft);
-            }
-            else
-            {
-                if (Tiles[(int)pos.x, (int)pos.y].IsAttackable || Tiles[(int)pos.x, (int)pos.y].IsActive || meshRenderer.sprite == GridManager.GridResources.GridMoveSpriteEnemy)
-                    return;
-                if (Tiles[(int)pos.x, (int)pos.y].Unit != null && Tiles[(int)pos.x, (int)pos.y].Unit.Faction.Id == playerId)
-                {
-                    meshRenderer.sprite = GridManager.GridResources.GridSpriteAlly;
-                    Tiles[(int)pos.x, (int)pos.y].IsActive = true;
-                }
-                else
-                {
-                    if (soft)
-                        meshRenderer.sprite = GridManager.GridResources.GridMoveSpriteEnemy;
-                    else
-                    {
-                        meshRenderer.sprite = GridManager.GridResources.GridMoveSprite;
-                        Tiles[(int)pos.x, (int)pos.y].IsActive = true;
-                    }
+            Tiles[(int) pos.x, (int) pos.y].SetMaterialAttack();
+           
 
-                }
-                if (Tiles[(int) pos.x, (int) pos.y].Unit != null &&
-                    Tiles[(int) pos.x, (int) pos.y].Unit.Faction.Id != playerId&&!Tiles[(int)pos.x, (int)pos.y].IsAttackable)
-                {
-                    SetAttackFieldMaterial(pos, playerId,soft);
-                }
-
-                
-            }
         }
     }
 }

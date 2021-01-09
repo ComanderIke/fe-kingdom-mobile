@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Game.GameActors.Units;
 using Game.Map;
 using UnityEngine;
 
@@ -81,7 +82,7 @@ namespace Game.Grid.PathFinding
             open.Remove(node);
         }
 
-        public MovementPath FindPath(int sx, int sy, int tx, int ty, int team, bool toAdjacentPos, List<int> range)
+        public MovementPath FindPath(int sx, int sy, int tx, int ty, IGridActor unit, bool toAdjacentPos, IEnumerable<int> range)
         {
             Nodes[sx, sy].CostFromStart = 0;
             Nodes[sx, sy].Depth = 0;
@@ -92,6 +93,7 @@ namespace Game.Grid.PathFinding
             int maxDepth = 0;
             int maxSearchDistance = 100;
             bool finished = false;
+            var enumerable = range as int[] ?? range.ToArray();
             while ((maxDepth < maxSearchDistance) && (open.Count != 0))
             {
                 var current = GetFirstInOpen();
@@ -114,28 +116,25 @@ namespace Game.Grid.PathFinding
                         int xp = x + current.X;
                         int yp = y + current.Y;
                         bool isAdjacent = false;
-                        if (toAdjacentPos && gridManager.GridLogic.IsTileAccessible(new Vector2(xp, yp)) && gridManager.GridLogic.IsTileFree(new Vector2(xp, yp)))
+                        if (toAdjacentPos && gridManager.GridLogic.IsTileAccessible(new Vector2(xp, yp), unit) && gridManager.GridLogic.IsTileFree(new Vector2(xp, yp)))
                         {
                             int delta = Mathf.Abs(xp - Nodes[tx, ty].X) + Mathf.Abs(yp - Nodes[tx, ty].Y);
-                            range.Reverse();
-                            foreach (int r in range.Where(r => delta == r))
+                            var reverse = enumerable.Reverse();
+                            if (reverse.Any(r => delta == r))
                             {
                                 isAdjacent = true;
                                 
                                 //if (GridGameManager.Instance.GetSystem<InputSystem>().AttackRangeFromPath < r)
                                 //{
-                                    //Debug.Log("AttackRange " + r + " " +tx+" "+ty+" "+ xp + " " + yp);
-                                    //GridGameManager.Instance.GetSystem<InputSystem>().AttackRangeFromPath = r;
-                                    tx = xp;
-                                    ty = yp;
-                                    finished = true;
-                                    break;
-                                //}
+                                //Debug.Log("AttackRange " + r + " " +tx+" "+ty+" "+ xp + " " + yp);
+                                //GridGameManager.Instance.GetSystem<InputSystem>().AttackRangeFromPath = r;
+                                tx = xp;
+                                ty = yp;
+                                finished = true;
                             }
-                            range.Reverse();
                         }
                        
-                        if (gridManager.GridLogic.IsValidLocation(team, sx, sy, xp, yp, isAdjacent) ||
+                        if (gridManager.GridLogic.IsValidLocation(unit, sx, sy, xp, yp, isAdjacent) ||
                             (xp == tx && yp == ty))
                         {
                            
@@ -195,12 +194,12 @@ namespace Game.Grid.PathFinding
             return path;
         }
 
-        public MovementPath GetPath(int x, int y, int x2, int y2, int team, bool toAdjacentPos, List<int> range)
+        public MovementPath GetPath(int x, int y, int x2, int y2, IGridActor unit, bool toAdjacentPos, IEnumerable<int> range)
         {
             //GridGameManager.Instance.GetSystem<InputSystem>().AttackRangeFromPath = 0;
             Reset();
 
-            return FindPath(x, y, x2, y2, team, toAdjacentPos, range);
+            return FindPath(x, y, x2, y2, unit, toAdjacentPos, range);
         }
     }
 }

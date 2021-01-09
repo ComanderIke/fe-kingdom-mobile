@@ -50,15 +50,15 @@ namespace Game.GUI
             UnitSelectionSystem.OnEnemySelected += ShowTopUi;
             UnitSelectionSystem.OnSelectedInActiveCharacter += ShowTopUi;
 
-            UnitActionSystem.OnCheckAttackPreview += ShowAttackPreview;
+           // UnitActionSystem.OnCheckAttackPreview += ShowAttackPreview;
             Unit.OnUnitLevelUp += ShowLevelUpScreen;
-            InputSystem.OnDragOverTile += HideAttackPreview;
-            InputSystem.OnDragReset += HideAttackPreview;
+            GridInputSystem.OnDragOverTile += HideAttackPreview;
+            GridInputSystem.OnDragReset += HideAttackPreview;
             
             GameplayInput.OnViewUnit += ShowTopUi;
             Unit.OnExpGained += ExpGained;
-            InputSystem.OnInputActivated += FadeOut;
-            InputSystem.OnInputDeactivated += FadeIn;
+            GridInputSystem.OnInputActivated += FadeOut;
+            GridInputSystem.OnInputDeactivated += FadeIn;
             resources = FindObjectOfType<ResourceScript>();
             var pointer = new PointerEventData(EventSystem.current); // pointer event for Execute Verhindert LagSpike bei erstem click
             ExecuteEvents.Execute(deselectButton.gameObject, pointer, ExecuteEvents.pointerEnterHandler);
@@ -98,9 +98,9 @@ namespace Game.GUI
         public void ShowLevelUpScreen(string name, int levelBefore, int levelAfter, int [] stats, int[] statIncreases)
         {
             AnimationQueue.Add(()=> { 
-                InputSystem.OnSetActive(false, this);
+                GridInputSystem.OnSetActive(false, this);
                 levelUpScreen.Show(name, levelBefore, levelAfter, stats, statIncreases); },
-                ()=> InputSystem.OnSetActive(true, this));
+                ()=> GridInputSystem.OnSetActive(true, this));
             
         }
         public void DeselectButtonClicked()

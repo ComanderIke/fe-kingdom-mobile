@@ -15,45 +15,42 @@ namespace Game.GameActors.Units.OnGameObject
         [SerializeField] private StatsBarOnMap hpBar;
         [SerializeField] private StatsBarOnMap spBar;
         [SerializeField] private GameObject pointLight;
-
-        [SerializeField] private TextMeshProUGUI ApText;
+        
         [SerializeField] private Image EquippedItemIcon;
         [SerializeField] private Image EquippedItemBackground;
         [SerializeField] private GameObject spriteMask;
         [SerializeField] private CanvasGroup alphaCanvas;
         [SerializeField] private SpriteRenderer sprite;
-        public Unit Unit;
+        public Unit unit;
 
         private void Start()
         {
             Unit.HpValueChanged += HpValueChanged;
             Unit.SpValueChanged += SpValueChanged;
             Unit.UnitWaiting += SetWaitingSprite;
-            Unit.ApValueChanged += ApValueChanged;
             Human.OnEquippedWeapon += OnEquippedWeapon;
             HpValueChanged();
             SpValueChanged();
         }
         public void Init()
         {
-            hpBar.GetComponent<Image>().color = ColorManager.Instance.GetFactionColor(Unit.Faction.Id);
+            hpBar.GetComponent<Image>().color = ColorManager.Instance.GetFactionColor(unit.Faction.Id);
             float intensity = 2;
-            sprite.material.SetColor("_OutLineColor", ColorManager.Instance.GetFactionColor(Unit.Faction.Id)*intensity);
+            sprite.material.SetColor("_OutLineColor", ColorManager.Instance.GetFactionColor(unit.Faction.Id)*intensity);
             //spBar.GetComponent<Image>().color = ColorManager.Instance.GetFactionColor(Unit.Faction.Id);
             HpValueChanged();
             SpValueChanged();
-            ApValueChanged();
             OnEquippedWeapon();
-            if(Unit.Faction.Id != GridGameManager.Instance.FactionManager.ActivePlayerNumber)
+            if(unit.Faction.Id != GridGameManager.Instance.FactionManager.ActivePlayerNumber)
             {
-                pointLight.SetActive(false);
+                //pointLight.SetActive(false);
                 Color color = Color.blue;
                 GetComponentInChildren<SpriteRenderer>().flipX = true;
 
                 //spriteMask.SetActive(false);
             }
             else {
-                pointLight.SetActive(true);
+                //pointLight.SetActive(true);
                 GetComponentInChildren<SpriteRenderer>().flipX = false;
                 //spriteMask.SetActive(true);
             }
@@ -63,7 +60,6 @@ namespace Game.GameActors.Units.OnGameObject
             Unit.HpValueChanged -= HpValueChanged;
             Unit.SpValueChanged -= SpValueChanged;
             Unit.UnitWaiting -= SetWaitingSprite;
-            Unit.ApValueChanged -= ApValueChanged;
             Human.OnEquippedWeapon -= OnEquippedWeapon;
         }
         public void SetVisible(bool visible)
@@ -81,8 +77,8 @@ namespace Game.GameActors.Units.OnGameObject
         }
         private void OnEquippedWeapon()
         {
-            EquippedItemBackground.color = ColorManager.Instance.GetFactionColor(Unit.Faction.Id);
-            if (Unit is Human human) {
+            EquippedItemBackground.color = ColorManager.Instance.GetFactionColor(unit.Faction.Id);
+            if (unit is Human human) {
                 if (human.EquippedWeapon != null)
                 {
                     EquippedItemIcon.sprite = human.EquippedWeapon.Sprite;
@@ -101,41 +97,20 @@ namespace Game.GameActors.Units.OnGameObject
         }
         private void HpValueChanged()
         {
-            if (hpBar != null && Unit != null)
-                hpBar.SetHealth(Unit.Hp, Unit.Stats.MaxHp);
+            if (hpBar != null && unit != null)
+                hpBar.SetHealth(unit.Hp, unit.Stats.MaxHp);
         }
-        private void ApValueChanged()
-        {
-            if (ApText != null && Unit != null)
-            {
-                ApText.text = "" + Unit.Ap;
-                ApText.color = ColorManager.Instance.GetFactionColor(Unit.Faction.Id);
-                if (Unit.Faction.Id != GridGameManager.Instance.FactionManager.ActiveFaction.Id)
-                {
-
-                    //ApText.transform.GetChild(0).gameObject.SetActive(false);
-                }
-                else if (Unit.Ap == 0)
-                {
-                    ApText.color = ColorManager.Instance.MainGreyColor;
-                    //ApText.transform.GetChild(0).gameObject.SetActive(false);
-                }
-                else
-                {
-                    //ApText.transform.GetChild(0).gameObject.SetActive(true);
-                }
-            }
-        }
+       
         private void SpValueChanged()
         {
-            if (spBar != null && Unit != null)
-                spBar.SetHealth(Unit.Sp, Unit.Stats.MaxSp);
+            if (spBar != null && unit != null)
+                spBar.SetHealth(unit.Sp, unit.Stats.MaxSp);
         }
       
 
         private void SetWaitingSprite(Unit unit, bool waiting)
         {
-            if (unit == Unit)
+            if (unit == this.unit)
             {
                 GetComponentInChildren<SpriteRenderer>().color = !waiting ? Color.white : Color.grey;
             }

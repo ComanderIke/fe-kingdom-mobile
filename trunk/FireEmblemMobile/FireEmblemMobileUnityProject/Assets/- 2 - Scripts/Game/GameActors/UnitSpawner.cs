@@ -7,7 +7,7 @@ namespace Game.GameActors
     public class UnitSpawner : MonoBehaviour
     {
 
-        public Unit Unit;
+        public Unit unit;
         public int FactionId;
         public int X => (int) transform.localPosition.x;
         public int Y => (int)transform.localPosition.y;

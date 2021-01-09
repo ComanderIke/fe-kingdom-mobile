@@ -20,7 +20,7 @@ namespace Game.Mechanics.Commands
             var unitSelectionManager = GridGameManager.Instance.GetSystem<UnitSelectionSystem>();
             if (unit != null && !unit.UnitTurnState.IsWaiting)
             {
-                GridGameManager.Instance.GetSystem<Map.GridSystem>().HideMovementRangeOnGrid();
+                GridGameManager.Instance.GetSystem<Map.GridSystem>().HideMoveRange();
                 unit.UnitTurnState.IsWaiting = true;
                 unit.UnitTurnState.Selected = false;
                 unit.UnitTurnState.HasMoved = true;

@@ -6,6 +6,7 @@ using Game.GameActors.Players;
 using Game.GameActors.Units.Attributes;
 using Game.GameActors.Units.CharStateEffects;
 using Game.GameActors.Units.OnGameObject;
+using Game.GameInput;
 using Game.GameResources;
 using Game.Grid;
 using Game.Mechanics.Battle;
@@ -13,14 +14,13 @@ using UnityEngine;
 
 namespace Game.GameActors.Units
 {
-    public abstract class Unit : ScriptableObject, ICloneable
+    public abstract class Unit : ScriptableObject, ICloneable, IGridActor, IBattleActor
     {
         [HideInInspector] private int hp;
 
         public string Name;
 
         [HideInInspector] private int sp;
-        [HideInInspector] private int ap;
         public delegate void OnUnitLevelUpEvent(string name, int levelBefore, int levelAfter, int[] stats, int[] statIncreases);
         public static OnUnitLevelUpEvent OnUnitLevelUp;
         public delegate void OnExpGainedEvent(Unit unit, int expBefore, int expGained);
@@ -37,6 +37,7 @@ namespace Game.GameActors.Units
         public Stats Stats;
         public bool IsVisible;
         public Growths Growths;
+        public MoveType MoveType;
 
         public CharacterSpriteSet CharacterSpriteSet;
 
@@ -68,29 +69,32 @@ namespace Game.GameActors.Units
                 SpValueChanged?.Invoke();
             }
         }
-        public int Ap
-        {
-            get => ap;
-            set
-            {
-                ap = value > Stats.Mov ? Stats.Mov : value;
-                if (ap <= 0) ap = 0;
-                ApValueChanged?.Invoke();
-                OnUnitActiveStateUpdated?.Invoke(this, ap != 0, false);
-            }
-        }
 
         public AIAgent Agent { get; private set; }
         public Faction Faction { get; set; }
         private List<Debuff> Debuffs { get; set; }
         private List<Buff> Buffs { get; set; }
 
-        public GridPosition GridPosition { get; set; }
+        
 
         public Motivation Motivation { get; internal set; }
 
+        #region IGridActor
+        public GridPosition GridPosition { get; set; }
+        public int MovementRage => Stats.Mov;
+        public IEnumerable<int> AttackRanges => Stats.AttackRanges;
+        public int FactionId => Faction.Id;
 
+        public bool CanMoveOnTo(Tile field)
+        {
+            return field.TileType.CanMoveThrough(MoveType);
+        }
+        public bool CanMoveThrough(IGridActor unit)
+        {
+            return FactionId != unit.FactionId;
+        }
 
+        #endregion
         //Interface SpeakableObject
         public void ShowSpeechBubble(string text)
         {
@@ -140,7 +144,6 @@ namespace Game.GameActors.Units
             Growths = Growths == null ? CreateInstance<Growths>() : Instantiate(Growths);
             Hp = Stats.MaxHp;
             Sp = Stats.MaxSp;
-            Ap = Stats.Mov;
             ExperienceManager.ExpGained += ExpGained;
             UnitTurnState.OnHasAttacked += HasAttacked;
             
@@ -206,7 +209,6 @@ namespace Game.GameActors.Units
             var buffEnd = Buffs.Where(b => b.TakeEffect(this)).ToList();
             foreach (var d in debuffEnd) d.Remove(this);
             foreach (var b in buffEnd) b.Remove(this);
-            Ap = Stats.Mov;
             UnitTurnState.Reset();
         }
 
@@ -303,8 +305,7 @@ namespace Game.GameActors.Units
 
             clone.hp = this.hp;
             clone.sp = this.sp;
-            clone.ap = this.ap;
-          
+
             clone.Stats = (Stats)Stats.Clone();
             clone.Growths = (Growths)Growths.Clone();
             clone.Motivation = Motivation;
@@ -335,5 +336,24 @@ namespace Game.GameActors.Units
         public static OnUnitDied UnitDied;
 
         #endregion
+
+      
+        public bool CanAttack(int x, int y)
+        {
+            return AttackRanges.Contains(DeltaPos(x, y));
+        }
+
+        private int DeltaPos(int x, int y)
+        {
+            return Math.Abs(GridPosition.X - x) + Math.Abs(GridPosition.Y - y);
+        }
+
+        public bool IsEnemy(IGridActor unit)
+        {
+            return FactionId != unit.FactionId;
+        }
+        
+        
+       
     }
 }

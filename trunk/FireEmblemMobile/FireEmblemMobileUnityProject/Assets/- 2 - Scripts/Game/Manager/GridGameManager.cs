@@ -47,7 +47,7 @@ namespace Game.Manager
             JITHelper.PreJitAll<UiSystem>();
             JITHelper.PreJitAll<GridLogic>();
             JITHelper.PreJitAll<GridRenderer>();
-            JITHelper.PreJitAll<InputSystem>();
+            JITHelper.PreJitAll<GridInputSystem>();
             JITHelper.PreJitAll<UnitInputController>();
             JITHelper.PreJitAll<PlayerInputFeedback>();
             JITHelper.PreJitAll<TopUi>();
@@ -94,7 +94,7 @@ namespace Game.Manager
                 FindObjectOfType<AudioSystem>(),
                 FindObjectOfType<PopUpTextSystem>(),
                 FindObjectOfType<UnitActionSystem>(),
-                FindObjectOfType<InputSystem>(),
+                FindObjectOfType<GridInputSystem>(),
                 FindObjectOfType<UnitsSystem>(),
                 FindObjectOfType<TurnSystem>(),
                 FindObjectOfType<FogOfWarSystem>(),
@@ -164,9 +164,9 @@ namespace Game.Manager
             foreach(var faction in FactionManager.Factions)
                 foreach (var spawn in spawner.Where(a => a.FactionId == faction.Id))
                 {
-                    if (spawn.Unit != null)
+                    if (spawn.unit != null)
                     {
-                        var unit = Instantiate(spawn.Unit) as Unit;
+                        var unit = Instantiate(spawn.unit) as Unit;
                         faction.AddUnit(unit);
                         unit.Initialize();
                        

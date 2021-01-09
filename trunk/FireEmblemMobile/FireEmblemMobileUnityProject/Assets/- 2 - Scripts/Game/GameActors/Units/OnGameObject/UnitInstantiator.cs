@@ -19,9 +19,9 @@ namespace Game.GameActors.Units.OnGameObject
             unitGameObject.layer = LayerMask.NameToLayer("Characters");
             
             var unitController = unitGameObject.GetComponentInChildren<UnitInputController>();
-            unitController.Unit = unit;
+            unitController.unit = unit;
             var unitRenderer = unitGameObject.GetComponentInChildren<UnitRenderer>();
-            unitRenderer.Unit = unit;
+            unitRenderer.unit = unit;
             unitRenderer.Init();
             unit.GameTransform.GameObject = unitGameObject;
             unit.SetPosition(x, y);

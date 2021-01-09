@@ -10,7 +10,7 @@ namespace Game.GameInput
     {
         void SelectUnit(Unit u);
         void MoveUnit(Unit u, GridPosition position, List<GridPosition> path);
-        void CheckAttackPreview(Unit u, Unit attackTarget, GridPosition attackPosition);
+        void CheckAttackPreview(IBattleActor u, IBattleActor attackTarget, GridPosition attackPosition);
         void AttackUnit(Unit u, Unit attackTarget);
         void DeselectUnit();
         void UseItem(Item i);
