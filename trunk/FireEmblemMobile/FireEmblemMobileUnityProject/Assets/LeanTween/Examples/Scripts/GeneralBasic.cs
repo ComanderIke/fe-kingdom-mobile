@@ -44,7 +44,7 @@ namespace LeanTween.Examples.Scripts
 					rotator.transform.position = new Vector3(10.2f,2.85f,0f);
 
 					// Instantiate Avatar
-					GameObject dude = (GameObject)GameObject.Instantiate(prefabAvatar, Vector3.zero, prefabAvatar.transform.rotation );
+					GameObject dude = (GameObject)Instantiate(prefabAvatar, Vector3.zero, prefabAvatar.transform.rotation );
 					dude.transform.parent = rotator.transform;
 					dude.transform.localPosition = new Vector3(0f,1.5f,2.5f*i);
 

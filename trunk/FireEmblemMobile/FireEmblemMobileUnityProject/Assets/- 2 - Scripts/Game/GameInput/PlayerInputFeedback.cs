@@ -309,7 +309,7 @@ namespace Game.GameInput
             {
                 if (moveCursor == null)
                 {
-                    moveCursor = GameObject.Instantiate(resources.Prefabs.MoveCursor, worldContainer);
+                    moveCursor = Instantiate(resources.Prefabs.MoveCursor, worldContainer);
                     moveCursor.name = "MoveCursor";
                 }
                 moveCursor.transform.localPosition = new Vector3(startX,
@@ -317,7 +317,7 @@ namespace Game.GameInput
                 moveCursor.SetActive(true);
                 if (moveCursorStart == null)
                 {
-                    moveCursorStart = GameObject.Instantiate(resources.Prefabs.MoveArrowDot, worldContainer);
+                    moveCursorStart = Instantiate(resources.Prefabs.MoveArrowDot, worldContainer);
                     moveCursorStart.name = "MoveCursorStart";
                 }
                 moveCursorStart.SetActive(true);
@@ -329,7 +329,7 @@ namespace Game.GameInput
             {
                 if (moveCursorStart == null)
                 {
-                    moveCursorStart = GameObject.Instantiate(resources.Prefabs.MoveArrowDot, worldContainer);
+                    moveCursorStart = Instantiate(resources.Prefabs.MoveArrowDot, worldContainer);
                     moveCursorStart.name = "MoveCursorStart";
                 }
           

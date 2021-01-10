@@ -7,7 +7,7 @@ using Utility;
 
 namespace Game.GUI
 {
-    [System.Serializable]
+    [Serializable]
     public class AttackPreviewStatBar : MonoBehaviour
     {
         private const float MIN_WIDTH = 0;

@@ -57,8 +57,7 @@ namespace Game.GUI
             
             GameplayInput.OnViewUnit += ShowTopUi;
             Unit.OnExpGained += ExpGained;
-            GridInputSystem.OnInputActivated += FadeOut;
-            GridInputSystem.OnInputDeactivated += FadeIn;
+            GridInputSystem.OnInputStateChanged += InputStateChanged;
             resources = FindObjectOfType<ResourceScript>();
             var pointer = new PointerEventData(EventSystem.current); // pointer event for Execute Verhindert LagSpike bei erstem click
             ExecuteEvents.Execute(deselectButton.gameObject, pointer, ExecuteEvents.pointerEnterHandler);
@@ -67,6 +66,14 @@ namespace Game.GUI
             ExecuteEvents.Execute(deselectButton.gameObject, pointer, ExecuteEvents.pointerUpHandler);
             HideDeselectButton();//Start with Button ACtive for Performance Reasons
             attackPreview.Hide();
+        }
+
+        private void InputStateChanged(bool active)
+        {
+            if(active)
+                FadeOut();
+            else
+                FadeIn();
         }
         private void FadeIn()
         {
@@ -98,9 +105,9 @@ namespace Game.GUI
         public void ShowLevelUpScreen(string name, int levelBefore, int levelAfter, int [] stats, int[] statIncreases)
         {
             AnimationQueue.Add(()=> { 
-                GridInputSystem.OnSetActive(false, this);
-                levelUpScreen.Show(name, levelBefore, levelAfter, stats, statIncreases); },
-                ()=> GridInputSystem.OnSetActive(true, this));
+                    GridInputSystem.SetActive(false);
+                    levelUpScreen.Show(name, levelBefore, levelAfter, stats, statIncreases); },
+                ()=> GridInputSystem.SetActive(true));
             
         }
         public void DeselectButtonClicked()

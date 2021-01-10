@@ -4,13 +4,14 @@ namespace Game.GameInput
 {
     public class CursorPosition
     {
-        public CursorPosition PreviousCursorPosition;
         public Vector2 Position;
+        public bool IsFree;
 
-        public CursorPosition(Vector2 position, CursorPosition previousCursorPosition)
+        public CursorPosition(Vector2 position, bool isFree)
         {
             Position = position;
-            PreviousCursorPosition = previousCursorPosition;
+            IsFree = isFree;
+
         }
     }
 }

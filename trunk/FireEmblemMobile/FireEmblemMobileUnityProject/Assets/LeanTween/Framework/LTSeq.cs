@@ -65,30 +65,30 @@ namespace LeanTween.Framework
 
 			counter = global_counter;
 
-			this.current = this;
+			current = this;
 		}
 
 		private LTSeq addOn(){
-			this.current.toggle = true;
-			LTSeq lastCurrent = this.current;
-			this.current = LeanTween.sequence(true);
+			current.toggle = true;
+			LTSeq lastCurrent = current;
+			current = LeanTween.sequence(true);
 			// Debug.Log("this.current:" + this.current.id + " lastCurrent:" + lastCurrent.id);
-			this.current.previous = lastCurrent;
+			current.previous = lastCurrent;
 			lastCurrent.toggle = false;
-			this.current.totalDelay = lastCurrent.totalDelay;
-			this.current.debugIter = lastCurrent.debugIter + 1;
+			current.totalDelay = lastCurrent.totalDelay;
+			current.debugIter = lastCurrent.debugIter + 1;
 			return current;
 		}
 
 		private float addPreviousDelays(){
 //		Debug.Log("delay:"+delay+" count:"+this.current.count+" this.current.totalDelay:"+this.current.totalDelay);
 
-			LTSeq prev = this.current.previous;
+			LTSeq prev = current.previous;
 
 			if (prev != null && prev.tween!=null) {
-				return this.current.totalDelay + prev.tween.time;
+				return current.totalDelay + prev.tween.time;
 			}
-			return this.current.totalDelay;
+			return current.totalDelay;
 		}
 
 		/**
@@ -101,9 +101,9 @@ namespace LeanTween.Framework
 	* seq.append( LeanTween.move(cube1, Vector3.one * 10f, 1f) ); // do a tween<br>
 	*/
 		public LTSeq append( float delay ){
-			this.current.totalDelay += delay;
+			current.totalDelay += delay;
 
-			return this.current;
+			return current;
 		}
 
 		/**
@@ -172,19 +172,19 @@ namespace LeanTween.Framework
 	* seq.append( LeanTween.rotateAround( avatar1, Vector3.forward, 360f, 1f ) ); // then do a rotate tween<br>
 	*/
 		public LTSeq append( LTDescr tween ){
-			this.current.tween = tween;
+			current.tween = tween;
 
 //		Debug.Log("tween:" + tween + " delay:" + this.current.totalDelay);
 
-			this.current.totalDelay = addPreviousDelays();
+			current.totalDelay = addPreviousDelays();
 
-			tween.setDelay( this.current.totalDelay );
+			tween.setDelay( current.totalDelay );
 
 			return addOn();
 		}
 
 		public LTSeq insert( LTDescr tween ){
-			this.current.tween = tween;
+			current.tween = tween;
 
 			tween.setDelay( addPreviousDelays() );
 
@@ -194,7 +194,7 @@ namespace LeanTween.Framework
 
 		public LTSeq setScale( float timeScale ){
 //		Debug.Log("this.current:" + this.current.previous.debugIter+" tween:"+this.current.previous.tween);
-			setScaleRecursive(this.current, timeScale, 500);
+			setScaleRecursive(current, timeScale, 500);
 
 			return addOn();
 		}

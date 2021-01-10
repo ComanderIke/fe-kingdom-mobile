@@ -10,29 +10,25 @@ namespace Game.Manager
 {
     public class GameManager : MonoBehaviour
     {
-        private static GameManager _instance;
-        public static GameManager Instance
-        {
-            get { return _instance = _instance ?? new GameManager(); }
-        }
+        public static GameManager Instance { get; private set; }
 
-        public GameProgress GameProgress;
-        public List<IEngineSystem> Systems { get; set; }
+        public GameProgress gameProgress;
+        private List<IEngineSystem> Systems { get; set; }
         public GameStateManager GameStateManager { get; set; }
         private void Awake()
         {
             DontDestroyOnLoad(gameObject);
 
-            if (_instance == null)
+            if (Instance == null)
             {
-                _instance = this;
+                Instance = this;
             }
             else
             {
                 Destroy(gameObject);
                 return;
             }
-            _instance.AddSystems();
+            Instance.AddSystems();
             
         }
         private void AddSystems()

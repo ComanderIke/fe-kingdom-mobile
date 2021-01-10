@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Game.GameActors.Units;
+using Game.GameInput;
 using Game.Grid.PathFinding;
 using Game.Map;
 using GameEngine;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace Game.Mechanics
 {
-    public class MoveSystem : IEngineSystem
+    public class MoveSystem : IEngineSystem, IPathProvider
     {
         private readonly GridSystem gridSystem;
         private AStar PathFindingManager { get; set; }
@@ -60,5 +61,6 @@ namespace Game.Mechanics
             return PathFindingManager.GetPath(x, y, x2, y2, unit, toAdjacentPos, range);
         }
 
+       
     }
 }

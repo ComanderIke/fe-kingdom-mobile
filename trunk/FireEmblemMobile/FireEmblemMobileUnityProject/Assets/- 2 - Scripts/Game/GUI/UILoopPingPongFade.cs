@@ -17,7 +17,7 @@ namespace Game.GUI
             if (LeanTween.isTweening(gameObject))
             {
                 CanvasGroup.alpha = minAlpha;
-                LeanTween.resume(this.gameObject);
+                LeanTween.resume(gameObject);
             }
             else
             {
@@ -27,7 +27,7 @@ namespace Game.GUI
         }
         private void OnDisable()
         {
-            LeanTween.pause(this.gameObject);
+            LeanTween.pause(gameObject);
         }
     }
 }

@@ -27,10 +27,10 @@ namespace Game.GUI
 
             //LeanTween.color(this.gameObject, Color.white, 0.1f).setEaseOutQuad();
             LeanTween.alphaCanvas(glow.GetComponent<CanvasGroup>(), 1, 1.0f).setLoopPingPong(1);
-            LeanTween.scale(this.gameObject, new Vector3(1.4f, 1.4f, 1), AnimateInDuration).setDelay(0.25f).setEaseSpring().setOnComplete(ShowTextAnimation);
+            LeanTween.scale(gameObject, new Vector3(1.4f, 1.4f, 1), AnimateInDuration).setDelay(0.25f).setEaseSpring().setOnComplete(ShowTextAnimation);
             //LeanTween.moveLocal(this.gameObject, new Vector3(0, -Screen.height/2+transform.parent.GetComponent<RectTransform>().rect.height/2, 0), AnimateInDuration).setEaseOutQuad();
         
-            oldPosition = this.transform.localPosition;
+            oldPosition = transform.localPosition;
 
         }
   
@@ -38,7 +38,7 @@ namespace Game.GUI
         {
             int exp = currentExp;
             float fillAmount = 0;
-            LeanTween.value(this.gameObject, 0, addedExp, Math.Max(addedExp / 100f*1.5f, 0.4f)).setEaseOutQuad().setOnUpdate((float val) =>
+            LeanTween.value(gameObject, 0, addedExp, Math.Max(addedExp / 100f*1.5f, 0.4f)).setEaseOutQuad().setOnUpdate((float val) =>
             {
             
                 int intVal = (int)val;
@@ -53,8 +53,8 @@ namespace Game.GUI
         }
         void Hide()
         {
-            LeanTween.scale(this.gameObject, new Vector3(1, 1, 1), AnimateOutDuration).setEaseInQuad().setDelay(AnimateStayDuration);
-            LeanTween.moveLocal(this.gameObject, oldPosition, AnimateOutDuration).setEaseInQuad().setDelay(AnimateStayDuration)
+            LeanTween.scale(gameObject, new Vector3(1, 1, 1), AnimateOutDuration).setEaseInQuad().setDelay(AnimateStayDuration);
+            LeanTween.moveLocal(gameObject, oldPosition, AnimateOutDuration).setEaseInQuad().setDelay(AnimateStayDuration)
                 .setOnComplete(() => { AnimationQueue.OnAnimationEnded?.Invoke(); });
         }
 

@@ -28,8 +28,8 @@ namespace LeanTween.Framework
         //LeanTween.colorText
         public static LTDescr LeanColorText(this RectTransform rectTransform, Color to, float time) { return LeanTween.colorText(rectTransform, to, time); }
         //LeanTween.delayedCall
-        public static LTDescr LeanDelayedCall(this GameObject gameObject, float delayTime, System.Action callback) { return LeanTween.delayedCall(gameObject, delayTime, callback); }
-        public static LTDescr LeanDelayedCall(this GameObject gameObject, float delayTime, System.Action<object> callback) { return LeanTween.delayedCall(gameObject, delayTime, callback); }
+        public static LTDescr LeanDelayedCall(this GameObject gameObject, float delayTime, Action callback) { return LeanTween.delayedCall(gameObject, delayTime, callback); }
+        public static LTDescr LeanDelayedCall(this GameObject gameObject, float delayTime, Action<object> callback) { return LeanTween.delayedCall(gameObject, delayTime, callback); }
 
         //LeanTween.isPaused
         public static bool LeanIsPaused(this GameObject gameObject) { return LeanTween.isPaused(gameObject); }
@@ -92,7 +92,7 @@ namespace LeanTween.Framework
         //LeanTween.pause
         public static void LeanPause(this GameObject gameObject) { LeanTween.pause(gameObject); }
         //LeanTween.play
-        public static LTDescr LeanPlay(this RectTransform rectTransform, UnityEngine.Sprite[] sprites) { return LeanTween.play(rectTransform, sprites); }
+        public static LTDescr LeanPlay(this RectTransform rectTransform, Sprite[] sprites) { return LeanTween.play(rectTransform, sprites); }
         //LeanTween.removeListener
         //LeanTween.resume
         public static void LeanResume(this GameObject gameObject) { LeanTween.resume(gameObject); }

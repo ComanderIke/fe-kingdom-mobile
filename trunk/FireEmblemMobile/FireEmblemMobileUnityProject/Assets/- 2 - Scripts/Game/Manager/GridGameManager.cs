@@ -31,7 +31,7 @@ namespace Game.Manager
         public static event Action OnStartGame;
         private bool init;
 
-        public List<IEngineSystem> Systems { get; set; }
+        private List<IEngineSystem> Systems { get; set; }
         public FactionManager FactionManager { get; set; }
         public GameStateManager GameStateManager { get; set; }
 

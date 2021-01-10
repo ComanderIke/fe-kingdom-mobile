@@ -22,6 +22,11 @@ namespace Game.GameActors.Players
             Units = new List<Unit>();
         }
 
+        public bool IsActive()
+        {
+            return GridGameManager.Instance.FactionManager.ActiveFaction == this;
+        }
+
         public List<Unit> GetActiveUnits()
         {
             return Units.Where(c => c.IsActive() && c.IsAlive()).ToList();

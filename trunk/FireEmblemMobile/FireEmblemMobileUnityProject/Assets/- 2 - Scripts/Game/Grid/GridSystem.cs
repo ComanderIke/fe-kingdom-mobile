@@ -23,7 +23,7 @@ namespace Game.Map
         private GridBuilder gridBuilder;
         public GridResources GridResources;
         public GridData GridData;
-        private Tile[,] Tiles { get; set; }
+        public Tile[,] Tiles { get; private set; }
         public GridRenderer GridRenderer { get; set; }
         public GridLogic GridLogic { get; set; }
         public NodeHelper NodeHelper;

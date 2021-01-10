@@ -19,8 +19,8 @@ namespace Game.Mechanics.Commands
             this.unit = unit;
             oldX = unit.GridPosition.X;
             oldY = unit.GridPosition.Y;
-            this.x = destination.X;
-            this.y = destination.Y;
+            x = destination.X;
+            y = destination.Y;
         }
 
         public MoveCharacterCommand(Unit unit, GridPosition destination, List<GridPosition> path) : this(unit, destination)

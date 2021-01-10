@@ -22,7 +22,7 @@ namespace Game.GameInput
         public static event AttackUnitEvent OnAttackUnit;
         public delegate void CheckAttackPreviewEvent(IBattleActor u, IBattleActor attackTarget, GridPosition attackPosition);
         public static event CheckAttackPreviewEvent OnCheckAttackPreview;
-        public void AttackUnit(Unit u, Unit attackTarget)
+        public void AttackUnit(IBattleActor u, IBattleActor attackTarget)
         {
             //Debug.Log("GameInput: Attack Unit: " + u.name+" Target: " +attackTarget.name);
             OnAttackUnit?.Invoke(u, attackTarget);
@@ -33,13 +33,13 @@ namespace Game.GameInput
             OnDeselectUnit?.Invoke();
         }
 
-        public void MoveUnit(Unit u, GridPosition position, List<GridPosition> movePath)
+        public void MoveUnit(IGridActor u, GridPosition position, List<GridPosition> movePath)
         {
             //Debug.Log("GameInput: Move Unit: " + u.name +" to [" +position.X +"/"+position.Y+"]");
             OnMoveUnit?.Invoke(u, position, movePath);
         }
 
-        public void SelectUnit(Unit u)
+        public void SelectUnit(IGridActor u)
         {
             //Debug.Log("GameInput: Select Unit: " + u.name);
             OnSelectUnit?.Invoke(u);
@@ -49,7 +49,7 @@ namespace Game.GameInput
             //Debug.Log("GameInput: View Unit: " + u.name);
             OnViewUnit?.Invoke(u);
         }
-        public void Wait(Unit u)
+        public void Wait(IGridActor u)
         {
             //Debug.Log("GameInput: Wait Unit: " + u.name);
             OnWait?.Invoke(u);
@@ -57,7 +57,7 @@ namespace Game.GameInput
 
         public void UseItem(Item i)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
         public void ExecuteInputActions(Action invokeAfter)
         {

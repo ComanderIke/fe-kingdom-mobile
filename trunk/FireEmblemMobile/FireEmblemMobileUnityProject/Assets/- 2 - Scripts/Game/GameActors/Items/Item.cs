@@ -21,7 +21,7 @@ namespace Game.GameActors.Items
 
         public object Clone()
         {
-            var clone = (Item)this.MemberwiseClone();
+            var clone = (Item)MemberwiseClone();
             HandleCloned(clone);
             return clone;
         }

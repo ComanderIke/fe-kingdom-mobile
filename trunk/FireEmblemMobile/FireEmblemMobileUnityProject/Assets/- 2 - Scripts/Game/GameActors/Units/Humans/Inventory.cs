@@ -36,7 +36,7 @@ namespace Game.GameActors.Units.Humans
 
         public object Clone()
         {
-            var clone = (Inventory)this.MemberwiseClone();
+            var clone = (Inventory)MemberwiseClone();
             clone.Items = new List<Item>();
             foreach (Item i in Items)
             {

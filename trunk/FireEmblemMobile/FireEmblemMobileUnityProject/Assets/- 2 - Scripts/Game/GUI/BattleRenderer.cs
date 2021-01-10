@@ -27,12 +27,12 @@ namespace Game.GUI
 
         private void OnEnable()
         {
-            GridInputSystem.OnSetActive?.Invoke(false,this);
+            GridInputSystem.SetActive(false);
         }
 
         private void OnDisable()
         {
-            GridInputSystem.OnSetActive?.Invoke(true, this);
+            GridInputSystem.SetActive(true);
         }
 
         public void Show(Unit attacker, Unit defender, bool[] attackSequence)

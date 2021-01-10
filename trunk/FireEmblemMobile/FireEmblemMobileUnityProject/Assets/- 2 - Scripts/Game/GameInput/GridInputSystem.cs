@@ -1,10 +1,7 @@
 ﻿using System;
 using Game.GameActors.Units;
-using Game.GameActors.Units.OnGameObject;
-using Game.Grid;
 using Game.Manager;
 using Game.Map;
-using Game.Mechanics;
 using GameEngine;
 using UnityEngine;
 
@@ -14,8 +11,7 @@ namespace Game.GameInput
     {
         public static event Action<bool> OnInputStateChanged;
         public static bool Active { get; private set; }
-
-        private RaycastManager raycastManager;
+        
         private GridSystem gridSystem;
         private GridInput gridInput;
         private IGameInputReceiver inputReceiver;
@@ -27,8 +23,7 @@ namespace Game.GameInput
         {
             Active = true;
             gridSystem = GridGameManager.Instance.GetSystem<GridSystem>();
-            raycastManager = new RaycastManager();
-            inputReceiver = new GameInputReceiver(new GameplayInput());
+            inputReceiver = new GameInputReceiver();
             gridInput = new GridInput();
             gridInput.RegisterInputReceiver(this);
         }

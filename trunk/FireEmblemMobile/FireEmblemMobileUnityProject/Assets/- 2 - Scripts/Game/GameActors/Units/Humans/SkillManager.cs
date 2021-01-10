@@ -28,7 +28,7 @@ namespace Game.GameActors.Units.Humans
 
         public object Clone()
         {
-            var clone = (SkillManager)this.MemberwiseClone();
+            var clone = (SkillManager)MemberwiseClone();
             clone.Skills = new List<Skill>();
             foreach (Skill skill in Skills)
             {

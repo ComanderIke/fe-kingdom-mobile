@@ -32,7 +32,7 @@ namespace Game.GUI.Text
                         () =>
                             LeanTween.moveLocalX(text.gameObject, posX + (Screen.width / 2) + (textRect.sizeDelta.x / 2), TEXT_FADE_OUT_DURATION).setEaseInQuad().setOnComplete(
                                 () => LeanTween.scaleY(BackGround.gameObject, 0, FADE_OUT_DURATION).setEaseInQuad().setOnComplete(
-                                        () => { OnFinished?.Invoke();Destroy(this.gameObject.transform.parent.gameObject); }
+                                        () => { OnFinished?.Invoke();Destroy(gameObject.transform.parent.gameObject); }
                                       )
                             )
                     )

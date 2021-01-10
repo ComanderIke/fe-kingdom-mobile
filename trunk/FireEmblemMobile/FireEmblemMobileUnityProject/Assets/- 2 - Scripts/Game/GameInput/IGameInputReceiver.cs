@@ -11,7 +11,6 @@ namespace Game.GameInput
         void DoubleClickedActor(IGridActor unit);
         void DraggedOnActor(IGridActor gridActor);
         void DraggedOverActor(IGridActor gridActor);
-        void ClickedOnUndefined();
         void StartDraggingActor(IGridActor actor);
         void ResetInput();
     }

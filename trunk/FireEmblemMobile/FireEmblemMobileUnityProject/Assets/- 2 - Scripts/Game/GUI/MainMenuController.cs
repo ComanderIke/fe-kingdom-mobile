@@ -67,11 +67,11 @@ namespace Game.GUI
             GetLoadFiles();
             foreach (var button in loadArea.GetComponentsInChildren<Button>())
             {
-                Object.Destroy(button.gameObject);
+                Destroy(button.gameObject);
             }
             foreach (string file in saveFiles)
             {
-                var buttonObject = Object.Instantiate(loadFilePrefab);
+                var buttonObject = Instantiate(loadFilePrefab);
                 string fileName = file.Replace(Application.persistentDataPath + "/saves/", "");
                 buttonObject.transform.SetParent(loadArea.transform, false);
                 buttonObject.GetComponent<Button>().onClick.AddListener(() => { LoadGame(fileName);});

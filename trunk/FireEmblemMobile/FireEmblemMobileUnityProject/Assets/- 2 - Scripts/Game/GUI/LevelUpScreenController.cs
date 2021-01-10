@@ -67,7 +67,7 @@ namespace Game.GUI
                     LeanTween.alphaCanvas(levelUpText.GetComponent<CanvasGroup>(), 0, 0.15f).setEaseInQuad().setDelay(1.8f);
                     LeanTween.scale(levelUpText.gameObject, new Vector3(1, 0, 1), 0.15f).setEaseInQuad().setDelay(1.8f);
                     LeanTween.moveLocalY(levelUpText.gameObject, levelUpText.transform.localPosition.y - 100, 0.15f).setDelay(1.8f).setEaseInQuad().setOnComplete(() => {
-                        LeanTween.alphaCanvas(this.GetComponent<CanvasGroup>(), 1, 0.55f).setEaseOutQuad();
+                        LeanTween.alphaCanvas(GetComponent<CanvasGroup>(), 1, 0.55f).setEaseOutQuad();
                         LeanTween.scale(levelText.gameObject, levelText.transform.localScale * 1.2f, 0.8f).setEaseOutQuad().setDelay(0.65f).setOnStart(() => levelText.text = "" + levelAfter)
                             .setOnComplete(() =>
                             {
@@ -120,7 +120,7 @@ namespace Game.GUI
                 actions.Add(CreateStatPopUpActionAnimationIn(resText, "" + (stats[7] + statsIncreases[7]), resAddedText, statsIncreases[7]));
                 actions.Add(CreateStatPopUpActionAnimationOut(resText, resAddedText));
             }
-            actions.Add(()=> LeanTween.alphaCanvas(this.GetComponent<CanvasGroup>(), 0, 0.65f).setEaseInQuad().setDelay(delaybetweenPopups)
+            actions.Add(()=> LeanTween.alphaCanvas(GetComponent<CanvasGroup>(), 0, 0.65f).setEaseInQuad().setDelay(delaybetweenPopups)
                 .setOnComplete(()=>AnimationQueue.OnAnimationEnded?.Invoke()));
 
         }

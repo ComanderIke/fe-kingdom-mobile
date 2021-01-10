@@ -11,6 +11,7 @@ using Game.GameResources;
 using Game.Grid;
 using Game.Mechanics.Battle;
 using UnityEngine;
+using Vector2 = System.Numerics.Vector2;
 
 namespace Game.GameActors.Units
 {
@@ -228,12 +229,15 @@ namespace Game.GameActors.Units
             GameTransform.EnableLight();
             GameTransform.SetPosition(x, y);
         }
+
+        
+
         public virtual void SetGameTransformPosition(int x, int y)
         {
             GameTransform.DeParentLight();
             GameTransform.SetPosition(x, y);
         }
-        public virtual Vector2 GetGameTransformPosition()
+        public virtual Vector3 GetGameTransformPosition()
         {
             return GameTransform.GetPosition();
         }
@@ -243,6 +247,16 @@ namespace Game.GameActors.Units
             GameTransform.SetPosition(GridPosition.X, GridPosition.Y);
             GameTransform.EnableCollider();
             GameTransform.EnableLight();
+        }
+
+        public bool CanAttackFrom(GridPosition attackFromPosition, GridPosition targetPosition)
+        {
+            return AttackRanges.Contains(DeltaPos(attackFromPosition.X, attackFromPosition.Y, targetPosition.X, targetPosition.Y));
+        }
+
+        private int DeltaPos(int x, int y, int x2, int y2)
+        {
+            return Math.Abs(x - x2) + Math.Abs(y - y2);
         }
 
         public void Die()
@@ -287,7 +301,7 @@ namespace Game.GameActors.Units
 
         public object Clone()
         {
-            var clone = (Unit) this.MemberwiseClone();
+            var clone = (Unit) MemberwiseClone();
             HandleCloned(clone);
             return clone;
         }
@@ -303,8 +317,8 @@ namespace Game.GameActors.Units
             clone.Debuffs = new List<Debuff>();
             clone.Agent = new AIAgent();
 
-            clone.hp = this.hp;
-            clone.sp = this.sp;
+            clone.hp = hp;
+            clone.sp = sp;
 
             clone.Stats = (Stats)Stats.Clone();
             clone.Growths = (Growths)Growths.Clone();
@@ -351,6 +365,11 @@ namespace Game.GameActors.Units
         public bool IsEnemy(IGridActor unit)
         {
             return FactionId != unit.FactionId;
+        }
+
+        public bool IsActiveFaction()
+        {
+            return Faction.IsActive;
         }
         
         

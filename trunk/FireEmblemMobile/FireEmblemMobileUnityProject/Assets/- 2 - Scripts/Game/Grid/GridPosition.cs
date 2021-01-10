@@ -11,70 +11,42 @@ namespace Game.Grid
     {
         public int X = -1;
         public int Y = -1;
-        private bool facingLeft = false;
-
-        public bool FacingLeft
-        {
-            get => facingLeft;
-            set
-            {
-                facingLeft = value;
-                Character.GameTransform.SetYRotation(facingLeft ? 180 : 0);
-            }
-        }
-
-        protected Unit Character;
-        protected GridSystem GridScript;
+        private Unit character;
+        private GridSystem gridScript;
 
         public GridPosition(int x, int y)
         {
-            this.X = x;
-            this.Y = y;
-            Character = null;
+            X = x;
+            Y = y;
+            character = null;
+            gridScript = GridGameManager.Instance.GetSystem<GridSystem>();
         }
+
         public GridPosition(Unit character)
         {
-            this.Character = character;
+            this.character = character;
         }
 
-        public Vector2 GetPos()
+        public void SetPosition(int newX, int newY)
         {
-            return new Vector2(X, Y);
-        }
-
-        public virtual void SetPosition(int newX, int newY)
-        {
-            if (GridScript == null)
-                GridScript = GridGameManager.Instance.GetSystem<GridSystem>();
             if (X != -1 && Y != -1)
-                GridScript.Tiles[X, Y].Actor = null;
-            GridScript.Tiles[newX, newY].Actor = Character;
+                gridScript.Tiles[X, Y].Actor = null;
+            gridScript.Tiles[newX, newY].Actor = character;
             X = newX;
             Y = newY;
         }
 
-      
-
-        public virtual void RemoveCharacter()
+        public void RemoveCharacter()
         {
-            if (GridScript == null)
-                GridScript = GridGameManager.Instance.GetSystem<GridSystem>();
-            GridScript.Tiles[X, Y].Actor = null;
+            gridScript.Tiles[X, Y].Actor = null;
         }
-
-        public int GetManhattanDistance(int x2, int y2)
-        {
-            return Math.Abs(X - x2) + Math.Abs(Y - y2);
-        }
-
-        
 
         public static List<GridPosition> GetFromVectorList(List<Vector2> movePath)
         {
-            List<GridPosition> ret = new List<GridPosition>();
-            for(int i=0; i < movePath.Count; i++)
+            var ret = new List<GridPosition>();
+            for (int i = 0; i < movePath.Count; i++)
             {
-                ret.Add(new GridPosition((int)movePath[i].x, (int)movePath[i].y));
+                ret.Add(new GridPosition((int) movePath[i].x, (int) movePath[i].y));
             }
             return ret;
         }

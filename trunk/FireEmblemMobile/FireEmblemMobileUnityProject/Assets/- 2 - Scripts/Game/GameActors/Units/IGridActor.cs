@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Game.Grid;
+using UnityEngine;
 
 namespace Game.GameActors.Units
 {
@@ -14,5 +15,9 @@ namespace Game.GameActors.Units
         bool IsEnemy(IGridActor unit);
         
         bool CanAttack(int x, int y);
+        Vector3 GetGameTransformPosition();
+        void SetGameTransformPosition(int x, int y);
+        void ResetPosition();
+        bool CanAttackFrom(GridPosition attackFromPosition, GridPosition targetPosition);
     }
 }

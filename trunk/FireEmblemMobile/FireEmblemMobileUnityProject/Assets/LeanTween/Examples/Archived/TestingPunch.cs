@@ -42,17 +42,17 @@ namespace LeanTween.Examples.Archived
             {
                 print("scale punch!");
 
-                tweenStatically( this.gameObject );
+                tweenStatically( gameObject );
 
-                Framework.LeanTween.scale(this.gameObject, new Vector3(1.15f, 1.15f, 1.15f), 0.6f);
+                Framework.LeanTween.scale(gameObject, new Vector3(1.15f, 1.15f, 1.15f), 0.6f);
 
-                Framework.LeanTween.rotateAround(this.gameObject, Vector3.forward, -360f, 0.3f).setOnComplete(() =>
+                Framework.LeanTween.rotateAround(gameObject, Vector3.forward, -360f, 0.3f).setOnComplete(() =>
                 {
-                    Framework.LeanTween.rotateAround(this.gameObject, Vector3.forward, -360f, 0.4f).setOnComplete(() =>
+                    Framework.LeanTween.rotateAround(gameObject, Vector3.forward, -360f, 0.4f).setOnComplete(() =>
                     {
-                        Framework.LeanTween.scale(this.gameObject, new Vector3(1f, 1f, 1f), 0.1f);
+                        Framework.LeanTween.scale(gameObject, new Vector3(1f, 1f, 1f), 0.1f);
 
-                        Framework.LeanTween.value(this.gameObject, (v) =>
+                        Framework.LeanTween.value(gameObject, (v) =>
                         {
                         
                         }, 0, 1, 0.3f).setDelay(1);
@@ -80,7 +80,7 @@ namespace LeanTween.Examples.Archived
             if (Input.GetKeyDown(KeyCode.R))
             {
                 // LeanTween.rotate(this.gameObject, Vector3.one, 1.0f).setEase(LeanTweenType.punch);
-                Framework.LeanTween.rotateAroundLocal(this.gameObject, this.transform.forward, -80f, 5.0f).setPoint(new Vector3(1.25f, 0f, 0f));
+                Framework.LeanTween.rotateAroundLocal(gameObject, transform.forward, -80f, 5.0f).setPoint(new Vector3(1.25f, 0f, 0f));
                 print("rotate punch!");
             }
  
@@ -90,16 +90,16 @@ namespace LeanTween.Examples.Archived
                 print("move punch!");
                 Time.timeScale = 0.25f;
                 float start = Time.realtimeSinceStartup;
-                Framework.LeanTween.moveX( this.gameObject, 1f, 1f).setOnComplete( destroyOnComp ).setOnCompleteParam( this.gameObject ).setOnComplete( ()=>{
+                Framework.LeanTween.moveX( gameObject, 1f, 1f).setOnComplete( destroyOnComp ).setOnCompleteParam( gameObject ).setOnComplete( ()=>{
                     float end = Time.realtimeSinceStartup;
                     float diff = end - start;
-                    Debug.Log("start:"+start+" end:"+end+" diff:"+diff+" x:"+this.gameObject.transform.position.x);
+                    Debug.Log("start:"+start+" end:"+end+" diff:"+diff+" x:"+gameObject.transform.position.x);
                 }).setEase(Framework.LeanTweenType.easeInBack).setOvershoot( overShootValue ).setPeriod(0.3f);
             }
 
             if (Input.GetKeyDown(KeyCode.C))
             {
-                Framework.LeanTween.color( this.gameObject, new Color(1f, 0f, 0f, 0.5f), 1f);
+                Framework.LeanTween.color( gameObject, new Color(1f, 0f, 0f, 0.5f), 1f);
 
                 Color to = new Color(Random.Range(0f,1f),0f,Random.Range(0f,1f),0.0f);
                 GameObject l = GameObject.Find("LCharacter");

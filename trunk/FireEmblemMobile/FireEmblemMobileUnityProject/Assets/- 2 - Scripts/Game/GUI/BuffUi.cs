@@ -33,7 +33,7 @@ namespace Game.GUI
         {
             if (buffs.ContainsKey(state.name))
             {
-                GameObject.Destroy(buffs[state.name]);
+                Destroy(buffs[state.name]);
                 buffs.Remove(state.name);
             }
         }

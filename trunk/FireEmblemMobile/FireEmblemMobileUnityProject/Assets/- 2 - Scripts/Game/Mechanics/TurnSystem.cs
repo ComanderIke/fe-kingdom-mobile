@@ -43,13 +43,13 @@ namespace Game.Mechanics
             if (!factionManager.ActiveFaction.IsPlayerControlled)
             {
                 //Debug.Log("AITurn");
-                GridInputSystem.OnSetActive?.Invoke(false, this);
+                GridInputSystem.SetActive(false);
                 gridGameManager.GameStateManager.Feed(NextStateTrigger.StartAITurn);
             }
             else
             {
                 //Debug.Log("PlayerTurn");
-                GridInputSystem.OnSetActive?.Invoke(true, this);
+                GridInputSystem.SetActive(true);
             }
             OnStartTurn?.Invoke();
             foreach (var c in factionManager.ActiveFaction.Units)

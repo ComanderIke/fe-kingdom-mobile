@@ -53,36 +53,36 @@ namespace LeanTween.Framework
 		public void reset(){
 			animationCurve = null;
 
-			this.onUpdateFloat = null;
-			this.onUpdateFloatRatio = null;
-			this.onUpdateVector2 = null;
-			this.onUpdateVector3 = null;
-			this.onUpdateFloatObject = null;
-			this.onUpdateVector3Object = null;
-			this.onUpdateColor = null;
-			this.onComplete = null;
-			this.onCompleteObject = null;
-			this.onCompleteParam = null;
-			this.onStart = null;
+			onUpdateFloat = null;
+			onUpdateFloatRatio = null;
+			onUpdateVector2 = null;
+			onUpdateVector3 = null;
+			onUpdateFloatObject = null;
+			onUpdateVector3Object = null;
+			onUpdateColor = null;
+			onComplete = null;
+			onCompleteObject = null;
+			onCompleteParam = null;
+			onStart = null;
 
-			this.point = Vector3.zero;
-			this.initFrameCount = 0;
+			point = Vector3.zero;
+			initFrameCount = 0;
 		}
 
 		public void callOnUpdate( float val, float ratioPassed){
-			if(this.onUpdateFloat!=null)
-				this.onUpdateFloat(val);
+			if(onUpdateFloat!=null)
+				onUpdateFloat(val);
 
-			if (this.onUpdateFloatRatio != null){
-				this.onUpdateFloatRatio(val,ratioPassed);
-			}else if(this.onUpdateFloatObject!=null){
-				this.onUpdateFloatObject(val, this.onUpdateParam);
-			}else if(this.onUpdateVector3Object!=null){
-				this.onUpdateVector3Object(LTDescr.newVect, this.onUpdateParam);
-			}else if(this.onUpdateVector3!=null){
-				this.onUpdateVector3(LTDescr.newVect);
-			}else if(this.onUpdateVector2!=null){
-				this.onUpdateVector2(new Vector2(LTDescr.newVect.x,LTDescr.newVect.y));
+			if (onUpdateFloatRatio != null){
+				onUpdateFloatRatio(val,ratioPassed);
+			}else if(onUpdateFloatObject!=null){
+				onUpdateFloatObject(val, onUpdateParam);
+			}else if(onUpdateVector3Object!=null){
+				onUpdateVector3Object(LTDescr.newVect, onUpdateParam);
+			}else if(onUpdateVector3!=null){
+				onUpdateVector3(LTDescr.newVect);
+			}else if(onUpdateVector2!=null){
+				onUpdateVector2(new Vector2(LTDescr.newVect.x,LTDescr.newVect.y));
 			}
 		}
 	}

@@ -9,8 +9,8 @@ namespace SerializedData
         public GameProgress GameProgress;
         public GameData(PlayerData player, GameProgress gameProgress)
         {
-            this.Player = player;
-            this.GameProgress = gameProgress;
+            Player = player;
+            GameProgress = gameProgress;
         }
     }
 }

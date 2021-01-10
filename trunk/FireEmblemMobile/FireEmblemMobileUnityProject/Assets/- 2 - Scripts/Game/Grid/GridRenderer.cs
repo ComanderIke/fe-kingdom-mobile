@@ -8,7 +8,7 @@ namespace Game.Grid
     {
         public delegate void OnRenderEnemyTileEvent(int x, int y, Unit enemy, int playerId);
         public static event OnRenderEnemyTileEvent OnRenderEnemyTile;
-        private Tile[,] Tiles { get; set; }
+        private Tile[,] Tiles { get; }
 
         public GridRenderer(GridSystem gridManager)
         {
