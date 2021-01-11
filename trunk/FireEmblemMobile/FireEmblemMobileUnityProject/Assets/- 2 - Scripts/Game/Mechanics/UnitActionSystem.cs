@@ -77,7 +77,8 @@ namespace Game.Mechanics
         }
 
         #region GameplayCommands
-        public void Wait(Unit unit)
+
+        public void Wait(ISelectableActor unit)
         {
             var mCc = new WaitCommand(unit);
             currentActions.Enqueue(mCc);

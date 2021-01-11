@@ -80,8 +80,11 @@ namespace Game.GameInput
 
         public void DoubleClickedActor(IGridActor unit)
         {
-            if(IsActiveFaction(unit))
-                gameplayInput.Wait(unit);
+            if (IsActiveFaction(unit))
+            {
+                if(unit is ISelectableActor selectAbleUnit)
+                    gameplayInput.Wait(selectAbleUnit);
+            }
             else
             {
                 ClickedOnActor(unit);
@@ -156,7 +159,7 @@ namespace Game.GameInput
             {
                 if (gridSystem.GridLogic.IsFieldAttackable(enemyActor.GridPosition.X, enemyActor.GridPosition.Y))
                 {
-                    if (selectionDataProvider.ConfirmAttackTarget!=enemyActor)
+                    if (selectionDataProvider.selectedAttackTarget!=enemyActor)
                     {
                         selectionDataProvider.ClearSelectedTile();
                         var gridPos = new GridPosition((int)selectedActor.GetGameTransformPosition().x, (int)selectedActor.GetGameTransformPosition().y);
@@ -191,7 +194,8 @@ namespace Game.GameInput
                                     gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, new GridPosition(selectedActor.GridPosition.X, selectedActor.GridPosition.Y));
                             }
                         }
-                        selectionDataProvider.ConfirmAttackTarget = enemyActor;
+                        if(enemyActor is ISelectableActor selectableEnemyActor)
+                            selectionDataProvider.selectedAttackTarget = selectableEnemyActor;
                     }
                     else
                     {
@@ -328,7 +332,7 @@ namespace Game.GameInput
         }
 
         
-        private void OnSelectedCharacter(Unit u)
+        private void OnSelectedCharacter(ISelectableActor u)
         {
             ResetInput();
         }

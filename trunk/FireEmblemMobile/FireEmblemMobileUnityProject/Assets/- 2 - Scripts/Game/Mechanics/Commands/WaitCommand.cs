@@ -7,9 +7,9 @@ namespace Game.Mechanics.Commands
 {
     public class WaitCommand : Command
     {
-        private readonly Unit unit;
+        private readonly ISelectableActor unit;
 
-        public WaitCommand(Unit unit)
+        public WaitCommand(ISelectableActor unit)
         {
             this.unit = unit;
         }

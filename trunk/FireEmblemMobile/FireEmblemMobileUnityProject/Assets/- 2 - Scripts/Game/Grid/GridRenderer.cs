@@ -16,7 +16,7 @@ namespace Game.Grid
         }
         
 
-        public void ShowStandOnVisual(Unit c)
+        public void ShowStandOnVisual(IGridActor c)
         {
             Tiles[c.GridPosition.X, c.GridPosition.Y].TileRenderer.StandOnVisual();
         }

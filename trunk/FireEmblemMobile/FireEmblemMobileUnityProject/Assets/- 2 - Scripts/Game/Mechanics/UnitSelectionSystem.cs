@@ -1,8 +1,8 @@
 ﻿using System;
-using Game.GameActors.Units;
 using Game.GameInput;
 using Game.Manager;
 using GameEngine;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace Game.Mechanics
@@ -11,14 +11,14 @@ namespace Game.Mechanics
     {
         public static event Action OnDeselectCharacter;
 
-        public static event Action<Unit> OnSelectedCharacter;
+        public static event Action<ISelectableActor> OnSelectedCharacter;
 
-        public static event Action<Unit> OnSelectedInActiveCharacter;
+        public static event Action<ISelectableActor> OnSelectedInActiveCharacter;
 
-        public static event Action<Unit> OnEnemySelected;
+        public static event Action<ISelectableActor> OnEnemySelected;
 
         private GridGameManager gridGameManager;
-        public Unit SelectedCharacter { get; set; }
+        public ISelectableActor SelectedCharacter { get; set; }
 
         private void Start()
         {
@@ -46,7 +46,7 @@ namespace Game.Mechanics
             SelectedCharacter = null;
         }
 
-        private void SelectCharacter(Unit c)
+        private void SelectCharacter(ISelectableActor c)
         {
             if (SelectedCharacter != null)
             {
@@ -57,26 +57,24 @@ namespace Game.Mechanics
             OnSelectedCharacter(SelectedCharacter);
         }
 
-        private void EnemySelected(Unit c)
+        private void EnemySelected(ISelectableActor c)
         {
-            Debug.Log("enemy selected " + c.Name);
+            Debug.Log("enemy selected " + c);
             if (SelectedCharacter != null)
             {
                 SelectedCharacter.UnitTurnState.Selected = false;
-                if (SelectedCharacter.GameTransform.GameObject != null)
-                    SelectedCharacter = null;
             }
             OnEnemySelected?.Invoke(c);
         }
 
-        private void SelectInActiveCharacter(Unit c)
+        private void SelectInActiveCharacter(ISelectableActor c)
         {
             Debug.Log("SelectInactiveCharacter");
             OnSelectedInActiveCharacter?.Invoke(c);
         }
-        private void SelectUnit(Unit c)
+        private void SelectUnit(ISelectableActor c)
         {
-            if (gridGameManager.FactionManager.ActiveFaction.Units.Contains(c))
+            if (gridGameManager.FactionManager.IsActiveFaction(c.FactionId))
             {
                 if (!c.UnitTurnState.IsWaiting)
                 {

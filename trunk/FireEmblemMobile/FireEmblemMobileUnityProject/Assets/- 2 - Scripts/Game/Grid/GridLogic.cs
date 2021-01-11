@@ -215,7 +215,7 @@ namespace Game.Grid
             return Tiles[(int) pos.x, (int) pos.y].HasFreeSpace();
         }
 
-        public IEnumerable<Tile> TilesFromWhereYouCanAttack(Unit character)
+        public IEnumerable<Tile> TilesFromWhereYouCanAttack(IGridActor character)
         {
             return (from Tile f in Tiles
                 where (f.X == character.GridPosition.X && f.Y == character.GridPosition.Y) ||

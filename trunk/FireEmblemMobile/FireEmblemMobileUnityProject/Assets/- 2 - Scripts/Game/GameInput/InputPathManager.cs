@@ -103,7 +103,8 @@ namespace Game.GameInput
            
             dragPath.Add(new Vector2(x, y));
             
-            if (dragPath.Count > gridActor.MovementRage || contains || IsLastActiveFieldAdjacent(x,y,gridActor))
+            //if (dragPath.Count > gridActor.MovementRage || contains || IsLastActiveFieldAdjacent(x,y,gridActor))
+            if (dragPath.Count > gridActor.MovementRage || contains)
             {
                 CreateNewMovementPath(gridActor, x , y);
               
@@ -115,27 +116,28 @@ namespace Game.GameInput
         {
             return MovementPath != null && MovementPath.Count <= range;
         }
-        private bool IsFieldAdjacent(float x, float y, float x2, float y2)
-        {
-            return Mathf.Abs(x - x2) + Mathf.Abs(y - y2) > 1;
-        }
-        public bool FunctionWhut(int x, int y)
-        {
-            return dragPath.Count >= 2 &&
-                   IsFieldAdjacent(dragPath[dragPath.Count - 2].x, dragPath[dragPath.Count - 2].y, x, y);
-        }
+        // private bool IsFieldAdjacent(float x, float y, float x2, float y2)
+        // {
+        //     return Mathf.Abs(x - x2) + Mathf.Abs(y - y2) > 1;
+        // }
 
-        public bool FunctionWhut2(int x, int y, IGridActor gridActor)
-        {
-            return dragPath.Count == 1 && IsFieldAdjacent(gridActor.GridPosition.X, gridActor.GridPosition.Y, x, y);
-        }
-        private bool IsLastActiveFieldAdjacent(int x, int y, IGridActor gridActor)
-        {
-            if(FunctionWhut(x,y))
-                return true;
-            if (FunctionWhut2(x,y, gridActor))
-                return true;
-            return IsFieldAdjacent(lastDragPosX, lastDragPosY, x, y);
-        }
+        // private bool FunctionWhut(int x, int y)
+        // {
+        //     return dragPath.Count >= 2 &&
+        //            IsFieldAdjacent(dragPath[dragPath.Count - 2].x, dragPath[dragPath.Count - 2].y, x, y);
+        // }
+        //
+        // private bool FunctionWhut2(int x, int y, IGridActor gridActor)
+        // {
+        //     return dragPath.Count == 1 && IsFieldAdjacent(gridActor.GridPosition.X, gridActor.GridPosition.Y, x, y);
+        // }
+        // private bool IsLastActiveFieldAdjacent(int x, int y, IGridActor gridActor)
+        // {
+        //     if(FunctionWhut(x,y))
+        //         return true;
+        //     if (FunctionWhut2(x,y, gridActor))
+        //         return true;
+        //     return IsFieldAdjacent(lastDragPosX, lastDragPosY, x, y);
+        // }
     }
 }

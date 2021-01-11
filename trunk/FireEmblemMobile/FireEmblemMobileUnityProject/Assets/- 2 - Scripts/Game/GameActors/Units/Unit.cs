@@ -9,13 +9,15 @@ using Game.GameActors.Units.OnGameObject;
 using Game.GameInput;
 using Game.GameResources;
 using Game.Grid;
+using Game.Mechanics;
 using Game.Mechanics.Battle;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Vector2 = System.Numerics.Vector2;
 
 namespace Game.GameActors.Units
 {
-    public abstract class Unit : ScriptableObject, ICloneable, IGridActor, IBattleActor
+    public abstract class Unit : ScriptableObject, ICloneable, IGridActor, IBattleActor, ISelectableActor
     {
         [HideInInspector] private int hp;
 
@@ -366,13 +368,6 @@ namespace Game.GameActors.Units
         {
             return FactionId != unit.FactionId;
         }
-
-        public bool IsActiveFaction()
-        {
-            return Faction.IsActive;
-        }
         
-        
-       
     }
 }

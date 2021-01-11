@@ -128,45 +128,7 @@ namespace Game.Mechanics.Battle
             return (int) (multiplier * attacks * Mathf.Clamp(GetDamage() - target.Stats.Def, 0, Mathf.Infinity));
         }
 
-        public bool IsFrontalAttack(Unit target)
-        {
-            int deltaX = owner.GridPosition.X - target.GridPosition.X;
-            int deltaY = owner.GridPosition.Y - target.GridPosition.Y;
-            if (deltaX != 0 && deltaY == 0)
-            {
-                switch (deltaX)
-                {
-                    //Target right of attacker and facing right
-                    case 1 when !target.GridPosition.FacingLeft:
-                    case -1 when target.GridPosition.FacingLeft:
-                        return true;
-                    default:
-                        return false;
-                }
-            }
-
-            return false;
-        }
-
-        public bool IsBackSideAttack(Unit target)
-        {
-            int deltaX = owner.GridPosition.X - target.GridPosition.X;
-            int deltaY = owner.GridPosition.Y - target.GridPosition.Y;
-            if (deltaX != 0 && deltaY == 0)
-            {
-                switch (deltaX)
-                {
-                    //Target right of attacker and facing left
-                    case 1 when target.GridPosition.FacingLeft:
-                    case -1 when !target.GridPosition.FacingLeft:
-                        return true;
-                    default:
-                        return false;
-                }
-            }
-
-            return false;
-        }
+        
 
         public AttackData CreateAttackData(Unit target, List<float> attackMultipliers,
             List<AttackAttributes> attackAttributes)

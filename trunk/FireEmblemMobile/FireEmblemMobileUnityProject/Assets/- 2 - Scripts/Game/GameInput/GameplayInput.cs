@@ -4,6 +4,7 @@ using Game.GameActors.Items;
 using Game.GameActors.Units;
 using Game.Grid;
 using Game.Mechanics;
+using UnityEngine;
 
 namespace Game.GameInput
 {
@@ -12,9 +13,10 @@ namespace Game.GameInput
         public delegate void Event();
         public static event Event OnDeselectUnit;
         public static event Event OnExecuteInputActions;
-        public delegate void UnitEvent(Unit u);
-        public static event UnitEvent OnSelectUnit;
-        public static event UnitEvent OnWait;
+        public delegate void UnitEvent(IGridActor u);
+        public delegate void SelectEvent(ISelectableActor actor);
+        public static event SelectEvent OnSelectUnit;
+        public static event SelectEvent OnWait;
         public static event UnitEvent OnViewUnit;
         public delegate void MoveUnitEvent(Unit u, GridPosition position, List<GridPosition> movePath);
         public static event MoveUnitEvent OnMoveUnit;
@@ -24,34 +26,35 @@ namespace Game.GameInput
         public static event CheckAttackPreviewEvent OnCheckAttackPreview;
         public void AttackUnit(IBattleActor u, IBattleActor attackTarget)
         {
-            //Debug.Log("GameInput: Attack Unit: " + u.name+" Target: " +attackTarget.name);
-            OnAttackUnit?.Invoke(u, attackTarget);
+            Debug.Log("GameInput: Attack Unit: " + u+" Target: " +attackTarget);
+            //OnAttackUnit?.Invoke(u, attackTarget);
         }
         public void DeselectUnit()
         {
-            //Debug.Log("GameInput: Deselect Unit");
+            Debug.Log("GameInput: Deselect Unit");
             OnDeselectUnit?.Invoke();
         }
 
         public void MoveUnit(IGridActor u, GridPosition position, List<GridPosition> movePath)
         {
-            //Debug.Log("GameInput: Move Unit: " + u.name +" to [" +position.X +"/"+position.Y+"]");
-            OnMoveUnit?.Invoke(u, position, movePath);
+            Debug.Log("GameInput: Move Unit: " + u +" to [" +position.X +"/"+position.Y+"]");
+            //OnMoveUnit?.Invoke(u, position, movePath);
         }
 
         public void SelectUnit(IGridActor u)
         {
-            //Debug.Log("GameInput: Select Unit: " + u.name);
-            OnSelectUnit?.Invoke(u);
+            Debug.Log("GameInput: Select Unit: " + u);
+            if(u is ISelectableActor actor)
+                OnSelectUnit?.Invoke(actor);
         }
         public void ViewUnit(Unit u)
         {
-            //Debug.Log("GameInput: View Unit: " + u.name);
+            Debug.Log("GameInput: View Unit: " + u.name);
             OnViewUnit?.Invoke(u);
         }
-        public void Wait(IGridActor u)
+        public void Wait(ISelectableActor u)
         {
-            //Debug.Log("GameInput: Wait Unit: " + u.name);
+            Debug.Log("GameInput: Wait Unit: " + u);
             OnWait?.Invoke(u);
         }
 

@@ -53,7 +53,8 @@ namespace Game.Mechanics
             {
                 if (p.IsPlayerControlled && !p.IsAlive())
                 {
-                    gridGameManager.GetSystem<UiSystem>()?.ShowGameOver();
+                    Debug.Log("Game Over!");
+                    //gridGameManager.GetSystem<UiSystem>()?.ShowGameOver();
                     GridInputSystem.SetActive(false);
                     gridGameManager.GameStateManager.Feed(NextStateTrigger.GameOver);
 
@@ -61,7 +62,8 @@ namespace Game.Mechanics
                 }
                 else if (!p.IsPlayerControlled && !p.IsAlive())
                 {
-                    gridGameManager.GetSystem<UiSystem>()?.ShowWinScreen();
+                    Debug.Log("Win!");
+                    //gridGameManager.GetSystem<UiSystem>()?.ShowWinScreen();
                     GridInputSystem.SetActive(false);
                     gridGameManager.GameStateManager.Feed(NextStateTrigger.PlayerWon);
                     return;

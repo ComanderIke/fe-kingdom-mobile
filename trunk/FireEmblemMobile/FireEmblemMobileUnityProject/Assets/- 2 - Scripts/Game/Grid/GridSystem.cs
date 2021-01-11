@@ -44,25 +44,31 @@ namespace Game.Map
             AStar PathFindingManager = new AStar(this, GridData.width, GridData.height);
         }
         [ContextMenu("Test")]
-        private void OnEnemySelected(Unit u)
+        private void OnEnemySelected(ISelectableActor u)
         {
-            HideMoveRange();
-            ShowMovementRangeOnGrid(u);
+            if (u is IGridActor gridActor)
+            {
+                HideMoveRange();
+                ShowMovementRangeOnGrid(gridActor);
 
-            ShowAttackRangeOnGrid(u, new List<int>(u.Stats.AttackRanges), true);
-            GridLogic.ResetActiveFields();
+                ShowAttackRangeOnGrid(gridActor, new List<int>(gridActor.AttackRanges), true);
+                GridLogic.ResetActiveFields();
+            }
         }
         public Tile GetTileFromVector2(Vector2 pos)
         {
             return Tiles[(int) pos.x, (int) pos.y];
         }
-        private void SelectedCharacter(Unit u)
+        private void SelectedCharacter(ISelectableActor u)
         {
-            HideMoveRange();
+            if (u is IGridActor gridActor)
+            {
+                HideMoveRange();
 
-            ShowMovementRangeOnGrid(u);
-            //if (!u.UnitTurnState.HasAttacked)
-            //    ShowAttackRangeOnGrid(u, new List<int>(u.Stats.AttackRanges));
+                ShowMovementRangeOnGrid(gridActor);
+                //if (!u.UnitTurnState.HasAttacked)
+                //    ShowAttackRangeOnGrid(u, new List<int>(u.Stats.AttackRanges));
+            }
 
         }
 
@@ -73,7 +79,7 @@ namespace Game.Map
 
       
 
-        public void ShowAttackRangeOnGrid(Unit character, List<int> attack, bool soft=false)
+        public void ShowAttackRangeOnGrid(IGridActor character, List<int> attack, bool soft=false)
         {
             NodeHelper.Reset();
             foreach (var f in GridLogic.TilesFromWhereYouCanAttack(character))
@@ -109,11 +115,11 @@ namespace Game.Map
 
             NodeHelper.Reset();
         }
-        public void ShowAttackRecursive(Unit character, int x, int y, int range, List<int> direction, bool soft=false)
+        public void ShowAttackRecursive(IGridActor character, int x, int y, int range, List<int> direction, bool soft=false)
         {
             if (range <= 0)
             {
-                GridRenderer.SetFieldMaterialAttack(new Vector2(x, y), character.Faction.Id);
+                GridRenderer.SetFieldMaterialAttack(new Vector2(x, y), character.FactionId);
 
                 return;
             }

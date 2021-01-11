@@ -9,10 +9,10 @@ namespace Game.GameInput
     public class SelectionManager : ISelectionDataProvider
     {
         private UnitSelectionSystem unitSelectionSystem;
-        public IGridActor SelectedActor => unitSelectionSystem.SelectedCharacter;
+        public ISelectableActor SelectedActor => unitSelectionSystem.SelectedCharacter;
         private int SelectedTileX { get; set; }
         private int SelectedTileY { get; set; }
-        public IGridActor ConfirmAttackTarget { get; set; }
+        public ISelectableActor selectedAttackTarget { get; set; }
         public void ClearSelectedTile()
         {
             SelectedTileX = -1;

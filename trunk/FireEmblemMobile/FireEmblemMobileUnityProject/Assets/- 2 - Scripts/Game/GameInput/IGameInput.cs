@@ -8,10 +8,10 @@ namespace Game.GameInput
 {
     public interface IGameInput
     {
-        void SelectUnit(Unit u);
-        void MoveUnit(Unit u, GridPosition position, List<GridPosition> path);
+        void SelectUnit(IGridActor u);
+        void MoveUnit(IGridActor u, GridPosition position, List<GridPosition> path);
         void CheckAttackPreview(IBattleActor u, IBattleActor attackTarget, GridPosition attackPosition);
-        void AttackUnit(Unit u, Unit attackTarget);
+        void AttackUnit(IBattleActor u, IBattleActor attackTarget);
         void DeselectUnit();
         void UseItem(Item i);
     
