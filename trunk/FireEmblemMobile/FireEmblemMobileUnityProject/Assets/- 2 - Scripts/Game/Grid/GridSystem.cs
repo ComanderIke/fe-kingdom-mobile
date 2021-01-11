@@ -41,9 +41,15 @@ namespace Game.Map
             UnitSelectionSystem.OnEnemySelected += OnEnemySelected;
             UnitSelectionSystem.OnSelectedInActiveCharacter += OnEnemySelected;
             MovementState.OnMovementFinished += (Unit u) => HideMoveRange();
+            Unit.UnitDied += RemoveUnitFromGrid;
             AStar PathFindingManager = new AStar(this, GridData.width, GridData.height);
         }
-        [ContextMenu("Test")]
+
+        void RemoveUnitFromGrid(IGridActor u)
+        {
+            Tiles[u.GridPosition.X, u.GridPosition.Y].Actor = null;
+        }
+      
         private void OnEnemySelected(ISelectableActor u)
         {
             if (u is IGridActor gridActor)
@@ -200,5 +206,14 @@ namespace Game.Map
             return Tiles[x, y];
         }
 
+        public void SetUnitPosition(Unit unit, int x, int y)
+        {
+            if (x != -1 && y != -1)
+            {
+                Tiles[unit.GridPosition.X, unit.GridPosition.Y].Actor = null;
+                Tiles[x, y].Actor = unit;
+                unit.SetPosition(x, y);
+            }
+        }
     }
 }

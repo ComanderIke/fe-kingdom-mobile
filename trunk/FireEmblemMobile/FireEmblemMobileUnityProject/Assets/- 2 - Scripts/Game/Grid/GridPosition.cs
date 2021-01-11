@@ -9,37 +9,36 @@ namespace Game.Grid
 {
     public class GridPosition
     {
-        public int X = -1;
-        public int Y = -1;
+        public int X;
+        public int Y;
         private Unit character;
-        private GridSystem gridScript;
+       // private GridSystem gridScript;
+
 
         public GridPosition(int x, int y)
         {
             X = x;
             Y = y;
-            character = null;
-            gridScript = GridGameManager.Instance.GetSystem<GridSystem>();
+           // gridScript = GridGameManager.Instance.GetSystem<GridSystem>();
         }
 
-        public GridPosition(Unit character)
+        public GridPosition(Unit character):this(-1, -1)
         {
             this.character = character;
         }
 
         public void SetPosition(int newX, int newY)
         {
-            if (X != -1 && Y != -1)
-                gridScript.Tiles[X, Y].Actor = null;
-            gridScript.Tiles[newX, newY].Actor = character;
+            
+           
             X = newX;
             Y = newY;
         }
 
-        public void RemoveCharacter()
-        {
-            gridScript.Tiles[X, Y].Actor = null;
-        }
+        // public void RemoveCharacter()
+        // {
+        //     gridScript.Tiles[X, Y].Actor = null;
+        // }
 
         public static List<GridPosition> GetFromVectorList(List<Vector2> movePath)
         {

@@ -1,4 +1,6 @@
 ﻿using Game.GUI;
+using Game.Manager;
+using Game.Map;
 using UnityEngine;
 
 namespace Game.GameActors.Units.OnGameObject
@@ -23,8 +25,10 @@ namespace Game.GameActors.Units.OnGameObject
             var unitRenderer = unitGameObject.GetComponentInChildren<UnitRenderer>();
             unitRenderer.unit = unit;
             unitRenderer.Init();
+            
             unit.GameTransform.GameObject = unitGameObject;
-            unit.SetPosition(x, y);
+            GridGameManager.Instance.GetSystem<GridSystem>().SetUnitPosition(unit, x, y);
+            
 
             //For Performance
             if(unitGameObject.GetComponentInChildren<Canvas>()!=null)

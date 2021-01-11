@@ -138,7 +138,7 @@ namespace Game.GameActors.Units
             ExperienceManager.LevelUp += LevelUp;
             BattleStats = new BattleStats(this);
             UnitTurnState = new UnitTurnState(this);
-            GridPosition = new GridPosition(this);
+            GridPosition = new GridPosition( this);
             GameTransform = new GameTransform();
             Buffs = new List<Buff>();
             Debuffs = new List<Debuff>();
@@ -220,10 +220,11 @@ namespace Game.GameActors.Units
             return UnitTurnState.IsWaiting == false;
         }
 
-        public void SetInternPosition(int x, int y)
-        {
-            GridPosition.SetPosition(x, y);
-        }
+        // public void SetInternPosition(int x, int y)
+        // {
+        //     //TODO it with GridSystem
+        //     GridPosition.SetPosition(x, y);
+        // }
 
         public virtual void SetPosition(int x, int y)
         {
@@ -264,7 +265,6 @@ namespace Game.GameActors.Units
         public void Die()
         {
             UnitDied(this);
-            GridPosition.RemoveCharacter();
             GameTransform.Destroy();
         }
 
