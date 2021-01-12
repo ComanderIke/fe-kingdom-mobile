@@ -229,7 +229,6 @@ namespace Game.GameActors.Units
         public virtual void SetPosition(int x, int y)
         {
             GridPosition.SetPosition(x, y);
-            GameTransform.EnableLight();
             GameTransform.SetPosition(x, y);
         }
 
@@ -237,7 +236,6 @@ namespace Game.GameActors.Units
 
         public virtual void SetGameTransformPosition(int x, int y)
         {
-            GameTransform.DeParentLight();
             GameTransform.SetPosition(x, y);
         }
         public virtual Vector3 GetGameTransformPosition()
@@ -249,7 +247,6 @@ namespace Game.GameActors.Units
         {
             GameTransform.SetPosition(GridPosition.X, GridPosition.Y);
             GameTransform.EnableCollider();
-            GameTransform.EnableLight();
         }
 
         public bool CanAttackFrom(GridPosition attackFromPosition, GridPosition targetPosition)

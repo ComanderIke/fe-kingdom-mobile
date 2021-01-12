@@ -34,15 +34,7 @@ namespace Game.GameActors.Units.OnGameObject
         {
             GameObject.GetComponent<BoxCollider2D>().enabled = true;
         }
-        public void DeParentLight()
-        {
-            UnitController.DeParentLight();
-           
-        }
-        public void EnableLight()
-        {
-            UnitController.ResetLight();
-        }
+
         public void DisableCollider()
         {
             GameObject.GetComponent<BoxCollider2D>().enabled = false;

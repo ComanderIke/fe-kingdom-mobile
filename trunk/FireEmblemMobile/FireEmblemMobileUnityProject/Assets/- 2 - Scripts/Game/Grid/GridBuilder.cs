@@ -16,7 +16,7 @@ namespace Game.Grid
         public Sprite gridSprite;
         private TileTypeAnalyzer tileTypeAnalyzerAnalyzer;
         [SerializeField]
-        private TileSprites standardSpriteSet;
+        private TileSprites[] spriteSets;
         [SerializeField]
         private TileType baseTile;
         public Material gridMaterial;
@@ -64,7 +64,7 @@ namespace Game.Grid
                     }
                     //Debug.Log("i: "+i +" j: " +j +""+cell.gameObject.name);
                     //Debug.Log(gridResources.sprites);
-                    tiles[i, j] = new Tile(i, j, tileData.tileType, new SpriteTileRenderer(cell.GetComponent<SpriteRenderer>(), standardSpriteSet));
+                    tiles[i, j] = new Tile(i, j, tileData.tileType, new SpriteTileRenderer(cell.GetComponent<SpriteRenderer>(), spriteSets));
                 }
             }
 

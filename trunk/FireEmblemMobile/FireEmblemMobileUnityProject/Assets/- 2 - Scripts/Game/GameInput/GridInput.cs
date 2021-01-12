@@ -25,7 +25,7 @@ namespace Game.GameInput
 
         public void Update()
         {
-            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+            if (Input.GetMouseButtonUp(0) && !EventSystem.current.IsPointerOverGameObject())
             {
                 CheckClickOnGrid();
             }

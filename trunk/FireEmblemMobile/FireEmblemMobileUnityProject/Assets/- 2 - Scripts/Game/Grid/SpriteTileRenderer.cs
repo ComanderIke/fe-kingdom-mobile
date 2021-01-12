@@ -9,11 +9,12 @@ namespace Game.Grid
         private TileSprites activeSpriteSet;
         private Dictionary<int, TileSprites> spriteSets;
         private int idCounter;
-        public SpriteTileRenderer(SpriteRenderer spriteRenderer, TileSprites spriteSet)
+        public SpriteTileRenderer(SpriteRenderer spriteRenderer, TileSprites[] spriteSets)
         {
             this.spriteRenderer = spriteRenderer;
-            spriteSets = new Dictionary<int, TileSprites>();
-            AddSpriteSet((spriteSet));
+            this.spriteSets = new Dictionary<int, TileSprites>();
+            foreach(var spriteSet in spriteSets)
+                AddSpriteSet((spriteSet));
             activeSpriteSet = spriteSets[0];
            
         }
@@ -26,10 +27,11 @@ namespace Game.Grid
 
         }
 
-        public void SetActiveSpriteSet(int id)
+        public void SetVisualStyle(int id)
         {
             activeSpriteSet = spriteSets[id];
         }
+        
 
         public void Reset()
         {

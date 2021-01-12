@@ -1,6 +1,7 @@
 ﻿using System;
 using Game.GameInput;
 using Game.Manager;
+using GameCamera;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Experimental.Rendering.Universal;
@@ -25,8 +26,7 @@ namespace Game.GameActors.Units.OnGameObject
         private DragManager DragManager { get; set; }
         private RaycastManager RaycastManager { get; set; }
         private IUnitInputReceiver InputReceiver { get; set; }
-        public new Light2D light;
-        
+
 
         private bool dragInitiated;
         private bool dragStarted;
@@ -58,15 +58,6 @@ namespace Game.GameActors.Units.OnGameObject
                 {
                     InputReceiver.DraggedOverActor(unit);
                 }
-        }
-        public void DeParentLight()
-        {
-            light.transform.SetParent(null);
-        }
-        public void ResetLight()
-        {
-            light.transform.SetParent(transform);
-            light.transform.localPosition = new Vector3(0.5f, 0.5f, 0);
         }
         private void OnMouseDrag()
         {
@@ -106,7 +97,8 @@ namespace Game.GameActors.Units.OnGameObject
                 else
                 {
                     timerForDoubleClick = Time.time;
-                    DragManager.StartDrag();
+                    if (unit.UnitTurnState.IsDragable())
+                        DragManager.StartDrag();
                 }
 
                 
@@ -128,10 +120,8 @@ namespace Game.GameActors.Units.OnGameObject
                 }
 
                 gameObject.GetComponent<BoxCollider2D>().enabled = true;
-                light.transform.SetParent(transform);
-                light.transform.localPosition = new Vector3(0.5f, 0.5f, 0);
             }
-            else if (unitSelectedBeforeClicking||(unit.Faction.Id != GridGameManager.Instance.FactionManager.ActivePlayerNumber&&doubleClick))
+            else if (unitSelectedBeforeClicking||(unit.Faction.Id != GridGameManager.Instance.FactionManager.ActivePlayerNumber||doubleClick))
             {
                 if (!EventSystem.current.IsPointerOverGameObject())
                 {
@@ -160,14 +150,14 @@ namespace Game.GameActors.Units.OnGameObject
 
         public void StartDrag()
         {
+            GridGameManager.Instance.GetSystem<CameraSystem>().DeactivateMixin<DragCameraMixin>();
             dragStarted = true;
             InputReceiver.StartDraggingActor(unit);
             unitSelectedBeforeClicking = unit.UnitTurnState.Selected;
             if (!unit.UnitTurnState.Selected)
                 if (!EventSystem.current.IsPointerOverGameObject())
                 {
-                    Unit.OnUnitActiveStateUpdated?.Invoke(unit, false, true); 
-                    light.transform.SetParent(null);
+                    Unit.OnUnitActiveStateUpdated?.Invoke(unit, false, true);
                     InputReceiver.ActorClicked(unit);
                 }
         }
@@ -183,6 +173,7 @@ namespace Game.GameActors.Units.OnGameObject
 
         public void EndDrag()
         {
+            GridGameManager.Instance.GetSystem<CameraSystem>().ActivateMixin<DragCameraMixin>();
         }
 
         public void NotDragging()

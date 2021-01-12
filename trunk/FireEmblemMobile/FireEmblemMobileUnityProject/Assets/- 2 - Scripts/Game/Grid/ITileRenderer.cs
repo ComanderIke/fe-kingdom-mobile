@@ -7,5 +7,6 @@
         void AllyVisual();
         void MoveVisual();
         void StandOnVisual();
+        void SetVisualStyle(int id);
     }
 }

@@ -29,7 +29,7 @@ namespace Game.Grid
         }
         public void SetFieldMaterialAttack(Vector2 pos, int playerId)
         {
-            Tiles[(int) pos.x, (int) pos.y].SetMaterialAttack();
+            Tiles[(int) pos.x, (int) pos.y].SetMaterialAttack(playerId);
            
 
         }

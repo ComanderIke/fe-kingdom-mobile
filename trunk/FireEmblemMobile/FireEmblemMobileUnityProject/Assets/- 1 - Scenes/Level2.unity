@@ -3395,14 +3395,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6604a36efde7cc3429d80c0a84e0cc2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiContainer: {fileID: 1424860809}
-  worldContainer: {fileID: 308607272382589985}
-  expBarController: {fileID: 1984517960}
-  MainCanvas: {fileID: 0}
-  playerTurnAnimation: {fileID: 1029225539605040, guid: 8cf871bd100a97b4ba49f2dd65cb3aae,
-    type: 3}
-  aiTurnAnimation: {fileID: 1595044637342162, guid: d166688b39d1eae4bbdebfadea4d3636,
-    type: 3}
 --- !u!1 &155974152
 GameObject:
   m_ObjectHideFlags: 0
@@ -25404,7 +25396,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3712bb84fc7694408e1841376329c42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementPath: []
 --- !u!1 &1169147872
 GameObject:
   m_ObjectHideFlags: 0
@@ -27055,9 +27046,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MapName: Map2
   gridBuilder: {fileID: 1228417308}
-  GridResources:
-    sprites: {fileID: 11400000, guid: 69e46eee3c387a14ca078b0840cbf768, type: 2}
-    spritesEnemy: {fileID: 11400000, guid: 23c6077c6deb5df4482157c06f111a68, type: 2}
   GridData: {fileID: 11400000, guid: a51338f5097662940b7ecffecfb70a71, type: 2}
 --- !u!114 &1228417308
 MonoBehaviour:
@@ -27073,7 +27061,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridData: {fileID: 11400000, guid: a51338f5097662940b7ecffecfb70a71, type: 2}
   gridSprite: {fileID: 21300000, guid: ba01aea2fb58f1d4f896084de2ac5bd7, type: 3}
-  standardSpriteSet: {fileID: 11400000, guid: 69e46eee3c387a14ca078b0840cbf768, type: 2}
+  spriteSets:
+  - {fileID: 11400000, guid: 69e46eee3c387a14ca078b0840cbf768, type: 2}
+  - {fileID: 11400000, guid: 23c6077c6deb5df4482157c06f111a68, type: 2}
   baseTile: {fileID: 11400000, guid: 58d3e917d886cb94d830aab07662cc70, type: 2}
   gridMaterial: {fileID: 2100000, guid: 4f61f982ecb83344685587359839f6a2, type: 2}
   gridTransform: {fileID: 1228417306}
@@ -44674,16 +44664,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b01ee55751ecd8349ad9dc93c1530789, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCanvas: {fileID: 914268625}
-  BattleRenderer: {fileID: 1586646276}
-  winScreen: {fileID: 459940804}
-  gameOverScreen: {fileID: 203348528}
-  levelUpScreen: {fileID: 1541928776}
-  fadeImage: {fileID: 1029652366}
-  bottomUi: {fileID: 1151049281}
-  topUi: {fileID: 315977141}
-  attackPreview: {fileID: 1428428005}
-  deselectButton: {fileID: 1538620473}
 --- !u!4 &1915216222
 Transform:
   m_ObjectHideFlags: 0

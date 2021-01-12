@@ -28,12 +28,14 @@ namespace Game.Grid
             TileRenderer.Reset();
         }
 
-        public void SetMaterialAttack()
+        public void SetMaterialAttack(int playerId)
         {
+            TileRenderer.SetVisualStyle(playerId);
             TileRenderer.AttackVisual();
         }
         public void SetMaterial( int playerId)
         {
+            TileRenderer.SetVisualStyle(playerId);
             if (Actor == null)
             {
                 TileRenderer.MoveVisual();
@@ -44,7 +46,7 @@ namespace Game.Grid
             }
             else
             {
-                SetMaterialAttack();
+                SetMaterialAttack(playerId);
             }
         }
         

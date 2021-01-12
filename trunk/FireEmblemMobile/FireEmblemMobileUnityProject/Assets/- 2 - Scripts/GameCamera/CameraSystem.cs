@@ -48,5 +48,16 @@ namespace GameCamera
         {
             foreach (var m in mixins) m.enabled = true;
         }
+
+        public void ActivateMixin<T>()
+        {
+            var mixin = (CameraMixin)GetComponent(typeof(T));
+            mixin.enabled = true;
+        }
+        public void DeactivateMixin<T>()
+        {
+            var mixin = (CameraMixin)GetComponent(typeof(T));
+            mixin.enabled = false;
+        }
     }
 }
