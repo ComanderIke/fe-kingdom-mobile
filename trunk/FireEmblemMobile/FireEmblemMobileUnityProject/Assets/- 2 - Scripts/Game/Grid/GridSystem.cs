@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Game.GameActors.Units;
-using Game.GameResources;
 using Game.Grid;
 using Game.Grid.PathFinding;
 using Game.Mechanics;
 using GameEngine;
-using UnityEditor.VersionControl;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Game.Map
 {
@@ -19,7 +15,7 @@ namespace Game.Map
     {
         public const float GRID_X_OFFSET = 0.0f;
         public string MapName;
-        [FormerlySerializedAs("GridBuilder")] [SerializeField]
+        [SerializeField]
         private GridBuilder gridBuilder;
         public GridResources GridResources;
         public GridData GridData;
