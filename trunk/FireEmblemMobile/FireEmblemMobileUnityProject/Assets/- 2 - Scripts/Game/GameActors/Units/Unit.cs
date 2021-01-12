@@ -11,9 +11,8 @@ using Game.GameResources;
 using Game.Grid;
 using Game.Mechanics;
 using Game.Mechanics.Battle;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using Vector2 = System.Numerics.Vector2;
+
 
 namespace Game.GameActors.Units
 {

@@ -106,7 +106,7 @@ namespace Game.GameActors.Units.OnGameObject
         }
         private void OnMouseUp()
         {
-            
+            GridGameManager.Instance.GetSystem<CameraSystem>().ActivateMixin<DragCameraMixin>();
             if (DragManager.IsDragging)
             {
                 DragManager.Update();// Update Dragmanager because he should notice first when MouseUp happens
