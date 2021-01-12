@@ -15,7 +15,7 @@ namespace Game.Grid
         private Tile[,] Tiles { get; }
         private GridSystem GridManager { get; }
         private readonly GridData gridData;
-        private GridSessionData gridSessionData;
+        public GridSessionData gridSessionData;
 
         public GridLogic(GridSystem gridManager)
         {
@@ -112,7 +112,7 @@ namespace Game.Grid
                 {
                     if (field.Actor == null)
                         return true;
-                    if (field.Actor.IsEnemy(unit))
+                    if (!field.Actor.IsEnemy(unit))
                         return true;
                 }
                 else

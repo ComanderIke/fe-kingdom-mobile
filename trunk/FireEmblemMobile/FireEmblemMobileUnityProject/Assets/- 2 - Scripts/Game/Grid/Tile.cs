@@ -1,4 +1,5 @@
 ﻿using Game.GameActors.Units;
+using UnityEngine;
 
 namespace Game.Grid
 {
@@ -11,7 +12,7 @@ namespace Game.Grid
      //   public bool IsAttackable;
         
         public TileType TileType;
-        public ITileRenderer TileRenderer;
+        public readonly ITileRenderer TileRenderer;
 
         public Tile(int i, int j, TileType tileType, ITileRenderer tileRenderer)
         {
@@ -25,45 +26,28 @@ namespace Game.Grid
         public void Reset()
         {
             TileRenderer.Reset();
-          //  IsActive = false;
-          //  IsAttackable = false;
         }
 
         public void SetMaterialAttack()
         {
-            // if (IsAttackable || IsActive)
-            //     return;
-            SetAttackFieldMaterial();
+            TileRenderer.AttackVisual();
         }
         public void SetMaterial( int playerId)
         {
-
-            // if (IsAttackable || IsActive)
-            //     return;
-            if (Actor != null && Actor.FactionId == playerId)
+            if (Actor == null)
+            {
+                TileRenderer.MoveVisual();
+            }
+            else if (Actor.FactionId == playerId)
             {
                 TileRenderer.AllyVisual();
-                //IsActive = true;
             }
             else
             {
-                TileRenderer.MoveVisual();
-                //    IsActive = true;
-            }
-            if (Actor != null &&
-                Actor.FactionId != playerId)
-            {
-                SetAttackFieldMaterial();
+                SetMaterialAttack();
             }
         }
-        private void SetAttackFieldMaterial()
-        {
-            TileRenderer.AttackVisual();
-            //OnRenderEnemyTile?.Invoke(X, Y, Unit, playerId);
-           //IsAttackable = true;
-
-        }
-
+        
         public bool HasFreeSpace()
         {
             return Actor == null;

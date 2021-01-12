@@ -73,7 +73,8 @@ namespace Game.Map
 
                 ShowMovementRangeOnGrid(gridActor);
                 //if (!u.UnitTurnState.HasAttacked)
-                //    ShowAttackRangeOnGrid(u, new List<int>(u.Stats.AttackRanges));
+                ShowAttackRangeOnGrid(gridActor, new List<int>(u.AttackRanges));
+                
             }
 
         }
@@ -118,14 +119,18 @@ namespace Game.Map
                     Tiles[i, j].Reset();
                 }
             }
-
+            GridLogic.ResetActiveFields();
             NodeHelper.Reset();
         }
         public void ShowAttackRecursive(IGridActor character, int x, int y, int range, List<int> direction, bool soft=false)
         {
             if (range <= 0)
             {
-                GridRenderer.SetFieldMaterialAttack(new Vector2(x, y), character.FactionId);
+                if (!IsTileMoveableAndActive(x, y))
+                {
+                    GridRenderer.SetFieldMaterialAttack(new Vector2(x, y), character.FactionId);
+                    GridLogic.gridSessionData.AddValidAttackPosition(x, y);
+                }
 
                 return;
             }
@@ -174,7 +179,7 @@ namespace Game.Map
             }
 
             GridRenderer.SetFieldMaterial(new Vector2(x, y), unit.FactionId);
-
+            GridLogic.gridSessionData.AddValidPosition(x, y);
             NodeHelper.Nodes[x, y].C = c;
             c++;
             if (GridLogic.CheckField(x - 1, y, unit, range) && NodeHelper.NodeFaster(x - 1, y, c))
@@ -210,7 +215,8 @@ namespace Game.Map
         {
             if (x != -1 && y != -1)
             {
-                Tiles[unit.GridPosition.X, unit.GridPosition.Y].Actor = null;
+                if(unit.GridPosition.X != -1 && unit.GridPosition.Y!=-1)
+                    Tiles[unit.GridPosition.X, unit.GridPosition.Y].Actor = null;
                 Tiles[x, y].Actor = unit;
                 unit.SetPosition(x, y);
             }

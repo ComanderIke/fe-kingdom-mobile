@@ -188,9 +188,9 @@ namespace Game.Manager
             {
                 Destroy(spawn.gameObject);
             }
-            GameplayInput input = new GameplayInput();
-            input.SelectUnit(FactionManager.Factions[0].Units[0]);
-            input.DeselectUnit();
+           // GameplayInput input = new GameplayInput();
+           // input.SelectUnit(FactionManager.Factions[0].Units[0]);
+            //input.DeselectUnit();
             
             
             //GetSystem<BattleSystem>().GetBattlePreview(FactionManager.Factions[0].Units[0], FactionManager.Factions[1].Units[0]);
