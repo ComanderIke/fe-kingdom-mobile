@@ -15,32 +15,34 @@ namespace Game.Map
     {
         public const float GRID_X_OFFSET = 0.0f;
         public string MapName;
-        [SerializeField]
-        private GridBuilder gridBuilder;
         public GridResources GridResources;
         public GridData GridData;
         public Tile[,] Tiles { get; private set; }
         public GridRenderer GridRenderer { get; set; }
         public GridLogic GridLogic { get; set; }
         public NodeHelper NodeHelper;
+        public AStar pathFinder;
 
-        private void Start()
+        public void Init()
         {
-
             Tiles = GetComponent<GridBuilder>().GetTiles();
             
             GridRenderer = new GridRenderer(this);
             GridLogic = new GridLogic(this);
             NodeHelper = new NodeHelper(GridData.width, GridData.height);
+            pathFinder = new AStar(GridLogic.tileChecker);
             UnitSelectionSystem.OnDeselectCharacter += HideMoveRange;
             UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
             UnitSelectionSystem.OnEnemySelected += OnEnemySelected;
             UnitSelectionSystem.OnSelectedInActiveCharacter += OnEnemySelected;
             MovementState.OnMovementFinished += (Unit u) => HideMoveRange();
             Unit.UnitDied += RemoveUnitFromGrid;
-            AStar PathFindingManager = new AStar(this, GridData.width, GridData.height);
         }
 
+        public ITileChecker GetTileChecker()
+        {
+            return GridLogic.tileChecker;
+        }
         void RemoveUnitFromGrid(IGridActor u)
         {
             Tiles[u.GridPosition.X, u.GridPosition.Y].Actor = null;

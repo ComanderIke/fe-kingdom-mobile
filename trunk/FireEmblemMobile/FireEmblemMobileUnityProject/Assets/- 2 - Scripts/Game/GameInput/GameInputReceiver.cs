@@ -24,8 +24,10 @@ namespace Game.GameInput
             gameplayInput = new GameplayInput();
             selectionDataProvider = new SelectionManager();
             lastInputPositionManager = new LastInputPositionManager();
-            inputPathManager = new InputPathManager();
+            
             gridSystem = GridGameManager.Instance.GetSystem<GridSystem>();
+            
+            inputPathManager = new InputPathManager(gridSystem.pathFinder);
             factionManager = GridGameManager.Instance.GetSystem<FactionManager>();
             UnitSelectionSystem.OnSelectedCharacter += OnSelectedCharacter;
             UnitSelectionSystem.OnSelectedInActiveCharacter += OnSelectedCharacter;

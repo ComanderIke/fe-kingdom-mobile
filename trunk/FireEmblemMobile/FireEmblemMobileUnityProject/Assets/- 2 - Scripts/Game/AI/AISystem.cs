@@ -6,6 +6,10 @@ namespace Game.AI
 {
     public class AISystem : IEngineSystem
     {
+        public void Init()
+        {
+            
+        }
         //private float GetDistanceToGoalImproval(Unit u, Vector2 newLoc)
         //{
         //    float oldDistance=0;

@@ -13,6 +13,34 @@ namespace Game.GUI
 {
     public class UiSystem : MonoBehaviour, IEngineSystem
     {
+        public void Init()
+        {
+            //gridGameManager = GridGameManager.Instance;
+            //     gameplayInput = new GameplayInput();
+            //     
+            //     UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
+            //     UnitSelectionSystem.OnDeselectCharacter += HideDeselectButton;
+            //     
+            //     UnitSelectionSystem.OnEnemySelected += ShowTopUi;
+            //     UnitSelectionSystem.OnSelectedInActiveCharacter += ShowTopUi;
+            //
+            //    // UnitActionSystem.OnCheckAttackPreview += ShowAttackPreview;
+            //     Unit.OnUnitLevelUp += ShowLevelUpScreen;
+            //     GridInputSystem.OnDragOverTile += HideAttackPreview;
+            //     GridInputSystem.OnDragReset += HideAttackPreview;
+            //     
+            //     GameplayInput.OnViewUnit += ShowTopUi;
+            //     Unit.OnExpGained += ExpGained;
+            //     GridInputSystem.OnInputStateChanged += InputStateChanged;
+            //     resources = FindObjectOfType<ResourceScript>();
+            //     var pointer = new PointerEventData(EventSystem.current); // pointer event for Execute Verhindert LagSpike bei erstem click
+            //     ExecuteEvents.Execute(deselectButton.gameObject, pointer, ExecuteEvents.pointerEnterHandler);
+            //     ExecuteEvents.Execute(deselectButton.gameObject, pointer, ExecuteEvents.submitHandler);
+            //     ExecuteEvents.Execute(deselectButton.gameObject, pointer, ExecuteEvents.pointerDownHandler);
+            //     ExecuteEvents.Execute(deselectButton.gameObject, pointer, ExecuteEvents.pointerUpHandler);
+            //     HideDeselectButton();//Start with Button ACtive for Performance Reasons
+            //     attackPreview.Hide();
+        }
         // #region Events
         // #endregion
         //
@@ -41,31 +69,7 @@ namespace Game.GUI
         //
         // private void Start()
         // {
-        //     gridGameManager = GridGameManager.Instance;
-        //     gameplayInput = new GameplayInput();
         //     
-        //     UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
-        //     UnitSelectionSystem.OnDeselectCharacter += HideDeselectButton;
-        //     
-        //     UnitSelectionSystem.OnEnemySelected += ShowTopUi;
-        //     UnitSelectionSystem.OnSelectedInActiveCharacter += ShowTopUi;
-        //
-        //    // UnitActionSystem.OnCheckAttackPreview += ShowAttackPreview;
-        //     Unit.OnUnitLevelUp += ShowLevelUpScreen;
-        //     GridInputSystem.OnDragOverTile += HideAttackPreview;
-        //     GridInputSystem.OnDragReset += HideAttackPreview;
-        //     
-        //     GameplayInput.OnViewUnit += ShowTopUi;
-        //     Unit.OnExpGained += ExpGained;
-        //     GridInputSystem.OnInputStateChanged += InputStateChanged;
-        //     resources = FindObjectOfType<ResourceScript>();
-        //     var pointer = new PointerEventData(EventSystem.current); // pointer event for Execute Verhindert LagSpike bei erstem click
-        //     ExecuteEvents.Execute(deselectButton.gameObject, pointer, ExecuteEvents.pointerEnterHandler);
-        //     ExecuteEvents.Execute(deselectButton.gameObject, pointer, ExecuteEvents.submitHandler);
-        //     ExecuteEvents.Execute(deselectButton.gameObject, pointer, ExecuteEvents.pointerDownHandler);
-        //     ExecuteEvents.Execute(deselectButton.gameObject, pointer, ExecuteEvents.pointerUpHandler);
-        //     HideDeselectButton();//Start with Button ACtive for Performance Reasons
-        //     attackPreview.Hide();
         // }
         //
         // private void InputStateChanged(bool active)

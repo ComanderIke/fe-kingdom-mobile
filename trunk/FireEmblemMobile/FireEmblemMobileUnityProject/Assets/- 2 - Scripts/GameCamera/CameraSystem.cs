@@ -13,7 +13,7 @@ namespace GameCamera
         public new Camera camera;
         private List<CameraMixin> mixins;
         public CameraData cameraData;
-        private void Start()
+        public void Init()
         {
             mixins = new List<CameraMixin>();
         }

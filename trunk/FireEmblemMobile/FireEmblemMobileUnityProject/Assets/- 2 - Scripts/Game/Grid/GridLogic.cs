@@ -5,6 +5,7 @@ using System.Linq;
 using Game.GameActors.Units;
 using Game.Manager;
 using Game.Map;
+using Game.Mechanics;
 using UnityEngine;
 
 namespace Game.Grid
@@ -16,6 +17,7 @@ namespace Game.Grid
         private GridSystem GridManager { get; }
         private readonly GridData gridData;
         public GridSessionData gridSessionData;
+        public ITileChecker tileChecker;
 
         public GridLogic(GridSystem gridManager)
         {
@@ -24,7 +26,10 @@ namespace Game.Grid
             gridSessionData = new GridSessionData();
             Tiles = gridManager.Tiles;
             gridData = gridManager.GridData;
+            tileChecker = new GridTileChecker(Tiles, gridData.width, gridData.height);
         }
+
+        
 
         public List<IGridActor> GetAttackTargets(IGridActor unit)
         {
@@ -193,10 +198,10 @@ namespace Game.Grid
             return !invalid;
         }
 
-        public bool IsTileAccessible(Vector2 pos, IGridActor character)
+        public bool IsTileAccessible(int x, int y, IGridActor character)
         {
-            bool invalid = (pos.x < 0) || (pos.y < 0) || (pos.x >= gridData.width) || (pos.y >= gridData.height);
-            var tile = Tiles[(int) pos.x, (int) pos.y];
+            bool invalid = (x < 0) || (y < 0) || (x >= gridData.width) || (y >= gridData.height);
+            var tile = Tiles[x, y];
             if (!invalid)
             {
                 invalid = !character.CanMoveOnTo(tile);
@@ -210,9 +215,9 @@ namespace Game.Grid
             return !invalid;
         }
 
-        public bool IsTileFree(Vector2 pos)
+        public bool IsTileFree(int x, int y)
         {
-            return Tiles[(int) pos.x, (int) pos.y].HasFreeSpace();
+            return Tiles[x, y].HasFreeSpace();
         }
 
         public IEnumerable<Tile> TilesFromWhereYouCanAttack(IGridActor character)

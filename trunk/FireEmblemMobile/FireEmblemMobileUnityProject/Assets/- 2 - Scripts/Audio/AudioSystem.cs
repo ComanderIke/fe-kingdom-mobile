@@ -31,6 +31,11 @@ namespace Audio
 
             DontDestroyOnLoad(gameObject);
 
+           
+        }
+
+        public void Init()
+        {
             foreach (var s in Sounds)
             {
                 s.Source = gameObject.AddComponent<AudioSource>();

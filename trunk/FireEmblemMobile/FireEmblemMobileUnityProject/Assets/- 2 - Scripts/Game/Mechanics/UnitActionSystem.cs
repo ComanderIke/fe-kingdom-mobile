@@ -28,7 +28,7 @@ namespace Game.Mechanics
         private Stack<Command> lastActions;
         private Queue<Command> currentActions;
 
-        private void Start()
+        public void Init()
         {
             GameplayInput.OnWait += Wait;
             GameplayInput.OnAttackUnit += Fight;
@@ -40,6 +40,7 @@ namespace Game.Mechanics
             OnCommandFinished += ExecuteActions;
             TriggerUndo += Undo;
         }
+   
 
         public void Undo()
         {

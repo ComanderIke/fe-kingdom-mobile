@@ -20,7 +20,7 @@ namespace GameCamera
             InputProvider = inputProvider;
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             if (InputProvider.InputPressed())
             {

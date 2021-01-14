@@ -14,13 +14,13 @@ namespace Game.GameInput
         
         public List<Vector2> MovementPath;
         private readonly List<Vector2> dragPath;
-        private IPathProvider pathProvider;
+        private IPathFinder pathProvider;
 
-        public InputPathManager()
+        public InputPathManager(IPathFinder pathProvider)
         {
             MovementPath = new List<Vector2>();
             dragPath = new List<Vector2>();
-            pathProvider = GridGameManager.Instance.GetSystem<MoveSystem>();
+            this.pathProvider = pathProvider;
         }
 
         public void Reset()
@@ -31,7 +31,7 @@ namespace Game.GameInput
         public void CalculateMousePathToPosition(IGridActor character, int x, int y)
         {
             Reset();
-            var p = pathProvider.GetPath(character.GridPosition.X,
+            var p = pathProvider.FindPath(character.GridPosition.X,
                 character.GridPosition.Y, x, y, character, false, character.AttackRanges);
             if (p != null)
                 for (int i = p.GetLength() - 2; i >= 0; i--)
@@ -43,7 +43,7 @@ namespace Game.GameInput
         public void CalculatePathToPosition(IGridActor character, Vector2 position)
         {
             Reset();
-            var p = pathProvider.GetPath(character.GridPosition.X,
+            var p = pathProvider.FindPath(character.GridPosition.X,
                 character.GridPosition.Y, (int) position.x, (int) position.y, character, true,
                 character.AttackRanges);
             MovementPath = new List<Vector2>();
@@ -90,7 +90,7 @@ namespace Game.GameInput
         private void CreateNewMovementPath(IGridActor gridActor, int x, int y)
         {
             dragPath.Clear();
-            var p = pathProvider.GetPath(gridActor.GridPosition.X,
+            var p = pathProvider.FindPath(gridActor.GridPosition.X,
                 gridActor.GridPosition.Y, x, y, gridActor, false, gridActor.AttackRanges);
             if (p != null)
                 for (int i = p.GetLength() - 2; i >= 0; i--)

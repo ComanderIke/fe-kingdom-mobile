@@ -19,7 +19,8 @@ namespace Game.GameInput
         private int lastDragPosX = -1;
         private int lastDragPosY = -1;
 
-        private void Start()
+
+        public void Init()
         {
             Active = true;
             gridSystem = GridGameManager.Instance.GetSystem<GridSystem>();
@@ -120,5 +121,7 @@ namespace Game.GameInput
             lastDragPosY = -1;
             inputReceiver.ResetInput();
         }
+
+      
     }
 }

@@ -144,14 +144,14 @@ namespace Game.GUI
 
         public void ShowCounterDamageText(int damage)
         {
-            GridGameManager.Instance.GetSystem<PopUpTextSystem>()
-                .CreateAttackPopUpTextRed("" + damage, attacker.GameTransform.GameObject.transform);
+            // GridGameManager.Instance.GetSystem<PopUpTextSystem>()
+            //     .CreateAttackPopUpTextRed("" + damage, attacker.GameTransform.GameObject.transform);
         }
 
         public void ShowDamageText(int damage)
         {
-            GridGameManager.Instance.GetSystem<PopUpTextSystem>()
-                    .CreateAttackPopUpTextRed("" + damage, defender.GameTransform.GameObject.transform);
+            // GridGameManager.Instance.GetSystem<PopUpTextSystem>()
+            //         .CreateAttackPopUpTextRed("" + damage, defender.GameTransform.GameObject.transform);
         }
 
 

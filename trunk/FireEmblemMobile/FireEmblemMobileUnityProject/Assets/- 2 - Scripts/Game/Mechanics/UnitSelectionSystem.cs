@@ -19,7 +19,7 @@ namespace Game.Mechanics
         private GridGameManager gridGameManager;
         public ISelectableActor SelectedCharacter { get; set; }
 
-        private void Start()
+        public void Init()
         {
             gridGameManager = GridGameManager.Instance;
 

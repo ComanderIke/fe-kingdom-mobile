@@ -8,7 +8,7 @@ namespace Game.GameActors.Units
     {
         private UnitInputController[] units;
 
-        private void Start()
+        public void Init()
         {
             units = FindObjectsOfType<UnitInputController>();
         }

@@ -2,5 +2,6 @@
 {
     public interface IEngineSystem
     {
+        void Init();
     }
 }

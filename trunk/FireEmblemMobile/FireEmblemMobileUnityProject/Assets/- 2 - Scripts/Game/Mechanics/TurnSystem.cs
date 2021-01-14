@@ -24,13 +24,14 @@ namespace Game.Mechanics
 
         public int TurnCount { get; set; }
 
-        private void Start()
+        public void Init()
         {
             gridGameManager = GridGameManager.Instance;
             OnTriggerEndTurn += EndTurn;
             factionManager = gridGameManager.FactionManager;
             InitPlayers();
         }
+ 
 
         private void InitPlayers()
         {

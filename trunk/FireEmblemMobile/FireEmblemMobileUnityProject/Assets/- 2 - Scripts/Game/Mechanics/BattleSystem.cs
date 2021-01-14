@@ -25,9 +25,14 @@ namespace Game.Mechanics
         private int attackerAttackCount;
         private int defenderAttackCount;
         private int currentAttackIndex;
-        public BattleSystem()
+
+        public void Init()
         {
             battleStarted = false;
+        }
+        public BattleSystem()
+        {
+            Init();
         }
         public BattleSystem(Unit attacker, Unit defender):base()
         {

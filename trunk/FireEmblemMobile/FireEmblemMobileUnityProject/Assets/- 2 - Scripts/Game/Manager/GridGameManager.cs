@@ -88,27 +88,35 @@ namespace Game.Manager
         {
             Systems = new List<IEngineSystem>
             {
-                FindObjectOfType<UiSystem>(),
                 FindObjectOfType<CameraSystem>(),
                 FindObjectOfType<GridSystem>(),
                 FindObjectOfType<AudioSystem>(),
-                FindObjectOfType<PopUpTextSystem>(),
                 FindObjectOfType<UnitActionSystem>(),
                 FindObjectOfType<GridInputSystem>(),
                 FindObjectOfType<UnitsSystem>(),
                 FindObjectOfType<TurnSystem>(),
-                FindObjectOfType<FogOfWarSystem>(),
                 new BattleSystem(),
                 FindObjectOfType<UnitSelectionSystem>()
             };
+
         }
 
         private void Initialize()
         {
+           
+            foreach (var system in Systems)
+            {
+                system.Init();
+            }
+            //needs to be added AFTER GridSystem has fully initialized
+            Systems.Add(new MoveSystem(GetSystem<GridSystem>().pathFinder,GetSystem<GridSystem>().GetTileChecker()));
+            GetSystem<MoveSystem>().Init();
+            
+            
             LevelConfig();
             GameStateManager = new GameStateManager();
             GameStateManager.Init();
-            Systems.Add(new MoveSystem(GetSystem<GridSystem>()));
+            
             OnStartGame?.Invoke();
             GetSystem<TurnSystem>().StartTurn();
         }
