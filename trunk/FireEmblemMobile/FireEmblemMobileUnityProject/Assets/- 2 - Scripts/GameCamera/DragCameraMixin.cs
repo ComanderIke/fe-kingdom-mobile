@@ -10,6 +10,7 @@ namespace GameCamera
         private IRayProvider RayProvider { get; set; }
         private IHitChecker HitChecker { get; set; }
         private IInputProvider InputProvider { get; set; }
+        
 
         public void Construct(IDragPerformer dragPerformer, IRayProvider rayProvider, IHitChecker hitChecker,
             IInputProvider inputProvider)
@@ -22,9 +23,11 @@ namespace GameCamera
 
         private void Update()
         {
+            CameraSystem.IsDragging = DragPerformer.IsDragging;
             if (InputProvider.InputPressed())
             {
                 DragPerformer.Drag(transform,InputProvider.InputPosition());
+                
             }
             if (InputProvider.InputPressedDown())
             {

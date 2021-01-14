@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Game.Manager;
+using GameCamera;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -10,6 +11,7 @@ namespace Game.GameInput
         private RaycastManager raycastManager;
 
         private List<IGridInputReceiver> inputReceivers;
+        
 
         public GridInput()
         {
@@ -27,7 +29,8 @@ namespace Game.GameInput
         {
             if (Input.GetMouseButtonUp(0) && !EventSystem.current.IsPointerOverGameObject())
             {
-                CheckClickOnGrid();
+                if(!CameraSystem.IsDragging)
+                    CheckClickOnGrid();
             }
         }
 
