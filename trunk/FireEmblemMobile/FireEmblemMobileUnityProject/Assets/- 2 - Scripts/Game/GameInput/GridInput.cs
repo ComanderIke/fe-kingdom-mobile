@@ -27,7 +27,7 @@ namespace Game.GameInput
 
         public void Update()
         {
-            if (Input.GetMouseButtonUp(0) && !EventSystem.current.IsPointerOverGameObject())
+            if (Input.GetMouseButtonUp(0) && Input.touchCount <= 2 && !EventSystem.current.IsPointerOverGameObject())
             {
                 if(!CameraSystem.IsDragging)
                     CheckClickOnGrid();

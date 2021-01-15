@@ -69,8 +69,10 @@ namespace Game.Grid
         public bool IsValidLocation(IGridActor unit, int sx, int sy, int x, int y, bool isAdjacent)
         {
             bool invalid = (x < 0) || (y < 0) || (x >= width) || (y >= height);
+            if (invalid)
+                return true;
             var tile = tiles[x, y];
-            if ((!invalid) && ((sx != x) || (sy != y)))
+            if ((sx != x) || (sy != y))
             {
                 invalid = !unit.CanMoveOnTo(tile);
             }
