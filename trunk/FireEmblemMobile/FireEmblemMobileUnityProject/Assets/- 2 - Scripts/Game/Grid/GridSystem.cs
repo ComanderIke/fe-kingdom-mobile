@@ -210,7 +210,7 @@ namespace Game.Map
             return Tiles[x, y];
         }
 
-        public void SetUnitPosition(Unit unit, int x, int y)
+        public void SetUnitPosition(IGridActor unit, int x, int y)
         {
             if (x != -1 && y != -1)
             {

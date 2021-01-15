@@ -5,6 +5,7 @@ using Game.GameInput;
 using Game.Grid;
 using Game.Grid.PathFinding;
 using Game.Manager;
+using Game.Map;
 using GameEngine;
 using GameEngine.GameStates;
 using UnityEngine;
@@ -115,7 +116,7 @@ namespace Game.Mechanics
         public override void Exit()
         {
             Debug.Log("Exit MoveState!"+x+" "+y);
-            unit.SetPosition(x, y);
+            gridGameManager.GetSystem<GridSystem>().SetUnitPosition(unit,x,y);
             unit.UnitTurnState.Selected = false;
             unit.UnitTurnState.HasMoved = true;
             GridInputSystem.SetActive(true);

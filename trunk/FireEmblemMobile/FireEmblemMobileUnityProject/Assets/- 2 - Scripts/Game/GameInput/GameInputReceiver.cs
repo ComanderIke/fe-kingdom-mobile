@@ -117,6 +117,7 @@ namespace Game.GameInput
                 if(selectionDataProvider.IsSelectedTile(x,y))
                 {
                     gameplayInput.MoveUnit(selectionDataProvider.SelectedActor, new GridPosition(x, y), GridPosition.GetFromVectorList(inputPathManager.MovementPath));
+                    gameplayInput.Wait(selectionDataProvider.SelectedActor);
                     gameplayInput.ExecuteInputActions(null);
                 }
                 else
@@ -232,6 +233,8 @@ namespace Game.GameInput
             {
                 if(character is IBattleActor battleActor && enemy is IBattleActor enemyBattleActor)
                     gameplayInput.AttackUnit(battleActor, enemyBattleActor);
+                if(character is ISelectableActor selectableActor)
+                    gameplayInput.Wait(selectableActor);
                 gameplayInput.ExecuteInputActions(null);
             }
             else if(movePath!=null) //go to enemy cause not in range
@@ -244,6 +247,8 @@ namespace Game.GameInput
                 }
                 if(character is IBattleActor battleActor && enemy is IBattleActor enemyBattleActor)
                     gameplayInput.AttackUnit(battleActor, enemyBattleActor);
+                if(character is ISelectableActor selectableActor)
+                    gameplayInput.Wait(selectableActor);
                 gameplayInput.ExecuteInputActions(null);
             }
         }
