@@ -253,6 +253,16 @@ namespace Game.GameActors.Units
             return AttackRanges.Contains(DeltaPos(attackFromPosition.X, attackFromPosition.Y, targetPosition.X, targetPosition.Y));
         }
 
+        public Transform GetTransform()
+        {
+            return GameTransform.GameObject.transform;
+        }
+
+        public bool HasMoved()
+        {
+            return UnitTurnState.HasMoved;
+        }
+
         private int DeltaPos(int x, int y, int x2, int y2)
         {
             return Math.Abs(x - x2) + Math.Abs(y - y2);

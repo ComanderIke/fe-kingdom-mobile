@@ -14,24 +14,24 @@ namespace GameCamera
         {
             if (Input.touchCount == 2)
             {
-                Vector2 touch0, touch1;
-                float distance;
-                touch0 = Input.GetTouch(0).position;
-                touch1 = Input.GetTouch(1).position;
-                distance = Vector2.Distance(touch0, touch1);
-               
-                if (startDistance == 0)
-                    startDistance = distance;
-                else if (distance - startDistance >= 100)
-                {
-                    zoom=0;
-                    startDistance = distance;
-                }
-                else if (distance - startDistance <= -100)
-                {
-                    zoom=1;
-                    startDistance = distance;
-                }
+                // Vector2 touch0, touch1;
+                // float distance;
+                // touch0 = Input.GetTouch(0).position;
+                // touch1 = Input.GetTouch(1).position;
+                // distance = Vector2.Distance(touch0, touch1);
+                //
+                // if (startDistance == 0)
+                //     startDistance = distance;
+                // else if (distance - startDistance >= 100)
+                // {
+                //     zoom=0;
+                //     startDistance = distance;
+                // }
+                // else if (distance - startDistance <= -100)
+                // {
+                //     zoom=1;
+                //     startDistance = distance;
+                // }
                 // Debug.Log("Distance: " + distance+" Start: "+startDistance+ " Zoom: "+zoom);
             }
             else

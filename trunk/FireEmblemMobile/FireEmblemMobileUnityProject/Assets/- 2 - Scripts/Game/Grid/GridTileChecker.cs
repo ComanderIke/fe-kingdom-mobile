@@ -70,7 +70,7 @@ namespace Game.Grid
         {
             bool invalid = (x < 0) || (y < 0) || (x >= width) || (y >= height);
             if (invalid)
-                return true;
+                return false;
             var tile = tiles[x, y];
             if ((sx != x) || (sy != y))
             {

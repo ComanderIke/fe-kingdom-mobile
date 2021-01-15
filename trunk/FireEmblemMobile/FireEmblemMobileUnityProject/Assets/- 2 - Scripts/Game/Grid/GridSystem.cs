@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Game.GameActors.Units;
 using Game.Grid;
 using Game.Grid.PathFinding;
+using Game.Manager;
 using Game.Mechanics;
 using GameEngine;
 using UnityEngine;
@@ -35,7 +36,7 @@ namespace Game.Map
             UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
             UnitSelectionSystem.OnEnemySelected += OnEnemySelected;
             UnitSelectionSystem.OnSelectedInActiveCharacter += OnEnemySelected;
-            MovementState.OnMovementFinished += (Unit u) => HideMoveRange();
+            MovementState.OnMovementFinished += (IGridActor u) => HideMoveRange();
             Unit.UnitDied += RemoveUnitFromGrid;
         }
 
@@ -126,7 +127,7 @@ namespace Game.Map
             {
                 if (!IsTileMoveableAndActive(x, y))
                 {
-                    GridRenderer.SetFieldMaterialAttack(new Vector2(x, y), character.FactionId);
+                    GridRenderer.SetFieldMaterialAttack(new Vector2(x, y), character.FactionId, !character.HasMoved());
                     GridLogic.gridSessionData.AddValidAttackPosition(x, y);
                 }
 
@@ -176,7 +177,7 @@ namespace Game.Map
                 return;
             }
 
-            GridRenderer.SetFieldMaterial(new Vector2(x, y), unit.FactionId);
+            GridRenderer.SetFieldMaterial(new Vector2(x, y), unit.FactionId, !unit.HasMoved());
             GridLogic.gridSessionData.AddValidPosition(x, y);
             NodeHelper.Nodes[x, y].C = c;
             c++;

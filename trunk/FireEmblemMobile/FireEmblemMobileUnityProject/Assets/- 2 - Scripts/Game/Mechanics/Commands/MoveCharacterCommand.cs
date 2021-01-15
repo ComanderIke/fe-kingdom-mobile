@@ -2,19 +2,20 @@
 using Game.GameActors.Units;
 using Game.Grid;
 using Game.Manager;
+using UnityEngine;
 
 namespace Game.Mechanics.Commands
 {
     internal class MoveCharacterCommand : Command
     {
-        private readonly Unit unit;
+        private readonly IGridActor unit;
         private readonly int x;
         private readonly int y;
         private readonly int oldX;
         private readonly int oldY;
         private readonly List<GridPosition> path;
 
-        public MoveCharacterCommand(Unit unit, GridPosition destination)
+        public MoveCharacterCommand(IGridActor unit, GridPosition destination)
         {
             this.unit = unit;
             oldX = unit.GridPosition.X;
@@ -23,13 +24,14 @@ namespace Game.Mechanics.Commands
             y = destination.Y;
         }
 
-        public MoveCharacterCommand(Unit unit, GridPosition destination, List<GridPosition> path) : this(unit, destination)
+        public MoveCharacterCommand(IGridActor unit, GridPosition destination, List<GridPosition> path) : this(unit, destination)
         {
             this.path = path;
         }
 
         public override void Execute()
         {
+            Debug.Log("Execute Movement!");
             GameStateManager.MovementState.StartMovement(unit, x, y, path);
         }
 

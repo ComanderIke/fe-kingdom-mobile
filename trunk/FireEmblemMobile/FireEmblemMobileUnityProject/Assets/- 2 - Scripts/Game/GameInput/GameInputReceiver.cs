@@ -106,11 +106,18 @@ namespace Game.GameInput
 
         public void ClickedOnGrid(int x, int y)
         {
+            
+            if(!gridSystem.GridLogic.IsTileFree(x,y))
+            {
+                Debug.Log("Somehow clicked on non empty Tile");
+                return;
+            }
             if (gridSystem.GridLogic.IsFieldFreeAndActive(x, y))
             {
                 if(selectionDataProvider.IsSelectedTile(x,y))
                 {
                     gameplayInput.MoveUnit(selectionDataProvider.SelectedActor, new GridPosition(x, y), GridPosition.GetFromVectorList(inputPathManager.MovementPath));
+                    gameplayInput.ExecuteInputActions(null);
                 }
                 else
                 {
@@ -225,6 +232,7 @@ namespace Game.GameInput
             {
                 if(character is IBattleActor battleActor && enemy is IBattleActor enemyBattleActor)
                     gameplayInput.AttackUnit(battleActor, enemyBattleActor);
+                gameplayInput.ExecuteInputActions(null);
             }
             else if(movePath!=null) //go to enemy cause not in range
             {
@@ -236,6 +244,7 @@ namespace Game.GameInput
                 }
                 if(character is IBattleActor battleActor && enemy is IBattleActor enemyBattleActor)
                     gameplayInput.AttackUnit(battleActor, enemyBattleActor);
+                gameplayInput.ExecuteInputActions(null);
             }
         }
         private bool IsActorOnTile(IGridActor actor, int x, int y)

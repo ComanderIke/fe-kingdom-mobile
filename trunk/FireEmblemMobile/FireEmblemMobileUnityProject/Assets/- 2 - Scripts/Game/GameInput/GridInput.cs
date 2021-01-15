@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Game.GameActors.Units.OnGameObject;
 using Game.Manager;
 using GameCamera;
 using UnityEngine;
@@ -29,6 +30,7 @@ namespace Game.GameInput
         {
             if (Input.GetMouseButtonUp(0) && Input.touchCount <= 2 && !EventSystem.current.IsPointerOverGameObject())
             {
+                
                 if(!CameraSystem.IsDragging)
                     CheckClickOnGrid();
             }

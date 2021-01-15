@@ -53,6 +53,16 @@ namespace Game.Grid
             spriteRenderer.sprite = activeSpriteSet.GridMoveSprite;
         }
 
+        public void ActiveAttackVisual()
+        {
+            spriteRenderer.sprite = activeSpriteSet.GridActiveAttackSprite;
+        }
+
+        public void ActiveMoveVisual()
+        {
+            spriteRenderer.sprite = activeSpriteSet.GridActiveMoveSprite;
+        }
+
         public void StandOnVisual()
         {
             spriteRenderer.sprite = activeSpriteSet.GridSpriteStandOn;

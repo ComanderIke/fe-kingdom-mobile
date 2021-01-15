@@ -13,7 +13,7 @@ namespace Game.Mechanics
 {
     public class MovementState : GameState<NextStateTrigger>
     {
-        public static event Action<Unit> OnMovementFinished;
+        public static event Action<IGridActor> OnMovementFinished;
         public static event Action OnEnter;
         private int x;
         private int y;
@@ -22,7 +22,7 @@ namespace Game.Mechanics
         private List<GridPosition> mousePath;
         public MovementPath Path;
         public int PathCounter;
-        private Unit unit;
+        private IGridActor unit;
 
         public MovementState()
         {
@@ -30,7 +30,7 @@ namespace Game.Mechanics
             PathCounter = 0;
         }
 
-        public void StartMovement(Unit c, int x, int y, List<GridPosition> path = null)
+        public void StartMovement(IGridActor c, int x, int y, List<GridPosition> path = null)
         {
             mousePath = path;
             this.x = x;
@@ -90,9 +90,9 @@ namespace Game.Mechanics
         private void MoveUnit()
         {
           
-            float x = unit.GameTransform.GameObject.transform.localPosition.x;
-            float y = unit.GameTransform.GameObject.transform.localPosition.y;
-            float z = unit.GameTransform.GameObject.transform.localPosition.z;
+            float x = unit.GetTransform().localPosition.x;
+            float y = unit.GetTransform().localPosition.y;
+            float z = unit.GetTransform().localPosition.z;
             float tx = Path.GetStep(PathCounter).GetX();
             float ty = Path.GetStep(PathCounter).GetY();
             //Debug.Log("Moving to x: " + tx + " y: " + ty+ " "+x+" "+y);
@@ -101,7 +101,7 @@ namespace Game.Mechanics
             float tolerance = 0.05f;
             x = Math.Abs(x - tx) < value ? tx : x + (x < tx ? value : -value);
             y = Math.Abs(y - ty) < value ? ty : y + (y < ty ? value : -value);
-            unit.GameTransform.GameObject.transform.localPosition = new Vector3(x, y, z);
+            unit.GetTransform().localPosition = new Vector3(x, y, z);
 
            
             if (Math.Abs(x - tx) < value && Math.Abs(y - ty) < value) PathCounter++;
@@ -114,6 +114,7 @@ namespace Game.Mechanics
 
         public override void Exit()
         {
+            Debug.Log("Exit MoveState!"+x+" "+y);
             unit.SetPosition(x, y);
             unit.UnitTurnState.Selected = false;
             unit.UnitTurnState.HasMoved = true;
@@ -123,6 +124,7 @@ namespace Game.Mechanics
 
         private void FinishMovement()
         {
+            Debug.Log("Finished Movement!");
             active = false;
             GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.FinishedMovement);
             UnitActionSystem.OnCommandFinished();

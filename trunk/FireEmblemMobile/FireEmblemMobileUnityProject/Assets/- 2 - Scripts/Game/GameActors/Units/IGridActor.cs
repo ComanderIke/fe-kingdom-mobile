@@ -10,6 +10,8 @@ namespace Game.GameActors.Units
         int MovementRage { get; }
         IEnumerable<int> AttackRanges { get; }
         int FactionId { get; }
+        UnitTurnState UnitTurnState { get; }
+        Transform GetTransform();
         bool CanMoveOnTo(Tile tile);
         bool CanMoveThrough(IGridActor unit);
         bool IsEnemy(IGridActor unit);
@@ -19,5 +21,8 @@ namespace Game.GameActors.Units
         void SetGameTransformPosition(int x, int y);
         void ResetPosition();
         bool CanAttackFrom(GridPosition attackFromPosition, GridPosition targetPosition);
+
+        bool HasMoved();
+        void SetPosition(int oldX, int oldY);
     }
 }

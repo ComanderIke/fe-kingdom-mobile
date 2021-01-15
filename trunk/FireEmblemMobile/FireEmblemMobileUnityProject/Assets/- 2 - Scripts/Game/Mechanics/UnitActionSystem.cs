@@ -93,8 +93,9 @@ namespace Game.Mechanics
         {
             OnCheckAttackPreview?.Invoke(u, target);
         }
-        public void MoveCharacter(Unit c, GridPosition destination, List<GridPosition> path = null)
+        public void MoveCharacter(IGridActor c, GridPosition destination, List<GridPosition> path = null)
         {
+            Debug.Log("Create Movement Command!");
             var mCc = new MoveCharacterCommand(c, destination, path);
             currentActions.Enqueue(mCc);
         }

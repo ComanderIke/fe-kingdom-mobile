@@ -34,7 +34,7 @@ namespace Game.GameActors.Units.OnGameObject
         private float timerForDoubleClick;
         private const float DOUBLE_CLICK_TIME = 0.4f;
         private bool unitSelectedBeforeClicking = false;
-        
+
         private void Start()
         {
             DragManager = new DragManager(this);
@@ -44,6 +44,7 @@ namespace Game.GameActors.Units.OnGameObject
 
         private void Update()
         {
+           
             if (!GridInputSystem.Active)
                 return;
             DragManager.Update();
@@ -65,6 +66,7 @@ namespace Game.GameActors.Units.OnGameObject
                 return;
             if (!EventSystem.current.IsPointerOverGameObject() && (dragStarted || dragInitiated))
             {
+               
                 dragStarted = false;
                 dragInitiated = true;
                 if (unit.UnitTurnState.IsDragable()) DragManager.Dragging();
@@ -109,6 +111,7 @@ namespace Game.GameActors.Units.OnGameObject
             GridGameManager.Instance.GetSystem<CameraSystem>().ActivateMixin<DragCameraMixin>();
             if (DragManager.IsDragging)
             {
+               
                 DragManager.Update();// Update Dragmanager because he should notice first when MouseUp happens
                 dragStarted = false;
                 dragInitiated = false;
@@ -120,6 +123,7 @@ namespace Game.GameActors.Units.OnGameObject
                 }
 
                 gameObject.GetComponent<BoxCollider2D>().enabled = true;
+                
             }
             else if (!CameraSystem.IsDragging && (unitSelectedBeforeClicking||(unit.Faction.Id != GridGameManager.Instance.FactionManager.ActivePlayerNumber||doubleClick)))
             {

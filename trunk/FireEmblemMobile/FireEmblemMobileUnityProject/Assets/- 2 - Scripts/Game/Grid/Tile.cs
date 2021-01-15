@@ -28,17 +28,25 @@ namespace Game.Grid
             TileRenderer.Reset();
         }
 
-        public void SetMaterialAttack(int playerId)
+        public void SetAttackMaterial(int playerId, bool activeUnit)
         {
             TileRenderer.SetVisualStyle(playerId);
-            TileRenderer.AttackVisual();
+            if(activeUnit)
+                TileRenderer.ActiveAttackVisual();
+            else
+            {
+                TileRenderer.AttackVisual();
+            }
         }
-        public void SetMaterial( int playerId)
+        public void SetMaterial( int playerId, bool activeUnit)
         {
             TileRenderer.SetVisualStyle(playerId);
             if (Actor == null)
             {
-                TileRenderer.MoveVisual();
+                if(activeUnit)
+                    TileRenderer.ActiveMoveVisual();
+                else
+                    TileRenderer.MoveVisual();
             }
             else if (Actor.FactionId == playerId)
             {
@@ -46,7 +54,7 @@ namespace Game.Grid
             }
             else
             {
-                SetMaterialAttack(playerId);
+                SetAttackMaterial(playerId, activeUnit);
             }
         }
         

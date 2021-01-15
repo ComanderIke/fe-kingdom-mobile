@@ -7,7 +7,9 @@ namespace Game.Grid
     {
         public Sprite GridSprite;
         public Sprite GridAttackSprite;
+        public Sprite GridActiveAttackSprite;
         public Sprite GridMoveSprite;
+        public Sprite GridActiveMoveSprite;
         public Sprite GridSpriteStandOn;
         public Sprite GridSpriteAlly;
     }

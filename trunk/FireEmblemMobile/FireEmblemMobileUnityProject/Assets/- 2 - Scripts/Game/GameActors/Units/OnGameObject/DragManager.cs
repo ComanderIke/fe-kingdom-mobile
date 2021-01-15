@@ -9,11 +9,12 @@ namespace Game.GameActors.Units.OnGameObject
         const float DRAG_FOLLOW_SPEED = 13;
         public static bool IsAnyUnitDragged = false;
 
-        public bool IsDraggingBeforeDelay { get; set; }
+        private bool IsDraggingBeforeDelay { get; set; }
         public bool IsDragging { get; set; }
-        public float DragTime { get; set; }
-        public bool IsDragDelay { get; set; }
-        public IDragAble DragObject { get; set; }
+        private float DragTime { get; set; }
+        private bool IsDragDelay { get; set; }
+
+        private IDragAble DragObject { get; set; }
         /*DragOffset*/
         private float deltaPosX;
         private float deltaPosY;
@@ -48,6 +49,7 @@ namespace Game.GameActors.Units.OnGameObject
                 }
                 if (Input.GetMouseButtonUp(0))
                 {
+                    Debug.Log("MOUSEUP DragManager!");
                     if (!IsDragDelay)
                     {
                         IsDraggingBeforeDelay = false;
@@ -90,7 +92,7 @@ namespace Game.GameActors.Units.OnGameObject
             }
         }
 
-        public void EndDrag()
+        private void EndDrag()
         {
             IsDragging = false;
             DragObject.GetTransform().localPosition = posBeforeDrag;
