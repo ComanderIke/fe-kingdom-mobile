@@ -121,7 +121,7 @@ namespace Game.GameActors.Units.OnGameObject
 
                 gameObject.GetComponent<BoxCollider2D>().enabled = true;
             }
-            else if (unitSelectedBeforeClicking||(unit.Faction.Id != GridGameManager.Instance.FactionManager.ActivePlayerNumber||doubleClick))
+            else if (!CameraSystem.IsDragging && (unitSelectedBeforeClicking||(unit.Faction.Id != GridGameManager.Instance.FactionManager.ActivePlayerNumber||doubleClick)))
             {
                 if (!EventSystem.current.IsPointerOverGameObject())
                 {
