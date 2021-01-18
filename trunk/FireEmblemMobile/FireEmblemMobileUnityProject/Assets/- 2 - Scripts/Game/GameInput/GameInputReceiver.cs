@@ -119,13 +119,16 @@ namespace Game.GameInput
                     gameplayInput.MoveUnit(selectionDataProvider.SelectedActor, new GridPosition(x, y), GridPosition.GetFromVectorList(inputPathManager.MovementPath));
                     gameplayInput.Wait(selectionDataProvider.SelectedActor);
                     gameplayInput.ExecuteInputActions(null);
+                    selectionDataProvider.ClearSelectedTile();
+                    
                 }
                 else
                 {
                     inputPathManager.CalculateMousePathToPosition(selectionDataProvider.SelectedActor, x, y);
                     selectionDataProvider.SelectedActor.SetGameTransformPosition(x, y);
+                    selectionDataProvider.SetSelectedTile(x, y);
                 }
-                selectionDataProvider.ClearSelectedTile();
+                
             }
             else if(selectionDataProvider.SelectedActor != null)
             {

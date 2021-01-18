@@ -49,7 +49,6 @@ namespace Game.GameActors.Units.OnGameObject
                 }
                 if (Input.GetMouseButtonUp(0))
                 {
-                    Debug.Log("MOUSEUP DragManager!");
                     if (!IsDragDelay)
                     {
                         IsDraggingBeforeDelay = false;
