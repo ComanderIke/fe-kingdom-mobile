@@ -49,7 +49,7 @@ namespace Game.Manager
             JITHelper.PreJitAll<GridRenderer>();
             JITHelper.PreJitAll<GridInputSystem>();
             JITHelper.PreJitAll<UnitInputController>();
-            JITHelper.PreJitAll<PlayerInputFeedback>();
+            JITHelper.PreJitAll<Visuals>();
             JITHelper.PreJitAll<TopUi>();
             JITHelper.PreJitAll<NodeHelper>();
             JITHelper.PreJitAll<DragManager>();

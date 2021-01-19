@@ -10,6 +10,7 @@ namespace Game.GameInput
     public class GridInputSystem : MonoBehaviour, IEngineSystem, IUnitInputReceiver, IGridInputReceiver
     {
         public static event Action<bool> OnInputStateChanged;
+        public static event Action OnResetInput;
         public static bool Active { get; private set; }
         
         private GridSystem gridSystem;
@@ -120,6 +121,7 @@ namespace Game.GameInput
             lastDragPosX = -1;
             lastDragPosY = -1;
             inputReceiver.ResetInput();
+            OnResetInput?.Invoke();
         }
 
       

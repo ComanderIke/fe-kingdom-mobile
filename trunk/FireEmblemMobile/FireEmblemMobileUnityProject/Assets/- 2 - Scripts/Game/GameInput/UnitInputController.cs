@@ -60,7 +60,7 @@ namespace Game.GameActors.Units.OnGameObject
                     InputReceiver.DraggedOverActor(unit);
                 }
         }
-        private void OnMouseDrag()
+        public void OnMouseDrag()
         {
             if (!GridInputSystem.Active)
                 return;
@@ -74,7 +74,7 @@ namespace Game.GameActors.Units.OnGameObject
         }
 
 
-        private void OnMouseDown()
+        public void OnMouseDown()
         {
 
             dragStarted = false;
@@ -106,7 +106,7 @@ namespace Game.GameActors.Units.OnGameObject
                 
             }
         }
-        private void OnMouseUp()
+        public void OnMouseUp()
         {
             GridGameManager.Instance.GetSystem<CameraSystem>().ActivateMixin<DragCameraMixin>();
             if (DragManager.IsDragging)
