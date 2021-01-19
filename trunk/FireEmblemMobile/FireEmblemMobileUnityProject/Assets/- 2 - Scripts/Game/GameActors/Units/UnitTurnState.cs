@@ -5,7 +5,8 @@ namespace Game.GameActors.Units
 {
     public class UnitTurnState
     {
-        public event Action<bool> OnHasAttacked; 
+        public event Action<bool> OnHasAttacked;
+        public event Action<bool> OnSelected;
         private readonly Unit unit;
         private bool hasMoved;
         private bool isWaiting;
@@ -44,7 +45,20 @@ namespace Game.GameActors.Units
                 OnHasAttacked?.Invoke(hasAttacked);
             }
         }
-        public bool Selected { get; set; }
+
+        private bool selected;
+        public bool Selected
+        {
+            get
+            {
+                return selected;
+            }
+            set
+            {
+                selected = value;
+                OnSelected?.Invoke(selected);
+            }
+        }
 
         public void Reset()
         {

@@ -25,6 +25,9 @@ namespace Game.GameActors.Units.OnGameObject
             var unitRenderer = unitGameObject.GetComponentInChildren<UnitRenderer>();
             unitRenderer.unit = unit;
             unitRenderer.Init();
+            var unitAnimator = unitGameObject.GetComponentInChildren<UnitAnimator>();
+            unitAnimator.unit = unit;
+          
             
             unit.GameTransform.GameObject = unitGameObject;
             GridGameManager.Instance.GetSystem<GridSystem>().SetUnitPosition(unit, x, y);

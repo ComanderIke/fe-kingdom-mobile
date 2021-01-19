@@ -15,6 +15,8 @@ namespace Game.GameInput
         [SerializeField]
         private GameObject moveCursorPrefab;
         [SerializeField]
+        private GameObject moveArrowPartPrefab;
+        [SerializeField]
         private MoveArrowSprites moveArrowSprites;
         [SerializeField]
         private Transform parent;
@@ -22,6 +24,11 @@ namespace Game.GameInput
         {
             instantiatedMovePath = new List<GameObject>();
 
+        }
+
+        private GameObject CreateArrowPart()
+        {
+            return  GameObject.Instantiate(moveArrowPartPrefab, parent);
         }
         public void DrawMovementPath(List<Vector2> mousePath, int startX, int startY)
         {
@@ -40,9 +47,8 @@ namespace Game.GameInput
                 moveCursor.SetActive(true);
                 if (moveCursorStart == null)
                 {
-                    
-                    moveCursorStart = GameObject.Instantiate(new GameObject(), parent);
-                    moveCursorStart.AddComponent<SpriteRenderer>();
+
+                    moveCursorStart = CreateArrowPart();
                     moveCursorStart.name = "MoveCursorStart";
                 }
                 moveCursorStart.SetActive(true);
@@ -54,8 +60,7 @@ namespace Game.GameInput
             {
                 if (moveCursorStart == null)
                 {
-                    moveCursorStart = GameObject.Instantiate(new GameObject(), parent);
-                    moveCursorStart.AddComponent<SpriteRenderer>();
+                    moveCursorStart = CreateArrowPart();
                     moveCursorStart.name = "MoveCursorStart";
                 }
           
@@ -79,8 +84,7 @@ namespace Game.GameInput
                 GameObject dot = null;
                 if (i >= instantiatedMovePath.Count)
                 {
-                    dot = GameObject.Instantiate(new GameObject(), parent);
-                    dot.AddComponent<SpriteRenderer>();
+                    dot = CreateArrowPart();
                     instantiatedMovePath.Add(dot);
                 }
                 else
