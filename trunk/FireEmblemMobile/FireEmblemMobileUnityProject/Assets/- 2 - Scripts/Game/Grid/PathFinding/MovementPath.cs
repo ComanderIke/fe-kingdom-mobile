@@ -25,7 +25,7 @@ namespace Game.Grid.PathFinding
             return (Step) steps[index];
         }
 
-        public void PrependStep(float x, float y)
+        public void PrependStep(int x, int y)
         {
             steps.Add(new Step(x, y));
         }

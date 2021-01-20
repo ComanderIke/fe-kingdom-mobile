@@ -49,11 +49,14 @@ namespace Game.GameInput
             {
                 DraggedOnActiveField(x, y, selectionDataProvider.SelectedActor);
             }
-            if (gridSystem.IsTileMoveableAndActive(x, y) && gridSystem.Tiles[x,y].HasFreeSpace())
+            else if (gridSystem.IsTileMoveableAndActive(x, y) && gridSystem.Tiles[x,y].HasFreeSpace())
             {
                 lastInputPositionManager.StoreLatestValidPosition(x, y, selectionDataProvider.SelectedActor.MovementRage);
             }
-            inputPathManager.UpdatedMovementPath(selectionDataProvider.SelectedActor);
+            else
+            {
+                ResetInput();
+            }
         }
         
         public void DraggedOnActor(IGridActor actor)
@@ -71,8 +74,13 @@ namespace Game.GameInput
         public void DraggedOverActor(IGridActor gridActor)
         {
             if (gridActor.IsEnemy(selectionDataProvider.SelectedActor))
-                DraggedOnEnemy(gridActor.GridPosition.X, gridActor.GridPosition.Y, gridActor);
-            inputPathManager.UpdatedMovementPath(selectionDataProvider.SelectedActor);
+                DraggedOnEnemy(gridActor.GridPosition.X, gridActor.GridPosition.Y, gridActor);//TODO should be dragged over enemy?
+            if (gridActor == selectionDataProvider.SelectedActor)
+            {
+                Debug.Log("Dragged over selected Actor");
+                ResetInput();
+            }
+
         }
         
         public void StartDraggingActor(IGridActor actor)
@@ -226,7 +234,7 @@ namespace Game.GameInput
         {
             return GridGameManager.Instance.FactionManager.IsActiveFaction(actor.FactionId);
         }
-        private void AttackEnemy(IGridActor character, IGridActor enemy, List<Vector2> movePath)
+        private void AttackEnemy(IGridActor character, IGridActor enemy, List<Vector2Int> movePath)
         {
             character.ResetPosition();
             gridSystem.HideMoveRange();

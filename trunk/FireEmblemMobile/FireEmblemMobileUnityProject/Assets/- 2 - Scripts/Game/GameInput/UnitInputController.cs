@@ -57,6 +57,7 @@ namespace Game.GameActors.Units.OnGameObject
             if(DragManager.IsAnyUnitDragged)
                 if (!EventSystem.current.IsPointerOverGameObject())
                 {
+                    Debug.Log("Dragged over: "+unit);
                     InputReceiver.DraggedOverActor(unit);
                 }
         }
@@ -153,6 +154,7 @@ namespace Game.GameActors.Units.OnGameObject
 
         public void StartDrag()
         {
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
             GridGameManager.Instance.GetSystem<CameraSystem>().DeactivateMixin<DragCameraMixin>();
             dragStarted = true;
             InputReceiver.StartDraggingActor(unit);

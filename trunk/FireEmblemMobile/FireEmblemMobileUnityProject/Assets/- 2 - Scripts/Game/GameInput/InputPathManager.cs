@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Game.GameActors.Units;
 using Game.Grid.PathFinding;
 using Game.Manager;
@@ -9,17 +10,18 @@ namespace Game.GameInput
 {
     public class InputPathManager
     {
-        public delegate void MovementPathUpdatedEvent(List<Vector2> mousePath, int startX, int startY);
+        public delegate void MovementPathUpdatedEvent(List<Vector2Int> mousePath, int startX, int startY);
         public static event MovementPathUpdatedEvent OnMovementPathUpdated;
         
-        public List<Vector2> MovementPath;
-        private readonly List<Vector2> dragPath;
+        public List<Vector2Int> MovementPath;
+        private readonly List<Vector2Int> dragPath;
         private IPathFinder pathProvider;
+        public static event Action OnReset;
 
         public InputPathManager(IPathFinder pathProvider)
         {
-            MovementPath = new List<Vector2>();
-            dragPath = new List<Vector2>();
+            MovementPath = new List<Vector2Int>();
+            dragPath = new List<Vector2Int>();
             this.pathProvider = pathProvider;
         }
 
@@ -27,6 +29,7 @@ namespace Game.GameInput
         {
             dragPath.Clear();
             MovementPath.Clear();
+            OnReset?.Invoke();
         }
         public void CalculateMousePathToPosition(IGridActor character, int x, int y)
         {
@@ -35,8 +38,8 @@ namespace Game.GameInput
                 character.GridPosition.Y, x, y, character, false, character.AttackRanges);
             if (p != null)
                 for (int i = p.GetLength() - 2; i >= 0; i--)
-                    dragPath.Add(new Vector2(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
-            MovementPath = new List<Vector2>(dragPath);
+                    dragPath.Add(new Vector2Int(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
+            MovementPath = new List<Vector2Int>(dragPath);
             UpdatedMovementPath(character);
         }
 
@@ -46,12 +49,12 @@ namespace Game.GameInput
             var p = pathProvider.FindPath(character.GridPosition.X,
                 character.GridPosition.Y, (int) position.x, (int) position.y, character, true,
                 character.AttackRanges);
-            MovementPath = new List<Vector2>();
+            MovementPath = new List<Vector2Int>();
             p.Reverse();
             for (int i = 1; i < p.GetLength(); i++)
             {
                 //Debug.Log(new Vector2(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
-                MovementPath.Add(new Vector2(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
+                MovementPath.Add(new Vector2Int(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
             }
             
             UpdatedMovementPath(character);
@@ -94,14 +97,14 @@ namespace Game.GameInput
                 gridActor.GridPosition.Y, x, y, gridActor, false, gridActor.AttackRanges);
             if (p != null)
                 for (int i = p.GetLength() - 2; i >= 0; i--)
-                    dragPath.Add(new Vector2(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
+                    dragPath.Add(new Vector2Int(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
         }
 
         public void AddToPath(int x, int y, IGridActor gridActor)
         {
-            bool contains = dragPath.Contains(new Vector2(x, y));
+            bool contains = dragPath.Contains(new Vector2Int(x, y));
            
-            dragPath.Add(new Vector2(x, y));
+            dragPath.Add(new Vector2Int(x, y));
             
             //if (dragPath.Count > gridActor.MovementRage || contains || IsLastActiveFieldAdjacent(x,y,gridActor))
             if (dragPath.Count > gridActor.MovementRage || contains)
@@ -109,7 +112,8 @@ namespace Game.GameInput
                 CreateNewMovementPath(gridActor, x , y);
               
             }
-            MovementPath = new List<Vector2>(dragPath);
+            MovementPath = new List<Vector2Int>(dragPath);
+            UpdatedMovementPath(gridActor);
         }
 
         public bool HasValidMovementPath(int range)

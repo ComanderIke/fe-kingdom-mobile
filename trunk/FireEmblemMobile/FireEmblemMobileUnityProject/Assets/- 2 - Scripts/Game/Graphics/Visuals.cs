@@ -34,10 +34,12 @@ namespace Game.GameInput
         // private List<GameObject> attackableFieldEffects;
          private void Start ()
          {
-             GridInputSystem.OnResetInput += moveArrowVisual.HideMovementPath;
+             //GridInputSystem.OnResetInput += moveArrowVisual.HideMovementPath;
+             InputPathManager.OnReset += moveArrowVisual.HideMovementPath;
              InputPathManager.OnMovementPathUpdated += moveArrowVisual.DrawMovementPath;
              BattleState.OnEnter += moveArrowVisual.HideMovementPath;
-             
+             UnitSelectionSystem.OnDeselectCharacter += moveArrowVisual.HideMovementPath;
+
              // GridInputSystem.OnMovementPathUpdated += moveArrowVisual.OnMovementPathUpdated;
              //     resources = FindObjectOfType<ResourceScript>();
              //     activeUnitEffects = new Dictionary<string, GameObject>();
@@ -62,7 +64,7 @@ namespace Game.GameInput
              //     BattleState.OnEnter += HideAttackableField;
              //     MovementState.OnEnter += HideAllActiveUnitEffects;
              //     MovementState.OnMovementFinished += (Unit u)=>HideMovementPath();
-     
+
              //    // UnitActionSystem.OnCheckAttackPreview += OnCheckAttackPreview;
              //     MovementState.OnMovementFinished += (Unit u)=>HideAttackableEnemy();
              //     GridRenderer.OnRenderEnemyTile += OnRenderEnemyTile;

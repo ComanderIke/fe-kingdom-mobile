@@ -245,7 +245,7 @@ namespace Game.GameActors.Units
         public void ResetPosition()
         {
             GameTransform.SetPosition(GridPosition.X, GridPosition.Y);
-            GameTransform.EnableCollider();
+           // GameTransform.EnableCollider();
         }
 
         public bool CanAttackFrom(GridPosition attackFromPosition, GridPosition targetPosition)

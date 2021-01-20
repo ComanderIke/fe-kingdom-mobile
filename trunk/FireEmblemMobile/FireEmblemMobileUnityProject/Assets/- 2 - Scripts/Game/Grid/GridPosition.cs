@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Game.GameActors.Units;
 using Game.Manager;
 using Game.Map;
@@ -40,14 +41,9 @@ namespace Game.Grid
         //     gridScript.Tiles[X, Y].Actor = null;
         // }
 
-        public static List<GridPosition> GetFromVectorList(List<Vector2> movePath)
+        public static List<GridPosition> GetFromVectorList(List<Vector2Int> movePath)
         {
-            var ret = new List<GridPosition>();
-            for (int i = 0; i < movePath.Count; i++)
-            {
-                ret.Add(new GridPosition((int) movePath[i].x, (int) movePath[i].y));
-            }
-            return ret;
+            return movePath.Select(t => new GridPosition(t.x, t.y)).ToList();
         }
     }
 }

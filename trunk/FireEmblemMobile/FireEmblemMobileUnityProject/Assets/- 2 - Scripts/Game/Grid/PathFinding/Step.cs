@@ -3,19 +3,19 @@
     [System.Serializable]
     public class Step
     {
-        private readonly float x;
-        private readonly float y;
+        private readonly int x;
+        private readonly int y;
 
-        public Step(float x, float y)
+        public Step(int x, int y)
         {
             this.x = x;
             this.y = y;
         }
-        public float GetX()
+        public int GetX()
         {
             return x;
         }
-        public float GetY()
+        public int GetY()
         {
             return y;
         }

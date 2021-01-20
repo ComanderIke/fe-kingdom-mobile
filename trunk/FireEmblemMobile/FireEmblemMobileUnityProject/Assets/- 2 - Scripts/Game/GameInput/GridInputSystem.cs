@@ -95,7 +95,7 @@ namespace Game.GameInput
 
             lastDragPosX = x;
             lastDragPosY = y;
-
+            Debug.Log("Dragged on: "+x+" "+y);
             var tile = gridSystem.GetTile(x, y);
             if (tile.Actor != null)
             {
@@ -103,6 +103,7 @@ namespace Game.GameInput
             }
             else
             {
+              
                 inputReceiver.DraggedOverGrid(x, y);
             }
         }
