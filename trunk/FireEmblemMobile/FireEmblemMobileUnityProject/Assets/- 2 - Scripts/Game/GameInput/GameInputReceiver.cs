@@ -41,7 +41,7 @@ namespace Game.GameInput
         public void ResetInput()
         {
             inputPathManager.Reset();
-            selectionDataProvider.ClearSelectedTile();
+            selectionDataProvider.ClearData();
         }
         public void DraggedOverGrid(int x, int y)
         {
@@ -135,6 +135,7 @@ namespace Game.GameInput
             if(!gridSystem.GridLogic.IsTileFree(x,y))
             {
                 //Debug.Log("Somehow clicked on non empty Tile");
+                
                 return;
             }
             if (gridSystem.GridLogic.IsFieldFreeAndActive(x, y))
@@ -144,7 +145,7 @@ namespace Game.GameInput
                     gameplayInput.MoveUnit(selectionDataProvider.SelectedActor, new GridPosition(x, y), GridPosition.GetFromVectorList(inputPathManager.MovementPath));
                     gameplayInput.Wait(selectionDataProvider.SelectedActor);
                     gameplayInput.ExecuteInputActions(null);
-                    selectionDataProvider.ClearSelectedTile();
+                    selectionDataProvider.ClearData();
                     
                 }
                 else
@@ -152,6 +153,7 @@ namespace Game.GameInput
                     inputPathManager.CalculateMousePathToPosition(selectionDataProvider.SelectedActor, x, y);
                     selectionDataProvider.SelectedActor.SetGameTransformPosition(x, y);
                     selectionDataProvider.SetSelectedTile(x, y);
+                    selectionDataProvider.ClearAttackTarget();
                 }
                 
             }
@@ -199,7 +201,7 @@ namespace Game.GameInput
                 {
                     if (selectionDataProvider.selectedAttackTarget!=enemyActor)
                     {
-                        selectionDataProvider.ClearSelectedTile();
+                        selectionDataProvider.ClearData();
                         var gridPos = new GridPosition((int)selectedActor.GetGameTransformPosition().x, (int)selectedActor.GetGameTransformPosition().y);
                         if (selectedActor.CanAttackFrom(gridPos, enemyActor.GridPosition))
                         {
@@ -209,7 +211,7 @@ namespace Game.GameInput
                         else if (selectedActor.CanAttack(enemyActor.GridPosition.X, enemyActor.GridPosition.Y))
                         {
                             selectedActor.ResetPosition();
-                            selectionDataProvider.ClearSelectedTile();
+                            selectionDataProvider.ClearData();
                             inputPathManager.Reset();
                             inputPathManager.UpdatedMovementPath(selectedActor.GridPosition.X, selectedActor.GridPosition.Y);
                             if(selectedActor is IBattleActor battleActor&& enemyActor is IBattleActor enemyBattleActor)
@@ -255,7 +257,7 @@ namespace Game.GameInput
         {
             character.ResetPosition();
             gridSystem.HideMoveRange();
-            
+            selectionDataProvider.ClearData();
             /* Enemy is in attackRange already */
             if ((movePath == null || movePath.Count == 0) && character.CanAttack( enemy.GridPosition.X, enemy.GridPosition.Y))
             {

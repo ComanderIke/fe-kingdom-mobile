@@ -80,7 +80,7 @@ namespace Game.GameInput
 
         public bool IsMovementPathEmpty()
         {
-            return MovementPath.Count >= 1;
+            return MovementPath.Count == 0;
         }
 
         public Vector2Int GetLastMovementPathPosition()

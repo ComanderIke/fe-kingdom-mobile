@@ -13,12 +13,18 @@ namespace Game.GameInput
         private int SelectedTileX { get; set; }
         private int SelectedTileY { get; set; }
         public ISelectableActor selectedAttackTarget { get; set; }
-        public void ClearSelectedTile()
+        public void ClearData()
         {
             SelectedTileX = -1;
             SelectedTileY = -1;
+            selectedAttackTarget = null;
+        }
+        public void ClearAttackTarget()
+        {
+            selectedAttackTarget = null;
         }
 
+   
         public bool IsSelectedTile(int x, int y)
         {
             return SelectedTileX == x && SelectedTileY == y;

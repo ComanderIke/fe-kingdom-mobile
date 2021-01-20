@@ -1,5 +1,6 @@
 ﻿using Game.GameActors.Units;
 using Game.Mechanics;
+using UnityEngine;
 
 namespace Game.Grid
 {
@@ -47,9 +48,10 @@ namespace Game.Grid
         public bool IsTileAccessible(int x, int y, IGridActor unit)
         {
             bool invalid = (x < 0) || (y < 0) || (x >= width) || (y >= height);
-            var tile = tiles[x, y];
+
             if (!invalid)
             {
+                var tile = tiles[x, y];
                 invalid = !unit.CanMoveOnTo(tile);
                 if (tile.Actor != null)
                 {
