@@ -16,7 +16,7 @@ namespace Game.GameInput
         public List<Vector2Int> MovementPath;
         private readonly List<Vector2Int> dragPath;
         private IPathFinder pathProvider;
-        public static event Action OnReset;
+        //public static event MovementPathUpdatedEvent OnReset;
 
         public InputPathManager(IPathFinder pathProvider)
         {
@@ -25,11 +25,11 @@ namespace Game.GameInput
             this.pathProvider = pathProvider;
         }
 
+
         public void Reset()
         {
             dragPath.Clear();
             MovementPath.Clear();
-            OnReset?.Invoke();
         }
         public void CalculateMousePathToPosition(IGridActor character, int x, int y)
         {
@@ -40,7 +40,7 @@ namespace Game.GameInput
                 for (int i = p.GetLength() - 2; i >= 0; i--)
                     dragPath.Add(new Vector2Int(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
             MovementPath = new List<Vector2Int>(dragPath);
-            UpdatedMovementPath(character);
+            UpdatedMovementPath(character.GridPosition.X, character.GridPosition.Y);
         }
 
         public void CalculatePathToPosition(IGridActor character, Vector2 position)
@@ -57,13 +57,11 @@ namespace Game.GameInput
                 MovementPath.Add(new Vector2Int(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
             }
             
-            UpdatedMovementPath(character);
+            UpdatedMovementPath(character.GridPosition.X, character.GridPosition.Y);
         }
 
-        public void UpdatedMovementPath(IGridActor character)
+        public void UpdatedMovementPath(int startX, int startY)
         {
-            int startX = character.GridPosition.X;
-            int startY = character.GridPosition.Y;
             OnMovementPathUpdated?.Invoke(MovementPath, startX, startY);
         }
         private bool HasMovementPath()
@@ -104,20 +102,10 @@ namespace Game.GameInput
         {
             if (dragPath.Count > 0)
             {
-                Debug.Log(dragPath[dragPath.Count - 1].x + " " + dragPath[dragPath.Count - 1].y + " " + x + " " + y +
-                          " Diff:" + (Math.Abs(dragPath[dragPath.Count - 1].x - x) +
-                          Math.Abs(dragPath[dragPath.Count - 1].y - y)));
                 return Math.Abs(dragPath[dragPath.Count - 1].x - x) + Math.Abs(dragPath[dragPath.Count - 1].y - y) == 1;
             }
-            else
-            {
-                Debug.Log(gridActor.GridPosition.X + " " + gridActor.GridPosition.Y + " " + x + " " + y +
-                          " Diff:" + (Math.Abs(gridActor.GridPosition.X - x) +
-                                      Math.Abs(gridActor.GridPosition.Y- y)));
-                return Math.Abs(gridActor.GridPosition.X - x) + Math.Abs(gridActor.GridPosition.Y - y) == 1;
-            }
+            return Math.Abs(gridActor.GridPosition.X - x) + Math.Abs(gridActor.GridPosition.Y - y) == 1;
 
-            return true;
         }
         public void AddToPath(int x, int y, IGridActor gridActor)
         {
@@ -137,7 +125,7 @@ namespace Game.GameInput
                 dragPath.Add(new Vector2Int(x, y));
             }
             MovementPath = new List<Vector2Int>(dragPath);
-            UpdatedMovementPath(gridActor);
+            UpdatedMovementPath(gridActor.GridPosition.X, gridActor.GridPosition.Y);
         }
 
         public bool HasValidMovementPath(int range)

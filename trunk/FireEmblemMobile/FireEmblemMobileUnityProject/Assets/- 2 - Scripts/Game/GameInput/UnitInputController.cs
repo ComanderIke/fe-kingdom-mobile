@@ -170,7 +170,6 @@ namespace Game.GameActors.Units.OnGameObject
 
         public void Dragging(float xPos, float yPos)
         {
-            Debug.Log("DRAGGING");
             boxCollider.enabled = false;
             var gridPos = RaycastManager.GetMousePositionOnGrid();
             if (RaycastManager.ConnectedLatestHit())

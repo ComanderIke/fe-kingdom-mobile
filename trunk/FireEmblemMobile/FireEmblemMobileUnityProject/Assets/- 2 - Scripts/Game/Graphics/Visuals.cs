@@ -35,7 +35,7 @@ namespace Game.GameInput
          private void Start ()
          {
              //GridInputSystem.OnResetInput += moveArrowVisual.HideMovementPath;
-             InputPathManager.OnReset += moveArrowVisual.HideMovementPath;
+             //InputPathManager.OnReset += ()=>moveArrowVisual.DrawMovementPath(null, );
              InputPathManager.OnMovementPathUpdated += moveArrowVisual.DrawMovementPath;
              BattleState.OnEnter += moveArrowVisual.HideMovementPath;
              UnitSelectionSystem.OnDeselectCharacter += moveArrowVisual.HideMovementPath;

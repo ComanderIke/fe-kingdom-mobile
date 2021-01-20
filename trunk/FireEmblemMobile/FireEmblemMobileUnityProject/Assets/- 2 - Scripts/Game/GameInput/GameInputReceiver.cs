@@ -48,6 +48,7 @@ namespace Game.GameInput
             if (gridSystem.IsTileMoveableAndActive(x, y) && !IsActorOnTile(selectionDataProvider.SelectedActor, x, y))
             {
                 DraggedOnActiveField(x, y, selectionDataProvider.SelectedActor);
+                lastInputPositionManager.StoreLatestValidPosition(x, y, selectionDataProvider.SelectedActor.MovementRage);
             }
             else if (gridSystem.IsTileMoveableAndActive(x, y) && gridSystem.Tiles[x,y].HasFreeSpace())
             {
@@ -56,6 +57,7 @@ namespace Game.GameInput
             else
             {
                 ResetInput();
+                inputPathManager.UpdatedMovementPath(selectionDataProvider.SelectedActor.GridPosition.X,selectionDataProvider.SelectedActor.GridPosition.Y);
             }
         }
         
@@ -77,13 +79,15 @@ namespace Game.GameInput
             {
                 if (gridActor == selectionDataProvider.SelectedActor)
                 {
-                    Debug.Log("Dragged over selected Actor");
+                    //Debug.Log("Dragged over selected Actor");
                     ResetInput();
+                    inputPathManager.UpdatedMovementPath(selectionDataProvider.SelectedActor.GridPosition.X,selectionDataProvider.SelectedActor.GridPosition.Y);
                 }
                 else
                 {
-                    Debug.Log("Dragged over Ally! Show only Cursor on StartPos and ad as valid Position for passthrough");
-                    inputPathManager.AddToPath(gridActor.GridPosition.X, gridActor.GridPosition.Y, selectionDataProvider.SelectedActor);
+                    //Debug.Log("Dragged over Ally! Show only Cursor on StartPos and ad as valid Position for passthrough");
+                    if(gridSystem.IsTileMoveableAndActive(gridActor.GridPosition.X, gridActor.GridPosition.Y))
+                        inputPathManager.AddToPath(gridActor.GridPosition.X, gridActor.GridPosition.Y, selectionDataProvider.SelectedActor);
                     //ResetInput();
                 }
             }
@@ -204,7 +208,7 @@ namespace Game.GameInput
                             selectedActor.ResetPosition();
                             selectionDataProvider.ClearSelectedTile();
                             inputPathManager.Reset();
-                            inputPathManager.UpdatedMovementPath(selectedActor);
+                            inputPathManager.UpdatedMovementPath(selectedActor.GridPosition.X, selectedActor.GridPosition.Y);
                             if(selectedActor is IBattleActor battleActor&& enemyActor is IBattleActor enemyBattleActor)
                                 gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, new GridPosition(selectedActor.GridPosition.X, selectedActor.GridPosition.Y));
                         }
@@ -313,7 +317,7 @@ namespace Game.GameInput
             }
             if (inputPathManager.HasValidMovementPath(selectedActor.MovementRage))
             {
-                inputPathManager.UpdatedMovementPath(selectedActor);
+                inputPathManager.UpdatedMovementPath(selectedActor.GridPosition.X, selectedActor.GridPosition.Y);
                 if(selectedActor is IBattleActor battleActor && enemy is IBattleActor enemyBattleActor)
                     gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, new GridPosition(x, y));
             }
@@ -329,7 +333,7 @@ namespace Game.GameInput
             {
            
                 inputPathManager.MovementPath.RemoveRange(attackPositionIndex + 1, inputPathManager.MovementPath.Count - (attackPositionIndex + 1));
-                inputPathManager.UpdatedMovementPath(selectedActor);
+                inputPathManager.UpdatedMovementPath(selectedActor.GridPosition.X, selectedActor.GridPosition.Y);
             }
             else
             {
@@ -339,7 +343,7 @@ namespace Game.GameInput
                     if(selectedActor is IBattleActor battleActor && enemy is IBattleActor enemyBattleActor)
                         gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, selectedActor.GridPosition);
                     inputPathManager.Reset();
-                    inputPathManager.UpdatedMovementPath(selectedActor);
+                    inputPathManager.UpdatedMovementPath(selectedActor.GridPosition.X, selectedActor.GridPosition.Y);
                 }
                 else
                 {
