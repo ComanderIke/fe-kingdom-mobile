@@ -23,6 +23,7 @@ namespace Game.GameActors.Units.OnGameObject
         // public static event OnUnitClickedEvent OnUnitDoubleClicked;
 
         public Unit unit;
+        public BoxCollider2D boxCollider;
         private DragManager DragManager { get; set; }
         private RaycastManager RaycastManager { get; set; }
         private IUnitInputReceiver InputReceiver { get; set; }
@@ -123,7 +124,7 @@ namespace Game.GameActors.Units.OnGameObject
                     InputReceiver.ActorDragEnded(unit, (int)gridPos.x, (int)gridPos.y);
                 }
 
-                gameObject.GetComponent<BoxCollider2D>().enabled = true;
+                boxCollider.enabled = true;
             }
             else if (!CameraSystem.IsDragging && (unitSelectedBeforeClicking||(unit.Faction.Id != GridGameManager.Instance.FactionManager.ActivePlayerNumber||doubleClick||unit.UnitTurnState.IsWaiting)))
             {
@@ -154,7 +155,7 @@ namespace Game.GameActors.Units.OnGameObject
 
         public void StartDrag()
         {
-            gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            
             GridGameManager.Instance.GetSystem<CameraSystem>().DeactivateMixin<DragCameraMixin>();
             dragStarted = true;
             InputReceiver.StartDraggingActor(unit);
@@ -169,6 +170,8 @@ namespace Game.GameActors.Units.OnGameObject
 
         public void Dragging(float xPos, float yPos)
         {
+            Debug.Log("DRAGGING");
+            boxCollider.enabled = false;
             var gridPos = RaycastManager.GetMousePositionOnGrid();
             if (RaycastManager.ConnectedLatestHit())
             {

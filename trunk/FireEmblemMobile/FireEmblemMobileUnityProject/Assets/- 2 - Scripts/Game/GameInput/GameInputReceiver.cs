@@ -127,7 +127,7 @@ namespace Game.GameInput
             
             if(!gridSystem.GridLogic.IsTileFree(x,y))
             {
-                Debug.Log("Somehow clicked on non empty Tile");
+                //Debug.Log("Somehow clicked on non empty Tile");
                 return;
             }
             if (gridSystem.GridLogic.IsFieldFreeAndActive(x, y))
