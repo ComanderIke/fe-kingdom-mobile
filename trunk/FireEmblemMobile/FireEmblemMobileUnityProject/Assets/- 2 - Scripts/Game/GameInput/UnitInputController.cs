@@ -140,7 +140,6 @@ namespace Game.GameActors.Units.OnGameObject
             if (doubleClick)
             {
                 doubleClick = false;
-                Debug.Log("DOUBLE CLICK");
             }
         }
 

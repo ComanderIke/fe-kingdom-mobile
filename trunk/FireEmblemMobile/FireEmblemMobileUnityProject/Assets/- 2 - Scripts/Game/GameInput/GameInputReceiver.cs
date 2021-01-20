@@ -106,8 +106,11 @@ namespace Game.GameInput
         {
             if (IsActiveFaction(unit))
             {
-                if(unit is ISelectableActor selectAbleUnit)
+                if (unit is ISelectableActor selectAbleUnit)
+                {
                     gameplayInput.Wait(selectAbleUnit);
+                    gameplayInput.ExecuteInputActions(null);
+                }
             }
             else
             {
