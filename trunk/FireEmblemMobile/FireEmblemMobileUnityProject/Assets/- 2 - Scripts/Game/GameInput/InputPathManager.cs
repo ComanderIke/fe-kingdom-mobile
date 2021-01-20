@@ -100,17 +100,41 @@ namespace Game.GameInput
                     dragPath.Add(new Vector2Int(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
         }
 
+        private bool IsPositionAdjacent(int x, int y, IGridActor gridActor)
+        {
+            if (dragPath.Count > 0)
+            {
+                Debug.Log(dragPath[dragPath.Count - 1].x + " " + dragPath[dragPath.Count - 1].y + " " + x + " " + y +
+                          " Diff:" + (Math.Abs(dragPath[dragPath.Count - 1].x - x) +
+                          Math.Abs(dragPath[dragPath.Count - 1].y - y)));
+                return Math.Abs(dragPath[dragPath.Count - 1].x - x) + Math.Abs(dragPath[dragPath.Count - 1].y - y) == 1;
+            }
+            else
+            {
+                Debug.Log(gridActor.GridPosition.X + " " + gridActor.GridPosition.Y + " " + x + " " + y +
+                          " Diff:" + (Math.Abs(gridActor.GridPosition.X - x) +
+                                      Math.Abs(gridActor.GridPosition.Y- y)));
+                return Math.Abs(gridActor.GridPosition.X - x) + Math.Abs(gridActor.GridPosition.Y - y) == 1;
+            }
+
+            return true;
+        }
         public void AddToPath(int x, int y, IGridActor gridActor)
         {
             bool contains = dragPath.Contains(new Vector2Int(x, y));
-           
-            dragPath.Add(new Vector2Int(x, y));
             
+            
+           
+           
             //if (dragPath.Count > gridActor.MovementRage || contains || IsLastActiveFieldAdjacent(x,y,gridActor))
-            if (dragPath.Count > gridActor.MovementRage || contains)
+            if (dragPath.Count > gridActor.MovementRage || contains||!IsPositionAdjacent(x,y, gridActor))
             {
+                Debug.Log("Create New Path!");
                 CreateNewMovementPath(gridActor, x , y);
-              
+            }
+            else
+            {
+                dragPath.Add(new Vector2Int(x, y));
             }
             MovementPath = new List<Vector2Int>(dragPath);
             UpdatedMovementPath(gridActor);

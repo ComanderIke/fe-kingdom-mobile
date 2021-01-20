@@ -73,13 +73,23 @@ namespace Game.GameInput
 
         public void DraggedOverActor(IGridActor gridActor)
         {
+            if (!gridActor.IsEnemy(selectionDataProvider.SelectedActor))
+            {
+                if (gridActor == selectionDataProvider.SelectedActor)
+                {
+                    Debug.Log("Dragged over selected Actor");
+                    ResetInput();
+                }
+                else
+                {
+                    Debug.Log("Dragged over Ally! Show only Cursor on StartPos and ad as valid Position for passthrough");
+                    inputPathManager.AddToPath(gridActor.GridPosition.X, gridActor.GridPosition.Y, selectionDataProvider.SelectedActor);
+                    //ResetInput();
+                }
+            }
             if (gridActor.IsEnemy(selectionDataProvider.SelectedActor))
                 DraggedOnEnemy(gridActor.GridPosition.X, gridActor.GridPosition.Y, gridActor);//TODO should be dragged over enemy?
-            if (gridActor == selectionDataProvider.SelectedActor)
-            {
-                Debug.Log("Dragged over selected Actor");
-                ResetInput();
-            }
+           
 
         }
         

@@ -92,7 +92,6 @@ namespace Game.GameInput
         {
             if (!Active || IsOldDrag(x, y) || gridSystem.IsOutOfBounds(x, y))
                 return;
-
             lastDragPosX = x;
             lastDragPosY = y;
             Debug.Log("Dragged on: "+x+" "+y);
