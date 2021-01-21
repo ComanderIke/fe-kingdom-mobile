@@ -6,8 +6,7 @@ namespace Game.Grid
 {
     public class GridRenderer
     {
-        public delegate void OnRenderEnemyTileEvent(int x, int y, Unit enemy, int playerId);
-        public static event OnRenderEnemyTileEvent OnRenderEnemyTile;
+
         private Tile[,] Tiles { get; }
 
         public GridRenderer(GridSystem gridManager)

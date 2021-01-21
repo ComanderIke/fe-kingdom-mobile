@@ -5,6 +5,8 @@ namespace Game.Grid
 {
     public class Tile
     {
+        public delegate void OnRenderEnemyTileEvent(int x, int y, IGridActor enemy, int playerId);
+        public static event OnRenderEnemyTileEvent OnRenderEnemyTile;
         public IGridActor Actor;
         public readonly int X;
         public readonly int Y;
@@ -31,6 +33,10 @@ namespace Game.Grid
         public void SetAttackMaterial(int playerId, bool activeUnit)
         {
             TileRenderer.SetVisualStyle(playerId);
+            if (Actor!=null&&playerId != Actor.FactionId)
+            {
+                OnRenderEnemyTile?.Invoke(X,Y,Actor,playerId);
+            }
             if(activeUnit)
                 TileRenderer.ActiveAttackVisual();
             else

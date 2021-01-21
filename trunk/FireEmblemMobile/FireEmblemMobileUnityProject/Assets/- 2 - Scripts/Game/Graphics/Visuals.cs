@@ -1,19 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Audio;
 using Game.GameActors.Units;
-using Game.GameResources;
+using Game.GameInput;
 using Game.Grid;
-using Game.GUI;
-using Game.GUI.PopUpText;
-using Game.GUI.Text;
-using Game.Manager;
 using Game.Mechanics;
 using UnityEngine;
-using Utility;
 
-namespace Game.GameInput
+namespace Game.Graphics
 {
     [Serializable]
     public class Visuals : MonoBehaviour
@@ -24,33 +16,36 @@ namespace Game.GameInput
         // private ResourceScript resources;
         [SerializeField]
         private MoveArrowVisual moveArrowVisual;
+        [SerializeField]
+        private AttackTargetVisual attackTargetVisual;
         // private Dictionary<string, GameObject> activeUnitEffects;
         // private GridGameManager gridGameManager;
         //
         // [SerializeField] private GameObject playerTurnAnimation = default;
         // [SerializeField] private GameObject aiTurnAnimation = default;
         //
-        // private List<GameObject> attackableEnemyEffects;
-        // private List<GameObject> attackableFieldEffects;
+
          private void Start ()
          {
              //GridInputSystem.OnResetInput += moveArrowVisual.HideMovementPath;
              //InputPathManager.OnReset += ()=>moveArrowVisual.DrawMovementPath(null, );
              InputPathManager.OnMovementPathUpdated += moveArrowVisual.DrawMovementPath;
              BattleState.OnEnter += moveArrowVisual.HideMovementPath;
-             UnitSelectionSystem.OnDeselectCharacter += moveArrowVisual.HideMovementPath;
-
+             UnitSelectionSystem.OnDeselectCharacter += DeselectedCharacter;
+             MovementState.OnEnter += attackTargetVisual.HideAttackableField;
+             BattleState.OnEnter += attackTargetVisual.HideAttackableField;
+             UnitActionSystem.OnCheckAttackPreview += OnCheckAttackPreview;
+             Tile.OnRenderEnemyTile += OnRenderEnemyTile;
              // GridInputSystem.OnMovementPathUpdated += moveArrowVisual.OnMovementPathUpdated;
              //     resources = FindObjectOfType<ResourceScript>();
              //     activeUnitEffects = new Dictionary<string, GameObject>();
              //     gridGameManager = GridGameManager.Instance;
-             //     attackableEnemyEffects = new List<GameObject>();
-             //     attackableFieldEffects = new List<GameObject>();
+             //     
              //     PlayerTurnTextAnimation.OnStarted += TurnAnimationStarted;
              //     PlayerTurnTextAnimation.OnFinished += TurnAnimationFinished;
              //    
              //     GridInputSystem.OnDraggedOnActiveField += HideAttackableEnemy;
-             //     UnitSelectionSystem.OnDeselectCharacter += DeselectedCharacter;
+                  
              //     UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
              //
              //     GridInputSystem.OnSetActive += InputActive;
@@ -60,14 +55,13 @@ namespace Game.GameInput
              //     BattleState.OnExit += OnExitBattleState;
              //     TurnSystem.OnStartTurn += OnStartTurn;
              //     Unit.OnUnitActiveStateUpdated += OnActiveUnitStateUpdate;
-             //     MovementState.OnEnter += HideAttackableField;
-             //     BattleState.OnEnter += HideAttackableField;
+                
              //     MovementState.OnEnter += HideAllActiveUnitEffects;
              //     MovementState.OnMovementFinished += (Unit u)=>HideMovementPath();
 
-             //    // UnitActionSystem.OnCheckAttackPreview += OnCheckAttackPreview;
+              
              //     MovementState.OnMovementFinished += (Unit u)=>HideAttackableEnemy();
-             //     GridRenderer.OnRenderEnemyTile += OnRenderEnemyTile;
+                  
              //     Unit.OnExpGained += ExpGained;
              //     GridInputSystem.OnInputActivated += InputActivated;
              //     UnitSelectionSystem.OnEnemySelected += EnemySelected;
@@ -103,13 +97,13 @@ namespace Game.GameInput
         // private void EnemySelected(Unit u) {
         //     HideAllActiveUnitEffects();
         // }
-        // private void DeselectedCharacter()
-        // {
-        //     ShowAllActiveUnitEffects();
-        //     HideMovementPath();
-        //     HideAttackableField();
-        //     HideAttackableEnemy();
-        // }
+        private void DeselectedCharacter()
+        {
+            //ShowAllActiveUnitEffects();
+            moveArrowVisual.HideMovementPath();
+            attackTargetVisual.HideAttackableField();
+           // HideAttackableEnemy();
+        }
         // bool setActiveUnitEffectsWhenInputIsActive = false;
         // private void InputActivated()
         // {
@@ -151,16 +145,16 @@ namespace Game.GameInput
         //     }
         // }
         //
-        // private void OnRenderEnemyTile(int x, int y, Unit enemy, int playerId)
-        // {
-        //     if (enemy != null && enemy.Faction.Id != playerId)
-        //         ShowAttackableField(x, y);
-        // }
-        // private void OnCheckAttackPreview(Unit u, Unit defender)
-        // {
-        //     HideAttackableEnemy();
-        //     ShowAttackableEnemy(defender.GridPosition.X, defender.GridPosition.Y);
-        // }
+        private void OnRenderEnemyTile(int x, int y, IGridActor enemy, int playerId)
+        {
+            attackTargetVisual.ShowAttackableField(x, y);
+        }
+        private void OnCheckAttackPreview(IBattleActor u, IBattleActor defender)
+        {
+            // attackTargetVisual.HideAttackableEnemy();
+            // if( defender is IGridActor gridActor)
+            //     attackTargetVisual.ShowAttackableEnemy(gridActor.GridPosition.X, gridActor.GridPosition.Y);
+        }
         // private void OnStartTurn()
         // {
         //     if (!gridGameManager.FactionManager.ActiveFaction.IsPlayerControlled)
@@ -178,57 +172,7 @@ namespace Game.GameInput
         //     }
         //
         // }
-        // public void ShowAttackableEnemy(int x, int y)
-        // {
-        //     if (attackableEnemyEffects.Any(gameObj => (int)gameObj.transform.localPosition.x == x && (int)gameObj.transform.localPosition.y == y))
-        //     {
-        //         attackableEnemyEffects.Find(gameObj => (int)gameObj.transform.localPosition.x == x && (int)gameObj.transform.localPosition.y == y)
-        //             .SetActive(true);
-        //         return;
-        //     }
-        //
-        //     var go = Instantiate(resources.Prefabs.AttackableEnemyPrefab,
-        //         GameObject.FindGameObjectWithTag("World").transform);
-        //     go.transform.localPosition = new Vector3(x, y, go.transform.localPosition.z);
-        //     attackableEnemyEffects.Add(go);
-        // }
-        // public void ShowAttackableField(int x, int y)
-        // {
-        //     //Debug.Log("Show Attackable Field: "+x+" " +y );
-        //     if (attackableFieldEffects.Any(gameObj => !gameObj.activeSelf||(gameObj.transform.localPosition.x-0.5f==x && gameObj.transform.localPosition.y-0.5f == y)))
-        //     {
-        //         GameObject go2 = attackableFieldEffects.Find(gameObj => gameObj.transform.localPosition.x - 0.5f == x && gameObj.transform.localPosition.y - 0.5f == y||!gameObj.activeSelf);
-        //         go2.transform.localPosition = new Vector3(x + 0.5f, y + 0.5f, go2.transform.localPosition.z);
-        //         go2.SetActive(true);
-        //         return;
-        //     }
-        //
-        //     var go = Instantiate(resources.Prefabs.attackIconPrefab,
-        //         null);
-        //     go.transform.localPosition = new Vector3(x + 0.5f, y + 0.5f, go.transform.localPosition.z);
-        //     attackableFieldEffects.Add(go);
-        // }
-        //
-        // public void HideAttackableField()
-        // {
-        //     foreach (var go in attackableFieldEffects)
-        //     {
-        //         go.SetActive(false);
-        //     
-        //     }
-        //
-        //     //attackableFieldEffects.Clear();
-        // }
-        //
-        // public void HideAttackableEnemy()
-        // {
-        //     foreach (var go in attackableEnemyEffects)
-        //     {
-        //         go.SetActive(false);
-        //     }
-        //
-        //     //attackableEnemyEffects.Clear();
-        // }
+      
         // public void PlayerTurnAnimation()
         // {
         //     Instantiate(playerTurnAnimation, new Vector3(), Quaternion.identity, uiContainer).transform

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Game.Graphics;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Game.GameInput
+namespace Game.Graphics
 {
     [Serializable]
     public class MoveArrowVisual
