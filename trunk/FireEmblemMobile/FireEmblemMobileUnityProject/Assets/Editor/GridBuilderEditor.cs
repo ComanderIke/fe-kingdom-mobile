@@ -20,13 +20,14 @@ namespace Editor
 
         public override void OnInspectorGUI()
         {
+            base.OnInspectorGUI();
             mytarget.gridData.width = EditorGUILayout.IntSlider("Width:", mytarget.gridData.width, 6, 24);
             mytarget.gridData.height = EditorGUILayout.IntSlider("Height:", mytarget.gridData.height, 6, 24);
             if (GUILayout.Button("Build Grid"))
             {
                 mytarget.Build(mytarget.gridData.width, mytarget.gridData.height);
             }
-            base.OnInspectorGUI();
+            
         }
 
 

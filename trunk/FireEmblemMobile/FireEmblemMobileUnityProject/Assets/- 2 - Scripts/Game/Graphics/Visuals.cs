@@ -16,6 +16,7 @@ namespace Game.Graphics
         // private ResourceScript resources;
         [SerializeField]
         private MoveArrowVisual moveArrowVisual;
+   
         // private Dictionary<string, GameObject> activeUnitEffects;
         // private GridGameManager gridGameManager;
         //

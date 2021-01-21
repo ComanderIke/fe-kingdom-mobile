@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Game.GameActors.Units;
+using Game.GameResources;
 using Game.Grid;
 using Game.Grid.PathFinding;
 using Game.Manager;
@@ -15,8 +16,8 @@ namespace Game.Map
     public class GridSystem : MonoBehaviour, IEngineSystem
     {
         public const float GRID_X_OFFSET = 0.0f;
-        public string MapName;
-        public GridResources GridResources;
+        private string MapName;
+        [HideInInspector]
         public GridData GridData;
         public Tile[,] Tiles { get; private set; }
         public GridRenderer GridRenderer { get; set; }
@@ -27,7 +28,7 @@ namespace Game.Map
         public void Init()
         {
             Tiles = GetComponent<GridBuilder>().GetTiles();
-            
+            GridData = ResourceScript.Instance.grid.gridData;
             GridRenderer = new GridRenderer(this);
             GridLogic = new GridLogic(this);
             NodeHelper = new NodeHelper(GridData.width, GridData.height);

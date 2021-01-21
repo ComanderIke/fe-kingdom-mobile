@@ -1,4 +1,5 @@
-﻿using Game.Graphics;
+﻿using Game.GameResources;
+using Game.Graphics;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -10,21 +11,18 @@ namespace Game.Grid
         private const string CELL_TAG = "Grid";
         private const int CELL_LAYER = 10;
 
+        [HideInInspector]
         public GridData gridData;
         private int width;
         private int height;
         private Tile[,] tiles;
-        public Sprite gridSprite;
-        private TileTypeAnalyzer tileTypeAnalyzerAnalyzer;
-        [SerializeField]
-        private TileSprites[] spriteSets;
-        [SerializeField]
-        private TileType baseTile;
-        [SerializeField]
-        private TileEffectVisual tileEffectVisual;
-        public Material gridMaterial;
         public Transform gridTransform;
         private bool initialized;
+
+        void Awake()
+        {
+            gridData = ResourceScript.Instance.grid.gridData;
+        }
         public void Build(int width, int height)
         {
             foreach (var transform in gridTransform.GetComponentsInChildren<Transform>())
@@ -39,7 +37,7 @@ namespace Game.Grid
                 {
                     var cell = CreateGridTileGameObject(i, j);
                     var meshRenderer = cell.GetComponent<SpriteRenderer>();
-                    meshRenderer.material = gridMaterial;
+                    meshRenderer.material = ResourceScript.Instance.grid.gridMaterial;
                 }
             }
         }
@@ -66,9 +64,7 @@ namespace Game.Grid
                     {
                         cell.AddComponent<TileData>().tileType = default;
                     }
-                    //Debug.Log("i: "+i +" j: " +j +""+cell.gameObject.name);
-                    //Debug.Log(gridResources.sprites);
-                    tiles[i, j] = new Tile(i, j, tileData.tileType, new SpriteTileRenderer(cell.GetComponent<SpriteRenderer>(), spriteSets), tileEffectVisual);
+                    tiles[i, j] = new Tile(i, j, tileData.tileType, new SpriteTileRenderer(cell.GetComponent<SpriteRenderer>(), ResourceScript.Instance.tiles.tileSpriteSets), ResourceScript.Instance.tiles.tileEffectVisual);
                 }
             }
 
@@ -84,10 +80,10 @@ namespace Game.Grid
             go.transform.parent = gridTransform.transform;
             go.transform.localPosition = new Vector3(x + 0.5f, y + 0.5f, 0);
             var spriteRenderer = go.AddComponent<SpriteRenderer>();
-            spriteRenderer.sprite = gridSprite;
+            spriteRenderer.sprite = ResourceScript.Instance.grid.standardSprite;
             spriteRenderer.sortingOrder = 0;
             go.AddComponent<BoxCollider2D>().size = new Vector3(1, 1);
-            go.AddComponent<TileData>().tileType=baseTile;
+            go.AddComponent<TileData>().tileType=ResourceScript.Instance.grid.standardTileType;
             
             return go;
         }

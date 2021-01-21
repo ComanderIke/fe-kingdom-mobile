@@ -5,11 +5,13 @@ namespace Game.GameResources
     public class ResourceScript : MonoBehaviour {
 
         public static ResourceScript Instance;
-        public Sprites Sprites;
-        public Prefabs Prefabs;
-        public ParticleSystems Particles;
-        public Textures Textures;
-        public Materials Materials;
+        public Sprites sprites;
+        public Prefabs prefabs;
+        public ParticleSystems particles;
+        public Textures textures;
+        public Materials materials;
+        public TileResources tiles;
+        public GridResources grid;
         private void Awake()
         {
             Instance = this;

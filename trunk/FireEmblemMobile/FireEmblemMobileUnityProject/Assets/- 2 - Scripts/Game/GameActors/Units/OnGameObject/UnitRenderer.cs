@@ -92,7 +92,7 @@ namespace Game.GameActors.Units.OnGameObject
             }
             else
             {
-                EquippedItemIcon.sprite = FindObjectOfType<ResourceScript>().Sprites.WolfClaw;
+                EquippedItemIcon.sprite = FindObjectOfType<ResourceScript>().sprites.WolfClaw;
             }
         }
         private void HpValueChanged()
