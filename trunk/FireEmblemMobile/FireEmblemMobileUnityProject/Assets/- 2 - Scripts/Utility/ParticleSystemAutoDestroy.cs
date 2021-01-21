@@ -11,6 +11,8 @@ namespace Utility
             ps = GetComponent<ParticleSystem>();
             if(ps==null)
                 ps = GetComponentInChildren<ParticleSystem>();
+            var main = ps.main;
+            main.loop = false;
         }
 
         public void Update()
