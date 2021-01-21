@@ -16,8 +16,6 @@ namespace Game.Graphics
         // private ResourceScript resources;
         [SerializeField]
         private MoveArrowVisual moveArrowVisual;
-        [SerializeField]
-        private AttackTargetVisual attackTargetVisual;
         // private Dictionary<string, GameObject> activeUnitEffects;
         // private GridGameManager gridGameManager;
         //
@@ -32,10 +30,9 @@ namespace Game.Graphics
              InputPathManager.OnMovementPathUpdated += moveArrowVisual.DrawMovementPath;
              BattleState.OnEnter += moveArrowVisual.HideMovementPath;
              UnitSelectionSystem.OnDeselectCharacter += DeselectedCharacter;
-             MovementState.OnEnter += attackTargetVisual.HideAttackableField;
-             BattleState.OnEnter += attackTargetVisual.HideAttackableField;
-             UnitActionSystem.OnCheckAttackPreview += OnCheckAttackPreview;
-             Tile.OnRenderEnemyTile += OnRenderEnemyTile;
+             // MovementState.OnEnter += attackTargetVisual.HideAttackableField;
+             // BattleState.OnEnter += attackTargetVisual.HideAttackableField;
+             // UnitActionSystem.OnCheckAttackPreview += OnCheckAttackPreview;
              // GridInputSystem.OnMovementPathUpdated += moveArrowVisual.OnMovementPathUpdated;
              //     resources = FindObjectOfType<ResourceScript>();
              //     activeUnitEffects = new Dictionary<string, GameObject>();
@@ -44,7 +41,7 @@ namespace Game.Graphics
              //     PlayerTurnTextAnimation.OnStarted += TurnAnimationStarted;
              //     PlayerTurnTextAnimation.OnFinished += TurnAnimationFinished;
              //    
-             //     GridInputSystem.OnDraggedOnActiveField += HideAttackableEnemy;
+              //    GridInputSystem.OnDraggedOnActiveField += HideAttackableEnemy;
                   
              //     UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
              //
@@ -101,7 +98,7 @@ namespace Game.Graphics
         {
             //ShowAllActiveUnitEffects();
             moveArrowVisual.HideMovementPath();
-            attackTargetVisual.HideAttackableField();
+           // attackTargetVisual.HideAttackableField();
            // HideAttackableEnemy();
         }
         // bool setActiveUnitEffectsWhenInputIsActive = false;
@@ -145,10 +142,7 @@ namespace Game.Graphics
         //     }
         // }
         //
-        private void OnRenderEnemyTile(int x, int y, IGridActor enemy, int playerId)
-        {
-            attackTargetVisual.ShowAttackableField(x, y);
-        }
+
         private void OnCheckAttackPreview(IBattleActor u, IBattleActor defender)
         {
             // attackTargetVisual.HideAttackableEnemy();

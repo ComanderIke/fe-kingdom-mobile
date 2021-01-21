@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Game.Graphics;
+using UnityEngine;
 using UnityEngine.Tilemaps;
 
 namespace Game.Grid
@@ -19,6 +20,8 @@ namespace Game.Grid
         private TileSprites[] spriteSets;
         [SerializeField]
         private TileType baseTile;
+        [SerializeField]
+        private TileEffectVisual tileEffectVisual;
         public Material gridMaterial;
         public Transform gridTransform;
         private bool initialized;
@@ -52,6 +55,7 @@ namespace Game.Grid
             width = gridData.width;
             height = gridData.height;
             tiles = new Tile[width, height];
+   
             for (int i = 0; i < width; i++)
             {
                 for (int j = 0; j < height; j++)
@@ -64,7 +68,7 @@ namespace Game.Grid
                     }
                     //Debug.Log("i: "+i +" j: " +j +""+cell.gameObject.name);
                     //Debug.Log(gridResources.sprites);
-                    tiles[i, j] = new Tile(i, j, tileData.tileType, new SpriteTileRenderer(cell.GetComponent<SpriteRenderer>(), spriteSets));
+                    tiles[i, j] = new Tile(i, j, tileData.tileType, new SpriteTileRenderer(cell.GetComponent<SpriteRenderer>(), spriteSets), tileEffectVisual);
                 }
             }
 

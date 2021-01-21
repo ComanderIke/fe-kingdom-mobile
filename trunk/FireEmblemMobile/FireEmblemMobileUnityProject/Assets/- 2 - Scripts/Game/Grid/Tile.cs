@@ -1,12 +1,11 @@
 ﻿using Game.GameActors.Units;
+using Game.Graphics;
 using UnityEngine;
 
 namespace Game.Grid
 {
     public class Tile
     {
-        public delegate void OnRenderEnemyTileEvent(int x, int y, IGridActor enemy, int playerId);
-        public static event OnRenderEnemyTileEvent OnRenderEnemyTile;
         public IGridActor Actor;
         public readonly int X;
         public readonly int Y;
@@ -15,14 +14,16 @@ namespace Game.Grid
         
         public TileType TileType;
         public readonly ITileRenderer TileRenderer;
+        private TileEffectVisual TileVfx;
 
-        public Tile(int i, int j, TileType tileType, ITileRenderer tileRenderer)
+        public Tile(int i, int j, TileType tileType, ITileRenderer tileRenderer, TileEffectVisual tileVfx)
         {
             X = i;
             Y = j;
             TileType = tileType;
             TileRenderer = tileRenderer;
-            
+            TileVfx = tileVfx;
+
         }
 
         public void Reset()
@@ -33,9 +34,9 @@ namespace Game.Grid
         public void SetAttackMaterial(int playerId, bool activeUnit)
         {
             TileRenderer.SetVisualStyle(playerId);
-            if (Actor!=null&&playerId != Actor.FactionId)
+            if (Actor!=null && playerId != Actor.FactionId)
             {
-                OnRenderEnemyTile?.Invoke(X,Y,Actor,playerId);
+                TileVfx.ShowAttackableField(X,Y);
             }
             if(activeUnit)
                 TileRenderer.ActiveAttackVisual();
