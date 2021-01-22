@@ -128,7 +128,7 @@ namespace Game.Map
             {
                 if (!IsTileMoveableAndActive(x, y))
                 {
-                    GridRenderer.SetFieldMaterialAttack(new Vector2(x, y), character.FactionId, !character.HasMoved());
+                    GridRenderer.SetFieldMaterialAttack(new Vector2(x, y), character.FactionId, !character.HasMoved(), GridGameManager.Instance.FactionManager.IsActiveFaction(character.FactionId));
                     GridLogic.gridSessionData.AddValidAttackPosition(x, y);
                 }
 
@@ -178,7 +178,7 @@ namespace Game.Map
                 return;
             }
 
-            GridRenderer.SetFieldMaterial(new Vector2(x, y), unit.FactionId, !unit.HasMoved());
+            GridRenderer.SetFieldMaterial(new Vector2(x, y), unit.FactionId, !unit.HasMoved(),GridGameManager.Instance.FactionManager.IsActiveFaction(unit.FactionId));
             GridLogic.gridSessionData.AddValidPosition(x, y);
             NodeHelper.Nodes[x, y].C = c;
             c++;

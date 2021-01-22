@@ -64,7 +64,7 @@ namespace Game.Grid
                     {
                         cell.AddComponent<TileData>().tileType = default;
                     }
-                    tiles[i, j] = new Tile(i, j, tileData.tileType, new SpriteTileRenderer(cell.GetComponent<SpriteRenderer>(), ResourceScript.Instance.tiles.tileSpriteSets), ResourceScript.Instance.tiles.tileEffectVisual);
+                    tiles[i, j] = new Tile(i, j, tileData.tileType, cell.transform, new SpriteTileRenderer(cell.GetComponent<SpriteRenderer>(), ResourceScript.Instance.tiles.tileSpriteSets), Instantiate(ResourceScript.Instance.tiles.tileEffectVisual));
                 }
             }
 

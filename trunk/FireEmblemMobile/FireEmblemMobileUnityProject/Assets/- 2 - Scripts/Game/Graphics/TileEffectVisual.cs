@@ -15,71 +15,44 @@ namespace Game.Graphics
     public class TileEffectVisual : ScriptableObject
     {
        
-        private List<GameObject> attackableFieldEffects;
+        private GameObject attackableField;
 
         [SerializeField]
         private GameObject attackIconPrefab;
-
-        private Transform parentTransform;
+        
 
         private void OnEnable()
         {
-            attackableFieldEffects = new List<GameObject>();
-            BattleState.OnEnter += HideAttackableField;
-            MovementState.OnEnter += HideAttackableField;
-            UnitSelectionSystem.OnDeselectCharacter += HideAttackableField;
-            parentTransform = GameObject.FindWithTag(TagManager.VfxTag).transform;
+            // BattleState.OnEnter += HideAttackableField;
+            // MovementState.OnEnter += HideAttackableField;
+            // UnitSelectionSystem.OnDeselectCharacter += HideAttackableField;
+            
         }
 
-        private bool AttackableFieldEffectExists(int x, int y)
+        public void ShowAttackableField(Tile tile)
         {
-            return attackableFieldEffects.Any(gameObj =>
+            if (attackableField !=null)
             {
-                Vector3 localPosition;
-                return !gameObj.activeSelf ||
-                       (Math.Abs((localPosition = gameObj.transform.localPosition).x - 0.5f - x) < 0.1f &&
-                        Math.Abs(localPosition.y - 0.5f - y) < 0.1f);
-            });
-        }
-
-        private GameObject FindAttackableFieldEffect(int x, int y)
-        {
-            return attackableFieldEffects.Find(gameObj =>
-            {
-                Vector3 localPosition;
-                return Math.Abs((localPosition = gameObj.transform.localPosition).x - 0.5f - x) < 0.1f && Math.Abs(localPosition.y - 0.5f - y) < 0.1f ||
-                       !gameObj.activeSelf;
-            });
-        }
-        public void ShowAttackableField(int x, int y)
-        {
-            //Debug.Log("Show Attackable Field: "+x+" " +y );
-            if (AttackableFieldEffectExists(x, y))
-            {
-                GameObject go2 = FindAttackableFieldEffect(x, y);
-                go2.transform.localPosition = new Vector3(x + 0.5f, y + 0.5f, go2.transform.localPosition.z);
-                go2.SetActive(true);
+                
+                attackableField.SetActive(true);
             }
             else
             {
-                CreateAttackableField(x, y);
+                CreateAttackableField(tile.GetTransform());
             }
+            attackableField.transform.localPosition =  Vector3.zero;
         }
 
-        private void CreateAttackableField(int x, int y)
+        private void CreateAttackableField(Transform parentTransform)
         {
-            var go = Instantiate(attackIconPrefab,
-                parentTransform);
-            go.transform.localPosition = new Vector3(x + 0.5f, y + 0.5f, go.transform.localPosition.z);
-            attackableFieldEffects.Add(go);
+            attackableField = Instantiate(attackIconPrefab, parentTransform);
+
         }
 
         public void HideAttackableField()
         {
-            foreach (var go in attackableFieldEffects)
-            {
-                go.SetActive(false);
-            }
+            if(attackableField!=null)
+                attackableField.SetActive(false);
         }
 
       

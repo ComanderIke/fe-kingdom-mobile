@@ -14,39 +14,54 @@ namespace Game.Grid
         
         public TileType TileType;
         public readonly ITileRenderer TileRenderer;
-        private TileEffectVisual TileVfx;
+        private TileEffectVisual tileVfx;
+        private Transform transform;
 
-        public Tile(int i, int j, TileType tileType, ITileRenderer tileRenderer, TileEffectVisual tileVfx)
+        public Tile(int i, int j, TileType tileType, Transform transform, ITileRenderer tileRenderer, TileEffectVisual tileVfx)
         {
             X = i;
             Y = j;
             TileType = tileType;
             TileRenderer = tileRenderer;
-            TileVfx = tileVfx;
+            this.tileVfx = tileVfx;
+            this.transform = transform;
 
         }
 
+        public Transform GetTransform()
+        {
+            return transform;
+        }
         public void Reset()
         {
             TileRenderer.Reset();
+            tileVfx.HideAttackableField();
         }
 
-        public void SetAttackMaterial(int playerId, bool activeUnit)
+        public void SetAttackMaterial(int playerId, bool activeUnit, bool activePlayer)
         {
+            Reset();
             TileRenderer.SetVisualStyle(playerId);
-            if (Actor!=null && playerId != Actor.FactionId)
+           
+
+            if (activeUnit)
             {
-                TileVfx.ShowAttackableField(X,Y);
-            }
-            if(activeUnit)
+                if (Actor!=null && playerId != Actor.FactionId && activePlayer)
+                {
+                    tileVfx.ShowAttackableField(this);
+                }
                 TileRenderer.ActiveAttackVisual();
+            }
             else
             {
                 TileRenderer.AttackVisual();
             }
         }
-        public void SetMaterial( int playerId, bool activeUnit)
+
+     
+        public void SetMaterial( int playerId, bool activeUnit, bool activePlayer)
         {
+            Reset();
             TileRenderer.SetVisualStyle(playerId);
             if (Actor == null)
             {
@@ -61,7 +76,7 @@ namespace Game.Grid
             }
             else
             {
-                SetAttackMaterial(playerId, activeUnit);
+                SetAttackMaterial(playerId, activeUnit, activePlayer);
             }
         }
         
@@ -76,5 +91,7 @@ namespace Game.Grid
                 return false;
             return Actor.FactionId != actor.FactionId;
         }
+
+
     }
 }
