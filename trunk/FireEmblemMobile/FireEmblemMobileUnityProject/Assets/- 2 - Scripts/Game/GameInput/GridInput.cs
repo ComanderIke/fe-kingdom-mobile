@@ -30,27 +30,33 @@ namespace Game.GameInput
         {
             if (Input.GetMouseButtonUp(0) && Input.touchCount <= 2 && !EventSystem.current.IsPointerOverGameObject())
             {
+                if (!CameraSystem.IsDragging)
+                {
+                    var gridPos = raycastManager.GetMousePositionOnGrid();
+                    var x = (int) gridPos.x;
+                    var y = (int) gridPos.y;
+                    var hit = raycastManager.GetLatestHit();
+    
+                    if (IsClickOnGrid(hit))
+                    {
+                        Debug.Log("Player Input: Grid clicked: " + x + " " + y);
+                        foreach (var inputReceiver in inputReceivers)
+                        {
+                            inputReceiver.GridClicked(x, y);
+                        }
+                    }
+                }
+
                 
-                if(!CameraSystem.IsDragging)
-                    CheckClickOnGrid();
             }
+           
+        }
+        private bool IsClickOnGrid(RaycastHit2D hit)
+        {
+            
+            return raycastManager.ConnectedLatestHit() && hit.collider.CompareTag(TagManager.GridTag);
+
         }
 
-        private void CheckClickOnGrid()
-        {
-            var gridPos = raycastManager.GetMousePositionOnGrid();
-            var hit = raycastManager.GetLatestHit();
-            var x = (int) gridPos.x;
-            var y = (int) gridPos.y;
-            if (raycastManager.ConnectedLatestHit() && hit.collider.CompareTag(TagManager.GridTag))
-            {
-                //ResetDrag();
-                Debug.Log("Player Input: Grid clicked: " + x + " " + y);
-                foreach (var inputReceiver in inputReceivers)
-                {
-                    inputReceiver.GridClicked(x, y);
-                }
-            }
-        }
     }
 }

@@ -35,12 +35,8 @@ namespace Game.GUI
             //position.z = 1;
             var ps = Instantiate(onTouchDownEffect, parent, false);
             ps.GetComponent<RectTransform>().anchoredPosition = position;
-            ps.layer = LayerMask.NameToLayer("FrontUI");
             ps.AddComponent<ParticleSystemAutoDestroy>();
-            foreach (var trans in ps.transform.GetComponentsInChildren<Transform>())
-            {
-                trans.gameObject.layer = LayerMask.NameToLayer("FrontUI");
-            }
+           
 
             ps.GetComponent<ParticleSystem>().Play(true);
         }
@@ -52,11 +48,8 @@ namespace Game.GUI
             screenParticles.anchoredPosition = position;
             var ps = Instantiate(onTouchEffect, parent, false);
             screenParticles = ps.GetComponent<RectTransform>();
-            ps.layer = LayerMask.NameToLayer("FrontUI");
-            foreach (var trans in ps.transform.GetComponentsInChildren<Transform>())
-            {
-                trans.gameObject.layer = LayerMask.NameToLayer("FrontUI");
-            }
+
+
 
             ps.GetComponent<ParticleSystem>().Play(true);
         }

@@ -78,7 +78,6 @@ namespace Game.GameActors.Units.OnGameObject
 
         public void OnMouseDown()
         {
-
             dragStarted = false;
             dragInitiated = false;
             doubleClick = false;
@@ -110,6 +109,7 @@ namespace Game.GameActors.Units.OnGameObject
         }
         public void OnMouseUp()
         {
+            Debug.Log("UNIT MOUSE UP");
             GridGameManager.Instance.GetSystem<CameraSystem>().ActivateMixin<DragCameraMixin>();
             if (DragManager.IsDragging)
             {
