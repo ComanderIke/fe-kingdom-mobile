@@ -91,6 +91,7 @@ namespace Game.Mechanics
         }
         public void CheckAttackPreview(IBattleActor u, IBattleActor target, GridPosition attackPosition)
         {
+            
             OnCheckAttackPreview?.Invoke(u, target);
         }
         public void MoveCharacter(IGridActor c, GridPosition destination, List<GridPosition> path = null)

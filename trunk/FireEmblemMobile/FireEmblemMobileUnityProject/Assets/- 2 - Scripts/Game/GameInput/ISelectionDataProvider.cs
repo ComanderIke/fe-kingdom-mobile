@@ -11,7 +11,8 @@ namespace Game.GameInput
 
         Vector2Int GetSelectedTile();
         void SetSelectedTile(int x, int y);
-        ISelectableActor selectedAttackTarget { get; set; }
+        void SetSelectedAttackTarget(ISelectableActor target);
+        ISelectableActor GetSelectedAttackTarget();
         void ClearData();
         bool IsSelectedTile(int i, int i1);
         void ClearAttackTarget();

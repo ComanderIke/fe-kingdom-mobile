@@ -12,16 +12,29 @@ namespace Game.GameInput
         public ISelectableActor SelectedActor => unitSelectionSystem.SelectedCharacter;
         private int SelectedTileX { get; set; }
         private int SelectedTileY { get; set; }
-        public ISelectableActor selectedAttackTarget { get; set; }
+        private ISelectableActor selectedAttackTarget;
+
+        public void SetSelectedAttackTarget(ISelectableActor target)
+        {
+            selectedAttackTarget?.SetAttackTarget(false);
+            selectedAttackTarget = target;
+            target?.SetAttackTarget(true);
+        }
+
+        public ISelectableActor GetSelectedAttackTarget()
+        {
+            return selectedAttackTarget;
+        }
+
         public void ClearData()
         {
             SelectedTileX = -1;
             SelectedTileY = -1;
-            selectedAttackTarget = null;
+            ClearAttackTarget();
         }
         public void ClearAttackTarget()
         {
-            selectedAttackTarget = null;
+            SetSelectedAttackTarget(null);
         }
 
    

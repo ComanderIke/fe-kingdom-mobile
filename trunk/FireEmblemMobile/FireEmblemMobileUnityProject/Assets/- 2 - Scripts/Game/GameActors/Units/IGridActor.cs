@@ -24,5 +24,6 @@ namespace Game.GameActors.Units
 
         bool HasMoved();
         void SetPosition(int oldX, int oldY);
+        
     }
 }

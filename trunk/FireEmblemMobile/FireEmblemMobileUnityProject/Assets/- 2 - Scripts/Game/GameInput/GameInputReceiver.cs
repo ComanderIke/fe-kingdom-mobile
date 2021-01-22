@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.GameActors.Units;
+using Game.GameResources;
 using Game.Grid;
 using Game.Grid.PathFinding;
 using Game.Manager;
@@ -27,7 +28,7 @@ namespace Game.GameInput
             
             gridSystem = GridGameManager.Instance.GetSystem<GridSystem>();
             
-            inputPathManager = new InputPathManager(gridSystem.pathFinder);
+            inputPathManager = new InputPathManager(gridSystem.pathFinder, ResourceScript.Instance.grid.moveArrowVisual);
             factionManager = GridGameManager.Instance.GetSystem<FactionManager>();
             UnitSelectionSystem.OnSelectedCharacter += OnSelectedCharacter;
             UnitSelectionSystem.OnSelectedInActiveCharacter += OnSelectedCharacter;
@@ -45,6 +46,7 @@ namespace Game.GameInput
         }
         public void DraggedOverGrid(int x, int y)
         {
+            ResetDragSelectables();
             if (gridSystem.IsTileMoveableAndActive(x, y) && !IsActorOnTile(selectionDataProvider.SelectedActor, x, y))
             {
                 DraggedOnActiveField(x, y, selectionDataProvider.SelectedActor);
@@ -73,8 +75,13 @@ namespace Game.GameInput
             }
         }
 
+        private void ResetDragSelectables()
+        {
+            selectionDataProvider.SetSelectedAttackTarget(null);
+        }
         public void DraggedOverActor(IGridActor gridActor)
         {
+            ResetDragSelectables();
             if (!gridActor.IsEnemy(selectionDataProvider.SelectedActor))
             {
                 if (gridActor == selectionDataProvider.SelectedActor)
@@ -92,7 +99,8 @@ namespace Game.GameInput
                 }
             }
             if (gridActor.IsEnemy(selectionDataProvider.SelectedActor))
-                DraggedOnEnemy(gridActor.GridPosition.X, gridActor.GridPosition.Y, gridActor);//TODO should be dragged over enemy?
+                DraggedOverEnemy(gridActor.GridPosition.X, gridActor.GridPosition.Y, gridActor);//TODO should be dragged over enemy?
+  
            
 
         }
@@ -199,7 +207,7 @@ namespace Game.GameInput
             {
                 if (gridSystem.GridLogic.IsFieldAttackable(enemyActor.GridPosition.X, enemyActor.GridPosition.Y))
                 {
-                    if (selectionDataProvider.selectedAttackTarget!=enemyActor)
+                    if (selectionDataProvider.GetSelectedAttackTarget()!=enemyActor)
                     {
                         selectionDataProvider.ClearData();
                         var gridPos = new GridPosition((int)selectedActor.GetGameTransformPosition().x, (int)selectedActor.GetGameTransformPosition().y);
@@ -235,7 +243,7 @@ namespace Game.GameInput
                             }
                         }
                         if(enemyActor is ISelectableActor selectableEnemyActor)
-                            selectionDataProvider.selectedAttackTarget = selectableEnemyActor;
+                            selectionDataProvider.SetSelectedAttackTarget(selectableEnemyActor);
                     }
                     else
                     {
@@ -298,16 +306,19 @@ namespace Game.GameInput
             inputPathManager.AddToPath(x, y, gridActor);
         }
 
-        private void DraggedOnEnemy(int x, int y, IGridActor enemy)
+        private void DraggedOverEnemy(int x, int y, IGridActor enemy)
         {
             var selectedActor = selectionDataProvider.SelectedActor;
             Debug.Log("Dragged on enemy: " + enemy +" at ["+x+"/"+y+"]");
             if (!IsTileAttackAble(x,y))
                 return;
+            if(enemy is ISelectableActor selectAbleEnemy)
+                selectionDataProvider.SetSelectedAttackTarget(selectAbleEnemy);
             if (inputPathManager.IsMovementPathEmpty())
             {
                 if(selectedActor.CanAttack(x, y))
                 {
+                    
                     if(selectedActor is IBattleActor battleActor && enemy is IBattleActor enemyBattleActor)
                         gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, selectedActor.GridPosition);
                 }

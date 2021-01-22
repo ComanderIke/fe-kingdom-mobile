@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.Graphics;
 using Game.Grid;
 using UnityEngine;
 
@@ -11,5 +12,6 @@ namespace Game.GameResources
         public Material gridMaterial;
         public TileType standardTileType;
         public Sprite standardSprite;
+        public MoveArrowVisual moveArrowVisual;
     }
 }

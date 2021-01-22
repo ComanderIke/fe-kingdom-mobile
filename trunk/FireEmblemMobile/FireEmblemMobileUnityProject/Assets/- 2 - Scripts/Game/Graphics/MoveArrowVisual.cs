@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.GameInput;
+using Game.Manager;
+using Game.Mechanics;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace Game.Graphics
 {
     [Serializable]
-    public class MoveArrowVisual
+    [CreateAssetMenu(menuName = "GameData/MoveArrow", fileName =  "MoveArrow")]
+    public class MoveArrowVisual : ScriptableObject, IMovePathVisual
     {
         private GameObject moveCursor;
         private GameObject moveCursorStart;
@@ -19,11 +23,13 @@ namespace Game.Graphics
         private GameObject moveArrowPartPrefab;
         [SerializeField]
         private MoveArrowSprites moveArrowSprites;
-        [SerializeField]
         private Transform parent;
-        public MoveArrowVisual()
+
+        public void OnEnable()
         {
             instantiatedMovePath = new List<GameObject>();
+            // InputPathManager.OnMovementPathUpdated += DrawMovementPath;
+            parent = GameObject.FindWithTag(TagManager.VfxTag).transform;
         }
 
         private GameObject CreateArrowPart()
@@ -33,6 +39,8 @@ namespace Game.Graphics
         public void DrawMovementPath(List<Vector2Int> mousePath, int startX, int startY)
         {
             HideMovementPath();
+            if (startX == -1 || startY == -1)
+                return;
             movementPathVisible = true;
         
             
@@ -181,7 +189,7 @@ namespace Game.Graphics
             if (moveCursorStart != null)
                 moveCursorStart.SetActive(false);
         }
-        public void DrawCurvedMovementPathSection(GameObject dot, Vector2Int v, Vector2Int vBefore, Vector2Int vAfter)
+        private void DrawCurvedMovementPathSection(GameObject dot, Vector2Int v, Vector2Int vBefore, Vector2Int vAfter)
         {
             SpriteRenderer sr = dot.GetComponent<SpriteRenderer>();
             if (vBefore.x == vAfter.x)

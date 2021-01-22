@@ -8,6 +8,7 @@ using Game.GameActors.Units.CharStateEffects;
 using Game.GameActors.Units.OnGameObject;
 using Game.GameInput;
 using Game.GameResources;
+using Game.Graphics;
 using Game.Grid;
 using Game.Mechanics;
 using Game.Mechanics.Battle;
@@ -42,11 +43,15 @@ namespace Game.GameActors.Units
         public MoveType MoveType;
 
         public CharacterSpriteSet CharacterSpriteSet;
-
+        
+        [SerializeField, SerializeReference]
+        public IUnitEffectVisual unitEffectVisual;
         public GameTransform GameTransform { get; private set; }
         public BattleStats BattleStats { get; private set; }
         public UnitTurnState UnitTurnState { get; private set; }
         public ExperienceManager ExperienceManager { get; private set; }
+        
+      
 
         public int Hp
         {
@@ -231,7 +236,13 @@ namespace Game.GameActors.Units
             GameTransform.SetPosition(x, y);
         }
 
-        
+        public void SetAttackTarget(bool selected)
+        {
+            if (selected)
+                unitEffectVisual.ShowAttackable(this);
+            else
+                unitEffectVisual.HideAttackable();
+        }
 
         public virtual void SetGameTransformPosition(int x, int y)
         {

@@ -116,7 +116,7 @@ namespace Game.GameInput
             return x == lastDragPosX && y == lastDragPosY;
         }
 
-        private void ResetInput()
+        public void ResetInput()
         {
             lastDragPosX = -1;
             lastDragPosY = -1;
@@ -124,6 +124,6 @@ namespace Game.GameInput
             OnResetInput?.Invoke();
         }
 
-      
+       
     }
 }

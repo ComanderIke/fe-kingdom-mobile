@@ -2,7 +2,7 @@
 
 namespace Game.Graphics
 {
-    [CreateAssetMenu(menuName = "GameData/SpriteSet/MoveArrow", fileName =  "MoveArrowSpriteSet")]
+    [CreateAssetMenu(menuName = "GameData/SpriteSet/MoveArrowSpriteSet", fileName =  "MoveArrowSpriteSet")]
     public class MoveArrowSprites: ScriptableObject
     {
         public Sprite moveArrowCurve;

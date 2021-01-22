@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Game.GameActors.Units;
+using Game.Graphics;
 using Game.Grid.PathFinding;
 using Game.Manager;
 using Game.Mechanics;
@@ -10,19 +11,22 @@ namespace Game.GameInput
 {
     public class InputPathManager
     {
-        public delegate void MovementPathUpdatedEvent(List<Vector2Int> mousePath, int startX, int startY);
-        public static event MovementPathUpdatedEvent OnMovementPathUpdated;
+       // public delegate void MovementPathUpdatedEvent(List<Vector2Int> mousePath, int startX, int startY);
+       // public static event MovementPathUpdatedEvent OnMovementPathUpdated;
         
         public List<Vector2Int> MovementPath;
         private readonly List<Vector2Int> dragPath;
         private IPathFinder pathProvider;
+
+        private IMovePathVisual movePathVisual;
         //public static event MovementPathUpdatedEvent OnReset;
 
-        public InputPathManager(IPathFinder pathProvider)
+        public InputPathManager(IPathFinder pathProvider, IMovePathVisual movePathVisual)
         {
             MovementPath = new List<Vector2Int>();
             dragPath = new List<Vector2Int>();
             this.pathProvider = pathProvider;
+            this.movePathVisual = movePathVisual;
         }
 
 
@@ -30,6 +34,7 @@ namespace Game.GameInput
         {
             dragPath.Clear();
             MovementPath.Clear();
+            UpdatedMovementPath(-1, -1);
         }
         public void CalculateMousePathToPosition(IGridActor character, int x, int y)
         {
@@ -62,7 +67,8 @@ namespace Game.GameInput
 
         public void UpdatedMovementPath(int startX, int startY)
         {
-            OnMovementPathUpdated?.Invoke(MovementPath, startX, startY);
+            movePathVisual.DrawMovementPath(MovementPath, startX, startY);
+           // OnMovementPathUpdated?.Invoke(MovementPath, startX, startY);
         }
         private bool HasMovementPath()
         {

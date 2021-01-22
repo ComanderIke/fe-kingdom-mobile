@@ -14,8 +14,7 @@ namespace Game.Graphics
         // [SerializeField] private ExpBarController expBarController = default;
         // [SerializeField] private Canvas MainCanvas = default;
         // private ResourceScript resources;
-        [SerializeField]
-        private MoveArrowVisual moveArrowVisual;
+
    
         // private Dictionary<string, GameObject> activeUnitEffects;
         // private GridGameManager gridGameManager;
@@ -28,9 +27,8 @@ namespace Game.Graphics
          {
              //GridInputSystem.OnResetInput += moveArrowVisual.HideMovementPath;
              //InputPathManager.OnReset += ()=>moveArrowVisual.DrawMovementPath(null, );
-             InputPathManager.OnMovementPathUpdated += moveArrowVisual.DrawMovementPath;
-             BattleState.OnEnter += moveArrowVisual.HideMovementPath;
-             UnitSelectionSystem.OnDeselectCharacter += DeselectedCharacter;
+             
+           //  UnitSelectionSystem.OnDeselectCharacter += DeselectedCharacter;
              // MovementState.OnEnter += attackTargetVisual.HideAttackableField;
              // BattleState.OnEnter += attackTargetVisual.HideAttackableField;
              // UnitActionSystem.OnCheckAttackPreview += OnCheckAttackPreview;
@@ -98,8 +96,7 @@ namespace Game.Graphics
         private void DeselectedCharacter()
         {
             //ShowAllActiveUnitEffects();
-            moveArrowVisual.HideMovementPath();
-           // attackTargetVisual.HideAttackableField();
+            // attackTargetVisual.HideAttackableField();
            // HideAttackableEnemy();
         }
         // bool setActiveUnitEffectsWhenInputIsActive = false;

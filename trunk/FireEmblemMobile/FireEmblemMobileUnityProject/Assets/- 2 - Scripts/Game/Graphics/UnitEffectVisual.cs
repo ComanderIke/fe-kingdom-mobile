@@ -1,45 +1,40 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Game.GameActors.Units;
 using UnityEngine;
 
 namespace Game.Graphics
 {
-    public class UnitEffectVisual
+    [CreateAssetMenu(menuName = "Unit/UnitEffectVisual", fileName = "unitEffectVisual")]
+    public class UnitEffectVisual :  IUnitEffectVisual
     {
-        private List<GameObject> attackableEnemyEffects;
+        private GameObject attackableEnemyEffect;
         [SerializeField]
         private GameObject attackableEnemyPrefab;
         
-        [SerializeField] private Transform parenTransform;
 
-        public UnitEffectVisual()
+ 
+        public override void ShowAttackable(IGridActor actor)
         {
-            attackableEnemyEffects = new List<GameObject>();
-        }
-        public void ShowAttackableEnemy(int x, int y)
-        {
-            if (attackableEnemyEffects.Any(gameObj =>
-                (int) gameObj.transform.localPosition.x == x && (int) gameObj.transform.localPosition.y == y))
+            if (attackableEnemyEffect == null)
             {
-                attackableEnemyEffects.Find(gameObj =>
-                        (int) gameObj.transform.localPosition.x == x && (int) gameObj.transform.localPosition.y == y)
-                    .SetActive(true);
-                return;
-            }
 
-            var go = GameObject.Instantiate(attackableEnemyPrefab,
-                parenTransform);
-            go.transform.localPosition = new Vector3(x, y, go.transform.localPosition.z);
-            attackableEnemyEffects.Add(go);
-        }
-        public void HideAttackableEnemy()
-        {
-            foreach (var go in attackableEnemyEffects)
+                attackableEnemyEffect = GameObject.Instantiate(attackableEnemyPrefab,
+                    actor.GetTransform());
+                attackableEnemyEffect.transform.localPosition = Vector3.zero;
+            }
+            else
             {
-                go.SetActive(false);
+                attackableEnemyEffect.transform.localPosition = Vector3.zero;
+                attackableEnemyEffect.SetActive(true);
             }
-
-            //attackableEnemyEffects.Clear();
+        }
+        public override void HideAttackable()
+        {
+            if (attackableEnemyEffect != null)
+            {
+                attackableEnemyEffect.SetActive(false);
+            }
         }
 
     }

@@ -44,6 +44,8 @@ namespace Game.Mechanics
             cameraSystem.RemoveMixin<DragCameraMixin>();
             cameraSystem.RemoveMixin<ClampCameraMixin>();
             cameraSystem.RemoveMixin<ViewOnGridMixin>();
+            var gridInput = gridGameManager.GetSystem<GridInputSystem>();
+            gridInput.ResetInput();
         }
 
         public void CheckGameOver()
