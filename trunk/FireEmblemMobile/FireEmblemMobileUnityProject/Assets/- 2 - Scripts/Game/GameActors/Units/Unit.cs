@@ -149,6 +149,7 @@ namespace Game.GameActors.Units
             Agent = new AIAgent();
             Stats = Stats == null ? CreateInstance<Stats>() : Instantiate(Stats);
             Growths = Growths == null ? CreateInstance<Growths>() : Instantiate(Growths);
+            unitEffectVisual = Instantiate(unitEffectVisual);
             Hp = Stats.MaxHp;
             Sp = Stats.MaxSp;
             ExperienceManager.ExpGained += ExpGained;
