@@ -98,13 +98,13 @@ namespace Game.GameActors.Units.OnGameObject
         private void HpValueChanged()
         {
             if (hpBar != null && unit != null)
-                hpBar.SetHealth(unit.Hp, unit.Stats.MaxHp);
+                hpBar.SetValue(unit.Hp, unit.Stats.MaxHp);
         }
        
         private void SpValueChanged()
         {
             if (spBar != null && unit != null)
-                spBar.SetHealth(unit.Sp, unit.Stats.MaxSp);
+                spBar.SetValue(unit.Sp, unit.Stats.MaxSp);
         }
       
 

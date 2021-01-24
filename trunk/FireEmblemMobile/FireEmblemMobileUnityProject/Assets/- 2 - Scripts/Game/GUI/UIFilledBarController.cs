@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace Game.GUI
 {
-    public class FilledBarController : MonoBehaviour
+    public class UIFilledBarController : MonoBehaviour
     {
         [SerializeField] private Image[] barCurrentImages = default;
         [SerializeField] private Image[] barColoredImages = default;

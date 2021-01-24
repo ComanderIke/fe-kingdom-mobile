@@ -40,11 +40,11 @@ namespace Game.GameResources
         }
         public Human GetHuman(string name)
         {
-            return Instantiate(humans.Find(a => a.Name == name));
+            return Instantiate(humans.Find(a => a.name == name));
         }
         public Monster GetMonster(string name)
         {
-            return Instantiate(monster.Find(a => a.Name == name));
+            return Instantiate(monster.Find(a => a.name == name));
         }
 
         private void OnEnable()

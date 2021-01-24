@@ -11,7 +11,7 @@ namespace Game.GUI
     public class AttackPreviewStatBar : MonoBehaviour
     {
         private const float MIN_WIDTH = 0;
-        [SerializeField] private FilledBarController filledBarController = default;
+        [SerializeField] private UIFilledBarController uiFilledBarController = default;
         [SerializeField] private GameObject valueBeforeMarker = default;
         [SerializeField] private RectTransform incDamageSection = default;
         [SerializeField] private TextMeshProUGUI valueAfterText = default;
@@ -28,9 +28,9 @@ namespace Game.GUI
         {
             incomingDamage.Reverse();
             if(afterBattleHp == -1)
-                filledBarController.SetFillAmount((currentHp * 1.0f)/maxHp);
+                uiFilledBarController.SetFillAmount((currentHp * 1.0f)/maxHp);
             else
-                filledBarController.SetFillAmount((afterBattleHp * 1.0f) / maxHp);
+                uiFilledBarController.SetFillAmount((afterBattleHp * 1.0f) / maxHp);
             if (rectTransform == null)
                 rectTransform = GetComponent<RectTransform>();
             float width = rectTransform.rect.width;

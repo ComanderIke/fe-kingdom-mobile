@@ -13,12 +13,14 @@ namespace Game.GUI
 {
     public class UiSystem : MonoBehaviour, IEngineSystem
     {
+        public ICharacterUI characterUI;
         public void Init()
         {
+            UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
             //gridGameManager = GridGameManager.Instance;
             //     gameplayInput = new GameplayInput();
             //     
-            //     UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
+                 
             //     UnitSelectionSystem.OnDeselectCharacter += HideDeselectButton;
             //     
             //     UnitSelectionSystem.OnEnemySelected += ShowTopUi;
@@ -40,6 +42,12 @@ namespace Game.GUI
             //     ExecuteEvents.Execute(deselectButton.gameObject, pointer, ExecuteEvents.pointerUpHandler);
             //     HideDeselectButton();//Start with Button ACtive for Performance Reasons
             //     attackPreview.Hide();
+        }
+       
+        private void SelectedCharacter(ISelectableActor actor)
+        {
+            if(actor is Unit u)
+                characterUI.Show(u);
         }
         // #region Events
         // #endregion
@@ -91,11 +99,7 @@ namespace Game.GUI
         // {
         //     ShowTopUi(unit);
         // }
-        // private void SelectedCharacter(Unit u)
-        // {
-        //     ShowDeselectButton();
-        //     ShowTopUi(u);
-        // }
+    
         // private void ShowDeselectButton()
         // {
         //     deselectButton.gameObject.SetActive(true);

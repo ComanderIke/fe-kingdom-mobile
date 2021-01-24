@@ -22,9 +22,9 @@ namespace Game.GUI
         [SerializeField] private TextMeshProUGUI skl = default;
         [SerializeField] private TextMeshProUGUI res = default;
         [SerializeField] private TextMeshProUGUI hp = default;
-        [SerializeField] private FilledBarController hpBar = default;
+        [SerializeField] private UIFilledBarController hpBar = default;
         [SerializeField] private TextMeshProUGUI sp = default;
-        [SerializeField] private FilledBarController spBar = default;
+        [SerializeField] private UIFilledBarController spBar = default;
         [SerializeField] private Image characterSprite = default;
         [SerializeField] private Image classSprite = default;
         [SerializeField] private Image[] motivationSprites = default;
@@ -56,7 +56,7 @@ namespace Game.GUI
             expBar.gameObject.SetActive(c.Faction.IsPlayerControlled);
             expLabel.gameObject.SetActive(c.Faction.IsPlayerControlled);
 
-            characterName.text = c.Name;
+            characterName.text = c.name;
             level.text = "" + c.ExperienceManager.Level;
             expBar.SetText(c.ExperienceManager.Exp);
             expBar.SetFillAmount(c.ExperienceManager.Exp);

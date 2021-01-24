@@ -54,7 +54,7 @@ namespace Game.Manager
             JITHelper.PreJitAll<TopUi>();
             JITHelper.PreJitAll<NodeHelper>();
             JITHelper.PreJitAll<DragManager>();
-            JITHelper.PreJitAll<FilledBarController>();
+            JITHelper.PreJitAll<UIFilledBarController>();
             //JITHelper.PreJitAll<Unit>(); Does crash because of IClonealbe or ScriptableObject
             JITHelper.PreJitAll<BattleStats>();
             JITHelper.PreJitAll<ExpBarController>();

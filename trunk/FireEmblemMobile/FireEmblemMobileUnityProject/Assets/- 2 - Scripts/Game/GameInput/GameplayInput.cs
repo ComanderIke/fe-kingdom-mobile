@@ -5,6 +5,7 @@ using Game.GameActors.Units;
 using Game.Grid;
 using Game.Mechanics;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Game.GameInput
 {
@@ -49,7 +50,7 @@ namespace Game.GameInput
         }
         public void ViewUnit(Unit u)
         {
-            Debug.Log("GameInput: View Unit: " + u.name);
+            Debug.Log("GameInput: View Unit: " + ((Object) u).name);
             OnViewUnit?.Invoke(u);
         }
         public void Wait(ISelectableActor u)

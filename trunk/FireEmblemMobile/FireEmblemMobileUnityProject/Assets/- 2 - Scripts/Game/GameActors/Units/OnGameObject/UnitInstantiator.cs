@@ -16,7 +16,7 @@ namespace Game.GameActors.Units.OnGameObject
             unitGameObject.GetComponentInChildren<SpriteRenderer>().sprite = unit.CharacterSpriteSet.MapSprite;
             
             unitGameObject.GetComponentInChildren<BuffUi>()?.Initialize(unit);
-            unitGameObject.name = unit.Name;
+            unitGameObject.name = unit.name;
             unitGameObject.transform.parent = gameObject.transform;
             unitGameObject.layer = LayerMask.NameToLayer("Characters");
             

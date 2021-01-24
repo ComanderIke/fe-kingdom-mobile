@@ -10,6 +10,7 @@ using Game.GameInput;
 using Game.GameResources;
 using Game.Graphics;
 using Game.Grid;
+using Game.GUI;
 using Game.Mechanics;
 using Game.Mechanics.Battle;
 using UnityEngine;
@@ -21,7 +22,7 @@ namespace Game.GameActors.Units
     {
         [HideInInspector] private int hp;
 
-        public string Name;
+        public new string name;
 
         [HideInInspector] private int sp;
         public delegate void OnUnitLevelUpEvent(string name, int levelBefore, int levelAfter, int[] stats, int[] statIncreases);
@@ -43,15 +44,16 @@ namespace Game.GameActors.Units
         public MoveType MoveType;
 
         public CharacterSpriteSet CharacterSpriteSet;
-        
+
         [SerializeField, SerializeReference]
         public IUnitEffectVisual unitEffectVisual;
         public GameTransform GameTransform { get; private set; }
         public BattleStats BattleStats { get; private set; }
         public UnitTurnState UnitTurnState { get; private set; }
         public ExperienceManager ExperienceManager { get; private set; }
-        
-      
+
+
+
 
         public int Hp
         {
@@ -172,7 +174,7 @@ namespace Game.GameActors.Units
         {
            
             int[] statIncreases=CalculateStatIncreases();
-            OnUnitLevelUp?.Invoke(Name, levelBefore, levelAfter, Stats.GetStatArray(), statIncreases);
+            OnUnitLevelUp?.Invoke(name, levelBefore, levelAfter, Stats.GetStatArray(), statIncreases);
             Stats.MaxHp += statIncreases[0];
             Stats.MaxSp += statIncreases[1];
             Stats.Str += statIncreases[2];
@@ -224,12 +226,6 @@ namespace Game.GameActors.Units
         {
             return UnitTurnState.IsWaiting == false;
         }
-
-        // public void SetInternPosition(int x, int y)
-        // {
-        //     //TODO it with GridSystem
-        //     GridPosition.SetPosition(x, y);
-        // }
 
         public virtual void SetPosition(int x, int y)
         {
@@ -316,7 +312,7 @@ namespace Game.GameActors.Units
 
         public override string ToString()
         {
-            return Name + " HP: " + Hp + "/" + Stats.MaxHp;
+            return name + " HP: " + Hp + "/" + Stats.MaxHp;
         }
 
         public object Clone()
@@ -388,4 +384,6 @@ namespace Game.GameActors.Units
         }
         
     }
+
+ 
 }

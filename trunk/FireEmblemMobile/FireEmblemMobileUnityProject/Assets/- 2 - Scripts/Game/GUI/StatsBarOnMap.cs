@@ -5,7 +5,7 @@ using Utility;
 
 namespace Game.GUI
 {
-    public class StatsBarOnMap : MonoBehaviour
+    public class StatsBarOnMap : IStatBar
     {
         public const float HP_BAR_OFFSET_DELAY = 0.1f;
         private int currentHealth;
@@ -23,16 +23,7 @@ namespace Game.GUI
         [SerializeField] private Image losingHpBar = default;
 
 
-        public void SetHealth(int value, int maxValue)
-        {
-            maxHealth = maxValue;
-            currentHealth = value;
-            currentHpValue = MathUtility.MapValues(currentHealth, 0f, maxHealth, 0f, 1f);
-            time = 0;
-            //Debug.Log("value: "+value +" " +maxValue+ "CV "+currentHpValue);
-            if (isActiveAndEnabled)
-                StartCoroutine(DelayedHp());
-        }
+      
         float time = 0;
         float loseTime = 0;
         private void Update()
@@ -59,9 +50,16 @@ namespace Game.GUI
             loseTime = 0;
             delayedHpValue = MathUtility.MapValues(currentHealth, 0f, maxHealth, 0f, 1f);
         }
-        private static float MapValues(float x, float inMin, float inMax, float outMin, float outMax)
+
+        public override void SetValue(int value, int maxValue)
         {
-            return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+            maxHealth = maxValue;
+            currentHealth = value;
+            currentHpValue = MathUtility.MapValues(currentHealth, 0f, maxHealth, 0f, 1f);
+            time = 0;
+            //Debug.Log("value: "+value +" " +maxValue+ "CV "+currentHpValue);
+            if (isActiveAndEnabled)
+                StartCoroutine(DelayedHp());
         }
     }
 }
