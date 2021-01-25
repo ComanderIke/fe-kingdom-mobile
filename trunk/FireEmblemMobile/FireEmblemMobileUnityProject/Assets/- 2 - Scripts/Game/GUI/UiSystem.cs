@@ -14,9 +14,12 @@ namespace Game.GUI
     public class UiSystem : MonoBehaviour, IEngineSystem
     {
         public ICharacterUI characterUI;
+        public ICharacterUI enemyCharacterUI;
         public void Init()
         {
             UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
+            UnitSelectionSystem.OnEnemySelected += SelectedEnemyCharacter;
+            UnitSelectionSystem.OnDeselectCharacter += DeselectedCharacter;
             //gridGameManager = GridGameManager.Instance;
             //     gameplayInput = new GameplayInput();
             //     
@@ -48,6 +51,16 @@ namespace Game.GUI
         {
             if(actor is Unit u)
                 characterUI.Show(u);
+        }
+        private void SelectedEnemyCharacter(ISelectableActor actor)
+        {
+            if(actor is Unit u)
+                enemyCharacterUI.Show(u);
+        }
+        private void DeselectedCharacter()
+        {
+            characterUI.Hide();
+            enemyCharacterUI.Hide();
         }
         // #region Events
         // #endregion

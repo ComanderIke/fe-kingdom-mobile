@@ -96,6 +96,7 @@ namespace Game.Manager
                 FindObjectOfType<GridInputSystem>(),
                 FindObjectOfType<UnitsSystem>(),
                 FindObjectOfType<TurnSystem>(),
+                FindObjectOfType<UiSystem>(),
                 new BattleSystem(),
                 FindObjectOfType<UnitSelectionSystem>()
             };

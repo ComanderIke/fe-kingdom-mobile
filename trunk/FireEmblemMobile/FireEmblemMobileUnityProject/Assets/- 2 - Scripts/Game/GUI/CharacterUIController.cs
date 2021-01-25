@@ -35,6 +35,7 @@ namespace Game.GUI
         public override void Show(Unit unit)
         {
             this.unit = unit;
+            UpdateValues();
             gameObject.SetActive(true);
             
         }
@@ -45,6 +46,12 @@ namespace Game.GUI
 
         void OnEnable()
         {
+           UpdateValues();
+            
+        }
+
+        void UpdateValues()
+        {
             if (unit == null)
                 return;
             characterName.SetText(unit.name);
@@ -52,7 +59,6 @@ namespace Game.GUI
             hpBar.SetValue(unit.Hp, unit.Stats.MaxHp);
             spBar.SetValue(unit.Sp, unit.Stats.MaxSp);
             faceSprite.sprite = unit.CharacterSpriteSet.FaceSprite;
-            
         }
 
         

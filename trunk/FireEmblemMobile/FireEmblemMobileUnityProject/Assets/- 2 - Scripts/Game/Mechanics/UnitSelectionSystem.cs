@@ -41,19 +41,21 @@ namespace Game.Mechanics
                 SelectedCharacter.ResetPosition();
                 SelectedCharacter.UnitTurnState.Selected = false;
             }
-            OnDeselectCharacter();
+            OnDeselectCharacter?.Invoke();
             SelectedCharacter = null;
         }
 
         private void SelectCharacter(ISelectableActor c)
         {
+            Debug.Log("SELECT CHARACTER "+c);
             if (SelectedCharacter != null)
             {
                 DeselectActiveCharacter();
             }
             SelectedCharacter = c;
             c.UnitTurnState.Selected = true;
-            OnSelectedCharacter(SelectedCharacter);
+            
+            OnSelectedCharacter?.Invoke(SelectedCharacter);
         }
 
         private void EnemySelected(ISelectableActor c)
