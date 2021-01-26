@@ -1,12 +1,12 @@
-﻿namespace Game.Mechanics.Battle
-{
-    public class BattlePreview
-    {
-        public BattlePreviewStats Attacker { get; set; }
-        public BattlePreviewStats Defender { get; set; }
+﻿using UnityEngine;
 
-        public BattlePreview()
-        {
-        }
+namespace Game.Mechanics.Battle
+{
+    [CreateAssetMenu(menuName =  "Debug/BattlePreview", fileName="battlePreview")]
+    public class BattlePreview : ScriptableObject
+    {
+        public BattlePreviewStats Attacker;
+        public BattlePreviewStats Defender;
+
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Utility
 {
+    [ExecuteInEditMode]
     public class ColorManager : MonoBehaviour {
 
         public Color MainGreenColor;
