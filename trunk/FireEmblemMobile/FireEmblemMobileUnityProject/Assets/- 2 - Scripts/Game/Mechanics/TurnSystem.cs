@@ -55,7 +55,7 @@ namespace Game.Mechanics
             OnStartTurn?.Invoke();
             foreach (var c in factionManager.ActiveFaction.Units)
             {
-                c.UpdateTurn();
+                c.TurnStateManager.UpdateTurn();
             }
         }
 
@@ -64,7 +64,7 @@ namespace Game.Mechanics
             //Debug.Log("EndTurn!");
             foreach (var c in factionManager.ActiveFaction.Units)
             {
-                c.EndTurn();
+                c.TurnStateManager.EndTurn();
                 //c.gameObject.GetComponent<CharacterScript>().SetSelected(false);
             }
 

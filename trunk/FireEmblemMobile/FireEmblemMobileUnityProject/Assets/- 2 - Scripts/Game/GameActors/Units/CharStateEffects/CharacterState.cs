@@ -18,8 +18,7 @@ namespace Game.GameActors.Units.CharStateEffects
                 return true;
             return false;
         }
-
-        public abstract void Remove(Unit unit);
+        
 
         private void OnEnable()
         {

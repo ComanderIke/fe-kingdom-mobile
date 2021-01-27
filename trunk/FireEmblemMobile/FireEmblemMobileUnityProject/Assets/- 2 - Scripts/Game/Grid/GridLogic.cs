@@ -62,8 +62,8 @@ namespace Game.Grid
 
         public List<IGridActor> GetAttackTargetsAtGameObjectPosition(Unit unit)
         {
-            int x = (int) unit.GameTransform.GetPosition().x;
-            int y = (int) unit.GameTransform.GetPosition().y;
+            int x = (int) unit.GameTransformManager.GetPosition().x;
+            int y = (int) unit.GameTransformManager.GetPosition().y;
             var targets = new List<IGridActor>();
             foreach (int attackRange in unit.Stats.AttackRanges)
             {

@@ -50,32 +50,27 @@ namespace Game.Map
             Tiles[u.GridPosition.X, u.GridPosition.Y].Actor = null;
         }
       
-        private void OnEnemySelected(ISelectableActor u)
+        private void OnEnemySelected(IGridActor gridActor)
         {
-            if (u is IGridActor gridActor)
-            {
-                HideMoveRange();
-                ShowMovementRangeOnGrid(gridActor);
 
-                ShowAttackRangeOnGrid(gridActor, new List<int>(gridActor.AttackRanges), true);
-                GridLogic.ResetActiveFields();
-            }
+            HideMoveRange();
+            ShowMovementRangeOnGrid(gridActor);
+
+            ShowAttackRangeOnGrid(gridActor, new List<int>(gridActor.AttackRanges), true);
+            GridLogic.ResetActiveFields();
         }
         public Tile GetTileFromVector2(Vector2 pos)
         {
             return Tiles[(int) pos.x, (int) pos.y];
         }
-        private void SelectedCharacter(ISelectableActor u)
+        private void SelectedCharacter(IGridActor gridActor)
         {
-            if (u is IGridActor gridActor)
-            {
-                HideMoveRange();
 
-                ShowMovementRangeOnGrid(gridActor);
-                //if (!u.UnitTurnState.HasAttacked)
-                ShowAttackRangeOnGrid(gridActor, new List<int>(u.AttackRanges));
-                
-            }
+            HideMoveRange();
+
+            ShowMovementRangeOnGrid(gridActor);
+            //if (!u.UnitTurnState.HasAttacked)
+            ShowAttackRangeOnGrid(gridActor, new List<int>(gridActor.AttackRanges));
 
         }
 
@@ -128,7 +123,7 @@ namespace Game.Map
             {
                 if (!IsTileMoveableAndActive(x, y))
                 {
-                    GridRenderer.SetFieldMaterialAttack(new Vector2(x, y), character.FactionId, !character.HasMoved(), GridGameManager.Instance.FactionManager.IsActiveFaction(character.FactionId));
+                    GridRenderer.SetFieldMaterialAttack(new Vector2(x, y), character.FactionId, !character.TurnStateManager.HasMoved, GridGameManager.Instance.FactionManager.IsActiveFaction(character.FactionId));
                     GridLogic.gridSessionData.AddValidAttackPosition(x, y);
                 }
 
@@ -178,7 +173,7 @@ namespace Game.Map
                 return;
             }
 
-            GridRenderer.SetFieldMaterial(new Vector2(x, y), unit.FactionId, !unit.HasMoved(),GridGameManager.Instance.FactionManager.IsActiveFaction(unit.FactionId));
+            GridRenderer.SetFieldMaterial(new Vector2(x, y), unit.FactionId, !unit.TurnStateManager.HasMoved,GridGameManager.Instance.FactionManager.IsActiveFaction(unit.FactionId));
             GridLogic.gridSessionData.AddValidPosition(x, y);
             NodeHelper.Nodes[x, y].C = c;
             c++;

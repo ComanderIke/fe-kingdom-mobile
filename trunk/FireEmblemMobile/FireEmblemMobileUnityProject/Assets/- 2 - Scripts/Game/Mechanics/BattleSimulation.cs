@@ -2,29 +2,30 @@
 using System.Collections.Generic;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
+using Game.GameInput;
 
 namespace Game.Mechanics
 {
     public class BattleSimulation
     {
-        public Unit Attacker { get; private set; }
-        public Unit Defender { get; private set; }
+        public IBattleActor Attacker { get; private set; }
+        public IBattleActor Defender { get; private set; }
         public List<Boolean> AttackSequence;
         public List<int> AttackerDamage;
         public List<int> DefenderDamage;
         public List<int> AttackerSpDamage;
         public List<int> DefenderSpDamage;
-        public BattleSimulation(Unit attacker, Unit defender)
+        public BattleSimulation(IBattleActor attacker, IBattleActor defender)
         {
-            Attacker = (Unit)attacker.Clone();
-            Defender = (Unit)defender.Clone();
+            Attacker = attacker.Clone();
+            Defender = defender.Clone();
             AttackSequence = new List<bool>();
             AttackerDamage = new List<int>();
             DefenderDamage = new List<int>();
             AttackerSpDamage = new List<int>();
             DefenderSpDamage = new List<int>();
         }
-        public bool DoAttack(Unit attacker, Unit defender)
+        public bool DoAttack(IBattleActor attacker, IBattleActor defender)
         {
             int damage = attacker.BattleStats.GetDamageAgainstTarget(defender);
             int spDamage= attacker.BattleStats.GetTotalSpDamageAgainstTarget(defender);

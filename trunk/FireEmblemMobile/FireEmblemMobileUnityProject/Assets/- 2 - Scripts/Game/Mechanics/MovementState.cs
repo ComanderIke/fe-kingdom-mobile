@@ -117,8 +117,8 @@ namespace Game.Mechanics
         {
             Debug.Log("Exit MoveState!"+x+" "+y);
             gridGameManager.GetSystem<GridSystem>().SetUnitPosition(unit,x,y);
-            unit.UnitTurnState.Selected = false;
-            unit.UnitTurnState.HasMoved = true;
+            unit.TurnStateManager.IsSelected = false;
+            unit.TurnStateManager.HasMoved = true;
             GridInputSystem.SetActive(true);
             OnMovementFinished?.Invoke(unit);
         }

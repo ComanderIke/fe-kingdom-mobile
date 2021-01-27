@@ -15,7 +15,7 @@ namespace Game.GameInput
         public static event Event OnDeselectUnit;
         public static event Event OnExecuteInputActions;
         public delegate void UnitEvent(IGridActor u);
-        public delegate void SelectEvent(ISelectableActor actor);
+        public delegate void SelectEvent(IGridActor actor);
         public static event SelectEvent OnSelectUnit;
         public static event SelectEvent OnWait;
         public static event UnitEvent OnViewUnit;
@@ -45,15 +45,14 @@ namespace Game.GameInput
         public void SelectUnit(IGridActor u)
         {
             Debug.Log("GameInput: Select Unit: " + u);
-            if(u is ISelectableActor actor)
-                OnSelectUnit?.Invoke(actor);
+            OnSelectUnit?.Invoke(u);
         }
         public void ViewUnit(Unit u)
         {
             Debug.Log("GameInput: View Unit: " + ((Object) u).name);
             OnViewUnit?.Invoke(u);
         }
-        public void Wait(ISelectableActor u)
+        public void Wait(IGridActor u)
         {
             Debug.Log("GameInput: Wait Unit: " + u);
             OnWait?.Invoke(u);

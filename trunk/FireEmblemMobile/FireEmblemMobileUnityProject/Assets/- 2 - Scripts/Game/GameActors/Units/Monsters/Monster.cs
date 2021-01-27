@@ -7,11 +7,6 @@ namespace Game.GameActors.Units.Monsters
     public class Monster : Unit
     {
         public MonsterType Type;
-
-        private new void OnEnable()
-        {
-            base.OnEnable();
-            GridPosition = new GridPosition(this);
-        }
+        
     }
 }

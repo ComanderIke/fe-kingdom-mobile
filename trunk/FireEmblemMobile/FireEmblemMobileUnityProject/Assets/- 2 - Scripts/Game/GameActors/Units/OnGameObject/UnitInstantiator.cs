@@ -13,7 +13,7 @@ namespace Game.GameActors.Units.OnGameObject
         public void PlaceCharacter(Unit unit, int x, int y)
         {
             var unitGameObject = Instantiate(UnitNormal);
-            unitGameObject.GetComponentInChildren<SpriteRenderer>().sprite = unit.CharacterSpriteSet.MapSprite;
+            unitGameObject.GetComponentInChildren<SpriteRenderer>().sprite = unit.visuals.CharacterSpriteSet.MapSprite;
             
             unitGameObject.GetComponentInChildren<BuffUi>()?.Initialize(unit);
             unitGameObject.name = unit.name;
@@ -29,7 +29,7 @@ namespace Game.GameActors.Units.OnGameObject
             unitAnimator.unit = unit;
           
             
-            unit.GameTransform.GameObject = unitGameObject;
+            unit.GameTransformManager.GameObject = unitGameObject;
             GridGameManager.Instance.GetSystem<GridSystem>().SetUnitPosition(unit, x, y);
             
 

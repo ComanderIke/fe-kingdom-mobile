@@ -2,7 +2,7 @@
 
 namespace Game.GameActors.Units.OnGameObject
 {
-    public class GameTransform
+    public class GameTransformManager
     {
         public GameObject GameObject { get; set; }
 

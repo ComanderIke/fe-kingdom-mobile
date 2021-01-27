@@ -58,7 +58,7 @@ namespace Game.GUI
             statPanel.SetStats(unit.Stats);
             hpBar.SetValue(unit.Hp, unit.Stats.MaxHp);
             spBar.SetValue(unit.Sp, unit.Stats.MaxSp);
-            faceSprite.sprite = unit.CharacterSpriteSet.FaceSprite;
+            faceSprite.sprite = unit.visuals.CharacterSpriteSet.FaceSprite;
         }
 
         

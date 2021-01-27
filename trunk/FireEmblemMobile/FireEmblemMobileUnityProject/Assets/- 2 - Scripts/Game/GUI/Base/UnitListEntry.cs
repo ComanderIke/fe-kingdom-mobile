@@ -14,7 +14,7 @@ namespace Game.GUI.Base
         public void SetUnit(Unit unit)
         {
             this.unit = unit;
-            sprite.sprite = unit.CharacterSpriteSet.MapSprite;
+            sprite.sprite = unit.visuals.CharacterSpriteSet.MapSprite;
             nameText.text = unit.name;
         }
     }

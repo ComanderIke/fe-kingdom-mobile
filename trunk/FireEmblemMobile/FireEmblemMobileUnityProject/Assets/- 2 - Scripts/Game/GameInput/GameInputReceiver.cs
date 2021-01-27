@@ -114,11 +114,8 @@ namespace Game.GameInput
         {
             if (IsActiveFaction(unit))
             {
-                if (unit is ISelectableActor selectAbleUnit)
-                {
-                    gameplayInput.Wait(selectAbleUnit);
-                    gameplayInput.ExecuteInputActions(null);
-                }
+                gameplayInput.Wait(unit);
+                gameplayInput.ExecuteInputActions(null);
             }
             else
             {
@@ -242,8 +239,7 @@ namespace Game.GameInput
                                     gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, new GridPosition(selectedActor.GridPosition.X, selectedActor.GridPosition.Y));
                             }
                         }
-                        if(enemyActor is ISelectableActor selectableEnemyActor)
-                            selectionDataProvider.SetSelectedAttackTarget(selectableEnemyActor);
+                        selectionDataProvider.SetSelectedAttackTarget(enemyActor);
                     }
                     else
                     {
@@ -271,8 +267,7 @@ namespace Game.GameInput
             {
                 if(character is IBattleActor battleActor && enemy is IBattleActor enemyBattleActor)
                     gameplayInput.AttackUnit(battleActor, enemyBattleActor);
-                if(character is ISelectableActor selectableActor)
-                    gameplayInput.Wait(selectableActor);
+                gameplayInput.Wait(character);
                 gameplayInput.ExecuteInputActions(null);
             }
             else if(movePath!=null) //go to enemy cause not in range
@@ -285,8 +280,7 @@ namespace Game.GameInput
                 }
                 if(character is IBattleActor battleActor && enemy is IBattleActor enemyBattleActor)
                     gameplayInput.AttackUnit(battleActor, enemyBattleActor);
-                if(character is ISelectableActor selectableActor)
-                    gameplayInput.Wait(selectableActor);
+                gameplayInput.Wait(character);
                 gameplayInput.ExecuteInputActions(null);
             }
         }
@@ -312,8 +306,7 @@ namespace Game.GameInput
             Debug.Log("Dragged on enemy: " + enemy +" at ["+x+"/"+y+"]");
             if (!IsTileAttackAble(x,y))
                 return;
-            if(enemy is ISelectableActor selectAbleEnemy)
-                selectionDataProvider.SetSelectedAttackTarget(selectAbleEnemy);
+            selectionDataProvider.SetSelectedAttackTarget(enemy);
             if (inputPathManager.IsMovementPathEmpty())
             {
                 if(selectedActor.CanAttack(x, y))
@@ -389,7 +382,7 @@ namespace Game.GameInput
         }
 
         
-        private void OnSelectedCharacter(ISelectableActor u)
+        private void OnSelectedCharacter(IGridActor u)
         {
             ResetInput();
         }

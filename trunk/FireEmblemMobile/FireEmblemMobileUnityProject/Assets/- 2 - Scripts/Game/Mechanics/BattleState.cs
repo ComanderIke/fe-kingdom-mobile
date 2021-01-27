@@ -57,7 +57,7 @@ namespace Game.Mechanics
         public override void Exit()
         {
             // HideFightVisuals();
-            attacker.UnitTurnState.HasAttacked = true;
+            attacker.TurnStateManager.HasAttacked = true;
             attacker = null;
             defender = null;
 

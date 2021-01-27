@@ -3,6 +3,7 @@ using Game.GameInput;
 using Game.GameResources;
 using Game.Manager;
 using Game.Mechanics;
+using Game.Mechanics.Battle;
 using GameEngine;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -15,11 +16,14 @@ namespace Game.GUI
     {
         public ICharacterUI characterUI;
         public ICharacterUI enemyCharacterUI;
+        public IAttackPreviewUI attackPreviewUI;
         public void Init()
         {
             UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
             UnitSelectionSystem.OnEnemySelected += SelectedEnemyCharacter;
             UnitSelectionSystem.OnDeselectCharacter += DeselectedCharacter;
+            UnitActionSystem.OnCheckAttackPreview += ShowAttackPreviewUI;
+            GridInputSystem.OnResetInput += HideAttacPreviewUI;
             //gridGameManager = GridGameManager.Instance;
             //     gameplayInput = new GameplayInput();
             //     
@@ -29,7 +33,7 @@ namespace Game.GUI
             //     UnitSelectionSystem.OnEnemySelected += ShowTopUi;
             //     UnitSelectionSystem.OnSelectedInActiveCharacter += ShowTopUi;
             //
-            //    // UnitActionSystem.OnCheckAttackPreview += ShowAttackPreview;
+            //    // 
             //     Unit.OnUnitLevelUp += ShowLevelUpScreen;
             //     GridInputSystem.OnDragOverTile += HideAttackPreview;
             //     GridInputSystem.OnDragReset += HideAttackPreview;
@@ -46,13 +50,23 @@ namespace Game.GUI
             //     HideDeselectButton();//Start with Button ACtive for Performance Reasons
             //     attackPreview.Hide();
         }
+
+        private void ShowAttackPreviewUI(BattlePreview battlePreview)
+        {
+            attackPreviewUI.Show(battlePreview);
+        }
+
+        private void HideAttacPreviewUI()
+        {
+            attackPreviewUI.Hide();
+        }
        
-        private void SelectedCharacter(ISelectableActor actor)
+        private void SelectedCharacter(IGridActor actor)
         {
             if(actor is Unit u)
                 characterUI.Show(u);
         }
-        private void SelectedEnemyCharacter(ISelectableActor actor)
+        private void SelectedEnemyCharacter(IGridActor actor)
         {
             if(actor is Unit u)
                 enemyCharacterUI.Show(u);

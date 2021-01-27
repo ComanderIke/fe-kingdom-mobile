@@ -56,8 +56,8 @@ namespace Testing.PlayMode
             UnitInputController unitInputController = GameObject.Find("Hector").GetComponent<UnitInputController>();
             unitInputController.OnMouseDown();
             unitInputController.OnMouseUp();
-            int x = unitInputController.unit.GridPosition.X;
-            int y = unitInputController.unit.GridPosition.Y;
+            int x = unitInputController.unit.GridComponent.GridPosition.X;
+            int y = unitInputController.unit.GridComponent.GridPosition.Y;
             UnitSelectionSystem selectionSystem = GridGameManager.Instance.GetSystem<UnitSelectionSystem>();
             Assert.AreEqual(unitInputController.unit, selectionSystem.SelectedCharacter);
             yield return null;
@@ -70,9 +70,9 @@ namespace Testing.PlayMode
             unitInputController.OnMouseUp();
             //inputSystem.GridClicked(2,1);
             
-            Debug.Log(unitInputController.unit.GridPosition.X+" "+unitInputController.unit.GridPosition.Y);
-            Assert.AreEqual(unitInputController.unit.GridPosition.X, 2);
-            Assert.AreEqual(unitInputController.unit.GridPosition.Y, 1);
+            Debug.Log(unitInputController.unit.GridComponent.GridPosition.X+" "+unitInputController.unit.GridComponent.GridPosition.Y);
+            Assert.AreEqual(unitInputController.unit.GridComponent.GridPosition.X, 2);
+            Assert.AreEqual(unitInputController.unit.GridComponent.GridPosition.Y, 1);
             Assert.AreEqual(unitInputController.unit, gridSystem.Tiles[2, 1].Actor);
             Assert.Null(gridSystem.Tiles[x, y].Actor);
 
@@ -85,8 +85,8 @@ namespace Testing.PlayMode
             UnitInputController unitInputController = GameObject.Find("Leila").GetComponent<UnitInputController>();
           //  unitInputController.OnMouseDown();
             unitInputController.StartDrag();
-            int x = unitInputController.unit.GridPosition.X;
-            int y = unitInputController.unit.GridPosition.Y;
+            int x = unitInputController.unit.GridComponent.GridPosition.X;
+            int y = unitInputController.unit.GridComponent.GridPosition.Y;
             UnitSelectionSystem selectionSystem = GridGameManager.Instance.GetSystem<UnitSelectionSystem>();
             yield return null;
             Assert.AreEqual(unitInputController.unit, selectionSystem.SelectedCharacter);
@@ -102,9 +102,9 @@ namespace Testing.PlayMode
             GridSystem gridSystem = GridGameManager.Instance.GetSystem<GridSystem>();
             //inputSystem.GridClicked(2,1);
             
-            Debug.Log(unitInputController.unit.GridPosition.X+" "+unitInputController.unit.GridPosition.Y);
-            Assert.AreEqual(unitInputController.unit.GridPosition.X, 2);
-            Assert.AreEqual(unitInputController.unit.GridPosition.Y, 5);
+            Debug.Log(unitInputController.unit.GridComponent.GridPosition.X+" "+unitInputController.unit.GridComponent.GridPosition.Y);
+            Assert.AreEqual(unitInputController.unit.GridComponent.GridPosition.X, 2);
+            Assert.AreEqual(unitInputController.unit.GridComponent.GridPosition.Y, 5);
             Assert.AreEqual(unitInputController.unit, gridSystem.Tiles[2, 5].Actor);
             Assert.Null(gridSystem.Tiles[x, y].Actor);
 

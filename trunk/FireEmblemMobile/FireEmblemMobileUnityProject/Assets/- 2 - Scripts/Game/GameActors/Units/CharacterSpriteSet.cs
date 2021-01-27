@@ -3,7 +3,8 @@
 namespace Game.GameActors.Units
 {
     [System.Serializable]
-    public class CharacterSpriteSet
+    [CreateAssetMenu(menuName = "GameData/Units/Visual", fileName = "UnitVisual")]
+    public class CharacterSpriteSet:ScriptableObject
     {
         public Sprite FaceSprite;
         public Sprite MapSprite;

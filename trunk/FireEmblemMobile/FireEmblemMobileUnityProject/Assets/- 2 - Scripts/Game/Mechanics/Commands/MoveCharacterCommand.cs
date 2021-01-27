@@ -38,7 +38,7 @@ namespace Game.Mechanics.Commands
         public override void Undo()
         {
             unit.SetPosition(oldX, oldY);
-            unit.UnitTurnState.Reset();
+            unit.TurnStateManager.Reset();
         }
     }
 }

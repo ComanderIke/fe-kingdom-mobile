@@ -7,9 +7,9 @@ namespace Game.Mechanics.Commands
 {
     public class WaitCommand : Command
     {
-        private readonly ISelectableActor unit;
+        private readonly IGridActor unit;
 
-        public WaitCommand(ISelectableActor unit)
+        public WaitCommand(IGridActor unit)
         {
             this.unit = unit;
         }
@@ -18,12 +18,12 @@ namespace Game.Mechanics.Commands
         {
             Debug.Log("Execute Wait Command!");
             var unitSelectionManager = GridGameManager.Instance.GetSystem<UnitSelectionSystem>();
-            if (unit != null && !unit.UnitTurnState.IsWaiting)
+            if (unit != null && !unit.TurnStateManager.IsWaiting)
             {
                 GridGameManager.Instance.GetSystem<Map.GridSystem>().HideMoveRange();
-                unit.UnitTurnState.IsWaiting = true;
-                unit.UnitTurnState.Selected = false;
-                unit.UnitTurnState.HasMoved = true;
+                unit.TurnStateManager.IsWaiting = true;
+                unit.TurnStateManager.IsSelected = false;
+                unit.TurnStateManager.HasMoved = true;
             }
             unitSelectionManager.DeselectActiveCharacter();
         }

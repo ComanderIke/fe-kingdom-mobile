@@ -9,19 +9,19 @@ namespace Game.GameInput
     public class SelectionManager : ISelectionDataProvider
     {
         private UnitSelectionSystem unitSelectionSystem;
-        public ISelectableActor SelectedActor => unitSelectionSystem.SelectedCharacter;
+        public IGridActor SelectedActor => unitSelectionSystem.SelectedCharacter;
         private int SelectedTileX { get; set; }
         private int SelectedTileY { get; set; }
-        private ISelectableActor selectedAttackTarget;
+        private IGridActor selectedAttackTarget;
 
-        public void SetSelectedAttackTarget(ISelectableActor target)
+        public void SetSelectedAttackTarget(IGridActor target)
         {
             selectedAttackTarget?.SetAttackTarget(false);
             selectedAttackTarget = target;
             target?.SetAttackTarget(true);
         }
 
-        public ISelectableActor GetSelectedAttackTarget()
+        public IGridActor GetSelectedAttackTarget()
         {
             return selectedAttackTarget;
         }

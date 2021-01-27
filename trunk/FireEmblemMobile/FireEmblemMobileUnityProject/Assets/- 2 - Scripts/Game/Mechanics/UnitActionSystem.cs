@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Game.GameActors.Units;
 using Game.GameInput;
 using Game.Grid;
+using Game.Manager;
+using Game.Mechanics.Battle;
 using Game.Mechanics.Commands;
 using GameEngine;
 using UnityEngine;
@@ -20,7 +22,7 @@ namespace Game.Mechanics
         public static event Action OnUndo;
         public static Action TriggerUndo;
 
-        public delegate void OnCheckAttackPreviewEvent(IBattleActor u, IBattleActor target);
+        public delegate void OnCheckAttackPreviewEvent(BattlePreview battlePreview);
         public static event OnCheckAttackPreviewEvent OnCheckAttackPreview;
 
         #endregion
@@ -79,7 +81,7 @@ namespace Game.Mechanics
 
         #region GameplayCommands
 
-        public void Wait(ISelectableActor unit)
+        public void Wait(IGridActor unit)
         {
             var mCc = new WaitCommand(unit);
             currentActions.Enqueue(mCc);
@@ -91,8 +93,8 @@ namespace Game.Mechanics
         }
         public void CheckAttackPreview(IBattleActor u, IBattleActor target, GridPosition attackPosition)
         {
-            
-            OnCheckAttackPreview?.Invoke(u, target);
+            var preview = GridGameManager.Instance.GetSystem<BattleSystem>().GetBattlePreview(u, target);
+            OnCheckAttackPreview?.Invoke(preview);
         }
         public void MoveCharacter(IGridActor c, GridPosition destination, List<GridPosition> path = null)
         {

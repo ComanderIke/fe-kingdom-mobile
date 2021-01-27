@@ -79,7 +79,7 @@ namespace Game.GUI
             else
                 sp.text = c.Sp + "/" + c.Stats.MaxSp;
             //atk.text = "" + c.BattleStats.GetAttackDamage();
-            characterSprite.sprite = c.CharacterSpriteSet.FaceSprite;
+            characterSprite.sprite = c.visuals.CharacterSpriteSet.FaceSprite;
            
             foreach (var motivationSprite in motivationSprites)
             {

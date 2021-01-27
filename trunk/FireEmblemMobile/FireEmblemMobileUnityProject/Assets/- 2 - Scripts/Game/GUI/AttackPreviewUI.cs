@@ -11,7 +11,7 @@ using UnityEngine.UI;
 namespace Game.GUI
 {
     [ExecuteInEditMode]
-    public class AttackPreviewUI : MonoBehaviour
+    public class AttackPreviewUI : IAttackPreviewUI
     {
         [SerializeField] private Canvas canvas = default;
         [SerializeField] private CanvasGroup canvasGroup = default;
@@ -93,8 +93,10 @@ namespace Game.GUI
              //sklValueRight.text = "" + battlePreview.Defender.Skill;
         }
 
-        public void Show(BattlePreview battlePreview, Sprite attackerFace, Sprite defenderFace)
+        public override void Show(BattlePreview battlePreview, UnitVisual attackerVisual, UnitVisual defenderVisual)
         {
+            attackerSprite = battlePreview.Attacker.
+            defenderSprite = battlePreview.Defender.
             this.battlePreview = battlePreview;
             this.gameObject.SetActive(true);
             UpdateValues();
@@ -150,7 +152,7 @@ namespace Game.GUI
                 scaleAnimations = GetComponentsInChildren<ScaleAnimation>();
         }
        
-        public void Hide()
+        public override void Hide()
         {
             this.gameObject.SetActive(true);
             // if (!visible)

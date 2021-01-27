@@ -16,10 +16,10 @@ namespace Game.GUI
 
         public void Initialize(Unit unit)
         {
-            unit.OnBuffAdded += AddBuff;
-            unit.OnDebuffAdded += AddBuff;
-            unit.OnBuffRemoved += RemoveBuff;
-            unit.OnDebuffRemoved += RemoveBuff;
+            // unit.OnBuffAdded += AddBuff;
+            // unit.OnDebuffAdded += AddBuff;
+            // unit.OnBuffRemoved += RemoveBuff;
+            // unit.OnDebuffRemoved += RemoveBuff;
         }
         void AddBuff(CharacterState state)
         {

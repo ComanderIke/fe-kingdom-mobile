@@ -4,6 +4,7 @@ using System.Linq;
 using Game.GameActors.Items.Weapons;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
+using Game.GameInput;
 using UnityEngine;
 
 namespace Game.Mechanics.Battle
@@ -13,21 +14,21 @@ namespace Game.Mechanics.Battle
         private const int AGILITY_TO_DOUBLE = 5;
         private const float FRONTAL_ATTACK_MOD = 1.5f;
 
-        private readonly Unit owner;
+        private readonly IBattleActor owner;
         public float FrontalAttackModifier { get; set; }
 
-        public BattleStats(Unit owner)
+        public BattleStats(IBattleActor owner)
         {
             this.owner = owner;
             FrontalAttackModifier = FRONTAL_ATTACK_MOD;
         }
 
-        public bool CanKillTarget(Unit target, float attackMultiplier)
+        public bool CanKillTarget(IBattleActor target, float attackMultiplier)
         {
             return GetDamageAgainstTarget(target, attackMultiplier) >= target.Hp;
         }
 
-        public int GetAttackCountAgainst(Unit c)
+        public int GetAttackCountAgainst(IBattleActor c)
         {
             int attackCount = 1;
             //if (owner.Stats.Spd - (c.Stats.Spd) > 0)
@@ -43,7 +44,7 @@ namespace Game.Mechanics.Battle
             return attackCount;
         }
 
-        public bool CanDoubleAttack(Unit c)
+        public bool CanDoubleAttack(IBattleActor c)
         {
             return owner.Stats.Spd >= c.Stats.Spd + AGILITY_TO_DOUBLE;
         }
@@ -73,7 +74,7 @@ namespace Game.Mechanics.Battle
             return (int) Mathf.Clamp(attack, 0, Mathf.Infinity);
         }
 
-        public int GetDamageAgainstTarget(Unit target, float atkMultiplier = 1.0f)
+        public int GetDamageAgainstTarget(IBattleActor target, float atkMultiplier = 1.0f)
         {
             var atkMulti = new List<float> { atkMultiplier };
             if (target.Sp <= 0)
@@ -82,7 +83,7 @@ namespace Game.Mechanics.Battle
 
         }
 
-        public int GetDamageAgainstTarget(Unit target, List<float> atkMultiplier)
+        public int GetDamageAgainstTarget(IBattleActor target, List<float> atkMultiplier)
         {
             if (target.Sp <= 0)
                 atkMultiplier.Add(2);
@@ -119,7 +120,7 @@ namespace Game.Mechanics.Battle
                 return (int) Mathf.Clamp(damage - owner.Stats.Def, 1, Mathf.Infinity);
         }
 
-        public int GetTotalDamageAgainstTarget(Unit target)
+        public int GetTotalDamageAgainstTarget(IBattleActor target)
         {
             int attacks = 1;
             float multiplier = 1.0f;
@@ -130,7 +131,7 @@ namespace Game.Mechanics.Battle
 
         
 
-        public AttackData CreateAttackData(Unit target, List<float> attackMultipliers,
+        public AttackData CreateAttackData(IBattleActor target, List<float> attackMultipliers,
             List<AttackAttributes> attackAttributes)
         {
             if (attackAttributes.Contains(AttackAttributes.FrontalAttack))
@@ -151,7 +152,7 @@ namespace Game.Mechanics.Battle
             return attackData;
         }
 
-        public int GetTotalSpDamageAgainstTarget(Unit attacker)
+        public int GetTotalSpDamageAgainstTarget(IBattleActor attacker)
         {
             return Math.Max(owner.Stats.Skl - attacker.Stats.Skl,1);
         }

@@ -71,7 +71,7 @@ namespace Game.GameActors.Units.OnGameObject
                
                 dragStarted = false;
                 dragInitiated = true;
-                if (unit.UnitTurnState.IsDragable()) DragManager.Dragging();
+                if (unit.IsDragable()) DragManager.Dragging();
             }
         }
 
@@ -94,13 +94,13 @@ namespace Game.GameActors.Units.OnGameObject
                 {
                    
                     timerForDoubleClick = 0;
-                    unitSelectedBeforeClicking = unit.UnitTurnState.Selected;
+                    unitSelectedBeforeClicking = unit.TurnStateManager.IsSelected;
                     doubleClick = true;
                 }
                 else
                 {
                     timerForDoubleClick = Time.time;
-                    if (unit.UnitTurnState.IsDragable())
+                    if (unit.IsDragable())
                         DragManager.StartDrag();
                 }
 
@@ -125,7 +125,7 @@ namespace Game.GameActors.Units.OnGameObject
 
                 boxCollider.enabled = true;
             }
-            else if (!CameraSystem.IsDragging && (unitSelectedBeforeClicking||(unit.Faction.Id != GridGameManager.Instance.FactionManager.ActivePlayerNumber||doubleClick||unit.UnitTurnState.IsWaiting)))
+            else if (!CameraSystem.IsDragging && (unitSelectedBeforeClicking||(unit.Faction.Id != GridGameManager.Instance.FactionManager.ActivePlayerNumber||doubleClick||unit.TurnStateManager.IsWaiting)))
             {
                 if (!EventSystem.current.IsPointerOverGameObject())
                 {
@@ -157,8 +157,8 @@ namespace Game.GameActors.Units.OnGameObject
             GridGameManager.Instance.GetSystem<CameraSystem>().DeactivateMixin<DragCameraMixin>();
             dragStarted = true;
             InputReceiver.StartDraggingActor(unit);
-            unitSelectedBeforeClicking = unit.UnitTurnState.Selected;
-            if (!unit.UnitTurnState.Selected)
+            unitSelectedBeforeClicking = unit.TurnStateManager.IsSelected;
+            if (!unit.TurnStateManager.IsSelected)
                 if (!EventSystem.current.IsPointerOverGameObject())
                 {
                     Unit.OnUnitActiveStateUpdated?.Invoke(unit, false, true);

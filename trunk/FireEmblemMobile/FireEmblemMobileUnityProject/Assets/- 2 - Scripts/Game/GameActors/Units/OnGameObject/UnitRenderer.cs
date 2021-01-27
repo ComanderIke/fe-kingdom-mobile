@@ -27,7 +27,7 @@ namespace Game.GameActors.Units.OnGameObject
         {
             Unit.HpValueChanged += HpValueChanged;
             Unit.SpValueChanged += SpValueChanged;
-            Unit.UnitWaiting += SetWaitingSprite;
+            unit.TurnStateManager.UnitWaiting += SetWaitingSprite;
             Human.OnEquippedWeapon += OnEquippedWeapon;
             HpValueChanged();
             SpValueChanged();
@@ -59,7 +59,7 @@ namespace Game.GameActors.Units.OnGameObject
         {
             Unit.HpValueChanged -= HpValueChanged;
             Unit.SpValueChanged -= SpValueChanged;
-            Unit.UnitWaiting -= SetWaitingSprite;
+            unit.TurnStateManager.UnitWaiting -= SetWaitingSprite;
             Human.OnEquippedWeapon -= OnEquippedWeapon;
         }
         public void SetVisible(bool visible)

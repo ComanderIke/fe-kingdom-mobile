@@ -1,5 +1,6 @@
 ﻿using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
+using Game.GameInput;
 using Game.GUI;
 using Game.Manager;
 using Game.Mechanics.Battle;
@@ -48,8 +49,8 @@ namespace Game.Mechanics
             battleSimulation.StartBattle();
             battleStarted = true;
             currentAttackIndex = 0;
-            attackerAttackCount = attacker.BattleStats.GetAttackCountAgainst(defender);
-            defenderAttackCount = defender.BattleStats.GetAttackCountAgainst(attacker);
+            attackerAttackCount = attacker.BattleComponent.BattleStats.GetAttackCountAgainst(defender);
+            defenderAttackCount = defender.BattleComponent.BattleStats.GetAttackCountAgainst(attacker);
         }
 
         public void ContinueBattle(Unit Attacker, Unit defender)
@@ -68,8 +69,8 @@ namespace Game.Mechanics
 
         public static bool DoAttack(Unit attacker, Unit defender)
         {
-            defender.InflictDamage(attacker.BattleStats.GetDamageAgainstTarget(defender), defender);
-            defender.Sp -= attacker.BattleStats.GetTotalSpDamageAgainstTarget(defender);
+            defender.BattleComponent.InflictDamage(attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defender), defender);
+            defender.Sp -= attacker.BattleComponent.BattleStats.GetTotalSpDamageAgainstTarget(defender);
             if (attacker is Human humanAttacker && humanAttacker.EquippedWeapon != null)
             {
                 attacker.Sp -= humanAttacker.EquippedWeapon.Weight;
@@ -149,7 +150,7 @@ namespace Game.Mechanics
             return exp;
         }
 
-        public BattlePreview GetBattlePreview(Unit attacker, Unit defender)
+        public BattlePreview GetBattlePreview(IBattleActor attacker, IBattleActor defender)
         {
             var battlePreview = new BattlePreview();
             battleSimulation = new BattleSimulation(attacker, defender);
