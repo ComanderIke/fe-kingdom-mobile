@@ -11,13 +11,13 @@ namespace Game.GameActors.Units
         public delegate void OnUnitCanMove(Unit unit, bool canMove);
 
         public OnUnitCanMove UnitCanMove;
-        public UnitTurnState UnitTurnState { get; private set; }
+        private UnitTurnState UnitTurnState { get; set; }
         private Unit unit;
 
         public TurnStateManager(Unit unit)
         {
             UnitTurnState = new UnitTurnState();
-            unit = this.unit;
+            this.unit = unit;
         }
 
         public bool IsWaiting

@@ -52,15 +52,15 @@ namespace Game.GameActors.Units.Humans
             }
         }
 
-        // protected override void HandleCloned(Unit clone)
-        // {
-        //     base.HandleCloned(clone);
-        //     var human = (Human) clone;
-        //     human.EquippedWeapon = (Weapon)EquippedWeapon?.Clone();
-        //     human.Inventory = (Inventory)Inventory.Clone();
-        //     human.Class = Class;
-        //     human.SkillManager = (SkillManager) SkillManager.Clone();
-        // }
+        protected override void HandleCloned(Unit clone)
+        {
+            base.HandleCloned(clone);
+            var human = (Human) clone;
+            human.EquippedWeapon = (Weapon)EquippedWeapon?.Clone();
+            human.Inventory = (Inventory)Inventory.Clone();
+            human.Class = Class;
+            human.SkillManager = (SkillManager) SkillManager.Clone();
+        }
         public Dictionary<WeaponType,string> WeaponProficiencies()
         {
             //PERFORMANCE PROBLEM!!!

@@ -53,7 +53,8 @@ namespace Game.GUI
 
         private void ShowAttackPreviewUI(BattlePreview battlePreview)
         {
-            attackPreviewUI.Show(battlePreview);
+            if(battlePreview.Attacker is Unit attacker && battlePreview.Defender is Unit defender)
+                attackPreviewUI.Show(battlePreview, attacker.visuals, defender.visuals);
         }
 
         private void HideAttacPreviewUI()

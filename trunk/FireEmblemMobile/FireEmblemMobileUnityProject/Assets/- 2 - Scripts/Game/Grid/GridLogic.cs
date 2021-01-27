@@ -33,8 +33,8 @@ namespace Game.Grid
 
         public List<IGridActor> GetAttackTargets(IGridActor unit)
         {
-            int x = unit.GridPosition.X;
-            int y = unit.GridPosition.Y;
+            int x = unit.GridComponent.GridPosition.X;
+            int y = unit.GridComponent.GridPosition.Y;
             var targets = new List<IGridActor>();
             foreach (int attackRange in unit.AttackRanges)
             {
@@ -48,7 +48,7 @@ namespace Game.Grid
                             if (IsOutOfBounds(new Vector2(x + i, y + j)))
                                 continue;
                             var unitOnTile = Tiles[i + x, j + y].Actor;
-                            if (unitOnTile != null && unitOnTile.FactionId != unit.FactionId)
+                            if (unitOnTile != null && unitOnTile.Faction.Id != unit.Faction.Id)
                             {
                                 targets.Add(unitOnTile);
                             }
@@ -77,7 +77,7 @@ namespace Game.Grid
                             if (IsOutOfBounds(new Vector2(x + i, y + j)))
                                 continue;
                             var unitOnTile = Tiles[i + x, j + y].Actor;
-                            if (unitOnTile != null && unitOnTile.FactionId != unit.Faction.Id)
+                            if (unitOnTile != null && unitOnTile.Faction.Id != unit.Faction.Id)
                             {
                                 targets.Add(unitOnTile);
                             }
@@ -113,7 +113,7 @@ namespace Game.Grid
             if (x >= 0 && y >= 0 && x < gridData.width && y < gridData.height)
             {
                 var field = Tiles[x, y];
-                if (unit.CanMoveOnTo(field))
+                if (unit.GridComponent.CanMoveOnTo(field))
                 {
                     if (field.Actor == null)
                         return true;
@@ -176,14 +176,14 @@ namespace Game.Grid
             var tile = Tiles[x, y];
             if ((!invalid) && ((sx != x) || (sy != y)))
             {
-                invalid = !unit.CanMoveOnTo(tile);
+                invalid = !unit.GridComponent.CanMoveOnTo(tile);
             }
 
             if (!invalid)
             {
                 if (tile.Actor != null)
                 {
-                    if (tile.Actor.CanMoveThrough(unit))
+                    if (tile.Actor.GridComponent.CanMoveThrough(unit))
                     {
                         invalid = true;
                     }
@@ -204,7 +204,7 @@ namespace Game.Grid
             var tile = Tiles[x, y];
             if (!invalid)
             {
-                invalid = !character.CanMoveOnTo(tile);
+                invalid = !character.GridComponent.CanMoveOnTo(tile);
                 if (tile.Actor != null)
                 {
                     if (tile.Actor != character)
@@ -223,7 +223,7 @@ namespace Game.Grid
         public IEnumerable<Tile> TilesFromWhereYouCanAttack(IGridActor character)
         {
             return (from Tile f in Tiles
-                where (f.X == character.GridPosition.X && f.Y == character.GridPosition.Y) ||
+                where (f.X == character.GridComponent.GridPosition.X && f.Y == character.GridComponent.GridPosition.Y) ||
                       (gridSessionData.IsMoveableAndActive(f.X, f.Y) && (f.Actor == null || f.Actor == character))
                 select f);
             //Todo fix on soft select tiles are not active so attack range from enemies not visible

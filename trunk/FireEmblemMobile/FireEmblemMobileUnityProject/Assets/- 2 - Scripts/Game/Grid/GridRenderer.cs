@@ -17,7 +17,7 @@ namespace Game.Grid
 
         public void ShowStandOnVisual(IGridActor c)
         {
-            Tiles[c.GridPosition.X, c.GridPosition.Y].TileRenderer.StandOnVisual();
+            Tiles[c.GridComponent.GridPosition.X, c.GridComponent.GridPosition.Y].TileRenderer.StandOnVisual();
         }
        
         public void SetFieldMaterial(Vector2 pos, int playerId, bool activeUnit, bool activePlayer)

@@ -6,6 +6,8 @@ namespace Game.GameActors.Units.OnGameObject
     {
         public GameObject GameObject { get; set; }
 
+        public Transform Transform => GameObject.transform;
+
         public UnitInputController UnitController => GameObject.GetComponent<UnitInputController>();
         public UnitAnimator UnitAnimator => GameObject.GetComponent<UnitAnimator>();
 

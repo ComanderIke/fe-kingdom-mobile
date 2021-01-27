@@ -11,9 +11,8 @@ namespace Game.GameActors.Units
        
         public IGridActor gridActor;
         public GridPosition GridPosition { get; set; }
-                
-        public int FactionId => gridActor.FactionId;
-        public IEnumerable<int> AttackRanges => gridActor.AttackRanges;
+        
+        
 
         
         public void ResetPosition()
@@ -42,7 +41,7 @@ namespace Game.GameActors.Units
         }
         public bool CanMoveThrough(IGridActor unit)
         {
-            return FactionId != unit.FactionId;
+            return gridActor.Faction.Id != unit.Faction.Id;
         }
         public bool CanAttack(int range)
         {
@@ -50,11 +49,11 @@ namespace Game.GameActors.Units
         }
         public bool CanAttack(int x, int y)
         {
-            return AttackRanges.Contains(DeltaPos(x, y));
+            return gridActor.AttackRanges.Contains(DeltaPos(x, y));
         }
         public bool CanAttackFrom(GridPosition attackFromPosition, GridPosition targetPosition)
         {
-            return AttackRanges.Contains(DeltaPos(attackFromPosition.X, attackFromPosition.Y, targetPosition.X, targetPosition.Y));
+            return gridActor.AttackRanges.Contains(DeltaPos(attackFromPosition.X, attackFromPosition.Y, targetPosition.X, targetPosition.Y));
         }
         private int DeltaPos(int x, int y)
         {

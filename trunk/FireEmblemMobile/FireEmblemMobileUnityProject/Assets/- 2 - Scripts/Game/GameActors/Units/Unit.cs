@@ -18,16 +18,35 @@ using UnityEngine;
 
 namespace Game.GameActors.Units
 {
-    public abstract class Unit : ScriptableObject, IGridActor, IBattleActor
+    public abstract class Unit : ScriptableObject, IGridActor, IBattleActor, ICloneable
     {
         public new string name;
 
         [HideInInspector] private int hp;
         [HideInInspector] private int sp;
 
-        public Stats Stats;
-        public Growths Growths;
-        public MoveType MoveType;
+        [SerializeField]
+        private Stats stats;
+        [SerializeField]
+        private Growths growths;
+        [SerializeField]
+        private MoveType moveType;
+
+        public MoveType MoveType
+        {
+            get => moveType;
+            set => moveType = value;
+        }
+        public Stats Stats
+        {
+            get => stats;
+            set => stats = value;
+        }
+        public Growths Growths
+        {
+            get => growths;
+            set => growths = value;
+        }
 
         [SerializeField] public UnitVisual visuals;
 
@@ -40,15 +59,11 @@ namespace Game.GameActors.Units
         public BattleComponent BattleComponent { get; set; }
 
         public GridComponent GridComponent { get; set; }
-
- 
-
+        
         public TurnStateManager TurnStateManager { get; set; }
 
         public StatusEffectManager StatusEffectManager { get; set; }
-
-   
-
+        
         public AIAgent Agent { get; private set; }
         public Faction Faction { get; set; }
         public Motivation Motivation { get; internal set; }
@@ -58,7 +73,7 @@ namespace Game.GameActors.Units
             get => hp;
             set
             {
-                hp = value > Stats.MaxHp ? Stats.MaxHp : value;
+                hp = value > stats.MaxHp ? stats.MaxHp : value;
 
                 if (hp <= 0) hp = 0;
                 HpValueChanged?.Invoke();
@@ -70,11 +85,16 @@ namespace Game.GameActors.Units
             get => sp;
             set
             {
-                sp = value > Stats.MaxSp ? Stats.MaxSp : value;
+                sp = value > stats.MaxSp ? stats.MaxSp : value;
                 if (sp <= 0) sp = 0;
                 SpValueChanged?.Invoke();
             }
         }
+
+        public IEnumerable<int> AttackRanges => stats.AttackRanges;
+        public int MovementRange => stats.Mov;
+        
+
         void OnDestroy()
         {
             ExperienceManager.LevelUp -= LevelUp;
@@ -91,12 +111,12 @@ namespace Game.GameActors.Units
             StatusEffectManager = new StatusEffectManager(this);
 
             Agent = new AIAgent();
-            Stats = Stats == null ? CreateInstance<Stats>() : Instantiate(Stats);
-            Growths = Growths == null ? CreateInstance<Growths>() : Instantiate(Growths);
+            stats = stats == null ? CreateInstance<Stats>() : Instantiate(stats);
+            growths = growths == null ? CreateInstance<Growths>() : Instantiate(growths);
             var tmp = unitEffectVisuals.Select(unitEffectVisual => Instantiate(unitEffectVisual)).ToList();
             unitEffectVisuals = tmp;
-            Hp = Stats.MaxHp;
-            Sp = Stats.MaxSp;
+            Hp = stats.MaxHp;
+            Sp = stats.MaxSp;
             ExperienceManager.ExpGained += ExpGained;
         }
 
@@ -108,20 +128,20 @@ namespace Game.GameActors.Units
         private void LevelUp(int levelBefore, int levelAfter)
         {
             int[] statIncreases = CalculateStatIncreases();
-            OnUnitLevelUp?.Invoke(name, levelBefore, levelAfter, Stats.GetStatArray(), statIncreases);
-            Stats.MaxHp += statIncreases[0];
-            Stats.MaxSp += statIncreases[1];
-            Stats.Str += statIncreases[2];
-            Stats.Mag += statIncreases[3];
-            Stats.Spd += statIncreases[4];
-            Stats.Skl += statIncreases[5];
-            Stats.Def += statIncreases[6];
-            Stats.Res += statIncreases[7];
+            OnUnitLevelUp?.Invoke(name, levelBefore, levelAfter, stats.GetStatArray(), statIncreases);
+            stats.MaxHp += statIncreases[0];
+            stats.MaxSp += statIncreases[1];
+            stats.Str += statIncreases[2];
+            stats.Mag += statIncreases[3];
+            stats.Spd += statIncreases[4];
+            stats.Skl += statIncreases[5];
+            stats.Def += statIncreases[6];
+            stats.Res += statIncreases[7];
         }
 
         private int[] CalculateStatIncreases()
         {
-            int[] growths = Growths.GetGrowthsArray();
+            int[] growths = this.growths.GetGrowthsArray();
             int[] increaseAmount = new int[growths.Length];
             for (int i = 0; i < growths.Length; i++)
             {
@@ -181,39 +201,43 @@ namespace Game.GameActors.Units
 
         public bool IsEnemy(IGridActor unit)
         {
-            return Faction.Id != unit.FactionId;
+            return Faction.Id != unit.Faction.Id;
         }
 
         public override string ToString()
         {
-            return name + " HP: " + Hp + "/" + Stats.MaxHp;
+            return name + " HP: " + Hp + "/" + stats.MaxHp;
         }
 
-        // public object Clone()
-        // {
-        //     var clone = (Unit) MemberwiseClone();
-        //     HandleCloned(clone);
-        //     return clone;
-        // }
-        //
-        // protected virtual void HandleCloned(Unit clone)
-        // {
-        //     clone.ExperienceManager = new ExperienceManager();
-        //     clone.BattleComponent = new BattleComponent(clone);
-        //     clone.TurnStateManager = new TurnStateManager(clone);
-        //     clone.GridComponent = new GridComponent(clone);
-        //     clone.GameTransformManager = new GameTransformManager();
-        //     clone.StatusEffectManager = new StatusEffectManager(clone);
-        //     clone.Agent = new AIAgent();
-        //
-        //     clone.hp = hp;
-        //     clone.sp = sp;
-        //
-        //     clone.Stats = (Stats) Stats.Clone();
-        //     clone.Growths = (Growths) Growths.Clone();
-        //     clone.Motivation = Motivation;
-        //     //Only for
-        // }
+        public object Clone()
+        {
+            var clone = (Unit) MemberwiseClone();
+            HandleCloned(clone);
+            return clone;
+        }
+        
+        protected virtual void HandleCloned(Unit clone)
+        {
+            clone.ExperienceManager = new ExperienceManager();
+            clone.BattleComponent = new BattleComponent(clone);
+            clone.TurnStateManager = new TurnStateManager(clone);
+            clone.GridComponent = new GridComponent(clone);
+            clone.GameTransformManager = new GameTransformManager();
+            clone.StatusEffectManager = new StatusEffectManager(clone);
+            clone.Agent = new AIAgent();
+            clone.unitEffectVisuals = unitEffectVisuals;
+            clone.visuals = visuals;
+        
+            clone.hp = hp;
+            clone.sp = sp;
+        
+            clone.Stats = (Stats) Stats.Clone();
+            clone.Growths = (Growths) Growths.Clone();
+            clone.Motivation = Motivation;
+            clone.MoveType = MoveType;
+            clone.Faction = Faction;
+            //Only for
+        }
 
         #region Events
 
@@ -246,7 +270,5 @@ namespace Game.GameActors.Units
         public static event OnUnitDamagedEvent OnUnitDamaged;
     }
 
-    public class VisualComponent
-    {
-    }
+ 
 }

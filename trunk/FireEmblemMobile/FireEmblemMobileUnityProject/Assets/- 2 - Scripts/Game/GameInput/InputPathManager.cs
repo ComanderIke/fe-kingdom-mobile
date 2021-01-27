@@ -39,20 +39,20 @@ namespace Game.GameInput
         public void CalculateMousePathToPosition(IGridActor character, int x, int y)
         {
             Reset();
-            var p = pathProvider.FindPath(character.GridPosition.X,
-                character.GridPosition.Y, x, y, character, false, character.AttackRanges);
+            var p = pathProvider.FindPath(character.GridComponent.GridPosition.X,
+                character.GridComponent.GridPosition.Y, x, y, character, false, character.AttackRanges);
             if (p != null)
                 for (int i = p.GetLength() - 2; i >= 0; i--)
                     dragPath.Add(new Vector2Int(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
             MovementPath = new List<Vector2Int>(dragPath);
-            UpdatedMovementPath(character.GridPosition.X, character.GridPosition.Y);
+            UpdatedMovementPath(character.GridComponent.GridPosition.X, character.GridComponent.GridPosition.Y);
         }
 
         public void CalculatePathToPosition(IGridActor character, Vector2 position)
         {
             Reset();
-            var p = pathProvider.FindPath(character.GridPosition.X,
-                character.GridPosition.Y, (int) position.x, (int) position.y, character, true,
+            var p = pathProvider.FindPath(character.GridComponent.GridPosition.X,
+                character.GridComponent.GridPosition.Y, (int) position.x, (int) position.y, character, true,
                 character.AttackRanges);
             MovementPath = new List<Vector2Int>();
             p.Reverse();
@@ -62,7 +62,7 @@ namespace Game.GameInput
                 MovementPath.Add(new Vector2Int(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
             }
             
-            UpdatedMovementPath(character.GridPosition.X, character.GridPosition.Y);
+            UpdatedMovementPath(character.GridComponent.GridPosition.X, character.GridComponent.GridPosition.Y);
         }
 
         public void UpdatedMovementPath(int startX, int startY)
@@ -97,8 +97,8 @@ namespace Game.GameInput
         private void CreateNewMovementPath(IGridActor gridActor, int x, int y)
         {
             dragPath.Clear();
-            var p = pathProvider.FindPath(gridActor.GridPosition.X,
-                gridActor.GridPosition.Y, x, y, gridActor, false, gridActor.AttackRanges);
+            var p = pathProvider.FindPath(gridActor.GridComponent.GridPosition.X,
+                gridActor.GridComponent.GridPosition.Y, x, y, gridActor, false, gridActor.AttackRanges);
             if (p != null)
                 for (int i = p.GetLength() - 2; i >= 0; i--)
                     dragPath.Add(new Vector2Int(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
@@ -110,7 +110,7 @@ namespace Game.GameInput
             {
                 return Math.Abs(dragPath[dragPath.Count - 1].x - x) + Math.Abs(dragPath[dragPath.Count - 1].y - y) == 1;
             }
-            return Math.Abs(gridActor.GridPosition.X - x) + Math.Abs(gridActor.GridPosition.Y - y) == 1;
+            return Math.Abs(gridActor.GridComponent.GridPosition.X - x) + Math.Abs(gridActor.GridComponent.GridPosition.Y - y) == 1;
 
         }
         public void AddToPath(int x, int y, IGridActor gridActor)
@@ -121,7 +121,7 @@ namespace Game.GameInput
            
            
             //if (dragPath.Count > gridActor.MovementRage || contains || IsLastActiveFieldAdjacent(x,y,gridActor))
-            if (dragPath.Count > gridActor.MovementRage || contains||!IsPositionAdjacent(x,y, gridActor))
+            if (dragPath.Count > gridActor.MovementRange || contains||!IsPositionAdjacent(x,y, gridActor))
             {
                 Debug.Log("Create New Path!");
                 CreateNewMovementPath(gridActor, x , y);
@@ -131,7 +131,7 @@ namespace Game.GameInput
                 dragPath.Add(new Vector2Int(x, y));
             }
             MovementPath = new List<Vector2Int>(dragPath);
-            UpdatedMovementPath(gridActor.GridPosition.X, gridActor.GridPosition.Y);
+            UpdatedMovementPath(gridActor.GridComponent.GridPosition.X, gridActor.GridComponent.GridPosition.Y);
         }
 
         public bool HasValidMovementPath(int range)

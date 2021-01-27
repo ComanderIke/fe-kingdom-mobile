@@ -50,22 +50,22 @@ namespace Game.GameInput
             if (gridSystem.IsTileMoveableAndActive(x, y) && !IsActorOnTile(selectionDataProvider.SelectedActor, x, y))
             {
                 DraggedOnActiveField(x, y, selectionDataProvider.SelectedActor);
-                lastInputPositionManager.StoreLatestValidPosition(x, y, selectionDataProvider.SelectedActor.MovementRage);
+                lastInputPositionManager.StoreLatestValidPosition(x, y, selectionDataProvider.SelectedActor.MovementRange);
             }
             else if (gridSystem.IsTileMoveableAndActive(x, y) && gridSystem.Tiles[x,y].HasFreeSpace())
             {
-                lastInputPositionManager.StoreLatestValidPosition(x, y, selectionDataProvider.SelectedActor.MovementRage);
+                lastInputPositionManager.StoreLatestValidPosition(x, y, selectionDataProvider.SelectedActor.MovementRange);
             }
             else
             {
                 ResetInput();
-                inputPathManager.UpdatedMovementPath(selectionDataProvider.SelectedActor.GridPosition.X,selectionDataProvider.SelectedActor.GridPosition.Y);
+                inputPathManager.UpdatedMovementPath(selectionDataProvider.SelectedActor.GridComponent.GridPosition.X,selectionDataProvider.SelectedActor.GridComponent.GridPosition.Y);
             }
         }
         
         public void DraggedOnActor(IGridActor actor)
         {
-            if (actor.IsEnemy(selectionDataProvider.SelectedActor)&&gridSystem.GridLogic.IsFieldAttackable(actor.GridPosition.X, actor.GridPosition.Y))
+            if (actor.IsEnemy(selectionDataProvider.SelectedActor)&&gridSystem.GridLogic.IsFieldAttackable(actor.GridComponent.GridPosition.X, actor.GridComponent.GridPosition.Y))
             {
                 AttackEnemy(selectionDataProvider.SelectedActor, actor, inputPathManager.MovementPath);
             }
@@ -88,18 +88,18 @@ namespace Game.GameInput
                 {
                     //Debug.Log("Dragged over selected Actor");
                     ResetInput();
-                    inputPathManager.UpdatedMovementPath(selectionDataProvider.SelectedActor.GridPosition.X,selectionDataProvider.SelectedActor.GridPosition.Y);
+                    inputPathManager.UpdatedMovementPath(selectionDataProvider.SelectedActor.GridComponent.GridPosition.X,selectionDataProvider.SelectedActor.GridComponent.GridPosition.Y);
                 }
                 else
                 {
                     //Debug.Log("Dragged over Ally! Show only Cursor on StartPos and ad as valid Position for passthrough");
-                    if(gridSystem.IsTileMoveableAndActive(gridActor.GridPosition.X, gridActor.GridPosition.Y))
-                        inputPathManager.AddToPath(gridActor.GridPosition.X, gridActor.GridPosition.Y, selectionDataProvider.SelectedActor);
+                    if(gridSystem.IsTileMoveableAndActive(gridActor.GridComponent.GridPosition.X, gridActor.GridComponent.GridPosition.Y))
+                        inputPathManager.AddToPath(gridActor.GridComponent.GridPosition.X, gridActor.GridComponent.GridPosition.Y, selectionDataProvider.SelectedActor);
                     //ResetInput();
                 }
             }
             if (gridActor.IsEnemy(selectionDataProvider.SelectedActor))
-                DraggedOverEnemy(gridActor.GridPosition.X, gridActor.GridPosition.Y, gridActor);//TODO should be dragged over enemy?
+                DraggedOverEnemy(gridActor.GridComponent.GridPosition.X, gridActor.GridComponent.GridPosition.Y, gridActor);//TODO should be dragged over enemy?
   
            
 
@@ -156,7 +156,7 @@ namespace Game.GameInput
                 else
                 {
                     inputPathManager.CalculateMousePathToPosition(selectionDataProvider.SelectedActor, x, y);
-                    selectionDataProvider.SelectedActor.SetGameTransformPosition(x, y);
+                    selectionDataProvider.SelectedActor.GameTransformManager.SetPosition(x, y);
                     selectionDataProvider.SetSelectedTile(x, y);
                     selectionDataProvider.ClearAttackTarget();
                 }
@@ -164,9 +164,9 @@ namespace Game.GameInput
             }
             else if(selectionDataProvider.SelectedActor != null)
             {
-                if (selectionDataProvider.SelectedActor.GridPosition.X == x && y == selectionDataProvider.SelectedActor.GridPosition.Y)
+                if (selectionDataProvider.SelectedActor.GridComponent.GridPosition.X == x && y == selectionDataProvider.SelectedActor.GridComponent.GridPosition.Y)
                 {
-                    selectionDataProvider.SelectedActor.ResetPosition();
+                    selectionDataProvider.SelectedActor.GridComponent.ResetPosition();
                     gameplayInput.DeselectUnit();
                 }
                 else
@@ -184,7 +184,7 @@ namespace Game.GameInput
         
         private void OwnedActorClicked(IGridActor unit)
         {
-            if ((int)unit.GetGameTransformPosition().x == selectionDataProvider.GetSelectedTile().x && (int)unit.GetGameTransformPosition().y == selectionDataProvider.GetSelectedTile().y)//Confirm Move
+            if ((int)unit.GameTransformManager.GetPosition().x == selectionDataProvider.GetSelectedTile().x && (int)unit.GameTransformManager.GetPosition().y == selectionDataProvider.GetSelectedTile().y)//Confirm Move
             {
                 ClickedOnGrid(selectionDataProvider.GetSelectedTile().x, selectionDataProvider.GetSelectedTile().y);
             }
@@ -202,41 +202,41 @@ namespace Game.GameInput
             }
             else
             {
-                if (gridSystem.GridLogic.IsFieldAttackable(enemyActor.GridPosition.X, enemyActor.GridPosition.Y))
+                if (gridSystem.GridLogic.IsFieldAttackable(enemyActor.GridComponent.GridPosition.X, enemyActor.GridComponent.GridPosition.Y))
                 {
                     if (selectionDataProvider.GetSelectedAttackTarget()!=enemyActor)
                     {
                         selectionDataProvider.ClearData();
-                        var gridPos = new GridPosition((int)selectedActor.GetGameTransformPosition().x, (int)selectedActor.GetGameTransformPosition().y);
-                        if (selectedActor.CanAttackFrom(gridPos, enemyActor.GridPosition))
+                        var gridPos = new GridPosition((int)selectedActor.GameTransformManager.GetPosition().x, (int)selectedActor.GameTransformManager.GetPosition().y);
+                        if (selectedActor.GridComponent.CanAttackFrom(gridPos, enemyActor.GridComponent.GridPosition))
                         {
                             if(selectedActor is IBattleActor battleActor&& enemyActor is IBattleActor enemyBattleActor)
                                 gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, gridPos);
                         }
-                        else if (selectedActor.CanAttack(enemyActor.GridPosition.X, enemyActor.GridPosition.Y))
+                        else if (selectedActor.GridComponent.CanAttack(enemyActor.GridComponent.GridPosition.X, enemyActor.GridComponent.GridPosition.Y))
                         {
-                            selectedActor.ResetPosition();
+                            selectedActor.GridComponent.ResetPosition();
                             selectionDataProvider.ClearData();
                             inputPathManager.Reset();
-                            inputPathManager.UpdatedMovementPath(selectedActor.GridPosition.X, selectedActor.GridPosition.Y);
+                            inputPathManager.UpdatedMovementPath(selectedActor.GridComponent.GridPosition.X, selectedActor.GridComponent.GridPosition.Y);
                             if(selectedActor is IBattleActor battleActor&& enemyActor is IBattleActor enemyBattleActor)
-                                gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, new GridPosition(selectedActor.GridPosition.X, selectedActor.GridPosition.Y));
+                                gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, new GridPosition(selectedActor.GridComponent.GridPosition.X, selectedActor.GridComponent.GridPosition.Y));
                         }
                         else
                         {
-                            selectedActor.ResetPosition();
-                            inputPathManager.CalculatePathToPosition(selectedActor, new Vector2(enemyActor.GridPosition.X, enemyActor.GridPosition.Y));
+                            selectedActor.GridComponent.ResetPosition();
+                            inputPathManager.CalculatePathToPosition(selectedActor, new Vector2(enemyActor.GridComponent.GridPosition.X, enemyActor.GridComponent.GridPosition.Y));
                             if (!inputPathManager.IsMovementPathEmpty())
                             {
                                 var lastMovPathPos = inputPathManager.GetLastMovementPathPosition();
-                                selectedActor.SetGameTransformPosition(lastMovPathPos.x, lastMovPathPos.y);
+                                selectedActor.GameTransformManager.SetPosition(lastMovPathPos.x, lastMovPathPos.y);
                                 if(selectedActor is IBattleActor battleActor&& enemyActor is IBattleActor enemyBattleActor)
                                     gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, new GridPosition(lastMovPathPos.x, lastMovPathPos.y));
                             }
                             else
                             {
                                 if(selectedActor is IBattleActor battleActor&& enemyActor is IBattleActor enemyBattleActor)
-                                    gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, new GridPosition(selectedActor.GridPosition.X, selectedActor.GridPosition.Y));
+                                    gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, new GridPosition(selectedActor.GridComponent.GridPosition.X, selectedActor.GridComponent.GridPosition.Y));
                             }
                         }
                         selectionDataProvider.SetSelectedAttackTarget(enemyActor);
@@ -255,15 +255,15 @@ namespace Game.GameInput
         }
         private bool IsActiveFaction(IGridActor actor)
         {
-            return GridGameManager.Instance.FactionManager.IsActiveFaction(actor.FactionId);
+            return GridGameManager.Instance.FactionManager.IsActiveFaction(actor.Faction.Id);
         }
         private void AttackEnemy(IGridActor character, IGridActor enemy, List<Vector2Int> movePath)
         {
-            character.ResetPosition();
+            character.GridComponent.ResetPosition();
             gridSystem.HideMoveRange();
             selectionDataProvider.ClearData();
             /* Enemy is in attackRange already */
-            if ((movePath == null || movePath.Count == 0) && character.CanAttack( enemy.GridPosition.X, enemy.GridPosition.Y))
+            if ((movePath == null || movePath.Count == 0) && character.GridComponent.CanAttack( enemy.GridComponent.GridPosition.X, enemy.GridComponent.GridPosition.Y))
             {
                 if(character is IBattleActor battleActor && enemy is IBattleActor enemyBattleActor)
                     gameplayInput.AttackUnit(battleActor, enemyBattleActor);
@@ -286,7 +286,7 @@ namespace Game.GameInput
         }
         private bool IsActorOnTile(IGridActor actor, int x, int y)
         {
-            return (x == actor.GridPosition.X && y == actor.GridPosition.Y);
+            return (x == actor.GridComponent.GridPosition.X && y == actor.GridComponent.GridPosition.Y);
         }
         private bool IsTileAttackAble(int x, int y)
         {
@@ -309,11 +309,11 @@ namespace Game.GameInput
             selectionDataProvider.SetSelectedAttackTarget(enemy);
             if (inputPathManager.IsMovementPathEmpty())
             {
-                if(selectedActor.CanAttack(x, y))
+                if(selectedActor.GridComponent.CanAttack(x, y))
                 {
                     
                     if(selectedActor is IBattleActor battleActor && enemy is IBattleActor enemyBattleActor)
-                        gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, selectedActor.GridPosition);
+                        gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, selectedActor.GridComponent.GridPosition);
                 }
                 else
                 {
@@ -324,9 +324,9 @@ namespace Game.GameInput
             {
                 SearchForSuitableAttackPosition(x, y, enemy, selectedActor);
             }
-            if (inputPathManager.HasValidMovementPath(selectedActor.MovementRage))
+            if (inputPathManager.HasValidMovementPath(selectedActor.MovementRange))
             {
-                inputPathManager.UpdatedMovementPath(selectedActor.GridPosition.X, selectedActor.GridPosition.Y);
+                inputPathManager.UpdatedMovementPath(selectedActor.GridComponent.GridPosition.X, selectedActor.GridComponent.GridPosition.Y);
                 if(selectedActor is IBattleActor battleActor && enemy is IBattleActor enemyBattleActor)
                     gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, new GridPosition(x, y));
             }
@@ -342,17 +342,17 @@ namespace Game.GameInput
             {
            
                 inputPathManager.MovementPath.RemoveRange(attackPositionIndex + 1, inputPathManager.MovementPath.Count - (attackPositionIndex + 1));
-                inputPathManager.UpdatedMovementPath(selectedActor.GridPosition.X, selectedActor.GridPosition.Y);
+                inputPathManager.UpdatedMovementPath(selectedActor.GridComponent.GridPosition.X, selectedActor.GridComponent.GridPosition.Y);
             }
             else
             {
-                int delta = Mathf.Abs(selectedActor.GridPosition.X - x) + Mathf.Abs(selectedActor.GridPosition.Y - y);
+                int delta = Mathf.Abs(selectedActor.GridComponent.GridPosition.X - x) + Mathf.Abs(selectedActor.GridComponent.GridPosition.Y - y);
                 if (selectedActor.AttackRanges.Contains(delta))
                 {
                     if(selectedActor is IBattleActor battleActor && enemy is IBattleActor enemyBattleActor)
-                        gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, selectedActor.GridPosition);
+                        gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, selectedActor.GridComponent.GridPosition);
                     inputPathManager.Reset();
-                    inputPathManager.UpdatedMovementPath(selectedActor.GridPosition.X, selectedActor.GridPosition.Y);
+                    inputPathManager.UpdatedMovementPath(selectedActor.GridComponent.GridPosition.X, selectedActor.GridComponent.GridPosition.Y);
                 }
                 else
                 {

@@ -47,7 +47,7 @@ namespace Game.Map
         }
         void RemoveUnitFromGrid(IGridActor u)
         {
-            Tiles[u.GridPosition.X, u.GridPosition.Y].Actor = null;
+            Tiles[u.GridComponent.GridPosition.X, u.GridComponent.GridPosition.Y].Actor = null;
         }
       
         private void OnEnemySelected(IGridActor gridActor)
@@ -76,7 +76,7 @@ namespace Game.Map
 
         public void ShowMovementRangeOnGrid(IGridActor c)
         {
-            ShowMovement(c.GridPosition.X, c.GridPosition.Y, c.MovementRage, 0, c);
+            ShowMovement(c.GridComponent.GridPosition.X, c.GridComponent.GridPosition.Y, c.MovementRange, 0, c);
         }
 
       
@@ -123,7 +123,7 @@ namespace Game.Map
             {
                 if (!IsTileMoveableAndActive(x, y))
                 {
-                    GridRenderer.SetFieldMaterialAttack(new Vector2(x, y), character.FactionId, !character.TurnStateManager.HasMoved, GridGameManager.Instance.FactionManager.IsActiveFaction(character.FactionId));
+                    GridRenderer.SetFieldMaterialAttack(new Vector2(x, y), character.Faction.Id, !character.TurnStateManager.HasMoved, GridGameManager.Instance.FactionManager.IsActiveFaction(character.Faction.Id));
                     GridLogic.gridSessionData.AddValidAttackPosition(x, y);
                 }
 
@@ -173,7 +173,7 @@ namespace Game.Map
                 return;
             }
 
-            GridRenderer.SetFieldMaterial(new Vector2(x, y), unit.FactionId, !unit.TurnStateManager.HasMoved,GridGameManager.Instance.FactionManager.IsActiveFaction(unit.FactionId));
+            GridRenderer.SetFieldMaterial(new Vector2(x, y), unit.Faction.Id, !unit.TurnStateManager.HasMoved,GridGameManager.Instance.FactionManager.IsActiveFaction(unit.Faction.Id));
             GridLogic.gridSessionData.AddValidPosition(x, y);
             NodeHelper.Nodes[x, y].C = c;
             c++;
@@ -210,10 +210,10 @@ namespace Game.Map
         {
             if (x != -1 && y != -1)
             {
-                if(unit.GridPosition.X != -1 && unit.GridPosition.Y!=-1)
-                    Tiles[unit.GridPosition.X, unit.GridPosition.Y].Actor = null;
+                if(unit.GridComponent.GridPosition.X != -1 && unit.GridComponent.GridPosition.Y!=-1)
+                    Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y].Actor = null;
                 Tiles[x, y].Actor = unit;
-                unit.SetPosition(x, y);
+                unit.GridComponent.SetPosition(x, y);
             }
         }
     }

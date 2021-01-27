@@ -17,8 +17,9 @@ namespace Game.Mechanics
         public List<int> DefenderSpDamage;
         public BattleSimulation(IBattleActor attacker, IBattleActor defender)
         {
-            Attacker = attacker.Clone();
-            Defender = defender.Clone();
+            
+            Attacker = attacker.Clone() as IBattleActor;
+            Defender = defender.Clone() as IBattleActor;
             AttackSequence = new List<bool>();
             AttackerDamage = new List<int>();
             DefenderDamage = new List<int>();
@@ -27,8 +28,8 @@ namespace Game.Mechanics
         }
         public bool DoAttack(IBattleActor attacker, IBattleActor defender)
         {
-            int damage = attacker.BattleStats.GetDamageAgainstTarget(defender);
-            int spDamage= attacker.BattleStats.GetTotalSpDamageAgainstTarget(defender);
+            int damage = attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defender);
+            int spDamage= attacker.BattleComponent.BattleStats.GetTotalSpDamageAgainstTarget(defender);
             if (attacker == Attacker)
             {
                 AttackerDamage.Add(Math.Min(defender.Hp, damage));
@@ -63,8 +64,8 @@ namespace Game.Mechanics
         }
         public void StartBattle()
         {
-            int attackerAttackCount = Attacker.BattleStats.GetAttackCountAgainst(Defender);
-            int defenderAttackCount = Defender.BattleStats.GetAttackCountAgainst(Attacker);
+            int attackerAttackCount = Attacker.BattleComponent.BattleStats.GetAttackCountAgainst(Defender);
+            int defenderAttackCount = Defender.BattleComponent.BattleStats.GetAttackCountAgainst(Attacker);
             while (attackerAttackCount > 0||defenderAttackCount>0)
             {
                 if (attackerAttackCount > 0)

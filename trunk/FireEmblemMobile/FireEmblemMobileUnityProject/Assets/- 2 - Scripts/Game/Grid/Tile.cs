@@ -46,7 +46,7 @@ namespace Game.Grid
 
             if (activeUnit)
             {
-                if (Actor!=null && playerId != Actor.FactionId && activePlayer)
+                if (Actor!=null && playerId != Actor.Faction.Id && activePlayer)
                 {
                     tileVfx.ShowAttackableField(this);
                 }
@@ -70,7 +70,7 @@ namespace Game.Grid
                 else
                     TileRenderer.MoveVisual();
             }
-            else if (Actor.FactionId == playerId)
+            else if (Actor.Faction.Id == playerId)
             {
                 TileRenderer.AllyVisual();
             }
@@ -89,7 +89,7 @@ namespace Game.Grid
         {
             if (Actor == null)
                 return false;
-            return Actor.FactionId != actor.FactionId;
+            return Actor.Faction.Id != actor.Faction.Id;
         }
 
 

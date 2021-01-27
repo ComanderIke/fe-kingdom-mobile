@@ -18,8 +18,8 @@ namespace Game.Mechanics.Commands
         public MoveCharacterCommand(IGridActor unit, GridPosition destination)
         {
             this.unit = unit;
-            oldX = unit.GridPosition.X;
-            oldY = unit.GridPosition.Y;
+            oldX = unit.GridComponent.GridPosition.X;
+            oldY = unit.GridComponent.GridPosition.Y;
             x = destination.X;
             y = destination.Y;
         }
@@ -37,7 +37,7 @@ namespace Game.Mechanics.Commands
 
         public override void Undo()
         {
-            unit.SetPosition(oldX, oldY);
+            unit.GridComponent.SetPosition(oldX, oldY);
             unit.TurnStateManager.Reset();
         }
     }

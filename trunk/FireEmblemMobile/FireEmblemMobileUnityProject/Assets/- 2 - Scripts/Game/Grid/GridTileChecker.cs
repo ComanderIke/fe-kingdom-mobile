@@ -29,7 +29,7 @@ namespace Game.Grid
             if (x >= 0 && y >= 0 && x < width && y < height)
             {
                 var field = tiles[x, y];
-                if (unit.CanMoveOnTo(field))
+                if (unit.GridComponent.CanMoveOnTo(field))
                 {
                     if (field.Actor == null)
                         return true;
@@ -52,7 +52,7 @@ namespace Game.Grid
             if (!invalid)
             {
                 var tile = tiles[x, y];
-                invalid = !unit.CanMoveOnTo(tile);
+                invalid = !unit.GridComponent.CanMoveOnTo(tile);
                 if (tile.Actor != null)
                 {
                     if (tile.Actor != unit)
@@ -76,14 +76,14 @@ namespace Game.Grid
             var tile = tiles[x, y];
             if ((sx != x) || (sy != y))
             {
-                invalid = !unit.CanMoveOnTo(tile);
+                invalid = !unit.GridComponent.CanMoveOnTo(tile);
             }
 
             if (!invalid)
             {
                 if (tile.Actor != null)
                 {
-                    if (tile.Actor.CanMoveThrough(unit))
+                    if (tile.Actor.GridComponent.CanMoveThrough(unit))
                     {
                         invalid = true;
                     }

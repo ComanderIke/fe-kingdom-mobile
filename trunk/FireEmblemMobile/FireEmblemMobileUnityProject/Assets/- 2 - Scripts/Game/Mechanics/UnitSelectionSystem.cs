@@ -39,7 +39,7 @@ namespace Game.Mechanics
         {
             if (SelectedCharacter != null)
             {
-                SelectedCharacter.ResetPosition();
+                SelectedCharacter.GridComponent.ResetPosition();
                 SelectedCharacter.TurnStateManager.IsSelected = false;
             }
             OnDeselectCharacter?.Invoke();
@@ -76,7 +76,7 @@ namespace Game.Mechanics
         }
         private void SelectUnit(IGridActor c)
         {
-            if (gridGameManager.FactionManager.IsActiveFaction(c.FactionId))
+            if (gridGameManager.FactionManager.IsActiveFaction(c.Faction.Id))
             {
                 if (!c.TurnStateManager.IsWaiting)
                 {

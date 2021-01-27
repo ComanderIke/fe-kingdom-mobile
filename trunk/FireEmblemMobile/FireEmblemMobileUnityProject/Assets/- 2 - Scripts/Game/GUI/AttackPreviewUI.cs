@@ -68,18 +68,18 @@ namespace Game.GUI
              faceSpriteLeft.sprite = attackerSprite;
              faceSpriteRight.sprite = defenderSprite;
 
-             dmgValue.text = "" + battlePreview.Attacker.Damage;
-             attackCountX.SetActive(battlePreview.Attacker.AttackCount > 1);
-             attackCount.gameObject.SetActive(battlePreview.Attacker.AttackCount > 1);
-             attackCount.text = "" + battlePreview.Attacker.AttackCount;
-             hpBar.UpdateValues(battlePreview.Attacker.MaxHp, battlePreview.Attacker.CurrentHp, battlePreview.Attacker.AfterBattleHp, battlePreview.Attacker.IncomingDamage);
-             spBar.UpdateValues(battlePreview.Attacker.MaxSp, battlePreview.Attacker.CurrentSp, battlePreview.Attacker.AfterBattleSp, battlePreview.Attacker.IncomingSpDamage);
-             dmgValueRight.text = "" + battlePreview.Defender.Damage;
-             attackCountRightX.SetActive(battlePreview.Defender.AttackCount > 1);
-             attackCountRight.gameObject.SetActive(battlePreview.Defender.AttackCount > 1);
-             attackCountRight.text = "" + battlePreview.Defender.AttackCount;
-             hpBarRight.UpdateValues(battlePreview.Defender.MaxHp, battlePreview.Defender.CurrentHp, battlePreview.Defender.AfterBattleHp, battlePreview.Defender.IncomingDamage);
-             spBarRight.UpdateValues(battlePreview.Defender.MaxSp, battlePreview.Defender.CurrentSp, battlePreview.Defender.AfterBattleSp, battlePreview.Defender.IncomingSpDamage);
+             dmgValue.text = "" + battlePreview.AttackerStats.Damage;
+             attackCountX.SetActive(battlePreview.AttackerStats.AttackCount > 1);
+             attackCount.gameObject.SetActive(battlePreview.AttackerStats.AttackCount > 1);
+             attackCount.text = "" + battlePreview.AttackerStats.AttackCount;
+             hpBar.UpdateValues(battlePreview.AttackerStats.MaxHp, battlePreview.AttackerStats.CurrentHp, battlePreview.AttackerStats.AfterBattleHp, battlePreview.AttackerStats.IncomingDamage);
+             spBar.UpdateValues(battlePreview.AttackerStats.MaxSp, battlePreview.AttackerStats.CurrentSp, battlePreview.AttackerStats.AfterBattleSp, battlePreview.AttackerStats.IncomingSpDamage);
+             dmgValueRight.text = "" + battlePreview.DefenderStats.Damage;
+             attackCountRightX.SetActive(battlePreview.DefenderStats.AttackCount > 1);
+             attackCountRight.gameObject.SetActive(battlePreview.DefenderStats.AttackCount > 1);
+             attackCountRight.text = "" + battlePreview.DefenderStats.AttackCount;
+             hpBarRight.UpdateValues(battlePreview.DefenderStats.MaxHp, battlePreview.DefenderStats.CurrentHp, battlePreview.DefenderStats.AfterBattleHp, battlePreview.DefenderStats.IncomingDamage);
+             spBarRight.UpdateValues(battlePreview.DefenderStats.MaxSp, battlePreview.DefenderStats.CurrentSp, battlePreview.DefenderStats.AfterBattleSp, battlePreview.DefenderStats.IncomingSpDamage);
              faceSpriteRight.color = new Color(1, 1, 1, 1);
 
              //spdValue.text = "" + battlePreview.Attacker.Speed;
@@ -95,8 +95,8 @@ namespace Game.GUI
 
         public override void Show(BattlePreview battlePreview, UnitVisual attackerVisual, UnitVisual defenderVisual)
         {
-            attackerSprite = battlePreview.Attacker.
-            defenderSprite = battlePreview.Defender.
+            attackerSprite = attackerVisual.CharacterSpriteSet.FaceSprite;
+            defenderSprite = defenderVisual.CharacterSpriteSet.FaceSprite;
             this.battlePreview = battlePreview;
             this.gameObject.SetActive(true);
             UpdateValues();

@@ -20,7 +20,7 @@ namespace Game.Graphics
             {
 
                 attackableEnemyEffect = GameObject.Instantiate(attackableEnemyPrefab,
-                    actor.GetTransform());
+                    actor.GameTransformManager.Transform);
                 attackableEnemyEffect.transform.localPosition = Vector3.zero;
             }
             else
