@@ -43,10 +43,12 @@ namespace Game.GameInput
         {
             inputPathManager.Reset();
             selectionDataProvider.ClearData();
+            gridSystem.cursor.Reset();
         }
         public void DraggedOverGrid(int x, int y)
         {
             ResetDragSelectables();
+            gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
             if (gridSystem.IsTileMoveableAndActive(x, y) && !IsActorOnTile(selectionDataProvider.SelectedActor, x, y))
             {
                 DraggedOnActiveField(x, y, selectionDataProvider.SelectedActor);
@@ -65,6 +67,7 @@ namespace Game.GameInput
         
         public void DraggedOnActor(IGridActor actor)
         {
+            gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[actor.GridComponent.GridPosition.X, actor.GridComponent.GridPosition.Y]);
             if (actor.IsEnemy(selectionDataProvider.SelectedActor)&&gridSystem.GridLogic.IsFieldAttackable(actor.GridComponent.GridPosition.X, actor.GridComponent.GridPosition.Y))
             {
                 AttackEnemy(selectionDataProvider.SelectedActor, actor, inputPathManager.MovementPath);
@@ -82,6 +85,7 @@ namespace Game.GameInput
         public void DraggedOverActor(IGridActor gridActor)
         {
             ResetDragSelectables();
+            gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[gridActor.GridComponent.GridPosition.X, gridActor.GridComponent.GridPosition.Y]);
             if (!gridActor.IsEnemy(selectionDataProvider.SelectedActor))
             {
                 if (gridActor == selectionDataProvider.SelectedActor)
@@ -125,6 +129,7 @@ namespace Game.GameInput
         
         public void ClickedOnActor(IGridActor unit)
         {
+            gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y]);
             if(IsActiveFaction(unit))
             {
                 OwnedActorClicked(unit);
@@ -136,7 +141,7 @@ namespace Game.GameInput
 
         public void ClickedOnGrid(int x, int y)
         {
-            
+            gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
             if(!gridSystem.GridLogic.IsTileFree(x,y))
             {
                 //Debug.Log("Somehow clicked on non empty Tile");

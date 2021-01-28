@@ -24,11 +24,14 @@ namespace Game.Map
         public GridLogic GridLogic { get; set; }
         public NodeHelper NodeHelper;
         public AStar pathFinder;
+        public GridCursor cursor { get; set; }
 
         public void Init()
         {
             Tiles = GetComponent<GridBuilder>().GetTiles();
             GridData = ResourceScript.Instance.grid.gridData;
+            cursor = new GridCursor();
+            
             GridRenderer = new GridRenderer(this);
             GridLogic = new GridLogic(this);
             NodeHelper = new NodeHelper(GridData.width, GridData.height);

@@ -154,7 +154,7 @@ namespace Game.GUI
        
         public override void Hide()
         {
-            this.gameObject.SetActive(true);
+            this.gameObject.SetActive(false);
             // if (!visible)
             //     return;
             // if (rectTransform == null)

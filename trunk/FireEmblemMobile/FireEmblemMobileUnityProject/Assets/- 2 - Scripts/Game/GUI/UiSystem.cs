@@ -2,6 +2,7 @@
 using Game.GameInput;
 using Game.GameResources;
 using Game.Manager;
+using Game.Map;
 using Game.Mechanics;
 using Game.Mechanics.Battle;
 using GameEngine;
@@ -23,11 +24,12 @@ namespace Game.GUI
             UnitSelectionSystem.OnEnemySelected += SelectedEnemyCharacter;
             UnitSelectionSystem.OnDeselectCharacter += DeselectedCharacter;
             UnitActionSystem.OnCheckAttackPreview += ShowAttackPreviewUI;
-            GridInputSystem.OnResetInput += HideAttacPreviewUI;
+            GridInputSystem.OnResetInput += HideAttackPreviewUI;
+            GridGameManager.Instance.GetSystem<GridSystem>().cursor.OnCursorPositionChanged += (Vector2Int v)=>HideAttackPreviewUI();
             //gridGameManager = GridGameManager.Instance;
             //     gameplayInput = new GameplayInput();
             //     
-                 
+
             //     UnitSelectionSystem.OnDeselectCharacter += HideDeselectButton;
             //     
             //     UnitSelectionSystem.OnEnemySelected += ShowTopUi;
@@ -57,7 +59,7 @@ namespace Game.GUI
                 attackPreviewUI.Show(battlePreview, attacker.visuals, defender.visuals);
         }
 
-        private void HideAttacPreviewUI()
+        private void HideAttackPreviewUI()
         {
             attackPreviewUI.Hide();
         }
