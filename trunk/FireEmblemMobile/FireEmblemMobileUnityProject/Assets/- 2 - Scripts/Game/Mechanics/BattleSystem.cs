@@ -17,8 +17,8 @@ namespace Game.Mechanics
 
         private const float FIGHT_TIME = 3.8f;
         private const float ATTACK_DELAY = 0.0f;
-        private readonly Unit attacker;
-        private readonly Unit defender;
+        private readonly IBattleActor attacker;
+        private readonly IBattleActor defender;
         private int attackCount;
         private bool battleStarted;
         private readonly UiSystem uiController;
@@ -26,6 +26,7 @@ namespace Game.Mechanics
         private int attackerAttackCount;
         private int defenderAttackCount;
         private int currentAttackIndex;
+        public IBattleRenderer battleRenderer { get; set; }
 
         public void Init()
         {
@@ -35,7 +36,7 @@ namespace Game.Mechanics
         {
             Init();
         }
-        public BattleSystem(Unit attacker, Unit defender):base()
+        public BattleSystem(IBattleActor attacker, IBattleActor defender):base()
         {
             this.attacker = attacker;
             this.defender = defender;
@@ -51,9 +52,10 @@ namespace Game.Mechanics
             currentAttackIndex = 0;
             attackerAttackCount = attacker.BattleComponent.BattleStats.GetAttackCountAgainst(defender);
             defenderAttackCount = defender.BattleComponent.BattleStats.GetAttackCountAgainst(attacker);
+            battleRenderer.Show(attacker, defender, GetAttackSequence());
         }
 
-        public void ContinueBattle(Unit Attacker, Unit defender)
+        public void ContinueBattle(IBattleActor attacker, IBattleActor defender)
         {
             ContinueBattle(battleSimulation.AttackSequence[currentAttackIndex]);
         }
@@ -67,7 +69,7 @@ namespace Game.Mechanics
             currentAttackIndex++;
         }
 
-        public static bool DoAttack(Unit attacker, Unit defender)
+        private static bool DoAttack(IBattleActor attacker, IBattleActor defender)
         {
             defender.BattleComponent.InflictDamage(attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defender), defender);
             defender.Sp -= attacker.BattleComponent.BattleStats.GetTotalSpDamageAgainstTarget(defender);
@@ -100,7 +102,7 @@ namespace Game.Mechanics
             }
 
             DistributeExperience();
-
+            battleRenderer.Hide();
             GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.BattleEnded);
             
             UnitActionSystem.OnCommandFinished();
@@ -116,7 +118,7 @@ namespace Game.Mechanics
                 defender.ExperienceManager.AddExp(CalculateExperiencePoints(defender, attacker));
             }
         }
-        public int CalculateExperiencePoints(Unit expReceiver, Unit enemyFought)
+        public int CalculateExperiencePoints(IBattleActor expReceiver, IBattleActor enemyFought)
         {
             int levelDifference = expReceiver.ExperienceManager.Level - enemyFought.ExperienceManager.Level;
             bool killEXP = !enemyFought.IsAlive();

@@ -4,24 +4,25 @@ using Game.GameActors.Units;
 using Game.GameInput;
 using Game.GUI.PopUpText;
 using Game.Manager;
+using Game.Mechanics;
 using UnityEngine;
 
 namespace Game.GUI
 {
-    public class BattleRenderer : MonoBehaviour
+    public class BattleRenderer : MonoBehaviour, IBattleRenderer
     {
         private const float DELAY = 0.4f;
 
         public delegate void OnFinishedEvent();
 
         public static OnFinishedEvent OnFinished;
-        public delegate void OnAttackConnectedEvent(Unit attacker, Unit defender);
+        public delegate void OnAttackConnectedEvent(IBattleActor attacker, IBattleActor defender);
 
         public static OnAttackConnectedEvent OnAttackConnected;
 
 
-        private Unit attacker;
-        private Unit defender;
+        private IBattleActor attacker;
+        private IBattleActor defender;
         private bool[] attackSequence;
         private int attackSequenceIndex;
 
@@ -35,7 +36,7 @@ namespace Game.GUI
             GridInputSystem.SetActive(true);
         }
 
-        public void Show(Unit attacker, Unit defender, bool[] attackSequence)
+        public void Show(IBattleActor attacker, IBattleActor defender, bool[] attackSequence)
         {
             this.attacker = attacker;
             this.defender = defender;
@@ -85,10 +86,10 @@ namespace Game.GUI
                 return;
             }
 
-            int attackerX = attacker.GridComponent.GridPosition.X;
-            int attackerY = attacker.GridComponent.GridPosition.Y;
-            int defenderX = defender.GridComponent.GridPosition.X;
-            int defenderY = defender.GridComponent.GridPosition.Y;
+            int attackerX = (int)attacker.GameTransformManager.GetPosition().x;
+            int attackerY = (int)attacker.GameTransformManager.GetPosition().y;
+            int defenderX = (int)defender.GameTransformManager.GetPosition().x;
+            int defenderY = (int)defender.GameTransformManager.GetPosition().y;
             if (attackSequence[attackSequenceIndex])
             {
                 if(attackerX> defenderX && attackerY == defenderY)

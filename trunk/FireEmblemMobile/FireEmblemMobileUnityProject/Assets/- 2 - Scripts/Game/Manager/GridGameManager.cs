@@ -98,6 +98,7 @@ namespace Game.Manager
                 FindObjectOfType<TurnSystem>(),
                 FindObjectOfType<UiSystem>(),
                 new BattleSystem(),
+                new MoveSystem(),
                 FindObjectOfType<UnitSelectionSystem>()
             };
 
@@ -105,22 +106,36 @@ namespace Game.Manager
 
         private void Initialize()
         {
-           
+            InjectDependencies();
             foreach (var system in Systems)
             {
                 system.Init();
             }
+            
             //needs to be added AFTER GridSystem has fully initialized
-            Systems.Add(new MoveSystem(GetSystem<GridSystem>().pathFinder,GetSystem<GridSystem>().GetTileChecker()));
-            GetSystem<MoveSystem>().Init();
-            
-            
+
+
             LevelConfig();
             GameStateManager = new GameStateManager();
             GameStateManager.Init();
             
             OnStartGame?.Invoke();
             GetSystem<TurnSystem>().StartTurn();
+        }
+
+        private void InjectDependencies()
+        {
+            var battleRenderers = FindObjectsOfType<MonoBehaviour>().OfType<IBattleRenderer>();
+            GetSystem<BattleSystem>().battleRenderer = battleRenderers.First();
+            
+            var gridSystem = GetSystem<GridSystem>();
+            var tileChecker = new GridTileChecker(gridSystem.Tiles, gridSystem.GridData.width, gridSystem.GridData.height);
+            gridSystem.GridLogic.tileChecker = tileChecker;
+            var pathFinder = new AStar(tileChecker);
+            gridSystem.pathFinder = pathFinder;
+            
+            GetSystem<MoveSystem>().tileChecker = tileChecker;
+            GetSystem<MoveSystem>().pathFinder = pathFinder;
         }
 
         private void Update()

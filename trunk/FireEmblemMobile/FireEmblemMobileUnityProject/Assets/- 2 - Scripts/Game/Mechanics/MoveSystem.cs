@@ -10,18 +10,20 @@ namespace Game.Mechanics
 {
     public class MoveSystem : IEngineSystem
     {
-        private IPathFinder pathFinder;
+        public IPathFinder pathFinder
+        {
+            get;
+            set;
+        }
         private NodeHelper nodeHelper;
-        private ITileChecker tileChecker;
+        public ITileChecker tileChecker
+        {
+            get;
+            set;
+        }
         public void Init()
         {
-            
-        }
-        public MoveSystem(IPathFinder pathFinder, ITileChecker tileChecker)
-        {
-            this.pathFinder = pathFinder;
             this.nodeHelper = new NodeHelper(tileChecker.GetWidth(), tileChecker.GetHeight());
-            this.tileChecker = tileChecker;
         }
 
         public List<Vector2> GetMovement(int x, int y, int movRange, Unit unit)

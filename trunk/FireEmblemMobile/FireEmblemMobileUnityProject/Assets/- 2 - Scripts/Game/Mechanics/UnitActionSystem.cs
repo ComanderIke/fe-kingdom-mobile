@@ -86,7 +86,7 @@ namespace Game.Mechanics
             var mCc = new WaitCommand(unit);
             currentActions.Enqueue(mCc);
         }
-        public void Fight(Unit attacker, Unit target)
+        public void Fight(IBattleActor attacker, IBattleActor target)
         {
             var mCc = new AttackCommand(attacker, target);
             currentActions.Enqueue(mCc);

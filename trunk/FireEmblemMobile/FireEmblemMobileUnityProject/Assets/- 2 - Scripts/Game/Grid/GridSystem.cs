@@ -23,19 +23,21 @@ namespace Game.Map
         public GridRenderer GridRenderer { get; set; }
         public GridLogic GridLogic { get; set; }
         public NodeHelper NodeHelper;
-        public AStar pathFinder;
+        public IPathFinder pathFinder { get; set; }
         public GridCursor cursor { get; set; }
 
-        public void Init()
+        private void Awake()
         {
             Tiles = GetComponent<GridBuilder>().GetTiles();
             GridData = ResourceScript.Instance.grid.gridData;
             cursor = new GridCursor();
-            
             GridRenderer = new GridRenderer(this);
             GridLogic = new GridLogic(this);
             NodeHelper = new NodeHelper(GridData.width, GridData.height);
-            pathFinder = new AStar(GridLogic.tileChecker);
+        }
+
+        public void Init()
+        {
             UnitSelectionSystem.OnDeselectCharacter += HideMoveRange;
             UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
             UnitSelectionSystem.OnEnemySelected += OnEnemySelected;

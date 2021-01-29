@@ -17,7 +17,7 @@ namespace Game.Grid
         private GridSystem GridManager { get; }
         private readonly GridData gridData;
         public GridSessionData gridSessionData;
-        public ITileChecker tileChecker;
+        public ITileChecker tileChecker { get; set; }
 
         public GridLogic(GridSystem gridManager)
         {
@@ -26,7 +26,7 @@ namespace Game.Grid
             gridSessionData = new GridSessionData();
             Tiles = gridManager.Tiles;
             gridData = gridManager.GridData;
-            tileChecker = new GridTileChecker(Tiles, gridData.width, gridData.height);
+           
         }
 
         

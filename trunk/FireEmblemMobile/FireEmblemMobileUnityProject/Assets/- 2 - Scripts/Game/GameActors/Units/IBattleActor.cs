@@ -1,5 +1,7 @@
-﻿using Game.GameActors.Units;
+﻿using Game.GameActors.Players;
+using Game.GameActors.Units;
 using Game.GameActors.Units.Attributes;
+using Game.GameActors.Units.OnGameObject;
 using Game.Mechanics;
 using Game.Mechanics.Battle;
 
@@ -11,7 +13,13 @@ namespace Game.GameInput
         Stats Stats { get; set; }
         int Hp { get; set; }
         int Sp { get; set; }
-        
+        Faction Faction { get; set; }
+        ExperienceManager ExperienceManager { get; }
+        TurnStateManager TurnStateManager { get; set; }
+        GameTransformManager GameTransformManager { get; set; }
+
         object Clone();
+        bool IsAlive();
+        void Die();
     }
 }

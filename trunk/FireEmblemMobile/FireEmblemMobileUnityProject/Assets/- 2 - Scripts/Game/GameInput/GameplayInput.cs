@@ -21,14 +21,14 @@ namespace Game.GameInput
         public static event UnitEvent OnViewUnit;
         public delegate void MoveUnitEvent(IGridActor u, GridPosition position, List<GridPosition> movePath);
         public static event MoveUnitEvent OnMoveUnit;
-        public delegate void AttackUnitEvent(Unit u, Unit attackTarget);
+        public delegate void AttackUnitEvent(IBattleActor u, IBattleActor attackTarget);
         public static event AttackUnitEvent OnAttackUnit;
         public delegate void CheckAttackPreviewEvent(IBattleActor u, IBattleActor attackTarget, GridPosition attackPosition);
         public static event CheckAttackPreviewEvent OnCheckAttackPreview;
         public void AttackUnit(IBattleActor u, IBattleActor attackTarget)
         {
             Debug.Log("GameInput: Attack Unit: " + u+" Target: " +attackTarget);
-            //OnAttackUnit?.Invoke(u, attackTarget);
+            OnAttackUnit?.Invoke(u, attackTarget);
         }
         public void DeselectUnit()
         {

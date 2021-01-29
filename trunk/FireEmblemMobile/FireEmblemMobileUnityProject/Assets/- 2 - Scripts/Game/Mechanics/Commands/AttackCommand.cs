@@ -1,5 +1,6 @@
 ﻿using System;
 using Game.GameActors.Units;
+using Game.GameInput;
 using Game.Manager;
 using GameEngine;
 using UnityEngine;
@@ -8,10 +9,10 @@ namespace Game.Mechanics.Commands
 {
     public class AttackCommand : Command
     {
-        private readonly Unit attacker;
-        private readonly Unit target;
+        private readonly IBattleActor attacker;
+        private readonly IBattleActor target;
 
-        public AttackCommand(Unit attacker, Unit target)
+        public AttackCommand(IBattleActor attacker, IBattleActor target)
         {
             this.attacker = attacker;
             this.target = target;

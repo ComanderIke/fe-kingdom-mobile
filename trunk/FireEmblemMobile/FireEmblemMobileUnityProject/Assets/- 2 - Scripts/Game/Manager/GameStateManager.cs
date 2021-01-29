@@ -24,8 +24,9 @@ namespace Game.Manager
             AIState = new AIState();
             GameOverState = new GameOverState();
             WinState = new WinState();
-            BattleState = new BattleState(); //should be replaced with an custom BattleState for each Battle
-            MovementState = new MovementState(); //should be replaced with an custom State for each Movement
+            BattleState = new BattleState(); 
+            
+            MovementState = new MovementState(); 
             stateMachine = new StateMachine<NextStateTrigger>(GameplayState);
         }
         public void Init()
