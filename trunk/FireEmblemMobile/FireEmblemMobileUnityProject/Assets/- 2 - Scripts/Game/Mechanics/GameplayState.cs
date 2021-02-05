@@ -40,6 +40,8 @@ namespace Game.Mechanics
 
         public override void Exit()
         {
+            Debug.Log("Exit GameplayState");
+           
             var cameraSystem  = gridGameManager.GetSystem<CameraSystem>();
             cameraSystem.RemoveMixin<DragCameraMixin>();
             cameraSystem.RemoveMixin<ClampCameraMixin>();

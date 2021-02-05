@@ -14,34 +14,27 @@ namespace Game.GUI
         private const float DELAY = 0.4f;
 
         public delegate void OnFinishedEvent();
-
+        
         public static OnFinishedEvent OnFinished;
         public delegate void OnAttackConnectedEvent(IBattleActor attacker, IBattleActor defender);
 
         public static OnAttackConnectedEvent OnAttackConnected;
 
 
+        public Canvas canvas;
         private IBattleActor attacker;
         private IBattleActor defender;
         private bool[] attackSequence;
         private int attackSequenceIndex;
 
-        private void OnEnable()
-        {
-            GridInputSystem.SetActive(false);
-        }
-
-        private void OnDisable()
-        {
-            GridInputSystem.SetActive(true);
-        }
+    
 
         public void Show(IBattleActor attacker, IBattleActor defender, bool[] attackSequence)
         {
             this.attacker = attacker;
             this.defender = defender;
-
-            gameObject.SetActive(true);
+            canvas.enabled = true;
+            //GridInputSystem.SetActive(false);
             this.attackSequence = attackSequence;
             //foreach (bool b in attackSequence)
             //{
@@ -145,7 +138,8 @@ namespace Game.GUI
 
         public void Hide()
         {
-            gameObject.SetActive(false);
+            //GridInputSystem.SetActive(true);
+            canvas.enabled = false;
         }
 
         public void ShowCounterDamageText(int damage)

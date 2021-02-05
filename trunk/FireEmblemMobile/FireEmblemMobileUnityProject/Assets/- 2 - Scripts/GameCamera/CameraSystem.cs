@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using GameEngine;
 using UnityEngine;
 
@@ -33,7 +34,7 @@ namespace GameCamera
         {
             var mixin = (CameraMixin)GetComponent(typeof(T));
             mixins.Remove(mixin);
-            Destroy(GetComponent(mixin.GetType()));
+            DestroyImmediate(GetComponent(mixin.GetType()));
         }
 
         public void DeactivateOtherMixins(CameraMixin mixin)

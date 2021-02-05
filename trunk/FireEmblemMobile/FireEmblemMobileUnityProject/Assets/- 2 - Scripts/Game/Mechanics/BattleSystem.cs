@@ -17,42 +17,29 @@ namespace Game.Mechanics
 
         private const float FIGHT_TIME = 3.8f;
         private const float ATTACK_DELAY = 0.0f;
-        private readonly IBattleActor attacker;
-        private readonly IBattleActor defender;
+        private IBattleActor attacker;
+        private IBattleActor defender;
         private int attackCount;
         private bool battleStarted;
-        private readonly UiSystem uiController;
         private BattleSimulation battleSimulation;
         private int attackerAttackCount;
         private int defenderAttackCount;
         private int currentAttackIndex;
-        public IBattleRenderer battleRenderer { get; set; }
+        public IBattleRenderer BattleRenderer { get; set; }
 
-        public void Init()
-        {
-            battleStarted = false;
-        }
-        public BattleSystem()
-        {
-            Init();
-        }
-        public BattleSystem(IBattleActor attacker, IBattleActor defender):base()
+
+        
+        public void StartBattle(IBattleActor attacker, IBattleActor defender)
         {
             this.attacker = attacker;
             this.defender = defender;
-            uiController = GridGameManager.Instance.GetSystem<UiSystem>();
-
-        }
-
-        public void StartBattle()
-        {
             battleSimulation = new BattleSimulation(attacker,defender);
             battleSimulation.StartBattle();
             battleStarted = true;
             currentAttackIndex = 0;
             attackerAttackCount = attacker.BattleComponent.BattleStats.GetAttackCountAgainst(defender);
             defenderAttackCount = defender.BattleComponent.BattleStats.GetAttackCountAgainst(attacker);
-            battleRenderer.Show(attacker, defender, GetAttackSequence());
+            BattleRenderer.Show(attacker, defender, GetAttackSequence());
         }
 
         public void ContinueBattle(IBattleActor attacker, IBattleActor defender)
@@ -102,10 +89,12 @@ namespace Game.Mechanics
             }
 
             DistributeExperience();
-            battleRenderer.Hide();
+            battleStarted = false;
+            //BattleRenderer.Hide();
             GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.BattleEnded);
             
             UnitActionSystem.OnCommandFinished();
+            
         }
         private void DistributeExperience()
         {
@@ -164,6 +153,11 @@ namespace Game.Mechanics
 
             battlePreview.DefenderStats = new BattlePreviewStats(defender.BattleComponent.BattleStats.GetDamage(), defender.Stats.Spd, attacker.BattleComponent.BattleStats.IsPhysical(), attacker.BattleComponent.BattleStats.IsPhysical() ? defender.Stats.Def : defender.Stats.Res, defender.Stats.Skl, defender.BattleComponent.BattleStats.GetDamageAgainstTarget(attacker), defender.BattleComponent.BattleStats.GetAttackCountAgainst(attacker), defender.Hp, defender.Stats.MaxHp, battleSimulation.Defender.Hp, battleSimulation.AttackerDamage, defender.Sp, defender.Stats.MaxSp, battleSimulation.Defender.Sp, battleSimulation.AttackerSpDamage);
             return battlePreview;
+        }
+
+        public void Init()
+        {
+            
         }
     }
 }

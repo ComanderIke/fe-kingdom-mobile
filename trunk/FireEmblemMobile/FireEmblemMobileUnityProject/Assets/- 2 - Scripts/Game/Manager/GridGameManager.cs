@@ -126,8 +126,8 @@ namespace Game.Manager
         private void InjectDependencies()
         {
             var battleRenderers = FindObjectsOfType<MonoBehaviour>().OfType<IBattleRenderer>();
-            GetSystem<BattleSystem>().battleRenderer = battleRenderers.First();
-            
+            GetSystem<BattleSystem>().BattleRenderer = battleRenderers.First();
+            Debug.Log("BATTLE RENDERER: "+battleRenderers.First());
             var gridSystem = GetSystem<GridSystem>();
             var tileChecker = new GridTileChecker(gridSystem.Tiles, gridSystem.GridData.width, gridSystem.GridData.height);
             gridSystem.GridLogic.tileChecker = tileChecker;

@@ -106,6 +106,10 @@ namespace Game.GameActors.Units.OnGameObject
 
                 
             }
+            else
+            {
+                Debug.Log("Clicked On Unit BUT POINTER OVER GAMEOBJECT");
+            }
         }
         public void OnMouseUp()
         {
@@ -153,7 +157,7 @@ namespace Game.GameActors.Units.OnGameObject
 
         public void StartDrag()
         {
-            
+            Debug.Log("START DRAG");
             GridGameManager.Instance.GetSystem<CameraSystem>().DeactivateMixin<DragCameraMixin>();
             dragStarted = true;
             InputReceiver.StartDraggingActor(unit);

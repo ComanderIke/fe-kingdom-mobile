@@ -24,8 +24,9 @@ namespace Game.Mechanics
         private string startMusic;
         
 
-        public BattleState()
+        public BattleState(BattleSystem battleSystem)
         {
+            this.battleSystem = battleSystem;
             //battleRenderer = GameObject.FindObjectOfType<IBattleRenderer>();
             //battleRenderer = DataScript.Instance.battleRenderer;
             //battleRenderer = Resources.Load(BattlerendererPrefab);
@@ -43,8 +44,8 @@ namespace Game.Mechanics
 
         public override void Enter()
         {
-            battleSystem = new BattleSystem(attacker, defender);
-            battleSystem.StartBattle();
+           // battleSystem = new BattleSystem(attacker, defender);
+            battleSystem.StartBattle(attacker, defender);
             BattleRenderer.OnAttackConnected += battleSystem.ContinueBattle;
             BattleRenderer.OnFinished += battleSystem.EndBattle;
             

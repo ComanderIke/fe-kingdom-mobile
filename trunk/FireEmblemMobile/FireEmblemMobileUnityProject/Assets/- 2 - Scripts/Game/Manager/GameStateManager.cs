@@ -24,7 +24,7 @@ namespace Game.Manager
             AIState = new AIState();
             GameOverState = new GameOverState();
             WinState = new WinState();
-            BattleState = new BattleState(); 
+            BattleState = new BattleState(GridGameManager.Instance.GetSystem<BattleSystem>()); 
             
             MovementState = new MovementState(); 
             stateMachine = new StateMachine<NextStateTrigger>(GameplayState);
