@@ -2,8 +2,8 @@
 {
     public enum NextStateTrigger
     {
-        AISystemFinished,
-        StartAITurn,
+        FinishedEnemyPhase,
+        StartEnemyPhase,
         GameOver,
         PlayerWon,
         BattleEnded,

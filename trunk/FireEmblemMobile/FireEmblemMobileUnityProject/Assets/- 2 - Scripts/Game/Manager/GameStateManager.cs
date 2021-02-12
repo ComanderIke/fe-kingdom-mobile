@@ -9,8 +9,8 @@ namespace Game.Manager
     public class GameStateManager
     {
 
-        public static GameplayState GameplayState { get; set; }
-        public static AIState AIState { get; set; }
+        public static GameplayState PlayerPhaseState { get; set; }
+        public static AIState EnemyPhaseState { get; set; }
         public static GameOverState GameOverState { get; set; }
         public static WinState WinState { get; set; }
         public static BattleState BattleState { get; set; }
@@ -20,14 +20,14 @@ namespace Game.Manager
 
         public GameStateManager()
         {
-            GameplayState = new GameplayState();
-            AIState = new AIState();
+            PlayerPhaseState = new GameplayState();
+            EnemyPhaseState = new AIState();
             GameOverState = new GameOverState();
             WinState = new WinState();
             BattleState = new BattleState(GridGameManager.Instance.GetSystem<BattleSystem>()); 
             
             MovementState = new MovementState(); 
-            stateMachine = new StateMachine<NextStateTrigger>(GameplayState);
+            stateMachine = new StateMachine<NextStateTrigger>(PlayerPhaseState);
         }
         public void Init()
         {
@@ -36,14 +36,14 @@ namespace Game.Manager
         }
         private void InitGameStateTransitions()
         {
-            //AIState.AddTransition(GameplayState, NextStateTrigger.AISystemFinished);TODO MAKE AI A SUBPART OF GAMEPLAYSTATE
-
-            GameplayState.AddTransition(GameOverState, NextStateTrigger.GameOver);
-            GameplayState.AddTransition(WinState, NextStateTrigger.PlayerWon);
-            GameplayState.AddTransition(BattleState, NextStateTrigger.BattleStarted);
-            GameplayState.AddTransition(MovementState, NextStateTrigger.MoveUnit);
-            MovementState.AddTransition(GameplayState, NextStateTrigger.FinishedMovement);//TODO NOT WORKING FOR AI
-            BattleState.AddTransition(GameplayState, NextStateTrigger.BattleEnded);
+            EnemyPhaseState.AddTransition(PlayerPhaseState, NextStateTrigger.FinishedEnemyPhase);
+            PlayerPhaseState.AddTransition(EnemyPhaseState, NextStateTrigger.StartEnemyPhase);
+            PlayerPhaseState.AddTransition(GameOverState, NextStateTrigger.GameOver);
+            PlayerPhaseState.AddTransition(WinState, NextStateTrigger.PlayerWon);
+            PlayerPhaseState.AddTransition(BattleState, NextStateTrigger.BattleStarted);
+            PlayerPhaseState.AddTransition(MovementState, NextStateTrigger.MoveUnit);
+            MovementState.AddTransition(PlayerPhaseState, NextStateTrigger.FinishedMovement);//TODO NOT WORKING FOR AI
+            BattleState.AddTransition(PlayerPhaseState, NextStateTrigger.BattleEnded);
         }
         // public void SwitchState(GameState<NextStateTrigger> nextState)
         // {

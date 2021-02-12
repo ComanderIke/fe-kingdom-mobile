@@ -45,7 +45,7 @@ namespace Game.Mechanics
             {
                 //Debug.Log("AITurn");
                 GridInputSystem.SetActive(false);
-                gridGameManager.GameStateManager.Feed(NextStateTrigger.StartAITurn);
+                gridGameManager.GameStateManager.Feed(NextStateTrigger.StartEnemyPhase);
             }
             else
             {

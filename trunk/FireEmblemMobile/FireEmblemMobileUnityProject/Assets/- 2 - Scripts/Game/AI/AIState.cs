@@ -37,7 +37,7 @@ namespace Game.AI
                 //else
                 //{
                     TurnSystem.OnTriggerEndTurn();
-                    GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.AISystemFinished);
+                    GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.FinishedEnemyPhase);
                 //}
             }
 
