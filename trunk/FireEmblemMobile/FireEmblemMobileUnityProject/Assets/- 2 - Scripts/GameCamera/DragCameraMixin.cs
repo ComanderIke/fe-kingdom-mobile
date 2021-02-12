@@ -1,6 +1,7 @@
 ﻿using GameEngine.Input;
 using GameEngine.Tools;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace GameCamera
 {
@@ -32,9 +33,10 @@ namespace GameCamera
             if (InputProvider.InputPressedDown())
             {
                 var ray = RayProvider.CreateRay(InputProvider.InputPosition());
-                if (HitChecker.CheckHit(ray))
+                if (HitChecker.CheckHit(ray) )
                 {
-                    DragPerformer.StartDrag(transform,InputProvider.InputPosition());
+                    if((Input.touchCount==0 &&!EventSystem.current.IsPointerOverGameObject())||( Input.touchCount!=0&&!EventSystem.current.IsPointerOverGameObject(Input.touches[0].fingerId)))
+                        DragPerformer.StartDrag(transform,InputProvider.InputPosition());
                 }
             }
             if (InputProvider.InputPressedUp())

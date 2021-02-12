@@ -18,9 +18,13 @@ namespace Game.GUI
         public ICharacterUI characterUI;
         public ICharacterUI enemyCharacterUI;
         public IAttackPreviewUI attackPreviewUI;
+
+        public Button EndTurnButton;
+        public OKCancelDialogController OkCancelDialogController;
         public void Init()
         {
             UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
+            UnitSelectionSystem.OnSelectedInActiveCharacter += SelectedCharacter;
             UnitSelectionSystem.OnEnemySelected += SelectedEnemyCharacter;
             UnitSelectionSystem.OnDeselectCharacter += DeselectedCharacter;
             UnitActionSystem.OnCheckAttackPreview += ShowAttackPreviewUI;
@@ -63,7 +67,10 @@ namespace Game.GUI
         {
             attackPreviewUI.Hide();
         }
-       
+        public void EndTurnClicked()
+        {
+            OkCancelDialogController.Show("End the Turn?", () => { TurnSystem.OnTriggerEndTurn(); });
+        }
         private void SelectedCharacter(IGridActor actor)
         {
             if(actor is Unit u)

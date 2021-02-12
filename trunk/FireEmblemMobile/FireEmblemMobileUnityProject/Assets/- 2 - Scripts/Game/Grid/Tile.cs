@@ -49,12 +49,16 @@ namespace Game.Grid
                 if (Actor!=null && playerId != Actor.Faction.Id && activePlayer)
                 {
                     tileVfx.ShowAttackableField(this);
+                    TileRenderer.ActiveAttackVisual();
                 }
-                TileRenderer.ActiveAttackVisual();
+                
             }
             else
             {
-                TileRenderer.AttackVisual();
+                if (Actor != null && playerId != Actor.Faction.Id && activePlayer)
+                {
+                    TileRenderer.AttackVisual();
+                }
             }
         }
 
