@@ -15,7 +15,7 @@ namespace Game.Mechanics
     {
         #region Events
 
-        public static Action OnCommandFinished;
+        public static event Action OnCommandFinished;
 
         public static event Action OnAllCommandsFinished;
 
@@ -30,6 +30,7 @@ namespace Game.Mechanics
         private Stack<Command> lastActions;
         private Queue<Command> currentActions;
 
+        private Command currentCommand;
         public void Init()
         {
             GameplayInput.OnWait += Wait;
@@ -42,7 +43,18 @@ namespace Game.Mechanics
             OnCommandFinished += ExecuteActions;
             TriggerUndo += Undo;
         }
-   
+
+        public void Update()
+        {
+            if (currentCommand != null)
+            {
+                currentCommand.Update();
+                if (currentCommand.IsFinished)
+                {
+                    OnCommandFinished();
+                }
+            }
+        }
 
         public void Undo()
         {
@@ -60,15 +72,19 @@ namespace Game.Mechanics
         {
             if (currentActions.Count != 0)
             {
-                var current = currentActions.Dequeue();
+                currentCommand = currentActions.Dequeue();
                 if (currentActions.Count == 0)
                 {
                     OnCommandFinished = null;
                     OnCommandFinished += ExecuteActions;
                     OnCommandFinished += AllCommandsFinished;
                 }
-                current.Execute();
-                lastActions.Push(current);
+                currentCommand.Execute();
+                lastActions.Push(currentCommand);
+            }
+            else
+            {
+                currentCommand = null;
             }
         }
 
@@ -98,8 +114,7 @@ namespace Game.Mechanics
         }
         public void MoveCharacter(IGridActor c, GridPosition destination, List<GridPosition> path = null)
         {
-            Debug.Log("Create Movement Command!");
-            var mCc = new MoveCharacterCommand(c, destination, path);
+            var mCc = new MoveCharacterCommand(c, new Vector2Int(destination.X, destination.Y), path);
             currentActions.Enqueue(mCc);
         }
         #endregion

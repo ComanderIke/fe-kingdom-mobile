@@ -9,7 +9,7 @@ namespace Game.GameActors.Units
         public bool isWaiting;
         public bool hasAttacked;
         public bool isSelected;
-        public bool isActive;
+       // public bool isActive;
         
     }
 }

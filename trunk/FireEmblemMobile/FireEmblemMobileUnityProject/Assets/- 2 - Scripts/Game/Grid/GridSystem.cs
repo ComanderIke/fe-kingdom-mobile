@@ -46,6 +46,8 @@ namespace Game.Map
             Unit.UnitDied += RemoveUnitFromGrid;
         }
 
+ 
+
         public ITileChecker GetTileChecker()
         {
             return GridLogic.tileChecker;

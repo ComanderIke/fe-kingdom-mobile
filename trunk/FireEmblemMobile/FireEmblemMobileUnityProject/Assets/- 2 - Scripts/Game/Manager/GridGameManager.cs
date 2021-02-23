@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Audio;
+using Game.AI;
 using Game.GameActors;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
@@ -13,6 +14,7 @@ using Game.Grid;
 using Game.Grid.PathFinding;
 using Game.GUI;
 using Game.GUI.PopUpText;
+using Game.GUI.Text;
 using Game.Map;
 using Game.Mechanics;
 using Game.Mechanics.Battle;
@@ -120,20 +122,25 @@ namespace Game.Manager
             GameStateManager.Init();
             
             OnStartGame?.Invoke();
-            GetSystem<TurnSystem>().StartTurn();
+            GetSystem<TurnSystem>().StartPhase();
         }
 
         private void InjectDependencies()
         {
+            // var type = typeof(IDependecyInjection);
+            // var types = AppDomain.CurrentDomain.GetAssemblies()
+            //     .SelectMany(s => s.GetTypes())
+            //     .Where(p => type.IsAssignableFrom(p));
+            
             var battleRenderers = FindObjectsOfType<MonoBehaviour>().OfType<IBattleRenderer>();
             GetSystem<BattleSystem>().BattleRenderer = battleRenderers.First();
-            Debug.Log("BATTLE RENDERER: "+battleRenderers.First());
             var gridSystem = GetSystem<GridSystem>();
             var tileChecker = new GridTileChecker(gridSystem.Tiles, gridSystem.GridData.width, gridSystem.GridData.height);
             gridSystem.GridLogic.tileChecker = tileChecker;
             var pathFinder = new AStar(tileChecker);
             gridSystem.pathFinder = pathFinder;
-            
+            ScoreCalculater.pathFinder = pathFinder;
+            GetSystem<TurnSystem>().phaseRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IPhaseRenderer>().First();
             GetSystem<MoveSystem>().tileChecker = tileChecker;
             GetSystem<MoveSystem>().pathFinder = pathFinder;
         }
@@ -192,8 +199,11 @@ namespace Game.Manager
                     if (spawn.unit != null)
                     {
                         var unit = Instantiate(spawn.unit) as Unit;
+        
+                       
                         faction.AddUnit(unit);
                         unit.Initialize();
+                        unit.AIComponent.WeightSet = spawn.AIWeightSet;
                        
                         unitInstantiator.PlaceCharacter(unit, spawn.X, spawn.Y);
                         //Debug.Log("Spawn Unit"+unit.name +" "+spawn.X+" "+spawn.Y);

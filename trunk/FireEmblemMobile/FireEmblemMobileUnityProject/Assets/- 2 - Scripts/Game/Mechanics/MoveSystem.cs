@@ -26,6 +26,8 @@ namespace Game.Mechanics
             this.nodeHelper = new NodeHelper(tileChecker.GetWidth(), tileChecker.GetHeight());
         }
 
+ 
+
         public List<Vector2> GetMovement(int x, int y, int movRange, Unit unit)
         {
             var locations = new List<Vector2>();

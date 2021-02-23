@@ -35,6 +35,10 @@ namespace Game.Grid
         {
             int x = unit.GridComponent.GridPosition.X;
             int y = unit.GridComponent.GridPosition.Y;
+            return GetAttackTargets(unit, x, y);
+        }
+        public List<IGridActor> GetAttackTargets(IGridActor unit, int x, int y)
+        {
             var targets = new List<IGridActor>();
             foreach (int attackRange in unit.AttackRanges)
             {
@@ -147,15 +151,22 @@ namespace Game.Grid
 
         #region AIHELP
 
-        public void GetMoveLocations(int x, int y, List<Vector2> locations, int range, int c, Unit unit)
+        public IEnumerable<Vector2Int> GetMoveLocations(IGridActor unit)
+        {
+            var locations = new List<Vector2Int>();
+            GetMoveLocations(unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y, locations,
+                unit.MovementRange, 0, unit);
+            return locations;
+        }
+        private void GetMoveLocations(int x, int y, List<Vector2Int> locations, int range, int c, IGridActor unit)
         {
             if (range < 0)
             {
                 return;
             }
 
-            if (!locations.Contains(new Vector2(x, y)) && Tiles[x, y].Actor == null)
-                locations.Add(new Vector3(x, y)); //TODO Height?!
+            if (!locations.Contains(new Vector2Int(x, y)) && Tiles[x, y].Actor == null)
+                locations.Add(new Vector2Int(x, y)); //TODO Height?!
             GridManager.NodeHelper.Nodes[x, y].C = c;
             c++;
             if (CheckField(x - 1, y, unit, range) && GridManager.NodeHelper.NodeFaster(x - 1, y, c))

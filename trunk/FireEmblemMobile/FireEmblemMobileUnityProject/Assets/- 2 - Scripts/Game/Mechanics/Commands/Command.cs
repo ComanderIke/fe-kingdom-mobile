@@ -2,8 +2,10 @@
 {
     public abstract class Command
     {
-        public bool Finished = false;
+        public bool IsFinished;
         public abstract void Execute();
         public abstract void Undo();
+
+        public abstract void Update();
     }
 }

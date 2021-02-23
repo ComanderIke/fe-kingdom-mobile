@@ -113,7 +113,8 @@ namespace Game.GameActors.Units.OnGameObject
         }
         public void OnMouseUp()
         {
-            GridGameManager.Instance.GetSystem<CameraSystem>().ActivateMixin<DragCameraMixin>();
+            if(unit.Faction.Id == GridGameManager.Instance.FactionManager.ActivePlayerNumber&&unit.Faction.IsPlayerControlled)
+                GridGameManager.Instance.GetSystem<CameraSystem>().ActivateMixin<DragCameraMixin>();
             if (DragManager.IsDragging)
             {
                
@@ -157,7 +158,6 @@ namespace Game.GameActors.Units.OnGameObject
 
         public void StartDrag()
         {
-            Debug.Log("START DRAG");
             GridGameManager.Instance.GetSystem<CameraSystem>().DeactivateMixin<DragCameraMixin>();
             dragStarted = true;
             InputReceiver.StartDraggingActor(unit);

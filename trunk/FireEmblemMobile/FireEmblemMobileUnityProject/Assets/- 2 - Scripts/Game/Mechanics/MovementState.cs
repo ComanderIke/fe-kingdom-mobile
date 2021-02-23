@@ -24,6 +24,8 @@ namespace Game.Mechanics
         public MovementPath Path;
         public int PathCounter;
         private IGridActor unit;
+        private bool movementFinished;
+        public bool IsFinished;
 
         public MovementState()
         {
@@ -31,18 +33,25 @@ namespace Game.Mechanics
             PathCounter = 0;
         }
 
-        public void StartMovement(IGridActor c, int x, int y, List<GridPosition> path = null)
+        public void StartMovement(IGridActor c, int x, int y, List<GridPosition> path = null )
         {
+           
+            
             mousePath = path;
             this.x = x;
             this.y = y;
             unit = c;
-            GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.MoveUnit);
             PathCounter = 0;
+            IsFinished = false;
+            movementFinished = false;
+            GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.MoveUnit);
+            
         }
 
         public override void Enter()
         {
+            NextState = PreviousState;
+            Debug.Log("PreviousState: " +PreviousState);
             if (unit.GridComponent.GridPosition.X == x && unit.GridComponent.GridPosition.Y == y) //already on Destination
             {
                 FinishMovement();
@@ -82,10 +91,12 @@ namespace Game.Mechanics
         }
         public override GameState<NextStateTrigger> Update()
         {
+            if (movementFinished)
+                return NextState;
             if (!active)
                 return null;
             MoveUnit();
-            return NextState;
+            return null;
         }
 
         private void MoveUnit()
@@ -96,7 +107,7 @@ namespace Game.Mechanics
             float z = localPosition.z;
             float tx = Path.GetStep(PathCounter).GetX();
             float ty = Path.GetStep(PathCounter).GetY();
-            //Debug.Log("Moving to x: " + tx + " y: " + ty+ " "+x+" "+y);
+            Debug.Log("Moving to x: " + tx + " y: " + ty+ " "+x+" "+y);
             var walkSpeed = 5f;
             float value = walkSpeed * Time.deltaTime;
             x = Math.Abs(x - tx) < value ? tx : x + (x < tx ? value : -value);
@@ -115,22 +126,20 @@ namespace Game.Mechanics
         public override void Exit()
         {
             Debug.Log("Exit MoveState!"+x+" "+y);
+           
+          
             gridGameManager.GetSystem<GridSystem>().SetUnitPosition(unit,x,y);
             unit.TurnStateManager.IsSelected = false;
             unit.TurnStateManager.HasMoved = true;
             GridInputSystem.SetActive(true);
             OnMovementFinished?.Invoke(unit);
+            IsFinished = true;
         }
 
         private void FinishMovement()
         {
-            Debug.Log("Finished Movement!");
             active = false;
-            GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.FinishedMovement);
-            UnitActionSystem.OnCommandFinished();
-           
-
-
+            movementFinished = true;
         }
     }
 }

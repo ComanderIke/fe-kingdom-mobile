@@ -21,13 +21,22 @@ namespace Game.Mechanics.Commands
         public override void Execute()
         {
             Debug.Log("Execute Attack Command!");
-            GameStateManager.BattleState.SetParticipants(attacker, target);
-            GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.BattleStarted);
+            GameStateManager.BattleState.Start(attacker, target);
+            
+            
         }
 
         public override void Undo()
         {
             throw new NotImplementedException();
+        }
+
+        public override void Update()
+        {
+            if (GameStateManager.BattleState.IsFinished)
+            {
+                IsFinished = true;
+            }
         }
     }
 }

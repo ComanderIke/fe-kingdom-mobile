@@ -25,6 +25,7 @@ namespace Game.Mechanics
         private int attackerAttackCount;
         private int defenderAttackCount;
         private int currentAttackIndex;
+        public bool IsFinished;
         public IBattleRenderer BattleRenderer { get; set; }
 
 
@@ -36,10 +37,12 @@ namespace Game.Mechanics
             battleSimulation = new BattleSimulation(attacker,defender);
             battleSimulation.StartBattle();
             battleStarted = true;
+            IsFinished = false;
             currentAttackIndex = 0;
             attackerAttackCount = attacker.BattleComponent.BattleStats.GetAttackCountAgainst(defender);
             defenderAttackCount = defender.BattleComponent.BattleStats.GetAttackCountAgainst(attacker);
             BattleRenderer.Show(attacker, defender, GetAttackSequence());
+            
         }
 
         public void ContinueBattle(IBattleActor attacker, IBattleActor defender)
@@ -91,9 +94,10 @@ namespace Game.Mechanics
             DistributeExperience();
             battleStarted = false;
             //BattleRenderer.Hide();
-            GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.BattleEnded);
+            IsFinished = true;
+            //GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.BattleEnded);
             
-            UnitActionSystem.OnCommandFinished();
+            
             
         }
         private void DistributeExperience()
@@ -156,6 +160,11 @@ namespace Game.Mechanics
         }
 
         public void Init()
+        {
+            
+        }
+
+        public void Update()
         {
             
         }

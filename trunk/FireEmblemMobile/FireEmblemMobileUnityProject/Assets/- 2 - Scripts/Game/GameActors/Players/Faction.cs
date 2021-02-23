@@ -29,7 +29,7 @@ namespace Game.GameActors.Players
 
         public List<Unit> GetActiveUnits()
         {
-            return Units.Where(c => c.TurnStateManager.IsActive && c.IsAlive()).ToList();
+            return Units.Where(c => !c.TurnStateManager.IsWaiting && c.IsAlive()).ToList();
         }
 
         public void Init()

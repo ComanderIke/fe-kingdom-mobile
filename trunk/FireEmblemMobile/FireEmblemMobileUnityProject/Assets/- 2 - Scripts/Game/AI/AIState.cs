@@ -15,7 +15,7 @@ namespace Game.AI
 
         public override void Enter()
         {
-            //brain = new Brain(GridGameManager.Instance.FactionManager.ActiveFaction);
+            brain = new Brain(GridGameManager.Instance.FactionManager.ActiveFaction);
         }
 
         public override void Exit()
@@ -30,15 +30,16 @@ namespace Game.AI
             {
                 pauseTime = 0;
 
-                //if (!brain.IsFinished())
-                //{
-                //    brain.Think();
-                //}
-                //else
-                //{
+                if (!brain.IsFinished())
+                {
+                    Debug.Log("THINK");
+                    brain.Think();
+                }
+                else
+                {
                     TurnSystem.OnTriggerEndTurn();
                     GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.FinishedEnemyPhase);
-                //}
+                }
             }
 
             return NextState;

@@ -7,6 +7,7 @@ namespace GameEngine.GameStates
     public abstract class GameState<TFeed>
     {
         protected GameState<TFeed> NextState;
+        public GameState<TFeed> PreviousState;
 
         protected GameState()
         {

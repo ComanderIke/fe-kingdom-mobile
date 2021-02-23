@@ -3,13 +3,11 @@ using UnityEngine;
 
 namespace Game.AI
 {
-    public class AIAgent
+    public class AIComponent
     {
-        public AIAgent()
+        public AIComponent()
         {
             AIGoals = new List<Goal>();
-            WeightSet = ScriptableObject.CreateInstance<WeightSet>();
-            //TODO Assigning WeightSets!
         }
 
         public List<Goal> AIGoals { get; set; }

@@ -9,6 +9,8 @@
         BattleEnded,
         BattleStarted,
         FinishedMovement,
-        MoveUnit
+        MoveUnit,
+        FinishedAIMovement,
+        AIBattleEnded
     }
 }

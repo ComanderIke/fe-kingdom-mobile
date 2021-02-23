@@ -51,8 +51,8 @@ namespace Game.GameActors.Units
                 //OnHasAttacked?.Invoke(value);
             }
         }
-        public bool IsActive { get=> UnitTurnState.isActive; set => UnitTurnState.isActive= value;
-        }
+        //public bool IsActive { get=> UnitTurnState.isActive; set => UnitTurnState.isActive= value;
+        //}
         
         public bool IsSelected
         {
@@ -68,7 +68,7 @@ namespace Game.GameActors.Units
         }
         public void UnitTurnFinished()
         {
-            IsActive = false;
+           // IsActive = false;
             HasMoved = true;
             HasAttacked = true;
             IsWaiting = true;
@@ -91,9 +91,16 @@ namespace Game.GameActors.Units
             HasAttacked = false;
             IsWaiting = false;
             IsSelected = false;
-            IsActive = false;
+           // IsActive = false;
         }
 
         public event Action<bool> OnSelected;
+
+        public void Wait()
+        {
+            unit.TurnStateManager.IsWaiting = true;
+            unit.TurnStateManager.IsSelected = false;
+            unit.TurnStateManager.HasMoved = true;
+        }
     }
 }

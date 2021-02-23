@@ -22,7 +22,7 @@ namespace Game.Mechanics
         private BattleSystem battleSystem;
 
         private string startMusic;
-        
+        public bool IsFinished;
 
         public BattleState(BattleSystem battleSystem)
         {
@@ -45,7 +45,10 @@ namespace Game.Mechanics
         public override void Enter()
         {
            // battleSystem = new BattleSystem(attacker, defender);
-            battleSystem.StartBattle(attacker, defender);
+           NextState = PreviousState;
+           IsFinished = false;
+           battleSystem.StartBattle(attacker, defender);
+           
             BattleRenderer.OnAttackConnected += battleSystem.ContinueBattle;
             BattleRenderer.OnFinished += battleSystem.EndBattle;
             
@@ -57,7 +60,13 @@ namespace Game.Mechanics
 
         public override GameState<NextStateTrigger> Update()
         {
-            return NextState;
+            if (battleSystem.IsFinished)
+            {
+                IsFinished = true;
+                return NextState;
+            }
+            else 
+                return null;
         }
 
         public override void Exit()
@@ -80,11 +89,11 @@ namespace Game.Mechanics
             startMusic = GridGameManager.Instance.GetSystem<AudioSystem>().GetCurrentlyPlayedMusicTracks()[0];
             GridGameManager.Instance.GetSystem<AudioSystem>().ChangeMusic("BattleTheme", startMusic);
         }
-    }
 
-    public interface IBattleRenderer
-    {
-        void Hide();
-        void Show(IBattleActor attacker, IBattleActor defender, bool[] attackSequence);
+        public void Start(IBattleActor battleActor, IBattleActor target)
+        {
+            SetParticipants(battleActor, target);
+            GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.BattleStarted);
+        }
     }
 }

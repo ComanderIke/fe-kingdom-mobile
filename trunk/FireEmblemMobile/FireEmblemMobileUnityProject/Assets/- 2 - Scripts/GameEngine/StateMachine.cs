@@ -14,7 +14,8 @@ namespace GameEngine
 
         public void Update()
         {
-            currentState.Update();
+          
+            SwitchState(currentState.Update());
         }
 
         public void Init()
@@ -25,15 +26,22 @@ namespace GameEngine
         public void Feed(TFeed input)
         {
             var nextState = currentState.Feed(input);
-            Debug.Log("Feed "+input+" Next State: "+nextState);
+            //Debug.Log("Feed "+input+" Next State: "+
+            if(nextState==null)
+                Debug.LogError("Feed not resulting in State" + input +" "+currentState);
             SwitchState(nextState);
+            
         }
+
+
 
         public void SwitchState(GameState<TFeed> nextState)
         {
             if (nextState != null)
             {
                 currentState.Exit();
+                nextState.PreviousState = currentState;
+                Debug.Log("SwitchState: "+ nextState+" PreviousState: "+nextState.PreviousState);
                 currentState = nextState;
                 nextState.Enter();
             }

@@ -1,29 +1,39 @@
 ﻿using System;
 using TMPro;
+using UnityEditor.Analytics;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Game.GUI.Text
 {
-    public class PlayerTurnTextAnimation : MonoBehaviour
+    public class PlayerTurnTextAnimation : MonoBehaviour, IPhaseRenderer
     {
-        public static event Action OnFinished;
-        public static event Action OnStarted;
+
+        private Canvas canvas;
         public TextMeshProUGUI text;
         public Image BackGround;
+        public Material []textMaterials;
+        public string[] phaseTexts;
         private const float FADE_IN_DURATION =  0.25f;
         private const float FADE_OUT_DURATION = 0.25f;
         private const float TEXT_FADE_IN_DURATION = 0.55f;
         private const float TEXT_FADE_OUT_DURATION = 0.55f;
 
-        private void Start()
+        void Awake()
         {
-            OnStarted?.Invoke();
-            float posX= text.transform.localPosition.x;
-            float posY = text.transform.localPosition.y;
-            float posZ = text.transform.localPosition.z;
+            canvas = GetComponent<Canvas>();
+        }
+        public void Show(int playerId, Action OnFinished)
+        {
+            canvas.enabled = true;
+            text.material = textMaterials[playerId];
+            text.SetText(phaseTexts[playerId]);
+      
             RectTransform textRect = text.GetComponent<RectTransform>();
-            text.transform.localPosition = new Vector3(posX - ((Screen.width/2) + (textRect.sizeDelta.x / 2)), posY, posZ);
+            float posX = textRect.anchoredPosition.x;
+            float posY = textRect.anchoredPosition.y;
+
+            textRect.anchoredPosition = new Vector3(posX - ((Screen.width/2) + (textRect.sizeDelta.x / 2)), posY);
             BackGround.transform.localScale = new Vector3(1, 0, 1);
 
             LeanTween.scaleY(BackGround.gameObject, 1, FADE_IN_DURATION).setEaseOutQuad().setOnComplete(
@@ -32,7 +42,7 @@ namespace Game.GUI.Text
                         () =>
                             LeanTween.moveLocalX(text.gameObject, posX + (Screen.width / 2) + (textRect.sizeDelta.x / 2), TEXT_FADE_OUT_DURATION).setEaseInQuad().setOnComplete(
                                 () => LeanTween.scaleY(BackGround.gameObject, 0, FADE_OUT_DURATION).setEaseInQuad().setOnComplete(
-                                        () => { OnFinished?.Invoke();Destroy(gameObject.transform.parent.gameObject); }
+                                        () => { OnFinished?.Invoke();Hide(); }
                                       )
                             )
                     )
@@ -40,7 +50,11 @@ namespace Game.GUI.Text
            
         }
 
-       
+        private void Hide()
+        {
+            canvas.enabled = false;
+        }
+        
          
     }
 }

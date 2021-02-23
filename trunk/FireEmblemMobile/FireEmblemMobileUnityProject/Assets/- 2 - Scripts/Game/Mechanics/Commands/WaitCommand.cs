@@ -21,16 +21,21 @@ namespace Game.Mechanics.Commands
             if (unit != null && !unit.TurnStateManager.IsWaiting)
             {
                 GridGameManager.Instance.GetSystem<Map.GridSystem>().HideMoveRange();
-                unit.TurnStateManager.IsWaiting = true;
-                unit.TurnStateManager.IsSelected = false;
-                unit.TurnStateManager.HasMoved = true;
+                unit.TurnStateManager.Wait();
+                
             }
             unitSelectionManager.DeselectActiveCharacter();
+            IsFinished = true;
         }
 
         public override void Undo()
         {
             throw new NotImplementedException();
+        }
+
+        public override void Update()
+        {
+            
         }
     }
 }

@@ -18,7 +18,7 @@ using UnityEngine;
 
 namespace Game.GameActors.Units
 {
-    public abstract class Unit : ScriptableObject, IGridActor, IBattleActor, ICloneable
+    public abstract class Unit : ScriptableObject, IGridActor, IBattleActor, ICloneable, IAIAgent
     {
         public new string name;
 
@@ -64,7 +64,7 @@ namespace Game.GameActors.Units
 
         public StatusEffectManager StatusEffectManager { get; set; }
         
-        public AIAgent Agent { get; private set; }
+        public AIComponent AIComponent { get; private set; }
         public Faction Faction { get; set; }
         public Motivation Motivation { get; internal set; }
 
@@ -109,8 +109,7 @@ namespace Game.GameActors.Units
             BattleComponent = new BattleComponent(this);
             GameTransformManager = new GameTransformManager();
             StatusEffectManager = new StatusEffectManager(this);
-
-            Agent = new AIAgent();
+            AIComponent = new AIComponent();
             stats = stats == null ? CreateInstance<Stats>() : Instantiate(stats);
             growths = growths == null ? CreateInstance<Growths>() : Instantiate(growths);
             var tmp = unitEffectVisuals.Select(unitEffectVisual => Instantiate(unitEffectVisual)).ToList();
@@ -224,7 +223,7 @@ namespace Game.GameActors.Units
             clone.GridComponent = new GridComponent(clone);
             clone.GameTransformManager = new GameTransformManager();
             clone.StatusEffectManager = new StatusEffectManager(clone);
-            clone.Agent = new AIAgent();
+            clone.AIComponent = new AIComponent();
             clone.unitEffectVisuals = unitEffectVisuals;
             clone.visuals = visuals;
         
@@ -269,6 +268,4 @@ namespace Game.GameActors.Units
 
         public static event OnUnitDamagedEvent OnUnitDamaged;
     }
-
- 
 }

@@ -30,7 +30,7 @@ namespace Game.GameInput
             gridInput.RegisterInputReceiver(this);
         }
 
-        private void Update()
+        public void Update()
         {
             if (!Active)
                 return;
@@ -72,7 +72,7 @@ namespace Game.GameInput
 
         public void ActorClicked(IGridActor unit)
         {
-            Debug.Log("Player Input: Unit clicked: " + unit);
+            //Debug.Log("Player Input: Unit clicked: " + unit);
             if (!Active)
                 return;
             inputReceiver.ClickedOnActor(unit);
@@ -94,7 +94,7 @@ namespace Game.GameInput
                 return;
             lastDragPosX = x;
             lastDragPosY = y;
-            Debug.Log("Dragged on: "+x+" "+y);
+            //Debug.Log("Dragged on: "+x+" "+y);
             var tile = gridSystem.GetTile(x, y);
             if (tile.Actor != null)
             {

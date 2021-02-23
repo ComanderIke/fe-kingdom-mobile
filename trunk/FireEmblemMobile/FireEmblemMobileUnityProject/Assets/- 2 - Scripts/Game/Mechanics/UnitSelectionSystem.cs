@@ -30,6 +30,11 @@ namespace Game.Mechanics
             BattleState.OnExit += DeselectActiveCharacter;
         }
 
+        public void Update()
+        {
+            
+        }
+
         private void SameCharacterSelected()
         {
             SelectCharacter(SelectedCharacter);

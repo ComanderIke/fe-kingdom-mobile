@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Game.AI;
 using Game.GameActors.Units;
 using Game.Grid;
 using Game.Manager;
@@ -14,17 +15,18 @@ namespace Game.Mechanics.Commands
         private readonly int oldX;
         private readonly int oldY;
         private readonly List<GridPosition> path;
+      
 
-        public MoveCharacterCommand(IGridActor unit, GridPosition destination)
+        public MoveCharacterCommand(IGridActor unit, Vector2Int destination)
         {
             this.unit = unit;
             oldX = unit.GridComponent.GridPosition.X;
             oldY = unit.GridComponent.GridPosition.Y;
-            x = destination.X;
-            y = destination.Y;
+            x = destination.x;
+            y = destination.y;
         }
 
-        public MoveCharacterCommand(IGridActor unit, GridPosition destination, List<GridPosition> path) : this(unit, destination)
+        public MoveCharacterCommand(IGridActor unit, Vector2Int destination, List<GridPosition> path) : this(unit, destination)
         {
             this.path = path;
         }
@@ -39,6 +41,11 @@ namespace Game.Mechanics.Commands
         {
             unit.GridComponent.SetPosition(oldX, oldY);
             unit.TurnStateManager.Reset();
+        }
+
+        public override void Update()
+        {
+            IsFinished = GameStateManager.MovementState.IsFinished;
         }
     }
 }

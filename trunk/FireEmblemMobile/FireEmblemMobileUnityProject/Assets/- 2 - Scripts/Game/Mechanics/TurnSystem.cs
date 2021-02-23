@@ -1,5 +1,6 @@
 ﻿using System;
 using Game.GameInput;
+using Game.GUI.Text;
 using Game.Manager;
 using GameEngine;
 using UnityEngine;
@@ -24,14 +25,16 @@ namespace Game.Mechanics
 
         public int TurnCount { get; set; }
 
+        public IPhaseRenderer phaseRenderer;
+
         public void Init()
         {
             gridGameManager = GridGameManager.Instance;
-            OnTriggerEndTurn += EndTurn;
+            OnTriggerEndTurn += EndPhase;
             factionManager = gridGameManager.FactionManager;
             InitPlayers();
         }
- 
+
 
         private void InitPlayers()
         {
@@ -39,7 +42,13 @@ namespace Game.Mechanics
             factionManager.ActiveFaction = gridGameManager.FactionManager.Factions[factionManager.ActivePlayerNumber];
         }
 
-        public void StartTurn()
+        public void StartPhase()
+        {
+            GridInputSystem.SetActive(false);
+            phaseRenderer.Show(factionManager.ActiveFaction.Id, ReadyPhase);
+        }
+
+        private void ReadyPhase()
         {
             if (!factionManager.ActiveFaction.IsPlayerControlled)
             {
@@ -59,7 +68,7 @@ namespace Game.Mechanics
             }
         }
 
-        public void EndTurn()
+        public void EndPhase()
         {
             //Debug.Log("EndTurn!");
             foreach (var c in factionManager.ActiveFaction.Units)
@@ -72,7 +81,7 @@ namespace Game.Mechanics
 
             gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter = null;
             OnEndTurn?.Invoke();
-            StartTurn();
+            StartPhase();
         }
 
         private void OnDestroy()

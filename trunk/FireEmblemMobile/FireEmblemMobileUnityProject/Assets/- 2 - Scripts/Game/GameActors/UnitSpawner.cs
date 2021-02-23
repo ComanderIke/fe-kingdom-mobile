@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Units;
+﻿using Game.AI;
+using Game.GameActors.Units;
 using UnityEngine;
 
 namespace Game.GameActors
@@ -9,6 +10,7 @@ namespace Game.GameActors
 
         public Unit unit;
         public int FactionId;
+        public WeightSet AIWeightSet;
         public int X => (int) transform.localPosition.x;
         public int Y => (int)transform.localPosition.y;
 
