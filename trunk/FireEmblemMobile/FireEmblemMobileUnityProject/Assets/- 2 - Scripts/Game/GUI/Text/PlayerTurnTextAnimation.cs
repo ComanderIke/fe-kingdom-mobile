@@ -26,12 +26,15 @@ namespace Game.GUI.Text
         public void Show(int playerId, Action OnFinished)
         {
             canvas.enabled = true;
-            text.material = textMaterials[playerId];
+            Debug.Log("Show Phase: "+playerId);
+           // text.material = textMaterials[playerId];
+            text.fontMaterial = textMaterials[playerId];
+            Debug.Log("Material: "+textMaterials[playerId]);
             text.SetText(phaseTexts[playerId]);
       
             RectTransform textRect = text.GetComponent<RectTransform>();
-            float posX = textRect.anchoredPosition.x;
-            float posY = textRect.anchoredPosition.y;
+            float posX = 0;
+            float posY = 0;
 
             textRect.anchoredPosition = new Vector3(posX - ((Screen.width/2) + (textRect.sizeDelta.x / 2)), posY);
             BackGround.transform.localScale = new Vector3(1, 0, 1);
