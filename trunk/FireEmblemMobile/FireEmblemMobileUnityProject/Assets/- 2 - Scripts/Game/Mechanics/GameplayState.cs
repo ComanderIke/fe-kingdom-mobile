@@ -14,10 +14,13 @@ namespace Game.Mechanics
     public class GameplayState : GameState<NextStateTrigger>
     {
         private readonly GridGameManager gridGameManager;
+        
+        private ConditionManager ConditionManager;
 
         public GameplayState()
         {
             gridGameManager = GridGameManager.Instance;
+            ConditionManager = new ConditionManager();
         }
 
         public override void Enter()
@@ -34,7 +37,14 @@ namespace Game.Mechanics
 
         public override GameState<NextStateTrigger> Update()
         {
-            CheckGameOver();
+            if (ConditionManager.CheckLose(gridGameManager.FactionManager.Factions))
+            {
+                return GameStateManager.GameOverState;
+            }
+            else if (ConditionManager.CheckWin(gridGameManager.FactionManager.Factions))
+            {
+                return GameStateManager.WinState;
+            }
             return NextState;
         }
 
@@ -50,29 +60,6 @@ namespace Game.Mechanics
             gridInput.ResetInput();
         }
 
-        public void CheckGameOver()
-        {
-
-            foreach (var p in gridGameManager.FactionManager.Factions)
-            {
-                if (p.IsPlayerControlled && !p.IsAlive())
-                {
-                    Debug.Log("Game Over!");
-                    //gridGameManager.GetSystem<UiSystem>()?.ShowGameOver();
-                    GridInputSystem.SetActive(false);
-                    gridGameManager.GameStateManager.Feed(NextStateTrigger.GameOver);
-
-                    return;
-                }
-                else if (!p.IsPlayerControlled && !p.IsAlive())
-                {
-                    Debug.Log("Win!");
-                    //gridGameManager.GetSystem<UiSystem>()?.ShowWinScreen();
-                    GridInputSystem.SetActive(false);
-                    gridGameManager.GameStateManager.Feed(NextStateTrigger.PlayerWon);
-                    return;
-                }
-            }
-        }
+       
     }
 }

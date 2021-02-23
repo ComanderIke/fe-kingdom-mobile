@@ -45,6 +45,7 @@ namespace Game.Manager
             //Debug.Log("Initialize");
             AddSystems();
             FactionManager = new FactionManager();
+            GameStateManager = new GameStateManager();
             Application.targetFrameRate = 60;
             JITHelper.PreJitAll<GridSystem>();
             JITHelper.PreJitAll<UiSystem>();
@@ -108,17 +109,16 @@ namespace Game.Manager
 
         private void Initialize()
         {
+           
             InjectDependencies();
             foreach (var system in Systems)
             {
                 system.Init();
             }
-            
-            //needs to be added AFTER GridSystem has fully initialized
 
 
             LevelConfig();
-            GameStateManager = new GameStateManager();
+          
             GameStateManager.Init();
             
             OnStartGame?.Invoke();
@@ -143,6 +143,9 @@ namespace Game.Manager
             GetSystem<TurnSystem>().phaseRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IPhaseRenderer>().First();
             GetSystem<MoveSystem>().tileChecker = tileChecker;
             GetSystem<MoveSystem>().pathFinder = pathFinder;
+            GameStateManager.WinState.renderer =  FindObjectsOfType<MonoBehaviour>().OfType<IWinRenderer>().First();
+            GameStateManager.GameOverState.renderer =  FindObjectsOfType<MonoBehaviour>().OfType<IGameOverRenderer>().First();
+            GameStateManager.BattleState.battleSystem = GetSystem<BattleSystem>();
         }
 
         private void Update()

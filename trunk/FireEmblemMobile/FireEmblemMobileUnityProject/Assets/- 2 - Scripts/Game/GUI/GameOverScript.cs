@@ -3,36 +3,21 @@ using UnityEngine.SceneManagement;
 
 namespace Game.GUI
 {
-    public class GameOverScript : MonoBehaviour
+    public class GameOverScript : MonoBehaviour, IGameOverRenderer
     {
-        private const float DELAY = 2.0f;
-        private bool active;
-        private float time = 0;
 
-        private void OnEnable()
+        private Canvas canvas;
+
+        private void Start()
         {
-            active = false;
-            time = 0;
+            canvas = GetComponent<Canvas>();
         }
 
-        private void Update()
+        public void Show()
         {
-            if (active)
-            {
-                if (Input.GetMouseButtonDown(0))
-                {
-                    SceneManager.LoadSceneAsync("MainMenu");
-                    active = false;
-                }
-            }
-            else
-            {
-                time += Time.deltaTime;
-                if (time >= DELAY)
-                {
-                    active = true;
-                }
-            }
+            canvas.enabled = true;
         }
+
+      
     }
 }

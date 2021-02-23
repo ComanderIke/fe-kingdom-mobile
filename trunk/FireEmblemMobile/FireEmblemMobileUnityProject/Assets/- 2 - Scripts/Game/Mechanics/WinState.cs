@@ -9,10 +9,12 @@ namespace Game.Mechanics
     {
         private const float DELAY = 2.0f;
         private float time = 0;
+        public IWinRenderer renderer;
         public override void Enter()
         {
             Debug.Log("Player Won");
             time = 0;
+            renderer.Show();
         }
 
         public override void Exit()

@@ -1,5 +1,6 @@
 ﻿using System;
 using Audio;
+using Game.AI;
 using Game.GameActors.Units;
 using Game.GameInput;
 using Game.GameResources;
@@ -12,21 +13,21 @@ using UnityEngine;
 
 namespace Game.Mechanics
 {
-    public class BattleState : GameState<NextStateTrigger>
+    public class BattleState : GameState<NextStateTrigger>, IDependecyInjection
     {
         public static Action OnEnter;
         public static Action OnExit;
 
         private IBattleActor attacker;
         private IBattleActor defender;
-        private BattleSystem battleSystem;
+        
+        public BattleSystem battleSystem; //Injected
 
         private string startMusic;
         public bool IsFinished;
 
-        public BattleState(BattleSystem battleSystem)
+        public BattleState()
         {
-            this.battleSystem = battleSystem;
             //battleRenderer = GameObject.FindObjectOfType<IBattleRenderer>();
             //battleRenderer = DataScript.Instance.battleRenderer;
             //battleRenderer = Resources.Load(BattlerendererPrefab);
