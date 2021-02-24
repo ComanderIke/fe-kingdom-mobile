@@ -10,6 +10,7 @@ namespace Game.GameActors.Items.Weapons
         Bow,
         Staff,
         Spear,
-        Axe
+        Axe,
+        Natural
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Game.GUI;
+using UnityEngine;
 
 namespace Game.GameActors.Units
 {
@@ -6,7 +7,7 @@ namespace Game.GameActors.Units
     {
         private const int MAX_EXP = 100;
         public delegate void ExpGainedEvent(int expBefore, int expGained);
-        public delegate void LevelupEvent(int levelBefore, int levelAfter);
+        public delegate void LevelupEvent();
         public ExpGainedEvent ExpGained;
         public LevelupEvent LevelUp;
         public ExperienceManager()
@@ -39,8 +40,11 @@ namespace Game.GameActors.Units
         private void PerformLevelUp()
         {
             Debug.Log("Level Up");
-            LevelUp?.Invoke(Level, Level + 1);
             Level++;
+            LevelUp?.Invoke();
+            
+           
+            
             
         }
     }

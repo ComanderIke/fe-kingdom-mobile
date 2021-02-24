@@ -28,9 +28,8 @@ namespace Game.Mechanics
             {
                 if (Input.GetMouseButtonDown(0))
                 {
-                    Debug.Log("SWITCHSCENE");
                     if (time >= DELAY)
-                        SceneController.SwitchScene("Level2");
+                        SceneController.SwitchScene("Base");
                 }
             }
 

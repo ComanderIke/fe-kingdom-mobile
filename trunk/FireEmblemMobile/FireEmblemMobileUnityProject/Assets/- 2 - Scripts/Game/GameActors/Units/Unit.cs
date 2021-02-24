@@ -124,52 +124,19 @@ namespace Game.GameActors.Units
             OnExpGained?.Invoke(this, expBefore, expGained);
         }
 
-        private void LevelUp(int levelBefore, int levelAfter)
+        private void LevelUp()
         {
-            int[] statIncreases = CalculateStatIncreases();
-            OnUnitLevelUp?.Invoke(name, levelBefore, levelAfter, stats.GetStatArray(), statIncreases);
-            stats.MaxHp += statIncreases[0];
-            stats.MaxSp += statIncreases[1];
-            stats.Str += statIncreases[2];
-            stats.Mag += statIncreases[3];
-            stats.Spd += statIncreases[4];
-            stats.Skl += statIncreases[5];
-            stats.Def += statIncreases[6];
-            stats.Res += statIncreases[7];
+            OnLevelUp?.Invoke(this);
         }
 
-        private int[] CalculateStatIncreases()
-        {
-            int[] growths = this.growths.GetGrowthsArray();
-            int[] increaseAmount = new int[growths.Length];
-            for (int i = 0; i < growths.Length; i++)
-            {
-                increaseAmount[i] = Method(growths[i]);
-            }
-
-            return increaseAmount;
-        }
+      
 
         public bool IsDragable()
         {
             return !TurnStateManager.IsWaiting && IsAlive() &&
                    Faction.Id == GridGameManager.Instance.FactionManager.ActivePlayerNumber;
         }
-        private int Method(int Growth)
-        {
-            int rngNumber = (int) (UnityEngine.Random.value * 100f);
-            if (Growth > 100)
-            {
-                return 1 + Method(Growth - 100);
-            }
-
-            if (rngNumber <= Growth)
-            {
-                return 1;
-            }
-
-            return 0;
-        }
+       
 
         public void SetAttackTarget(bool selected)
         {
@@ -254,11 +221,9 @@ namespace Game.GameActors.Units
         public static OnUnitDied UnitDied;
 
         #endregion
+        
 
-        public delegate void OnUnitLevelUpEvent(string name, int levelBefore, int levelAfter, int[] stats,
-            int[] statIncreases);
 
-        public static OnUnitLevelUpEvent OnUnitLevelUp;
 
         public delegate void OnExpGainedEvent(Unit unit, int expBefore, int expGained);
 
@@ -267,5 +232,7 @@ namespace Game.GameActors.Units
         public delegate void OnUnitDamagedEvent(Unit unit, int damage);
 
         public static event OnUnitDamagedEvent OnUnitDamaged;
+        public delegate void LevelupEvent(Unit unit);
+        public LevelupEvent OnLevelUp;
     }
 }

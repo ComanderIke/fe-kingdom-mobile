@@ -30,7 +30,10 @@ namespace Menu
         {
             if (_instance != null)
                 if (_instance.currentSceneName != nextSceneName)
+                {
                     _instance.nextSceneName = nextSceneName;
+                    Debug.Log("SwitchScene: "+nextSceneName);
+                }
         }
 
         private void Awake()

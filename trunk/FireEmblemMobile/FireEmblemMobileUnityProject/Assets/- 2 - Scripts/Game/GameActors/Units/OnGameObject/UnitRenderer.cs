@@ -1,4 +1,5 @@
 ﻿using Game.GameActors.Units.Humans;
+using Game.GameActors.Units.Monsters;
 using Game.GameResources;
 using Game.GUI;
 using Game.Manager;
@@ -90,9 +91,9 @@ namespace Game.GameActors.Units.OnGameObject
                 }
                     
             }
-            else
+            else if(unit is Monster monster)
             {
-                EquippedItemIcon.sprite = FindObjectOfType<ResourceScript>().sprites.WolfClaw;
+                EquippedItemIcon.sprite = monster.Weapon.Sprite; //FindObjectOfType<ResourceScript>().sprites.WolfClaw;
             }
         }
         private void HpValueChanged()

@@ -102,6 +102,7 @@ namespace Game.Manager
                 FindObjectOfType<UiSystem>(),
                 new BattleSystem(),
                 new MoveSystem(),
+                new UnitProgressSystem(),
                 FindObjectOfType<UnitSelectionSystem>()
             };
 
@@ -146,6 +147,7 @@ namespace Game.Manager
             GameStateManager.WinState.renderer =  FindObjectsOfType<MonoBehaviour>().OfType<IWinRenderer>().First();
             GameStateManager.GameOverState.renderer =  FindObjectsOfType<MonoBehaviour>().OfType<IGameOverRenderer>().First();
             GameStateManager.BattleState.battleSystem = GetSystem<BattleSystem>();
+            GetSystem<UnitProgressSystem>().levelUpRenderer = FindObjectsOfType<MonoBehaviour>().OfType<ILevelUpRenderer>().First();
         }
 
         private void Update()
@@ -192,8 +194,10 @@ namespace Game.Manager
                 };
             }
             //Debug.Log("LevelConfig");
-           
-            FactionManager.Factions[0].Units = Player.Instance.Units;
+            foreach (var unit in Player.Instance.Units)
+            {
+                FactionManager.Factions[0].AddUnit(unit);
+            }
             FactionManager.Factions[0].Name = Player.Instance.Name;
             int[] indexes = new int [FactionManager.Factions.Count];
             foreach(var faction in FactionManager.Factions)

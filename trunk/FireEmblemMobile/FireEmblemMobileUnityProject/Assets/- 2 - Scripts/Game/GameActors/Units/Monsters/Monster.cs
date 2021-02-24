@@ -1,4 +1,5 @@
-﻿using Game.Grid;
+﻿using Game.GameActors.Items.Weapons;
+using Game.Grid;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Monsters
@@ -7,6 +8,6 @@ namespace Game.GameActors.Units.Monsters
     public class Monster : Unit
     {
         public MonsterType Type;
-        
+        public Weapon Weapon;
     }
 }

@@ -12,14 +12,17 @@ namespace Game.GameActors.Players
         public int Id;
         public bool IsPlayerControlled;
         public string Name;
-        public List<Unit> Units;
+        public List<Unit> Units { get; private set; }
 
-        public Faction(int number, string name, bool isPlayerControlled)
+        public Faction()
+        {
+            Units = new List<Unit>();
+        }
+        public Faction(int number, string name, bool isPlayerControlled):this()
         {
             Id = number;
             Name = name;
             IsPlayerControlled = isPlayerControlled;
-            Units = new List<Unit>();
         }
 
         public bool IsActive()
@@ -49,11 +52,10 @@ namespace Game.GameActors.Players
 
         public void AddUnit(Unit unit)
         {
-            if (Units == null)
-                Units = new List<Unit>();
             unit.Faction = this;
             unit.Faction.Id = Id;
             Units.Add(unit);
+            OnAddUnit?.Invoke(unit);
         }
 
         public List<Faction> GetOpponentFactions()
@@ -65,5 +67,7 @@ namespace Game.GameActors.Players
         {
             return Units.Aggregate("Faction: "+Name+" Unit Count: "+Units.Count, (current, u) => current + u.ToString());
         }
+
+        public event Action<Unit> OnAddUnit;
     }
 }
