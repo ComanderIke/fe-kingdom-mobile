@@ -23,6 +23,7 @@ namespace Game.GameInput
 
         public InputPathManager(IPathFinder pathProvider, IMovePathVisual movePathVisual)
         {
+            Debug.Log(pathProvider);
             MovementPath = new List<Vector2Int>();
             dragPath = new List<Vector2Int>();
             this.pathProvider = pathProvider;
@@ -39,6 +40,8 @@ namespace Game.GameInput
         public void CalculateMousePathToPosition(IGridActor character, int x, int y)
         {
             Reset();
+            Debug.Log(character);
+            Debug.Log(pathProvider);
             var p = pathProvider.FindPath(character.GridComponent.GridPosition.X,
                 character.GridComponent.GridPosition.Y, x, y, character, false, character.AttackRanges);
             if (p != null)
@@ -97,6 +100,8 @@ namespace Game.GameInput
         private void CreateNewMovementPath(IGridActor gridActor, int x, int y)
         {
             dragPath.Clear();
+            Debug.Log(gridActor);
+            Debug.Log(pathProvider);
             var p = pathProvider.FindPath(gridActor.GridComponent.GridPosition.X,
                 gridActor.GridComponent.GridPosition.Y, x, y, gridActor, false, gridActor.AttackRanges);
             if (p != null)

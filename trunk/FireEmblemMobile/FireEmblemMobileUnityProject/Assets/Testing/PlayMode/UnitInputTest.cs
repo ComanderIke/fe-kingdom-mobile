@@ -77,38 +77,7 @@ namespace Testing.PlayMode
             Assert.Null(gridSystem.Tiles[x, y].Actor);
 
         }
-        [UnityTest]
-        public IEnumerator _6_DragPlayerUnit2()
-        {
-            yield return SetupScene();
-            
-            UnitInputController unitInputController = GameObject.Find("Leila").GetComponent<UnitInputController>();
-          //  unitInputController.OnMouseDown();
-            unitInputController.StartDrag();
-            int x = unitInputController.unit.GridComponent.GridPosition.X;
-            int y = unitInputController.unit.GridComponent.GridPosition.Y;
-            UnitSelectionSystem selectionSystem = GridGameManager.Instance.GetSystem<UnitSelectionSystem>();
-            yield return null;
-            Assert.AreEqual(unitInputController.unit, selectionSystem.SelectedCharacter);
-            //unitInputController.OnMouseDrag();
-            unitInputController.Dragging(2,5);
-            yield return new WaitForSeconds(0.5f);
-            
-            
-            unitInputController.OnMouseUp();
-            
-
-            yield return null;
-            GridSystem gridSystem = GridGameManager.Instance.GetSystem<GridSystem>();
-            //inputSystem.GridClicked(2,1);
-            
-            Debug.Log(unitInputController.unit.GridComponent.GridPosition.X+" "+unitInputController.unit.GridComponent.GridPosition.Y);
-            Assert.AreEqual(unitInputController.unit.GridComponent.GridPosition.X, 2);
-            Assert.AreEqual(unitInputController.unit.GridComponent.GridPosition.Y, 5);
-            Assert.AreEqual(unitInputController.unit, gridSystem.Tiles[2, 5].Actor);
-            Assert.Null(gridSystem.Tiles[x, y].Actor);
-
-        }
+       
         [UnityTest]
         public IEnumerator _1_SelectPlayerUnit()
         {

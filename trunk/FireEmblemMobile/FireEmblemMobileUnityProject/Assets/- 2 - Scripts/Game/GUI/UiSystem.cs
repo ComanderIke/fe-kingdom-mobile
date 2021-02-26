@@ -28,7 +28,7 @@ namespace Game.GUI
             UnitSelectionSystem.OnEnemySelected += SelectedEnemyCharacter;
             UnitSelectionSystem.OnDeselectCharacter += DeselectedCharacter;
             UnitActionSystem.OnCheckAttackPreview += ShowAttackPreviewUI;
-            GridInputSystem.OnResetInput += HideAttackPreviewUI;
+            GridInputSystem.OnResetInput += HideAttackPreviewUI;//TODO Remove somehow
             GridGameManager.Instance.GetSystem<GridSystem>().cursor.OnCursorPositionChanged += (Vector2Int v)=>HideAttackPreviewUI();
             //gridGameManager = GridGameManager.Instance;
             //     gameplayInput = new GameplayInput();

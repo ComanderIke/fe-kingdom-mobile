@@ -7,15 +7,15 @@ using UnityEngine;
 
 namespace Game.GameInput
 {
-    public class GridInputSystem : MonoBehaviour, IEngineSystem, IUnitInputReceiver, IGridInputReceiver
+    public class GridInputSystem : IEngineSystem, IUnitInputReceiver, IGridInputReceiver
     {
-        public static event Action<bool> OnInputStateChanged;
+        public event Action<bool> OnInputStateChanged;
         public static event Action OnResetInput;
-        public static bool Active { get; private set; }
+        public bool Active { get; private set; }
         
         private GridSystem gridSystem;
         private GridInput gridInput;
-        private IGameInputReceiver inputReceiver;
+        public IGameInputReceiver inputReceiver { get; set; }
 
         private int lastDragPosX = -1;
         private int lastDragPosY = -1;
@@ -25,9 +25,10 @@ namespace Game.GameInput
         {
             Active = true;
             gridSystem = GridGameManager.Instance.GetSystem<GridSystem>();
-            inputReceiver = new GameInputReceiver();
+            
             gridInput = new GridInput();
             gridInput.RegisterInputReceiver(this);
+            
         }
 
         public void Update()
@@ -37,7 +38,7 @@ namespace Game.GameInput
             gridInput.Update();
         }
 
-        public static void SetActive(bool active)
+        public void SetActive(bool active)
         {
             Active = active;
             if (Active)

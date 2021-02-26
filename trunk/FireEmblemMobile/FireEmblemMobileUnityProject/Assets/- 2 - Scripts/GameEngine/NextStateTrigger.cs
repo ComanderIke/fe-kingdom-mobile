@@ -6,11 +6,12 @@
         StartEnemyPhase,
         GameOver,
         PlayerWon,
-        BattleEnded,
+
         BattleStarted,
-        FinishedMovement,
+    
         MoveUnit,
-        FinishedAIMovement,
-        AIBattleEnded
+
+        StartPlayerPhase,
+        Transition
     }
 }

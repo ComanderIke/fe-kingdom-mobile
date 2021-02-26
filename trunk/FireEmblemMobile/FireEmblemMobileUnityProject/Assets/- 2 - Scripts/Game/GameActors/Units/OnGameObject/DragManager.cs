@@ -14,20 +14,21 @@ namespace Game.GameActors.Units.OnGameObject
         private float DragTime { get; set; }
         private bool IsDragDelay { get; set; }
 
-        private IDragAble DragObject { get; set; }
+        private IDragAble DragObserver { get; set; }
         /*DragOffset*/
         private float deltaPosX;
         private float deltaPosY;
         private Camera camera = Camera.main;
 
         private Vector3 posBeforeDrag;
+        private Transform dragObjectTransform;
 
-        public DragManager(IDragAble dragObject)
+        public DragManager(IDragAble dragObserver)
         {
             IsDraggingBeforeDelay = false;
             IsDragDelay = true;
             IsDragging = false;
-            DragObject = dragObject;
+            DragObserver = dragObserver;
         }
 
         public void Update()
@@ -53,29 +54,30 @@ namespace Game.GameActors.Units.OnGameObject
                     {
                         IsDraggingBeforeDelay = false;
                         IsAnyUnitDragged = false;
-                        EndDrag();
+                        EndDrag(dragObjectTransform);
                     }
                 }
              }
             else
             {
-                DragObject.NotDragging();
+                DragObserver.NotDragging();
             }
         }
 
-        public void StartDrag()
+        public void StartDrag(Transform dragObjectTransform)
         {
             IsDragging = false;
             IsDragDelay = true;
             DragTime = 0;
-            Vector3 dist = camera.WorldToScreenPoint(DragObject.GetTransform().position);
+            this.dragObjectTransform = dragObjectTransform;
+            Vector3 dist = camera.WorldToScreenPoint(dragObjectTransform.position);
             deltaPosX = Input.mousePosition.x - dist.x;
             deltaPosY = Input.mousePosition.y - dist.y;
-            posBeforeDrag = DragObject.GetTransform().localPosition;
-            DragObject.StartDrag();
+            posBeforeDrag = dragObjectTransform.localPosition;
+            DragObserver.StartDrag(dragObjectTransform);
         }
 
-        public void Dragging()
+        public void Dragging(Transform dragObjectTransform)
         {
             IsDraggingBeforeDelay = true;
            
@@ -86,16 +88,16 @@ namespace Game.GameActors.Units.OnGameObject
                 Vector3 worldPos = camera.ScreenToWorldPoint(curPos);
                 worldPos.z = 0;
                 worldPos.x -= Map.GridSystem.GRID_X_OFFSET;
-                DragObject.GetTransform().localPosition = Vector3.Lerp(DragObject.GetTransform().localPosition, worldPos, Time.deltaTime * DRAG_FOLLOW_SPEED);
-                DragObject.Dragging(worldPos.x, worldPos.y);
+                dragObjectTransform.localPosition = Vector3.Lerp(dragObjectTransform.localPosition, worldPos, Time.deltaTime * DRAG_FOLLOW_SPEED);
+                DragObserver.Dragging(dragObjectTransform, worldPos.x, worldPos.y);
             }
         }
 
-        private void EndDrag()
+        private void EndDrag(Transform dragObjectTransform)
         {
             IsDragging = false;
-            DragObject.GetTransform().localPosition = posBeforeDrag;
-            DragObject.EndDrag();
+            dragObjectTransform.localPosition = posBeforeDrag;
+            DragObserver.EndDrag();
         }
     }
 }

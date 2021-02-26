@@ -92,11 +92,9 @@ namespace Game.Manager
         {
             Systems = new List<IEngineSystem>
             {
-                FindObjectOfType<CameraSystem>(),
                 FindObjectOfType<GridSystem>(),
                 FindObjectOfType<AudioSystem>(),
                 FindObjectOfType<UnitActionSystem>(),
-                FindObjectOfType<GridInputSystem>(),
                 FindObjectOfType<UnitsSystem>(),
                 FindObjectOfType<TurnSystem>(),
                 FindObjectOfType<UiSystem>(),
@@ -141,12 +139,13 @@ namespace Game.Manager
             var pathFinder = new AStar(tileChecker);
             gridSystem.pathFinder = pathFinder;
             ScoreCalculater.pathFinder = pathFinder;
-            GetSystem<TurnSystem>().phaseRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IPhaseRenderer>().First();
+          
             GetSystem<MoveSystem>().tileChecker = tileChecker;
             GetSystem<MoveSystem>().pathFinder = pathFinder;
             GameStateManager.WinState.renderer =  FindObjectsOfType<MonoBehaviour>().OfType<IWinRenderer>().First();
             GameStateManager.GameOverState.renderer =  FindObjectsOfType<MonoBehaviour>().OfType<IGameOverRenderer>().First();
             GameStateManager.BattleState.battleSystem = GetSystem<BattleSystem>();
+            GameStateManager.PhaseTransitionState.phaseRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IPhaseRenderer>().First();
             GetSystem<UnitProgressSystem>().levelUpRenderer = FindObjectsOfType<MonoBehaviour>().OfType<ILevelUpRenderer>().First();
         }
 

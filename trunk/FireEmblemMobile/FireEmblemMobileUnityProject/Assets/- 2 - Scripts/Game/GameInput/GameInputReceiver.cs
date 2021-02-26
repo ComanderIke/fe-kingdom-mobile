@@ -19,17 +19,14 @@ namespace Game.GameInput
         private ISelectionDataProvider selectionDataProvider;
         private LastInputPositionManager lastInputPositionManager;
         private GridSystem gridSystem;
-        private FactionManager factionManager;
-        public GameInputReceiver()
+        public GameInputReceiver(GridSystem gridSystem)
         {
             gameplayInput = new GameplayInput();
             selectionDataProvider = new SelectionManager();
             lastInputPositionManager = new LastInputPositionManager();
-            
-            gridSystem = GridGameManager.Instance.GetSystem<GridSystem>();
-            
+
+            this.gridSystem = gridSystem;
             inputPathManager = new InputPathManager(gridSystem.pathFinder, ResourceScript.Instance.grid.moveArrowVisual);
-            factionManager = GridGameManager.Instance.GetSystem<FactionManager>();
             UnitSelectionSystem.OnSelectedCharacter += OnSelectedCharacter;
             UnitSelectionSystem.OnSelectedInActiveCharacter += OnSelectedCharacter;
         }

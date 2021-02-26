@@ -59,7 +59,6 @@ namespace Game.Mechanics
             }
             OnEnter?.Invoke();
             active = true;
-            GridInputSystem.SetActive(false);
             if (mousePath == null || mousePath.Count == 0)
             {
                 Path = gridGameManager.GetSystem<MoveSystem>().GetPath(unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y, x, y,
@@ -131,7 +130,6 @@ namespace Game.Mechanics
             gridGameManager.GetSystem<GridSystem>().SetUnitPosition(unit,x,y);
             unit.TurnStateManager.IsSelected = false;
             unit.TurnStateManager.HasMoved = true;
-            GridInputSystem.SetActive(true);
             OnMovementFinished?.Invoke(unit);
             IsFinished = true;
         }

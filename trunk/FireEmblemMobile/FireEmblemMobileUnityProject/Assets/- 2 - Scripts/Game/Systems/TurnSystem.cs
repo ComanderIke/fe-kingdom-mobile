@@ -2,6 +2,7 @@
 using Game.GameInput;
 using Game.GUI.Text;
 using Game.Manager;
+using Game.States;
 using GameEngine;
 using UnityEngine;
 
@@ -25,7 +26,7 @@ namespace Game.Mechanics
 
         public int TurnCount { get; set; }
 
-        public IPhaseRenderer phaseRenderer;
+   
 
         public void Init()
         {
@@ -44,23 +45,24 @@ namespace Game.Mechanics
 
         public void StartPhase()
         {
-            GridInputSystem.SetActive(false);
-            phaseRenderer.Show(factionManager.ActiveFaction.Id, ReadyPhase);
+            if (!factionManager.ActiveFaction.IsPlayerControlled)
+            {
+                //Debug.Log("AITurn");
+                gridGameManager.GameStateManager.Feed(NextStateTrigger.Transition);
+                //gridGameManager.GameStateManager.Feed(NextStateTrigger.StartEnemyPhase);
+            }
+            else
+            {
+                gridGameManager.GameStateManager.Feed(NextStateTrigger.Transition);
+                //Debug.Log("PlayerTurn");
+            }
+           
+            
         }
 
         private void ReadyPhase()
         {
-            if (!factionManager.ActiveFaction.IsPlayerControlled)
-            {
-                //Debug.Log("AITurn");
-                GridInputSystem.SetActive(false);
-                gridGameManager.GameStateManager.Feed(NextStateTrigger.StartEnemyPhase);
-            }
-            else
-            {
-                //Debug.Log("PlayerTurn");
-                GridInputSystem.SetActive(true);
-            }
+          
             OnStartTurn?.Invoke();
             foreach (var c in factionManager.ActiveFaction.Units)
             {
@@ -70,6 +72,7 @@ namespace Game.Mechanics
 
         public void EndPhase()
         {
+           
             //Debug.Log("EndTurn!");
             foreach (var c in factionManager.ActiveFaction.Units)
             {
