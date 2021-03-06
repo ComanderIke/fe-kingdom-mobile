@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.States;
 using TMPro;
 using UnityEngine;
 using Utility;
 
 namespace Game.GUI
 {
-    public class LevelUpScreenController : MonoBehaviour, ILevelUpRenderer
+    public class LevelUpScreenController : MonoBehaviour, ILevelUpRenderer, IAnimation
     {
         [SerializeField] private TextMeshProUGUI levelUpText;
 
@@ -32,7 +33,9 @@ namespace Game.GUI
         private float delaybetweenPopups = 0.10f;
         List<Action> actions = new List<Action>();
         int actionIndex = 0;
-
+        private int[] stats;
+        private int[] statsIncreases;
+        private int levelAfter;
         private Canvas canvas;
 
         void Start()
@@ -40,34 +43,9 @@ namespace Game.GUI
             canvas = GetComponent<Canvas>();
         }
         // Start is called before the first frame update
-        public void Show(string name, int levelBefore, int levelAfter, int[] stats, int[] statsIncreases)
+        public void Play(Action finished)
         {
-            Debug.Log("Show Level Up!");
             canvas.enabled = true;
-
-            nameText.text = "" + name;
-            levelText.text = "" + levelBefore;
-            strText.text = "" + stats[2];
-            spdText.text = "" + stats[5];
-            defText.text = "" + stats[6];
-            sklText.text = "" + stats[4]; 
-            magText.text = "" + stats[3];
-            hpText.text = "" + stats[0];
-            spText.text = "" +stats[1];
-            resText.text = "" + stats[7];
-
-            strAddedText.text = "";
-            spdAddedText.text = "";
-            defAddedText.text = "";
-            sklAddedText.text = "";
-            magAddedText.text = "";
-            hpAddedText.text = "";
-            spAddedText.text = "";
-            resAddedText.text = "";
-            //for(int i=0; i < statsIncreases.Length; i++)
-            //{
-            //    Debug.Log(statsIncreases[i] + ", ");
-            //}
             LeanTween.alphaCanvas(levelUpText.GetComponent<CanvasGroup>(), 1, 0.15f).setEaseOutQuad();
             LeanTween.scale(levelUpText.gameObject, Vector3.one, 0.15f).setEaseOutQuad();
             LeanTween.moveLocalY(levelUpText.gameObject, levelUpText.transform.localPosition.y + 100, 0.15f).setEaseOutQuad().setOnComplete(
@@ -92,75 +70,106 @@ namespace Game.GUI
 
             if (statsIncreases[0] > 0) {
                 actions.Add(CreateStatPopUpActionAnimationIn(hpText, "" + (stats[0] + statsIncreases[0]), hpAddedText, statsIncreases[0]));
-                actions.Add(CreateStatPopUpActionAnimationOut(hpText, hpAddedText));
+                actions.Add(CreateStatPopUpActionAnimationOut(hpText));
             }
             if (statsIncreases[2] > 0)
             {
                 actions.Add(CreateStatPopUpActionAnimationIn(strText, "" + (stats[2] +statsIncreases[2]), strAddedText, statsIncreases[2]));
-                actions.Add(CreateStatPopUpActionAnimationOut(strText, strAddedText));
+                actions.Add(CreateStatPopUpActionAnimationOut(strText));
             }
             if (statsIncreases[3] > 0)
             {
                 actions.Add(CreateStatPopUpActionAnimationIn(magText, "" + (stats[3] + statsIncreases[3]), magAddedText, statsIncreases[3]));
-                actions.Add(CreateStatPopUpActionAnimationOut(magText, magAddedText));
+                actions.Add(CreateStatPopUpActionAnimationOut(magText));
             }
             if (statsIncreases[5] > 0)
             {
                 actions.Add(CreateStatPopUpActionAnimationIn(sklText, "" + (stats[5] +statsIncreases[5]), sklAddedText, statsIncreases[5]));
-                actions.Add(CreateStatPopUpActionAnimationOut(sklText, sklAddedText));
+                actions.Add(CreateStatPopUpActionAnimationOut(sklText));
             }
             if (statsIncreases[1] > 0)
             {
                 actions.Add(CreateStatPopUpActionAnimationIn(spText, "" + (stats[1] +statsIncreases[1]), spAddedText, statsIncreases[1]));
-                actions.Add(CreateStatPopUpActionAnimationOut(spText, spAddedText));
+                actions.Add(CreateStatPopUpActionAnimationOut(spText));
             }
             if (statsIncreases[4] > 0)
             {
                 actions.Add(CreateStatPopUpActionAnimationIn(spdText, "" + (stats[4] + statsIncreases[4]), spdAddedText, statsIncreases[4]));
-                actions.Add(CreateStatPopUpActionAnimationOut(spdText, spdAddedText));
+                actions.Add(CreateStatPopUpActionAnimationOut(spdText));
             }
             if (statsIncreases[6] > 0)
             {
                 actions.Add(CreateStatPopUpActionAnimationIn(defText, "" + (stats[6] + statsIncreases[6]), defAddedText, statsIncreases[6]));
-                actions.Add(CreateStatPopUpActionAnimationOut(defText, defAddedText));
+                actions.Add(CreateStatPopUpActionAnimationOut(defText));
             }
             if (statsIncreases[7] > 0)
             {
                 actions.Add(CreateStatPopUpActionAnimationIn(resText, "" + (stats[7] + statsIncreases[7]), resAddedText, statsIncreases[7]));
-                actions.Add(CreateStatPopUpActionAnimationOut(resText, resAddedText));
+                actions.Add(CreateStatPopUpActionAnimationOut(resText));
             }
             actions.Add(()=> LeanTween.alphaCanvas(alphaCanvas, 0, 0.65f).setEaseInQuad().setDelay(delaybetweenPopups)
-                .setOnComplete(()=>AnimationQueue.OnAnimationEnded?.Invoke()));
+                .setOnComplete(()=>
+                {
+                    finished?.Invoke();
+                    AnimationQueue.OnAnimationEnded?.Invoke();
+                }));
+        }
+        public void UpdateValues(string name, int levelBefore, int levelAfter, int[] stats, int[] statsIncreases)
+        {
+            Debug.Log("Show Level Up!");
 
+            this.statsIncreases = statsIncreases;
+            this.stats = stats;
+            this.levelAfter = levelAfter;
+            nameText.text = "" + name;
+            levelText.text = "" + levelBefore;
+            strText.text = "" + stats[2];
+            spdText.text = "" + stats[5];
+            defText.text = "" + stats[6];
+            sklText.text = "" + stats[4]; 
+            magText.text = "" + stats[3];
+            hpText.text = "" + stats[0];
+            spText.text = "" +stats[1];
+            resText.text = "" + stats[7];
+
+            strAddedText.text = "";
+            spdAddedText.text = "";
+            defAddedText.text = "";
+            sklAddedText.text = "";
+            magAddedText.text = "";
+            hpAddedText.text = "";
+            spAddedText.text = "";
+            resAddedText.text = "";
         }
-        private Action CreateStatPopUpActionAnimationIn(TextMeshProUGUI textobject, string text, TextMeshProUGUI textAddedobject, int statIncrease)
+        private Action CreateStatPopUpActionAnimationIn(TMP_Text textObject, string text, TMP_Text textAddedObject, int statIncrease)
         {
             return () => {
-                LeanTween.scale(textobject.gameObject, textobject.transform.localScale * 1.0f, 0.20f).setEaseOutQuad().setDelay(delaybetweenPopups)
+                LeanTween.scale(textObject.gameObject, textObject.transform.localScale * 1.0f, 0.20f).setEaseOutQuad().setDelay(delaybetweenPopups)
                     .setOnComplete(() =>
                     {
-                        textobject.text = text;
+                        textObject.text = text;
                         if (actionIndex < actions.Count)
                             actions[actionIndex].Invoke();
                         actionIndex++;
                     });
-                textAddedobject.text = "+"+statIncrease;
-                LeanTween.alphaCanvas(textAddedobject.GetComponent<CanvasGroup>(), 1, 0.20f).setEaseOutQuad().setDelay(delaybetweenPopups);
-                LeanTween.scale(textAddedobject.gameObject, Vector3.one, 0.20f).setEaseOutQuad().setDelay(delaybetweenPopups);
+                textAddedObject.text = "+"+statIncrease;
+                LeanTween.alphaCanvas(textAddedObject.GetComponent<CanvasGroup>(), 1, 0.20f).setEaseOutQuad().setDelay(delaybetweenPopups);
+                LeanTween.scale(textAddedObject.gameObject, Vector3.one, 0.20f).setEaseOutQuad().setDelay(delaybetweenPopups);
             };
         }
-        private Action CreateStatPopUpActionAnimationOut(TextMeshProUGUI textobject, TextMeshProUGUI textAddedobject)
+        private Action CreateStatPopUpActionAnimationOut(TMP_Text textObject)
         {
             return () => {
-                LeanTween.scale(textobject.gameObject, textobject.transform.localScale, 0.0f).setEaseInQuad().setDelay(delaybetweenPopups)
+                LeanTween.scale(textObject.gameObject, textObject.transform.localScale, 0.0f).setEaseInQuad().setDelay(delaybetweenPopups)
                     .setOnComplete(() =>
                     {
                         if (actionIndex < actions.Count)
                             actions[actionIndex].Invoke();
                         actionIndex++;
                     });
-                //LeanTween.alphaCanvas(textAddedobject.GetComponent<CanvasGroup>(), 0, 0.3f).setEaseInQuad().setDelay(delaybetweenPopups);
             };
         }
+
+        
     }
 }

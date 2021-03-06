@@ -91,7 +91,7 @@ namespace Game.Mechanics
                 defender.Die();
             }
 
-            DistributeExperience();
+           
             battleStarted = false;
             //BattleRenderer.Hide();
             IsFinished = true;
@@ -100,50 +100,8 @@ namespace Game.Mechanics
             
             
         }
-        private void DistributeExperience()
-        {
-            if (attacker.IsAlive()&&attacker.Faction.IsPlayerControlled)
-            {
-                attacker.ExperienceManager.AddExp(CalculateExperiencePoints(attacker, defender));
-            }
-            if (defender.IsAlive() && defender.Faction.IsPlayerControlled)
-            {
-                defender.ExperienceManager.AddExp(CalculateExperiencePoints(defender, attacker));
-            }
-        }
-        public int CalculateExperiencePoints(IBattleActor expReceiver, IBattleActor enemyFought)
-        {
-            int levelDifference = expReceiver.ExperienceManager.Level - enemyFought.ExperienceManager.Level;
-            bool killEXP = !enemyFought.IsAlive();
-            int expLeft = enemyFought.ExperienceManager.ExpLeftToDrain;
-            int maxEXPDrain = ExperienceManager.MAX_EXP_TO_DRAIN;
-            float chipExpPercent = 0.2f;
-            float killExpPercent = 1.0f;
-            int exp =(int)( killEXP == true ? killExpPercent * maxEXPDrain : chipExpPercent * maxEXPDrain);
-            if(exp > expLeft)
-            {
-                exp = expLeft;
-            }
-            if(!killEXP&&expLeft-exp < maxEXPDrain / 5)
-            {
-                exp = expLeft - maxEXPDrain / 5;
-            }
-            enemyFought.ExperienceManager.ExpLeftToDrain -= exp;
-            if (enemyFought.ExperienceManager.ExpLeftToDrain < 0)
-                enemyFought.ExperienceManager.ExpLeftToDrain = 0;
-            if (levelDifference < 0)
-            {
-                exp = (int)(exp * (1f + ((levelDifference * -1) / 10f)));
-            }
-            if (levelDifference >= 0)
-            {
-                exp = (int)(exp * (1f - ((levelDifference) / 10f)));
-            }
-            if (exp <= 0)
-                exp = 0;
-            Debug.Log("EXP : " +exp);
-            return exp;
-        }
+    
+        
 
         public BattlePreview GetBattlePreview(IBattleActor attacker, IBattleActor defender)
         {

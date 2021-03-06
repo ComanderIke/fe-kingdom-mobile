@@ -74,9 +74,13 @@ namespace Game.Mechanics
         {
             // HideFightVisuals();
             attacker.TurnStateManager.HasAttacked = true;
+            
+            GridGameManager.Instance.GetSystem<UnitProgressSystem>().DistributeExperience(attacker, defender);
+            
             attacker = null;
             defender = null;
 
+           
             BattleRenderer.OnAttackConnected -= battleSystem.ContinueBattle;
             BattleRenderer.OnFinished -= battleSystem.EndBattle;
             GridGameManager.Instance.GetSystem<AudioSystem>().ChangeMusic(startMusic, "BattleTheme", true);

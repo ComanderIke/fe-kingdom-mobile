@@ -40,9 +40,12 @@ namespace Utility
         }
         public static void AnimationEnded()
         {
-            queue.Peek().runAfterAction?.Invoke();
-            queue.Dequeue();
-            NextAnimation();
+            if (queue.Count != 0)
+            {
+                queue.Peek().runAfterAction?.Invoke();
+                queue.Dequeue();
+                NextAnimation();
+            }
         }
         public static void NextAnimation()
         {
