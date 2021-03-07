@@ -9,6 +9,7 @@ namespace Game.GUI
 {
     public class TopUi : MonoBehaviour
     {
+        public  ExpBarController expRenderer;
         [SerializeField] private Canvas characterScreen = default;
         [SerializeField] private Image topUiEnemy = default;
         [SerializeField] private TextMeshProUGUI characterName = default;
@@ -43,7 +44,7 @@ namespace Game.GUI
             colorManager = FindObjectOfType<ColorManager>();
 
         }
-        public void Show(Unit c)
+        public void Show(Unit c)//Unused
         {
             if (colorManager == null)
             {

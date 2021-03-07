@@ -10,13 +10,14 @@ using Game.States;
 using GameEngine;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
-using AnimationState = Game.States.AnimationState;
+using Utility;
 
 namespace Game.Mechanics
 {
     public class UnitProgressSystem : IEngineSystem, IDependecyInjection
     {
         public ILevelUpRenderer levelUpRenderer;//injected
+        public IExpRenderer ExpRenderer;
         private List<Faction> Factions;
 
         public void Init()
@@ -44,7 +45,7 @@ namespace Game.Mechanics
             Debug.Log(" Level Up Progress!");
            
             levelUpRenderer.UpdateValues(unit.name, unit.ExperienceManager.Level-1, unit.ExperienceManager.Level, unit.Stats.GetStatArray(), statIncreases);
-            GridGameManager.Instance.GameStateManager.SwitchState(new AnimationState(levelUpRenderer as IAnimation));
+            AnimationQueue.Add(((IAnimation)levelUpRenderer).Play);
             unit.Stats.MaxHp += statIncreases[0];
             unit.Stats.MaxSp += statIncreases[1];
             unit.Stats.Str += statIncreases[2];
@@ -57,24 +58,36 @@ namespace Game.Mechanics
 
         public void DistributeExperience(IBattleActor attacker, IBattleActor defender)
         {
+    
             if (attacker.IsAlive()&&attacker.Faction.IsPlayerControlled)
             {
-                attacker.ExperienceManager.AddExp(CalculateExperiencePoints(attacker, defender));
+                var exp = CalculateExperiencePoints(attacker, defender);
+                ExpRenderer.UpdateValues(attacker.ExperienceManager.Exp,exp);
+                AnimationQueue.Add(((IAnimation) ExpRenderer).Play);
+                GridGameManager.Instance.GetSystem<UiSystem>().SelectedCharacter((Unit)attacker);
+                attacker.ExperienceManager.AddExp(exp);
             }
             if (defender.IsAlive() && defender.Faction.IsPlayerControlled)
             {
-                defender.ExperienceManager.AddExp(CalculateExperiencePoints(defender, attacker));
+                var exp = CalculateExperiencePoints(defender, attacker);
+                ExpRenderer.UpdateValues(defender.ExperienceManager.Exp,exp);
+                AnimationQueue.Add(((IAnimation) ExpRenderer).Play);
+                GridGameManager.Instance.GetSystem<UiSystem>().SelectedCharacter((Unit)defender);
+                defender.ExperienceManager.AddExp(exp);
             }
         }
         public int CalculateExperiencePoints(IBattleActor expReceiver, IBattleActor enemyFought)
         {
+ 
             int levelDifference = expReceiver.ExperienceManager.Level - enemyFought.ExperienceManager.Level;
             bool killEXP = !enemyFought.IsAlive();
             int expLeft = enemyFought.ExperienceManager.ExpLeftToDrain;
             int maxEXPDrain = ExperienceManager.MAX_EXP_TO_DRAIN;
+  
             float chipExpPercent = 0.2f;
             float killExpPercent = 1.0f;
             int exp =(int)( killEXP == true ? killExpPercent * maxEXPDrain : chipExpPercent * maxEXPDrain);
+      
             if(exp > expLeft)
             {
                 exp = expLeft;

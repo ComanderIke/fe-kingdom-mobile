@@ -147,6 +147,7 @@ namespace Game.Manager
             GameStateManager.BattleState.battleSystem = GetSystem<BattleSystem>();
             GameStateManager.PhaseTransitionState.phaseRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IPhaseRenderer>().First();
             GetSystem<UnitProgressSystem>().levelUpRenderer = FindObjectsOfType<MonoBehaviour>().OfType<ILevelUpRenderer>().First();
+            GetSystem<UnitProgressSystem>().ExpRenderer = FindObjectsOfType<MonoBehaviour>().OfType<TopUi>().First().expRenderer;
         }
 
         private void Update()

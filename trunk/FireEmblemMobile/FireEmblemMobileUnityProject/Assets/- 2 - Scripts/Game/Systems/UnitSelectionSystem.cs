@@ -27,7 +27,7 @@ namespace Game.Mechanics
             GameplayInput.OnSelectUnit += SelectUnit;
             GameplayInput.OnDeselectUnit += DeselectActiveCharacter;
             TurnSystem.OnEndTurn += DeselectActiveCharacter;
-            BattleState.OnExit += DeselectActiveCharacter;
+            //BattleState.OnExit += DeselectActiveCharacter;
         }
 
         public void Update()

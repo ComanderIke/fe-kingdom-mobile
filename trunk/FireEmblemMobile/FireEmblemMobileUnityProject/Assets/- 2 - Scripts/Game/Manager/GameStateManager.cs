@@ -16,7 +16,6 @@ namespace Game.Manager
         public static WinState WinState { get; set; }
         public static BattleState BattleState { get; set; }
         public static MovementState MovementState { get; set; }
-        
         public static PhaseTransitionState PhaseTransitionState { get; set; }
 
         private StateMachine<NextStateTrigger> stateMachine;
@@ -80,4 +79,6 @@ namespace Game.Manager
 
     
     }
+
+  
 }

@@ -73,12 +73,12 @@ namespace Game.GUI
         {
             OkCancelDialogController.Show("End the Turn?", () => { TurnSystem.OnTriggerEndTurn(); });
         }
-        private void SelectedCharacter(IGridActor actor)
+        public void SelectedCharacter(IGridActor actor)
         {
             if(actor is Unit u)
                 characterUI.Show(u);
         }
-        private void SelectedEnemyCharacter(IGridActor actor)
+        public void SelectedEnemyCharacter(IGridActor actor)
         {
             if(actor is Unit u)
                 enemyCharacterUI.Show(u);

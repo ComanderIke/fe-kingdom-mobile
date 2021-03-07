@@ -12,6 +12,7 @@
         MoveUnit,
 
         StartPlayerPhase,
-        Transition
+        Transition,
+        FinishedBattle
     }
 }

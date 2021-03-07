@@ -7,7 +7,7 @@ using Utility;
 
 namespace Game.GUI
 {
-    public class LevelUpScreenController : MonoBehaviour, ILevelUpRenderer, IAnimation
+    public class LevelUpScreenController : MonoBehaviour, ILevelUpRenderer
     {
         [SerializeField] private TextMeshProUGUI levelUpText;
 
@@ -43,7 +43,7 @@ namespace Game.GUI
             canvas = GetComponent<Canvas>();
         }
         // Start is called before the first frame update
-        public void Play(Action finished)
+        public void Play()
         {
             canvas.enabled = true;
             LeanTween.alphaCanvas(levelUpText.GetComponent<CanvasGroup>(), 1, 0.15f).setEaseOutQuad();
@@ -110,7 +110,6 @@ namespace Game.GUI
             actions.Add(()=> LeanTween.alphaCanvas(alphaCanvas, 0, 0.65f).setEaseInQuad().setDelay(delaybetweenPopups)
                 .setOnComplete(()=>
                 {
-                    finished?.Invoke();
                     AnimationQueue.OnAnimationEnded?.Invoke();
                 }));
         }

@@ -7,6 +7,7 @@ using Game.GameResources;
 using Game.Graphics;
 using Game.GUI;
 using Game.Manager;
+using Game.States;
 using GameEngine;
 using GameEngine.GameStates;
 using UnityEngine;
@@ -46,11 +47,11 @@ namespace Game.Mechanics
         public override void Enter()
         {
            // battleSystem = new BattleSystem(attacker, defender);
-           NextState = PreviousState;
+         
            IsFinished = false;
            battleSystem.StartBattle(attacker, defender);
-           
-            BattleRenderer.OnAttackConnected += battleSystem.ContinueBattle;
+     
+           BattleRenderer.OnAttackConnected += battleSystem.ContinueBattle;
             BattleRenderer.OnFinished += battleSystem.EndBattle;
             
             //Debug.Log("ENTER FIGHTSTATE");
@@ -64,18 +65,18 @@ namespace Game.Mechanics
             if (battleSystem.IsFinished)
             {
                 IsFinished = true;
-                return NextState;
+                GridGameManager.Instance.GameStateManager.SwitchState(new AfterBattleState(attacker, defender));
+ 
             }
-            else 
-                return null;
+            return null;
         }
 
         public override void Exit()
         {
             // HideFightVisuals();
             attacker.TurnStateManager.HasAttacked = true;
+            Debug.Log("EXIT BATTLESTATE");
             
-            GridGameManager.Instance.GetSystem<UnitProgressSystem>().DistributeExperience(attacker, defender);
             
             attacker = null;
             defender = null;

@@ -24,7 +24,7 @@ namespace Game.Mechanics.Commands
                 unit.TurnStateManager.Wait();
                 
             }
-            unitSelectionManager.DeselectActiveCharacter();
+           // unitSelectionManager.DeselectActiveCharacter();
             IsFinished = true;
         }
 
