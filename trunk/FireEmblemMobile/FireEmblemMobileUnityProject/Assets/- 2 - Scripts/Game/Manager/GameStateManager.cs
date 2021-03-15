@@ -17,6 +17,8 @@ namespace Game.Manager
         public static BattleState BattleState { get; set; }
         public static MovementState MovementState { get; set; }
         public static PhaseTransitionState PhaseTransitionState { get; set; }
+        
+        public static ConditionsScreenState ConditionScreenState { get; set; }
 
         private StateMachine<NextStateTrigger> stateMachine;
 
@@ -29,8 +31,8 @@ namespace Game.Manager
             BattleState = new BattleState();
             MovementState = new MovementState();
             PhaseTransitionState = new PhaseTransitionState();
-            
-            stateMachine = new StateMachine<NextStateTrigger>(PlayerPhaseState);
+            ConditionScreenState = new ConditionsScreenState();
+            stateMachine = new StateMachine<NextStateTrigger>(ConditionScreenState);
         }
         public void Init()
         {

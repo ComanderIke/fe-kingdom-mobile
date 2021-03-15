@@ -1,6 +1,7 @@
 ﻿using Game.GameActors.Units;
 using Game.GameInput;
 using Game.GameResources;
+using Game.Grid;
 using Game.Manager;
 using Game.Map;
 using Game.Mechanics;
@@ -18,6 +19,7 @@ namespace Game.GUI
         public ICharacterUI characterUI;
         public ICharacterUI enemyCharacterUI;
         public IAttackPreviewUI attackPreviewUI;
+        public IObjectiveUI objectiveUI;
 
         public Button EndTurnButton;
         public OKCancelDialogController OkCancelDialogController;
@@ -59,6 +61,10 @@ namespace Game.GUI
 
 
 
+        public void ShowObjectiveCanvas(Chapter chapter)
+        {
+            objectiveUI.Show(chapter);
+        }
         private void ShowAttackPreviewUI(BattlePreview battlePreview)
         {
             if(battlePreview.Attacker is Unit attacker && battlePreview.Defender is Unit defender)
@@ -272,5 +278,9 @@ namespace Game.GUI
         // {
         //
         // }
+        public void HideObjectiveCanvas()
+        {
+            objectiveUI.Hide();
+        }
     }
 }

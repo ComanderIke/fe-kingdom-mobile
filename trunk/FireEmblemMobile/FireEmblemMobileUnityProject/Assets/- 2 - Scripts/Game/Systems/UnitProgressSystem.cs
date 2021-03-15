@@ -25,8 +25,6 @@ namespace Game.Mechanics
             Factions = GridGameManager.Instance.FactionManager.Factions;
             foreach (var faction in Factions)
             {
-                Debug.Log(faction);
-                Debug.Log(faction.Units);
                 faction.OnAddUnit += UpdateUnit;
                 foreach (var unit in faction.Units)
                 {

@@ -145,6 +145,8 @@ namespace Game.Manager
             GameStateManager.WinState.renderer =  FindObjectsOfType<MonoBehaviour>().OfType<IWinRenderer>().First();
             GameStateManager.GameOverState.renderer =  FindObjectsOfType<MonoBehaviour>().OfType<IGameOverRenderer>().First();
             GameStateManager.BattleState.battleSystem = GetSystem<BattleSystem>();
+            var chapterConfig = FindObjectOfType<ChapterConfig>();
+            GameStateManager.ConditionScreenState.chapter = chapterConfig.chapter;
             GameStateManager.PhaseTransitionState.phaseRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IPhaseRenderer>().First();
             GetSystem<UnitProgressSystem>().levelUpRenderer = FindObjectsOfType<MonoBehaviour>().OfType<ILevelUpRenderer>().First();
             GetSystem<UnitProgressSystem>().ExpRenderer = FindObjectsOfType<MonoBehaviour>().OfType<TopUi>().First().expRenderer;
@@ -169,6 +171,7 @@ namespace Game.Manager
             var unitInstantiator = FindObjectOfType<UnitInstantiator>();
             var resources = FindObjectOfType<ResourceScript>();
             var data = FindObjectOfType<DataScript>();
+           
 
             if (Player.Instance.Units == null || Player.Instance.Units.Count == 0)
             {
@@ -230,11 +233,13 @@ namespace Game.Manager
             {
                 Destroy(spawn.gameObject);
             }
-           // GameplayInput input = new GameplayInput();
-           // input.SelectUnit(FactionManager.Factions[0].Units[0]);
+
+            
+            // GameplayInput input = new GameplayInput();
+            // input.SelectUnit(FactionManager.Factions[0].Units[0]);
             //input.DeselectUnit();
-            
-            
+
+
             //GetSystem<BattleSystem>().GetBattlePreview(FactionManager.Factions[0].Units[0], FactionManager.Factions[1].Units[0]);
         }
 
