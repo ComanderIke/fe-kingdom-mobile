@@ -20,6 +20,7 @@ namespace Game.GUI
         public ICharacterUI enemyCharacterUI;
         public IAttackPreviewUI attackPreviewUI;
         public IObjectiveUI objectiveUI;
+        public IUnitPlacementUI unitPlacementUI;
 
         public Button EndTurnButton;
         public OKCancelDialogController OkCancelDialogController;
@@ -282,5 +283,6 @@ namespace Game.GUI
         {
             objectiveUI.Hide();
         }
+     
     }
 }

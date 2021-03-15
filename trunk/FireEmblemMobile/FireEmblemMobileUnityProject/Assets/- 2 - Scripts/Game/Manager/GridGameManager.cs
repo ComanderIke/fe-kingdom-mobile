@@ -147,6 +147,7 @@ namespace Game.Manager
             GameStateManager.BattleState.battleSystem = GetSystem<BattleSystem>();
             var chapterConfig = FindObjectOfType<ChapterConfig>();
             GameStateManager.ConditionScreenState.chapter = chapterConfig.chapter;
+            GameStateManager.UnitPlacementState.UnitPlacementUI =  FindObjectsOfType<MonoBehaviour>().OfType<IUnitPlacementUI>().First();
             GameStateManager.PhaseTransitionState.phaseRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IPhaseRenderer>().First();
             GetSystem<UnitProgressSystem>().levelUpRenderer = FindObjectsOfType<MonoBehaviour>().OfType<ILevelUpRenderer>().First();
             GetSystem<UnitProgressSystem>().ExpRenderer = FindObjectsOfType<MonoBehaviour>().OfType<TopUi>().First().expRenderer;
@@ -202,6 +203,7 @@ namespace Game.Manager
                 FactionManager.Factions[0].AddUnit(unit);
             }
             FactionManager.Factions[0].Name = Player.Instance.Name;
+            GameStateManager.UnitPlacementState.SetUnits(FactionManager.Factions[0].Units);
             int[] indexes = new int [FactionManager.Factions.Count];
             foreach(var faction in FactionManager.Factions)
                 foreach (var spawn in spawner.Where(a => a.FactionId == faction.Id))
