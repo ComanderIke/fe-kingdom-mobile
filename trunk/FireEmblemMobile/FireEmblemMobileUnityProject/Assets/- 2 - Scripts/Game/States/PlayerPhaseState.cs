@@ -81,7 +81,7 @@ namespace Game.Mechanics
         {
             foreach (var unit in factionManager.Factions.SelectMany(faction => faction.Units))
             {
-                unit.GameTransformManager.UnitController.InputSystem = unitInputSystem;
+                unit.GameTransformManager.UnitController.touchInputReceiver = unitInputSystem;
             }
         }
 

@@ -9,7 +9,7 @@ using UnityEngine.EventSystems;
 
 namespace Game.GameInput
 {
-    public class UnitInputSystem : IEngineSystem, IDragAble
+    public class UnitInputSystem : IEngineSystem, IDragAble, IUnitTouchInputReceiver
     {
         public event Action EndedDrag;
         public event Action StartedDrag;
@@ -62,6 +62,12 @@ namespace Game.GameInput
                     DragManager.Dragging(unitController.transform);
             }
         }
+
+        public void OnMouseDrag(UnitInputController unitInputController, PointerEventData eventData)
+        {
+            
+        }
+
         public void OnMouseDown(UnitInputController unitController)
         {
             dragStarted = false;
@@ -140,6 +146,22 @@ namespace Game.GameInput
                 doubleClick = false;
             }
         }
+
+        public void OnBeginDrag(UnitInputController unitInputController, PointerEventData eventData)
+        {
+            
+        }
+
+        public void OnEndDrag(UnitInputController unitInputController, PointerEventData eventData)
+        {
+            
+        }
+
+        public void OnDrop(UnitInputController unitInputController, PointerEventData eventData)
+        {
+            
+        }
+
         public void StartDrag(Transform dragObject)
         {
             StartedDrag?.Invoke();
@@ -182,5 +204,18 @@ namespace Game.GameInput
         }
 
       
+    }
+
+    public interface IUnitTouchInputReceiver
+    {
+        void OnMouseEnter(UnitInputController unitInputController);
+        void OnMouseDrag(UnitInputController unitInputController);
+        
+        void OnMouseDrag(UnitInputController unitInputController, PointerEventData eventData);
+        void OnMouseDown(UnitInputController unitInputController);
+        void OnMouseUp(UnitInputController unitInputController);
+        void OnBeginDrag(UnitInputController unitInputController, PointerEventData eventData);
+        void OnEndDrag(UnitInputController unitInputController, PointerEventData eventData);
+        void OnDrop(UnitInputController unitInputController, PointerEventData eventData);
     }
 }

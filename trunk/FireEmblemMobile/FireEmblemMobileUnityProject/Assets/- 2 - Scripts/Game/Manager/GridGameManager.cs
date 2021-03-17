@@ -166,75 +166,7 @@ namespace Game.Manager
 
         private void LevelConfig()
         {
-            var turnManager = GetSystem<TurnSystem>();
-            var player = FactionManager.GetPlayerControlledFaction();
-            var spawner = FindObjectsOfType<UnitSpawner>();
-            var unitInstantiator = FindObjectOfType<UnitInstantiator>();
-            var resources = FindObjectOfType<ResourceScript>();
-            var data = FindObjectOfType<DataScript>();
-           
-
-            if (Player.Instance.Units == null || Player.Instance.Units.Count == 0)
-            {
-                //Debug.Log("Create Demo Characters");
-                var unit1 = DataScript.Instance.GetHuman("Leila");
-                var unit2 = DataScript.Instance.GetHuman("Flora");
-                var unit3 = DataScript.Instance.GetHuman("Eldric");
-                var unit4 = DataScript.Instance.GetHuman("Hector");
-                unit1.Initialize();
-                unit2.Initialize();
-                unit3.Initialize();
-                unit4.Initialize();
-                unit4.Inventory.AddItem(DataScript.Instance.GetWeapon("Iron Sword"));
-                unit3.Inventory.AddItem(DataScript.Instance.GetWeapon("Iron Bow"));
-                unit1.Inventory.AddItem(DataScript.Instance.GetWeapon("Steel Bow"));
-                unit2.Inventory.AddItem(DataScript.Instance.GetWeapon("Fire"));
-                Player.Instance.Units = new List<Unit>
-                {
-                    unit1,
-                    unit2,
-                    unit3,
-                    unit4
-                };
-            }
-            //Debug.Log("LevelConfig");
-            foreach (var unit in Player.Instance.Units)
-            {
-                FactionManager.Factions[0].AddUnit(unit);
-            }
-            FactionManager.Factions[0].Name = Player.Instance.Name;
-            GameStateManager.UnitPlacementState.SetUnits(FactionManager.Factions[0].Units);
-            int[] indexes = new int [FactionManager.Factions.Count];
-            foreach(var faction in FactionManager.Factions)
-                foreach (var spawn in spawner.Where(a => a.FactionId == faction.Id))
-                {
-                    if (spawn.unit != null)
-                    {
-                        var unit = Instantiate(spawn.unit) as Unit;
-        
-                       
-                        faction.AddUnit(unit);
-                        unit.Initialize();
-                        unit.AIComponent.WeightSet = spawn.AIWeightSet;
-                       
-                        unitInstantiator.PlaceCharacter(unit, spawn.X, spawn.Y);
-                        //Debug.Log("Spawn Unit"+unit.name +" "+spawn.X+" "+spawn.Y);
-                    }
-                    else if(faction.Units.Count!=0 && indexes[faction.Id]< faction.Units.Count)
-                    {
-                        var unit = faction.Units[indexes[faction.Id]++];
-                        unit.Faction = faction;
-                        unit.Initialize();
-                       
-                        unitInstantiator.PlaceCharacter(unit, spawn.X, spawn.Y);
-                        //Debug.Log("Spawn Unit"+ unit.name + " " + spawn.X + " " + spawn.Y+" ");
-                    }
-                }
-           
-            foreach (var spawn in spawner)
-            {
-                Destroy(spawn.gameObject);
-            }
+            
 
             
             // GameplayInput input = new GameplayInput();

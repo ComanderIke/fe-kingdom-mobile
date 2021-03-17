@@ -9,7 +9,7 @@ using UnityEngine.Serialization;
 
 namespace Game.GameActors.Units.OnGameObject
 {
-    public class UnitInputController : MonoBehaviour
+    public class UnitInputController : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
     {
         // public delegate void OnUnitDraggedEvent(int x, int y, Unit character);
         // public static event OnUnitDraggedEvent OnUnitDragged;
@@ -25,7 +25,7 @@ namespace Game.GameActors.Units.OnGameObject
         public Unit unit;
         public BoxCollider2D boxCollider;
 
-        public UnitInputSystem InputSystem { get; set; }
+        public IUnitTouchInputReceiver touchInputReceiver { get; set; }
 
 
         private bool dragInitiated;
@@ -38,24 +38,52 @@ namespace Game.GameActors.Units.OnGameObject
         
         private void OnMouseEnter()
         {
-            InputSystem.OnMouseEnter(this);
+            
+            touchInputReceiver?.OnMouseEnter(this);
         }
         public void OnMouseDrag()
         {
-            InputSystem.OnMouseDrag(this);
+
+            touchInputReceiver?.OnMouseDrag(this);
         }
         public void OnMouseDown()
         {
-            InputSystem.OnMouseDown(this);
+            touchInputReceiver?.OnMouseDown(this);
         }
         public void OnMouseUp()
         {
-            InputSystem.OnMouseUp(this);
+            touchInputReceiver?.OnMouseUp(this);
         }
         
         public Transform GetTransform()
         {
             return transform;
+        }
+
+   
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+           
+           
+            touchInputReceiver?.OnBeginDrag(this, eventData);
+        }
+
+        public void OnEndDrag(PointerEventData eventData)
+        {
+            
+            touchInputReceiver?.OnEndDrag(this, eventData);
+         
+        }
+
+        public void OnDrag(PointerEventData eventData)
+        {
+            Debug.Log("OnDrag");
+            touchInputReceiver?.OnMouseDrag(this, eventData);
+        }
+
+        public void OnDrop(PointerEventData eventData)
+        {
+            touchInputReceiver?.OnDrop(this, eventData);
         }
     }
 }
