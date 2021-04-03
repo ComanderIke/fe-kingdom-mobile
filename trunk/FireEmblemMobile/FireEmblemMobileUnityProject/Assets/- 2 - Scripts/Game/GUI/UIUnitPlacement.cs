@@ -24,6 +24,7 @@ public class UIUnitPlacement : IUnitPlacementUI
     [SerializeField]
     private List<Unit> units;
 
+    public GameObject unitFieldAnimationPrefab;
 
     private bool dragInitiated;
     private bool dragStarted;
@@ -52,6 +53,12 @@ public class UIUnitPlacement : IUnitPlacementUI
             }
     }
 
+    public void StartClicked()
+    {
+        OnFinished?.Invoke();
+        Hide();
+    }
+
     public override void Show(List<Unit> units)
     {
         this.units = units;
@@ -59,6 +66,7 @@ public class UIUnitPlacement : IUnitPlacementUI
         GetComponent<Canvas>().enabled = true;
         
     }
+    
     public override void Hide()
     {
         GetComponent<Canvas>().enabled = false;

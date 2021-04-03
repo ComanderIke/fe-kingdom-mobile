@@ -74,10 +74,9 @@ namespace Game.GameActors.Units.OnGameObject
             touchInputReceiver?.OnEndDrag(this, eventData);
          
         }
-
+  
         public void OnDrag(PointerEventData eventData)
         {
-            Debug.Log("OnDrag");
             touchInputReceiver?.OnMouseDrag(this, eventData);
         }
 

@@ -10,6 +10,7 @@ using Game.GameResources;
 using Game.Grid;
 using Game.GUI;
 using Game.Manager;
+using Game.Map;
 using Game.Mechanics;
 using GameEngine;
 using GameEngine.GameStates;
@@ -21,8 +22,9 @@ namespace Game.States
 {
     public class UnitPlacementState : GameState<NextStateTrigger>, IDependecyInjection
     {
-        private const float DELAY = 1.0f;
+        private const float DELAY = 0.5f;
         private float time = 0;
+        private bool finished;
         public List<Unit> units;
         public IUnitPlacementUI UnitPlacementUI { get; set; }
         public IUnitTouchInputReceiver UnitPlacementInputSystem { get; set; }
@@ -31,12 +33,13 @@ namespace Game.States
         private UnitInstantiator unitInstantiator;
         public override void Enter()
         {
+            finished = false;
             factionManager = GridGameManager.Instance.FactionManager;
             var spawner = GameObject.FindObjectsOfType<UnitSpawner>();
             unitInstantiator = GameObject.FindObjectOfType<UnitInstantiator>();
             var resources = GameObject.FindObjectOfType<ResourceScript>();
             var data = GameObject.FindObjectOfType<DataScript>();
-           
+            var gridSystem = GridGameManager.Instance.GetSystem<GridSystem>();
 
             InitUnits();
             InitFactions();
@@ -70,6 +73,7 @@ namespace Game.States
           //  Debug.Log("UnitPlacement"+units.Count());
             NextState = GameStateManager.PlayerPhaseState;
             UnitPlacementUI.Show(units);
+            UnitPlacementUI.OnFinished += () => { finished = true;};
             var startPositions = GameObject.FindObjectsOfType<StartPosition>();
             UnitPlacementInputSystem = new UnitPlacementInputSystem();
 
@@ -85,6 +89,13 @@ namespace Game.States
             foreach (var spawn in spawner)
             {
                 GameObject.Destroy(spawn.gameObject);
+            }
+
+            foreach (var unit in Player.Instance.Units)
+            {
+                var tile= gridSystem.GetTile(unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y);
+               tile.tileVfx.ShowSwapable(tile);
+               //tile.TileRenderer.SwapVisual();
             }
         }
 
@@ -148,6 +159,12 @@ namespace Game.States
         public override void Exit()
         {
             UnitPlacementUI.Hide();
+            var gridSystem = GridGameManager.Instance.GetSystem<GridSystem>();
+            foreach (var unit in Player.Instance.Units)
+            {
+                var tile= gridSystem.GetTile(unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y);
+                tile.tileVfx.Hide(tile);
+            }
         }
 
         public override GameState<NextStateTrigger> Update()
@@ -155,10 +172,10 @@ namespace Game.States
             time += Time.deltaTime;
             if (time >= DELAY)
             {
-                if (Input.GetMouseButtonDown(0))
+                if (finished)
                 {
                     // if (time >= DELAY)
-                    //     return NextState;
+                        return NextState;
                 }
             }
 

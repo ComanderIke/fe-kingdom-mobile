@@ -15,10 +15,10 @@ namespace Game.Graphics
     public class TileEffectVisual : ScriptableObject
     {
        
-        private GameObject attackableField;
+        private GameObject tileEffectGO;
 
         [SerializeField]
-        private GameObject attackIconPrefab;
+        private GameObject tileEffectPrefab;
         
 
         private void OnEnable()
@@ -29,30 +29,30 @@ namespace Game.Graphics
             
         }
 
-        public void ShowAttackableField(Tile tile)
+        public void Show(Tile tile)
         {
-            if (attackableField !=null)
+            if (tileEffectGO !=null)
             {
                 
-                attackableField.SetActive(true);
+                tileEffectGO.SetActive(true);
             }
             else
             {
-                CreateAttackableField(tile.GetTransform());
+                Create(tile.GetTransform());
             }
-            attackableField.transform.localPosition =  Vector3.zero;
+            tileEffectGO.transform.localPosition =  Vector3.zero;
         }
 
-        private void CreateAttackableField(Transform parentTransform)
+        private void Create(Transform parentTransform)
         {
-            attackableField = Instantiate(attackIconPrefab, parentTransform);
+            tileEffectGO = Instantiate(tileEffectPrefab, parentTransform);
 
         }
 
-        public void HideAttackableField()
+        public void Hide()
         {
-            if(attackableField!=null)
-                attackableField.SetActive(false);
+            if(tileEffectGO!=null)
+                tileEffectGO.SetActive(false);
         }
 
       

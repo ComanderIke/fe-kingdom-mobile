@@ -12,5 +12,6 @@ namespace Game.Grid
         public Sprite GridActiveMoveSprite;
         public Sprite GridSpriteStandOn;
         public Sprite GridSpriteAlly;
+        public Sprite GridSwapSprite;
     }
 }

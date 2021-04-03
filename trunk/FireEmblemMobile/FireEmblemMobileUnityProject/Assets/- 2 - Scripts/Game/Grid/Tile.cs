@@ -14,10 +14,10 @@ namespace Game.Grid
         
         public TileType TileType;
         public readonly ITileRenderer TileRenderer;
-        private TileEffectVisual tileVfx;
+        public ITileEffectVisualRenderer tileVfx;
         private Transform transform;
 
-        public Tile(int i, int j, TileType tileType, Transform transform, ITileRenderer tileRenderer, TileEffectVisual tileVfx)
+        public Tile(int i, int j, TileType tileType, Transform transform, ITileRenderer tileRenderer, ITileEffectVisualRenderer tileVfx)
         {
             X = i;
             Y = j;
@@ -35,7 +35,7 @@ namespace Game.Grid
         public void Reset()
         {
             TileRenderer.Reset();
-            tileVfx.HideAttackableField();
+            tileVfx.Hide(this);
         }
 
         public void SetAttackMaterial(int playerId, bool activeUnit, bool activePlayer)
@@ -48,7 +48,7 @@ namespace Game.Grid
             {
                 if (Actor!=null && playerId != Actor.Faction.Id && activePlayer)
                 {
-                    tileVfx.ShowAttackableField(this);
+                    tileVfx.ShowAttackable(this);
                     TileRenderer.ActiveAttackVisual();
                 }
                 

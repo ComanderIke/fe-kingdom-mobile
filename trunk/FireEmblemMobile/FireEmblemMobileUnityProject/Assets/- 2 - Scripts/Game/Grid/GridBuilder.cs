@@ -53,7 +53,7 @@ namespace Game.Grid
             width = gridData.width;
             height = gridData.height;
             tiles = new Tile[width, height];
-   
+            var tileeffectVisualRenderer = FindObjectOfType<TileEffectRenderer>();
             for (int i = 0; i < width; i++)
             {
                 for (int j = 0; j < height; j++)
@@ -64,7 +64,7 @@ namespace Game.Grid
                     {
                         cell.AddComponent<TileData>().tileType = default;
                     }
-                    tiles[i, j] = new Tile(i, j, tileData.tileType, cell.transform, new SpriteTileRenderer(cell.GetComponent<SpriteRenderer>(), ResourceScript.Instance.tiles.tileSpriteSets), Instantiate(ResourceScript.Instance.tiles.tileEffectVisual));
+                    tiles[i, j] = new Tile(i, j, tileData.tileType, cell.transform, new SpriteTileRenderer(cell.GetComponent<SpriteRenderer>(), ResourceScript.Instance.tiles.tileSpriteSets),tileeffectVisualRenderer);
                 }
             }
 

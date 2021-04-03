@@ -10,5 +10,6 @@
         void ActiveMoveVisual();
         void StandOnVisual();
         void SetVisualStyle(int id);
+        void SwapVisual();
     }
 }

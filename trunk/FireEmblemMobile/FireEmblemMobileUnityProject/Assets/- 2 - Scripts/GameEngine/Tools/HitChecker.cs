@@ -28,5 +28,10 @@ namespace GameEngine.Tools
             }
             return false;
         }
+
+        public bool HasTagExcluded(string tag)
+        {
+            return excludeColliderTags.Contains(tag);
+        }
     }
 }

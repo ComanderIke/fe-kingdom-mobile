@@ -149,6 +149,7 @@ namespace Game.Manager
             GameStateManager.ConditionScreenState.chapter = chapterConfig.chapter;
             GameStateManager.UnitPlacementState.UnitPlacementUI =  FindObjectsOfType<MonoBehaviour>().OfType<IUnitPlacementUI>().First();
             GameStateManager.PhaseTransitionState.phaseRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IPhaseRenderer>().First();
+            GameStateManager.PlayerPhaseState.playerPhaseUI = FindObjectsOfType<MonoBehaviour>().OfType<IPlayerPhaseUI>().First();
             GetSystem<UnitProgressSystem>().levelUpRenderer = FindObjectsOfType<MonoBehaviour>().OfType<ILevelUpRenderer>().First();
             GetSystem<UnitProgressSystem>().ExpRenderer = FindObjectsOfType<MonoBehaviour>().OfType<TopUi>().First().expRenderer;
         }

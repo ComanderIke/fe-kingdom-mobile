@@ -31,7 +31,11 @@ namespace Game.Grid
         {
             activeSpriteSet = spriteSets[id];
         }
-        
+
+        public void SwapVisual()
+        {
+            spriteRenderer.sprite = activeSpriteSet.GridSwapSprite;
+        }
 
         public void Reset()
         {

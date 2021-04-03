@@ -11,7 +11,7 @@ namespace GameCamera
         private IRayProvider RayProvider { get; set; }
         private IHitChecker HitChecker { get; set; }
         private IInputProvider InputProvider { get; set; }
-        
+
 
         public void Construct(IDragPerformer dragPerformer, IRayProvider rayProvider, IHitChecker hitChecker,
             IInputProvider inputProvider)
@@ -35,8 +35,14 @@ namespace GameCamera
                 var ray = RayProvider.CreateRay(InputProvider.InputPosition());
                 if (HitChecker.CheckHit(ray) )
                 {
-                    if((Input.touchCount==0 &&!EventSystem.current.IsPointerOverGameObject())||( Input.touchCount!=0&&!EventSystem.current.IsPointerOverGameObject(Input.touches[0].fingerId)))
-                        DragPerformer.StartDrag(transform,InputProvider.InputPosition());
+                    Debug.Log("HIT"+Input.touchCount+" "+EventSystem.current.currentSelectedGameObject);
+                    if (EventSystem.current.currentSelectedGameObject == null ||
+                                                  !HitChecker.HasTagExcluded(EventSystem.current
+                                                      .currentSelectedGameObject.tag))
+                    {
+                        Debug.Log("Perform DragStart");
+                        DragPerformer.StartDrag(transform, InputProvider.InputPosition());
+                    }
                 }
             }
             if (InputProvider.InputPressedUp())

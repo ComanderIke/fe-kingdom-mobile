@@ -21,9 +21,8 @@ namespace Game.GUI
         public IAttackPreviewUI attackPreviewUI;
         public IObjectiveUI objectiveUI;
         public IUnitPlacementUI unitPlacementUI;
-
-        public Button EndTurnButton;
-        public OKCancelDialogController OkCancelDialogController;
+        
+        
         public void Init()
         {
             UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
@@ -76,10 +75,7 @@ namespace Game.GUI
         {
             attackPreviewUI.Hide();
         }
-        public void EndTurnClicked()
-        {
-            OkCancelDialogController.Show("End the Turn?", () => { TurnSystem.OnTriggerEndTurn(); });
-        }
+        
         public void SelectedCharacter(IGridActor actor)
         {
             if(actor is Unit u)

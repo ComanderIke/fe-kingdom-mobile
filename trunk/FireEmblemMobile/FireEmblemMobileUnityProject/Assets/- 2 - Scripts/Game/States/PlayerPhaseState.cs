@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Game.AI;
 using Game.GameActors.Units;
 using Game.GameInput;
 using Game.Grid;
@@ -14,7 +15,7 @@ using UnityEngine;
 
 namespace Game.Mechanics
 {
-    public class PlayerPhaseState : GameState<NextStateTrigger>
+    public class PlayerPhaseState : GameState<NextStateTrigger>, IDependecyInjection
     {
         private readonly GridGameManager gridGameManager;
 
@@ -23,6 +24,7 @@ namespace Game.Mechanics
         private GridInputSystem gridInputSystem;
         private UnitInputSystem unitInputSystem;
         private CameraSystem cameraSystem;
+        public IPlayerPhaseUI playerPhaseUI;//Inject
 
         public PlayerPhaseState()
         {
@@ -60,6 +62,7 @@ namespace Game.Mechanics
             cameraSystem.AddMixin<ViewOnGridMixin>().zoom = 0;
             gridInputSystem.SetActive(true);
             unitInputSystem.SetActive(true);
+            playerPhaseUI.Show();
             SetUpInputForUnits();
             // add as InputReceiver to all units
         }
@@ -111,8 +114,9 @@ namespace Game.Mechanics
             gridInputSystem.ResetInput();
             gridInputSystem.SetActive(false);
             unitInputSystem.SetActive(false);
+            playerPhaseUI.Hide();
             // remove as Input Receiver to all Units
-            
+
         }
 
        

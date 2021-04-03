@@ -64,10 +64,12 @@ namespace Game.GameActors.Units.OnGameObject
             }
         }
 
+
         public void StartDrag(Transform dragObjectTransform)
         {
             IsDragging = false;
             IsDragDelay = true;
+  
             DragTime = 0;
             this.dragObjectTransform = dragObjectTransform;
             Vector3 dist = camera.WorldToScreenPoint(dragObjectTransform.position);
@@ -95,8 +97,10 @@ namespace Game.GameActors.Units.OnGameObject
 
         private void EndDrag(Transform dragObjectTransform)
         {
+            
             IsDragging = false;
-            dragObjectTransform.localPosition = posBeforeDrag;
+            if(dragObjectTransform!=null)
+                dragObjectTransform.localPosition = posBeforeDrag;
             DragObserver.EndDrag();
         }
     }
