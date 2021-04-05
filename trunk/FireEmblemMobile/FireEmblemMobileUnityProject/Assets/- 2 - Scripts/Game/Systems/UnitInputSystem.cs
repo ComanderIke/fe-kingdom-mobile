@@ -42,17 +42,21 @@ namespace Game.GameInput
 
         public void OnMouseEnter(UnitInputController unitController)
         {
-            if(DragManager.IsAnyUnitDragged)
-                if (EventSystem.current.currentSelectedGameObject==null||EventSystem.current.currentSelectedGameObject.CompareTag(TagManager.UnitTag))
-                {
-                    Debug.Log("Dragged over: "+unitController.unit);
-                    InputReceiver.DraggedOverActor(unitController.unit);
-                }
+            if (DragManager.IsAnyUnitDragged)
+            {
+                // if (EventSystem.current.currentSelectedGameObject==null||EventSystem.current.currentSelectedGameObject.CompareTag(TagManager.UnitTag))
+                // {
+                Debug.Log("Dragged over: " + unitController.unit);
+                InputReceiver.DraggedOverActor(unitController.unit);
+                // }
+            }
         }
 
         public void OnMouseDrag(UnitInputController unitController)
         {
-            if (EventSystem.current.currentSelectedGameObject==null||EventSystem.current.currentSelectedGameObject.CompareTag(TagManager.UnitTag) && (dragStarted || dragInitiated))
+            // if (EventSystem.current.currentSelectedGameObject==null||EventSystem.current.currentSelectedGameObject.CompareTag(TagManager.UnitTag) && (dragStarted || dragInitiated))
+            // {
+            if ((dragStarted || dragInitiated))
             {
                
                 dragStarted = false;
@@ -81,8 +85,8 @@ namespace Game.GameInput
                 return;
            
 
-            if (EventSystem.current.currentSelectedGameObject==null||EventSystem.current.currentSelectedGameObject.CompareTag(TagManager.UnitTag))
-            {
+            // if (EventSystem.current.currentSelectedGameObject==null||EventSystem.current.currentSelectedGameObject.CompareTag(TagManager.UnitTag))
+            // {
                 Debug.Log("Clicked Unit: "+unitController.unit.name);
                 if (timerForDoubleClick != 0 &&  Time.time - timerForDoubleClick < DOUBLE_CLICK_TIME)
                 {
@@ -99,11 +103,11 @@ namespace Game.GameInput
                 }
 
                 
-            }
-            else
-            {
-                Debug.Log("Clicked On Unit BUT POINTER OVER GAMEOBJECT" + EventSystem.current.currentSelectedGameObject.name+" "+EventSystem.current.currentSelectedGameObject.tag);
-            }
+            // }
+            // else
+            // {
+            //     Debug.Log("Clicked On Unit BUT POINTER OVER GAMEOBJECT" + EventSystem.current.currentSelectedGameObject.name+" "+EventSystem.current.currentSelectedGameObject.tag);
+            // }
         }
         public void OnMouseUp(UnitInputController unitController)
         {
@@ -132,13 +136,13 @@ namespace Game.GameInput
             }
             else if (!CameraSystem.IsDragging && (unitSelectedBeforeClicking||(unit.Faction.Id != GridGameManager.Instance.FactionManager.ActivePlayerNumber||doubleClick||unit.TurnStateManager.IsWaiting)))
             {
-                if (EventSystem.current.currentSelectedGameObject==null||EventSystem.current.currentSelectedGameObject.CompareTag(TagManager.UnitTag))
-                {
+                // if (EventSystem.current.currentSelectedGameObject==null||EventSystem.current.currentSelectedGameObject.CompareTag(TagManager.UnitTag))
+                // {
                     if(doubleClick)
                         InputReceiver.ActorDoubleClicked(unit);
                     else
                         InputReceiver.ActorClicked(unit);
-                }
+                // }
             }
 
             if (doubleClick)
@@ -172,11 +176,11 @@ namespace Game.GameInput
             InputReceiver.StartDraggingActor(unit);
             unitSelectedBeforeClicking = unit.TurnStateManager.IsSelected;
             if (!unit.TurnStateManager.IsSelected)
-                if (EventSystem.current.currentSelectedGameObject==null||EventSystem.current.currentSelectedGameObject.CompareTag(TagManager.UnitTag))
-                {
+                // if (EventSystem.current.currentSelectedGameObject==null||EventSystem.current.currentSelectedGameObject.CompareTag(TagManager.UnitTag))
+                // {
                     Unit.OnUnitActiveStateUpdated?.Invoke(unit, false, true);
                     InputReceiver.ActorClicked(unit);
-                }
+                // }
         }
 
         public void Dragging(Transform dragObject, float xPos, float yPos)

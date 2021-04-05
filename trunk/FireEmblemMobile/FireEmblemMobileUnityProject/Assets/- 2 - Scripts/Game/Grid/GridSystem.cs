@@ -213,12 +213,31 @@ namespace Game.Map
             return Tiles[x, y];
         }
 
+        public void SwapUnits(IGridActor unit,IGridActor unit2)
+        {
+            Debug.Log("Swap Units:  "+((Unit)unit).name+" "+((Unit)unit2).name);
+            var tmpPosX = unit.GridComponent.GridPosition.X;
+            var tmpPosY = unit.GridComponent.GridPosition.Y;
+            var tmpPos2X = unit2.GridComponent.GridPosition.X;
+            var tmpPos2Y = unit2.GridComponent.GridPosition.Y;
+            Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y].Actor = null;
+            Tiles[unit2.GridComponent.GridPosition.X, unit2.GridComponent.GridPosition.Y].Actor = null;
+            Tiles[tmpPos2X, tmpPos2Y].Actor = unit;
+            unit.GridComponent.SetPosition(tmpPos2X, tmpPos2Y);
+            Tiles[tmpPosX, tmpPosY].Actor = unit2;
+            unit2.GridComponent.SetPosition(tmpPosX, tmpPosY);
+            
+        }
         public void SetUnitPosition(IGridActor unit, int x, int y)
         {
             if (x != -1 && y != -1)
             {
-                if(unit.GridComponent.GridPosition.X != -1 && unit.GridComponent.GridPosition.Y!=-1)
+                if (unit.GridComponent.GridPosition.X != -1 && unit.GridComponent.GridPosition.Y != -1)
+                {
+
                     Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y].Actor = null;
+                }
+
                 Tiles[x, y].Actor = unit;
                 unit.GridComponent.SetPosition(x, y);
             }

@@ -27,10 +27,11 @@ namespace Game.States
         private bool finished;
         public List<Unit> units;
         public IUnitPlacementUI UnitPlacementUI { get; set; }
-        public IUnitTouchInputReceiver UnitPlacementInputSystem { get; set; }
+        public UnitPlacementInputSystem UnitPlacementInputSystem { get; set; }
 
         private FactionManager factionManager;
         private UnitInstantiator unitInstantiator;
+        private GridSystem gridSystem;
         public override void Enter()
         {
             finished = false;
@@ -39,7 +40,7 @@ namespace Game.States
             unitInstantiator = GameObject.FindObjectOfType<UnitInstantiator>();
             var resources = GameObject.FindObjectOfType<ResourceScript>();
             var data = GameObject.FindObjectOfType<DataScript>();
-            var gridSystem = GridGameManager.Instance.GetSystem<GridSystem>();
+            gridSystem = GridGameManager.Instance.GetSystem<GridSystem>();
 
             InitUnits();
             InitFactions();
@@ -71,12 +72,12 @@ namespace Game.States
            
            
           //  Debug.Log("UnitPlacement"+units.Count());
-            NextState = GameStateManager.PlayerPhaseState;
+            NextState = GameStateManager.PhaseTransitionState;
             UnitPlacementUI.Show(units);
             UnitPlacementUI.OnFinished += () => { finished = true;};
             var startPositions = GameObject.FindObjectsOfType<StartPosition>();
             UnitPlacementInputSystem = new UnitPlacementInputSystem();
-
+            UnitPlacementInputSystem.unitDroppedOnOtherUnit += SwapUnits;
             var playerFaction = factionManager.GetPlayerControlledFaction();
             for (int i = 0;
                 i < startPositions.Length && i < playerFaction.Units.Count();
@@ -97,6 +98,17 @@ namespace Game.States
                tile.tileVfx.ShowSwapable(tile);
                //tile.TileRenderer.SwapVisual();
             }
+        }
+
+        void SwapUnits(Unit unit, Unit unit2)
+        {
+            
+
+      
+            gridSystem.SwapUnits(unit,unit2);
+   
+            //unitInputController.transform.position = new Vector3(currentSelectedUnitController.unit.GridComponent.GridPosition.Xtransform.position);
+
         }
 
         void SpawnUnit(Faction faction, Unit unit, int x, int y)
@@ -160,6 +172,7 @@ namespace Game.States
         {
             UnitPlacementUI.Hide();
             var gridSystem = GridGameManager.Instance.GetSystem<GridSystem>();
+            UnitPlacementInputSystem.unitDroppedOnOtherUnit -= SwapUnits;
             foreach (var unit in Player.Instance.Units)
             {
                 var tile= gridSystem.GetTile(unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y);

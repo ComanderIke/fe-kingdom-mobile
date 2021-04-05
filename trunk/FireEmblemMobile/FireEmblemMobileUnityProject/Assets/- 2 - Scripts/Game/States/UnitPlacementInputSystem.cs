@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Units;
+﻿using System;
+using Game.GameActors.Units;
 using Game.GameActors.Units.OnGameObject;
 using Game.GameInput;
 using UnityEngine;
@@ -10,6 +11,7 @@ namespace Game.States
     {
         private Vector3 offset;
         private UnitInputController currentSelectedUnitController;
+        public Action<Unit, Unit> unitDroppedOnOtherUnit;
         public void OnMouseEnter(UnitInputController unitInputController)
         {
             
@@ -18,6 +20,7 @@ namespace Game.States
         public void OnMouseDrag(UnitInputController unitInputController)
         {
             currentSelectedUnitController = unitInputController;
+
             // unitInputController.transform += 
         }
 
@@ -25,6 +28,7 @@ namespace Game.States
         {
            
             currentSelectedUnitController = unitInputController;
+
             unitInputController.transform.position=offset+ eventData.pointerCurrentRaycast.worldPosition;
         }
 
@@ -35,12 +39,14 @@ namespace Game.States
 
         public void OnMouseUp(UnitInputController unitInputController)
         {
+           
             //currentSelectedUnitController = null;
         }
 
         public void OnBeginDrag(UnitInputController unitInputController, PointerEventData eventData)
         {
             currentSelectedUnitController = unitInputController;
+            unitInputController.boxCollider.enabled = false;
             offset = unitInputController.transform.position - eventData.pointerCurrentRaycast.worldPosition;
         }
 
@@ -50,26 +56,27 @@ namespace Game.States
             var screenRay = Camera.main.ScreenPointToRay(eventData.position);
             // Perform Physics2D.GetRayIntersection from transform and see if any 2D object was under transform.position on drop.
             RaycastHit2D hit2D = Physics2D.GetRayIntersection(screenRay);
+            unitInputController.boxCollider.enabled = true;
             if (hit2D)
             {
-                Debug.Log(hit2D.transform.gameObject.name);
                 var dropComponent = hit2D.transform.gameObject.GetComponent<IDropHandler>();
                 if (dropComponent != null)
+                {
                     dropComponent.OnDrop(eventData);
+                    return;
+                }
+
             }
+            unitInputController.unit.GridComponent.ResetPosition();
             currentSelectedUnitController = null;
         }
 
         public void OnDrop(UnitInputController unitInputController, PointerEventData eventData)
         {
-            if (unitInputController.unit != null)
+            if (unitInputController.unit != null&&currentSelectedUnitController!=null && unitInputController.unit!=currentSelectedUnitController.unit)
             {
-                Debug.Log("Swap Units");
-                var tempX = unitInputController.unit.GridComponent.GridPosition.X;
-                var tempY= unitInputController.unit.GridComponent.GridPosition.Y;
-                unitInputController.unit.GridComponent.SetPosition(currentSelectedUnitController.unit.GridComponent.GridPosition.X,currentSelectedUnitController.unit.GridComponent.GridPosition.Y);
-                //unitInputController.transform.position = new Vector3(currentSelectedUnitController.unit.GridComponent.GridPosition.Xtransform.position);
-                currentSelectedUnitController.unit.GridComponent.SetPosition(tempX, tempY);
+                unitDroppedOnOtherUnit?.Invoke(unitInputController.unit, currentSelectedUnitController.unit);
+                
             }
         }
     }

@@ -35,12 +35,10 @@ namespace GameCamera
                 var ray = RayProvider.CreateRay(InputProvider.InputPosition());
                 if (HitChecker.CheckHit(ray) )
                 {
-                    Debug.Log("HIT"+Input.touchCount+" "+EventSystem.current.currentSelectedGameObject);
                     if (EventSystem.current.currentSelectedGameObject == null ||
-                                                  !HitChecker.HasTagExcluded(EventSystem.current
-                                                      .currentSelectedGameObject.tag))
+                        !HitChecker.HasTagExcluded(EventSystem.current
+                            .currentSelectedGameObject.tag))
                     {
-                        Debug.Log("Perform DragStart");
                         DragPerformer.StartDrag(transform, InputProvider.InputPosition());
                     }
                 }
