@@ -1,5 +1,5 @@
 ﻿public interface IPlayerPhaseUI
 {
-    void Show();
+    void Show(int turnCount);
     void Hide();
 }

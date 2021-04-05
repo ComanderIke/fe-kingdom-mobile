@@ -62,7 +62,7 @@ namespace Game.Mechanics
             cameraSystem.AddMixin<ViewOnGridMixin>().zoom = 0;
             gridInputSystem.SetActive(true);
             unitInputSystem.SetActive(true);
-            playerPhaseUI.Show();
+            playerPhaseUI.Show(gridGameManager.GetSystem<TurnSystem>().TurnCount);
             SetUpInputForUnits();
             // add as InputReceiver to all units
         }

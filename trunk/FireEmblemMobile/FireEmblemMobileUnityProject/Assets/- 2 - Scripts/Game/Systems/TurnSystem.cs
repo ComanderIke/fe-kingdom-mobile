@@ -34,6 +34,7 @@ namespace Game.Mechanics
             OnTriggerEndTurn += EndPhase;
             factionManager = gridGameManager.FactionManager;
             InitPlayers();
+            TurnCount = 1;
         }
 
 
@@ -81,9 +82,11 @@ namespace Game.Mechanics
             }
 
             factionManager.ActivePlayerNumber++;
-
+            
             gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter = null;
             OnEndTurn?.Invoke();
+            if (factionManager.ActivePlayerNumber == 0)
+                TurnCount++;
             StartPhase();
         }
 
