@@ -10,10 +10,10 @@ namespace GameCamera
         private float maxY;
         private float minX;
         private float minY;
-        private int width;
-        private int height;
+        private float width;
+        private float height;
 
-        public void Construct(int width, int height)
+        public void Construct(float width, float height)
         {
             this.width = width;
             this.height = height;
@@ -30,7 +30,7 @@ namespace GameCamera
             }
         }
 
-        private void SetBounds(int width, int height)
+        private void SetBounds(float width, float height)
         {
             var orthographicSize = CameraSystem.camera.orthographicSize;
             var aspect = CameraSystem.camera.aspect;
