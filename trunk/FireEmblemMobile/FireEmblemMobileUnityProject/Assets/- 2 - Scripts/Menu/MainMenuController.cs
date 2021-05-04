@@ -15,10 +15,12 @@ namespace Game.GUI
         [SerializeField] private GameObject loadFilePrefab = default;
         private string[] saveFiles;
         private string lastestSaveFile;
-        [SerializeField] private OptionsController optionsMenu;
+        [SerializeField] private UIMenu optionsMenu;
+        [SerializeField] private UIMenu campaignMenu;
         public void NewGameClicked()
         {
-            SceneController.SwitchScene("Base");
+            campaignMenu.Show();
+            //SceneController.SwitchScene("Base");
         }
         public void OpenSaveDialog()
         {

@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
-public class OptionsController : MonoBehaviour
+public class OptionsController : UIMenu
 {
     // Start is called before the first frame update
-    [SerializeField] private Canvas canvas;
+   
     [SerializeField] private Slider musicVolumeSlider;
     [SerializeField] private AudioMixer masterMixer;
 
@@ -26,13 +26,5 @@ public class OptionsController : MonoBehaviour
         masterMixer.SetFloat("MusicVolume", musicVolume);
         Debug.Log("TODO Convert Normalized Value to dB");
     }
-    public void Show()
-    {
-        canvas.enabled = true;
-    }
-
-    public void BackClicked()
-    {
-        canvas.enabled = false;
-    }
+   
 }
