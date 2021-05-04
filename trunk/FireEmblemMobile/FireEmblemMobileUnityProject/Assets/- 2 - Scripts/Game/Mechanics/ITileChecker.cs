@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Units;
+﻿using System.CodeDom.Compiler;
+using Game.GameActors.Units;
 using UnityEngine;
 
 namespace Game.Mechanics
@@ -11,5 +12,7 @@ namespace Game.Mechanics
         bool IsTileAccessible(int x, int y, IGridActor unit);
         bool IsTileFree(int x, int y);
         bool IsValidLocation(IGridActor unit, int sx, int sy, int xp, int yp, bool isAdjacent);
+
+        int GetMovementCost(int x, int y, IGridActor unit);
     }
 }

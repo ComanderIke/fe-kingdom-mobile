@@ -29,7 +29,9 @@ namespace Game.Graphics
         {
             instantiatedMovePath = new List<GameObject>();
             // InputPathManager.OnMovementPathUpdated += DrawMovementPath;
-            parent = GameObject.FindWithTag(TagManager.VfxTag).transform;
+            var vfxGo = GameObject.FindWithTag(TagManager.VfxTag);
+            if(vfxGo!=null)
+                parent = vfxGo.transform;
         }
 
         private GameObject CreateArrowPart()

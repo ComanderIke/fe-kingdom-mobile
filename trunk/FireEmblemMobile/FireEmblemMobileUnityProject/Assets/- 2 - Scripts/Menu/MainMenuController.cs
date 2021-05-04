@@ -14,6 +14,8 @@ namespace Game.GUI
         [SerializeField] private GameObject loadArea = default;
         [SerializeField] private GameObject loadFilePrefab = default;
         private string[] saveFiles;
+        private string lastestSaveFile;
+        [SerializeField] private OptionsController optionsMenu;
         public void NewGameClicked()
         {
             SceneController.SwitchScene("Base");
@@ -22,6 +24,16 @@ namespace Game.GUI
         {
             saveDialog.gameObject.SetActive(true);
             LeanTween.scale(saveDialog, Vector3.one, 0.3f).setEase(LeanTweenType.easeOutBack);
+        }
+        public void ContineClicked()
+        {
+            SceneController.SwitchScene("Base");
+            //LoadGame(lastestSaveFile);
+        }
+        public void OptionsClicked()
+        {
+            Debug.Log("TODO Open OptionsMenu");
+            optionsMenu.Show();
         }
 
         public void SaveGameClicked()

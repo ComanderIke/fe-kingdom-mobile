@@ -133,8 +133,8 @@ namespace Game.Grid.PathFinding
                         if (tileChecker.IsValidLocation(unit, sx, sy, xp, yp, isAdjacent) ||
                             (xp == tx && yp == ty))
                         {
-                           
-                            int nextStepCost = current.CostFromStart + 1;
+
+                            int nextStepCost = current.CostFromStart +tileChecker.GetMovementCost(xp,yp, unit);
                             var neighbor = Nodes[xp, yp];
                             if (nextStepCost < neighbor.CostFromStart)
                             {
