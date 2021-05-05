@@ -35,7 +35,15 @@ namespace GameCamera
             var orthographicSize = CameraSystem.camera.orthographicSize;
             var aspect = CameraSystem.camera.aspect;
             var horizontalDelta = orthographicSize * 2 * aspect - orthographicSize * 2 * 1920/1080;
-            minX = -CameraSystem.cameraData.cameraBoundsBorder.x + horizontalDelta / 2;
+            if (CameraSystem.cameraData.cameraBoundsBorder.x == 0)
+            {
+                minX = 0;
+            }
+            else
+            {
+                minX = -CameraSystem.cameraData.cameraBoundsBorder.x + horizontalDelta / 2;
+            }
+
             maxX = width + CameraSystem.cameraData.cameraBoundsBorder.x - orthographicSize * 2 * aspect + horizontalDelta / 2;
             minY = -CameraSystem.cameraData.cameraBoundsBorder.y;
             maxY = height + CameraSystem.cameraData.cameraBoundsBorder.y- orthographicSize * 2;
