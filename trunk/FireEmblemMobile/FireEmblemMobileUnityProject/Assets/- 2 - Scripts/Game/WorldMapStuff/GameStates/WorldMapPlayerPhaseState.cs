@@ -1,6 +1,8 @@
 ﻿using Game.Manager;
+using Game.WorldMapStuff.Systems;
 using GameEngine;
 using GameEngine.GameStates;
+using UnityEngine;
 
 namespace Game.WorldMapStuff
 {
@@ -13,9 +15,12 @@ namespace Game.WorldMapStuff
             inputSystem = new WorldMapInputSystem();
         }
         public override void Enter()
-        {
-         
+        { 
             inputSystem.SetActive(true);
+         
+            SetUpInputForLocations();
+            SetUpInputForUnits();
+           
             
         }
 
@@ -29,9 +34,24 @@ namespace Game.WorldMapStuff
             inputSystem.Update();
             return NextState;
         }
+        private void SetUpInputForUnits()
+        {
+            foreach (var party in GameObject.FindObjectsOfType<WorldMapPlayerParty>())
+            {
+                party.inputReceiver=inputSystem;
+            }
+        }
+        private void SetUpInputForLocations()
+        {
+            foreach (var location in GameObject.FindObjectsOfType<WorldMapPosition>())
+            {
+                location.inputReceiver = inputSystem;
+            }
+        }
 
         public void Init()
         {
+            inputSystem.inputReceiver = new WorldMapGameplayInputReceiver();
             inputSystem.Init();
         }
     }
