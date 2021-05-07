@@ -46,7 +46,7 @@ namespace Game.States
             InitFactions();
             //Debug.Log("LevelConfig");
           
-            GameStateManager.UnitPlacementState.SetUnits(factionManager.Factions[0].Units);
+            GridGameManager.Instance.GameStateManager.UnitPlacementState.SetUnits(factionManager.Factions[0].Units);
             int[] indexes = new int [factionManager.Factions.Count];
             foreach(var faction in factionManager.Factions)
                 foreach (var spawn in spawner.Where(a => a.FactionId == faction.Id))
@@ -72,7 +72,7 @@ namespace Game.States
            
            
           //  Debug.Log("UnitPlacement"+units.Count());
-            NextState = GameStateManager.PhaseTransitionState;
+            NextState =  GridGameManager.Instance.GameStateManager.PhaseTransitionState;
             UnitPlacementUI.Show(units);
             UnitPlacementUI.OnFinished += () => { finished = true;};
             var startPositions = GameObject.FindObjectsOfType<StartPosition>();

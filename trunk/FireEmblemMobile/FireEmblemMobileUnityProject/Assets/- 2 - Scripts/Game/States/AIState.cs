@@ -31,11 +31,11 @@ namespace Game.AI
             
             if (ConditionManager.CheckLose(GridGameManager.Instance.FactionManager.Factions))
             {
-                return GameStateManager.GameOverState;
+                return  GridGameManager.Instance.GameStateManager.GameOverState;
             }
             else if (ConditionManager.CheckWin(GridGameManager.Instance.FactionManager.Factions))
             {
-                return GameStateManager.WinState;
+                return  GridGameManager.Instance.GameStateManager.WinState;
             }
             
             pauseTime += Time.deltaTime;

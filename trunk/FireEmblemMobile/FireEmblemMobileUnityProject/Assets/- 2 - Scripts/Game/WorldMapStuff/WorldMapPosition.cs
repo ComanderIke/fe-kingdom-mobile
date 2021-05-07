@@ -8,6 +8,8 @@ public class WorldMapPosition : MonoBehaviour
 {
     public WorldMapPosition[] Connections;
 
+    public GameObject Walkable;
+    public GameObject Attackable;
     private List<Road> roads;
 
     private void OnEnable()
@@ -15,6 +17,16 @@ public class WorldMapPosition : MonoBehaviour
         spawndirty = false;
     }
 
+    public void ShowAttackable()
+    {
+        Attackable.SetActive(true);
+        Walkable.SetActive(false);
+    }
+    public void ShowWalkable()
+    {
+        Walkable.SetActive(true);
+        Attackable.SetActive(false);
+    }
     public void OnMouseDown()
     {
         Debug.Log("Position Clicked!");
@@ -89,5 +101,25 @@ public class WorldMapPosition : MonoBehaviour
             }
         
     }
-    
+
+    public void DrawInteractableConnections()
+    {
+        foreach (WorldMapPosition connection in Connections)
+        {
+            connection.ShowWalkable();
+        }
+    }
+    public void HideInteractableConnections()
+    {
+        foreach (WorldMapPosition connection in Connections)
+        {
+            connection.Hide();
+        }
+    }
+
+    private void Hide()
+    {
+        Walkable.SetActive(false);
+        Attackable.SetActive(false);
+    }
 }

@@ -18,7 +18,7 @@ namespace Game.States
         public override void Enter()
         {
             Debug.Log("CONDITIONS");
-            NextState = GameStateManager.UnitPlacementState;
+            NextState =  GridGameManager.Instance.GameStateManager.UnitPlacementState;
             GridGameManager.Instance.GetSystem<UiSystem>().ShowObjectiveCanvas(chapter);
         }
 

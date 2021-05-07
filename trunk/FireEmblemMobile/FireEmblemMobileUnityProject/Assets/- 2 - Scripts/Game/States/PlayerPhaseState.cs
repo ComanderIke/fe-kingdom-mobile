@@ -95,11 +95,11 @@ namespace Game.Mechanics
             
             if (conditionManager.CheckLose(gridGameManager.FactionManager.Factions))
             {
-                return GameStateManager.GameOverState;
+                return  GridGameManager.Instance.GameStateManager.GameOverState;
             }
             else if (conditionManager.CheckWin(gridGameManager.FactionManager.Factions))
             {
-                return GameStateManager.WinState;
+                return  GridGameManager.Instance.GameStateManager.WinState;
             }
             return NextState;
         }

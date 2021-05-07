@@ -36,7 +36,7 @@ namespace Game.Manager
 
         private List<IEngineSystem> Systems { get; set; }
         public FactionManager FactionManager { get; set; }
-        public GameStateManager GameStateManager { get; set; }
+        public GridGameStateManager GameStateManager { get; set; }
 
         private void Awake()
         {
@@ -45,7 +45,7 @@ namespace Game.Manager
             //Debug.Log("Initialize");
             AddSystems();
             FactionManager = new FactionManager();
-            GameStateManager = new GameStateManager();
+            GameStateManager = new GridGameStateManager();
             Application.targetFrameRate = 60;
             JITHelper.PreJitAll<GridSystem>();
             JITHelper.PreJitAll<UiSystem>();

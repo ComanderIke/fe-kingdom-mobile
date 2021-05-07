@@ -13,8 +13,9 @@ namespace Game.Grid
 
         public virtual int GetMovementCost(MoveType moveType)
         {
-
-            return moveType.movementCosts[TerrainType];
+            if (moveType.movementCosts.ContainsKey(TerrainType))
+                return moveType.movementCosts[TerrainType];
+            else return 1;
         }
 
         public virtual bool CanMoveThrough(MoveType moveType)

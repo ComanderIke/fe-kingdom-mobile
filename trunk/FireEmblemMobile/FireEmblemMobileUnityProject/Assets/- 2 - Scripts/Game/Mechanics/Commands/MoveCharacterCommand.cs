@@ -34,7 +34,7 @@ namespace Game.Mechanics.Commands
         public override void Execute()
         {
             Debug.Log("Execute Movement!");
-            GameStateManager.MovementState.StartMovement(unit, x, y, path);
+            GridGameManager.Instance.GameStateManager.MovementState.StartMovement(unit, x, y, path);
         }
 
         public override void Undo()
@@ -45,7 +45,7 @@ namespace Game.Mechanics.Commands
 
         public override void Update()
         {
-            IsFinished = GameStateManager.MovementState.IsFinished;
+            IsFinished =  GridGameManager.Instance.GameStateManager.MovementState.IsFinished;
         }
     }
 }

@@ -30,9 +30,9 @@ namespace Game.States
         void Finished()
         {
             if(GridGameManager.Instance.FactionManager.ActiveFaction.IsPlayerControlled)
-                GridGameManager.Instance.GameStateManager.SwitchState(GameStateManager.PlayerPhaseState);
+                GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.PlayerPhaseState);
             else
-                GridGameManager.Instance.GameStateManager.SwitchState(GameStateManager.EnemyPhaseState);
+                GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.EnemyPhaseState);
         }
         public override void Exit()
         {

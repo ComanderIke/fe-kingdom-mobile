@@ -21,7 +21,7 @@ namespace Game.Mechanics.Commands
         public override void Execute()
         {
             Debug.Log("Execute Attack Command!");
-            GameStateManager.BattleState.Start(attacker, target);
+            GridGameManager.Instance.GameStateManager.BattleState.Start(attacker, target);
             
             
         }
@@ -33,7 +33,7 @@ namespace Game.Mechanics.Commands
 
         public override void Update()
         {
-            if (GameStateManager.BattleState.IsFinished)
+            if ( GridGameManager.Instance.GameStateManager.BattleState.IsFinished)
             {
                 IsFinished = true;
             }
