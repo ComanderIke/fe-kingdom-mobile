@@ -11,6 +11,7 @@ public class WorldMapPosition : MonoBehaviour
     public GameObject Walkable;
     public GameObject Attackable;
     private List<Road> roads;
+    public  IWorldMapLocationInputReceiver inputReceiver { get; set; }
 
     private void OnEnable()
     {
@@ -29,7 +30,7 @@ public class WorldMapPosition : MonoBehaviour
     }
     public void OnMouseDown()
     {
-        Debug.Log("Position Clicked!");
+        inputReceiver.LocationClicked(this);
     }
     public void AddRoad(Road road)
     {

@@ -8,7 +8,9 @@ public class WorldMapPlayerParty : MonoBehaviour
     // Start is called before the first frame update
     private bool selected;
     private SpriteRenderer spriteRenderer;
+    public Party party;
     [SerializeField] private WorldMapPosition currentLocation;
+    public IWorldMapUnitInputReceiver inputReceiver { get; set; }
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -23,6 +25,7 @@ public class WorldMapPlayerParty : MonoBehaviour
     void OnMouseDown()
     {
         Debug.Log("Mouse Clicked on Party");
+        inputReceiver.UnitClicked(party);
 
         selected = !selected;
 
