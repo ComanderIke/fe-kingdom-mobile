@@ -25,7 +25,7 @@ namespace Game.GameActors.Players
             IsPlayerControlled = isPlayerControlled;
         }
 
-        public bool IsActive()
+        public virtual bool IsActive()
         {
             return GridGameManager.Instance.FactionManager.ActiveFaction == this;
         }
@@ -45,7 +45,7 @@ namespace Game.GameActors.Players
             if (Units.Contains(unit)) Units.Remove(unit);
         }
 
-        public bool IsAlive()
+        public virtual bool IsAlive()
         {
             return Units.Any(unit => unit.IsAlive());
         }
