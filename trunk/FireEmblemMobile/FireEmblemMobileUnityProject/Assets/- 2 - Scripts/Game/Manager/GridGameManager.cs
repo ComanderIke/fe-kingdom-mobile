@@ -44,33 +44,33 @@ namespace Game.Manager
 
             //Debug.Log("Initialize");
             AddSystems();
-            FactionManager = new FactionManager();
+            FactionManager = new FactionManager(FindObjectOfType<PlayerConfig>().Factions.ToList());
             GameStateManager = new GridGameStateManager();
             Application.targetFrameRate = 60;
-            JITHelper.PreJitAll<GridSystem>();
-            JITHelper.PreJitAll<UiSystem>();
-            JITHelper.PreJitAll<GridLogic>();
-            JITHelper.PreJitAll<GridRenderer>();
-            JITHelper.PreJitAll<GridInputSystem>();
-            JITHelper.PreJitAll<UnitInputController>();
-            JITHelper.PreJitAll<Visuals>();
-            JITHelper.PreJitAll<TopUi>();
-            JITHelper.PreJitAll<NodeHelper>();
-            JITHelper.PreJitAll<DragManager>();
-            JITHelper.PreJitAll<UIFilledBarController>();
-            //JITHelper.PreJitAll<Unit>(); Does crash because of IClonealbe or ScriptableObject
-            JITHelper.PreJitAll<BattleStats>();
-            JITHelper.PreJitAll<ExpBarController>();
-            JITHelper.PreJitAll<Image>();
-            JITHelper.PreJitAll<ExperienceManager>();
-            JITHelper.PreJitAll<AttackPreviewStatBar>();
-            JITHelper.PreJitAll<AttackPreviewUI>();
-            JITHelper.PreJitAll<CursorAnimationBlinkController>();
-            JITHelper.PreJitAll<BattleSimulation>();
-            JITHelper.PreJitAll<BattleSystem>();
-            JITHelper.PreJitAll<UILoopPingPongFade>();
-            JITHelper.PreJitAll<RawImageUVOffsetAnimation>();
-            JITHelper.PreJitAll<AStar>();
+            // JITHelper.PreJitAll<GridSystem>();
+            // JITHelper.PreJitAll<UiSystem>();
+            // JITHelper.PreJitAll<GridLogic>();
+            // JITHelper.PreJitAll<GridRenderer>();
+            // JITHelper.PreJitAll<GridInputSystem>();
+            // JITHelper.PreJitAll<UnitInputController>();
+            // JITHelper.PreJitAll<Visuals>();
+            // JITHelper.PreJitAll<TopUi>();
+            // JITHelper.PreJitAll<NodeHelper>();
+            // JITHelper.PreJitAll<DragManager>();
+            // JITHelper.PreJitAll<UIFilledBarController>();
+            // //JITHelper.PreJitAll<Unit>(); Does crash because of IClonealbe or ScriptableObject
+            // JITHelper.PreJitAll<BattleStats>();
+            // JITHelper.PreJitAll<ExpBarController>();
+            // JITHelper.PreJitAll<Image>();
+            // JITHelper.PreJitAll<ExperienceManager>();
+            // JITHelper.PreJitAll<AttackPreviewStatBar>();
+            // JITHelper.PreJitAll<AttackPreviewUI>();
+            // JITHelper.PreJitAll<CursorAnimationBlinkController>();
+            // JITHelper.PreJitAll<BattleSimulation>();
+            // JITHelper.PreJitAll<BattleSystem>();
+            // JITHelper.PreJitAll<UILoopPingPongFade>();
+            // JITHelper.PreJitAll<RawImageUVOffsetAnimation>();
+            // JITHelper.PreJitAll<AStar>();
             
             //JITHelper.PreJitAll<String>();
             //JITHelper.PreJitAll<GameObject>();
@@ -142,6 +142,8 @@ namespace Game.Manager
           
             GetSystem<MoveSystem>().tileChecker = tileChecker;
             GetSystem<MoveSystem>().pathFinder = pathFinder;
+            GetSystem<TurnSystem>().factionManager = FactionManager;
+            GetSystem<TurnSystem>().gameStateManager = GameStateManager;
             GameStateManager.WinState.renderer =  FindObjectsOfType<MonoBehaviour>().OfType<IWinRenderer>().First();
             GameStateManager.GameOverState.renderer =  FindObjectsOfType<MonoBehaviour>().OfType<IGameOverRenderer>().First();
             GameStateManager.BattleState.battleSystem = GetSystem<BattleSystem>();

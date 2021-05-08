@@ -21,8 +21,8 @@ namespace Game.Mechanics
 
         #endregion
 
-        private GridGameManager gridGameManager;
-        private FactionManager factionManager;
+        public GameStateManager gameStateManager{ get; set; }
+        public FactionManager factionManager{ get; set; }
 
         public int TurnCount { get; set; }
 
@@ -30,9 +30,10 @@ namespace Game.Mechanics
 
         public void Init()
         {
-            gridGameManager = GridGameManager.Instance;
+           // var gameManager = TurnBasedGameManager.Instance;
             OnTriggerEndTurn += EndPhase;
-            factionManager = gridGameManager.FactionManager;
+            // factionManager = gameManager.FactionManager;
+            // gameStateManager = gameManager.GameStateManager;
             InitPlayers();
             TurnCount = 1;
         }
@@ -41,7 +42,7 @@ namespace Game.Mechanics
         private void InitPlayers()
         {
             factionManager.ActivePlayerNumber = 0;
-            factionManager.ActiveFaction = gridGameManager.FactionManager.Factions[factionManager.ActivePlayerNumber];
+            factionManager.ActiveFaction = factionManager.Factions[factionManager.ActivePlayerNumber];
         }
 
         public void StartPhase()
@@ -49,27 +50,27 @@ namespace Game.Mechanics
             if (!factionManager.ActiveFaction.IsPlayerControlled)
             {
                 //Debug.Log("AITurn");
-                gridGameManager.GameStateManager.Feed(NextStateTrigger.Transition);
+                gameStateManager.Feed(NextStateTrigger.Transition);
                 //gridGameManager.GameStateManager.Feed(NextStateTrigger.StartEnemyPhase);
             }
             else
             {
-                gridGameManager.GameStateManager.Feed(NextStateTrigger.Transition);
+                gameStateManager.Feed(NextStateTrigger.Transition);
                 //Debug.Log("PlayerTurn");
             }
            
             
         }
 
-        private void ReadyPhase()
-        {
-          
-            OnStartTurn?.Invoke();
-            foreach (var c in factionManager.ActiveFaction.Units)
-            {
-                c.TurnStateManager.UpdateTurn();
-            }
-        }
+        // private void ReadyPhase()
+        // {
+        //   
+        //     OnStartTurn?.Invoke();
+        //     foreach (var c in factionManager.ActiveFaction.Units)
+        //     {
+        //         c.TurnStateManager.UpdateTurn();
+        //     }
+        // }
 
         public void EndPhase()
         {
@@ -83,7 +84,7 @@ namespace Game.Mechanics
 
             factionManager.ActivePlayerNumber++;
             
-            gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter = null;
+            //gameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter = null;
             OnEndTurn?.Invoke();
             if (factionManager.ActivePlayerNumber == 0)
                 TurnCount++;

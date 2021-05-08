@@ -20,11 +20,11 @@ namespace Game.Manager
             }
         }
 
-        public FactionManager()
+        public FactionManager(List<Faction> factions)
         {
             Factions = new List<Faction>();
-            var transform = Object.FindObjectOfType<PlayerConfig>();
-            foreach (var p in transform.Factions)
+            
+            foreach (var p in factions)
             {
                 Factions.Add(p);
                 p.Init();

@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Audio;
+using Game.GameActors.Players;
 using Game.GUI;
 using Game.Manager;
 using Game.Mechanics;
+using Game.WorldMapStuff.Controller;
 using GameEngine;
 using UnityEditor.Build.Content;
 using UnityEngine;
@@ -23,8 +25,9 @@ public class WorldMapGameManager : MonoBehaviour
     {
         Instance = this;
         AddSystems();
-        FactionManager = new FactionManager();
-        GameStateManager = new GameStateManager();
+        var config = GameObject.FindObjectOfType<WM_Playerconfig>();
+        FactionManager = new FactionManager(config.factions.Cast<Faction>().ToList());
+        GameStateManager = new WorldMapGameStateManager();
         Application.targetFrameRate = 60;
     }
 
@@ -32,7 +35,8 @@ public class WorldMapGameManager : MonoBehaviour
     {
         Systems = new List<IEngineSystem>
         {
-            FindObjectOfType<AudioSystem>()
+            FindObjectOfType<AudioSystem>(),
+            FindObjectOfType<TurnSystem>()
         };
 
     }
@@ -49,7 +53,8 @@ public class WorldMapGameManager : MonoBehaviour
     }
       private void InjectDependencies()
       {
-
+          GetSystem<TurnSystem>().factionManager = FactionManager;
+          GetSystem<TurnSystem>().gameStateManager = GameStateManager;
 
       }
       private void Update()
