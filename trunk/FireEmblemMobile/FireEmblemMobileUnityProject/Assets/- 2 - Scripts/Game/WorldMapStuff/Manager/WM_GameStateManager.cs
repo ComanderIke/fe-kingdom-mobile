@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Game.Manager
 {
-    public class WorldMapGameStateManager:GameStateManager
+    public class WM_GameStateManager:GameStateManager
     {
 
         public static  WM_PlayerPhaseState PlayerPhaseState{ get; set; }
@@ -20,10 +20,10 @@ namespace Game.Manager
 
         
 
-        public WorldMapGameStateManager()
+        public WM_GameStateManager()
         {
             PlayerPhaseState = new WM_PlayerPhaseState();
-            PhaseTransitionState = new PhaseTransitionState(WorldMapGameManager.Instance.FactionManager);
+            PhaseTransitionState = new PhaseTransitionState(WorldMapGameManager.Instance.FactionManager, WorldMapGameManager.Instance.GameStateManager);
             stateMachine = new StateMachine<NextStateTrigger>(PhaseTransitionState);
         }
         public void Init()
@@ -35,14 +35,14 @@ namespace Game.Manager
         }
         private void InitGameStateTransitions()
         {
-            EnemyPhaseState.AddTransition(PhaseTransitionState, NextStateTrigger.Transition);
+           //EnemyPhaseState.AddTransition(PhaseTransitionState, NextStateTrigger.Transition);
             PlayerPhaseState.AddTransition(PhaseTransitionState, NextStateTrigger.Transition);
-            PlayerPhaseState.AddTransition(BattleState, NextStateTrigger.BattleStarted);
-            PlayerPhaseState.AddTransition(MovementState, NextStateTrigger.MoveUnit);
-            EnemyPhaseState.AddTransition(MovementState, NextStateTrigger.MoveUnit);
-            EnemyPhaseState.AddTransition(BattleState, NextStateTrigger.BattleStarted);
+            //PlayerPhaseState.AddTransition(BattleState, NextStateTrigger.BattleStarted);
+            //PlayerPhaseState.AddTransition(MovementState, NextStateTrigger.MoveUnit);
+           // EnemyPhaseState.AddTransition(MovementState, NextStateTrigger.MoveUnit);
+           // EnemyPhaseState.AddTransition(BattleState, NextStateTrigger.BattleStarted);
             PhaseTransitionState.AddTransition(PlayerPhaseState, NextStateTrigger.StartPlayerPhase);
-            PhaseTransitionState.AddTransition(EnemyPhaseState, NextStateTrigger.StartEnemyPhase);
+            //PhaseTransitionState.AddTransition(EnemyPhaseState, NextStateTrigger.StartEnemyPhase);
         }
         
     

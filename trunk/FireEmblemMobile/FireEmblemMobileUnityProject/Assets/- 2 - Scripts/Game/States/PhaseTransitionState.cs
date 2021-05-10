@@ -11,9 +11,10 @@ namespace Game.States
     {
         public IPhaseRenderer phaseRenderer;
         private FactionManager factionManager;
-        public PhaseTransitionState(FactionManager factionManager)
+        private GameStateManager gameStateManager;
+        public PhaseTransitionState(FactionManager factionManager, GameStateManager gameStateManager)
         {
-            this.factionManager = this.factionManager;
+            this.factionManager = factionManager;
         }
         public override void Enter()
         {
@@ -23,10 +24,10 @@ namespace Game.States
 
         void Finished()
         {
-            if(GridGameManager.Instance.FactionManager.ActiveFaction.IsPlayerControlled)
-                GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.StartPlayerPhase);
+            if(factionManager.ActiveFaction.IsPlayerControlled)
+                gameStateManager.Feed(NextStateTrigger.StartPlayerPhase);
             else
-                GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.StartEnemyPhase);
+                gameStateManager.Feed(NextStateTrigger.StartEnemyPhase);
         }
         public override void Exit()
         {

@@ -5,6 +5,7 @@ using System.Linq;
 using Audio;
 using Game.GameActors.Players;
 using Game.GUI;
+using Game.GUI.Text;
 using Game.Manager;
 using Game.Mechanics;
 using Game.WorldMapStuff.Controller;
@@ -19,7 +20,7 @@ public class WorldMapGameManager : MonoBehaviour
     private bool init;
     private List<IEngineSystem> Systems { get; set; }
     public FactionManager FactionManager { get; set; }
-    public GameStateManager GameStateManager { get; set; }
+    public WM_GameStateManager GameStateManager { get; set; }
 
     private void Awake()
     {
@@ -27,7 +28,7 @@ public class WorldMapGameManager : MonoBehaviour
         AddSystems();
         var config = GameObject.FindObjectOfType<WM_Playerconfig>();
         FactionManager = new FactionManager(config.factions.Cast<Faction>().ToList());
-        GameStateManager = new WorldMapGameStateManager();
+        GameStateManager = new WM_GameStateManager();
         Application.targetFrameRate = 60;
     }
 
@@ -49,12 +50,14 @@ public class WorldMapGameManager : MonoBehaviour
             system.Init();
         }
         GameStateManager.Init();
-        GetSystem<TurnSystem>().StartPhase();
+        //GetSystem<TurnSystem>().StartPhase();
     }
       private void InjectDependencies()
       {
+          Debug.Log("Inject");
           GetSystem<TurnSystem>().factionManager = FactionManager;
           GetSystem<TurnSystem>().gameStateManager = GameStateManager;
+          GameStateManager.PhaseTransitionState.phaseRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IPhaseRenderer>().First();
 
       }
       private void Update()

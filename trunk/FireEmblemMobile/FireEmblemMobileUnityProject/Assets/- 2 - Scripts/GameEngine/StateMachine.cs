@@ -28,7 +28,7 @@ namespace GameEngine
             var nextState = currentState.Feed(input);
             //Debug.Log("Feed "+input+" Next State: "+
             if(nextState==null)
-                Debug.LogError("Feed not resulting in State" + input +" "+currentState);
+                Debug.LogError("Feed not resulting in State " + input +" "+currentState);
             SwitchState(nextState);
             
         }
