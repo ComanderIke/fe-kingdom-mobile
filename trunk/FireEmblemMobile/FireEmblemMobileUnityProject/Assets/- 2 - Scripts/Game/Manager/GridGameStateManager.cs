@@ -29,7 +29,7 @@ namespace Game.Manager
             WinState = new WinState();
             BattleState = new BattleState();
             MovementState = new MovementState();
-            PhaseTransitionState = new PhaseTransitionState();
+            PhaseTransitionState = new PhaseTransitionState(GridGameManager.Instance.FactionManager);
             ConditionScreenState = new ConditionsScreenState();
             UnitPlacementState = new UnitPlacementState();
             stateMachine = new StateMachine<NextStateTrigger>(ConditionScreenState);

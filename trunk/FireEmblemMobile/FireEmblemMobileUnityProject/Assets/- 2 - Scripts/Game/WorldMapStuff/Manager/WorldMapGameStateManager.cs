@@ -11,14 +11,20 @@ namespace Game.Manager
     public class WorldMapGameStateManager:GameStateManager
     {
 
-        public static  WorldMapPlayerPhaseState PlayerPhaseState{ get; set; }
+        public static  WM_PlayerPhaseState PlayerPhaseState{ get; set; }
+        public static  WM_EnemyPhaseState EnemyPhaseState{ get; set; }
+        public static  WM_BattleState BattleState{ get; set; }
+        public static  WM_MovementState MovementState{ get; set; }
+        public PhaseTransitionState PhaseTransitionState { get; set; }
+        
 
         
 
         public WorldMapGameStateManager()
         {
-            PlayerPhaseState = new WorldMapPlayerPhaseState();
-            stateMachine = new StateMachine<NextStateTrigger>(PlayerPhaseState);
+            PlayerPhaseState = new WM_PlayerPhaseState();
+            PhaseTransitionState = new PhaseTransitionState(WorldMapGameManager.Instance.FactionManager);
+            stateMachine = new StateMachine<NextStateTrigger>(PhaseTransitionState);
         }
         public void Init()
         {
@@ -29,7 +35,14 @@ namespace Game.Manager
         }
         private void InitGameStateTransitions()
         {
-           
+            EnemyPhaseState.AddTransition(PhaseTransitionState, NextStateTrigger.Transition);
+            PlayerPhaseState.AddTransition(PhaseTransitionState, NextStateTrigger.Transition);
+            PlayerPhaseState.AddTransition(BattleState, NextStateTrigger.BattleStarted);
+            PlayerPhaseState.AddTransition(MovementState, NextStateTrigger.MoveUnit);
+            EnemyPhaseState.AddTransition(MovementState, NextStateTrigger.MoveUnit);
+            EnemyPhaseState.AddTransition(BattleState, NextStateTrigger.BattleStarted);
+            PhaseTransitionState.AddTransition(PlayerPhaseState, NextStateTrigger.StartPlayerPhase);
+            PhaseTransitionState.AddTransition(EnemyPhaseState, NextStateTrigger.StartEnemyPhase);
         }
         
     

@@ -6,11 +6,11 @@ using UnityEngine;
 
 namespace Game.WorldMapStuff
 {
-    public class WorldMapPlayerPhaseState: GameState<NextStateTrigger>
+    public class WM_PlayerPhaseState: GameState<NextStateTrigger>
     {
         private WorldMapInputSystem inputSystem;
 
-        public WorldMapPlayerPhaseState()
+        public WM_PlayerPhaseState()
         {
             inputSystem = new WorldMapInputSystem();
         }

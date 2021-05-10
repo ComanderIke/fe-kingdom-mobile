@@ -10,13 +10,15 @@ namespace Game.States
     public class PhaseTransitionState : GameState<NextStateTrigger>
     {
         public IPhaseRenderer phaseRenderer;
-        public PhaseTransitionState()
+        private FactionManager factionManager;
+        public PhaseTransitionState(FactionManager factionManager)
         {
+            this.factionManager = this.factionManager;
         }
         public override void Enter()
         {
             Debug.Log("TransitionStart");
-            phaseRenderer.Show(GridGameManager.Instance.FactionManager.ActiveFaction.Id, Finished);
+            phaseRenderer.Show(factionManager.ActiveFaction.Id, Finished);
         }
 
         void Finished()
