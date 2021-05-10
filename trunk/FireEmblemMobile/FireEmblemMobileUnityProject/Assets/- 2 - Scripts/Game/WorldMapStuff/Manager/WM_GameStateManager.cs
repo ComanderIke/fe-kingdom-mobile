@@ -35,14 +35,14 @@ namespace Game.Manager
         }
         private void InitGameStateTransitions()
         {
-           //EnemyPhaseState.AddTransition(PhaseTransitionState, NextStateTrigger.Transition);
+            EnemyPhaseState.AddTransition(PhaseTransitionState, NextStateTrigger.Transition);
             PlayerPhaseState.AddTransition(PhaseTransitionState, NextStateTrigger.Transition);
             //PlayerPhaseState.AddTransition(BattleState, NextStateTrigger.BattleStarted);
             //PlayerPhaseState.AddTransition(MovementState, NextStateTrigger.MoveUnit);
            // EnemyPhaseState.AddTransition(MovementState, NextStateTrigger.MoveUnit);
-           // EnemyPhaseState.AddTransition(BattleState, NextStateTrigger.BattleStarted);
+            //EnemyPhaseState.AddTransition(BattleState, NextStateTrigger.BattleStarted);
             PhaseTransitionState.AddTransition(PlayerPhaseState, NextStateTrigger.StartPlayerPhase);
-            //PhaseTransitionState.AddTransition(EnemyPhaseState, NextStateTrigger.StartEnemyPhase);
+            PhaseTransitionState.AddTransition(EnemyPhaseState, NextStateTrigger.StartEnemyPhase);
         }
         
     

@@ -9,17 +9,19 @@ namespace Game.AI
     public class WM_EnemyPhaseState : GameState<NextStateTrigger>
     {
         public const float PAUSE_BETWEEN_ACTIONS = 0.5f;
-        private Brain brain;
+        private IBrain brain;
         private ConditionManager ConditionManager;
         private float pauseTime;
+        private FactionManager factionManager;
 
-        public WM_EnemyPhaseState()
+        public WM_EnemyPhaseState(FactionManager factionManager)
         {
             ConditionManager = new ConditionManager();
+            this.factionManager= factionManager;
         }
         public override void Enter()
         {
-            brain = new Brain(GridGameManager.Instance.FactionManager.ActiveFaction);
+            brain = new WM_Brain(factionManager.ActiveFaction);
         }
 
         public override void Exit()
@@ -29,14 +31,14 @@ namespace Game.AI
         public override GameState<NextStateTrigger> Update()
         {
             
-            if (ConditionManager.CheckLose(GridGameManager.Instance.FactionManager.Factions))
-            {
-                return  GridGameManager.Instance.GameStateManager.GameOverState;
-            }
-            else if (ConditionManager.CheckWin(GridGameManager.Instance.FactionManager.Factions))
-            {
-                return  GridGameManager.Instance.GameStateManager.WinState;
-            }
+            // if (ConditionManager.CheckLose(factionManager.Factions))
+            // {
+            //     return  WorldMapGameManager.Instance.GameStateManager.GameOverState;
+            // }
+            // else if (ConditionManager.CheckWin(factionManager.Factions))
+            // {
+            //     return  WorldMapGameManager.Instance.GameStateManager.WinState;
+            // }
             
             pauseTime += Time.deltaTime;
             //wait so the player can follow what the AI is doing

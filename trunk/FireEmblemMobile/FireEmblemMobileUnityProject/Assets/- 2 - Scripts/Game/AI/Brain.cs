@@ -9,7 +9,7 @@ using Vector3 = System.Numerics.Vector3;
 
 namespace Game.AI
 {
-    public class Brain
+    public class Brain :IBrain
     {
 
         private bool finished;
