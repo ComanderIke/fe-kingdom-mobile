@@ -11,10 +11,10 @@ namespace Game.Manager
     public class WM_GameStateManager:GameStateManager
     {
 
-        public static  WM_PlayerPhaseState PlayerPhaseState{ get; set; }
-        public static  WM_EnemyPhaseState EnemyPhaseState{ get; set; }
-        public static  WM_BattleState BattleState{ get; set; }
-        public static  WM_MovementState MovementState{ get; set; }
+        public WM_PlayerPhaseState PlayerPhaseState{ get; set; }
+        public WM_EnemyPhaseState EnemyPhaseState{ get; set; }
+        public WM_BattleState BattleState{ get; set; }
+        public WM_MovementState MovementState{ get; set; }
         public PhaseTransitionState PhaseTransitionState { get; set; }
         
 
@@ -22,8 +22,11 @@ namespace Game.Manager
 
         public WM_GameStateManager()
         {
-            PlayerPhaseState = new WM_PlayerPhaseState();
-            PhaseTransitionState = new PhaseTransitionState(WorldMapGameManager.Instance.FactionManager, WorldMapGameManager.Instance.GameStateManager);
+            PlayerPhaseState = new WM_PlayerPhaseState(WorldMapGameManager.Instance.GetSystem<TurnSystem>());
+            EnemyPhaseState = new WM_EnemyPhaseState(WorldMapGameManager.Instance.FactionManager);
+            Debug.Log("CONTRUCT"+this);
+            PhaseTransitionState = new PhaseTransitionState(WorldMapGameManager.Instance.FactionManager, this);
+            
             stateMachine = new StateMachine<NextStateTrigger>(PhaseTransitionState);
         }
         public void Init()

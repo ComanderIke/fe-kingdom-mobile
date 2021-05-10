@@ -29,6 +29,7 @@ public class WorldMapGameManager : MonoBehaviour
         var config = GameObject.FindObjectOfType<WM_Playerconfig>();
         FactionManager = new FactionManager(config.factions.Cast<Faction>().ToList());
         GameStateManager = new WM_GameStateManager();
+        Debug.Log("AWAKE" +GameStateManager);
         Application.targetFrameRate = 60;
     }
 
@@ -58,6 +59,7 @@ public class WorldMapGameManager : MonoBehaviour
           GetSystem<TurnSystem>().factionManager = FactionManager;
           GetSystem<TurnSystem>().gameStateManager = GameStateManager;
           GameStateManager.PhaseTransitionState.phaseRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IPhaseRenderer>().First();
+          GameStateManager.PlayerPhaseState.playerPhaseUI = FindObjectsOfType<MonoBehaviour>().OfType<IPlayerPhaseUI>().First();
 
       }
       private void Update()

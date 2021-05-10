@@ -34,10 +34,10 @@ namespace Game.AI
         {
    
         }
-        private bool IsStartOfTurn()
-        {
-
-        }
+        // private bool IsStartOfTurn()
+        // {
+        //     
+        // }
 
        
         public bool IsFinished()

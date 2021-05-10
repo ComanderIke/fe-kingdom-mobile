@@ -15,15 +15,17 @@ namespace Game.States
         public PhaseTransitionState(FactionManager factionManager, GameStateManager gameStateManager)
         {
             this.factionManager = factionManager;
+            this.gameStateManager = gameStateManager;
         }
         public override void Enter()
         {
-            Debug.Log("TransitionStart");
+            Debug.Log("TransitionStart " +gameStateManager);
             phaseRenderer.Show(factionManager.ActiveFaction.Id, Finished);
         }
 
         void Finished()
         {
+            Debug.Log("Finished " +gameStateManager);
             if(factionManager.ActiveFaction.IsPlayerControlled)
                 gameStateManager.Feed(NextStateTrigger.StartPlayerPhase);
             else

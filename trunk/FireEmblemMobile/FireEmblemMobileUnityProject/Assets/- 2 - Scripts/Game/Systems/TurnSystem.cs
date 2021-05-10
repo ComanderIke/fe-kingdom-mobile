@@ -76,10 +76,13 @@ namespace Game.Mechanics
         {
            
             //Debug.Log("EndTurn!");
-            foreach (var c in factionManager.ActiveFaction.Units)
+            if (factionManager.ActiveFaction.Units != null && factionManager.ActiveFaction.Units.Count != 0)
             {
-                c.TurnStateManager.EndTurn();
-                //c.gameObject.GetComponent<CharacterScript>().SetSelected(false);
+                foreach (var c in factionManager.ActiveFaction.Units)
+                {
+                    c.TurnStateManager.EndTurn();
+                    //c.gameObject.GetComponent<CharacterScript>().SetSelected(false);
+                }
             }
 
             factionManager.ActivePlayerNumber++;

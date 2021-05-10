@@ -1,4 +1,5 @@
 ﻿using Game.Manager;
+using Game.Mechanics;
 using Game.WorldMapStuff.Systems;
 using GameEngine;
 using GameEngine.GameStates;
@@ -9,10 +10,13 @@ namespace Game.WorldMapStuff
     public class WM_PlayerPhaseState: GameState<NextStateTrigger>
     {
         private WorldMapInputSystem inputSystem;
+        public IPlayerPhaseUI playerPhaseUI;
+        public TurnSystem turnSystem;
 
-        public WM_PlayerPhaseState()
+        public WM_PlayerPhaseState(TurnSystem turnSystem)
         {
             inputSystem = new WorldMapInputSystem();
+            this.turnSystem = turnSystem;
         }
         public override void Enter()
         { 
@@ -20,13 +24,14 @@ namespace Game.WorldMapStuff
          
             SetUpInputForLocations();
             SetUpInputForUnits();
-           
+            playerPhaseUI.Show(turnSystem.TurnCount);
             
         }
 
         public override void Exit()
         {
             inputSystem.SetActive(false);
+            playerPhaseUI.Hide();
         }
 
         public override GameState<NextStateTrigger> Update()
