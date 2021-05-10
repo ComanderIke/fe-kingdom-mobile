@@ -1,4 +1,4 @@
 ﻿public interface IWorldMapUnitInputReceiver
 {
-    void UnitClicked(Party party);
+    void PartyClicked(Party party);
 }

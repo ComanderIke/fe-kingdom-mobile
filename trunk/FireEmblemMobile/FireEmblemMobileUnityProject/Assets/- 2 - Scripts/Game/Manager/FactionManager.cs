@@ -40,5 +40,9 @@ namespace Game.Manager
         {
             return ActiveFaction.Id == actorFactionId;
         }
+        public bool IsActiveFaction(Faction faction)
+        {
+            return ActiveFaction == faction;
+        }
     }
 }

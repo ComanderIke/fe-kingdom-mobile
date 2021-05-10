@@ -12,7 +12,10 @@ public class WorldMapInputSystem: IEngineSystem , IWorldMapLocationInputReceiver
     public IWorldMapInputReceiver inputReceiver { get; set; }
     public void LocationClicked(WorldMapPosition location)
     {
-        Debug.Log("Input Received!");
+         if (!isActive)
+                    return;
+         inputReceiver.LocationClicked(location);
+         Debug.Log("Input Received!");
     }
 
     public void Init()
@@ -22,10 +25,10 @@ public class WorldMapInputSystem: IEngineSystem , IWorldMapLocationInputReceiver
 
     public void Update()
     {
-        if (isActive)
-        {
-            
-        }
+        // if (isActive)
+        // {
+        //     
+        // }
     }
 
     public void SetActive(bool b)
@@ -33,8 +36,11 @@ public class WorldMapInputSystem: IEngineSystem , IWorldMapLocationInputReceiver
         isActive = b;
     }
 
-    public void UnitClicked(Party party)
+    public void PartyClicked(Party party)
     {
+        if (!isActive)
+            return;
         Debug.Log("Party Clicked!");
+        inputReceiver.PartyClicked(party);
     }
 }

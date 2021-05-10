@@ -25,12 +25,12 @@ public class WorldMapPlayerParty : MonoBehaviour
     void OnMouseDown()
     {
         Debug.Log("Mouse Clicked on Party");
-        inputReceiver.UnitClicked(party);
+        inputReceiver.PartyClicked(party);
 
-        selected = !selected;
-
-        
-        UpdateGraphics();
+        // selected = !selected;
+        //
+        //
+        // UpdateGraphics();
 
     }
 
