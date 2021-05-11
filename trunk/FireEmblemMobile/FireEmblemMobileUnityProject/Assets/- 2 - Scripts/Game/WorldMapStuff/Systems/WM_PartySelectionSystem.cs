@@ -46,7 +46,6 @@ namespace Game.WorldMapStuff.Systems
                 }
                 SelectedActor = c;
                 c.TurnStateManager.IsSelected = true;
-            
                 OnSelectedParty?.Invoke(SelectedActor);
             }
 

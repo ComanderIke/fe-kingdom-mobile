@@ -12,11 +12,11 @@ namespace Game.WorldMapStuff.Systems
         private FactionManager factionManager;
 
 
-        public WorldMapGameplayInputReceiver(WorldMapGameManager gameManager)
+        public WorldMapGameplayInputReceiver(FactionManager factionManager,WM_PartySelectionSystem selectionSystem)
         {
-            selectionDataProvider = new WM_SelectionManager(gameManager.GetSystem<WM_PartySelectionSystem>());
+            selectionDataProvider = new WM_SelectionManager(selectionSystem);
             gameplayInput = new WM_GameplayInput();
-            factionManager = gameManager.FactionManager;
+            this.factionManager = factionManager;
             // WM_PartySelectionSystem.OnSelectedParty += OnSelectedCharacter;
             // WM_PartySelectionSystem.OnSelectedInActiveParty += OnSelectedCharacter;
         }

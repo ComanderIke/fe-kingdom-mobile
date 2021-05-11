@@ -12,6 +12,7 @@ namespace Game.WorldMapStuff
         private WorldMapInputSystem inputSystem;
         public IPlayerPhaseUI playerPhaseUI;
         public TurnSystem turnSystem;
+    
 
         public WM_PlayerPhaseState(TurnSystem turnSystem)
         {
@@ -56,7 +57,7 @@ namespace Game.WorldMapStuff
 
         public void Init()
         {
-            inputSystem.inputReceiver = new WorldMapGameplayInputReceiver();
+            inputSystem.inputReceiver = new WorldMapGameplayInputReceiver(WorldMapGameManager.Instance.FactionManager, WorldMapGameManager.Instance.GetSystem<WM_PartySelectionSystem>());
             inputSystem.Init();
         }
     }

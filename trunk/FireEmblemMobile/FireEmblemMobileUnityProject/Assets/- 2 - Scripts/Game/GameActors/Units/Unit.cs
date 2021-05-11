@@ -18,7 +18,7 @@ using UnityEngine;
 
 namespace Game.GameActors.Units
 {
-    public abstract class Unit : ScriptableObject, IGridActor, IBattleActor, ICloneable, IAIAgent
+    public abstract class Unit : ScriptableObject, IActor, IGridActor, IBattleActor, ICloneable, IAIAgent
     {
         public new string name;
 

@@ -6,10 +6,9 @@ using UnityEngine;
 
 namespace Game.WorldMapStuff.Systems
 {
-    public interface IWM_Actor
+    public interface IWM_Actor:IActor
     {
         void SetAttackTarget(bool b);
-        TurnStateManager TurnStateManager { get; set; }
         WM_Faction Faction { get; set; }
         GameTransformManager GameTransformManager { get; set; }
         WorldMapPosition location { get; set; }

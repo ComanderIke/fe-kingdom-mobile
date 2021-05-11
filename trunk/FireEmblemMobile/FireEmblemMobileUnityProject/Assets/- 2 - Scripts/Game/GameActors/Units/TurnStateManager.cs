@@ -4,20 +4,20 @@ namespace Game.GameActors.Units
 {
     public class TurnStateManager
     {
-        public delegate void OnUnitWaiting(Unit unit, bool waiting);
+        public delegate void OnActorWaiting(IActor unit, bool waiting);
 
-        public OnUnitWaiting UnitWaiting;
+        public OnActorWaiting UnitWaiting;
 
-        public delegate void OnUnitCanMove(Unit unit, bool canMove);
-
-        public OnUnitCanMove UnitCanMove;
+        public delegate void OnActorCanMove(IActor unit, bool canMove);
+        public event Action<bool> OnSelected;
+        public OnActorCanMove UnitCanMove;
         private UnitTurnState UnitTurnState { get; set; }
-        private Unit unit;
+        private IActor actor;
 
-        public TurnStateManager(Unit unit)
+        public TurnStateManager(IActor actor)
         {
             UnitTurnState = new UnitTurnState();
-            this.unit = unit;
+            this.actor = actor;
         }
 
         public bool IsWaiting
@@ -29,7 +29,7 @@ namespace Game.GameActors.Units
             set
             {
                 UnitTurnState.isWaiting = value;
-                UnitWaiting?.Invoke(unit, value);
+                UnitWaiting?.Invoke(actor, value);
             }
         }
         public bool HasMoved
@@ -41,7 +41,7 @@ namespace Game.GameActors.Units
             set
             {
                 UnitTurnState.hasMoved = value;
-                UnitCanMove?.Invoke(unit, !value);
+                UnitCanMove?.Invoke(actor, !value);
             }
         }
 
@@ -80,7 +80,8 @@ namespace Game.GameActors.Units
 
         public void UpdateTurn()
         {
-            unit.StatusEffectManager.Update();
+            if(actor is Unit unit)
+                unit.StatusEffectManager.Update();
           
             Reset();
         }
@@ -94,13 +95,13 @@ namespace Game.GameActors.Units
            // IsActive = false;
         }
 
-        public event Action<bool> OnSelected;
+
 
         public void Wait()
         {
-            unit.TurnStateManager.IsWaiting = true;
-            unit.TurnStateManager.IsSelected = false;
-            unit.TurnStateManager.HasMoved = true;
+            actor.TurnStateManager.IsWaiting = true;
+            actor.TurnStateManager.IsSelected = false;
+            actor.TurnStateManager.HasMoved = true;
         }
     }
 }

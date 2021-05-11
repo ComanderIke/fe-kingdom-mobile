@@ -41,6 +41,6 @@ public class WorldMapInputSystem: IEngineSystem , IWorldMapLocationInputReceiver
         if (!isActive)
             return;
         Debug.Log("Party Clicked!");
-        inputReceiver.PartyClicked(party);
+        inputReceiver.ActorClicked(party);
     }
 }
