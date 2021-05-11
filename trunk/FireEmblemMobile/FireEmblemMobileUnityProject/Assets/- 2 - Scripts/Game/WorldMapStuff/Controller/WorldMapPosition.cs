@@ -136,4 +136,9 @@ public class WorldMapPosition : MonoBehaviour
     {
        return selectedActor.location.Connections.Contains(this);
     }
+
+    public bool IsAttackable(IWM_Actor selectedActor)
+    {
+        return selectedActor.location.Connections.Contains(this);
+    }
 }

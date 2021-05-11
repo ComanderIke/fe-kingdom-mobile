@@ -101,20 +101,35 @@ namespace Game.WorldMapStuff.Systems
             }
         }
 
-        private void EnemyActorClicked(IWM_Actor party)
+        private void EnemyActorClicked(IWM_Actor actor)
         {
             Debug.Log("Enemy Party clicked!");
-            if (selectionDataProvider.SelectedActor == null)
+            var selectedActor = selectionDataProvider.SelectedActor;
+            if (selectedActor == null)
             {
-                gameplayInput.SelectActor(party);
+                gameplayInput.SelectActor(actor);
             }
-            else if(selectionDataProvider.GetSelectedAttackTarget()==party)
+            else 
             {
-                gameplayInput.AttackEnemyActor(party);
-            }
-            else
-            {
-                gameplayInput.AttackPreviewEnemyActor(party);
+                if (actor.location.IsAttackable(selectedActor))
+                {
+                    if (selectionDataProvider.GetSelectedAttackTarget() != actor)
+                    {
+                        selectedActor.ResetPosition();
+                        selectionDataProvider.ClearData();
+                        selectionDataProvider.SetSelectedAttackTarget(actor);
+                        gameplayInput.AttackPreviewEnemyActor(actor);
+                        
+                    }
+                    else
+                    {
+                        gameplayInput.AttackEnemyActor(actor);
+                    }
+                }
+                else
+                {
+                    gameplayInput.SelectActor(actor);
+                }
             }
             
         }
@@ -123,9 +138,9 @@ namespace Game.WorldMapStuff.Systems
         {
             Debug.Log("Own Party clicked!");
             
-            if (selectionDataProvider.SelectedActor == null)
+            if (party.location == selectionDataProvider.SelectedActor.location)
             {
-                gameplayInput.SelectActor(party);
+                LocationClicked(party.location);
             }
             else
             {
