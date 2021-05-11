@@ -17,6 +17,7 @@ public class Party:IWM_Actor
     public WorldMapPosition location { get; set; }
     private List<Unit> members;
     public static Action<Party> PartyDied;
+    public WM_ActorRenderer WmActorRenderer { get; set; }
 
     public Party()
     {
@@ -43,4 +44,3 @@ public class Party:IWM_Actor
         Debug.Log("ResetLocation");
     }
 }
-
