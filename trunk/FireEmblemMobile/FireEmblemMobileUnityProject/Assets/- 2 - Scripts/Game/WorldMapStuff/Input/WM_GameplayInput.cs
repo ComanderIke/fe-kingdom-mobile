@@ -9,24 +9,34 @@ namespace Game.WorldMapStuff.Input
         private WM_PartyActionSystem partyActionSystem;
         private WM_PartySelectionSystem partySelectionSystem;
 
-        public void SelectParty(Party party)
+        public void SelectActor(IWM_Actor party)
         {
             partySelectionSystem.SelectParty(party);
 
         }
+        public void DeselectActor()
+        {
+            partySelectionSystem.DeselectActor();
 
-        public void AttackPreviewEnemyParty(Party party)
+        }
+
+        public void AttackPreviewEnemyActor(IWM_Actor party)
         {
             partyActionSystem.AttackPreviewParty(party);
         }
 
-        public void AttackEnemyParty(Party party)
+        public void AttackEnemyActor(IWM_Actor party)
         {
             partyActionSystem.AttackParty(party);
         }
-        public void MoveParty(Party party, WorldMapPosition location)
+        public void MoveActor(IWM_Actor party, WorldMapPosition location)
         {
             partyActionSystem.MoveParty(party, location);
+        }
+
+        public void Wait(IWM_Actor party)
+        {
+            partyActionSystem.Wait(party);
         }
     }
 }

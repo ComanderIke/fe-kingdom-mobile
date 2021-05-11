@@ -25,7 +25,7 @@ namespace Game.WorldMapStuff.Systems
             SelectCharacter(SelectedActor);
         }
 
-        private void DeselectActiveCharacter()
+        public void DeselectActor()
         {
             if (SelectedActor != null)
             {
@@ -42,7 +42,7 @@ namespace Game.WorldMapStuff.Systems
                 Debug.Log("SELECT CHARACTER "+c);
                 if (SelectedActor != null)
                 {
-                    DeselectActiveCharacter();
+                    DeselectActor();
                 }
                 SelectedActor = c;
                 c.TurnStateManager.IsSelected = true;

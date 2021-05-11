@@ -29,7 +29,7 @@ public class Party:IWM_Actor
 
     public void SetAttackTarget(bool b)
     {
-        throw new NotImplementedException();
+        Debug.Log("TODO AttackTarget Visuals");
     }
 
     public TurnStateManager TurnStateManager { get; set; }

@@ -15,6 +15,11 @@ namespace Game.GameActors.Units.OnGameObject
         {
             GameObject.transform.localPosition = new Vector3(x, y, 0);
         }
+        
+        public void SetPosition(Vector3 position)
+        {
+            GameObject.transform.position = position;
+        }
         public Vector3 GetCenterPosition()
         {
             return GameObject.transform.localPosition+ new Vector3(0.5f,0.5f,0);

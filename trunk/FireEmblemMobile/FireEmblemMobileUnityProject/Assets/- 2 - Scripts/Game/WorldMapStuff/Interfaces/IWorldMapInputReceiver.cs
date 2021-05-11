@@ -1,5 +1,7 @@
-﻿public interface IWorldMapInputReceiver
+﻿using Game.WorldMapStuff.Systems;
+
+public interface IWorldMapInputReceiver
 {
     void LocationClicked(WorldMapPosition location);
-    void PartyClicked(Party party);
+    void ActorClicked(IWM_Actor party);
 }

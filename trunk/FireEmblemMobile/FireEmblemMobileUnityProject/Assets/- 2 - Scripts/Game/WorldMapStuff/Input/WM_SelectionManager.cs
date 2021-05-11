@@ -3,24 +3,25 @@
     public class WM_SelectionManager : IWM_SelectionDataProvider
 
     {
-        public IWM_Actor SelectedActor { get; private set; }
+        private WM_PartySelectionSystem partySelectionSystem;
+        public IWM_Actor SelectedActor => partySelectionSystem.SelectedActor;
         private WorldMapPosition selectedLocation;
         private IWM_Actor selectedAttackTarget;
 
-        public WM_SelectionManager()
+        public WM_SelectionManager(WM_PartySelectionSystem partySelectionSystem)
         {
-            SelectedActor = null;
             selectedAttackTarget = null;
             selectedLocation = null;
+            this.partySelectionSystem = partySelectionSystem;
         }
         public WorldMapPosition GetSelectedLocation()
         {
-            throw new System.NotImplementedException();
+            return selectedLocation;
         }
 
-        public void GetSelectedLocation(WorldMapPosition position)
+        public void SetSelectedLocation(WorldMapPosition position)
         {
-            throw new System.NotImplementedException();
+            selectedLocation = position;
         }
 
         public void SetSelectedAttackTarget(IWM_Actor target)
@@ -38,8 +39,7 @@
         public void ClearData()
         {
             selectedLocation = null;
-            SelectedActor = null;
-            selectedAttackTarget = null;
+            ClearAttackTarget();
 
         }
 

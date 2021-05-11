@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Game.WorldMapStuff.Systems;
 using UnityEditor.MemoryProfiler;
 using UnityEngine;
 
@@ -11,6 +13,7 @@ public class WorldMapPosition : MonoBehaviour
     public GameObject Walkable;
     public GameObject Attackable;
     private List<Road> roads;
+    public IWM_Actor actor;
     public  IWorldMapLocationInputReceiver inputReceiver { get; set; }
 
     private void OnEnable()
@@ -122,5 +125,15 @@ public class WorldMapPosition : MonoBehaviour
     {
         Walkable.SetActive(false);
         Attackable.SetActive(false);
+    }
+
+    public bool IsFree()
+    {
+        return actor == null;
+    }
+
+    public bool IsReachable(IWM_Actor selectedActor)
+    {
+       return selectedActor.location.Connections.Contains(this);
     }
 }
