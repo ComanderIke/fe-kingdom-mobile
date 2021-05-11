@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.Systems;
@@ -10,7 +11,7 @@ public class Party:IWM_Actor
 {
 
 
-    public WM_Faction Faction;
+    public WM_Faction Faction{ get; set; }
     private List<Unit> members;
     public static Action<Party> PartyDied;
 
@@ -29,6 +30,13 @@ public class Party:IWM_Actor
     public void SetAttackTarget(bool b)
     {
         throw new NotImplementedException();
+    }
+
+    public TurnStateManager TurnStateManager { get; set; }
+
+    public void ResetPosition()
+    {
+        Debug.Log("ResetLocation");
     }
 }
 

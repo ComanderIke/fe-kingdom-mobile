@@ -1,34 +1,32 @@
-﻿using UnityEngine;
+﻿using Game.AI;
+using Game.WorldMapStuff.Systems;
+using UnityEngine;
 
-namespace Game.WorldMapStuff.Systems
+namespace Game.WorldMapStuff.Input
 {
-    internal class WM_GameplayInput
+    public class WM_GameplayInput
     {
+        private WM_PartyActionSystem partyActionSystem;
+        private WM_PartySelectionSystem partySelectionSystem;
+
         public void SelectParty(Party party)
         {
-            if (!party.TurnState.IsWaiting)
-            {
-                Debug.Log(" Select Active Party");
-            }
-            else
-            {
-                Debug.Log("Select Unactive Party");
-            }
-        }
+            partySelectionSystem.SelectParty(party);
 
-        public void SelectEnemyParty(Party party)
-        {
-            throw new System.NotImplementedException();
         }
 
         public void AttackPreviewEnemyParty(Party party)
         {
-            throw new System.NotImplementedException();
+            partyActionSystem.AttackPreviewParty(party);
         }
 
         public void AttackEnemyParty(Party party)
         {
-            throw new System.NotImplementedException();
+            partyActionSystem.AttackParty(party);
+        }
+        public void MoveParty(Party party, WorldMapPosition location)
+        {
+            partyActionSystem.MoveParty(party, location);
         }
     }
 }

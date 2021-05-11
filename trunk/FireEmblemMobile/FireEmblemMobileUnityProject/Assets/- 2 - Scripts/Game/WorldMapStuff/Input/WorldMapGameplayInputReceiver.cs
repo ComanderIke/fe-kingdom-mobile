@@ -1,4 +1,5 @@
 ﻿using Game.Manager;
+using Game.WorldMapStuff.Input;
 using UnityEngine;
 
 namespace Game.WorldMapStuff.Systems
@@ -38,7 +39,7 @@ namespace Game.WorldMapStuff.Systems
             Debug.Log("Enemy Party clicked!");
             if (selectionDataProvider.SelectedActor == null)
             {
-                gameplayInput.SelectEnemyParty(party);
+                gameplayInput.SelectParty(party);
             }
             else if(selectionDataProvider.GetSelectedAttackTarget()==party)
             {
