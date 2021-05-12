@@ -58,7 +58,7 @@ public class WM_ActorRenderer:MonoBehaviour
 
         public void ShowSelected(bool selected)
         {
-           
+            actor.location.Select(selected);
             if (selected)
             {
                 float intensity = 2;

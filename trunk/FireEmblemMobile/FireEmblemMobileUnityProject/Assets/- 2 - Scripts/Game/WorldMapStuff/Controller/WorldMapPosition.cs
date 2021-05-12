@@ -1,37 +1,58 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Game.WorldMapStuff.Controller;
 using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.Systems;
 using UnityEditor.MemoryProfiler;
 using UnityEngine;
 
 [ExecuteInEditMode]
+[RequireComponent(typeof(LocationRenderer))]
 public class WorldMapPosition : MonoBehaviour
 {
     public WorldMapPosition[] Connections;
 
-    public GameObject Walkable;
-    public GameObject Attackable;
+
     private List<Road> roads;
-    public WM_Actor actor;
+
+    private WM_Actor actor;
+    public WM_Actor Actor
+    {
+        get
+        {
+            return actor;
+        }
+        set
+        {
+            if(actor!=null)
+                actor.TurnStateManager.onSelected -= OnSelectedActor;
+            actor = value;
+            if (actor != null)
+                actor.TurnStateManager.onSelected += OnSelectedActor;
+        }
+    }
+
+  
     public  IWorldMapLocationInputReceiver inputReceiver { get; set; }
 
+    public LocationRenderer renderer{ get; set; }
     private void OnEnable()
     {
+        renderer = GetComponent<LocationRenderer>();
         spawndirty = false;
     }
 
-    public void ShowAttackable()
+    void OnSelectedActor(bool selected)
     {
-        Attackable.SetActive(true);
-        Walkable.SetActive(false);
+        
+        if(selected)
+            renderer.DrawInteractableConnections();
+        else
+            renderer.HideInteractableConnections();
+
     }
-    public void ShowWalkable()
-    {
-        Walkable.SetActive(true);
-        Attackable.SetActive(false);
-    }
+    
     public void OnMouseDown()
     {
         inputReceiver.LocationClicked(this);
@@ -107,26 +128,10 @@ public class WorldMapPosition : MonoBehaviour
         
     }
 
-    public void DrawInteractableConnections()
-    {
-        foreach (WorldMapPosition connection in Connections)
-        {
-            connection.ShowWalkable();
-        }
-    }
-    public void HideInteractableConnections()
-    {
-        foreach (WorldMapPosition connection in Connections)
-        {
-            connection.Hide();
-        }
-    }
+    
+    
 
-    private void Hide()
-    {
-        Walkable.SetActive(false);
-        Attackable.SetActive(false);
-    }
+  
 
     public bool IsFree()
     {
@@ -142,4 +147,11 @@ public class WorldMapPosition : MonoBehaviour
     {
         return selectedActor.location.Connections.Contains(this);
     }
+
+    public void Select(bool selected)
+    {
+        renderer.ShowSelected(selected);
+    }
+
+    
 }

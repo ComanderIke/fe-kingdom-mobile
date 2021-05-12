@@ -43,7 +43,7 @@ namespace Game.WorldMapStuff
         }
         private void SetUpInputForUnits()
         {
-            foreach (var party in GameObject.FindObjectsOfType<WorldMapPlayerParty>())
+            foreach (var party in GameObject.FindObjectsOfType<PartyController>())
             {
                 party.inputReceiver=inputSystem;
             }
