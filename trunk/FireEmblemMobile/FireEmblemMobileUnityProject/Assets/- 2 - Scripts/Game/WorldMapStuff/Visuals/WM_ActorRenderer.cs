@@ -1,8 +1,6 @@
 ﻿using Game.GameActors.Units;
-using Game.GameActors.Units.Humans;
-using Game.GameActors.Units.Monsters;
 using Game.Manager;
-using Game.WorldMapStuff.Systems;
+using Game.WorldMapStuff.Model;
 using UnityEngine;
 using Utility;
 
@@ -12,21 +10,21 @@ public class WM_ActorRenderer:MonoBehaviour
         [SerializeField] private CanvasGroup alphaCanvas;
         [SerializeField] private SpriteRenderer sprite;
         
-        public IWM_Actor unit;
+        public WM_Actor actor;
 
         private void Start()
         {
-            unit.TurnStateManager.UnitWaiting += SetWaitingSprite;
+            actor.TurnStateManager.UnitWaiting += SetWaitingSprite;
 
         }
         public void Init()
         {
            // hpBar.GetComponent<Image>().color = ColorManager.Instance.GetFactionColor(unit.Faction.Id);
             float intensity = 2;
-            sprite.material.SetColor("_OutLineColor", ColorManager.Instance.GetFactionColor(unit.Faction.Id)*intensity);
+            sprite.material.SetColor("_OutLineColor", ColorManager.Instance.GetFactionColor(actor.Faction.Id)*intensity);
             //spBar.GetComponent<Image>().color = ColorManager.Instance.GetFactionColor(Unit.Faction.Id);
             
-            if(unit.Faction.Id != GridGameManager.Instance.FactionManager.ActivePlayerNumber)
+            if(actor.Faction.Id != GridGameManager.Instance.FactionManager.ActivePlayerNumber)
             {
                 //pointLight.SetActive(false);
                 Color color = Color.blue;
@@ -42,7 +40,7 @@ public class WM_ActorRenderer:MonoBehaviour
         }
         void Destroy()
         {
-            unit.TurnStateManager.UnitWaiting -= SetWaitingSprite;
+            actor.TurnStateManager.UnitWaiting -= SetWaitingSprite;
         }
         public void SetVisible(bool visible)
         {
@@ -60,7 +58,7 @@ public class WM_ActorRenderer:MonoBehaviour
  
         private void SetWaitingSprite(IActor unit, bool waiting)
         {
-            if ( unit == this.unit)
+            if ( unit == this.actor)
             {
                 GetComponentInChildren<SpriteRenderer>().color = !waiting ? Color.white : Color.grey;
             }

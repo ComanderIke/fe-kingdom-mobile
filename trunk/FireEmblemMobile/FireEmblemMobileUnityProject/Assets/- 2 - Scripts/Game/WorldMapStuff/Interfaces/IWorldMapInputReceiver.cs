@@ -1,7 +1,8 @@
-﻿using Game.WorldMapStuff.Systems;
+﻿using Game.WorldMapStuff.Model;
+using Game.WorldMapStuff.Systems;
 
 public interface IWorldMapInputReceiver
 {
     void LocationClicked(WorldMapPosition location);
-    void ActorClicked(IWM_Actor party);
+    void ActorClicked(WM_Actor party);
 }

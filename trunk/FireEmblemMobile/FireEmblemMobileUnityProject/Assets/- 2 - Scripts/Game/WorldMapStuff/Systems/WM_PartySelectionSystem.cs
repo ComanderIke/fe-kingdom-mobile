@@ -1,19 +1,21 @@
 ﻿using System;
 using Game.Manager;
+using Game.WorldMapStuff.Model;
+using GameEngine;
 using UnityEngine;
 
 namespace Game.WorldMapStuff.Systems
 {
-    public class WM_PartySelectionSystem
+    public class WM_PartySelectionSystem:IEngineSystem
     {
         public static event Action OnDeselectParty;
 
-        public static event Action<IWM_Actor> OnSelectedParty;
+        public static event Action<WM_Actor> OnSelectedParty;
 
-        public static event Action<IWM_Actor> OnSelectedInActiveParty;
+        public static event Action<WM_Actor> OnSelectedInActiveParty;
 
-        public static event Action<IWM_Actor> OnEnemyPartySelected;
-        public IWM_Actor SelectedActor { get; set; }
+        public static event Action<WM_Actor> OnEnemyPartySelected;
+        public WM_Actor SelectedActor { get; set; }
         private FactionManager factionManager;
 
         public WM_PartySelectionSystem(FactionManager factionManager)
@@ -37,7 +39,7 @@ namespace Game.WorldMapStuff.Systems
             SelectedActor = null;
         }
 
-        private void SelectCharacter(IWM_Actor c)
+        private void SelectCharacter(WM_Actor c)
             {
                 Debug.Log("SELECT CHARACTER "+c);
                 if (SelectedActor != null)
@@ -49,7 +51,7 @@ namespace Game.WorldMapStuff.Systems
                 OnSelectedParty?.Invoke(SelectedActor);
             }
 
-            private void EnemySelected(IWM_Actor c)
+            private void EnemySelected(WM_Actor c)
             {
                 Debug.Log("enemy selected " + c);
                 if (SelectedActor != null)
@@ -58,13 +60,14 @@ namespace Game.WorldMapStuff.Systems
                 }
                 OnEnemyPartySelected?.Invoke(c);
             }
-            private void SelectInActiveCharacter(IWM_Actor c)
+            private void SelectInActiveCharacter(WM_Actor c)
             {
                 Debug.Log("SelectInactiveCharacter");
                 OnSelectedInActiveParty?.Invoke(c);
             }
-            public void SelectParty(IWM_Actor c)
+            public void SelectParty(WM_Actor c)
             {
+                Debug.Log("FactionManager: "+factionManager);
                 if (factionManager.IsActiveFaction(c.Faction))
                 {
                     if (!c.TurnStateManager.IsWaiting)
@@ -89,5 +92,9 @@ namespace Game.WorldMapStuff.Systems
                 }
             }
 
+            public void Init()
+            {
+                
+            }
     }
 }

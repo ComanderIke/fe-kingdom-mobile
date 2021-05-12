@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Game.GameActors.Units;
 using Game.Manager;
+using UnityEngine;
 
 namespace Game.GameActors.Players
 {
     [Serializable]
-    public class Faction
+    public class Faction:ScriptableObject
     {
         public int Id;
         public bool IsPlayerControlled;

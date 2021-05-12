@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Game.GameActors.Players;
 using Game.Manager;
+using UnityEngine;
 
 namespace Game.WorldMapStuff.Model
 {
     [Serializable]
+    [CreateAssetMenu(fileName="WM_Faction", menuName = "GameData/Faction")]
     public class WM_Faction:Faction
     {
    

@@ -1,5 +1,6 @@
 ﻿using Game.Manager;
 using Game.Mechanics;
+using Game.WorldMapStuff.Input;
 using Game.WorldMapStuff.Systems;
 using GameEngine;
 using GameEngine.GameStates;
@@ -57,7 +58,10 @@ namespace Game.WorldMapStuff
 
         public void Init()
         {
-            inputSystem.inputReceiver = new WorldMapGameplayInputReceiver(WorldMapGameManager.Instance.FactionManager, WorldMapGameManager.Instance.GetSystem<WM_PartySelectionSystem>());
+            inputSystem.inputReceiver = new WorldMapGameplayInputReceiver(WorldMapGameManager.Instance.FactionManager, 
+                WorldMapGameManager.Instance.GetSystem<WM_PartySelectionSystem>(),
+                new WM_GameplayInput(WorldMapGameManager.Instance.GetSystem<WM_PartySelectionSystem>(), 
+                    WorldMapGameManager.Instance.GetSystem<WM_PartyActionSystem>()));
             inputSystem.Init();
         }
     }

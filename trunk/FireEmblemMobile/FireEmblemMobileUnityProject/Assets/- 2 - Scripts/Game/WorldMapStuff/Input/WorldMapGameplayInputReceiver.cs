@@ -1,5 +1,6 @@
 ﻿using Game.Manager;
 using Game.WorldMapStuff.Input;
+using Game.WorldMapStuff.Model;
 using UnityEngine;
 
 namespace Game.WorldMapStuff.Systems
@@ -12,10 +13,12 @@ namespace Game.WorldMapStuff.Systems
         private FactionManager factionManager;
 
 
-        public WorldMapGameplayInputReceiver(FactionManager factionManager,WM_PartySelectionSystem selectionSystem)
+        public WorldMapGameplayInputReceiver(FactionManager factionManager,WM_PartySelectionSystem selectionSystem, WM_GameplayInput gameplayInput)
         {
+            Debug.Log("SELECTIONSYSTEM: "+selectionSystem);
             selectionDataProvider = new WM_SelectionManager(selectionSystem);
-            gameplayInput = new WM_GameplayInput();
+            this.gameplayInput = gameplayInput;
+            
             this.factionManager = factionManager;
             // WM_PartySelectionSystem.OnSelectedParty += OnSelectedCharacter;
             // WM_PartySelectionSystem.OnSelectedInActiveParty += OnSelectedCharacter;
@@ -25,7 +28,7 @@ namespace Game.WorldMapStuff.Systems
         {
             selectionDataProvider.ClearData();
         }
-        public void DoubleClickedActor(IWM_Actor unit)
+        public void DoubleClickedActor(WM_Actor unit)
         {
             if (factionManager.IsActiveFaction(unit.Faction))
             {
@@ -88,7 +91,7 @@ namespace Game.WorldMapStuff.Systems
             }
         }
 
-        public void ActorClicked(IWM_Actor party)
+        public void ActorClicked(WM_Actor party)
         {
             if (factionManager.IsActiveFaction(party.Faction))
             {
@@ -101,7 +104,7 @@ namespace Game.WorldMapStuff.Systems
             }
         }
 
-        private void EnemyActorClicked(IWM_Actor actor)
+        private void EnemyActorClicked(WM_Actor actor)
         {
             Debug.Log("Enemy Party clicked!");
             var selectedActor = selectionDataProvider.SelectedActor;
@@ -134,7 +137,7 @@ namespace Game.WorldMapStuff.Systems
             
         }
 
-        private void OwnActorClicked(IWM_Actor party)
+        private void OwnActorClicked(WM_Actor party)
         {
             Debug.Log("Own Party clicked!");
             

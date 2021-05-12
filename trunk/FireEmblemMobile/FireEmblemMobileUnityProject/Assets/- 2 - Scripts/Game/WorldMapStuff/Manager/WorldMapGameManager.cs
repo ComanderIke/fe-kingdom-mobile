@@ -9,6 +9,8 @@ using Game.GUI.Text;
 using Game.Manager;
 using Game.Mechanics;
 using Game.WorldMapStuff.Controller;
+using Game.WorldMapStuff.Input;
+using Game.WorldMapStuff.Systems;
 using GameEngine;
 using UnityEditor.Build.Content;
 using UnityEngine;
@@ -25,9 +27,11 @@ public class WorldMapGameManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        AddSystems();
         var config = GameObject.FindObjectOfType<WM_Playerconfig>();
         FactionManager = new FactionManager(config.factions.Cast<Faction>().ToList());
+        AddSystems();
+     
+        
         GameStateManager = new WM_GameStateManager();
         Debug.Log("AWAKE" +GameStateManager);
         Application.targetFrameRate = 60;
@@ -38,7 +42,9 @@ public class WorldMapGameManager : MonoBehaviour
         Systems = new List<IEngineSystem>
         {
             FindObjectOfType<AudioSystem>(),
-            FindObjectOfType<TurnSystem>()
+            FindObjectOfType<TurnSystem>(),
+            new WM_PartySelectionSystem(FactionManager),
+            new WM_PartyActionSystem()
         };
 
     }

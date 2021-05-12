@@ -8,13 +8,28 @@ using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.Systems;
 using UnityEngine;
 
-public class Party:IWM_Actor
+[CreateAssetMenu(fileName = "Party", menuName = "GameData/Party")]
+public class Party:WM_Actor
 {
 
+    [SerializeField]
+    private WM_Faction faction;
 
-    public WM_Faction Faction{ get; set; }
+    public WM_Faction Faction
+    {
+        get
+        {
+            return faction;
+        }
+        set
+        {
+            faction = value;
+        }
+    }
+
     public GameTransformManager GameTransformManager { get; set; }
     public WorldMapPosition location { get; set; }
+    [SerializeField]
     private List<Unit> members;
     public static Action<Party> PartyDied;
     public WM_ActorRenderer WmActorRenderer { get; set; }
@@ -32,14 +47,14 @@ public class Party:IWM_Actor
         return members.Count(a => a.IsAlive()) != 0;
     }
 
-    public void SetAttackTarget(bool b)
+    public override void SetAttackTarget(bool b)
     {
         Debug.Log("TODO AttackTarget Visuals");
     }
 
-    public TurnStateManager TurnStateManager { get; set; }
+   
 
-    public void ResetPosition()
+    public override void ResetPosition()
     {
         Debug.Log("ResetLocation");
     }

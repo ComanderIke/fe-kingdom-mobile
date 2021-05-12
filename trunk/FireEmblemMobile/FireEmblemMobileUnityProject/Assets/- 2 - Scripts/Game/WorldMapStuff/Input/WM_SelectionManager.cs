@@ -1,12 +1,14 @@
-﻿namespace Game.WorldMapStuff.Systems
+﻿using Game.WorldMapStuff.Model;
+
+namespace Game.WorldMapStuff.Systems
 {
     public class WM_SelectionManager : IWM_SelectionDataProvider
 
     {
         private WM_PartySelectionSystem partySelectionSystem;
-        public IWM_Actor SelectedActor => partySelectionSystem.SelectedActor;
+        public WM_Actor SelectedActor => partySelectionSystem.SelectedActor;
         private WorldMapPosition selectedLocation;
-        private IWM_Actor selectedAttackTarget;
+        private WM_Actor selectedAttackTarget;
 
         public WM_SelectionManager(WM_PartySelectionSystem partySelectionSystem)
         {
@@ -24,14 +26,14 @@
             selectedLocation = position;
         }
 
-        public void SetSelectedAttackTarget(IWM_Actor target)
+        public void SetSelectedAttackTarget(WM_Actor target)
         {
             selectedAttackTarget?.SetAttackTarget(false);
             selectedAttackTarget = target;
             target.SetAttackTarget(true);
         }
 
-        public IWM_Actor GetSelectedAttackTarget()
+        public WM_Actor GetSelectedAttackTarget()
         {
             return selectedAttackTarget;
         }
