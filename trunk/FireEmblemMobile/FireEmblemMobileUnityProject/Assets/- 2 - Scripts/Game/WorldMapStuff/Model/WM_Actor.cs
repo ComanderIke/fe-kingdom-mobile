@@ -13,7 +13,21 @@ namespace Game.WorldMapStuff.Model
             TurnStateManager = new TurnStateManager(this);
         }
         public abstract void SetAttackTarget(bool b);
-        public WM_Faction Faction { get; set; }
+        [SerializeField]
+        private WM_Faction faction;
+
+        public WM_Faction Faction
+        {
+            get
+            {
+                return faction;
+            }
+            set
+            {
+                faction = value;
+            }
+        }
+
         public GameTransformManager GameTransformManager { get; set; }
         public WorldMapPosition location { get; set; }
         public abstract void ResetPosition();

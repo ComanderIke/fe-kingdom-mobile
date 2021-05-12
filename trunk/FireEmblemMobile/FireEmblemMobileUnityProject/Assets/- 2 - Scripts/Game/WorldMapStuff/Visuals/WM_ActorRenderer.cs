@@ -15,7 +15,7 @@ public class WM_ActorRenderer:MonoBehaviour
         private void Start()
         {
             actor.TurnStateManager.UnitWaiting += SetWaitingSprite;
-
+            actor.TurnStateManager.onSelected += ShowSelected;
         }
         public void Init()
         {
@@ -53,6 +53,23 @@ public class WM_ActorRenderer:MonoBehaviour
             {
                 alphaCanvas.alpha = 0f;
                 sprite.color = new Color(0, 0, 0,1f);
+            }
+        }
+
+        public void ShowSelected(bool selected)
+        {
+           
+            if (selected)
+            {
+                float intensity = 2;
+                sprite.material.SetColor("_OutLineColor",
+                    ColorManager.Instance.GetFactionColor(actor.Faction.Id) * intensity);
+            }
+            else
+            {
+                float intensity = 2;
+                sprite.material.SetColor("_OutLineColor",
+                    ColorManager.Instance.MainRedColor*intensity);
             }
         }
  

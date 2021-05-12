@@ -67,7 +67,6 @@ namespace Game.WorldMapStuff.Systems
             }
             public void SelectParty(WM_Actor c)
             {
-                Debug.Log("FactionManager: "+factionManager);
                 if (factionManager.IsActiveFaction(c.Faction))
                 {
                     if (!c.TurnStateManager.IsWaiting)

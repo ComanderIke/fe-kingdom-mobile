@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Game.GameActors.Units
 {
@@ -9,7 +10,10 @@ namespace Game.GameActors.Units
         public OnActorWaiting UnitWaiting;
 
         public delegate void OnActorCanMove(IActor unit, bool canMove);
-        public event Action<bool> OnSelected;
+        public delegate void OnSelected(bool selected);
+
+        public OnSelected onSelected;
+   
         public OnActorCanMove UnitCanMove;
         private UnitTurnState UnitTurnState { get; set; }
         private IActor actor;
@@ -62,8 +66,9 @@ namespace Game.GameActors.Units
             }
             set
             {
+               
                 UnitTurnState.isSelected = value;
-                OnSelected?.Invoke(value);
+                onSelected?.Invoke(value);
             }
         }
         public void UnitTurnFinished()

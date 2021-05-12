@@ -23,7 +23,7 @@ namespace Game.GameActors.Units.OnGameObject
         public Unit unit;
         void Start()
         {
-            unit.TurnStateManager.OnSelected += SetSelected;
+            unit.TurnStateManager.onSelected += SetSelected;
         }
         public void AttackConnected()
         {

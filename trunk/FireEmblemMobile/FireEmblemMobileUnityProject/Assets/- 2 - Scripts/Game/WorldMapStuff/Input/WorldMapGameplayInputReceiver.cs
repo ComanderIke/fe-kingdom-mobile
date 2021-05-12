@@ -141,7 +141,7 @@ namespace Game.WorldMapStuff.Systems
         {
             Debug.Log("Own Party clicked!");
             
-            if (party.location == selectionDataProvider.SelectedActor.location)
+            if (selectionDataProvider.SelectedActor!=null&&party.location == selectionDataProvider.SelectedActor.location)
             {
                 LocationClicked(party.location);
             }

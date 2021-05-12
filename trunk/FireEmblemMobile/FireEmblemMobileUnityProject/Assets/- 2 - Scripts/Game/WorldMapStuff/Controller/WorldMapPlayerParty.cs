@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game.WorldMapStuff.Model;
 using UnityEngine;
 using Utility;
 
@@ -13,7 +14,9 @@ public class WorldMapPlayerParty : MonoBehaviour
     public IWorldMapUnitInputReceiver inputReceiver { get; set; }
     void Start()
     {
+        Debug.Log("WTF: "+party.Faction.Id);
         spriteRenderer = GetComponent<SpriteRenderer>();
+        party.location = currentLocation;
     }
 
     // Update is called once per frame
@@ -24,7 +27,6 @@ public class WorldMapPlayerParty : MonoBehaviour
 
     void OnMouseDown()
     {
-        Debug.Log("Mouse Clicked on Party");
         inputReceiver.PartyClicked(party);
 
         // selected = !selected;

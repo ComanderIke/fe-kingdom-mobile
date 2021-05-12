@@ -3,5 +3,6 @@
     public interface IActor
     {
         TurnStateManager TurnStateManager { get; set; }
+        
     }
 }

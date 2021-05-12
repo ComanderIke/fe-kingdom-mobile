@@ -19,13 +19,13 @@ namespace Game.States
         }
         public override void Enter()
         {
-            Debug.Log("TransitionStart " +gameStateManager);
+
             phaseRenderer.Show(factionManager.ActiveFaction.Id, Finished);
         }
 
         void Finished()
         {
-            Debug.Log("Finished " +gameStateManager);
+
             if(factionManager.ActiveFaction.IsPlayerControlled)
                 gameStateManager.Feed(NextStateTrigger.StartPlayerPhase);
             else
@@ -33,7 +33,7 @@ namespace Game.States
         }
         public override void Exit()
         {
-            Debug.Log("TransitionEnd");
+
         }
 
         public override GameState<NextStateTrigger> Update()
