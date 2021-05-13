@@ -1,6 +1,9 @@
 ﻿using Game.WorldMapStuff.Model;
 
-public interface IWorldMapUnitInputReceiver
+namespace Game.WorldMapStuff.Interfaces
 {
-    void PartyClicked(Party party);
+    public interface IWorldMapUnitInputReceiver
+    {
+        void ActorClicked(WM_Actor party);
+    }
 }

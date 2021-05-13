@@ -33,7 +33,6 @@ public class WorldMapGameManager : MonoBehaviour
      
         
         GameStateManager = new WM_GameStateManager();
-        Debug.Log("AWAKE" +GameStateManager);
         Application.targetFrameRate = 60;
     }
 

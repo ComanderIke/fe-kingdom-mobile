@@ -25,10 +25,10 @@ namespace Game.GUI.Text
         public void Show(int playerId, Action OnFinished)
         {
             canvas.enabled = true;
-            Debug.Log("Show Phase: "+playerId);
+
            // text.material = textMaterials[playerId];
             text.fontMaterial = textMaterials[playerId];
-            Debug.Log("Material: "+textMaterials[playerId]);
+
             text.SetText(phaseTexts[playerId]);
       
             RectTransform textRect = text.GetComponent<RectTransform>();

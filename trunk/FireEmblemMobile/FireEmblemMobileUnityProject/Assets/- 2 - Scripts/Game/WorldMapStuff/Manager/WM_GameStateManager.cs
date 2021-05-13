@@ -24,7 +24,6 @@ namespace Game.Manager
         {
             PlayerPhaseState = new WM_PlayerPhaseState(WorldMapGameManager.Instance.GetSystem<TurnSystem>());
             EnemyPhaseState = new WM_EnemyPhaseState(WorldMapGameManager.Instance.FactionManager);
-            Debug.Log("CONTRUCT"+this);
             PhaseTransitionState = new PhaseTransitionState(WorldMapGameManager.Instance.FactionManager, this);
             
             stateMachine = new StateMachine<NextStateTrigger>(PhaseTransitionState);

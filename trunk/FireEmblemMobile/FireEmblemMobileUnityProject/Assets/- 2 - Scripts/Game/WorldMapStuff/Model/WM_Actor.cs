@@ -11,6 +11,7 @@ namespace Game.WorldMapStuff.Model
         protected WM_Actor()
         {
             TurnStateManager = new TurnStateManager(this);
+            GameTransformManager = new WM_GameTransformManager();
         }
         public abstract void SetAttackTarget(bool b);
         [SerializeField]
@@ -28,7 +29,7 @@ namespace Game.WorldMapStuff.Model
             }
         }
 
-        public GameTransformManager GameTransformManager { get; set; }
+        public WM_GameTransformManager GameTransformManager { get; set; }
         public WorldMapPosition location { get; set; }
         public abstract void ResetPosition();
     }

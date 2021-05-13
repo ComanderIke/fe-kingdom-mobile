@@ -20,12 +20,17 @@ namespace Game.WorldMapStuff.Input
 
         public void MoveParty(WM_Actor party, WorldMapPosition location)
         {
-            Debug.Log("TODO Move Party");
+            party.location = location;
+            location.Actor = party;
+            party.GameTransformManager.SetPosition(location.transform.position);
+            Debug.Log("Move Party");
         }
 
         public void Wait(WM_Actor party)
         {
-            Debug.Log("TODO Wait Party");
+            Debug.Log("Wait Party");
+            party.TurnStateManager.IsSelected = false;
+            party.TurnStateManager.IsWaiting = true;
         }
 
         public void Init()

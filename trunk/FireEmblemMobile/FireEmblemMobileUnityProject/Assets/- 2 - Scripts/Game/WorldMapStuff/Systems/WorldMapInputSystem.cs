@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Game.GameInput;
+using Game.WorldMapStuff.Interfaces;
 using Game.WorldMapStuff.Model;
 using GameEngine;
 using UnityEngine;
@@ -36,7 +37,7 @@ public class WorldMapInputSystem: IEngineSystem , IWorldMapLocationInputReceiver
         isActive = b;
     }
 
-    public void PartyClicked(Party party)
+    public void ActorClicked(WM_Actor party)
     {
         if (!isActive)
             return;

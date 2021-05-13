@@ -11,20 +11,14 @@ namespace Game.WorldMapStuff.Model
     public class Party:WM_Actor
     {
 
-   
-
-        public GameTransformManager GameTransformManager { get; set; }
-  
         [SerializeField]
         private List<Unit> members;
         public static Action<Party> PartyDied;
         public WM_ActorRenderer WmActorRenderer { get; set; }
 
-        public Party()
+        public Party():base()
         {
             members = new List<Unit>();
-            TurnStateManager = new TurnStateManager(this);
-            
         }
     
 

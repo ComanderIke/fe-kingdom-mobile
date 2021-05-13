@@ -1,9 +1,9 @@
 ﻿using Game.Manager;
-using Game.WorldMapStuff.Input;
 using Game.WorldMapStuff.Model;
+using Game.WorldMapStuff.Systems;
 using UnityEngine;
 
-namespace Game.WorldMapStuff.Systems
+namespace Game.WorldMapStuff.Input
 {
     public class WorldMapGameplayInputReceiver: IWorldMapInputReceiver
     {
@@ -15,7 +15,6 @@ namespace Game.WorldMapStuff.Systems
 
         public WorldMapGameplayInputReceiver(FactionManager factionManager,WM_PartySelectionSystem selectionSystem, WM_GameplayInput gameplayInput)
         {
-            Debug.Log("SELECTIONSYSTEM: "+selectionSystem);
             selectionDataProvider = new WM_SelectionManager(selectionSystem);
             this.gameplayInput = gameplayInput;
             
@@ -51,21 +50,21 @@ namespace Game.WorldMapStuff.Systems
             {
                 if (location.IsReachable(selectionDataProvider.SelectedActor))
                 {
-                    if (selectionDataProvider.GetSelectedLocation()==location)
-                    {
-                        Debug.Log("Confirm Move");
+                    // if (selectionDataProvider.GetSelectedLocation()==location)
+                    // {
+                      //  Debug.Log("Confirm Move");
                         gameplayInput.MoveActor(selectionDataProvider.SelectedActor, location);
                         gameplayInput.Wait(selectionDataProvider.SelectedActor);
                         // gameplayInput.ExecuteInputActions(null);
                         selectionDataProvider.ClearData();
-                    }
-                    else
-                    {
-                        selectionDataProvider.SelectedActor.GameTransformManager.SetPosition(location.gameObject.transform.position);
-                        selectionDataProvider.SetSelectedLocation(location);
-                        selectionDataProvider.ClearAttackTarget();
-                        Debug.Log("Select location");
-                    }
+                    // }
+                    // else
+                    // {
+                    //     selectionDataProvider.SelectedActor.GameTransformManager.SetPosition(location.gameObject.transform.position);
+                    //     selectionDataProvider.SetSelectedLocation(location);
+                    //     selectionDataProvider.ClearAttackTarget();
+                    //     Debug.Log("Select location");
+                    // }
                 }
                 else
                 {

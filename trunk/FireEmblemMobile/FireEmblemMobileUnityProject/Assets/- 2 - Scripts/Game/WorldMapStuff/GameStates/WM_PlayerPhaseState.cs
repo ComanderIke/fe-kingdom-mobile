@@ -1,5 +1,6 @@
 ﻿using Game.Manager;
 using Game.Mechanics;
+using Game.WorldMapStuff.Controller;
 using Game.WorldMapStuff.Input;
 using Game.WorldMapStuff.Systems;
 using GameEngine;
@@ -43,7 +44,7 @@ namespace Game.WorldMapStuff
         }
         private void SetUpInputForUnits()
         {
-            foreach (var party in GameObject.FindObjectsOfType<PartyController>())
+            foreach (var party in GameObject.FindObjectsOfType<WM_ActorController>())
             {
                 party.inputReceiver=inputSystem;
             }

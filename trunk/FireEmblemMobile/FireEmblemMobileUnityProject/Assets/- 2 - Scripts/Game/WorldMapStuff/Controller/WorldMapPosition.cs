@@ -140,6 +140,7 @@ public class WorldMapPosition : MonoBehaviour
 
     public bool IsReachable(WM_Actor selectedActor)
     {
+        Debug.Log(selectedActor.location+" "+this);
        return selectedActor.location.Connections.Contains(this);
     }
 
