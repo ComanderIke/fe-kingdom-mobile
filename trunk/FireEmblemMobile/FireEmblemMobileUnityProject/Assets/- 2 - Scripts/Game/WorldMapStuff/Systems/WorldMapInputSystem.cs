@@ -16,7 +16,6 @@ public class WorldMapInputSystem: IEngineSystem , IWorldMapLocationInputReceiver
          if (!isActive)
                     return;
          inputReceiver.LocationClicked(location);
-         Debug.Log("Input Received!");
     }
 
     public void Init()
@@ -41,7 +40,6 @@ public class WorldMapInputSystem: IEngineSystem , IWorldMapLocationInputReceiver
     {
         if (!isActive)
             return;
-        Debug.Log("Party Clicked!" +party+" "+party.Faction.Id);
         inputReceiver.ActorClicked(party);
     }
 }

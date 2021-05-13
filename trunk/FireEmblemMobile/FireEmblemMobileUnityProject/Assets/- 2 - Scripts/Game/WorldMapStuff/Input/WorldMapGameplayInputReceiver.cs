@@ -141,15 +141,15 @@ namespace Game.WorldMapStuff.Systems
         {
             Debug.Log("Own Party clicked!");
             
-            if (selectionDataProvider.SelectedActor!=null&&party.location == selectionDataProvider.SelectedActor.location)
-            {
-                LocationClicked(party.location);
-            }
-            else
-            {
-                //TODO Also select for now
+            // if (selectionDataProvider.SelectedActor!=null&&party.location == selectionDataProvider.SelectedActor.location)
+            // {
+            //     LocationClicked(party.location);
+            // }
+            // else
+            // {
+            //     //TODO Also select for now
                 gameplayInput.SelectActor(party);
-            }
+            // }
         }
     }
 }

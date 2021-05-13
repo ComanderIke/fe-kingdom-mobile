@@ -24,7 +24,8 @@ namespace Game.WorldMapStuff.Systems
         }
         private void SameCharacterSelected()
         {
-            SelectCharacter(SelectedActor);
+            DeselectActor();
+            //SelectCharacter(SelectedActor);
         }
 
         public void DeselectActor()
@@ -34,7 +35,7 @@ namespace Game.WorldMapStuff.Systems
                 SelectedActor.ResetPosition();
                 SelectedActor.TurnStateManager.IsSelected = false;
             }
-
+            Debug.Log("DeselectActor");
             OnDeselectParty?.Invoke();
             SelectedActor = null;
         }

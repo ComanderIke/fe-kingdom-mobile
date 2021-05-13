@@ -9,6 +9,7 @@ namespace Game.WorldMapStuff.Controller
         public SpriteRenderer spriteRenderer;
         public Sprite selectedSprite;
         public Sprite normalSprite;
+        public Sprite moveSprite;
         public Sprite enemySprite;
         public GameObject Walkable;
         public GameObject Attackable;
@@ -23,11 +24,13 @@ namespace Game.WorldMapStuff.Controller
         {
             Walkable.SetActive(true);
             Attackable.SetActive(false);
+            spriteRenderer.sprite = moveSprite;
         }
         public void ShowSelected(bool selected)
         {
             spriteRenderer.sprite = selected ? selectedSprite:normalSprite;
         }
+        
         public void DrawInteractableConnections()
         {
             foreach (WorldMapPosition connection in location.Connections)
@@ -44,6 +47,7 @@ namespace Game.WorldMapStuff.Controller
         }
         private void Hide()
         {
+            spriteRenderer.sprite = normalSprite;
             Walkable.SetActive(false);
            Attackable.SetActive(false);
         }
