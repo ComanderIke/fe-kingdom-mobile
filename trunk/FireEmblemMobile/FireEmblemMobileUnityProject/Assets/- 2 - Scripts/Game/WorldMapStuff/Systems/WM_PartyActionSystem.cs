@@ -1,4 +1,6 @@
-﻿using Game.WorldMapStuff.Model;
+﻿using System;
+using Game.WorldMapStuff.Model;
+using Game.WorldMapStuff.Model.Battle;
 using Game.WorldMapStuff.Systems;
 using GameEngine;
 using UnityEngine;
@@ -7,9 +9,15 @@ namespace Game.WorldMapStuff.Input
 {
     public class WM_PartyActionSystem:IEngineSystem
     {
- 
+        private WM_PreviewSystem previewSystem;
+
+        public WM_PartyActionSystem(WM_PreviewSystem system)
+        {
+            previewSystem = system;
+        }
         public void AttackPreviewParty(WM_Actor party)
         {
+            previewSystem.ShowAttackPreview(party);
             Debug.Log("TODO UI AttackPreview Party");
         }
 

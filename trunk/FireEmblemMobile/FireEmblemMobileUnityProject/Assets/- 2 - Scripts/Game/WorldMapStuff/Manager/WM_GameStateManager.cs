@@ -2,6 +2,7 @@
 using Game.Mechanics;
 using Game.States;
 using Game.WorldMapStuff;
+using Game.WorldMapStuff.Manager;
 using GameEngine;
 using GameEngine.GameStates;
 using UnityEngine;

@@ -35,7 +35,13 @@ namespace Game.WorldMapStuff.Controller
         {
             foreach (WorldMapPosition connection in location.Connections)
             {
-                connection.renderer.ShowWalkable();
+               
+                if(connection.Actor!=null&&!connection.Actor.Faction.IsActive())
+                    connection.renderer.ShowAttackable();
+                else
+                {
+                    connection.renderer.ShowWalkable();
+                }
             }
         }
         public void HideInteractableConnections()

@@ -19,6 +19,7 @@ namespace Game.WorldMapStuff.Input
             this.gameplayInput = gameplayInput;
             
             this.factionManager = factionManager;
+            WM_PartySelectionSystem.OnDeselectParty += selectionDataProvider.ClearData;
             // WM_PartySelectionSystem.OnSelectedParty += OnSelectedCharacter;
             // WM_PartySelectionSystem.OnSelectedInActiveParty += OnSelectedCharacter;
         }

@@ -2,6 +2,7 @@
 using Game.Mechanics;
 using Game.WorldMapStuff.Controller;
 using Game.WorldMapStuff.Input;
+using Game.WorldMapStuff.Manager;
 using Game.WorldMapStuff.Systems;
 using GameEngine;
 using GameEngine.GameStates;

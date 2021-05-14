@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Game.GameActors.Players;
 using Game.Manager;
+using Game.WorldMapStuff.Manager;
 using UnityEngine;
 
 namespace Game.WorldMapStuff.Model

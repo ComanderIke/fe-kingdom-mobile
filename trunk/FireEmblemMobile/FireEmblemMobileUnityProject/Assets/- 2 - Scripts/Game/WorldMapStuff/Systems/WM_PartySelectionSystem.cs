@@ -18,7 +18,7 @@ namespace Game.WorldMapStuff.Systems
         public static event Action<WM_Actor> OnEnemyPartySelected;
         public WM_Actor SelectedActor { get; set; }
         private FactionManager factionManager;
-
+        
         public WM_PartySelectionSystem(FactionManager factionManager)
         {
             this.factionManager = factionManager;
