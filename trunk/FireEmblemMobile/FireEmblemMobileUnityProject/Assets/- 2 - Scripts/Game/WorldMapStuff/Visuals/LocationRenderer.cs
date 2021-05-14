@@ -51,5 +51,10 @@ namespace Game.WorldMapStuff.Controller
             Walkable.SetActive(false);
            Attackable.SetActive(false);
         }
+
+        public void Reset()
+        {
+            Hide();
+        }
     }
 }

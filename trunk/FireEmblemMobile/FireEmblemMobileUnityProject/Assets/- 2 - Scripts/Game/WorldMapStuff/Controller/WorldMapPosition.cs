@@ -154,5 +154,12 @@ public class WorldMapPosition : MonoBehaviour
         renderer.ShowSelected(selected);
     }
 
-    
+    public void Reset()
+    {
+        renderer.Reset();
+        foreach (var connection in Connections)
+        {
+            connection.renderer.Reset();
+        }
+    }
 }

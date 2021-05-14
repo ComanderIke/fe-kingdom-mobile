@@ -20,6 +20,8 @@ namespace Game.WorldMapStuff.Input
 
         public void MoveParty(WM_Actor party, WorldMapPosition location)
         {
+            party.location.Actor = null;
+            party.location.Reset();
             party.location = location;
             location.Actor = party;
             party.GameTransformManager.SetPosition(location.transform.position);

@@ -48,7 +48,7 @@ namespace Game.WorldMapStuff.Input
            
             if (selectionDataProvider.SelectedActor != null)
             {
-                if (location.IsReachable(selectionDataProvider.SelectedActor))
+                if (location.IsReachable(selectionDataProvider.SelectedActor)&&!selectionDataProvider.SelectedActor.TurnStateManager.IsWaiting)
                 {
                     // if (selectionDataProvider.GetSelectedLocation()==location)
                     // {
