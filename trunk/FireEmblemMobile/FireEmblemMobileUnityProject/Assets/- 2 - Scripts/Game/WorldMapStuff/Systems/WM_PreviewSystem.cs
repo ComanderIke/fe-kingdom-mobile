@@ -10,7 +10,7 @@ namespace Game.WorldMapStuff.Systems
     public class WM_PreviewSystem:IEngineSystem
     {
         private WM_AttackPreview attackPreview;
-
+        private WM_Actor currentEnemy;
         public WM_PreviewSystem(IWM_AttackPreviewRenderer attackPreviewRenderer)
         {
             attackPreview = new WM_AttackPreview(attackPreviewRenderer);
@@ -24,11 +24,15 @@ namespace Game.WorldMapStuff.Systems
         public void ShowAttackPreview(WM_Actor party)
         {
             attackPreview.Show(party);
+            party.location.renderer.ShowAttackable();
+            currentEnemy = party;
         }
 
         void HideAttackPreview()
         {
             attackPreview.Hide();
+            if(currentEnemy!=null && currentEnemy.location!=null)
+                currentEnemy.location.renderer.ShowAttackable();
         }
     }
 }

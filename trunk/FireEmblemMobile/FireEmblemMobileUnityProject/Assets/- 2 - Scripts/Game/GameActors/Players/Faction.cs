@@ -8,6 +8,7 @@ using UnityEngine;
 namespace Game.GameActors.Players
 {
     [Serializable]
+    [CreateAssetMenu(fileName="Faction", menuName = "GameData/Faction")]
     public class Faction:ScriptableObject
     {
         public int Id;

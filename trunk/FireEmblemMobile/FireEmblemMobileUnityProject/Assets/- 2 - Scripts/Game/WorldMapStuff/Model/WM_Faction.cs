@@ -9,7 +9,7 @@ using UnityEngine;
 namespace Game.WorldMapStuff.Model
 {
     [Serializable]
-    [CreateAssetMenu(fileName="WM_Faction", menuName = "GameData/Faction")]
+    [CreateAssetMenu(fileName="WM_Faction", menuName = "GameData/WM_Faction")]
     public class WM_Faction:Faction
     {
    

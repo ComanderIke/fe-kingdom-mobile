@@ -13,17 +13,27 @@ namespace Game.WorldMapStuff.Controller
         public Sprite enemySprite;
         public GameObject Walkable;
         public GameObject Attackable;
+        public GameObject Enemy;
 
         public void ShowAttackable()
         {
             spriteRenderer.sprite = enemySprite;
             Attackable.SetActive(true);
             Walkable.SetActive(false);
+            Enemy.SetActive(true);
+        }
+        public void ShowEnemy()
+        {
+            spriteRenderer.sprite = enemySprite;
+            Attackable.SetActive(false);
+            Walkable.SetActive(false);
+            Enemy.SetActive(true);
         }
         public void ShowWalkable()
         {
             Walkable.SetActive(true);
             Attackable.SetActive(false);
+            Enemy.SetActive(false);
             spriteRenderer.sprite = moveSprite;
         }
         public void ShowSelected(bool selected)
@@ -37,7 +47,7 @@ namespace Game.WorldMapStuff.Controller
             {
                
                 if(connection.Actor!=null&&!connection.Actor.Faction.IsActive())
-                    connection.renderer.ShowAttackable();
+                    connection.renderer.ShowEnemy();
                 else
                 {
                     connection.renderer.ShowWalkable();

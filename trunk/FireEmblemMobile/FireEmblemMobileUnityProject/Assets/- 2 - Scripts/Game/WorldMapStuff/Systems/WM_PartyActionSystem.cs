@@ -3,6 +3,7 @@ using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.Model.Battle;
 using Game.WorldMapStuff.Systems;
 using GameEngine;
+using Menu;
 using UnityEngine;
 
 namespace Game.WorldMapStuff.Input
@@ -23,6 +24,7 @@ namespace Game.WorldMapStuff.Input
 
         public void AttackParty(WM_Actor party)
         {
+            SceneController.SwitchScene("Level2");
             Debug.Log("TODO Attack Party");
         }
 
