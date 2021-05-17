@@ -22,15 +22,18 @@ namespace Game.Mechanics
 
         public void Init()
         {
-            Factions = GridGameManager.Instance.FactionManager.Factions;
-            foreach (var faction in Factions)
-            {
-                faction.OnAddUnit += UpdateUnit;
-                foreach (var unit in faction.Units)
-                {
-                    unit.OnLevelUp += LevelUp;
-                }
-            }
+            Debug.Log("TODO INIT PROGRESS SYSTEM");
+            // Factions = GridGameManager.Instance.FactionManager.Factions;
+            // foreach (var faction in Factions)
+            // {
+            //     faction.OnAddUnit += UpdateUnit;
+            //     Debug.Log("Count" +faction.Units.Count);
+            //     foreach (var unit in faction.Units)
+            //     {
+            //         Debug.Log("unit"+ unit.name);
+            //         unit.OnLevelUp += LevelUp;
+            //     }
+            // }
         }
 
         private void UpdateUnit(Unit unit)

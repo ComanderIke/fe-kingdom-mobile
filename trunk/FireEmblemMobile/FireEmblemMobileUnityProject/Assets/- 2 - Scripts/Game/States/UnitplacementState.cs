@@ -12,6 +12,7 @@ using Game.GUI;
 using Game.Manager;
 using Game.Map;
 using Game.Mechanics;
+using Game.WorldMapStuff.Model;
 using GameEngine;
 using GameEngine.GameStates;
 using Menu;
@@ -44,7 +45,7 @@ namespace Game.States
 
             InitUnits();
             InitFactions();
-            //Debug.Log("LevelConfig");
+            Debug.Log("LevelConfig");
           
             GridGameManager.Instance.GameStateManager.UnitPlacementState.SetUnits(factionManager.Factions[0].Units);
             int[] indexes = new int [factionManager.Factions.Count];
@@ -57,6 +58,7 @@ namespace Game.States
         
                        
                         faction.AddUnit(unit);
+                        Debug.Log("INIT UNIT V1");
                         unit.Initialize();
                         unit.AIComponent.WeightSet = spawn.AIWeightSet;
                        
@@ -71,7 +73,7 @@ namespace Game.States
                 }
            
            
-          //  Debug.Log("UnitPlacement"+units.Count());
+            Debug.Log("UnitPlacement"+units.Count());
             NextState =  GridGameManager.Instance.GameStateManager.PhaseTransitionState;
             UnitPlacementUI.Show(units);
             UnitPlacementUI.OnFinished += () => { finished = true;};
@@ -115,6 +117,7 @@ namespace Game.States
         {
             
             unit.Faction = faction;
+            Debug.Log("INIT UNIT V2");
             unit.Initialize();
                        
             unitInstantiator.PlaceCharacter(unit, x, y);
@@ -123,17 +126,23 @@ namespace Game.States
 
         void InitFactions()
         {
-            foreach (var unit in Player.Instance.Units)
+            Debug.Log("INIT FACTIONS!");
+            factionManager.Factions[0].ClearUnits();
+            factionManager.Factions[1].ClearUnits();
+            foreach (var unit in BattleTransferData.Instance.UnitsGoingIntoBattle)
             {
+                Debug.Log("BATTLE UNIT"+unit.name);
+              
                 factionManager.Factions[0].AddUnit(unit);
             }
-            factionManager.Factions[0].Name = Player.Instance.Name;
+            factionManager.Factions[0].Name = BattleTransferData.Instance.PlayerName;
         }
         void InitUnits()
         {
-            if (Player.Instance.Units == null || Player.Instance.Units.Count == 0)
+            if (BattleTransferData.Instance.UnitsGoingIntoBattle == null || BattleTransferData.Instance.UnitsGoingIntoBattle.Count == 0)
             {
-                //Debug.Log("Create Demo Characters");
+                Debug.Log("Create Demo Characters");
+                Debug.Log("WHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY??????????????");
                 var unit1 = DataScript.Instance.GetHuman("Leila");
                 var unit2 = DataScript.Instance.GetHuman("Flora");
                 var unit3 = DataScript.Instance.GetHuman("Eldric");
@@ -146,7 +155,7 @@ namespace Game.States
                 unit3.Inventory.AddItem(DataScript.Instance.GetWeapon("Iron Bow"));
                 unit1.Inventory.AddItem(DataScript.Instance.GetWeapon("Steel Bow"));
                 unit2.Inventory.AddItem(DataScript.Instance.GetWeapon("Fire"));
-                Player.Instance.Units = new List<Unit>
+                BattleTransferData.Instance.UnitsGoingIntoBattle = new List<Unit>
                 {
                     unit1,
                     unit2,
@@ -154,9 +163,14 @@ namespace Game.States
                     unit4
                 };
             }
+    
         }
         private void SetUpInputForUnits()
         {
+            Debug.Log( GridGameManager.Instance.FactionManager);
+            Debug.Log( GridGameManager.Instance.FactionManager.Factions.Count);
+            Debug.Log( GridGameManager.Instance.FactionManager.Factions[0].Units.Count);
+            Debug.Log( GridGameManager.Instance.FactionManager.Factions[1].Units.Count);
             
             foreach (var unit in GridGameManager.Instance.FactionManager.Factions.SelectMany(faction => faction.Units))
             {

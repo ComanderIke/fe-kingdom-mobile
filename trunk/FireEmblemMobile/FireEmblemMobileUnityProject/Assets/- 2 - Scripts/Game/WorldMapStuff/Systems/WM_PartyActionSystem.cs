@@ -1,8 +1,10 @@
 ﻿using System;
+using Game.GameActors.Units;
 using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.Model.Battle;
 using Game.WorldMapStuff.Systems;
 using GameEngine;
+using ICSharpCode.NRefactory.Ast;
 using Menu;
 using UnityEngine;
 
@@ -11,10 +13,12 @@ namespace Game.WorldMapStuff.Input
     public class WM_PartyActionSystem:IEngineSystem
     {
         private WM_PreviewSystem previewSystem;
+        private WM_PartySelectionSystem selectionSystem;
 
-        public WM_PartyActionSystem(WM_PreviewSystem system)
+        public WM_PartyActionSystem(WM_PreviewSystem system, WM_PartySelectionSystem selectionSystem)
         {
             previewSystem = system;
+            this.selectionSystem = selectionSystem;
         }
         public void AttackPreviewParty(WM_Actor party)
         {
@@ -24,8 +28,19 @@ namespace Game.WorldMapStuff.Input
 
         public void AttackParty(WM_Actor party)
         {
-            SceneController.SwitchScene("Level2");
-            Debug.Log("TODO Attack Party");
+            var selected = selectionSystem.SelectedActor;
+            Debug.Log(selectionSystem.SelectedActor+" "+selectionSystem.SelectedActor.name);
+            if (selected is Party pty)
+            {
+                BattleTransferData.Instance.PlayerName = pty.Faction.name;
+                BattleTransferData.Instance.UnitsGoingIntoBattle = pty.members;
+                foreach (Unit unit in pty.members)
+                {
+                    Debug.Log("Party Member: "+unit.name);
+                }
+                Debug.Log("BATTLETRANSFERDATA CREATED");
+                SceneController.SwitchScene("Level2");
+            }
         }
 
         public void MoveParty(WM_Actor party, WorldMapPosition location)

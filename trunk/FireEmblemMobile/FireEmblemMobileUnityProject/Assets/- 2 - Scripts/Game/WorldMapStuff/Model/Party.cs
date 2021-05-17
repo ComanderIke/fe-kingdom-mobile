@@ -11,8 +11,7 @@ namespace Game.WorldMapStuff.Model
     public class Party:WM_Actor
     {
 
-        [SerializeField]
-        private List<Unit> members;
+        [SerializeField] public List<Unit> members;
         public static Action<Party> PartyDied;
         public WM_ActorRenderer WmActorRenderer { get; set; }
 

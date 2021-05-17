@@ -112,8 +112,18 @@ namespace Game.GameActors.Units
             AIComponent = new AIComponent();
             stats = stats == null ? CreateInstance<Stats>() : Instantiate(stats);
             growths = growths == null ? CreateInstance<Growths>() : Instantiate(growths);
-            var tmp = unitEffectVisuals.Select(unitEffectVisual => Instantiate(unitEffectVisual)).ToList();
-            unitEffectVisuals = tmp;
+            Debug.Log(("init: "+name));
+            if (unitEffectVisuals != null&&unitEffectVisuals.Count!=0)
+            {
+                for(int i = unitEffectVisuals.Count-1; i>=0; i--)
+                {
+                    if (unitEffectVisuals[i] == null)
+                        unitEffectVisuals.Remove(unitEffectVisuals[i] );
+                }
+                var tmp = unitEffectVisuals.Select(unitEffectVisual => Instantiate(unitEffectVisual)).ToList();
+                unitEffectVisuals = tmp;
+            }
+
             Hp = stats.MaxHp;
             Sp = stats.MaxSp;
             ExperienceManager.ExpGained += ExpGained;

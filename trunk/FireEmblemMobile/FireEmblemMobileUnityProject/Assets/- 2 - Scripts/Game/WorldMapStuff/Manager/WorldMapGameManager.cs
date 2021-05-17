@@ -39,13 +39,14 @@ namespace Game.WorldMapStuff.Manager
         {
             var xyz = FindObjectsOfType<MonoBehaviour>().OfType<IWM_AttackPreviewRenderer>().First();
             var previewSystem = new WM_PreviewSystem(xyz);
+            var selectionSystem = new WM_PartySelectionSystem(FactionManager);
             Systems = new List<IEngineSystem>
             {
                 FindObjectOfType<AudioSystem>(),
                 FindObjectOfType<TurnSystem>(),
-                new WM_PartySelectionSystem(FactionManager),
+                selectionSystem,
                 previewSystem,
-                new WM_PartyActionSystem(previewSystem),
+                new WM_PartyActionSystem(previewSystem,selectionSystem),
             
             };
 

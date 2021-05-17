@@ -12,7 +12,7 @@ namespace Game.GameActors.Players
         private static Player _instance;
         public static Player Instance
         {
-            get { return _instance = _instance ?? new Player(); }
+            get { return _instance ??= new Player(); }
         }
 
         [SerializeField] private int playerId = default;
@@ -28,6 +28,7 @@ namespace Game.GameActors.Players
             Name = "Player1";
             playerId = 0;
         }
+        
 
         public void LoadPlayer(Player player)
         {

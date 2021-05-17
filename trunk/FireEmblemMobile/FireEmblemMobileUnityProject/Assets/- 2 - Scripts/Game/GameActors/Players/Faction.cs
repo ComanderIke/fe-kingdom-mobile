@@ -71,5 +71,10 @@ namespace Game.GameActors.Players
         }
 
         public event Action<Unit> OnAddUnit;
+
+        public void ClearUnits()
+        {
+            Units.Clear();
+        }
     }
 }
