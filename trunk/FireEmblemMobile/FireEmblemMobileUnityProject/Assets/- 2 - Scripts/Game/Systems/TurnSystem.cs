@@ -32,7 +32,7 @@ namespace Game.Mechanics
         public void Init()
         {
            // var gameManager = TurnBasedGameManager.Instance;
-            OnTriggerEndTurn += EndPhase;
+           
             // factionManager = gameManager.FactionManager;
             // gameStateManager = gameManager.GameStateManager;
             InitPlayers();
@@ -41,12 +41,14 @@ namespace Game.Mechanics
 
         public void Deactivate()
         {
-            
+
+            OnTriggerEndTurn = null;
         }
 
         public void Activate()
         {
-
+            OnTriggerEndTurn = null;
+            OnTriggerEndTurn += EndPhase;
         }
 
         private void InitPlayers()
@@ -55,18 +57,19 @@ namespace Game.Mechanics
             factionManager.ActiveFaction = factionManager.Factions[factionManager.ActivePlayerNumber];
         }
 
-        public void StartPhase()
+        private void StartPhase()
         {
             if (!factionManager.ActiveFaction.IsPlayerControlled)
             {
-                //Debug.Log("AITurn");
+                Debug.Log("AITurn");
                 gameStateManager.Feed(NextStateTrigger.Transition);
                 //gridGameManager.GameStateManager.Feed(NextStateTrigger.StartEnemyPhase);
             }
             else
             {
+                Debug.Log("PlayerTurn");
                 gameStateManager.Feed(NextStateTrigger.Transition);
-                //Debug.Log("PlayerTurn");
+              
             }
            
             
@@ -82,10 +85,10 @@ namespace Game.Mechanics
         //     }
         // }
 
-        public void EndPhase()
+        private void EndPhase()
         {
            
-            //Debug.Log("EndTurn!");
+            Debug.Log("EndTurn! BUT WHY?");
             if (factionManager.ActiveFaction.Units != null && factionManager.ActiveFaction.Units.Count != 0)
             {
                 foreach (var c in factionManager.ActiveFaction.Units)
@@ -100,7 +103,6 @@ namespace Game.Mechanics
 
                 if (wmFaction != null && wmFaction.Parties.Count != 0)
                 {
-                    Debug.Log(wmFaction.Parties.Count);
                     foreach (var c in  wmFaction.Parties)
                     {
 
@@ -116,6 +118,7 @@ namespace Game.Mechanics
             OnEndTurn?.Invoke();
             if (factionManager.ActivePlayerNumber == 0)
                 TurnCount++;
+            //Debug.Log("Calling Start Phase From EndPhase");
             StartPhase();
         }
 

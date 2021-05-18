@@ -85,7 +85,7 @@ namespace Game.States
             UnitPlacementUI.Show(units);
             UnitPlacementUI.OnFinished += () =>
             {
-                Debug.Log("Finish clicked!");finished = true;};
+                finished = true;};
             var startPositions = GameObject.FindObjectsOfType<StartPosition>();
             UnitPlacementInputSystem = new UnitPlacementInputSystem();
             UnitPlacementInputSystem.unitDroppedOnOtherUnit += SwapUnits;

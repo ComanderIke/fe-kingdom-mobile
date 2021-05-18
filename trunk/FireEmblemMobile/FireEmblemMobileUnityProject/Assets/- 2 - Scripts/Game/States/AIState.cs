@@ -19,11 +19,13 @@ namespace Game.AI
         }
         public override void Enter()
         {
+            Debug.Log("Enter AI State");
             brain = new Brain(GridGameManager.Instance.FactionManager.ActiveFaction);
         }
 
         public override void Exit()
         {
+            Debug.Log("Exit AI State");
         }
 
         public override GameState<NextStateTrigger> Update()
@@ -51,6 +53,7 @@ namespace Game.AI
                 }
                 else
                 {
+                    Debug.Log("AI State Finished");
                     TurnSystem.OnTriggerEndTurn();
                 }
             }

@@ -44,13 +44,13 @@ namespace Game.AI
 
             foreach (var loc in moveLocs)
             {
-                Debug.Log("Possible Location: "+loc);
+//                Debug.Log("Possible Location: "+loc);
                 float locScore = ScoreCalculater.ScoreLocationForCharacter(loc, unit);
                 var targets = GridGameManager.Instance.GetSystem<GridSystem>().GridLogic.GetAttackTargets((IGridActor)unit, loc.x, loc.y);
-                Debug.Log("Targets: "+targets.Count);
+              //  Debug.Log("Targets: "+targets.Count);
                 foreach (var gridActor in targets)
                 {
-                    Debug.Log("Possible Target: "+gridActor);
+                   // Debug.Log("Possible Target: "+gridActor);
                     var t = (Unit) gridActor;
                     float attackscore = ScoreCalculater.ScoreAttackForUnit((IBattleActor)unit, unit.AIComponent.WeightSet,loc, t);
                     if ((locScore + attackscore) > currentBestScore)

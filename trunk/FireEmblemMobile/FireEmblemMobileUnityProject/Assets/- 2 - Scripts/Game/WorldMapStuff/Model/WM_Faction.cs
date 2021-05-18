@@ -29,7 +29,7 @@ namespace Game.WorldMapStuff.Model
 
         public void Init()
         {
-            Party.PartyDied += RemoveParty;
+            
         }
 
         private void RemoveParty(Party unit)

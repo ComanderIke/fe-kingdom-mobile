@@ -161,6 +161,7 @@ namespace Game.GameActors.Units
         public void Die()
         {
             UnitDied(this);
+            Faction.RemoveUnit(this);
             GameTransformManager.Destroy();
         }
 

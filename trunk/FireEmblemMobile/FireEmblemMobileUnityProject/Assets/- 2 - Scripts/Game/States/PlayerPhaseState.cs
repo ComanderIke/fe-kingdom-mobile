@@ -106,8 +106,7 @@ namespace Game.Mechanics
 
         public override void Exit()
         {
-            Debug.Log("Exit GameplayState");
-            
+
             cameraSystem.RemoveMixin<DragCameraMixin>();
             cameraSystem.RemoveMixin<ClampCameraMixin>();
             cameraSystem.RemoveMixin<ViewOnGridMixin>();

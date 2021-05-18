@@ -122,7 +122,7 @@ namespace Game.Manager
             GameStateManager.Init();
             
             OnStartGame?.Invoke();
-            GetSystem<TurnSystem>().StartPhase();
+            //GetSystem<TurnSystem>().StartPhase();
         }
 
         private void InjectDependencies()
