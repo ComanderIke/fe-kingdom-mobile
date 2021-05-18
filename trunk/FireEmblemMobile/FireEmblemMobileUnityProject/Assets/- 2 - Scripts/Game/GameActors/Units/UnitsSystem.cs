@@ -13,6 +13,16 @@ namespace Game.GameActors.Units
             units = FindObjectsOfType<UnitInputController>();
         }
 
+        public void Deactivate()
+        {
+            
+        }
+
+        public void Activate()
+        {
+            
+        }
+
         public void ShowUnits()
         {
             foreach (var unit in units) unit.gameObject.SetActive(true);

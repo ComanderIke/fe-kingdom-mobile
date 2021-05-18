@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Units;
+﻿using System;
+using Game.GameActors.Units;
 using Game.Manager;
 using Game.WorldMapStuff.Model;
 using UnityEngine;
@@ -17,6 +18,13 @@ public class WM_ActorRenderer:MonoBehaviour
             actor.TurnStateManager.UnitWaiting += SetWaitingSprite;
             actor.TurnStateManager.onSelected += ShowSelected;
         }
+
+        public void OnDestroy()
+        {
+            actor.TurnStateManager.UnitWaiting -= SetWaitingSprite;
+            actor.TurnStateManager.onSelected -= ShowSelected;
+        }
+
         public void Init()
         {
            // hpBar.GetComponent<Image>().color = ColorManager.Instance.GetFactionColor(unit.Faction.Id);

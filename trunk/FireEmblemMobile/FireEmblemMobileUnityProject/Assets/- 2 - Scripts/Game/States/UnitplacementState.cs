@@ -45,7 +45,7 @@ namespace Game.States
 
             InitUnits();
             InitFactions();
-            Debug.Log("LevelConfig");
+
           
             GridGameManager.Instance.GameStateManager.UnitPlacementState.SetUnits(factionManager.Factions[0].Units);
             int[] indexes = new int [factionManager.Factions.Count];
@@ -55,7 +55,7 @@ namespace Game.States
             {
                 foreach (var spawn in spawner.Where(a => a.FactionId == faction.Id))
                 {
-                    Debug.Log("Spawner" + spawn.unit.name + spawn.X + " " + spawn.Y);
+
                     if (tmpEnemyUnits.Count > spawn.id && tmpEnemyUnits[spawn.id] != null)
                     {
                         
@@ -65,8 +65,7 @@ namespace Game.States
                         unit.Initialize();
                         unit.AIComponent.WeightSet = spawn.AIWeightSet;
                         unit.Faction = faction;
-                        Debug.Log("Spawn Unit" + unit.name + " " + spawn.X + " " + spawn.Y + " ");
-                        Debug.Log("Spawn Unit" + unit.name + " " + spawn.X + " " + spawn.Y + " " + unit.Faction.Id);
+
                         unitInstantiator.PlaceCharacter(unit, spawn.X, spawn.Y);
 
                     }
@@ -76,7 +75,7 @@ namespace Game.States
                         faction.AddUnit(unit);
                         unit.Initialize();
                         unit.AIComponent.WeightSet = spawn.AIWeightSet;
-                        Debug.Log("Spawn2 Unit" + unit.name + " " + spawn.X + " " + spawn.Y + " " + unit.Faction.Id);
+
                         unitInstantiator.PlaceCharacter(unit, spawn.X, spawn.Y);
                     }
                 }
@@ -84,7 +83,9 @@ namespace Game.States
 
             NextState =  GridGameManager.Instance.GameStateManager.PhaseTransitionState;
             UnitPlacementUI.Show(units);
-            UnitPlacementUI.OnFinished += () => { finished = true;};
+            UnitPlacementUI.OnFinished += () =>
+            {
+                Debug.Log("Finish clicked!");finished = true;};
             var startPositions = GameObject.FindObjectsOfType<StartPosition>();
             UnitPlacementInputSystem = new UnitPlacementInputSystem();
             UnitPlacementInputSystem.unitDroppedOnOtherUnit += SwapUnits;
@@ -139,7 +140,6 @@ namespace Game.States
             {
 
                 factionManager.Factions[0].AddUnit(unit);
-                Debug.Log("Player Unit"+unit.name +" "+unit.Faction.Id);
             }
 
             if (BattleTransferData.Instance.EnemyUnits != null)
@@ -148,7 +148,6 @@ namespace Game.States
                 {
 
                     factionManager.Factions[1].AddUnit(unit);
-                    Debug.Log("Enemy Unit" + unit.name + " " + unit.Faction.Id);
                 }
             }
 
@@ -185,12 +184,10 @@ namespace Game.States
         private void SetUpInputForUnits()
         {
   
-            Debug.Log(GridGameManager.Instance.FactionManager.Factions[0].Units.Count);
-            Debug.Log(GridGameManager.Instance.FactionManager.Factions[1].Units.Count);
+
             foreach (var unit in GridGameManager.Instance.FactionManager.Factions.SelectMany(faction => faction.Units))
             {
-               
-                Debug.Log(unit.name);
+
                 unit.GameTransformManager.UnitController.touchInputReceiver = UnitPlacementInputSystem;
                 
             }

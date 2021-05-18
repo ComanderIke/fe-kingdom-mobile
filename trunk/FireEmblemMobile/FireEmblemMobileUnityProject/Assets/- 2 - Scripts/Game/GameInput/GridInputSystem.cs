@@ -31,6 +31,16 @@ namespace Game.GameInput
             
         }
 
+        public void Deactivate()
+        {
+            
+        }
+
+        public void Activate()
+        {
+            
+        }
+
         public void Update()
         {
             if (!Active)

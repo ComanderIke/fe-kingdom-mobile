@@ -32,12 +32,7 @@ namespace Game.WorldMapStuff.Input
             Debug.Log(selectionSystem.SelectedActor+" "+selectionSystem.SelectedActor.name);
             if (selected is Party pty)
             {
-                BattleTransferData.Instance.PlayerName = pty.Faction.name;
-                BattleTransferData.Instance.UnitsGoingIntoBattle = pty.members;
-                if(party is Party enemyParty)
-                    BattleTransferData.Instance.EnemyUnits = enemyParty.members;    
-
-                SceneController.SwitchScene("Level2");
+                WorldMapSceneController.Instance.LoadLevel(pty, (Party)party);
             }
         }
 
@@ -61,6 +56,15 @@ namespace Game.WorldMapStuff.Input
         public void Init()
         {
             
+        }
+
+        public void Deactivate()
+        {
+            
+        }
+
+        public void Activate()
+        {
         }
     }
 }

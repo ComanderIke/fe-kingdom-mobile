@@ -58,6 +58,16 @@ namespace Audio
             PlayMusic("PlayerTheme", 0, 1);
         }
 
+        public void Deactivate()
+        {
+            
+        }
+
+        public void Activate()
+        {
+            
+        }
+
         public void PlaySound(string name, float delay = 0, float fadeDuration = -1.0f)
         {
             var s = Array.Find(Sounds, sound => sound.Name == name);

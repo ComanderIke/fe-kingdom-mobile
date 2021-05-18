@@ -29,7 +29,10 @@ namespace Game.Mechanics
                 if (Input.GetMouseButtonDown(0))
                 {
                     if (time >= DELAY)
-                        SceneController.SwitchScene("Base");
+                    {
+                        WorldMapSceneController.Instance.LoadWorldMap();
+                    }
+                        
                 }
             }
 

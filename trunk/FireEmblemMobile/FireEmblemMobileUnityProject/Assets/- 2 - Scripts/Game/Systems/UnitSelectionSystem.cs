@@ -24,10 +24,22 @@ namespace Game.Mechanics
         {
             gridGameManager = GridGameManager.Instance;
 
+           
+            //BattleState.OnExit += DeselectActiveCharacter;
+        }
+
+        public void Deactivate()
+        {
+            GameplayInput.OnSelectUnit -= SelectUnit;
+            GameplayInput.OnDeselectUnit -= DeselectActiveCharacter;
+            TurnSystem.OnEndTurn -= DeselectActiveCharacter;
+        }
+
+        public void Activate()
+        {
             GameplayInput.OnSelectUnit += SelectUnit;
             GameplayInput.OnDeselectUnit += DeselectActiveCharacter;
             TurnSystem.OnEndTurn += DeselectActiveCharacter;
-            //BattleState.OnExit += DeselectActiveCharacter;
         }
 
         public void Update()

@@ -39,6 +39,15 @@ namespace Game.Mechanics
             TurnCount = 1;
         }
 
+        public void Deactivate()
+        {
+            
+        }
+
+        public void Activate()
+        {
+
+        }
 
         private void InitPlayers()
         {

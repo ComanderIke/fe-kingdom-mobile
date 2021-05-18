@@ -14,11 +14,21 @@ namespace Game.WorldMapStuff.Systems
         public WM_PreviewSystem(IWM_AttackPreviewRenderer attackPreviewRenderer)
         {
             attackPreview = new WM_AttackPreview(attackPreviewRenderer);
-            WM_PartySelectionSystem.OnDeselectParty += HideAttackPreview;
+            
         }
         public void Init()
         {
             
+        }
+
+        public void Activate()
+        {
+            WM_PartySelectionSystem.OnDeselectParty += HideAttackPreview;
+        }
+
+        public void Deactivate()
+        {
+            WM_PartySelectionSystem.OnDeselectParty -= HideAttackPreview;
         }
 
         public void ShowAttackPreview(WM_Actor party)

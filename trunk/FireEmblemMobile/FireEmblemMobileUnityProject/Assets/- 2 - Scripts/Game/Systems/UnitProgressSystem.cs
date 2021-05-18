@@ -36,6 +36,16 @@ namespace Game.Mechanics
             // }
         }
 
+        public void Deactivate()
+        {
+           
+        }
+
+        public void Activate()
+        {
+      
+        }
+
         private void UpdateUnit(Unit unit)
         {
             unit.OnLevelUp += LevelUp;

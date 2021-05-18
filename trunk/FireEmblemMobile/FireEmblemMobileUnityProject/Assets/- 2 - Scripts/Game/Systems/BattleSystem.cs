@@ -122,6 +122,16 @@ namespace Game.Mechanics
             
         }
 
+        public void Deactivate()
+        {
+            
+        }
+
+        public void Activate()
+        {
+         
+        }
+
         public void Update()
         {
             

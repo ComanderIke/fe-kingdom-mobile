@@ -22,7 +22,7 @@ namespace Game.WorldMapStuff.Systems
         public WM_PartySelectionSystem(FactionManager factionManager)
         {
             this.factionManager = factionManager;
-            TurnSystem.OnEndTurn += DeselectActor;
+           
         }
         private void SameCharacterSelected()
         {
@@ -97,6 +97,16 @@ namespace Game.WorldMapStuff.Systems
             public void Init()
             {
                 
+            }
+
+            public void Deactivate()
+            {
+                TurnSystem.OnEndTurn -= DeselectActor;
+            }
+
+            public void Activate()
+            {
+                TurnSystem.OnEndTurn += DeselectActor;
             }
     }
 }

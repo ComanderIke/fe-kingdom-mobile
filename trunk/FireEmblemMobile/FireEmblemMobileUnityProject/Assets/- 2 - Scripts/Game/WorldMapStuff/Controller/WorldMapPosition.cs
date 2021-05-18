@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,11 @@ public class WorldMapPosition : MonoBehaviour
         }
     }
 
-  
+    public void OnDestroy(){
+        if(actor!=null)
+            actor.TurnStateManager.onSelected -= OnSelectedActor;
+    }
+
     public  IWorldMapLocationInputReceiver inputReceiver { get; set; }
 
     public LocationRenderer renderer{ get; set; }

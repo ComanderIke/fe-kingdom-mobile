@@ -25,6 +25,7 @@ namespace Game.WorldMapStuff.Manager
         private List<IEngineSystem> Systems { get; set; }
         public FactionManager FactionManager { get; set; }
         public WM_GameStateManager GameStateManager { get; set; }
+        private bool active = true;
 
         private void Awake()
         {
@@ -54,6 +55,26 @@ namespace Game.WorldMapStuff.Manager
             };
 
         }
+
+        public void Deactivate()
+        {
+            foreach (var system in Systems)
+            {
+                system.Deactivate();
+            }
+
+            active = false;
+        }
+        public void Activate()
+        {
+            foreach (var system in Systems)
+            {
+                system.Activate();
+            }
+
+            active = true;
+
+        }
         private void Initialize()
         {
            
@@ -61,6 +82,7 @@ namespace Game.WorldMapStuff.Manager
             foreach (var system in Systems)
             {
                 system.Init();
+                system.Activate();
             }
 
             var startingParty = FindObjectOfType<DataScript>().GetCampaignParty(0);
@@ -102,12 +124,14 @@ namespace Game.WorldMapStuff.Manager
         }
         private void Update()
         {
+            if (!active)
+                return;
             if (!init)
             {
                 Initialize();
                 init = true;
             }
-
+           
             GameStateManager.Update();
         }
         public T GetSystem<T>()

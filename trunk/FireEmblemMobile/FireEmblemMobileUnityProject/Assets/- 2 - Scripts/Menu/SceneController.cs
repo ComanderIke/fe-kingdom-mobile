@@ -25,6 +25,7 @@ namespace Menu
         [SerializeField] private CanvasGroup alphaCanvas = default;
         public string[] Tips;
         private UpdateDelegate[] updateDelegates;
+        public static event Action OnSceneReady;
 
         public static void SwitchScene(string nextSceneName)
         {
@@ -103,6 +104,7 @@ namespace Menu
                 progressBar.fillAmount = 0;
                 progressText.text = "0%";
                 LoadingScreen.SetActive(false);
+                OnSceneReady?.Invoke();
             }
             else
             {
@@ -135,6 +137,7 @@ namespace Menu
         // handle anything that needs to happen immediately after loading
         private void UpdateScenePostload()
         {
+          
             currentSceneName = nextSceneName;
             sceneState = SceneState.Ready;
         }
@@ -147,12 +150,14 @@ namespace Menu
             // but may be used later DON'T do this here
             GC.Collect();
             sceneState = SceneState.Run;
+           
         }
 
         // wait for scene change
         private void UpdateSceneRun()
         {
             if (currentSceneName != nextSceneName) sceneState = SceneState.Reset;
+            
         }
 
         private void OnDestroy()

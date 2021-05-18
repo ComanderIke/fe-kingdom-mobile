@@ -24,6 +24,16 @@ public class WorldMapInputSystem: IEngineSystem , IWorldMapLocationInputReceiver
         
     }
 
+    public void Deactivate()
+    {
+        
+    }
+
+    public void Activate()
+    {
+        
+    }
+
     public void Update()
     {
         // if (isActive)

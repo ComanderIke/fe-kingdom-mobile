@@ -20,6 +20,16 @@ namespace GameCamera
             mixins = new List<CameraMixin>();
         }
 
+        public void Deactivate()
+        {
+            
+        }
+
+        public void Activate()
+        {
+           
+        }
+
         public T AddMixin<T>()
         {
             if (!typeof(CameraMixin).IsAssignableFrom(typeof(T)))

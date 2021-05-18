@@ -25,13 +25,7 @@ namespace Game.GUI
         
         public void Init()
         {
-            UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
-            UnitSelectionSystem.OnSelectedInActiveCharacter += SelectedCharacter;
-            UnitSelectionSystem.OnEnemySelected += SelectedEnemyCharacter;
-            UnitSelectionSystem.OnDeselectCharacter += DeselectedCharacter;
-            UnitActionSystem.OnCheckAttackPreview += ShowAttackPreviewUI;
-            GridInputSystem.OnResetInput += HideAttackPreviewUI;//TODO Remove somehow
-            GridGameManager.Instance.GetSystem<GridSystem>().cursor.OnCursorPositionChanged += (Vector2Int v)=>HideAttackPreviewUI();
+           
             //gridGameManager = GridGameManager.Instance;
             //     gameplayInput = new GameplayInput();
             //     
@@ -59,7 +53,27 @@ namespace Game.GUI
             //     attackPreview.Hide();
         }
 
+        public void Deactivate()
+        {
+            UnitSelectionSystem.OnSelectedCharacter -= SelectedCharacter;
+            UnitSelectionSystem.OnSelectedInActiveCharacter -= SelectedCharacter;
+            UnitSelectionSystem.OnEnemySelected -= SelectedEnemyCharacter;
+            UnitSelectionSystem.OnDeselectCharacter -= DeselectedCharacter;
+            UnitActionSystem.OnCheckAttackPreview -= ShowAttackPreviewUI;
+            GridInputSystem.OnResetInput -= HideAttackPreviewUI;//TODO Remove somehow
+            GridGameManager.Instance.GetSystem<GridSystem>().cursor.OnCursorPositionChanged -= (Vector2Int v)=>HideAttackPreviewUI();
+        }
 
+        public void Activate()
+        {
+            UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
+            UnitSelectionSystem.OnSelectedInActiveCharacter += SelectedCharacter;
+            UnitSelectionSystem.OnEnemySelected += SelectedEnemyCharacter;
+            UnitSelectionSystem.OnDeselectCharacter += DeselectedCharacter;
+            UnitActionSystem.OnCheckAttackPreview += ShowAttackPreviewUI;
+            GridInputSystem.OnResetInput += HideAttackPreviewUI;//TODO Remove somehow
+            GridGameManager.Instance.GetSystem<GridSystem>().cursor.OnCursorPositionChanged += (Vector2Int v)=>HideAttackPreviewUI();
+        }
 
         public void ShowObjectiveCanvas(Chapter chapter)
         {

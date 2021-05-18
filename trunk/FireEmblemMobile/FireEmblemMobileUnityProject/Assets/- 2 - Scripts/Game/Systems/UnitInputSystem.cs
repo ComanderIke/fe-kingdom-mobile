@@ -31,6 +31,17 @@ namespace Game.GameInput
             DragManager = new DragManager(this);
             RaycastManager = new RaycastManager();
         }
+
+        public void Deactivate()
+        {
+            
+        }
+
+        public void Activate()
+        {
+   
+        }
+
         public void SetActive(bool active)
         {
             Active = active;

@@ -113,6 +113,7 @@ namespace Game.Manager
             foreach (var system in Systems)
             {
                 system.Init();
+                system.Activate();
             }
 
 

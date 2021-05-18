@@ -10,8 +10,16 @@ namespace Game.AI
         {
             
         }
-  
 
+        public void Deactivate()
+        {
+            
+        }
+
+        public void Activate()
+        {
+      
+        }
 
         //private int GetAttackRange(Vector2 location, Vector2 target)
         //{

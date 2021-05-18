@@ -33,6 +33,22 @@ namespace Game.Mechanics
         private Command currentCommand;
         public void Init()
         {
+         
+        }
+
+        public void Deactivate()
+        {
+            GameplayInput.OnWait -= Wait;
+            GameplayInput.OnAttackUnit -= Fight;
+            GameplayInput.OnMoveUnit -= MoveCharacter;
+            GameplayInput.OnCheckAttackPreview -= CheckAttackPreview;
+            GameplayInput.OnExecuteInputActions -= ExecuteActions;
+            OnCommandFinished -= ExecuteActions;
+            TriggerUndo -= Undo;
+        }
+
+        public void Activate()
+        {
             GameplayInput.OnWait += Wait;
             GameplayInput.OnAttackUnit += Fight;
             GameplayInput.OnMoveUnit += MoveCharacter;

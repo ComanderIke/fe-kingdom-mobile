@@ -38,6 +38,21 @@ namespace Game.Map
 
         public void Init()
         {
+          
+        }
+
+        public void Deactivate()
+        {
+            UnitSelectionSystem.OnDeselectCharacter -= HideMoveRange;
+            UnitSelectionSystem.OnSelectedCharacter -= SelectedCharacter;
+            UnitSelectionSystem.OnEnemySelected -= OnEnemySelected;
+            UnitSelectionSystem.OnSelectedInActiveCharacter -= OnEnemySelected;
+            MovementState.OnMovementFinished -= (IGridActor u) => HideMoveRange();
+            Unit.UnitDied -= RemoveUnitFromGrid;
+        }
+
+        public void Activate()
+        {
             UnitSelectionSystem.OnDeselectCharacter += HideMoveRange;
             UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
             UnitSelectionSystem.OnEnemySelected += OnEnemySelected;
@@ -45,8 +60,6 @@ namespace Game.Map
             MovementState.OnMovementFinished += (IGridActor u) => HideMoveRange();
             Unit.UnitDied += RemoveUnitFromGrid;
         }
-
- 
 
         public ITileChecker GetTileChecker()
         {

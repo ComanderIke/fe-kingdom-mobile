@@ -55,6 +55,7 @@ public class UIUnitPlacement : IUnitPlacementUI
 
     public void StartClicked()
     {
+        Debug.Log("OnStartClicked!");
         OnFinished?.Invoke();
         Hide();
     }
