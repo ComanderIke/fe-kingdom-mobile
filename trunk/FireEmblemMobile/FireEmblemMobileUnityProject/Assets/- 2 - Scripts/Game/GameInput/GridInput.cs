@@ -28,10 +28,13 @@ namespace Game.GameInput
 
         public void Update()
         {
-            if (Input.GetMouseButtonUp(0) && Input.touchCount <= 2 && !EventSystem.current.IsPointerOverGameObject())
+
+            if (Input.GetMouseButtonUp(0) && Input.touchCount <= 2 )//&& !EventSystem.current.IsPointerOverGameObject())
             {
+          
                 if (!CameraSystem.IsDragging)
                 {
+                   
                     var gridPos = raycastManager.GetMousePositionOnGrid();
                     var x = (int) gridPos.x;
                     var y = (int) gridPos.y;

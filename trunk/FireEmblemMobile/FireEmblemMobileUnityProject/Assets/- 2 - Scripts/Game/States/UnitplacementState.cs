@@ -56,7 +56,7 @@ namespace Game.States
                 foreach (var spawn in spawner.Where(a => a.FactionId == faction.Id))
                 {
                     Debug.Log("Spawner" + spawn.unit.name + spawn.X + " " + spawn.Y);
-                    if (tmpEnemyUnits.Count >= spawn.id && tmpEnemyUnits[spawn.id] != null)
+                    if (tmpEnemyUnits.Count > spawn.id && tmpEnemyUnits[spawn.id] != null)
                     {
                         
                         var unit = GameObject.Instantiate(tmpEnemyUnits[spawn.id]) as Unit;
@@ -141,12 +141,17 @@ namespace Game.States
                 factionManager.Factions[0].AddUnit(unit);
                 Debug.Log("Player Unit"+unit.name +" "+unit.Faction.Id);
             }
-            foreach (var unit in BattleTransferData.Instance.EnemyUnits)
-            {
 
-                factionManager.Factions[1].AddUnit(unit);
-                Debug.Log("Enemy Unit"+unit.name +" "+unit.Faction.Id);
+            if (BattleTransferData.Instance.EnemyUnits != null)
+            {
+                foreach (var unit in BattleTransferData.Instance.EnemyUnits)
+                {
+
+                    factionManager.Factions[1].AddUnit(unit);
+                    Debug.Log("Enemy Unit" + unit.name + " " + unit.Faction.Id);
+                }
             }
+
             factionManager.Factions[0].Name = BattleTransferData.Instance.PlayerName;
         }
         void InitUnits()
