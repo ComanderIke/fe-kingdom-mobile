@@ -34,11 +34,9 @@ namespace Game.WorldMapStuff.Input
             {
                 BattleTransferData.Instance.PlayerName = pty.Faction.name;
                 BattleTransferData.Instance.UnitsGoingIntoBattle = pty.members;
-                foreach (Unit unit in pty.members)
-                {
-                    Debug.Log("Party Member: "+unit.name);
-                }
-                Debug.Log("BATTLETRANSFERDATA CREATED");
+                if(party is Party enemyParty)
+                    BattleTransferData.Instance.EnemyUnits = enemyParty.members;    
+
                 SceneController.SwitchScene("Level2");
             }
         }

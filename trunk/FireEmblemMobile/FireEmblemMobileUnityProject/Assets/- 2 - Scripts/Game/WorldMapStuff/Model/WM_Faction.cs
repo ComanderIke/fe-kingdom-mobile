@@ -17,6 +17,7 @@ namespace Game.WorldMapStuff.Model
         
         public WM_Faction(int number, string name, bool isPlayerControlled):base(number, name, isPlayerControlled)
         {
+            Debug.Log("CREATE PARTY LIST");
             Parties = new List<Party>();
         }
 
@@ -43,6 +44,8 @@ namespace Game.WorldMapStuff.Model
 
         public void AddParty(Party unit)
         {
+            if (Parties == null)
+                Parties = new List<Party>();
             unit.Faction = this;
             unit.Faction.Id = Id;
             Parties.Add(unit);

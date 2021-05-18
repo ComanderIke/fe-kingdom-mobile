@@ -48,7 +48,6 @@ namespace Game.AI
 
                 if (!brain.IsFinished())
                 {
-                    Debug.Log("THINK");
                     brain.Think();
                 }
                 else

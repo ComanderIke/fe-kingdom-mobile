@@ -49,31 +49,39 @@ namespace Game.States
           
             GridGameManager.Instance.GameStateManager.UnitPlacementState.SetUnits(factionManager.Factions[0].Units);
             int[] indexes = new int [factionManager.Factions.Count];
-            foreach(var faction in factionManager.Factions)
+            var tmpEnemyUnits = factionManager.Factions[1].Units.Select(item => (Unit)item.Clone()).ToList();
+            factionManager.Factions[1].Units.Clear();
+            foreach (var faction in factionManager.Factions)
+            {
                 foreach (var spawn in spawner.Where(a => a.FactionId == faction.Id))
                 {
-                    if (spawn.unit != null)
+                    Debug.Log("Spawner" + spawn.unit.name + spawn.X + " " + spawn.Y);
+                    if (tmpEnemyUnits.Count >= spawn.id && tmpEnemyUnits[spawn.id] != null)
                     {
-                        var unit = GameObject.Instantiate(spawn.unit) as Unit;
-        
-                       
+                        
+                        var unit = GameObject.Instantiate(tmpEnemyUnits[spawn.id]) as Unit;
+                      
                         faction.AddUnit(unit);
-                        Debug.Log("INIT UNIT V1");
                         unit.Initialize();
                         unit.AIComponent.WeightSet = spawn.AIWeightSet;
-                       
+                        unit.Faction = faction;
+                        Debug.Log("Spawn Unit" + unit.name + " " + spawn.X + " " + spawn.Y + " ");
+                        Debug.Log("Spawn Unit" + unit.name + " " + spawn.X + " " + spawn.Y + " " + unit.Faction.Id);
                         unitInstantiator.PlaceCharacter(unit, spawn.X, spawn.Y);
-                        //Debug.Log("Spawn Unit"+unit.name +" "+spawn.X+" "+spawn.Y);
+
                     }
-                    else if(faction.Units.Count!=0 && indexes[faction.Id]< faction.Units.Count)
+                    else
                     {
-                        var unit = faction.Units[indexes[faction.Id]++];
-                        SpawnUnit(faction, unit, spawn.X, spawn.Y);
+                        var unit = GameObject.Instantiate(spawn.unit) as Unit;
+                        faction.AddUnit(unit);
+                        unit.Initialize();
+                        unit.AIComponent.WeightSet = spawn.AIWeightSet;
+                        Debug.Log("Spawn2 Unit" + unit.name + " " + spawn.X + " " + spawn.Y + " " + unit.Faction.Id);
+                        unitInstantiator.PlaceCharacter(unit, spawn.X, spawn.Y);
                     }
                 }
-           
-           
-            Debug.Log("UnitPlacement"+units.Count());
+            }
+
             NextState =  GridGameManager.Instance.GameStateManager.PhaseTransitionState;
             UnitPlacementUI.Show(units);
             UnitPlacementUI.OnFinished += () => { finished = true;};
@@ -117,7 +125,6 @@ namespace Game.States
         {
             
             unit.Faction = faction;
-            Debug.Log("INIT UNIT V2");
             unit.Initialize();
                        
             unitInstantiator.PlaceCharacter(unit, x, y);
@@ -126,14 +133,19 @@ namespace Game.States
 
         void InitFactions()
         {
-            Debug.Log("INIT FACTIONS!");
             factionManager.Factions[0].ClearUnits();
             factionManager.Factions[1].ClearUnits();
             foreach (var unit in BattleTransferData.Instance.UnitsGoingIntoBattle)
             {
-                Debug.Log("BATTLE UNIT"+unit.name);
-              
+
                 factionManager.Factions[0].AddUnit(unit);
+                Debug.Log("Player Unit"+unit.name +" "+unit.Faction.Id);
+            }
+            foreach (var unit in BattleTransferData.Instance.EnemyUnits)
+            {
+
+                factionManager.Factions[1].AddUnit(unit);
+                Debug.Log("Enemy Unit"+unit.name +" "+unit.Faction.Id);
             }
             factionManager.Factions[0].Name = BattleTransferData.Instance.PlayerName;
         }
@@ -167,13 +179,13 @@ namespace Game.States
         }
         private void SetUpInputForUnits()
         {
-            Debug.Log( GridGameManager.Instance.FactionManager);
-            Debug.Log( GridGameManager.Instance.FactionManager.Factions.Count);
-            Debug.Log( GridGameManager.Instance.FactionManager.Factions[0].Units.Count);
-            Debug.Log( GridGameManager.Instance.FactionManager.Factions[1].Units.Count);
-            
+  
+            Debug.Log(GridGameManager.Instance.FactionManager.Factions[0].Units.Count);
+            Debug.Log(GridGameManager.Instance.FactionManager.Factions[1].Units.Count);
             foreach (var unit in GridGameManager.Instance.FactionManager.Factions.SelectMany(faction => faction.Units))
             {
+               
+                Debug.Log(unit.name);
                 unit.GameTransformManager.UnitController.touchInputReceiver = UnitPlacementInputSystem;
                 
             }

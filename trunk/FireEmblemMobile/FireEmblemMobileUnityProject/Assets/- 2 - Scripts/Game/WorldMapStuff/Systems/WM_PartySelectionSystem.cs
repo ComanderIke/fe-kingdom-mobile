@@ -22,7 +22,6 @@ namespace Game.WorldMapStuff.Systems
         public WM_PartySelectionSystem(FactionManager factionManager)
         {
             this.factionManager = factionManager;
-            Debug.Log("Setup Events for PartySelection");
             TurnSystem.OnEndTurn += DeselectActor;
         }
         private void SameCharacterSelected()

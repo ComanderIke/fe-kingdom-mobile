@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using Game.GameActors.Items.Weapons;
+using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
 using Game.GameActors.Units.Monsters;
 using Game.Map;
+using Game.WorldMapStuff.Model;
 using UnityEngine;
 
 namespace Game.GameResources
@@ -18,6 +20,7 @@ namespace Game.GameResources
         [SerializeField] private List<Weapon> weapons = default;
         [SerializeField] private List<Human> humans = default;
         [SerializeField] private List<Monster> monster = default;
+        [SerializeField] private List<Party> parties = default;
 
 
         public List<Weapon> Weapons
@@ -33,6 +36,21 @@ namespace Game.GameResources
                 }
                 return ret;
             }
+        }
+
+        public Party GetCampaignParty(int campaignIndex)
+        {
+            var tmpMembers = parties[campaignIndex].members;
+            var party =  Instantiate((parties[campaignIndex]));
+            party.members = new List<Unit>();
+            foreach (var member in tmpMembers)
+            {
+                Unit unit = Instantiate(member);
+                unit.Initialize();
+                party.members.Add(unit);
+            }
+
+            return party;
         }
         public Weapon GetWeapon(string name)
         {

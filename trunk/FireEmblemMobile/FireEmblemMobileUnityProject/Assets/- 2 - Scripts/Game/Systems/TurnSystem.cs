@@ -91,6 +91,7 @@ namespace Game.Mechanics
 
                 if (wmFaction != null && wmFaction.Parties.Count != 0)
                 {
+                    Debug.Log(wmFaction.Parties.Count);
                     foreach (var c in  wmFaction.Parties)
                     {
 

@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Audio;
 using Game.GameActors.Players;
+using Game.GameActors.Units;
+using Game.GameResources;
 using Game.GUI.Text;
 using Game.Manager;
 using Game.Mechanics;
 using Game.WorldMapStuff.Controller;
 using Game.WorldMapStuff.Input;
+using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.Systems;
 using GameEngine;
 using UnityEngine;
@@ -27,7 +30,7 @@ namespace Game.WorldMapStuff.Manager
         {
             Instance = this;
             var config = GameObject.FindObjectOfType<WM_Playerconfig>();
-            FactionManager = new FactionManager(config.factions.Cast<Faction>().ToList());
+            FactionManager = new FactionManager(config.GetFactions().Cast<Faction>().ToList());
             AddSystems();
      
         
@@ -59,12 +62,38 @@ namespace Game.WorldMapStuff.Manager
             {
                 system.Init();
             }
+
+            var startingParty = FindObjectOfType<DataScript>().GetCampaignParty(0);
+            var partySpawns= FindObjectsOfType<PartySpawn>();
+            var instantiator = FindObjectOfType<PartyInstantiator>();
+            foreach (var spawn in partySpawns)
+            {
+                var partyInst = Instantiate(spawn.party);
+                partyInst.members = new List<Unit>();
+                foreach (Unit u in spawn.party.members)
+                {
+                    var instUnit = Instantiate(u);
+                    instUnit.Initialize();
+                    partyInst.members.Add(instUnit);
+                    
+                }
+                instantiator.InstantiateParty(partyInst, spawn.location);
+                ((WM_Faction)FactionManager.Factions[partyInst.Faction.Id]).AddParty(partyInst);
+                
+            }
+
+            for (int i = partySpawns.Length - 1; i >= 0; i-- )
+            {
+                GameObject.Destroy(partySpawns[i].gameObject);
+            }
+            instantiator.InstantiatePartyAtStartPoint(startingParty);
+            Debug.Log("START HP: " + startingParty.members[0].Hp);
+            ((WM_Faction)FactionManager.Factions[startingParty.Faction.Id]).AddParty(startingParty);
             GameStateManager.Init();
             //GetSystem<TurnSystem>().StartPhase();
         }
         private void InjectDependencies()
         {
-            Debug.Log("Inject");
             GetSystem<TurnSystem>().factionManager = FactionManager;
             GetSystem<TurnSystem>().gameStateManager = GameStateManager;
             GameStateManager.PhaseTransitionState.phaseRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IPhaseRenderer>().First();

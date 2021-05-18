@@ -12,6 +12,7 @@ namespace Game.WorldMapStuff.Model
         }
 
         public string PlayerName { get; set; }
+        public List<Unit> EnemyUnits { get; set; }
 
         public List<Unit> UnitsGoingIntoBattle;
         

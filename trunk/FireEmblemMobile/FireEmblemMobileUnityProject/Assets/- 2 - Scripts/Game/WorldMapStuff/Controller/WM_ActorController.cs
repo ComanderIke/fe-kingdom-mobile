@@ -13,14 +13,7 @@ namespace Game.WorldMapStuff.Controller
         public WM_Actor actor;
         [SerializeField] private WorldMapPosition currentLocation;
         public IWorldMapUnitInputReceiver inputReceiver { get; set; }
-        void Start()
-        {
-            actor.location = currentLocation;
-            currentLocation.Actor = actor;
-            actor.GameTransformManager.GameObject = gameObject;
-            Debug.Log("TODO START "+gameObject);
-            actor.Faction.AddParty((Party)actor);
-        }
+        
         void OnMouseDown()
         {
             inputReceiver.ActorClicked(actor);

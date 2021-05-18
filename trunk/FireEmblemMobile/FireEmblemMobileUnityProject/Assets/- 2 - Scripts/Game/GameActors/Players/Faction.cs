@@ -42,7 +42,7 @@ namespace Game.GameActors.Players
             Unit.UnitDied += RemoveUnit;
         }
 
-        private void RemoveUnit(Unit unit)
+        public void RemoveUnit(Unit unit)
         {
             if (Units.Contains(unit)) Units.Remove(unit);
         }

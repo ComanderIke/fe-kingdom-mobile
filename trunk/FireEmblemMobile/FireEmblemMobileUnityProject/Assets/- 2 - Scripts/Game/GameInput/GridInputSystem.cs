@@ -44,7 +44,7 @@ namespace Game.GameInput
             if (Active)
             {
                 OnInputStateChanged?.Invoke(Active);
-                Debug.Log(Active ? "Input Activated:" : "Input Deactivated");
+                // Debug.Log(Active ? "Input Activated:" : "Input Deactivated");
             }
         }
         

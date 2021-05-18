@@ -13,7 +13,6 @@ namespace Game.WorldMapStuff.Model.Battle
 
         public void Show(WM_Actor actor)
         {
-            Debug.Log("SHOW ATTACK PREVIEW :)");
             renderer.Show(actor.GameTransformManager.Transform.position);
         }
 

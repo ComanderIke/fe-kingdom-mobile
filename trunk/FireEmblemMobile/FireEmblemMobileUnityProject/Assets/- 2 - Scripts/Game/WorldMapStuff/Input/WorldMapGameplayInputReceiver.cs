@@ -81,11 +81,10 @@ namespace Game.WorldMapStuff.Input
                     ResetInput();
                 }
 
-                Debug.Log("Location clicked with selected actor");
+
             }
             else
             {
-                Debug.Log("Location clicked without selected actor");
                 ResetInput();
                 gameplayInput.DeselectActor();
             }
@@ -106,21 +105,17 @@ namespace Game.WorldMapStuff.Input
 
         private void EnemyActorClicked(WM_Actor actor)
         {
-            Debug.Log("Enemy Party clicked!");
             var selectedActor = selectionDataProvider.SelectedActor;
             if (selectedActor == null)
             {
-                Debug.Log("Select");
                 gameplayInput.SelectActor(actor);
             }
             else 
             {
-                Debug.Log("Selected Actor: "+selectedActor.name);
                 if (actor.location.IsAttackable(selectedActor))
                 {
                     if (selectionDataProvider.GetSelectedAttackTarget() != actor)
                     {
-                        Debug.Log("Preview");
                         selectedActor.ResetPosition();
                         selectionDataProvider.ClearData();
                         selectionDataProvider.SetSelectedAttackTarget(actor);
@@ -129,13 +124,11 @@ namespace Game.WorldMapStuff.Input
                     }
                     else
                     {
-                        Debug.Log("Attack");
                         gameplayInput.AttackEnemyActor(actor);
                     }
                 }
                 else
                 {
-                    Debug.Log("Select2");
                     gameplayInput.SelectActor(actor);
                 }
             }

@@ -16,7 +16,6 @@ namespace Game.WorldMapStuff.Model
         
         public void SetPosition(Vector3 position)
         {
-            Debug.Log("SetPosition"+GameObject);
             GameObject.transform.position = position;
         }
         public Vector3 GetCenterPosition()
