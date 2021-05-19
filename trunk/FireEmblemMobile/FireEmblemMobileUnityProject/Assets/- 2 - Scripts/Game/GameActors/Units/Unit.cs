@@ -107,7 +107,10 @@ namespace Game.GameActors.Units
 
         public IEnumerable<int> AttackRanges => stats.AttackRanges;
         public int MovementRange => stats.Mov;
-        
+        public int MaxSpBars
+        {
+            get => stats.MaxSp / SP_PER_BAR;
+        }
 
         void OnDestroy()
         {

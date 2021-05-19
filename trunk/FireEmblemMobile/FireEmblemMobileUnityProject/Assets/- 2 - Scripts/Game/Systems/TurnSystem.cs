@@ -59,17 +59,29 @@ namespace Game.Mechanics
 
         private void StartPhase()
         {
+           
             if (!factionManager.ActiveFaction.IsPlayerControlled)
             {
+                foreach (var c in factionManager.ActiveFaction.Units)
+                {
+              
+                    c.SpBars++;
+                }
                 Debug.Log("AITurn");
                 gameStateManager.Feed(NextStateTrigger.Transition);
                 //gridGameManager.GameStateManager.Feed(NextStateTrigger.StartEnemyPhase);
             }
             else
             {
+                foreach (var c in factionManager.ActiveFaction.Units)
+                {
+              
+                    c.SpBars++;
+                }
                 Debug.Log("PlayerTurn");
                 gameStateManager.Feed(NextStateTrigger.Transition);
-              
+                
+
             }
            
             
@@ -94,6 +106,7 @@ namespace Game.Mechanics
                 foreach (var c in factionManager.ActiveFaction.Units)
                 {
                     c.TurnStateManager.EndTurn();
+                    
                     //c.gameObject.GetComponent<CharacterScript>().SetSelected(false);
                 }
             }
@@ -116,8 +129,11 @@ namespace Game.Mechanics
             
             //gameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter = null;
             OnEndTurn?.Invoke();
-            if (factionManager.ActivePlayerNumber == 0)
+            if (factionManager.ActivePlayerNumber == 0){
                 TurnCount++;
+                //Debug.Log("Update SP Bars: "+ factionManager.ActiveFaction.Id);
+                
+            }
             //Debug.Log("Calling Start Phase From EndPhase");
             StartPhase();
         }

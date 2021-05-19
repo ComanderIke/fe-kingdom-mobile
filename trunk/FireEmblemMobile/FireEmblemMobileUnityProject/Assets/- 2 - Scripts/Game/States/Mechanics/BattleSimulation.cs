@@ -29,11 +29,11 @@ namespace Game.Mechanics
         public bool DoAttack(IBattleActor attacker, IBattleActor defender)
         {
             int damage = attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defender);
-            int spDamage= attacker.BattleComponent.BattleStats.GetTotalSpDamageAgainstTarget(defender);
+            //int spDamage= attacker.BattleComponent.BattleStats.GetTotalSpDamageAgainstTarget(defender);
             if (attacker == Attacker)
             {
                 AttackerDamage.Add(Math.Min(defender.Hp, damage));
-                AttackerSpDamage.Add(Math.Min(defender.Sp, spDamage));
+                //AttackerSpDamage.Add(Math.Min(defender.Sp, spDamage));
                 if (attacker is Human humanAttacker && humanAttacker.EquippedWeapon != null)
                 {
                     //DefenderSpDamage.Add(Math.Min(attacker.Sp, humanAttacker.EquippedWeapon.Weight));
@@ -45,7 +45,7 @@ namespace Game.Mechanics
             else
             {
                 DefenderDamage.Add(Math.Min(defender.Hp, damage));
-                DefenderSpDamage.Add(Math.Min(defender.Sp, spDamage));
+               // DefenderSpDamage.Add(Math.Min(defender.Sp, spDamage));
                 if (attacker is Human humanAttacker && humanAttacker.EquippedWeapon != null)
                 {
                     //AttackerSpDamage.Add(Math.Min(attacker.Sp, humanAttacker.EquippedWeapon.Weight));
@@ -54,7 +54,7 @@ namespace Game.Mechanics
                 }
             }
             defender.Hp -= damage;
-            defender.Sp -= spDamage;
+          //  defender.Sp -= spDamage;
            
             //if (defender is Human humanDefender && humanDefender.EquippedWeapon != null)
             //{

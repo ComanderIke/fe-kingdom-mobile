@@ -62,15 +62,17 @@ namespace Game.Mechanics
         private static bool DoAttack(IBattleActor attacker, IBattleActor defender)
         {
             defender.BattleComponent.InflictDamage(attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defender), defender);
-            defender.Sp -= attacker.BattleComponent.BattleStats.GetTotalSpDamageAgainstTarget(defender);
-            if (attacker is Human humanAttacker && humanAttacker.EquippedWeapon != null)
-            {
-                attacker.Sp -= humanAttacker.EquippedWeapon.Weight;
-            }
-            if (defender is Human humanDefender && humanDefender.EquippedWeapon != null)
-            {
-                defender.Sp -= humanDefender.EquippedWeapon.Weight;
-            }
+            
+            
+            // defender.Sp -= attacker.BattleComponent.BattleStats.GetTotalSpDamageAgainstTarget(defender);
+            // if (attacker is Human humanAttacker && humanAttacker.EquippedWeapon != null)
+            // {
+            //     attacker.Sp -= humanAttacker.EquippedWeapon.Weight;
+            // }
+            // if (defender is Human humanDefender && humanDefender.EquippedWeapon != null)
+            // {
+            //     defender.Sp -= humanDefender.EquippedWeapon.Weight;
+            // }
             return defender.Hp > 0;
         }
 
@@ -82,6 +84,8 @@ namespace Game.Mechanics
 
         public void EndBattle()
         {
+            defender.SpBars--;
+            attacker.SpBars--;
             if (!attacker.IsAlive())
             {
                 attacker.Die();

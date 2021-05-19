@@ -13,6 +13,7 @@ namespace Game.GameInput
         Stats Stats { get; set; }
         int Hp { get; set; }
         int Sp { get; set; }
+        int SpBars{ get; set; }
         Faction Faction { get; set; }
         ExperienceManager ExperienceManager { get; }
         TurnStateManager TurnStateManager { get; set; }

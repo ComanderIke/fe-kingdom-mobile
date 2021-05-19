@@ -65,7 +65,7 @@ namespace Game.GUI
             expBar.SetFillAmount(unit.ExperienceManager.Exp);
             hpBar.SetValue(unit.Hp, unit.Stats.MaxHp);
            // spBar.SetValue(unit.Sp, unit.Stats.MaxSp);
-            spBars.SetValue(unit.SpBars);
+            spBars.SetValue(unit.SpBars, unit.MaxSpBars);
             faceSprite.sprite = unit.visuals.CharacterSpriteSet.FaceSprite;
         }
 

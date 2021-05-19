@@ -31,6 +31,8 @@ namespace Game.Mechanics.Battle
         public int GetAttackCountAgainst(IBattleActor c)
         {
             int attackCount = 1;
+            if (owner.SpBars == 0)
+                return 0;
             //if (owner.Stats.Spd - (c.Stats.Spd) > 0)
             //{
             //    attackCount++;

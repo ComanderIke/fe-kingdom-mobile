@@ -115,7 +115,7 @@ namespace Game.GameActors.Units.OnGameObject
         private void SpBarsValueChanged()
         {
             if (spBars != null && unit != null)
-                spBars.SetValue(unit.SpBars);
+                spBars.SetValue(unit.SpBars, unit.MaxSpBars);
         }
       
 
