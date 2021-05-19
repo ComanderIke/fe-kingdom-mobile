@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Game.GameActors.Units;
+using Game.GameActors.Units.OnGameObject;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,8 +21,10 @@ namespace Game.GUI
         private TextMeshProUGUI characterName;
         [SerializeField]
         private IStatBar hpBar;
+       // [SerializeField]
+      //  private IStatBar spBar;
         [SerializeField]
-        private IStatBar spBar;
+        private ISPBarRenderer spBars;
 
         [SerializeField] private ExpBarController expBar = default;
         [SerializeField] private TextMeshProUGUI expLabel = default;
@@ -61,7 +64,8 @@ namespace Game.GUI
             expBar.SetText(unit.ExperienceManager.Exp);
             expBar.SetFillAmount(unit.ExperienceManager.Exp);
             hpBar.SetValue(unit.Hp, unit.Stats.MaxHp);
-            spBar.SetValue(unit.Sp, unit.Stats.MaxSp);
+           // spBar.SetValue(unit.Sp, unit.Stats.MaxSp);
+            spBars.SetValue(unit.SpBars);
             faceSprite.sprite = unit.visuals.CharacterSpriteSet.FaceSprite;
         }
 

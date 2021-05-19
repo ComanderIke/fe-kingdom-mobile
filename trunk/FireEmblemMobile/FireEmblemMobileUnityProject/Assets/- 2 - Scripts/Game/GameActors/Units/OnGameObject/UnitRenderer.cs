@@ -15,6 +15,7 @@ namespace Game.GameActors.Units.OnGameObject
 
         [SerializeField] private StatsBarOnMap hpBar;
         [SerializeField] private StatsBarOnMap spBar;
+        [SerializeField] private ISPBarRenderer spBars;
         [SerializeField] private GameObject pointLight;
         
         [SerializeField] private Image EquippedItemIcon;
@@ -28,10 +29,12 @@ namespace Game.GameActors.Units.OnGameObject
         {
             Unit.HpValueChanged += HpValueChanged;
             Unit.SpValueChanged += SpValueChanged;
+            Unit.SpBarsValueChanged += SpBarsValueChanged;
             unit.TurnStateManager.UnitWaiting += SetWaitingSprite;
             Human.OnEquippedWeapon += OnEquippedWeapon;
             HpValueChanged();
             SpValueChanged();
+            SpBarsValueChanged();
         }
         public void Init()
         {
@@ -40,6 +43,7 @@ namespace Game.GameActors.Units.OnGameObject
             sprite.material.SetColor("_OutLineColor", ColorManager.Instance.GetFactionColor(unit.Faction.Id)*intensity);
             //spBar.GetComponent<Image>().color = ColorManager.Instance.GetFactionColor(Unit.Faction.Id);
             HpValueChanged();
+            SpBarsValueChanged();
             SpValueChanged();
             OnEquippedWeapon();
             if(unit.Faction.Id != GridGameManager.Instance.FactionManager.ActivePlayerNumber)
@@ -60,6 +64,7 @@ namespace Game.GameActors.Units.OnGameObject
         {
             Unit.HpValueChanged -= HpValueChanged;
             Unit.SpValueChanged -= SpValueChanged;
+            Unit.SpBarsValueChanged -= SpBarsValueChanged;
             unit.TurnStateManager.UnitWaiting -= SetWaitingSprite;
             Human.OnEquippedWeapon -= OnEquippedWeapon;
         }
@@ -106,6 +111,11 @@ namespace Game.GameActors.Units.OnGameObject
         {
             if (spBar != null && unit != null)
                 spBar.SetValue(unit.Sp, unit.Stats.MaxSp);
+        }
+        private void SpBarsValueChanged()
+        {
+            if (spBars != null && unit != null)
+                spBars.SetValue(unit.SpBars);
         }
       
 

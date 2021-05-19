@@ -24,7 +24,8 @@ namespace Game.GameActors.Units
 
         [HideInInspector] private int hp;
         [HideInInspector] private int sp;
-
+        [HideInInspector] private int spBars;
+        private const int SP_PER_BAR = 5;
         [SerializeField]
         private Stats stats;
         [SerializeField]
@@ -80,6 +81,19 @@ namespace Game.GameActors.Units
             }
         }
 
+
+        public int SpBars
+        {
+            get => spBars;
+            set
+            {
+                spBars = value > stats.MaxSp/SP_PER_BAR ? stats.MaxSp/SP_PER_BAR : value;
+
+                if (spBars <= 0) spBars = 0;
+                SpBarsValueChanged?.Invoke();
+            }
+        }
+
         public int Sp
         {
             get => sp;
@@ -125,6 +139,7 @@ namespace Game.GameActors.Units
 
             Hp = stats.MaxHp;
             Sp = stats.MaxSp;
+            SpBars = Sp / SP_PER_BAR;
             ExperienceManager.ExpGained += ExpGained;
         }
 
@@ -219,6 +234,8 @@ namespace Game.GameActors.Units
 
         public static event Action HpValueChanged;
         public static event Action SpValueChanged;
+        public static event Action SpBarsValueChanged;
+
 
 
 

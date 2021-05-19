@@ -197,6 +197,7 @@ namespace Game.GameInput
         }
         private void EnemyClicked(IGridActor enemyActor)
         {
+            Debug.Log("Enemy Clikced!");
             var selectedActor = selectionDataProvider.SelectedActor;
             if (selectedActor == null)
             {
@@ -212,11 +213,13 @@ namespace Game.GameInput
                         var gridPos = new GridPosition((int)selectedActor.GameTransformManager.GetPosition().x, (int)selectedActor.GameTransformManager.GetPosition().y);
                         if (selectedActor.GridComponent.CanAttackFrom(gridPos, enemyActor.GridComponent.GridPosition))
                         {
+                            Debug.Log("Can Attack from Position");
                             if(selectedActor is IBattleActor battleActor&& enemyActor is IBattleActor enemyBattleActor)
                                 gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, gridPos);
                         }
                         else if (selectedActor.GridComponent.CanAttack(enemyActor.GridComponent.GridPosition.X, enemyActor.GridComponent.GridPosition.Y))
                         {
+                            Debug.Log("Can Attack From Position2");
                             selectedActor.GridComponent.ResetPosition();
                             selectionDataProvider.ClearData();
                             inputPathManager.Reset();
@@ -226,6 +229,7 @@ namespace Game.GameInput
                         }
                         else
                         {
+                            Debug.Log("Dont know");
                             selectedActor.GridComponent.ResetPosition();
                             inputPathManager.CalculatePathToPosition(selectedActor, new Vector2(enemyActor.GridComponent.GridPosition.X, enemyActor.GridComponent.GridPosition.Y));
                             if (!inputPathManager.IsMovementPathEmpty())
