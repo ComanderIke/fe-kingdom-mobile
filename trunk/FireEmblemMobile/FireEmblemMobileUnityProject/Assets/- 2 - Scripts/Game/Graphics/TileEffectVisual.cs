@@ -40,7 +40,7 @@ namespace Game.Graphics
             {
                 Create(tile.GetTransform());
             }
-            tileEffectGO.transform.localPosition =  Vector3.zero;
+            tileEffectGO.transform.localPosition =  new Vector3(0.0f,0.0f,0);
         }
 
         private void Create(Transform parentTransform)

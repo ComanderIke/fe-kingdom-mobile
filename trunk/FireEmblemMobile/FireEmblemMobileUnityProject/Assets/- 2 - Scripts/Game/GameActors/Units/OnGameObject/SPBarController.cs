@@ -9,7 +9,9 @@ namespace Game.GameActors.Units.OnGameObject
         public GameObject SPBarPrefab;
         public GameObject SPBarEmptyPrefab;
         public Transform Parent;
-// Start is called before the first frame update
+
+        private static readonly int Empty = Animator.StringToHash("Empty");
+        // Start is called before the first frame update
    
         public override void SetValue(int value, int maxValue)
         {
@@ -23,7 +25,12 @@ namespace Game.GameActors.Units.OnGameObject
             }
             for (int i = value; i < maxValue; i++)
             {
-                Instantiate(SPBarEmptyPrefab, Parent, false);
+                
+                var go= Instantiate(SPBarEmptyPrefab, Parent, false);
+                if (value == 0)
+                {
+                    go.GetComponent<Animator>().SetTrigger(Empty);
+                }
             }
         }
     }

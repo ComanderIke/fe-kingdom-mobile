@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Game.GameActors.Units;
+using Game.GameActors.Units.OnGameObject;
 using UnityEngine;
 
 namespace Game.Graphics
@@ -9,9 +10,11 @@ namespace Game.Graphics
     public class UnitEffectVisual :  IUnitEffectVisual
     {
         private GameObject attackableEnemyEffect;
+        private GameObject noStaminaVfx;
         [SerializeField]
         private GameObject attackableEnemyPrefab;
-        
+        [SerializeField]
+        private GameObject noStaminaVfxPrefab;
 
  
         public override void ShowAttackable(IGridActor actor)
@@ -21,11 +24,11 @@ namespace Game.Graphics
 
                 attackableEnemyEffect = GameObject.Instantiate(attackableEnemyPrefab,
                     actor.GameTransformManager.Transform);
-                attackableEnemyEffect.transform.localPosition = Vector3.zero;
+                attackableEnemyEffect.transform.position = actor.GameTransformManager.GetCenterPosition();
             }
             else
             {
-                attackableEnemyEffect.transform.localPosition = Vector3.zero;
+                attackableEnemyEffect.transform.position = actor.GameTransformManager.GetCenterPosition();
                 attackableEnemyEffect.SetActive(true);
             }
         }
@@ -36,6 +39,28 @@ namespace Game.Graphics
                 attackableEnemyEffect.SetActive(false);
             }
         }
+        public override void HideNoStamina()
+        {
+            if (noStaminaVfx != null)
+            {
+                noStaminaVfx.SetActive(false);
+            }
+        }
 
+        public override void ShowNoStamina(IGridActor actor)
+        {
+            if (noStaminaVfx == null)
+            {
+
+                noStaminaVfx = GameObject.Instantiate(noStaminaVfxPrefab,
+                    actor.GameTransformManager.Transform);
+                noStaminaVfx.transform.localPosition = Vector3.zero;
+            }
+            else
+            {
+                noStaminaVfx.transform.localPosition = Vector3.zero;
+                noStaminaVfx.SetActive(true);
+            }
+        }
     }
 }

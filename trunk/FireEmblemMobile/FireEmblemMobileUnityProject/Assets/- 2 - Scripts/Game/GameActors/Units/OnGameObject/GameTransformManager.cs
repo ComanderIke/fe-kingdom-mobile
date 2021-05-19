@@ -22,7 +22,7 @@ namespace Game.GameActors.Units.OnGameObject
         }
         public Vector3 GetCenterPosition()
         {
-            return GameObject.transform.localPosition+ new Vector3(0.5f,0.5f,0);
+            return GameObject.transform.position+ new Vector3(0.5f,0.5f,0);
         }
         
         public Vector3 GetPosition()

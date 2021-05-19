@@ -89,7 +89,21 @@ namespace Game.GameActors.Units
             {
                 spBars = value > stats.MaxSp/SP_PER_BAR ? stats.MaxSp/SP_PER_BAR : value;
 
-                if (spBars <= 0) spBars = 0;
+                if (spBars <= 0)
+                {
+                    spBars = 0;
+                    foreach (var unitEffectVisual in unitEffectVisuals)
+                    {
+                        unitEffectVisual.ShowNoStamina(this);
+                    }
+                }
+                else
+                {
+                    foreach (var unitEffectVisual in unitEffectVisuals)
+                    {
+                        unitEffectVisual.HideNoStamina();
+                    }
+                }
                 SpBarsValueChanged?.Invoke();
             }
         }
