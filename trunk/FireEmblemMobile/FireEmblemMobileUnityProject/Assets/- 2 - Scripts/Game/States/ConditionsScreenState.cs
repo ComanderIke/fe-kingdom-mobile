@@ -11,7 +11,7 @@ namespace Game.States
 {
     public class ConditionsScreenState : GameState<NextStateTrigger>, IDependecyInjection
     {
-        private const float DELAY = 1.0f;
+        private const float DELAY = 0.5f;
         private float time = 0;
         public Chapter chapter;
         

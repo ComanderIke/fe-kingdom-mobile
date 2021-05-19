@@ -100,7 +100,7 @@ namespace Game.GUI
             if(actor is Unit u)
                 enemyCharacterUI.Show(u);
         }
-        private void DeselectedCharacter()
+        private void DeselectedCharacter(IGridActor actor)
         {
             characterUI.Hide();
             enemyCharacterUI.Hide();

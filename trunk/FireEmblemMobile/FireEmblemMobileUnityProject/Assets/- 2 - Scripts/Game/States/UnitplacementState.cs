@@ -103,12 +103,27 @@ namespace Game.States
                 GameObject.Destroy(spawn.gameObject);
             }
 
-            foreach (var unit in Player.Instance.Units)
-            {
+            foreach (var unit in factionManager.Factions[0].Units)
+            { 
                 var tile= gridSystem.GetTile(unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y);
                tile.tileVfx.ShowSwapable(tile);
                //tile.TileRenderer.SwapVisual();
             }
+
+            UnitSelectionSystem.OnDeselectCharacter += ShowSwapable;
+            UnitSelectionSystem.OnSelectedCharacter += HideSwapable;
+        }
+
+        private void ShowSwapable(IGridActor unit)
+        {
+            var tile= gridSystem.GetTile(unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y);
+            tile.tileVfx.ShowSwapable(tile);
+        }
+
+        private void HideSwapable(IGridActor unit)
+        {
+            var tile= gridSystem.GetTile(unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y);
+            tile.tileVfx.Hide(tile);
         }
 
         void SwapUnits(Unit unit, Unit unit2)
@@ -158,7 +173,6 @@ namespace Game.States
             if (BattleTransferData.Instance.UnitsGoingIntoBattle == null || BattleTransferData.Instance.UnitsGoingIntoBattle.Count == 0)
             {
                 Debug.Log("Create Demo Characters");
-                Debug.Log("WHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY??????????????");
                 var unit1 = DataScript.Instance.GetHuman("Leila");
                 var unit2 = DataScript.Instance.GetHuman("Flora");
                 var unit3 = DataScript.Instance.GetHuman("Eldric");
@@ -201,11 +215,13 @@ namespace Game.States
             UnitPlacementUI.Hide();
             var gridSystem = GridGameManager.Instance.GetSystem<GridSystem>();
             UnitPlacementInputSystem.unitDroppedOnOtherUnit -= SwapUnits;
-            foreach (var unit in Player.Instance.Units)
+            foreach (var unit in   factionManager.Factions[0].Units)
             {
                 var tile= gridSystem.GetTile(unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y);
                 tile.tileVfx.Hide(tile);
             }
+            UnitSelectionSystem.OnDeselectCharacter -= ShowSwapable;
+            UnitSelectionSystem.OnSelectedCharacter -= HideSwapable;
         }
 
         public override GameState<NextStateTrigger> Update()

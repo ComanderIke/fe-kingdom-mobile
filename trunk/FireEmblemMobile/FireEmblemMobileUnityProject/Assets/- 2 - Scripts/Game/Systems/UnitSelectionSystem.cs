@@ -9,7 +9,7 @@ namespace Game.Mechanics
 {
     public class UnitSelectionSystem : MonoBehaviour, IEngineSystem
     {
-        public static event Action OnDeselectCharacter;
+        public static event Action<IGridActor> OnDeselectCharacter;
 
         public static event Action<IGridActor> OnSelectedCharacter;
 
@@ -59,7 +59,7 @@ namespace Game.Mechanics
                 SelectedCharacter.GridComponent.ResetPosition();
                 SelectedCharacter.TurnStateManager.IsSelected = false;
             }
-            OnDeselectCharacter?.Invoke();
+            OnDeselectCharacter?.Invoke(SelectedCharacter);
             SelectedCharacter = null;
         }
 

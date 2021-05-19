@@ -13,10 +13,10 @@ namespace Game.GUI.Text
         public Image BackGround;
         public Material []textMaterials;
         public string[] phaseTexts;
-        private const float FADE_IN_DURATION =  0.25f;
-        private const float FADE_OUT_DURATION = 0.25f;
-        private const float TEXT_FADE_IN_DURATION = 0.55f;
-        private const float TEXT_FADE_OUT_DURATION = 0.55f;
+        private const float FADE_IN_DURATION =  0.20f;
+        private const float FADE_OUT_DURATION = 0.20f;
+        private const float TEXT_FADE_IN_DURATION = 0.50f;
+        private const float TEXT_FADE_OUT_DURATION = 0.50f;
 
         void Awake()
         {

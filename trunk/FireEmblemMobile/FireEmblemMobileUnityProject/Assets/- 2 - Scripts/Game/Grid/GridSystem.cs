@@ -43,7 +43,7 @@ namespace Game.Map
 
         public void Deactivate()
         {
-            UnitSelectionSystem.OnDeselectCharacter -= HideMoveRange;
+            UnitSelectionSystem.OnDeselectCharacter -=  (IGridActor u) => HideMoveRange();
             UnitSelectionSystem.OnSelectedCharacter -= SelectedCharacter;
             UnitSelectionSystem.OnEnemySelected -= OnEnemySelected;
             UnitSelectionSystem.OnSelectedInActiveCharacter -= OnEnemySelected;
@@ -53,7 +53,7 @@ namespace Game.Map
 
         public void Activate()
         {
-            UnitSelectionSystem.OnDeselectCharacter += HideMoveRange;
+            UnitSelectionSystem.OnDeselectCharacter += (IGridActor u) => HideMoveRange();
             UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
             UnitSelectionSystem.OnEnemySelected += OnEnemySelected;
             UnitSelectionSystem.OnSelectedInActiveCharacter += OnEnemySelected;
