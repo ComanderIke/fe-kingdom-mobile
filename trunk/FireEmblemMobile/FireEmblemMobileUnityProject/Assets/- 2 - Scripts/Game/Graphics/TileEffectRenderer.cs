@@ -22,7 +22,6 @@ public class TileEffectRenderer : MonoBehaviour, ITileEffectVisualRenderer
     }
     public void ShowSwapable(Tile tile)
     {
-        Debug.Log("Show Swapable" + tile);
 
         if (swapAbleVFXs.ContainsKey(tile))
         {

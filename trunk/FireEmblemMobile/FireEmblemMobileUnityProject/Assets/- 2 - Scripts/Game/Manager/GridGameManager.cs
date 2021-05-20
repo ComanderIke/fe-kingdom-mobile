@@ -101,6 +101,7 @@ namespace Game.Manager
                 new BattleSystem(),
                 new MoveSystem(),
                 new UnitProgressSystem(),
+                new PopUpTextSystem(),
                 FindObjectOfType<UnitSelectionSystem>()
             };
 

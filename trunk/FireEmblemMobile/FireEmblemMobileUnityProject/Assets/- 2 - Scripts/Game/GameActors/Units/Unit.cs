@@ -74,8 +74,9 @@ namespace Game.GameActors.Units
             get => hp;
             set
             {
+              
                 hp = value > stats.MaxHp ? stats.MaxHp : value;
-
+              
                 if (hp <= 0) hp = 0;
                 HpValueChanged?.Invoke();
             }
@@ -273,9 +274,9 @@ namespace Game.GameActors.Units
 
         public static event OnExpGainedEvent OnExpGained;
 
-        public delegate void OnUnitDamagedEvent(Unit unit, int damage);
+        public delegate void OnUnitDamagedEvent(Unit unit, int damage,bool magic, bool crit, bool eff);
 
-        public static event OnUnitDamagedEvent OnUnitDamaged;
+        public static OnUnitDamagedEvent OnUnitDamaged;
         public delegate void LevelupEvent(Unit unit);
         public LevelupEvent OnLevelUp;
     }

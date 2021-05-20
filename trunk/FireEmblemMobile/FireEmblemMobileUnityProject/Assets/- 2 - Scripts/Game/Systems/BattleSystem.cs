@@ -61,7 +61,7 @@ namespace Game.Mechanics
 
         private static bool DoAttack(IBattleActor attacker, IBattleActor defender)
         {
-            defender.BattleComponent.InflictDamage(attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defender), defender);
+            defender.BattleComponent.InflictDamage(attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defender),false, false,false, defender);
             
             
             // defender.Sp -= attacker.BattleComponent.BattleStats.GetTotalSpDamageAgainstTarget(defender);
