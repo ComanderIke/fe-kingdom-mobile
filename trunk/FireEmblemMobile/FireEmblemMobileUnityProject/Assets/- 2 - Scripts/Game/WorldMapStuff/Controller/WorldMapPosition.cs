@@ -16,28 +16,60 @@ public class WorldMapPosition : MonoBehaviour
 
 
     private List<Road> roads;
-
-    private WM_Actor actor;
-    public WM_Actor Actor
+    
+    private List<WM_Actor> actors;
+    public List<WM_Actor> Actors
     {
         get
         {
-            return actor;
+            if (actors == null)
+                actors = new List<WM_Actor>();
+            return actors;
+        }
+    }
+
+    public void AddActor(WM_Actor actor)
+    {
+        actors.Add(actor);
+    }
+    public void RemoveActor(WM_Actor actor)
+    {
+        actors.Remove(actor);
+    }
+    public WM_Actor Actor
+    {
+        get
+        {   if(actors != null&& actors.Count>0)
+                return actors[0];
+            return null;
         }
         set
         {
-            if(actor!=null)
-                actor.TurnStateManager.onSelected -= OnSelectedActor;
-            actor = value;
-            if (actor != null)
-                actor.TurnStateManager.onSelected += OnSelectedActor;
+            if (actors == null || actors.Count == 0)
+            {
+                
+                actors = new List<WM_Actor>();
+                actors.Add(value);
+            }
+            else
+            {
+                if(actors[0]!=null)
+                    actors[0].TurnStateManager.onSelected -= OnSelectedActor;
+                actors[0] = value;
+            }
+            if (actors[0] != null)
+                actors[0].TurnStateManager.onSelected += OnSelectedActor;
+           
+            
         }
     }
 
     public void OnDestroy(){
-        if(actor!=null)
-            actor.TurnStateManager.onSelected -= OnSelectedActor;
+        if(Actor!=null)
+            Actor.TurnStateManager.onSelected -= OnSelectedActor;
     }
+
+   
 
     public  IWorldMapLocationInputReceiver inputReceiver { get; set; }
 
@@ -138,9 +170,9 @@ public class WorldMapPosition : MonoBehaviour
 
   
 
-    public bool IsFree()
+    public bool HasSpace()
     {
-        return actor == null;
+        return Actors.Count < 2;
     }
 
     public bool IsReachable(WM_Actor selectedActor)

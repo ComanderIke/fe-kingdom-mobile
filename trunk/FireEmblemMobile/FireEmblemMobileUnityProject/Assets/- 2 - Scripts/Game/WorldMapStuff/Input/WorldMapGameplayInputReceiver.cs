@@ -42,7 +42,7 @@ namespace Game.WorldMapStuff.Input
         }
         public void LocationClicked(WorldMapPosition location)
         {
-            if(!location.IsFree())
+            if(!location.HasSpace())
             {
                 return;
             }

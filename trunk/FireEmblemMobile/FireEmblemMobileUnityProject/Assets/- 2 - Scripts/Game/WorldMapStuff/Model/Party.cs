@@ -37,5 +37,15 @@ namespace Game.WorldMapStuff.Model
         {
             Debug.Log("ResetLocation");
         }
+
+        public Party Split()
+        {
+            return Instantiate(this);
+        }
+
+        public void Join(Party otherParty)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
