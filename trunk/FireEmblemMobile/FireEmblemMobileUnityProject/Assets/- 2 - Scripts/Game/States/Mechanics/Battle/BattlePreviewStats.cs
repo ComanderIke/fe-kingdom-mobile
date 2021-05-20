@@ -22,6 +22,9 @@ namespace Game.Mechanics.Battle
         public int AttackCount;
         public int CurrentHp;
         public int MaxHp;
+        public int CurrentSpBars;
+        public int AfterSpBars;
+        public int MaxSpBars;
         public int AfterBattleHp;
         public List<int> IncomingDamage;
         public int CurrentSp;
@@ -29,7 +32,7 @@ namespace Game.Mechanics.Battle
         public int AfterBattleSp;
         public List<int> IncomingSpDamage;
 
-        public BattlePreviewStats(int attack, int speed, DamageType damageType, int defense, int skill, int damage, int attackCount, int currentHp, int maxHp, int afterBattleHp, List<int> incomingDamage, int currentSp, int maxSp, int afterBattleSp, List<int> incomingSpDamage)
+        public BattlePreviewStats(int attack, int speed, DamageType damageType, int defense, int skill, int damage, int attackCount, int currentHp, int maxHp, int afterBattleHp, List<int> incomingDamage, int currentSp, int maxSp, int afterBattleSp, List<int> incomingSpDamage, int currentSpBars,int afterSpBars, int maxSpBars)
         {
             Attack = attack;
             Speed = speed;
@@ -46,6 +49,11 @@ namespace Game.Mechanics.Battle
             MaxSp = maxSp;
             AfterBattleSp = afterBattleSp;
             IncomingSpDamage = incomingSpDamage;
+            CurrentSpBars = currentSpBars;
+            AfterSpBars = afterSpBars;
+            MaxSpBars = maxSpBars;
         }
+
+        
     }
 }

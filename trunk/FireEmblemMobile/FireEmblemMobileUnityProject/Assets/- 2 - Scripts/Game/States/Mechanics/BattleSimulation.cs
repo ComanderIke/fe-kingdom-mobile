@@ -75,11 +75,11 @@ namespace Game.Mechanics
                     {
                         
                         attackerAttackCount--;
-                        if (Defender.Sp <= 0)
+                        if (Defender.SpBars <= 0)
                         {
                             defenderAttackCount = 0;
                         }
-                        if (Attacker.Sp <= 0)
+                        if (Attacker.SpBars <= 0)
                         {
                             attackerAttackCount = 0;
                         }
@@ -96,11 +96,11 @@ namespace Game.Mechanics
                     {
                        
                         defenderAttackCount--;
-                        if (Defender.Sp <= 0)
+                        if (Defender.SpBars <= 0)
                         {
                             defenderAttackCount = 0;
                         }
-                        if (Attacker.Sp <= 0)
+                        if (Attacker.SpBars <= 0)
                         {
                             attackerAttackCount = 0;
                         }
@@ -111,6 +111,9 @@ namespace Game.Mechanics
                     }
                 }
             }
+
+            Attacker.SpBars--;
+            Defender.SpBars--;
         }
 
         

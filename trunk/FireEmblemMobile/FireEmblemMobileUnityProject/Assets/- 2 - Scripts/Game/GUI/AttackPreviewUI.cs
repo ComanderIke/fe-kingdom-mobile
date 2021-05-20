@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Game.GameActors.Units;
+using Game.GameActors.Units.OnGameObject;
 using Game.GameInput;
 using Game.GUI.Text;
 using Game.Mechanics.Battle;
@@ -29,6 +30,7 @@ namespace Game.GUI
         [SerializeField] private GameObject attackCountX = default;
         [SerializeField] private AttackPreviewStatBar hpBar = default;
         [SerializeField] private AttackPreviewStatBar spBar = default;
+        [SerializeField] private ISPBarRenderer spBars;
         [Header("Right")]
         [SerializeField] private GameObject right = default;
         [SerializeField] private TextMeshProUGUI atkValueRight = default;
@@ -42,6 +44,7 @@ namespace Game.GUI
         [SerializeField] private GameObject attackCountRightX = default;
         [SerializeField] private AttackPreviewStatBar hpBarRight = default;
         [SerializeField] private AttackPreviewStatBar spBarRight = default;
+        [SerializeField] private ISPBarRenderer spBarsRight;
         RawImageUVOffsetAnimation[] uvAnimations;
         UILoopPingPongFade[] fadeAnimations;
         ScaleAnimation[] scaleAnimations;
@@ -73,13 +76,16 @@ namespace Game.GUI
              attackCount.gameObject.SetActive(battlePreview.AttackerStats.AttackCount > 1);
              attackCount.text = "" + battlePreview.AttackerStats.AttackCount;
              hpBar.UpdateValues(battlePreview.AttackerStats.MaxHp, battlePreview.AttackerStats.CurrentHp, battlePreview.AttackerStats.AfterBattleHp, battlePreview.AttackerStats.IncomingDamage);
-             spBar.UpdateValues(battlePreview.AttackerStats.MaxSp, battlePreview.AttackerStats.CurrentSp, battlePreview.AttackerStats.AfterBattleSp, battlePreview.AttackerStats.IncomingSpDamage);
+             spBars.SetPreviewValue(battlePreview.AttackerStats.CurrentSpBars,battlePreview.AttackerStats.AfterSpBars,battlePreview.AttackerStats.MaxSpBars);
+             //spBar.UpdateValues(battlePreview.AttackerStats.MaxSp, battlePreview.AttackerStats.CurrentSp, battlePreview.AttackerStats.AfterBattleSp, battlePreview.AttackerStats.IncomingSpDamage);
              dmgValueRight.text = "" + battlePreview.DefenderStats.Damage;
              attackCountRightX.SetActive(battlePreview.DefenderStats.AttackCount > 1);
              attackCountRight.gameObject.SetActive(battlePreview.DefenderStats.AttackCount > 1);
              attackCountRight.text = "" + battlePreview.DefenderStats.AttackCount;
              hpBarRight.UpdateValues(battlePreview.DefenderStats.MaxHp, battlePreview.DefenderStats.CurrentHp, battlePreview.DefenderStats.AfterBattleHp, battlePreview.DefenderStats.IncomingDamage);
-             spBarRight.UpdateValues(battlePreview.DefenderStats.MaxSp, battlePreview.DefenderStats.CurrentSp, battlePreview.DefenderStats.AfterBattleSp, battlePreview.DefenderStats.IncomingSpDamage);
+             spBarsRight.SetPreviewValue(battlePreview.DefenderStats.CurrentSpBars,battlePreview.DefenderStats.AfterSpBars,battlePreview.DefenderStats.MaxSpBars);
+             //spBarRight.UpdateValues(battlePreview.DefenderStats.MaxSp, battlePreview.DefenderStats.CurrentSp, battlePreview.DefenderStats.AfterBattleSp, battlePreview.DefenderStats.IncomingSpDamage);
+            
              faceSpriteRight.color = new Color(1, 1, 1, 1);
 
              //spdValue.text = "" + battlePreview.Attacker.Speed;

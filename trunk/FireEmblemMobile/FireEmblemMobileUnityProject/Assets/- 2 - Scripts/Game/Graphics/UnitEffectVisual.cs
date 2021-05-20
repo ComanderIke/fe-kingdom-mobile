@@ -20,7 +20,8 @@ namespace Game.Graphics
  
         public override void ShowAttackable(IGridActor actor)
         {
-          
+            if (actor.GameTransformManager.GameObject == null)
+                return;
             if (attackableEnemyEffect == null)
             {
 
@@ -51,6 +52,8 @@ namespace Game.Graphics
 
         public override void ShowNoStamina(IGridActor actor)
         {
+            if (actor.GameTransformManager.GameObject == null)
+                return;
             if (noStaminaVfx == null)
             {
 

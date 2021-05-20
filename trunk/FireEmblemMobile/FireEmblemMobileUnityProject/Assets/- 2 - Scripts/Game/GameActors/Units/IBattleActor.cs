@@ -14,6 +14,7 @@ namespace Game.GameInput
         int Hp { get; set; }
         int Sp { get; set; }
         int SpBars{ get; set; }
+        int MaxSpBars { get; }
         Faction Faction { get; set; }
         ExperienceManager ExperienceManager { get; }
         TurnStateManager TurnStateManager { get; set; }
