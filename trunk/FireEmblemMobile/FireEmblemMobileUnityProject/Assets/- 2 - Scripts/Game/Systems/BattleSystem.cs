@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Units;
+﻿using System.Runtime.InteropServices;
+using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
 using Game.GameInput;
 using Game.GUI;
@@ -61,7 +62,11 @@ namespace Game.Mechanics
 
         private static bool DoAttack(IBattleActor attacker, IBattleActor defender)
         {
-            defender.BattleComponent.InflictDamage(attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defender),false, false,false, defender);
+            bool crit = defender.SpBars == 0;
+            bool magic = attacker.BattleComponent.BattleStats.GetDamageType() == DamageType.Magic;
+            bool eff = false;
+
+            defender.BattleComponent.InflictDamage(attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defender),magic, crit,eff, defender);
             
             
             // defender.Sp -= attacker.BattleComponent.BattleStats.GetTotalSpDamageAgainstTarget(defender);
@@ -115,9 +120,9 @@ namespace Game.Mechanics
             battleSimulation = new BattleSimulation(attacker, defender);
             battleSimulation.StartBattle();
 
-            battlePreview.AttackerStats = new BattlePreviewStats(attacker.BattleComponent.BattleStats.GetDamage(), attacker.Stats.Spd, defender.BattleComponent.BattleStats.IsPhysical(), defender.BattleComponent.BattleStats.IsPhysical() ? attacker.Stats.Def : attacker.Stats.Res, attacker.Stats.Skl, attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defender), attacker.BattleComponent.BattleStats.GetAttackCountAgainst(defender), attacker.Hp, attacker.Stats.MaxHp, battleSimulation.Attacker.Hp, battleSimulation.DefenderDamage, attacker.Sp, attacker.Stats.MaxSp, battleSimulation.Attacker.Sp, battleSimulation.DefenderSpDamage);
+            battlePreview.AttackerStats = new BattlePreviewStats(attacker.BattleComponent.BattleStats.GetDamage(), attacker.Stats.Spd, defender.BattleComponent.BattleStats.GetDamageType(), defender.BattleComponent.BattleStats.GetDamageType()==DamageType.Physical ? attacker.Stats.Def : attacker.Stats.Res, attacker.Stats.Skl, attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defender), attacker.BattleComponent.BattleStats.GetAttackCountAgainst(defender), attacker.Hp, attacker.Stats.MaxHp, battleSimulation.Attacker.Hp, battleSimulation.DefenderDamage, attacker.Sp, attacker.Stats.MaxSp, battleSimulation.Attacker.Sp, battleSimulation.DefenderSpDamage);
 
-            battlePreview.DefenderStats = new BattlePreviewStats(defender.BattleComponent.BattleStats.GetDamage(), defender.Stats.Spd, attacker.BattleComponent.BattleStats.IsPhysical(), attacker.BattleComponent.BattleStats.IsPhysical() ? defender.Stats.Def : defender.Stats.Res, defender.Stats.Skl, defender.BattleComponent.BattleStats.GetDamageAgainstTarget(attacker), defender.BattleComponent.BattleStats.GetAttackCountAgainst(attacker), defender.Hp, defender.Stats.MaxHp, battleSimulation.Defender.Hp, battleSimulation.AttackerDamage, defender.Sp, defender.Stats.MaxSp, battleSimulation.Defender.Sp, battleSimulation.AttackerSpDamage);
+            battlePreview.DefenderStats = new BattlePreviewStats(defender.BattleComponent.BattleStats.GetDamage(), defender.Stats.Spd, attacker.BattleComponent.BattleStats.GetDamageType(), attacker.BattleComponent.BattleStats.GetDamageType()==DamageType.Physical? defender.Stats.Def : defender.Stats.Res, defender.Stats.Skl, defender.BattleComponent.BattleStats.GetDamageAgainstTarget(attacker), defender.BattleComponent.BattleStats.GetAttackCountAgainst(attacker), defender.Hp, defender.Stats.MaxHp, battleSimulation.Defender.Hp, battleSimulation.AttackerDamage, defender.Sp, defender.Stats.MaxSp, battleSimulation.Defender.Sp, battleSimulation.AttackerSpDamage);
             return battlePreview;
         }
 

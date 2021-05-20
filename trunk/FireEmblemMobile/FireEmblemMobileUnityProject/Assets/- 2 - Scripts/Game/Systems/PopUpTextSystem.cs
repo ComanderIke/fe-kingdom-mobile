@@ -39,7 +39,7 @@ namespace Game.Mechanics
 
             if (crit) // Bigger and Brighter?
             {
-               // Debug.Log("CRIIIITTTTTTTTTT");
+          
                 scale = 1.20f;
                 if (!magic)
                 {

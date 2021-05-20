@@ -5,6 +5,7 @@ using Game.GameActors.Items.Weapons;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
 using Game.GameInput;
+using Game.GUI.PopUpText;
 using UnityEngine;
 
 namespace Game.Mechanics.Battle
@@ -79,27 +80,31 @@ namespace Game.Mechanics.Battle
         public int GetDamageAgainstTarget(IBattleActor target, float atkMultiplier = 1.0f)
         {
             var atkMulti = new List<float> { atkMultiplier };
-            if (target.Sp <= 0)
-                atkMulti.Add(2.0f);
+           
             return GetDamageAgainstTarget(target, atkMulti);
 
         }
 
         public int GetDamageAgainstTarget(IBattleActor target, List<float> atkMultiplier)
         {
-            if (target.Sp <= 0)
-                atkMultiplier.Add(2);
-            return (int) (Mathf.Clamp(GetDamage(atkMultiplier) - target.Stats.Def, 1, Mathf.Infinity));
+            float dmgMult = 1;
+            if (target.SpBars <= 0)
+            {
+                dmgMult = 2;
+                //atkMultiplier.Add(2);
+            }
+                
+            return (int) (Mathf.Clamp((GetDamage(atkMultiplier) - target.Stats.Def)*dmgMult, 1, Mathf.Infinity));
         }
 
-        public bool IsPhysical()
+        public DamageType GetDamageType()
         {
             if (owner is Human human && human.EquippedWeapon != null)
             {
-                return human.EquippedWeapon.WeaponType != WeaponType.Magic;
+                return human.EquippedWeapon.DamageType;
             }
 
-            return true;
+            return DamageType.Physical;
         }
         public int GetAttackDamage()
         {

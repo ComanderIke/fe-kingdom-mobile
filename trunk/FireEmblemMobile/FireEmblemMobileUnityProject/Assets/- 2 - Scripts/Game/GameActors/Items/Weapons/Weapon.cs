@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
+using Game.Mechanics;
 using UnityEngine;
 
 namespace Game.GameActors.Items.Weapons
@@ -18,7 +19,7 @@ namespace Game.GameActors.Items.Weapons
 
         public List<WeaponMixin> WeaponMixins;
         public WeaponType WeaponType;
-
+        public DamageType DamageType;
 
         public override void Use(Human character)
         {
