@@ -23,7 +23,18 @@ namespace Game.WorldMapStuff.Controller
         {
       
             spawndirty = false;
-            locationControllers[0].SetActive(true);
+            if(locationControllers.Length>=1)
+                locationControllers[0].SetActive(true);
+            if(locationControllers.Length==2)
+                locationControllers[1].SetActive(false);
+        }
+
+        public void SetInputReceiver(IWorldMapLocationInputReceiver inputReceiver)
+        {
+            foreach (var loc in locationControllers)
+            {
+                loc.inputReceiver = inputReceiver;
+            }
         }
 
         public void UpdatePositionLocations()
@@ -34,7 +45,7 @@ namespace Game.WorldMapStuff.Controller
                 if (loc.IsActive())
                     cnt++;
             }
-
+            Debug.Log("Update Positions: "+gameObject.name+" cnt: "+cnt);
             if (cnt == 0)
             {
                 cnt = 1;
@@ -176,6 +187,7 @@ namespace Game.WorldMapStuff.Controller
 
            foreach (WorldMapPosition connection in Connections)
            {
+               int cnt = 0;
                foreach (var loc in connection.locationControllers)
                {
                    if (loc.IsActive())
@@ -184,14 +196,32 @@ namespace Game.WorldMapStuff.Controller
                        {
                            loc.renderer.ShowEnemy();
                        }
-                       else
+                       else if(loc.IsFree())
                        {
+                           loc.renderer.ShowWalkable();
+                       }
+                        if(loc.Actor!=null&& loc.Actor.Faction.IsActive())
+                            cnt++;
+                   }
+                   
+               }
+                Debug.Log("Cnt"+cnt);
+               if (cnt == 1)
+               {
+                   foreach (var loc in connection.locationControllers)
+                   {
+                       if (!loc.IsActive())
+                       {
+                           Debug.Log("SetActive"+loc.gameObject.name);
+                           loc.SetActive(true);
                            loc.renderer.ShowWalkable();
                        }
                    }
                }
+               connection.UpdatePositionLocations();
 
            }
+          
        }
        public void HideInteractableConnections()
        {

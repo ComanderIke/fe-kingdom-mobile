@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 6733227342145882314}
   - component: {fileID: 6733227342145882315}
   - component: {fileID: 5934527190750734497}
+  - component: {fileID: 9181069597996668313}
   m_Layer: 5
   m_Name: PartyMemberUIPrefab
   m_TagString: Untagged
@@ -222,11 +223,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e849286995c4f8a998b227d7b68e8f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
+  canvasGroup: {fileID: 9181069597996668313}
   nameText: {fileID: 6733227342291869543}
   image: {fileID: 6733227341317834374}
   BackgroundImage: {fileID: 6733227342145882314}
   selectedSprite: {fileID: 21300000, guid: 1783cc6043a225f4ba56f2fe3304d981, type: 3}
   normalSprite: {fileID: 21300000, guid: 5e6198b9cee87394dbe00c9097e4adf7, type: 3}
+--- !u!225 &9181069597996668313
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6733227342145882309}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &6733227342291869537
 GameObject:
   m_ObjectHideFlags: 0

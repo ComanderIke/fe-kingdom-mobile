@@ -52,9 +52,10 @@ namespace Game.WorldMapStuff
         }
         private void SetUpInputForLocations()
         {
-            foreach (var location in GameObject.FindObjectsOfType<LocationController>())
+            foreach (var position in GameObject.FindObjectsOfType<WorldMapPosition>())
             {
-                location.inputReceiver = inputSystem;
+                
+                position.SetInputReceiver(inputSystem);
             }
         }
 
