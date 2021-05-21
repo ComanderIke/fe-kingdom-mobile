@@ -119,6 +119,7 @@ namespace Game.WorldMapStuff.Manager
             GetSystem<TurnSystem>().gameStateManager = GameStateManager;
             GetSystem<WM_PartyActionSystem>().partyInstantiator = FindObjectOfType<PartyInstantiator>();
             GetSystem<WM_PartyActionSystem>().partyActionRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IPartyActionRenderer>().First();
+            GetSystem<WM_PartyActionSystem>().partyActionRenderer.Hide();
             GameStateManager.PhaseTransitionState.phaseRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IPhaseRenderer>().First();
             GameStateManager.PlayerPhaseState.playerPhaseUI = FindObjectsOfType<MonoBehaviour>().OfType<IPlayerPhaseUI>().First();
 

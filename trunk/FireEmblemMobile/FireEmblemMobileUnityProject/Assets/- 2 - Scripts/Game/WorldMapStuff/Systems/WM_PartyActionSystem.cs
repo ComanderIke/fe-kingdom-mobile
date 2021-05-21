@@ -90,6 +90,7 @@ namespace Game.WorldMapStuff.Systems
             Debug.Log("Party Selected");
             if (actor is Party party)
             {
+                partyActionRenderer.Show(party);
                 if (party.members.Count >= 1 && party.location.worldMapPosition.HasSpace())
                 {
                     Debug.Log("Show Split");
@@ -113,6 +114,7 @@ namespace Game.WorldMapStuff.Systems
             }
             else
             {
+                partyActionRenderer.Hide();
                 partyActionRenderer.HideJoinButton();
                 Debug.Log("Hide Split 222??");
                 partyActionRenderer.HideSplitButton();
@@ -123,6 +125,7 @@ namespace Game.WorldMapStuff.Systems
         private void PartyDeselected()
         {
             Debug.Log("PartyDeselected");
+            partyActionRenderer.Hide();
             partyActionRenderer.HideJoinButton();
             partyActionRenderer.HideSplitButton();
         }

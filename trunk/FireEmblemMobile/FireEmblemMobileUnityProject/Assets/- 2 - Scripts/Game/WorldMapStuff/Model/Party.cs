@@ -55,7 +55,14 @@ namespace Game.WorldMapStuff.Model
 
         public void Join(Party otherParty)
         {
-            throw new NotImplementedException();
+            foreach (var member in otherParty.members)
+            {
+                members.Add(member);
+            }
+
+            otherParty.location.Actor = null;
+            otherParty.GameTransformManager.Destroy();
+            GameObject.Destroy(otherParty);
         }
     }
 }

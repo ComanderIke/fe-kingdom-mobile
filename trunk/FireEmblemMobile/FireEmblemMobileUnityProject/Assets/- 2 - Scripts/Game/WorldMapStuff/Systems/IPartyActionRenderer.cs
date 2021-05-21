@@ -1,7 +1,11 @@
-﻿namespace Game.WorldMapStuff.Systems
+﻿using Game.WorldMapStuff.Model;
+
+namespace Game.WorldMapStuff.Systems
 {
     public interface IPartyActionRenderer
     {
+        public void Hide();
+        public void Show(Party selected);
         void ShowJoinButton();
 
 
