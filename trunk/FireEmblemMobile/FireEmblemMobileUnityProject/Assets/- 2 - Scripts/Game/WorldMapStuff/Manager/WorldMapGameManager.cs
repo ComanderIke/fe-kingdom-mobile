@@ -109,7 +109,6 @@ namespace Game.WorldMapStuff.Manager
                 GameObject.Destroy(partySpawns[i].gameObject);
             }
             instantiator.InstantiatePartyAtStartPoint(startingParty);
-            Debug.Log("START HP: " + startingParty.members[0].Hp);
             ((WM_Faction)FactionManager.Factions[startingParty.Faction.Id]).AddParty(startingParty);
             GameStateManager.Init();
             //GetSystem<TurnSystem>().StartPhase();
@@ -118,6 +117,7 @@ namespace Game.WorldMapStuff.Manager
         {
             GetSystem<TurnSystem>().factionManager = FactionManager;
             GetSystem<TurnSystem>().gameStateManager = GameStateManager;
+            GetSystem<WM_PartyActionSystem>().partyInstantiator = FindObjectOfType<PartyInstantiator>();
             GetSystem<WM_PartyActionSystem>().partyActionRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IPartyActionRenderer>().First();
             GameStateManager.PhaseTransitionState.phaseRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IPhaseRenderer>().First();
             GameStateManager.PlayerPhaseState.playerPhaseUI = FindObjectsOfType<MonoBehaviour>().OfType<IPlayerPhaseUI>().First();

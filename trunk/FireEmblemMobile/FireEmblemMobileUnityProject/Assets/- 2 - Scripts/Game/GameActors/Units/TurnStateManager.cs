@@ -5,11 +5,11 @@ namespace Game.GameActors.Units
 {
     public class TurnStateManager
     {
-        public delegate void OnActorWaiting(IActor unit, bool waiting);
+        public delegate void OnActorWaiting(bool waiting);
 
         public OnActorWaiting UnitWaiting;
 
-        public delegate void OnActorCanMove(IActor unit, bool canMove);
+        public delegate void OnActorCanMove(bool canMove);
         public delegate void OnSelected(bool selected);
 
         public OnSelected onSelected;
@@ -33,7 +33,7 @@ namespace Game.GameActors.Units
             set
             {
                 UnitTurnState.isWaiting = value;
-                UnitWaiting?.Invoke(actor, value);
+                UnitWaiting?.Invoke(value);
             }
         }
         public bool HasMoved
@@ -45,7 +45,7 @@ namespace Game.GameActors.Units
             set
             {
                 UnitTurnState.hasMoved = value;
-                UnitCanMove?.Invoke(actor, !value);
+                UnitCanMove?.Invoke(!value);
             }
         }
 

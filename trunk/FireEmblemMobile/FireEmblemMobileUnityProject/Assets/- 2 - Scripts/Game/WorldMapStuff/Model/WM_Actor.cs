@@ -1,5 +1,6 @@
 ﻿using Game.GameActors.Units;
 using Game.GameActors.Units.OnGameObject;
+using Game.WorldMapStuff.Controller;
 using UnityEngine;
 
 namespace Game.WorldMapStuff.Model
@@ -30,7 +31,7 @@ namespace Game.WorldMapStuff.Model
         }
 
         public WM_GameTransformManager GameTransformManager { get; set; }
-        public WorldMapPosition location { get; set; }
+        public LocationController location { get; set; }
         public abstract void ResetPosition();
     }
 }

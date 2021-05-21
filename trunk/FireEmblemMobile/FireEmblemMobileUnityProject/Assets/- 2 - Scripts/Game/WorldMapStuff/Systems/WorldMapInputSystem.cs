@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Game.GameInput;
+using Game.WorldMapStuff.Controller;
 using Game.WorldMapStuff.Interfaces;
 using Game.WorldMapStuff.Model;
 using GameEngine;
@@ -12,7 +13,7 @@ public class WorldMapInputSystem: IEngineSystem , IWorldMapLocationInputReceiver
 
     private bool isActive = true;
     public IWorldMapInputReceiver inputReceiver { get; set; }
-    public void LocationClicked(WorldMapPosition location)
+    public void LocationClicked(LocationController location)
     {
          if (!isActive)
                     return;

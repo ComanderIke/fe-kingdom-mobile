@@ -1,4 +1,5 @@
 ﻿using Game.AI;
+using Game.WorldMapStuff.Controller;
 using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.Systems;
 using UnityEngine;
@@ -35,7 +36,7 @@ namespace Game.WorldMapStuff.Input
         {
             partyActionSystem.AttackParty(party);
         }
-        public void MoveActor(WM_Actor party, WorldMapPosition location)
+        public void MoveActor(WM_Actor party, LocationController location)
         {
             partyActionSystem.MoveParty(party, location);
         }

@@ -62,22 +62,31 @@ namespace Game.Mechanics
            
             if (!factionManager.ActiveFaction.IsPlayerControlled)
             {
-                foreach (var c in factionManager.ActiveFaction.Units)
+
+                if (factionManager.ActiveFaction.Units != null && factionManager.ActiveFaction.Units.Count != 0)
                 {
-              
-                    c.SpBars++;
+                    foreach (var c in factionManager.ActiveFaction.Units)
+                    {
+
+                        c.SpBars++;
+                    }
                 }
+
                 Debug.Log("AITurn");
                 gameStateManager.Feed(NextStateTrigger.Transition);
                 //gridGameManager.GameStateManager.Feed(NextStateTrigger.StartEnemyPhase);
             }
             else
             {
-                foreach (var c in factionManager.ActiveFaction.Units)
+                if (factionManager.ActiveFaction.Units != null && factionManager.ActiveFaction.Units.Count != 0)
                 {
-              
-                    c.SpBars++;
+                    foreach (var c in factionManager.ActiveFaction.Units)
+                    {
+
+                        c.SpBars++;
+                    }
                 }
+
                 Debug.Log("PlayerTurn");
                 gameStateManager.Feed(NextStateTrigger.Transition);
                 

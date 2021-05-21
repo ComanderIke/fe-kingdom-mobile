@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Game.WorldMapStuff.Controller;
+using Game.WorldMapStuff.Interfaces;
+using UnityEngine;
 
 namespace Game.WorldMapStuff.Model
 {
@@ -48,6 +50,21 @@ namespace Game.WorldMapStuff.Model
         public void Destroy()
         {
             Object.Destroy(GameObject);
+        }
+
+        public void SetParent(Transform transform)
+        {
+            Transform.SetParent(transform);
+            Transform.localPosition = Vector3.zero;
+        }
+
+        public IWorldMapUnitInputReceiver GetInputReceiver()
+        {
+            return Transform.GetComponent<WM_ActorController>().inputReceiver;
+        }
+        public void SetInputReceiver(IWorldMapUnitInputReceiver inputReceiver)
+        {
+            Transform.GetComponent<WM_ActorController>().inputReceiver=inputReceiver;
         }
     }
 }

@@ -119,12 +119,10 @@ namespace Game.GameActors.Units.OnGameObject
         }
       
 
-        private void SetWaitingSprite(IActor unit, bool waiting)
+        private void SetWaitingSprite(bool waiting)
         {
-            if ( unit == this.unit)
-            {
-                GetComponentInChildren<SpriteRenderer>().color = !waiting ? Color.white : Color.grey;
-            }
+
+            GetComponentInChildren<SpriteRenderer>().color = !waiting ? Color.white : Color.grey;
         }
 
 

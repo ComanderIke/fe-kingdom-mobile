@@ -5,7 +5,7 @@ namespace Game.WorldMapStuff.Controller
 {
     public class LocationRenderer:MonoBehaviour
     {
-        public WorldMapPosition location;
+
         public SpriteRenderer spriteRenderer;
         public Sprite selectedSprite;
         public Sprite normalSprite;
@@ -41,27 +41,8 @@ namespace Game.WorldMapStuff.Controller
             spriteRenderer.sprite = selected ? selectedSprite:normalSprite;
         }
         
-        public void DrawInteractableConnections()
-        {
-            foreach (WorldMapPosition connection in location.Connections)
-            {
-               
-                if(connection.Actor!=null&&!connection.Actor.Faction.IsActive())
-                    connection.renderer.ShowEnemy();
-                else
-                {
-                    connection.renderer.ShowWalkable();
-                }
-            }
-        }
-        public void HideInteractableConnections()
-        {
-            foreach (WorldMapPosition connection in location.Connections)
-            {
-                connection.renderer.Hide();
-            }
-        }
-        private void Hide()
+       
+        public void Hide()
         {
             spriteRenderer.sprite = normalSprite;
             Walkable.SetActive(false);

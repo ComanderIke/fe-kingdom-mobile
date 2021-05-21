@@ -1,4 +1,6 @@
-﻿public interface IWorldMapLocationInputReceiver
+﻿using Game.WorldMapStuff.Controller;
+
+public interface IWorldMapLocationInputReceiver
 {
-    void LocationClicked(WorldMapPosition location);
+    void LocationClicked(LocationController location);
 }

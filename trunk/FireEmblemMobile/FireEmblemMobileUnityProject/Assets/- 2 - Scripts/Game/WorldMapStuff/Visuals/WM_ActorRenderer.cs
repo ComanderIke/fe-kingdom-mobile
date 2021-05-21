@@ -64,7 +64,7 @@ public class WM_ActorRenderer:MonoBehaviour
             }
         }
 
-        public void ShowSelected(bool selected)
+        private void ShowSelected(bool selected)
         {
             actor.location.Select(selected);
             if (selected)
@@ -81,12 +81,9 @@ public class WM_ActorRenderer:MonoBehaviour
             }
         }
  
-        private void SetWaitingSprite(IActor unit, bool waiting)
+        private void SetWaitingSprite(bool waiting)
         {
-            if ( unit == this.actor)
-            {
-                GetComponentInChildren<SpriteRenderer>().color = !waiting ? Color.white : Color.grey;
-            }
+            GetComponentInChildren<SpriteRenderer>().color = !waiting ? Color.white : Color.grey;
         }
 
 }

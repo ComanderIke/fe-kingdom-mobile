@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using Game.WorldMapStuff.Controller;
+using Game.WorldMapStuff.Manager;
 using Game.WorldMapStuff.Model;
 using GameEngine;
 using UnityEngine;
@@ -13,6 +15,7 @@ namespace Game.WorldMapStuff.Systems
         private WM_PreviewSystem previewSystem;
         private WM_PartySelectionSystem selectionSystem;
         public IPartyActionRenderer partyActionRenderer;
+        public PartyInstantiator partyInstantiator;
 
         public WM_PartyActionSystem(WM_PreviewSystem system, WM_PartySelectionSystem selectionSystem)
         {
@@ -36,14 +39,17 @@ namespace Game.WorldMapStuff.Systems
             }
         }
 
-        public void MoveParty(WM_Actor party, WorldMapPosition location)
-        {
+        public void MoveParty(WM_Actor party, LocationController location)
+        {  
+            Debug.Log("Move Party");
+            party.TurnStateManager.HasMoved = true;
             party.location.Actor = null;
             party.location.Reset();
             party.location = location;
             location.Actor = party;
             party.GameTransformManager.SetPosition(location.transform.position);
-            Debug.Log("Move Party");
+          
+            
         }
 
         public void Wait(WM_Actor party)
@@ -59,7 +65,7 @@ namespace Game.WorldMapStuff.Systems
             if (actor is Party party)
             {
                 Party otherParty = null;
-                foreach (var locActor in party.location.Actors)
+                foreach (var locActor in party.location.worldMapPosition.GetActors())
                 {
                     if (locActor != party)
                         otherParty = (Party)locActor;
@@ -75,6 +81,8 @@ namespace Game.WorldMapStuff.Systems
             if (actor is Party party)
             {
                 var splitParty=party.Split();
+                partyInstantiator.InstantiateParty(splitParty, party.location.worldMapPosition);
+                splitParty.GameTransformManager.SetInputReceiver(party.GameTransformManager.GetInputReceiver());
             }
         }
         private void PartySelected(WM_Actor actor)
@@ -82,7 +90,7 @@ namespace Game.WorldMapStuff.Systems
             Debug.Log("Party Selected");
             if (actor is Party party)
             {
-                if (party.members.Count >= 1 && party.location.HasSpace())
+                if (party.members.Count >= 1 && party.location.worldMapPosition.HasSpace())
                 {
                     Debug.Log("Show Split");
                     partyActionRenderer.ShowSplitButton();
@@ -93,7 +101,7 @@ namespace Game.WorldMapStuff.Systems
                     partyActionRenderer.HideSplitButton();
                 }
 
-                if (party.location.Actors.Select(a=> a.Faction.Id==party.Faction.Id).Count()==2)
+                if (party.location.worldMapPosition.GetActors().Select(a=> a.Faction.Id==party.Faction.Id).Count()==2)
                 {
                     
                     partyActionRenderer.ShowJoinButton();

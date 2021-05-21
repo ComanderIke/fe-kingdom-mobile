@@ -40,7 +40,17 @@ namespace Game.WorldMapStuff.Model
 
         public Party Split()
         {
-            return Instantiate(this);
+            var newParty = Instantiate(this);
+            int half = members.Count / 2;
+            newParty.members = new List<Unit>();
+            for(int i=0; i < half; i++)
+            {
+               newParty.members.Add(members[members.Count-1-i]);
+               members.RemoveAt(members.Count-1-i);
+            }
+
+            newParty.Faction = Faction;
+            return newParty;
         }
 
         public void Join(Party otherParty)

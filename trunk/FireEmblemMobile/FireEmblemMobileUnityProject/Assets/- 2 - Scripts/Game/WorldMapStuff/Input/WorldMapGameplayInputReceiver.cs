@@ -1,4 +1,5 @@
 ﻿using Game.Manager;
+using Game.WorldMapStuff.Controller;
 using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.Systems;
 using UnityEngine;
@@ -40,16 +41,16 @@ namespace Game.WorldMapStuff.Input
                 ActorClicked(unit);
             }
         }
-        public void LocationClicked(WorldMapPosition location)
+        public void LocationClicked(LocationController location)
         {
-            if(!location.HasSpace())
+            if(!location.worldMapPosition.HasSpace())
             {
                 return;
             }
            
             if (selectionDataProvider.SelectedActor != null)
             {
-                if (location.IsReachable(selectionDataProvider.SelectedActor)&&!selectionDataProvider.SelectedActor.TurnStateManager.IsWaiting)
+                if (location.worldMapPosition.IsReachable(selectionDataProvider.SelectedActor)&&!selectionDataProvider.SelectedActor.TurnStateManager.IsWaiting)
                 {
                     // if (selectionDataProvider.GetSelectedLocation()==location)
                     // {
@@ -112,7 +113,7 @@ namespace Game.WorldMapStuff.Input
             }
             else 
             {
-                if (actor.location.IsAttackable(selectedActor))
+                if (actor.location.worldMapPosition.IsAttackable(selectedActor))
                 {
                     if (selectionDataProvider.GetSelectedAttackTarget() != actor)
                     {
