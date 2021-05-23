@@ -54,8 +54,8 @@ namespace Game.WorldMapStuff.Model
 
         public void SetParent(Transform transform)
         {
-            Transform.SetParent(transform);
-            Transform.localPosition = Vector3.zero;
+            Transform.SetParent(transform, false);
+            Transform.localPosition = new Vector3(0,0,-0.1f);
         }
 
         public IWorldMapUnitInputReceiver GetInputReceiver()

@@ -16,7 +16,7 @@ namespace Game.WorldMapStuff.Controller
 
         private void OnEnable()
         {
-            Debug.Log("Create Roads");
+          //  Debug.Log("Create Roads");
             foreach (Transform child in RoadParent.GetComponentsInChildren<Transform>()) {
                 if(child!=RoadParent)
                     GameObject.DestroyImmediate(child.gameObject);
@@ -32,12 +32,13 @@ namespace Game.WorldMapStuff.Controller
 
         private void UpdateAllLocations()
         {
-            Debug.Log("UpdateAllLocations!");
+          //  Debug.Log("UpdateAllLocations!");
             foreach (var pos in GetComponentsInChildren<WorldMapPosition>())
             {
+                
                 pos.UpdateActiveLocations();
                 pos.UpdatePositionLocations();
-                pos.HideInteractableConnections();
+                pos.Reset();
                 
             }
                

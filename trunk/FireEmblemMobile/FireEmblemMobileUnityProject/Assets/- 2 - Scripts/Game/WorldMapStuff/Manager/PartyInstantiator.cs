@@ -13,14 +13,16 @@ namespace Game.WorldMapStuff.Manager
         {
            // Debug.Log("Instantiate StartParty: " + startingParty + " at location: " + startPoint);
             var partyGO= Instantiate(partyPrefab, partyParent);
-            partyGO.transform.position = startPoint.transform.position;
+            partyGO.transform.position = new Vector3(startPoint.transform.position.x,startPoint.transform.position.y,startPoint.transform.position.z-0.1f);
             partyGO.name = startingParty.Faction.Id == 0 ? "PlayerParty" : "EnemyParty";
+           
             startingParty.GameTransformManager.GameObject = partyGO;
             startPoint.SetActor(startingParty);
 
             partyGO.GetComponent<WM_ActorController>().actor = startingParty;
             partyGO.GetComponent<WM_ActorRenderer>().actor = startingParty;
-    
+            partyGO.GetComponent<WM_ActorRenderer>().Init();
+
         }
 
         public void InstantiateParty(Party spawnParty, WorldMapPosition location)
@@ -28,12 +30,13 @@ namespace Game.WorldMapStuff.Manager
             //Debug.Log("Instantiate Party: " + spawnParty + " at location: " + location);
             var partyGO= Instantiate(partyPrefab, partyParent);
             partyGO.name = spawnParty.Faction.Id == 0 ? "PlayerParty" : "EnemyParty";
-            partyGO.transform.position = location.transform.position;
+            partyGO.transform.position =  new Vector3(location.transform.position.x,location.transform.position.y,location.transform.position.z-0.1f);
             spawnParty.GameTransformManager.GameObject = partyGO;
             location.SetActor(spawnParty);
            
             partyGO.GetComponent<WM_ActorController>().actor = spawnParty;
             partyGO.GetComponent<WM_ActorRenderer>().actor = spawnParty;
+            partyGO.GetComponent<WM_ActorRenderer>().Init();
         
         }
     }

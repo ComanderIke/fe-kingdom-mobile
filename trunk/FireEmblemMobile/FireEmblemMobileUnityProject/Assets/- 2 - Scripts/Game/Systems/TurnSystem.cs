@@ -109,7 +109,7 @@ namespace Game.Mechanics
         private void EndPhase()
         {
            
-            Debug.Log("EndTurn! BUT WHY?");
+            //Debug.Log("EndTurn! BUT WHY?");
             if (factionManager.ActiveFaction.Units != null && factionManager.ActiveFaction.Units.Count != 0)
             {
                 foreach (var c in factionManager.ActiveFaction.Units)

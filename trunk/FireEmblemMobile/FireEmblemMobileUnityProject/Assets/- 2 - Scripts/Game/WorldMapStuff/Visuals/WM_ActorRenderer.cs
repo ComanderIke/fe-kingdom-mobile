@@ -1,6 +1,7 @@
 ﻿using System;
 using Game.GameActors.Units;
 using Game.Manager;
+using Game.WorldMapStuff.Manager;
 using Game.WorldMapStuff.Model;
 using UnityEngine;
 using Utility;
@@ -27,12 +28,13 @@ public class WM_ActorRenderer:MonoBehaviour
 
         public void Init()
         {
+            sprite.sprite = ((Party) actor).members[0].visuals.CharacterSpriteSet.MapSprite;
            // hpBar.GetComponent<Image>().color = ColorManager.Instance.GetFactionColor(unit.Faction.Id);
             float intensity = 2;
             sprite.material.SetColor("_OutLineColor", ColorManager.Instance.GetFactionColor(actor.Faction.Id)*intensity);
             //spBar.GetComponent<Image>().color = ColorManager.Instance.GetFactionColor(Unit.Faction.Id);
             
-            if(actor.Faction.Id != GridGameManager.Instance.FactionManager.ActivePlayerNumber)
+            if(actor.Faction.Id != WorldMapGameManager.Instance.FactionManager.ActivePlayerNumber)
             {
                 //pointLight.SetActive(false);
                 Color color = Color.blue;

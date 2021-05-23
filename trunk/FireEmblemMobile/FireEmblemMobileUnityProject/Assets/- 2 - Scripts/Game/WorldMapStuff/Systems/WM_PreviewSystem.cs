@@ -41,8 +41,6 @@ namespace Game.WorldMapStuff.Systems
         void HideAttackPreview()
         {
             attackPreview.Hide();
-            if(currentEnemy!=null && currentEnemy.location!=null)
-                currentEnemy.location.renderer.ShowAttackable();
         }
     }
 }

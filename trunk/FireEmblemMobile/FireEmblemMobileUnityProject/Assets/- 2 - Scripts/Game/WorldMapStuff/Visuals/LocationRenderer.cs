@@ -17,6 +17,7 @@ namespace Game.WorldMapStuff.Controller
 
         public void ShowAttackable()
         {
+            Debug.Log("Show AttackAble");
             spriteRenderer.sprite = enemySprite;
             Attackable.SetActive(true);
             Walkable.SetActive(false);
@@ -47,6 +48,7 @@ namespace Game.WorldMapStuff.Controller
             spriteRenderer.sprite = normalSprite;
             Walkable.SetActive(false);
            Attackable.SetActive(false);
+           Enemy.SetActive(false);
         }
 
         public void Reset()

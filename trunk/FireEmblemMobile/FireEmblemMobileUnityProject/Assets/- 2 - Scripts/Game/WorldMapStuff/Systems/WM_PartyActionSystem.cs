@@ -48,9 +48,8 @@ namespace Game.WorldMapStuff.Systems
             party.location.Reset();
             party.location = location;
             location.Actor = party;
-            party.GameTransformManager.SetPosition(location.transform.position);
-          
-            
+
+
         }
 
         public void Wait(WM_Actor party)

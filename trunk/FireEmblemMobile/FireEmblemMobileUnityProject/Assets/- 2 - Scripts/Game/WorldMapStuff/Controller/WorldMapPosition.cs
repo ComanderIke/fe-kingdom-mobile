@@ -60,7 +60,7 @@ namespace Game.WorldMapStuff.Controller
                 }
                   
             }
-            Debug.Log("Update Positions: "+gameObject.name+" cnt: "+cnt);
+         //  Debug.Log("Update Positions: "+gameObject.name+" cnt: "+cnt);
             if (cnt == 0)
             {
                 cnt = 1;
@@ -187,17 +187,17 @@ namespace Game.WorldMapStuff.Controller
             loc.Reset();
         }
         
-        foreach (var connection in Connections)
-        {
-            foreach (var loc in connection.locationControllers)
-            {
-                loc.Reset();
-            }
-        }
+        // foreach (var connection in Connections)
+        // {
+        //     foreach (var loc in connection.locationControllers)
+        //     {
+        //         loc.Reset();
+        //     }
+        // }
     }
        public void DrawInteractableConnections()
        {
-           Debug.Log("Draw Interactables:");
+        //   Debug.Log("Draw Interactables:");
         
 
            foreach (WorldMapPosition connection in Connections)
@@ -220,14 +220,14 @@ namespace Game.WorldMapStuff.Controller
                    }
                    
                }
-                Debug.Log("Cnt"+cnt);
+              //  Debug.Log("Cnt"+cnt);
                if (cnt == 1)
                {
                    foreach (var loc in connection.locationControllers)
                    {
                        if (!loc.IsActive())
                        {
-                           Debug.Log("SetActive"+loc.gameObject.name);
+                          // Debug.Log("SetActive"+loc.gameObject.name);
                            loc.SetActive(true);
                            loc.renderer.ShowWalkable();
                        }
@@ -245,13 +245,13 @@ namespace Game.WorldMapStuff.Controller
            {
                loc.Hide();
            }
-           foreach (WorldMapPosition connection in Connections)
-           {
-               foreach (var loc in connection.locationControllers)
-               {
-                   loc.Hide();
-               }
-           }
+           // foreach (WorldMapPosition connection in Connections)
+           // {
+           //     foreach (var loc in connection.locationControllers)
+           //     {
+           //         loc.Hide();
+           //     }
+           // }
        }
 
        public void Hide()

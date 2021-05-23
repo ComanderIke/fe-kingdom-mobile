@@ -19,7 +19,7 @@ public class LocationController : MonoBehaviour
         get => actor;
         set
         {
-            Debug.Log("Set Actor: "+gameObject.name);
+           // Debug.Log("Set Actor: "+gameObject.name);
             if (actor != null)
             {
                 actor.TurnStateManager.onSelected -= OnSelectedActor;
