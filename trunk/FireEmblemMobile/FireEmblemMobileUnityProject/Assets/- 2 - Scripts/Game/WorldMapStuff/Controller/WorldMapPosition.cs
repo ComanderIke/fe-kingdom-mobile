@@ -37,13 +37,28 @@ namespace Game.WorldMapStuff.Controller
             }
         }
 
+        public void UpdateActiveLocations()
+        {
+            foreach (var loc in locationControllers)
+            {
+
+                if (loc.Actor == null)
+                    loc.SetActive(false);
+            }
+        }
+
         public void UpdatePositionLocations()
         {
             int cnt = 0;
             foreach (var loc in locationControllers)
             {
                 if (loc.IsActive())
-                    cnt++;
+                {
+                  
+                   
+                        cnt++;
+                }
+                  
             }
             Debug.Log("Update Positions: "+gameObject.name+" cnt: "+cnt);
             if (cnt == 0)
@@ -225,6 +240,7 @@ namespace Game.WorldMapStuff.Controller
        }
        public void HideInteractableConnections()
        {
+           
            foreach (var loc in locationControllers)
            {
                loc.Hide();

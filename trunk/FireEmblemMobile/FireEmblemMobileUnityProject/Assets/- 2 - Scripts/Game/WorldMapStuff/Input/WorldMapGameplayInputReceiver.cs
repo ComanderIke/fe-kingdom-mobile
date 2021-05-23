@@ -104,6 +104,11 @@ namespace Game.WorldMapStuff.Input
             }
         }
 
+        public void WorldClicked()
+        {
+            gameplayInput.DeselectActor();
+        }
+
         private void EnemyActorClicked(WM_Actor actor)
         {
             var selectedActor = selectionDataProvider.SelectedActor;

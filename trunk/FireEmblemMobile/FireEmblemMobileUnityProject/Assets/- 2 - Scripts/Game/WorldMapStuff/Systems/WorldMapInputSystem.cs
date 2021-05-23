@@ -7,7 +7,7 @@ using Game.WorldMapStuff.Model;
 using GameEngine;
 using UnityEngine;
 
-public class WorldMapInputSystem: IEngineSystem , IWorldMapLocationInputReceiver, IWorldMapUnitInputReceiver
+public class WorldMapInputSystem: IEngineSystem , IWorldMapLocationInputReceiver, IWorldMapUnitInputReceiver, IWorldMapInputReceiver
 {
 
 
@@ -53,5 +53,12 @@ public class WorldMapInputSystem: IEngineSystem , IWorldMapLocationInputReceiver
         if (!isActive)
             return;
         inputReceiver.ActorClicked(party);
+    }
+
+    public void WorldClicked()
+    {
+        if (!isActive)
+            return;
+        inputReceiver.WorldClicked();
     }
 }

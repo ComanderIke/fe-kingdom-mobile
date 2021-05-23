@@ -56,8 +56,7 @@ public class LocationController : MonoBehaviour
         
         if(selected)
             worldMapPosition.DrawInteractableConnections();
-        else
-            worldMapPosition.HideInteractableConnections();
+
 
     }
     private bool active;

@@ -57,6 +57,8 @@ namespace Game.WorldMapStuff
                 
                 position.SetInputReceiver(inputSystem);
             }
+
+            GameObject.FindObjectOfType<WorldMapInputController>().InputReceiver=inputSystem;
         }
 
         public void Init()

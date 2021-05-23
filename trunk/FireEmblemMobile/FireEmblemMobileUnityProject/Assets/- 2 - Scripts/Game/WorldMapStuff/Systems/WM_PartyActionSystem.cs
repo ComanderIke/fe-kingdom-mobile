@@ -56,7 +56,8 @@ namespace Game.WorldMapStuff.Systems
         public void Wait(WM_Actor party)
         {
             Debug.Log("Wait Party");
-            party.TurnStateManager.IsSelected = false;
+            selectionSystem.DeselectActor();
+
             party.TurnStateManager.IsWaiting = true;
         }
 

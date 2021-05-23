@@ -6,4 +6,5 @@ public interface IWorldMapInputReceiver
 {
     void LocationClicked(LocationController location);
     void ActorClicked(WM_Actor party);
+    void WorldClicked();
 }
