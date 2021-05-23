@@ -1,131 +1,54 @@
-using System.Collections;
-using System.Collections.Generic;
+using Game.WorldMapStuff.Interfaces;
+using Game.WorldMapStuff.Manager;
 using Game.WorldMapStuff.Model;
-using Game.WorldMapStuff.Systems;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class SelectedPartyUIController : MonoBehaviour,IPartyActionRenderer
+namespace Game.WorldMapStuff.UI
 {
-    public GameObject PartyPrefab;
-
-    public Transform partyParent;
-    public Transform partyParent2;
-    public GameObject party2Panel;
-    public TextMeshProUGUI currentPartyText;
-    public TextMeshProUGUI Party2Text;
-    public GameObject SwapButtonPanel;
-    public GameObject SplitJoinPanel;
-    public GameObject SplitPartyButton;
-
-    public GameObject JoinPartyButton;
-
-    private List<PartyMemberUIController> partyMembers;
-    private List<PartyMemberUIController> partyMembers2;
-    // Start is called before the first frame update
-    void Start()
+    public class SelectedPartyUIController : IPartySelectionRenderer
     {
-        partyMembers = new List<PartyMemberUIController>();
-        partyMembers2 = new List<PartyMemberUIController>();
-    }
 
-    public void Show(Party party)
-    {
-        partyMembers.Clear();
-        foreach (Transform tfm in partyParent)
+        public TextMeshProUGUI currentPartyText;
+
+        public IPartyScreenUI CharacterScreen;
+        public Image sprite;
+        public IPartyActionRenderer partyActionRenderer;
+
+
+        private WM_Actor current;
+        // Start is called before the first frame update
+
+        public override void Show(WM_Actor actor)
         {
-            Destroy(tfm.gameObject);
-        }
-        foreach (var member in party.members)
-        {
-            var go = Instantiate(PartyPrefab, partyParent, false);
-            partyMembers.Add(go.GetComponent<PartyMemberUIController>());
-        }
-        gameObject.SetActive(true);
-        if (party.location.worldMapPosition.GetActors().Count == 2)
-        {
-            var party2 = party.location.worldMapPosition.GetActors()[0] == party
-                ?(Party) party.location.worldMapPosition.GetActors()[1]
-                : (Party)party.location.worldMapPosition.GetActors()[0];
-            foreach (Transform tfm in partyParent2)
+            current = actor;
+            if (actor is Party party)
             {
-                Destroy(tfm.gameObject);
+                sprite.sprite = party.members[0].visuals.CharacterSpriteSet.FaceSprite;
+                currentPartyText.SetText(party.name);
             }
-            
-            foreach (var member in party2.members)
-            {
-                var go = Instantiate(PartyPrefab, partyParent2, false);
-                var controller = go.GetComponent<PartyMemberUIController>();
-                partyMembers2.Add(controller);
-                controller.SetText(member.name);
-                controller.SetSprite(member.visuals.CharacterSpriteSet.MapSprite);
-
-            }
-            party2Panel.SetActive(true);
+            gameObject.SetActive(true);
         }
-        else
+    
+
+        public override void Hide()
         {
-            party2Panel.SetActive(false);
+            gameObject.SetActive(false);
         }
-            
-    }
+    
 
-    public void Hide()
-    {
-        gameObject.SetActive(false);
-    }
-
-    void UpdatePanel()
-    {
-        if(SplitPartyButton.activeSelf||JoinPartyButton.activeSelf)
-            SplitJoinPanel.SetActive(true);
-        else
+    
+        public void JoinSplitClicked()
         {
-            SplitJoinPanel.SetActive(false);
+            Debug.Log("JoinSplit clicked!");
+            partyActionRenderer.Show((Party)current);
         }
 
-
-        party2Panel.gameObject.SetActive(JoinPartyButton.activeSelf);
-    }
-    public void ShowJoinButton()
-    {
-        JoinPartyButton.SetActive(true);
-       UpdatePanel();
-    }
-    public void HideJoinButton()
-    {
-        JoinPartyButton.SetActive(false);
-        UpdatePanel();
-    }
-    public void ShowSplitButton()
-    {
-        SplitPartyButton.SetActive(true);
-        UpdatePanel();
-    }
-    public void HideSplitButton()
-    {
-        SplitPartyButton.SetActive(false);
-        UpdatePanel();
-    }
-    public void SwapClicked()
-    {
-        Debug.Log("Swap clicked!");
-        //WM_PartyActionSystem.OnSplitClicked?.Invoke();
-    }
-    public void SplitClicked()
-    {
-        Debug.Log("Split clicked!");
-        WM_PartyActionSystem.OnSplitClicked?.Invoke();
-    }
-    public void JoinClicked()
-    {
-        Debug.Log("Join Clicked!");
-        WM_PartyActionSystem.OnJoinClicked?.Invoke();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public void CharacterScreenClicked()
+        {
+            Debug.Log("CharacterScreen clicked!");
+            CharacterScreen.Show((Party)current);
+        }
     }
 }

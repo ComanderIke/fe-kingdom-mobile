@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Game.WorldMapStuff.Controller;
+using Game.WorldMapStuff.Interfaces;
 using Game.WorldMapStuff.Manager;
 using Game.WorldMapStuff.Model;
 using GameEngine;
@@ -85,50 +86,8 @@ namespace Game.WorldMapStuff.Systems
                 splitParty.GameTransformManager.SetInputReceiver(party.GameTransformManager.GetInputReceiver());
             }
         }
-        private void PartySelected(WM_Actor actor)
-        {
-            Debug.Log("Party Selected");
-            if (actor is Party party)
-            {
-                partyActionRenderer.Show(party);
-                if (party.members.Count >= 1 && party.location.worldMapPosition.HasSpace())
-                {
-                    Debug.Log("Show Split");
-                    partyActionRenderer.ShowSplitButton();
-                }
-                else
-                {
-                    Debug.Log("Hide Split ??");
-                    partyActionRenderer.HideSplitButton();
-                }
+     
 
-                if (party.location.worldMapPosition.GetActors().Select(a=> a.Faction.Id==party.Faction.Id).Count()==2)
-                {
-                    
-                    partyActionRenderer.ShowJoinButton();
-                }
-                else
-                {
-                    partyActionRenderer.HideJoinButton();
-                }
-            }
-            else
-            {
-                partyActionRenderer.Hide();
-                partyActionRenderer.HideJoinButton();
-                Debug.Log("Hide Split 222??");
-                partyActionRenderer.HideSplitButton();
-            }
-            
-            
-        }
-        private void PartyDeselected()
-        {
-            Debug.Log("PartyDeselected");
-            partyActionRenderer.Hide();
-            partyActionRenderer.HideJoinButton();
-            partyActionRenderer.HideSplitButton();
-        }
         public void Init()
         {
             
@@ -140,16 +99,14 @@ namespace Game.WorldMapStuff.Systems
         {
             OnJoinClicked -= JoinParty;
             OnSplitClicked -= SplitParty;
-            WM_PartySelectionSystem.OnSelectedParty -= PartySelected;
-            WM_PartySelectionSystem.OnDeselectParty -= PartyDeselected;
+
         }
 
         public void Activate()
         {
             OnJoinClicked += JoinParty;
             OnSplitClicked += SplitParty;
-            WM_PartySelectionSystem.OnSelectedParty += PartySelected;
-            WM_PartySelectionSystem.OnDeselectParty += PartyDeselected;
+
         }
     }
 }

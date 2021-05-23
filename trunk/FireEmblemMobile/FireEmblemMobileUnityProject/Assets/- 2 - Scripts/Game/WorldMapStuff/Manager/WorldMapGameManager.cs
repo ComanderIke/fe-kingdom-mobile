@@ -14,6 +14,7 @@ using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.Systems;
 using GameEngine;
 using UnityEngine;
+using IPartyActionRenderer = Game.WorldMapStuff.Interfaces.IPartyActionRenderer;
 
 namespace Game.WorldMapStuff.Manager
 {
@@ -120,6 +121,8 @@ namespace Game.WorldMapStuff.Manager
             GetSystem<WM_PartyActionSystem>().partyInstantiator = FindObjectOfType<PartyInstantiator>();
             GetSystem<WM_PartyActionSystem>().partyActionRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IPartyActionRenderer>().First();
             GetSystem<WM_PartyActionSystem>().partyActionRenderer.Hide();
+            GetSystem<WM_PartySelectionSystem>().partySelectionRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IPartySelectionRenderer>().First();
+            GetSystem<WM_PartySelectionSystem>().partySelectionRenderer.Hide();
             GameStateManager.PhaseTransitionState.phaseRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IPhaseRenderer>().First();
             GameStateManager.PlayerPhaseState.playerPhaseUI = FindObjectsOfType<MonoBehaviour>().OfType<IPlayerPhaseUI>().First();
 

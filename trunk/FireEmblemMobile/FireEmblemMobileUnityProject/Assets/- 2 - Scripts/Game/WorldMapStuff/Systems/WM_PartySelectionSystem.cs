@@ -1,6 +1,7 @@
 ﻿using System;
 using Game.Manager;
 using Game.Mechanics;
+using Game.WorldMapStuff.Manager;
 using Game.WorldMapStuff.Model;
 using GameEngine;
 using UnityEngine;
@@ -18,6 +19,7 @@ namespace Game.WorldMapStuff.Systems
         public static event Action<WM_Actor> OnEnemyPartySelected;
         public WM_Actor SelectedActor { get; set; }
         private FactionManager factionManager;
+        public IPartySelectionRenderer partySelectionRenderer;
         
         public WM_PartySelectionSystem(FactionManager factionManager)
         {
@@ -39,6 +41,7 @@ namespace Game.WorldMapStuff.Systems
             }
             Debug.Log("DeselectActor");
             OnDeselectParty?.Invoke();
+            partySelectionRenderer.Hide();
             SelectedActor = null;
         }
 
@@ -52,6 +55,7 @@ namespace Game.WorldMapStuff.Systems
                 SelectedActor = c;
                 c.TurnStateManager.IsSelected = true;
                 OnSelectedParty?.Invoke(SelectedActor);
+                partySelectionRenderer.Show(SelectedActor);
             }
 
             private void EnemySelected(WM_Actor c)
