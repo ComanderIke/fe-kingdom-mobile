@@ -4,7 +4,6 @@ using Game.Manager;
 using Game.WorldMapStuff.Manager;
 using Game.WorldMapStuff.Model;
 using Menu;
-using UnityEditor.SearchService;
 using UnityEngine;
 
 public class WorldMapSceneController : MonoBehaviour

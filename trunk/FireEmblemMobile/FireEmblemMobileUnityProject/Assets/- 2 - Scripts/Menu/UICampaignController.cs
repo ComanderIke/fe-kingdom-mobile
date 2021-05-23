@@ -8,6 +8,6 @@ public class UICampaignController : UIMenu
 
     public void StartClicked()
     {
-        SceneController.SwitchScene("Base");
+        SceneController.SwitchScene("WorldMap");
     }
 }
