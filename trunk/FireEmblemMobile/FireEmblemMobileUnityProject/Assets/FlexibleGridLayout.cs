@@ -9,7 +9,7 @@ public class FlexibleGridLayout : LayoutGroup
     public FitType fitType;
     public int rows;
     public int columns;
-    private Vector2 cellSize;
+    public Vector2 cellSize;
     public Vector2 spacing;
     public bool fitX;
     public bool fitY;
@@ -74,10 +74,11 @@ public class FlexibleGridLayout : LayoutGroup
     public override void SetLayoutHorizontal()
     {
        
+       
     }
 
     public override void SetLayoutVertical()
     {
-        
+       
     }
 }
