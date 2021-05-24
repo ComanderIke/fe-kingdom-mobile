@@ -1,89 +1,58 @@
 ﻿Shader "Custom/UIBlur"
 {
+    
     Properties
     {
-        [PerRendererData] _MainTex("Sprite Texture", 2D) = "white" {}
-        _Size ("Blur Radius", Range(0,4)) = 3
+        // Blur properties
+        [IntRange] _Radius("Blur Radius", Range(0, 64)) = 1
+        [IntRange] _Step("Step Size", Range(3, 10)) = 4
+        _Jump("Jump Size", Range(0.0001,0.3)) = 0.1
+        _BlurTex ("Blurred Texture", 2D) = "white" {}
+
+        // Default properties
+        [PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
+        _Color ("Tint", Color) = (1,1,1,1)
+
+        _StencilComp ("Stencil Comparison", Float) = 8
+        _Stencil ("Stencil ID", Float) = 0
+        _StencilOp ("Stencil Operation", Float) = 0
+        _StencilWriteMask ("Stencil Write Mask", Float) = 255
+        _StencilReadMask ("Stencil Read Mask", Float) = 255
+
+        _ColorMask ("Color Mask", Float) = 15
+
+        [Toggle(UNITY_UI_ALPHACLIP)] _UseUIAlphaClip ("Use Alpha Clip", Float) = 0
     }
+
     SubShader
     {
-        Tags { 
-            "Queue" = "Transparent"
-            "IgnoreProjector" = "True"
-            "RenderType" = "Transparent"
-            "PreviewType" = "Plane"
-            "CanUseSpriteAtlas" = "True" 
-        }
-            Cull Off
-            Lighting Off
-            Zwrite Off
-            ZTest Always
-            Blend SrcAlpha OneMinusSrcAlpha
-
-        GrabPass{
-            Tags{ "LightMode" = "Always"}
-        }
-        Pass{
-            Tags{ "LightMode" = "Always"}
-
-
-        CGPROGRAM
-
-        #pragma vertex vert
-        #pragma fragment frag
-        #pragma fragmentoption ARB_precision_hint_fastest
-        #include "UnityCG.cginc"
-
-
-        struct appdata_t
+        Tags
         {
-            float4 vertex : POSITION;
-            float4 color : COLOR;
-            float2 texcoord: TEXCOORD0;
-        };
-        struct v2f
+            "Queue"="Transparent"
+            "IgnoreProjector"="True"
+            "RenderType"="Transparent"
+            "PreviewType"="Plane"
+            "CanUseSpriteAtlas"="True"
+        }
+
+        Stencil
         {
-            float4 vertex : POSITION;
-            float4 uvgrab: TEXCOORD0;
-            fixed4 color : COLOR;
-        };
-
-
-        v2f vert(appdata_t v) {
-            v2f o;
-            o.vertex = UnityObjectToClipPos(v.vertex);
-#if UNITY_UV_STARTS_AT_TOP
-            float scale = -1.0;
-#else
-            float scale = 1.0;
-#endif
-            o.uvgrab.xy = (float2(o.vertex.x, o.vertex.y * scale) + o.vertex.w) * 0.5;
-            o.uvgrab.zw = o.vertex.zw;
-            return o;
+            Ref [_Stencil]
+            Comp [_StencilComp]
+            Pass [_StencilOp]
+            ReadMask [_StencilReadMask]
+            WriteMask [_StencilWriteMask]
         }
 
+        Cull Off
+        Lighting Off
+        ZWrite Off
+        ZTest [unity_GUIZTestMode]
+        Blend SrcAlpha OneMinusSrcAlpha
+        ColorMask [_ColorMask]
 
-        sampler2D _GrabTexture;
-        float4 _GrabTexture_TexelSize;
-        float _Size;
-
-        half4 frag(v2f i) : COLOR{
-            half4 sum = half4(0,0,0,0);
-#define BLURPIXEL(weight, kernelx) tex2Dproj(_GrabTexture, UNITY_PROJ_COORD(float4(i.uvgrab.x + _GrabTexture_TexelSize.x*kernelx*_Size, i.uvgrab.y, i.uvgrab.z,i.uvgrab.w)))*weight
-            sum += BLURPIXEL(0.05, -4.0);
-            sum += BLURPIXEL(0.09, -3.0);
-            sum += BLURPIXEL(0.12, -2.0);
-            sum += BLURPIXEL(0.15, -1.0);
-            sum += BLURPIXEL(0.18, 0.0);
-            sum += BLURPIXEL(0.15, 1.0);
-            sum += BLURPIXEL(0.12, 2.0);
-            sum += BLURPIXEL(0.09, 3.0);
-            sum += BLURPIXEL(0.05, 4.0);
-            return sum;
-        }
-        ENDCG
-        }
-        Pass{
+        Pass
+        {
             Name "Default"
             CGPROGRAM
             #pragma vertex vert
@@ -93,56 +62,83 @@
             #include "UnityCG.cginc"
             #include "UnityUI.cginc"
 
-            #pragma multi_compile __ UNITY_UI_CLIP_RECT
-            #pragma multi_compile __ UNITY_UI_ALPHACLIP
+            #pragma multi_compile_local _ UNITY_UI_ALPHACLIP
+
             struct appdata_t
             {
-                float4 vertex : POSITION;
-                float4 color : COLOR;
-                float2 texcoord: TEXCOORD0;
+                float4 vertex   : POSITION;
+                float4 color    : COLOR;
+                float2 texcoord : TEXCOORD0;
                 UNITY_VERTEX_INPUT_INSTANCE_ID
             };
+
             struct v2f
             {
-                float4 vertex : SV_POSITION;
-                fixed4 color : COLOR;
-                float2 texcoord : TEXCOORD0;
-                float4 worldPosition : TEXCOORD1;
-                float4 uvgrab : TEXCOORD2;
+                float4 vertex   : SV_POSITION;
+                fixed4 color    : COLOR;
+                float2 texcoord  : TEXCOORD0;
+                float4 screenPosition : TEXCOORD1;
+                UNITY_VERTEX_OUTPUT_STEREO
             };
+            int _Radius;
+            float _Step; 
+            float _Jump;
+            sampler2D _BlurTex;
+
             sampler2D _MainTex;
-            sampler2D _GrabTexture;
-            float4 _GrabTexture_TexelSize;
+            fixed4 _Color;
             fixed4 _TextureSampleAdd;
             float4 _ClipRect;
             float4 _MainTex_ST;
 
-            v2f vert(appdata_t v) {
+            half4 GetBlur(float4 uv, half4 pixel)
+            {
+                #define GrabPixelXY(kernelx, kernely) tex2Dproj(_BlurTex, UNITY_PROJ_COORD(float4(uv.x +  _Jump * kernelx, uv.y + _Jump*kernely, uv.z,uv.w)))
+                
+                float4 sum = GrabPixelXY(0,0);
+
+                float range = _Step;
+                
+                for (; range <= _Radius; range += _Step)
+                {
+                    for (float i = 0.06; i <= 0.18; i+= 0.03){
+                        float minus = (0.21-i);
+                        sum += GrabPixelXY(-range*i, range*minus);
+                        sum += GrabPixelXY(range*i, -range*minus);
+                        sum += GrabPixelXY(-range*minus, -range*i);
+                        sum += GrabPixelXY(range*minus, range*i);
+                    }
+                }
+
+                half4 result = sum/(_Radius*2+1);
+                return result * pixel;
+            }
+
+            v2f vert(appdata_t v)
+            {
                 v2f OUT;
                 UNITY_SETUP_INSTANCE_ID(v);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT);
-                OUT.worldPosition = v.vertex;
-                OUT.vertex = UnityObjectToClipPos(OUT.worldPosition);
-                OUT.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);
-#if UNITY_UV_STARTS_AT_TOP
-                float scale = -1.0;
-#else
-                float scale = 1.0;
-#endif
-                OUT.uvgrab.xy = (float2(OUT.vertex.x, OUT.vertex.y * scale) + OUT.vertex.w) * 0.5f;
-                OUT.uvgrab.zw = OUT.vertex.zw;
+                OUT.vertex = UnityObjectToClipPos(v.vertex);
+                OUT.screenPosition = ComputeScreenPos(OUT.vertex);
 
-                OUT.color = v.color;
+                OUT.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);
+
+                OUT.color = v.color * _Color;
                 return OUT;
             }
-            fixed4 frag(v2f IN) :SV_Target
+
+            fixed4 frag(v2f IN) : SV_Target
             {
                 half4 color = (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd) * IN.color;
-                half4 blur = tex2Dproj(_GrabTexture, UNITY_PROJ_COORD(IN.uvgrab));
-                return color;
+
+                #ifdef UNITY_UI_ALPHACLIP
+                    clip (color.a - 0.001);
+                #endif
+
+                return  GetBlur(IN.screenPosition, color);
             }
-                ENDCG
-}
+            ENDCG
+        }
     }
-    FallBack "Diffuse"
 }
