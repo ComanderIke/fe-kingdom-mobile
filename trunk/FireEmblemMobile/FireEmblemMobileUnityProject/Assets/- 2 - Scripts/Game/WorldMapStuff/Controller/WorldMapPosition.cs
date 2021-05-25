@@ -13,6 +13,7 @@ namespace Game.WorldMapStuff.Controller
         public LocationController[] locationControllers;
         public WorldMapPosition[] Connections;
 
+        public EnterLocationController enterLocationController;
         public int space = 2;
 
         private List<Road> roads;
@@ -27,6 +28,7 @@ namespace Game.WorldMapStuff.Controller
                 locationControllers[0].SetActive(true);
             if(locationControllers.Length==2)
                 locationControllers[1].SetActive(false);
+            UpdateEnterLocationController();
         }
 
         public void SetInputReceiver(IWorldMapLocationInputReceiver inputReceiver)
@@ -35,6 +37,11 @@ namespace Game.WorldMapStuff.Controller
             {
                 loc.inputReceiver = inputReceiver;
             }
+        }
+
+        public void EnterLocationClicked()
+        {
+            Debug.Log("Enter Location!");
         }
 
         public void UpdateActiveLocations()
@@ -75,6 +82,7 @@ namespace Game.WorldMapStuff.Controller
                 locationControllers[i].SetPosition(transform.position.x-halfDistance + i* locationControllers[0].renderer.spriteRenderer.size.x*transform.localScale.x);
                 
             }
+            UpdateEnterLocationController();
             
         }
         public bool IsReachable(WM_Actor selectedActor)
@@ -179,6 +187,22 @@ namespace Game.WorldMapStuff.Controller
                    break;
                }
            }
+          UpdateEnterLocationController();
+       }
+
+       private void UpdateEnterLocationController()
+       {
+           var actors = GetActors();
+           if(actors.Count==0)
+               enterLocationController.gameObject.SetActive(false);
+           else if(actors.All(a => a.Faction.IsActive()&&a.Faction.IsPlayerControlled))
+           {
+               enterLocationController.gameObject.SetActive(true);
+           }
+           else
+           {
+               enterLocationController.gameObject.SetActive(false);
+           }
        }
        public void Reset()
     {
@@ -186,6 +210,7 @@ namespace Game.WorldMapStuff.Controller
         {
             loc.Reset();
         }
+        UpdateEnterLocationController();
         
         // foreach (var connection in Connections)
         // {

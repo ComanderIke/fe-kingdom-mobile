@@ -38,6 +38,9 @@ public class SplitPartyUIController : IPartyActionRenderer
         {
             var go = Instantiate(PartyPrefab, partyParent, false);
             partyMembers.Add(go.GetComponent<PartyMemberUIController>());
+            var controller = go.GetComponent<PartyMemberUIController>();
+            controller.SetText(member.name);
+            controller.SetSprite(member.visuals.CharacterSpriteSet.MapSprite);
         }
 
         gameObject.SetActive(true);

@@ -7,24 +7,19 @@ using UnityEngine;
 public class PartyScreenUIController : IPartyScreenUI
 {
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField]
+    private Canvas canvas;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public UIPartyOverViewController partyOverViewController;
 
     public override void Show(Party party)
     {
-        gameObject.SetActive(true);
+        canvas.enabled=true;
+        partyOverViewController.Show(party);
     }
 
     public override void Hide()
     {
-        gameObject.SetActive(false);
+        canvas.enabled=false;
     }
 }

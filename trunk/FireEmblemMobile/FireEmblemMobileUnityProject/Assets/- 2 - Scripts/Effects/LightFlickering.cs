@@ -4,6 +4,7 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 namespace Effects
 {
+
     public class LightFlickering : MonoBehaviour
     {
         [Tooltip("External light to flicker; you can leave this null if you attach script to a light")]
