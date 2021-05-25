@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class SpriteOutLinePressed : MonoBehaviour
 
     public Material selected;
 
+    public GameObject activate;
     public SpriteRenderer spriteRenderer;
     // Start is called before the first frame update
     void Start()
@@ -22,24 +24,28 @@ public class SpriteOutLinePressed : MonoBehaviour
         
     }
 
-    // public void OnMouseEnter()
-    // {
-    //     
-    //     spriteRenderer.material = selected;
-    // }
-    // public void OnMouseExit()
-    // {
-    //     
-    //     spriteRenderer.material = normal;
-    // }
+    
     public void OnMouseDown()
     {
       
         spriteRenderer.material = selected;
+        
     }
+
+
+    public void OnMouseOver()
+    {
+        
+    }
+
     public void OnMouseUp()
     {
   
         spriteRenderer.material = normal;
+    }
+    public void OnMouseUpAsButton()
+    {
+        if(activate!=null)
+            activate.SetActive(true);
     }
 }
