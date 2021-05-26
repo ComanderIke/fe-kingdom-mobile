@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Game.WorldMapStuff.Model;
+using Menu;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
 namespace Game.WorldMapStuff.Controller
@@ -41,6 +43,7 @@ namespace Game.WorldMapStuff.Controller
 
         public void EnterLocationClicked()
         {
+            SceneController.SwitchScene("InsideLocation");
             Debug.Log("Enter Location!");
         }
 
