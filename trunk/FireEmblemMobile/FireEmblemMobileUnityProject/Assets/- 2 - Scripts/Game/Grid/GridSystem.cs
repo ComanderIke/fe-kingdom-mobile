@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Game.GameActors.Units;
 using Game.GameResources;
 using Game.Grid;
-using Game.Grid.PathFinding;
+using Game.Grid.GridPathFinding;
 using Game.Manager;
 using Game.Mechanics;
 using GameEngine;

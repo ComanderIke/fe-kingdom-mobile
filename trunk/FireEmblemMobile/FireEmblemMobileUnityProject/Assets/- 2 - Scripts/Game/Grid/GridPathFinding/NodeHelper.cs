@@ -1,4 +1,4 @@
-﻿namespace Game.Grid.PathFinding
+﻿namespace Game.Grid.GridPathFinding
 {
     public class NodeHelper
     {

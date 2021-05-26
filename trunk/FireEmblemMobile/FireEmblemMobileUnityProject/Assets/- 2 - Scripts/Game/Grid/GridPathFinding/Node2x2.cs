@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Game.Grid.PathFinding
+namespace Game.Grid.GridPathFinding
 {
     public class Node2X2
     {

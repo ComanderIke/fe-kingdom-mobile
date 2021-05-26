@@ -11,7 +11,7 @@ using Game.GameInput;
 using Game.GameResources;
 using Game.Graphics;
 using Game.Grid;
-using Game.Grid.PathFinding;
+using Game.Grid.GridPathFinding;
 using Game.GUI;
 using Game.GUI.PopUpText;
 using Game.GUI.Text;
@@ -138,7 +138,7 @@ namespace Game.Manager
             var gridSystem = GetSystem<GridSystem>();
             var tileChecker = new GridTileChecker(gridSystem.Tiles, gridSystem.GridData.width, gridSystem.GridData.height);
             gridSystem.GridLogic.tileChecker = tileChecker;
-            var pathFinder = new AStar(tileChecker);
+            var pathFinder = new GridAStar(tileChecker);
             gridSystem.pathFinder = pathFinder;
             ScoreCalculater.pathFinder = pathFinder;
           

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Game.GameActors.Units;
 using Game.GameInput;
-using Game.Grid.PathFinding;
+using Game.Grid.GridPathFinding;
 using Game.Map;
 using GameEngine;
 using UnityEngine;

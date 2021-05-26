@@ -4,7 +4,7 @@ using System.Linq;
 using Game.GameActors.Units;
 using Game.GameResources;
 using Game.Grid;
-using Game.Grid.PathFinding;
+using Game.Grid.GridPathFinding;
 using Game.Manager;
 using Game.Map;
 using Game.Mechanics;

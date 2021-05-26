@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Game.GameActors.Units;
-using Game.Grid.PathFinding;
+using Game.Grid.GridPathFinding;
 
 namespace Game.Mechanics
 {

@@ -6,9 +6,9 @@ using Game.Map;
 using Game.Mechanics;
 using UnityEngine;
 
-namespace Game.Grid.PathFinding
+namespace Game.Grid.GridPathFinding
 {
-    public class AStar : IPathFinder
+    public class GridAStar : IPathFinder
     {
         private ArrayList closed;
         private ArrayList open;
@@ -17,7 +17,7 @@ namespace Game.Grid.PathFinding
         private readonly int height;
         private ITileChecker tileChecker;
 
-        public AStar(ITileChecker tileChecker)
+        public GridAStar(ITileChecker tileChecker)
         {
             this.tileChecker = tileChecker;
             this.width = tileChecker.GetWidth();

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Game.GameActors.Units;
 using Game.Graphics;
-using Game.Grid.PathFinding;
+using Game.Grid.GridPathFinding;
 using Game.Manager;
 using Game.Mechanics;
 using UnityEngine;
