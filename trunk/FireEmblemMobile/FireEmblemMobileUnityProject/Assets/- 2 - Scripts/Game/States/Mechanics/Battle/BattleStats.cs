@@ -163,5 +163,16 @@ namespace Game.Mechanics.Battle
         {
             return Math.Max(owner.Stats.Skl - attacker.Stats.Skl,1);
         }
+
+        public int GetAttackSpeed()
+        {
+            if (owner is Human human)
+            {
+                Debug.Log("TODO ATTACK SPEED CALC");
+                return human.Stats.Spd - human.EquippedWeapon.Weight;
+            }
+
+            return owner.Stats.Spd;
+        }
     }
 }

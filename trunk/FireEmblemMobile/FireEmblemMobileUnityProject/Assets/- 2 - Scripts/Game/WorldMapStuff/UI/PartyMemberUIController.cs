@@ -19,6 +19,8 @@ public class PartyMemberUIController:MonoBehaviour, IPointerDownHandler, IBeginD
     private RectTransform rectTransform;
     private Transform saveParent;
     public int saveSiblingIndex;
+    public UIPartyOverViewController OverviewController { get; set; }
+    public int UnitIndex{ get; set; }
 
     private void Awake()
     {
@@ -49,6 +51,7 @@ public class PartyMemberUIController:MonoBehaviour, IPointerDownHandler, IBeginD
     {
         selected = !selected;
         BackgroundImage.sprite = selected?selectedSprite:normalSprite;
+        OverviewController.UnitClicked(UnitIndex);
     }
 
     public void OnPointerDown(PointerEventData eventData)

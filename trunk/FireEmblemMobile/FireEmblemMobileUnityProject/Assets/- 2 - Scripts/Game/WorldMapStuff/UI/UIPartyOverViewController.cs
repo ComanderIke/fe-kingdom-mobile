@@ -46,11 +46,16 @@ public class UIPartyOverViewController : MonoBehaviour
         {
             Destroy(tfm.gameObject);
         }
+
+        int index = 0;
         foreach (var member in party.members)
         {
             var go = Instantiate(partyMemberPrefab, partyMemberParent, false);
             instantiatedMembers.Add(go.GetComponent<PartyMemberUIController>());
             var controller = go.GetComponent<PartyMemberUIController>();
+            controller.OverviewController = this;
+            controller.UnitIndex = index;
+            index++;
             controller.SetText(member.name);
             controller.SetSprite(member.visuals.CharacterSpriteSet.MapSprite);
         }
