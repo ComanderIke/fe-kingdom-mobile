@@ -19,7 +19,7 @@ namespace Game.WorldMapStuff.Manager
 
         public void BackClicked()
         {
-            SceneController.SwitchScene("WorldMap");
+            WorldMapSceneController.Instance.LoadWorldMap();
         }
     }
 }

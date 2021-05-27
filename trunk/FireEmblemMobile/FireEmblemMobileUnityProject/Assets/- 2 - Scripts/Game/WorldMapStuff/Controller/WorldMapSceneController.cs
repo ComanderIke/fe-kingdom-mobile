@@ -26,6 +26,12 @@ public class WorldMapSceneController : MonoBehaviour
         }
     }
 
+    public void LoadInside(Party playerParty)
+    {
+        SceneController.OnSceneReady += Hide;
+        BattleTransferData.Instance.UnitsGoingIntoBattle = playerParty.members;
+        SceneController.SwitchScene("InsideLocation");
+    }
     public void LoadLevel(Party playerParty, Party enemyParty)
     {
         BattleTransferData.Instance.PlayerName = playerParty.Faction.name;

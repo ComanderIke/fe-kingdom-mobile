@@ -9,6 +9,7 @@ public class WorldMapInputController : MonoBehaviour
     // Update is called once per frame
     public void OnMouseDown()
     {
-        InputReceiver.WorldClicked();
+        if(InputReceiver!=null)
+            InputReceiver.WorldClicked();
     }
 }

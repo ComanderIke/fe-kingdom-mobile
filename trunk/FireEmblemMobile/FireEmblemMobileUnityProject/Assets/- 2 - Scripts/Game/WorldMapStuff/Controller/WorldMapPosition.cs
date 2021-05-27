@@ -43,7 +43,7 @@ namespace Game.WorldMapStuff.Controller
 
         public void EnterLocationClicked()
         {
-            SceneController.SwitchScene("InsideLocation");
+            WorldMapSceneController.Instance.LoadInside((Party)GetActors()[0]);
             Debug.Log("Enter Location!");
         }
 

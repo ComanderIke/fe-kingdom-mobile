@@ -14,7 +14,7 @@ namespace Menu
         private string currentSceneName;
         public GameObject LoadingScreen;
         private float loadTime;
-        public float MinLoadTime = 5f;
+        public float MinLoadTime = 1f;
         private string nextSceneName;
         private AsyncOperation resourceUnloadTask;
         private AsyncOperation sceneLoadTask;
