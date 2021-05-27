@@ -80,4 +80,11 @@ public class WorldMapSceneController : MonoBehaviour
     }
 
     public event Action<bool> OnBattleFinished;
+
+    public void LoadMainMenu()
+    {
+        Debug.Log("LoadMainMenu");
+        SceneController.SwitchScene("MainMenu");
+        Destroy(this.gameObject);
+    }
 }

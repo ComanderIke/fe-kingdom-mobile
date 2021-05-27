@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Game.Mechanics;
-using Game.WorldMapStuff.Input;
 using Game.WorldMapStuff.Systems;
 using TMPro;
 using UnityEngine;

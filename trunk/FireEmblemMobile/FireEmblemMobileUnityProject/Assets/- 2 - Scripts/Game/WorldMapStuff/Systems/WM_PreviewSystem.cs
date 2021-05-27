@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Game.WorldMapStuff.Input;
 using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.Model.Battle;
 using GameEngine;

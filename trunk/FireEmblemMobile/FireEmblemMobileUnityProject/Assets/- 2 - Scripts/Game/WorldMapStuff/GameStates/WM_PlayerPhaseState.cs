@@ -1,9 +1,9 @@
 ﻿using Game.Manager;
 using Game.Mechanics;
 using Game.WorldMapStuff.Controller;
-using Game.WorldMapStuff.Input;
 using Game.WorldMapStuff.Manager;
 using Game.WorldMapStuff.Systems;
+using Game.WorldMapStuff.WM_Input;
 using GameEngine;
 using GameEngine.GameStates;
 using UnityEngine;
@@ -15,12 +15,13 @@ namespace Game.WorldMapStuff
         private WorldMapInputSystem inputSystem;
         public IPlayerPhaseUI playerPhaseUI;
         public TurnSystem turnSystem;
-    
+        private ConditionManager ConditionManager;
 
-        public WM_PlayerPhaseState(TurnSystem turnSystem)
+        public WM_PlayerPhaseState(TurnSystem turnSystem, ConditionManager conditionManager)
         {
             inputSystem = new WorldMapInputSystem();
             this.turnSystem = turnSystem;
+            ConditionManager = conditionManager;
         }
         public override void Enter()
         { 
@@ -41,6 +42,14 @@ namespace Game.WorldMapStuff
         public override GameState<NextStateTrigger> Update()
         {
             inputSystem.Update();
+            if (ConditionManager.CheckLose())
+            {
+                return  WorldMapGameManager.Instance.GameStateManager.WM_GameOverState;
+            }
+            else if (ConditionManager.CheckWin())
+            {
+                return  WorldMapGameManager.Instance.GameStateManager.WM_WinState;
+            }
             return NextState;
         }
         private void SetUpInputForUnits()

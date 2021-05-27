@@ -13,9 +13,9 @@ namespace Game.AI
         private ConditionManager ConditionManager;
         private float pauseTime;
 
-        public AIState()
+        public AIState(ConditionManager manager)
         {
-            ConditionManager = new ConditionManager();
+            ConditionManager = manager;
         }
         public override void Enter()
         {
@@ -31,11 +31,11 @@ namespace Game.AI
         public override GameState<NextStateTrigger> Update()
         {
             
-            if (ConditionManager.CheckLose(GridGameManager.Instance.FactionManager.Factions))
+            if (ConditionManager.CheckLose())
             {
                 return  GridGameManager.Instance.GameStateManager.GameOverState;
             }
-            else if (ConditionManager.CheckWin(GridGameManager.Instance.FactionManager.Factions))
+            else if (ConditionManager.CheckWin())
             {
                 return  GridGameManager.Instance.GameStateManager.WinState;
             }

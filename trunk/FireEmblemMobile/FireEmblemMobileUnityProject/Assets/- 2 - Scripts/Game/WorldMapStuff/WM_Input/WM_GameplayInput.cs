@@ -1,10 +1,7 @@
-﻿using Game.AI;
-using Game.WorldMapStuff.Controller;
-using Game.WorldMapStuff.Model;
+﻿using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.Systems;
-using UnityEngine;
 
-namespace Game.WorldMapStuff.Input
+namespace Game.WorldMapStuff.WM_Input
 {
     public class WM_GameplayInput
     {

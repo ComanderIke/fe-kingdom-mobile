@@ -23,8 +23,10 @@ namespace Game.Manager
 
         public GridGameStateManager()
         {
-            PlayerPhaseState = new PlayerPhaseState();
-            EnemyPhaseState = new AIState();
+            ConditionManager conditionManager =
+                new ChapterConditionManager(GameObject.FindObjectOfType<ChapterConfig>().chapter, GridGameManager.Instance.FactionManager);
+            PlayerPhaseState = new PlayerPhaseState(conditionManager);
+            EnemyPhaseState = new AIState(conditionManager);
             GameOverState = new GameOverState();
             WinState = new WinState();
             BattleState = new BattleState();

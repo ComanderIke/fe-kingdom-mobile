@@ -12,13 +12,45 @@ namespace Game.Grid
 
         public bool CheckCondition(FactionManager factionManager)
         {
-            
-            switch (type)
+            if (victory)
             {
-                case ConditionType.Route: break;
-                case ConditionType.KillBoss: break;
-                case ConditionType.Seize: break;
+                switch (type)
+                {
+                    case ConditionType.Route: foreach (var p in factionManager.Factions)
+                        {
+
+                            if (!p.IsPlayerControlled && !p.IsAlive())
+                            {
+                                return true;
+                            }
+                        }
+
+                        return false;break;
+                    case ConditionType.KillBoss: break;
+                    case ConditionType.Seize: break;
+                }
+                
             }
+            else
+            {
+                switch (type)
+                {
+                    case ConditionType.Route: foreach (var p in factionManager.Factions)
+                        {
+
+                            if (p.IsPlayerControlled && !p.IsAlive())
+                            {
+                                return false;
+                            }
+                        }
+
+                        return true;break;
+                    case ConditionType.KillBoss: break;
+                    case ConditionType.Seize: break;
+                }
+            }
+            
+            
 
             return false;
         }

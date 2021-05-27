@@ -1,5 +1,6 @@
 ﻿using Game.Manager;
 using Game.Mechanics;
+using Game.WorldMapStuff.Manager;
 using GameEngine;
 using GameEngine.GameStates;
 using UnityEngine;
@@ -14,9 +15,9 @@ namespace Game.AI
         private float pauseTime;
         private FactionManager factionManager;
 
-        public WM_EnemyPhaseState(FactionManager factionManager)
+        public WM_EnemyPhaseState(FactionManager factionManager, ConditionManager conditionManager)
         {
-            ConditionManager = new ConditionManager();
+            ConditionManager = conditionManager;
             this.factionManager= factionManager;
         }
         public override void Enter()
@@ -31,14 +32,14 @@ namespace Game.AI
         public override GameState<NextStateTrigger> Update()
         {
             
-            // if (ConditionManager.CheckLose(factionManager.Factions))
-            // {
-            //     return  WorldMapGameManager.Instance.GameStateManager.GameOverState;
-            // }
-            // else if (ConditionManager.CheckWin(factionManager.Factions))
-            // {
-            //     return  WorldMapGameManager.Instance.GameStateManager.WinState;
-            // }
+            if (ConditionManager.CheckLose())
+            {
+                return  WorldMapGameManager.Instance.GameStateManager.WM_GameOverState;
+            }
+            else if (ConditionManager.CheckWin())
+            {
+                return  WorldMapGameManager.Instance.GameStateManager.WM_WinState;
+            }
             
             pauseTime += Time.deltaTime;
             //wait so the player can follow what the AI is doing

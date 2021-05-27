@@ -1,7 +1,8 @@
 ﻿using Game.WorldMapStuff.Controller;
 using Game.WorldMapStuff.Model;
+using Game.WorldMapStuff.Systems;
 
-namespace Game.WorldMapStuff.Systems
+namespace Game.WorldMapStuff.WM_Input
 {
     public class WM_SelectionManager : IWM_SelectionDataProvider
 

@@ -26,11 +26,11 @@ namespace Game.Mechanics
         private CameraSystem cameraSystem;
         public IPlayerPhaseUI playerPhaseUI;//Inject
 
-        public PlayerPhaseState()
+        public PlayerPhaseState(ConditionManager conditionManager)
         {
             gridGameManager = GridGameManager.Instance;
             factionManager = gridGameManager.FactionManager;
-            conditionManager = new ConditionManager();
+            this.conditionManager = conditionManager;
             cameraSystem = GameObject.FindObjectOfType<CameraSystem>();
             gridInputSystem = new GridInputSystem();
             unitInputSystem = new UnitInputSystem();
@@ -93,11 +93,11 @@ namespace Game.Mechanics
             unitInputSystem.Update();
             gridInputSystem.Update();
             
-            if (conditionManager.CheckLose(gridGameManager.FactionManager.Factions))
+            if (conditionManager.CheckLose())
             {
                 return  GridGameManager.Instance.GameStateManager.GameOverState;
             }
-            else if (conditionManager.CheckWin(gridGameManager.FactionManager.Factions))
+            else if (conditionManager.CheckWin())
             {
                 return  GridGameManager.Instance.GameStateManager.WinState;
             }

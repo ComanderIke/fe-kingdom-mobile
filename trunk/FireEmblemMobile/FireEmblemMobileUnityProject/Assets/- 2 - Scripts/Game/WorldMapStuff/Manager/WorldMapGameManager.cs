@@ -9,7 +9,6 @@ using Game.GUI.Text;
 using Game.Manager;
 using Game.Mechanics;
 using Game.WorldMapStuff.Controller;
-using Game.WorldMapStuff.Input;
 using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.Systems;
 using GameEngine;
