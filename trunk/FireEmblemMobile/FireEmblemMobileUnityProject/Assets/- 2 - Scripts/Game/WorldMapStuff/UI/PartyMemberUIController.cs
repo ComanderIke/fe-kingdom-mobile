@@ -15,7 +15,7 @@ public class PartyMemberUIController:MonoBehaviour, IPointerDownHandler, IBeginD
     public Image BackgroundImage;
     public Sprite selectedSprite;
     public Sprite normalSprite;
-    private bool selected;
+
     private RectTransform rectTransform;
     private Transform saveParent;
     public int saveSiblingIndex;
@@ -49,8 +49,8 @@ public class PartyMemberUIController:MonoBehaviour, IPointerDownHandler, IBeginD
 
     public void Clicked()
     {
-        selected = !selected;
-        BackgroundImage.sprite = selected?selectedSprite:normalSprite;
+
+
         OverviewController.UnitClicked(UnitIndex);
     }
 
@@ -117,5 +117,14 @@ public class PartyMemberUIController:MonoBehaviour, IPointerDownHandler, IBeginD
         saveParent = parent;
         saveSiblingIndex = transform.GetSiblingIndex();
         noParent = false;
+    }
+
+    public void Select()
+    {
+        BackgroundImage.sprite = selectedSprite;
+    }
+    public void ResetVisuals()
+    {
+        BackgroundImage.sprite = normalSprite;
     }
 }

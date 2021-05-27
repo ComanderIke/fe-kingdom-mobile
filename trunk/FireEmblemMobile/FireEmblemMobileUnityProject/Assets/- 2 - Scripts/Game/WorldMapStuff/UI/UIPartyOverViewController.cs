@@ -37,6 +37,8 @@ public class UIPartyOverViewController : MonoBehaviour
     [HideInInspector]
     public Party party;
 
+
+
     public void Show(Party party)
     {
         this.party = party;
@@ -91,6 +93,19 @@ public class UIPartyOverViewController : MonoBehaviour
     public void UnitClicked(int index)
     {
         selectedUnitIndex = index;
+        foreach (var member in instantiatedMembers)
+        {
+            if (member.UnitIndex == selectedUnitIndex)
+            {
+                member.Select();
+            }
+            else
+            {
+                member.ResetVisuals();
+            }
+        }
+
+       
         characterView.Show(party.members[index]);
     }
     
