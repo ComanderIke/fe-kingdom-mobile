@@ -29,12 +29,16 @@ namespace Menu
 
         public static void SwitchScene(string nextSceneName)
         {
+            Debug.Log("Trying Switch Scene: " + nextSceneName);
             if (_instance != null)
+            {
+                Debug.Log("Current Scene Name: "+_instance.currentSceneName);
                 if (_instance.currentSceneName != nextSceneName)
                 {
                     _instance.nextSceneName = nextSceneName;
-                    Debug.Log("SwitchScene: "+nextSceneName);
+                    Debug.Log("SwitchScene: " + nextSceneName);
                 }
+            }
         }
 
         private void Awake()
@@ -162,13 +166,16 @@ namespace Menu
 
         private void OnDestroy()
         {
-            if (updateDelegates != null)
+            if (_instance == this)
             {
-                for (var i = 0; i < (int) SceneState.Count; i++) updateDelegates[i] = null;
-                updateDelegates = null;
-            }
+                if (updateDelegates != null)
+                {
+                    for (var i = 0; i < (int) SceneState.Count; i++) updateDelegates[i] = null;
+                    updateDelegates = null;
+                }
 
-            _instance = null;
+                _instance = null;
+            }
         }
 
         private int tipCount;

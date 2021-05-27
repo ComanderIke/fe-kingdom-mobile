@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Game.Manager;
@@ -32,7 +33,7 @@ public class WorldMapSceneController : MonoBehaviour
         BattleTransferData.Instance.UnitsGoingIntoBattle = playerParty.members;
         SceneController.SwitchScene("InsideLocation");
     }
-    public void LoadLevel(Party playerParty, Party enemyParty)
+    public void LoadBattleLevel(Party playerParty, Party enemyParty)
     {
         BattleTransferData.Instance.PlayerName = playerParty.Faction.name;
         BattleTransferData.Instance.UnitsGoingIntoBattle = playerParty.members;
@@ -46,6 +47,23 @@ public class WorldMapSceneController : MonoBehaviour
         Show();
         SceneController.SwitchScene("WorldMap");
     }
+
+    private bool lastBattleVictory = false;
+    public void FinishedBattle(bool victory)
+    {
+        GridGameManager.Instance.Deactivate();
+        Show();
+        lastBattleVictory = victory;
+        SceneController.OnSceneReady += InvokeBattleFinished;
+        SceneController.SwitchScene("WorldMap");
+       
+    }
+
+    private void InvokeBattleFinished()
+    {
+        SceneController.OnSceneReady -= InvokeBattleFinished;
+        OnBattleFinished?.Invoke(lastBattleVictory);
+    }
     private void Hide()
     {
         WorldMapGameManager.Instance.Deactivate();
@@ -56,7 +74,10 @@ public class WorldMapSceneController : MonoBehaviour
     
     private void Show()
     {
-        DisableObject.SetActive(true);
         WorldMapGameManager.Instance.Activate();
+        DisableObject.SetActive(true);
+      
     }
+
+    public event Action<bool> OnBattleFinished;
 }

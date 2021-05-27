@@ -33,5 +33,13 @@ namespace Game.WorldMapStuff.Model
         public WM_GameTransformManager GameTransformManager { get; set; }
         public LocationController location { get; set; }
         public abstract void ResetPosition();
+
+        public void Defeated()
+        {
+            location.Actor = null;
+            faction.Parties.Remove((Party)this);
+            Destroy(GameTransformManager.GameObject);
+            Destroy(this);
+        }
     }
 }

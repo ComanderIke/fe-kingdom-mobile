@@ -198,7 +198,7 @@ namespace Game.WorldMapStuff.Controller
            var actors = GetActors();
            if(actors.Count==0)
                enterLocationController.gameObject.SetActive(false);
-           else if(actors.All(a => a.Faction.IsActive()&&a.Faction.IsPlayerControlled))
+           else if(actors.Any(a => a.Faction.IsActive()&&a.Faction.IsPlayerControlled))
            {
                enterLocationController.gameObject.SetActive(true);
            }

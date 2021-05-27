@@ -109,14 +109,14 @@ namespace Game.Manager
 
         private void Initialize()
         {
-           
+            active = true;
             InjectDependencies();
             foreach (var system in Systems)
             {
                 system.Init();
                 system.Activate();
             }
-
+           
 
             LevelConfig();
           
@@ -165,6 +165,9 @@ namespace Game.Manager
                 Initialize();
                 init = true;
             }
+            if (!active)
+                return;
+           
 
             GameStateManager.Update();
         }
@@ -188,5 +191,18 @@ namespace Game.Manager
                 return (T) Convert.ChangeType(s, typeof(T));
             return default;
         }
+
+        private bool active = true;
+        public void Deactivate()
+        {
+            foreach (var system in Systems)
+            {
+                system.Deactivate();
+            }
+
+            active = false;
+        }
+        
+        
     }
 }

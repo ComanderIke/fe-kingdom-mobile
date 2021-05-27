@@ -30,7 +30,7 @@ namespace Game.Mechanics
                 {
                     if (time >= DELAY)
                     {
-                        WorldMapSceneController.Instance.LoadWorldMap();
+                        WorldMapSceneController.Instance.FinishedBattle(true);
                     }
                         
                 }

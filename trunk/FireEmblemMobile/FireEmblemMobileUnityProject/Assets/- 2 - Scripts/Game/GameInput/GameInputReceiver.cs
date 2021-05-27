@@ -158,6 +158,7 @@ namespace Game.GameInput
                 else
                 {
                     inputPathManager.CalculateMousePathToPosition(selectionDataProvider.SelectedActor, x, y);
+                    Debug.Log("GameInput SetPosition");
                     selectionDataProvider.SelectedActor.GameTransformManager.SetPosition(x, y);
                     selectionDataProvider.SetSelectedTile(x, y);
                     selectionDataProvider.ClearAttackTarget();
@@ -167,7 +168,7 @@ namespace Game.GameInput
             else if(selectionDataProvider.SelectedActor != null)
             {
                 if (selectionDataProvider.SelectedActor.GridComponent.GridPosition.X == x && y == selectionDataProvider.SelectedActor.GridComponent.GridPosition.Y)
-                {
+                {  Debug.Log("ResetPos4");
                     selectionDataProvider.SelectedActor.GridComponent.ResetPosition();
                     gameplayInput.DeselectUnit();
                 }
@@ -235,6 +236,7 @@ namespace Game.GameInput
                             if (!inputPathManager.IsMovementPathEmpty())
                             {
                                 var lastMovPathPos = inputPathManager.GetLastMovementPathPosition();
+                                Debug.Log("GameInput2 SetPosition");
                                 selectedActor.GameTransformManager.SetPosition(lastMovPathPos.x, lastMovPathPos.y);
                                 if(selectedActor is IBattleActor battleActor&& enemyActor is IBattleActor enemyBattleActor)
                                     gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, new GridPosition(lastMovPathPos.x, lastMovPathPos.y));

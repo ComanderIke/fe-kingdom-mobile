@@ -13,7 +13,7 @@ namespace Game.Mechanics
         public IGameOverRenderer renderer;
         public override void Enter()
         {
-            Debug.Log("Game Over");
+            Debug.Log("Battle Lost");
             time = 0;
             renderer.Show();
         }
@@ -30,7 +30,7 @@ namespace Game.Mechanics
                 if (Input.GetMouseButtonDown(0))
                 {
                     if (time >= DELAY)
-                        SceneController.SwitchScene("MainMenu");
+                        WorldMapSceneController.Instance.FinishedBattle(false);
                 }
             }
 

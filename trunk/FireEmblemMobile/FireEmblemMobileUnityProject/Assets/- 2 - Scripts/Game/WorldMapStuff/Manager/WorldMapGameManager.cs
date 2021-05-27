@@ -72,7 +72,8 @@ namespace Game.WorldMapStuff.Manager
             {
                 system.Activate();
             }
-
+            GetSystem<TurnSystem>().factionManager = FactionManager;
+            GetSystem<TurnSystem>().gameStateManager = GameStateManager;
             active = true;
 
         }

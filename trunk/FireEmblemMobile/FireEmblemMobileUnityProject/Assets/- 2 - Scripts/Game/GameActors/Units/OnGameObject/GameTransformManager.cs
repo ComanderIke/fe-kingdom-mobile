@@ -13,6 +13,7 @@ namespace Game.GameActors.Units.OnGameObject
 
         public void SetPosition(int x, int y)
         {
+            Debug.Log("Set position: "+x+" "+y);
             GameObject.transform.localPosition = new Vector3(x, y, 0);
         }
         

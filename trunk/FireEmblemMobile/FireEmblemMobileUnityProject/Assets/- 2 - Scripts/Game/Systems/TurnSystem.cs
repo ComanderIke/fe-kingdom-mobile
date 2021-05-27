@@ -41,13 +41,16 @@ namespace Game.Mechanics
 
         public void Deactivate()
         {
-
+            OnStartTurn = null;
             OnTriggerEndTurn = null;
+           // Debug.Log("Deactivate TurnSystem!");
         }
 
         public void Activate()
         {
+           // Debug.Log("Activate TurnSystem!");
             OnTriggerEndTurn = null;
+            OnStartTurn = null;
             OnTriggerEndTurn += EndPhase;
         }
 
@@ -147,10 +150,6 @@ namespace Game.Mechanics
             StartPhase();
         }
 
-        private void OnDestroy()
-        {
-            OnTriggerEndTurn = null;
-            OnStartTurn = null;
-        }
+ 
     }
 }

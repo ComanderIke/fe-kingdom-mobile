@@ -30,14 +30,39 @@ namespace Game.WorldMapStuff.Systems
             Debug.Log("TODO UI AttackPreview Party");
         }
 
+        private Party currentAttackTarget;
         public void AttackParty(WM_Actor party)
         {
             var selected = selectionSystem.SelectedActor;
             Debug.Log(selectionSystem.SelectedActor+" "+selectionSystem.SelectedActor.name);
             if (selected is Party pty)
             {
-                WorldMapSceneController.Instance.LoadLevel(pty, (Party)party);
+                WorldMapSceneController.Instance.LoadBattleLevel(pty, (Party)party);
+                currentAttackTarget = (Party) party;
+                WorldMapSceneController.Instance.OnBattleFinished += AttackFinished;
             }
+        }
+
+        private void AttackFinished(bool victory)
+        {
+            var selected = selectionSystem.SelectedActor;
+            if (victory)
+            {
+                Debug.Log("Enemy Party Defeated");
+                currentAttackTarget.Defeated();
+                var location = currentAttackTarget.location;
+                MoveParty(selected, location);
+                Wait(selected);
+            }
+            else
+            {
+                if (selected is Party pty)
+                {
+                    pty.Defeated();
+                    Debug.Log("Own Party Defeated");
+                }
+            }
+
         }
 
         public void MoveParty(WM_Actor party, LocationController location)

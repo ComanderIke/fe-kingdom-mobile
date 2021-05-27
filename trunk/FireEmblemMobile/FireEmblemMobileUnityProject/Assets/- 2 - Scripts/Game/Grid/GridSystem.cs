@@ -43,24 +43,28 @@ namespace Game.Map
 
         public void Deactivate()
         {
-            UnitSelectionSystem.OnDeselectCharacter -=  (IGridActor u) => HideMoveRange();
+            UnitSelectionSystem.OnDeselectCharacter -=  InvokeHideMoveRange;
             UnitSelectionSystem.OnSelectedCharacter -= SelectedCharacter;
             UnitSelectionSystem.OnEnemySelected -= OnEnemySelected;
             UnitSelectionSystem.OnSelectedInActiveCharacter -= OnEnemySelected;
-            MovementState.OnMovementFinished -= (IGridActor u) => HideMoveRange();
+            MovementState.OnMovementFinished -= InvokeHideMoveRange;
             Unit.UnitDied -= RemoveUnitFromGrid;
         }
 
         public void Activate()
         {
-            UnitSelectionSystem.OnDeselectCharacter += (IGridActor u) => HideMoveRange();
+            UnitSelectionSystem.OnDeselectCharacter += InvokeHideMoveRange;
             UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
             UnitSelectionSystem.OnEnemySelected += OnEnemySelected;
             UnitSelectionSystem.OnSelectedInActiveCharacter += OnEnemySelected;
-            MovementState.OnMovementFinished += (IGridActor u) => HideMoveRange();
+            MovementState.OnMovementFinished += InvokeHideMoveRange;
             Unit.UnitDied += RemoveUnitFromGrid;
         }
 
+        private void InvokeHideMoveRange(IGridActor u)
+        {
+            HideMoveRange();
+        }
         public ITileChecker GetTileChecker()
         {
             return GridLogic.tileChecker;

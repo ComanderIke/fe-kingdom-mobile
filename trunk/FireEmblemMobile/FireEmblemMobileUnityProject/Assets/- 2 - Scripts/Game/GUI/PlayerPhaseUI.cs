@@ -28,6 +28,7 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
     {
         OkCancelDialogController.Show("End the Turn?", () =>
         {
-            Debug.Log("Ending Turn with UI!");TurnSystem.OnTriggerEndTurn(); });
+            Debug.Log("Ending Turn with UI!");
+            TurnSystem.OnTriggerEndTurn(); });
     }
 }
