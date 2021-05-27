@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.Mechanics;
+using Game.WorldMapStuff.Manager;
 using Game.WorldMapStuff.Model;
 using TMPro;
 using UnityEngine;
@@ -39,6 +41,14 @@ public class UIPartyOverViewController : MonoBehaviour
     {
         this.party = party;
         playerFaction = party.Faction;
+        turnCount.SetText("Turn: "+WorldMapGameManager.Instance.GetSystem<TurnSystem>().TurnCount);
+        string condStr = "";
+        foreach (var cond in FindObjectOfType<CampaignConfig>().campaign.victoryDefeatConditions)
+        {
+            condStr += cond.description+", ";
+        }
+        partyName.SetTextWithoutNotify(party.name);
+        conditions.SetText(condStr);
         UnitClicked(selectedUnitIndex);
         instantiatedMembers = new List<PartyMemberUIController>();
         instantiatedMembers.Clear();
