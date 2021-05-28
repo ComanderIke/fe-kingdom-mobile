@@ -1,6 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using Game.Manager;
 using Menu;
 using TMPro;
+using UnityEditor.Build.Content;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,8 +18,19 @@ namespace Game.GUI
         [SerializeField] private GameObject loadFilePrefab = default;
         private string[] saveFiles;
         private string lastestSaveFile;
+        public GameObject ContinueButton;
+        public GameObject LoadButton;
+        public GameObject SaveButton;
         [SerializeField] private UIMenu optionsMenu;
         [SerializeField] private UIMenu campaignMenu;
+
+        private void Start()
+        {
+            ContinueButton.SetActive(GameManager.Instance.SessionManager.WorldMapLoaded);
+            SaveButton.SetActive(GameManager.Instance.SessionManager.WorldMapLoaded);
+            LoadButton.SetActive(GetLoadFiles()!=0);
+        }
+
         public void NewGameClicked()
         {
             campaignMenu.Show();
@@ -29,7 +43,7 @@ namespace Game.GUI
         }
         public void ContineClicked()
         {
-            SceneController.SwitchScene("Base");
+            SceneController.SwitchScene("WorldMap");
             //LoadGame(lastestSaveFile);
         }
         public void OptionsClicked()
@@ -66,7 +80,7 @@ namespace Game.GUI
             LeanTween.scale(loadDialog, Vector3.one, 0.3f).setEase(LeanTweenType.easeOutBack);
 
         }
-        public void GetLoadFiles()
+        public int GetLoadFiles()
         {
             if (!Directory.Exists(Application.persistentDataPath + "/saves/"))
             {
@@ -74,6 +88,7 @@ namespace Game.GUI
             }
 
             saveFiles = Directory.GetFiles(Application.persistentDataPath + "/saves/");
+            return saveFiles.Length;
         }
 
         public void ShowLoadScreen()

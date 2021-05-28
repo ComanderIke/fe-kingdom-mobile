@@ -14,7 +14,7 @@ namespace Menu
         private string currentSceneName;
         public GameObject LoadingScreen;
         private float loadTime;
-        public float MinLoadTime = 1f;
+        public float MinLoadTime = 0f;
         private string nextSceneName;
         private AsyncOperation resourceUnloadTask;
         private AsyncOperation sceneLoadTask;
@@ -112,7 +112,8 @@ namespace Menu
             }
             else
             {
-                float progress = Mathf.Clamp01(loadTime / MinLoadTime); //sceneLoadTask.progress / .9f);
+
+                float progress = sceneLoadTask.progress/.9f;//Mathf.Clamp01(loadTime / MinLoadTime); //sceneLoadTask.progress / .9f);
                 progressBar.fillAmount = progress;
                 progressText.text = ((int)(progress*100))+"%";
                 loadTime += Time.deltaTime;
@@ -187,6 +188,7 @@ namespace Menu
             while (sceneState != SceneState.Ready)
             {
                 yield return new WaitForSeconds(3f);
+                
                 LeanTween.alphaCanvas(alphaCanvas, 0, 0.5f);
                 yield return new WaitForSeconds(0.5f);
                 tipCount++;
