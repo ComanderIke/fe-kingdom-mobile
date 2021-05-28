@@ -2,6 +2,7 @@
 using Game.Mechanics;
 using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.UI;
+using UnityEngine;
 
 namespace Game.AI
 {
@@ -34,13 +35,14 @@ namespace Game.AI
             foreach (var cond in campaign.victoryDefeatConditions)
             {
                 if(!cond.victory)
-                    if (!cond.CheckCondition(factionManager))
+                    if (cond.CheckCondition(factionManager))
                     {
-                        return false;
+                        Debug.Log("Campaign Lose: ");
+                        return true;
                     }
             }
-
-            return true;
+            
+            return false;
 
         }
     }

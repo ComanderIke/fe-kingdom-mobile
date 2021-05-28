@@ -5,6 +5,7 @@ using Audio;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameResources;
+using Game.GUI;
 using Game.GUI.Text;
 using Game.Manager;
 using Game.Mechanics;
@@ -125,6 +126,8 @@ namespace Game.WorldMapStuff.Manager
             GetSystem<WM_PartySelectionSystem>().partySelectionRenderer.Hide();
             GameStateManager.PhaseTransitionState.phaseRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IPhaseRenderer>().First();
             GameStateManager.PlayerPhaseState.playerPhaseUI = FindObjectsOfType<MonoBehaviour>().OfType<IPlayerPhaseUI>().First();
+            GameStateManager.WM_WinState.renderer = FindObjectsOfType<MonoBehaviour>().OfType<IWinRenderer>().First();
+            GameStateManager.WM_GameOverState.renderer = FindObjectsOfType<MonoBehaviour>().OfType<IGameOverRenderer>().First();
 
         }
         private void Update()

@@ -19,7 +19,7 @@ public class WorldMapCameraController : MonoBehaviour
         cameraSystem.Init();
         cameraSystem.AddMixin<ClampCameraMixin>().Construct(width, height);
         cameraSystem.AddMixin<DragCameraMixin>().Construct(new WorldPosDragPerformer(1f, cameraSystem.camera),
-            new ScreenPointToRayProvider(cameraSystem.camera), new HitChecker(),new MouseInputProvider());
+            new ScreenPointToRayProvider(cameraSystem.camera), new HitChecker(),new MouseCameraInputProvider());
     }
 
     // Update is called once per frame

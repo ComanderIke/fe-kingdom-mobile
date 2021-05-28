@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using GameEngine;
 using UnityEngine;
 
 namespace GameCamera
 {
-    public class CameraSystem : MonoBehaviour, IEngineSystem
+    public class CameraSystem : MonoBehaviour
     {
         public delegate void OnMoveToFinishedEvent();
 

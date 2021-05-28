@@ -10,40 +10,40 @@ namespace GameCamera
         private IDragPerformer DragPerformer { get; set; }
         private IRayProvider RayProvider { get; set; }
         private IHitChecker HitChecker { get; set; }
-        private IInputProvider InputProvider { get; set; }
+        private ICameraInputProvider CameraInputProvider { get; set; }
 
 
         public void Construct(IDragPerformer dragPerformer, IRayProvider rayProvider, IHitChecker hitChecker,
-            IInputProvider inputProvider)
+            ICameraInputProvider cameraInputProvider)
         {
             DragPerformer = dragPerformer;
             RayProvider = rayProvider;
             HitChecker = hitChecker;
-            InputProvider = inputProvider;
+            CameraInputProvider = cameraInputProvider;
         }
 
         private void Update()
         {
             CameraSystem.IsDragging = DragPerformer.IsDragging;
-            if (InputProvider.InputPressed())
+            if (CameraInputProvider.InputPressed())
             {
-                DragPerformer.Drag(transform,InputProvider.InputPosition());
+                DragPerformer.Drag(transform,CameraInputProvider.InputPosition());
                 
             }
-            if (InputProvider.InputPressedDown())
+            if (CameraInputProvider.InputPressedDown())
             {
-                var ray = RayProvider.CreateRay(InputProvider.InputPosition());
+                var ray = RayProvider.CreateRay(CameraInputProvider.InputPosition());
                 if (HitChecker.CheckHit(ray) )
                 {
                     if (EventSystem.current.currentSelectedGameObject == null ||
                         !HitChecker.HasTagExcluded(EventSystem.current
                             .currentSelectedGameObject.tag))
                     {
-                        DragPerformer.StartDrag(transform, InputProvider.InputPosition());
+                        DragPerformer.StartDrag(transform, CameraInputProvider.InputPosition());
                     }
                 }
             }
-            if (InputProvider.InputPressedUp())
+            if (CameraInputProvider.InputPressedUp())
             {
                 DragPerformer.EndDrag(transform);
                 CameraSystem.ActivateMixins();

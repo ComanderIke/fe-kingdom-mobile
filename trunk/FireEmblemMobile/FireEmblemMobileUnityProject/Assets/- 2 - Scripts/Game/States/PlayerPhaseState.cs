@@ -55,7 +55,7 @@ namespace Game.Mechanics
         {
             Debug.Log("Enter GameplayState");
             cameraSystem.AddMixin<DragCameraMixin>().Construct(new WorldPosDragPerformer(1f, cameraSystem.camera),
-                new ScreenPointToRayProvider(cameraSystem.camera), new HitChecker(),new MouseInputProvider());
+                new ScreenPointToRayProvider(cameraSystem.camera), new HitChecker(),new MouseCameraInputProvider());
             int height = gridGameManager.GetSystem<GridSystem>().GridData.height;
             int width = gridGameManager.GetSystem<GridSystem>().GridData.width;
             cameraSystem.AddMixin<ClampCameraMixin>().Construct(width, height);

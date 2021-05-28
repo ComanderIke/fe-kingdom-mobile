@@ -12,7 +12,7 @@ public class SlideInDetector : MonoBehaviour, IPointerDownHandler
 {
     private IDragPerformer DragPerformer { get; set; }
     private IRayProvider RayProvider { get; set; }
-    private IInputProvider InputProvider { get; set; }
+    private ICameraInputProvider CameraInputProvider { get; set; }
 
     private RectTransform rectT;
     public bool isOpen;
@@ -22,7 +22,7 @@ public class SlideInDetector : MonoBehaviour, IPointerDownHandler
     public void Start()
     {
         DragPerformer = new UIDragPerformer(0.01f);
-        InputProvider = new MouseInputProvider();
+        CameraInputProvider = new MouseCameraInputProvider();
         RayProvider = new ScreenPointToRayProvider(Camera.main);
         rectT = GetComponent<RectTransform>();
         originPos=rectT.anchoredPosition;
@@ -43,9 +43,9 @@ public class SlideInDetector : MonoBehaviour, IPointerDownHandler
     }
     void Update()
     {
-        if (InputProvider.InputPressed())
+        if (CameraInputProvider.InputPressed())
         {
-            DragPerformer.Drag(transform, InputProvider.InputPosition());
+            DragPerformer.Drag(transform, CameraInputProvider.InputPosition());
             if (rectT.anchoredPosition.x - originPos.x >= 0)
             {
                 rectT.anchoredPosition = originPos;
@@ -57,7 +57,7 @@ public class SlideInDetector : MonoBehaviour, IPointerDownHandler
         }
 
 
-        if (InputProvider.InputPressedUp())
+        if (CameraInputProvider.InputPressedUp())
         {
             DragPerformer.EndDrag(transform);
             if (rectT.anchoredPosition.x - originPos.x > -rectT.rect.width/3f*1f)
@@ -75,7 +75,7 @@ public class SlideInDetector : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        DragPerformer.StartDrag(transform, InputProvider.InputPosition());
+        DragPerformer.StartDrag(transform, CameraInputProvider.InputPosition());
     }
     public void Open()
     {

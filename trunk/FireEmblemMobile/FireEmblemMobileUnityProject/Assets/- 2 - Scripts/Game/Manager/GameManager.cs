@@ -11,10 +11,10 @@ namespace Game.Manager
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance { get; private set; }
-
-        public GameProgress gameProgress;
+        
         private List<IEngineSystem> Systems { get; set; }
         public GameStateManager GameStateManager { get; set; }
+        public SessionManager SessionManager;
         private void Awake()
         {
             DontDestroyOnLoad(gameObject);
@@ -22,6 +22,7 @@ namespace Game.Manager
             if (Instance == null)
             {
                 Instance = this;
+                SessionManager = new SessionManager();
             }
             else
             {
