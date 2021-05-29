@@ -87,7 +87,7 @@ namespace Game.WorldMapStuff.Manager
                 system.Activate();
             }
 
-            var startingParty = FindObjectOfType<DataScript>().GetCampaignParty(0);
+            var startingParty = FindObjectOfType<GameData>().GetCampaignParty(0);
             var partySpawns= FindObjectsOfType<PartySpawn>();
             var instantiator = FindObjectOfType<PartyInstantiator>();
             foreach (var spawn in partySpawns)

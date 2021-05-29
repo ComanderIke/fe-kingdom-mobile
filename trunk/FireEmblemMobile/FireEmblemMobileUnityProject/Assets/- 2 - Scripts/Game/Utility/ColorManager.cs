@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Utility
 {
-    [ExecuteInEditMode]
-    public class ColorManager : MonoBehaviour {
+    [CreateAssetMenu(fileName ="ColorManager", menuName = "GameData/Config/Colors")]
+    public class ColorManager : ScriptableObject {
 
         public Color MainGreenColor;
         public Color MainRedColor;
@@ -18,19 +19,10 @@ namespace Utility
         public Color[] FactionColors; 
         public Color[] FactionUIBackgroundColors;
         public static ColorManager Instance;
-      
 
-        void Awake()
+        private void OnEnable()
         {
-            if (Instance == null)
-            {
-                Instance = this;
-            }
-            else
-            {
-                Destroy(gameObject);
-                return;
-            }
+            Instance = this;
         }
 
         public Color GetFactionColor(int factionId)

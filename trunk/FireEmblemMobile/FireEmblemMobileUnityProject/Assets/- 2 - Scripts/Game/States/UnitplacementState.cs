@@ -39,8 +39,8 @@ namespace Game.States
             factionManager = GridGameManager.Instance.FactionManager;
             var spawner = GameObject.FindObjectsOfType<UnitSpawner>();
             unitInstantiator = GameObject.FindObjectOfType<UnitInstantiator>();
-            var resources = GameObject.FindObjectOfType<ResourceScript>();
-            var data = GameObject.FindObjectOfType<DataScript>();
+            var resources = GameObject.FindObjectOfType<GameAssets>();
+            var data = GameObject.FindObjectOfType<GameData>();
             gridSystem = GridGameManager.Instance.GetSystem<GridSystem>();
 
             InitUnits();
@@ -173,18 +173,18 @@ namespace Game.States
             if (BattleTransferData.Instance.UnitsGoingIntoBattle == null || BattleTransferData.Instance.UnitsGoingIntoBattle.Count == 0)
             {
                 Debug.Log("Create Demo Characters");
-                var unit1 = DataScript.Instance.GetHuman("Leila");
-                var unit2 = DataScript.Instance.GetHuman("Flora");
-                var unit3 = DataScript.Instance.GetHuman("Eldric");
-                var unit4 = DataScript.Instance.GetHuman("Hector");
+                var unit1 = GameData.Instance.GetHuman("Leila");
+                var unit2 = GameData.Instance.GetHuman("Flora");
+                var unit3 = GameData.Instance.GetHuman("Eldric");
+                var unit4 = GameData.Instance.GetHuman("Hector");
                 unit1.Initialize();
                 unit2.Initialize();
                 unit3.Initialize();
                 unit4.Initialize();
-                unit4.Inventory.AddItem(DataScript.Instance.GetWeapon("Iron Sword"));
-                unit3.Inventory.AddItem(DataScript.Instance.GetWeapon("Iron Bow"));
-                unit1.Inventory.AddItem(DataScript.Instance.GetWeapon("Steel Bow"));
-                unit2.Inventory.AddItem(DataScript.Instance.GetWeapon("Fire"));
+                unit4.Inventory.AddItem(GameData.Instance.GetWeapon("Iron Sword"));
+                unit3.Inventory.AddItem(GameData.Instance.GetWeapon("Iron Bow"));
+                unit1.Inventory.AddItem(GameData.Instance.GetWeapon("Steel Bow"));
+                unit2.Inventory.AddItem(GameData.Instance.GetWeapon("Fire"));
                 BattleTransferData.Instance.UnitsGoingIntoBattle = new List<Unit>
                 {
                     unit1,

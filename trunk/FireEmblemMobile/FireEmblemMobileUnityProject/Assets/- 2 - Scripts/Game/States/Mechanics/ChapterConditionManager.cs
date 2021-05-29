@@ -3,6 +3,7 @@ using Game.GameActors.Players;
 using Game.GameInput;
 using Game.Grid;
 using Game.Manager;
+using UnityEngine;
 
 namespace Game.Mechanics
 {
@@ -36,13 +37,14 @@ namespace Game.Mechanics
             foreach (var cond in chapter.victoryDefeatConditions)
             {
                 if(!cond.victory)
-                    if (!cond.CheckCondition(factionManager))
+                    if (cond.CheckCondition(factionManager))
                     {
-                        return false;
+                        Debug.Log("CheckLose: true "+cond.description);
+                        return true;
                     }
             }
 
-            return true;
+            return false;
             
         }
     }

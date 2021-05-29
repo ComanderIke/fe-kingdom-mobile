@@ -40,11 +40,11 @@ namespace Game.Grid
 
                             if (p.IsPlayerControlled && !p.IsAlive())
                             {
-                                return false;
+                                return true;
                             }
                         }
 
-                        return true;break;
+                        return false;break;
                     case ConditionType.KillBoss: break;
                     case ConditionType.Seize: break;
                 }

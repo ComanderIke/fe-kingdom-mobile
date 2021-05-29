@@ -26,7 +26,7 @@ namespace Game.GameInput
             lastInputPositionManager = new LastInputPositionManager();
 
             this.gridSystem = gridSystem;
-            inputPathManager = new InputPathManager(gridSystem.pathFinder, ResourceScript.Instance.grid.moveArrowVisual);
+            inputPathManager = new InputPathManager(gridSystem.pathFinder, GameAssets.Instance.grid.moveArrowVisual);
             UnitSelectionSystem.OnSelectedCharacter += OnSelectedCharacter;
             UnitSelectionSystem.OnSelectedInActiveCharacter += OnSelectedCharacter;
         }

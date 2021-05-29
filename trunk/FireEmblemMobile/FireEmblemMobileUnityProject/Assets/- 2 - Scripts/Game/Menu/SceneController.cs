@@ -161,6 +161,7 @@ namespace Menu
         // wait for scene change
         private void UpdateSceneRun()
         {
+            
             if (currentSceneName != nextSceneName) sceneState = SceneState.Reset;
             
         }

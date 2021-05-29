@@ -9,14 +9,15 @@ using UnityEngine;
 
 namespace Game.GameResources
 {
-    public class DataScript : MonoBehaviour
+    [CreateAssetMenu(fileName = "GameData", menuName = "GameData/Config/GameData")]
+    public class GameData : ScriptableObject
     {
         public UiData UiData;
         public DialogData DialogTexts;
         public UnitData UnitData;
         public CharacterStateData CharacterStateData;
 
-        public static DataScript Instance;
+        public static GameData Instance;
         [SerializeField] private List<Weapon> weapons = default;
         [SerializeField] private List<Human> humans = default;
         [SerializeField] private List<Monster> monster = default;
@@ -69,10 +70,7 @@ namespace Game.GameResources
         {
             Instance = this;
         }
-        private void OnDestroy()
-        {
-            Instance = null;
-        }
+      
 
 
     }

@@ -29,7 +29,7 @@ namespace Game.Map
         private void Awake()
         {
             Tiles = GetComponent<GridBuilder>().GetTiles();
-            GridData = ResourceScript.Instance.grid.gridData;
+            GridData = GameAssets.Instance.grid.gridData;
             cursor = new GridCursor();
             GridRenderer = new GridRenderer(this);
             GridLogic = new GridLogic(this);

@@ -21,7 +21,7 @@ namespace Game.Grid
 
         void Awake()
         {
-            gridData = ResourceScript.Instance.grid.gridData;
+            gridData = GameAssets.Instance.grid.gridData;
         }
         public void Build(int width, int height)
         {
@@ -37,7 +37,7 @@ namespace Game.Grid
                 {
                     var cell = CreateGridTileGameObject(i, j);
                     var meshRenderer = cell.GetComponent<SpriteRenderer>();
-                    meshRenderer.material = ResourceScript.Instance.grid.gridMaterial;
+                    meshRenderer.material = GameAssets.Instance.grid.gridMaterial;
                 }
             }
         }
@@ -64,7 +64,7 @@ namespace Game.Grid
                     {
                         cell.AddComponent<TileData>().tileType = default;
                     }
-                    tiles[i, j] = new Tile(i, j, tileData.tileType, cell.transform, new SpriteTileRenderer(cell.GetComponent<SpriteRenderer>(), ResourceScript.Instance.tiles.tileSpriteSets),tileeffectVisualRenderer);
+                    tiles[i, j] = new Tile(i, j, tileData.tileType, cell.transform, new SpriteTileRenderer(cell.GetComponent<SpriteRenderer>(), GameAssets.Instance.tiles.tileSpriteSets),tileeffectVisualRenderer);
                 }
             }
 
@@ -80,10 +80,10 @@ namespace Game.Grid
             go.transform.parent = gridTransform.transform;
             go.transform.localPosition = new Vector3(x + 0.5f, y + 0.5f, 0);
             var spriteRenderer = go.AddComponent<SpriteRenderer>();
-            spriteRenderer.sprite = ResourceScript.Instance.grid.standardSprite;
+            spriteRenderer.sprite = GameAssets.Instance.grid.standardSprite;
             spriteRenderer.sortingOrder = 0;
             go.AddComponent<BoxCollider2D>().size = new Vector3(1, 1);
-            go.AddComponent<TileData>().tileType=ResourceScript.Instance.grid.standardTileType;
+            go.AddComponent<TileData>().tileType=GameAssets.Instance.grid.standardTileType;
             
             return go;
         }

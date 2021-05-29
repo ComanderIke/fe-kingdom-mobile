@@ -1,47 +1,16 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1961367458926910
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4744530050386504}
-  - component: {fileID: 114417611292314510}
-  m_Layer: 0
-  m_Name: '@Data'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4744530050386504
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1961367458926910}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114417611292314510
+--- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1961367458926910}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86c372ea5d59f8d46929b1437e1305ab, type: 3}
-  m_Name: 
+  m_Script: {fileID: 11500000, guid: aed809efedc34078ac7731659e56340f, type: 3}
+  m_Name: GameData
   m_EditorClassIdentifier: 
   DialogTexts:
     StartFight: {fileID: 0}
@@ -64,19 +33,19 @@ MonoBehaviour:
   CharacterStateData:
     CantAttack: {fileID: 0}
   weapons:
-  - {fileID: 11400000, guid: 81a61bb498fb6f94fad85f4f09ea6524, type: 2}
-  - {fileID: 11400000, guid: ac568134ab31f5845a903f4e89d7324a, type: 2}
   - {fileID: 11400000, guid: 6544be2bd6f106249ac554cd1e9029ee, type: 2}
+  - {fileID: 11400000, guid: ac568134ab31f5845a903f4e89d7324a, type: 2}
   - {fileID: 11400000, guid: 36a3c23465f75d6439de53d96dd0085b, type: 2}
-  - {fileID: 11400000, guid: d9a0058398b2a494e8e44022edc5fd56, type: 2}
+  - {fileID: 11400000, guid: 81a61bb498fb6f94fad85f4f09ea6524, type: 2}
   - {fileID: 11400000, guid: 3281ba6ac1b7d4047aa6947eba98a1af, type: 2}
+  - {fileID: 11400000, guid: d9a0058398b2a494e8e44022edc5fd56, type: 2}
   - {fileID: 11400000, guid: 49297f7e78d80dd4bb10a8e48435fb97, type: 2}
   - {fileID: 11400000, guid: 819d1fb0ea4f0b34d9b8dfbae02d67de, type: 2}
   humans:
-  - {fileID: 11400000, guid: 0919802465d902648810a0746a36b1d2, type: 2}
   - {fileID: 11400000, guid: 07e1c43a84c71a4478ab6f9de79a1283, type: 2}
   - {fileID: 11400000, guid: 6e06a08df4bcaf14f874bd9ca895d6cf, type: 2}
   - {fileID: 11400000, guid: b3a22f580f9faf3468d23a0da664bddd, type: 2}
+  - {fileID: 11400000, guid: 0919802465d902648810a0746a36b1d2, type: 2}
   monster:
   - {fileID: 11400000, guid: c17627050e93dcc48a6da0c00b18f90b, type: 2}
   parties:

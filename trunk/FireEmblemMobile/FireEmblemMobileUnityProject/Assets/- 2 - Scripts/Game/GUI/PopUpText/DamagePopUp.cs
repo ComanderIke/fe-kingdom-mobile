@@ -8,7 +8,7 @@ namespace Game.GUI.PopUpText
     {
         public static DamagePopUp Create(Vector3 position, int damageAmount, Color color, float scale=1.0f)
         {
-            GameObject damagePopUpTransform = Instantiate(ResourceScript.Instance.prefabs.DamagePopUptext, position, Quaternion.identity);
+            GameObject damagePopUpTransform = Instantiate(GameAssets.Instance.prefabs.DamagePopUptext, position, Quaternion.identity);
 
             DamagePopUp damagePopUp = damagePopUpTransform.GetComponent<DamagePopUp>();
             damagePopUp.Setup(damageAmount, color, scale);
