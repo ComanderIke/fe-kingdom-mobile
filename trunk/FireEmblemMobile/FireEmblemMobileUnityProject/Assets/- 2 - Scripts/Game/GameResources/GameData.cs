@@ -5,24 +5,29 @@ using Game.GameActors.Units.Humans;
 using Game.GameActors.Units.Monsters;
 using Game.Map;
 using Game.WorldMapStuff.Model;
+using GameEngine;
 using UnityEngine;
 
 namespace Game.GameResources
 {
     [CreateAssetMenu(fileName = "GameData", menuName = "GameData/Config/GameData")]
-    public class GameData : ScriptableObject
-    {
+    public class GameData : SingletonScriptableObject<GameData>    {
         public UiData UiData;
         public DialogData DialogTexts;
         public UnitData UnitData;
         public CharacterStateData CharacterStateData;
 
-        public static GameData Instance;
+   
         [SerializeField] private List<Weapon> weapons = default;
         [SerializeField] private List<Human> humans = default;
         [SerializeField] private List<Monster> monster = default;
         [SerializeField] private List<Party> parties = default;
 
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        private static void FirstInitialize()
+        {
+            Debug.Log("Before Awake!");
+        }
 
         public List<Weapon> Weapons
         {
@@ -66,10 +71,7 @@ namespace Game.GameResources
             return Instantiate(monster.Find(a => a.name == name));
         }
 
-        private void OnEnable()
-        {
-            Instance = this;
-        }
+      
       
 
 

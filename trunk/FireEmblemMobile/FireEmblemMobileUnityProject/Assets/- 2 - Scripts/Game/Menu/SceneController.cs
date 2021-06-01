@@ -29,10 +29,10 @@ namespace Menu
 
         public static void SwitchScene(string nextSceneName)
         {
-            Debug.Log("Trying Switch Scene: " + nextSceneName);
+            //Debug.Log("Trying Switch Scene: " + nextSceneName);
             if (_instance != null)
             {
-                Debug.Log("Current Scene Name: "+_instance.currentSceneName);
+                //Debug.Log("Current Scene Name: "+_instance.currentSceneName);
                 if (_instance.currentSceneName != nextSceneName)
                 {
                     _instance.nextSceneName = nextSceneName;

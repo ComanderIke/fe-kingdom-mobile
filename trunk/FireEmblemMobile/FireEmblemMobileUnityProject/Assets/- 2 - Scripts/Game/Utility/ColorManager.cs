@@ -1,10 +1,11 @@
 ﻿using System;
+using GameEngine;
 using UnityEngine;
 
 namespace Utility
 {
     [CreateAssetMenu(fileName ="ColorManager", menuName = "GameData/Config/Colors")]
-    public class ColorManager : ScriptableObject {
+    public class ColorManager : SingletonScriptableObject<ColorManager> {
 
         public Color MainGreenColor;
         public Color MainRedColor;
@@ -18,12 +19,8 @@ namespace Utility
         public Color[] SixGradeColors;
         public Color[] FactionColors; 
         public Color[] FactionUIBackgroundColors;
-        public static ColorManager Instance;
 
-        private void OnEnable()
-        {
-            Instance = this;
-        }
+
 
         public Color GetFactionColor(int factionId)
         {

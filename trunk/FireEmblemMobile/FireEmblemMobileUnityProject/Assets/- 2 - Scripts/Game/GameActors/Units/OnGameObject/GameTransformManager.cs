@@ -8,12 +8,29 @@ namespace Game.GameActors.Units.OnGameObject
 
         public Transform Transform => GameObject.transform;
 
-        public UnitInputController UnitController => GameObject.GetComponent<UnitInputController>();
-        public UnitAnimator UnitAnimator => GameObject.GetComponent<UnitAnimator>();
+        public UnitInputController UnitController
+        {
+            get
+            {
+                if(GameObject!=null)
+                    GameObject.GetComponent<UnitInputController>();
+                return null;
+            }
+        }
+
+        public UnitAnimator UnitAnimator
+        {
+            get
+            {
+                if(GameObject!=null)
+                    GameObject.GetComponent<UnitAnimator>();
+                return null;
+            }
+        }
 
         public void SetPosition(int x, int y)
         {
-            Debug.Log("Set position: "+x+" "+y);
+
             GameObject.transform.localPosition = new Vector3(x, y, 0);
         }
         

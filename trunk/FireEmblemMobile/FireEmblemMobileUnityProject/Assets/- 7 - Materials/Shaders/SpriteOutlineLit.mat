@@ -8,20 +8,24 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SpriteOutlineLit
-  m_Shader: {fileID: -6465566751694194690, guid: a0384bacccd5f024195eae26427f973d,
-    type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_Shader: {fileID: 10751, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
-  disabledShaderPasses: []
+  disabledShaderPasses:
+  - SHADOWCASTER
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _BaseMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: ece4ba411ae211b4da73b2b46e331ace, type: 3}
+        m_Texture: {fileID: 2800000, guid: e6fcab8bbe73d594bb40219f91872de8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -36,13 +40,26 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - Boolean_2397F47C: 1
     - Vector1_37529266: 0.4
     - Vector1_3C31A09: 0.5
     - Vector1_4AF2D774: 0.006
     - Vector1_6A75DC4B: 1
+    - _AlphaClip: 0
+    - _Blend: 0
+    - _Cull: 2
+    - _Cutoff: 0.5
+    - _DstBlend: 10
+    - _QueueOffset: 0
+    - _SampleGI: 0
+    - _SrcBlend: 5
+    - _Surface: 1
+    - _ZWrite: 0
     m_Colors:
     - Color_5193478B: {r: 4.38131, g: 1.009307, b: 0.41289833, a: 1}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _OutLineColor: {r: 0.627451, g: 3.6078432, b: 5.8980393, a: 1}
   m_BuildTextureStacks: []

@@ -18,13 +18,13 @@ namespace Game.GameActors.Units
         
         public void ResetPosition()
         {
-            Debug.Log("GridComponent ResetPosition");
+
             gridActor.GameTransformManager.SetPosition(GridPosition.X, GridPosition.Y);
             // GameTransform.EnableCollider();
         }
         public virtual void SetPosition(int x, int y)
         {
-            Debug.Log("GridComponent SetPosition");
+
             GridPosition.SetPosition(x, y);
             gridActor.GameTransformManager.SetPosition(x, y);
         }

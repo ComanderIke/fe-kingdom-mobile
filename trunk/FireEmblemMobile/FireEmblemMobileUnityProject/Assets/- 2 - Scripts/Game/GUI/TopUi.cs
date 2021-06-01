@@ -35,21 +35,17 @@ namespace Game.GUI
         [SerializeField] private TextMeshProUGUI[] weaponProficiencyLevels = default;
         [SerializeField] private Image[] skillSprites = default;
         [SerializeField] private Image[] inventorySprites = default;
-        private ColorManager colorManager;
+
 
 
         void Start()
         {
-            
-            colorManager = FindObjectOfType<ColorManager>();
+       
 
         }
         public void Show(Unit c)//Unused
         {
-            if (colorManager == null)
-            {
-                colorManager = FindObjectOfType<ColorManager>();
-            }
+           
             characterScreen.enabled = true;
             
             
@@ -69,7 +65,7 @@ namespace Game.GUI
             def.text = "" + c.Stats.Def;
             res.text = "" + c.Stats.Res;
             hpBar.SetFillAmount((c.Hp * 1.0f) / c.Stats.MaxHp);
-            hpBar.SetColor(c.Faction.Id == 0 ? colorManager.MainGreenColor : colorManager.MainRedColor);
+            hpBar.SetColor(c.Faction.Id == 0 ? ColorManager.Instance.MainGreenColor : ColorManager.Instance.MainRedColor);
             if(c.Hp==c.Stats.MaxHp)
                 hp.text = ""+c.Hp;
             else

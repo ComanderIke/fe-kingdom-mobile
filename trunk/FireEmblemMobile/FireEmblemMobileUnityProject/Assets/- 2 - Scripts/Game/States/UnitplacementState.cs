@@ -39,8 +39,6 @@ namespace Game.States
             factionManager = GridGameManager.Instance.FactionManager;
             var spawner = GameObject.FindObjectsOfType<UnitSpawner>();
             unitInstantiator = GameObject.FindObjectOfType<UnitInstantiator>();
-            var resources = GameObject.FindObjectOfType<GameAssets>();
-            var data = GameObject.FindObjectOfType<GameData>();
             gridSystem = GridGameManager.Instance.GetSystem<GridSystem>();
 
             InitUnits();
@@ -199,9 +197,10 @@ namespace Game.States
         {
   
 
+            Debug.Log("TODO Only for Instantiated PartyMembers not extra Ones!");
             foreach (var unit in GridGameManager.Instance.FactionManager.Factions.SelectMany(faction => faction.Units))
             {
-
+                Debug.Log(unit.name+" "+unit.Faction.Name);
                 unit.GameTransformManager.UnitController.touchInputReceiver = UnitPlacementInputSystem;
                 
             }
