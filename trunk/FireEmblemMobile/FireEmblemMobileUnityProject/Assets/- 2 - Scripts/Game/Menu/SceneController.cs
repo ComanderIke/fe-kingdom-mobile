@@ -113,12 +113,10 @@ namespace Menu
             else
             {
 
-                float progress = sceneLoadTask.progress/.9f;//Mathf.Clamp01(loadTime / MinLoadTime); //sceneLoadTask.progress / .9f);
+                float progress = Mathf.Clamp01( sceneLoadTask.progress / .9f);//loadTime / MinLoadTime);
                 progressBar.fillAmount = progress;
                 progressText.text = ((int)(progress*100))+"%";
                 loadTime += Time.deltaTime;
-                // Update Scene Loading Progress
-                // LoadingScreen etc..
             }
         }
 
