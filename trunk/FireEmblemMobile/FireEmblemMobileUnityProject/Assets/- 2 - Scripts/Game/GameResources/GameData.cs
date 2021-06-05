@@ -16,6 +16,7 @@ namespace Game.GameResources
         public DialogData DialogTexts;
         public UnitData UnitData;
         public CharacterStateData CharacterStateData;
+        
 
    
         [SerializeField] private List<Weapon> weapons = default;

@@ -55,7 +55,7 @@ namespace Game.GameActors.Units
         
         public GameTransformManager GameTransformManager { get; set; }
 
-        public ExperienceManager ExperienceManager { get; private set; }
+        public ExperienceManager ExperienceManager { get;  set; }
 
         public BattleComponent BattleComponent { get; set; }
 

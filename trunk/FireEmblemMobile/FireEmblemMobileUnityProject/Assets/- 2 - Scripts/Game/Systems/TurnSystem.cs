@@ -3,6 +3,7 @@ using Game.GameInput;
 using Game.GUI.Text;
 using Game.Manager;
 using Game.States;
+using Game.WorldMapStuff.Manager;
 using Game.WorldMapStuff.Model;
 using GameEngine;
 using UnityEngine;
@@ -25,9 +26,23 @@ namespace Game.Mechanics
         public GameStateManager gameStateManager{ get; set; }
         public FactionManager factionManager{ get; set; }
 
-        public int TurnCount { get; set; }
+        private int turnCount;
+        public int TurnCount
+        {
+            get
+            {
+                return turnCount;
+            }
+            set
+            {
+                turnCount = value;
+                if(gameStateManager is WM_GameStateManager)
+                    WorldMapGameManager.Instance.Campaign.turnCount = turnCount;
+                    
+            }
+        }
 
-   
+
 
         public void Init()
         {
@@ -36,7 +51,7 @@ namespace Game.Mechanics
             // factionManager = gameManager.FactionManager;
             // gameStateManager = gameManager.GameStateManager;
             InitPlayers();
-            TurnCount = 1;
+            TurnCount = WorldMapGameManager.Instance.Campaign.turnCount;
         }
 
         public void Deactivate()

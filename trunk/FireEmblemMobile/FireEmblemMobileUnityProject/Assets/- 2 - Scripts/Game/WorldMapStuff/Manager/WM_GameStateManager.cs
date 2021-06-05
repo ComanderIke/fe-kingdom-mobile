@@ -25,7 +25,7 @@ namespace Game.Manager
 
         public WM_GameStateManager()
         {
-            ConditionManager conditionManager =new CampaignConditionManager(GameObject.FindObjectOfType<CampaignConfig>().campaign, WorldMapGameManager.Instance.FactionManager);
+            ConditionManager conditionManager =new CampaignConditionManager(WorldMapGameManager.Instance.Campaign, WorldMapGameManager.Instance.FactionManager);
             PlayerPhaseState = new WM_PlayerPhaseState(WorldMapGameManager.Instance.GetSystem<TurnSystem>(), conditionManager);
             EnemyPhaseState = new WM_EnemyPhaseState(WorldMapGameManager.Instance.FactionManager, conditionManager);
             PhaseTransitionState = new PhaseTransitionState(WorldMapGameManager.Instance.FactionManager, this);

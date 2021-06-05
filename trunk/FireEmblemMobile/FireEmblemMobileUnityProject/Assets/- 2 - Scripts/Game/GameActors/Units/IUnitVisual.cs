@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.GameResources;
 using UnityEngine;
 
 namespace Game.GameActors.Units
@@ -6,13 +7,22 @@ namespace Game.GameActors.Units
   [Serializable]
     public class UnitVisual
     {
-
+        
         
         public CharacterSpriteSet CharacterSpriteSet;
 
-        public int GetId()
+        public int ID
         {
-            return CharacterSpriteSet.id;
+            get
+            {
+                return CharacterSpriteSet.id;
+            }
+            set
+            {
+                CharacterSpriteSet.id = value;
+            }
         }
+
+        
     }
 }

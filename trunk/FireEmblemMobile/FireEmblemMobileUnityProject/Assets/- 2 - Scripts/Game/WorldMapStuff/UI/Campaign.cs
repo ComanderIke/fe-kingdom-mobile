@@ -1,4 +1,6 @@
-﻿using Game.Grid;
+﻿using System.Collections.Generic;
+using Game.Grid;
+using Game.Systems;
 using UnityEngine;
 
 namespace Game.WorldMapStuff.UI
@@ -8,5 +10,25 @@ namespace Game.WorldMapStuff.UI
     {
         public CampaignVictoryDefeatCondition[] victoryDefeatConditions;
         public string name;
+        public int campaignId;
+        [HideInInspector]
+        public int turnCount = 1;
+        [HideInInspector]
+        public List<LocationController> locations;
+
+        public CampaignData GetSaveData()
+        {
+            return new CampaignData(this);
+        }
+
+        public void LoadData(CampaignData campaignData)
+        {
+            campaignId = campaignData.campaignId;
+            turnCount = campaignData.turnCount;
+            for (int i=0; i < locations.Count; i++)
+            {
+                locations[i].LoadData(campaignData.locationData[i]);
+            }
+        }
     }
 }

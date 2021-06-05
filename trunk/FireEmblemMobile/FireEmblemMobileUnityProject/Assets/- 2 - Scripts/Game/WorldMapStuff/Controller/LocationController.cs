@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Game.GameActors.Units;
+using Game.Systems;
 using Game.WorldMapStuff.Controller;
 using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.Systems;
@@ -107,5 +108,17 @@ public class LocationController : MonoBehaviour
     public void Reset()
     {
         renderer.Reset();
+    }
+
+    public LocationData GetSaveData()
+    {
+        return new LocationData(this);
+    }
+
+    public void LoadData(LocationData locationData)
+    {
+        Actor = locationData.actor;
+       // locationData.name Also not helpful?
+       // worldMapPosition = locationData.worldMapPosition; Not helpful?
     }
 }

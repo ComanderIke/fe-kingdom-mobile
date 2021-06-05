@@ -9,9 +9,11 @@ using Game.GUI;
 using Game.GUI.Text;
 using Game.Manager;
 using Game.Mechanics;
+using Game.Systems;
 using Game.WorldMapStuff.Controller;
 using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.Systems;
+using Game.WorldMapStuff.UI;
 using GameEngine;
 using UnityEngine;
 using IPartyActionRenderer = Game.WorldMapStuff.Interfaces.IPartyActionRenderer;
@@ -27,7 +29,7 @@ namespace Game.WorldMapStuff.Manager
         public FactionManager FactionManager { get; set; }
         public WM_GameStateManager GameStateManager { get; set; }
         private bool active = true;
-
+        public Campaign Campaign;
         private void Awake()
         {
             Instance = this;
@@ -79,6 +81,7 @@ namespace Game.WorldMapStuff.Manager
         }
         private void Initialize()
         {
+            Campaign=GameObject.FindObjectOfType<CampaignConfig>().campaign;
            
             InjectDependencies();
             foreach (var system in Systems)
@@ -87,6 +90,9 @@ namespace Game.WorldMapStuff.Manager
                 system.Activate();
             }
 
+            Player.Instance.faction = FactionManager.GetPlayerControlledFaction();
+            Player.Instance.Name = "Player1";
+            Player.Instance.money = 0;
             var startingParty = GameData.Instance.GetCampaignParty(0);
             var partySpawns= FindObjectsOfType<PartySpawn>();
             var instantiator = FindObjectOfType<PartyInstantiator>();
@@ -149,5 +155,9 @@ namespace Game.WorldMapStuff.Manager
             return default;
         }
 
+        public void LoadData(CampaignData campaignData)
+        {
+            Campaign.LoadData(campaignData);
+        }
     }
 }

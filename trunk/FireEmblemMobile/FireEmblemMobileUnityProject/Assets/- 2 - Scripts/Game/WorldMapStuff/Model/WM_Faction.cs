@@ -32,6 +32,11 @@ namespace Game.WorldMapStuff.Model
             
         }
 
+        public void ClearParty()
+        {
+            Parties.Clear();
+            Parties = new List<Party>();
+        }
         private void RemoveParty(Party unit)
         {
             if (Parties.Contains(unit)) Parties.Remove(unit);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Game.GameActors.Units;
 using Game.GameInput;
 using Game.Grid;
@@ -10,6 +11,21 @@ namespace Game.Graphics
     [Serializable]
     public class Visuals : MonoBehaviour
     {
+        [SerializeField]
+        public List<CharacterSpriteSet> characterSpriteSets;
+
+
+        public CharacterSpriteSet LoadCharacterSpriteSet(int id)
+        {
+            foreach (var spriteSet in characterSpriteSets)
+            {
+                if (spriteSet.id == id)
+                    return spriteSet;
+                
+            }
+
+            return null;
+        }
         // [SerializeField] private Transform uiContainer = default;
         // [SerializeField] private ExpBarController expBarController = default;
         // [SerializeField] private Canvas MainCanvas = default;

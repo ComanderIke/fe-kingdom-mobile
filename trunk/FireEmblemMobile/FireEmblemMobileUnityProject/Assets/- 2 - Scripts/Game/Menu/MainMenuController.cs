@@ -1,7 +1,11 @@
 ﻿using System;
 using System.IO;
+using Game.GameActors.Players;
 using Game.Manager;
+using Game.Systems;
+using Game.WorldMapStuff.Manager;
 using Menu;
+using SerializedData;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,6 +26,7 @@ namespace Game.GUI
         public GameObject SaveButton;
         [SerializeField] private UIMenu optionsMenu;
         [SerializeField] private UIMenu campaignMenu;
+        private SaveData currentSaveData;
 
         private void Start()
         {
@@ -53,17 +58,31 @@ namespace Game.GUI
 
         public void SaveGameClicked()
         {
-            //SaveSystem.SaveGame(saveNameField.text.Trim());
+            SaveSystem.SaveGame(saveNameField.text.Trim(), new SaveData(Player.Instance, WorldMapGameManager.Instance.Campaign));
             LeanTween.scale(saveDialog, Vector3.zero, 0.3f).setEase(LeanTweenType.easeInBack)
                 .setOnComplete(HideSaveDialog);
         }
         public void LoadGame(string name)
         {
-            //SaveSystem.LoadGame(name);
+            currentSaveData= (SaveData)SaveSystem.LoadGame(name);
+            Debug.Log("Loading: TurnCount: "+currentSaveData.campaignData.turnCount);
+            Debug.Log("PartyCount: "+currentSaveData.playerData.factionData.Parties.Count);
+            Debug.Log("UnitCount: "+currentSaveData.playerData.factionData.Parties[0].unitData.Count);
+            Debug.Log("Loading: First Unit: "+currentSaveData.playerData.factionData.Parties[0].unitData[0].name);
+            
+            
+           // SceneController.SwitchScene("WorldMap");
+           // SceneController.OnSceneReady += LoadLoadedData;
             LeanTween.scale(loadDialog, Vector3.zero, 0.3f).setEase(LeanTweenType.easeInBack)
                 .setOnComplete(HideLoadDialog);
         }
 
+        void LoadLoadedData()
+        {
+            Player.Instance.LoadData(currentSaveData.playerData);
+            WorldMapGameManager.Instance.LoadData(currentSaveData.campaignData);
+            SceneController.OnSceneReady -= LoadLoadedData;
+        }
         void HideSaveDialog()
         {
             saveDialog.SetActive(false);
