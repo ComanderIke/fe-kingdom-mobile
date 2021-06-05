@@ -6,7 +6,6 @@ namespace Game.GameActors.Units
     [CreateAssetMenu(menuName = "GameData/Units/Visual", fileName = "UnitVisual")]
     public class CharacterSpriteSet:ScriptableObject
     {
-        public int id;
         public Sprite FaceSprite;
         public Sprite MapSprite;
     }

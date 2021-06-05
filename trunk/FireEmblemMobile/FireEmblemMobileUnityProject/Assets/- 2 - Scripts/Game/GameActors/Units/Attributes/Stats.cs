@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Game.GameActors.Players;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Attributes
@@ -30,6 +31,10 @@ namespace Game.GameActors.Units.Attributes
         [SerializeField]
         public int Str;
 
+        public StatsData GetSaveData()
+        {
+            return new StatsData(MaxHp, MaxSp, Mov, Res, Skl, Spd, Str, Def, Mag, AttackRanges);
+        }
         public int[] GetStatArray()
         {
             return new int[] { MaxHp, MaxSp, Str, Mag, Skl, Spd, Def, Res };
@@ -57,6 +62,20 @@ namespace Game.GameActors.Units.Attributes
             stats.Spd = Spd;
             stats.Str = Str;
             return stats;
+        }
+
+        public void LoadData(StatsData statsData)
+        {
+            MaxHp = statsData.MaxHp;
+            MaxSp = statsData.MaxSp;
+            Mov = statsData.Mov;
+            AttackRanges = statsData.AttackRanges;
+            Str = statsData.Str;
+            Mag = statsData.Mag;
+            Def = statsData.Def;
+            Res = statsData.Res;
+            Spd = statsData.Spd;
+            Skl = statsData.Skl;
         }
     }
 }

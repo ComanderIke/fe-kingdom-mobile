@@ -77,7 +77,7 @@ public class LocationController : MonoBehaviour
 
     void Awake()
     {
-        UniqueId = transform.position.sqrMagnitude + "-" + name + "-" + transform.GetSiblingIndex();
+        UniqueId =  worldMapPosition.name + "-" + transform.GetSiblingIndex()+"-"+transform.position.sqrMagnitude;
     }
     public void SetPosition(float xValue)
     {

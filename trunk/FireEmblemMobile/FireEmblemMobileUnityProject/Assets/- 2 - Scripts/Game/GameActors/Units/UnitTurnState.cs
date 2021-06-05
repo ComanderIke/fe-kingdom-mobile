@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.GameActors.Units
 {
-    [SerializeField]
+    [System.Serializable]
     public class UnitTurnState
     {
         [SerializeField]

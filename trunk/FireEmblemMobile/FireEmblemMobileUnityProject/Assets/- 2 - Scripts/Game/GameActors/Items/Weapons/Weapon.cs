@@ -11,7 +11,7 @@ namespace Game.GameActors.Items.Weapons
     [CreateAssetMenu(menuName = "GameData/Weapons/Weapon", fileName = "Weapon")]
     public class Weapon : Item
     {
-        public int id;
+        
         [Range(1, 4)] public int[] AttackRanges;
 
 

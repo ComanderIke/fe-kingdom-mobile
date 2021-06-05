@@ -16,8 +16,7 @@ namespace Game.GameActors.Units
         public OnSelected onSelected;
    
         public OnActorCanMove UnitCanMove;
-        [SerializeField]
-        private UnitTurnState UnitTurnState { get; set; }
+        [SerializeField] private UnitTurnState UnitTurnState;
         private IActor actor;
 
         public TurnStateManager(IActor actor)

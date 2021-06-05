@@ -23,6 +23,11 @@ namespace Game.GameActors.Units.Attributes
         public int Def;
         [SerializeField]
         public int Res;
+
+        public GrowthsData GetSaveData()
+        {
+            return new GrowthsData(MaxHp, MaxSp, Str, Mag, Spd, Skl, Def, Res);
+        }
         
        
 
@@ -44,6 +49,18 @@ namespace Game.GameActors.Units.Attributes
         public int[] GetGrowthsArray()
         {
             return new int[] { MaxHp, MaxSp, Str, Mag, Spd, Skl, Def, Res };
+        }
+
+        public void LoadData(GrowthsData growthsData)
+        {
+            Def = growthsData.Def;
+            Res = growthsData.Res;
+            Spd = growthsData.Spd;
+            Skl = growthsData.Skl;
+            Mag = growthsData.Mag;
+            Str = growthsData.Str;
+            MaxHp = growthsData.MaxHp;
+            MaxSp = growthsData.MaxSp;
         }
     }
 }

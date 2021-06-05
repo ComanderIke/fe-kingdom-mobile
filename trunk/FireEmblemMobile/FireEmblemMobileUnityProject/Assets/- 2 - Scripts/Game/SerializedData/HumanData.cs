@@ -3,23 +3,25 @@ using Game.GameActors.Items.Weapons;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
 using Game.GameResources;
+using UnityEngine;
 
 namespace Game.GameActors.Players
 {
     [System.Serializable]
     public class HumanData: UnitData
     {
-        public int weaponId;
+        [SerializeField]
+        public string weaponId;
         public HumanData(Human unit) : base(unit)
         {
-            weaponId = unit.EquippedWeapon.id;
+            weaponId = unit.EquippedWeapon.name;
         }
 
         public override void Load(Unit unit)
         {
             base.Load(unit);
             Human human = (Human) unit;
-            human.EquippedWeapon = GameData.Instance.Weapons.FirstOrDefault(w=>w.id == weaponId);
+            human.EquippedWeapon = GameData.Instance.Weapons.FirstOrDefault(w=>w.name == weaponId);
         }
     }
 }

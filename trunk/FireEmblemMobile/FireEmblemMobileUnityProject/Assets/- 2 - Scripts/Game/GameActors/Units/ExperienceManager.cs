@@ -1,4 +1,5 @@
-﻿using Game.GUI;
+﻿using System;
+using Game.GUI;
 using UnityEngine;
 
 namespace Game.GameActors.Units
@@ -48,6 +49,7 @@ namespace Game.GameActors.Units
         }
 
         public const int MAX_EXP_TO_DRAIN = 100;
+        [NonSerialized]
         public int ExpLeftToDrain = 100;
 
         public void AddExp(int exp)

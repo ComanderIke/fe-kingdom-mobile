@@ -15,11 +15,11 @@ namespace Game.Graphics
         public List<CharacterSpriteSet> characterSpriteSets;
 
 
-        public CharacterSpriteSet LoadCharacterSpriteSet(int id)
+        public CharacterSpriteSet LoadCharacterSpriteSet(string id)
         {
             foreach (var spriteSet in characterSpriteSets)
             {
-                if (spriteSet.id == id)
+                if (spriteSet.name == id)
                     return spriteSet;
                 
             }
