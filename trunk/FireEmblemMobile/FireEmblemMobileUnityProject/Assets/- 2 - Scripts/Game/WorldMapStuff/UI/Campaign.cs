@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Game.Grid;
 using Game.Systems;
+using Game.WorldMapStuff.Model;
 using UnityEngine;
 
 namespace Game.WorldMapStuff.UI
@@ -13,8 +14,10 @@ namespace Game.WorldMapStuff.UI
         public int campaignId;
         [HideInInspector]
         public int turnCount = 1;
-        [HideInInspector]
-        public List<LocationController> locations;
+        // [HideInInspector]
+        // public List<LocationController> locations;
+
+        public WM_Faction EnemyFaction;
 
         public CampaignData GetSaveData()
         {
@@ -25,10 +28,10 @@ namespace Game.WorldMapStuff.UI
         {
             campaignId = campaignData.campaignId;
             turnCount = campaignData.turnCount;
-            for (int i=0; i < locations.Count; i++)
-            {
-                locations[i].LoadData(campaignData.locationData[i]);
-            }
+            // for (int i=0; i < locations.Count; i++)
+            // {
+            //     locations[i].LoadData(campaignData.locationData[i]);
+            // }
         }
     }
 }

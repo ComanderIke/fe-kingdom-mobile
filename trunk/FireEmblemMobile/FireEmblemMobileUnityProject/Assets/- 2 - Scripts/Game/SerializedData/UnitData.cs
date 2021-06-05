@@ -43,6 +43,7 @@ namespace Game.GameActors.Players
                 CharacterSpriteSet = GameAssets.Instance.visuals.LoadCharacterSpriteSet(VisualsID)
             };
             unit.MoveType = moveType;
+           
         }
     }
 }

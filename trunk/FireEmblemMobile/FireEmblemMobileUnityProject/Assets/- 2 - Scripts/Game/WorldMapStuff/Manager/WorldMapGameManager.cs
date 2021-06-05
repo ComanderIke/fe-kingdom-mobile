@@ -27,17 +27,19 @@ namespace Game.WorldMapStuff.Manager
         private bool init;
         private List<IEngineSystem> Systems { get; set; }
         public FactionManager FactionManager { get; set; }
+        public World World { get; set; }
         public WM_GameStateManager GameStateManager { get; set; }
         private bool active = true;
         public Campaign Campaign;
         private void Awake()
         {
+            Debug.Log("WorldMapGameManagerAwake!");
             Instance = this;
             var config = GameObject.FindObjectOfType<WM_Playerconfig>();
             FactionManager = new FactionManager(config.GetFactions().Cast<Faction>().ToList());
             AddSystems();
-     
-        
+            Campaign = Instantiate(GameObject.FindObjectOfType<CampaignConfig>().campaign);
+            World =  GameObject.FindObjectOfType<World>();
             GameStateManager = new WM_GameStateManager();
             Application.targetFrameRate = 60;
         }
@@ -81,7 +83,7 @@ namespace Game.WorldMapStuff.Manager
         }
         private void Initialize()
         {
-            Campaign=GameObject.FindObjectOfType<CampaignConfig>().campaign;
+            
            
             InjectDependencies();
             foreach (var system in Systems)

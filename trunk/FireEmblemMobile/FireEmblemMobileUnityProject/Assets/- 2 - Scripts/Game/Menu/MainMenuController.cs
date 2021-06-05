@@ -65,6 +65,7 @@ namespace Game.GUI
         public void LoadGame(string name)
         {
             currentSaveData= (SaveData)SaveSystem.LoadGame(name);
+            
             Debug.Log("Loading: TurnCount: "+currentSaveData.campaignData.turnCount);
             Debug.Log("PartyCount: "+currentSaveData.playerData.factionData.Parties.Count);
             Debug.Log("UnitCount: "+currentSaveData.playerData.factionData.Parties[0].unitData.Count);
@@ -79,6 +80,7 @@ namespace Game.GUI
 
         void LoadLoadedData()
         {
+            Debug.Log("Assign Loaded DATA!");
             Player.Instance.LoadData(currentSaveData.playerData);
             WorldMapGameManager.Instance.LoadData(currentSaveData.campaignData);
             SceneController.OnSceneReady -= LoadLoadedData;

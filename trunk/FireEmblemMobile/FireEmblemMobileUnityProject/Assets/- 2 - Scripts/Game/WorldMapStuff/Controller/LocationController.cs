@@ -15,6 +15,7 @@ public class LocationController : MonoBehaviour
 
     public WorldMapPosition worldMapPosition;
     private WM_Actor actor;
+    public string UniqueId;
     public WM_Actor Actor
     {
         get => actor;
@@ -46,6 +47,7 @@ public class LocationController : MonoBehaviour
         if(Actor!=null)
             Actor.TurnStateManager.onSelected -= OnSelectedActor;
     }
+    
 
     void OnActorMoved(bool canMove)
     {
@@ -73,6 +75,10 @@ public class LocationController : MonoBehaviour
         return active;
     }
 
+    void Awake()
+    {
+        UniqueId = transform.position.sqrMagnitude + "-" + name + "-" + transform.GetSiblingIndex();
+    }
     public void SetPosition(float xValue)
     {
         transform.position = new Vector3(xValue, transform.position.y, transform.position.z);
@@ -85,9 +91,11 @@ public class LocationController : MonoBehaviour
     }
    
 
+    [ExecuteInEditMode]
     private void OnEnable()
     {
         renderer = GetComponent<LocationRenderer>();
+
        
     }
     public void Select(bool selected)
@@ -99,6 +107,7 @@ public class LocationController : MonoBehaviour
     {
         inputReceiver.LocationClicked(this);
     }
+    
 
     public void Hide()
     {
@@ -110,15 +119,15 @@ public class LocationController : MonoBehaviour
         renderer.Reset();
     }
 
-    public LocationData GetSaveData()
-    {
-        return new LocationData(this);
-    }
+    // public LocationData GetSaveData()
+    // {
+    //     return new LocationData(this);
+    // }
 
-    public void LoadData(LocationData locationData)
-    {
-        Actor = locationData.actor;
-       // locationData.name Also not helpful?
-       // worldMapPosition = locationData.worldMapPosition; Not helpful?
-    }
+    // public void LoadData(LocationData locationData)
+    // {
+    //     Actor = locationData.actor;
+    //    // locationData.name Also not helpful?
+    //    // worldMapPosition = locationData.worldMapPosition; Not helpful?
+    // }
 }

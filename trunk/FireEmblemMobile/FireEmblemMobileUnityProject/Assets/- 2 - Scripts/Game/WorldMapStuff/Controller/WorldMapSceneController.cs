@@ -87,7 +87,10 @@ namespace Game.WorldMapStuff.Controller
             Debug.Log("LoadMainMenu");
             if (async)
             {
+                SceneController.OnSceneReady += Hide;
+                DisableObject.SetActive(false);
                 SceneController.SwitchScene("MainMenu");
+                
             }
             else
             {
