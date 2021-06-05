@@ -27,9 +27,9 @@ namespace Game.Grid
 
         }
 
-        public void SetVisualStyle(int id)
+        public void SetVisualStyle(FactionId id)
         {
-            activeSpriteSet = spriteSets[id];
+            activeSpriteSet = spriteSets[(int)id];
         }
 
         public void SwapVisual()

@@ -47,7 +47,7 @@ namespace Game.GameActors.Units.OnGameObject
             SpBarsValueChanged();
             SpValueChanged();
             OnEquippedWeapon();
-            if(unit.Faction.Id != GridGameManager.Instance.FactionManager.ActivePlayerNumber)
+            if(!GridGameManager.Instance.FactionManager.IsActiveFaction(unit.Faction))
             {
                 //pointLight.SetActive(false);
                 Color color = Color.blue;

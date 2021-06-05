@@ -20,13 +20,13 @@ namespace Game.Grid
             Tiles[c.GridComponent.GridPosition.X, c.GridComponent.GridPosition.Y].TileRenderer.StandOnVisual();
         }
        
-        public void SetFieldMaterial(Vector2 pos, int playerId, bool activeUnit, bool activePlayer)
+        public void SetFieldMaterial(Vector2 pos, FactionId playerId, bool activeUnit, bool activePlayer)
         {
             Tiles[(int) pos.x, (int) pos.y].SetMaterial(playerId, activeUnit,activePlayer);
            
 
         }
-        public void SetFieldMaterialAttack(Vector2 pos, int playerId, bool activeUnit,bool activePlayer)
+        public void SetFieldMaterialAttack(Vector2 pos, FactionId playerId, bool activeUnit,bool activePlayer)
         {
             Tiles[(int) pos.x, (int) pos.y].SetAttackMaterial(playerId, activeUnit,activePlayer);
            

@@ -38,7 +38,7 @@ namespace Game.Grid
             tileVfx.Hide(this);
         }
 
-        public void SetAttackMaterial(int playerId, bool activeUnit, bool activePlayer)
+        public void SetAttackMaterial(FactionId playerId, bool activeUnit, bool activePlayer)
         {
             Reset();
             TileRenderer.SetVisualStyle(playerId);
@@ -63,7 +63,7 @@ namespace Game.Grid
         }
 
      
-        public void SetMaterial( int playerId, bool activeUnit, bool activePlayer)
+        public void SetMaterial( FactionId playerId, bool activeUnit, bool activePlayer)
         {
             Reset();
             TileRenderer.SetVisualStyle(playerId);

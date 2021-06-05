@@ -9,7 +9,7 @@ namespace Game.GameActors
     {
 
         public Unit unit;
-        public int FactionId;
+        public FactionId FactionId;
         public WeightSet AIWeightSet;
         public int id;
         public int X => (int) transform.localPosition.x;

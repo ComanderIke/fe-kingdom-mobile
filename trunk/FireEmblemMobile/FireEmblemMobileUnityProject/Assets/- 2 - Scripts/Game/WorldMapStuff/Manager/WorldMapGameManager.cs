@@ -35,11 +35,16 @@ namespace Game.WorldMapStuff.Manager
         {
             Debug.Log("WorldMapGameManagerAwake!");
             Instance = this;
-            var config = GameObject.FindObjectOfType<WM_Playerconfig>();
-            FactionManager = new FactionManager(config.GetFactions().Cast<Faction>().ToList());
-            AddSystems();
             Campaign = Instantiate(GameObject.FindObjectOfType<CampaignConfig>().campaign);
-            World =  GameObject.FindObjectOfType<World>();
+            Campaign.EnemyFaction = new WM_Faction(FactionId.ENEMY, "Enemy", false);
+            Player.Instance.faction = new WM_Faction(FactionId.PLAYER, "Player", true);
+            FactionManager = new FactionManager();
+            FactionManager.AddFaction(Player.Instance.faction);
+            FactionManager.AddFaction(Campaign.EnemyFaction);
+            
+            AddSystems();
+          
+            World =  FindObjectOfType<World>();
             GameStateManager = new WM_GameStateManager();
             Application.targetFrameRate = 60;
         }
@@ -92,7 +97,7 @@ namespace Game.WorldMapStuff.Manager
                 system.Activate();
             }
 
-            Player.Instance.faction = FactionManager.GetPlayerControlledFaction();
+
             Player.Instance.Name = "Player1";
             Player.Instance.money = 0;
             var startingParty = GameData.Instance.GetCampaignParty(0);
@@ -110,7 +115,7 @@ namespace Game.WorldMapStuff.Manager
                     
                 }
                 instantiator.InstantiateParty(partyInst, spawn.location);
-                ((WM_Faction)FactionManager.Factions[partyInst.Faction.Id]).AddParty(partyInst);
+                ((WM_Faction)FactionManager.FactionFromId(spawn.factionId)).AddParty(partyInst);
                 
             }
 
@@ -119,7 +124,7 @@ namespace Game.WorldMapStuff.Manager
                 GameObject.Destroy(partySpawns[i].gameObject);
             }
             instantiator.InstantiatePartyAtStartPoint(startingParty);
-            ((WM_Faction)FactionManager.Factions[startingParty.Faction.Id]).AddParty(startingParty);
+            ((WM_Faction)FactionManager.FactionFromId(startingParty.Faction.Id)).AddParty(startingParty);
             GameStateManager.Init();
             //GetSystem<TurnSystem>().StartPhase();
         }

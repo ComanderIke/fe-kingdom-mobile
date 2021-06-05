@@ -147,7 +147,7 @@ namespace Game.Map
             {
                 if (!IsTileMoveableAndActive(x, y))
                 {
-                    GridRenderer.SetFieldMaterialAttack(new Vector2(x, y), character.Faction.Id, !character.TurnStateManager.HasMoved, GridGameManager.Instance.FactionManager.IsActiveFaction(character.Faction.Id));
+                    GridRenderer.SetFieldMaterialAttack(new Vector2(x, y), character.Faction.Id, !character.TurnStateManager.HasMoved, GridGameManager.Instance.FactionManager.IsActiveFaction(character.Faction));
                     GridLogic.gridSessionData.AddValidAttackPosition(x, y);
                 }
 
@@ -197,7 +197,7 @@ namespace Game.Map
                 return;
             }
 
-            GridRenderer.SetFieldMaterial(new Vector2(x, y), unit.Faction.Id, !unit.TurnStateManager.HasMoved,GridGameManager.Instance.FactionManager.IsActiveFaction(unit.Faction.Id));
+            GridRenderer.SetFieldMaterial(new Vector2(x, y), unit.Faction.Id, !unit.TurnStateManager.HasMoved,GridGameManager.Instance.FactionManager.IsActiveFaction(unit.Faction));
             GridLogic.gridSessionData.AddValidPosition(x, y);
             NodeHelper.Nodes[x, y].C = c;
             c+=Tiles[x,y].TileType.GetMovementCost(unit.MoveType);

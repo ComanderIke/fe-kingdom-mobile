@@ -1,23 +1,25 @@
-﻿using Game.GameActors.Items.Weapons;
+﻿using System.Linq;
+using Game.GameActors.Items.Weapons;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
+using Game.GameResources;
 
 namespace Game.GameActors.Players
 {
     [System.Serializable]
     public class HumanData: UnitData
     {
-        public Weapon EquippedWeapon;
+        public int weaponId;
         public HumanData(Human unit) : base(unit)
         {
-            EquippedWeapon = unit.EquippedWeapon;
+            weaponId = unit.EquippedWeapon.id;
         }
 
         public override void Load(Unit unit)
         {
             base.Load(unit);
             Human human = (Human) unit;
-            human.EquippedWeapon = EquippedWeapon;
+            human.EquippedWeapon = GameData.Instance.Weapons.FirstOrDefault(w=>w.id == weaponId);
         }
     }
 }

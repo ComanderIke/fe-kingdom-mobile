@@ -10,8 +10,7 @@ namespace Game.WorldMapStuff.Model
         {
             get { return _instance ??= new BattleTransferData(); }
         }
-
-        public string PlayerName { get; set; }
+        
         public List<Unit> EnemyUnits { get; set; }
 
         public List<Unit> UnitsGoingIntoBattle;

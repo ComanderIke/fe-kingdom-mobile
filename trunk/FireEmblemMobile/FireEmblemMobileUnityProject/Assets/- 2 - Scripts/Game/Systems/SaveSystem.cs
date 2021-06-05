@@ -18,7 +18,7 @@ namespace SerializedData
             }
             
             string path = Application.persistentDataPath+ "/saves/" + filename+".fe";
-            var jsonData=JsonUtility.ToJson(data);
+            var jsonData=JsonUtility.ToJson(data, true);
             Debug.Log("Save Game: " + path);
             if (WriteToFile(path, jsonData))
             {
@@ -89,7 +89,7 @@ namespace SerializedData
             }
         }
 
-        public static void SaveGame(string filename, object saveData)
+        public static void SaveGame(string filename, SaveData saveData)
         {
             
             SaveData(filename,saveData);

@@ -163,8 +163,7 @@ namespace Game.States
                     factionManager.Factions[1].AddUnit(unit);
                 }
             }
-
-            factionManager.Factions[0].Name = BattleTransferData.Instance.PlayerName;
+            
         }
         void InitUnits()
         {

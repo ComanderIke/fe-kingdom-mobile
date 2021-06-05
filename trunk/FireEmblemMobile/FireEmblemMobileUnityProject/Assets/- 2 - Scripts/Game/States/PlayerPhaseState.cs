@@ -69,7 +69,7 @@ namespace Game.Mechanics
 
         private void FindBetterName(Unit unit)
         {
-            if(unit.Faction.Id == factionManager.ActivePlayerNumber&&unit.Faction.IsPlayerControlled)
+            if(factionManager.IsActiveFaction(unit.Faction)&&unit.Faction.IsPlayerControlled)
                 ActivateCameraDrag();
         }
         private void ActivateCameraDrag()

@@ -7,13 +7,21 @@ namespace Game.GameActors.Units.Attributes
     [CreateAssetMenu(menuName = "GameData/Unit/Growths", fileName = "UnitGrowths")]
     public class Growths : ScriptableObject, ICloneable
     {
+        [SerializeField]
         public int MaxHp;
+        [SerializeField]
         public int MaxSp;
+        [SerializeField]
         public int Str;
+        [SerializeField]
         public int Mag;
+        [SerializeField]
         public int Spd;
+        [SerializeField]
         public int Skl;
+        [SerializeField]
         public int Def;
+        [SerializeField]
         public int Res;
         
        

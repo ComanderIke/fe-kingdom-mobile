@@ -22,14 +22,14 @@ namespace Game.GUI.Text
         {
             canvas = GetComponent<Canvas>();
         }
-        public void Show(int playerId, Action OnFinished)
+        public void Show(FactionId playerId, Action OnFinished)
         {
             canvas.enabled = true;
 
            // text.material = textMaterials[playerId];
-            text.fontMaterial = textMaterials[playerId];
+            text.fontMaterial = textMaterials[(int)playerId];
 
-            text.SetText(phaseTexts[playerId]);
+            text.SetText(phaseTexts[(int)playerId]);
       
             RectTransform textRect = text.GetComponent<RectTransform>();
             float posX = 0;

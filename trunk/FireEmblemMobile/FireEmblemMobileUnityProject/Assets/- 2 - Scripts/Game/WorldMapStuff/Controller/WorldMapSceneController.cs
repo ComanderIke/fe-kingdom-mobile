@@ -36,7 +36,6 @@ namespace Game.WorldMapStuff.Controller
         }
         public void LoadBattleLevel(Party playerParty, Party enemyParty)
         {
-            BattleTransferData.Instance.PlayerName = playerParty.Faction.name;
             BattleTransferData.Instance.UnitsGoingIntoBattle = playerParty.members;
             BattleTransferData.Instance.EnemyUnits = enemyParty.members;
             SceneController.OnSceneReady += Hide;

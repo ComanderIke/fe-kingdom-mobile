@@ -34,7 +34,7 @@ public class WM_ActorRenderer:MonoBehaviour
             sprite.material.SetColor("_OutLineColor", ColorManager.Instance.GetFactionColor(actor.Faction.Id)*intensity);
             //spBar.GetComponent<Image>().color = ColorManager.Instance.GetFactionColor(Unit.Faction.Id);
             
-            if(actor.Faction.Id != WorldMapGameManager.Instance.FactionManager.ActivePlayerNumber)
+            if((int)actor.Faction.Id != WorldMapGameManager.Instance.FactionManager.ActivePlayerNumber)
             {
                 //pointLight.SetActive(false);
                 Color color = Color.blue;

@@ -94,7 +94,7 @@ namespace Game.Mechanics
         }
         private void SelectUnit(IGridActor c)
         {
-            if (gridGameManager.FactionManager.IsActiveFaction(c.Faction.Id))
+            if (gridGameManager.FactionManager.IsActiveFaction(c.Faction))
             {
                 if (!c.TurnStateManager.IsWaiting)
                 {

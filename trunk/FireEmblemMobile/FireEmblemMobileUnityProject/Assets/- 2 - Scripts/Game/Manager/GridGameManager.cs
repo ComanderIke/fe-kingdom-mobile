@@ -18,6 +18,7 @@ using Game.GUI.Text;
 using Game.Map;
 using Game.Mechanics;
 using Game.Mechanics.Battle;
+using Game.WorldMapStuff.UI;
 using GameCamera;
 using GameEngine;
 using UnityEngine;
@@ -44,48 +45,16 @@ namespace Game.Manager
 
             //Debug.Log("Initialize");
             AddSystems();
-            FactionManager = new FactionManager(FindObjectOfType<PlayerConfig>().Factions.ToList());
+            FactionManager = new FactionManager();
+            var playerFaction=new Faction();
+            var enemyFaction=new Faction();
+            playerFaction.Id = FactionId.PLAYER;
+            playerFaction.IsPlayerControlled = true;
+            enemyFaction.Id = FactionId.ENEMY;
+            FactionManager.AddFaction(playerFaction);
+            FactionManager.AddFaction(enemyFaction);
             GameStateManager = new GridGameStateManager();
             Application.targetFrameRate = 60;
-            // JITHelper.PreJitAll<GridSystem>();
-            // JITHelper.PreJitAll<UiSystem>();
-            // JITHelper.PreJitAll<GridLogic>();
-            // JITHelper.PreJitAll<GridRenderer>();
-            // JITHelper.PreJitAll<GridInputSystem>();
-            // JITHelper.PreJitAll<UnitInputController>();
-            // JITHelper.PreJitAll<Visuals>();
-            // JITHelper.PreJitAll<TopUi>();
-            // JITHelper.PreJitAll<NodeHelper>();
-            // JITHelper.PreJitAll<DragManager>();
-            // JITHelper.PreJitAll<UIFilledBarController>();
-            // //JITHelper.PreJitAll<Unit>(); Does crash because of IClonealbe or ScriptableObject
-            // JITHelper.PreJitAll<BattleStats>();
-            // JITHelper.PreJitAll<ExpBarController>();
-            // JITHelper.PreJitAll<Image>();
-            // JITHelper.PreJitAll<ExperienceManager>();
-            // JITHelper.PreJitAll<AttackPreviewStatBar>();
-            // JITHelper.PreJitAll<AttackPreviewUI>();
-            // JITHelper.PreJitAll<CursorAnimationBlinkController>();
-            // JITHelper.PreJitAll<BattleSimulation>();
-            // JITHelper.PreJitAll<BattleSystem>();
-            // JITHelper.PreJitAll<UILoopPingPongFade>();
-            // JITHelper.PreJitAll<RawImageUVOffsetAnimation>();
-            // JITHelper.PreJitAll<AStar>();
-            
-            //JITHelper.PreJitAll<String>();
-            //JITHelper.PreJitAll<GameObject>();
-            //var method = typeof(MapSystem).GetMethod("HideMovementRangeOnGrid", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            //if (method != null)
-            //{
-            //    method.MethodHandle.GetFunctionPointer();
-            //    Debug.Log("JIT Compilation Complete");
-            //}
-            //method = typeof(MapSystem).GetMethod("ShowMovementRangeOnGrid", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            //if (method != null)
-            //{
-            //    method.MethodHandle.GetFunctionPointer();
-            //    Debug.Log("JIT Compilation Complete");
-            //}
         }
 
         private void AddSystems()
@@ -117,8 +86,7 @@ namespace Game.Manager
                 system.Activate();
             }
            
-
-            LevelConfig();
+            
           
             GameStateManager.Init();
             
@@ -172,18 +140,7 @@ namespace Game.Manager
             GameStateManager.Update();
         }
 
-        private void LevelConfig()
-        {
-            
 
-            
-            // GameplayInput input = new GameplayInput();
-            // input.SelectUnit(FactionManager.Factions[0].Units[0]);
-            //input.DeselectUnit();
-
-
-            //GetSystem<BattleSystem>().GetBattlePreview(FactionManager.Factions[0].Units[0], FactionManager.Factions[1].Units[0]);
-        }
 
         public T GetSystem<T>()
         {

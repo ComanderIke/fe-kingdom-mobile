@@ -8,10 +8,10 @@ using UnityEngine;
 namespace Game.GameActors.Players
 {
     [Serializable]
-    [CreateAssetMenu(fileName="Faction", menuName = "GameData/Faction")]
-    public class Faction:ScriptableObject
+    //[CreateAssetMenu(fileName="Faction", menuName = "GameData/Faction")]
+    public class Faction
     {
-        public int Id;
+        public FactionId Id;
         public bool IsPlayerControlled;
         public string Name;
         public List<Unit> Units { get; private set; }
@@ -20,7 +20,7 @@ namespace Game.GameActors.Players
         {
             Units = new List<Unit>();
         }
-        public Faction(int number, string name, bool isPlayerControlled):this()
+        public Faction(FactionId number, string name, bool isPlayerControlled):this()
         {
             Id = number;
             Name = name;
@@ -37,10 +37,7 @@ namespace Game.GameActors.Players
             return Units.Where(c => !c.TurnStateManager.IsWaiting && c.IsAlive()).ToList();
         }
 
-        public void Init()
-        {
-            
-        }
+      
 
         public void RemoveUnit(Unit unit)
         {

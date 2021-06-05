@@ -9,15 +9,14 @@ using UnityEngine;
 namespace Game.WorldMapStuff.Model
 {
     [Serializable]
-    [CreateAssetMenu(fileName="WM_Faction", menuName = "GameData/WM_Faction")]
+    //[CreateAssetMenu(fileName="WM_Faction", menuName = "GameData/WM_Faction")]
     public class WM_Faction:Faction
     {
    
         public List<Party> Parties { get; private set; }
         
-        public WM_Faction(int number, string name, bool isPlayerControlled):base(number, name, isPlayerControlled)
+        public WM_Faction(FactionId number, string name, bool isPlayerControlled):base(number, name, isPlayerControlled)
         {
-            Debug.Log("CREATE PARTY LIST");
             Parties = new List<Party>();
         }
 
@@ -27,10 +26,6 @@ namespace Game.WorldMapStuff.Model
         }
 
 
-        public void Init()
-        {
-            
-        }
 
         public void ClearParty()
         {

@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Game.GameActors.Units
 {
+    [System.Serializable]
     public class ExperienceManager
     {
         private const int MAX_EXP = 100;
@@ -17,8 +18,35 @@ namespace Game.GameActors.Units
         }
 
         public int NextLevelExp { get; set; }
-        public int Level { get; set; }
-        public int Exp { get; set; }
+        [SerializeField]
+        private int level;
+
+        public int Level
+        {
+            get
+            {
+                return level;
+            }
+            set
+            {
+                level = value;
+            }
+        }
+
+        [SerializeField] private int exp;
+
+        public int Exp
+        {
+            get
+            {
+                return exp;
+            }
+            set
+            {
+                exp = value;
+            }
+        }
+
         public const int MAX_EXP_TO_DRAIN = 100;
         public int ExpLeftToDrain = 100;
 

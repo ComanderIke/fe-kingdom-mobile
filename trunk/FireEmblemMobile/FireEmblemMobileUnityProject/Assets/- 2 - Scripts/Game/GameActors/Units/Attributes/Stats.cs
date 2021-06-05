@@ -9,15 +9,25 @@ namespace Game.GameActors.Units.Attributes
     [CreateAssetMenu(menuName = "GameData/Unit/Stats", fileName = "UnitStats")]
     public class Stats : ScriptableObject, ICloneable
     {
+        [SerializeField]
         public List<int> AttackRanges;
+        [SerializeField]
         public int Def;
+        [SerializeField]
         public int Mag;
+        [SerializeField]
         public int MaxHp;
+        [SerializeField]
         public int MaxSp;
+        [SerializeField]
         public int Mov;
+        [SerializeField]
         public int Res;
+        [SerializeField]
         public int Skl;
+        [SerializeField]
         public int Spd;
+        [SerializeField]
         public int Str;
 
         public int[] GetStatArray()

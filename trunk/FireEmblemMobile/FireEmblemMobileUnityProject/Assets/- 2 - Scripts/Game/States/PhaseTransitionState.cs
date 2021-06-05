@@ -25,7 +25,7 @@ namespace Game.States
 
         void Finished()
         {
-            Debug.Log("Phase Trans Finished: "+factionManager.ActiveFaction.IsPlayerControlled);
+           // Debug.Log("Phase Trans Finished: "+factionManager.ActiveFaction.IsPlayerControlled);
 
             if(factionManager.ActiveFaction.IsPlayerControlled)
                 gameStateManager.Feed(NextStateTrigger.StartPlayerPhase);

@@ -22,9 +22,9 @@ namespace Utility
 
 
 
-        public Color GetFactionColor(int factionId)
+        public Color GetFactionColor(FactionId factionId)
         {
-            return FactionColors[factionId];
+            return FactionColors[(int)factionId];
         }
     }
 }

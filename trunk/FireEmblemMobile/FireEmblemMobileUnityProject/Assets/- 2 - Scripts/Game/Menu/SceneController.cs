@@ -36,7 +36,7 @@ namespace Menu
                 if (_instance.currentSceneName != nextSceneName)
                 {
                     _instance.nextSceneName = nextSceneName;
-                    Debug.Log("SwitchScene: " + nextSceneName);
+                   // Debug.Log("SwitchScene: " + nextSceneName);
                 }
             }
         }

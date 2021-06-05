@@ -15,7 +15,7 @@ namespace Game.WorldMapStuff.Model
             GameTransformManager = new WM_GameTransformManager();
         }
         public abstract void SetAttackTarget(bool b);
-        [SerializeField]
+        [SerializeField][HideInInspector]
         private WM_Faction faction;
 
         public WM_Faction Faction

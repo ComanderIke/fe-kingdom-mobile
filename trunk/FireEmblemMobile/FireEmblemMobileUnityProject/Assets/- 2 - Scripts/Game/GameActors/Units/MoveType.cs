@@ -8,6 +8,7 @@ namespace Game.GameActors.Units
     [CreateAssetMenu(menuName = "GameData/Unit/MoveType", fileName = "MoveType")]
     public class MoveType : ScriptableObject
     {
+        public int moveTypeId;
         public Dictionary<TerrainType, int> movementCosts;
         [SerializeField] public List<int> movementCostSerialized;
         public int baseMovement = 3;

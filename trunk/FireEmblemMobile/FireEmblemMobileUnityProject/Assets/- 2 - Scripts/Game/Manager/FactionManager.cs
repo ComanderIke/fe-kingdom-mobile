@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Game.GameActors.Players;
 using UnityEngine;
 
@@ -20,29 +21,32 @@ namespace Game.Manager
             }
         }
 
-        public FactionManager(List<Faction> factions)
+        public FactionManager()
         {
             Factions = new List<Faction>();
             
-            foreach (var p in factions)
-            {
-                Factions.Add(p);
-                p.Init();
-            }
+          
+        }
+
+        public void AddFaction(Faction faction)
+        {
+            Factions.Add(faction);
+            
         }
 
         public Faction GetPlayerControlledFaction()
         {
             return Factions[0];
         }
-
-        public bool IsActiveFaction(int actorFactionId)
-        {
-            return ActiveFaction.Id == actorFactionId;
-        }
+        
         public bool IsActiveFaction(Faction faction)
         {
             return ActiveFaction == faction;
+        }
+
+        public Faction FactionFromId(FactionId factionId)
+        {
+            return Factions.FirstOrDefault(f => factionId == f.Id);
         }
     }
 }

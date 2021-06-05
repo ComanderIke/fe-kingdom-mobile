@@ -4,7 +4,7 @@ namespace Game.GUI.Text
 {
     public interface IPhaseRenderer
     {
-        void Show(int id, Action OnFinished);
+        void Show(FactionId id, Action OnFinished);
         
     }
 }

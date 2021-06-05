@@ -22,7 +22,7 @@ namespace Game.GameResources
         [SerializeField] private List<Weapon> weapons = default;
         [SerializeField] private List<Human> humans = default;
         [SerializeField] private List<Monster> monster = default;
-        [SerializeField] private List<Party> parties = default;
+        [SerializeField] private List<Party> playerStartingParties = default;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void FirstInitialize()
@@ -47,8 +47,8 @@ namespace Game.GameResources
 
         public Party GetCampaignParty(int campaignIndex)
         {
-            var tmpMembers = parties[campaignIndex].members;
-            var party =  Instantiate((parties[campaignIndex]));
+            var tmpMembers = playerStartingParties[campaignIndex].members;
+            var party =  Instantiate((playerStartingParties[campaignIndex]));
             party.members = new List<Unit>();
             foreach (var member in tmpMembers)
             {

@@ -145,7 +145,7 @@ namespace Game.GameInput
 
                 unitController.boxCollider.enabled = true;
             }
-            else if (!CameraSystem.IsDragging && (unitSelectedBeforeClicking||(unit.Faction.Id != GridGameManager.Instance.FactionManager.ActivePlayerNumber||doubleClick||unit.TurnStateManager.IsWaiting)))
+            else if (!CameraSystem.IsDragging && (unitSelectedBeforeClicking||( !GridGameManager.Instance.FactionManager.IsActiveFaction(unit.Faction)||doubleClick||unit.TurnStateManager.IsWaiting)))
             {
                 // if (EventSystem.current.currentSelectedGameObject==null||EventSystem.current.currentSelectedGameObject.CompareTag(TagManager.UnitTag))
                 // {

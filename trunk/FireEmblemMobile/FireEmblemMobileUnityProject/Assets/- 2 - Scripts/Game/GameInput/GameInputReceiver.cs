@@ -263,7 +263,7 @@ namespace Game.GameInput
         }
         private bool IsActiveFaction(IGridActor actor)
         {
-            return GridGameManager.Instance.FactionManager.IsActiveFaction(actor.Faction.Id);
+            return GridGameManager.Instance.FactionManager.IsActiveFaction(actor.Faction);
         }
         private void AttackEnemy(IGridActor character, IGridActor enemy, List<Vector2Int> movePath)
         {

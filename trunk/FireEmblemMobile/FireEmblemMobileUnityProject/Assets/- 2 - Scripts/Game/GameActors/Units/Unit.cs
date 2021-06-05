@@ -175,8 +175,7 @@ namespace Game.GameActors.Units
 
         public bool IsDragable()
         {
-            return !TurnStateManager.IsWaiting && IsAlive() &&
-                   Faction.Id == GridGameManager.Instance.FactionManager.ActivePlayerNumber;
+            return !TurnStateManager.IsWaiting && IsAlive() && GridGameManager.Instance.FactionManager.IsActiveFaction(Faction);
         }
        
 

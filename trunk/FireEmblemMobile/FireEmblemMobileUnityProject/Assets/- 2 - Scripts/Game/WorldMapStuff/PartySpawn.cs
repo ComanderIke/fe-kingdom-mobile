@@ -9,6 +9,7 @@ public class PartySpawn : MonoBehaviour
 {
     public Party party;
 
+    public FactionId factionId;
     private SpriteRenderer spriteRenderer;
     public WorldMapPosition location;
     // Start is called before the first frame update
@@ -23,4 +24,10 @@ public class PartySpawn : MonoBehaviour
         spriteRenderer.sprite = party.members[0].visuals.CharacterSpriteSet.MapSprite;
         transform.position = location.transform.position;
     }
+}
+
+public enum FactionId
+{
+    PLAYER,
+    ENEMY
 }

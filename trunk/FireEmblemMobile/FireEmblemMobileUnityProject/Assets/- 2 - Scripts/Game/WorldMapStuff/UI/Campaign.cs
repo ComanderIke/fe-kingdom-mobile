@@ -17,6 +17,7 @@ namespace Game.WorldMapStuff.UI
         // [HideInInspector]
         // public List<LocationController> locations;
 
+        [HideInInspector]
         public WM_Faction EnemyFaction;
 
         public CampaignData GetSaveData()

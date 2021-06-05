@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Game.GameActors.Units
 {
+    [System.Serializable]
     public class TurnStateManager
     {
         public delegate void OnActorWaiting(bool waiting);
@@ -15,6 +16,7 @@ namespace Game.GameActors.Units
         public OnSelected onSelected;
    
         public OnActorCanMove UnitCanMove;
+        [SerializeField]
         private UnitTurnState UnitTurnState { get; set; }
         private IActor actor;
 

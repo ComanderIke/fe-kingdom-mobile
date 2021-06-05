@@ -15,8 +15,10 @@ namespace Game.GameActors.Players
         [SerializeField]
         private Growths growths;
         [SerializeField]
-        private MoveType moveType;
+        private int moveTypeId;
+        [SerializeField]
         public ExperienceManager ExperienceManager;
+        [SerializeField]
         public TurnStateManager TurnStateManager;
         [SerializeField]
         public int VisualsID;
@@ -25,7 +27,7 @@ namespace Game.GameActors.Players
             this.name = unit.name;
             ExperienceManager = unit.ExperienceManager;
             TurnStateManager = unit.TurnStateManager;
-            this.moveType = unit.MoveType;
+            this.moveTypeId = unit.MoveType.moveTypeId;
             this.growths = unit.Growths;
             this.stats = unit.Stats;
             VisualsID = unit.visuals.ID;
@@ -42,7 +44,7 @@ namespace Game.GameActors.Players
             {
                 CharacterSpriteSet = GameAssets.Instance.visuals.LoadCharacterSpriteSet(VisualsID)
             };
-            unit.MoveType = moveType;
+            unit.MoveType = GameData.Instance.UnitData.GetMoveType(moveTypeId);
            
         }
     }

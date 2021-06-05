@@ -8,7 +8,7 @@ namespace Game.GameActors.Players
     public class FactionData
     {
         [SerializeField]
-        public int factionId;
+        public FactionId factionId;
         [SerializeField]
         public string Name;
         [SerializeField]

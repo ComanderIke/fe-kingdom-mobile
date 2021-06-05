@@ -39,7 +39,7 @@ namespace Game.WorldMapStuff.Systems
                 SelectedActor.ResetPosition();
                 SelectedActor.TurnStateManager.IsSelected = false;
             }
-            Debug.Log("DeselectActor");
+            //Debug.Log("DeselectActor");
             OnDeselectParty?.Invoke();
             partySelectionRenderer.Hide();
             SelectedActor = null;
@@ -48,6 +48,7 @@ namespace Game.WorldMapStuff.Systems
         private void SelectCharacter(WM_Actor c)
             {
                 Debug.Log("SELECT CHARACTER "+c);
+                Debug.Log(c.name+" "+c.Faction.Id+" "+c.Faction.IsPlayerControlled+" "+c.Faction.Name);
                 if (SelectedActor != null)
                 {
                     DeselectActor();

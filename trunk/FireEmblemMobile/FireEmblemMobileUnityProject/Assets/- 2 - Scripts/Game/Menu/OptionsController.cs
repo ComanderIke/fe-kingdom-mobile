@@ -15,7 +15,7 @@ public class OptionsController : UIMenu
     void OnEnable()
     {
         masterMixer.GetFloat("MusicVolume", out musicVolume);
-        Debug.Log("TODO Convert Normalized Value to dB");
+        //Debug.Log("TODO Convert Normalized Value to dB");
         musicVolumeSlider.value = musicVolume;
            
     }
@@ -24,7 +24,7 @@ public class OptionsController : UIMenu
     {
         musicVolume = musicVolumeSlider.value;
         masterMixer.SetFloat("MusicVolume", musicVolume);
-        Debug.Log("TODO Convert Normalized Value to dB");
+        //Debug.Log("TODO Convert Normalized Value to dB");
     }
    
 }
