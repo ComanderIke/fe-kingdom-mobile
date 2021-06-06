@@ -46,5 +46,11 @@ namespace GameEngine
                 nextState.Enter();
             }
         }
+
+        public void CleanUp()
+        {
+            // currentState.Exit();
+            // currentState = null;
+        }
     }
 }

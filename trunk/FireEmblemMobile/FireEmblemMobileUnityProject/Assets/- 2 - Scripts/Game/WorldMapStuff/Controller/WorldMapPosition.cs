@@ -44,7 +44,6 @@ namespace Game.WorldMapStuff.Controller
         public void EnterLocationClicked()
         {
             WorldMapSceneController.Instance.LoadInside((Party)GetActors()[0]);
-            Debug.Log("Enter Location!");
         }
 
         public void UpdateActiveLocations()

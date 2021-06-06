@@ -17,6 +17,8 @@ namespace Audio
 
         public SoundData[] Sounds;
 
+        private bool initialized = false;
+
         private void Awake()
         {
             if (Instance == null)
@@ -36,22 +38,27 @@ namespace Audio
 
         public void Init()
         {
-            foreach (var s in Sounds)
+            if (!initialized)
             {
-                s.Source = gameObject.AddComponent<AudioSource>();
-                s.Source.clip = s.Clip;
-                s.Source.volume = s.Volume;
-                s.Source.pitch = s.Pitch;
-                s.Source.loop = s.Loop;
-            }
+                foreach (var s in Sounds)
+                {
+                    s.Source = gameObject.AddComponent<AudioSource>();
+                    s.Source.clip = s.Clip;
+                    s.Source.volume = s.Volume;
+                    s.Source.pitch = s.Pitch;
+                    s.Source.loop = s.Loop;
+                }
 
-            foreach (var m in Music)
-            {
-                m.Source = gameObject.AddComponent<AudioSource>();
-                m.Source.clip = m.Clip;
-                m.Source.volume = m.Volume;
-                m.Source.pitch = m.Pitch;
-                m.Source.loop = m.Loop;
+                foreach (var m in Music)
+                {
+                    m.Source = gameObject.AddComponent<AudioSource>();
+                    m.Source.clip = m.Clip;
+                    m.Source.volume = m.Volume;
+                    m.Source.pitch = m.Pitch;
+                    m.Source.loop = m.Loop;
+                }
+
+                initialized = true;
             }
 
             currentlyPlayedMusic = new List<MusicData>();

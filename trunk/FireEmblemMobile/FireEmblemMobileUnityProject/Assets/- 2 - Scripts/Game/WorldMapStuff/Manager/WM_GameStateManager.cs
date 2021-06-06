@@ -52,7 +52,7 @@ namespace Game.Manager
             PhaseTransitionState.AddTransition(PlayerPhaseState, NextStateTrigger.StartPlayerPhase);
             PhaseTransitionState.AddTransition(EnemyPhaseState, NextStateTrigger.StartEnemyPhase);
         }
-        
-    
+
+       
     }
 }

@@ -28,10 +28,15 @@ namespace Game.WorldMapStuff.Controller
             }
         }
 
+        private void Cleanup()
+        {
+            WorldMapGameManager.Instance.CleanUp();
+        }
         public void LoadInside(Party playerParty)
         {
             SceneController.OnSceneReady += Hide;
             BattleTransferData.Instance.UnitsGoingIntoBattle = playerParty.members;
+            Cleanup();
             SceneController.SwitchScene(Scenes.InsideLocation);
         }
         public void LoadBattleLevel(Party playerParty, Party enemyParty)
@@ -39,6 +44,7 @@ namespace Game.WorldMapStuff.Controller
             BattleTransferData.Instance.UnitsGoingIntoBattle = playerParty.members;
             BattleTransferData.Instance.EnemyUnits = enemyParty.members;
             SceneController.OnSceneReady += Hide;
+            Cleanup();
             SceneController.SwitchScene(Scenes.Level2);
         }
 
@@ -83,7 +89,6 @@ namespace Game.WorldMapStuff.Controller
 
         public void LoadMainMenu(bool async = false)
         {
-            Debug.Log("LoadMainMenu");
             if (async)
             {
                 SceneController.OnSceneReady += Hide;
@@ -93,6 +98,7 @@ namespace Game.WorldMapStuff.Controller
             }
             else
             {
+                Cleanup();
                 SceneController.SwitchScene(Scenes.MainMenu);
                 Destroy(this.gameObject);
             }
