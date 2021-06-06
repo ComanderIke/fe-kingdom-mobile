@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Game.WorldMapStuff.Model;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -39,6 +40,12 @@ namespace Menu
                    // Debug.Log("SwitchScene: " + nextSceneName);
                 }
             }
+        }
+        public static void SwitchScene(Scenes buildIndex)
+        {
+            string pathToScene = SceneUtility.GetScenePathByBuildIndex((int)buildIndex);
+            string sceneName = System.IO.Path.GetFileNameWithoutExtension(pathToScene);
+            SwitchScene(sceneName);
         }
 
         private void Awake()

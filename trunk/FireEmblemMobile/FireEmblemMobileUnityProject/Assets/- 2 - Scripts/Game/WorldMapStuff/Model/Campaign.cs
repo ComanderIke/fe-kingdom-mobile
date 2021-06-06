@@ -33,5 +33,13 @@ namespace Game.WorldMapStuff.Model
             //     locations[i].LoadData(campaignData.locationData[i]);
             // }
         }
+
+        public void LoadConfig(CampaignConfig instanceCampaign)
+        {
+            name=instanceCampaign.name;
+            campaignId = instanceCampaign.campaignId;
+            victoryDefeatConditions = instanceCampaign.victoryDefeatConditions;
+            
+        }
     }
 }

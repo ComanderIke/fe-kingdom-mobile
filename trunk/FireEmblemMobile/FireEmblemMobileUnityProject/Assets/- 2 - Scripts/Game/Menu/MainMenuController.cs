@@ -49,7 +49,7 @@ namespace Game.GUI
         }
         public void ContineClicked()
         {
-            SceneController.SwitchScene("WorldMap");
+            SceneController.SwitchScene(Scenes.WorldMap);
             //LoadGame(lastestSaveFile);
         }
         public void OptionsClicked()
@@ -74,7 +74,7 @@ namespace Game.GUI
             Debug.Log("Loading: First Unit: "+currentSaveData.playerData.factionData.Parties[0].unitData[0].name);
             
             
-            SceneController.SwitchScene("WorldMap");
+            SceneController.SwitchScene(Scenes.WorldMap);
             SceneController.OnSceneReady += LoadLoadedData;
             LeanTween.scale(loadDialog, Vector3.zero, 0.3f).setEase(LeanTweenType.easeInBack)
                 .setOnComplete(HideLoadDialog);

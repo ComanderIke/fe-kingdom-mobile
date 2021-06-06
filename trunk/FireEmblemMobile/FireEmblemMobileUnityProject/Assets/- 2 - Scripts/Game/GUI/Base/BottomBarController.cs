@@ -1,4 +1,5 @@
-﻿using Menu;
+﻿using Game.WorldMapStuff.Model;
+using Menu;
 using UnityEngine;
 
 namespace Game.GUI.Base
@@ -19,7 +20,7 @@ namespace Game.GUI.Base
 
         public void GoIntoBattleClicked()
         {
-            SceneController.SwitchScene("Level2");
+            SceneController.SwitchScene(Scenes.Level2);
         }
     }
 }

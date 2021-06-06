@@ -32,20 +32,20 @@ namespace Game.WorldMapStuff.Controller
         {
             SceneController.OnSceneReady += Hide;
             BattleTransferData.Instance.UnitsGoingIntoBattle = playerParty.members;
-            SceneController.SwitchScene("InsideLocation");
+            SceneController.SwitchScene(Scenes.InsideLocation);
         }
         public void LoadBattleLevel(Party playerParty, Party enemyParty)
         {
             BattleTransferData.Instance.UnitsGoingIntoBattle = playerParty.members;
             BattleTransferData.Instance.EnemyUnits = enemyParty.members;
             SceneController.OnSceneReady += Hide;
-            SceneController.SwitchScene("Level2");
+            SceneController.SwitchScene(Scenes.Level2);
         }
 
         public void LoadWorldMap()
         {
             Show();
-            SceneController.SwitchScene("WorldMap");
+            SceneController.SwitchScene(Scenes.WorldMap);
         }
 
         private bool lastBattleVictory = false;
@@ -55,7 +55,7 @@ namespace Game.WorldMapStuff.Controller
             Show();
             lastBattleVictory = victory;
             SceneController.OnSceneReady += InvokeBattleFinished;
-            SceneController.SwitchScene("WorldMap");
+            SceneController.SwitchScene(Scenes.WorldMap);
        
         }
 
@@ -88,12 +88,12 @@ namespace Game.WorldMapStuff.Controller
             {
                 SceneController.OnSceneReady += Hide;
                 DisableObject.SetActive(false);
-                SceneController.SwitchScene("MainMenu");
+                SceneController.SwitchScene(Scenes.MainMenu);
                 
             }
             else
             {
-                SceneController.SwitchScene("MainMenu");
+                SceneController.SwitchScene(Scenes.MainMenu);
                 Destroy(this.gameObject);
             }
         }

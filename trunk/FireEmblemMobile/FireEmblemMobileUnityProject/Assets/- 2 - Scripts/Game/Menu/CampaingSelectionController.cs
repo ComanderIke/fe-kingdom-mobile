@@ -53,6 +53,10 @@ public class CampaingSelectionController : MonoBehaviour
         }
     }
 
+    public void StartClicked()
+    {
+        FindObjectOfType<UICampaignController>().StartCampaign(selected);
+    }
     public void UpdatePosition()
     {
         for (int i = 0; i < campaignImages.Count; i++)
