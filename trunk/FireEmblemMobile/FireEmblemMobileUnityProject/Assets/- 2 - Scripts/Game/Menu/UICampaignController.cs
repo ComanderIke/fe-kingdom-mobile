@@ -13,7 +13,6 @@ public class UICampaignController : UIMenu
 
     public void StartCampaign(int selected)
     {
-        Debug.Log("Start Campaing");
         Campaign.Instance.LoadConfig(GameData.Instance.campaigns[selected]);
        
         SceneController.SwitchScene(GameData.Instance.campaigns[selected].scene);

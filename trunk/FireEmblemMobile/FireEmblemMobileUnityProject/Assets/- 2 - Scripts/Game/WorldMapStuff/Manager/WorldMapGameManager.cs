@@ -33,7 +33,6 @@ namespace Game.WorldMapStuff.Manager
 
         private void Awake()
         {
-            Debug.Log("WorldMapGameManagerAwake!");
             Instance = this;
             World =  FindObjectOfType<World>();
             if (SaveData.currentSaveData != null)
@@ -49,7 +48,6 @@ namespace Game.WorldMapStuff.Manager
             FactionManager = new FactionManager();
             FactionManager.AddFaction(Player.Instance.faction);
             FactionManager.AddFaction(Campaign.Instance.EnemyFaction);
-            Debug.Log(" FactionManagerAWAKE: "+FactionManager.Factions[0].Id);
             AddSystems();
           
            
@@ -142,10 +140,7 @@ namespace Game.WorldMapStuff.Manager
 
         private void InstantiateUnits()
         {
-            Debug.Log("FactionManager"+FactionManager);
-            Debug.Log("FactionManager"+FactionManager.Factions);
-            Debug.Log("FactionManager"+FactionManager.Factions[0]);
-            Debug.Log("FactionManager"+FactionManager.Factions[1]);
+
             var instantiator = FindObjectOfType<PartyInstantiator>();
             foreach (var faction1 in FactionManager.Factions)
             {

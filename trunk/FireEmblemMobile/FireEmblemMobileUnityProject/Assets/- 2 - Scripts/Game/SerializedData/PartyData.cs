@@ -19,6 +19,8 @@ namespace Game.GameActors.Players
         [SerializeField]
         public List<MonsterData> monsterData;
 
+        [SerializeField] private TurnStateManager turnStateManager;
+
         [SerializeField] public string locationId;
         public PartyData(Party party)
         {
@@ -30,16 +32,15 @@ namespace Game.GameActors.Players
                 if (member is Human human)
                 {
                     humanData.Add(new HumanData(human));
-                    Debug.Log("Save as Human");
                 }
 
                 if (member is Monster monster)
                 {
                     monsterData.Add(new MonsterData(monster));
-                    Debug.Log("Save as Monster");
                 }
             }
 
+            turnStateManager = party.TurnStateManager;
             locationId = party.location.UniqueId;
         }
 
@@ -48,31 +49,19 @@ namespace Game.GameActors.Players
             party.name = name;
             party.members = new List<Unit>();
             party.location = WorldMapGameManager.Instance.World.Locations.FirstOrDefault(l=> l.UniqueId==locationId);
+            party.TurnStateManager = turnStateManager;
             foreach (var data in humanData)
             {
-                Debug.Log("Load PartyMember: "+data);
-               
-                    Debug.Log("Load Human: "+data);
-                    var unit = ScriptableObject.CreateInstance<Human>();
-                    data.Load(unit);
-                    party.members.Add(unit);
-                
-              
-             
-               
+                var unit = ScriptableObject.CreateInstance<Human>();
+                data.Load(unit);
+                party.members.Add(unit);
+
             }
             foreach (var data in monsterData)
             {
-                Debug.Log("Load PartyMember: "+data);
-               
-                Debug.Log("Load Human: "+data);
                 var unit = ScriptableObject.CreateInstance<Monster>();
                 data.Load(unit);
                 party.members.Add(unit);
-                
-              
-             
-               
             }
         }
     }

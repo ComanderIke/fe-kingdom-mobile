@@ -26,7 +26,7 @@ namespace Game.AI
                         return false;
                     }
             }
-
+            
             return true;
         }
 

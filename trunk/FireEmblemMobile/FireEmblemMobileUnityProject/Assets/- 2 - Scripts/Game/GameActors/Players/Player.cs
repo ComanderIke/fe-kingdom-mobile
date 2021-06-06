@@ -41,7 +41,7 @@ namespace Game.GameActors.Players
             Name = data.Name;
             faction = new WM_Faction();
             data.factionData.Load((WM_Faction)faction);
-            Debug.Log("Load Faction: "+faction.Id);
+            faction.IsPlayerControlled = true;
             convoy=data.convoy;
             dataLoaded = true;
         }

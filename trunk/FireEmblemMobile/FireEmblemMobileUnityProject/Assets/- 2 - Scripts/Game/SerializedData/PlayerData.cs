@@ -25,13 +25,6 @@ namespace Game.GameActors.Players
 
         }
 
-        public void Load(Player player)
-        {
-            player.money = money;
-            player.Name = Name;
-            player.convoy = convoy;
-            factionData.Load((WM_Faction)player.faction);
-
-        }
+        
     }
 }

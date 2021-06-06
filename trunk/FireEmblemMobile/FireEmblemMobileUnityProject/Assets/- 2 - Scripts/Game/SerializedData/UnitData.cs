@@ -43,9 +43,7 @@ namespace Game.GameActors.Players
             unit.ExperienceManager = ExperienceManager;
             unit.TurnStateManager = TurnStateManager;
             unit.visuals = new UnitVisual();
-            Debug.Log("HMM? "+GameAssets.Instance.visuals);
             unit.visuals.CharacterSpriteSet = GameAssets.Instance.visuals.LoadCharacterSpriteSet(visualsID);
-            Debug.Log("HMM2? "+GameAssets.Instance.visuals);
             unit.MoveType = GameData.Instance.UnitData.GetMoveType(moveTypeId);
            
         }

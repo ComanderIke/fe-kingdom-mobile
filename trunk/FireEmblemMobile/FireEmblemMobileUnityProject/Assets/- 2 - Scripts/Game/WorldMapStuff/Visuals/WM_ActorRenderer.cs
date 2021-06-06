@@ -28,15 +28,13 @@ public class WM_ActorRenderer:MonoBehaviour
 
         public void Init()
         {
-            Debug.Log("Init"+actor.name);
-            Debug.Log("Init"+actor.members);
-            Debug.Log("Init"+actor.members.Count);
+
             sprite.sprite = actor.members[0].visuals.CharacterSpriteSet.MapSprite;
            // hpBar.GetComponent<Image>().color = ColorManager.Instance.GetFactionColor(unit.Faction.Id);
             float intensity = 2;
-            Debug.Log("SetColor"+actor.Faction.Id);
+
             sprite.material.SetColor("_OutLineColor", ColorManager.Instance.GetFactionColor(actor.Faction.Id)*intensity);
-            Debug.Log("ÄHH"+actor.Faction.Id);
+
             //spBar.GetComponent<Image>().color = ColorManager.Instance.GetFactionColor(Unit.Faction.Id);
             
             // if((int)actor.Faction.Id != WorldMapGameManager.Instance.FactionManager.ActivePlayerNumber)
