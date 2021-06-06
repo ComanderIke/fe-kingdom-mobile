@@ -27,8 +27,10 @@ namespace Game.WorldMapStuff.Manager
 
         public void InstantiateParty(Party spawnParty, WorldMapPosition location)
         {
-            //Debug.Log("Instantiate Party: " + spawnParty + " at location: " + location);
+            Debug.Log("Instantiate Party: " + spawnParty + " at location: " + location);
             var partyGO= Instantiate(partyPrefab, partyParent);
+            Debug.Log(spawnParty.Faction);
+            Debug.Log(spawnParty.Faction.Id);
             partyGO.name = spawnParty.Faction.Id == 0 ? "PlayerParty" : "EnemyParty";
             partyGO.transform.position =  new Vector3(location.transform.position.x,location.transform.position.y,location.transform.position.z-0.1f);
             spawnParty.GameTransformManager.GameObject = partyGO;

@@ -14,5 +14,6 @@ namespace Game.WorldMapStuff.UI
         public int campaignId;
 
         public Sprite sprite;
+        public Scenes scene;
     }
 }

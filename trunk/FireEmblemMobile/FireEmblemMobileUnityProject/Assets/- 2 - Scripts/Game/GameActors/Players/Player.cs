@@ -20,6 +20,8 @@ namespace Game.GameActors.Players
         public string Name;
         [SerializeField] public List<Item> convoy = default;
         [SerializeField] public int money = default;
+        [HideInInspector]
+        public bool dataLoaded = false;
 
         public Player()
         {
@@ -37,12 +39,12 @@ namespace Game.GameActors.Players
         {
             money = data.money;
             Name = data.Name;
+            faction = new WM_Faction();
             data.factionData.Load((WM_Faction)faction);
+            Debug.Log("Load Faction: "+faction.Id);
             convoy=data.convoy;
+            dataLoaded = true;
         }
-        public void LoadPlayer(Player player)
-        {
-            _instance = player;
-        }
+       
     }
 }

@@ -36,14 +36,16 @@ namespace Game.GameActors.Players
         public virtual void Load(Unit unit)
         {
             unit.name = name;
+            unit.Stats = ScriptableObject.CreateInstance<Stats>();
             unit.Stats.LoadData(statsData);
+            unit.Growths = ScriptableObject.CreateInstance<Growths>();
             unit.Growths.LoadData(growthsData);
             unit.ExperienceManager = ExperienceManager;
             unit.TurnStateManager = TurnStateManager;
-            unit.visuals = new UnitVisual
-            {
-                CharacterSpriteSet = GameAssets.Instance.visuals.LoadCharacterSpriteSet(visualsID)
-            };
+            unit.visuals = new UnitVisual();
+            Debug.Log("HMM? "+GameAssets.Instance.visuals);
+            unit.visuals.CharacterSpriteSet = GameAssets.Instance.visuals.LoadCharacterSpriteSet(visualsID);
+            Debug.Log("HMM2? "+GameAssets.Instance.visuals);
             unit.MoveType = GameData.Instance.UnitData.GetMoveType(moveTypeId);
            
         }

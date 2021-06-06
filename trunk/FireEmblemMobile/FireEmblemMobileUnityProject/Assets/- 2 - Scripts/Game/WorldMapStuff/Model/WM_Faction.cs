@@ -20,6 +20,11 @@ namespace Game.WorldMapStuff.Model
             Parties = new List<Party>();
         }
 
+        public WM_Faction(): base()
+        {
+            Parties = new List<Party>();
+        }
+
         public override bool IsActive()
         {
             return WorldMapGameManager.Instance.FactionManager.ActiveFaction == this;

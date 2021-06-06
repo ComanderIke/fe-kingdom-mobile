@@ -7,6 +7,7 @@ namespace Game.Systems
     [System.Serializable]
     public class SaveData
     {
+        public static SaveData currentSaveData;
         public PlayerData playerData;
         public CampaignData campaignData;
 

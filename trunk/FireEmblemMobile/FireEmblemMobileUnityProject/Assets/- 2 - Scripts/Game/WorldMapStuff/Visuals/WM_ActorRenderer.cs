@@ -12,7 +12,7 @@ public class WM_ActorRenderer:MonoBehaviour
         [SerializeField] private CanvasGroup alphaCanvas;
         [SerializeField] private SpriteRenderer sprite;
         
-        public WM_Actor actor;
+        public Party actor;
 
         private void Start()
         {
@@ -28,25 +28,30 @@ public class WM_ActorRenderer:MonoBehaviour
 
         public void Init()
         {
-            sprite.sprite = ((Party) actor).members[0].visuals.CharacterSpriteSet.MapSprite;
+            Debug.Log("Init"+actor.name);
+            Debug.Log("Init"+actor.members);
+            Debug.Log("Init"+actor.members.Count);
+            sprite.sprite = actor.members[0].visuals.CharacterSpriteSet.MapSprite;
            // hpBar.GetComponent<Image>().color = ColorManager.Instance.GetFactionColor(unit.Faction.Id);
             float intensity = 2;
+            Debug.Log("SetColor"+actor.Faction.Id);
             sprite.material.SetColor("_OutLineColor", ColorManager.Instance.GetFactionColor(actor.Faction.Id)*intensity);
+            Debug.Log("ÄHH"+actor.Faction.Id);
             //spBar.GetComponent<Image>().color = ColorManager.Instance.GetFactionColor(Unit.Faction.Id);
             
-            if((int)actor.Faction.Id != WorldMapGameManager.Instance.FactionManager.ActivePlayerNumber)
-            {
-                //pointLight.SetActive(false);
-                Color color = Color.blue;
-                GetComponentInChildren<SpriteRenderer>().flipX = true;
-
-                //spriteMask.SetActive(false);
-            }
-            else {
-                //pointLight.SetActive(true);
-                GetComponentInChildren<SpriteRenderer>().flipX = false;
-                //spriteMask.SetActive(true);
-            }
+            // if((int)actor.Faction.Id != WorldMapGameManager.Instance.FactionManager.ActivePlayerNumber)
+            // {
+            //     //pointLight.SetActive(false);
+            //    // Color color = Color.blue;
+            //    // GetComponentInChildren<SpriteRenderer>().flipX = true;
+            //
+            //     //spriteMask.SetActive(false);
+            // }
+            // else {
+            //     //pointLight.SetActive(true);
+            //     //GetComponentInChildren<SpriteRenderer>().flipX = false;
+            //     //spriteMask.SetActive(true);
+            // }
         }
         void Destroy()
         {

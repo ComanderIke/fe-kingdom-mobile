@@ -9,7 +9,7 @@ using UnityEngine;
 namespace Game.Graphics
 {
     [Serializable]
-    public class Visuals : MonoBehaviour
+    public class Visuals
     {
         [SerializeField]
         public List<CharacterSpriteSet> characterSpriteSets;

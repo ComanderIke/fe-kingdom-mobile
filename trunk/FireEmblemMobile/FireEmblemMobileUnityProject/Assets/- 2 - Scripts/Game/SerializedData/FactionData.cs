@@ -34,6 +34,7 @@ namespace Game.GameActors.Players
             {
                 var party = ScriptableObject.CreateInstance<Party>();
                 partyData.Load(party);
+                party.Faction = faction;
                 faction.Parties.Add(party);
             }
         }

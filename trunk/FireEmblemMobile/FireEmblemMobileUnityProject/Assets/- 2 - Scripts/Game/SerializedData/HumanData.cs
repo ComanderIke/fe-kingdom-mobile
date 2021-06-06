@@ -19,6 +19,7 @@ namespace Game.GameActors.Players
 
         public override void Load(Unit unit)
         {
+            Debug.Log("Load Human!");
             base.Load(unit);
             Human human = (Human) unit;
             human.EquippedWeapon = GameData.Instance.Weapons.FirstOrDefault(w=>w.name == weaponId);

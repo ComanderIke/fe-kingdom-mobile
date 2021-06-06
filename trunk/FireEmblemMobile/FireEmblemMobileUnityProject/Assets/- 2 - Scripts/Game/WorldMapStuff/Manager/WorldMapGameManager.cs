@@ -35,18 +35,38 @@ namespace Game.WorldMapStuff.Manager
         {
             Debug.Log("WorldMapGameManagerAwake!");
             Instance = this;
-
-            Campaign.Instance.EnemyFaction = new WM_Faction(FactionId.ENEMY, "Enemy", false);
-            Player.Instance.faction = new WM_Faction(FactionId.PLAYER, "Player", true);
+            World =  FindObjectOfType<World>();
+            if (SaveData.currentSaveData != null)
+            {
+                Player.Instance.LoadData(SaveData.currentSaveData.playerData);
+                Campaign.Instance.LoadData(SaveData.currentSaveData.campaignData);
+            }
+            
+            if(!Player.Instance.dataLoaded)
+                InitializePlayerData();
+            if(!Campaign.Instance.dataLoaded)
+                InitializeCampaignData();
             FactionManager = new FactionManager();
             FactionManager.AddFaction(Player.Instance.faction);
             FactionManager.AddFaction(Campaign.Instance.EnemyFaction);
-            
+            Debug.Log(" FactionManagerAWAKE: "+FactionManager.Factions[0].Id);
             AddSystems();
           
-            World =  FindObjectOfType<World>();
+           
             GameStateManager = new WM_GameStateManager();
             Application.targetFrameRate = 60;
+        }
+
+        private void InitializePlayerData()
+        {
+            Player.Instance.faction = new WM_Faction(FactionId.PLAYER, "Player", true);
+            Player.Instance.Name = "Player";
+            Player.Instance.money = 0;
+        }
+        private void InitializeCampaignData()
+        {
+            Campaign.Instance.LoadConfig(GameData.Instance.campaigns[0]);
+            Campaign.Instance.EnemyFaction = new WM_Faction(FactionId.ENEMY, "Enemy", false);
         }
 
         private void AddSystems()
@@ -86,23 +106,12 @@ namespace Game.WorldMapStuff.Manager
             active = true;
 
         }
-        private void Initialize()
+
+        private void IfNotLoaded()
         {
-            
-           
-            InjectDependencies();
-            foreach (var system in Systems)
-            {
-                system.Init();
-                system.Activate();
-            }
-
-
-            Player.Instance.Name = "Player1";
-            Player.Instance.money = 0;
             var startingParty = GameData.Instance.GetCampaignParty(0);
             var partySpawns= FindObjectsOfType<PartySpawn>();
-            var instantiator = FindObjectOfType<PartyInstantiator>();
+            var startSpawn= FindObjectOfType<StartSpawn>();
             foreach (var spawn in partySpawns)
             {
                 var partyInst = Instantiate(spawn.party);
@@ -114,19 +123,56 @@ namespace Game.WorldMapStuff.Manager
                     partyInst.members.Add(instUnit);
                     
                 }
-                instantiator.InstantiateParty(partyInst, spawn.location);
+
+                partyInst.location = spawn.location.locationControllers[0];
+               
                 ((WM_Faction)FactionManager.FactionFromId(spawn.factionId)).AddParty(partyInst);
                 
             }
-
             for (int i = partySpawns.Length - 1; i >= 0; i-- )
             {
                 GameObject.Destroy(partySpawns[i].gameObject);
             }
-            instantiator.InstantiatePartyAtStartPoint(startingParty);
+
+            startingParty.location = startSpawn.location;
             ((WM_Faction)FactionManager.FactionFromId(startingParty.Faction.Id)).AddParty(startingParty);
+        }
+
+
+
+        private void InstantiateUnits()
+        {
+            Debug.Log("FactionManager"+FactionManager);
+            Debug.Log("FactionManager"+FactionManager.Factions);
+            Debug.Log("FactionManager"+FactionManager.Factions[0]);
+            Debug.Log("FactionManager"+FactionManager.Factions[1]);
+            var instantiator = FindObjectOfType<PartyInstantiator>();
+            foreach (var faction1 in FactionManager.Factions)
+            {
+                var faction = (WM_Faction) faction1;
+                foreach (Party actor in faction.Parties)
+                {
+                    instantiator.InstantiateParty(actor, actor.location.worldMapPosition);
+                }
+            }
+
+            
+        }
+        private void Initialize()
+        {
+            
+           
+            InjectDependencies();
+            foreach (var system in Systems)
+            {
+                system.Init();
+                system.Activate();
+            }
+            if(!Player.Instance.dataLoaded|| !Campaign.Instance.dataLoaded)
+                IfNotLoaded();
+            InstantiateUnits();
+            
             GameStateManager.Init();
-            //GetSystem<TurnSystem>().StartPhase();
         }
         private void InjectDependencies()
         {

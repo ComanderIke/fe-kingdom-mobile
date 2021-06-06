@@ -28,7 +28,7 @@ namespace Game.GUI
         public GameObject SaveButton;
         [SerializeField] private UIMenu optionsMenu;
         [SerializeField] private UIMenu campaignMenu;
-        private SaveData currentSaveData;
+
 
         private void Start()
         {
@@ -66,27 +66,16 @@ namespace Game.GUI
         }
         public void LoadGame(string name)
         {
-            currentSaveData= SaveSystem.LoadGame(name);
+            SaveData.currentSaveData= SaveSystem.LoadGame(name);
             
-            Debug.Log("Loading: TurnCount: "+currentSaveData.campaignData.turnCount);
-            Debug.Log("PartyCount: "+currentSaveData.playerData.factionData.Parties.Count);
-            Debug.Log("UnitCount: "+currentSaveData.playerData.factionData.Parties[0].unitData.Count);
-            Debug.Log("Loading: First Unit: "+currentSaveData.playerData.factionData.Parties[0].unitData[0].name);
-            
-            
+
+         
             SceneController.SwitchScene(Scenes.WorldMap);
-            SceneController.OnSceneReady += LoadLoadedData;
+
             LeanTween.scale(loadDialog, Vector3.zero, 0.3f).setEase(LeanTweenType.easeInBack)
                 .setOnComplete(HideLoadDialog);
         }
 
-        void LoadLoadedData()
-        {
-            Debug.Log("Assign Loaded DATA!");
-            Player.Instance.LoadData(currentSaveData.playerData);
-            Campaign.Instance.LoadData(currentSaveData.campaignData);
-            SceneController.OnSceneReady -= LoadLoadedData;
-        }
         void HideSaveDialog()
         {
             saveDialog.SetActive(false);
