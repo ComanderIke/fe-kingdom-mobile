@@ -74,5 +74,10 @@ namespace Game.GameActors.Players
         {
             Units.Clear();
         }
+
+        public void LoadData(FactionData dataFactionData)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

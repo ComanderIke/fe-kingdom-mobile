@@ -4,6 +4,8 @@ using Game.GameActors.Players;
 using Game.Manager;
 using Game.Systems;
 using Game.WorldMapStuff.Manager;
+using Game.WorldMapStuff.Model;
+using Game.WorldMapStuff.UI;
 using Menu;
 using SerializedData;
 using TMPro;
@@ -58,13 +60,13 @@ namespace Game.GUI
 
         public void SaveGameClicked()
         {
-            SaveSystem.SaveGame(saveNameField.text.Trim(), new SaveData(Player.Instance, WorldMapGameManager.Instance.Campaign));
+            SaveSystem.SaveGame(saveNameField.text.Trim(), new SaveData(Player.Instance, Campaign.Instance));
             LeanTween.scale(saveDialog, Vector3.zero, 0.3f).setEase(LeanTweenType.easeInBack)
                 .setOnComplete(HideSaveDialog);
         }
         public void LoadGame(string name)
         {
-            currentSaveData= (SaveData)SaveSystem.LoadGame(name);
+            currentSaveData= SaveSystem.LoadGame(name);
             
             Debug.Log("Loading: TurnCount: "+currentSaveData.campaignData.turnCount);
             Debug.Log("PartyCount: "+currentSaveData.playerData.factionData.Parties.Count);
@@ -72,8 +74,8 @@ namespace Game.GUI
             Debug.Log("Loading: First Unit: "+currentSaveData.playerData.factionData.Parties[0].unitData[0].name);
             
             
-           // SceneController.SwitchScene("WorldMap");
-           // SceneController.OnSceneReady += LoadLoadedData;
+            SceneController.SwitchScene("WorldMap");
+            SceneController.OnSceneReady += LoadLoadedData;
             LeanTween.scale(loadDialog, Vector3.zero, 0.3f).setEase(LeanTweenType.easeInBack)
                 .setOnComplete(HideLoadDialog);
         }
@@ -82,7 +84,7 @@ namespace Game.GUI
         {
             Debug.Log("Assign Loaded DATA!");
             Player.Instance.LoadData(currentSaveData.playerData);
-            WorldMapGameManager.Instance.LoadData(currentSaveData.campaignData);
+            Campaign.Instance.LoadData(currentSaveData.campaignData);
             SceneController.OnSceneReady -= LoadLoadedData;
         }
         void HideSaveDialog()

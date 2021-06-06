@@ -1,30 +1,29 @@
-﻿using System.Collections.Generic;
-using Game.Grid;
-using Game.Systems;
-using Game.WorldMapStuff.Model;
-using UnityEngine;
+﻿using Game.Systems;
+using Game.WorldMapStuff.UI;
 
-namespace Game.WorldMapStuff.UI
+namespace Game.WorldMapStuff.Model
 {
-    [CreateAssetMenu(fileName = "campaign", menuName = "GameData/Campaign")]
-    public class Campaign:ScriptableObject
+    public class Campaign
     {
+        private static Campaign _instance;
         public CampaignVictoryDefeatCondition[] victoryDefeatConditions;
         public string name;
         public int campaignId;
-        [HideInInspector]
         public int turnCount = 1;
         // [HideInInspector]
         // public List<LocationController> locations;
-
-        [HideInInspector]
+        
         public WM_Faction EnemyFaction;
+        public static Campaign Instance
+        {
+            get { return _instance ??= new Campaign(); }
+        }
 
-        public CampaignData GetSaveData()
+         public CampaignData GetSaveData()
         {
             return new CampaignData(this);
         }
-
+        
         public void LoadData(CampaignData campaignData)
         {
             campaignId = campaignData.campaignId;

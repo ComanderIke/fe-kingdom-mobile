@@ -5,6 +5,7 @@ using Game.GameActors.Units.Humans;
 using Game.GameActors.Units.Monsters;
 using Game.Map;
 using Game.WorldMapStuff.Model;
+using Game.WorldMapStuff.UI;
 using GameEngine;
 using UnityEngine;
 
@@ -23,6 +24,7 @@ namespace Game.GameResources
         [SerializeField] private List<Human> humans = default;
         [SerializeField] private List<Monster> monster = default;
         [SerializeField] private List<Party> playerStartingParties = default;
+        [SerializeField] public List<CampaignConfig> campaigns;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void FirstInitialize()

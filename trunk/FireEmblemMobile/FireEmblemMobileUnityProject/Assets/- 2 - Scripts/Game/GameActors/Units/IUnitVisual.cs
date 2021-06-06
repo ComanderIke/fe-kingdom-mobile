@@ -11,17 +11,7 @@ namespace Game.GameActors.Units
         
         public CharacterSpriteSet CharacterSpriteSet;
 
-        public int ID
-        {
-            get
-            {
-                return CharacterSpriteSet.id;
-            }
-            set
-            {
-                CharacterSpriteSet.id = value;
-            }
-        }
+     
 
         
     }

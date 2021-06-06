@@ -37,7 +37,7 @@ namespace Game.Mechanics
             {
                 turnCount = value;
                 if(gameStateManager is WM_GameStateManager)
-                    WorldMapGameManager.Instance.Campaign.turnCount = turnCount;
+                    Campaign.Instance.turnCount = turnCount;
                     
             }
         }
@@ -51,7 +51,7 @@ namespace Game.Mechanics
             // factionManager = gameManager.FactionManager;
             // gameStateManager = gameManager.GameStateManager;
             InitPlayers();
-            TurnCount = WorldMapGameManager.Instance.Campaign.turnCount;
+            TurnCount = Campaign.Instance.turnCount;
         }
 
         public void Deactivate()

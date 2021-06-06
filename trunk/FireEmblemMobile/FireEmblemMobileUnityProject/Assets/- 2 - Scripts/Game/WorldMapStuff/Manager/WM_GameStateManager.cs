@@ -4,6 +4,7 @@ using Game.States;
 using Game.WorldMapStuff;
 using Game.WorldMapStuff.GameStates;
 using Game.WorldMapStuff.Manager;
+using Game.WorldMapStuff.Model;
 using GameEngine;
 using GameEngine.GameStates;
 using UnityEngine;
@@ -25,7 +26,7 @@ namespace Game.Manager
 
         public WM_GameStateManager()
         {
-            ConditionManager conditionManager =new CampaignConditionManager(WorldMapGameManager.Instance.Campaign, WorldMapGameManager.Instance.FactionManager);
+            ConditionManager conditionManager =new CampaignConditionManager(Campaign.Instance, WorldMapGameManager.Instance.FactionManager);
             PlayerPhaseState = new WM_PlayerPhaseState(WorldMapGameManager.Instance.GetSystem<TurnSystem>(), conditionManager);
             EnemyPhaseState = new WM_EnemyPhaseState(WorldMapGameManager.Instance.FactionManager, conditionManager);
             PhaseTransitionState = new PhaseTransitionState(WorldMapGameManager.Instance.FactionManager, this);

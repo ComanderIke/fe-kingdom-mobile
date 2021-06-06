@@ -35,7 +35,10 @@ namespace Game.GameActors.Players
 
         public void LoadData(PlayerData data)
         {
-            
+            money = data.money;
+            Name = data.Name;
+            data.factionData.Load((WM_Faction)faction);
+            convoy=data.convoy;
         }
         public void LoadPlayer(Player player)
         {

@@ -45,7 +45,7 @@ public class UIPartyOverViewController : MonoBehaviour
         playerFaction = party.Faction;
         turnCount.SetText("Turn: "+WorldMapGameManager.Instance.GetSystem<TurnSystem>().TurnCount);
         string condStr = "";
-        foreach (var cond in FindObjectOfType<CampaignConfig>().campaign.victoryDefeatConditions)
+        foreach (var cond in Campaign.Instance.victoryDefeatConditions)
         {
             condStr += cond.description+", ";
         }

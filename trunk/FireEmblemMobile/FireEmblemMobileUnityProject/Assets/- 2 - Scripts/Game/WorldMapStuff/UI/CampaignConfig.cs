@@ -1,7 +1,18 @@
-﻿using Game.WorldMapStuff.UI;
+﻿using System.Collections.Generic;
+using Game.Grid;
+using Game.Systems;
+using Game.WorldMapStuff.Model;
 using UnityEngine;
 
-public class CampaignConfig:MonoBehaviour
+namespace Game.WorldMapStuff.UI
 {
-    public Campaign campaign;
+    [CreateAssetMenu(fileName = "campaignConfig", menuName = "GameData/CampaignConfig")]
+    public class CampaignConfig:ScriptableObject
+    {
+        public CampaignVictoryDefeatCondition[] victoryDefeatConditions;
+        public string name;
+        public int campaignId;
+
+        public Sprite sprite;
+    }
 }

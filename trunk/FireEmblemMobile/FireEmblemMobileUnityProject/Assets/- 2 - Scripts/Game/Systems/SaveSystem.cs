@@ -63,7 +63,7 @@ namespace SerializedData
             return false;
         }
 
-        private static object LoadData(string path)
+        private static SaveData LoadData(string path)
         {
             if (File.Exists(path))
             {
@@ -95,7 +95,7 @@ namespace SerializedData
             SaveData(filename,saveData);
         }
 
-        public static object LoadGame(string filename)
+        public static SaveData LoadGame(string filename)
         {
             return LoadData(Application.persistentDataPath + "/saves/" + filename);
         }

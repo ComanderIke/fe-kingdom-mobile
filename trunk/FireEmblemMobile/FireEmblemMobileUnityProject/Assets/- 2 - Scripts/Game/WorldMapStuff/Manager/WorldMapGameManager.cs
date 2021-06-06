@@ -30,17 +30,17 @@ namespace Game.WorldMapStuff.Manager
         public World World { get; set; }
         public WM_GameStateManager GameStateManager { get; set; }
         private bool active = true;
-        public Campaign Campaign;
+
         private void Awake()
         {
             Debug.Log("WorldMapGameManagerAwake!");
             Instance = this;
-            Campaign = Instantiate(GameObject.FindObjectOfType<CampaignConfig>().campaign);
-            Campaign.EnemyFaction = new WM_Faction(FactionId.ENEMY, "Enemy", false);
+
+            Campaign.Instance.EnemyFaction = new WM_Faction(FactionId.ENEMY, "Enemy", false);
             Player.Instance.faction = new WM_Faction(FactionId.PLAYER, "Player", true);
             FactionManager = new FactionManager();
             FactionManager.AddFaction(Player.Instance.faction);
-            FactionManager.AddFaction(Campaign.EnemyFaction);
+            FactionManager.AddFaction(Campaign.Instance.EnemyFaction);
             
             AddSystems();
           
@@ -162,9 +162,6 @@ namespace Game.WorldMapStuff.Manager
             return default;
         }
 
-        public void LoadData(CampaignData campaignData)
-        {
-            Campaign.LoadData(campaignData);
-        }
+     
     }
 }
