@@ -36,8 +36,6 @@ namespace Game.GUI
 
         private void Awake()
         {
- 
-
             if (Instance == null)
             {
                 Instance = this;
@@ -50,7 +48,6 @@ namespace Game.GUI
                 Destroy(gameObject);
                 return;
             }
-           
         }
 
         public void ShowMainMenu()
@@ -58,60 +55,24 @@ namespace Game.GUI
             mainMenuCanvas.enabled=true;
             optionsMenu.Hide();
             campaignMenu.Hide();
-            
         }
 
         public void HideMenu()
         {
             mainMenuCanvas.enabled = false;
         }
-        public void NewGameClicked()
-        {
-            campaignMenu.Show();
-            //SceneController.SwitchScene("Base");
-        }
-        public void OpenSaveDialog()
-        {
-            saveDialog.gameObject.SetActive(true);
-            LeanTween.scale(saveDialog, Vector3.one, 0.3f).setEase(LeanTweenType.easeOutBack);
-        }
-        public void ContinueClicked()
-        {
-            
-            LoadScene(Scenes.Campaign1);
-            //LoadGame(lastestSaveFile);
-        }
+     
+        
 
        
-        public void LoadScene(Scenes scene)
+        public void LoadCampaignScene(Campaign campaign)
         {
             HideMenu();
-            SceneController.LoadSceneAsync(Scenes.Campaign1, true);
-            
-            if (!SceneController.IsLoaded(Scenes.WM_Gameplay))
-            {
-                Debug.Log("Also Load Gameplay");
-                SceneController.OnSceneCompletelyFinished += LoadGameplayScene;
-            }
+            SceneController.LoadSceneAsync(campaign.scene, true);
+            SceneController.LoadSceneAsync(Scenes.UI, true);
+            SceneController.LoadSceneAsync(Scenes.WM_Gameplay, true);
         }
 
-        private void LoadGameplayScene()
-        {
-            Debug.Log("LOADING GAMEPLAY");
-            SceneController.OnSceneCompletelyFinished -= LoadGameplayScene;
-            SceneController.LoadSceneAsync(Scenes.WM_Gameplay,true);
-        }
-        public void OptionsClicked()
-        {
-            optionsMenu.Show();
-        }
-
-        public void SaveGameClicked()
-        {
-            SaveSystem.SaveGame(saveNameField.text.Trim(), new SaveData(Player.Instance, Campaign.Instance));
-            LeanTween.scale(saveDialog, Vector3.zero, 0.3f).setEase(LeanTweenType.easeInBack)
-                .setOnComplete(HideSaveDialog);
-        }
         public void LoadGame(string name)
         {
             SaveData.currentSaveData= SaveSystem.LoadGame(name);
@@ -125,16 +86,26 @@ namespace Game.GUI
                     break;
                 }
             }
-            LoadScene(first.scene);
+
+            Player.Instance.LoadData(SaveData.currentSaveData.playerData);
+            Campaign.Instance.LoadData(SaveData.currentSaveData.campaignData);
+            LoadCampaignScene(Campaign.Instance);
 
             LeanTween.scale(loadDialog, Vector3.zero, 0.3f).setEase(LeanTweenType.easeInBack)
                 .setOnComplete(HideLoadDialog);
         }
-
+        
+        #region LoadSaveDialog
+        public void OpenSaveDialog()
+        {
+            saveDialog.gameObject.SetActive(true);
+            LeanTween.scale(saveDialog, Vector3.one, 0.3f).setEase(LeanTweenType.easeOutBack);
+        }
         void HideSaveDialog()
         {
             saveDialog.SetActive(false);
         }
+       
         void HideLoadDialog()
         {
             loadDialog.SetActive(false);
@@ -173,11 +144,43 @@ namespace Game.GUI
                 buttonObject.GetComponentInChildren<TextMeshProUGUI>().text = fileName;
             }
         }
+        #endregion
+        
+        #region Clicks
+
+        public void LoadCampaignClicked(int campaignIndex)
+        {
+            Campaign.Instance.LoadConfig(GameData.Instance.campaigns[campaignIndex]);
+            LoadCampaignScene(Campaign.Instance);
+        }
+
+        public void OptionsClicked()
+        {
+            optionsMenu.Show();
+        }
+        public void NewGameClicked()
+        {
+            campaignMenu.Show();
+            //SceneController.SwitchScene("Base");
+        }
+
         public void ExitClicked()
         {
             Application.Quit();
         }
-
+        public void SaveGameClicked()
+        {
+            SaveSystem.SaveGame(saveNameField.text.Trim(), new SaveData(Player.Instance, Campaign.Instance));
+            LeanTween.scale(saveDialog, Vector3.zero, 0.3f).setEase(LeanTweenType.easeInBack)
+                .setOnComplete(HideSaveDialog);
+        }
+        public void ContinueClicked()
+        {
+            HideMenu();
+            //LoadScene(Scenes.Campaign1);
+            //LoadGame(lastestSaveFile);
+        }
+        #endregion
         
     }
 }

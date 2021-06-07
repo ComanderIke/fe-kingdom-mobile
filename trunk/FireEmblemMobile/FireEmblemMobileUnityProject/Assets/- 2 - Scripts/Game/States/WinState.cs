@@ -1,10 +1,9 @@
 ﻿using Game.WorldMapStuff.Controller;
 using GameEngine;
 using GameEngine.GameStates;
-using Menu;
 using UnityEngine;
 
-namespace Game.Mechanics
+namespace Game.States
 {
     public class WinState : GameState<NextStateTrigger>
     {
@@ -31,12 +30,10 @@ namespace Game.Mechanics
                 {
                     if (time >= DELAY)
                     {
-                        WorldMapSceneController.Instance.FinishedBattle(true);
+                        GameSceneController.Instance.LoadWorldMapFromBattle();
                     }
-                        
                 }
             }
-
             return NextState;
         }
     }

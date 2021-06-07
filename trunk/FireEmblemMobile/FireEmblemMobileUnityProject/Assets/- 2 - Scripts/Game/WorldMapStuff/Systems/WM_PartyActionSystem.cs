@@ -37,9 +37,10 @@ namespace Game.WorldMapStuff.Systems
             Debug.Log(selectionSystem.SelectedActor+" "+selectionSystem.SelectedActor.name);
             if (selected is Party pty)
             {
-                WorldMapSceneController.Instance.LoadBattleLevel(pty, (Party)party);
+                GameSceneController.Instance.LoadBattleLevel(pty, (Party)party);
                 currentAttackTarget = (Party) party;
-                WorldMapSceneController.Instance.OnBattleFinished += AttackFinished;
+                Debug.Log("TODO ATTACK FINISHED");
+                //GameSceneController.Instance.OnBattleFinished += AttackFinished;
             }
         }
 

@@ -31,12 +31,10 @@ namespace Game.WorldMapStuff.GameStates
                 {
                     if (time >= DELAY)
                     {
-                        WorldMapSceneController.Instance.LoadOnlyMainMenu();
+                        GameSceneController.Instance.UnloadAllExceptMainMenu();
                     }
-                        
                 }
             }
-
             return NextState;
         }
     }

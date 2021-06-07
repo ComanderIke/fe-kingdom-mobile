@@ -12,7 +12,7 @@ namespace Game.WorldMapStuff.Manager
         public void BackClicked()
         {
 
-            WorldMapSceneController.Instance.LoadWorldMapFromInside();
+            GameSceneController.Instance.LoadWorldMapFromInside();
         }
     }
 }

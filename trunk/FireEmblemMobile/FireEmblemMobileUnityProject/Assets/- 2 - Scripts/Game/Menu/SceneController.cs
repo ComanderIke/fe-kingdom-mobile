@@ -61,7 +61,7 @@ namespace Menu
         {
             string pathToScene = SceneUtility.GetScenePathByBuildIndex((int)buildIndex);
             string sceneName = System.IO.Path.GetFileNameWithoutExtension(pathToScene);
-            if (_instance != null)
+            if (_instance != null&& SceneManager.GetSceneByName(sceneName).isLoaded)
             {
                 //Debug.Log("Current Scene Name: "+_instance.currentSceneName);
                 _instance.scenesToLoad.Add(new SceneLoadData(){name=sceneName, scene=buildIndex, unload = true});

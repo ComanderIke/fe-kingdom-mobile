@@ -37,11 +37,7 @@ namespace Game.WorldMapStuff.Manager
                 return;
             Instance = this;
             World =  FindObjectOfType<World>();
-            if (SaveData.currentSaveData != null)
-            {
-                Player.Instance.LoadData(SaveData.currentSaveData.playerData);
-                Campaign.Instance.LoadData(SaveData.currentSaveData.campaignData);
-            }
+           
             
             if(!Player.Instance.dataLoaded)
                 InitializePlayerData();

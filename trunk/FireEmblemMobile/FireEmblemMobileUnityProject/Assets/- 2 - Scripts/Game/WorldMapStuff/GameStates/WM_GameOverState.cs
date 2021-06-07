@@ -33,7 +33,7 @@ namespace Game.WorldMapStuff.GameStates
                     if (Input.GetMouseButtonDown(0))
                     {
                         if (time >= DELAY)
-                            WorldMapSceneController.Instance.LoadOnlyMainMenu();
+                            GameSceneController.Instance.UnloadAllExceptMainMenu();
                     }
                 }
 

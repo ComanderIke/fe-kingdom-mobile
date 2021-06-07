@@ -31,7 +31,7 @@ namespace Game.Mechanics
                 if (Input.GetMouseButtonDown(0))
                 {
                     if (time >= DELAY)
-                        WorldMapSceneController.Instance.FinishedBattle(false);
+                        GameSceneController.Instance.LoadWorldMapFromBattle();
                 }
             }
 

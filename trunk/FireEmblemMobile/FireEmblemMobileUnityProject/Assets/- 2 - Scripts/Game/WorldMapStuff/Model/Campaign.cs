@@ -16,6 +16,7 @@ namespace Game.WorldMapStuff.Model
         
         public WM_Faction EnemyFaction;
         public bool dataLoaded;
+        public Scenes scene;
 
         public static Campaign Instance
         {
@@ -31,6 +32,7 @@ namespace Game.WorldMapStuff.Model
         {
             campaignId = campaignData.campaignId;
             turnCount = campaignData.turnCount;
+            scene =  GameData.Instance.campaigns[campaignId].scene;
             dataLoaded = true;
             victoryDefeatConditions = GameData.Instance.campaigns[campaignId].victoryDefeatConditions;
             EnemyFaction = new WM_Faction();
@@ -47,7 +49,7 @@ namespace Game.WorldMapStuff.Model
             name=instanceCampaign.name;
             campaignId = instanceCampaign.campaignId;
             victoryDefeatConditions = instanceCampaign.victoryDefeatConditions;
-            
+            scene = instanceCampaign.scene;
         }
     }
 }
