@@ -65,7 +65,7 @@ namespace Game.Manager
                 FindObjectOfType<AudioSystem>(),
                 FindObjectOfType<UnitActionSystem>(),
                 FindObjectOfType<UnitsSystem>(),
-                FindObjectOfType<TurnSystem>(),
+                new TurnSystem(),
                 FindObjectOfType<UiSystem>(),
                 new BattleSystem(),
                 new MoveSystem(),

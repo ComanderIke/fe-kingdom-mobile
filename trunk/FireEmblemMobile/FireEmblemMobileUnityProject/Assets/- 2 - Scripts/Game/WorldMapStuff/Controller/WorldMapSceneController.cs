@@ -34,7 +34,7 @@ namespace Game.WorldMapStuff.Controller
         }
         public void LoadInside(Party playerParty)
         {
-            SceneController.OnSceneReady += Hide;
+            SceneController.OnBeforeSceneReady += Hide;
             BattleTransferData.Instance.UnitsGoingIntoBattle = playerParty.members;
             Cleanup();
             SceneController.SwitchScene(Scenes.InsideLocation);
@@ -43,14 +43,14 @@ namespace Game.WorldMapStuff.Controller
         {
             BattleTransferData.Instance.UnitsGoingIntoBattle = playerParty.members;
             BattleTransferData.Instance.EnemyUnits = enemyParty.members;
-            SceneController.OnSceneReady += Hide;
+            SceneController.OnBeforeSceneReady += Hide;
             Cleanup();
             SceneController.SwitchScene(Scenes.Level2);
         }
 
         public void LoadWorldMap()
         {
-            Show();
+            SceneController.OnSceneReady+=Show;
             SceneController.SwitchScene(Scenes.WorldMap);
         }
 
@@ -58,28 +58,29 @@ namespace Game.WorldMapStuff.Controller
         public void FinishedBattle(bool victory)
         {
             GridGameManager.Instance.Deactivate();
-            Show();
+            SceneController.OnSceneReady+=Show;
             lastBattleVictory = victory;
-            SceneController.OnSceneReady += InvokeBattleFinished;
+            SceneController.OnBeforeSceneReady += InvokeBattleFinished;
             SceneController.SwitchScene(Scenes.WorldMap);
        
         }
 
         private void InvokeBattleFinished()
         {
-            SceneController.OnSceneReady -= InvokeBattleFinished;
+            SceneController.OnBeforeSceneReady -= InvokeBattleFinished;
             OnBattleFinished?.Invoke(lastBattleVictory);
         }
         private void Hide()
         {
             WorldMapGameManager.Instance.Deactivate();
-            SceneController.OnSceneReady -= Hide;
+            SceneController.OnBeforeSceneReady -= Hide;
             DisableObject.SetActive(false);
         
         }
     
         private void Show()
         {
+            SceneController.OnSceneReady-=Show;
             WorldMapGameManager.Instance.Activate();
             DisableObject.SetActive(true);
       

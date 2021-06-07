@@ -78,7 +78,7 @@ namespace Game.WorldMapStuff.Manager
             Systems = new List<IEngineSystem>
             {
                 FindObjectOfType<AudioSystem>(),
-                FindObjectOfType<TurnSystem>(),
+                new TurnSystem(),
                 selectionSystem,
                 previewSystem,
                 new WM_PartyActionSystem(previewSystem,selectionSystem),
@@ -108,6 +108,14 @@ namespace Game.WorldMapStuff.Manager
 
         }
 
+        private void DestroySpawns()
+        {
+            var partySpawns= FindObjectsOfType<PartySpawn>();
+            for (int i = partySpawns.Length - 1; i >= 0; i-- )
+            {
+                GameObject.Destroy(partySpawns[i].gameObject);
+            }
+        }
         private void IfNotLoaded()
         {
             var startingParty = GameData.Instance.GetCampaignParty(0);
@@ -130,10 +138,7 @@ namespace Game.WorldMapStuff.Manager
                 ((WM_Faction)FactionManager.FactionFromId(spawn.factionId)).AddParty(partyInst);
                 
             }
-            for (int i = partySpawns.Length - 1; i >= 0; i-- )
-            {
-                GameObject.Destroy(partySpawns[i].gameObject);
-            }
+          
 
             startingParty.location = startSpawn.location;
             ((WM_Faction)FactionManager.FactionFromId(startingParty.Faction.Id)).AddParty(startingParty);
@@ -168,6 +173,7 @@ namespace Game.WorldMapStuff.Manager
             }
             if(!Player.Instance.dataLoaded|| !Campaign.Instance.dataLoaded)
                 IfNotLoaded();
+            DestroySpawns();
             InstantiateUnits();
             
             GameStateManager.Init();

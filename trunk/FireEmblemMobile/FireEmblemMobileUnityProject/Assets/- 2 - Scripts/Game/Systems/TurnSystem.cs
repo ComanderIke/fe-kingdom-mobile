@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Game.Mechanics
 {
-    public class TurnSystem : MonoBehaviour, IEngineSystem
+    public class TurnSystem : IEngineSystem
     {
         #region Events
 

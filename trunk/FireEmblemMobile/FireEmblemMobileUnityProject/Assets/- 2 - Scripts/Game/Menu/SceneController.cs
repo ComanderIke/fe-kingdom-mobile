@@ -27,7 +27,7 @@ namespace Menu
         public string[] Tips;
         private UpdateDelegate[] updateDelegates;
         public static event Action OnSceneReady;
-
+        public static event Action OnBeforeSceneReady;
         public static void SwitchScene(string nextSceneName)
         {
             //Debug.Log("Trying Switch Scene: " + nextSceneName);
@@ -96,6 +96,7 @@ namespace Menu
             sceneLoadTask.allowSceneActivation = false;
             sceneState = SceneState.Load;
             LoadingScreen.SetActive(true);
+            OnBeforeSceneReady?.Invoke();
             progressBar.fillAmount = 0;
             progressText.text = "0%";
             loadTime = 0;
