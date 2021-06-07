@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using Game.WorldMapStuff.Model;
 using TMPro;
 using UnityEngine;
@@ -12,13 +15,13 @@ namespace Menu
     {
         private static SceneController _instance;
 
-        private string currentSceneName;
+
         public GameObject LoadingScreen;
         private float loadTime;
         public float MinLoadTime = 0f;
-        private string nextSceneName;
+
         private AsyncOperation resourceUnloadTask;
-        private AsyncOperation sceneLoadTask;
+      //  private AsyncOperation sceneLoadTask;
         private SceneState sceneState;
         [SerializeField] private Image progressBar = default;
         [SerializeField] private TextMeshProUGUI progressText = default;
@@ -27,26 +30,46 @@ namespace Menu
         public string[] Tips;
         private UpdateDelegate[] updateDelegates;
         public static event Action OnSceneReady;
+        public static event Action OnSceneCompletelyFinished;
         public static event Action OnBeforeSceneReady;
-        public static void SwitchScene(string nextSceneName)
+        public static event Action FinishedUnloading;
+
+        private List<SceneLoadData> scenesToLoad = new List<SceneLoadData>();
+
+        class SceneLoadData
         {
-            //Debug.Log("Trying Switch Scene: " + nextSceneName);
-            if (_instance != null)
-            {
-                //Debug.Log("Current Scene Name: "+_instance.currentSceneName);
-                if (_instance.currentSceneName != nextSceneName)
-                {
-                    _instance.nextSceneName = nextSceneName;
-                   // Debug.Log("SwitchScene: " + nextSceneName);
-                }
-            }
+            public Scenes scene;
+            public bool additive;
+            public string name;
+            public bool unload;
+            public AsyncOperation task;
+            
         }
-        public static void SwitchScene(Scenes buildIndex)
+       
+        public static void LoadSceneAsync(Scenes buildIndex, bool additive)
         {
             string pathToScene = SceneUtility.GetScenePathByBuildIndex((int)buildIndex);
             string sceneName = System.IO.Path.GetFileNameWithoutExtension(pathToScene);
-            SwitchScene(sceneName);
+            if (_instance != null)
+            {
+                //Debug.Log("Current Scene Name: "+_instance.currentSceneName);
+                _instance.scenesToLoad.Add(new SceneLoadData(){name=sceneName, scene=buildIndex, additive = additive});
+                Debug.Log("Load Scene: " + sceneName);
+            }
         }
+        public static void UnLoadSceneAsync(Scenes buildIndex)
+        {
+            string pathToScene = SceneUtility.GetScenePathByBuildIndex((int)buildIndex);
+            string sceneName = System.IO.Path.GetFileNameWithoutExtension(pathToScene);
+            if (_instance != null)
+            {
+                //Debug.Log("Current Scene Name: "+_instance.currentSceneName);
+                _instance.scenesToLoad.Add(new SceneLoadData(){name=sceneName, scene=buildIndex, unload = true});
+                Debug.Log("Unload Scene: " + sceneName);
+            }
+        }
+
+     
 
         private void Awake()
         {
@@ -61,6 +84,7 @@ namespace Menu
                 Destroy(gameObject);
                 return;
             }
+
 
             updateDelegates = new UpdateDelegate[(int) SceneState.Count];
 
@@ -92,8 +116,20 @@ namespace Menu
         // handle anything that needs to happen before loading
         private void UpdateScenePreload()
         {
-            sceneLoadTask = SceneManager.LoadSceneAsync(nextSceneName);
-            sceneLoadTask.allowSceneActivation = false;
+
+            foreach (var scene in scenesToLoad)
+            {
+                if (scene.unload)
+                {
+                    scene.task=SceneManager.UnloadSceneAsync(scene.name);
+                }
+                else
+                {
+                    scene.task = SceneManager.LoadSceneAsync(scene.name,
+                        scene.additive ? LoadSceneMode.Additive : LoadSceneMode.Single);
+                    scene.task.allowSceneActivation = false;
+                }
+            }
             sceneState = SceneState.Load;
             LoadingScreen.SetActive(true);
             OnBeforeSceneReady?.Invoke();
@@ -108,9 +144,20 @@ namespace Menu
         {
             if (loadTime >= MinLoadTime)
             {
-                sceneLoadTask.allowSceneActivation = true;
+                foreach (var scene in scenesToLoad.Where(s=>s.task!=null))
+                {
+                    scene.task.allowSceneActivation = true;
+                }
             }
-            if (sceneLoadTask.isDone)
+
+            bool done = true;
+            foreach (var scene in scenesToLoad.Where(s=>s.task!=null))
+            {
+                if (!scene.task.isDone)
+                    done = false;
+            }
+
+            if (done)
             {
                 sceneState = SceneState.Unload;
                 progressBar.fillAmount = 0;
@@ -120,8 +167,14 @@ namespace Menu
             }
             else
             {
+                float sumProgress = 0;
+                foreach (var scene in scenesToLoad.Where(s=>s.task!=null))
+                {
+                    sumProgress+=scene.task.progress;
+                }
 
-                float progress = Mathf.Clamp01( sceneLoadTask.progress / .9f);//loadTime / MinLoadTime);
+                sumProgress /= scenesToLoad.Count(s=>s.task!=null);
+                float progress = Mathf.Clamp01( sumProgress / .9f);//loadTime / MinLoadTime);
                 progressBar.fillAmount = progress;
                 progressText.text = ((int)(progress*100))+"%";
                 loadTime += Time.deltaTime;
@@ -148,8 +201,15 @@ namespace Menu
         // handle anything that needs to happen immediately after loading
         private void UpdateScenePostload()
         {
-          
-            currentSceneName = nextSceneName;
+            for (int i=scenesToLoad.Count-1; i >=0; i--)
+            {
+                if (scenesToLoad[i].task != null)
+                {
+                    scenesToLoad.Remove(scenesToLoad[i]);
+                }
+            }
+
+            scenesToLoad.Clear();
             sceneState = SceneState.Ready;
         }
 
@@ -161,14 +221,14 @@ namespace Menu
             // but may be used later DON'T do this here
             GC.Collect();
             sceneState = SceneState.Run;
+            OnSceneCompletelyFinished?.Invoke();
            
         }
 
         // wait for scene change
         private void UpdateSceneRun()
         {
-            
-            if (currentSceneName != nextSceneName) sceneState = SceneState.Reset;
+            if ( scenesToLoad.Count!=0) sceneState = SceneState.Reset;
             
         }
 
@@ -221,5 +281,9 @@ namespace Menu
         }
 
         private delegate void UpdateDelegate();
+
+  
+        
+  
     }
 }

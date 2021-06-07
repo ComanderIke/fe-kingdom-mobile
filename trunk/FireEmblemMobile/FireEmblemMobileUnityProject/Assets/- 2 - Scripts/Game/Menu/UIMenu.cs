@@ -8,8 +8,12 @@ public abstract class UIMenu: MonoBehaviour
         canvas.enabled = true;
     }
 
-    public void BackClicked()
+    public void Hide()
     {
         canvas.enabled = false;
+    }
+    public void BackClicked()
+    {
+        Hide();
     }
 }

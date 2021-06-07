@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using Game.GameActors.Players;
+using Game.GameResources;
 using Game.Manager;
 using Game.Systems;
 using Game.WorldMapStuff.Manager;
@@ -10,12 +12,14 @@ using Menu;
 using SerializedData;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Game.GUI
 {
     public class MainMenuController : MonoBehaviour
     {
+        public static MainMenuController Instance;
         [SerializeField] private TMP_InputField saveNameField = default;
         [SerializeField] private GameObject saveDialog = default;
         [SerializeField] private GameObject loadDialog = default;
@@ -28,15 +32,39 @@ namespace Game.GUI
         public GameObject SaveButton;
         [SerializeField] private UIMenu optionsMenu;
         [SerializeField] private UIMenu campaignMenu;
+        [SerializeField] private Canvas mainMenuCanvas;
 
-
-        private void Start()
+        private void Awake()
         {
-            ContinueButton.SetActive(GameManager.Instance.SessionManager.WorldMapLoaded);
-            SaveButton.SetActive(GameManager.Instance.SessionManager.WorldMapLoaded);
-            LoadButton.SetActive(GetLoadFiles()!=0);
+ 
+
+            if (Instance == null)
+            {
+                Instance = this;
+                ContinueButton.SetActive(GameManager.Instance.SessionManager.WorldMapLoaded);
+                SaveButton.SetActive(GameManager.Instance.SessionManager.WorldMapLoaded);
+                LoadButton.SetActive(GetLoadFiles()!=0);
+            }
+            else
+            {
+                Destroy(gameObject);
+                return;
+            }
+           
         }
 
+        public void ShowMainMenu()
+        {
+            mainMenuCanvas.enabled=true;
+            optionsMenu.Hide();
+            campaignMenu.Hide();
+            
+        }
+
+        public void HideMenu()
+        {
+            mainMenuCanvas.enabled = false;
+        }
         public void NewGameClicked()
         {
             campaignMenu.Show();
@@ -47,14 +75,34 @@ namespace Game.GUI
             saveDialog.gameObject.SetActive(true);
             LeanTween.scale(saveDialog, Vector3.one, 0.3f).setEase(LeanTweenType.easeOutBack);
         }
-        public void ContineClicked()
+        public void ContinueClicked()
         {
-            SceneController.SwitchScene(Scenes.WorldMap);
+            
+            LoadScene(Scenes.Campaign1);
             //LoadGame(lastestSaveFile);
+        }
+
+       
+        public void LoadScene(Scenes scene)
+        {
+            HideMenu();
+            SceneController.LoadSceneAsync(Scenes.Campaign1, true);
+            
+            if (!SceneController.IsLoaded(Scenes.WM_Gameplay))
+            {
+                Debug.Log("Also Load Gameplay");
+                SceneController.OnSceneCompletelyFinished += LoadGameplayScene;
+            }
+        }
+
+        private void LoadGameplayScene()
+        {
+            Debug.Log("LOADING GAMEPLAY");
+            SceneController.OnSceneCompletelyFinished -= LoadGameplayScene;
+            SceneController.LoadSceneAsync(Scenes.WM_Gameplay,true);
         }
         public void OptionsClicked()
         {
-            Debug.Log("TODO Open OptionsMenu");
             optionsMenu.Show();
         }
 
@@ -67,10 +115,17 @@ namespace Game.GUI
         public void LoadGame(string name)
         {
             SaveData.currentSaveData= SaveSystem.LoadGame(name);
-            
 
-         
-            SceneController.SwitchScene(Scenes.WorldMap);
+            CampaignConfig first = null;
+            foreach (var c in GameData.Instance.campaigns)
+            {
+                if (c.campaignId == SaveData.currentSaveData.campaignData.campaignId)
+                {
+                    first = c;
+                    break;
+                }
+            }
+            LoadScene(first.scene);
 
             LeanTween.scale(loadDialog, Vector3.zero, 0.3f).setEase(LeanTweenType.easeInBack)
                 .setOnComplete(HideLoadDialog);
@@ -122,5 +177,7 @@ namespace Game.GUI
         {
             Application.Quit();
         }
+
+        
     }
 }

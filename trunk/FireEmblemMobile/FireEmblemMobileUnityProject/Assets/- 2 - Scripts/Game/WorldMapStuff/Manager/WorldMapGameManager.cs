@@ -24,7 +24,7 @@ namespace Game.WorldMapStuff.Manager
     {
         // Start is called before the first frame update
         public static WorldMapGameManager Instance;
-        private bool init;
+        private static bool init;
         private List<IEngineSystem> Systems { get; set; }
         public FactionManager FactionManager { get; set; }
         public World World { get; set; }
@@ -178,6 +178,7 @@ namespace Game.WorldMapStuff.Manager
         }
         private void InjectDependencies()
         {
+
             GetSystem<TurnSystem>().factionManager = FactionManager;
             GetSystem<TurnSystem>().gameStateManager = GameStateManager;
             GetSystem<WM_PartyActionSystem>().partyInstantiator = FindObjectOfType<PartyInstantiator>();
@@ -201,7 +202,7 @@ namespace Game.WorldMapStuff.Manager
                 init = true;
             }
            
-            GameStateManager.Update();
+            Instance.GameStateManager.Update();
         }
         public T GetSystem<T>()
         {
@@ -210,9 +211,6 @@ namespace Game.WorldMapStuff.Manager
             return default;
         }
 
-        public void CleanUp()
-        {
-            GameStateManager.CleanUp();
-        }
+       
     }
 }

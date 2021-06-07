@@ -37,9 +37,6 @@ namespace Game.Manager
         {
             stateMachine.Update();
         }
-        public void CleanUp()
-        {
-            stateMachine.CleanUp();
-        }
+      
     }
 }

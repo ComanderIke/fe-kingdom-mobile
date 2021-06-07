@@ -31,7 +31,7 @@ namespace Game.WorldMapStuff.GameStates
                 {
                     if (time >= DELAY)
                     {
-                        WorldMapSceneController.Instance.LoadMainMenu();
+                        WorldMapSceneController.Instance.LoadOnlyMainMenu();
                     }
                         
                 }

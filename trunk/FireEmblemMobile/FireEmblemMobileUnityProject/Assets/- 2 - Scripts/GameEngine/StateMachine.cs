@@ -47,10 +47,5 @@ namespace GameEngine
             }
         }
 
-        public void CleanUp()
-        {
-            // currentState.Exit();
-            // currentState = null;
-        }
     }
 }

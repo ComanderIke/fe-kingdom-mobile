@@ -4,6 +4,7 @@ using Game.WorldMapStuff.Manager;
 using Game.WorldMapStuff.Model;
 using Menu;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Game.WorldMapStuff.Controller
 {
@@ -11,7 +12,7 @@ namespace Game.WorldMapStuff.Controller
     {
         // Start is called before the first frame update
         public static WorldMapSceneController Instance;
-        public GameObject DisableObject;
+       // public GameObject DisableObject;
         void Awake()
         {
             DontDestroyOnLoad(this);
@@ -28,40 +29,47 @@ namespace Game.WorldMapStuff.Controller
             }
         }
 
-        private void Cleanup()
-        {
-            WorldMapGameManager.Instance.CleanUp();
-        }
+      
         public void LoadInside(Party playerParty)
         {
-            SceneController.OnBeforeSceneReady += Hide;
+            // SceneController.OnBeforeSceneReady += Hide;
             BattleTransferData.Instance.UnitsGoingIntoBattle = playerParty.members;
-            Cleanup();
-            SceneController.SwitchScene(Scenes.InsideLocation);
+            SceneController.UnloadScene(Scenes.WM_Gameplay).completed+= (AsyncOperation) =>
+            {
+                Debug.Log("Unloading Gameplay Complete");
+                SceneController.UnloadScene(Scenes.Campaign1).completed += (AsyncOperation) =>
+                {
+                    Debug.Log("Unloading Campaign1 Complete");
+                    SceneController.LoadSceneAsync(Scenes.InsideLocation,true);
+                };
+            };
+            
+           
+            
         }
         public void LoadBattleLevel(Party playerParty, Party enemyParty)
         {
             BattleTransferData.Instance.UnitsGoingIntoBattle = playerParty.members;
             BattleTransferData.Instance.EnemyUnits = enemyParty.members;
-            SceneController.OnBeforeSceneReady += Hide;
-            Cleanup();
-            SceneController.SwitchScene(Scenes.Level2);
+            // SceneController.OnBeforeSceneReady += Hide;
+
+            SceneController.LoadSceneAsync(Scenes.Level2, true);
         }
 
         public void LoadWorldMap()
         {
-            SceneController.OnSceneReady+=Show;
-            SceneController.SwitchScene(Scenes.WorldMap);
+            // SceneController.OnSceneReady+=Show;
+            SceneController.LoadSceneAsync(Scenes.Campaign1,true);
         }
 
         private bool lastBattleVictory = false;
         public void FinishedBattle(bool victory)
         {
             GridGameManager.Instance.Deactivate();
-            SceneController.OnSceneReady+=Show;
+            // SceneController.OnSceneReady+=Show;
             lastBattleVictory = victory;
             SceneController.OnBeforeSceneReady += InvokeBattleFinished;
-            SceneController.SwitchScene(Scenes.WorldMap);
+            SceneController.LoadSceneAsync(Scenes.Campaign1, true);
        
         }
 
@@ -70,39 +78,42 @@ namespace Game.WorldMapStuff.Controller
             SceneController.OnBeforeSceneReady -= InvokeBattleFinished;
             OnBattleFinished?.Invoke(lastBattleVictory);
         }
-        private void Hide()
-        {
-            WorldMapGameManager.Instance.Deactivate();
-            SceneController.OnBeforeSceneReady -= Hide;
-            DisableObject.SetActive(false);
-        
-        }
+        // private void Hide()
+        // {
+        //     WorldMapGameManager.Instance.Deactivate();
+        //     SceneController.OnBeforeSceneReady -= Hide;
+        //    // DisableObject.SetActive(false);
+        //
+        // }
     
-        private void Show()
-        {
-            SceneController.OnSceneReady-=Show;
-            WorldMapGameManager.Instance.Activate();
-            DisableObject.SetActive(true);
-      
-        }
+        // private void Show()
+        // {
+        //     SceneController.OnSceneReady-=Show;
+        //     WorldMapGameManager.Instance.Activate();
+        //    // DisableObject.SetActive(true);
+        //
+        // }
 
         public event Action<bool> OnBattleFinished;
 
-        public void LoadMainMenu(bool async = false)
+        public void LoadOnlyMainMenu()
         {
-            if (async)
-            {
-                SceneController.OnSceneReady += Hide;
-                DisableObject.SetActive(false);
-                SceneController.SwitchScene(Scenes.MainMenu);
-                
-            }
-            else
-            {
-                Cleanup();
-                SceneController.SwitchScene(Scenes.MainMenu);
-                Destroy(this.gameObject);
-            }
+            SceneController.LoadSceneAsync(Scenes.MainMenu, false);
+        }
+
+        public void LoadWorldMapFromInside()
+        {
+            SceneController.UnloadScene(Scenes.InsideLocation);
+            SceneController.LoadSceneAsync(Scenes.Campaign1, true);
+            SceneController.OnSceneCompletelyFinished += LoadGameplayScene;
+            
+            
+        }
+
+        private void LoadGameplayScene()
+        {
+            SceneController.OnSceneCompletelyFinished -= LoadGameplayScene;
+            SceneController.LoadSceneAsync(Scenes.WM_Gameplay, true);
         }
     }
 }
