@@ -60,6 +60,9 @@ namespace Game.GUI
         public void HideMenu()
         {
             mainMenuCanvas.enabled = false;
+            optionsMenu.Hide();
+            campaignMenu.Hide();
+            
         }
      
         

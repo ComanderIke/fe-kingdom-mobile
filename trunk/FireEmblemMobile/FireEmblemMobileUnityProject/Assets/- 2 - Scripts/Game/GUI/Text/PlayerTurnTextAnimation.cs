@@ -24,6 +24,7 @@ namespace Game.GUI.Text
         }
         public void Show(FactionId playerId, Action OnFinished)
         {
+            Debug.Log("Show PLayer Text");
             canvas.enabled = true;
 
            // text.material = textMaterials[playerId];
@@ -34,7 +35,7 @@ namespace Game.GUI.Text
             RectTransform textRect = text.GetComponent<RectTransform>();
             float posX = 0;
             float posY = 0;
-
+            
             textRect.anchoredPosition = new Vector3(posX - ((Screen.width/2) + (textRect.sizeDelta.x / 2)), posY);
             BackGround.transform.localScale = new Vector3(1, 0, 1);
 
@@ -44,7 +45,7 @@ namespace Game.GUI.Text
                         () =>
                             LeanTween.moveLocalX(text.gameObject, posX + (Screen.width / 2) + (textRect.sizeDelta.x / 2), TEXT_FADE_OUT_DURATION).setEaseInQuad().setOnComplete(
                                 () => LeanTween.scaleY(BackGround.gameObject, 0, FADE_OUT_DURATION).setEaseInQuad().setOnComplete(
-                                        () => { OnFinished?.Invoke();Hide(); }
+                                        () => { Debug.Log("Finish Show PLayer Text");OnFinished?.Invoke();Hide(); }
                                       )
                             )
                     )

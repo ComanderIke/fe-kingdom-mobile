@@ -24,7 +24,7 @@ namespace Game.WorldMapStuff.Manager
     {
         // Start is called before the first frame update
         public static WorldMapGameManager Instance;
-        private static bool init;
+        private bool init;
         private List<IEngineSystem> Systems { get; set; }
         public FactionManager FactionManager { get; set; }
         public World World { get; set; }
@@ -33,12 +33,16 @@ namespace Game.WorldMapStuff.Manager
 
         private void Awake()
         {
-            if (Instance != null)//Reentering Scene
-                return;
+            // if (Instance != null)//Reentering Scene
+            //     return;
             Instance = this;
             World =  FindObjectOfType<World>();
-           
-            
+            if (SaveData.currentSaveData != null)//TODO loading a second time when loading game from main Menu
+            {
+                Player.Instance.LoadData(SaveData.currentSaveData.playerData);
+                Campaign.Instance.LoadData(SaveData.currentSaveData.campaignData);
+            }
+
             if(!Player.Instance.dataLoaded)
                 InitializePlayerData();
             if(!Campaign.Instance.dataLoaded)
@@ -80,6 +84,11 @@ namespace Game.WorldMapStuff.Manager
             
             };
 
+        }
+
+        private void OnDestroy()
+        {
+            Deactivate();
         }
 
         public void Deactivate()

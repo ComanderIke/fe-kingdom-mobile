@@ -19,7 +19,6 @@ namespace Game.States
         }
         public override void Enter()
         {
-
             phaseRenderer.Show(factionManager.ActiveFaction.Id, Finished);
         }
 
