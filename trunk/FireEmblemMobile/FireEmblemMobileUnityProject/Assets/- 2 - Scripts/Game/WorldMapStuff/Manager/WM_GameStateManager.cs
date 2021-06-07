@@ -34,7 +34,7 @@ namespace Game.Manager
             WM_WinState = new Wm_WinState();
             stateMachine = new StateMachine<NextStateTrigger>(PhaseTransitionState);
         }
-        public void Init()
+        public override void Init()
         {
             InitGameStateTransitions();
             PlayerPhaseState.Init();

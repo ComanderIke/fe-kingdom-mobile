@@ -11,7 +11,7 @@ public class LocationController : MonoBehaviour
 {
     // Start is called before the first frame update
     public  IWorldMapLocationInputReceiver inputReceiver { get; set; }
-    public LocationRenderer renderer;
+    public new LocationRenderer renderer;
 
     public WorldMapPosition worldMapPosition;
     private WM_Actor actor;

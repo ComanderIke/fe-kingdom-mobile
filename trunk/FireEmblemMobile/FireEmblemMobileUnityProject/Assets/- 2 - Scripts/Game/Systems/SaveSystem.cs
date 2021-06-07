@@ -41,7 +41,7 @@ namespace SerializedData
             }
             catch (Exception e)
             {
-                Debug.LogError("Failed to write to File: {path} with exception: {e}");
+                Debug.LogError("Failed to write to File: {path} with exception: "+e.Message);
             }
 
             return false;
@@ -56,7 +56,7 @@ namespace SerializedData
             }
             catch (Exception e)
             {
-                Debug.LogError("Failed to read from File: {path} with exception: {e}");
+                Debug.LogError("Failed to read from File: {path} with exception: "+e.Message);
                 result = "";
             }
 

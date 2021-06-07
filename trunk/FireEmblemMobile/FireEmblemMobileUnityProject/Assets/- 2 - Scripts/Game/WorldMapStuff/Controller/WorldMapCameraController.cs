@@ -23,7 +23,7 @@ public class WorldMapCameraController : MonoBehaviour
         cameraSystem.AddMixin<ClampCameraMixin>().Construct(width, height);
         cameraSystem.AddMixin<DragCameraMixin>().Construct(new WorldPosDragPerformer(1f, cameraSystem.camera),
             new ScreenPointToRayProvider(cameraSystem.camera), new HitChecker(),new MouseCameraInputProvider());
-        Debug.Log("Init WM_Camera");
+       
         initialized = true;
     }
 

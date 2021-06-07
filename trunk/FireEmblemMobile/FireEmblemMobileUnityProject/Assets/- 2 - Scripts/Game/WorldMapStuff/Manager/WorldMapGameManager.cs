@@ -35,7 +35,6 @@ namespace Game.WorldMapStuff.Manager
         {
             if (Instance != null)//Reentering Scene
                 return;
-            Debug.Log("AWAKE IN WM_GM");
             Instance = this;
             World =  FindObjectOfType<World>();
             if (SaveData.currentSaveData != null)
@@ -163,8 +162,7 @@ namespace Game.WorldMapStuff.Manager
         }
         private void Initialize()
         {
-            Debug.Log("INIT WM");
-           
+
             InjectDependencies();
             foreach (var system in Systems)
             {

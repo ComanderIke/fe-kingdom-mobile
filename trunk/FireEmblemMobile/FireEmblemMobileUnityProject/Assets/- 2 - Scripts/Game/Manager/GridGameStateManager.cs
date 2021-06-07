@@ -36,7 +36,7 @@ namespace Game.Manager
             UnitPlacementState = new UnitPlacementState();
             stateMachine = new StateMachine<NextStateTrigger>(ConditionScreenState);
         }
-        public void Init()
+        public override void Init()
         {
             InitGameStateTransitions();
             PlayerPhaseState.Init();

@@ -33,7 +33,7 @@ namespace Game.GameActors.Units.OnGameObject
         private bool doubleClick;
         private float timerForDoubleClick;
         private const float DOUBLE_CLICK_TIME = 0.4f;
-        private bool unitSelectedBeforeClicking = false;
+        //private bool unitSelectedBeforeClicking = false;
         
         
         private void OnMouseEnter()

@@ -10,7 +10,7 @@ namespace Game.WorldMapStuff.UI
     public class CampaignConfig:ScriptableObject
     {
         public CampaignVictoryDefeatCondition[] victoryDefeatConditions;
-        public string name;
+        public new string name;
         public int campaignId;
 
         public Sprite sprite;

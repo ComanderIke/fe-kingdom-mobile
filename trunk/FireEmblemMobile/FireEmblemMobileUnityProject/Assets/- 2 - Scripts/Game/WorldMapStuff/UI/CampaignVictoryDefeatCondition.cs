@@ -40,7 +40,7 @@ namespace Game.WorldMapStuff.UI
                             }
                         }
 
-                        return false;break;
+                        return false;
                     case CampaignConditionType.KillBoss: break;
                 }
             }

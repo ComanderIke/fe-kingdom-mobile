@@ -7,6 +7,7 @@ namespace Game.WorldMapStuff.Manager
     public class InsideLocationManager : MonoBehaviour
     {
         // Start is called before the first frame update
+        public GameObject DeactivateOnLoad;
         void Start()
         {
         
@@ -20,6 +21,7 @@ namespace Game.WorldMapStuff.Manager
 
         public void BackClicked()
         {
+            DeactivateOnLoad.SetActive(false);
             WorldMapSceneController.Instance.LoadWorldMap();
         }
     }

@@ -15,7 +15,7 @@ namespace Game.GUI
         public GameObject glow;
         int currentExp;
         int addedExp;
-        float textspeed = 3;
+        // float textspeed = 3;
         public float AnimateInDuration=0.25f;
         public float AnimateStayDuration = 0.45f;
         public float AnimateOutDuration = 0.2f;

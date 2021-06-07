@@ -19,7 +19,7 @@ namespace Game.Mechanics
 
         public static event Action OnEndTurn;
 
-        public static event Action OnStartTurn;
+        // public static event Action OnStartTurn;
 
         #endregion
 
@@ -56,7 +56,7 @@ namespace Game.Mechanics
 
         public void Deactivate()
         {
-            OnStartTurn = null;
+            //OnStartTurn = null;
             OnTriggerEndTurn = null;
            // Debug.Log("Deactivate TurnSystem!");
         }
@@ -65,7 +65,7 @@ namespace Game.Mechanics
         {
            // Debug.Log("Activate TurnSystem!");
             OnTriggerEndTurn = null;
-            OnStartTurn = null;
+            //OnStartTurn = null;
             OnTriggerEndTurn += EndPhase;
         }
 

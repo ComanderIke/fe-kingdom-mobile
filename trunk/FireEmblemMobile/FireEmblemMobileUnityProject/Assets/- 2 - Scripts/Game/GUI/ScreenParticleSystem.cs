@@ -7,7 +7,7 @@ namespace Game.GUI
     {
         [SerializeField] private GameObject onTouchDownEffect = default;
         [SerializeField] private GameObject onTouchEffect = default;
-        [SerializeField] private Camera psCamera = default;
+       // [SerializeField] private Camera psCamera = default;
         [SerializeField] private Transform parent = default;
 
         private RectTransform screenParticles;

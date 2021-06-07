@@ -16,7 +16,7 @@ namespace Game.Manager
 
             stateMachine = new StateMachine<NextStateTrigger>(null);
         }
-        public void Init()
+        public virtual void Init()
         {
           
             stateMachine.Init();
@@ -24,7 +24,7 @@ namespace Game.Manager
         }
         public void Feed(NextStateTrigger trigger)
         {
-            Debug.Log("Feed State: "+trigger);
+            //Debug.Log("Feed State: "+trigger);
             stateMachine.Feed(trigger);
         }
 

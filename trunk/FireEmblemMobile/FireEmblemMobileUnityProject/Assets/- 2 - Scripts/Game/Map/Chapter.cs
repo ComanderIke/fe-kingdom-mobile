@@ -6,6 +6,6 @@ namespace Game.Grid
     public class Chapter : ScriptableObject
     {
         public VictoryDefeatCondition[] victoryDefeatConditions;
-        public string name;
+        public new string name;
     }
 }

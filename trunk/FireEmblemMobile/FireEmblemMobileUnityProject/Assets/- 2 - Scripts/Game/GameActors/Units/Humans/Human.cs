@@ -28,7 +28,7 @@ namespace Game.GameActors.Units.Humans
             };
         }
 
-        public new void OnEnable()
+        public void OnEnable()
         {
             if (Inventory == null)
                 Inventory = Instantiate(CreateInstance<Inventory>());

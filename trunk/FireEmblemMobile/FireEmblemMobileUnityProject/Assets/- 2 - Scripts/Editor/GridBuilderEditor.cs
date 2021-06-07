@@ -11,8 +11,7 @@ namespace Editor
     {
         
         private GridBuilder mytarget;
-        private int width = 6;
-        private int height = 6;
+       
         private void OnEnable()
         {
             mytarget = (GridBuilder)target;

@@ -19,38 +19,38 @@ namespace Game.GUI
 
         [Header("Left")]
         [SerializeField] private GameObject left = default;
-        [SerializeField] private TextMeshProUGUI atkValue = default;
-        [SerializeField] private TextMeshProUGUI spdValue = default;
-        [SerializeField] private TextMeshProUGUI defLabel = default;
-        [SerializeField] private TextMeshProUGUI defValue = default;
-        [SerializeField] private TextMeshProUGUI sklValue = default;
+        // [SerializeField] private TextMeshProUGUI atkValue = default;
+        // [SerializeField] private TextMeshProUGUI spdValue = default;
+        // [SerializeField] private TextMeshProUGUI defLabel = default;
+        // [SerializeField] private TextMeshProUGUI defValue = default;
+        // [SerializeField] private TextMeshProUGUI sklValue = default;
         [SerializeField] private Image faceSpriteLeft = default;
         [SerializeField] private TextMeshProUGUI dmgValue = default;
         [SerializeField] private TextMeshProUGUI attackCount = default;
         [SerializeField] private GameObject attackCountX = default;
         [SerializeField] private AttackPreviewStatBar hpBar = default;
-        [SerializeField] private AttackPreviewStatBar spBar = default;
+        // [SerializeField] private AttackPreviewStatBar spBar = default;
         [SerializeField] private ISPBarRenderer spBars;
         [Header("Right")]
         [SerializeField] private GameObject right = default;
-        [SerializeField] private TextMeshProUGUI atkValueRight = default;
-        [SerializeField] private TextMeshProUGUI spdValueRight = default;
-        [SerializeField] private TextMeshProUGUI defLabelRight = default;
-        [SerializeField] private TextMeshProUGUI defValueRight = default;
-        [SerializeField] private TextMeshProUGUI sklValueRight = default;
+        // [SerializeField] private TextMeshProUGUI atkValueRight = default;
+        // [SerializeField] private TextMeshProUGUI spdValueRight = default;
+        // [SerializeField] private TextMeshProUGUI defLabelRight = default;
+        // [SerializeField] private TextMeshProUGUI defValueRight = default;
+        // [SerializeField] private TextMeshProUGUI sklValueRight = default;
         [SerializeField] private Image faceSpriteRight = default;
         [SerializeField] private TextMeshProUGUI dmgValueRight = default;
         [SerializeField] private TextMeshProUGUI attackCountRight = default;
         [SerializeField] private GameObject attackCountRightX = default;
         [SerializeField] private AttackPreviewStatBar hpBarRight = default;
-        [SerializeField] private AttackPreviewStatBar spBarRight = default;
+        // [SerializeField] private AttackPreviewStatBar spBarRight = default;
         [SerializeField] private ISPBarRenderer spBarsRight;
         RawImageUVOffsetAnimation[] uvAnimations;
         UILoopPingPongFade[] fadeAnimations;
         ScaleAnimation[] scaleAnimations;
         private RectTransform rectTransform;
         private Camera Camera;
-        private bool visible = true;
+        //private bool visible = true;
         
         [SerializeField] 
         private Sprite attackerSprite;
@@ -110,7 +110,7 @@ namespace Game.GUI
         }
         public void Show(float yPos)
         {
-            visible = true;
+
             canvas.enabled = true;
             foreach (var animation in uvAnimations)
             {

@@ -11,7 +11,7 @@ namespace Game.GUI
     {
         public  ExpBarController expRenderer;
         [SerializeField] private Canvas characterScreen = default;
-        [SerializeField] private Image topUiEnemy = default;
+        // [SerializeField] private Image topUiEnemy = default;
         [SerializeField] private TextMeshProUGUI characterName = default;
         [SerializeField] private TextMeshProUGUI level = default;
         [SerializeField] private ExpBarController expBar = default;
@@ -29,10 +29,10 @@ namespace Game.GUI
         [SerializeField] private Image characterSprite = default;
         [SerializeField] private Image classSprite = default;
         [SerializeField] private Image[] motivationSprites = default;
-        [SerializeField] private TextMeshProUGUI atk = default;
-        [SerializeField] private Image equippedWeaponSprite = default;
-        [SerializeField] private Image[] weaponProficiencyGradients = default;
-        [SerializeField] private TextMeshProUGUI[] weaponProficiencyLevels = default;
+        // [SerializeField] private TextMeshProUGUI atk = default;
+        // [SerializeField] private Image equippedWeaponSprite = default;
+        // [SerializeField] private Image[] weaponProficiencyGradients = default;
+        // [SerializeField] private TextMeshProUGUI[] weaponProficiencyLevels = default;
         [SerializeField] private Image[] skillSprites = default;
         [SerializeField] private Image[] inventorySprites = default;
 

@@ -7,14 +7,14 @@ namespace Game.GUI.Text
 {
     public class BattleTextAnimation : MonoBehaviour
     {
-        public static event Action OnFinished;
+        // public static event Action OnFinished;
         public static event Action OnStarted;
         public TextMeshProUGUI text;
         public Image BackGround;
         private const float FADE_IN_DURATION =  0.25f;
-        private const float FADE_OUT_DURATION = 0.25f;
+        // private const float FADE_OUT_DURATION = 0.25f;
         private const float TEXT_FADE_IN_DURATION = 0.55f;
-        private const float TEXT_FADE_OUT_DURATION = 0.55f;
+        // private const float TEXT_FADE_OUT_DURATION = 0.55f;
 
         private void OnEnable()
         {

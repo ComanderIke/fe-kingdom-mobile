@@ -27,7 +27,7 @@ namespace Game.GUI
         private ISPBarRenderer spBars;
 
         [SerializeField] private ExpBarController expBar = default;
-        [SerializeField] private TextMeshProUGUI expLabel = default;
+        // [SerializeField] private TextMeshProUGUI expLabel = default;
         public Unit unit;
     
         

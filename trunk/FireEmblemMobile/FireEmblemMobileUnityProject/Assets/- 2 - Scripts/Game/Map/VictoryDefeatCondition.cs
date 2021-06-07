@@ -25,7 +25,7 @@ namespace Game.Grid
                             }
                         }
 
-                        return false;break;
+                        return false;
                     case ConditionType.KillBoss: break;
                     case ConditionType.Seize: break;
                 }
@@ -44,7 +44,7 @@ namespace Game.Grid
                             }
                         }
 
-                        return false;break;
+                        return false;
                     case ConditionType.KillBoss: break;
                     case ConditionType.Seize: break;
                 }
