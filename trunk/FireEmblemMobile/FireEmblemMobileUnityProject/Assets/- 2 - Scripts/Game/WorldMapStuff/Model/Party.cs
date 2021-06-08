@@ -50,6 +50,7 @@ namespace Game.WorldMapStuff.Model
             }
 
             newParty.Faction = Faction;
+            //newParty.location.worldMapPosition.SetActor(newParty);
             return newParty;
         }
 

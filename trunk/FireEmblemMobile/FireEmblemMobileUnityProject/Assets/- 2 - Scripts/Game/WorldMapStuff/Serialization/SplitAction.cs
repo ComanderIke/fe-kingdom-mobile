@@ -30,10 +30,12 @@ namespace Game.WorldMapStuff.Systems
 
         public override void Save(SaveData current)
         {
-            Debug.Log("Saving MoveAction");
+   
             if (party.Faction.IsPlayerControlled)
             {
                 current.playerData.factionData.Parties.FirstOrDefault(p => p.name == party.name).SaveData(party);
+                Debug.Log(party.location.name+" "+party.location.worldMapPosition.name);
+                Debug.Log(splitParty.location.name+" "+splitParty.location.worldMapPosition.name);
                 current.playerData.factionData.Parties.Add(new PartyData(splitParty));
             }
         }

@@ -86,9 +86,13 @@ namespace Game.WorldMapStuff.Systems
                     if (locActor != party)
                         otherParty = (Party)locActor;
                 }
-                var action = new JoinAction((Party)party, otherParty);
-                action.PerformAction();
-                action.Save(SaveData.currentSaveData);
+
+                if (otherParty != null)
+                {
+                    var action = new JoinAction((Party) party, otherParty);
+                    action.PerformAction();
+                    action.Save(SaveData.currentSaveData);
+                }
 
             }
         }

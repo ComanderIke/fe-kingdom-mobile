@@ -34,6 +34,11 @@ namespace Game.GameActors.Players
             party.name = name;
             party.members = new List<Unit>();
             party.location = WorldMapGameManager.Instance.World.Locations.FirstOrDefault(l=> l.UniqueId==locationId);
+            Debug.Log(party.name);
+            Debug.Log("loc. "+party.location+" "+locationId);
+
+            // Debug.Log(party.members[0].name);
+            // Debug.Log("loading Party: "+party.members[0].name+" "+party.location.worldMapPosition.name);
             party.TurnStateManager = turnStateManager;
             foreach (var data in humanData)
             {
@@ -55,6 +60,10 @@ namespace Game.GameActors.Players
             name = party.name;
             humanData = new List<HumanData>();
             monsterData = new List<MonsterData>();
+            // Debug.Log("Saving Party: " +party.name);
+            // Debug.Log(party.members.Count);
+            // Debug.Log(party.members[0].name);
+            // Debug.Log(party.location.name);
             foreach (var member in party.members)
             {
                 if (member is Human human)

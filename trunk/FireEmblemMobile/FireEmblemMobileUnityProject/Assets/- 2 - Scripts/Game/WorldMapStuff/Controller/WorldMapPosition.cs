@@ -33,6 +33,13 @@ namespace Game.WorldMapStuff.Controller
             UpdateEnterLocationController();
         }
 
+        private void Awake()
+        {
+            foreach (var loc in locationControllers)
+                loc.Init();
+
+        }
+
         public void SetInputReceiver(IWorldMapLocationInputReceiver inputReceiver)
         {
             foreach (var loc in locationControllers)

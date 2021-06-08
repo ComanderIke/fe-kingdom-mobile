@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using Game.WorldMapStuff.Interfaces;
 using Game.WorldMapStuff.Manager;
 using Game.WorldMapStuff.Model;
@@ -12,6 +14,7 @@ namespace Game.WorldMapStuff.UI
 
         public TextMeshProUGUI currentPartyText;
 
+        [HideInInspector]
         public IPartyScreenUI CharacterScreen;
         public Image sprite;
         public IPartyActionRenderer partyActionRenderer;
@@ -19,6 +22,11 @@ namespace Game.WorldMapStuff.UI
 
         private WM_Actor current;
         // Start is called before the first frame update
+
+        private void Start()
+        {
+            CharacterScreen = FindObjectsOfType<MonoBehaviour>().OfType<IPartyScreenUI>().First();
+        }
 
         public override void Show(WM_Actor actor)
         {
@@ -42,6 +50,7 @@ namespace Game.WorldMapStuff.UI
         public void JoinSplitClicked()
         {
             Debug.Log("JoinSplit clicked!");
+            
             partyActionRenderer.Show((Party)current);
         }
 
