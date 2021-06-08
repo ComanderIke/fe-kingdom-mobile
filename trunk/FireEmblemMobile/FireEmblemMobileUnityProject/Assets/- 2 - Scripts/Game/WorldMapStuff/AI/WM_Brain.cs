@@ -16,7 +16,7 @@ namespace Game.AI
         private Faction player;
         // private GoalManager goalManager;
         // private DecisionMaker decisionMaker;
-        private WM_UnitActionSystem unitActionSystem;
+       // private WM_UnitActionSystem unitActionSystem;
 
         public WM_Brain(Faction player)
         {

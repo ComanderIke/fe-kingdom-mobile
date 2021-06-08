@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Linq;
+using Game.Systems;
 using Game.WorldMapStuff.Controller;
 using Game.WorldMapStuff.Interfaces;
 using Game.WorldMapStuff.Manager;
 using Game.WorldMapStuff.Model;
+using Game.WorldMapStuff.Serialization;
 using GameEngine;
 using UnityEngine;
 
@@ -47,33 +48,20 @@ namespace Game.WorldMapStuff.Systems
         private void AttackFinished(bool victory)
         {
             var selected = selectionSystem.SelectedActor;
-            if (victory)
-            {
-                Debug.Log("Enemy Party Defeated");
-                currentAttackTarget.Defeated();
-                var location = currentAttackTarget.location;
-                MoveParty(selected, location);
-                Wait(selected);
-            }
-            else
-            {
-                if (selected is Party pty)
-                {
-                    pty.Defeated();
-                    Debug.Log("Own Party Defeated");
-                }
-            }
+            var action = new AttackFinishedAction((Party)selected, currentAttackTarget,selectionSystem, victory);
+            action.PerformAction();
+            action.Save(SaveData.currentSaveData);
+           
 
         }
 
         public void MoveParty(WM_Actor party, LocationController location)
         {  
             Debug.Log("Move Party");
-            party.TurnStateManager.HasMoved = true;
-            party.location.Actor = null;
-            party.location.Reset();
-            party.location = location;
-            location.Actor = party;
+            var action = new MoveAction((Party)party, location);
+                action.PerformAction();
+                action.Save(SaveData.currentSaveData);
+            
 
 
         }
@@ -81,9 +69,10 @@ namespace Game.WorldMapStuff.Systems
         public void Wait(WM_Actor party)
         {
             Debug.Log("Wait Party");
-            selectionSystem.DeselectActor();
 
-            party.TurnStateManager.IsWaiting = true;
+            var action = new WaitAction((Party)party, selectionSystem);
+            action.PerformAction();
+            action.Save(SaveData.currentSaveData);
         }
 
         private void JoinParty()
@@ -97,8 +86,10 @@ namespace Game.WorldMapStuff.Systems
                     if (locActor != party)
                         otherParty = (Party)locActor;
                 }
-                
-                party.Join(otherParty);
+                var action = new JoinAction((Party)party, otherParty);
+                action.PerformAction();
+                action.Save(SaveData.currentSaveData);
+
             }
         }
 
@@ -107,9 +98,10 @@ namespace Game.WorldMapStuff.Systems
             var actor = selectionSystem.SelectedActor;
             if (actor is Party party)
             {
-                var splitParty=party.Split();
-                partyInstantiator.InstantiateParty(splitParty, party.location.worldMapPosition);
-                splitParty.GameTransformManager.SetInputReceiver(party.GameTransformManager.GetInputReceiver());
+                var action = new SplitAction(party, partyInstantiator);
+                action.PerformAction();
+                action.Save(SaveData.currentSaveData);
+                
             }
         }
      

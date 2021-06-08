@@ -9,6 +9,7 @@ using Game.GUI;
 using Game.GUI.Text;
 using Game.Manager;
 using Game.Mechanics;
+using Game.Menu;
 using Game.Systems;
 using Game.WorldMapStuff.Controller;
 using Game.WorldMapStuff.Model;
@@ -47,6 +48,7 @@ namespace Game.WorldMapStuff.Manager
                 InitializePlayerData();
             if(!Campaign.Instance.dataLoaded)
                 InitializeCampaignData();
+         
             FactionManager = new FactionManager();
             FactionManager.AddFaction(Player.Instance.faction);
             FactionManager.AddFaction(Campaign.Instance.EnemyFaction);
@@ -57,6 +59,10 @@ namespace Game.WorldMapStuff.Manager
             Application.targetFrameRate = 60;
         }
 
+        private void CreateSaveData()
+        {
+            SaveData.currentSaveData = new SaveData(Player.Instance, Campaign.Instance);
+        }
         private void InitializePlayerData()
         {
             Player.Instance.faction = new WM_Faction(FactionId.PLAYER, "Player", true);
@@ -146,6 +152,7 @@ namespace Game.WorldMapStuff.Manager
 
             startingParty.location = startSpawn.location;
             ((WM_Faction)FactionManager.FactionFromId(startingParty.Faction.Id)).AddParty(startingParty);
+            CreateSaveData();
         }
 
 

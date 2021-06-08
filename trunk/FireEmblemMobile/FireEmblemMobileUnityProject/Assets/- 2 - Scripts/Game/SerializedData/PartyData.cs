@@ -3,6 +3,7 @@ using System.Linq;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
 using Game.GameActors.Units.Monsters;
+using Game.Systems;
 using Game.WorldMapStuff.Manager;
 using Game.WorldMapStuff.Model;
 using UnityEngine;
@@ -19,29 +20,13 @@ namespace Game.GameActors.Players
         [SerializeField]
         public List<MonsterData> monsterData;
 
-        [SerializeField] private TurnStateManager turnStateManager;
+        [SerializeField] public TurnStateManager turnStateManager;
 
         [SerializeField] public string locationId;
         public PartyData(Party party)
         {
-            name = party.name;
-            humanData = new List<HumanData>();
-            monsterData = new List<MonsterData>();
-            foreach (var member in party.members)
-            {
-                if (member is Human human)
-                {
-                    humanData.Add(new HumanData(human));
-                }
-
-                if (member is Monster monster)
-                {
-                    monsterData.Add(new MonsterData(monster));
-                }
-            }
-
-            turnStateManager = party.TurnStateManager;
-            locationId = party.location.UniqueId;
+            SaveData(party);
+            
         }
 
         public void Load(Party party)
@@ -63,6 +48,28 @@ namespace Game.GameActors.Players
                 data.Load(unit);
                 party.members.Add(unit);
             }
+        }
+
+        public void SaveData(Party party)
+        {
+            name = party.name;
+            humanData = new List<HumanData>();
+            monsterData = new List<MonsterData>();
+            foreach (var member in party.members)
+            {
+                if (member is Human human)
+                {
+                    humanData.Add(new HumanData(human));
+                }
+
+                if (member is Monster monster)
+                {
+                    monsterData.Add(new MonsterData(monster));
+                }
+            }
+
+            turnStateManager = party.TurnStateManager;
+            locationId = party.location.UniqueId;
         }
     }
 }

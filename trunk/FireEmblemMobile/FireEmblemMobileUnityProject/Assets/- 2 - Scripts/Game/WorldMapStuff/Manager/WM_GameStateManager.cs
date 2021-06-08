@@ -16,7 +16,7 @@ namespace Game.Manager
 
         public WM_PlayerPhaseState PlayerPhaseState{ get; set; }
         public WM_EnemyPhaseState EnemyPhaseState{ get; set; }
-        public WM_BattleState BattleState{ get; set; }
+
         public PhaseTransitionState PhaseTransitionState { get; set; }
         public Wm_WinState WM_WinState { get; set; }
         public WM_GameOverState WM_GameOverState { get; set; }
