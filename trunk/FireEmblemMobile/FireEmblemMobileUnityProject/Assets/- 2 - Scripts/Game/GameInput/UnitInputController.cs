@@ -1,13 +1,8 @@
-﻿using System;
-using Game.GameInput;
-using Game.Manager;
-using GameCamera;
+﻿using Game.GameActors.Units;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Experimental.Rendering.Universal;
-using UnityEngine.Serialization;
 
-namespace Game.GameActors.Units.OnGameObject
+namespace Game.GameInput
 {
     public class UnitInputController : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
     {

@@ -9,7 +9,7 @@ namespace Game.States
     {
         private const float DELAY = 2.0f;
         private float time = 0;
-        public IWinRenderer renderer;
+        public IBattleSuccessRenderer renderer;
         public override void Enter()
         {
             Debug.Log("Player Won");

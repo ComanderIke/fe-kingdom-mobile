@@ -55,6 +55,7 @@ namespace Game.GUI
             UpdateContent();
 
         }
+        
 
         public override void Hide()
         {

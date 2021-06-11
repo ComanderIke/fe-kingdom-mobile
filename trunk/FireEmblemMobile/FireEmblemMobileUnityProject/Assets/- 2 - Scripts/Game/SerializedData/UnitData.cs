@@ -21,7 +21,10 @@ namespace Game.GameActors.Players
         [SerializeField]
         public TurnStateManager TurnStateManager;
         [SerializeField]
-        public string visualsID;
+        public string spriteID;
+        [SerializeField]
+        public string vfxID;
+        
         public UnitData(Unit unit)
         {
             this.name = unit.name;
@@ -30,7 +33,8 @@ namespace Game.GameActors.Players
             this.moveTypeId = unit.MoveType.moveTypeId;
             this.growthsData = unit.Growths.GetSaveData();
             this.statsData = unit.Stats.GetSaveData();
-            visualsID = unit.visuals.CharacterSpriteSet.name;
+            spriteID = unit.visuals.CharacterSpriteSet.name;
+            vfxID = unit.visuals.UnitEffectVisual.name;
         }
 
         public virtual void Load(Unit unit)
@@ -43,7 +47,8 @@ namespace Game.GameActors.Players
             unit.ExperienceManager = ExperienceManager;
             unit.TurnStateManager = TurnStateManager;
             unit.visuals = new UnitVisual();
-            unit.visuals.CharacterSpriteSet = GameAssets.Instance.visuals.LoadCharacterSpriteSet(visualsID);
+            unit.visuals.CharacterSpriteSet = GameAssets.Instance.visuals.LoadCharacterSpriteSet(spriteID);
+            unit.visuals.UnitEffectVisual = GameAssets.Instance.visuals.LoadUnitEffectVisual(vfxID);
             unit.MoveType = GameData.Instance.UnitData.GetMoveType(moveTypeId);
            
         }

@@ -18,11 +18,14 @@ namespace Game.WorldMapStuff.Serialization
 
         public override void PerformAction()
         {
+            Debug.Log("Perform Movement Action from: "+party.location.UniqueId + " to " + location.UniqueId);
             party.TurnStateManager.HasMoved = true;
             party.location.Actor = null;
             party.location.Reset();
+         
             party.location = location;
             location.Actor = party;
+           
         }
 
         public override void Save(SaveData current)

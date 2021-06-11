@@ -1,4 +1,5 @@
-﻿using Game.GUI;
+﻿using Game.GameInput;
+using Game.GUI;
 using Game.Manager;
 using Game.Map;
 using UnityEngine;
@@ -22,11 +23,14 @@ namespace Game.GameActors.Units.OnGameObject
             
             var unitController = unitGameObject.GetComponentInChildren<UnitInputController>();
             unitController.unit = unit;
+            Debug.Log("Set Unit Controller: " + unit.name + " " + unitController);
             var unitRenderer = unitGameObject.GetComponentInChildren<UnitRenderer>();
             unitRenderer.unit = unit;
+            Debug.Log("Set Unit Renderer: " + unit.name + " " + unitRenderer);
             unitRenderer.Init();
             var unitAnimator = unitGameObject.GetComponentInChildren<UnitAnimator>();
             unitAnimator.unit = unit;
+            Debug.Log("Set Unit Animator: " + unit.name + " " + unitAnimator);
             Debug.Log("Set Unit GameObject: " + unit.name + " " + unitGameObject);
             unit.GameTransformManager.GameObject = unitGameObject;
             GridGameManager.Instance.GetSystem<GridSystem>().SetUnitPosition(unit, x, y);

@@ -1,4 +1,5 @@
 ﻿using Game.GUI;
+using Game.Manager;
 using Game.WorldMapStuff.Controller;
 using GameEngine;
 using GameEngine.GameStates;
@@ -11,7 +12,7 @@ namespace Game.Mechanics
     {
         private const float DELAY = 2.0f;
         private float time;
-        public IGameOverRenderer renderer;
+        public IBattleLostRenderer renderer;
         public override void Enter()
         {
             Debug.Log("Battle Lost");

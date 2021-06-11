@@ -14,6 +14,7 @@ namespace Game.WorldMapStuff.Model
         [SerializeField] public List<Unit> members;
         public static Action<Party> PartyDied;
         public WM_ActorRenderer WmActorRenderer { get; set; }
+        public static int MaxSize = 4;
 
         public Party():base()
         {

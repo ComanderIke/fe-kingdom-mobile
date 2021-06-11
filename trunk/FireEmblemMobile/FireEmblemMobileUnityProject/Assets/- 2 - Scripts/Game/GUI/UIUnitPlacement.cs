@@ -5,11 +5,14 @@ using System.Linq;
 using Game.GameActors.Units;
 using Game.GameActors.Units.OnGameObject;
 using Game.GameInput;
+using Game.Grid;
 using Game.GUI;
 using Game.Manager;
+using Game.WorldMapStuff.Controller;
 using GameCamera;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 [ExecuteInEditMode]
 public class UIUnitPlacement : IUnitPlacementUI
@@ -28,6 +31,11 @@ public class UIUnitPlacement : IUnitPlacementUI
 
     private bool dragInitiated;
     private bool dragStarted;
+    [SerializeField] private GameObject PrepUI;
+    [SerializeField] private Button ShowPrepUIButton;
+
+    [SerializeField] private IUnitSelectionUI unitSelectionUI;
+    [SerializeField] private UIObjectiveController conditionUI;
     // Update is called once per frame
  
 
@@ -40,18 +48,35 @@ public class UIUnitPlacement : IUnitPlacementUI
     private void OnEnable()
     {
         RaycastManager = new RaycastManager();
-        UpdateValues();
+        unitSelectionUI.unitSelectionChanged += InvokeSelectionChanged;
+        //  UpdateValues();
     }
 
-    private void UpdateValues()
+    private void OnDisable()
     {
-        if(units!=null)
-            foreach (Unit u in units)
-            {
-                var go = Instantiate(unitPrefab, layoutGroup, false);
-                go.GetComponent<UIUnitDragObject>().UnitPlacement = this;
-            }
+        unitSelectionUI.unitSelectionChanged -= InvokeSelectionChanged;
     }
+
+    private void InvokeSelectionChanged(List<Unit> units)
+    {
+        unitSelectionChanged?.Invoke(units);
+    }
+
+    // private void UpdateValues()
+    // {
+    //     for (int i=layoutGroup.childCount-1; i>=0; i--){
+    //         DestroyImmediate(layoutGroup.transform.GetChild(i).gameObject);
+    //     }
+    //
+    //     if(units!=null)
+    //         foreach (Unit u in units)
+    //         {
+    //            
+    //             var go = Instantiate(unitPrefab, layoutGroup, false);
+    //             go.GetComponent<UIUnitDragObject>().UnitPlacement = this;
+    //             go.GetComponent<UIUnitDragObject>().SetUnitSprite(u.visuals.CharacterSpriteSet.MapSprite);
+    //         }
+    // }
 
     public void StartClicked()
     {
@@ -59,10 +84,11 @@ public class UIUnitPlacement : IUnitPlacementUI
         Hide();
     }
 
-    public override void Show(List<Unit> units)
+    public override void Show(List<Unit> units, Chapter chapter)
     {
         this.units = units;
-        UpdateValues();
+        this.chapter = chapter;
+        //UpdateValues();
         GetComponent<Canvas>().enabled = true;
         
     }
@@ -70,6 +96,44 @@ public class UIUnitPlacement : IUnitPlacementUI
     public override void Hide()
     {
         GetComponent<Canvas>().enabled = false;
+    }
+
+    private void HideGrid()
+    {
+        PrepUI.SetActive(false);
+        ShowPrepUIButton.gameObject.SetActive(true);
+    }
+    public void ShowGrid()
+    {
+        PrepUI.SetActive(true);
+        ShowPrepUIButton.gameObject.SetActive(false);
+    }
+    public void MapButtonCLicked()
+    {
+        HideGrid();
+    }
+    public void ConditionButtonClicked()
+    {
+        conditionUI.Show(chapter);
+        Hide();
+    }
+    public void Show()
+    {
+        GetComponent<Canvas>().enabled = true;
+
+    }
+    public void ExitButtonClicked()
+    {
+        GameSceneController.Instance.LoadWorldMapFromBattle();
+    }
+    public void UnitButtonClicked()
+    {
+        unitSelectionUI.Show(units);
+        Hide();
+    }
+    public void PlaceholderButtonCLicked()
+    {
+        Debug.Log("Placeholder Button Clicked!");
     }
     // public override void OnDrag(UIUnitDragObject uiUnitDragObject, PointerEventData eventData)
     // {

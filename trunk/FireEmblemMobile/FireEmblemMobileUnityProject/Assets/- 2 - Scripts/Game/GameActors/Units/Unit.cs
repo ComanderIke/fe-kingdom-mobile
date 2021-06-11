@@ -51,7 +51,7 @@ namespace Game.GameActors.Units
 
         [SerializeField] public UnitVisual visuals;
 
-        [SerializeField] public List<IUnitEffectVisual> unitEffectVisuals;
+   
         
         public GameTransformManager GameTransformManager { get; set; }
 
@@ -93,17 +93,15 @@ namespace Game.GameActors.Units
                 if (spBars <= 0)
                 {
                     spBars = 0;
-                    foreach (var unitEffectVisual in unitEffectVisuals)
-                    {
-                        unitEffectVisual.ShowNoStamina(this);
-                    }
+                   
+                        visuals.UnitEffectVisual.ShowNoStamina(this);
+                    
                 }
                 else
                 {
-                    foreach (var unitEffectVisual in unitEffectVisuals)
-                    {
-                        unitEffectVisual.HideNoStamina();
-                    }
+                    
+                    visuals.UnitEffectVisual.HideNoStamina();
+                    
                 }
                 SpBarsValueChanged?.Invoke();
             }
@@ -144,20 +142,14 @@ namespace Game.GameActors.Units
             AIComponent = new AIComponent();
             stats = stats == null ? CreateInstance<Stats>() : Instantiate(stats);
             growths = growths == null ? CreateInstance<Growths>() : Instantiate(growths);
-            if (unitEffectVisuals != null&&unitEffectVisuals.Count!=0)
+            if (visuals.UnitEffectVisual != null)
             {
-                for(int i = unitEffectVisuals.Count-1; i>=0; i--)
-                {
-                    if (unitEffectVisuals[i] == null)
-                        unitEffectVisuals.Remove(unitEffectVisuals[i] );
-                }
-                var tmp = unitEffectVisuals.Select(unitEffectVisual => Instantiate(unitEffectVisual)).ToList();
-                unitEffectVisuals = tmp;
+                visuals.UnitEffectVisual = Instantiate(visuals.UnitEffectVisual);
             }
 
-            Hp = stats.MaxHp;
-            Sp = stats.MaxSp;
-            SpBars = Sp / SP_PER_BAR;
+            hp = stats.MaxHp;
+            sp = stats.MaxSp;
+            spBars = Sp / SP_PER_BAR;
             ExperienceManager.ExpGained += ExpGained;
         }
 
@@ -181,13 +173,12 @@ namespace Game.GameActors.Units
 
         public void SetAttackTarget(bool selected)
         {
-            foreach (var unitEffectVisual in unitEffectVisuals)
-            {
+        
                 if (selected)
-                    unitEffectVisual.ShowAttackable(this);
+                    visuals.UnitEffectVisual.ShowAttackable(this);
                 else
-                    unitEffectVisual.HideAttackable();
-            }
+                    visuals.UnitEffectVisual.HideAttackable();
+          
         }
 
         public void Die()
@@ -233,7 +224,7 @@ namespace Game.GameActors.Units
             clone.GameTransformManager = new GameTransformManager();
             clone.StatusEffectManager = new StatusEffectManager(clone);
             clone.AIComponent = new AIComponent();
-            clone.unitEffectVisuals = unitEffectVisuals;
+            clone.visuals.UnitEffectVisual = visuals.UnitEffectVisual;
             clone.visuals = visuals;
         
             clone.hp = hp;

@@ -18,7 +18,7 @@ namespace Game.Manager
         public MovementState MovementState { get; set; }
         public PhaseTransitionState PhaseTransitionState { get; set; }
         public UnitPlacementState UnitPlacementState { get; set; }
-        public ConditionsScreenState ConditionScreenState { get; set; }
+        //public ConditionsScreenState ConditionScreenState { get; set; }
         
 
         public GridGameStateManager()
@@ -32,14 +32,15 @@ namespace Game.Manager
             BattleState = new BattleState();
             MovementState = new MovementState();
             PhaseTransitionState = new PhaseTransitionState(GridGameManager.Instance.FactionManager, this);
-            ConditionScreenState = new ConditionsScreenState();
+            //ConditionScreenState = new ConditionsScreenState();
             UnitPlacementState = new UnitPlacementState();
-            stateMachine = new StateMachine<NextStateTrigger>(ConditionScreenState);
+            stateMachine = new StateMachine<NextStateTrigger>(UnitPlacementState);
         }
         public override void Init()
         {
             InitGameStateTransitions();
             PlayerPhaseState.Init();
+            UnitPlacementState.Init();
             base.Init();
 
         }

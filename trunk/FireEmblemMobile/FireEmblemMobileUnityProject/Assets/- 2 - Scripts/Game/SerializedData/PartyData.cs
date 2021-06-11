@@ -44,6 +44,7 @@ namespace Game.GameActors.Players
             {
                 var unit = ScriptableObject.CreateInstance<Human>();
                 data.Load(unit);
+                unit.Initialize();
                 party.members.Add(unit);
 
             }
@@ -51,6 +52,7 @@ namespace Game.GameActors.Players
             {
                 var unit = ScriptableObject.CreateInstance<Monster>();
                 data.Load(unit);
+                unit.Initialize();
                 party.members.Add(unit);
             }
         }

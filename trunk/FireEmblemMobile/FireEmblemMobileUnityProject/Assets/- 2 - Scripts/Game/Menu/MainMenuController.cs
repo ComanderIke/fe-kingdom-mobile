@@ -39,9 +39,7 @@ namespace Game.GUI
             if (Instance == null)
             {
                 Instance = this;
-                ContinueButton.SetActive(GameManager.Instance.SessionManager.WorldMapLoaded);
-                SaveButton.SetActive(GameManager.Instance.SessionManager.WorldMapLoaded);
-                LoadButton.SetActive(GetLoadFiles()!=0);
+                ShowMainMenu();
             }
             else
             {
@@ -52,6 +50,9 @@ namespace Game.GUI
 
         public void ShowMainMenu()
         {
+            ContinueButton.SetActive(SaveData.currentSaveData!=null);
+            SaveButton.SetActive(SaveData.currentSaveData!=null);
+            LoadButton.SetActive(GetLoadFiles()!=0);
             mainMenuCanvas.enabled=true;
             optionsMenu.Hide();
             campaignMenu.Hide();

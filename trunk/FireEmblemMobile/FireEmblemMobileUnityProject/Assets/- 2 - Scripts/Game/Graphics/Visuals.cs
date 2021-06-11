@@ -13,7 +13,8 @@ namespace Game.Graphics
     {
         [SerializeField]
         public List<CharacterSpriteSet> characterSpriteSets;
-
+        [SerializeField]
+        public List<IUnitEffectVisual> unitVisualEffects;
 
         public CharacterSpriteSet LoadCharacterSpriteSet(string id)
         {
@@ -257,5 +258,16 @@ namespace Game.Graphics
         // }
         //
         // 
+        public IUnitEffectVisual LoadUnitEffectVisual(string id)
+        {
+            foreach (var vfx in unitVisualEffects)
+            {
+                if (vfx.name == id)
+                    return vfx;
+                
+            }
+
+            return null;
+        }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Game.GameResources;
+using Game.Graphics;
 using UnityEngine;
 
 namespace Game.GameActors.Units
@@ -11,7 +13,7 @@ namespace Game.GameActors.Units
         
         public CharacterSpriteSet CharacterSpriteSet;
 
-     
+        public IUnitEffectVisual UnitEffectVisual;
 
         
     }

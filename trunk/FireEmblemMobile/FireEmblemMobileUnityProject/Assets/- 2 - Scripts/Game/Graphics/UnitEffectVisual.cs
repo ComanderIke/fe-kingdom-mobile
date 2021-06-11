@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Game.GameActors.Units;
 using Game.GameActors.Units.OnGameObject;
@@ -8,6 +9,7 @@ using UnityEngine.Rendering.Universal;
 namespace Game.Graphics
 {
     [CreateAssetMenu(menuName = "Unit/UnitEffectVisual", fileName = "unitEffectVisual")]
+    [Serializable]
     public class UnitEffectVisual :  IUnitEffectVisual
     {
         private GameObject attackableEnemyEffect;

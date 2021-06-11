@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Game.GameActors.Units;
+using UnityEngine;
 
 namespace Utility
 {
@@ -16,5 +17,6 @@ namespace Utility
             return (int)transform.localPosition.y;
         }
 
+        public Unit Actor { get; set; }
     }
 }

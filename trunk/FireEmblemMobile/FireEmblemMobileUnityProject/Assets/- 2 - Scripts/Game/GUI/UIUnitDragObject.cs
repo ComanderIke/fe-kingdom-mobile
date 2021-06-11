@@ -1,42 +1,77 @@
-using System.Collections;
-using System.Collections.Generic;
-using Game.GUI;
-using GameEngine.Tools;
+using Game.GameActors.Units;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class UIUnitDragObject : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
+namespace Game.GUI
 {
-    
-    public IUnitPlacementUI UnitPlacement { get; set; }
-
-    public RectTransform rectTransform;
-    private CanvasGroup canvasGroup;
-
-    
-    // Start is called before the first frame update
-    void Start()
+    public class UIUnitDragObject : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
     {
-        rectTransform = GetComponent<RectTransform>();
-        canvasGroup = GetComponent<CanvasGroup>();
-    }
     
 
-    public void OnDrag(PointerEventData eventData)
-    {
+        public Image UnitSpriteRenderer;
+        public Sprite normalSprite;
+        public Sprite selectedSprite;
+        public Image BackGroundRenderer;
+        public RectTransform rectTransform;
+        private CanvasGroup canvasGroup;
+
+        public Unit unit;
+        public UnitSelectionUI UnitSelectionUI
+        {
+            get;
+            set;
+        }
+    
+        // Start is called before the first frame update
+        void Start()
+        {
+            rectTransform = GetComponent<RectTransform>();
+            canvasGroup = GetComponent<CanvasGroup>();
+        }
+
+        public void SetUnitSprite(Sprite sprite)
+        {
+            UnitSpriteRenderer.sprite = sprite;
+        }
+
+        public void OnDrag(PointerEventData eventData)
+        {
         
-        //UnitPlacement.OnDrag(this, eventData);
-    }
+            //UnitPlacement.OnDrag(this, eventData);
+        }
 
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        //canvasGroup.blocksRaycasts = false;
-        //UnitPlacement.OnBeginDrag(this, eventData);
-    }
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            //canvasGroup.blocksRaycasts = false;
+            //UnitPlacement.OnBeginDrag(this, eventData);
+        }
 
-    public void OnEndDrag(PointerEventData eventData)
-    {
-       // UnitPlacement.OnEndDrag(this, eventData);
-        //canvasGroup.blocksRaycasts = true;
+        public void OnEndDrag(PointerEventData eventData)
+        {
+            // UnitPlacement.OnEndDrag(this, eventData);
+            //canvasGroup.blocksRaycasts = true;
+        }
+
+        public void Clicked()
+        {
+            UnitSelectionUI.UnitClicked(this);
+        }
+
+        public void SetUnit(Unit unit)
+        {
+            this.unit = unit;
+            SetUnitSprite(unit.visuals.CharacterSpriteSet.MapSprite);
+        }
+
+        public void ShowSelected()
+        {
+            BackGroundRenderer.sprite = selectedSprite;
+        }
+
+        public void HideSelected()
+        {
+            BackGroundRenderer.sprite = normalSprite;
+        }
     }
 }

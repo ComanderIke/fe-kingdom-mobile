@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Game.GameInput;
+using UnityEngine;
 
 namespace Game.GameActors.Units.OnGameObject
 {
@@ -13,7 +14,7 @@ namespace Game.GameActors.Units.OnGameObject
             get
             {
                 if(GameObject!=null)
-                    GameObject.GetComponent<UnitInputController>();
+                    return GameObject.GetComponentInChildren<UnitInputController>();
                 return null;
             }
         }
@@ -23,7 +24,7 @@ namespace Game.GameActors.Units.OnGameObject
             get
             {
                 if(GameObject!=null)
-                    GameObject.GetComponent<UnitAnimator>();
+                    return GameObject.GetComponentInChildren<UnitAnimator>();
                 return null;
             }
         }

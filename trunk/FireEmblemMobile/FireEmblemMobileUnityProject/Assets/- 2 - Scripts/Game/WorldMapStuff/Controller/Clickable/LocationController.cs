@@ -44,8 +44,11 @@ public class LocationController : MonoBehaviour
         }
     }
     public void OnDestroy(){
-        if(Actor!=null)
+        if (Actor != null)
+        {
             Actor.TurnStateManager.onSelected -= OnSelectedActor;
+            actor.TurnStateManager.UnitCanMove -= OnActorMoved;
+        }
     }
     
 
@@ -118,6 +121,8 @@ public class LocationController : MonoBehaviour
     {
         renderer.Reset();
     }
+
+
 
     // public LocationData GetSaveData()
     // {
