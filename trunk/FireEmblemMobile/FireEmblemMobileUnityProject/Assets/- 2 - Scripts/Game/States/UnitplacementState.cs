@@ -97,22 +97,48 @@ namespace Game.States
             }
         }
 
+        private void DeleteSpawnedPlayerUnit(StartPosition startPos)
+        {
+            unitInstantiator.UnPlaceCharacter(startPos.Actor);
+            startPos.Actor = null;
+        }
         private void SpawnPlayerUnits(List<Unit> selectedUnits)
         {
+            Debug.Log("Spawn Player Units: "+selectedUnits.Count);
            
             var playerFaction = factionManager.GetPlayerControlledFaction();
             int unitCnt = 0;
-            for (int i = 0;
-                i < startPositions.Length && unitCnt < selectedUnits.Count();
-                i++)
+            List<Unit> newSpawnUnits = new List<Unit>();
+            List<Unit> alreadySpawnUnits = new List<Unit>();
+            for (int i = 0; i < startPositions.Length; i++)
             {
-                if (!selectedUnits.Contains(startPositions[i].Actor))
+                if (startPositions[i].Actor != null)
                 {
-                    SpawnUnit(playerFaction, selectedUnits[unitCnt], startPositions[i].GetXOnGrid(),
+                    if (!selectedUnits.Contains(startPositions[i].Actor))
+                    {
+                        DeleteSpawnedPlayerUnit(startPositions[i]);
+                    }
+                    else
+                    {
+                        alreadySpawnUnits.Add(startPositions[i].Actor);
+                    }
+                }
+            }
+
+            newSpawnUnits = selectedUnits.Except(alreadySpawnUnits).ToList();
+            Debug.Log("new Spawn Units: "+newSpawnUnits.Count);
+            for (int i = 0; i < startPositions.Length; i++)
+            {
+                if (startPositions[i].Actor == null&& unitCnt < newSpawnUnits.Count)
+                {
+                    SpawnUnit(playerFaction, newSpawnUnits[unitCnt], startPositions[i].GetXOnGrid(),
                         startPositions[i].GetYOnGrid());
-                    startPositions[i].Actor = selectedUnits[unitCnt];
+                    startPositions[i].Actor = newSpawnUnits[unitCnt];
                     unitCnt++;
                 }
+                
+
+                
             }
             SetUpInputForUnits();
         }
@@ -153,15 +179,18 @@ namespace Game.States
             gridSystem = GridGameManager.Instance.GetSystem<GridSystem>();
             UnitPlacementUI.unitSelectionChanged += InstantiateUnits;
             NextState =  GridGameManager.Instance.GameStateManager.PhaseTransitionState;
+            startPositions = GameObject.FindObjectsOfType<StartPosition>();
             InitUnits();
             InitFactions();
             InitCamera();
+            SetUpInputForStartPos();
             SetUnits(factionManager.Factions[0].Units);
             SpawnEnemies();
             UnitPlacementUI.Show(units, chapter);
             UnitPlacementUI.OnFinished += () => { finished = true;};
-            startPositions = GameObject.FindObjectsOfType<StartPosition>();
+        
             UnitPlacementInputSystem = new UnitPlacementInputSystem();
+            UnitPlacementInputSystem.unitDroppedOnStartPos += SwapPosition;
             UnitPlacementInputSystem.unitDroppedOnOtherUnit += SwapUnits;
             SpawnPlayerUnits(units);
             DestorySpawns();
@@ -187,13 +216,25 @@ namespace Game.States
             tile.tileVfx.Hide(tile);
         }
 
+        void SwapPosition(Unit unit, StartPosition startPos)
+        {
+            if (startPos.Actor == null)
+            {
+                startPos.Actor = unit;
+                gridSystem.SetUnitPosition(unit,startPos.GetXOnGrid(), startPos.GetYOnGrid());
+            }
+        }
         void SwapUnits(Unit unit, Unit unit2)
         {
+
+
+            var startPos1= startPositions.FirstOrDefault(s => s.Actor == unit);
+            var startPos2= startPositions.FirstOrDefault(s => s.Actor == unit2);
+            startPos1.Actor = unit2;
+            startPos2.Actor = unit;
+            gridSystem.SwapUnits(unit,unit2);
             
 
-      
-            gridSystem.SwapUnits(unit,unit2);
-   
             //unitInputController.transform.position = new Vector3(currentSelectedUnitController.unit.GridComponent.GridPosition.Xtransform.position);
 
         }
@@ -230,6 +271,7 @@ namespace Game.States
             }
             
         }
+        
         void InitUnits()
         {
             if (BattleTransferData.Instance.UnitsGoingIntoBattle == null || BattleTransferData.Instance.UnitsGoingIntoBattle.Count == 0)
@@ -256,6 +298,14 @@ namespace Game.States
                 };
             }
     
+        }
+
+        private void SetUpInputForStartPos()
+        {
+            foreach (var startPos in startPositions)
+            {
+                startPos.touchInputReceiver = UnitPlacementInputSystem;
+            }
         }
         private void SetUpInputForUnits()
         {

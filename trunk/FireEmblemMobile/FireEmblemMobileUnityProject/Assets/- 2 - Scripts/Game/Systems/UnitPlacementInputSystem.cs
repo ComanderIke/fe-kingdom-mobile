@@ -4,6 +4,7 @@ using Game.GameActors.Units.OnGameObject;
 using Game.GameInput;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Utility;
 
 namespace Game.States
 {
@@ -12,6 +13,8 @@ namespace Game.States
         private Vector3 offset;
         private UnitInputController currentSelectedUnitController;
         public Action<Unit, Unit> unitDroppedOnOtherUnit;
+        public Action<Unit, StartPosition> unitDroppedOnStartPos;
+
         public void OnMouseEnter(UnitInputController unitInputController)
         {
             
@@ -70,7 +73,14 @@ namespace Game.States
             unitInputController.unit.GridComponent.ResetPosition();
             currentSelectedUnitController = null;
         }
-
+        public void OnDrop(StartPosition startPosition, PointerEventData eventData)
+        {
+            if (startPosition.Actor== null&&currentSelectedUnitController!=null && startPosition.Actor!=currentSelectedUnitController.unit)
+            {
+                unitDroppedOnStartPos?.Invoke( currentSelectedUnitController.unit, startPosition);
+                
+            }
+        }
         public void OnDrop(UnitInputController unitInputController, PointerEventData eventData)
         {
             if (unitInputController.unit != null&&currentSelectedUnitController!=null && unitInputController.unit!=currentSelectedUnitController.unit)

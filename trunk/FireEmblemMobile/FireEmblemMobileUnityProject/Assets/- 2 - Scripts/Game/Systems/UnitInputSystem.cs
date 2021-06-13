@@ -6,6 +6,7 @@ using GameCamera;
 using GameEngine;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Utility;
 
 namespace Game.GameInput
 {
@@ -177,6 +178,11 @@ namespace Game.GameInput
             
         }
 
+        public void OnDrop(StartPosition startPosition, PointerEventData eventData)
+        {
+            throw new NotImplementedException();
+        }
+
         public void StartDrag(Transform dragObject)
         {
             StartedDrag?.Invoke();
@@ -232,5 +238,6 @@ namespace Game.GameInput
         void OnBeginDrag(UnitInputController unitInputController, PointerEventData eventData);
         void OnEndDrag(UnitInputController unitInputController, PointerEventData eventData);
         void OnDrop(UnitInputController unitInputController, PointerEventData eventData);
+        void OnDrop(StartPosition startPosition, PointerEventData eventData);
     }
 }

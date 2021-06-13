@@ -23,15 +23,15 @@ namespace Game.GameActors.Units.OnGameObject
             
             var unitController = unitGameObject.GetComponentInChildren<UnitInputController>();
             unitController.unit = unit;
-            Debug.Log("Set Unit Controller: " + unit.name + " " + unitController);
+          //  Debug.Log("Set Unit Controller: " + unit.name + " " + unitController);
             var unitRenderer = unitGameObject.GetComponentInChildren<UnitRenderer>();
             unitRenderer.unit = unit;
-            Debug.Log("Set Unit Renderer: " + unit.name + " " + unitRenderer);
+           // Debug.Log("Set Unit Renderer: " + unit.name + " " + unitRenderer);
             unitRenderer.Init();
             var unitAnimator = unitGameObject.GetComponentInChildren<UnitAnimator>();
             unitAnimator.unit = unit;
-            Debug.Log("Set Unit Animator: " + unit.name + " " + unitAnimator);
-            Debug.Log("Set Unit GameObject: " + unit.name + " " + unitGameObject);
+            //Debug.Log("Set Unit Animator: " + unit.name + " " + unitAnimator);
+           // Debug.Log("Set Unit GameObject: " + unit.name + " " + unitGameObject);
             unit.GameTransformManager.GameObject = unitGameObject;
             GridGameManager.Instance.GetSystem<GridSystem>().SetUnitPosition(unit, x, y);
             
@@ -39,6 +39,13 @@ namespace Game.GameActors.Units.OnGameObject
             //For Performance
             if(unitGameObject.GetComponentInChildren<Canvas>()!=null)
                 unitGameObject.GetComponentInChildren<Canvas>().worldCamera = Camera.main;
+        }
+
+        public void UnPlaceCharacter(Unit unit)
+        {
+            GameObject.Destroy(unit.GameTransformManager.GameObject);
+            GridGameManager.Instance.GetSystem<GridSystem>()
+                .GetTile(unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y).Actor = null;
         }
     }
 }

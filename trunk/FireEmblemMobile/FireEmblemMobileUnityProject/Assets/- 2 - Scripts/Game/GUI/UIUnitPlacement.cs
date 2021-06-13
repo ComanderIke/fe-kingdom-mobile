@@ -33,9 +33,12 @@ public class UIUnitPlacement : IUnitPlacementUI
     private bool dragStarted;
     [SerializeField] private GameObject PrepUI;
     [SerializeField] private Button ShowPrepUIButton;
+    [SerializeField] private Button StartButton;
 
     [SerializeField] private IUnitSelectionUI unitSelectionUI;
     [SerializeField] private UIObjectiveController conditionUI;
+
+    private List<Unit> selectedUnits;
     // Update is called once per frame
  
 
@@ -60,6 +63,8 @@ public class UIUnitPlacement : IUnitPlacementUI
     private void InvokeSelectionChanged(List<Unit> units)
     {
         unitSelectionChanged?.Invoke(units);
+        selectedUnits = units;
+        StartButton.interactable = units.Count!=0;
     }
 
     // private void UpdateValues()
@@ -88,6 +93,8 @@ public class UIUnitPlacement : IUnitPlacementUI
     {
         this.units = units;
         this.chapter = chapter;
+        if (selectedUnits == null)
+            selectedUnits = units;
         //UpdateValues();
         GetComponent<Canvas>().enabled = true;
         
@@ -97,6 +104,8 @@ public class UIUnitPlacement : IUnitPlacementUI
     {
         GetComponent<Canvas>().enabled = false;
     }
+
+
 
     private void HideGrid()
     {
@@ -128,7 +137,7 @@ public class UIUnitPlacement : IUnitPlacementUI
     }
     public void UnitButtonClicked()
     {
-        unitSelectionUI.Show(units);
+        unitSelectionUI.Show(selectedUnits);
         Hide();
     }
     public void PlaceholderButtonCLicked()

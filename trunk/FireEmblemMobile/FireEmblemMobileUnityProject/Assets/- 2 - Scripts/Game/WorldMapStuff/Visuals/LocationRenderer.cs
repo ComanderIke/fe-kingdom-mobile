@@ -45,8 +45,8 @@ namespace Game.WorldMapStuff.Controller
        
         public void Hide()
         {
-            Debug.Log(this);
-            Debug.Log(this.transform.parent.name);
+            // Debug.Log(this);
+            // Debug.Log(this.transform.parent.name);
             spriteRenderer.sprite = normalSprite;
             Walkable.SetActive(false);
            Attackable.SetActive(false);

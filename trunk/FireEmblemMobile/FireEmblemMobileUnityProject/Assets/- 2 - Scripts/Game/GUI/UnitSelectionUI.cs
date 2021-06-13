@@ -31,7 +31,6 @@ public class UnitSelectionUI : IUnitSelectionUI
             allUnitUis[i].ShowSelected();
         }
         unitSelectionChanged?.Invoke(selectedUnitUIs.Select(s=>s.unit).ToList());
-        selectedUnitUIs = new List<UIUnitDragObject>();
         unitText.SetText("Units: "+selectedUnitUIs.Count+"/"+Party.MaxSize);
     }
 

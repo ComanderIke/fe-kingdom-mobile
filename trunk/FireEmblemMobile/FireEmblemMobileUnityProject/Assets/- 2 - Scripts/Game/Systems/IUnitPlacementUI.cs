@@ -15,6 +15,8 @@ namespace Game.GUI
         public Action OnFinished;
         [SerializeField]
         public Chapter chapter;
-        
+
+   
+
     }
 }
