@@ -55,7 +55,7 @@ namespace Game.States
         private void InitCamera()
         {
             cameraSystem.AddMixin<DragCameraMixin>().Construct(new WorldPosDragPerformer(1f, cameraSystem.camera),
-                new ScreenPointToRayProvider(cameraSystem.camera), new HitChecker(),new MouseCameraInputProvider());
+                new ScreenPointToRayProvider(cameraSystem.camera), new HitChecker(TagManager.UnitTag),new MouseCameraInputProvider());
             int height =  GridGameManager.Instance.GetSystem<GridSystem>().GridData.height;
             int width =  GridGameManager.Instance.GetSystem<GridSystem>().GridData.width;
             cameraSystem.AddMixin<ClampCameraMixin>().Construct(width, height);
@@ -183,15 +183,16 @@ namespace Game.States
             InitUnits();
             InitFactions();
             InitCamera();
+            UnitPlacementInputSystem = new UnitPlacementInputSystem();
+            UnitPlacementInputSystem.unitDroppedOnStartPos += SwapPosition;
+            UnitPlacementInputSystem.unitDroppedOnOtherUnit += SwapUnits;
             SetUpInputForStartPos();
             SetUnits(factionManager.Factions[0].Units);
             SpawnEnemies();
             UnitPlacementUI.Show(units, chapter);
             UnitPlacementUI.OnFinished += () => { finished = true;};
         
-            UnitPlacementInputSystem = new UnitPlacementInputSystem();
-            UnitPlacementInputSystem.unitDroppedOnStartPos += SwapPosition;
-            UnitPlacementInputSystem.unitDroppedOnOtherUnit += SwapUnits;
+           
             SpawnPlayerUnits(units);
             DestorySpawns();
             ShowStartPos();
@@ -218,15 +219,24 @@ namespace Game.States
 
         void SwapPosition(Unit unit, StartPosition startPos)
         {
+            if (startPos.Actor == unit)
+            {
+                //TODO RESET POSITION
+            }
             if (startPos.Actor == null)
             {
+
+                startPositions.FirstOrDefault(s => s.Actor == unit).Actor = null;
                 startPos.Actor = unit;
                 gridSystem.SetUnitPosition(unit,startPos.GetXOnGrid(), startPos.GetYOnGrid());
             }
         }
         void SwapUnits(Unit unit, Unit unit2)
         {
-
+            if (unit == unit2)
+            {
+                return;
+            }
 
             var startPos1= startPositions.FirstOrDefault(s => s.Actor == unit);
             var startPos2= startPositions.FirstOrDefault(s => s.Actor == unit2);
@@ -302,8 +312,10 @@ namespace Game.States
 
         private void SetUpInputForStartPos()
         {
+            Debug.Log("SETUP");
             foreach (var startPos in startPositions)
             {
+                Debug.Log("Set Up startPos inputReveiver: " + UnitPlacementInputSystem);
                 startPos.touchInputReceiver = UnitPlacementInputSystem;
             }
         }

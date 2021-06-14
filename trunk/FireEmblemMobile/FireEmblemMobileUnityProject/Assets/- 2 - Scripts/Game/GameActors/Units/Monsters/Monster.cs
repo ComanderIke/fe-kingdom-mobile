@@ -7,6 +7,7 @@ namespace Game.GameActors.Units.Monsters
     [CreateAssetMenu(menuName = "GameData/Monster", fileName = "Monster")]
     public class Monster : Unit
     {
+        
         public MonsterType Type;
         public Weapon Weapon;
     }

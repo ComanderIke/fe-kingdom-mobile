@@ -93,7 +93,7 @@ public class UIUnitPlacement : IUnitPlacementUI
     {
         this.units = units;
         this.chapter = chapter;
-        if (selectedUnits == null)
+        if (selectedUnits == null|| selectedUnits.Count==0)
             selectedUnits = units;
         //UpdateValues();
         GetComponent<Canvas>().enabled = true;
@@ -137,7 +137,7 @@ public class UIUnitPlacement : IUnitPlacementUI
     }
     public void UnitButtonClicked()
     {
-        unitSelectionUI.Show(selectedUnits);
+        unitSelectionUI.Show(units,selectedUnits);
         Hide();
     }
     public void PlaceholderButtonCLicked()

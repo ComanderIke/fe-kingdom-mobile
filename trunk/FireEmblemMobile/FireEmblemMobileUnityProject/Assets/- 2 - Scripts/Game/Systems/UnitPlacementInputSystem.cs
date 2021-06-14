@@ -70,23 +70,36 @@ namespace Game.States
                 }
 
             }
+            Debug.Log("End Drag Reset");
             unitInputController.unit.GridComponent.ResetPosition();
             currentSelectedUnitController = null;
         }
         public void OnDrop(StartPosition startPosition, PointerEventData eventData)
         {
-            if (startPosition.Actor== null&&currentSelectedUnitController!=null && startPosition.Actor!=currentSelectedUnitController.unit)
+          
+            if (startPosition.Actor== null&&currentSelectedUnitController!=null )
             {
+                Debug.Log("Unit dropped on Start Pos Successfully");
                 unitDroppedOnStartPos?.Invoke( currentSelectedUnitController.unit, startPosition);
                 
             }
+            else if (currentSelectedUnitController != null && startPosition.Actor !=null && startPosition.Actor == currentSelectedUnitController.unit)
+            {
+                Debug.Log("REset Position after Drop");
+                currentSelectedUnitController.unit.GridComponent.ResetPosition();
+            
+            }
+            Debug.Log(startPosition.Actor.name+" "+currentSelectedUnitController.unit.name);
         }
         public void OnDrop(UnitInputController unitInputController, PointerEventData eventData)
         {
-            if (unitInputController.unit != null&&currentSelectedUnitController!=null && unitInputController.unit!=currentSelectedUnitController.unit)
+            if (unitInputController.unit != null&&currentSelectedUnitController!=null)
             {
-                unitDroppedOnOtherUnit?.Invoke(unitInputController.unit, currentSelectedUnitController.unit);
-                
+                if (unitInputController.unit != currentSelectedUnitController.unit)
+                {
+                    unitDroppedOnOtherUnit?.Invoke(unitInputController.unit, currentSelectedUnitController.unit);
+                }
+
             }
         }
     }

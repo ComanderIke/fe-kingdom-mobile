@@ -21,7 +21,13 @@ namespace Utility
         public IUnitTouchInputReceiver touchInputReceiver { get; set; }
         public void OnDrop(PointerEventData eventData)
         {
+            
+            Debug.Log("Dropped on START POS");
             touchInputReceiver?.OnDrop(this, eventData);
+            if (touchInputReceiver == null)
+            {
+                Debug.LogError("touchInputReceiver is null");
+            }
         }
         public Unit Actor { get; set; }
     }

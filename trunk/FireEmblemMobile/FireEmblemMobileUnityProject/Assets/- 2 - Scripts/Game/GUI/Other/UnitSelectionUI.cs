@@ -18,7 +18,7 @@ public class UnitSelectionUI : IUnitSelectionUI
     public TextMeshProUGUI unitText;
     [HideInInspector]
     public bool init = false;
-    public override void Show(List<Unit> units)
+    public override void Show(List<Unit> units, List<Unit> selectedUnits)
     {
         this.units = units;
         selectedUnitUIs = new List<UIUnitDragObject>();
@@ -26,9 +26,16 @@ public class UnitSelectionUI : IUnitSelectionUI
         InstantiateUnits();
         for (int i = 0; i < Party.MaxSize && i < allUnitUis.Count; i++)
         {
-            selectedUnitUIs.Add(allUnitUis[i]);
-          
-            allUnitUis[i].ShowSelected();
+            if (selectedUnits.Contains(allUnitUis[i].unit))
+            {
+                selectedUnitUIs.Add(allUnitUis[i]);
+
+                allUnitUis[i].ShowSelected();
+            }
+            else
+            {
+                allUnitUis[i].HideSelected();
+            }
         }
         unitSelectionChanged?.Invoke(selectedUnitUIs.Select(s=>s.unit).ToList());
         unitText.SetText("Units: "+selectedUnitUIs.Count+"/"+Party.MaxSize);
@@ -74,9 +81,16 @@ public class UnitSelectionUI : IUnitSelectionUI
         }
         else
         {
-            selectedUnitUIs.Remove(unitUI);
-            unitSelectionChanged?.Invoke(selectedUnitUIs.Select(s=>s.unit).ToList());
-            unitUI.HideSelected();
+            if (selectedUnitUIs.Count == 1)
+            {
+                Debug.Log("Cant remove last Unit!");
+            }
+            else
+            {
+                selectedUnitUIs.Remove(unitUI);
+                unitSelectionChanged?.Invoke(selectedUnitUIs.Select(s => s.unit).ToList());
+                unitUI.HideSelected();
+            }
         }
         unitText.SetText("Units: "+selectedUnitUIs.Count+"/"+Party.MaxSize);
         
