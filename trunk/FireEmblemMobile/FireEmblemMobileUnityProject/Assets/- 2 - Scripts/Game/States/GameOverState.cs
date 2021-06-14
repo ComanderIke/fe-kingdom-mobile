@@ -32,7 +32,7 @@ namespace Game.Mechanics
                 if (Input.GetMouseButtonDown(0))
                 {
                     if (time >= DELAY)
-                        GameSceneController.Instance.LoadWorldMapFromBattle();
+                        GameSceneController.Instance.LoadWorldMapAfterBattle(false);
                 }
             }
 

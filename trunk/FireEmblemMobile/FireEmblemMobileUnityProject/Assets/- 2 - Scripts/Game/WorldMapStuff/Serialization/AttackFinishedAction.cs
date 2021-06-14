@@ -11,21 +11,21 @@ namespace Game.WorldMapStuff.Serialization
     {
         private Party party;
         private Party enemy;
-        private bool victory;
+        private BattleOutcome battleOutCome;
         private WM_PartySelectionSystem selectionSystem;
         private string partyId;
         private string enemyId;
-        public AttackFinishedAction(Party party, Party enemy,  WM_PartySelectionSystem selectionSystem, bool victory)
+        public AttackFinishedAction(Party party, Party enemy,  WM_PartySelectionSystem selectionSystem, BattleOutcome battleOutCome)
         {
             this.party = party;
             this.enemy = enemy;
             this.selectionSystem = selectionSystem;
-            this.victory = victory;
+            this.battleOutCome = battleOutCome;
         }
 
         public override void PerformAction()
         {
-            if (victory)
+            if (battleOutCome==BattleOutcome.Victory)
             {
                 Debug.Log("Enemy Party Defeated");
                 var location = enemy.location;
@@ -40,11 +40,16 @@ namespace Game.WorldMapStuff.Serialization
                 action.PerformAction();
                 action.Save(SaveData.currentSaveData);
             }
-            else
+            else if(battleOutCome==BattleOutcome.Defeat)
             {
                 partyId = party.name;
                 party.Defeated();
                 Debug.Log("Own Party Defeated");
+            }
+            else
+            {
+                selectionSystem.DeselectActor();
+                Debug.Log("Battle Canceled/Retreated");
             }
         }
 
@@ -53,17 +58,19 @@ namespace Game.WorldMapStuff.Serialization
             Debug.Log("Saving MoveAction");
             if (party.Faction.IsPlayerControlled)
             {
-                if(victory)
+                if(battleOutCome==BattleOutcome.Victory)
                     current.playerData.factionData.Parties.FirstOrDefault(p => p.name == party.name).SaveData(party);
-                else
+                else if(battleOutCome==BattleOutcome.Defeat)
                     current.playerData.factionData.Parties.RemoveAll(p => p.name == partyId);
+                else
+                {
+                    Debug.Log("Save Nothing?");
+                }
             }
             else
             {
-                if(victory)
-                    current.campaignData.enemyFactionData.Parties.RemoveAll(p => p.name == enemyId);
-                else
-                    current.campaignData.enemyFactionData.Parties.FirstOrDefault(p => p.name == enemy.name).SaveData(enemy);
+               Debug.Log("TODO Saving AttackFinishedData when EnemyAI attacked, if that will even be possible");
+               //TODO Saving AttackFinishedData when EnemyAI attacked, if that will even be possible
             }
         }
     }

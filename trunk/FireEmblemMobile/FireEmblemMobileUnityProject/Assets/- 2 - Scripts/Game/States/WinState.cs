@@ -30,7 +30,7 @@ namespace Game.States
                 {
                     if (time >= DELAY)
                     {
-                        GameSceneController.Instance.LoadWorldMapFromBattle();
+                        GameSceneController.Instance.LoadWorldMapAfterBattle(true);
                     }
                 }
             }

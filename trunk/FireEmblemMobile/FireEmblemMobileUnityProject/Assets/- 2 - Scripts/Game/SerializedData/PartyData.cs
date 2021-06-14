@@ -34,8 +34,7 @@ namespace Game.GameActors.Players
             party.name = name;
             party.members = new List<Unit>();
             party.location = WorldMapGameManager.Instance.World.Locations.FirstOrDefault(l=> l.UniqueId==locationId);
-            Debug.Log(party.name);
-            Debug.Log("loc. "+party.location+" "+locationId);
+
 
             // Debug.Log(party.members[0].name);
             // Debug.Log("loading Party: "+party.members[0].name+" "+party.location.worldMapPosition.name);

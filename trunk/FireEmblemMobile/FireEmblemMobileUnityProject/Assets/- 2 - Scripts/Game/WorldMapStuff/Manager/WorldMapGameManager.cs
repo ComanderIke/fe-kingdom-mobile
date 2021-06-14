@@ -53,8 +53,7 @@ namespace Game.WorldMapStuff.Manager
             FactionManager.AddFaction(Player.Instance.faction);
             FactionManager.AddFaction(Campaign.Instance.EnemyFaction);
             AddSystems();
-          
-           
+            
             GameStateManager = new WM_GameStateManager();
             Application.targetFrameRate = 60;
         }
@@ -166,8 +165,7 @@ namespace Game.WorldMapStuff.Manager
                 var faction = (WM_Faction) faction1;
                 foreach (Party actor in faction.Parties)
                 {
-                    Debug.Log(actor.name+" "+actor.members[0].name);
-                    Debug.Log(actor.location.worldMapPosition.name+" "+actor.location.name);
+                  
                     instantiator.InstantiateParty(actor, actor.location.worldMapPosition);
                 }
             }

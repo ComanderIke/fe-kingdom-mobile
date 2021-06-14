@@ -90,7 +90,7 @@ namespace Game.Mechanics
                     }
                 }
 
-                Debug.Log("AITurn");
+               // Debug.Log("AITurn");
                 gameStateManager.Feed(NextStateTrigger.Transition);
                 //gridGameManager.GameStateManager.Feed(NextStateTrigger.StartEnemyPhase);
             }
@@ -105,7 +105,7 @@ namespace Game.Mechanics
                     }
                 }
 
-                Debug.Log("PlayerTurn");
+                //Debug.Log("PlayerTurn");
                 gameStateManager.Feed(NextStateTrigger.Transition);
                 
 

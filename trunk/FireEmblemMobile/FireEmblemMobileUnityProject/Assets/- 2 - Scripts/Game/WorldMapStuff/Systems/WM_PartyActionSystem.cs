@@ -38,17 +38,18 @@ namespace Game.WorldMapStuff.Systems
             Debug.Log(selectionSystem.SelectedActor+" "+selectionSystem.SelectedActor.name);
             if (selected is Party pty)
             {
+               
                 GameSceneController.Instance.LoadBattleLevel(pty, (Party)party);
                 currentAttackTarget = (Party) party;
-                Debug.Log("TODO ATTACK FINISHED");
+               // Debug.Log("TODO ATTACK FINISHED");
                 //GameSceneController.Instance.OnBattleFinished += AttackFinished;
             }
         }
 
-        private void AttackFinished(bool victory)
+        private void AttackFinished()
         {
             var selected = selectionSystem.SelectedActor;
-            var action = new AttackFinishedAction((Party)selected, currentAttackTarget,selectionSystem, victory);
+            var action = new AttackFinishedAction((Party)selected, currentAttackTarget,selectionSystem, SceneTransferData.Instance.BattleOutCome);
             action.PerformAction();
             action.Save(SaveData.currentSaveData);
            
@@ -57,7 +58,7 @@ namespace Game.WorldMapStuff.Systems
 
         public void MoveParty(WM_Actor party, LocationController location)
         {  
-            Debug.Log("Move Party");
+           // Debug.Log("Move Party");
             var action = new MoveAction((Party)party, location);
                 action.PerformAction();
                 action.Save(SaveData.currentSaveData);
@@ -68,7 +69,7 @@ namespace Game.WorldMapStuff.Systems
 
         public void Wait(WM_Actor party)
         {
-            Debug.Log("Wait Party");
+           // Debug.Log("Wait Party");
 
             var action = new WaitAction((Party)party, selectionSystem);
             action.PerformAction();

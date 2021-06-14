@@ -53,7 +53,7 @@ namespace Game.Mechanics
 
         public override void Enter()
         {
-            Debug.Log("Enter GameplayState");
+           // Debug.Log("Enter GameplayState");
             cameraSystem.AddMixin<DragCameraMixin>().Construct(new WorldPosDragPerformer(1f, cameraSystem.camera),
                 new ScreenPointToRayProvider(cameraSystem.camera), new HitChecker(),new MouseCameraInputProvider());
             int height = gridGameManager.GetSystem<GridSystem>().GridData.height;

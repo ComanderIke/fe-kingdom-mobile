@@ -97,8 +97,8 @@ namespace Game.GameInput
         private void CreateNewMovementPath(IGridActor gridActor, int x, int y)
         {
             dragPath.Clear();
-            Debug.Log(gridActor);
-            Debug.Log(pathProvider);
+         //   Debug.Log(gridActor);
+         //   Debug.Log(pathProvider);
             var p = pathProvider.FindPath(gridActor.GridComponent.GridPosition.X,
                 gridActor.GridComponent.GridPosition.Y, x, y, gridActor, false, gridActor.AttackRanges);
             if (p != null)
@@ -125,7 +125,7 @@ namespace Game.GameInput
             //if (dragPath.Count > gridActor.MovementRage || contains || IsLastActiveFieldAdjacent(x,y,gridActor))
             if (dragPath.Count > gridActor.MovementRange || contains||!IsPositionAdjacent(x,y, gridActor))
             {
-                Debug.Log("Create New Path!");
+              //  Debug.Log("Create New Path!");
                 CreateNewMovementPath(gridActor, x , y);
             }
             else

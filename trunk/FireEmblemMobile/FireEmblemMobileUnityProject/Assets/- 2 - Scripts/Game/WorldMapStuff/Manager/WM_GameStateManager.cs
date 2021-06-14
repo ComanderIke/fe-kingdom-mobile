@@ -20,19 +20,21 @@ namespace Game.Manager
         public PhaseTransitionState PhaseTransitionState { get; set; }
         public Wm_WinState WM_WinState { get; set; }
         public WM_GameOverState WM_GameOverState { get; set; }
-        
+        public Wm_PrepState WM_PrepState { get; set; }
 
-        
+
+
 
         public WM_GameStateManager()
         {
             ConditionManager conditionManager =new CampaignConditionManager(Campaign.Instance, WorldMapGameManager.Instance.FactionManager);
+            WM_PrepState = new Wm_PrepState();
             PlayerPhaseState = new WM_PlayerPhaseState(WorldMapGameManager.Instance.GetSystem<TurnSystem>(), conditionManager);
             EnemyPhaseState = new WM_EnemyPhaseState(WorldMapGameManager.Instance.FactionManager, conditionManager);
             PhaseTransitionState = new PhaseTransitionState(WorldMapGameManager.Instance.FactionManager, this);
             WM_GameOverState = new WM_GameOverState();
             WM_WinState = new Wm_WinState();
-            stateMachine = new StateMachine<NextStateTrigger>(PhaseTransitionState);
+            stateMachine = new StateMachine<NextStateTrigger>(WM_PrepState);
         }
         public override void Init()
         {
@@ -43,6 +45,7 @@ namespace Game.Manager
         }
         private void InitGameStateTransitions()
         {
+            WM_PrepState.AddTransition(PhaseTransitionState, NextStateTrigger.FinishedPreparation);
             EnemyPhaseState.AddTransition(PhaseTransitionState, NextStateTrigger.Transition);
             PlayerPhaseState.AddTransition(PhaseTransitionState, NextStateTrigger.Transition);
             //PlayerPhaseState.AddTransition(BattleState, NextStateTrigger.BattleStarted);

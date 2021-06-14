@@ -48,7 +48,7 @@ namespace Game.WorldMapStuff.Systems
         private void SelectCharacter(WM_Actor c)
             {
                 Debug.Log("SELECT CHARACTER "+c);
-                Debug.Log(c.name+" "+c.Faction.Id+" "+c.Faction.IsPlayerControlled+" "+c.Faction.Name);
+               // Debug.Log(c.name+" "+c.Faction.Id+" "+c.Faction.IsPlayerControlled+" "+c.Faction.Name);
                 if (SelectedActor != null)
                 {
                     DeselectActor();
@@ -61,7 +61,7 @@ namespace Game.WorldMapStuff.Systems
 
             private void EnemySelected(WM_Actor c)
             {
-                Debug.Log("enemy selected " + c);
+                //Debug.Log("enemy selected " + c);
                 if (SelectedActor != null)
                 {
                     SelectedActor.TurnStateManager.IsSelected = false;
@@ -70,7 +70,7 @@ namespace Game.WorldMapStuff.Systems
             }
             private void SelectInActiveCharacter(WM_Actor c)
             {
-                Debug.Log("SelectInactiveCharacter");
+               // Debug.Log("SelectInactiveCharacter");
                 OnSelectedInActiveParty?.Invoke(c);
             }
             public void SelectParty(WM_Actor c)

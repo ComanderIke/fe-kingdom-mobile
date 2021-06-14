@@ -133,7 +133,7 @@ public class UIUnitPlacement : IUnitPlacementUI
     }
     public void ExitButtonClicked()
     {
-        GameSceneController.Instance.LoadWorldMapFromBattle();
+        GameSceneController.Instance.LoadWorldMapBeforeBattle();
     }
     public void UnitButtonClicked()
     {

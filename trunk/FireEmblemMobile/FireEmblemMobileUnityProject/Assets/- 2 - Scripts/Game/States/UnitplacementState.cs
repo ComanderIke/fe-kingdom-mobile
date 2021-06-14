@@ -104,7 +104,7 @@ namespace Game.States
         }
         private void SpawnPlayerUnits(List<Unit> selectedUnits)
         {
-            Debug.Log("Spawn Player Units: "+selectedUnits.Count);
+            //Debug.Log("Spawn Player Units: "+selectedUnits.Count);
            
             var playerFaction = factionManager.GetPlayerControlledFaction();
             int unitCnt = 0;
@@ -126,7 +126,7 @@ namespace Game.States
             }
 
             newSpawnUnits = selectedUnits.Except(alreadySpawnUnits).ToList();
-            Debug.Log("new Spawn Units: "+newSpawnUnits.Count);
+          //  Debug.Log("new Spawn Units: "+newSpawnUnits.Count);
             for (int i = 0; i < startPositions.Length; i++)
             {
                 if (startPositions[i].Actor == null&& unitCnt < newSpawnUnits.Count)
@@ -264,16 +264,16 @@ namespace Game.States
             factionManager.Factions[0].ClearUnits();
             factionManager.Factions[1].ClearUnits();
             int cnt = 0;
-            foreach (var unit in BattleTransferData.Instance.UnitsGoingIntoBattle)
+            foreach (var unit in SceneTransferData.Instance.UnitsGoingIntoBattle)
             {
                 cnt++;
                 if(cnt <= 4)
                     factionManager.Factions[0].AddUnit(unit);
             }
         
-            if (BattleTransferData.Instance.EnemyUnits != null)
+            if (SceneTransferData.Instance.EnemyUnits != null)
             {
-                foreach (var unit in BattleTransferData.Instance.EnemyUnits)
+                foreach (var unit in SceneTransferData.Instance.EnemyUnits)
                 {
 
                     factionManager.Factions[1].AddUnit(unit);
@@ -284,7 +284,7 @@ namespace Game.States
         
         void InitUnits()
         {
-            if (BattleTransferData.Instance.UnitsGoingIntoBattle == null || BattleTransferData.Instance.UnitsGoingIntoBattle.Count == 0)
+            if (SceneTransferData.Instance.UnitsGoingIntoBattle == null || SceneTransferData.Instance.UnitsGoingIntoBattle.Count == 0)
             {
                 Debug.Log("Create Demo Characters");
                 var unit1 = GameData.Instance.GetHuman("Leila");
@@ -299,7 +299,7 @@ namespace Game.States
                 unit3.Inventory.AddItem(GameData.Instance.GetWeapon("Iron Bow"));
                 unit1.Inventory.AddItem(GameData.Instance.GetWeapon("Steel Bow"));
                 unit2.Inventory.AddItem(GameData.Instance.GetWeapon("Fire"));
-                BattleTransferData.Instance.UnitsGoingIntoBattle = new List<Unit>
+                SceneTransferData.Instance.UnitsGoingIntoBattle = new List<Unit>
                 {
                     unit1,
                     unit2,
@@ -312,10 +312,10 @@ namespace Game.States
 
         private void SetUpInputForStartPos()
         {
-            Debug.Log("SETUP");
+           //Debug.Log("SETUP");
             foreach (var startPos in startPositions)
             {
-                Debug.Log("Set Up startPos inputReveiver: " + UnitPlacementInputSystem);
+               // Debug.Log("Set Up startPos inputReveiver: " + UnitPlacementInputSystem);
                 startPos.touchInputReceiver = UnitPlacementInputSystem;
             }
         }

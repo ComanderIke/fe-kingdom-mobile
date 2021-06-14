@@ -274,8 +274,8 @@ namespace Game.WorldMapStuff.Controller
        }
        public void HideInteractableConnections()
        {
-           Debug.Log("Hide WMPos: "+name+" "+locationControllers.Length);
-           Debug.Log("Hide WMPos: "+locationControllers.Length);
+           // Debug.Log("Hide WMPos: "+name+" "+locationControllers.Length);
+           // Debug.Log("Hide WMPos: "+locationControllers.Length);
            
            foreach (var loc in locationControllers)
            {

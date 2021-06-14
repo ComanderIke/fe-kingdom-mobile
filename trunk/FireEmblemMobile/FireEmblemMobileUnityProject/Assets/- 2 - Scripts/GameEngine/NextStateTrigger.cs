@@ -13,6 +13,7 @@
 
         StartPlayerPhase,
         Transition,
-        FinishedBattle
+        FinishedBattle,
+        FinishedPreparation
     }
 }

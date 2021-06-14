@@ -33,8 +33,8 @@ namespace Game.GameActors.Players
             this.moveTypeId = unit.MoveType.moveTypeId;
             this.growthsData = unit.Growths.GetSaveData();
             this.statsData = unit.Stats.GetSaveData();
-            spriteID = unit.visuals.CharacterSpriteSet.name;
-            vfxID = unit.visuals.UnitEffectVisual.name;
+            spriteID = unit.visuals.CharacterSpriteSet.ID;
+            vfxID = unit.visuals.UnitEffectVisual.ID;
         }
 
         public virtual void Load(Unit unit)

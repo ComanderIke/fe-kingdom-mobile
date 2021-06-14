@@ -30,7 +30,7 @@ namespace Game.WorldMapStuff.Serialization
 
         public override void Save(SaveData current)
         {
-            Debug.Log("Saving MoveAction");
+            //Debug.Log("Saving MoveAction");
             if (party.Faction.IsPlayerControlled)
             {
                 current.playerData.factionData.Parties.FirstOrDefault(p => p.name == party.name).locationId = location.UniqueId;

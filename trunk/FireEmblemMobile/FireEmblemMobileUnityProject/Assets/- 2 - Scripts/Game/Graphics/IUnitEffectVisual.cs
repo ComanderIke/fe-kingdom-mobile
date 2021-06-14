@@ -1,11 +1,10 @@
 ﻿using System;
 using Game.GameActors.Units;
-using UnityEngine;
 
 namespace Game.Graphics
 {
     [Serializable]
-    public abstract class IUnitEffectVisual : ScriptableObject
+    public abstract class IUnitEffectVisual : SerializeableSO
     {
         
         public abstract void ShowAttackable(IGridActor gridActor);

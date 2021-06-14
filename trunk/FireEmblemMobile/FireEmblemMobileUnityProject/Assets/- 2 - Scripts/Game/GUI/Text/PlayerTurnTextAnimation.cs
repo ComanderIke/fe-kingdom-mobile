@@ -24,7 +24,7 @@ namespace Game.GUI.Text
         }
         public void Show(FactionId playerId, Action OnFinished)
         {
-            Debug.Log("Show PLayer Text");
+           // Debug.Log("Show PLayer Text");
             canvas.enabled = true;
 
            // text.material = textMaterials[playerId];
@@ -45,7 +45,11 @@ namespace Game.GUI.Text
                         () =>
                             LeanTween.moveLocalX(text.gameObject, posX + (Screen.width / 2) + (textRect.sizeDelta.x / 2), TEXT_FADE_OUT_DURATION).setEaseInQuad().setOnComplete(
                                 () => LeanTween.scaleY(BackGround.gameObject, 0, FADE_OUT_DURATION).setEaseInQuad().setOnComplete(
-                                        () => { Debug.Log("Finish Show PLayer Text");OnFinished?.Invoke();Hide(); }
+                                    () =>
+                                    {
+                                        //Debug.Log("Finish Show PLayer Text");
+                                        OnFinished?.Invoke();Hide();
+                                    }
                                       )
                             )
                     )

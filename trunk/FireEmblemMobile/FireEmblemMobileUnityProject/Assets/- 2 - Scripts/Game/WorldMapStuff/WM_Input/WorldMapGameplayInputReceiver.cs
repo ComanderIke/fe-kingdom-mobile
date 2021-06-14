@@ -142,7 +142,7 @@ namespace Game.WorldMapStuff.WM_Input
 
         private void OwnActorClicked(WM_Actor party)
         {
-            Debug.Log("Own Party clicked!");
+            //Debug.Log("Own Party clicked!");
             
             // if (selectionDataProvider.SelectedActor!=null&&party.location == selectionDataProvider.SelectedActor.location)
             // {

@@ -75,7 +75,7 @@ namespace Game.Mechanics
         {
             // HideFightVisuals();
             attacker.TurnStateManager.HasAttacked = true;
-            Debug.Log("EXIT BATTLESTATE");
+           // Debug.Log("EXIT BATTLESTATE");
             
             
             attacker = null;

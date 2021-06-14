@@ -53,7 +53,7 @@ namespace Game.AI
                 }
                 else
                 {
-                    Debug.Log("Ending Turn with WM_AI!");
+                   // Debug.Log("Ending Turn with WM_AI!");
                     TurnSystem.OnTriggerEndTurn();
                 }
             }

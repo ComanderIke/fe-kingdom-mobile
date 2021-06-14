@@ -51,7 +51,7 @@ namespace Game.Mechanics
         public override void Enter()
         {
             NextState = PreviousState;
-            Debug.Log("PreviousState: " +PreviousState);
+          //  Debug.Log("PreviousState: " +PreviousState);
             if (unit.GridComponent.GridPosition.X == x && unit.GridComponent.GridPosition.Y == y) //already on Destination
             {
                 FinishMovement();
@@ -124,7 +124,7 @@ namespace Game.Mechanics
 
         public override void Exit()
         {
-            Debug.Log("Exit MoveState!"+x+" "+y);
+         //   Debug.Log("Exit MoveState!"+x+" "+y);
            
           
             gridGameManager.GetSystem<GridSystem>().SetUnitPosition(unit,x,y);

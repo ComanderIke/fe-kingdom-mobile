@@ -99,7 +99,7 @@ namespace Game.GameInput
 
             // if (EventSystem.current.currentSelectedGameObject==null||EventSystem.current.currentSelectedGameObject.CompareTag(TagManager.UnitTag))
             // {
-                Debug.Log("Clicked Unit: "+unitController.unit.name);
+                //Debug.Log("Clicked Unit: "+unitController.unit.name);
                 if (timerForDoubleClick != 0 &&  Time.time - timerForDoubleClick < DOUBLE_CLICK_TIME)
                 {
                    

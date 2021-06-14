@@ -29,14 +29,14 @@ namespace Game.WorldMapStuff.Model
 
         public override void SetAttackTarget(bool b)
         {
-            Debug.Log("TODO AttackTarget Visuals?");
+ //           Debug.Log("TODO AttackTarget Visuals?");
         }
 
    
 
         public override void ResetPosition()
         {
-            Debug.Log("TODOResetLocation?");
+//            Debug.Log("TODOResetLocation?");
         }
 
         public Party Split()

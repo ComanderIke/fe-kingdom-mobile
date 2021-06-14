@@ -20,7 +20,7 @@ namespace Game.Graphics
         {
             foreach (var spriteSet in characterSpriteSets)
             {
-                if (spriteSet.name == id)
+                if (spriteSet.ID == id)
                     return spriteSet;
                 
             }
@@ -262,7 +262,7 @@ namespace Game.Graphics
         {
             foreach (var vfx in unitVisualEffects)
             {
-                if (vfx.name == id)
+                if (vfx.ID == id)
                     return vfx;
                 
             }
