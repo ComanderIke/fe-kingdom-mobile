@@ -57,6 +57,7 @@ namespace Game.WorldMapStuff
             foreach (var party in GameObject.FindObjectsOfType<WM_ActorController>())
             {
                 party.inputReceiver=inputSystem;
+                
             }
         }
         private void SetUpInputForLocations()

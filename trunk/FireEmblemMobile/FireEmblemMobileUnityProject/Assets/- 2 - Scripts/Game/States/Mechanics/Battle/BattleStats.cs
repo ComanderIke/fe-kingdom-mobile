@@ -168,7 +168,7 @@ namespace Game.Mechanics.Battle
         {
             if (owner is Human human)
             {
-                Debug.Log("TODO ATTACK SPEED CALC");
+                //Debug.Log("TODO ATTACK SPEED CALC");
                 return human.Stats.Spd - human.EquippedWeapon.Weight;
             }
 

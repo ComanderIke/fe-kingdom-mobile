@@ -14,6 +14,7 @@ namespace Game.WorldMapStuff.Model
         
         public List<Unit> EnemyUnits { get; set; }
         public string PartyID { get; set; }
+        public Party Party{ get; set; }
         public string EnemyPartyID { get; set; }
 
 

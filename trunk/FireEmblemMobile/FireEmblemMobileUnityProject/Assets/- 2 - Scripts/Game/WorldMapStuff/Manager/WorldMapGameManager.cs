@@ -41,19 +41,22 @@ namespace Game.WorldMapStuff.Manager
             if (SaveData.currentSaveData != null)//TODO loading a second time when loading game from main Menu
             {
                 Player.Instance.LoadData(SaveData.currentSaveData.playerData);
+                Debug.Log("+++++++++++++++++"+Player.Instance.faction.Parties[0].members[0].name+" EXP:"+Player.Instance.faction.Parties[0].members[0].ExperienceManager.Exp);
                 Campaign.Instance.LoadData(SaveData.currentSaveData.campaignData);
             }
-
-            if(!Player.Instance.dataLoaded)
+            else
+            {
                 InitializePlayerData();
-            if(!Campaign.Instance.dataLoaded)
                 InitializeCampaignData();
-         
+                Debug.Log("IF NOT LOADED!");
+                IfNotLoaded();
+            }
+
             FactionManager = new FactionManager();
             FactionManager.AddFaction(Player.Instance.faction);
             FactionManager.AddFaction(Campaign.Instance.EnemyFaction);
             AddSystems();
-            
+            Debug.Log("================="+Player.Instance.faction.Parties[0].members[0].name+" EXP:"+Player.Instance.faction.Parties[0].members[0].ExperienceManager.Exp);
             GameStateManager = new WM_GameStateManager();
             Application.targetFrameRate = 60;
         }
@@ -134,23 +137,28 @@ namespace Game.WorldMapStuff.Manager
             {
                 var partyInst = Instantiate(spawn.party);
                 partyInst.members = new List<Unit>();
+              //  Debug.Log("Spawn Party: "+spawn.party.name);
                 foreach (Unit u in spawn.party.members)
                 {
                     var instUnit = Instantiate(u);
                     instUnit.Initialize();
+                   // Debug.Log("Unit: "+u.name);
+                   
                     partyInst.members.Add(instUnit);
                     
                 }
 
                 partyInst.location = spawn.location.locationControllers[0];
                
-                ((WM_Faction)FactionManager.FactionFromId(spawn.factionId)).AddParty(partyInst);
+                Campaign.Instance.EnemyFaction.AddParty(partyInst);
                 
             }
           
 
-            startingParty.location = startSpawn.location;
-            ((WM_Faction)FactionManager.FactionFromId(startingParty.Faction.Id)).AddParty(startingParty);
+            startingParty.location = startSpawn.location; 
+            startingParty.members[0].ExperienceManager.AddExp(25);
+            
+            Player.Instance.faction.AddParty(startingParty);
             CreateSaveData();
         }
 
@@ -181,8 +189,9 @@ namespace Game.WorldMapStuff.Manager
                 system.Init();
                 system.Activate();
             }
-            if(!Player.Instance.dataLoaded|| !Campaign.Instance.dataLoaded)
-                IfNotLoaded();
+
+           
+
             DestroySpawns();
             InstantiateUnits();
             

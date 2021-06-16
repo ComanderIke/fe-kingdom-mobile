@@ -16,7 +16,7 @@ namespace Game.GameActors.Players
         }
 
 
-        public Faction faction;
+        public WM_Faction faction;
         public string Name;
         [SerializeField] public List<Item> convoy = default;
         [SerializeField] public int money = default;

@@ -44,8 +44,11 @@ namespace Game.GameActors.Players
             unit.Stats.LoadData(statsData);
             unit.Growths = ScriptableObject.CreateInstance<Growths>();
             unit.Growths.LoadData(growthsData);
-            unit.ExperienceManager = ExperienceManager;
+            unit.ExperienceManager = new ExperienceManager();
+            unit.ExperienceManager.Exp = ExperienceManager.Exp;
+            unit.ExperienceManager.Level = ExperienceManager.Level;
             unit.TurnStateManager = TurnStateManager;
+            
             unit.visuals = new UnitVisual();
             unit.visuals.CharacterSpriteSet = GameAssets.Instance.visuals.LoadCharacterSpriteSet(spriteID);
             unit.visuals.UnitEffectVisual = GameAssets.Instance.visuals.LoadUnitEffectVisual(vfxID);

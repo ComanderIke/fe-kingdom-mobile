@@ -20,7 +20,9 @@ namespace Game.GameActors.Players
         public override void Load(Unit unit)
         {
             base.Load(unit);
+          
             Human human = (Human) unit;
+            Debug.Log("LOAD222222: "+unit.name+" "+unit.ExperienceManager.Exp);
             human.EquippedWeapon = GameData.Instance.Weapons.FirstOrDefault(w=>w.name == weaponId);
         }
     }

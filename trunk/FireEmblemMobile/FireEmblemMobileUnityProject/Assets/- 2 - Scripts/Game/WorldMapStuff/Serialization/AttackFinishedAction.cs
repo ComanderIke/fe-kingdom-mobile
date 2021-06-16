@@ -27,12 +27,31 @@ namespace Game.WorldMapStuff.Serialization
         {
             if (battleOutCome==BattleOutcome.Victory)
             {
-                Debug.Log("Enemy Party Defeated");
+                Debug.Log("VICTORY ATTACK FINISHED ACTION");
                 var location = enemy.location;
                 enemyId = enemy.name;
                 enemy.Defeated();
-                
-                
+                // var units = SceneTransferData.Instance.UnitsGoingIntoBattle;
+                // for (int i=party.members.Count-1; i>=0; i--)
+                // {
+                //     var unit =units.FirstOrDefault(u => u.name==party.members[i].name);
+                //     if (unit != null)
+                //     {
+                //         Debug.Log("Set UNIT: "+unit.name);
+                //         party.members[i] = unit;
+                //     }
+                //     else
+                //     {
+                //         Debug.Log("UNIT NOT FOUND" +party.members[i].name);
+                //         party.members.Remove(party.members[i]);
+                //     }
+                // }
+                party.members = SceneTransferData.Instance.UnitsGoingIntoBattle;
+                foreach (var unit in party.members)
+                {
+                    Debug.Log(unit.name+" "+unit.ExperienceManager.Exp);
+                }
+
                 SerializedAction action = new MoveAction(party, location);
                 action.PerformAction();
                 action.Save(SaveData.currentSaveData);

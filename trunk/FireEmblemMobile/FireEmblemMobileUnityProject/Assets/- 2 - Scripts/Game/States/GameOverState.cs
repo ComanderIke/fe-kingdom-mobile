@@ -1,6 +1,7 @@
 ﻿using Game.GUI;
 using Game.Manager;
 using Game.WorldMapStuff.Controller;
+using Game.WorldMapStuff.Model;
 using GameEngine;
 using GameEngine.GameStates;
 using Menu;
@@ -10,7 +11,7 @@ namespace Game.Mechanics
 {
     public class GameOverState : GameState<NextStateTrigger>
     {
-        private const float DELAY = 2.0f;
+        private const float DELAY =.3f;
         private float time;
         public IBattleLostRenderer renderer;
         public override void Enter()
@@ -32,7 +33,9 @@ namespace Game.Mechanics
                 if (Input.GetMouseButtonDown(0))
                 {
                     if (time >= DELAY)
+                    {
                         GameSceneController.Instance.LoadWorldMapAfterBattle(false);
+                    }
                 }
             }
 

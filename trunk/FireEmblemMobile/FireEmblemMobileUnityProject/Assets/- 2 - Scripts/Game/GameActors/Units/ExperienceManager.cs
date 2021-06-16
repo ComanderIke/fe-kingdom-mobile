@@ -12,40 +12,24 @@ namespace Game.GameActors.Units
         public delegate void LevelupEvent();
         public ExpGainedEvent ExpGained;
         public LevelupEvent LevelUp;
-        public ExperienceManager()
-        {
-            Level = 1;
-            NextLevelExp = MAX_EXP;
-        }
 
-        public int NextLevelExp { get; set; }
+
+
         [SerializeField]
         private int level;
 
         public int Level
         {
-            get
-            {
-                return level;
-            }
-            set
-            {
-                level = value;
-            }
+            get => level;
+            set => level = value;
         }
 
         [SerializeField] private int exp;
 
         public int Exp
         {
-            get
-            {
-                return exp;
-            }
-            set
-            {
-                exp = value;
-            }
+            get => exp;
+            set => exp = value;
         }
 
         public const int MAX_EXP_TO_DRAIN = 100;
@@ -57,8 +41,9 @@ namespace Game.GameActors.Units
             if (exp > MAX_EXP)
                 exp = MAX_EXP;
             ExpGained?.Invoke(Exp, exp);
+            Debug.Log("Add Exp: " + exp);
             Exp += exp;
-           
+            Debug.Log("EXP: " + Exp);
             if (Exp >= MAX_EXP)
             {
                 Exp -= MAX_EXP;

@@ -55,7 +55,13 @@ namespace Game.GameActors.Units
         
         public GameTransformManager GameTransformManager { get; set; }
 
-        public ExperienceManager ExperienceManager { get;  set; }
+        [SerializeField] private ExperienceManager experienceManager;
+
+        public ExperienceManager ExperienceManager
+        {
+            get =>  experienceManager;
+            set => experienceManager = value;
+        }
 
         public BattleComponent BattleComponent { get; set; }
 
@@ -124,6 +130,7 @@ namespace Game.GameActors.Units
         {
             get => stats.MaxSp / SP_PER_BAR;
         }
+        
 
         void OnDestroy()
         {
@@ -132,9 +139,9 @@ namespace Game.GameActors.Units
 
         public void Initialize()
         {
-            ExperienceManager = new ExperienceManager();
+            experienceManager ??= new ExperienceManager();
             ExperienceManager.LevelUp += LevelUp;
-            TurnStateManager = new TurnStateManager(this);
+            TurnStateManager ??= new TurnStateManager(this);
             GridComponent = new GridComponent(this);
             BattleComponent = new BattleComponent(this);
             GameTransformManager = new GameTransformManager();
@@ -151,6 +158,7 @@ namespace Game.GameActors.Units
             sp = stats.MaxSp;
             spBars = Sp / SP_PER_BAR;
             ExperienceManager.ExpGained += ExpGained;
+            
         }
 
         private void ExpGained(int expBefore, int expGained)
@@ -217,7 +225,7 @@ namespace Game.GameActors.Units
         
         protected virtual void HandleCloned(Unit clone)
         {
-            clone.ExperienceManager = new ExperienceManager();
+            clone.experienceManager = new ExperienceManager();
             clone.BattleComponent = new BattleComponent(clone);
             clone.TurnStateManager = new TurnStateManager(clone);
             clone.GridComponent = new GridComponent(clone);
@@ -269,5 +277,6 @@ namespace Game.GameActors.Units
         public static OnUnitDamagedEvent OnUnitDamaged;
         public delegate void LevelupEvent(Unit unit);
         public LevelupEvent OnLevelUp;
+        
     }
 }
