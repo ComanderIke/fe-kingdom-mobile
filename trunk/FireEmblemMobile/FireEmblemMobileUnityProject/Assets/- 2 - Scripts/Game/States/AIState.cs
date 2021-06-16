@@ -54,7 +54,7 @@ namespace Game.AI
                 else
                 {
                     Debug.Log("AI State Finished");
-                    TurnSystem.OnTriggerEndTurn();
+                    GridGameManager.Instance.GetSystem<TurnSystem>().OnTriggerEndTurn();
                 }
             }
            

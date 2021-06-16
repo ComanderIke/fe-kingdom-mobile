@@ -55,13 +55,18 @@ namespace Game.WorldMapStuff.Serialization
 
         public override void Save(SaveData current)
         {
-            Debug.Log("Saving MoveAction");
+            Debug.Log("Saving AttackFinished");
             if (party.Faction.IsPlayerControlled)
             {
-                if(battleOutCome==BattleOutcome.Victory)
+                if (battleOutCome == BattleOutcome.Victory)
+                {
                     current.playerData.factionData.Parties.FirstOrDefault(p => p.name == party.name).SaveData(party);
-                else if(battleOutCome==BattleOutcome.Defeat)
+                    current.campaignData.enemyFactionData.Parties.RemoveAll(p => p.name == enemyId);
+                }
+                else if (battleOutCome == BattleOutcome.Defeat)
+                {
                     current.playerData.factionData.Parties.RemoveAll(p => p.name == partyId);
+                }
                 else
                 {
                     Debug.Log("Save Nothing?");

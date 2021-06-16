@@ -18,7 +18,7 @@ namespace Game.GameActors.Units
         
         public void ResetPosition()
         {
-
+            Debug.Log("GridActor: "+gridActor);
             gridActor.GameTransformManager.SetPosition(GridPosition.X, GridPosition.Y);
             // GameTransform.EnableCollider();
         }

@@ -18,6 +18,8 @@ namespace Game.WorldMapStuff.Model
         [SerializeField][HideInInspector]
         private WM_Faction faction;
 
+        public bool dead;
+
         public WM_Faction Faction
         {
             get
@@ -39,7 +41,8 @@ namespace Game.WorldMapStuff.Model
             location.Actor = null;
             faction.Parties.Remove((Party)this);
             Destroy(GameTransformManager.GameObject);
-            Destroy(this);
+            dead = true;
+            //Destroy(this);
         }
     }
 }

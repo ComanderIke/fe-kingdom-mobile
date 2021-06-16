@@ -15,9 +15,9 @@ namespace Game.Mechanics
         #region Events
 
 
-        public static Action OnTriggerEndTurn;
+        public Action OnTriggerEndTurn;
 
-        public static event Action OnEndTurn;
+        public event Action OnEndTurn;
 
         // public static event Action OnStartTurn;
 

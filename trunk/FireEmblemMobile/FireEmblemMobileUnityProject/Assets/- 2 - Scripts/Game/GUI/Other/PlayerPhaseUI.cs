@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game.Manager;
 using Game.Mechanics;
+using Game.WorldMapStuff.Manager;
 using Game.WorldMapStuff.Systems;
 using TMPro;
 using UnityEngine;
@@ -28,6 +30,12 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
         OkCancelDialogController.Show("End the Turn?", () =>
         {
             //Debug.Log("Ending Turn with UI!");
-            TurnSystem.OnTriggerEndTurn(); });
+            if(GridGameManager.Instance!=null)
+                GridGameManager.Instance.GetSystem<TurnSystem>().OnTriggerEndTurn();
+            else
+            {
+                WorldMapGameManager.Instance.GetSystem<TurnSystem>().OnTriggerEndTurn();
+            }
+        });
     }
 }

@@ -106,12 +106,12 @@ namespace Game.WorldMapStuff.Systems
 
             public void Deactivate()
             {
-                TurnSystem.OnEndTurn -= DeselectActor;
+                WorldMapGameManager.Instance.GetSystem<TurnSystem>().OnEndTurn -= DeselectActor;
             }
 
             public void Activate()
             {
-                TurnSystem.OnEndTurn += DeselectActor;
+                WorldMapGameManager.Instance.GetSystem<TurnSystem>().OnEndTurn += DeselectActor;
             }
     }
 }

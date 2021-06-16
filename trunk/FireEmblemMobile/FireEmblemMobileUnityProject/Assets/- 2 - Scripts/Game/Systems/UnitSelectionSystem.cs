@@ -32,14 +32,14 @@ namespace Game.Mechanics
         {
             GameplayInput.OnSelectUnit -= SelectUnit;
             GameplayInput.OnDeselectUnit -= DeselectActiveCharacter;
-            TurnSystem.OnEndTurn -= DeselectActiveCharacter;
+            gridGameManager.GetSystem<TurnSystem>().OnEndTurn -= DeselectActiveCharacter;
         }
 
         public void Activate()
         {
             GameplayInput.OnSelectUnit += SelectUnit;
             GameplayInput.OnDeselectUnit += DeselectActiveCharacter;
-            TurnSystem.OnEndTurn += DeselectActiveCharacter;
+            gridGameManager.GetSystem<TurnSystem>().OnEndTurn += DeselectActiveCharacter;
         }
 
         public void Update()

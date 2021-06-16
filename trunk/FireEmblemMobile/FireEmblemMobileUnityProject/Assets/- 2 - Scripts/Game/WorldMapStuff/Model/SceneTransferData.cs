@@ -15,6 +15,8 @@ namespace Game.WorldMapStuff.Model
         public List<Unit> EnemyUnits { get; set; }
         public string PartyID { get; set; }
         public string EnemyPartyID { get; set; }
+
+
         public string LocationId;
 
         public List<Unit> UnitsGoingIntoBattle;
