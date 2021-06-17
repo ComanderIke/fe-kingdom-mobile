@@ -27,9 +27,10 @@ namespace Game.GameInput
 
             this.gridSystem = gridSystem;
             inputPathManager = new InputPathManager(gridSystem.pathFinder, GameAssets.Instance.grid.moveArrowVisual);
-            UnitSelectionSystem.OnSelectedCharacter += OnSelectedCharacter;
-            UnitSelectionSystem.OnSelectedInActiveCharacter += OnSelectedCharacter;
+            // UnitSelectionSystem.OnSelectedCharacter += OnSelectedCharacter;
+            // UnitSelectionSystem.OnSelectedInActiveCharacter += OnSelectedCharacter;
         }
+        
        
         public void DraggedOnGrid(int x, int y)
         {
@@ -390,10 +391,10 @@ namespace Game.GameInput
         }
 
         
-        private void OnSelectedCharacter(IGridActor u)
-        {
-            ResetInput();
-        }
+        // private void OnSelectedCharacter(IGridActor u)
+        // {
+        //     ResetInput();
+        // }
         private Vector2 GetCenterPos(Vector2 clickedPos)
         {
             int centerX = (int)Mathf.Round(clickedPos.x - GridSystem.GRID_X_OFFSET) - 1;

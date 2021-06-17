@@ -180,7 +180,7 @@ namespace Game.States
             UnitPlacementUI.unitSelectionChanged += InstantiateUnits;
             NextState =  GridGameManager.Instance.GameStateManager.PhaseTransitionState;
             startPositions = GameObject.FindObjectsOfType<StartPosition>();
-            InitUnits();
+          
             InitFactions();
             InitCamera();
             UnitPlacementInputSystem = new UnitPlacementInputSystem();
@@ -196,7 +196,7 @@ namespace Game.States
             SpawnPlayerUnits(units);
             DestorySpawns();
             ShowStartPos();
-            
+            InitUnits();
             
 
            
@@ -284,30 +284,16 @@ namespace Game.States
         
         void InitUnits()
         {
-            if (SceneTransferData.Instance.UnitsGoingIntoBattle == null || SceneTransferData.Instance.UnitsGoingIntoBattle.Count == 0)
+            foreach (var faction in factionManager.Factions)
             {
-                Debug.Log("Create Demo Characters");
-                var unit1 = GameData.Instance.GetHuman("Leila");
-                var unit2 = GameData.Instance.GetHuman("Flora");
-                var unit3 = GameData.Instance.GetHuman("Eldric");
-                var unit4 = GameData.Instance.GetHuman("Hector");
-                unit1.Initialize();
-                unit2.Initialize();
-                unit3.Initialize();
-                unit4.Initialize();
-                unit4.Inventory.AddItem(GameData.Instance.GetWeapon("Iron Sword"));
-                unit3.Inventory.AddItem(GameData.Instance.GetWeapon("Iron Bow"));
-                unit1.Inventory.AddItem(GameData.Instance.GetWeapon("Steel Bow"));
-                unit2.Inventory.AddItem(GameData.Instance.GetWeapon("Fire"));
-                SceneTransferData.Instance.UnitsGoingIntoBattle = new List<Unit>
+                foreach (var unit in faction.Units)
                 {
-                    unit1,
-                    unit2,
-                    unit3,
-                    unit4
-                };
+                    unit.TurnStateManager.HasAttacked = false;
+                    unit.TurnStateManager.HasMoved = false;
+                    unit.TurnStateManager.IsSelected = false;
+                    unit.TurnStateManager.IsWaiting = false;
+                }
             }
-    
         }
 
         private void SetUpInputForStartPos()
@@ -349,6 +335,7 @@ namespace Game.States
             UnitPlacementInputSystem.unitDroppedOnOtherUnit -= SwapUnits;
             foreach (var unit in   factionManager.Factions[0].Units)
             {
+                
                 var tile= gridSystem.GetTile(unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y);
                 tile.tileVfx.Hide(tile);
             }

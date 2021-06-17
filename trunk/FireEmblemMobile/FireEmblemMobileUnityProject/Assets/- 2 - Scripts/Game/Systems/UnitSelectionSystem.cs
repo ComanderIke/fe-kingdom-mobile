@@ -94,6 +94,8 @@ namespace Game.Mechanics
         }
         private void SelectUnit(IGridActor c)
         {
+            Debug.Log(c.Faction.Id+" X "+gridGameManager.FactionManager.ActiveFaction.Id);
+            Debug.Log("IsActive: "+gridGameManager.FactionManager.IsActiveFaction(c.Faction));
             if (gridGameManager.FactionManager.IsActiveFaction(c.Faction))
             {
                 if (!c.TurnStateManager.IsWaiting)

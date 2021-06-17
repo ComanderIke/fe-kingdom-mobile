@@ -61,7 +61,7 @@ namespace Game.GameActors.Units.OnGameObject
                 //spriteMask.SetActive(true);
             }
         }
-        void Destroy()
+        void OnDestroy()
         {
             Unit.HpValueChanged -= HpValueChanged;
             Unit.SpValueChanged -= SpValueChanged;

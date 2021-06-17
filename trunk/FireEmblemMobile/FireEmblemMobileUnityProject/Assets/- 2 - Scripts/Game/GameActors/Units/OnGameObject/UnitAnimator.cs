@@ -26,6 +26,13 @@ namespace Game.GameActors.Units.OnGameObject
             if(unit!=null)
              unit.TurnStateManager.onSelected += SetSelected;
         }
+
+        private void OnDestroy()
+        {
+            if(unit!=null)
+                unit.TurnStateManager.onSelected -= SetSelected;
+        }
+
         public void AttackConnected()
         {
             OnAttackAnimationConnected?.Invoke();

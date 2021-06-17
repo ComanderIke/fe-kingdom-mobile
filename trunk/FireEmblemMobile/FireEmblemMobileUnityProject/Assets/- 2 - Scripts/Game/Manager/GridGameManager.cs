@@ -80,6 +80,7 @@ namespace Game.Manager
         {
             active = true;
             InjectDependencies();
+            SetUpEvents();
             foreach (var system in Systems)
             {
                 system.Init();
@@ -94,6 +95,10 @@ namespace Game.Manager
             //GetSystem<TurnSystem>().StartPhase();
         }
 
+        private void SetUpEvents()
+        {
+           
+        }
         private void InjectDependencies()
         {
             // var type = typeof(IDependecyInjection);
@@ -159,7 +164,10 @@ namespace Game.Manager
 
             active = false;
         }
-        
-        
+
+        private void OnDestroy()
+        {
+            Deactivate();
+        }
     }
 }

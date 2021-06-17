@@ -46,6 +46,7 @@ namespace Game.Mechanics
         public void Init()
         {
             gridInputSystem.inputReceiver = new GameInputReceiver(gridGameManager.GetSystem<GridSystem>());
+         
             gridInputSystem.Init();
             unitInputSystem.Init();
             cameraSystem.Init();
@@ -54,6 +55,7 @@ namespace Game.Mechanics
         public override void Enter()
         {
            // Debug.Log("Enter GameplayState");
+           
             cameraSystem.AddMixin<DragCameraMixin>().Construct(new WorldPosDragPerformer(1f, cameraSystem.camera),
                 new ScreenPointToRayProvider(cameraSystem.camera), new HitChecker(),new MouseCameraInputProvider());
             int height = gridGameManager.GetSystem<GridSystem>().GridData.height;
@@ -64,6 +66,8 @@ namespace Game.Mechanics
             unitInputSystem.SetActive(true);
             playerPhaseUI.Show(gridGameManager.GetSystem<TurnSystem>().TurnCount);
             SetUpInputForUnits();
+            UnitSelectionSystem.OnSelectedInActiveCharacter += OnSelectedCharacter;
+            UnitSelectionSystem.OnSelectedCharacter += OnSelectedCharacter;
             // add as InputReceiver to all units
         }
 
@@ -105,16 +109,23 @@ namespace Game.Mechanics
             return NextState;
         }
 
+        private void OnSelectedCharacter(IGridActor character)
+        {
+            gridInputSystem.inputReceiver.ResetInput();
+        }
         public override void Exit()
         {
 
             cameraSystem.RemoveMixin<DragCameraMixin>();
             cameraSystem.RemoveMixin<ClampCameraMixin>();
             cameraSystem.RemoveMixin<ViewOnGridMixin>();
+            UnitSelectionSystem.OnSelectedInActiveCharacter -=OnSelectedCharacter;
+            UnitSelectionSystem.OnSelectedCharacter -= OnSelectedCharacter;
             gridInputSystem.ResetInput();
             gridInputSystem.SetActive(false);
             unitInputSystem.SetActive(false);
             playerPhaseUI.Hide();
+            
             // remove as Input Receiver to all Units
 
         }
