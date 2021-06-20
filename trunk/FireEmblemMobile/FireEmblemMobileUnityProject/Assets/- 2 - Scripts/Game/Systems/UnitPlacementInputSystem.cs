@@ -14,6 +14,7 @@ namespace Game.States
         private UnitInputController currentSelectedUnitController;
         public Action<Unit, Unit> unitDroppedOnOtherUnit;
         public Action<Unit, StartPosition> unitDroppedOnStartPos;
+        public bool active = true;
 
         public void OnMouseEnter(UnitInputController unitInputController)
         {
@@ -22,6 +23,8 @@ namespace Game.States
 
         public void OnMouseDrag(UnitInputController unitInputController)
         {
+            if (!active)
+                return;
             currentSelectedUnitController = unitInputController;
 
             // unitInputController.transform += 
@@ -29,7 +32,8 @@ namespace Game.States
 
         public void OnMouseDrag(UnitInputController unitInputController, PointerEventData eventData)
         {
-           
+            if (!active)
+                return;
             currentSelectedUnitController = unitInputController;
 
             unitInputController.transform.position=offset+ eventData.pointerCurrentRaycast.worldPosition;
@@ -37,6 +41,8 @@ namespace Game.States
 
         public void OnMouseDown(UnitInputController unitInputController)
         {
+            if (!active)
+                return;
             currentSelectedUnitController = unitInputController;
         }
 
@@ -48,6 +54,8 @@ namespace Game.States
 
         public void OnBeginDrag(UnitInputController unitInputController, PointerEventData eventData)
         {
+            if (!active)
+                return;
             currentSelectedUnitController = unitInputController;
             unitInputController.boxCollider.enabled = false;
             offset = unitInputController.transform.position - eventData.pointerCurrentRaycast.worldPosition;
@@ -55,6 +63,8 @@ namespace Game.States
 
         public void OnEndDrag(UnitInputController unitInputController, PointerEventData eventData)
         {
+            if (!active)
+                return;
             offset = Vector3.zero;
             var screenRay = Camera.main.ScreenPointToRay(eventData.position);
             // Perform Physics2D.GetRayIntersection from transform and see if any 2D object was under transform.position on drop.
@@ -76,6 +86,8 @@ namespace Game.States
         }
         public void OnDrop(StartPosition startPosition, PointerEventData eventData)
         {
+            if (!active)
+                return;
           
             if (startPosition.Actor== null&&currentSelectedUnitController!=null )
             {
@@ -93,6 +105,8 @@ namespace Game.States
         }
         public void OnDrop(UnitInputController unitInputController, PointerEventData eventData)
         {
+            if (!active)
+                return;
             if (unitInputController.unit != null&&currentSelectedUnitController!=null)
             {
                 if (unitInputController.unit != currentSelectedUnitController.unit)

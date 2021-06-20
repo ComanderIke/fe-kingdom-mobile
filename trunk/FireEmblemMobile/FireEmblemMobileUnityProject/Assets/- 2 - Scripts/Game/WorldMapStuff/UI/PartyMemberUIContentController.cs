@@ -9,6 +9,7 @@ namespace Game.WorldMapStuff.UI
         {
             if (eventData.pointerDrag != null)
             {
+                Debug.Log("DROP ON CONTENTS");
                 var partyUI=eventData.pointerDrag.gameObject.GetComponent<PartyMemberUIController>();
                 if (partyUI != null)
                 {

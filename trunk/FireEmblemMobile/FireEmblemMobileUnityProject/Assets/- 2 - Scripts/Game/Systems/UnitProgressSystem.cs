@@ -18,27 +18,44 @@ namespace Game.Mechanics
     {
         public ILevelUpRenderer levelUpRenderer;//injected
         public IExpRenderer ExpRenderer;
-        private List<Faction> Factions;
+        private List<Unit> units;
+        private List<Faction> factions;
+
+        public UnitProgressSystem(FactionManager fm)
+        {
+            factions = new List<Faction>();
+            units = new List<Unit>();
+            foreach(var faction in fm.Factions)
+                AddFaction(faction);
+        }
+        private void AddFaction(Faction faction)
+        {
+            factions.Add(faction);
+            foreach (var unit in faction.Units)
+            {
+                AddUnit(unit);
+            }
+            faction.OnAddUnit += AddUnit;
+        }
+        private void AddUnit(Unit u)
+        {
+
+            u.OnLevelUp += LevelUp;
+            units.Add(u);
+
+        }
 
         public void Init()
         {
-            Debug.Log("TODO INIT PROGRESS SYSTEM");
-            // Factions = GridGameManager.Instance.FactionManager.Factions;
-            // foreach (var faction in Factions)
-            // {
-            //     faction.OnAddUnit += UpdateUnit;
-            //     Debug.Log("Count" +faction.Units.Count);
-            //     foreach (var unit in faction.Units)
-            //     {
-            //         Debug.Log("unit"+ unit.name);
-            //         unit.OnLevelUp += LevelUp;
-            //     }
-            // }
+            
         }
 
         public void Deactivate()
         {
-           
+            foreach (var unit in units)
+            {
+                unit.OnLevelUp -= LevelUp;
+            }
         }
 
         public void Activate()
@@ -46,17 +63,18 @@ namespace Game.Mechanics
       
         }
 
-        private void UpdateUnit(Unit unit)
-        {
-            unit.OnLevelUp += LevelUp;
-        }
+
         private void LevelUp(Unit unit)
         {
             int[] statIncreases = CalculateStatIncreases(unit.Growths.GetGrowthsArray());
-            Debug.Log(" Level Up Progress!");
-           
-            levelUpRenderer.UpdateValues(unit.name, unit.ExperienceManager.Level-1, unit.ExperienceManager.Level, unit.Stats.GetStatArray(), statIncreases);
-            AnimationQueue.Add(((IAnimation)levelUpRenderer).Play);
+
+            if (levelUpRenderer != null)
+            {
+                levelUpRenderer.UpdateValues(unit.name, unit.ExperienceManager.Level - 1, unit.ExperienceManager.Level,
+                    unit.Stats.GetStatArray(), statIncreases);
+                AnimationQueue.Add(((IAnimation) levelUpRenderer).Play);
+            }
+
             unit.Stats.MaxHp += statIncreases[0];
             unit.Stats.MaxSp += statIncreases[1];
             unit.Stats.Str += statIncreases[2];
@@ -73,16 +91,24 @@ namespace Game.Mechanics
             if (attacker.IsAlive()&&attacker.Faction.IsPlayerControlled)
             {
                 var exp = CalculateExperiencePoints(attacker, defender);
-                ExpRenderer.UpdateValues(attacker.ExperienceManager.Exp,exp);
-                AnimationQueue.Add(((IAnimation) ExpRenderer).Play);
+                if (ExpRenderer != null)
+                {
+                    ExpRenderer.UpdateValues(attacker.ExperienceManager.Exp, exp);
+                    AnimationQueue.Add(((IAnimation) ExpRenderer).Play);
+                }
+
                 GridGameManager.Instance.GetSystem<UiSystem>().SelectedCharacter((Unit)attacker);
                 attacker.ExperienceManager.AddExp(exp);
             }
             if (defender.IsAlive() && defender.Faction.IsPlayerControlled)
             {
                 var exp = CalculateExperiencePoints(defender, attacker);
-                ExpRenderer.UpdateValues(defender.ExperienceManager.Exp,exp);
-                AnimationQueue.Add(((IAnimation) ExpRenderer).Play);
+                if (ExpRenderer != null)
+                {
+                    ExpRenderer.UpdateValues(defender.ExperienceManager.Exp, exp);
+                    AnimationQueue.Add(((IAnimation) ExpRenderer).Play);
+                }
+
                 GridGameManager.Instance.GetSystem<UiSystem>().SelectedCharacter((Unit)defender);
                 defender.ExperienceManager.AddExp(exp);
             }

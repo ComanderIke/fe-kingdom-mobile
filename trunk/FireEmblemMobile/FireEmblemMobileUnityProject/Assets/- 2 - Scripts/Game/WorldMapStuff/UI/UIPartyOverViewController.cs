@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.GameActors.Units;
 using Game.Mechanics;
 using Game.WorldMapStuff.Manager;
 using Game.WorldMapStuff.Model;
@@ -54,9 +55,9 @@ public class UIPartyOverViewController : MonoBehaviour
         UnitClicked(selectedUnitIndex);
         instantiatedMembers = new List<PartyMemberUIController>();
         instantiatedMembers.Clear();
-        foreach (Transform tfm in partyMemberParent)
+        for(int i=partyMemberParent.childCount-1; i >=0;i--)
         {
-            Destroy(tfm.gameObject);
+            DestroyImmediate(partyMemberParent.GetChild(i).gameObject);
         }
 
         int index = 0;
@@ -108,5 +109,37 @@ public class UIPartyOverViewController : MonoBehaviour
        
         characterView.Show(party.members[index]);
     }
-    
+
+    public void UpdatePartyOrder()
+    {
+        Debug.Log("Before:");
+       
+        PartyMemberUIController[] tmpUnits= partyMemberParent.GetComponentsInChildren<PartyMemberUIController>();
+        foreach (var member in party.members)
+        {
+            Debug.Log(member.name);
+        }
+
+        List<Unit> indexLookUp = new List<Unit>(party.members);
+
+        for (int i = 0; i < tmpUnits.Length; i++)
+        {
+            var member = indexLookUp[tmpUnits[i].UnitIndex];
+            if (indexLookUp.IndexOf(member) != i)
+            {
+                Debug.Log("i: "+i+" index: "+party.members.IndexOf(member) +"member: "+member.name);
+                party.members.Remove(member);
+                party.members.Insert(i, member);
+            }
+           
+        }
+Debug.Log("After:");
+        foreach (var member in party.members)
+        {
+            Debug.Log(member.name);
+        }
+        
+     
+        Show(party);
+    }
 }

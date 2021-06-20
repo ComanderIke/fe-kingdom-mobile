@@ -333,6 +333,7 @@ namespace Game.States
             HideStartPos();
             var gridSystem = GridGameManager.Instance.GetSystem<GridSystem>();
             UnitPlacementInputSystem.unitDroppedOnOtherUnit -= SwapUnits;
+            UnitPlacementInputSystem.active = false;
             foreach (var unit in   factionManager.Factions[0].Units)
             {
                 

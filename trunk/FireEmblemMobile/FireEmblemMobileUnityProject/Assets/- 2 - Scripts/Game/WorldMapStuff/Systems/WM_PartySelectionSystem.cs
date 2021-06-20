@@ -72,6 +72,8 @@ namespace Game.WorldMapStuff.Systems
             {
                // Debug.Log("SelectInactiveCharacter");
                 OnSelectedInActiveParty?.Invoke(c);
+                if(c.Faction.IsPlayerControlled) 
+                    partySelectionRenderer.Show(c);
             }
             public void SelectParty(WM_Actor c)
             {

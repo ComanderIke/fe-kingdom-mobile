@@ -17,7 +17,7 @@ public class PartyMemberUIController:MonoBehaviour, IPointerDownHandler, IBeginD
     public Sprite normalSprite;
 
     private RectTransform rectTransform;
-    private Transform saveParent;
+    public Transform saveParent;
     public int saveSiblingIndex;
     public UIPartyOverViewController OverviewController { get; set; }
     public int UnitIndex{ get; set; }
@@ -26,6 +26,7 @@ public class PartyMemberUIController:MonoBehaviour, IPointerDownHandler, IBeginD
     {
         saveParent = transform.parent;
         saveSiblingIndex = transform.GetSiblingIndex();
+        Debug.Log("SI"+saveSiblingIndex);
         GameObject tmp = gameObject;
         while (canvas == null)
         {
@@ -89,7 +90,7 @@ public class PartyMemberUIController:MonoBehaviour, IPointerDownHandler, IBeginD
     {
         if (eventData.pointerDrag != null)
         {
-            
+            Debug.Log("ON DROP MEMBER");
             var partyUI=eventData.pointerDrag.gameObject.GetComponent<PartyMemberUIController>();
             if (partyUI != null)
             {
@@ -99,12 +100,23 @@ public class PartyMemberUIController:MonoBehaviour, IPointerDownHandler, IBeginD
                 //this.transform.SetParent(tmpTransform);
                 UpdateParent(tmpTransform, partyUI.saveSiblingIndex);
             }
-               
+           // Invoke("UpdatePartyOrder",0.02f);
+
+        }
+    }
+
+    void UpdatePartyOrder()
+    {
+        var UIPartyOverViewController = FindObjectOfType<UIPartyOverViewController>();
+        if (UIPartyOverViewController != null)
+        {
+            UIPartyOverViewController.UpdatePartyOrder();
         }
     }
 
     public void UpdateParent(Transform parent, int siblingIndex)
     {
+        Debug.Log("Update parent: "+UnitIndex+" SI: "+siblingIndex);
         transform.SetParent(parent);
         this.transform.SetSiblingIndex(siblingIndex);
         saveParent = parent;

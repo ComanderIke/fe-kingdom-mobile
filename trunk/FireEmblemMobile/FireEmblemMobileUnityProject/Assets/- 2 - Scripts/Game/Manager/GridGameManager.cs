@@ -44,7 +44,6 @@ namespace Game.Manager
             Instance = this;
 
             //Debug.Log("Initialize");
-            AddSystems();
             FactionManager = new FactionManager();
             var playerFaction=new Faction();
             var enemyFaction=new Faction();
@@ -53,6 +52,8 @@ namespace Game.Manager
             enemyFaction.Id = FactionId.ENEMY;
             FactionManager.AddFaction(playerFaction);
             FactionManager.AddFaction(enemyFaction);
+            AddSystems();
+            
             GameStateManager = new GridGameStateManager();
             Application.targetFrameRate = 60;
         }
@@ -69,7 +70,7 @@ namespace Game.Manager
                 FindObjectOfType<UiSystem>(),
                 new BattleSystem(),
                 new MoveSystem(),
-                new UnitProgressSystem(),
+                new UnitProgressSystem(FactionManager),
                 new PopUpTextSystem(),
                 FindObjectOfType<UnitSelectionSystem>()
             };

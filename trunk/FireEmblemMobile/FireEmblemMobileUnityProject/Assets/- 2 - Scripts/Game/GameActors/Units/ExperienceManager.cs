@@ -16,7 +16,7 @@ namespace Game.GameActors.Units
 
 
         [SerializeField]
-        private int level;
+        private int level = 1;
 
         public int Level
         {
