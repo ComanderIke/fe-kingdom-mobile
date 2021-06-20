@@ -66,7 +66,8 @@ namespace Game.GameActors.Units.OnGameObject
             Unit.HpValueChanged -= HpValueChanged;
             Unit.SpValueChanged -= SpValueChanged;
             Unit.SpBarsValueChanged -= SpBarsValueChanged;
-            unit.TurnStateManager.UnitWaiting -= SetWaitingSprite;
+            if(unit!=null)
+                unit.TurnStateManager.UnitWaiting -= SetWaitingSprite;
             Human.OnEquippedWeapon -= OnEquippedWeapon;
         }
         public void SetVisible(bool visible)
