@@ -27,7 +27,7 @@ public class UIPartyMemberDropArea : MonoBehaviour, IDropHandler
                 partyUI.UpdateParent(partyUI.saveParent);
         
             }
-            //Invoke("UpdatePartyOrder",0.02f);
+            Invoke("UpdatePartyOrder",0.02f);
            
         }
     }

@@ -26,7 +26,7 @@ public class PartyMemberUIController:MonoBehaviour, IPointerDownHandler, IBeginD
     {
         saveParent = transform.parent;
         saveSiblingIndex = transform.GetSiblingIndex();
-        Debug.Log("SI"+saveSiblingIndex);
+      //  Debug.Log("SI"+saveSiblingIndex);
         GameObject tmp = gameObject;
         while (canvas == null)
         {
@@ -96,11 +96,12 @@ public class PartyMemberUIController:MonoBehaviour, IPointerDownHandler, IBeginD
             {
               //  Debug.Log("SWAP"+partyUI.gameObject.name+" "+this.gameObject.name);
                 var tmpTransform = partyUI.saveParent;
+                var tmpIndex = partyUI.saveSiblingIndex;
                 partyUI.UpdateParent(transform.parent, saveSiblingIndex);
                 //this.transform.SetParent(tmpTransform);
-                UpdateParent(tmpTransform, partyUI.saveSiblingIndex);
+                UpdateParent(tmpTransform, tmpIndex);
             }
-           // Invoke("UpdatePartyOrder",0.02f);
+            Invoke("UpdatePartyOrder",0.02f);
 
         }
     }
@@ -125,9 +126,11 @@ public class PartyMemberUIController:MonoBehaviour, IPointerDownHandler, IBeginD
     }
     public void UpdateParent(Transform parent)
     {
+       
         transform.SetParent(parent);
         saveParent = parent;
         saveSiblingIndex = transform.GetSiblingIndex();
+        Debug.Log("Update parent2222: "+UnitIndex+" SI: "+saveSiblingIndex);
         noParent = false;
     }
 
