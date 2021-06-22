@@ -30,7 +30,7 @@ namespace Game.WorldMapStuff.GameStates
             WM_Faction  playerFaction = (WM_Faction)WorldMapGameManager.Instance.FactionManager.GetPlayerControlledFaction();
             Party lastSelectedParty =
                 playerFaction.Parties.FirstOrDefault(p => p.name == SceneTransferData.Instance.PartyID);
-            LocationController locationOfEnemy = WorldMapGameManager.Instance.World.Locations.FirstOrDefault(l=> l.UniqueId==SceneTransferData.Instance.LocationId);
+            LocationController locationOfEnemy = WorldMapGameManager.Instance.World.Locations.FirstOrDefault(l=> l.UniqueId==SceneTransferData.Instance.LocationData.LocationId);
            
             var action = new AttackFinishedAction(lastSelectedParty, (Party) locationOfEnemy.Actor,selectionSystem, SceneTransferData.Instance.BattleOutCome);
             action.PerformAction();

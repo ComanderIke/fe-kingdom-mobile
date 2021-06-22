@@ -16,10 +16,9 @@ namespace Game.WorldMapStuff.Model
         public string PartyID { get; set; }
         public Party Party{ get; set; }
         public string EnemyPartyID { get; set; }
+        public LocationData LocationData { get; set; }
 
-
-        public string LocationId;
-
+     
         public List<Unit> UnitsGoingIntoBattle;
         public BattleOutcome BattleOutCome = BattleOutcome.None;
         public Action BattleFinished;
@@ -31,6 +30,20 @@ namespace Game.WorldMapStuff.Model
             UnitsGoingIntoBattle = new List<Unit>();
         }
     }
+
+    public class LocationData
+    {
+        public string LocationId;
+
+        public Village Village;
+
+        public LocationData(string id, Village village)
+        {
+            this.LocationId = id;
+            this.Village = village;
+        }
+    }
+
     [Serializable]
     public enum BattleOutcome
     {

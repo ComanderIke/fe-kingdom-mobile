@@ -21,12 +21,15 @@ namespace Game.WorldMapStuff.Manager
         private Party party;
         public AstarPath pathfinderGraph;
         public AIPathSystem pathSystem;
+        public BuildingManager BuildingManager;
         private List<GameObject> units;
         public void Start()
         {
             WM_Faction faction=(WM_Faction)WorldMapGameManager.Instance.FactionManager.GetPlayerControlledFaction();
             this.party = faction.Parties.FirstOrDefault(p => p.name == SceneTransferData.Instance.PartyID);
+            BuildingManager.SpawnBuildings(SceneTransferData.Instance.LocationData.Village.buildings);
             SpawnUnits();
+            pathfinderGraph.Scan();//TODO slow?
             
         }
 

@@ -25,7 +25,7 @@ namespace Game.WorldMapStuff.Controller
             Debug.Log("Load Inside" + playerParty.members[0].ExperienceManager.Exp);
             SceneTransferData.Instance.PartyID = playerParty.name;
             SceneTransferData.Instance.Party = playerParty;
-            SceneTransferData.Instance.LocationId = playerParty.location.UniqueId;
+            SceneTransferData.Instance.LocationData =new LocationData(playerParty.location.UniqueId, playerParty.location.worldMapPosition.Village);
             SceneController.UnLoadSceneAsync(Scenes.WM_Gameplay);
             SceneController.UnLoadSceneAsync(Scenes.Campaign1);
             SceneController.LoadSceneAsync(Scenes.InsideLocation,true);
@@ -38,7 +38,7 @@ namespace Game.WorldMapStuff.Controller
             SceneTransferData.Instance.PartyID = playerParty.name;
             SceneTransferData.Instance.Party = playerParty;
             SceneTransferData.Instance.EnemyPartyID = enemyParty.name;
-            SceneTransferData.Instance.LocationId = enemyParty.location.UniqueId;
+            SceneTransferData.Instance.LocationData =new LocationData(enemyParty.location.UniqueId, enemyParty.location.worldMapPosition.Village);
             SceneController.UnLoadSceneAsync(Scenes.WM_Gameplay);
             SceneController.UnLoadSceneAsync(Scenes.Campaign1);
             SceneController.LoadSceneAsync(Scenes.Level2, true);

@@ -22,6 +22,8 @@ namespace Game.WorldMapStuff.Controller
         
         private bool dirty = false;
         private bool spawndirty = false;
+        public Village Village;
+
         private void OnEnable()
         {
       
