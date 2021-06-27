@@ -1,23 +1,23 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.WorldMapStuff.Model;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SpriteOutLinePressed : MonoBehaviour
+public class BuildingInputController : MonoBehaviour
 {
     public Material normal;
 
     public Material selected;
-
-    public GameObject activate;
     public SpriteRenderer spriteRenderer;
 
-    public static Action<GameObject> OnClicked;
+    public BuildingType BuildingType;
+    public BuildingManager BuildingManager;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        BuildingManager = FindObjectOfType<BuildingManager>();
     }
 
     // Update is called once per frame
@@ -47,8 +47,6 @@ public class SpriteOutLinePressed : MonoBehaviour
     }
     public void OnMouseUpAsButton()
     {
-        if(activate!=null)
-            activate.SetActive(true);
-        OnClicked?.Invoke(this.gameObject);
+        BuildingManager.BuildingClicked(BuildingType);
     }
 }

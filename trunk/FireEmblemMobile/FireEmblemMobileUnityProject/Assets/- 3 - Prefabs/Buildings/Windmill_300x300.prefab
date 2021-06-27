@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3698445817355731168}
   - component: {fileID: 3698445817355731169}
   - component: {fileID: 3698445817355731199}
+  - component: {fileID: -779689883834032922}
   m_Layer: 13
   m_Name: Windmill_300x300
   m_TagString: Untagged
@@ -26,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3698445817355731170}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 14.731709, y: -3.492899, z: -0.42995813}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children:
   - {fileID: 3698445818730174438}
@@ -111,6 +112,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2.5}
   m_EdgeRadius: 0
+--- !u!114 &-779689883834032922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3698445817355731170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4172a36df62de374cbf793236d60aaf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normal: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  selected: {fileID: 2100000, guid: 431c9572419f9e648b1b9583bd3a8505, type: 2}
+  spriteRenderer: {fileID: 3698445817355731169}
+  BuildingType: 4
+  BuildingManager: {fileID: 0}
 --- !u!1 &3698445818730174439
 GameObject:
   m_ObjectHideFlags: 0
