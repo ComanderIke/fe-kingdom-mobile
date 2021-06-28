@@ -7,6 +7,7 @@ using UnityEngine;
 public class BuildingManager : MonoBehaviour
 {
     public List<Transform> BuildingSpawnPoints;
+    public Canvas cityCanvas;
 
     public GameObject smithyPrefab;
 
@@ -93,5 +94,7 @@ public class BuildingManager : MonoBehaviour
 
                 smithyUI.Show();break;
         }
+
+        cityCanvas.gameObject.SetActive(false);
     }
 }
