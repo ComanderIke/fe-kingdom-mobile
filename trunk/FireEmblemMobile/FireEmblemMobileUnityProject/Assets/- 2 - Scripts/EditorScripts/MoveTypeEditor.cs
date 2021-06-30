@@ -6,8 +6,7 @@ using Game.Grid;
 using UnityEditor;
 using UnityEngine;
 
-namespace Editor
-{
+
     [CustomEditor(typeof(MoveType))]
     public class MoveTypeEditor : UnityEditor.Editor
     {
@@ -59,5 +58,5 @@ namespace Editor
             
             EditorGUILayout.EndHorizontal();
         }
-    }
+    
 }

@@ -1,7 +1,11 @@
 ﻿namespace Unused.Dialogs
 {
-	public class Dialog
+	[System.Serializable]
+	public class Dialogue
 	{
+		public string sentences;
+
+		public string name;
 		/*
 		private int characterindex;
 		private int stringindex = 0;

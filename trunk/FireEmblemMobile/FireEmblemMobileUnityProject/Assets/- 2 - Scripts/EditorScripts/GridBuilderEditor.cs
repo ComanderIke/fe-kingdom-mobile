@@ -4,8 +4,7 @@ using Game.Map;
 using UnityEditor;
 using UnityEngine;
 
-namespace Editor
-{
+
     [CustomEditor(typeof(GridBuilder))]
     public class GridBuilderEditor : UnityEditor.Editor
     {
@@ -31,5 +30,5 @@ namespace Editor
 
 
     }
-}
+
 
