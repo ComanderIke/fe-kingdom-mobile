@@ -42,10 +42,12 @@ using Object = UnityEngine.Object;
                    // EditorGUILayout.PropertyField(transformProp);
                     var sentenceProp = transformProp.FindPropertyRelative("sentence");
                     EditorGUILayout.PropertyField(sentenceProp);
-                    var charNameProp = transformProp.FindPropertyRelative("CharacterName");
+                    var charNameProp = transformProp.FindPropertyRelative("unit");
                     EditorGUILayout.PropertyField(charNameProp);
                     var lineTypeProp = transformProp.FindPropertyRelative("LineType");
                     EditorGUILayout.PropertyField(lineTypeProp);
+                    var leftProp = transformProp.FindPropertyRelative("left");
+                    EditorGUILayout.PropertyField(leftProp);
                     switch (lineTypeProp.enumValueIndex)
                     {
                         case (int)LineType.Normal: break;
