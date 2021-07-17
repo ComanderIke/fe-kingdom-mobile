@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using Game.GameResources;
+﻿using Game.GameResources;
 using Game.Systems;
 using Game.WorldMapStuff.UI;
 
@@ -12,8 +11,6 @@ namespace Game.WorldMapStuff.Model
         public string name;
         public int campaignId;
         public int turnCount = 1;
-
-
         // [HideInInspector]
         // public List<LocationController> locations;
         

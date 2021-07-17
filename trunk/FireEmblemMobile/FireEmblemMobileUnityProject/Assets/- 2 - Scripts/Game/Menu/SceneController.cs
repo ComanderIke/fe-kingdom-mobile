@@ -48,7 +48,6 @@ namespace Menu
        
         public static void LoadSceneAsync(Scenes buildIndex, bool additive)
         {
-            Debug.Log(buildIndex);
             string pathToScene = SceneUtility.GetScenePathByBuildIndex((int)buildIndex);
             string sceneName = System.IO.Path.GetFileNameWithoutExtension(pathToScene);
             if (_instance != null)

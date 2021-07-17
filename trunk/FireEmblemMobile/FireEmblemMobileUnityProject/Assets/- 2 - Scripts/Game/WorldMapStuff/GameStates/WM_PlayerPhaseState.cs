@@ -25,8 +25,6 @@ namespace Game.WorldMapStuff
         }
         public override void Enter()
         { 
-
-           
             inputSystem.SetActive(true);
          
             SetUpInputForLocations();
@@ -39,7 +37,6 @@ namespace Game.WorldMapStuff
         {
             inputSystem.SetActive(false);
             playerPhaseUI.Hide();
-            
         }
 
         public override GameState<NextStateTrigger> Update()

@@ -32,8 +32,6 @@ namespace Game.WorldMapStuff.Manager
         public WM_GameStateManager GameStateManager { get; set; }
         private bool active = true;
 
-       
-
         private void Awake()
         {
             // if (Instance != null)//Reentering Scene
@@ -45,7 +43,6 @@ namespace Game.WorldMapStuff.Manager
                 Player.Instance.LoadData(SaveData.currentSaveData.playerData);
                 Debug.Log("+++++++++++++++++"+Player.Instance.faction.Parties[0].members[0].name+" EXP:"+Player.Instance.faction.Parties[0].members[0].ExperienceManager.Exp);
                 Campaign.Instance.LoadData(SaveData.currentSaveData.campaignData);
-                
             }
             else
             {
@@ -62,11 +59,6 @@ namespace Game.WorldMapStuff.Manager
             Debug.Log("================="+Player.Instance.faction.Parties[0].members[0].name+" EXP:"+Player.Instance.faction.Parties[0].members[0].ExperienceManager.Exp);
             GameStateManager = new WM_GameStateManager();
             Application.targetFrameRate = 60;
-            float x = PlayerPrefs.GetFloat("CameraX");
-            float y = PlayerPrefs.GetFloat("CameraY");
-            float z = GameObject.FindObjectOfType<WorldMapCameraController>().transform.position.z;
-            Debug.Log("Load Camera Pos: "+new Vector3(x,y,z));
-            GameObject.FindObjectOfType<WorldMapCameraController>().transform.position = new Vector3(x,y,z);
         }
 
         private void CreateSaveData()
@@ -109,7 +101,6 @@ namespace Game.WorldMapStuff.Manager
 
         public void Deactivate()
         {
-            GameStateManager.Deactivate();
             foreach (var system in Systems)
             {
                 system.Deactivate();

@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Game.Utility;
 using Game.WorldMapStuff.Model;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -30,8 +29,8 @@ public class BuildingInputController : MonoBehaviour
     
     public void OnMouseDown()
     {
-        if (!UIHelper.IsPointerOverGameObject())
-            spriteRenderer.material = selected;
+      
+        spriteRenderer.material = selected;
         
     }
 
@@ -43,13 +42,11 @@ public class BuildingInputController : MonoBehaviour
 
     public void OnMouseUp()
     {
+  
         spriteRenderer.material = normal;
     }
     public void OnMouseUpAsButton()
     {
-        if (!UIHelper.IsPointerOverGameObject())
-        {
-            BuildingManager.BuildingClicked(BuildingType);
-        }
+        BuildingManager.BuildingClicked(BuildingType);
     }
 }
