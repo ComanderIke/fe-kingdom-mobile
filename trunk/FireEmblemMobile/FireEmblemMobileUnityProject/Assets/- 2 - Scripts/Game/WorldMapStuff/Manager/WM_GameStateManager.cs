@@ -56,6 +56,9 @@ namespace Game.Manager
             PhaseTransitionState.AddTransition(EnemyPhaseState, NextStateTrigger.StartEnemyPhase);
         }
 
-       
+        public void Deactivate()
+        {
+           // stateMachine.Exit();
+        }
     }
 }

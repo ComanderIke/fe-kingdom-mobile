@@ -13,22 +13,21 @@ namespace Game.Dialog
         public Dialogue leftDialog;
         public Dialogue rightDialog;
         private int index=-1;
-        private void Start()
+        public Action dialogEnd;
+        private bool active = false;
+
+        public void ShowDialog(Conversation conversation)
         {
-            // foreach (var line in Conversation.lines)
-            // {
-            //     Debug.Log(line.sentence);
-            //     if (line.LineType==LineType.MultipleChoice)
-            //     {
-            //         foreach(var option in line.options)
-            //             Debug.Log("Option: " +option);
-            //     }
-            // }
+            this.Conversation = conversation;
+            active = true;
+            index = -1;
         }
+
+        
 
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (active && Input.GetMouseButtonDown(0))
             {
                 NextLine();
             }
@@ -58,6 +57,11 @@ namespace Game.Dialog
             else
             {
                 Debug.Log("Dialog end!");
+                dialogEnd?.Invoke();
+                rightDialog.gameObject.SetActive(false);
+                leftDialog.gameObject.SetActive(false);
+                active = false;
+
             }
         }
     }

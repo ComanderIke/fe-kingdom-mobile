@@ -22,7 +22,7 @@ namespace Game.GameActors.Players
             base.Load(unit);
           
             Human human = (Human) unit;
-            Debug.Log("LOAD222222: "+unit.name+" "+unit.ExperienceManager.Exp);
+            //Debug.Log("LOAD222222: "+unit.name+" "+unit.ExperienceManager.Exp);
             human.EquippedWeapon = GameData.Instance.Weapons.FirstOrDefault(w=>w.name == weaponId);
         }
     }
