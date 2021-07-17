@@ -20,6 +20,11 @@ namespace Game.WorldMapStuff.Controller
 
         public void LoadInside(Party playerParty)
         {
+        Vector3 cameraPos = GameObject.FindObjectOfType<WorldMapCameraController>().transform.position;
+                    PlayerPrefs.SetFloat("CameraX", cameraPos.x);
+                    PlayerPrefs.SetFloat("CameraY", cameraPos.y);
+                    PlayerPrefs.Save();
+                    Debug.Log("Save Camera Pos: "+cameraPos);
             SceneTransferData.Instance.Reset();
             SceneTransferData.Instance.UnitsGoingIntoBattle = playerParty.members;
             Debug.Log("Load Inside" + playerParty.members[0].ExperienceManager.Exp);
@@ -32,6 +37,11 @@ namespace Game.WorldMapStuff.Controller
         }
         public void LoadBattleLevel(Party playerParty, Party enemyParty)
         {
+            Vector3 cameraPos = GameObject.FindObjectOfType<WorldMapCameraController>().transform.position;
+            PlayerPrefs.SetFloat("CameraX", cameraPos.x);
+            PlayerPrefs.SetFloat("CameraX", cameraPos.y);
+            PlayerPrefs.Save();
+            Debug.Log("Save Camera Pos: "+cameraPos);
             SceneTransferData.Instance.Reset();
             SceneTransferData.Instance.UnitsGoingIntoBattle = playerParty.members;
             SceneTransferData.Instance.EnemyUnits = enemyParty.members;

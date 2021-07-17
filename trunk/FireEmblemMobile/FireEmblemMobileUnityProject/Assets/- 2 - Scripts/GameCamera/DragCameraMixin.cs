@@ -1,7 +1,6 @@
 ﻿using GameEngine.Input;
 using GameEngine.Tools;
-using UnityEngine;
-using UnityEngine.EventSystems;
+
 
 namespace GameCamera
 {

@@ -47,5 +47,9 @@ namespace GameEngine
             }
         }
 
+        public void Exit()
+        {
+            currentState.Exit();
+        }
     }
 }
