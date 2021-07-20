@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Game.Mechanics;
 using UnityEngine;
 
@@ -79,6 +80,40 @@ namespace Game.GameActors.Units.OnGameObject
         public void BattleAnimationUpRight()
         {
             animator.SetTrigger(AnimationUpRight);
+        }
+        protected AnimationClipOverrides clipOverrides;
+        public void SetUnit(Unit unit1)
+        {
+            this.unit = unit1;
+            AnimatorOverrideController aoc = new AnimatorOverrideController(animator.runtimeAnimatorController);
+          
+
+       
+            animator.runtimeAnimatorController = aoc;
+            clipOverrides = new AnimationClipOverrides(aoc.overridesCount);
+            aoc.GetOverrides(clipOverrides);
+            
+            if (unit1.visuals.CharacterSpriteSet.idleAnimation != null)
+            {
+                clipOverrides["Idle"] = unit1.visuals.CharacterSpriteSet.idleAnimation;
+            }
+            aoc.ApplyOverrides(clipOverrides);
+        }
+    }
+
+    public class AnimationClipOverrides : List<KeyValuePair<AnimationClip, AnimationClip>>
+    {
+        public AnimationClipOverrides(int capacity) : base(capacity) {}
+
+        public AnimationClip this[string name]
+        {
+            get { return this.Find(x => x.Key.name.Equals(name)).Value; }
+            set
+            {
+                int index = this.FindIndex(x => x.Key.name.Equals(name));
+                if (index != -1)
+                    this[index] = new KeyValuePair<AnimationClip, AnimationClip>(this[index].Key, value);
+            }
         }
     }
 }

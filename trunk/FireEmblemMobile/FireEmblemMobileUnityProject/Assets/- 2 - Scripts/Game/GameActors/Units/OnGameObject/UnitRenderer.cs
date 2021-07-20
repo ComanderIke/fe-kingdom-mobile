@@ -6,7 +6,7 @@ using Game.Manager;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
+
 using Utility;
 
 namespace Game.GameActors.Units.OnGameObject
@@ -17,6 +17,7 @@ namespace Game.GameActors.Units.OnGameObject
         [SerializeField] private StatsBarOnMap hpBar;
         [SerializeField] private StatsBarOnMap spBar;
         [SerializeField] private ISPBarRenderer spBars;
+        [SerializeField] private TextMeshProUGUI hpText;
         [SerializeField] private GameObject pointLight;
         
         [SerializeField] private Image EquippedItemIcon;
@@ -41,6 +42,7 @@ namespace Game.GameActors.Units.OnGameObject
         public void Init()
         {
             hpBar.GetComponent<Image>().color = ColorManager.Instance.GetFactionColor(unit.Faction.Id);
+            hpText.color = ColorManager.Instance.GetFactionColor(unit.Faction.Id);
             float intensity = 2;
             sprite.material.SetColor("_OutLineColor", ColorManager.Instance.GetFactionColor(unit.Faction.Id)*intensity);
             //spBar.GetComponent<Image>().color = ColorManager.Instance.GetFactionColor(Unit.Faction.Id);
@@ -106,8 +108,10 @@ namespace Game.GameActors.Units.OnGameObject
         }
         private void HpValueChanged()
         {
-            if (hpBar != null && unit != null)
+            if (hpBar != null && unit != null){
                 hpBar.SetValue(unit.Hp, unit.Stats.MaxHp);
+                hpText.SetText(""+unit.Hp);
+            }
         }
        
         private void SpValueChanged()

@@ -9,5 +9,6 @@ namespace Game.GameActors.Units
     {
         public Sprite FaceSprite;
         public Sprite MapSprite;
+        public AnimationClip idleAnimation;
     }
 }

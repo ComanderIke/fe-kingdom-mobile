@@ -10,10 +10,15 @@ namespace Game.GameActors.Units.OnGameObject
     {
 
         public GameObject UnitNormal;
+        public GameObject UnitEnemy;
 
         public void PlaceCharacter(Unit unit, int x, int y)
         {
-            var unitGameObject = Instantiate(UnitNormal);
+            GameObject unitGameObject;
+            if(GridGameManager.Instance.FactionManager.GetPlayerControlledFaction().Id==unit.Faction.Id)
+                unitGameObject = Instantiate(UnitNormal);
+            else
+                unitGameObject = Instantiate(UnitEnemy);
             unitGameObject.GetComponentInChildren<SpriteRenderer>().sprite = unit.visuals.CharacterSpriteSet.MapSprite;
             
             unitGameObject.GetComponentInChildren<BuffUi>()?.Initialize(unit);
@@ -29,7 +34,8 @@ namespace Game.GameActors.Units.OnGameObject
            // Debug.Log("Set Unit Renderer: " + unit.name + " " + unitRenderer);
             unitRenderer.Init();
             var unitAnimator = unitGameObject.GetComponentInChildren<UnitAnimator>();
-            unitAnimator.unit = unit;
+            unitAnimator.SetUnit(unit);
+            
             //Debug.Log("Set Unit Animator: " + unit.name + " " + unitAnimator);
            // Debug.Log("Set Unit GameObject: " + unit.name + " " + unitGameObject);
             unit.GameTransformManager.GameObject = unitGameObject;

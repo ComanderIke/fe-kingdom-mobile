@@ -46,28 +46,28 @@ namespace Game.Graphics
         }
         public override void HideNoStamina()
         {
-            if (noStaminaVfx != null)
-            {
-                noStaminaVfx.SetActive(false);
-            }
+            // if (noStaminaVfx != null)
+            // {
+            //     noStaminaVfx.SetActive(false);
+            // }
         }
 
         public override void ShowNoStamina(IGridActor actor)
         {
-            if (actor.GameTransformManager.GameObject == null)
-                return;
-            if (noStaminaVfx == null)
-            {
-
-                noStaminaVfx = GameObject.Instantiate(noStaminaVfxPrefab,
-                    actor.GameTransformManager.Transform);
-                noStaminaVfx.transform.localPosition = Vector3.zero;
-            }
-            else
-            {
-                noStaminaVfx.transform.localPosition = Vector3.zero;
-                noStaminaVfx.SetActive(true);
-            }
+            // if (actor.GameTransformManager.GameObject == null)
+            //     return;
+            // if (noStaminaVfx == null)
+            // {
+            //
+            //     noStaminaVfx = GameObject.Instantiate(noStaminaVfxPrefab,
+            //         actor.GameTransformManager.Transform);
+            //     noStaminaVfx.transform.localPosition = Vector3.zero;
+            // }
+            // else
+            // {
+            //     noStaminaVfx.transform.localPosition = Vector3.zero;
+            //     noStaminaVfx.SetActive(true);
+            // }
         }
     }
 }
