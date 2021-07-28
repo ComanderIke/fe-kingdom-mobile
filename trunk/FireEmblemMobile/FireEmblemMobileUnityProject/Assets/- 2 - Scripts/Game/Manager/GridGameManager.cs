@@ -3,27 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using Audio;
 using Game.AI;
-using Game.GameActors;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
-using Game.GameActors.Units.OnGameObject;
-using Game.GameInput;
-using Game.GameResources;
-using Game.Graphics;
 using Game.Grid;
 using Game.Grid.GridPathFinding;
 using Game.GUI;
-using Game.GUI.PopUpText;
 using Game.GUI.Text;
 using Game.Map;
 using Game.Mechanics;
-using Game.Mechanics.Battle;
-using Game.WorldMapStuff.UI;
-using GameCamera;
 using GameEngine;
 using UnityEngine;
-using UnityEngine.UI;
-using Utility;
 
 namespace Game.Manager
 {
@@ -123,6 +112,8 @@ namespace Game.Manager
             GameStateManager.WinState.renderer =  FindObjectsOfType<MonoBehaviour>().OfType<IBattleSuccessRenderer>().First();
             GameStateManager.GameOverState.renderer =  FindObjectsOfType<MonoBehaviour>().OfType<IBattleLostRenderer>().First();
             GameStateManager.BattleState.battleSystem = GetSystem<BattleSystem>();
+            GameStateManager.BattleState.BattleAnimation = FindObjectsOfType<MonoBehaviour>().OfType<IBattleAnimation>().First();
+            GameStateManager.BattleState.BattleAnimation.Hide();
             var chapterConfig = FindObjectOfType<ChapterConfig>();
             GameStateManager.UnitPlacementState.chapter = chapterConfig.chapter;
             GameStateManager.UnitPlacementState.UnitPlacementUI =  FindObjectsOfType<MonoBehaviour>().OfType<IUnitPlacementUI>().First();

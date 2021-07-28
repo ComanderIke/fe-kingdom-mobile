@@ -1,4 +1,8 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Dynamic;
+using System.Runtime.InteropServices;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
 using Game.GameInput;
@@ -42,72 +46,69 @@ namespace Game.Mechanics
             currentAttackIndex = 0;
             attackerAttackCount = attacker.BattleComponent.BattleStats.GetAttackCountAgainst(defender);
             defenderAttackCount = defender.BattleComponent.BattleStats.GetAttackCountAgainst(attacker);
-            BattleRenderer.Show(attacker, defender, GetAttackSequence());
+            //BattleRenderer.Show(attacker, defender, GetAttackSequence());
             
         }
 
-        public void ContinueBattle(IBattleActor attacker, IBattleActor defender)
-        {
-            ContinueBattle(battleSimulation.AttackSequence[currentAttackIndex]);
-        }
-        private void ContinueBattle(bool attackerAttacking)
-        {
-           
-            if (attackerAttacking)
-                DoAttack(attacker, defender);
-            else
-                DoAttack(defender, attacker);
-            currentAttackIndex++;
-        }
+        // public void ContinueBattle(IBattleActor attacker, IBattleActor defender)
+        // {
+        //     ContinueBattle(battleSimulation.AttackSequence[currentAttackIndex]);
+        // }
+        // private void ContinueBattle(bool attackerAttacking)
+        // {
+        //    
+        //     if (attackerAttacking)
+        //         DoAttack(attacker, defender);
+        //     else
+        //         DoAttack(defender, attacker);
+        //     currentAttackIndex++;
+        // }
 
-        private static bool DoAttack(IBattleActor attacker, IBattleActor defender)
+        // private static bool DoAttack(IBattleActor attacker, IBattleActor defender)
+        // {
+        //     bool crit = defender.SpBars == 0;
+        //     bool magic = attacker.BattleComponent.BattleStats.GetDamageType() == DamageType.Magic;
+        //     bool eff = false;
+        //
+        //     defender.BattleComponent.InflictDamage(attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defender),magic, crit,eff, defender);
+        //     return defender.Hp > 0;
+        // }
+
+        // public bool[] GetAttackSequence()
+        // {
+        //     return battleStarted ? battleSimulation.AttackSequence.ToArray() : null;
+        // }
+
+
+      
+        IEnumerator Delay(float delay, Action action)
         {
-            bool crit = defender.SpBars == 0;
-            bool magic = attacker.BattleComponent.BattleStats.GetDamageType() == DamageType.Magic;
-            bool eff = false;
-
-            defender.BattleComponent.InflictDamage(attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defender),magic, crit,eff, defender);
-            
-            
-            // defender.Sp -= attacker.BattleComponent.BattleStats.GetTotalSpDamageAgainstTarget(defender);
-            // if (attacker is Human humanAttacker && humanAttacker.EquippedWeapon != null)
-            // {
-            //     attacker.Sp -= humanAttacker.EquippedWeapon.Weight;
-            // }
-            // if (defender is Human humanDefender && humanDefender.EquippedWeapon != null)
-            // {
-            //     defender.Sp -= humanDefender.EquippedWeapon.Weight;
-            // }
-            return defender.Hp > 0;
+            yield return new WaitForSeconds(delay);
+            action?.Invoke();
         }
-
-        public bool[] GetAttackSequence()
-        {
-            return battleStarted ? battleSimulation.AttackSequence.ToArray() : null;
-        }
-  
-
         public void EndBattle()
         {
-            defender.SpBars--;
-            attacker.SpBars--;
-            if (!attacker.IsAlive())
-            {
-                attacker.Die();
-            }
-            if (!defender.IsAlive())
-            {
-                defender.Die();
-            }
+            
+                defender.SpBars--;
+                attacker.SpBars--;
+                if (!attacker.IsAlive())
+                {
+                    attacker.Die();
+                }
+                if (!defender.IsAlive())
+                {
+                    defender.Die();
+                }
 
            
-            battleStarted = false;
-            //BattleRenderer.Hide();
-            IsFinished = true;
-            //GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.BattleEnded);
+                battleStarted = false;
+                //BattleRenderer.Hide();
+                IsFinished = true;
+                //GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.BattleEnded);
             
-            
-            
+
+
+
         }
     
         

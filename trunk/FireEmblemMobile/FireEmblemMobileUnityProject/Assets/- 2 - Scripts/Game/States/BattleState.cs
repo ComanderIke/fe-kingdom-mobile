@@ -23,6 +23,7 @@ namespace Game.Mechanics
         private IBattleActor defender;
         
         public BattleSystem battleSystem; //Injected
+        public IBattleAnimation BattleAnimation;
 
         private string startMusic;
         public bool IsFinished;
@@ -47,12 +48,10 @@ namespace Game.Mechanics
         public override void Enter()
         {
            // battleSystem = new BattleSystem(attacker, defender);
-         
+           BattleAnimation.Show();
            IsFinished = false;
            battleSystem.StartBattle(attacker, defender);
-     
-           BattleRenderer.OnAttackConnected += battleSystem.ContinueBattle;
-            BattleRenderer.OnFinished += battleSystem.EndBattle;
+           BattleAnimation.OnFinished += battleSystem.EndBattle;
             
             //Debug.Log("ENTER FIGHTSTATE");
 
@@ -81,9 +80,8 @@ namespace Game.Mechanics
             attacker = null;
             defender = null;
 
-           
-            BattleRenderer.OnAttackConnected -= battleSystem.ContinueBattle;
-            BattleRenderer.OnFinished -= battleSystem.EndBattle;
+            BattleAnimation.Hide();
+            BattleAnimation.OnFinished -= battleSystem.EndBattle;
             GridGameManager.Instance.GetSystem<AudioSystem>().ChangeMusic(startMusic, "BattleTheme", true);
             OnExit?.Invoke();
         }
@@ -101,5 +99,12 @@ namespace Game.Mechanics
             SetParticipants(battleActor, target);
             GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.BattleStarted);
         }
+    }
+
+    public interface IBattleAnimation
+    {
+        void Show();
+        void Hide();
+        event Action OnFinished;
     }
 }

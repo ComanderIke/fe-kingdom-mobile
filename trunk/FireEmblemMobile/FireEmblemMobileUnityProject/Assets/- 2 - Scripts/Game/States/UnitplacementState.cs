@@ -180,7 +180,7 @@ namespace Game.States
             UnitPlacementUI.unitSelectionChanged += InstantiateUnits;
             NextState =  GridGameManager.Instance.GameStateManager.PhaseTransitionState;
             startPositions = GameObject.FindObjectsOfType<StartPosition>();
-          
+           
             InitFactions();
             InitCamera();
             UnitPlacementInputSystem = new UnitPlacementInputSystem();
@@ -264,13 +264,26 @@ namespace Game.States
             factionManager.Factions[0].ClearUnits();
             factionManager.Factions[1].ClearUnits();
             int cnt = 0;
-            foreach (var unit in SceneTransferData.Instance.UnitsGoingIntoBattle)
+            if (SceneTransferData.Instance.UnitsGoingIntoBattle != null)
             {
-                cnt++;
-                if(cnt <= 4)
-                    factionManager.Factions[0].AddUnit(unit);
+                foreach (var unit in SceneTransferData.Instance.UnitsGoingIntoBattle)
+                {
+                    cnt++;
+                    if (cnt <= 4)
+                        factionManager.Factions[0].AddUnit(unit);
+                }
             }
-        
+            else
+            {
+                var units = GameObject.FindObjectOfType<DemoUnits>().GetUnits();
+                foreach (var unit in units)
+                {
+                    cnt++;
+                    if (cnt <= 4)
+                        factionManager.Factions[0].AddUnit(unit);
+                }
+            }
+
             if (SceneTransferData.Instance.EnemyUnits != null)
             {
                 foreach (var unit in SceneTransferData.Instance.EnemyUnits)
