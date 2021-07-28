@@ -1,5 +1,6 @@
 ﻿using GameEngine.Input;
 using GameEngine.Tools;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace GameCamera
@@ -37,8 +38,10 @@ namespace GameCamera
                     // if (EventSystem.current.currentSelectedGameObject == null ||
                     //     !HitChecker.HasTagExcluded(EventSystem.current
                     //         .currentSelectedGameObject.tag))
-                    if(!EventSystem.current.IsPointerOverGameObject())
+                    //Debug.Log("POINTER OVER GO: " + EventSystem.current.currentSelectedGameObject.name);
+                    if(!EventSystem.current.IsPointerOverGameObject(0))
                     {
+                        Debug.Log("DRAG");
                         DragPerformer.StartDrag(transform, CameraInputProvider.InputPosition());
                     }
                 }
