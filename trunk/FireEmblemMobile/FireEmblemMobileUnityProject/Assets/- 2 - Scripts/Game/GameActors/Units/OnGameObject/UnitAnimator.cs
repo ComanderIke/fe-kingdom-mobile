@@ -85,6 +85,8 @@ namespace Game.GameActors.Units.OnGameObject
         public void SetUnit(Unit unit1)
         {
             this.unit = unit1;
+            if (unit1.visuals.CharacterSpriteSet.idleAnimation != null)
+                return;
             AnimatorOverrideController aoc = new AnimatorOverrideController(animator.runtimeAnimatorController);
           
 

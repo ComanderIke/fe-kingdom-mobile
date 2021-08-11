@@ -1,4 +1,6 @@
-﻿using Game.GameActors.Units;
+﻿using System;
+using Game.GameActors.Units;
+using Game.GameActors.Units.OnGameObject;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -21,6 +23,8 @@ namespace Game.GameInput
         public BoxCollider2D boxCollider;
 
         public IUnitTouchInputReceiver touchInputReceiver { get; set; }
+        [SerializeField]
+        private UnitRenderer unitRenderer;
 
 
         private bool dragInitiated;
@@ -33,9 +37,15 @@ namespace Game.GameInput
         
         private void OnMouseEnter()
         {
-            
+           unitRenderer.ShowHover();
             touchInputReceiver?.OnMouseEnter(this);
         }
+
+        private void OnMouseExit()
+        {
+            unitRenderer.HideHover();
+        }
+
         public void OnMouseDrag()
         {
 

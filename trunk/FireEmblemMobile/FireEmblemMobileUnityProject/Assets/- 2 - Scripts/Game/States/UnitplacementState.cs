@@ -58,7 +58,7 @@ namespace Game.States
                 new ScreenPointToRayProvider(cameraSystem.camera), new HitChecker(TagManager.UnitTag),new MouseCameraInputProvider());
             int height =  GridGameManager.Instance.GetSystem<GridSystem>().GridData.height;
             int width =  GridGameManager.Instance.GetSystem<GridSystem>().GridData.width;
-            cameraSystem.AddMixin<ClampCameraMixin>().Construct(width, height);
+         //   cameraSystem.AddMixin<ClampCameraMixin>().Construct(width, height);
             cameraSystem.AddMixin<ViewOnGridMixin>().zoom = 0;
         }
 

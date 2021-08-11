@@ -11,6 +11,7 @@ namespace GameCamera
 
         public static OnMoveToFinishedEvent MoveToFinishedEvent;
         public new Camera camera;
+        public Camera uiCamera;
         private List<CameraMixin> mixins;
         public CameraData cameraData;
         public static bool IsDragging;
@@ -43,6 +44,10 @@ namespace GameCamera
         {
             var mixin = (CameraMixin)GetComponent(typeof(T));
             mixins.Remove(mixin);
+            if (mixin == null)
+                return;
+            
+            
             DestroyImmediate(GetComponent(mixin.GetType()));
         }
 

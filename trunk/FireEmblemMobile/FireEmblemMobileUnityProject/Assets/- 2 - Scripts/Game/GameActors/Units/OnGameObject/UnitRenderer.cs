@@ -24,6 +24,7 @@ namespace Game.GameActors.Units.OnGameObject
         [SerializeField] private Image EquippedItemBackground;
         [SerializeField] private GameObject spriteMask;
         [SerializeField] private CanvasGroup alphaCanvas;
+        [SerializeField] private CanvasGroup hoverCanvas;
         [SerializeField] private SpriteRenderer sprite;
         public Unit unit;
 
@@ -35,9 +36,18 @@ namespace Game.GameActors.Units.OnGameObject
             if(unit!=null)
                 unit.TurnStateManager.UnitWaiting += SetWaitingSprite;
             Human.OnEquippedWeapon += OnEquippedWeapon;
+           // hoverCanvas.alpha = 0;
             HpValueChanged();
             SpValueChanged();
             SpBarsValueChanged();
+        }
+        public void HideHover()
+        {
+           // hoverCanvas.alpha = 0;
+        }
+        public void ShowHover()
+        {
+         //   hoverCanvas.alpha = 1;
         }
         public void Init()
         {

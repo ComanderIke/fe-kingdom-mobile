@@ -60,7 +60,7 @@ namespace Game.Mechanics
                 new ScreenPointToRayProvider(cameraSystem.camera), new HitChecker(),new MouseCameraInputProvider());
             int height = gridGameManager.GetSystem<GridSystem>().GridData.height;
             int width = gridGameManager.GetSystem<GridSystem>().GridData.width;
-            cameraSystem.AddMixin<ClampCameraMixin>().Construct(width, height);
+           // cameraSystem.AddMixin<ClampCameraMixin>().Construct(width, height);
             cameraSystem.AddMixin<ViewOnGridMixin>().zoom = 0;
             gridInputSystem.SetActive(true);
             unitInputSystem.SetActive(true);
