@@ -7,6 +7,16 @@ namespace GameCamera
     public class ViewOnGridMixin : CameraMixin
     {
         private int currentZoom = -1;
+        [SerializeField]
+        private float minX=-5;
+        [SerializeField]
+        private float maxX=18;
+        [SerializeField]
+        private float minY=-5;
+        [SerializeField]
+        private float maxY=12;
+     
+       
 
         [Range(0, 3)] public int zoom = 1;
         public float zoomSpeed=0.004f;
@@ -31,6 +41,7 @@ namespace GameCamera
                  CameraSystem.camera.orthographicSize = Mathf.Max(CameraSystem.camera.orthographicSize,1f);
                  CameraSystem.camera.orthographicSize = Mathf.Min(CameraSystem.camera.orthographicSize,5f);
                  CameraSystem.uiCamera.orthographicSize = CameraSystem.camera.orthographicSize;
+               
                  // distance = Vector2.Distance(touch0, touch1);
                  //
                  // if (startDistance == 0)
@@ -50,6 +61,28 @@ namespace GameCamera
             else
             {
                 startDistance = 0;
+            }
+            Vector3  topRight =  CameraSystem.camera.ScreenToWorldPoint(new Vector3( CameraSystem.camera.pixelWidth,  CameraSystem.camera.pixelHeight, -transform.position.z));
+            Vector3  bottomLeft =  CameraSystem.camera.ScreenToWorldPoint(new Vector3(0,0,-transform.position.z));
+       
+            if(topRight.x > maxX)
+            {
+                transform.position = new Vector3(transform.position.x - (topRight.x - maxX), transform.position.y, transform.position.z);
+            }
+       
+            if(topRight.y > maxY)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y - (topRight.y - maxY), transform.position.z);
+            }
+       
+            if(bottomLeft.x < minX)
+            {
+                transform.position = new Vector3(transform.position.x + (minX - bottomLeft.x), transform.position.y, transform.position.z);
+            }
+       
+            if(bottomLeft.y < minY)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y + (minY - bottomLeft.y), transform.position.z);
             }
             // if (currentZoom != zoom)
             // {
