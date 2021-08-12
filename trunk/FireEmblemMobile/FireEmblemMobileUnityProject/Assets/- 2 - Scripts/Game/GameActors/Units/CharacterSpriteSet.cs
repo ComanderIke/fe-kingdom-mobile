@@ -9,8 +9,7 @@ namespace Game.GameActors.Units
     {
         public Sprite FaceSprite;
         public Sprite MapSprite;
-        public AnimationClip idleAnimation;
-        public AnimationClip battleAnimation;
-        public AnimationClip dodgeAnimation;
+        public GameObject battleAnimatedSprite;
+        public GameObject animatedSprite;
     }
 }

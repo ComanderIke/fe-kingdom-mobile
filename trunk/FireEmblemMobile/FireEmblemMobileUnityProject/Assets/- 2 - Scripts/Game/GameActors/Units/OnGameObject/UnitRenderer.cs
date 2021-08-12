@@ -25,7 +25,7 @@ namespace Game.GameActors.Units.OnGameObject
         [SerializeField] private GameObject spriteMask;
         [SerializeField] private CanvasGroup alphaCanvas;
         [SerializeField] private CanvasGroup hoverCanvas;
-        [SerializeField] private SpriteRenderer sprite;
+        [SerializeField] public SpriteRenderer sprite;
         public Unit unit;
 
         private void Start()
