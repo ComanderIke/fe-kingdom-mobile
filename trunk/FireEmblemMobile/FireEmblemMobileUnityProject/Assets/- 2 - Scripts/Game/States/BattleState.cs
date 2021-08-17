@@ -48,11 +48,12 @@ namespace Game.Mechanics
         public override void Enter()
         {
            // battleSystem = new BattleSystem(attacker, defender);
-           BattleAnimation.Show();
+          
            IsFinished = false;
+           BattleAnimation.Show(battleSystem.GetBattleSimulation(attacker,defender));
            battleSystem.StartBattle(attacker, defender);
            BattleAnimation.OnFinished += battleSystem.EndBattle;
-            
+         
             //Debug.Log("ENTER FIGHTSTATE");
 
             SetUpMusic();
@@ -103,7 +104,7 @@ namespace Game.Mechanics
 
     public interface IBattleAnimation
     {
-        void Show();
+        void Show(BattleSimulation battleSimulation);
         void Hide();
         event Action OnFinished;
     }

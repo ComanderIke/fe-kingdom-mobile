@@ -111,7 +111,14 @@ namespace Game.Mechanics
 
         }
     
-        
+        public BattleSimulation GetBattleSimulation(IBattleActor attacker, IBattleActor defender)
+        {
+            battleSimulation = new BattleSimulation(attacker, defender);
+            battleSimulation.StartBattle();
+
+            return battleSimulation;
+        }
+
 
         public BattlePreview GetBattlePreview(IBattleActor attacker, IBattleActor defender)
         {
