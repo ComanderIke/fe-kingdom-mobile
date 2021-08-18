@@ -23,7 +23,7 @@ public class ParalaxController : MonoBehaviour
     // Update is called once per frame
     private Vector3 newPos;
     private Vector3 sumnewPos;
-    private Vector3 velo;
+    private float velo;
     
 
     void LateUpdate()
@@ -34,7 +34,7 @@ public class ParalaxController : MonoBehaviour
          newPos = sumnewPos*speed;
         // Debug.Log("NewPos. "+newPos);
          //velo = Time.deltaTime;
-         transform.position=Vector3.SmoothDamp(transform.position, transformStartPos+newPos,ref velo, drag);
+         transform.position=new Vector3(Mathf.SmoothDamp(transform.position.x, transformStartPos.x+newPos.x,ref velo, drag),transform.position.y,transform.position.z);
         // Debug.Log(velo);
          lastCameraPos = camera.position;
      }

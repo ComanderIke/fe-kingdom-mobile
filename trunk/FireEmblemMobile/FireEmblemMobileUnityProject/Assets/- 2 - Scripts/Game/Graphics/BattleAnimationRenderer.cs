@@ -21,10 +21,12 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     public TimelineAsset cameraIntro;
     public TimelineAsset cameraZoomIn;
     public TimelineAsset cameraZoomOut;
-
+    public Transform rightCharacterPosition;
     private bool playing;
+    private BattleSimulation battleSimulation;
     public void Show(BattleSimulation battleSimulation)
     {
+        this.battleSimulation = battleSimulation;
         var background=GameObject.Instantiate(battleBackground, transform);
         background.transform.position = new Vector3(camera.transform.position.x, background.transform.position.y,
             background.transform.position.z);
@@ -32,6 +34,8 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         {
             paralaxController.camera = camera.transform;
         }
+
+        leftCharacterAttacker = battleSimulation.Attacker.Faction.IsPlayerControlled;
         if (battleSimulation.Attacker.Faction.IsPlayerControlled)
         {
             characterLeft = Instantiate(((Unit) battleSimulation.Attacker).visuals.CharacterSpriteSet.battleAnimatedSprite,
@@ -51,27 +55,79 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         playableDirector.Stop();
         playableDirector.playableAsset = cameraIntro;
         playableDirector.Play();
+        characterLeft.GetComponent<BattleAnimationSpriteController>().WalkIn();
+        characterRight.transform.localScale = new Vector3(-characterRight.transform.localScale.x, characterRight.transform.localScale.y,
+            characterRight.transform.localScale.z);
+        characterRight.transform.position = rightCharacterPosition.position;
         playing = true;
         LeanTween.value(volume.weight, 1, 1.2f).setEaseOutQuad().setOnUpdate((value) =>
         {
             volume.weight = value;
         });
-        Invoke("IntroFinished", (float)playableDirector.duration);
+        Invoke("IntroFinished", (float)playableDirector.duration+introWaitDuration);
     }
 
+    private float introWaitDuration = 1.0f;
+
+    private bool leftCharacterAttacker = false;
+    //private float zoomInWaitDuration = 1.0f;
     private void IntroFinished()
     {
         playableDirector.Stop();
         playableDirector.playableAsset = cameraZoomIn;
         playableDirector.Play();
+       
         Invoke("ZoomInFinished", (float)playableDirector.duration);
+    }
+
+    private int attackSequenzIndex = 0;
+  
+    private float attackDuration = 1.0f;
+
+    private void ContinueBattle()
+    {
+        if (attackSequenzIndex >= battleSimulation.AttackSequence.Count)
+        {
+            AllAttacksFinished();
+            return;
+        }
+        if (battleSimulation.AttackSequence[attackSequenzIndex])
+        {
+            var attackingCharacter = leftCharacterAttacker ? characterLeft : characterRight;
+            var defendingCharacter = leftCharacterAttacker ? characterRight : characterLeft;
+            attackingCharacter.GetComponent<BattleAnimationSpriteController>().Attack(!leftCharacterAttacker);
+            defendingCharacter.GetComponent<BattleAnimationSpriteController>().Dodge(leftCharacterAttacker);
+        }
+        else
+        {
+            var attackingCharacter = leftCharacterAttacker ? characterRight : characterLeft;
+            var defendingCharacter = leftCharacterAttacker ? characterLeft : characterRight;
+            attackingCharacter.GetComponent<BattleAnimationSpriteController>().Attack(leftCharacterAttacker);
+            defendingCharacter.GetComponent<BattleAnimationSpriteController>().Dodge(!leftCharacterAttacker);
+        }
+        attackSequenzIndex++;
+        Invoke("FinishAttack", attackDuration);
+      
+    }
+
+    private float timeBetweenAttacks = 1.0f;
+    private void FinishAttack()
+    {
+
+        Invoke("ContinueBattle",timeBetweenAttacks );
+    }
+
+    private void AllAttacksFinished()
+    {
+        playableDirector.playableAsset = cameraZoomOut;
+        playableDirector.Play();
+        Invoke("ZoomOutFinished", (float)playableDirector.duration);
     }
     private void ZoomInFinished()
     {
         playableDirector.Stop();
-        playableDirector.playableAsset = cameraZoomOut;
-        playableDirector.Play();
-        Invoke("ZoomOutFinished", (float)playableDirector.duration);
+        ContinueBattle();
+      
     }
 
     private void ZoomOutFinished()
