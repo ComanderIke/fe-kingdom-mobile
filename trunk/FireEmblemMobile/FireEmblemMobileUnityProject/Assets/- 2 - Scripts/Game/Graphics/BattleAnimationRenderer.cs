@@ -24,6 +24,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     public Transform rightCharacterPosition;
     private bool playing;
     private BattleSimulation battleSimulation;
+    public CameraShake cameraShake;
     public void Show(BattleSimulation battleSimulation)
     {
         this.battleSimulation = battleSimulation;
@@ -83,9 +84,12 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     private int attackSequenzIndex = 0;
   
     private float attackDuration = 1.0f;
+    public float magnitude = 0.4f;
 
+    public float duration = 1.9f;
     private void ContinueBattle()
     {
+        StartCoroutine(cameraShake.Shake(duration, magnitude));
         if (attackSequenzIndex >= battleSimulation.AttackSequence.Count)
         {
             AllAttacksFinished();
