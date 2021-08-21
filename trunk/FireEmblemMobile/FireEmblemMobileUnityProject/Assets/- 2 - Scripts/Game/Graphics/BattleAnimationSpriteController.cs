@@ -11,6 +11,7 @@ public class BattleAnimationSpriteController : MonoBehaviour
     public TimelineAsset walkIn;
 
     public TimelineAsset attack;
+    public TimelineAsset idle;
     public TimelineAsset attackMirrored;
     public TimelineAsset dodge;
     public TimelineAsset dodgeMirrored;
@@ -19,6 +20,10 @@ public class BattleAnimationSpriteController : MonoBehaviour
     public void WalkIn()
     {
         PlayableDirector.Play(walkIn);
+    }
+    public void Idle()
+    {
+        PlayableDirector.Play(idle);
     }
     public void Attack(bool mirror=false)
     {
@@ -34,5 +39,10 @@ public class BattleAnimationSpriteController : MonoBehaviour
             PlayableDirector.Play(dodgeMirrored);
         else
             PlayableDirector.Play(dodge);
+    }
+
+    public double GetAttackDuration()
+    {
+        return PlayableDirector.duration;
     }
 }

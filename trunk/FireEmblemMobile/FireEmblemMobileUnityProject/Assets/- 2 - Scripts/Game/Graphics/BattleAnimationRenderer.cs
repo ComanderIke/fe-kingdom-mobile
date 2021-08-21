@@ -43,6 +43,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
                     transform);
             characterRight = Instantiate(((Unit) battleSimulation.Defender).visuals.CharacterSpriteSet.battleAnimatedSprite,
                     transform);
+           
         }
         else
         {
@@ -56,7 +57,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         playableDirector.Stop();
         playableDirector.playableAsset = cameraIntro;
         playableDirector.Play();
-        characterLeft.GetComponent<BattleAnimationSpriteController>().WalkIn();
+        characterLeft.GetComponentInChildren<BattleAnimationSpriteController>().WalkIn();
         characterRight.transform.localScale = new Vector3(-characterRight.transform.localScale.x, characterRight.transform.localScale.y,
             characterRight.transform.localScale.z);
         characterRight.transform.position = rightCharacterPosition.position;
@@ -83,7 +84,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
 
     private int attackSequenzIndex = 0;
   
-    private float attackDuration = 1.0f;
+    private float attackDuration = 0.0f;
     public float magnitude = 0.4f;
 
     public float duration = 1.9f;
@@ -99,16 +100,22 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         {
             var attackingCharacter = leftCharacterAttacker ? characterLeft : characterRight;
             var defendingCharacter = leftCharacterAttacker ? characterRight : characterLeft;
-            attackingCharacter.GetComponent<BattleAnimationSpriteController>().Attack(!leftCharacterAttacker);
-            defendingCharacter.GetComponent<BattleAnimationSpriteController>().Dodge(leftCharacterAttacker);
+           
+            attackingCharacter.GetComponentInChildren<BattleAnimationSpriteController>().Attack();
+            defendingCharacter.GetComponentInChildren<BattleAnimationSpriteController>().Dodge();
+            attackDuration= (float) attackingCharacter.GetComponentInChildren<BattleAnimationSpriteController>().GetAttackDuration();
         }
         else
         {
             var attackingCharacter = leftCharacterAttacker ? characterRight : characterLeft;
             var defendingCharacter = leftCharacterAttacker ? characterLeft : characterRight;
-            attackingCharacter.GetComponent<BattleAnimationSpriteController>().Attack(leftCharacterAttacker);
-            defendingCharacter.GetComponent<BattleAnimationSpriteController>().Dodge(!leftCharacterAttacker);
+         
+            attackingCharacter.GetComponentInChildren<BattleAnimationSpriteController>().Attack();
+            defendingCharacter.GetComponentInChildren<BattleAnimationSpriteController>().Dodge();
+            attackDuration= (float) attackingCharacter.GetComponentInChildren<BattleAnimationSpriteController>().GetAttackDuration();
         }
+
+        
         attackSequenzIndex++;
         Invoke("FinishAttack", attackDuration);
       
@@ -117,15 +124,19 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     private float timeBetweenAttacks = 1.0f;
     private void FinishAttack()
     {
-
-        Invoke("ContinueBattle",timeBetweenAttacks );
+        playableDirector.playableAsset = cameraZoomOut;
+        playableDirector.Play();
+        characterLeft.GetComponentInChildren<BattleAnimationSpriteController>().Idle();
+        characterRight.GetComponentInChildren<BattleAnimationSpriteController>().Idle();
+        Invoke("ZoomOutFinished",timeBetweenAttacks );
     }
 
     private void AllAttacksFinished()
     {
-        playableDirector.playableAsset = cameraZoomOut;
-        playableDirector.Play();
-        Invoke("ZoomOutFinished", (float)playableDirector.duration);
+         playableDirector.playableAsset = cameraZoomOut;
+         playableDirector.Play();
+         OnFinished.Invoke();
+        // Invoke("ZoomOutFinished", (float)playableDirector.duration);
     }
     private void ZoomInFinished()
     {
@@ -136,7 +147,11 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
 
     private void ZoomOutFinished()
     {
-        OnFinished?.Invoke();
+        playableDirector.playableAsset = cameraZoomIn;
+        playableDirector.Play();
+       
+        Invoke("ZoomInFinished", (float)playableDirector.duration);
+        //OnFinished?.Invoke();
     }
 
     public void Hide()
