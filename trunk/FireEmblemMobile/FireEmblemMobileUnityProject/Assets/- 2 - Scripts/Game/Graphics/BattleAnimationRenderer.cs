@@ -58,9 +58,10 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         playableDirector.playableAsset = cameraIntro;
         playableDirector.Play();
         characterLeft.GetComponentInChildren<BattleAnimationSpriteController>().WalkIn();
+        characterRight.GetComponentInChildren<BattleAnimationSpriteController>().Idle();
         characterRight.transform.localScale = new Vector3(-characterRight.transform.localScale.x, characterRight.transform.localScale.y,
             characterRight.transform.localScale.z);
-        characterRight.transform.position = rightCharacterPosition.position;
+        //characterRight.transform.position = rightCharacterPosition.position;
         playing = true;
         LeanTween.value(volume.weight, 1, 1.2f).setEaseOutQuad().setOnUpdate((value) =>
         {
@@ -90,12 +91,13 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     public float duration = 1.9f;
     private void ContinueBattle()
     {
-        StartCoroutine(cameraShake.Shake(duration, magnitude));
+       
         if (attackSequenzIndex >= battleSimulation.AttackSequence.Count)
         {
             AllAttacksFinished();
             return;
         }
+        StartCoroutine(cameraShake.Shake(duration, magnitude));
         if (battleSimulation.AttackSequence[attackSequenzIndex])
         {
             var attackingCharacter = leftCharacterAttacker ? characterLeft : characterRight;
@@ -133,10 +135,16 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
 
     private void AllAttacksFinished()
     {
-         playableDirector.playableAsset = cameraZoomOut;
-         playableDirector.Play();
-         OnFinished.Invoke();
+         // playableDirector.playableAsset = cameraZoomOut;
+         // playableDirector.Play();
+         Invoke("BattleFinished",(float) (playableDirector.duration+0.5f) );
+        
         // Invoke("ZoomOutFinished", (float)playableDirector.duration);
+    }
+
+    private void BattleFinished()
+    {
+        OnFinished.Invoke();
     }
     private void ZoomInFinished()
     {
@@ -147,6 +155,11 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
 
     private void ZoomOutFinished()
     {
+        if (attackSequenzIndex >= battleSimulation.AttackSequence.Count)
+        {
+            AllAttacksFinished();
+            return;
+        }
         playableDirector.playableAsset = cameraZoomIn;
         playableDirector.Play();
        

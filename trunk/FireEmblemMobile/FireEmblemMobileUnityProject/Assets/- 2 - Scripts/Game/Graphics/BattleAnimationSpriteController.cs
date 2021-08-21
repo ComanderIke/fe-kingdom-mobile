@@ -12,9 +12,7 @@ public class BattleAnimationSpriteController : MonoBehaviour
 
     public TimelineAsset attack;
     public TimelineAsset idle;
-    public TimelineAsset attackMirrored;
     public TimelineAsset dodge;
-    public TimelineAsset dodgeMirrored;
     // Start is called before the first frame update
     
     public void WalkIn()
@@ -25,20 +23,14 @@ public class BattleAnimationSpriteController : MonoBehaviour
     {
         PlayableDirector.Play(idle);
     }
-    public void Attack(bool mirror=false)
+    public void Attack()
     {
-        if(mirror)
-            PlayableDirector.Play(attackMirrored);
-        else
-            PlayableDirector.Play(attack);
+        PlayableDirector.Play(attack);
     }
 
-    public void Dodge(bool mirror=false)
+    public void Dodge()
     {
-        if(mirror)
-            PlayableDirector.Play(dodgeMirrored);
-        else
-            PlayableDirector.Play(dodge);
+        PlayableDirector.Play(dodge);
     }
 
     public double GetAttackDuration()
