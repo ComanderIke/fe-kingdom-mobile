@@ -15,6 +15,7 @@ public class ParalaxController : MonoBehaviour
 
     void Start()
     {
+        camera = GameObject.FindWithTag("BattleCamera").transform;
         lastCameraPos = camera.position;
         cameraStartPos = lastCameraPos;
         transformStartPos = transform.position;

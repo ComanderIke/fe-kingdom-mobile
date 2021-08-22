@@ -31,10 +31,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         var background=GameObject.Instantiate(battleBackground, transform);
         background.transform.position = new Vector3(camera.transform.position.x, background.transform.position.y,
             background.transform.position.z);
-        foreach (var paralaxController in battleBackground.GetComponentsInChildren<ParalaxController>())
-        {
-            paralaxController.camera = camera.transform;
-        }
+    
 
         leftCharacterAttacker = battleSimulation.Attacker.Faction.IsPlayerControlled;
         if(characterLeft!=null)
