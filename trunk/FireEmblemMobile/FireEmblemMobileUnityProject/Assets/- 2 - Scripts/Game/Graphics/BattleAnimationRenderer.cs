@@ -37,6 +37,11 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         }
 
         leftCharacterAttacker = battleSimulation.Attacker.Faction.IsPlayerControlled;
+        if(characterLeft!=null)
+            Destroy(characterLeft);
+        if(characterRight!=null)
+            Destroy(characterRight);
+        attackSequenzIndex = 0;
         if (battleSimulation.Attacker.Faction.IsPlayerControlled)
         {
             characterLeft = Instantiate(((Unit) battleSimulation.Attacker).visuals.CharacterSpriteSet.battleAnimatedSprite,
@@ -124,6 +129,18 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     }
 
     private float timeBetweenAttacks = 1.0f;
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            CancelInvoke();
+            Debug.Log("TODO Reset Cameras and Volumes!");
+            BattleFinished();
+            
+        }
+    }
+
     private void FinishAttack()
     {
         playableDirector.playableAsset = cameraZoomOut;
@@ -144,7 +161,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
 
     private void BattleFinished()
     {
-        OnFinished.Invoke();
+        OnFinished?.Invoke();
     }
     private void ZoomInFinished()
     {
