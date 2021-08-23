@@ -1,4 +1,5 @@
-﻿using Game.GameInput;
+﻿using System.Collections.Generic;
+using Game.GameInput;
 using UnityEngine;
 
 namespace Game.Mechanics.Battle
@@ -11,5 +12,6 @@ namespace Game.Mechanics.Battle
         public BattlePreviewStats AttackerStats;
         public BattlePreviewStats DefenderStats;
 
+        public List<Mechanics.AttackData> AttacksData { get; set; }
     }
 }

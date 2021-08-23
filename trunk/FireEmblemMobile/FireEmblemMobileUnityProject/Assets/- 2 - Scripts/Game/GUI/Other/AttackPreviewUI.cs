@@ -75,14 +75,29 @@ namespace Game.GUI
              attackCountX.SetActive(battlePreview.AttackerStats.AttackCount > 1);
              attackCount.gameObject.SetActive(battlePreview.AttackerStats.AttackCount > 1);
              attackCount.text = "" + battlePreview.AttackerStats.AttackCount;
-             hpBar.UpdateValues(battlePreview.AttackerStats.MaxHp, battlePreview.AttackerStats.CurrentHp, battlePreview.AttackerStats.AfterBattleHp, battlePreview.AttackerStats.IncomingDamage);
+             List<int> attackerDmg = new List<int>();
+             List<int> defenderDmg = new List<int>();
+             for (int i = 0; i < battlePreview.AttacksData.Count; i++)
+             {
+                 if (battlePreview.AttacksData[i].attacker)
+                 {
+                     attackerDmg.Add(battlePreview.AttacksData[i].Dmg);
+                 }
+                 else
+                 {
+                     defenderDmg.Add(battlePreview.AttacksData[i].Dmg);
+                 }
+             }
+             hpBar.UpdateValues(battlePreview.AttackerStats.MaxHp, battlePreview.AttackerStats.CurrentHp, battlePreview.AttackerStats.AfterBattleHp, 
+                 attackerDmg);
              spBars.SetPreviewValue(battlePreview.AttackerStats.CurrentSpBars,battlePreview.AttackerStats.AfterSpBars,battlePreview.AttackerStats.MaxSpBars);
              //spBar.UpdateValues(battlePreview.AttackerStats.MaxSp, battlePreview.AttackerStats.CurrentSp, battlePreview.AttackerStats.AfterBattleSp, battlePreview.AttackerStats.IncomingSpDamage);
              dmgValueRight.text = "" + battlePreview.DefenderStats.Damage;
              attackCountRightX.SetActive(battlePreview.DefenderStats.AttackCount > 1);
              attackCountRight.gameObject.SetActive(battlePreview.DefenderStats.AttackCount > 1);
              attackCountRight.text = "" + battlePreview.DefenderStats.AttackCount;
-             hpBarRight.UpdateValues(battlePreview.DefenderStats.MaxHp, battlePreview.DefenderStats.CurrentHp, battlePreview.DefenderStats.AfterBattleHp, battlePreview.DefenderStats.IncomingDamage);
+             hpBarRight.UpdateValues(battlePreview.DefenderStats.MaxHp, battlePreview.DefenderStats.CurrentHp, battlePreview.DefenderStats.AfterBattleHp,
+                 defenderDmg);
              spBarsRight.SetPreviewValue(battlePreview.DefenderStats.CurrentSpBars,battlePreview.DefenderStats.AfterSpBars,battlePreview.DefenderStats.MaxSpBars);
              //spBarRight.UpdateValues(battlePreview.DefenderStats.MaxSp, battlePreview.DefenderStats.CurrentSp, battlePreview.DefenderStats.AfterBattleSp, battlePreview.DefenderStats.IncomingSpDamage);
             

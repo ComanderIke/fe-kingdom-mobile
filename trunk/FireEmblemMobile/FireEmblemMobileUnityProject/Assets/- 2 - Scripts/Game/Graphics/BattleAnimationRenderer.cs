@@ -94,19 +94,27 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     private void ContinueBattle()
     {
        
-        if (attackSequenzIndex >= battleSimulation.AttackSequence.Count)
+        if (attackSequenzIndex >= battleSimulation.AttacksData.Count)
         {
             AllAttacksFinished();
             return;
         }
         StartCoroutine(cameraShake.Shake(duration, magnitude));
-        if (battleSimulation.AttackSequence[attackSequenzIndex])
+
+        if (battleSimulation.AttacksData[attackSequenzIndex].attacker)
         {
             var attackingCharacter = leftCharacterAttacker ? characterLeft : characterRight;
             var defendingCharacter = leftCharacterAttacker ? characterRight : characterLeft;
-           
             attackingCharacter.GetComponentInChildren<BattleAnimationSpriteController>().Attack();
-            defendingCharacter.GetComponentInChildren<BattleAnimationSpriteController>().Dodge();
+            if (battleSimulation.AttacksData[attackSequenzIndex].hit)
+            {
+                defendingCharacter.GetComponentInChildren<BattleAnimationSpriteController>().Damaged();
+            }
+            else
+            {
+                defendingCharacter.GetComponentInChildren<BattleAnimationSpriteController>().Dodge();
+            }
+            
             attackDuration= (float) attackingCharacter.GetComponentInChildren<BattleAnimationSpriteController>().GetAttackDuration();
         }
         else
@@ -115,7 +123,14 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
             var defendingCharacter = leftCharacterAttacker ? characterLeft : characterRight;
          
             attackingCharacter.GetComponentInChildren<BattleAnimationSpriteController>().Attack();
-            defendingCharacter.GetComponentInChildren<BattleAnimationSpriteController>().Dodge();
+            if (battleSimulation.AttacksData[attackSequenzIndex].hit)
+            {
+                defendingCharacter.GetComponentInChildren<BattleAnimationSpriteController>().Damaged();
+            }
+            else
+            {
+                defendingCharacter.GetComponentInChildren<BattleAnimationSpriteController>().Dodge();
+            }
             attackDuration= (float) attackingCharacter.GetComponentInChildren<BattleAnimationSpriteController>().GetAttackDuration();
         }
 
@@ -169,7 +184,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
 
     private void ZoomOutFinished()
     {
-        if (attackSequenzIndex >= battleSimulation.AttackSequence.Count)
+        if (attackSequenzIndex >= battleSimulation.AttacksData.Count)
         {
             AllAttacksFinished();
             return;

@@ -127,10 +127,25 @@ namespace Game.Mechanics
             battlePreview.Defender = defender;
             battleSimulation = new BattleSimulation(attacker, defender);
             battleSimulation.StartBattle();
+            battlePreview.AttacksData = battleSimulation.AttacksData;
 
-            battlePreview.AttackerStats = new BattlePreviewStats(attacker.BattleComponent.BattleStats.GetDamage(), attacker.Stats.Spd, defender.BattleComponent.BattleStats.GetDamageType(), defender.BattleComponent.BattleStats.GetDamageType()==DamageType.Physical ? attacker.Stats.Def : attacker.Stats.Res, attacker.Stats.Skl, attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defender), attacker.BattleComponent.BattleStats.GetAttackCountAgainst(defender), attacker.Hp, attacker.Stats.MaxHp, battleSimulation.Attacker.Hp, battleSimulation.DefenderDamage, attacker.Sp, attacker.Stats.MaxSp, battleSimulation.Attacker.Sp, battleSimulation.DefenderSpDamage, attacker.SpBars, battleSimulation.Attacker.SpBars, attacker.MaxSpBars);
+            battlePreview.AttackerStats = new BattlePreviewStats(attacker.BattleComponent.BattleStats.GetDamage(), 
+                attacker.Stats.Spd, defender.BattleComponent.BattleStats.GetDamageType(), 
+                defender.BattleComponent.BattleStats.GetDamageType()==DamageType.Physical ? attacker.Stats.Def : attacker.Stats.Res, 
+                attacker.Stats.Skl, attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defender), 
+                attacker.BattleComponent.BattleStats.GetAttackCountAgainst(defender), attacker.Hp, attacker.Stats.MaxHp, 
+                battleSimulation.Attacker.Hp, attacker.Sp, attacker.Stats.MaxSp, 
+                battleSimulation.Attacker.Sp, attacker.SpBars, 
+                battleSimulation.Attacker.SpBars, attacker.MaxSpBars);
 
-            battlePreview.DefenderStats = new BattlePreviewStats(defender.BattleComponent.BattleStats.GetDamage(), defender.Stats.Spd, attacker.BattleComponent.BattleStats.GetDamageType(), attacker.BattleComponent.BattleStats.GetDamageType()==DamageType.Physical? defender.Stats.Def : defender.Stats.Res, defender.Stats.Skl, defender.BattleComponent.BattleStats.GetDamageAgainstTarget(attacker), defender.BattleComponent.BattleStats.GetAttackCountAgainst(attacker), defender.Hp, defender.Stats.MaxHp, battleSimulation.Defender.Hp, battleSimulation.AttackerDamage, defender.Sp, defender.Stats.MaxSp, battleSimulation.Defender.Sp, battleSimulation.AttackerSpDamage,  defender.SpBars, battleSimulation.Defender.SpBars, defender.MaxSpBars);
+            battlePreview.DefenderStats = new BattlePreviewStats(defender.BattleComponent.BattleStats.GetDamage(), 
+                defender.Stats.Spd, attacker.BattleComponent.BattleStats.GetDamageType(), 
+                attacker.BattleComponent.BattleStats.GetDamageType()==DamageType.Physical? defender.Stats.Def : defender.Stats.Res,
+                defender.Stats.Skl, defender.BattleComponent.BattleStats.GetDamageAgainstTarget(attacker),
+                defender.BattleComponent.BattleStats.GetAttackCountAgainst(attacker), defender.Hp, defender.Stats.MaxHp,
+                battleSimulation.Defender.Hp, defender.Sp, defender.Stats.MaxSp, 
+                battleSimulation.Defender.Sp,  defender.SpBars, 
+                battleSimulation.Defender.SpBars, defender.MaxSpBars);
             return battlePreview;
         }
 
