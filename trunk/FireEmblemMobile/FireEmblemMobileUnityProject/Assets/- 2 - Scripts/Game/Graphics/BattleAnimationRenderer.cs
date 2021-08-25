@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Game.GameActors.Units;
+using Game.GUI.PopUpText;
 using Game.Mechanics;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -91,6 +92,14 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     public float magnitude = 0.4f;
 
     public float duration = 1.9f;
+
+   
+
+    IEnumerator Delay(float delay, Action action)
+    {
+        yield return new WaitForSeconds(delay);
+        action?.Invoke();
+    }
     private void ContinueBattle()
     {
        
@@ -100,38 +109,58 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
             return;
         }
         StartCoroutine(cameraShake.Shake(duration, magnitude));
-
+        var dmg = battleSimulation.AttacksData[attackSequenzIndex].Dmg;
         if (battleSimulation.AttacksData[attackSequenzIndex].attacker)
         {
             var attackingCharacter = leftCharacterAttacker ? characterLeft : characterRight;
             var defendingCharacter = leftCharacterAttacker ? characterRight : characterLeft;
-            attackingCharacter.GetComponentInChildren<BattleAnimationSpriteController>().Attack();
+            var attackerSpriteController = attackingCharacter.GetComponentInChildren<BattleAnimationSpriteController>();
+            var defenderSpriteController = defendingCharacter.GetComponentInChildren<BattleAnimationSpriteController>();
+            var defenderImpactPosition = defendingCharacter.GetComponentInChildren<ImpactPosition>();
+           
+            attackerSpriteController.Attack();
             if (battleSimulation.AttacksData[attackSequenzIndex].hit)
             {
-                defendingCharacter.GetComponentInChildren<BattleAnimationSpriteController>().Damaged();
+                defenderSpriteController.Damaged();
+              
+                StartCoroutine(Delay(0.05f,()=>
+                    DamagePopUp.CreateForBattleView(defenderImpactPosition.transform.position,
+                        dmg, Color.red, 5.0f,!leftCharacterAttacker)));
+
             }
             else
             {
-                defendingCharacter.GetComponentInChildren<BattleAnimationSpriteController>().Dodge();
+                defenderSpriteController.Dodge();
+                StartCoroutine(Delay(0.05f, () =>
+                    DamagePopUp.CreateMiss(defenderImpactPosition.transform.position,
+                        Color.white, 4.0f, !leftCharacterAttacker)));
             }
             
-            attackDuration= (float) attackingCharacter.GetComponentInChildren<BattleAnimationSpriteController>().GetAttackDuration();
+            attackDuration= (float) attackerSpriteController.GetAttackDuration();
         }
         else
         {
             var attackingCharacter = leftCharacterAttacker ? characterRight : characterLeft;
             var defendingCharacter = leftCharacterAttacker ? characterLeft : characterRight;
-         
-            attackingCharacter.GetComponentInChildren<BattleAnimationSpriteController>().Attack();
+            var attackerSpriteController = attackingCharacter.GetComponentInChildren<BattleAnimationSpriteController>();
+            var defenderSpriteController = defendingCharacter.GetComponentInChildren<BattleAnimationSpriteController>();
+            var defenderImpactPosition = defendingCharacter.GetComponentInChildren<ImpactPosition>();
+            attackerSpriteController.Attack();
             if (battleSimulation.AttacksData[attackSequenzIndex].hit)
             {
-                defendingCharacter.GetComponentInChildren<BattleAnimationSpriteController>().Damaged();
+                defenderSpriteController.Damaged();
+                StartCoroutine(Delay(0.05f, () =>
+                    DamagePopUp.CreateForBattleView(defenderImpactPosition.transform.position,
+                        dmg, Color.red, 5.0f, leftCharacterAttacker)));
             }
             else
             {
-                defendingCharacter.GetComponentInChildren<BattleAnimationSpriteController>().Dodge();
+                defenderSpriteController.Dodge();
+                StartCoroutine(Delay(0.05f, () =>
+                    DamagePopUp.CreateMiss(defenderImpactPosition.transform.position,
+                        Color.white, 4.0f, leftCharacterAttacker)));
             }
-            attackDuration= (float) attackingCharacter.GetComponentInChildren<BattleAnimationSpriteController>().GetAttackDuration();
+            attackDuration= (float) attackerSpriteController.GetAttackDuration();
         }
 
         
