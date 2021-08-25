@@ -30,7 +30,7 @@ namespace Game.Mechanics
         {
             int damage = attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defender);
             //int spDamage= attacker.BattleComponent.BattleStats.GetTotalSpDamageAgainstTarget(defender);
-            attackData.hit = UnityEngine.Random.Range(0, 101) > 50;
+            attackData.hit = UnityEngine.Random.Range(0, 101) <= attacker.BattleComponent.BattleStats.GetHitAgainstTarget(defender);
             if (attacker == Attacker)
             {
               
@@ -56,7 +56,8 @@ namespace Game.Mechanics
                    
                 }
             }
-            defender.Hp -= damage;
+            if(attackData.hit)
+                defender.Hp -= damage;
           //  defender.Sp -= spDamage;
            
             //if (defender is Human humanDefender && humanDefender.EquippedWeapon != null)

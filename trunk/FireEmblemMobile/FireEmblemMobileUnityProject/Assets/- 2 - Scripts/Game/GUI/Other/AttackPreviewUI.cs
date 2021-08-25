@@ -26,6 +26,7 @@ namespace Game.GUI
         // [SerializeField] private TextMeshProUGUI sklValue = default;
         [SerializeField] private Image faceSpriteLeft = default;
         [SerializeField] private TextMeshProUGUI dmgValue = default;
+        [SerializeField] private TextMeshProUGUI hitValue = default;
         [SerializeField] private TextMeshProUGUI attackCount = default;
         [SerializeField] private GameObject attackCountX = default;
         [SerializeField] private AttackPreviewStatBar hpBar = default;
@@ -40,6 +41,7 @@ namespace Game.GUI
         // [SerializeField] private TextMeshProUGUI sklValueRight = default;
         [SerializeField] private Image faceSpriteRight = default;
         [SerializeField] private TextMeshProUGUI dmgValueRight = default;
+        [SerializeField] private TextMeshProUGUI hitValueRight = default;
         [SerializeField] private TextMeshProUGUI attackCountRight = default;
         [SerializeField] private GameObject attackCountRightX = default;
         [SerializeField] private AttackPreviewStatBar hpBarRight = default;
@@ -72,6 +74,7 @@ namespace Game.GUI
              faceSpriteRight.sprite = defenderSprite;
 
              dmgValue.text = "" + battlePreview.AttackerStats.Damage;
+             hitValue.text = "" + battlePreview.AttackerStats.Hit;
              attackCountX.SetActive(battlePreview.AttackerStats.AttackCount > 1);
              attackCount.gameObject.SetActive(battlePreview.AttackerStats.AttackCount > 1);
              attackCount.text = "" + battlePreview.AttackerStats.AttackCount;
@@ -93,6 +96,7 @@ namespace Game.GUI
              spBars.SetPreviewValue(battlePreview.AttackerStats.CurrentSpBars,battlePreview.AttackerStats.AfterSpBars,battlePreview.AttackerStats.MaxSpBars);
              //spBar.UpdateValues(battlePreview.AttackerStats.MaxSp, battlePreview.AttackerStats.CurrentSp, battlePreview.AttackerStats.AfterBattleSp, battlePreview.AttackerStats.IncomingSpDamage);
              dmgValueRight.text = "" + battlePreview.DefenderStats.Damage;
+             hitValueRight.text = "" + battlePreview.DefenderStats.Hit;
              attackCountRightX.SetActive(battlePreview.DefenderStats.AttackCount > 1);
              attackCountRight.gameObject.SetActive(battlePreview.DefenderStats.AttackCount > 1);
              attackCountRight.text = "" + battlePreview.DefenderStats.AttackCount;

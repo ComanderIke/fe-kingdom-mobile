@@ -19,6 +19,7 @@ namespace Game.Mechanics.Battle
         [HideInInspector]
         public int Skill;
         public int Damage;
+        public int Hit;
         public int AttackCount;
         public int CurrentHp;
         public int MaxHp;
@@ -29,7 +30,7 @@ namespace Game.Mechanics.Battle
         public int CurrentSp;
         public int MaxSp;
         public int AfterBattleSp;
-        public BattlePreviewStats(int attack, int speed, DamageType damageType, int defense, int skill, int damage, int attackCount, int currentHp, int maxHp, int afterBattleHp, int currentSp, int maxSp, int afterBattleSp, int currentSpBars,int afterSpBars, int maxSpBars)
+        public BattlePreviewStats(int attack, int speed, DamageType damageType, int defense, int skill, int damage, int hit, int attackCount, int currentHp, int maxHp, int afterBattleHp, int currentSp, int maxSp, int afterBattleSp, int currentSpBars,int afterSpBars, int maxSpBars)
         {
             Attack = attack;
             Speed = speed;
@@ -37,6 +38,7 @@ namespace Game.Mechanics.Battle
             Defense = defense;
             Skill = skill;
             Damage = damage;
+            Hit = hit;
             AttackCount = attackCount;
             CurrentHp = currentHp;
             MaxHp = maxHp;

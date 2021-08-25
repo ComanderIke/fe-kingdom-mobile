@@ -13,15 +13,12 @@ namespace Game.Mechanics.Battle
     public class BattleStats
     {
         private const int AGILITY_TO_DOUBLE = 5;
-        private const float FRONTAL_ATTACK_MOD = 1.5f;
 
         private readonly IBattleActor owner;
-        public float FrontalAttackModifier { get; set; }
 
         public BattleStats(IBattleActor owner)
         {
             this.owner = owner;
-            FrontalAttackModifier = FRONTAL_ATTACK_MOD;
         }
 
         public bool CanKillTarget(IBattleActor target, float attackMultiplier)
@@ -34,10 +31,6 @@ namespace Game.Mechanics.Battle
             int attackCount = 1;
             if (owner.SpBars == 0)
                 return 0;
-            //if (owner.Stats.Spd - (c.Stats.Spd) > 0)
-            //{
-            //    attackCount++;
-            //}
 
             if (owner.Stats.Spd - (c.Stats.Spd + AGILITY_TO_DOUBLE) >= 0)
             {
@@ -91,7 +84,6 @@ namespace Game.Mechanics.Battle
             if (target.SpBars <= 0)
             {
                 dmgMult = 2;
-                //atkMultiplier.Add(2);
             }
                 
             return (int) (Mathf.Clamp((GetDamage(atkMultiplier) - target.Stats.Def)*dmgMult, 1, Mathf.Infinity));
@@ -137,32 +129,32 @@ namespace Game.Mechanics.Battle
         }
 
         
-
-        public AttackData CreateAttackData(IBattleActor target, List<float> attackMultipliers,
-            List<AttackAttributes> attackAttributes)
+        public int GetHitrate()
         {
-            if (attackAttributes.Contains(AttackAttributes.FrontalAttack))
+            if (owner is Human human)
             {
-                attackMultipliers.Add(FRONTAL_ATTACK_MOD);
+                //Debug.Log("TODO ATTACK SPEED CALC");
+                return human.Stats.Skl *2 + human.EquippedWeapon.Hit;
             }
 
-            float attackMultiplier = attackMultipliers.Aggregate(1.0f, (current, f) => current * f);
-
-            int dmg = GetDamageAgainstTarget(target, attackMultiplier);
-
-            if (dmg >= target.Hp)
+            return owner.Stats.Skl*2;
+        }
+        public int GetAvoid()
+        {
+            if (owner is Human human)
             {
-                attackAttributes.Add(AttackAttributes.Lethal);
+                //Debug.Log("TODO ATTACK SPEED CALC");
+                return human.Stats.Spd * 2 - human.EquippedWeapon.Weight;
             }
 
-            var attackData = new AttackData(owner, dmg, attackMultiplier, attackAttributes);
-            return attackData;
+            return owner.Stats.Spd*2;
         }
 
-        public int GetTotalSpDamageAgainstTarget(IBattleActor attacker)
+        public int GetHitAgainstTarget(IBattleActor target)
         {
-            return Math.Max(owner.Stats.Skl - attacker.Stats.Skl,1);
+            return GetHitrate() - target.BattleComponent.BattleStats.GetAvoid();
         }
+   
 
         public int GetAttackSpeed()
         {
