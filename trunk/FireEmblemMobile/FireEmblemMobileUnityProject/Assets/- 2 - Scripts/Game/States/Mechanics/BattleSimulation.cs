@@ -56,7 +56,7 @@ namespace Game.Mechanics
                    
                 }
             }
-            if(attackData.hit)
+            if(attackData.hit||certainHit)
                 defender.Hp -= damage;
           //  defender.Sp -= spDamage;
            
@@ -66,8 +66,11 @@ namespace Game.Mechanics
             //}
             return defender.Hp > 0;
         }
-        public void StartBattle()
+
+        private bool certainHit = false;
+        public void StartBattle(bool certainHit)
         {
+            this.certainHit = certainHit;
             int attackerAttackCount = Attacker.BattleComponent.BattleStats.GetAttackCountAgainst(Defender);
             int defenderAttackCount = Defender.BattleComponent.BattleStats.GetAttackCountAgainst(Attacker);
            

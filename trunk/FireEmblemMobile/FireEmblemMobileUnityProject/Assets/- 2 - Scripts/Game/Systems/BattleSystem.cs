@@ -40,7 +40,7 @@ namespace Game.Mechanics
             this.attacker = attacker;
             this.defender = defender;
             battleSimulation = new BattleSimulation(attacker,defender);
-            battleSimulation.StartBattle();
+            battleSimulation.StartBattle(false);
             battleStarted = true;
             IsFinished = false;
             currentAttackIndex = 0;
@@ -114,7 +114,7 @@ namespace Game.Mechanics
         public BattleSimulation GetBattleSimulation(IBattleActor attacker, IBattleActor defender)
         {
             battleSimulation = new BattleSimulation(attacker, defender);
-            battleSimulation.StartBattle();
+            battleSimulation.StartBattle(false);
 
             return battleSimulation;
         }
@@ -126,7 +126,7 @@ namespace Game.Mechanics
             battlePreview.Attacker = attacker;
             battlePreview.Defender = defender;
             battleSimulation = new BattleSimulation(attacker, defender);
-            battleSimulation.StartBattle();
+            battleSimulation.StartBattle(true);
             battlePreview.AttacksData = battleSimulation.AttacksData;
 
             battlePreview.AttackerStats = new BattlePreviewStats(attacker.BattleComponent.BattleStats.GetDamage(), 

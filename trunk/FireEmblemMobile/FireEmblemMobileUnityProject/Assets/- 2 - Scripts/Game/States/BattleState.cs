@@ -51,7 +51,7 @@ namespace Game.Mechanics
           
            IsFinished = false;
            BattleAnimation.Show(battleSystem.GetBattleSimulation(attacker,defender));
-           battleSystem.StartBattle(attacker, defender);
+         //  battleSystem.StartBattle(attacker, defender); TODO same RNG as battleAnimation
            BattleAnimation.OnFinished += battleSystem.EndBattle;
          
             //Debug.Log("ENTER FIGHTSTATE");

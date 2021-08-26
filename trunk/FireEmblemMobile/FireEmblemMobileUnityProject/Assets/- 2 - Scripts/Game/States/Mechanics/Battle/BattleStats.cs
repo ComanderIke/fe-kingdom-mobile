@@ -4,6 +4,7 @@ using System.Linq;
 using Game.GameActors.Items.Weapons;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
+using Game.GameActors.Units.Monsters;
 using Game.GameInput;
 using Game.GUI.PopUpText;
 using UnityEngine;
@@ -36,7 +37,7 @@ namespace Game.Mechanics.Battle
             {
                 attackCount++;
             }
-
+            Debug.Log("Speedcheck: "+owner.Stats.Spd+" "+(c.Stats.Spd + AGILITY_TO_DOUBLE)+" "+attackCount);
             return attackCount;
         }
 
@@ -135,6 +136,10 @@ namespace Game.Mechanics.Battle
             {
                 //Debug.Log("TODO ATTACK SPEED CALC");
                 return human.Stats.Skl *2 + human.EquippedWeapon.Hit;
+            }  if (owner is Monster monster)
+            {
+                //Debug.Log("TODO ATTACK SPEED CALC");
+                return monster.Stats.Skl *2 + monster.Weapon.Hit;
             }
 
             return owner.Stats.Skl*2;
