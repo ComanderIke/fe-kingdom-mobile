@@ -50,7 +50,7 @@ namespace Game.Mechanics
            // battleSystem = new BattleSystem(attacker, defender);
           
            IsFinished = false;
-           BattleAnimation.Show(battleSystem.GetBattleSimulation(attacker,defender));
+           BattleAnimation.Show(battleSystem.GetBattleSimulation(attacker,defender), attacker, defender);
          //  battleSystem.StartBattle(attacker, defender); TODO same RNG as battleAnimation
            BattleAnimation.OnFinished += battleSystem.EndBattle;
          
@@ -104,7 +104,7 @@ namespace Game.Mechanics
 
     public interface IBattleAnimation
     {
-        void Show(BattleSimulation battleSimulation);
+        void Show(BattleSimulation battleSimulation, IBattleActor attacker, IBattleActor defender);
         void Hide();
         event Action OnFinished;
     }

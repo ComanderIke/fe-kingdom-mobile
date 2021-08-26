@@ -37,7 +37,7 @@ namespace Game.Mechanics.Battle
             {
                 attackCount++;
             }
-            Debug.Log("Speedcheck: "+owner.Stats.Spd+" "+(c.Stats.Spd + AGILITY_TO_DOUBLE)+" "+attackCount);
+          
             return attackCount;
         }
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.GameInput;
 using Game.Mechanics;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -24,7 +25,7 @@ public class BattleAnimationRendererOld : MonoBehaviour, IBattleAnimation
         
     }
 
-    public void Show(BattleSimulation battleSimulation)
+    public void Show(BattleSimulation battleSimulation, IBattleActor attacker, IBattleActor defender)
     {
         gameObject.SetActive(true);
         canvas.Show();

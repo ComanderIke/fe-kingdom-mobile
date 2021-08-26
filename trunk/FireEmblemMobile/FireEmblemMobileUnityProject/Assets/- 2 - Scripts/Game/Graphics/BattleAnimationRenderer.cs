@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Game.GameActors.Units;
+using Game.GameInput;
 using Game.GUI.PopUpText;
 using Game.Mechanics;
 using UnityEngine;
@@ -27,14 +28,14 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     private BattleSimulation battleSimulation;
     public CameraShake cameraShake;
     public BattleUI BattleUI;
-    public void Show(BattleSimulation battleSimulation)
+    public void Show(BattleSimulation battleSimulation, IBattleActor attacker, IBattleActor defender)
     {
         this.battleSimulation = battleSimulation;
         var background=GameObject.Instantiate(battleBackground, transform);
         background.transform.position = new Vector3(camera.transform.position.x, background.transform.position.y,
             background.transform.position.z);
     
-        BattleUI.Show(battleSimulation);
+        BattleUI.Show(battleSimulation, (Unit)attacker, (Unit)defender);
         leftCharacterAttacker = battleSimulation.Attacker.Faction.IsPlayerControlled;
         if(characterLeft!=null)
             Destroy(characterLeft);
@@ -111,8 +112,10 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         }
         StartCoroutine(cameraShake.Shake(duration, magnitude));
         var dmg = battleSimulation.AttacksData[attackSequenzIndex].Dmg;
+    
         if (battleSimulation.AttacksData[attackSequenzIndex].attacker)
         {
+          
             var attackingCharacter = leftCharacterAttacker ? characterLeft : characterRight;
             var defendingCharacter = leftCharacterAttacker ? characterRight : characterLeft;
             var attackerSpriteController = attackingCharacter.GetComponentInChildren<BattleAnimationSpriteController>();
@@ -122,6 +125,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
             attackerSpriteController.Attack();
             if (battleSimulation.AttacksData[attackSequenzIndex].hit)
             {
+                BattleUI.UpdateDefenderHPBar(battleSimulation.AttacksData[attackSequenzIndex]);
                 defenderSpriteController.Damaged();
               
                 StartCoroutine(Delay(0.05f,()=>
@@ -141,6 +145,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         }
         else
         {
+           
             var attackingCharacter = leftCharacterAttacker ? characterRight : characterLeft;
             var defendingCharacter = leftCharacterAttacker ? characterLeft : characterRight;
             var attackerSpriteController = attackingCharacter.GetComponentInChildren<BattleAnimationSpriteController>();
@@ -149,6 +154,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
             attackerSpriteController.Attack();
             if (battleSimulation.AttacksData[attackSequenzIndex].hit)
             {
+                BattleUI.UpdateAttackerHPBar(battleSimulation.AttacksData[attackSequenzIndex]);
                 defenderSpriteController.Damaged();
                 StartCoroutine(Delay(0.05f, () =>
                     DamagePopUp.CreateForBattleView(defenderImpactPosition.transform.position,
