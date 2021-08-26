@@ -26,6 +26,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     private bool playing;
     private BattleSimulation battleSimulation;
     public CameraShake cameraShake;
+    public BattleUI BattleUI;
     public void Show(BattleSimulation battleSimulation)
     {
         this.battleSimulation = battleSimulation;
@@ -33,7 +34,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         background.transform.position = new Vector3(camera.transform.position.x, background.transform.position.y,
             background.transform.position.z);
     
-
+        BattleUI.Show(battleSimulation);
         leftCharacterAttacker = battleSimulation.Attacker.Faction.IsPlayerControlled;
         if(characterLeft!=null)
             Destroy(characterLeft);

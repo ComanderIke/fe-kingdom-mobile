@@ -18,12 +18,27 @@ namespace Game.Mechanics
        
         public IBattleActor Attacker { get; private set; }
         public IBattleActor Defender { get; private set; }
+        public int AttackerDamage { get; set; }
+        public int AttackerHit { get; set; }
+        public int AttackerAttackCount { get; set; }
+        public int DefenderDamage { get; set; }
+        public int DefenderHit { get; set; }
+        public int DefenderAttackCount { get; set; }
+
         public List<AttackData> AttacksData;
         public BattleSimulation(IBattleActor attacker, IBattleActor defender)
         {
             
             Attacker = attacker.Clone() as IBattleActor;
             Defender = defender.Clone() as IBattleActor;
+            AttackerDamage = Attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(Defender);
+            DefenderDamage = Defender.BattleComponent.BattleStats.GetDamageAgainstTarget(Attacker);
+            
+            AttackerHit = Attacker.BattleComponent.BattleStats.GetHitAgainstTarget(Defender);
+            DefenderHit = Defender.BattleComponent.BattleStats.GetHitAgainstTarget(Attacker);
+            
+            AttackerAttackCount = Attacker.BattleComponent.BattleStats.GetAttackCountAgainst(Defender);
+            DefenderAttackCount = Defender.BattleComponent.BattleStats.GetAttackCountAgainst(Attacker);
             AttacksData = new List<AttackData>();
         }
         public bool DoAttack(IBattleActor attacker, IBattleActor defender, ref AttackData attackData)
