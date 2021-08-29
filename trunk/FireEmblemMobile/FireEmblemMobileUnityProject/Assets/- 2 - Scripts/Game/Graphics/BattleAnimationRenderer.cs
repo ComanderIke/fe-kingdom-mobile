@@ -28,13 +28,20 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     private BattleSimulation battleSimulation;
     public CameraShake cameraShake;
     public BattleUI BattleUI;
+    private IBattleActor attacker;
+    private IBattleActor defender;
+    private bool leftCharacterDied;
+    private bool rightCharacterDied;
     public void Show(BattleSimulation battleSimulation, IBattleActor attacker, IBattleActor defender)
     {
         this.battleSimulation = battleSimulation;
         var background=GameObject.Instantiate(battleBackground, transform);
         background.transform.position = new Vector3(camera.transform.position.x, background.transform.position.y,
             background.transform.position.z);
-    
+        leftCharacterDied = false;
+        rightCharacterDied = false;
+        this.attacker = battleSimulation.Attacker;
+        this.defender = battleSimulation.Defender;
         BattleUI.Show(battleSimulation, (Unit)attacker, (Unit)defender);
         leftCharacterAttacker = battleSimulation.Attacker.Faction.IsPlayerControlled;
         if(characterLeft!=null)
@@ -102,6 +109,8 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         yield return new WaitForSeconds(delay);
         action?.Invoke();
     }
+
+
     private void ContinueBattle()
     {
        
@@ -112,6 +121,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         }
         StartCoroutine(cameraShake.Shake(duration, magnitude));
         var dmg = battleSimulation.AttacksData[attackSequenzIndex].Dmg;
+        
     
         if (battleSimulation.AttacksData[attackSequenzIndex].attacker)
         {
@@ -126,8 +136,19 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
             if (battleSimulation.AttacksData[attackSequenzIndex].hit)
             {
                 BattleUI.UpdateDefenderHPBar(battleSimulation.AttacksData[attackSequenzIndex]);
-                defenderSpriteController.Damaged();
-              
+                if (battleSimulation.AttacksData[attackSequenzIndex].kill)
+                {
+                    defenderSpriteController.Death();
+                    if(leftCharacterAttacker)
+                        rightCharacterDied = true;
+                    else
+                    {
+                        leftCharacterDied = true;
+                    }
+                }
+                else
+                    defenderSpriteController.Damaged();
+
                 StartCoroutine(Delay(0.05f,()=>
                     DamagePopUp.CreateForBattleView(defenderImpactPosition.transform.position,
                         dmg, Color.red, 5.0f,!leftCharacterAttacker)));
@@ -155,7 +176,18 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
             if (battleSimulation.AttacksData[attackSequenzIndex].hit)
             {
                 BattleUI.UpdateAttackerHPBar(battleSimulation.AttacksData[attackSequenzIndex]);
-                defenderSpriteController.Damaged();
+                if (battleSimulation.AttacksData[attackSequenzIndex].kill)
+                {
+                    defenderSpriteController.Death();
+                    if(leftCharacterAttacker)
+                        leftCharacterDied = true;
+                    else
+                    {
+                        rightCharacterDied = true;
+                    }
+                }
+                else
+                    defenderSpriteController.Damaged();
                 StartCoroutine(Delay(0.05f, () =>
                     DamagePopUp.CreateForBattleView(defenderImpactPosition.transform.position,
                         dmg, Color.red, 5.0f, leftCharacterAttacker)));
@@ -193,8 +225,27 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     {
         playableDirector.playableAsset = cameraZoomOut;
         playableDirector.Play();
-        characterLeft.GetComponentInChildren<BattleAnimationSpriteController>().Idle();
-        characterRight.GetComponentInChildren<BattleAnimationSpriteController>().Idle();
+        Debug.Log("ALive: "+attacker.IsAlive()+" "+defender.IsAlive());
+        if (leftCharacterDied)
+        {
+            characterLeft.SetActive(false);
+
+        }
+        else
+        {
+            characterLeft.GetComponentInChildren<BattleAnimationSpriteController>().Idle();
+        }
+        if (rightCharacterDied)
+        {
+            characterRight.SetActive(false);
+
+        }
+        else
+        {
+            characterRight.GetComponentInChildren<BattleAnimationSpriteController>().Idle();
+        }
+       
+      
         Invoke("ZoomOutFinished",timeBetweenAttacks );
     }
 
@@ -209,6 +260,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
 
     private void BattleFinished()
     {
+        Debug.Log("BattleFINISHED!");
         OnFinished?.Invoke();
     }
     private void ZoomInFinished()
@@ -234,6 +286,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
 
     public void Hide()
     {
+        Debug.Log("HIDE!");
         canvas.Hide();
         LeanTween.value(volume.weight, 0, 0.4f).setEaseInQuad().setOnUpdate((value) =>
         {

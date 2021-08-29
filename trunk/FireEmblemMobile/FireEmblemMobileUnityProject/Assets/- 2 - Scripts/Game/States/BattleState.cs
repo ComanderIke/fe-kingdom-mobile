@@ -45,14 +45,16 @@ namespace Game.Mechanics
             this.defender = defender;
         }
 
+        private BattleSimulation battleSimulation;
         public override void Enter()
         {
            // battleSystem = new BattleSystem(attacker, defender);
           
            IsFinished = false;
-           BattleAnimation.Show(battleSystem.GetBattleSimulation(attacker,defender), attacker, defender);
+          battleSimulation = battleSystem.GetBattleSimulation(attacker, defender);
+           BattleAnimation.Show(battleSimulation, attacker, defender);
          //  battleSystem.StartBattle(attacker, defender); TODO same RNG as battleAnimation
-           BattleAnimation.OnFinished += battleSystem.EndBattle;
+           BattleAnimation.OnFinished += EndBattle;
          
             //Debug.Log("ENTER FIGHTSTATE");
 
@@ -62,20 +64,42 @@ namespace Game.Mechanics
 
         public override GameState<NextStateTrigger> Update()
         {
-            if (battleSystem.IsFinished)
+            if (IsFinished)
             {
-                IsFinished = true;
                 GridGameManager.Instance.GameStateManager.SwitchState(new AfterBattleState(attacker, defender));
  
             }
             return null;
         }
 
+        private void EndBattle()
+        {
+
+            attacker.Hp = battleSimulation.Attacker.Hp;
+            defender.Hp = battleSimulation.Defender.Hp;
+            defender.SpBars--;
+            attacker.SpBars--;
+            if (!attacker.IsAlive())
+            {
+                attacker.Die();
+            }
+            if (!defender.IsAlive())
+            {
+                defender.Die();
+            }
+
+       
+            //battleStarted = false;
+            //BattleRenderer.Hide();
+            IsFinished = true;
+            //GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.BattleEnded);
+
+        }
         public override void Exit()
         {
             // HideFightVisuals();
             attacker.TurnStateManager.HasAttacked = true;
-           // Debug.Log("EXIT BATTLESTATE");
+            Debug.Log("EXIT BATTLESTATE");
             
             
             attacker = null;

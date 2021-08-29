@@ -12,6 +12,7 @@ namespace Game.Mechanics
         public bool attacker;
         public int Dmg;
         public bool hit;
+        public bool kill;
     }
     public class BattleSimulation
     {
@@ -24,6 +25,8 @@ namespace Game.Mechanics
         public int DefenderDamage { get; set; }
         public int DefenderHit { get; set; }
         public int DefenderAttackCount { get; set; }
+        public bool AttackerAlive{ get; set; }
+        public bool DttackerAlive{ get; set; }
 
         public List<AttackData> AttacksData;
         public BattleSimulation(IBattleActor attacker, IBattleActor defender)
@@ -111,6 +114,7 @@ namespace Game.Mechanics
                     }
                     else
                     {
+                        attackData.kill = true;
                         AttacksData.Add(attackData);
                         break;
                     }
@@ -134,6 +138,7 @@ namespace Game.Mechanics
                     }
                     else
                     {
+                        attackData.kill = true;
                         AttacksData.Add(attackData);
                         break;
                     }
@@ -141,7 +146,7 @@ namespace Game.Mechanics
                 }
                
             }
-
+            
             Attacker.SpBars--;
             Defender.SpBars--;
         }

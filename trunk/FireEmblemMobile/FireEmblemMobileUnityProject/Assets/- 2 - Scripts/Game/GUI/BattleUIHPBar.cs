@@ -15,20 +15,21 @@ public class BattleUIHPBar : MonoBehaviour
 
     private float elapsedTime = 0;
 
-    private const float UpdateSpeedSeconds = 0.3f;
-    private const float UpdateSpeedLosingBarSeconds = 1.2f;
+    private const float UpdateSpeedSeconds = 0.2f;
+    private const float UpdateSpeedLosingBarSeconds = 0.9f;
     // Start is called before the first frame update
     public void SetValues(int maxHp, int currentHp)
     {
         this.currentHp = currentHp;
         this.maxHP = maxHp;
         elapsedTime = 0;
-        StartCoroutine(AnimateBar(currentHp / (maxHp*1.0f)));
-        StartCoroutine(AnimateBar2(currentHp / (maxHp*1.0f)));
+        StartCoroutine(AnimateBar(0f,currentHp / (maxHp*1.0f)));
+        StartCoroutine(AnimateBar2(0.35f, currentHp / (maxHp*1.0f)));
     }
 
-    private IEnumerator AnimateBar(float pct)
+    private IEnumerator AnimateBar(float delay,float pct)
     {
+        yield return new WaitForSeconds(delay);
         float preChangePct = currentHPBar.fillAmount;
         float elapsed = 0;
         while (elapsed < UpdateSpeedSeconds)
@@ -40,8 +41,9 @@ public class BattleUIHPBar : MonoBehaviour
 
         currentHPBar.fillAmount = pct;
     }
-    private IEnumerator AnimateBar2(float pct)
+    private IEnumerator AnimateBar2(float delay, float pct)
     {
+        yield return new WaitForSeconds(delay);
         float preChangePct = LosingHPBar.fillAmount;
         float elapsed = 0;
         while (elapsed < UpdateSpeedLosingBarSeconds)

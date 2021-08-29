@@ -14,6 +14,7 @@ public class BattleAnimationSpriteController : MonoBehaviour
     public TimelineAsset idle;
     public TimelineAsset dodge;
     public TimelineAsset damaged;
+    public TimelineAsset death;
     // Start is called before the first frame update
     
     public void WalkIn()
@@ -28,6 +29,11 @@ public class BattleAnimationSpriteController : MonoBehaviour
     {
         PlayableDirector.Play(attack);
     }
+    public void Death()
+    {
+        PlayableDirector.Play(death);
+    }
+
 
     public void Dodge()
     {
