@@ -1,4 +1,5 @@
-﻿using GameEngine.Input;
+﻿using Game.GameInput;
+using GameEngine.Input;
 using GameEngine.Tools;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,7 +12,25 @@ namespace GameCamera
         private IRayProvider RayProvider { get; set; }
         private IHitChecker HitChecker { get; set; }
         private ICameraInputProvider CameraInputProvider { get; set; }
-
+        
+        private static StandaloneInputModuleV2 currentInput;
+        private StandaloneInputModuleV2 CurrentInput
+        {
+            get
+            {
+                if (currentInput == null)
+                {
+                    currentInput = EventSystem.current.currentInputModule as StandaloneInputModuleV2;
+                    if (currentInput == null)
+                    {
+                        Debug.LogError("Missing StandaloneInputModuleV2.");
+                        // some error handling
+                    }
+                }
+ 
+                return currentInput;
+            }
+        }
 
         public void Construct(IDragPerformer dragPerformer, IRayProvider rayProvider, IHitChecker hitChecker,
             ICameraInputProvider cameraInputProvider)
@@ -38,10 +57,13 @@ namespace GameCamera
                     // if (EventSystem.current.currentSelectedGameObject == null ||
                     //     !HitChecker.HasTagExcluded(EventSystem.current
                     //         .currentSelectedGameObject.tag))
-                    //Debug.Log("POINTER OVER GO: " + EventSystem.current.currentSelectedGameObject.name);
-                    if(!EventSystem.current.IsPointerOverGameObject(0))
+                    //Debug.Log(CurrentInput.GameObjectUnderPointer());
+                    if(!EventSystem.current.IsPointerOverGameObject(Input.touches[0].fingerId))
                     {
-                        Debug.Log("DRAG");
+                        DragPerformer.StartDrag(transform, CameraInputProvider.InputPosition());
+                    }
+                    else if (CurrentInput.GameObjectUnderPointer().CompareTag("Grid"))
+                    {
                         DragPerformer.StartDrag(transform, CameraInputProvider.InputPosition());
                     }
                 }

@@ -160,7 +160,7 @@ namespace Game.GameInput
                 {
                     inputPathManager.CalculateMousePathToPosition(selectionDataProvider.SelectedActor, x, y);
                     Debug.Log("GameInput SetPosition");
-                    selectionDataProvider.SelectedActor.GameTransformManager.SetPosition(x, y);
+                    //selectionDataProvider.SelectedActor.GameTransformManager.SetPosition(x, y);
                     selectionDataProvider.SetSelectedTile(x, y);
                     selectionDataProvider.ClearAttackTarget();
                 }
@@ -238,7 +238,7 @@ namespace Game.GameInput
                             {
                                 var lastMovPathPos = inputPathManager.GetLastMovementPathPosition();
                                 Debug.Log("GameInput2 SetPosition");
-                                selectedActor.GameTransformManager.SetPosition(lastMovPathPos.x, lastMovPathPos.y);
+                               // selectedActor.GameTransformManager.SetPosition(lastMovPathPos.x, lastMovPathPos.y);
                                 if(selectedActor is IBattleActor battleActor&& enemyActor is IBattleActor enemyBattleActor)
                                     gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, new GridPosition(lastMovPathPos.x, lastMovPathPos.y));
                             }
