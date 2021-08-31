@@ -62,7 +62,7 @@ namespace GameCamera
                     {
                         DragPerformer.StartDrag(transform, CameraInputProvider.InputPosition());
                     }
-                    else if (CurrentInput.GameObjectUnderPointer().CompareTag("Grid"))
+                    else if (CurrentInput.GameObjectUnderPointer()!=null &&CurrentInput.GameObjectUnderPointer().CompareTag("Grid"))
                     {
                         DragPerformer.StartDrag(transform, CameraInputProvider.InputPosition());
                     }

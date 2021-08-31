@@ -9,7 +9,13 @@ namespace Game.Map
         private GridPosition gridPosition;
 
         private Tile currentTile;
+        private GridCursorRenderer renderer;
 
+        public GridCursor()
+        {
+            renderer = GameObject.FindObjectOfType<GridCursorRenderer>();
+            renderer.Hide();
+        }
         public Tile GetCurrentTile()
         {
             return currentTile;
@@ -19,6 +25,7 @@ namespace Game.Map
             currentTile = tile;
             gridPosition = new GridPosition(currentTile.X, currentTile.Y);
             OnCursorPositionChanged?.Invoke(new Vector2Int(gridPosition.X,gridPosition.Y));
+            renderer.Show(new Vector2(gridPosition.X,gridPosition.Y));
         }
 
         public event Action<Vector2Int> OnCursorPositionChanged;
@@ -28,6 +35,7 @@ namespace Game.Map
         {
             currentTile = null;
             gridPosition = null;
+           // renderer.Hide();
             //OnResetCursor
         }
     }
