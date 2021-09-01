@@ -302,6 +302,7 @@ GameObject:
   - component: {fileID: 8702659}
   - component: {fileID: 8702661}
   - component: {fileID: 8702660}
+  - component: {fileID: 8702662}
   m_Layer: 5
   m_Name: TileInfoPanel
   m_TagString: Untagged
@@ -369,6 +370,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8702658}
   m_CullTransparentMesh: 1
+--- !u!114 &8702662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8702658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dc8acd539df0104a9921c10195908ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: {fileID: 1495887633}
+  boni1: {fileID: 1130299868}
+  boni2: {fileID: 1388130228}
 --- !u!1 &10094124
 GameObject:
   m_ObjectHideFlags: 0
@@ -13617,6 +13633,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OkCancelDialogController: {fileID: 76188692}
   turnText: {fileID: 1304193236}
+  TileInfoPanel: {fileID: 8702662}
 --- !u!114 &271894344
 MonoBehaviour:
   m_ObjectHideFlags: 0

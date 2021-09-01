@@ -55,7 +55,7 @@ namespace Game.Mechanics
         public override void Enter()
         {
            // Debug.Log("Enter GameplayState");
-           
+           gridGameManager.GetSystem<GridSystem>().cursor.OnCursorPositionChanged += CursorPosChanged;
             cameraSystem.AddMixin<DragCameraMixin>().Construct(new WorldPosDragPerformer(1f, cameraSystem.camera),
                 new ScreenPointToRayProvider(cameraSystem.camera), new HitChecker(),new MouseCameraInputProvider());
             int height = gridGameManager.GetSystem<GridSystem>().GridData.height;
@@ -65,10 +65,16 @@ namespace Game.Mechanics
             gridInputSystem.SetActive(true);
             unitInputSystem.SetActive(true);
             playerPhaseUI.Show(gridGameManager.GetSystem<TurnSystem>().TurnCount);
+            
             SetUpInputForUnits();
             UnitSelectionSystem.OnSelectedInActiveCharacter += OnSelectedCharacter;
             UnitSelectionSystem.OnSelectedCharacter += OnSelectedCharacter;
             // add as InputReceiver to all units
+        }
+
+        private void CursorPosChanged(Vector2Int tilePos)
+        {
+            playerPhaseUI.ShowTileInfo(gridGameManager.GetSystem<GridSystem>().cursor.GetCurrentTile());
         }
 
         private void FindBetterName(Unit unit)
@@ -121,10 +127,12 @@ namespace Game.Mechanics
             cameraSystem.RemoveMixin<ViewOnGridMixin>();
             UnitSelectionSystem.OnSelectedInActiveCharacter -=OnSelectedCharacter;
             UnitSelectionSystem.OnSelectedCharacter -= OnSelectedCharacter;
+            gridGameManager.GetSystem<GridSystem>().cursor.OnCursorPositionChanged -= CursorPosChanged;
             gridInputSystem.ResetInput();
             gridInputSystem.SetActive(false);
             unitInputSystem.SetActive(false);
             playerPhaseUI.Hide();
+            playerPhaseUI.HideTileInfo();
             
             // remove as Input Receiver to all Units
 
