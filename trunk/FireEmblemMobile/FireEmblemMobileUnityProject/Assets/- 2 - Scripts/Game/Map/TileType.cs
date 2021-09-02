@@ -20,6 +20,8 @@ namespace Game.Grid
 
         public virtual bool CanMoveThrough(MoveType moveType)
         {
+            if (TerrainType.Obstacle == TerrainType)
+                return false;
             return true;
             //return moveType.CanMoveThrough(TerrainType);
         }
