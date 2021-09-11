@@ -196,6 +196,14 @@ namespace Game.GameActors.Units
             GameTransformManager.Destroy();
         }
 
+      
+        public Tile GetTile()
+        {
+            return GridComponent.Tile;
+        }
+
+        
+
         public void Heal(int heal)
         {
             Hp += heal;
@@ -229,6 +237,8 @@ namespace Game.GameActors.Units
             clone.BattleComponent = new BattleComponent(clone);
             clone.TurnStateManager = new TurnStateManager(clone);
             clone.GridComponent = new GridComponent(clone);
+            clone.GridComponent.Tile = GridComponent.Tile;
+           // clone.GridComponent.previousTile = GridComponent.previousTile;
             clone.GameTransformManager = new GameTransformManager();
             clone.StatusEffectManager = new StatusEffectManager(clone);
             clone.AIComponent = new AIComponent();

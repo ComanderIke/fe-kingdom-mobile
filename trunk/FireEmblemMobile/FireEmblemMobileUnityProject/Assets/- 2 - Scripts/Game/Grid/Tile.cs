@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Units;
+﻿using System.Xml.Schema;
+using Game.GameActors.Units;
 using Game.Graphics;
 using UnityEngine;
 
@@ -6,7 +7,28 @@ namespace Game.Grid
 {
     public class Tile
     {
-        public IGridActor Actor;
+        private IGridActor actor;
+        public IGridActor Actor
+        {
+            get
+            {
+                return actor;
+            }
+            set
+            {
+                Debug.Log("Actor: "+actor);
+                actor = value;
+               Debug.Log("Tile: "+this.X+" "+this.Y+ " "+actor);
+               if (actor != null)
+               {
+                   actor.GridComponent.Tile = this;
+                   Debug.Log("Tile: " + this.X + " " + this.Y + " ACtor: " + actor + " " +
+                             actor.GridComponent.Tile.TileType.TerrainType);
+               }
+
+            }
+        }
+
         public readonly int X;
         public readonly int Y;
       //  public bool IsActive;
@@ -28,6 +50,7 @@ namespace Game.Grid
 
         }
 
+        
         public Transform GetTransform()
         {
             return transform;

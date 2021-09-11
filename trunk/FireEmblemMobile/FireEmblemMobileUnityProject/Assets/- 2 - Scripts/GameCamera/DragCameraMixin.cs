@@ -58,7 +58,7 @@ namespace GameCamera
                     //     !HitChecker.HasTagExcluded(EventSystem.current
                     //         .currentSelectedGameObject.tag))
                     //Debug.Log(CurrentInput.GameObjectUnderPointer());
-                    if(!EventSystem.current.IsPointerOverGameObject(Input.touches[0].fingerId))
+                    if(Input.touchCount>0 && !EventSystem.current.IsPointerOverGameObject(Input.touches[0].fingerId))
                     {
                         DragPerformer.StartDrag(transform, CameraInputProvider.InputPosition());
                     }

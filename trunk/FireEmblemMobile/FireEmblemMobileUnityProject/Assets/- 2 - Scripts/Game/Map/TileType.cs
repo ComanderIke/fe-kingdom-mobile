@@ -10,6 +10,7 @@ namespace Game.Grid
 
         public int avoidBonus;
         public int defenseBonus;
+        public int speedMalus;
 
         public virtual int GetMovementCost(MoveType moveType)
         {

@@ -21,7 +21,11 @@ namespace Game.Mechanics.Battle
         {
             this.owner = owner;
         }
-
+        public int GetDefense()
+        {
+            Debug.Log(owner.GetTile().X+" "+owner.GetTile().Y);
+            return owner.Stats.Def + owner.GetTile().TileType.defenseBonus;
+        }
         public bool CanKillTarget(IBattleActor target, float attackMultiplier)
         {
             return GetDamageAgainstTarget(target, attackMultiplier) >= target.Hp;
@@ -33,7 +37,7 @@ namespace Game.Mechanics.Battle
             if (owner.SpBars == 0)
                 return 0;
 
-            if (owner.Stats.Spd - (c.Stats.Spd + AGILITY_TO_DOUBLE) >= 0)
+            if ( owner.BattleComponent.BattleStats.GetAttackSpeed()- (c.BattleComponent.BattleStats.GetAttackSpeed() + AGILITY_TO_DOUBLE) >= 0)
             {
                 attackCount++;
             }
@@ -43,7 +47,7 @@ namespace Game.Mechanics.Battle
 
         public bool CanDoubleAttack(IBattleActor c)
         {
-            return owner.Stats.Spd >= c.Stats.Spd + AGILITY_TO_DOUBLE;
+            return owner.BattleComponent.BattleStats.GetAttackSpeed() >= c.BattleComponent.BattleStats.GetAttackSpeed() + AGILITY_TO_DOUBLE;
         }
 
         public int GetDamage(float attackModifier)
@@ -87,7 +91,7 @@ namespace Game.Mechanics.Battle
                 dmgMult = 2;
             }
                 
-            return (int) (Mathf.Clamp((GetDamage(atkMultiplier) - target.Stats.Def)*dmgMult, 1, Mathf.Infinity));
+            return (int) (Mathf.Clamp((GetDamage(atkMultiplier) - - target.BattleComponent.BattleStats.GetDefense())*dmgMult, 1, Mathf.Infinity));
         }
 
         public DamageType GetDamageType()
@@ -117,7 +121,7 @@ namespace Game.Mechanics.Battle
             if (magic)
                 return (int) Mathf.Clamp(damage, 1, Mathf.Infinity);
             else
-                return (int) Mathf.Clamp(damage - owner.Stats.Def, 1, Mathf.Infinity);
+                return (int) Mathf.Clamp(damage -  owner.BattleComponent.BattleStats.GetDefense(), 1, Mathf.Infinity);
         }
 
         public int GetTotalDamageAgainstTarget(IBattleActor target)
@@ -126,7 +130,7 @@ namespace Game.Mechanics.Battle
             float multiplier = 1.0f;
             if (CanDoubleAttack(target))
                 attacks = 2;
-            return (int) (multiplier * attacks * Mathf.Clamp(GetDamage() - target.Stats.Def, 0, Mathf.Infinity));
+            return (int) (multiplier * attacks * Mathf.Clamp(GetDamage() - target.BattleComponent.BattleStats.GetDefense(), 0, Mathf.Infinity));
         }
 
         
@@ -149,10 +153,10 @@ namespace Game.Mechanics.Battle
             if (owner is Human human)
             {
                 //Debug.Log("TODO ATTACK SPEED CALC");
-                return human.Stats.Spd * 2 - human.EquippedWeapon.Weight;
+                return owner.GetTile().TileType.avoidBonus+human.Stats.Spd * 2 - human.EquippedWeapon.Weight;
             }
-
-            return owner.Stats.Spd*2;
+            
+            return owner.GetTile().TileType.avoidBonus+owner.Stats.Spd*2;
         }
 
         public int GetHitAgainstTarget(IBattleActor target)
@@ -166,10 +170,10 @@ namespace Game.Mechanics.Battle
             if (owner is Human human)
             {
                 //Debug.Log("TODO ATTACK SPEED CALC");
-                return human.Stats.Spd - human.EquippedWeapon.Weight;
+                return human.Stats.Spd - human.EquippedWeapon.Weight+ owner.GetTile().TileType.speedMalus;
             }
 
-            return owner.Stats.Spd;
+            return owner.Stats.Spd + owner.GetTile().TileType.speedMalus;
         }
     }
 }

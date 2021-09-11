@@ -12,22 +12,50 @@ namespace Game.GameActors.Units
        
         public IGridActor gridActor;
         public GridPosition GridPosition { get; set; }
-        
-        
 
-        
+        private Tile tile;
+        public Tile Tile
+        {
+            get
+            {
+                return tile;
+            }
+            set
+            {
+                if (previousTile == null)
+                    previousTile = value;
+                else
+                {
+                    previousTile = tile;
+                }
+                tile = value;
+            }
+        }
+
+        private Tile previousTile;
+
         public void ResetPosition()
         {
             Debug.Log("GridActor: "+gridActor);
+            if(previousTile!=null)
+                 Tile = previousTile;
             gridActor.GameTransformManager.SetPosition(GridPosition.X, GridPosition.Y);
             // GameTransform.EnableCollider();
         }
-        public virtual void SetPosition(int x, int y)
+        public virtual void SetPosition( int x, int y)
         {
-
+            //previousTile = Tile;
             GridPosition.SetPosition(x, y);
             gridActor.GameTransformManager.SetPosition(x, y);
         }
+        public virtual void SetInternPosition( int x, int y)
+        {
+            //previousTile = Tile;
+            Debug.Log("SetInternPosition: "+ x +" "+y);
+            GridPosition.SetPosition(x, y);
+            //gridActor.GameTransformManager.SetPosition(x, y);
+        }
+
 
   
         public GridComponent(IGridActor actor)

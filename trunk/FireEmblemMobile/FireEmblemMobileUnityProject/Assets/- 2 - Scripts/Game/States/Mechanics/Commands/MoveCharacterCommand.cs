@@ -14,10 +14,11 @@ namespace Game.Mechanics.Commands
         private readonly int y;
         private readonly int oldX;
         private readonly int oldY;
+
         private readonly List<GridPosition> path;
       
 
-        public MoveCharacterCommand(IGridActor unit, Vector2Int destination)
+        public MoveCharacterCommand(IGridActor unit,  Vector2Int destination)
         {
             this.unit = unit;
             oldX = unit.GridComponent.GridPosition.X;
@@ -26,7 +27,7 @@ namespace Game.Mechanics.Commands
             y = destination.y;
         }
 
-        public MoveCharacterCommand(IGridActor unit, Vector2Int destination, List<GridPosition> path) : this(unit, destination)
+        public MoveCharacterCommand(IGridActor unit,Vector2Int destination, List<GridPosition> path) : this(unit, destination)
         {
             this.path = path;
         }

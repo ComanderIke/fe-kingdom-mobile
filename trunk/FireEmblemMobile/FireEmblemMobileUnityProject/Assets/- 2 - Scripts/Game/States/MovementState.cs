@@ -18,6 +18,7 @@ namespace Game.Mechanics
         public static event Action OnEnter;
         private int x;
         private int y;
+  
         private bool active;
         private readonly GridGameManager gridGameManager;
         private List<GridPosition> mousePath;
@@ -33,10 +34,10 @@ namespace Game.Mechanics
             PathCounter = 0;
         }
 
-        public void StartMovement(IGridActor c, int x, int y, List<GridPosition> path = null )
+        public void StartMovement(IGridActor c,  int x, int y, List<GridPosition> path = null )
         {
-           
-            
+
+      
             mousePath = path;
             this.x = x;
             this.y = y;

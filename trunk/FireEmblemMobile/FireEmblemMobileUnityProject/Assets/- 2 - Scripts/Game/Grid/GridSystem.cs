@@ -259,5 +259,19 @@ namespace Game.Map
                 unit.GridComponent.SetPosition(x, y);
             }
         }
+        public void SetUnitInternPosition(IGridActor unit, int x, int y)
+        {
+            if (x != -1 && y != -1)
+            {
+                if (unit.GridComponent.GridPosition.X != -1 && unit.GridComponent.GridPosition.Y != -1)
+                {
+
+                    Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y].Actor = null;
+                }
+                Debug.Log("UNIT: "+unit);
+                Tiles[x, y].Actor = unit;
+                unit.GridComponent.SetInternPosition(x, y);
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@
 using Game.GameActors.Units;
 using Game.GameActors.Units.Attributes;
 using Game.GameActors.Units.OnGameObject;
+using Game.Grid;
 using Game.Mechanics;
 using Game.Mechanics.Battle;
 
@@ -23,5 +24,7 @@ namespace Game.GameInput
         object Clone();
         bool IsAlive();
         void Die();
+        Tile GetTile();
+    
     }
 }

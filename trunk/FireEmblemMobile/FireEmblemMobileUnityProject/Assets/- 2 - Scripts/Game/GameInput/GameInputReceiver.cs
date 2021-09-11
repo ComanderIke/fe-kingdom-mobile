@@ -237,7 +237,10 @@ namespace Game.GameInput
                             if (!inputPathManager.IsMovementPathEmpty())
                             {
                                 var lastMovPathPos = inputPathManager.GetLastMovementPathPosition();
-                                Debug.Log("GameInput2 SetPosition");
+                              
+                                Debug.Log("GameInput2 SetPosition " + selectedActor);
+                                gridSystem.SetUnitInternPosition(selectedActor,lastMovPathPos.x, lastMovPathPos.y);
+                                Debug.Log("Test");
                                // selectedActor.GameTransformManager.SetPosition(lastMovPathPos.x, lastMovPathPos.y);
                                 if(selectedActor is IBattleActor battleActor&& enemyActor is IBattleActor enemyBattleActor)
                                     gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, new GridPosition(lastMovPathPos.x, lastMovPathPos.y));
