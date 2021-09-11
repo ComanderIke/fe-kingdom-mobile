@@ -29,6 +29,7 @@ public class AnimateTrail : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Animate();
         if (!active)
             return;
         elapsed += Time.deltaTime;
@@ -37,7 +38,7 @@ public class AnimateTrail : MonoBehaviour
             active = false;
             StartCoroutine(TransOut());
         }
-        Animate();
+        
     }
 
     void Animate()
