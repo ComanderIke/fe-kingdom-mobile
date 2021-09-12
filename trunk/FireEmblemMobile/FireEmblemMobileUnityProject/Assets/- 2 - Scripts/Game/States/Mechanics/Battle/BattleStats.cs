@@ -91,7 +91,7 @@ namespace Game.Mechanics.Battle
                 dmgMult = 2;
             }
                 
-            return (int) (Mathf.Clamp((GetDamage(atkMultiplier) - - target.BattleComponent.BattleStats.GetDefense())*dmgMult, 1, Mathf.Infinity));
+            return (int) (Mathf.Clamp((GetDamage(atkMultiplier) - target.BattleComponent.BattleStats.GetDefense())*dmgMult, 1, Mathf.Infinity));
         }
 
         public DamageType GetDamageType()

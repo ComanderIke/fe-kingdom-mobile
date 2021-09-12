@@ -59,6 +59,7 @@ namespace Game.GUI
         [SerializeField] 
         private Sprite defenderSprite;
 
+        [SerializeField] private GameObject turnCount;
         [SerializeField] 
         private BattlePreview battlePreview;
 
@@ -130,6 +131,7 @@ namespace Game.GUI
             this.battlePreview = battlePreview;
             this.gameObject.SetActive(true);
             UpdateValues();
+            turnCount.SetActive(false);
            
         }
         public void Show(float yPos)
@@ -184,6 +186,7 @@ namespace Game.GUI
        
         public override void Hide()
         {
+            turnCount.SetActive(true);
             this.gameObject.SetActive(false);
             // if (!visible)
             //     return;

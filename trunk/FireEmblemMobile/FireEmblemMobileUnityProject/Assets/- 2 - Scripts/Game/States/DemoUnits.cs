@@ -9,6 +9,10 @@ namespace Game.States
         [SerializeField]
         private List<Unit> units;
 
+        void Start()
+        {
+            Debug.LogError("TESTERROR");
+        }
         public List<Unit> GetUnits()
         {
             var list = new List<Unit>();
