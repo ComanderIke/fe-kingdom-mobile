@@ -26,6 +26,12 @@ namespace Game.Map
             gridPosition = new GridPosition(currentTile.X, currentTile.Y);
             OnCursorPositionChanged?.Invoke(new Vector2Int(gridPosition.X,gridPosition.Y));
             renderer.Show(new Vector2(gridPosition.X,gridPosition.Y));
+            if(tile.Actor==null)
+                renderer.ShowTileInfo();
+            else
+            {
+                renderer.HideTileInfo();
+            }
         }
 
         public event Action<Vector2Int> OnCursorPositionChanged;
