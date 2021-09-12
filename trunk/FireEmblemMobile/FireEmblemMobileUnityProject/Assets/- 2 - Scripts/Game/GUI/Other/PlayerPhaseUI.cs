@@ -39,7 +39,7 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
    
     public void EndTurnClicked()
     {
-        OkCancelDialogController.Show("End the Turn?", () =>
+        OkCancelDialogController.Show("Do you want to end the turn?", () =>
         {
             //Debug.Log("Ending Turn with UI!");
             if(GridGameManager.Instance!=null)
