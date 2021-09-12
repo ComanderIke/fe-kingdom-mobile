@@ -16,7 +16,8 @@ public class BattleCanvasController : MonoBehaviour
 
     public void Show()
     {
-        gameObject.SetActive(true);
+      
+        GetComponent<Canvas>().enabled = true;
         RectTransform rectT = image.rectTransform;
         rectT.sizeDelta = new Vector2(0, 0);
      
@@ -28,7 +29,7 @@ public class BattleCanvasController : MonoBehaviour
     public void Hide()
     {
         RectTransform rectT = image.rectTransform;
-        LeanTween.size(rectT, new Vector2(0, 0), 0.4f).setEaseInQuad().setOnComplete(()=>gameObject.SetActive(false));
+        LeanTween.size(rectT, new Vector2(0, 0), 0.4f).setEaseInQuad().setOnComplete(()=>GetComponent<Canvas>().enabled = false);
        // LeanTween.scaleY(battleCanvas,0,0.4f).setEaseInQuad();
         LeanTween.alphaCanvas(battleCanvasGroup,0, .25f).setEaseInQuad();
        
