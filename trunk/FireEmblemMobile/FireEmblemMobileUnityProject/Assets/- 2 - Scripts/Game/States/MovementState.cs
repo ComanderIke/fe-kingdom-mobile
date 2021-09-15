@@ -27,6 +27,7 @@ namespace Game.Mechanics
         private IGridActor unit;
         private bool movementFinished;
         public bool IsFinished;
+        private bool skipAnimation;
 
         public MovementState()
         {
@@ -34,10 +35,10 @@ namespace Game.Mechanics
             PathCounter = 0;
         }
 
-        public void StartMovement(IGridActor c,  int x, int y, List<GridPosition> path = null )
+        public void StartMovement(IGridActor c,  int x, int y, bool skipAnimation=false,List<GridPosition> path = null )
         {
-
-      
+            this.skipAnimation = skipAnimation;
+            Debug.Log("Move to: "+x+" "+y+" "+c);
             mousePath = path;
             this.x = x;
             this.y = y;
@@ -80,7 +81,8 @@ namespace Game.Mechanics
                 Path.Remove(0);
             }
             //PrintMovementPath();
-            FinishMovement();
+            if(skipAnimation)
+                FinishMovement();
         }
         private void PrintMovementPath()
         {
@@ -107,8 +109,8 @@ namespace Game.Mechanics
             float z = localPosition.z;
             float tx = Path.GetStep(PathCounter).GetX();
             float ty = Path.GetStep(PathCounter).GetY();
-            Debug.Log("Moving to x: " + tx + " y: " + ty+ " "+x+" "+y);
-            var walkSpeed = 5f;
+           // Debug.Log("Moving to x: " + tx + " y: " + ty+ " "+x+" "+y);
+            var walkSpeed = 7.0f;
             float value = walkSpeed * Time.deltaTime;
             x = Math.Abs(x - tx) < value ? tx : x + (x < tx ? value : -value);
             y = Math.Abs(y - ty) < value ? ty : y + (y < ty ? value : -value);

@@ -37,6 +37,11 @@ namespace Game.Grid
             spriteRenderer.sprite = activeSpriteSet.GridSwapSprite;
         }
 
+        public void BlockedVisual()
+        {
+            spriteRenderer.sprite = activeSpriteSet.BlockedSprite;
+        }
+
         public void Reset()
         {
             spriteRenderer.sprite = activeSpriteSet.GridSprite;

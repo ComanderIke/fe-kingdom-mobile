@@ -74,11 +74,23 @@ namespace Game.Grid
                     tileVfx.ShowAttackable(this);
                     TileRenderer.ActiveAttackVisual();
                 }
+                else if (TileType.TerrainType == TerrainType.Obstacle)
+                {
+                    TileRenderer.BlockedVisual();
+                }
+                else 
+                {
+                    TileRenderer.ActiveAttackVisual();
+                }
                 
             }
             else
             {
                 if (Actor != null && playerId != Actor.Faction.Id && activePlayer)
+                {
+                    TileRenderer.AttackVisual();
+                }
+                else
                 {
                     TileRenderer.AttackVisual();
                 }

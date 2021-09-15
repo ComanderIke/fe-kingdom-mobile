@@ -13,6 +13,7 @@ namespace Game.GameActors.Units.OnGameObject
 
         [SerializeField] private Animator animator;
         private static readonly int Selected = Animator.StringToHash("Selected");
+        private static readonly int Moving = Animator.StringToHash("Moving");
         private static readonly int AnimationUp = Animator.StringToHash("BattleAnimationUp");
         private static readonly int AnimationDown = Animator.StringToHash("BattleAnimationDown");
         private static readonly int AnimationLeft = Animator.StringToHash("BattleAnimationLeft");
@@ -22,10 +23,36 @@ namespace Game.GameActors.Units.OnGameObject
         private static readonly int AnimationUpLeft = Animator.StringToHash("BattleAnimationUpLeft");
         private static readonly int AnimationUpRight = Animator.StringToHash("BattleAnimationUpRight");
         public Unit unit;
+        private Vector3 lastPosition;
+        private bool moving;
         void Start()
         {
             if(unit!=null)
              unit.TurnStateManager.onSelected += SetSelected;
+            lastPosition = transform.position;
+        }
+
+        private void Update()
+        {
+            // Debug.Log(name+" "+Vector3.Distance(lastPosition,transform.position));
+            if (Vector3.Distance(lastPosition,transform.position)>0.01f)
+            {
+               
+                if (!moving)
+                {
+                    Debug.Log("Move!");
+                    
+                    moving = true;
+                    animator.SetBool(Moving, moving);
+                }
+            }
+            else if(moving)
+            {
+                moving = false;
+                Debug.Log("Stop Move!");
+                animator.SetBool(Moving, moving);
+            }
+            lastPosition = transform.position;
         }
 
         private void OnDestroy()

@@ -11,5 +11,6 @@
         void StandOnVisual();
         void SetVisualStyle(FactionId id);
         void SwapVisual();
+        void BlockedVisual();
     }
 }

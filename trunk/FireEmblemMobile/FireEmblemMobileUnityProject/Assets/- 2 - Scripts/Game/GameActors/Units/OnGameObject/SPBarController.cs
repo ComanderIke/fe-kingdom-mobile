@@ -18,7 +18,7 @@ namespace Game.GameActors.Units.OnGameObject
         public override void SetValue(int value, int maxValue)
         {
             foreach (Transform child in Parent) {
-                GameObject.Destroy(child.gameObject);
+                GameObject.DestroyImmediate(child.gameObject);
             }
 
             for (int i = 0; i < value; i++)

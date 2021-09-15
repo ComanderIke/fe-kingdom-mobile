@@ -161,6 +161,8 @@ namespace Game.GameInput
                     inputPathManager.CalculateMousePathToPosition(selectionDataProvider.SelectedActor, x, y);
                     Debug.Log("GameInput SetPosition");
                     //selectionDataProvider.SelectedActor.GameTransformManager.SetPosition(x, y);
+                    gameplayInput.MoveUnit(selectionDataProvider.SelectedActor, new GridPosition(x, y), GridPosition.GetFromVectorList(inputPathManager.MovementPath));
+                    gameplayInput.ExecuteInputActions(null);
                     selectionDataProvider.SetSelectedTile(x, y);
                     selectionDataProvider.ClearAttackTarget();
                 }
