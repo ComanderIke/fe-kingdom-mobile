@@ -91,8 +91,8 @@ namespace Game.Map
         {
 
             HideMoveRange();
-
-            ShowMovementRangeOnGrid(gridActor);
+            if(!gridActor.TurnStateManager.HasMoved)
+                ShowMovementRangeOnGrid(gridActor);
             //if (!u.UnitTurnState.HasAttacked)
             ShowAttackRangeOnGrid(gridActor, new List<int>(gridActor.AttackRanges));
 
@@ -147,7 +147,7 @@ namespace Game.Map
             {
                 if (!IsTileMoveableAndActive(x, y))
                 {
-                    GridRenderer.SetFieldMaterialAttack(new Vector2(x, y), character.Faction.Id, !character.TurnStateManager.HasMoved, GridGameManager.Instance.FactionManager.IsActiveFaction(character.Faction));
+                    GridRenderer.SetFieldMaterialAttack(new Vector2(x, y), character.Faction.Id, !character.TurnStateManager.IsWaiting, GridGameManager.Instance.FactionManager.IsActiveFaction(character.Faction));
                     GridLogic.gridSessionData.AddValidAttackPosition(x, y);
                 }
 

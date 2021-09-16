@@ -146,8 +146,9 @@ namespace Game.GameInput
                 
                 return;
             }
-            if (gridSystem.GridLogic.IsFieldFreeAndActive(x, y))
+            if (gridSystem.GridLogic.IsFieldFreeAndActive(x, y)&&selectionDataProvider.SelectedActor!=null &&!selectionDataProvider.SelectedActor.TurnStateManager.HasMoved)
             {
+                
                 if(selectionDataProvider.IsSelectedTile(x,y))
                 {
                     gameplayInput.MoveUnit(selectionDataProvider.SelectedActor, new GridPosition(x, y), GridPosition.GetFromVectorList(inputPathManager.MovementPath));
@@ -162,7 +163,23 @@ namespace Game.GameInput
                     Debug.Log("GameInput SetPosition");
                     //selectionDataProvider.SelectedActor.GameTransformManager.SetPosition(x, y);
                     gameplayInput.MoveUnit(selectionDataProvider.SelectedActor, new GridPosition(x, y), GridPosition.GetFromVectorList(inputPathManager.MovementPath));
-                    gameplayInput.ExecuteInputActions(null);
+                   
+                    gameplayInput.ExecuteInputActions( ()=>
+                    {
+                        if (gridSystem.GridLogic.GetAttackTargets(selectionDataProvider.SelectedActor).Count > 0)
+                        {
+                            Debug.Log(""+gridSystem.GridLogic.GetAttackTargets(selectionDataProvider.SelectedActor).Count);
+                            gridSystem.ShowAttackFromPosition((Unit) selectionDataProvider.SelectedActor,x,y);
+                            
+                        }
+                        else
+                        {
+                            gridSystem.ShowAttackRangeOnGrid(selectionDataProvider.SelectedActor,
+                                selectionDataProvider.SelectedActor.AttackRanges);
+                        }
+                    });
+                    
+                    
                     selectionDataProvider.SetSelectedTile(x, y);
                     selectionDataProvider.ClearAttackTarget();
                 }

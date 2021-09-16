@@ -9,7 +9,7 @@ namespace Game.GameActors.Units
     public interface IGridActor
     {
         GridComponent GridComponent { get; set; }
-        IEnumerable<int> AttackRanges { get; }
+        List<int> AttackRanges { get; }
         int MovementRange { get; }
         Faction Faction { get; }
         MoveType MoveType { get; set; }

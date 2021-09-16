@@ -124,7 +124,7 @@ namespace Game.GameActors.Units
             }
         }
 
-        public IEnumerable<int> AttackRanges => stats.AttackRanges;
+        public List<int> AttackRanges => stats.AttackRanges;
         public int MovementRange => stats.Mov;
         public int MaxSpBars
         {

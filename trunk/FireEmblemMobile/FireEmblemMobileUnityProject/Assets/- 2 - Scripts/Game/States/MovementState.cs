@@ -131,8 +131,8 @@ namespace Game.Mechanics
            
           
             gridGameManager.GetSystem<GridSystem>().SetUnitPosition(unit,x,y);
-            unit.TurnStateManager.IsSelected = false;
-            unit.TurnStateManager.HasMoved = true;
+            //unit.TurnStateManager.IsSelected = false;
+            
             OnMovementFinished?.Invoke(unit);
             IsFinished = true;
         }
@@ -141,6 +141,7 @@ namespace Game.Mechanics
         {
             active = false;
             movementFinished = true;
+            unit.TurnStateManager.HasMoved = true;
         }
     }
 }

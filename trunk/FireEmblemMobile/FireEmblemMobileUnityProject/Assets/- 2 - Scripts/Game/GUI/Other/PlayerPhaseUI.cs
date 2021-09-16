@@ -13,7 +13,7 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
     public OKCancelDialogController OkCancelDialogController;
     public TextMeshProUGUI turnText;
     public TileInfoPanel TileInfoPanel;
-
+    public GameObject BackButton;
     public void ShowTileInfo(Tile selectedTile)
     {
         TileInfoPanel.Show(selectedTile);
@@ -29,13 +29,25 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
         
     }
 
+    public void ShowBackButton()
+    {
+        BackButton.SetActive(true);
+    }
+    public void HideBackButton()
+    {
+        BackButton.SetActive(false);
+    }
+
     public void Hide()
     {
         GetComponent<Canvas>().enabled = false;
        
     }
 
-  
+    public void BackClicked()
+    {
+       HideBackButton();
+    }
    
     public void EndTurnClicked()
     {
