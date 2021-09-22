@@ -14,6 +14,7 @@ namespace Game.GameInput
         private int SelectedTileY { get; set; }
         private IGridActor selectedAttackTarget;
         private IGridActor undoAbleActor;
+        private ISelectionUI selectionUI;
 
         public void SetSelectedAttackTarget(IGridActor target)
         {
@@ -38,11 +39,13 @@ namespace Game.GameInput
         {
             SetSelectedAttackTarget(null);
             undoAbleActor = null;
+            selectionUI.HideUndo();
         }
 
         public void SetUndoAbleActor(IGridActor selectedActor)
         {
             undoAbleActor = selectedActor;
+            selectionUI.ShowUndo();
         }
 
         public bool IsSelectedTile(int x, int y)
@@ -53,6 +56,7 @@ namespace Game.GameInput
         public SelectionManager()
         {
             unitSelectionSystem = GridGameManager.Instance.GetSystem<UnitSelectionSystem>();
+            selectionUI = GameObject.FindObjectOfType<SelectionUI>();
             SelectedTileX = -1;
             SelectedTileY = -1;
         }
