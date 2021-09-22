@@ -234,7 +234,8 @@ namespace Game.GameInput
                 {
                     if (selectionDataProvider.GetSelectedAttackTarget()!=enemyActor)
                     {
-                        selectionDataProvider.ClearData();
+                        selectionDataProvider.ClearPositionData();
+                        selectionDataProvider.ClearAttackData();
                         var gridPos = new GridPosition((int)selectedActor.GameTransformManager.GetPosition().x, (int)selectedActor.GameTransformManager.GetPosition().y);
                         if (selectedActor.GridComponent.CanAttackFrom(gridPos, enemyActor.GridComponent.GridPosition))
                         {
@@ -246,7 +247,8 @@ namespace Game.GameInput
                         {
                             Debug.Log("Can Attack From Position2");
                             selectedActor.GridComponent.ResetPosition();
-                            selectionDataProvider.ClearData();
+                            selectionDataProvider.ClearPositionData();
+                            selectionDataProvider.ClearAttackData();
                             inputPathManager.Reset();
                             inputPathManager.UpdatedMovementPath(selectedActor.GridComponent.GridPosition.X, selectedActor.GridComponent.GridPosition.Y);
                             if(selectedActor is IBattleActor battleActor&& enemyActor is IBattleActor enemyBattleActor)

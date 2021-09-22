@@ -35,6 +35,15 @@ namespace Game.GameInput
             ClearAttackTarget();
             undoAbleActor = null;
         }
+        public void ClearPositionData()
+        {
+            SelectedTileX = -1;
+            SelectedTileY = -1;
+           
+        }
+        public void ClearAttackData(){
+            SetSelectedAttackTarget(null);
+        }
         public void ClearAttackTarget()
         {
             SetSelectedAttackTarget(null);

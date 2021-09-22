@@ -27,6 +27,7 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
 
     public void SubscribeOnBackClicked(Action action)
     {
+        Debug.Log("Subscribe BACK!");
         OnBackClicked += action;
     }
 
@@ -60,8 +61,9 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
 
     public void BackClicked()
     {
+        Debug.Log("BACK Clicked!");
         OnBackClicked?.Invoke();
-       HideBackButton();
+       
     }
    
     public void EndTurnClicked()
