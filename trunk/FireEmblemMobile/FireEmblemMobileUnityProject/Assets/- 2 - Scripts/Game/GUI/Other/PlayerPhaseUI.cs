@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Game.Grid;
@@ -14,6 +15,7 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
     public TextMeshProUGUI turnText;
     public TileInfoPanel TileInfoPanel;
     public GameObject BackButton;
+    public Action OnBackClicked;
     public void ShowTileInfo(Tile selectedTile)
     {
         TileInfoPanel.Show(selectedTile);
@@ -21,6 +23,18 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
     public void HideTileInfo()
     {
         TileInfoPanel.Hide();
+    }
+
+    public void SubscribeOnBackClicked(Action action)
+    {
+        OnBackClicked += action;
+    }
+
+    
+
+    public void UnsubscribeOnBackClicked(Action action)
+    {
+        OnBackClicked -= action;
     }
     public void Show(int turnCount)
     {
@@ -46,6 +60,7 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
 
     public void BackClicked()
     {
+        OnBackClicked?.Invoke();
        HideBackButton();
     }
    

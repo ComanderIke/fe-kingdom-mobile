@@ -19,9 +19,11 @@ namespace Game.Mechanics
 
         private GridGameManager gridGameManager;
         public IGridActor SelectedCharacter { get; set; }
+        private GameplayInput gameplayInput;
 
         public void Init()
         {
+            gameplayInput = new GameplayInput();
             gridGameManager = GridGameManager.Instance;
 
            
@@ -59,6 +61,11 @@ namespace Game.Mechanics
             {
                 SelectedCharacter.GridComponent.ResetPosition();
                 SelectedCharacter.TurnStateManager.IsSelected = false;
+                if (SelectedCharacter.TurnStateManager.HasMoved)
+                {
+                    gameplayInput.Wait(SelectedCharacter);
+                    gameplayInput.ExecuteInputActions(null);
+                }
             }
             OnDeselectCharacter?.Invoke(SelectedCharacter);
             SelectedCharacter = null;

@@ -170,12 +170,16 @@ namespace Game.GameInput
                         {
                             Debug.Log(""+gridSystem.GridLogic.GetAttackTargets(selectionDataProvider.SelectedActor).Count);
                             gridSystem.ShowAttackFromPosition((Unit) selectionDataProvider.SelectedActor,x,y);
+                            selectionDataProvider.SetUndoAbleActor(selectionDataProvider.SelectedActor);
                             
                         }
                         else
                         {
                             gridSystem.ShowAttackRangeOnGrid(selectionDataProvider.SelectedActor,
                                 selectionDataProvider.SelectedActor.AttackRanges);
+                            selectionDataProvider.SetUndoAbleActor(selectionDataProvider.SelectedActor);
+                            gameplayInput.Wait(selectionDataProvider.SelectedActor);
+                            gameplayInput.ExecuteInputActions(null);
                         }
                     });
                     
@@ -258,11 +262,20 @@ namespace Game.GameInput
                                 var lastMovPathPos = inputPathManager.GetLastMovementPathPosition();
                               
                                 Debug.Log("GameInput2 SetPosition " + selectedActor);
-                                gridSystem.SetUnitInternPosition(selectedActor,lastMovPathPos.x, lastMovPathPos.y);
+                                gameplayInput.MoveUnit(selectionDataProvider.SelectedActor, new GridPosition(lastMovPathPos.x, lastMovPathPos.y), GridPosition.GetFromVectorList(inputPathManager.MovementPath));
+                   
+                                gameplayInput.ExecuteInputActions( ()=>
+                                {
+                                    Debug.Log(""+gridSystem.GridLogic.GetAttackTargets(selectionDataProvider.SelectedActor).Count);
+                                    gridSystem.ShowAttackFromPosition((Unit) selectionDataProvider.SelectedActor,lastMovPathPos.x,lastMovPathPos.y);
+                                    if(selectedActor is IBattleActor battleActor&& enemyActor is IBattleActor enemyBattleActor)
+                                        gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, new GridPosition(lastMovPathPos.x, lastMovPathPos.y));
+
+                                });
+                                //gridSystem.SetUnitInternPosition(selectedActor,lastMovPathPos.x, lastMovPathPos.y);
                                 Debug.Log("Test");
                                // selectedActor.GameTransformManager.SetPosition(lastMovPathPos.x, lastMovPathPos.y);
-                                if(selectedActor is IBattleActor battleActor&& enemyActor is IBattleActor enemyBattleActor)
-                                    gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, new GridPosition(lastMovPathPos.x, lastMovPathPos.y));
+                                
                             }
                             else
                             {

@@ -23,6 +23,7 @@ namespace Game.Mechanics
         private ConditionManager conditionManager;
         private GridInputSystem gridInputSystem;
         private UnitInputSystem unitInputSystem;
+       // private ISelectionDataProvider selectionDataProvider;
         private CameraSystem cameraSystem;
         public IPlayerPhaseUI playerPhaseUI;//Inject
 
@@ -34,6 +35,7 @@ namespace Game.Mechanics
             cameraSystem = GameObject.FindObjectOfType<CameraSystem>();
             gridInputSystem = new GridInputSystem();
             unitInputSystem = new UnitInputSystem();
+            
            
           
             unitInputSystem.InputReceiver = gridInputSystem;
@@ -65,11 +67,17 @@ namespace Game.Mechanics
             gridInputSystem.SetActive(true);
             unitInputSystem.SetActive(true);
             playerPhaseUI.Show(gridGameManager.GetSystem<TurnSystem>().TurnCount);
+            playerPhaseUI.SubscribeOnBackClicked(Undo);
             
             SetUpInputForUnits();
             UnitSelectionSystem.OnSelectedInActiveCharacter += OnSelectedCharacter;
             UnitSelectionSystem.OnSelectedCharacter += OnSelectedCharacter;
             // add as InputReceiver to all units
+        }
+
+        public void Undo()
+        {
+            Debug.Log("UNDO123");
         }
 
         private void CursorPosChanged(Vector2Int tilePos)
@@ -94,8 +102,11 @@ namespace Game.Mechanics
         {
             foreach (var unit in factionManager.Factions.SelectMany(faction => faction.Units))
             {
-                if(unit.GameTransformManager.GameObject!=null)
+                if (unit.GameTransformManager.GameObject != null)
+                {
                     unit.GameTransformManager.UnitController.touchInputReceiver = unitInputSystem;
+                    
+                }
             }
         }
 
@@ -103,6 +114,7 @@ namespace Game.Mechanics
         {
             unitInputSystem.Update();
             gridInputSystem.Update();
+            
             
             if (conditionManager.CheckLose())
             {
@@ -121,7 +133,7 @@ namespace Game.Mechanics
         }
         public override void Exit()
         {
-
+            playerPhaseUI.UnsubscribeOnBackClicked(Undo);
             cameraSystem.RemoveMixin<DragCameraMixin>();
             cameraSystem.RemoveMixin<ClampCameraMixin>();
             cameraSystem.RemoveMixin<ViewOnGridMixin>();

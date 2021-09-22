@@ -16,5 +16,6 @@ namespace Game.GameInput
         void ClearData();
         bool IsSelectedTile(int i, int i1);
         void ClearAttackTarget();
+        void SetUndoAbleActor(IGridActor selectedActor);
     }
 }

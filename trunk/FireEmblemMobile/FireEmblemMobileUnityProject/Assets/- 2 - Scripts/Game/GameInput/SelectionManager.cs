@@ -13,6 +13,7 @@ namespace Game.GameInput
         private int SelectedTileX { get; set; }
         private int SelectedTileY { get; set; }
         private IGridActor selectedAttackTarget;
+        private IGridActor undoAbleActor;
 
         public void SetSelectedAttackTarget(IGridActor target)
         {
@@ -31,13 +32,19 @@ namespace Game.GameInput
             SelectedTileX = -1;
             SelectedTileY = -1;
             ClearAttackTarget();
+            undoAbleActor = null;
         }
         public void ClearAttackTarget()
         {
             SetSelectedAttackTarget(null);
+            undoAbleActor = null;
         }
 
-   
+        public void SetUndoAbleActor(IGridActor selectedActor)
+        {
+            undoAbleActor = selectedActor;
+        }
+
         public bool IsSelectedTile(int x, int y)
         {
             return SelectedTileX == x && SelectedTileY == y;
