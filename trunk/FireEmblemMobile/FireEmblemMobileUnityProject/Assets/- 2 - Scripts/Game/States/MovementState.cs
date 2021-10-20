@@ -110,7 +110,7 @@ namespace Game.Mechanics
             float tx = Path.GetStep(PathCounter).GetX();
             float ty = Path.GetStep(PathCounter).GetY();
            // Debug.Log("Moving to x: " + tx + " y: " + ty+ " "+x+" "+y);
-            var walkSpeed = 7.0f;
+            var walkSpeed = 5.0f;
             float value = walkSpeed * Time.deltaTime;
             x = Math.Abs(x - tx) < value ? tx : x + (x < tx ? value : -value);
             y = Math.Abs(y - ty) < value ? ty : y + (y < ty ? value : -value);

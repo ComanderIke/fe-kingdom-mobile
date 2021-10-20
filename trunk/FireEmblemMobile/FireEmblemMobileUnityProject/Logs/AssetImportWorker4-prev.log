@@ -1,0 +1,116 @@
+Using pre-set license
+Built from '2021.1/staging' branch; Version is '2021.1.7f1 (d91830b65d9b) revision 14227504'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10 Pro; OS build 19043.1237; Version 2009; 64bit' Language: 'de' Physical Memory: 8108 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+ COMMAND LINE ARGUMENTS:
+E:\Unity\2021.1.7f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker4
+-projectPath
+E:/Projects/FEM/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject
+-logFile
+Logs/AssetImportWorker4.log
+-srvPort
+50643
+Successfully changed project path to: E:/Projects/FEM/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject
+E:/Projects/FEM/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 204.00 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2021.1.7f1 (d91830b65d9b)
+[Subsystems] Discovering subsystems at path E:/Unity/2021.1.7f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path E:/Projects/FEM/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce GTX 860M (ID=0x1392)
+    Vendor:   NVIDIA
+    VRAM:     2019 MB
+    Driver:   23.21.13.8871
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Initialize mono
+Mono path[0] = 'E:/Unity/2021.1.7f1/Editor/Data/Managed'
+Mono path[1] = 'E:/Unity/2021.1.7f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'E:/Unity/2021.1.7f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56680
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: E:/Unity/2021.1.7f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.002478 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 239.62 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  3.751 seconds
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.012674 seconds.
+Begin MonoManager ReloadAssembly
+OnLevelWasLoaded was found on LeanTween
+This message has been deprecated and will be removed in a later version of Unity.
+Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
+
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 237.95 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in 13.327 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.24 seconds
+Refreshing native plugins compatible for Editor in 2.75 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3816 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 240.0 MB.
+System memory in use after: 240.2 MB.
+
+Unloading 53 unused Assets to reduce memory usage. Loaded Objects now: 4246.
+Total: 15.046800 ms (FindLiveObjects: 1.205400 ms CreateObjectMapping: 0.569500 ms MarkObjects: 13.124800 ms  DeleteObjects: 0.144400 ms)
+
+========================================================================
+Received Import Request.
+  path: Assets/- 4 - Textures/Characters/Witch/Dark Magic Critical Attack Spell.png
+  artifactKey: Guid(71c2ba9453b9da2449458c9b973b67ca) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/- 4 - Textures/Characters/Witch/Dark Magic Critical Attack Spell.png using Guid(71c2ba9453b9da2449458c9b973b67ca) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2c59cb322309b0c780aec6a8c0b1facf') in 0.420664 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000314 seconds.
+  path: Assets/- 2 - Scripts/External/Runtime/AstarPathfindingProject/ExampleScenes/Example2_Terrain/Pathfinding_Terrain.asset
+  artifactKey: Guid(ce970816794dc4a6c8b5acdbc5953551) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/- 2 - Scripts/External/Runtime/AstarPathfindingProject/ExampleScenes/Example2_Terrain/Pathfinding_Terrain.asset using Guid(ce970816794dc4a6c8b5acdbc5953551) Importer(815301076,1909f56bfc062723c751e8b465ee728b) Received signal SIGSEGV
+Stack trace:
+0x00007ff6b86a31b4 (Unity) CreateAssetToGUIDMappingV2
+0x00007ff6b864c9ba (Unity) AssetDatabase::CreateAssetToGUIDMapping
+0x00007ff6b8d3ddbb (Unity) SplatDatabase::CreateTerrainLayerAsset
+0x00007ff6b8d3cc80 (Unity) SplatDatabase::ConvertSplatsToTerrainLayers
+0x00007ff6b8d39cdc (Unity) SplatDatabase::AwakeFromLoad
+0x00007ff6b8d76ae6 (Unity) TerrainData::AwakeFromLoad
+0x00007ff6b7db351f (Unity) AwakeFromLoadQueue::InvokePersistentManagerAwake
+0x00007ff6b7db3eb2 (Unity) AwakeFromLoadQueue::PersistentManagerAwakeFromLoad
+0x00007ff6b7db403a (Unity) AwakeFromLoadQueue::PersistentManagerAwakeFromLoad
+0x00007ff6b7d87e5f (Unity) PersistentManager::IntegrateAllThreadedObjects
+0x00007ff6b7d889c7 (Unity) PersistentManager::LoadAndIntegrateAllPreallocatedObjects
+0x00007ff6b7d8bee2 (Unity) PersistentManager::ReadObject
+0x00007ff6b8645a01 (Unity) WritePreviews
+0x00007ff6b8642403 (Unity) PreviewImporter::GenerateAssetData
+0x00007ff6b86dc84e (Unity) ImportToObjects
+0x00007ff6b86db848 (Unity) ImportAsset
+0x00007ff6b8679e6f (Unity) AssetImportWorker::Import
+0x00007ff6b869cf52 (Unity) <lambda_9a0c3c600e605f826d039b184a304624>::operator()
+0x00007ff6b8723712 (Unity) asio::detail::completion_handler<core::mutable_function<void __cdecl(void)> >::do_complete
+0x00007ff6b8725980 (Unity) asio::detail::win_iocp_io_service::do_one
+0x00007ff6b872906e (Unity) asio::io_service::run
+0x00007ff6b86c551a (Unity) RunAssetImportWorkerClientV2
+0x00007ff6b86c5570 (Unity) RunAssetImporterV2
+0x00007ff6b81cc106 (Unity) Application::InitializeProject
+0x00007ff6b85d8837 (Unity) WinMain
+0x00007ff6ba105682 (Unity) __scrt_common_main_seh
+0x00007fff61c17034 (KERNEL32) BaseThreadInitThunk
+0x00007fff637e2651 (ntdll) RtlUserThreadStart
+
