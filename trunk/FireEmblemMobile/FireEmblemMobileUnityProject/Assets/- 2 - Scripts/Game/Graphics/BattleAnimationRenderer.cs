@@ -32,7 +32,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     private IBattleActor defender;
     private bool leftCharacterDied;
     private bool rightCharacterDied;
-    public void Show(BattleSimulation battleSimulation, IBattleActor attacker, IBattleActor defender)
+    public void Show(BattleSimulation battleSimulation, IBattleActor attackingActor, IBattleActor defendingActor)
     {
         this.battleSimulation = battleSimulation;
         var background=GameObject.Instantiate(battleBackground, transform);
@@ -42,7 +42,8 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         rightCharacterDied = false;
         this.attacker = battleSimulation.Attacker;
         this.defender = battleSimulation.Defender;
-        BattleUI.Show(battleSimulation, (Unit)attacker, (Unit)defender);
+        Debug.Log(attacker.Hp+ " "+attackingActor.Hp);
+        BattleUI.Show(battleSimulation, (Unit)attackingActor, (Unit)defendingActor);
         leftCharacterAttacker = battleSimulation.Attacker.Faction.IsPlayerControlled;
         if(characterLeft!=null)
             Destroy(characterLeft);

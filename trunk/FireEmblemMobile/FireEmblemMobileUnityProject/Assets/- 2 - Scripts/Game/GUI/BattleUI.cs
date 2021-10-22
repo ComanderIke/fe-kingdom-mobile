@@ -46,6 +46,7 @@ public class BattleUI : MonoBehaviour
         currentHPRight = defender.Hp;
         maxHPLeft = attacker.Stats.MaxHp;
         maxHPRight = defender.Stats.MaxHp;
+      //  Debug.Log(currentHPLeft+" "+currentHPRight+" "+battleSimulation.Attacker.Stats.MaxHp+" "+battleSimulation.Attacker.Hp);
         hpText.SetText(""+currentHPLeft);
         hpTextRight.SetText(""+currentHPRight);
         faceSpriteLeft.sprite = attacker.visuals.CharacterSpriteSet.FaceSprite;
@@ -60,8 +61,9 @@ public class BattleUI : MonoBehaviour
         attackCountRightX.SetActive(battleSimulation.DefenderAttackCount > 1);
         attackCountRight.gameObject.SetActive(attackCountRightX.activeSelf);
         attackCountRight.text = "" + battleSimulation.DefenderAttackCount;
-        leftHPBar.SetValues(battleSimulation.Attacker.Stats.MaxHp,battleSimulation.Attacker.Hp);
-        rightHPBar.SetValues(battleSimulation.Defender.Stats.MaxHp,battleSimulation.Defender.Hp);
+        leftHPBar.SetValues(attacker.Stats.MaxHp,attacker.Hp);
+        rightHPBar.SetValues(defender.Stats.MaxHp,defender.Hp);
+   
     }
 
    

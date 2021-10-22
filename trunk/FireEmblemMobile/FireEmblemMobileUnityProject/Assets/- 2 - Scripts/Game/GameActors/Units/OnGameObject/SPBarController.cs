@@ -17,10 +17,11 @@ namespace Game.GameActors.Units.OnGameObject
    
         public override void SetValue(int value, int maxValue)
         {
-            foreach (Transform child in Parent) {
-                GameObject.DestroyImmediate(child.gameObject);
+            int childs = Parent.childCount;
+            for (int i = childs - 1; i >= 0; i--)
+            {
+                GameObject.Destroy(Parent.GetChild(i).gameObject);
             }
-
             for (int i = 0; i < value; i++)
             {
                 Instantiate(SPBarPrefab, Parent, false);
@@ -34,12 +35,19 @@ namespace Game.GameActors.Units.OnGameObject
                     go.GetComponent<Animator>().SetTrigger(Empty);
                 }
             }
+           
+      
+            // foreach (Transform child in Parent) {
+            //     Debug.Log("destroy: "+child.name);
+            //     DestroyImmediate(child.gameObject);
+            // }
         }
         public override void SetPreviewValue(int value, int valueAfter,int maxValue)
         {
-
-            foreach (Transform child in Parent) {
-                GameObject.Destroy(child.gameObject);
+            int childs = Parent.childCount;
+            for (int i = childs - 1; i >= 0; i--)
+            {
+                GameObject.Destroy(Parent.GetChild(i).gameObject);
             }
 
             for (int i = 0; i < valueAfter; i++)
