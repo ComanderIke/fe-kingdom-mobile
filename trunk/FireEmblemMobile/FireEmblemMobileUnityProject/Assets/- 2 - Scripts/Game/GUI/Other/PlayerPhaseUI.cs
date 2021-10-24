@@ -70,11 +70,15 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
     {
         OkCancelDialogController.Show("Do you want to end the turn?", () =>
         {
-            //Debug.Log("Ending Turn with UI!");
-            if(GridGameManager.Instance!=null)
+            Debug.Log("Ending Turn clicked with UI!");
+            if (GridGameManager.Instance != null)
+            {
+                Debug.Log("Ending Turn");
                 GridGameManager.Instance.GetSystem<TurnSystem>().OnTriggerEndTurn();
+            }
             else
             {
+                Debug.Log("World Map Ending Turn with UI!");
                 WorldMapGameManager.Instance.GetSystem<TurnSystem>().OnTriggerEndTurn();
             }
         });
