@@ -27,15 +27,27 @@ public class ShadowController : MonoBehaviour
         shadowCaster = GetComponent<SpriteRenderer>();
         if(shadowGo != null)
             DestroyImmediate(shadowGo);
-        if(shadowGo==null)
-            if (GetComponentInChildren<SpriteRenderer>().gameObject.name == "shadow")
-                shadowGo = GetComponentInChildren<SpriteRenderer>().gameObject;
+      //  Debug.Log("HÄH!");
+        var children = GetComponentsInChildren<SpriteRenderer>();
+        for(int i=children.Length-1; i>=0;i--)
+        {
+           // Debug.Log(i+" "+children[i].gameObject.name);
+            if (children[i].gameObject.name == "shadow")
+            {
+                //Debug.Log("Destroy!");
+                DestroyImmediate(children[i].gameObject);
+            }
+        }
+
         if (shadowGo == null)
         {
             shadowGo = GameObject.Instantiate(new GameObject(), transform, false);
             shadowGo.name = "shadow";
+           
 
         }
+        if(shadowGo.GetComponent<SpriteRenderer>()==null)
+            shadowGo.AddComponent<SpriteRenderer>();
         shadowGo.GetComponent<SpriteRenderer>().sprite = shadowCaster.sprite;
         shadowGo.GetComponent<SpriteRenderer>().color = shadowColor;
         shadowGo.transform.localPosition = shadowOffset;
