@@ -162,10 +162,11 @@ namespace Game.States
         }
         private void HideStartPos()
         {
-            foreach (var startpos in startPositions)
+            for(int i= startPositions.Length-1; i>=0;i-- )
             { 
-                var tile= gridSystem.GetTile(startpos.GetXOnGrid(), startpos.GetYOnGrid());
+                var tile= gridSystem.GetTile(startPositions[i].GetXOnGrid(), startPositions[i].GetYOnGrid());
                 tile.tileVfx.Hide(tile);
+                GameObject.Destroy(startPositions[i].gameObject);
                 //tile.TileRenderer.SwapVisual();
             }
         }

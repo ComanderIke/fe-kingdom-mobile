@@ -10,6 +10,11 @@ namespace Utility
         void Start () {
             GetComponentInChildren<SpriteRenderer>().enabled = false;
         }
+
+        public void Destroy()
+        {
+            Destroy(gameObject);
+        }
         public int GetXOnGrid()
         {
             return (int)transform.localPosition.x;

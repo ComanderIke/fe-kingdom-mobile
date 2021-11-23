@@ -10,7 +10,6 @@ namespace Game.GameResources
     {
         public GridData gridData;
         public Material gridMaterial;
-        public TileType standardTileType;
         public Sprite standardSprite;
         public MoveArrowVisual moveArrowVisual;
     }

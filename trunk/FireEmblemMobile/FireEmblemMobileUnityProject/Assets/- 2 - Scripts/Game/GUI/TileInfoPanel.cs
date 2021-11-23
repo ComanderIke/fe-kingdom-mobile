@@ -14,25 +14,25 @@ public class TileInfoPanel : MonoBehaviour
 
     public void Show(Tile tile)
     {
-        name.SetText(tile.TileType.name.ToString());
-        if (tile.TileType.avoidBonus != 0)
+        name.SetText(tile.TileData.name.ToString());
+        if (tile.TileData.avoBonus != 0)
         {
             boni1.gameObject.SetActive(true);
-            boni1.SetText( tile.TileType.avoidBonus + "% Avo");
+            boni1.SetText( tile.TileData.avoBonus + "% Avo");
         }
         else
         {
             boni1.gameObject.SetActive(false);
         }
-        if (tile.TileType.speedMalus != 0)
+        if (tile.TileData.speedMalus != 0)
         {
             boni2.gameObject.SetActive(true);
-            boni2.SetText( tile.TileType.speedMalus + " Spd");
+            boni2.SetText( tile.TileData.speedMalus + " Spd");
         }
-        else if (tile.TileType.defenseBonus != 0)
+        else if (tile.TileData.defenseBonus != 0)
         {
             boni2.gameObject.SetActive(true);
-            boni2.SetText( tile.TileType.defenseBonus + " Def");
+            boni2.SetText( tile.TileData.defenseBonus + " Def");
         }
         else
         {

@@ -24,7 +24,7 @@ namespace Game.Mechanics.Battle
         public int GetDefense()
         {
             Debug.Log(owner.GetTile().X+" "+owner.GetTile().Y);
-            return owner.Stats.Def + owner.GetTile().TileType.defenseBonus;
+            return owner.Stats.Def + owner.GetTile().TileData.defenseBonus;
         }
         public bool CanKillTarget(IBattleActor target, float attackMultiplier)
         {
@@ -153,10 +153,10 @@ namespace Game.Mechanics.Battle
             if (owner is Human human)
             {
                 //Debug.Log("TODO ATTACK SPEED CALC");
-                return owner.GetTile().TileType.avoidBonus+human.Stats.Spd * 2 - human.EquippedWeapon.Weight;
+                return owner.GetTile().TileData.avoBonus+human.Stats.Spd * 2 - human.EquippedWeapon.Weight;
             }
             
-            return owner.GetTile().TileType.avoidBonus+owner.Stats.Spd*2;
+            return owner.GetTile().TileData.avoBonus+owner.Stats.Spd*2;
         }
 
         public int GetHitAgainstTarget(IBattleActor target)
@@ -170,10 +170,10 @@ namespace Game.Mechanics.Battle
             if (owner is Human human)
             {
                 //Debug.Log("TODO ATTACK SPEED CALC");
-                return human.Stats.Spd - human.EquippedWeapon.Weight+ owner.GetTile().TileType.speedMalus;
+                return human.Stats.Spd - human.EquippedWeapon.Weight+ owner.GetTile().TileData.speedMalus;
             }
 
-            return owner.Stats.Spd + owner.GetTile().TileType.speedMalus;
+            return owner.Stats.Spd + owner.GetTile().TileData.speedMalus;
         }
     }
 }

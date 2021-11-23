@@ -36,7 +36,7 @@ namespace Game.GameActors.Units
 
         public void ResetPosition()
         {
-            Debug.Log("GridActor: "+gridActor);
+           // Debug.Log("GridActor: "+gridActor);
             if(previousTile!=null)
                  Tile = previousTile;
             gridActor.GameTransformManager.SetPosition(GridPosition.X, GridPosition.Y);
@@ -68,7 +68,8 @@ namespace Game.GameActors.Units
 
         public bool CanMoveOnTo(Tile field)
         {
-            return field.TileType.CanMoveThrough(gridActor.MoveType);
+            //Debug.Log("Can move on to: "+field.X+ " "+field.Y+ " "+field.TileData.name+" "+field.TileData.CanMoveThrough(gridActor.MoveType) );
+            return field.TileData.CanMoveThrough(gridActor.MoveType);
         }
         public bool CanMoveThrough(IGridActor unit)
         {

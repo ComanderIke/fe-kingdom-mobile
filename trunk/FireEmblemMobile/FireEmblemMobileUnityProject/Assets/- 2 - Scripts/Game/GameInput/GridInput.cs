@@ -29,7 +29,7 @@ namespace Game.GameInput
  
         bool CheckUIObjectsInPosition(Vector2 position)
         {
-            Debug.Log("Touch Position: " + position);
+            //Debug.Log("Touch Position: " + position);
             UnityEngine.EventSystems.PointerEventData pointer = new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current);
             pointer.position = position;
             List<UnityEngine.EventSystems.RaycastResult> raycastResults = new List<UnityEngine.EventSystems.RaycastResult>();

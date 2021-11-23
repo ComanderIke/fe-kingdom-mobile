@@ -59,12 +59,7 @@ namespace Game.Grid
                 for (int j = 0; j < height; j++)
                 {
                     var cell = gridTransform.GetChild(i * height + j).gameObject;
-                    var tileData = cell.GetComponent<TileData>();
-                    if (tileData == null)
-                    {
-                        cell.AddComponent<TileData>().tileType = default;
-                    }
-                    tiles[i, j] = new Tile(i, j, tileData.tileType, cell.transform, new SpriteTileRenderer(cell.GetComponent<SpriteRenderer>(), GameAssets.Instance.tiles.tileSpriteSets),tileeffectVisualRenderer);
+                    tiles[i, j] = new Tile(i, j, cell.transform, new SpriteTileRenderer(cell.GetComponent<SpriteRenderer>(), GameAssets.Instance.tiles.tileSpriteSets),tileeffectVisualRenderer);
                 }
             }
 
@@ -83,8 +78,7 @@ namespace Game.Grid
             spriteRenderer.sprite = GameAssets.Instance.grid.standardSprite;
             spriteRenderer.sortingOrder = 0;
             go.AddComponent<BoxCollider2D>().size = new Vector3(1, 1);
-            go.AddComponent<TileData>().tileType=GameAssets.Instance.grid.standardTileType;
-            
+
             return go;
         }
         

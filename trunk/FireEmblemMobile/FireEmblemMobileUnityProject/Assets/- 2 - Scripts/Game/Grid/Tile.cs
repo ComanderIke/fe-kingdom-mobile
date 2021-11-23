@@ -1,6 +1,7 @@
 ﻿using System.Xml.Schema;
 using Game.GameActors.Units;
 using Game.Graphics;
+using Game.Map;
 using UnityEngine;
 
 namespace Game.Grid
@@ -16,14 +17,12 @@ namespace Game.Grid
             }
             set
             {
-                Debug.Log("Actor: "+actor);
+                //Debug.Log("Actor: "+actor);
                 actor = value;
-               Debug.Log("Tile: "+this.X+" "+this.Y+ " "+actor);
+               //Debug.Log("Tile: "+this.X+" "+this.Y+ " "+actor);
                if (actor != null)
                {
                    actor.GridComponent.Tile = this;
-                   Debug.Log("Tile: " + this.X + " " + this.Y + " ACtor: " + actor + " " +
-                             actor.GridComponent.Tile.TileType.TerrainType);
                }
 
             }
@@ -33,17 +32,22 @@ namespace Game.Grid
         public readonly int Y;
       //  public bool IsActive;
      //   public bool IsAttackable;
-        
-        public TileType TileType;
+     
         public readonly ITileRenderer TileRenderer;
         public ITileEffectVisualRenderer tileVfx;
         private Transform transform;
 
-        public Tile(int i, int j, TileType tileType, Transform transform, ITileRenderer tileRenderer, ITileEffectVisualRenderer tileVfx)
+        public TileData TileData
+        {
+            get
+            {
+                return TileManager.Instance.GetData(X, Y);
+            }
+        }
+        public Tile(int i, int j,  Transform transform, ITileRenderer tileRenderer, ITileEffectVisualRenderer tileVfx)
         {
             X = i;
             Y = j;
-            TileType = tileType;
             TileRenderer = tileRenderer;
             this.tileVfx = tileVfx;
             this.transform = transform;
@@ -74,7 +78,7 @@ namespace Game.Grid
                     tileVfx.ShowAttackable(this);
                     TileRenderer.ActiveAttackVisual();
                 }
-                else if (TileType.TerrainType == TerrainType.Obstacle)
+                else if (!TileData.walkable)
                 {
                     TileRenderer.BlockedVisual();
                 }

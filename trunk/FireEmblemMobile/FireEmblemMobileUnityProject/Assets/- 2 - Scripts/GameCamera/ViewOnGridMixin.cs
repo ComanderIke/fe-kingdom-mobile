@@ -21,6 +21,21 @@ namespace GameCamera
         [Range(0, 3)] public int zoom = 1;
         public float zoomSpeed=0.004f;
         private float startDistance;
+        public void Construct(float width, float height, int zoom)
+        {
+            this.zoom = zoom;
+            SetBounds(width, height);
+        }
+        private void SetBounds(float width, float height)
+        {
+           
+            minX = -CameraSystem.cameraData.cameraBoundsBorder.x;
+
+
+            maxX = width + CameraSystem.cameraData.cameraBoundsBorder.x;
+            minY = -CameraSystem.cameraData.cameraBoundsBorder.y;
+            maxY = height + CameraSystem.cameraData.cameraBoundsBorder.y;
+        }
 
         private void Update()
         {

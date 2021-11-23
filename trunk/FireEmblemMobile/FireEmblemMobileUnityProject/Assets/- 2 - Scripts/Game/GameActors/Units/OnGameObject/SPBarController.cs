@@ -20,7 +20,7 @@ namespace Game.GameActors.Units.OnGameObject
             int childs = Parent.childCount;
             for (int i = childs - 1; i >= 0; i--)
             {
-                GameObject.Destroy(Parent.GetChild(i).gameObject);
+                GameObject.DestroyImmediate(Parent.GetChild(i).gameObject);
             }
             for (int i = 0; i < value; i++)
             {

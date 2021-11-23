@@ -36,7 +36,7 @@ namespace Game.Mechanics.Commands
 
         public override void Execute()
         {
-            Debug.Log("Execute Movement!");
+            //Debug.Log("Execute Movement!");
             GridGameManager.Instance.GameStateManager.MovementState.StartMovement(unit, x, y, skipAnimation, path);
         }
 

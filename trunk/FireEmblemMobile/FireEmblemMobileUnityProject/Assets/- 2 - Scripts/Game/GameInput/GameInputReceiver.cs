@@ -160,7 +160,7 @@ namespace Game.GameInput
                 else
                 {
                     inputPathManager.CalculateMousePathToPosition(selectionDataProvider.SelectedActor, x, y);
-                    Debug.Log("GameInput SetPosition");
+                    //Debug.Log("GameInput SetPosition");
                     //selectionDataProvider.SelectedActor.GameTransformManager.SetPosition(x, y);
                     gameplayInput.MoveUnit(selectionDataProvider.SelectedActor, new GridPosition(x, y), GridPosition.GetFromVectorList(inputPathManager.MovementPath));
                    

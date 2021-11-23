@@ -27,7 +27,7 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
 
     public void SubscribeOnBackClicked(Action action)
     {
-        Debug.Log("Subscribe BACK!");
+        //Debug.Log("Subscribe BACK!");
         OnBackClicked += action;
     }
 

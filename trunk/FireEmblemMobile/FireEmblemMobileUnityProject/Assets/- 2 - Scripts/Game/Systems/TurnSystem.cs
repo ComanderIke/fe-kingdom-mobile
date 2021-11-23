@@ -54,8 +54,8 @@ namespace Game.Mechanics
            
             if(gameStateManager is WM_GameStateManager)
                 TurnCount = Campaign.Instance.turnCount;
-            Debug.Log("Init TurnSystem: " + TurnCount);
-            Debug.Log("Active Faction: " + factionManager.ActiveFaction.Name);
+            //Debug.Log("Init TurnSystem: " + TurnCount);
+            //Debug.Log("Active Faction: " + factionManager.ActiveFaction.Name);
         }
 
         public void Deactivate()
