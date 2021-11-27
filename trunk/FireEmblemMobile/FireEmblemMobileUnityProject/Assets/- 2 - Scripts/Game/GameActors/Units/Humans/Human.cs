@@ -35,6 +35,7 @@ namespace Game.GameActors.Units.Humans
             Inventory.Owner = this;
             SkillManager = new SkillManager();
             SpecialAttackManager = new SpecialAttackManager();
+            Equip(EquippedWeapon);
         }
 
         public string GetWeaponProficiency(WeaponType weaponType)
@@ -89,7 +90,7 @@ namespace Game.GameActors.Units.Humans
             Stats.AttackRanges.Clear();
             EquippedWeapon = w;
             foreach (int r in w.AttackRanges) Stats.AttackRanges.Add(r);
-            //Debug.Log("Equip " + w.name + " on " + Name + " " + w.AttackRanges.Length+" "+ Stats.AttackRanges.Count);
+            Debug.Log("Equip " + w.name + " on " + name + " " + w.AttackRanges.Length+" "+ Stats.AttackRanges.Count);
             OnEquippedWeapon?.Invoke();
         }
         public void AutoEquip()

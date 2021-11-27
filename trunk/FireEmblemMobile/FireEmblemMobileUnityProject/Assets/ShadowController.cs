@@ -13,7 +13,7 @@ public class ShadowController : MonoBehaviour
     public Vector3 shadowDirection;
     public Vector3 shadowScale=Vector3.one;
     private SpriteRenderer shadowCaster;
-
+    public Material shadowMat;
     private Animator animator;
     private GameObject shadowGo;
     // Start is called before the first frame update
@@ -57,7 +57,9 @@ public class ShadowController : MonoBehaviour
         shadowGo.GetComponent<SpriteRenderer>().sortingLayerID = shadowCaster.sortingLayerID;
         shadowGo.GetComponent<SpriteRenderer>().sortingOrder = shadowCaster.sortingOrder;
         shadowGo.GetComponent<SpriteRenderer>().flipX = shadowCaster.flipX;;
-       
+        if (shadowMat != null)
+            shadowGo.GetComponent<SpriteRenderer>().material = shadowMat;
+
     }
 
     void UpdateShadow()
