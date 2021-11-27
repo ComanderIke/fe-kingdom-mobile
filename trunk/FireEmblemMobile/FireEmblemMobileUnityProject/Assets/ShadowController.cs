@@ -49,7 +49,7 @@ public class ShadowController : MonoBehaviour
         shadowGo.transform.localScale = shadowScale;
         shadowGo.layer = gameObject.layer;
         shadowGo.GetComponent<SpriteRenderer>().sortingLayerID = shadowCaster.sortingLayerID;
-        shadowGo.GetComponent<SpriteRenderer>().sortingOrder = shadowCaster.sortingOrder;
+        shadowGo.GetComponent<SpriteRenderer>().sortingOrder = shadowCaster.sortingOrder-1;
         shadowGo.GetComponent<SpriteRenderer>().flipX = shadowCaster.flipX;;
         if (shadowMat != null)
             shadowGo.GetComponent<SpriteRenderer>().material = shadowMat;
