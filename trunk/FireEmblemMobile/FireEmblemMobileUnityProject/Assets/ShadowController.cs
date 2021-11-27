@@ -19,35 +19,29 @@ public class ShadowController : MonoBehaviour
     // Start is called before the first frame update
     void OnEnable()
     {
-        InitShadow();
+        foreach (Transform child in transform)
+        {
+            if (child.tag == "Shadow")
+                shadowGo=child.gameObject;
+        }
+        shadowCaster = GetComponent<SpriteRenderer>();
+        if(shadowGo==null)
+            CreateShadow();
+        else 
+            InitShadow();
     }
 
+    void CreateShadow()
+    {
+        shadowGo = GameObject.Instantiate(new GameObject(), transform, false);
+        shadowGo.name = "Shadow";
+        shadowGo.AddComponent<SpriteRenderer>();
+        shadowGo.tag = "Shadow";
+        
+        InitShadow();
+    }
     void InitShadow()
     {
-        shadowCaster = GetComponent<SpriteRenderer>();
-        if(shadowGo != null)
-            DestroyImmediate(shadowGo);
-      //  Debug.Log("HÄH!");
-        var children = GetComponentsInChildren<SpriteRenderer>();
-        for(int i=children.Length-1; i>=0;i--)
-        {
-           // Debug.Log(i+" "+children[i].gameObject.name);
-            if (children[i].gameObject.name == "shadow")
-            {
-                //Debug.Log("Destroy!");
-                DestroyImmediate(children[i].gameObject);
-            }
-        }
-
-        if (shadowGo == null)
-        {
-            shadowGo = GameObject.Instantiate(new GameObject(), transform, false);
-            shadowGo.name = "shadow";
-           
-
-        }
-        if(shadowGo.GetComponent<SpriteRenderer>()==null)
-            shadowGo.AddComponent<SpriteRenderer>();
         shadowGo.GetComponent<SpriteRenderer>().sprite = shadowCaster.sprite;
         shadowGo.GetComponent<SpriteRenderer>().color = shadowColor;
         shadowGo.transform.localPosition = shadowOffset;
@@ -67,11 +61,7 @@ public class ShadowController : MonoBehaviour
         shadowGo.GetComponent<SpriteRenderer>().sprite = shadowCaster.sprite;
         shadowGo.GetComponent<SpriteRenderer>().flipX = shadowCaster.flipX;;
     }
-
-    private void OnDisable()
-    {
-        DestroyImmediate(shadowGo);
-    }
+    
 
     // Update is called once per frame
     void Update()

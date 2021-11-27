@@ -32,6 +32,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     private IBattleActor defender;
     private bool leftCharacterDied;
     private bool rightCharacterDied;
+    public GameObject light;
     public void Show(BattleSimulation battleSimulation, IBattleActor attackingActor, IBattleActor defendingActor)
     {
         this.battleSimulation = battleSimulation;
@@ -50,6 +51,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         if(characterRight!=null)
             Destroy(characterRight);
         attackSequenzIndex = 0;
+        light.SetActive(true);
         if (battleSimulation.Attacker.Faction.IsPlayerControlled)
         {
             characterLeft = Instantiate(((Unit) battleSimulation.Attacker).visuals.CharacterSpriteSet.battleAnimatedSprite,
@@ -289,9 +291,11 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     {
         Debug.Log("HIDE!");
         canvas.Hide();
+        light.SetActive(false);
         LeanTween.value(volume.weight, 0, 0.4f).setEaseInQuad().setOnUpdate((value) =>
         {
             volume.weight = value;
+           
         }).setOnComplete(()=> gameObject.SetActive(false));
        
         
