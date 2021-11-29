@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.Map;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using TileData = Game.Map.TileData;
@@ -15,12 +17,20 @@ public class TileManager : MonoBehaviour
     [SerializeField]
     private List<TileData> tileDatas;
 
+    [SerializeField] private Transform propsParent;
+    private List<PropOnGrid> props;
+
     private Dictionary<TileBase, TileData> dataFromTiles;
     // Start is called before the first frame update
     void Awake()
     {
         Instance = this;
         dataFromTiles = new Dictionary<TileBase, TileData>();
+        props = new List<PropOnGrid>();
+        foreach (var prop in propsParent.GetComponentsInChildren<PropOnGrid>())
+        {
+            props.Add(prop);
+        }
         foreach (var tileData in tileDatas)
         {
             if(tileData.tiles!=null&&tileData.tiles.Length>0)
@@ -31,8 +41,13 @@ public class TileManager : MonoBehaviour
         }
     }
 
-    public TileData GetData(int x, int y)
+    public GridTerrainData GetData(int x, int y)
     {
+        foreach (var prop in props)
+        {
+            if (prop.IsOnPosition(x, y))
+                return prop.terrainData;
+        }
         foreach (var tilemap in tilemaps)
         {
             TileBase tileBase = tilemap.GetTile(new Vector3Int(x, y, 0));
@@ -44,8 +59,9 @@ public class TileManager : MonoBehaviour
                 return dataFromTiles[tileBase];
             }
         }
+       
 
-     
+
         return standardTileData;
     }
 }

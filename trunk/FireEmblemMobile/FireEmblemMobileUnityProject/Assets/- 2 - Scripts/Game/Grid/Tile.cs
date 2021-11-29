@@ -37,7 +37,7 @@ namespace Game.Grid
         public ITileEffectVisualRenderer tileVfx;
         private Transform transform;
 
-        public TileData TileData
+        public GridTerrainData TileData
         {
             get
             {

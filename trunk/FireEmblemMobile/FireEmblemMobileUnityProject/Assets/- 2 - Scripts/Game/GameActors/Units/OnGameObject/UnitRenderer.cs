@@ -21,7 +21,7 @@ namespace Game.GameActors.Units.OnGameObject
         [SerializeField] private GameObject pointLight;
         
         [SerializeField] private Image EquippedItemIcon;
-        [SerializeField] private Image EquippedItemBackground;
+        //[SerializeField] private Image EquippedItemBackground;
         [SerializeField] private GameObject spriteMask;
         [SerializeField] private CanvasGroup alphaCanvas;
         [SerializeField] private CanvasGroup hoverCanvas;
@@ -98,23 +98,23 @@ namespace Game.GameActors.Units.OnGameObject
         }
         private void OnEquippedWeapon()
         {
-            EquippedItemBackground.color = ColorManager.Instance.GetFactionColor(unit.Faction.Id);
-            if (unit is Human human) {
-                if (human.EquippedWeapon != null)
-                {
-                    EquippedItemIcon.sprite = human.EquippedWeapon.Sprite;
-                    
-                }
-                else
-                {
-                    EquippedItemIcon.sprite = null;
-                }
-                    
-            }
-            else if(unit is Monster monster)
-            {
-                EquippedItemIcon.sprite = monster.Weapon.Sprite; //FindObjectOfType<ResourceScript>().sprites.WolfClaw;
-            }
+            // EquippedItemBackground.color = ColorManager.Instance.GetFactionColor(unit.Faction.Id);
+            // if (unit is Human human) {
+            //     if (human.EquippedWeapon != null)
+            //     {
+            //         EquippedItemIcon.sprite = human.EquippedWeapon.Sprite;
+            //         
+            //     }
+            //     else
+            //     {
+            //         EquippedItemIcon.sprite = null;
+            //     }
+            //         
+            // }
+            // else if(unit is Monster monster)
+            // {
+            //     EquippedItemIcon.sprite = monster.Weapon.Sprite; //FindObjectOfType<ResourceScript>().sprites.WolfClaw;
+            // }
         }
         private void HpValueChanged()
         {

@@ -6,18 +6,8 @@ using UnityEngine.Tilemaps;
 
 namespace Game.Map
 {
-    [CreateAssetMenu(menuName = "Map/TileData", fileName = "TileData")]
-    public class TileData : ScriptableObject
+    public class GridTerrainData:ScriptableObject
     {
-        public string name;
-        public TileBase[] tiles;
-        public bool walkable = true;
-        public int defenseBonus;
-        public int avoBonus;
-        public int speedMalus;
-        public MoveTypeCosts[] movementCostsArray;
-        private Dictionary<MoveType, int> movementCosts;
-
         [Serializable]
         public struct MoveTypeCosts
         {
@@ -26,7 +16,14 @@ namespace Game.Map
             public int cost;
 
         }
-
+        public string name;
+        public bool walkable = true;
+        public int defenseBonus;
+        public int avoBonus;
+        public int speedMalus;
+        public MoveTypeCosts[] movementCostsArray;
+        private Dictionary<MoveType, int> movementCosts;
+        
         private void OnEnable()
         {
             movementCosts = new Dictionary<MoveType, int>();
@@ -35,7 +32,6 @@ namespace Game.Map
                 movementCosts.Add(mtc.moveType, mtc.cost);
             }
         }
-
         public int GetMovementCost(MoveType moveType)
         {
             if (movementCosts.ContainsKey(moveType))
@@ -48,8 +44,17 @@ namespace Game.Map
             return walkable;//TODO
             //if (TerrainType.Obstacle == TerrainType)
             //    return false;
-           // return true;
+            // return true;
        
         }
+    }
+    [CreateAssetMenu(menuName = "Map/TileData", fileName = "TileData")]
+    public class TileData : GridTerrainData
+    {
+       
+        public TileBase[] tiles;
+      
+ 
+       
     }
 }
