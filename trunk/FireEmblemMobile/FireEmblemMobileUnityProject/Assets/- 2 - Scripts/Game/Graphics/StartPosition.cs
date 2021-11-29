@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace Utility
 {
+    [ExecuteInEditMode]
     public class StartPosition : MonoBehaviour, IDropHandler {
 
         void Start () {
@@ -33,6 +34,11 @@ namespace Utility
             {
                 Debug.LogError("touchInputReceiver is null");
             }
+        }
+        void Update()
+        {
+            transform.localPosition = new Vector3((int) transform.localPosition.x, (int) transform.localPosition.y,
+                (int) transform.localPosition.z);
         }
         public Unit Actor { get; set; }
     }

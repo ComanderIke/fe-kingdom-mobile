@@ -27,8 +27,8 @@ namespace Game.GameActors.Units.OnGameObject
         private bool moving;
         void Start()
         {
-            if(unit!=null)
-             unit.TurnStateManager.onSelected += SetSelected;
+            // if(unit!=null)
+            //  unit.TurnStateManager.onSelected += SetSelected;
             lastPosition = transform.position;
         }
 
@@ -57,8 +57,8 @@ namespace Game.GameActors.Units.OnGameObject
 
         private void OnDestroy()
         {
-            if(unit!=null)
-                unit.TurnStateManager.onSelected -= SetSelected;
+            // if(unit!=null)
+            //     unit.TurnStateManager.onSelected -= SetSelected;
         }
 
         public void AttackConnected()
@@ -72,10 +72,10 @@ namespace Game.GameActors.Units.OnGameObject
             //Debug.Log("Attack Finished!");
         }
 
-        public void SetSelected(bool selected)
-        {
-            animator.SetBool(Selected, selected);
-        }
+        // public void SetSelected(bool selected)
+        // {
+        //     animator.SetBool(Selected, selected);
+        // }
         public void BattleAnimationUp()
         {
             animator.SetTrigger(AnimationUp);
