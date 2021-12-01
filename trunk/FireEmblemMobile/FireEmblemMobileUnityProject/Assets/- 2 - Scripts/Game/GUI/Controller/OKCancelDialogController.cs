@@ -25,6 +25,7 @@ public class OKCancelDialogController : MonoBehaviour
     }
     public void CancelClicked()
     {
+        Debug.Log("Cancel Clicked!");
         gameObject.SetActive(false);
     }
 }

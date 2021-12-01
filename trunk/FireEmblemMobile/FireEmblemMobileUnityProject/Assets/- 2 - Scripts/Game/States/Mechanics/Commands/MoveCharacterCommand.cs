@@ -3,6 +3,7 @@ using Game.AI;
 using Game.GameActors.Units;
 using Game.Grid;
 using Game.Manager;
+using Game.Map;
 using UnityEngine;
 
 namespace Game.Mechanics.Commands
@@ -42,8 +43,10 @@ namespace Game.Mechanics.Commands
 
         public override void Undo()
         {
-            unit.GridComponent.SetPosition(oldX, oldY);
+            GridGameManager.Instance.GetSystem<GridSystem>().SetUnitPosition(unit,oldX,oldY);
+            //unit.GridComponent.SetPosition(oldX, oldY);
             unit.TurnStateManager.Reset();
+            Debug.Log("Undo Move!");
         }
 
         public override void Update()

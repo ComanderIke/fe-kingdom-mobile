@@ -20,7 +20,6 @@ namespace Game.Mechanics
         public static event Action OnAllCommandsFinished;
 
         public static event Action OnUndo;
-        public static Action TriggerUndo;
 
         public delegate void OnCheckAttackPreviewEvent(BattlePreview battlePreview);
         public static event OnCheckAttackPreviewEvent OnCheckAttackPreview;
@@ -28,9 +27,11 @@ namespace Game.Mechanics
         #endregion
 
         private Stack<Command> lastActions;
+        private Stack<Command> lastCharacterActions;
         private Queue<Command> currentActions;
 
         private Command currentCommand;
+        private IGridActor lastCharacter;
         public void Init()
         {
          
@@ -38,28 +39,40 @@ namespace Game.Mechanics
 
         public void Deactivate()
         {
+            GameplayInput.OnUndoUnit -= Undo;
             GameplayInput.OnWait -= Wait;
             GameplayInput.OnAttackUnit -= Fight;
             GameplayInput.OnMoveUnit -= MoveCharacter;
             GameplayInput.OnCheckAttackPreview -= CheckAttackPreview;
             GameplayInput.OnExecuteInputActions -= ExecuteActions;
             OnCommandFinished -= ExecuteActions;
-            TriggerUndo -= Undo;
         }
 
         public void Activate()
         {
+            GameplayInput.OnUndoUnit += Undo;
             GameplayInput.OnWait += Wait;
             GameplayInput.OnAttackUnit += Fight;
             GameplayInput.OnMoveUnit += MoveCharacter;
+
             GameplayInput.OnCheckAttackPreview += CheckAttackPreview;
             GameplayInput.OnExecuteInputActions += ExecuteActions;
             lastActions = new Stack<Command>();
+            lastCharacterActions = new Stack<Command>();
             currentActions = new Queue<Command>();
             OnCommandFinished += ExecuteActions;
-            TriggerUndo += Undo;
-        }
 
+        }
+        private void ResetCharacterActions()
+        {
+            Debug.Log("Clear Actions: "+lastCharacterActions.Count);
+            foreach (var action in lastCharacterActions)
+            {
+                Debug.Log("Clear Action: "+action);
+            }
+            lastCharacterActions.Clear();
+        }
+       
         public void Update()
         {
             if (currentCommand != null)
@@ -76,9 +89,17 @@ namespace Game.Mechanics
         {
             OnUndo?.Invoke();
             Debug.Log("Undo: " + lastActions.Count);
-            lastActions.Pop().Undo();
+            Debug.Log("Undo only recent character related Actions!!!");
+            Debug.Log("Undo attackpreview movement also");
+            while (lastCharacterActions.Count != 0)
+            {
+                lastCharacterActions.Pop().Undo();
+                lastActions.Pop();
+            }
+            
         }
 
+   
         public void AddCommand(Command c)
         {
             currentActions.Enqueue(c);
@@ -97,6 +118,7 @@ namespace Game.Mechanics
                 }
                 currentCommand.Execute();
                 lastActions.Push(currentCommand);
+                lastCharacterActions.Push(currentCommand);
             }
             else
             {
@@ -115,21 +137,33 @@ namespace Game.Mechanics
 
         public void Wait(IGridActor unit)
         {
+            if(unit!=lastCharacter)
+                ResetCharacterActions();
             var mCc = new WaitCommand(unit);
+            lastCharacter = unit;
             currentActions.Enqueue(mCc);
         }
         public void Fight(IBattleActor attacker, IBattleActor target)
         {
+            if((IGridActor)attacker!=lastCharacter)
+                ResetCharacterActions();
+            //ResetCharacterActions();
+            lastCharacter = (IGridActor)attacker;
             var mCc = new AttackCommand(attacker, target);
             currentActions.Enqueue(mCc);
         }
         public void CheckAttackPreview(IBattleActor u, IBattleActor target, GridPosition attackPosition)
         {
+            
             var preview = GridGameManager.Instance.GetSystem<BattleSystem>().GetBattlePreview(u, target);
             OnCheckAttackPreview?.Invoke(preview);
         }
         public void MoveCharacter(IGridActor c, GridPosition destination, List<GridPosition> path = null)
         {
+            //ResetCharacterActions();
+            if(c!=lastCharacter)
+                ResetCharacterActions();
+            lastCharacter = c;
             var mCc = new MoveCharacterCommand(c, new Vector2Int(destination.X, destination.Y), path);
             currentActions.Enqueue(mCc);
         }

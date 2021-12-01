@@ -30,7 +30,8 @@ namespace Game.Mechanics.Commands
 
         public override void Undo()
         {
-            throw new NotImplementedException();
+            Debug.Log("Undo Wait!");
+            unit.TurnStateManager.IsWaiting = false;
         }
 
         public override void Update()

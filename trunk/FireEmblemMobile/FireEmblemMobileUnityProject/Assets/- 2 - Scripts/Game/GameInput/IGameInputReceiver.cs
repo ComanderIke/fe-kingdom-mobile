@@ -13,5 +13,6 @@ namespace Game.GameInput
         void DraggedOverActor(IGridActor gridActor);
         void StartDraggingActor(IGridActor actor);
         void ResetInput();
+        void UndoClicked();
     }
 }

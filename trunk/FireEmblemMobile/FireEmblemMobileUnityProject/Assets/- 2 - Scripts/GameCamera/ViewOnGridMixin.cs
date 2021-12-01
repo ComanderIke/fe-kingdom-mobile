@@ -8,6 +8,10 @@ namespace GameCamera
     {
         private int currentZoom = -1;
         [SerializeField]
+        private float maxZoom=3.5f;
+        [SerializeField]
+        private float minZoom=1.5f;
+        [SerializeField]
         private float minX=-5;
         [SerializeField]
         private float maxX=18;
@@ -16,14 +20,11 @@ namespace GameCamera
         [SerializeField]
         private float maxY=12;
      
-       
-
-        [Range(0, 3)] public int zoom = 1;
+        
         public float zoomSpeed=0.004f;
         private float startDistance;
-        public void Construct(float width, float height, int zoom)
+        public void Construct(float width, float height)
         {
-            this.zoom = zoom;
             SetBounds(width, height);
         }
         private void SetBounds(float width, float height)
@@ -53,8 +54,8 @@ namespace GameCamera
                  float deltaMagDiff = prevTouchDeltaMag - touchDeltaMag;
 
                  CameraSystem.camera.orthographicSize += deltaMagDiff * zoomSpeed;
-                 CameraSystem.camera.orthographicSize = Mathf.Max(CameraSystem.camera.orthographicSize,1f);
-                 CameraSystem.camera.orthographicSize = Mathf.Min(CameraSystem.camera.orthographicSize,5f);
+                 CameraSystem.camera.orthographicSize = Mathf.Max(CameraSystem.camera.orthographicSize,minZoom);
+                 CameraSystem.camera.orthographicSize = Mathf.Min(CameraSystem.camera.orthographicSize,maxZoom);
                  CameraSystem.uiCamera.orthographicSize = CameraSystem.camera.orthographicSize;
                
                  // distance = Vector2.Distance(touch0, touch1);

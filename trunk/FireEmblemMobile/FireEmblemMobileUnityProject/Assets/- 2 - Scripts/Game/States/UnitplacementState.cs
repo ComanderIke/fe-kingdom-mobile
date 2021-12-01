@@ -59,7 +59,7 @@ namespace Game.States
             int height =  GridGameManager.Instance.GetSystem<GridSystem>().GridData.height;
             int width =  GridGameManager.Instance.GetSystem<GridSystem>().GridData.width;
          //   cameraSystem.AddMixin<ClampCameraMixin>().Construct(width, height);
-            cameraSystem.AddMixin<ViewOnGridMixin>().zoom = 0;
+            //cameraSystem.AddMixin<ViewOnGridMixin>().zoom = 0;
         }
 
         private void SpawnEnemies()

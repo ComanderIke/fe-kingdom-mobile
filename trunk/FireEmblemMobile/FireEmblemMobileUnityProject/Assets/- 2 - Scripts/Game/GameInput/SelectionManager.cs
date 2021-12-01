@@ -48,7 +48,7 @@ namespace Game.GameInput
         {
             SetSelectedAttackTarget(null);
             undoAbleActor = null;
-            selectionUI.HideUndo();
+            //selectionUI.HideUndo();
         }
 
         public void SetUndoAbleActor(IGridActor selectedActor)
@@ -56,7 +56,10 @@ namespace Game.GameInput
             undoAbleActor = selectedActor;
             selectionUI.ShowUndo();
         }
-
+        public IGridActor GetUndoAbleActor()
+        {
+            return undoAbleActor;
+        }
         public bool IsSelectedTile(int x, int y)
         {
             return SelectedTileX == x && SelectedTileY == y;

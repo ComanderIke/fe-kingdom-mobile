@@ -18,6 +18,7 @@ namespace Game.GameInput
         public delegate void SelectEvent(IGridActor actor);
         public static event SelectEvent OnSelectUnit;
         public static event SelectEvent OnWait;
+        public static event Event OnUndoUnit;
         public static event UnitEvent OnViewUnit;
         public delegate void MoveUnitEvent(IGridActor u, GridPosition position, List<GridPosition> movePath);
         public static event MoveUnitEvent OnMoveUnit;
@@ -38,6 +39,7 @@ namespace Game.GameInput
 
         public void MoveUnit(IGridActor u, GridPosition position, List<GridPosition> movePath)
         {
+            
             Debug.Log("GameInput: Move Unit: " + u +" to [" +position.X +"/"+position.Y+"]");
             OnMoveUnit?.Invoke(u, position, movePath);
         }
@@ -71,6 +73,11 @@ namespace Game.GameInput
         public void CheckAttackPreview(IBattleActor u, IBattleActor attackTarget, GridPosition attackPosition)
         {
             OnCheckAttackPreview?.Invoke(u, attackTarget, attackPosition);
+        }
+
+        public void UndoUnit(IGridActor unit)
+        {
+            OnUndoUnit?.Invoke();
         }
     }
 }

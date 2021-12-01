@@ -19,5 +19,6 @@ namespace Game.GameInput
         void SetUndoAbleActor(IGridActor selectedActor);
         void ClearPositionData();
         void ClearAttackData();
+        IGridActor GetUndoAbleActor();
     }
 }

@@ -43,6 +43,13 @@ namespace Game.GameInput
             selectionDataProvider.ClearData();
             gridSystem.cursor.Reset();
         }
+
+        public void UndoClicked()
+        {
+            var unit = selectionDataProvider.GetUndoAbleActor();
+            gameplayInput.UndoUnit(unit);
+        }
+
         public void DraggedOverGrid(int x, int y)
         {
             ResetDragSelectables();
@@ -142,7 +149,7 @@ namespace Game.GameInput
             gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
             if(!gridSystem.GridLogic.IsTileFree(x,y))
             {
-                //Debug.Log("Somehow clicked on non empty Tile");
+                Debug.Log("Somehow clicked on non empty Tile");
                 
                 return;
             }
@@ -155,10 +162,12 @@ namespace Game.GameInput
                     gameplayInput.Wait(selectionDataProvider.SelectedActor);
                     gameplayInput.ExecuteInputActions(null);
                     selectionDataProvider.ClearData();
+                    Debug.Log("SelectedTile");
                     
                 }
                 else
                 {
+                    Debug.Log("NonSelectedTile");
                     inputPathManager.CalculateMousePathToPosition(selectionDataProvider.SelectedActor, x, y);
                     //Debug.Log("GameInput SetPosition");
                     //selectionDataProvider.SelectedActor.GameTransformManager.SetPosition(x, y);
@@ -191,6 +200,7 @@ namespace Game.GameInput
             }
             else if(selectionDataProvider.SelectedActor != null)
             {
+                Debug.Log("SelectedActor Null");
                 if (selectionDataProvider.SelectedActor.GridComponent.GridPosition.X == x && y == selectionDataProvider.SelectedActor.GridComponent.GridPosition.Y)
                 {  Debug.Log("ResetPos4");
                     selectionDataProvider.SelectedActor.GridComponent.ResetPosition();
@@ -204,6 +214,7 @@ namespace Game.GameInput
             }
             else
             {
+                Debug.Log("None");
                 ResetInput();
                 gameplayInput.DeselectUnit();
             }

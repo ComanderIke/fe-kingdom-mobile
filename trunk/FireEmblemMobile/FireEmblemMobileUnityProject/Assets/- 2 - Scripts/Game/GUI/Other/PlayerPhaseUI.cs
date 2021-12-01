@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.GameInput;
 using Game.Grid;
 using Game.Manager;
 using Game.Mechanics;
@@ -11,10 +12,10 @@ using UnityEngine;
 
 public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
 {
+    public SelectionUI selectionUI;
     public OKCancelDialogController OkCancelDialogController;
     public TextMeshProUGUI turnText;
     public TileInfoPanel TileInfoPanel;
-    public GameObject BackButton;
     public Action OnBackClicked;
     public void ShowTileInfo(Tile selectedTile)
     {
@@ -44,24 +45,26 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
         
     }
 
-    public void ShowBackButton()
-    {
-        BackButton.SetActive(true);
-    }
-    public void HideBackButton()
-    {
-        BackButton.SetActive(false);
-    }
+    // public void ShowBackButton()
+    // {
+    //     BackButton.SetActive(true);
+    // }
+    // public void HideBackButton()
+    // {
+    //     BackButton.SetActive(false);
+    // }
 
     public void Hide()
     {
         GetComponent<Canvas>().enabled = false;
-       
+        selectionUI.HideUndo();
+
     }
 
     public void BackClicked()
     {
         Debug.Log("BACK Clicked!");
+        selectionUI.HideUndo();
         OnBackClicked?.Invoke();
        
     }

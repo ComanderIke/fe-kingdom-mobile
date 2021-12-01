@@ -28,7 +28,7 @@ namespace Game.Mechanics.Commands
 
         public override void Undo()
         {
-            throw new NotImplementedException();
+            Debug.Log("Undo Attack should not be undoable!");
         }
 
         public override void Update()

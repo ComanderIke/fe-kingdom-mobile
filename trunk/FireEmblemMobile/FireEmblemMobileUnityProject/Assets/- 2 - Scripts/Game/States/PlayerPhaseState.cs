@@ -63,7 +63,7 @@ namespace Game.Mechanics
             int height = gridGameManager.GetSystem<GridSystem>().GridData.height;
             int width = gridGameManager.GetSystem<GridSystem>().GridData.width;
            // cameraSystem.AddMixin<ClampCameraMixin>().Construct(width, height);
-            cameraSystem.AddMixin<ViewOnGridMixin>().Construct(width, height, 0);
+            cameraSystem.AddMixin<ViewOnGridMixin>().Construct(width, height);
             gridInputSystem.SetActive(true);
             unitInputSystem.SetActive(true);
             playerPhaseUI.Show(gridGameManager.GetSystem<TurnSystem>().TurnCount);
@@ -78,6 +78,7 @@ namespace Game.Mechanics
         public void Undo()
         {
             Debug.Log("UNDO123");
+            gridInputSystem.inputReceiver.UndoClicked();
         }
 
         private void CursorPosChanged(Vector2Int tilePos)
