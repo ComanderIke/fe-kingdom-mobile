@@ -77,7 +77,7 @@ namespace Game.Mechanics
 
             attacker.Hp = battleSimulation.Attacker.Hp;
             defender.Hp = battleSimulation.Defender.Hp;
-            defender.SpBars--;
+            defender.SpBars--; 
             attacker.SpBars--;
             if (!attacker.IsAlive())
             {
@@ -106,7 +106,7 @@ namespace Game.Mechanics
             defender = null;
 
             BattleAnimation.Hide();
-            BattleAnimation.OnFinished -= battleSystem.EndBattle;
+            BattleAnimation.OnFinished -= EndBattle;
             GridGameManager.Instance.GetSystem<AudioSystem>().ChangeMusic(startMusic, "BattleTheme", true);
             OnExit?.Invoke();
         }

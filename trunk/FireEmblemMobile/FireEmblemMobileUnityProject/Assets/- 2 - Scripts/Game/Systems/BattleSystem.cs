@@ -86,30 +86,30 @@ namespace Game.Mechanics
             yield return new WaitForSeconds(delay);
             action?.Invoke();
         }
-        public void EndBattle()
-        {
-                //
-                // defender.SpBars--;
-                // attacker.SpBars--;
-                if (!attacker.IsAlive())
-                {
-                    attacker.Die();
-                }
-                if (!defender.IsAlive())
-                {
-                    defender.Die();
-                }
-
-           
-                battleStarted = false;
-                //BattleRenderer.Hide();
-                IsFinished = true;
-                //GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.BattleEnded);
-            
-
-
-
-        }
+        // public void EndBattle()
+        // {
+        //         //
+        //         // defender.SpBars--;
+        //         // attacker.SpBars--;
+        //         if (!attacker.IsAlive())
+        //         {
+        //             attacker.Die();
+        //         }
+        //         if (!defender.IsAlive())
+        //         {
+        //             defender.Die();
+        //         }
+        //
+        //    
+        //         battleStarted = false;
+        //         //BattleRenderer.Hide();
+        //         IsFinished = true;
+        //         //GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.BattleEnded);
+        //     
+        //
+        //
+        //
+        // }
     
         public BattleSimulation GetBattleSimulation(IBattleActor attacker, IBattleActor defender)
         {
