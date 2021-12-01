@@ -88,9 +88,9 @@ namespace Game.Mechanics
         }
         public void EndBattle()
         {
-            
-                defender.SpBars--;
-                attacker.SpBars--;
+                //
+                // defender.SpBars--;
+                // attacker.SpBars--;
                 if (!attacker.IsAlive())
                 {
                     attacker.Die();

@@ -147,7 +147,7 @@ namespace Game.Mechanics
                
             }
             
-            Attacker.SpBars--;
+            Attacker.SpBars--; 
             Defender.SpBars--;
         }
 
