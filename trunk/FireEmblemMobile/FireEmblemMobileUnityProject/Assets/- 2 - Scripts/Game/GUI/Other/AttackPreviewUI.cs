@@ -76,7 +76,7 @@ namespace Game.GUI
 
              dmgValue.text = "" + battlePreview.AttackerStats.Damage;
              hitValue.text = "" + battlePreview.AttackerStats.Hit;
-             Debug.Log("ATTACKCOUNT: "+battlePreview.AttackerStats.AttackCount+" "+battlePreview.DefenderStats.AttackCount);
+             //Debug.Log("ATTACKCOUNT: "+battlePreview.AttackerStats.AttackCount+" "+battlePreview.DefenderStats.AttackCount);
              attackCountX.SetActive(battlePreview.AttackerStats.AttackCount > 1);
              attackCount.gameObject.SetActive(battlePreview.AttackerStats.AttackCount > 1);
              attackCount.text = "" + battlePreview.AttackerStats.AttackCount;
@@ -96,7 +96,7 @@ namespace Game.GUI
                      defenderDmg.Add(battlePreview.AttacksData[i].Dmg);
                  }
              }
-             Debug.Log("HPBar: "+battlePreview.AttackerStats.MaxHp+" "+battlePreview.AttackerStats.CurrentHp+" "+battlePreview.AttackerStats.AfterBattleHp);
+             //Debug.Log("HPBar: "+battlePreview.AttackerStats.MaxHp+" "+battlePreview.AttackerStats.CurrentHp+" "+battlePreview.AttackerStats.AfterBattleHp);
              hpBar.UpdateValues(battlePreview.AttackerStats.MaxHp, battlePreview.AttackerStats.CurrentHp, battlePreview.AttackerStats.AfterBattleHp, 
                  defenderDmg);
              spBars.SetPreviewValue(battlePreview.AttackerStats.CurrentSpBars,battlePreview.AttackerStats.AfterSpBars,battlePreview.AttackerStats.MaxSpBars);

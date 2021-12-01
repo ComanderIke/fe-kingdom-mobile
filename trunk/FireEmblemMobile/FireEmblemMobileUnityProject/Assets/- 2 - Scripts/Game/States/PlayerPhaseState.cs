@@ -144,6 +144,7 @@ namespace Game.Mechanics
             gridInputSystem.ResetInput();
             gridInputSystem.SetActive(false);
             unitInputSystem.SetActive(false);
+            Debug.Log("Exit");
             playerPhaseUI.Hide();
             playerPhaseUI.HideTileInfo();
             

@@ -250,13 +250,14 @@ namespace Game.GameInput
                         var gridPos = new GridPosition((int)selectedActor.GameTransformManager.GetPosition().x, (int)selectedActor.GameTransformManager.GetPosition().y);
                         if (selectedActor.GridComponent.CanAttackFrom(gridPos, enemyActor.GridComponent.GridPosition))
                         {
-                            Debug.Log("Can Attack from Position");
+                           // Debug.Log("Can Attack from Position");
                             if(selectedActor is IBattleActor battleActor&& enemyActor is IBattleActor enemyBattleActor)
                                 gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, gridPos);
+                            selectionDataProvider.SetUndoAbleActor(selectionDataProvider.SelectedActor);
                         }
                         else if (selectedActor.GridComponent.CanAttack(enemyActor.GridComponent.GridPosition.X, enemyActor.GridComponent.GridPosition.Y))
                         {
-                            Debug.Log("Can Attack From Position2");
+                            //Debug.Log("Can Attack From Position2");
                             selectedActor.GridComponent.ResetPosition();
                             selectionDataProvider.ClearPositionData();
                             selectionDataProvider.ClearAttackData();
@@ -264,29 +265,31 @@ namespace Game.GameInput
                             inputPathManager.UpdatedMovementPath(selectedActor.GridComponent.GridPosition.X, selectedActor.GridComponent.GridPosition.Y);
                             if(selectedActor is IBattleActor battleActor&& enemyActor is IBattleActor enemyBattleActor)
                                 gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, new GridPosition(selectedActor.GridComponent.GridPosition.X, selectedActor.GridComponent.GridPosition.Y));
+                            selectionDataProvider.SetUndoAbleActor(selectionDataProvider.SelectedActor);
                         }
                         else
                         {
-                            Debug.Log("Dont know");
+                            //Debug.Log("Dont know");
                             selectedActor.GridComponent.ResetPosition();
                             inputPathManager.CalculatePathToPosition(selectedActor, new Vector2(enemyActor.GridComponent.GridPosition.X, enemyActor.GridComponent.GridPosition.Y));
                             if (!inputPathManager.IsMovementPathEmpty())
                             {
                                 var lastMovPathPos = inputPathManager.GetLastMovementPathPosition();
                               
-                                Debug.Log("GameInput2 SetPosition " + selectedActor);
+                                //Debug.Log("GameInput2 SetPosition " + selectedActor);
                                 gameplayInput.MoveUnit(selectionDataProvider.SelectedActor, new GridPosition(lastMovPathPos.x, lastMovPathPos.y), GridPosition.GetFromVectorList(inputPathManager.MovementPath));
-                   
+                               
                                 gameplayInput.ExecuteInputActions( ()=>
                                 {
-                                    Debug.Log(""+gridSystem.GridLogic.GetAttackTargets(selectionDataProvider.SelectedActor).Count);
+                                    //Debug.Log(""+gridSystem.GridLogic.GetAttackTargets(selectionDataProvider.SelectedActor).Count);
+                                    selectionDataProvider.SetUndoAbleActor(selectionDataProvider.SelectedActor);
                                     gridSystem.ShowAttackFromPosition((Unit) selectionDataProvider.SelectedActor,lastMovPathPos.x,lastMovPathPos.y);
                                     if(selectedActor is IBattleActor battleActor&& enemyActor is IBattleActor enemyBattleActor)
                                         gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, new GridPosition(lastMovPathPos.x, lastMovPathPos.y));
 
                                 });
                                 //gridSystem.SetUnitInternPosition(selectedActor,lastMovPathPos.x, lastMovPathPos.y);
-                                Debug.Log("Test");
+                                //Debug.Log("Test");
                                // selectedActor.GameTransformManager.SetPosition(lastMovPathPos.x, lastMovPathPos.y);
                                 
                             }
@@ -294,6 +297,7 @@ namespace Game.GameInput
                             {
                                 if(selectedActor is IBattleActor battleActor&& enemyActor is IBattleActor enemyBattleActor)
                                     gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, new GridPosition(selectedActor.GridComponent.GridPosition.X, selectedActor.GridComponent.GridPosition.Y));
+                                selectionDataProvider.SetUndoAbleActor(selectionDataProvider.SelectedActor);
                             }
                         }
                         selectionDataProvider.SetSelectedAttackTarget(enemyActor);
@@ -371,6 +375,7 @@ namespace Game.GameInput
                     
                     if(selectedActor is IBattleActor battleActor && enemy is IBattleActor enemyBattleActor)
                         gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, selectedActor.GridComponent.GridPosition);
+                    selectionDataProvider.SetUndoAbleActor(selectionDataProvider.SelectedActor);
                 }
                 else
                 {
@@ -386,6 +391,7 @@ namespace Game.GameInput
                 inputPathManager.UpdatedMovementPath(selectedActor.GridComponent.GridPosition.X, selectedActor.GridComponent.GridPosition.Y);
                 if(selectedActor is IBattleActor battleActor && enemy is IBattleActor enemyBattleActor)
                     gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, new GridPosition(x, y));
+                selectionDataProvider.SetUndoAbleActor(selectionDataProvider.SelectedActor);
             }
         }
 
@@ -410,6 +416,7 @@ namespace Game.GameInput
                         gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, selectedActor.GridComponent.GridPosition);
                     inputPathManager.Reset();
                     inputPathManager.UpdatedMovementPath(selectedActor.GridComponent.GridPosition.X, selectedActor.GridComponent.GridPosition.Y);
+                    
                 }
                 else
                 {

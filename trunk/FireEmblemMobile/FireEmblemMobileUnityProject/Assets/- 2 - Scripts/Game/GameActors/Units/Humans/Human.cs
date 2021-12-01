@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Game.GameActors.Items.Weapons;
+using Game.Mechanics;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Humans
@@ -37,7 +38,7 @@ namespace Game.GameActors.Units.Humans
             SpecialAttackManager = new SpecialAttackManager();
             Equip(EquippedWeapon);
         }
-
+      
         public string GetWeaponProficiency(WeaponType weaponType)
         {
             switch (weaponType)

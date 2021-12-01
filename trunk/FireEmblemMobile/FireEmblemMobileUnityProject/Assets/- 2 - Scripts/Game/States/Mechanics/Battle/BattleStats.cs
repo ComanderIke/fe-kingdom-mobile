@@ -23,7 +23,8 @@ namespace Game.Mechanics.Battle
         }
         public int GetDefense()
         {
-            Debug.Log(owner.GetTile().X+" "+owner.GetTile().Y);
+            
+            //Debug.Log(owner.GetTile().X+" "+owner.GetTile().Y);
             return owner.Stats.Def + owner.GetTile().TileData.defenseBonus;
         }
         public bool CanKillTarget(IBattleActor target, float attackMultiplier)
@@ -64,8 +65,13 @@ namespace Game.Mechanics.Battle
                 if (c.EquippedWeapon != null)
                     weaponDamage = c.EquippedWeapon.Dmg;
             }
-
             int unmodifiedAttack = owner.Stats.Str + weaponDamage;
+            if (GetDamageType()==DamageType.Magic)
+            {
+                unmodifiedAttack = owner.Stats.Mag + weaponDamage;
+            }
+            
+           
             int attack = unmodifiedAttack;
             if (attackModifier != null)
             {
@@ -90,8 +96,20 @@ namespace Game.Mechanics.Battle
             {
                 dmgMult = 2;
             }
-                
-            return (int) (Mathf.Clamp((GetDamage(atkMultiplier) - target.BattleComponent.BattleStats.GetDefense())*dmgMult, 1, Mathf.Infinity));
+
+            int defense = 0;
+            if (GetDamageType()==DamageType.Magic)
+            {
+                defense = target.BattleComponent.BattleStats.GetResistance();
+            }
+            else
+                defense = target.BattleComponent.BattleStats.GetDefense();
+            return (int) (Mathf.Clamp((GetDamage(atkMultiplier) - defense)*dmgMult, 1, Mathf.Infinity));
+        }
+
+        private int GetResistance()
+        {
+            return owner.Stats.Res + owner.GetTile().TileData.defenseBonus;
         }
 
         public DamageType GetDamageType()
@@ -116,21 +134,22 @@ namespace Game.Mechanics.Battle
             return owner.Stats.Str;
         }
 
-        public int GetReceivedDamage(int damage, bool magic = false)
-        {
-            if (magic)
-                return (int) Mathf.Clamp(damage, 1, Mathf.Infinity);
-            else
-                return (int) Mathf.Clamp(damage -  owner.BattleComponent.BattleStats.GetDefense(), 1, Mathf.Infinity);
-        }
-
         public int GetTotalDamageAgainstTarget(IBattleActor target)
         {
             int attacks = 1;
             float multiplier = 1.0f;
             if (CanDoubleAttack(target))
                 attacks = 2;
-            return (int) (multiplier * attacks * Mathf.Clamp(GetDamage() - target.BattleComponent.BattleStats.GetDefense(), 0, Mathf.Infinity));
+            int defense = 0;
+            if (GetDamageType() == DamageType.Magic)
+            {
+                defense = target.BattleComponent.BattleStats.GetResistance();
+            }
+            else
+            {
+                defense = target.BattleComponent.BattleStats.GetDefense();
+            }
+            return (int) (multiplier * attacks * Mathf.Clamp(GetDamage() -defense, 0, Mathf.Infinity));
         }
 
         
@@ -139,24 +158,24 @@ namespace Game.Mechanics.Battle
             if (owner is Human human)
             {
                 //Debug.Log("TODO ATTACK SPEED CALC");
-                return human.Stats.Skl *2 + human.EquippedWeapon.Hit;
+                return (human.Stats.Skl- human.EquippedWeapon.Weight) * 2 + human.EquippedWeapon.Hit;
             }  if (owner is Monster monster)
             {
                 //Debug.Log("TODO ATTACK SPEED CALC");
-                return monster.Stats.Skl *2 + monster.Weapon.Hit;
+                return monster.Stats.Skl * 2 + monster.Weapon.Hit;
             }
 
-            return owner.Stats.Skl*2;
+            return owner.Stats.Skl * 2;
         }
         public int GetAvoid()
         {
             if (owner is Human human)
             {
                 //Debug.Log("TODO ATTACK SPEED CALC");
-                return owner.GetTile().TileData.avoBonus+human.Stats.Spd * 2 - human.EquippedWeapon.Weight;
+                return owner.GetTile().TileData.avoBonus + (human.Stats.Spd  - human.EquippedWeapon.Weight)* 2;
             }
             
-            return owner.GetTile().TileData.avoBonus+owner.Stats.Spd*2;
+            return owner.GetTile().TileData.avoBonus + owner.Stats.Spd * 2;
         }
 
         public int GetHitAgainstTarget(IBattleActor target)

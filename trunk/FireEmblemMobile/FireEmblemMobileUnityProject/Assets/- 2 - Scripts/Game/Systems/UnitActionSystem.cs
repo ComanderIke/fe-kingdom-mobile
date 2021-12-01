@@ -65,11 +65,11 @@ namespace Game.Mechanics
         }
         private void ResetCharacterActions()
         {
-            Debug.Log("Clear Actions: "+lastCharacterActions.Count);
-            foreach (var action in lastCharacterActions)
-            {
-                Debug.Log("Clear Action: "+action);
-            }
+            //Debug.Log("Clear Actions: "+lastCharacterActions.Count);
+            // foreach (var action in lastCharacterActions)
+            // {
+            //     Debug.Log("Clear Action: "+action);
+            // }
             lastCharacterActions.Clear();
         }
        

@@ -56,6 +56,7 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
 
     public void Hide()
     {
+        Debug.Log("Hide");
         GetComponent<Canvas>().enabled = false;
         selectionUI.HideUndo();
 
@@ -64,9 +65,17 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
     public void BackClicked()
     {
         Debug.Log("BACK Clicked!");
-        selectionUI.HideUndo();
+        
         OnBackClicked?.Invoke();
+        Invoke(nameof(HideUndo),0.05f);//Invoke after small time so the raycast of the button click doesnt go to the grid....
+        
        
+    }
+
+    private void HideUndo()
+    {
+        selectionUI.HideUndo();
+        
     }
    
     public void EndTurnClicked()

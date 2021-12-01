@@ -25,6 +25,6 @@ namespace Game.GameInput
         bool IsAlive();
         void Die();
         Tile GetTile();
-    
+
     }
 }

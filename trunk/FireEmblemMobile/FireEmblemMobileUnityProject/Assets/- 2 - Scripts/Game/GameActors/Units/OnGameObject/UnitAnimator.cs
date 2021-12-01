@@ -40,7 +40,7 @@ namespace Game.GameActors.Units.OnGameObject
                
                 if (!moving)
                 {
-                    Debug.Log("Move!");
+                    //Debug.Log("Move!");
                     
                     moving = true;
                     animator.SetBool(Moving, moving);
@@ -49,7 +49,7 @@ namespace Game.GameActors.Units.OnGameObject
             else if(moving)
             {
                 moving = false;
-                Debug.Log("Stop Move!");
+               // Debug.Log("Stop Move!");
                 animator.SetBool(Moving, moving);
             }
             lastPosition = transform.position;
