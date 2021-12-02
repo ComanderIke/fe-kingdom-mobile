@@ -237,6 +237,8 @@ namespace Game.GameActors.Units
             clone.BattleComponent = new BattleComponent(clone);
             clone.TurnStateManager = new TurnStateManager(clone);
             clone.GridComponent = new GridComponent(clone);
+            clone.GridComponent.GridPosition =
+                new GridPosition(GridComponent.GridPosition.X, GridComponent.GridPosition.Y);
             clone.GridComponent.Tile = GridComponent.Tile;
            // clone.GridComponent.previousTile = GridComponent.previousTile;
             clone.GameTransformManager = new GameTransformManager();

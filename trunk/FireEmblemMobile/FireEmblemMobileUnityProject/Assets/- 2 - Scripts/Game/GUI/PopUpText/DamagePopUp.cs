@@ -67,21 +67,21 @@ namespace Game.GUI.PopUpText
             }
         }
 
-        public static DamagePopUp CreateForBattleView(Vector3 transformPosition, int dmg, Color color, float scale, bool right)
+        public static DamagePopUp CreateForBattleView(Vector3 transformPosition, int dmg, Color color, float scale, Vector2 moveVector)
         {
             GameObject damagePopUpTransform = Instantiate(GameAssets.Instance.prefabs.DamagePopUptext, new Vector3 (transformPosition.x, transformPosition.y, transformPosition.z), Quaternion.identity);
             damagePopUpTransform.layer = LayerMask.NameToLayer("Characters");
             DamagePopUp damagePopUp = damagePopUpTransform.GetComponent<DamagePopUp>();
-            damagePopUp.Setup(dmg.ToString(), color, scale, right? new Vector3(-1.2f, .1f):new Vector3(1.2f, .1f) * 2.5f);
+            damagePopUp.Setup(dmg.ToString(), color, scale, moveVector);
             return damagePopUp;
         }
 
-        public static DamagePopUp CreateMiss(Vector3 transformPosition, Color color, float scale, bool right)
+        public static DamagePopUp CreateMiss(Vector3 transformPosition, Color color, float scale, Vector2 moveVector)
         {
             GameObject damagePopUpTransform = Instantiate(GameAssets.Instance.prefabs.DamagePopUptext, new Vector3 (transformPosition.x, transformPosition.y, transformPosition.z), Quaternion.identity);
             damagePopUpTransform.layer = LayerMask.NameToLayer("Characters");
             DamagePopUp damagePopUp = damagePopUpTransform.GetComponent<DamagePopUp>();
-            damagePopUp.Setup("Missed!", color, scale, right? new Vector3(-1.2f, .1f):new Vector3(1.2f, .1f) * 2.5f);
+            damagePopUp.Setup("Missed!", color, scale, moveVector);
             return damagePopUp;
         }
     }

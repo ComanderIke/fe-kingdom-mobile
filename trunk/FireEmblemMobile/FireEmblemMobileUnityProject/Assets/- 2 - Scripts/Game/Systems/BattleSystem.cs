@@ -142,7 +142,7 @@ namespace Game.Mechanics
                 defender.Stats.Spd, attacker.BattleComponent.BattleStats.GetDamageType(), 
                 attacker.BattleComponent.BattleStats.GetDamageType()==DamageType.Physical? defender.Stats.Def : defender.Stats.Res,
                 defender.Stats.Skl, defender.BattleComponent.BattleStats.GetDamageAgainstTarget(attacker),defender.BattleComponent.BattleStats.GetHitAgainstTarget(attacker),
-                defender.BattleComponent.BattleStats.GetAttackCountAgainst(attacker), defender.Hp, defender.Stats.MaxHp,
+                battleSimulation.DefenderAttackCount, defender.Hp, defender.Stats.MaxHp,
                 battleSimulation.Defender.Hp, defender.Sp, defender.Stats.MaxSp, 
                 battleSimulation.Defender.Sp,  defender.SpBars, 
                 battleSimulation.Defender.SpBars, defender.MaxSpBars);

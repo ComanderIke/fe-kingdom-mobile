@@ -154,7 +154,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
 
                 StartCoroutine(Delay(0.05f,()=>
                     DamagePopUp.CreateForBattleView(defenderImpactPosition.transform.position,
-                        dmg, Color.red, 5.0f,!leftCharacterAttacker)));
+                        dmg, Color.red, 5.0f,new Vector3(1.2f, .1f) * 2.5f)));
 
             }
             else
@@ -162,7 +162,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
                 defenderSpriteController.Dodge();
                 StartCoroutine(Delay(0.05f, () =>
                     DamagePopUp.CreateMiss(defenderImpactPosition.transform.position,
-                        Color.white, 4.0f, !leftCharacterAttacker)));
+                        Color.white, 4.0f, new Vector3(1.2f, .1f) * 2.5f)));
             }
             
             attackDuration= (float) attackerSpriteController.GetAttackDuration();
@@ -193,14 +193,14 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
                     defenderSpriteController.Damaged();
                 StartCoroutine(Delay(0.05f, () =>
                     DamagePopUp.CreateForBattleView(defenderImpactPosition.transform.position,
-                        dmg, Color.red, 5.0f, leftCharacterAttacker)));
+                        dmg, Color.red, 5.0f, new Vector3(-1.2f, .1f))));
             }
             else
             {
                 defenderSpriteController.Dodge();
                 StartCoroutine(Delay(0.05f, () =>
                     DamagePopUp.CreateMiss(defenderImpactPosition.transform.position,
-                        Color.white, 4.0f, leftCharacterAttacker)));
+                        Color.white, 4.0f, new Vector3(-1.2f, .1f))));
             }
             attackDuration= (float) attackerSpriteController.GetAttackDuration();
         }

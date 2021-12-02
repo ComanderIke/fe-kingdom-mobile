@@ -4,6 +4,8 @@ using System.Linq;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
 using Game.GameInput;
+using Game.Grid;
+using UnityEngine;
 
 namespace Game.Mechanics
 {
@@ -91,6 +93,14 @@ namespace Game.Mechanics
             this.certainHit = certainHit;
             int attackerAttackCount = Attacker.BattleComponent.BattleStats.GetAttackCountAgainst(Defender);
             int defenderAttackCount = Defender.BattleComponent.BattleStats.GetAttackCountAgainst(Attacker);
+            GridPosition attackerGridPos = ((Unit)Attacker).GridComponent.GridPosition;
+            Debug.Log("TODO GridPosition-1?!?!?!");
+            if (!((IGridActor)Defender).GridComponent.CanAttack(attackerGridPos.X, attackerGridPos.Y))
+            {
+                defenderAttackCount = 0;
+            }
+
+            DefenderAttackCount = defenderAttackCount;
            
             while (attackerAttackCount > 0||defenderAttackCount>0)
             {

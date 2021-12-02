@@ -81,6 +81,7 @@ namespace Game.GameActors.Units
         }
         public bool CanAttack(int x, int y)
         {
+            Debug.Log("Can attack: "+x+ " "+y+ " from " + GridPosition.X+" "+GridPosition.Y);
             return gridActor.AttackRanges.Contains(DeltaPos(x, y));
         }
         public bool CanAttackFrom(GridPosition attackFromPosition, GridPosition targetPosition)
