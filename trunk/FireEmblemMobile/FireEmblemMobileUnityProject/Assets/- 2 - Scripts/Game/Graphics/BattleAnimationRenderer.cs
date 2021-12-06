@@ -21,6 +21,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     public Camera camera;
     public GameObject battleBackground;
     public TimelineAsset cameraIntro;
+    public TimelineAsset cameraIntroInverse;
     public TimelineAsset cameraZoomIn;
     public TimelineAsset cameraZoomOut;
     public Transform rightCharacterPosition;
@@ -36,9 +37,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     public void Show(BattleSimulation battleSimulation, IBattleActor attackingActor, IBattleActor defendingActor)
     {
         this.battleSimulation = battleSimulation;
-        var background=GameObject.Instantiate(battleBackground, transform);
-        background.transform.position = new Vector3(camera.transform.position.x, background.transform.position.y,
-            background.transform.position.z);
+       
         leftCharacterDied = false;
         rightCharacterDied = false;
         this.attacker = battleSimulation.Attacker;
@@ -70,10 +69,34 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         gameObject.SetActive(true);
         canvas.Show();
         playableDirector.Stop();
-        playableDirector.playableAsset = cameraIntro;
+      
+        if (battleSimulation.Attacker.Faction.IsPlayerControlled)
+        {
+            playableDirector.playableAsset = cameraIntro;
+            camera.transform.localPosition =
+                new Vector3(-80, camera.transform.localPosition.y, camera.transform.localPosition.z);
+        }
+        else
+        {
+            playableDirector.playableAsset = cameraIntroInverse;
+            camera.transform.localPosition =
+                new Vector3(80, camera.transform.localPosition.y, camera.transform.localPosition.z);
+        }
         playableDirector.Play();
-        characterLeft.GetComponentInChildren<BattleAnimationSpriteController>().WalkIn();
-        characterRight.GetComponentInChildren<BattleAnimationSpriteController>().Idle();
+        var background=GameObject.Instantiate(battleBackground, transform);
+        background.transform.position = new Vector3(camera.transform.position.x, background.transform.position.y,
+            background.transform.position.z);
+        if (battleSimulation.Attacker.Faction.IsPlayerControlled)
+        {
+            characterLeft.GetComponentInChildren<BattleAnimationSpriteController>().WalkIn();
+            characterRight.GetComponentInChildren<BattleAnimationSpriteController>().Idle();
+        }
+        else
+        {
+            characterLeft.GetComponentInChildren<BattleAnimationSpriteController>().Idle();
+            characterRight.GetComponentInChildren<BattleAnimationSpriteController>().WalkIn();
+        }
+
         characterRight.transform.localScale = new Vector3(-characterRight.transform.localScale.x, characterRight.transform.localScale.y,
             characterRight.transform.localScale.z);
         //characterRight.transform.position = rightCharacterPosition.position;

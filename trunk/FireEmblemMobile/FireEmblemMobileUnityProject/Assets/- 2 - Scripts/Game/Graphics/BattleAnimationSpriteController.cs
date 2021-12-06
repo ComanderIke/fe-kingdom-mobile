@@ -9,7 +9,6 @@ public class BattleAnimationSpriteController : MonoBehaviour
     public PlayableDirector PlayableDirector;
 
     public TimelineAsset walkIn;
-
     public TimelineAsset attack;
     public TimelineAsset idle;
     public TimelineAsset dodge;
