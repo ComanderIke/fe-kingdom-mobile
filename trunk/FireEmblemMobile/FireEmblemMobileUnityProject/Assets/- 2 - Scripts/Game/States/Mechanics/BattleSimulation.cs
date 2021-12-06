@@ -158,7 +158,8 @@ namespace Game.Mechanics
             }
             
             Attacker.SpBars--; 
-            Defender.SpBars--;
+            if(defenderAttackCount!=0)
+                Defender.SpBars--;
         }
 
         

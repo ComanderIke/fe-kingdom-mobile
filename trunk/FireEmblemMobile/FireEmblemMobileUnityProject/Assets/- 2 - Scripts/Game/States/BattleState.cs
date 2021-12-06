@@ -77,7 +77,8 @@ namespace Game.Mechanics
 
             attacker.Hp = battleSimulation.Attacker.Hp;
             defender.Hp = battleSimulation.Defender.Hp;
-            defender.SpBars--; 
+            if(battleSimulation.DefenderAttackCount!=0)
+                defender.SpBars--; 
             attacker.SpBars--;
             if (!attacker.IsAlive())
             {
