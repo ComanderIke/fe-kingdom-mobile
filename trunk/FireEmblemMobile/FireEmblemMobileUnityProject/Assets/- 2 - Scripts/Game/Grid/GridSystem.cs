@@ -58,6 +58,7 @@ namespace Game.Map
             UnitSelectionSystem.OnEnemySelected += OnEnemySelected;
             UnitSelectionSystem.OnSelectedInActiveCharacter += OnEnemySelected;
             MovementState.OnMovementFinished += InvokeHideMoveRange;
+            
             Unit.UnitDied += RemoveUnitFromGrid;
         }
 

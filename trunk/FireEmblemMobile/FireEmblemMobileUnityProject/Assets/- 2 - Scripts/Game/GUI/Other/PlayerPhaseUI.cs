@@ -16,7 +16,7 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
     public OKCancelDialogController OkCancelDialogController;
     public TextMeshProUGUI turnText;
     public TileInfoPanel TileInfoPanel;
-    public Action OnBackClicked;
+    public static Action OnBackClicked;
     public void ShowTileInfo(Tile selectedTile)
     {
         TileInfoPanel.Show(selectedTile);

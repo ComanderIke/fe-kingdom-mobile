@@ -34,8 +34,10 @@ namespace Game.GameInput
        
         public void DraggedOnGrid(int x, int y)
         {
+            Debug.Log("DraggedOnGrid");
             selectionDataProvider.SetSelectedTile(x, y);
             ClickedOnGrid(x, y);
+            
         }
         public void ResetInput()
         {
@@ -146,6 +148,7 @@ namespace Game.GameInput
 
         public void ClickedOnGrid(int x, int y)
         {
+        
             gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
             if(!gridSystem.GridLogic.IsTileFree(x,y))
             {
@@ -160,7 +163,11 @@ namespace Game.GameInput
                 {
                     gameplayInput.MoveUnit(selectionDataProvider.SelectedActor, new GridPosition(x, y), GridPosition.GetFromVectorList(inputPathManager.MovementPath));
                     gameplayInput.Wait(selectionDataProvider.SelectedActor);
-                    gameplayInput.ExecuteInputActions(null);
+                    
+                    gameplayInput.ExecuteInputActions(() =>
+                    {
+                        selectionDataProvider.SetUndoAbleActor(selectionDataProvider.SelectedActor);
+                    });
                     selectionDataProvider.ClearData();
                     Debug.Log("SelectedTile");
                     
@@ -218,6 +225,7 @@ namespace Game.GameInput
                 ResetInput();
                 gameplayInput.DeselectUnit();
             }
+           
         }
         
         private void OwnedActorClicked(IGridActor unit)

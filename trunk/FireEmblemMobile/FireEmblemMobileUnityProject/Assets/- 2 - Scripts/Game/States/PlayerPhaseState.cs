@@ -79,6 +79,8 @@ namespace Game.Mechanics
         {
             Debug.Log("UNDO123");
             gridInputSystem.inputReceiver.UndoClicked();
+            gridGameManager.GetSystem<GridSystem>().HideMoveRange();
+        
         }
 
         private void CursorPosChanged(Vector2Int tilePos)

@@ -61,11 +61,13 @@ namespace Game.GUI
             UnitSelectionSystem.OnDeselectCharacter -= DeselectedCharacter;
             UnitActionSystem.OnCheckAttackPreview -= ShowAttackPreviewUI;
             GridInputSystem.OnResetInput -= HideAttackPreviewUI;//TODO Remove somehow
+            PlayerPhaseUI.OnBackClicked -= HideAttackPreviewUI;
             GridGameManager.Instance.GetSystem<GridSystem>().cursor.OnCursorPositionChanged -= (Vector2Int v)=>HideAttackPreviewUI();
         }
 
         public void Activate()
         {
+            PlayerPhaseUI.OnBackClicked += HideAttackPreviewUI;
             UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
             UnitSelectionSystem.OnSelectedInActiveCharacter += SelectedCharacter;
             UnitSelectionSystem.OnEnemySelected += SelectedEnemyCharacter;
