@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e53456ce70545147a4e06ae081ea4b1, type: 3}
+  m_Name: River
+  m_EditorClassIdentifier: 
+  name: River
+  walkable: 1
+  defenseBonus: -2
+  avoBonus: -20
+  speedMalus: -5
+  movementCostsArray:
+  - moveType: {fileID: 11400000, guid: 580bbea6e1e3e824a81881f8e2a825ba, type: 2}
+    cost: 3
+  - moveType: {fileID: 11400000, guid: d13592b1fa0af024a841b121149b8014, type: 2}
+    cost: 2
+  - moveType: {fileID: 11400000, guid: ca134ece578a7684db4f492a3756fdd2, type: 2}
+    cost: 1
+  - moveType: {fileID: 11400000, guid: bff40a3de87900a4496abf2b9dfca7a2, type: 2}
+    cost: 2
+  tiles:
+  - {fileID: 11400000, guid: f63fe6b06dc9b4b429bbf9397097fd8a, type: 2}

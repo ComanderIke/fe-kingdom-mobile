@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Game.Map;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class PropOnGrid : MonoBehaviour
 {
    public GridTerrainData terrainData;
@@ -22,6 +23,11 @@ public class PropOnGrid : MonoBehaviour
       }
       return false;
    }
+   void Update()
+        {
+            transform.localPosition = new Vector3((int) transform.localPosition.x, (int) transform.localPosition.y,
+                (int) transform.localPosition.z);
+        }
    public int X
    {
       get
