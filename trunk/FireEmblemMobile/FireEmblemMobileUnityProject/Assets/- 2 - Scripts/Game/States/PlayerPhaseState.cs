@@ -77,7 +77,7 @@ namespace Game.Mechanics
 
         public void Undo()
         {
-            Debug.Log("UNDO123");
+
             gridInputSystem.inputReceiver.UndoClicked();
             gridGameManager.GetSystem<GridSystem>().HideMoveRange();
         
