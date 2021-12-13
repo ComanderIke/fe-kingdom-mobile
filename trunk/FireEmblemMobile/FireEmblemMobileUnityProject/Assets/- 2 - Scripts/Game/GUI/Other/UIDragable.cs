@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Game.GameActors.Items;
 using Game.GameActors.Units;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -23,6 +24,7 @@ namespace Game.GUI
         public bool CanDrag { get; set; } = true;
         private Transform startParent;
 
+        public Item item;
         // Start is called before the first frame update
         void Start()
         {
@@ -75,8 +77,9 @@ namespace Game.GUI
                 }
             }
 
-            rectTransform.anchoredPosition = StartPosition;
+           
             transform.SetParent(startParent);
+            rectTransform.anchoredPosition = StartPosition;
             OnEndDragHandler?.Invoke(eventData, false);
             
         }
