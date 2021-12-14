@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Game.GameActors.Items.Weapons;
+using UnityEngine;
 
 namespace Game.GUI
 {
@@ -9,7 +10,7 @@ namespace Game.GUI
         protected override void Awake()
         {
             base.Awake();
-            DropArea.dropConditions.Add(new IsWeaponCondition());
+            DropArea.dropConditions.Add(new IsWeaponCondition(EquipmentSlotType.Weapon));
         }
 
        

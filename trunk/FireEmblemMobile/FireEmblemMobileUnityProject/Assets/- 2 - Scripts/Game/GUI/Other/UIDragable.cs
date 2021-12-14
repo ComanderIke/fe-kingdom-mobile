@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 namespace Game.GUI
 {
+    [ExecuteInEditMode]
     public class UIDragable : MonoBehaviour, IInitializePotentialDragHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
     {
     
@@ -26,9 +27,11 @@ namespace Game.GUI
 
         public Item item;
         // Start is called before the first frame update
-        void Start()
+        void OnEnable()
         {
             rectTransform = GetComponent<RectTransform>();
+            GetComponentInChildren<ItemDisplay>().item = item;
+            GetComponentInChildren<ItemDisplay>().UpdateSprite();
         }
 
         public void SetCanvas(Canvas canvas)

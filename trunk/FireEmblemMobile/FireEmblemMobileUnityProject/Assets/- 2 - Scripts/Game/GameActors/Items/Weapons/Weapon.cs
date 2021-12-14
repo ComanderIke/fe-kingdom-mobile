@@ -9,7 +9,7 @@ namespace Game.GameActors.Items.Weapons
 {
     [Serializable]
     [CreateAssetMenu(menuName = "GameData/Weapons/Weapon", fileName = "Weapon")]
-    public class Weapon : Item
+    public class Weapon : EquipableItem
     {
         
         [Range(1, 4)] public int[] AttackRanges;
