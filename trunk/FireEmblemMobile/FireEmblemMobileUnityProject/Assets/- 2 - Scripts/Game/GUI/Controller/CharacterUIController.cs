@@ -60,7 +60,7 @@ namespace Game.GUI
             if (unit == null)
                 return;
             characterName.SetText(unit.name);
-            statPanel.SetStats(unit.Stats);
+           
             expBar.SetText(unit.ExperienceManager.Exp);
             expBar.SetFillAmount(unit.ExperienceManager.Exp);
             hpBar.SetValue(unit.Hp, unit.Stats.MaxHp);

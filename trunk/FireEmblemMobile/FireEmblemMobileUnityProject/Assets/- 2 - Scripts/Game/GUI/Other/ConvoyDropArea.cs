@@ -14,6 +14,7 @@ namespace Game.GUI
 
         private void OnItemDropped(UIDragable dragable)
         {
+            Debug.Log("Item Dropped on Convoy");
             dragable.transform.SetParent(transform);
         }
     }

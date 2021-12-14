@@ -95,5 +95,12 @@ namespace Game.GUI
             StartPosition = rectTransform.anchoredPosition;
             startParent = transform.parent;
         }
+
+        public void SetItem(Item item1)
+        {
+            item = item1;
+            GetComponentInChildren<ItemDisplay>().item = item;
+            GetComponentInChildren<ItemDisplay>().UpdateSprite();
+        }
     }
 }
