@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using Game.GameActors.Items;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using UnityEngine;
 
@@ -8,10 +10,13 @@ namespace Game.States
     {
         [SerializeField]
         private List<Unit> units;
+        [SerializeField]
+        private List<Item> convoy;
 
         void Start()
         {
             Debug.LogError("TESTERROR");
+            Player.Instance.convoy = convoy;
         }
         public List<Unit> GetUnits()
         {
