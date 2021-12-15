@@ -68,21 +68,21 @@ namespace Game.Mechanics
         {
             int[] statIncreases = CalculateStatIncreases(unit.Growths.GetGrowthsArray());
 
-            if (levelUpRenderer != null)
-            {
-                levelUpRenderer.UpdateValues(unit.name, unit.ExperienceManager.Level - 1, unit.ExperienceManager.Level,
-                    unit.Stats.GetStatArray(), statIncreases);
-                AnimationQueue.Add(((IAnimation) levelUpRenderer).Play);
-            }
-
-            unit.Stats.MaxHp += statIncreases[0];
-            unit.Stats.MaxSp += statIncreases[1];
-            unit.Stats.Str += statIncreases[2];
-            unit.Stats.Mag += statIncreases[3];
-            unit.Stats.Spd += statIncreases[4];
-            unit.Stats.Skl += statIncreases[5];
-            unit.Stats.Def += statIncreases[6];
-            unit.Stats.Res += statIncreases[7];
+            // if (levelUpRenderer != null)
+            // {
+            //     levelUpRenderer.UpdateValues(unit.name, unit.ExperienceManager.Level - 1, unit.ExperienceManager.Level,
+            //         unit.Stats.GetStatArray(), statIncreases);
+            //     AnimationQueue.Add(((IAnimation) levelUpRenderer).Play);
+            // }
+            //
+            // unit.Stats.MaxHp += statIncreases[0];
+            // unit.Stats.MaxSp += statIncreases[1];
+            // unit.Stats.STR += statIncreases[2];
+            // unit.Stats.INT += statIncreases[3];
+            // unit.Stats.AGI += statIncreases[4];
+            // unit.Stats.DEX += statIncreases[5];
+            // unit.Stats.Armor += statIncreases[6];
+            // unit.Stats.FAITH += statIncreases[7];
         }
 
         public void DistributeExperience(IBattleActor attacker, IBattleActor defender)

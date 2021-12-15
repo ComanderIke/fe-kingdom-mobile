@@ -7,38 +7,56 @@ using UnityEngine;
 namespace Game.GameActors.Units.Attributes
 {
     [Serializable]
+    public class Attributes
+    {
+        [SerializeField]
+        public int INT;
+        [SerializeField]
+        public int CON;
+        [SerializeField]
+        public int FAITH;
+        [SerializeField]
+        public int DEX;
+        [SerializeField]
+        public int AGI;
+        [SerializeField]
+        public int STR;
+
+        public Attributes(Attributes attributes)
+        {
+            INT = attributes.INT;
+            CON = attributes.CON;
+            DEX = attributes.DEX;
+            AGI = attributes.AGI;
+            STR = attributes.STR;
+            FAITH = attributes.FAITH;
+        }
+    }
+    [Serializable]
     [CreateAssetMenu(menuName = "GameData/Unit/Stats", fileName = "UnitStats")]
     public class Stats : ScriptableObject, ICloneable
     {
         [SerializeField]
         public List<int> AttackRanges;
         [SerializeField]
-        public int Def;
+        public Attributes Attributes;
         [SerializeField]
-        public int Mag;
+        public int Armor;
         [SerializeField]
         public int MaxHp;
         [SerializeField]
         public int MaxSp;
         [SerializeField]
         public int Mov;
-        [SerializeField]
-        public int Res;
-        [SerializeField]
-        public int Skl;
-        [SerializeField]
-        public int Spd;
-        [SerializeField]
-        public int Str;
+      
+       
+        
 
         public StatsData GetSaveData()
         {
-            return new StatsData(MaxHp, MaxSp, Mov, Res, Skl, Spd, Str, Def, Mag, AttackRanges);
+            return new StatsData(MaxHp, MaxSp, Mov, Attributes, Armor,  AttackRanges);
         }
-        public int[] GetStatArray()
-        {
-            return new int[] { MaxHp, MaxSp, Str, Mag, Skl, Spd, Def, Res };
-        }
+    
         public int GetMaxAttackRange()
         {
             return AttackRanges.Max();
@@ -52,15 +70,13 @@ namespace Game.GameActors.Units.Attributes
             {
                 stats.AttackRanges.Add(i);
             }
-            stats.Def = Def;
+            stats.Armor = Armor;
             stats.MaxHp = MaxHp;
             stats.MaxSp = MaxSp;
-            stats.Mag = Mag;
+            stats.Attributes = new Attributes(Attributes);
+       
             stats.Mov = Mov;
-            stats.Res = Res;
-            stats.Skl = Skl;
-            stats.Spd = Spd;
-            stats.Str = Str;
+           
             return stats;
         }
 
@@ -70,12 +86,8 @@ namespace Game.GameActors.Units.Attributes
             MaxSp = statsData.MaxSp;
             Mov = statsData.Mov;
             AttackRanges = statsData.AttackRanges;
-            Str = statsData.Str;
-            Mag = statsData.Mag;
-            Def = statsData.Def;
-            Res = statsData.Res;
-            Spd = statsData.Spd;
-            Skl = statsData.Skl;
+            Armor = statsData.Armor;
+            Attributes = new Attributes(statsData.Attributes);
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Game.GameActors.Units;
@@ -8,54 +9,63 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+[ExecuteInEditMode]
 public class UICharacterViewController : MonoBehaviour
 {
+    public Unit unit;
     public TextMeshProUGUI charName;
     public TextMeshProUGUI Lv;
     public TextMeshProUGUI Exp;
     public TextMeshProUGUI CharClass;
-    public Image sprite;
-    public Image weaponIcon;
+    public UIEquipmentController equipmentController;
+    public UIAttributeController attributeController;
+    public UIConvoyController convoyController;
+    public UISkillsController skillsController;
+    public UITalentsController talentsController;
     public TextMeshProUGUI weaponAtk;
     public TextMeshProUGUI Atk;
     public TextMeshProUGUI AS;
     public TextMeshProUGUI HP;
     public TextMeshProUGUI MaxHP;
     public TextMeshProUGUI SP;
-    public TextMeshProUGUI STR;
-    public TextMeshProUGUI MAG;
-    public TextMeshProUGUI AGI;
-    public TextMeshProUGUI DEF;
-    public TextMeshProUGUI RES;
+    public TextMeshProUGUI Hitrate;
+    public TextMeshProUGUI DodgeRate;
+    public TextMeshProUGUI Crit;
+    public TextMeshProUGUI CritAvoid;
+    public TextMeshProUGUI Armor;
+    public TextMeshProUGUI MagicResistance;
     public TextMeshProUGUI WeaponName;
     public IStatBar HPBar;
     public ISPBarRenderer SPBars;
-    public void Show(Unit partyMember)
+    public Image image;
+
+    private void OnEnable()
     {
-        charName.SetText(partyMember.name);
-        Lv.SetText(""+partyMember.ExperienceManager.Level);
-        Exp.SetText(""+partyMember.ExperienceManager.Exp);
+        Show(unit);
+    }
+
+    public void Show(Unit unit)
+    {
+        this.unit = unit;
+        charName.SetText(unit.name);
+        Lv.SetText(""+unit.ExperienceManager.Level);
+        Exp.SetText(""+unit.ExperienceManager.Exp);
         CharClass.SetText("[CLASS]");
-        sprite.sprite = partyMember.visuals.CharacterSpriteSet.MapSprite;
-        if (partyMember is Human human)
-        {
-            weaponIcon.sprite = human.EquippedWeapon.Sprite;
-            weaponAtk.SetText(""+human.EquippedWeapon.Dmg);
-            WeaponName.SetText(human.EquippedWeapon.name);
-           
-        }
-        Atk.SetText(""+partyMember.BattleComponent.BattleStats.GetDamage());
-        AS.SetText(""+partyMember.BattleComponent.BattleStats.GetAttackSpeed());
-        HP.SetText(""+partyMember.Hp);
-        MaxHP.SetText("/"+partyMember.Stats.MaxHp);
-        SP.SetText(""+partyMember.Sp);
-        STR.SetText(""+partyMember.Stats.Str);
-        DEF.SetText(""+partyMember.Stats.Def);
-        RES.SetText(""+partyMember.Stats.Res);
-        AGI.SetText(""+partyMember.Stats.Spd);
-        MAG.SetText(""+partyMember.Stats.Mag);
-        HPBar.SetValue(partyMember.Hp, partyMember.Stats.MaxHp);
-        SPBars.SetValue(partyMember.SpBars, partyMember.MaxSpBars);
+        image.sprite = unit.visuals.CharacterSpriteSet.FaceSprite;
+        Atk.SetText(""+unit.BattleComponent.BattleStats.GetDamage());
+        AS.SetText(""+unit.BattleComponent.BattleStats.GetAttackSpeed());
+        HP.SetText(""+unit.Hp);
+        MaxHP.SetText("/"+unit.Stats.MaxHp);
+        SP.SetText(""+unit.Sp);
+        Armor.SetText(""+unit.Stats.Armor);
+
+        HPBar.SetValue(unit.Hp, unit.Stats.MaxHp);
+        SPBars.SetValue(unit.SpBars, unit.MaxSpBars);
+        equipmentController.Show(unit);
+        attributeController.Show(unit);
+        skillsController.Show(unit);
+        talentsController.Show(unit);
+        convoyController.Show();
 
     }
 }
