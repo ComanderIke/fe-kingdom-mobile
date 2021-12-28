@@ -130,18 +130,18 @@ namespace Game.Mechanics
             battlePreview.AttacksData = battleSimulation.AttacksData;
 
             battlePreview.AttackerStats = new BattlePreviewStats(attacker.BattleComponent.BattleStats.GetDamage(), 
-                attacker.Stats.AGI, defender.BattleComponent.BattleStats.GetDamageType(), 
-                defender.BattleComponent.BattleStats.GetDamageType()==DamageType.Physical ? attacker.Stats.Armor : attacker.Stats.FAITH, 
-                attacker.Stats.DEX, attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defender), attacker.BattleComponent.BattleStats.GetHitAgainstTarget(defender),
+                attacker.Stats.Attributes.AGI, defender.BattleComponent.BattleStats.GetDamageType(), 
+                defender.BattleComponent.BattleStats.GetDamageType()==DamageType.Physical ? attacker.Stats.Armor : attacker.Stats.Attributes.FAITH, 
+                attacker.Stats.Attributes.DEX, attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defender), attacker.BattleComponent.BattleStats.GetHitAgainstTarget(defender),
                 attacker.BattleComponent.BattleStats.GetAttackCountAgainst(defender), attacker.Hp, attacker.Stats.MaxHp, 
                 battleSimulation.Attacker.Hp, attacker.Sp, attacker.Stats.MaxSp, 
                 battleSimulation.Attacker.Sp, attacker.SpBars, 
                 battleSimulation.Attacker.SpBars, attacker.MaxSpBars);
 
             battlePreview.DefenderStats = new BattlePreviewStats(defender.BattleComponent.BattleStats.GetDamage(), 
-                defender.Stats.AGI, attacker.BattleComponent.BattleStats.GetDamageType(), 
-                attacker.BattleComponent.BattleStats.GetDamageType()==DamageType.Physical? defender.Stats.Armor : defender.Stats.FAITH,
-                defender.Stats.DEX, defender.BattleComponent.BattleStats.GetDamageAgainstTarget(attacker),defender.BattleComponent.BattleStats.GetHitAgainstTarget(attacker),
+                defender.Stats.Attributes.AGI, attacker.BattleComponent.BattleStats.GetDamageType(), 
+                attacker.BattleComponent.BattleStats.GetDamageType()==DamageType.Physical? defender.Stats.Armor : defender.Stats.Attributes.FAITH,
+                defender.Stats.Attributes.DEX, defender.BattleComponent.BattleStats.GetDamageAgainstTarget(attacker),defender.BattleComponent.BattleStats.GetHitAgainstTarget(attacker),
                 battleSimulation.DefenderAttackCount, defender.Hp, defender.Stats.MaxHp,
                 battleSimulation.Defender.Hp, defender.Sp, defender.Stats.MaxSp, 
                 battleSimulation.Defender.Sp,  defender.SpBars, 

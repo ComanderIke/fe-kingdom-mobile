@@ -47,7 +47,7 @@ public class UICharacterViewController : MonoBehaviour
     public void Show(Unit unit)
     {
         this.unit = unit;
-        charName.SetText(unit.name);
+       // charName.SetText(unit.name);
         Lv.SetText(""+unit.ExperienceManager.Level);
         Exp.SetText(""+unit.ExperienceManager.Exp);
         CharClass.SetText("[CLASS]");

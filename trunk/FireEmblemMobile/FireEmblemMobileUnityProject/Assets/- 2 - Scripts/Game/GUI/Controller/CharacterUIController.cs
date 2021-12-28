@@ -13,8 +13,8 @@ namespace Game.GUI
     
     public class CharacterUIController :  ICharacterUI
     {
-        [SerializeField]
-        private UIStatPanel statPanel;
+        // [SerializeField]
+        // private UIStatPanel statPanel;
         [SerializeField]
         private Image faceSprite;
         [SerializeField]
@@ -34,7 +34,7 @@ namespace Game.GUI
 
         public void CharacterImageClicked()
         {
-            statPanel.gameObject.SetActive(!statPanel.gameObject.activeSelf);
+            // statPanel.gameObject.SetActive(!statPanel.gameObject.activeSelf);
         }
 
         public override void Show(Unit unit)

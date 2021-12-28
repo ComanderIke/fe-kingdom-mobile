@@ -158,24 +158,24 @@ namespace Game.Mechanics.Battle
             if (owner is Human human)
             {
                 //Debug.Log("TODO ATTACK SPEED CALC");
-                return (human.Stats.DEX- human.EquippedWeapon.Weight) * 2 + human.EquippedWeapon.Hit;
+                return (human.Stats.Attributes.DEX- human.EquippedWeapon.Weight) * 2 + human.EquippedWeapon.Hit;
             }  if (owner is Monster monster)
             {
                 //Debug.Log("TODO ATTACK SPEED CALC");
-                return monster.Stats.DEX * 2 + monster.Weapon.Hit;
+                return monster.Stats.Attributes.DEX * 2 + monster.Weapon.Hit;
             }
 
-            return owner.Stats.DEX * 2;
+            return owner.Stats.Attributes.DEX * 2;
         }
         public int GetAvoid()
         {
             if (owner is Human human)
             {
                 //Debug.Log("TODO ATTACK SPEED CALC");
-                return owner.GetTile().TileData.avoBonus + (human.Stats.AGI  - human.EquippedWeapon.Weight)* 2;
+                return owner.GetTile().TileData.avoBonus + (human.Stats.Attributes.AGI  - human.EquippedWeapon.Weight)* 2;
             }
             
-            return owner.GetTile().TileData.avoBonus + owner.Stats.AGI * 2;
+            return owner.GetTile().TileData.avoBonus + owner.Stats.Attributes.AGI * 2;
         }
 
         public int GetHitAgainstTarget(IBattleActor target)
@@ -189,10 +189,10 @@ namespace Game.Mechanics.Battle
             if (owner is Human human)
             {
                 //Debug.Log("TODO ATTACK SPEED CALC");
-                return human.Stats.AGI - human.EquippedWeapon.Weight+ owner.GetTile().TileData.speedMalus;
+                return human.Stats.Attributes.AGI - human.EquippedWeapon.Weight+ owner.GetTile().TileData.speedMalus;
             }
 
-            return owner.Stats.AGI + owner.GetTile().TileData.speedMalus;
+            return owner.Stats.Attributes.AGI + owner.GetTile().TileData.speedMalus;
         }
     }
 }
