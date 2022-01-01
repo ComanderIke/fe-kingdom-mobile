@@ -9,11 +9,9 @@ namespace Game.AI
     public class CampaignConditionManager : ConditionManager
     {
         private Campaign campaign;
-        private FactionManager factionManager;
-        public CampaignConditionManager(Campaign campaign, FactionManager factionManager)
+        public CampaignConditionManager(Campaign campaign)
         {
             this.campaign = campaign;
-            this.factionManager = factionManager;
         }
 
         public override bool CheckWin()
@@ -21,7 +19,7 @@ namespace Game.AI
             foreach (var cond in campaign.victoryDefeatConditions)
             {
                 if(cond.victory)
-                    if (!cond.CheckCondition(factionManager))
+                    if (!cond.CheckCondition())
                     {
                         return false;
                     }
@@ -35,7 +33,7 @@ namespace Game.AI
             foreach (var cond in campaign.victoryDefeatConditions)
             {
                 if(!cond.victory)
-                    if (cond.CheckCondition(factionManager))
+                    if (cond.CheckCondition())
                     {
                         Debug.Log("Campaign Lose: ");
                         return true;

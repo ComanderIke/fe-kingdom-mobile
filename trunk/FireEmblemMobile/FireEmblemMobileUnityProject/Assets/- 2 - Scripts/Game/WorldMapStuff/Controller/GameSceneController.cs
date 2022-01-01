@@ -30,28 +30,27 @@ namespace Game.WorldMapStuff.Controller
             Debug.Log("Load Inside" + playerParty.members[0].ExperienceManager.Exp);
             SceneTransferData.Instance.PartyID = playerParty.name;
             SceneTransferData.Instance.Party = playerParty;
-            SceneTransferData.Instance.LocationData =new LocationData(playerParty.location.UniqueId, playerParty.location.worldMapPosition.Village);
+            //SceneTransferData.Instance.LocationData =new LocationData(playerParty.location.UniqueId, playerParty.location.worldMapPosition.Village);
             SceneController.UnLoadSceneAsync(Scenes.WM_Gameplay);
             SceneController.UnLoadSceneAsync(Scenes.Campaign1);
             SceneController.LoadSceneAsync(Scenes.InsideLocation,true);
         }
-        public void LoadBattleLevel(Party playerParty, Party enemyParty)
+        public void LoadBattleLevel(Scenes buildIndex, EnemyArmyData enemyParty, EncounterNode node)
         {
             Vector3 cameraPos = GameObject.FindObjectOfType<WorldMapCameraController>().transform.position;
             PlayerPrefs.SetFloat("CameraX", cameraPos.x);
             PlayerPrefs.SetFloat("CameraX", cameraPos.y);
             PlayerPrefs.Save();
-            Debug.Log("Save Camera Pos: "+cameraPos);
             SceneTransferData.Instance.Reset();
-            SceneTransferData.Instance.UnitsGoingIntoBattle = playerParty.members;
-            SceneTransferData.Instance.EnemyUnits = enemyParty.members;
-            SceneTransferData.Instance.PartyID = playerParty.name;
-            SceneTransferData.Instance.Party = playerParty;
+            SceneTransferData.Instance.UnitsGoingIntoBattle = Player.Instance.Party.members;
+            SceneTransferData.Instance.EnemyUnits = enemyParty;
+            SceneTransferData.Instance.PartyID = Player.Instance.Party.name;
+            SceneTransferData.Instance.Party = Player.Instance.Party;
             SceneTransferData.Instance.EnemyPartyID = enemyParty.name;
-            SceneTransferData.Instance.LocationData =new LocationData(enemyParty.location.UniqueId, enemyParty.location.worldMapPosition.Village);
+            //SceneTransferData.Instance.NodeData =new NodeData(node.UniqueId);
             SceneController.UnLoadSceneAsync(Scenes.WM_Gameplay);
             SceneController.UnLoadSceneAsync(Scenes.Campaign1);
-            SceneController.LoadSceneAsync(Scenes.Level2, true);
+            SceneController.LoadSceneAsync(buildIndex, true);
         }
         public void LoadWorldMapFromInside()
         {

@@ -50,7 +50,7 @@ namespace Game.GameResources
         public Party GetCampaignParty(int campaignIndex)
         {
             var tmpMembers = playerStartingParties[campaignIndex].members;
-            var party =  Instantiate((playerStartingParties[campaignIndex]));
+            var party =  (playerStartingParties[campaignIndex]);
             party.members = new List<Unit>();
             foreach (var member in tmpMembers)
             {

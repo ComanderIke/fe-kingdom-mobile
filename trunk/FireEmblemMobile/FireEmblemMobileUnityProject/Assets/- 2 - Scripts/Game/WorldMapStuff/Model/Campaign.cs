@@ -12,12 +12,6 @@ namespace Game.WorldMapStuff.Model
         public string name;
         public int campaignId;
         public int turnCount = 1;
-
-
-        // [HideInInspector]
-        // public List<LocationController> locations;
-        
-        public WM_Faction EnemyFaction;
         public bool dataLoaded;
         public Scenes scene;
 
@@ -38,9 +32,7 @@ namespace Game.WorldMapStuff.Model
             scene =  GameData.Instance.campaigns[campaignId].scene;
             dataLoaded = true;
             victoryDefeatConditions = GameData.Instance.campaigns[campaignId].victoryDefeatConditions;
-            EnemyFaction = new WM_Faction();
-           
-            campaignData.enemyFactionData.Load(EnemyFaction);
+    
             // for (int i=0; i < locations.Count; i++)
             // {
             //     locations[i].LoadData(campaignData.locationData[i]);

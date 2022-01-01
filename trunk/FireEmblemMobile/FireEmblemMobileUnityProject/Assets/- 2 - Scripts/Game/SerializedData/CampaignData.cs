@@ -16,7 +16,7 @@ namespace Game.Systems
         {
             campaignId = campaign.campaignId;
             turnCount = campaign.turnCount;
-            enemyFactionData = new FactionData(campaign.EnemyFaction);
+          //  enemyFactionData = new FactionData(campaign.EnemyFaction);
             // locationData = new List<LocationData>();
             // foreach (var locationController in campaign.locations)
             // {

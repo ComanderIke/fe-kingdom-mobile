@@ -287,10 +287,10 @@ namespace Game.States
 
             if (SceneTransferData.Instance.EnemyUnits != null)
             {
-                foreach (var unit in SceneTransferData.Instance.EnemyUnits)
+                foreach (var unit in SceneTransferData.Instance.EnemyUnits.units)
                 {
 
-                    factionManager.Factions[1].AddUnit(unit);
+                    factionManager.Factions[1].AddUnit(unit.unit);
                 }
             }
             

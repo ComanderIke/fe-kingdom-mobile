@@ -142,19 +142,19 @@ namespace Game.Mechanics
                 }
             }
 
-            if (factionManager.ActiveFaction is WM_Faction wmFaction)
-            {
-
-                if (wmFaction != null && wmFaction.Parties.Count != 0)
-                {
-                    foreach (var c in  wmFaction.Parties)
-                    {
-
-                        c.TurnStateManager.EndTurn();
-                        //c.gameObject.GetComponent<CharacterScript>().SetSelected(false);
-                    }
-                }
-            }
+            // if (factionManager.ActiveFaction is WM_Faction wmFaction)
+            // {
+            //
+            //     if (wmFaction != null && wmFaction.Parties.Count != 0)
+            //     {
+            //         foreach (var c in  wmFaction.Parties)
+            //         {
+            //
+            //             c.TurnStateManager.EndTurn();
+            //             //c.gameObject.GetComponent<CharacterScript>().SetSelected(false);
+            //         }
+            //     }
+            // }
 
             factionManager.ActivePlayerNumber++;
             

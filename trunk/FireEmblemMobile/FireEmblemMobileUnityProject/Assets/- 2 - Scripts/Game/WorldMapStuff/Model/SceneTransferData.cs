@@ -12,11 +12,11 @@ namespace Game.WorldMapStuff.Model
             get { return _instance ??= new SceneTransferData(); }
         }
         
-        public List<Unit> EnemyUnits { get; set; }
+        public EnemyArmyData EnemyUnits { get; set; }
         public string PartyID { get; set; }
         public Party Party{ get; set; }
         public string EnemyPartyID { get; set; }
-        public LocationData LocationData { get; set; }
+        // public LocationData LocationData { get; set; }
 
      
         public List<Unit> UnitsGoingIntoBattle;
@@ -26,29 +26,8 @@ namespace Game.WorldMapStuff.Model
         public void Reset()
         {
             BattleOutCome = BattleOutcome.None;
-            EnemyUnits = new List<Unit>();
+            EnemyUnits = null;
             UnitsGoingIntoBattle = new List<Unit>();
         }
-    }
-
-    public class LocationData
-    {
-        public string LocationId;
-
-        public Village Village;
-
-        public LocationData(string id, Village village)
-        {
-            this.LocationId = id;
-            this.Village = village;
-        }
-    }
-
-    [Serializable]
-    public enum BattleOutcome
-    {
-        Victory,
-        Defeat,
-        None
     }
 }

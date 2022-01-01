@@ -21,7 +21,7 @@ namespace Game.GameActors.Players
             Name = player.Name;
             money = player.money;
             convoy = player.convoy;
-            factionData = new FactionData((WM_Faction)player.faction);
+            //factionData = new FactionData((WM_Faction)player.faction);
 
         }
 

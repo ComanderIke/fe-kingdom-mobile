@@ -15,8 +15,8 @@ namespace Game.GameActors.Players
             get { return _instance ??= new Player(); }
         }
 
-
-        public WM_Faction faction;
+        public Party Party { get; set; }
+        
         public string Name;
         [SerializeField] public List<Item> convoy = default;
         [SerializeField] public int money = default;
@@ -39,9 +39,7 @@ namespace Game.GameActors.Players
         {
             money = data.money;
             Name = data.Name;
-            faction = new WM_Faction();
-            data.factionData.Load((WM_Faction)faction);
-            faction.IsPlayerControlled = true;
+            //data.factionData.Load((WM_Faction)faction);
             convoy=data.convoy;
             dataLoaded = true;
         }
