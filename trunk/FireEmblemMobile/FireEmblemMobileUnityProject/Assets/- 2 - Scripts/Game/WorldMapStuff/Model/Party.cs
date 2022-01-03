@@ -19,7 +19,9 @@ namespace Game.WorldMapStuff.Model
         {
             members = new List<Unit>();
         }
-    
+
+        public EncounterNode EncounterNode { get; set; }
+        public GameObject GameObject { get; set; }
 
         public bool IsAlive()
         {

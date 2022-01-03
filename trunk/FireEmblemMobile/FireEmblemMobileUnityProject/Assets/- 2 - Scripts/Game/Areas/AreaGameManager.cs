@@ -1,28 +1,31 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.GameActors.Players;
+using Game.WorldMapStuff.Model;
+using Game.WorldMapStuff.Systems;
 using UnityEngine;
 
-public class Area_Player
-{
-    public EncounterNode EncounterNode;
-    public GameObject GameObject;
-}
+
 public class AreaGameManager : MonoBehaviour
 {
     public GameObject playerPrefab;
-
+    private Area_ActionSystem actionSystem;
     public GameObject moveOptionPrefab;
-    public Area_Player player;
+
+    public Party playerStartParty;
     public ColumnManager ColumnManager;
     // Start is called before the first frame update
     private List<GameObject> moveOptions=new List<GameObject>();
     void Start()
     {
-        player = new Area_Player();
+        actionSystem = new Area_ActionSystem();
+
         var go = Instantiate(playerPrefab, null, false);
         go.transform.position = ColumnManager.GetStartNode().gameObject.transform.position;
-        player.GameObject = go;
-        player.EncounterNode = ColumnManager.GetStartNode();
+        Player.Instance.Party = Instantiate(playerStartParty);
+        Player.Instance.Party.GameObject = go;
+        Player.Instance.Party.EncounterNode = ColumnManager.GetStartNode();
         
         ResetMoveOptions();
   
@@ -37,7 +40,7 @@ public class AreaGameManager : MonoBehaviour
 
             
         }
-        foreach (var child in player.EncounterNode.children)
+        foreach (var child in Player.Instance.Party.EncounterNode.children)
         {
             child.moveable = false;
         }
@@ -45,7 +48,7 @@ public class AreaGameManager : MonoBehaviour
     public void ShowMoveOptions()
     {
         moveOptions = new List<GameObject>();
-        foreach (var child in player.EncounterNode.children)
+        foreach (var child in Player.Instance.Party.EncounterNode.children)
         {
             child.moveable = true;
             var go = Instantiate(moveOptionPrefab, null, false);
@@ -63,10 +66,21 @@ public class AreaGameManager : MonoBehaviour
 
     public void NodeClicked(EncounterNode encounterNode)
     {
-        player.GameObject.transform.position = encounterNode.gameObject.transform.position;
-        player.EncounterNode = encounterNode;
         FindObjectOfType<EncounterCursorController>().SetPosition(encounterNode.gameObject.transform.position);
-        ResetMoveOptions();
-        ShowMoveOptions();
+        if (encounterNode.moveable)
+        {
+            
+           
+            actionSystem.Move(encounterNode);
+            StartCoroutine( DelayAction(()=>encounterNode.Activate(), 1.0f));
+            // ResetMoveOptions();
+            // ShowMoveOptions();
+        }
+    }
+
+    private IEnumerator DelayAction(Action action, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        action?.Invoke();
     }
 }

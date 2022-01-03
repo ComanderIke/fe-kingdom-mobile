@@ -473,8 +473,6 @@ MonoBehaviour:
   encounter3ChildPercentage: 0.3
   chanceToShareChild: 0.3
   columnMaxEncounter: 4
-  NodePrefab: {fileID: 835066965299672002, guid: b9f4ef7d3874571469b84858a8158365,
-    type: 3}
   LineRendererPrefab: {fileID: 8412994387867442554, guid: a85c233c00267c245b95d2dd5acb73f1,
     type: 3}
   xRandomMin: -0.7
@@ -482,34 +480,17 @@ MonoBehaviour:
   yRandomMin: -0.4
   yRandomMax: 0.4
   battleEncountersUntilDifferentNode: 1
-  startEncounterPrefab: {fileID: 8230723085265343809, guid: 281b59dc64a2c4f4ebc100d2d529ece6,
-    type: 3}
-  endEncounterPrefab: {fileID: 5074970089772292829, guid: 7bf28fb60b16a3e4cb8ad1112d4fc38d,
-    type: 3}
-  ChurchNodePrefab: {fileID: 228917054141221267, guid: 583eaa05f58942149aa3e88f6aab8070,
-    type: 3}
-  ChurchNodeChance: 0.05
-  InnNodePrefab: {fileID: 835066965299672002, guid: b9f4ef7d3874571469b84858a8158365,
-    type: 3}
-  InnNodeChance: 0.15
-  MerchantNodePrefab: {fileID: 7795190567949889588, guid: d5147c6567c3eb643a2dc741a1efe41f,
-    type: 3}
-  MerchantNodeChance: 0.1
-  SmithyNodePrefab: {fileID: 5795712804970683374, guid: 4b747d01f6f59264ba4d7cc6d53e4de2,
-    type: 3}
-  SmithyNodeChance: 0.05
-  BattleNodePrefab: {fileID: 6212486344461680871, guid: 590a6575568fa5143987fe1f8b2c848f,
-    type: 3}
-  BattleNodeChance: 0.3
-  BattleNodePrefab2: {fileID: 1361400497281951303, guid: 0f97bd4ba8a13fd48a96bdb70733e170,
-    type: 3}
-  BattleNode2Chance: 0.2
-  TreasureEncounterPrefab: {fileID: 5795712804970683374, guid: 426f1f5986d9a2f4789653ae7d4264e3,
-    type: 3}
-  TreasureNodeChance: 0.05
-  EventEncounterPrefab: {fileID: 5795712804970683374, guid: 7de365d3cba0bcd4484f251ae51e6534,
-    type: 3}
-  EventNodeChance: 0.2
+  startNodeData: {fileID: 11400000, guid: 48889ab8cea10644f87e71f022dad1a2, type: 2}
+  nodeDatas:
+  - {fileID: 11400000, guid: e9edc95566a14af41904a804677b418b, type: 2}
+  - {fileID: 11400000, guid: 3a74b82d9cbdcd546864220dab0a1d21, type: 2}
+  - {fileID: 11400000, guid: f708728653f5cf54b90ff783cdd4c64d, type: 2}
+  - {fileID: 11400000, guid: 36da2f3da2a09ca418d34925605ff9cf, type: 2}
+  - {fileID: 11400000, guid: bebc9190d59d7634585ba6725172f948, type: 2}
+  - {fileID: 11400000, guid: 36f973f75b744144b894814d6efd9adc, type: 2}
+  - {fileID: 11400000, guid: 401112c2102422743b1de8eddd72b0e2, type: 2}
+  - {fileID: 11400000, guid: c7d853897baca3e42b72f42c574b029b, type: 2}
+  endNodeData: {fileID: 11400000, guid: 999b302d3da552a4ab7519ab822505b6, type: 2}
   ChanceDistributionAfterOccurence: 0.1
 --- !u!4 &55807139
 Transform:
@@ -6400,6 +6381,7 @@ MonoBehaviour:
     type: 3}
   moveOptionPrefab: {fileID: 3389544128479181451, guid: 2ba5e37cd06c9574283aab77cb35e267,
     type: 3}
+  playerStartParty: {fileID: 11400000, guid: 9481403441226d94ba6ffeec0614b579, type: 2}
   ColumnManager: {fileID: 55807138}
 --- !u!4 &814546089
 Transform:
@@ -7045,10 +7027,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef239d994022ed74286dc260b450b644, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartPosition: {fileID: 0}
-  RoadPrefab: {fileID: 8412994387867442554, guid: a85c233c00267c245b95d2dd5acb73f1,
-    type: 3}
-  RoadParent: {fileID: 1779658516}
 --- !u!114 &1011505028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7061,8 +7039,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d79728ae3bb34ba39d402e6410458700, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldPositions: []
-  Locations: []
 --- !u!1 &1018859465
 GameObject:
   m_ObjectHideFlags: 0
@@ -7209,7 +7185,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efebaa7ffbd441b895e8a1152bda3715, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  location: {fileID: 0}
 --- !u!1 &1044661066
 GameObject:
   m_ObjectHideFlags: 0
@@ -10378,10 +10353,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43de44533aa946be9cb6fe9ad28fd3e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPoint: {fileID: 0}
-  partyPrefab: {fileID: 3514601913328849977, guid: 6fb03a8295b2f9c48b0fc4122d0b222f,
-    type: 3}
-  partyParent: {fileID: 1011505026}
 --- !u!4 &2110099526
 Transform:
   m_ObjectHideFlags: 0

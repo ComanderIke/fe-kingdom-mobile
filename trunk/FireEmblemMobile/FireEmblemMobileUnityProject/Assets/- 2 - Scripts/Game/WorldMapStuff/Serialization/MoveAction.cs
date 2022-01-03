@@ -17,12 +17,9 @@ namespace Game.WorldMapStuff.Serialization
         public override void PerformAction()
         {
             Debug.Log("Perform Movement Action");
-            // party.location.Actor = null;
-            // party.location.Reset();
-            //
-            // party.location = location;
-            // location.Actor = party;
-           
+            Player.Instance.Party.EncounterNode = location;
+            Player.Instance.Party.GameObject.transform.position = location.gameObject.transform.position;
+
         }
 
         public override void Save(SaveData current)

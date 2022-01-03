@@ -6,29 +6,6 @@ using Pathfinding;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class EncounterNode
-{
-    public string UniqueId { get; set; }
-    public List<EncounterNode> parents;
-    public List<EncounterNode> children;
-
-    public GameObject gameObject;
-
-    public bool moveable;
-    //public Column column;
-
-    public EncounterNode(EncounterNode parent)
-    {
-        children = new List<EncounterNode>();
-        parents = new List<EncounterNode>();
-        parents.Add(parent);
-    }
-
-    
-}
-
-
-
 public class Column
 {
     public List<EncounterNode> children;
@@ -49,7 +26,6 @@ public class ColumnManager : MonoBehaviour
     public float encounter3ChildPercentage=0.2f;
     public float chanceToShareChild = 0.3f;
     public int columnMaxEncounter = 5;
-    public GameObject NodePrefab;
     private EncounterNode startNode;
     private EncounterNode endNode;
     public GameObject LineRendererPrefab;
@@ -59,69 +35,47 @@ public class ColumnManager : MonoBehaviour
     public float xRandomMax = 0.5f;
     public float yRandomMin = -0.5f;
     public float yRandomMax = 0.5f;
-    public int battleEncountersUntilDifferentNode = 1;
 
-    public GameObject startEncounterPrefab;
-    public GameObject endEncounterPrefab;
-    public GameObject ChurchNodePrefab;
-    public float ChurchNodeChance = 0.1f;
-    public GameObject InnNodePrefab;
-    public float InnNodeChance = 0.35f;
-    public GameObject MerchantNodePrefab;
-    public float MerchantNodeChance = 0.15f;
-    public GameObject SmithyNodePrefab;
-    public float SmithyNodeChance = 0.10f;
-    public GameObject BattleNodePrefab;
-    public float BattleNodeChance = 0.35f;
-    public GameObject BattleNodePrefab2;
-    public float BattleNode2Chance = 0.15f;
-    public GameObject TreasureEncounterPrefab;
-    public float TreasureNodeChance = 0.05f;
-    public GameObject EventEncounterPrefab;
-    public float EventNodeChance = 0.05f;
+    public EncounterNodeData startNodeData;
+    public List<EncounterNodeData> nodeDatas;
+    public EncounterNodeData endNodeData;
+
     public float ChanceDistributionAfterOccurence = 0.05f;
-    private Dictionary<string, float> StartEncounterChances = new Dictionary<string, float>();
-    private Dictionary<string, float> EncounterChances = new Dictionary<string, float>();
-
+    private Dictionary<EncounterNodeData, float> EncounterChances = new Dictionary<EncounterNodeData, float>();
+    private Dictionary<EncounterNodeData, float> StartEncounterChances = new Dictionary<EncounterNodeData, float>();
     private float sumAllStartChances;
     //public float yRandom = 0.5f;
     
     // Start is called before the first frame update
 
+  
     void OnEnable()
     {
         OnDisable();
         EncounterChances.Clear();
-        EncounterChances.Add(nameof(SmithyNodeChance), SmithyNodeChance);
-        EncounterChances.Add(nameof(InnNodeChance), InnNodeChance);
-        EncounterChances.Add(nameof(ChurchNodeChance), ChurchNodeChance);
-        EncounterChances.Add(nameof(MerchantNodeChance), MerchantNodeChance);
-        EncounterChances.Add(nameof(BattleNodeChance), BattleNodeChance);
-        EncounterChances.Add(nameof(BattleNode2Chance), BattleNode2Chance);
-        EncounterChances.Add(nameof(TreasureNodeChance), TreasureNodeChance);
-        EncounterChances.Add(nameof(EventNodeChance), EventNodeChance);
-        StartEncounterChances = new Dictionary<string, float>(EncounterChances);
+        StartEncounterChances.Clear();
+        foreach (var encounterData in nodeDatas)
+        {
+            Debug.Log("add: " + encounterData);
+            EncounterChances.Add(encounterData, encounterData.appearanceChance);
+            StartEncounterChances.Add(encounterData, encounterData.appearanceChance);
+        }
         columns.Clear();
         sumAllStartChances = 0;
         foreach (var keyvaluepair in EncounterChances)
         {
-            Debug.Log(keyvaluepair.Key+" "+keyvaluepair.Value);
             sumAllStartChances += keyvaluepair.Value;
         }
-        
-        Column startColumn = new Column();
-        startNode = new EncounterNode(null);
-        startColumn.children.Add(startNode);
-        startColumn.index = 0;
-       
-        
-        var go = GameObject.Instantiate(startEncounterPrefab, this.transform);
-        go.transform.localPosition = Vector3.zero;
-        go.GetComponentInChildren<EncounterClickController>().encounterNode = startNode;
-        go.name = "Start Node";
-        startNode.gameObject = go;
-        columns.Add(startColumn);
-        
+        CreateStartColumn();
+        CreateMiddleColumns();
+        CreateEndColumn();
+        PositionEncounters();
+        CreateConnections();
+
+    }
+
+    private void CreateMiddleColumns()
+    {
         for (int i = 1; i < columnCount; i++)
         {
             Column column = new Column();
@@ -136,24 +90,40 @@ public class ColumnManager : MonoBehaviour
             
             columns.Add(column);
         }
+    }
+    void CreateStartColumn()
+    {
+        Column startColumn = new Column();
+
+        var go = GameObject.Instantiate(startNodeData.prefab, this.transform);
+        go.transform.localPosition = Vector3.zero;
+        startNode = startNodeData.CreateNode(null);
+        
+        go.GetComponentInChildren<EncounterClickController>().encounterNode = startNode;
+        go.name = "Start Node";
+        startColumn.children.Add(startNode);
+        startColumn.index = 0;
+        startNode.gameObject = go;
+        columns.Add(startColumn);
+    }
+
+    void CreateEndColumn()
+    {
         Column endColumn = new Column();
-        endNode = new EncounterNode(null);
+        if (endNodeData is BattleEncounterNodeData data)
+        {
+            endNode = new BattleEncounterNode(data.levelIndex, data.EnemyArmyData,null);
+        }
+
         endColumn.children.Add(endNode);
         endColumn.index = columnCount;
-        go = GameObject.Instantiate(endEncounterPrefab, this.transform);
+        var go = GameObject.Instantiate(endNodeData.prefab, this.transform);
         go.transform.localPosition = Vector3.zero;
         go.name = "End Node";
         go.GetComponentInChildren<EncounterClickController>().encounterNode = endNode;
         endNode.gameObject = go;
         
         columns.Add(endColumn);
-        PositionEncounters();
-        CreateConnections();
-        foreach (var keyvaluepair in EncounterChances)
-        {
-            Debug.Log(keyvaluepair.Key+" "+keyvaluepair.Value);
-        }
-
     }
 
     private void CreateConnections()
@@ -235,7 +205,6 @@ public class ColumnManager : MonoBehaviour
                             (j * (columnHeight*1.0f / (columns[i].children.Count-1)) -
                             (columnHeight*1.0f / 2)+ Random.Range(yRandomMin, yRandomMax)));
                     }
-                    //Debug.Log("X Pos: "+columns[i].index * columnWidth);
                 }
             }
         }
@@ -250,7 +219,6 @@ public class ColumnManager : MonoBehaviour
     void SpawnEncounters(EncounterNode parent, Column current)
     {
         float rng = Random.value;
-       // Debug.Log("Current: "+current.index+" Previous: "+columns[current.index - 1].index+" Children: "+columns[current.index - 1].children.Count);
         if (columns[current.index - 1].children.Count == 1)
         {
             rng = Random.Range(0, encounter2ChildPercentage);
@@ -281,9 +249,7 @@ public class ColumnManager : MonoBehaviour
         }
     }
 
-    
-
-    void SpawnSingleEncounter(EncounterNode parent, Column current)
+    bool ShareChild(EncounterNode parent, Column current)
     {
         bool bindChild = false;
         float chance = chanceToShareChild;
@@ -294,7 +260,6 @@ public class ColumnManager : MonoBehaviour
             {
                 chance *= 2;
             }
-
             if (rng2 <= chance|| current.children.Count + 1 > columnMaxEncounter)
             {
                 for (int i = current.children.Count-1; i >=0; i--)
@@ -308,26 +273,29 @@ public class ColumnManager : MonoBehaviour
                         break;
                     }
                 }
-
-                
             }
-           
         }
-        if (!bindChild)
+        return bindChild;
+    }
+    void SpawnSingleEncounter(EncounterNode parent, Column current)
+    {
+        if (!ShareChild(parent, current))
         {
-            EncounterNode node = new EncounterNode(parent);
-            float rng = Random.Range(0f, ChurchNodeChance+BattleNodeChance+BattleNode2Chance+InnNodeChance+MerchantNodeChance+SmithyNodeChance);
-            var prefab = NodePrefab;
-            if (current.index <= battleEncountersUntilDifferentNode)
+            
+            float threshold = 0;
+            EncounterNodeData chosenKey =null;
+            float sumAllChances = 0;
+            foreach (var key in EncounterChances.Keys)
             {
-                rng += ChurchNodeChance + InnNodeChance + MerchantNodeChance + SmithyNodeChance;
+                sumAllChances += EncounterChances[key];
             }
 
-            float threshold = 0;
-            string chosenKey = "";
+            float rng = Random.Range(0, sumAllChances);
+            //Debug.Log(sumAllStartChances);
             foreach (var key in EncounterChances.Keys)
             {
                 threshold +=EncounterChances[key];
+                Debug.Log(key+ " "+threshold+" "+rng);
                 if (rng <= threshold)
                 {
                     UpdateEncounterChances(key);
@@ -336,28 +304,10 @@ public class ColumnManager : MonoBehaviour
                 }
                     
             }
+            
+            EncounterNode node = chosenKey.CreateNode(parent);
 
-            switch (chosenKey)
-            {
-                case nameof(InnNodeChance): 
-                    prefab = InnNodePrefab;break;
-                case nameof(ChurchNodeChance): 
-                    prefab = ChurchNodePrefab;break;
-                case nameof(SmithyNodeChance): 
-                    prefab = SmithyNodePrefab;break;
-                case nameof(MerchantNodeChance): 
-                    prefab = MerchantNodePrefab;break;
-                case nameof(BattleNodeChance): 
-                    prefab = BattleNodePrefab;break;
-                case nameof(BattleNode2Chance): 
-                    prefab = BattleNodePrefab2;break;
-                case nameof(TreasureNodeChance): 
-                    prefab = TreasureEncounterPrefab;break;
-                case nameof(EventNodeChance): 
-                    prefab = EventEncounterPrefab;break;
-                
-            }
-            var go = GameObject.Instantiate(prefab, this.transform);
+            var go = GameObject.Instantiate(chosenKey.prefab, this.transform);
             go.name = "EncounterNode Column:" + current.index;
             node.gameObject = go;
             go.GetComponentInChildren<EncounterClickController>().encounterNode = node;
@@ -368,12 +318,12 @@ public class ColumnManager : MonoBehaviour
     }
 
     
-    private void UpdateEncounterChances(string paramkey)
+    private void UpdateEncounterChances(EncounterNodeData paramkey)
     {
-        List<string> keys = new List<string>(EncounterChances.Keys);
+        List<EncounterNodeData> keys = new List<EncounterNodeData>(EncounterChances.Keys);
         foreach (var key in keys)
         {
-            if (key.CompareTo(paramkey)==0)
+            if (key==paramkey)
             {
                 EncounterChances[key] = StartEncounterChances[key]-ChanceDistributionAfterOccurence;
                  if (EncounterChances[key] < 0)
@@ -384,24 +334,6 @@ public class ColumnManager : MonoBehaviour
                 EncounterChances[key] += ChanceDistributionAfterOccurence*(StartEncounterChances[key]/sumAllStartChances);
             }
         }
-    }
-
-    void SpawnSpecificEncounter(EncounterNode parent, Column current, GameObject nodePrefab)
-    {
-
-            EncounterNode node = new EncounterNode(parent);
-            var go = GameObject.Instantiate(nodePrefab, this.transform);
-            go.name = "EncounterNode Column:" + current.index;
-            node.gameObject = go;
-            current.children.Add((node));
-            parent.children.Add(node);
-            //Debug.Log("Spawn New Node!");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public EncounterNode GetStartNode()

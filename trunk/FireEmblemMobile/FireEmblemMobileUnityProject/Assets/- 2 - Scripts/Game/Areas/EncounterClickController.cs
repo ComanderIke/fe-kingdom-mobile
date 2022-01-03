@@ -22,10 +22,9 @@ public class EncounterClickController : MonoBehaviour
     private void OnMouseDown()
     {
         Debug.Log("EncounterClicked!");
-        if (encounterNode.moveable)
-        {
+        
             FindObjectOfType<AreaGameManager>().NodeClicked(encounterNode);
           
-        }
+        
     }
 }
