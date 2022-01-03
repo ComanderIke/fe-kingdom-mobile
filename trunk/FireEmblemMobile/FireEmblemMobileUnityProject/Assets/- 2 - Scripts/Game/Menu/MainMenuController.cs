@@ -73,8 +73,8 @@ namespace Game.GUI
         {
             HideMenu();
             SceneController.LoadSceneAsync(campaign.scene, true);
-            SceneController.LoadSceneAsync(Scenes.UI, true);
-            SceneController.LoadSceneAsync(Scenes.WM_Gameplay, true);
+            // SceneController.LoadSceneAsync(Scenes.UI, true);
+            // SceneController.LoadSceneAsync(Scenes.WM_Gameplay, true);
         }
 
         public void LoadGame(string name)

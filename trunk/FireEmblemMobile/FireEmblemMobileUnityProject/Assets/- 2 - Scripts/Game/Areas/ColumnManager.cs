@@ -49,11 +49,11 @@ public class ColumnManager : MonoBehaviour
     // Start is called before the first frame update
 
   
-    void OnEnable()
+    void Start()
     {
         OnDisable();
-        EncounterChances.Clear();
-        StartEncounterChances.Clear();
+        EncounterChances= new Dictionary<EncounterNodeData, float>();
+        StartEncounterChances= new Dictionary<EncounterNodeData, float>();
         foreach (var encounterData in nodeDatas)
         {
             Debug.Log("add: " + encounterData);
@@ -291,11 +291,9 @@ public class ColumnManager : MonoBehaviour
             }
 
             float rng = Random.Range(0, sumAllChances);
-            //Debug.Log(sumAllStartChances);
             foreach (var key in EncounterChances.Keys)
             {
                 threshold +=EncounterChances[key];
-                Debug.Log(key+ " "+threshold+" "+rng);
                 if (rng <= threshold)
                 {
                     UpdateEncounterChances(key);

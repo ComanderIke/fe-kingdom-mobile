@@ -1,4 +1,6 @@
-﻿using Game.WorldMapStuff.Model;
+﻿using Game.WorldMapStuff.Controller;
+using Game.WorldMapStuff.Model;
+using Menu;
 using UnityEngine;
 
 public class BattleEncounterNode : EncounterNode
@@ -14,7 +16,7 @@ public class BattleEncounterNode : EncounterNode
 
     public override void Activate()
     {
-        Debug.Log("ACtivate BattleEncoutnerNode");
+        GameSceneController.Instance.LoadBattleLevel(levelindex, enemyArmyData, this);
     }
 }
 public class StartEncounterNode : EncounterNode

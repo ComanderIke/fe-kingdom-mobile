@@ -20,20 +20,20 @@ namespace Game.WorldMapStuff.Controller
 
         public void LoadInside(Party playerParty)
         {
-        Vector3 cameraPos = GameObject.FindObjectOfType<WorldMapCameraController>().transform.position;
-                    PlayerPrefs.SetFloat("CameraX", cameraPos.x);
-                    PlayerPrefs.SetFloat("CameraY", cameraPos.y);
-                    PlayerPrefs.Save();
-                    Debug.Log("Save Camera Pos: "+cameraPos);
-            SceneTransferData.Instance.Reset();
-            SceneTransferData.Instance.UnitsGoingIntoBattle = playerParty.members;
-            Debug.Log("Load Inside" + playerParty.members[0].ExperienceManager.Exp);
-            SceneTransferData.Instance.PartyID = playerParty.name;
-            SceneTransferData.Instance.Party = playerParty;
-            //SceneTransferData.Instance.LocationData =new LocationData(playerParty.location.UniqueId, playerParty.location.worldMapPosition.Village);
-            SceneController.UnLoadSceneAsync(Scenes.WM_Gameplay);
-            SceneController.UnLoadSceneAsync(Scenes.Campaign1);
-            SceneController.LoadSceneAsync(Scenes.InsideLocation,true);
+        // Vector3 cameraPos = GameObject.FindObjectOfType<WorldMapCameraController>().transform.position;
+        //             PlayerPrefs.SetFloat("CameraX", cameraPos.x);
+        //             PlayerPrefs.SetFloat("CameraY", cameraPos.y);
+        //             PlayerPrefs.Save();
+        //             Debug.Log("Save Camera Pos: "+cameraPos);
+        //     SceneTransferData.Instance.Reset();
+        //     SceneTransferData.Instance.UnitsGoingIntoBattle = playerParty.members;
+        //     Debug.Log("Load Inside" + playerParty.members[0].ExperienceManager.Exp);
+        //     SceneTransferData.Instance.PartyID = playerParty.name;
+        //     SceneTransferData.Instance.Party = playerParty;
+        //     //SceneTransferData.Instance.LocationData =new LocationData(playerParty.location.UniqueId, playerParty.location.worldMapPosition.Village);
+        //     SceneController.UnLoadSceneAsync(Scenes.WM_Gameplay);
+        //     SceneController.UnLoadSceneAsync(Scenes.Campaign1);
+        //     SceneController.LoadSceneAsync(Scenes.InsideLocation,true);
         }
         public void LoadBattleLevel(Scenes buildIndex, EnemyArmyData enemyParty, EncounterNode node)
         {
@@ -48,48 +48,47 @@ namespace Game.WorldMapStuff.Controller
             SceneTransferData.Instance.Party = Player.Instance.Party;
             SceneTransferData.Instance.EnemyPartyID = enemyParty.name;
             //SceneTransferData.Instance.NodeData =new NodeData(node.UniqueId);
-            SceneController.UnLoadSceneAsync(Scenes.WM_Gameplay);
-            SceneController.UnLoadSceneAsync(Scenes.Campaign1);
+            SceneController.UnLoadSceneAsync(Scenes.EncounterArea);
             SceneController.LoadSceneAsync(buildIndex, true);
         }
         public void LoadWorldMapFromInside()
         {
-            SceneTransferData.Instance.Reset();
-            SceneController.UnLoadSceneAsync(Scenes.InsideLocation);
-            SceneController.LoadSceneAsync(Scenes.Campaign1, true);
-            SceneController.LoadSceneAsync(Scenes.WM_Gameplay, true);
+            // SceneTransferData.Instance.Reset();
+            // SceneController.UnLoadSceneAsync(Scenes.InsideLocation);
+            // SceneController.LoadSceneAsync(Scenes.Campaign1, true);
+            // SceneController.LoadSceneAsync(Scenes.WM_Gameplay, true);
         }
 
         public void LoadWorldMapBeforeBattle()
         {
-            SceneTransferData.Instance.Reset();
-          
-            SceneController.UnLoadSceneAsync(Scenes.Level2);
-            SceneController.LoadSceneAsync(Scenes.Campaign1, true);
-            SceneController.LoadSceneAsync(Scenes.WM_Gameplay, true);
+            // SceneTransferData.Instance.Reset();
+            //
+            // SceneController.UnLoadSceneAsync(Scenes.Battle1);
+            // SceneController.LoadSceneAsync(Scenes.Campaign1, true);
+            // SceneController.LoadSceneAsync(Scenes.WM_Gameplay, true);
      
         }
 
     
         public void LoadWorldMapAfterBattle(bool victory)
         {
-            SceneTransferData.Instance.BattleOutCome = victory?BattleOutcome.Victory:  BattleOutcome.Defeat;
-          
-            SceneController.UnLoadSceneAsync(Scenes.Level2);
-            SceneController.LoadSceneAsync(Scenes.Campaign1, true);
-            SceneController.LoadSceneAsync(Scenes.WM_Gameplay, true);
+            // SceneTransferData.Instance.BattleOutCome = victory?BattleOutcome.Victory:  BattleOutcome.Defeat;
+            //
+            // SceneController.UnLoadSceneAsync(Scenes.Battle1);
+            // SceneController.LoadSceneAsync(Scenes.Campaign1, true);
+            // SceneController.LoadSceneAsync(Scenes.WM_Gameplay, true);
 
         }
 
         public void UnloadAllExceptMainMenu()
         {
-            SceneTransferData.Instance.Reset();
-            SceneController.UnLoadSceneAsync(Scenes.InsideLocation);
-            SceneController.UnLoadSceneAsync(Scenes.Level2);
-            SceneController.UnLoadSceneAsync(Scenes.WM_Gameplay);
-            SceneController.UnLoadSceneAsync(Scenes.UI);
-            SceneController.UnLoadSceneAsync(Scenes.Campaign1);
-            SceneController.LoadSceneAsync(Scenes.WM_Gameplay, true);
+            // SceneTransferData.Instance.Reset();
+            // SceneController.UnLoadSceneAsync(Scenes.InsideLocation);
+            // SceneController.UnLoadSceneAsync(Scenes.Battle1);
+            // SceneController.UnLoadSceneAsync(Scenes.WM_Gameplay);
+            // SceneController.UnLoadSceneAsync(Scenes.UI);
+            // SceneController.UnLoadSceneAsync(Scenes.Campaign1);
+            // SceneController.LoadSceneAsync(Scenes.WM_Gameplay, true);
         }
     }
 }
