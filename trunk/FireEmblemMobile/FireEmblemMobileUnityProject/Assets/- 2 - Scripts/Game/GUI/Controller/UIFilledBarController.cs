@@ -6,7 +6,7 @@ namespace Game.GUI
     public class UIFilledBarController : MonoBehaviour
     {
         [SerializeField] private Image[] barCurrentImages = default;
-        [SerializeField] private Image[] barColoredImages = default;
+        // [SerializeField] private Image[] barColoredImages = default;
 
         public void SetFillAmount(float fillAmount)
         {
@@ -15,13 +15,13 @@ namespace Game.GUI
                 img.fillAmount = fillAmount;
             }
         }
-        public void SetColor(Color color)
-        {
-            foreach (var img in barColoredImages)
-            {
-                img.color = color;
-            }
-        }
+        // public void SetColor(Color color)
+        // {
+        //     foreach (var img in barColoredImages)
+        //     {
+        //         img.color = color;
+        //     }
+        // }
 
     }
 }

@@ -5,6 +5,7 @@ using Game.AI;
 using Game.GameActors.Players;
 using Game.GameActors.Units.Attributes;
 using Game.GameActors.Units.CharStateEffects;
+using Game.GameActors.Units.Humans;
 using Game.GameActors.Units.OnGameObject;
 using Game.GameInput;
 using Game.GameResources;
@@ -21,7 +22,7 @@ namespace Game.GameActors.Units
     public abstract class Unit : ScriptableObject, IActor, IGridActor, IBattleActor, ICloneable, IAIAgent
     {
         public new string name;
-
+        public string jobClass;
         [HideInInspector] private int hp;
         [HideInInspector] private int sp;
         [HideInInspector] private int spBars;
@@ -32,7 +33,7 @@ namespace Game.GameActors.Units
         private Growths growths;
         [SerializeField]
         private MoveType moveType;
-
+        public SkillManager SkillManager { get; set; }
         public MoveType MoveType
         {
             get => moveType;
@@ -137,9 +138,21 @@ namespace Game.GameActors.Units
             ExperienceManager.LevelUp -= LevelUp;
         }
 
+        
+
+        private bool initialized = false;
         public void Initialize()
         {
+            Debug.Log("Try Initialize");
+            if (initialized && BattleComponent !=null)
+            {
+                return;
+            }
+
+            Debug.Log("Do Initialize");
+            SkillManager = new SkillManager();
             experienceManager ??= new ExperienceManager();
+            ExperienceManager.LevelUp = null;
             ExperienceManager.LevelUp += LevelUp;
             TurnStateManager ??= new TurnStateManager(this);
             GridComponent = new GridComponent(this);
@@ -157,8 +170,10 @@ namespace Game.GameActors.Units
             hp = stats.MaxHp;
             sp = stats.MaxSp;
             spBars = Sp / SP_PER_BAR;
+            ExperienceManager.ExpGained = null;
             ExperienceManager.ExpGained += ExpGained;
-            
+            initialized = true;
+
         }
 
         private void ExpGained(int expBefore, int expGained)
@@ -246,7 +261,7 @@ namespace Game.GameActors.Units
             clone.AIComponent = new AIComponent();
             clone.visuals.UnitEffectVisual = visuals.UnitEffectVisual;
             clone.visuals = visuals;
-        
+            clone.SkillManager = (SkillManager) SkillManager.Clone();
             clone.hp = hp;
             clone.sp = sp;
         
@@ -289,6 +304,10 @@ namespace Game.GameActors.Units
         public static OnUnitDamagedEvent OnUnitDamaged;
         public delegate void LevelupEvent(Unit unit);
         public LevelupEvent OnLevelUp;
-        
+
+        public void OnEnable()
+        {
+            Initialize();
+        }
     }
 }

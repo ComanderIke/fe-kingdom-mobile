@@ -155,9 +155,11 @@ namespace Game.Mechanics.Battle
         
         public int GetHitrate()
         {
+       
             if (owner is Human human)
             {
                 //Debug.Log("TODO ATTACK SPEED CALC");
+    
                 return (human.Stats.Attributes.DEX- human.EquippedWeapon.Weight) * 2 + human.EquippedWeapon.Hit;
             }  if (owner is Monster monster)
             {
@@ -169,13 +171,17 @@ namespace Game.Mechanics.Battle
         }
         public int GetAvoid()
         {
+            var tileBonus = 0;
+            if(owner.GetTile()!=null)
+                tileBonus=owner.GetTile().TileData.avoBonus;
             if (owner is Human human)
             {
                 //Debug.Log("TODO ATTACK SPEED CALC");
-                return owner.GetTile().TileData.avoBonus + (human.Stats.Attributes.AGI  - human.EquippedWeapon.Weight)* 2;
+                
+                return  tileBonus+ (human.Stats.Attributes.AGI  - human.EquippedWeapon.Weight)* 2;
             }
             
-            return owner.GetTile().TileData.avoBonus + owner.Stats.Attributes.AGI * 2;
+            return tileBonus + owner.Stats.Attributes.AGI * 2;
         }
 
         public int GetHitAgainstTarget(IBattleActor target)
@@ -193,6 +199,16 @@ namespace Game.Mechanics.Battle
             }
 
             return owner.Stats.Attributes.AGI + owner.GetTile().TileData.speedMalus;
+        }
+
+        public int GetCrit()
+        {
+            return 0;
+        }
+
+        public int GetCritAvoid()
+        {
+            return 0;
         }
     }
 }

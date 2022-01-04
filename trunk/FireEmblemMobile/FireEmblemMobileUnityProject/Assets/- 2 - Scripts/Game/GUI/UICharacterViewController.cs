@@ -16,27 +16,25 @@ public class UICharacterViewController : MonoBehaviour
     public TextMeshProUGUI charName;
     public TextMeshProUGUI Lv;
     public TextMeshProUGUI Exp;
-    public TextMeshProUGUI CharClass;
     public UIEquipmentController equipmentController;
-    public UIAttributeController attributeController;
-    public UIConvoyController convoyController;
     public UISkillsController skillsController;
-    public UITalentsController talentsController;
-    public TextMeshProUGUI weaponAtk;
-    public TextMeshProUGUI Atk;
-    public TextMeshProUGUI AS;
-    public TextMeshProUGUI HP;
-    public TextMeshProUGUI MaxHP;
-    public TextMeshProUGUI SP;
+    
+
     public TextMeshProUGUI Hitrate;
     public TextMeshProUGUI DodgeRate;
     public TextMeshProUGUI Crit;
     public TextMeshProUGUI CritAvoid;
-    public TextMeshProUGUI Armor;
-    public TextMeshProUGUI MagicResistance;
-    public TextMeshProUGUI WeaponName;
+    
+    public TextMeshProUGUI STR;
+    public TextMeshProUGUI INT;
+    public TextMeshProUGUI DEX;
+    public TextMeshProUGUI AGI;
+    public TextMeshProUGUI CON;
+    public TextMeshProUGUI FTH;
+    
     public IStatBar HPBar;
-    public ISPBarRenderer SPBars;
+    public TextMeshProUGUI hpText;
+    
     public Image image;
 
     private void OnEnable()
@@ -46,26 +44,29 @@ public class UICharacterViewController : MonoBehaviour
 
     public void Show(Unit unit)
     {
+        unit.Initialize();
         this.unit = unit;
-       // charName.SetText(unit.name);
-        Lv.SetText(""+unit.ExperienceManager.Level);
-        Exp.SetText(""+unit.ExperienceManager.Exp);
-        CharClass.SetText("[CLASS]");
+        charName.SetText(unit.name +", "+unit.jobClass);
+        Lv.SetText("Lv. "+unit.ExperienceManager.Level);
+        Exp.SetText(""+unit.ExperienceManager.Exp+"/"+unit.ExperienceManager.MaxExp);
         image.sprite = unit.visuals.CharacterSpriteSet.FaceSprite;
-        Atk.SetText(""+unit.BattleComponent.BattleStats.GetDamage());
-        AS.SetText(""+unit.BattleComponent.BattleStats.GetAttackSpeed());
-        HP.SetText(""+unit.Hp);
-        MaxHP.SetText("/"+unit.Stats.MaxHp);
-        SP.SetText(""+unit.Sp);
-        Armor.SetText(""+unit.Stats.Armor);
-
+        
+        Hitrate.SetText(""+unit.BattleComponent.BattleStats.GetHitrate()+"%");
+        DodgeRate.SetText(""+unit.BattleComponent.BattleStats.GetAvoid()+"%");
+        Crit.SetText(""+unit.BattleComponent.BattleStats.GetCrit()+"%");
+        CritAvoid.SetText(""+unit.BattleComponent.BattleStats.GetCritAvoid()+"%");
+        
+        STR.SetText(""+unit.Stats.Attributes.STR);
+        INT.SetText(""+unit.Stats.Attributes.INT);
+        DEX.SetText(""+unit.Stats.Attributes.DEX);
+        AGI.SetText(""+unit.Stats.Attributes.AGI);
+        CON.SetText(""+unit.Stats.Attributes.CON);
+        FTH.SetText(""+unit.Stats.Attributes.FAITH);
+        
         HPBar.SetValue(unit.Hp, unit.Stats.MaxHp);
-        SPBars.SetValue(unit.SpBars, unit.MaxSpBars);
-        equipmentController.Show(unit);
-        attributeController.Show(unit);
+        equipmentController.Show((Human)unit);
         skillsController.Show(unit);
-        talentsController.Show(unit);
-        convoyController.Show();
+       
 
     }
 }

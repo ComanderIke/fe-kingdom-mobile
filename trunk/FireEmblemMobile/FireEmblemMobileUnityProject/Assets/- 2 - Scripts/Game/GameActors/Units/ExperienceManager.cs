@@ -32,6 +32,8 @@ namespace Game.GameActors.Units
             set => exp = value;
         }
 
+        public int MaxExp = 100;
+
         public const int MAX_EXP_TO_DRAIN = 100;
         [NonSerialized]
         public int ExpLeftToDrain = 100;

@@ -16,9 +16,11 @@ namespace Game.GameActors.Units.Humans
 
         public Weapon EquippedWeapon;
 
-        public Inventory Inventory;
-        public SkillManager SkillManager { get; set; }
-        public SpecialAttackManager SpecialAttackManager { get; set; }
+       // public Inventory Inventory;
+
+        public Armor EquippedArmor { get; set; }
+        public Relic EquippedRelic { get; set; }
+        public Consumable EquippedConsumable { get; set; }
 
         [SerializeField] private string[] weaponProficiencyLevels;
 
@@ -31,11 +33,11 @@ namespace Game.GameActors.Units.Humans
 
         public void OnEnable()
         {
-            if (Inventory == null)
-                Inventory = Instantiate(CreateInstance<Inventory>());
-            Inventory.Owner = this;
-            SkillManager = new SkillManager();
-            SpecialAttackManager = new SpecialAttackManager();
+            // if (Inventory == null)
+            //     Inventory = Instantiate(CreateInstance<Inventory>());
+            // Inventory.Owner = this;
+            base.OnEnable();
+            
             Equip(EquippedWeapon);
         }
       
@@ -59,9 +61,9 @@ namespace Game.GameActors.Units.Humans
             base.HandleCloned(clone);
             var human = (Human) clone;
             human.EquippedWeapon = (Weapon)EquippedWeapon?.Clone();
-            human.Inventory = (Inventory)Inventory.Clone();
+            //human.Inventory = (Inventory)Inventory.Clone();
             human.Class = Class;
-            human.SkillManager = (SkillManager) SkillManager.Clone();
+            
         }
         public Dictionary<WeaponType,string> WeaponProficiencies()
         {
@@ -97,10 +99,12 @@ namespace Game.GameActors.Units.Humans
         public void AutoEquip()
         {
            
-            if (EquippedWeapon == null)
-            {
-                Equip((Weapon)Inventory.Items.First(a=> a is Weapon weapon && CanUseWeapon(weapon)));
-            }
+            // if (EquippedWeapon == null)
+            // {
+            //     Equip((Weapon)Inventory.Items.First(a=> a is Weapon weapon && CanUseWeapon(weapon)));
+            // }
         }
     }
+
+    
 }

@@ -9,12 +9,10 @@ namespace Game.GameActors.Units
     {
         public BattleStats BattleStats { get;  set; }
 
-
-        public IBattleActor BattleActor;
+        
         public BattleComponent(IBattleActor actor)
         {
-            BattleActor = actor;
-            BattleStats = new BattleStats(actor);
+             BattleStats = new BattleStats(actor);
             
         }
 
