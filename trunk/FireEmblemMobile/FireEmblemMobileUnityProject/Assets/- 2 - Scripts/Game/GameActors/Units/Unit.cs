@@ -141,13 +141,20 @@ namespace Game.GameActors.Units
         
 
         private bool initialized = false;
-        public void Initialize()
+        public void InitForEditMode()
         {
-            Debug.Log("Try Initialize");
             if (initialized && BattleComponent !=null)
             {
                 return;
             }
+            BattleComponent = new BattleComponent(this);
+            initialized = true;
+
+        }
+        public void Initialize()
+        {
+            Debug.Log("Try Initialize");
+            
 
             Debug.Log("Do Initialize");
             SkillManager = new SkillManager();
@@ -172,8 +179,7 @@ namespace Game.GameActors.Units
             spBars = Sp / SP_PER_BAR;
             ExperienceManager.ExpGained = null;
             ExperienceManager.ExpGained += ExpGained;
-            initialized = true;
-
+           
         }
 
         private void ExpGained(int expBefore, int expGained)
@@ -245,6 +251,7 @@ namespace Game.GameActors.Units
             HandleCloned(clone);
             return clone;
         }
+
         
         protected virtual void HandleCloned(Unit clone)
         {

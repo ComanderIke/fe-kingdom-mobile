@@ -13,19 +13,23 @@ MonoBehaviour:
   m_Name: DemoSpearFighter
   m_EditorClassIdentifier: 
   name: Leila
+  jobClass: 
   stats: {fileID: 11400000, guid: 5d2ab2f01b5daaa4b9f121beb826bcb6, type: 2}
-  growths: {fileID: 11400000, guid: be2dad7b271d63f46bc46127c178348b, type: 2}
+  growths: {fileID: 0}
   moveType: {fileID: 11400000, guid: 580bbea6e1e3e824a81881f8e2a825ba, type: 2}
   visuals:
     CharacterSpriteSet: {fileID: 11400000, guid: 4485885652ebc5043a5f98f1b743190c,
       type: 2}
-    UnitEffectVisual: {fileID: 11400000, guid: af10e6087dc82f34ebed15c0092e0174, type: 2}
+    UnitEffectVisual: {fileID: 0}
   experienceManager:
     level: 1
     exp: 0
+    MaxExp: 100
   Class: {fileID: 11400000, guid: c9fb62633f511e34e9f6889cbde27e91, type: 2}
   EquippedWeapon: {fileID: 11400000, guid: 8e3e843ce5618b9429f4a4f0e60b142c, type: 2}
-  Inventory: {fileID: 0}
+  EquippedArmor: {fileID: 11400000, guid: 3721b2ef6bbccc84999f1178c277dbbc, type: 2}
+  EquippedRelic: {fileID: 0}
+  EquippedConsumable: {fileID: 0}
   weaponProficiencyLevels:
   - E
   - D

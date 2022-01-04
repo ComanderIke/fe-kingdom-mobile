@@ -10,7 +10,7 @@ namespace Game.GUI
         protected override void Awake()
         {
             base.Awake();
-            DropArea.dropConditions.Add(new IsWeaponCondition(EquipmentSlotType.Amulet));
+            DropArea.dropConditions.Add(new IsWeaponCondition(EquipmentSlotType.Relic));
         }
 
        

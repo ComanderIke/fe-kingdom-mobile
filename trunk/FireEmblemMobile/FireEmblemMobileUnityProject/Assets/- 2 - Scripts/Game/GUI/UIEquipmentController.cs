@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Units;
+﻿using Game.GameActors.Items.Weapons;
+using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
 using TMPro;
 using UnityEngine;
@@ -12,18 +13,48 @@ public class UIEquipmentController:MonoBehaviour
     public Image WeaponSlot;
     public Image RelicSlot;
     public Image ConsumeableSlot;
+    public Color inActiveColor;
     public void Show(Human unit)
     {
         Atk.SetText(""+unit.BattleComponent.BattleStats.GetDamage());
-        Armor.SetText(""+unit.Stats.Armor);
+        Armor.SetText(""+unit.BattleComponent.BattleStats.GetArmor());
 
-        if(unit.EquippedWeapon!=null)
+        if (unit.EquippedWeapon != null)
+        {
             WeaponSlot.sprite = unit.EquippedWeapon.Sprite;
-        if(unit.EquippedArmor!=null)
+            WeaponSlot.color=Color.white;
+        }
+        else
+        {
+            WeaponSlot.color = inActiveColor;
+        }
+        if(unit.EquippedArmor!=null){
             ArmorSlot.sprite = unit.EquippedArmor.Sprite;
-        if(unit.EquippedRelic!=null)
+            ArmorSlot.color=Color.white;
+        }
+        else
+        {
+            ArmorSlot.color = inActiveColor;
+        }
+
+        if (unit.EquippedRelic != null)
+        {
             RelicSlot.sprite = unit.EquippedRelic.Sprite;
-        if(unit.EquippedConsumable!=null)
+            RelicSlot.color=Color.white;
+        }
+        else
+        {
+            RelicSlot.color = inActiveColor;
+        }
+
+        if (unit.EquippedConsumable != null)
+        {
             ConsumeableSlot.sprite = unit.EquippedConsumable.Sprite;
+            ConsumeableSlot.color=Color.white;
+        }
+        else
+        {
+            ConsumeableSlot.color = inActiveColor;
+        }
     }
 }

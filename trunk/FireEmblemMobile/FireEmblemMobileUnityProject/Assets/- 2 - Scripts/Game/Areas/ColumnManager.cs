@@ -56,7 +56,7 @@ public class ColumnManager : MonoBehaviour
         StartEncounterChances= new Dictionary<EncounterNodeData, float>();
         foreach (var encounterData in nodeDatas)
         {
-            Debug.Log("add: " + encounterData);
+           // Debug.Log("add: " + encounterData);
             EncounterChances.Add(encounterData, encounterData.appearanceChance);
             StartEncounterChances.Add(encounterData, encounterData.appearanceChance);
         }

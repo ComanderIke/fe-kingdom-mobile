@@ -5,6 +5,7 @@ using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
 using Game.GameActors.Units.OnGameObject;
 using Game.GUI;
+using Game.WorldMapStuff.Model;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,9 +14,10 @@ using UnityEngine.UI;
 public class UICharacterViewController : MonoBehaviour
 {
     public Unit unit;
+    public Party party;
     public TextMeshProUGUI charName;
     public TextMeshProUGUI Lv;
-    public TextMeshProUGUI Exp;
+    public IStatBar ExpBar;
     public UIEquipmentController equipmentController;
     public UISkillsController skillsController;
     
@@ -37,18 +39,21 @@ public class UICharacterViewController : MonoBehaviour
     
     public Image image;
 
+    private int currentUnitIndex = 0;
+
     private void OnEnable()
     {
-        Show(unit);
+        Show(party);
     }
 
-    public void Show(Unit unit)
+    public void Show(Party player)
     {
-        unit.Initialize();
-        this.unit = unit;
+        this.unit = party.members[currentUnitIndex];
+        this.party = party;
+        
         charName.SetText(unit.name +", "+unit.jobClass);
         Lv.SetText("Lv. "+unit.ExperienceManager.Level);
-        Exp.SetText(""+unit.ExperienceManager.Exp+"/"+unit.ExperienceManager.MaxExp);
+        ExpBar.SetValue(unit.ExperienceManager.Exp, unit.ExperienceManager.MaxExp);
         image.sprite = unit.visuals.CharacterSpriteSet.FaceSprite;
         
         Hitrate.SetText(""+unit.BattleComponent.BattleStats.GetHitrate()+"%");
@@ -68,5 +73,19 @@ public class UICharacterViewController : MonoBehaviour
         skillsController.Show(unit);
        
 
+    }
+
+    public void NextCharacterClicked()
+    {
+        
+        currentUnitIndex = currentUnitIndex >= party.members.Count-1 ? 0 : currentUnitIndex+1;
+        Debug.Log("Unit Index: " + currentUnitIndex);
+        Show(party);
+    }
+    public void PreviousCharacterClicked()
+    {
+        currentUnitIndex = currentUnitIndex <= 0 ? party.members.Count-1 : currentUnitIndex-1;
+        Debug.Log("Unit Index: " + currentUnitIndex);
+        Show(party);
     }
 }

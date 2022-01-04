@@ -17,12 +17,9 @@ namespace Game.GameActors.Items.Weapons
 
     public enum EquipmentSlotType
     {
-        Helmet,
+        Consumable,
         Armor,
-        Legarmor,
-        Boots,
-        Amulet,
-        Ring,
+        Relic,
         Weapon
     }
 }

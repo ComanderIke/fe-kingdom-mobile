@@ -18,9 +18,9 @@ namespace Game.GameActors.Units.Humans
 
        // public Inventory Inventory;
 
-        public Armor EquippedArmor { get; set; }
-        public Relic EquippedRelic { get; set; }
-        public Consumable EquippedConsumable { get; set; }
+       public Armor EquippedArmor;
+       public Relic EquippedRelic;
+       public Consumable EquippedConsumable;
 
         [SerializeField] private string[] weaponProficiencyLevels;
 

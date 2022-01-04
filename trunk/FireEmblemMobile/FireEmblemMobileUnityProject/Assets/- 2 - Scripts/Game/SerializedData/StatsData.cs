@@ -10,8 +10,6 @@ namespace Game.GameActors.Players
         [SerializeField]
         public List<int> AttackRanges;
         [SerializeField]
-        public int Armor;
-        [SerializeField]
         public int MaxHp;
         [SerializeField]
         public int MaxSp;
@@ -20,13 +18,12 @@ namespace Game.GameActors.Players
 
 
         [SerializeField] public Attributes Attributes;
-        public StatsData(int maxHp, int maxSp, int mov, Attributes attributes,  int armor,  List<int> attackRanges)
+        public StatsData(int maxHp, int maxSp, int mov, Attributes attributes,  List<int> attackRanges)
         {
             AttackRanges = attackRanges;
             MaxHp = maxHp;
             MaxSp = maxSp;
             Mov = mov;
-            Armor = armor;
             Attributes = attributes;
         }
     }

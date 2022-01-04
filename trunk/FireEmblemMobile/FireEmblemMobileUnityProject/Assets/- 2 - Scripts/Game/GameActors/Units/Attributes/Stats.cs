@@ -41,8 +41,6 @@ namespace Game.GameActors.Units.Attributes
         [SerializeField]
         public Attributes Attributes;
         [SerializeField]
-        public int Armor;
-        [SerializeField]
         public int MaxHp;
         [SerializeField]
         public int MaxSp;
@@ -54,7 +52,7 @@ namespace Game.GameActors.Units.Attributes
 
         public StatsData GetSaveData()
         {
-            return new StatsData(MaxHp, MaxSp, Mov, Attributes, Armor,  AttackRanges);
+            return new StatsData(MaxHp, MaxSp, Mov, Attributes,  AttackRanges);
         }
     
         public int GetMaxAttackRange()
@@ -70,7 +68,6 @@ namespace Game.GameActors.Units.Attributes
             {
                 stats.AttackRanges.Add(i);
             }
-            stats.Armor = Armor;
             stats.MaxHp = MaxHp;
             stats.MaxSp = MaxSp;
             stats.Attributes = new Attributes(Attributes);
@@ -86,7 +83,6 @@ namespace Game.GameActors.Units.Attributes
             MaxSp = statsData.MaxSp;
             Mov = statsData.Mov;
             AttackRanges = statsData.AttackRanges;
-            Armor = statsData.Armor;
             Attributes = new Attributes(statsData.Attributes);
         }
     }

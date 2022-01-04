@@ -25,7 +25,7 @@ namespace Game.Mechanics.Battle
         {
             
             //Debug.Log(owner.GetTile().X+" "+owner.GetTile().Y);
-            return owner.Stats.Armor + owner.GetTile().TileData.defenseBonus;
+            return GetArmor() + owner.GetTile().TileData.defenseBonus;
         }
         public bool CanKillTarget(IBattleActor target, float attackMultiplier)
         {
@@ -208,6 +208,17 @@ namespace Game.Mechanics.Battle
 
         public int GetCritAvoid()
         {
+            return 0;
+        }
+
+        public int GetArmor()
+        {
+            if (owner is Human human)
+            {
+                
+                return human.EquippedArmor.armor;
+            }
+
             return 0;
         }
     }
