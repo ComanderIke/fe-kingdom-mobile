@@ -13,12 +13,14 @@ public class AreaGameManager : MonoBehaviour
     private Area_ActionSystem actionSystem;
     public GameObject moveOptionPrefab;
 
+    public static AreaGameManager Instance;
     public Party playerStartParty;
     public ColumnManager ColumnManager;
     // Start is called before the first frame update
     private List<GameObject> moveOptions=new List<GameObject>();
     void Start()
     {
+        Instance = this;
         actionSystem = new Area_ActionSystem();
 
         var go = Instantiate(playerPrefab, null, false);
@@ -78,9 +80,17 @@ public class AreaGameManager : MonoBehaviour
         }
     }
 
+    public void Continue()
+    {
+        ResetMoveOptions();
+        ShowMoveOptions();
+    }
+
     private IEnumerator DelayAction(Action action, float delay)
     {
         yield return new WaitForSeconds(delay);
         action?.Invoke();
     }
+
+   
 }

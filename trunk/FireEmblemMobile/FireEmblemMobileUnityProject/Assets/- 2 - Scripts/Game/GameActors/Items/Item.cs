@@ -11,6 +11,7 @@ namespace Game.GameActors.Items
         public string Description;
         public List<ItemMixin> Mixins;
         public int NumberOfUses;
+        public int cost;
 
         [Header("ItemAttributes")] public Sprite Sprite;
 

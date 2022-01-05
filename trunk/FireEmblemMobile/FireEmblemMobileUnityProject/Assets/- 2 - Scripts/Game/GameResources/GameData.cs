@@ -21,6 +21,8 @@ namespace Game.GameResources
 
    
         [SerializeField] private List<Weapon> weapons = default;
+        [SerializeField] private List<Weapon> magic = default;
+        [SerializeField] private List<EquipableItem> consumables = default;
         [SerializeField] private List<Human> humans = default;
         [SerializeField] private List<Monster> monster = default;
         [SerializeField] private List<Party> playerStartingParties = default;
@@ -74,9 +76,19 @@ namespace Game.GameResources
             return Instantiate(monster.Find(a => a.name == name));
         }
 
-      
-      
+        public EquipableItem GetRandomPotion()
+        {
+            return Instantiate(consumables[Random.Range(0, consumables.Count-1)]);
+        }
 
+        public EquipableItem GetRandomMagic()
+        {
+            return Instantiate(magic[Random.Range(0, magic.Count-1)]);
+        }
 
+        public EquipableItem GetRandomWeapon()
+        {
+            return Instantiate(weapons[Random.Range(0, weapons.Count-1)]);
+        }
     }
 }

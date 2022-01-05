@@ -19,5 +19,10 @@ public abstract class EncounterNode
         parents.Add(parent);
     }
 
+    public void Continue()
+    {
+        AreaGameManager.Instance.Continue();
+    }
+
     public abstract void Activate();
 }

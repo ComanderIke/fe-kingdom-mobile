@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Game.WorldMapStuff.Model;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,12 +20,14 @@ public class UIInnController : MonoBehaviour
     public List<UIShopItemController> shopItems;
     public UIQuestItemController questOption;
     public UIRecruitCharacterController recruitCharacter;
+    private InnEncounterNode node;
 
-
-    public void Show(Party party, Inn inn)
+    public void Show(InnEncounterNode node)
     {
         canvas.enabled = true;
-        this.party = party;
+        this.node = node;
+        this.party = node.party;
+        this.inn = node.inn;
 
        
         for (int i=0; i<inn.shopItems.Count; i++)
@@ -35,9 +38,10 @@ public class UIInnController : MonoBehaviour
         recruitCharacter.SetValues(inn.recruitableCharacter);
     }
 
-    public void Hide()
+    public void ContinueClicked()
     {
         canvas.enabled=false;
+        node.Continue();
     }
 
     public void DrinkClicked()
