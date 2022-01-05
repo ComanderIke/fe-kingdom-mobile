@@ -19,7 +19,7 @@ namespace Game.GameResources
         public CharacterStateData CharacterStateData;
         
 
-   
+        [SerializeField] private List<EquipableItem> armor = default;
         [SerializeField] private List<Weapon> weapons = default;
         [SerializeField] private List<Weapon> magic = default;
         [SerializeField] private List<EquipableItem> consumables = default;
@@ -89,6 +89,11 @@ namespace Game.GameResources
         public EquipableItem GetRandomWeapon()
         {
             return Instantiate(weapons[Random.Range(0, weapons.Count-1)]);
+        }
+
+        public EquipableItem GetRandomArmor()
+        {
+            return Instantiate(armor[Random.Range(0, armor.Count-1)]);
         }
     }
 }
