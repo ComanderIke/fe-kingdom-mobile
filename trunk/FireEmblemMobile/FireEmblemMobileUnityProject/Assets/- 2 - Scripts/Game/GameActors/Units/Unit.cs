@@ -140,23 +140,10 @@ namespace Game.GameActors.Units
 
         
 
-        private bool initialized = false;
-        public void InitForEditMode()
-        {
-            if (initialized && BattleComponent !=null)
-            {
-                return;
-            }
-            BattleComponent = new BattleComponent(this);
-            initialized = true;
 
-        }
         public void Initialize()
         {
-            Debug.Log("Try Initialize");
-            
 
-            Debug.Log("Do Initialize");
             SkillManager = new SkillManager();
             experienceManager ??= new ExperienceManager();
             ExperienceManager.LevelUp = null;

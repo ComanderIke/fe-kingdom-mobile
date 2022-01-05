@@ -1,4 +1,5 @@
-﻿using Game.WorldMapStuff.Controller;
+﻿using Game.GameActors.Players;
+using Game.WorldMapStuff.Controller;
 using Game.WorldMapStuff.Model;
 using Menu;
 using UnityEngine;
@@ -52,6 +53,7 @@ public class MerchantEncounterNode : EncounterNode
 
     public override void Activate()
     {
+        GameObject.FindObjectOfType<UIInnController>().Show(Player.Instance.Party);
         Debug.Log("Activate MerchantEncounterNode");
     }
 }
