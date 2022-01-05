@@ -1,5 +1,4 @@
-﻿using Game.GameActors.Players;
-using Game.WorldMapStuff.Controller;
+﻿using Game.WorldMapStuff.Controller;
 using Game.WorldMapStuff.Model;
 using Menu;
 using UnityEngine;
@@ -32,18 +31,7 @@ public class StartEncounterNode : EncounterNode
         Debug.Log("Activate StartEncounterNode");
     }
 }
-public class InnEncounterNode : EncounterNode
-{
-    public InnEncounterNode(EncounterNode parent) : base(parent)
-    {
 
-    }
-
-    public override void Activate()
-    {
-        Debug.Log("Activate InnEncounterNode");
-    }
-}
 public class MerchantEncounterNode : EncounterNode
 {
     public MerchantEncounterNode(EncounterNode parent) : base(parent)
@@ -53,7 +41,7 @@ public class MerchantEncounterNode : EncounterNode
 
     public override void Activate()
     {
-        GameObject.FindObjectOfType<UIInnController>().Show(Player.Instance.Party);
+        //GameObject.FindObjectOfType<UIInnController>().Show(Player.Instance.Party);
         Debug.Log("Activate MerchantEncounterNode");
     }
 }

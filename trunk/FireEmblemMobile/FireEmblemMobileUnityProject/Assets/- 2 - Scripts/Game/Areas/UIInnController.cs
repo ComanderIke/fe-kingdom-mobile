@@ -8,30 +8,46 @@ using UnityEngine.UI;
 public class UIInnController : MonoBehaviour
 {
     // Start is called before the first frame update
+    public Canvas canvas;
+    [HideInInspector]
     public Party party;
-    public GameObject headline;
-    public TextMeshProUGUI headlineText;
-    public Image recruitCharacterImage;
-    void Start()
-    {
-        
-    }
-    
+   // public TextMeshProUGUI personName;
+    //public TextMeshProUGUI talkText;
 
-    public void Show(Party instanceParty)
+    private Inn inn;
+    
+    public List<UIShopItemController> shopItems;
+    public UIQuestItemController questOption;
+    public UIRecruitCharacterController recruitCharacter;
+
+
+    public void Show(Party party, Inn inn)
     {
-        gameObject.SetActive(true);
+        canvas.enabled = true;
         this.party = party;
-        headline.SetActive(true);
-        headlineText.SetText("Inn");
+
+       
+        for (int i=0; i<inn.shopItems.Count; i++)
+        {
+            shopItems[i].SetValues(inn.shopItems[i]);
+        }
+        questOption.SetValues(inn.quest);
+        recruitCharacter.SetValues(inn.recruitableCharacter);
     }
 
     public void Hide()
     {
-        gameObject.SetActive(false);
-        headline.SetActive(false);
+        canvas.enabled=false;
     }
 
+    public void DrinkClicked()
+    {
+        
+    }
+    public void FoodCLicked()
+    {
+        
+    }
     public void RestClicked()
     {
         
