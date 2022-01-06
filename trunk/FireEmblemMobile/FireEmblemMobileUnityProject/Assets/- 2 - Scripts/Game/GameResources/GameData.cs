@@ -20,6 +20,8 @@ namespace Game.GameResources
         
 
         [SerializeField] private List<EquipableItem> armor = default;
+        [SerializeField] private List<EquipableItem> relics = default;
+        [SerializeField] private List<EquipableItem> staffs = default;
         [SerializeField] private List<Weapon> weapons = default;
         [SerializeField] private List<Weapon> magic = default;
         [SerializeField] private List<EquipableItem> consumables = default;
@@ -94,6 +96,16 @@ namespace Game.GameResources
         public EquipableItem GetRandomArmor()
         {
             return Instantiate(armor[Random.Range(0, armor.Count-1)]);
+        }
+
+        public EquipableItem GetRandomRelic()
+        {
+            return Instantiate(relics[Random.Range(0, relics.Count-1)]);
+        }
+
+        public EquipableItem GetRandomStaff()
+        {
+            return Instantiate(staffs[Random.Range(0, staffs.Count-1)]);
         }
     }
 }

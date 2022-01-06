@@ -31,15 +31,15 @@ namespace Game.GameActors.Units.Humans
             };
         }
 
-        public void OnEnable()
-        {
-            // if (Inventory == null)
-            //     Inventory = Instantiate(CreateInstance<Inventory>());
-            // Inventory.Owner = this;
-            base.OnEnable();
-            
-            Equip(EquippedWeapon);
-        }
+        // public void OnEnable()
+        // {
+        //     // if (Inventory == null)
+        //     //     Inventory = Instantiate(CreateInstance<Inventory>());
+        //     // Inventory.Owner = this;
+        //     base.OnEnable();
+        //     
+        //     Equip(EquippedWeapon);
+        // }
       
         public string GetWeaponProficiency(WeaponType weaponType)
         {

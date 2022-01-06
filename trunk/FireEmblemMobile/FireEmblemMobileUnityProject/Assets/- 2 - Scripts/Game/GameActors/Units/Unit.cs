@@ -299,9 +299,9 @@ namespace Game.GameActors.Units
         public delegate void LevelupEvent(Unit unit);
         public LevelupEvent OnLevelUp;
 
-        public void OnEnable()
-        {
-            Initialize();
-        }
+        // public void OnEnable()
+        // {
+        //     Initialize();
+        // }
     }
 }
