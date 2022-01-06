@@ -26,6 +26,7 @@ public class AreaGameManager : MonoBehaviour
         var go = Instantiate(playerPrefab, null, false);
         go.transform.position = ColumnManager.GetStartNode().gameObject.transform.position;
         Player.Instance.Party = Instantiate(playerStartParty);
+        Player.Instance.Party.Initialize();
         Player.Instance.Party.GameObject = go;
         Player.Instance.Party.EncounterNode = ColumnManager.GetStartNode();
         

@@ -24,10 +24,12 @@ public class UIMerchantController : MonoBehaviour
             var item = merchant.shopItems[i];
             shopItems[i].SetValues(new ShopItem(item.cost, item.Sprite, item.Description));
         }
+        FindObjectOfType<UICharacterViewController>().Show(party);
     }
     public void ContinueClicked()
     {
         canvas.enabled=false;
         node.Continue();
+        FindObjectOfType<UICharacterViewController>().Hide();
     }
 }

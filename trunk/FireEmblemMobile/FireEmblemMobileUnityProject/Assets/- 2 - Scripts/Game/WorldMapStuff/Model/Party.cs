@@ -27,6 +27,14 @@ namespace Game.WorldMapStuff.Model
         {
             return members.Count(a => a.IsAlive()) != 0;
         }
-        
+
+        public void Initialize()
+        {
+            Debug.Log("Init Party");
+            foreach (var member in members)
+            {
+                member.Initialize();
+            }
+        }
     }
 }

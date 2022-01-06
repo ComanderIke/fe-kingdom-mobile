@@ -36,12 +36,14 @@ public class UIInnController : MonoBehaviour
         }
         questOption.SetValues(inn.quest);
         recruitCharacter.SetValues(inn.recruitableCharacter);
+        FindObjectOfType<UICharacterViewController>().Show(party);
     }
 
     public void ContinueClicked()
     {
         canvas.enabled=false;
         node.Continue();
+        FindObjectOfType<UICharacterViewController>().Hide();
     }
 
     public void DrinkClicked()

@@ -17,6 +17,7 @@ public class UIEventController : MonoBehaviour
         canvas.enabled = true;
         this.party = node.party;
         this.randomEvent = node.randomEvent;
+        FindObjectOfType<UICharacterViewController>().Show(party);
         // for (int i=0; i<church.shopItems.Count; i++)
         // {
         //     var item = church.shopItems[i];
@@ -26,6 +27,7 @@ public class UIEventController : MonoBehaviour
     public void ContinueClicked()
     {
         canvas.enabled = false;
+        FindObjectOfType<UICharacterViewController>().Hide();
         node.Continue();
     }
 }

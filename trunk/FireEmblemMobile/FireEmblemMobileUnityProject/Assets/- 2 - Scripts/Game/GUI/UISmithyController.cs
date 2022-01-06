@@ -23,10 +23,12 @@ public class UISmithyController : MonoBehaviour
             var item = smithy.shopItems[i];
             shopItems[i].SetValues(new ShopItem(item.cost, item.Sprite, item.Description));
         }
+        FindObjectOfType<UICharacterViewController>().Show(party);
     }
 
     public void ContinueClicked()
     {
+        FindObjectOfType<UICharacterViewController>().Hide();
         canvas.enabled = false;
         node.Continue();
     }

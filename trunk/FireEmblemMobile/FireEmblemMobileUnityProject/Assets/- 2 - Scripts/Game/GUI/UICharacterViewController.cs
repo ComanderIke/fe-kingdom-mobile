@@ -13,6 +13,7 @@ using UnityEngine.UI;
 [ExecuteInEditMode]
 public class UICharacterViewController : MonoBehaviour
 {
+    public Canvas canvas;
     public Unit unit;
     public Party party;
     public TextMeshProUGUI charName;
@@ -41,13 +42,14 @@ public class UICharacterViewController : MonoBehaviour
 
     private int currentUnitIndex = 0;
 
-    private void OnEnable()
-    {
-        Show(party);
-    }
+    // private void OnEnable()
+    // {
+    //     Show(party);
+    // }
 
     public void Show(Party player)
     {
+        canvas.enabled = true;
         this.unit = party.members[currentUnitIndex];
         this.party = party;
         
@@ -87,5 +89,10 @@ public class UICharacterViewController : MonoBehaviour
         currentUnitIndex = currentUnitIndex <= 0 ? party.members.Count-1 : currentUnitIndex-1;
         Debug.Log("Unit Index: " + currentUnitIndex);
         Show(party);
+    }
+
+    public void Hide()
+    {
+        canvas.enabled = false;
     }
 }

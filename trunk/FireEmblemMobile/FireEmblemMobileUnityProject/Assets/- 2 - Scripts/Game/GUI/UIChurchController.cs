@@ -33,11 +33,13 @@ public class UIChurchController : MonoBehaviour
             var item = church.shopItems[i];
             shopItems[i].SetValues(new ShopItem(item.cost, item.Sprite, item.Description));
         }
+        FindObjectOfType<UICharacterViewController>().Show(party);
     }
 
     public void ContinueClicked()
     {
         canvas.enabled = false;
+        FindObjectOfType<UICharacterViewController>().Hide();
         node.Continue();
     }
 }
