@@ -15,7 +15,7 @@ public class BattleEncounterNode : EncounterNode
 
     public override void Activate()
     {
-        AreaGameManager.Instance.Continue();
-        //GameSceneController.Instance.LoadBattleLevel(levelindex, enemyArmyData, this);
+        Continue();
+        GameSceneController.Instance.LoadBattleLevel(levelindex, enemyArmyData, this);
     }
 }

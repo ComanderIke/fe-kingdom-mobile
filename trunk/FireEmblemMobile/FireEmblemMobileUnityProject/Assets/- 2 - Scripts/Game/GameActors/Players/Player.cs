@@ -16,7 +16,8 @@ namespace Game.GameActors.Players
         }
 
         public Party Party { get; set; }
-        
+        [HideInInspector]
+
         public string Name;
         [SerializeField] public List<Item> convoy = default;
         [SerializeField] public int money = default;

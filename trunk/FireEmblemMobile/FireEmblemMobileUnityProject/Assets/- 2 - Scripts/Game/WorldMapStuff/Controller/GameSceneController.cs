@@ -42,11 +42,8 @@ namespace Game.WorldMapStuff.Controller
             PlayerPrefs.SetFloat("CameraX", cameraPos.y);
             PlayerPrefs.Save();
             SceneTransferData.Instance.Reset();
-            SceneTransferData.Instance.UnitsGoingIntoBattle = Player.Instance.Party.members;
-            SceneTransferData.Instance.EnemyUnits = enemyParty;
-            SceneTransferData.Instance.PartyID = Player.Instance.Party.name;
-            SceneTransferData.Instance.Party = Player.Instance.Party;
-            SceneTransferData.Instance.EnemyPartyID = enemyParty.name;
+           // SceneTransferData.Instance.EnemyUnits = enemyParty;
+            //SceneTransferData.Instance.EnemyPartyID = enemyParty.name;
             //SceneTransferData.Instance.NodeData =new NodeData(node.UniqueId);
             SceneController.UnLoadSceneAsync(Scenes.EncounterArea);
             SceneController.LoadSceneAsync(buildIndex, true);
@@ -74,8 +71,8 @@ namespace Game.WorldMapStuff.Controller
         {
             // SceneTransferData.Instance.BattleOutCome = victory?BattleOutcome.Victory:  BattleOutcome.Defeat;
             //
-            // SceneController.UnLoadSceneAsync(Scenes.Battle1);
-            // SceneController.LoadSceneAsync(Scenes.Campaign1, true);
+             SceneController.UnLoadSceneAsync(Scenes.Battle1);
+             SceneController.LoadSceneAsync(Scenes.EncounterArea, true);
             // SceneController.LoadSceneAsync(Scenes.WM_Gameplay, true);
 
         }

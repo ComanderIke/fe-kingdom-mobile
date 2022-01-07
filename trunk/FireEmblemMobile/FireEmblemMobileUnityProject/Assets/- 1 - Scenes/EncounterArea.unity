@@ -1040,31 +1040,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4c455c715b3194192c37c40b49644c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  columnCount: 10
+  spawnData:
+    columnCount: 10
+    encounter2ChildPercentage: 0.5
+    encounter3ChildPercentage: 0.3
+    chanceToShareChild: 0.3
+    columnMaxEncounter: 4
+    startNodeData: {fileID: 11400000, guid: 48889ab8cea10644f87e71f022dad1a2, type: 2}
+    nodeDatas:
+    - {fileID: 11400000, guid: bebc9190d59d7634585ba6725172f948, type: 2}
+    - {fileID: 11400000, guid: 401112c2102422743b1de8eddd72b0e2, type: 2}
+    - {fileID: 11400000, guid: c7d853897baca3e42b72f42c574b029b, type: 2}
+    - {fileID: 11400000, guid: 36f973f75b744144b894814d6efd9adc, type: 2}
+    - {fileID: 11400000, guid: f708728653f5cf54b90ff783cdd4c64d, type: 2}
+    - {fileID: 11400000, guid: 36da2f3da2a09ca418d34925605ff9cf, type: 2}
+    - {fileID: 11400000, guid: e9edc95566a14af41904a804677b418b, type: 2}
+    - {fileID: 11400000, guid: 3a74b82d9cbdcd546864220dab0a1d21, type: 2}
+    endNodeData: {fileID: 11400000, guid: 999b302d3da552a4ab7519ab822505b6, type: 2}
+    ChanceDistributionAfterOccurence: 0.05
+    sumAllStartChances: 0
   columnWidth: 3
   columnHeight: 4.5
-  encounter2ChildPercentage: 0.5
-  encounter3ChildPercentage: 0.3
-  chanceToShareChild: 0.3
-  columnMaxEncounter: 4
   LineRendererPrefab: {fileID: 8412994387867442554, guid: a85c233c00267c245b95d2dd5acb73f1,
     type: 3}
   xRandomMin: -0.7
   xRandomMax: 0.7
   yRandomMin: -0.4
   yRandomMax: 0.4
-  startNodeData: {fileID: 11400000, guid: 48889ab8cea10644f87e71f022dad1a2, type: 2}
-  nodeDatas:
-  - {fileID: 11400000, guid: e9edc95566a14af41904a804677b418b, type: 2}
-  - {fileID: 11400000, guid: 3a74b82d9cbdcd546864220dab0a1d21, type: 2}
-  - {fileID: 11400000, guid: 36da2f3da2a09ca418d34925605ff9cf, type: 2}
-  - {fileID: 11400000, guid: f708728653f5cf54b90ff783cdd4c64d, type: 2}
-  - {fileID: 11400000, guid: 401112c2102422743b1de8eddd72b0e2, type: 2}
-  - {fileID: 11400000, guid: 36f973f75b744144b894814d6efd9adc, type: 2}
-  - {fileID: 11400000, guid: bebc9190d59d7634585ba6725172f948, type: 2}
-  - {fileID: 11400000, guid: c7d853897baca3e42b72f42c574b029b, type: 2}
-  endNodeData: {fileID: 11400000, guid: 999b302d3da552a4ab7519ab822505b6, type: 2}
-  ChanceDistributionAfterOccurence: 0.1
 --- !u!4 &55807139
 Transform:
   m_ObjectHideFlags: 0
@@ -1072,8 +1074,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 55807137}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.56, y: 2.71, z: -6.5751576}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.5599995, y: 2.71, z: -6.575157}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2547,6 +2549,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 127816419}
   m_CullTransparentMesh: 1
+--- !u!1 &129077563
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 129077565}
+  - component: {fileID: 129077564}
+  m_Layer: 0
+  m_Name: Debug
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &129077564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129077563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2567d778c5da1d546b537a9964f56b8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SingletonScriptableObjects:
+  - {fileID: 11400000, guid: bdbcf239f1bd3c148a54c303e94aeded, type: 2}
+  - {fileID: 11400000, guid: 76159c489d2c4f64f90b1cfcce83274e, type: 2}
+--- !u!4 &129077565
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129077563}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 99.129074, y: 311.3103, z: -455.61673}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &132649654
 GameObject:
   m_ObjectHideFlags: 0
@@ -6177,7 +6225,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 309041375}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -4.35, z: 0}
   m_LocalScale: {x: 0.45, y: 0.45, z: 1}
   m_Children: []
@@ -18040,6 +18088,7 @@ MonoBehaviour:
     type: 3}
   playerStartParty: {fileID: 11400000, guid: 9481403441226d94ba6ffeec0614b579, type: 2}
   ColumnManager: {fileID: 55807138}
+  spawnParent: {fileID: 1086920147}
 --- !u!4 &814546089
 Transform:
   m_ObjectHideFlags: 0
@@ -22362,6 +22411,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1083922029}
   m_CullTransparentMesh: 1
+--- !u!1 &1086920146
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1086920147}
+  m_Layer: 0
+  m_Name: DynamicSpawns
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1086920147
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1086920146}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1092871338
 GameObject:
   m_ObjectHideFlags: 0

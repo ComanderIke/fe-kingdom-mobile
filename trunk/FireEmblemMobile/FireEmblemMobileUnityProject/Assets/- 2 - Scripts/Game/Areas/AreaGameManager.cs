@@ -6,33 +6,50 @@ using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.Systems;
 using UnityEngine;
 
-
 public class AreaGameManager : MonoBehaviour
 {
     public GameObject playerPrefab;
     private Area_ActionSystem actionSystem;
     public GameObject moveOptionPrefab;
-
-    public static AreaGameManager Instance;
+    
     public Party playerStartParty;
     public ColumnManager ColumnManager;
     // Start is called before the first frame update
+    public Transform spawnParent;
     private List<GameObject> moveOptions=new List<GameObject>();
     void Start()
     {
-        Instance = this;
+        Debug.Log("WHY IS START NOT CALLED?");
         actionSystem = new Area_ActionSystem();
 
-        var go = Instantiate(playerPrefab, null, false);
-        go.transform.position = ColumnManager.GetStartNode().gameObject.transform.position;
-        Player.Instance.Party = Instantiate(playerStartParty);
-        Player.Instance.Party.Initialize();
+       
+        if (Player.Instance.Party == null)
+        {
+            Debug.Log("Player Null");
+            Player.Instance.Party = Instantiate(playerStartParty);
+            Player.Instance.Party.Initialize();
+            
+
+        }
+        else
+        {
+            
+        }
+        var go = Instantiate(playerPrefab, spawnParent, false);
         Player.Instance.Party.GameObject = go;
-        Player.Instance.Party.EncounterNode = ColumnManager.GetStartNode();
-        
+        if (Player.Instance.Party.EncounterNode == null)
+        {
+            Debug.Log("Player Node Null");
+           
+            Player.Instance.Party.EncounterNode = EncounterTree.Instance.startNode;
+        }
+        go.transform.position = Player.Instance.Party.EncounterNode.gameObject.transform.position;
+
+       Debug.Log(Player.Instance.Party.EncounterNode);
         ResetMoveOptions();
   
         ShowMoveOptions();
+        
     }
 
     private void ResetMoveOptions()
@@ -54,7 +71,7 @@ public class AreaGameManager : MonoBehaviour
         foreach (var child in Player.Instance.Party.EncounterNode.children)
         {
             child.moveable = true;
-            var go = Instantiate(moveOptionPrefab, null, false);
+            var go = Instantiate(moveOptionPrefab, spawnParent, false);
             go.transform.position = child.gameObject.transform.position;
             moveOptions.Add(go);
         }

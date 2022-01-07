@@ -265,9 +265,9 @@ namespace Game.States
             factionManager.Factions[0].ClearUnits();
             factionManager.Factions[1].ClearUnits();
             int cnt = 0;
-            if (SceneTransferData.Instance.UnitsGoingIntoBattle != null)
+            if (Player.Instance.Party.members.Count!=0)
             {
-                foreach (var unit in SceneTransferData.Instance.UnitsGoingIntoBattle)
+                foreach (var unit in Player.Instance.Party.members)
                 {
                     cnt++;
                     if (cnt <= 4)

@@ -22,5 +22,6 @@ public class EventEncounterNode : EncounterNode
     {
         GameObject.FindObjectOfType<UIEventController>().Show(this);
         Debug.Log("Activate EventEncounterNode");
+        
     }
 }

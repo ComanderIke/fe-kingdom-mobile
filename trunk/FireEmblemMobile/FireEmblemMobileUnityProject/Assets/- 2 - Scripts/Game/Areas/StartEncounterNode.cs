@@ -9,7 +9,7 @@ public class StartEncounterNode : EncounterNode
 
     public override void Activate()
     {
-        AreaGameManager.Instance.Continue();
+        GameObject.FindObjectOfType<AreaGameManager>().Continue();
         Debug.Log("Activate StartEncounterNode");
     }
 }
