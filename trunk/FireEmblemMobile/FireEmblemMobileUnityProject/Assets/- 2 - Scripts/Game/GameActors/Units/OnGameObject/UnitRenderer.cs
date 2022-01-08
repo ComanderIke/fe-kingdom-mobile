@@ -31,15 +31,15 @@ namespace Game.GameActors.Units.OnGameObject
         private void Start()
         {
             Unit.HpValueChanged += HpValueChanged;
-            Unit.SpValueChanged += SpValueChanged;
-            Unit.SpBarsValueChanged += SpBarsValueChanged;
+            // Unit.SpValueChanged += SpValueChanged;
+            // Unit.SpBarsValueChanged += SpBarsValueChanged;
             if(unit!=null)
                 unit.TurnStateManager.UnitWaiting += SetWaitingSprite;
             Human.OnEquippedWeapon += OnEquippedWeapon;
            // hoverCanvas.alpha = 0;
             HpValueChanged();
-            SpValueChanged();
-            SpBarsValueChanged();
+            // SpValueChanged();
+            // SpBarsValueChanged();
         }
         public void HideHover()
         {
@@ -57,8 +57,8 @@ namespace Game.GameActors.Units.OnGameObject
             sprite.material.SetColor("_OutLineColor", ColorManager.Instance.GetFactionColor(unit.Faction.Id)*intensity);
             //spBar.GetComponent<Image>().color = ColorManager.Instance.GetFactionColor(Unit.Faction.Id);
             HpValueChanged();
-            SpBarsValueChanged();
-            SpValueChanged();
+            // SpBarsValueChanged();
+            // SpValueChanged();
             OnEquippedWeapon();
             if(!GridGameManager.Instance.FactionManager.IsActiveFaction(unit.Faction))
             {
@@ -77,8 +77,8 @@ namespace Game.GameActors.Units.OnGameObject
         void OnDestroy()
         {
             Unit.HpValueChanged -= HpValueChanged;
-            Unit.SpValueChanged -= SpValueChanged;
-            Unit.SpBarsValueChanged -= SpBarsValueChanged;
+            // Unit.SpValueChanged -= SpValueChanged;
+            // Unit.SpBarsValueChanged -= SpBarsValueChanged;
             if(unit!=null)
                 unit.TurnStateManager.UnitWaiting -= SetWaitingSprite;
             Human.OnEquippedWeapon -= OnEquippedWeapon;
@@ -124,16 +124,16 @@ namespace Game.GameActors.Units.OnGameObject
             }
         }
        
-        private void SpValueChanged()
-        {
-            if (spBar != null && unit != null)
-                spBar.SetValue(unit.Sp, unit.Stats.MaxSp);
-        }
-        private void SpBarsValueChanged()
-        {
-            if (spBars != null && unit != null)
-                spBars.SetValue(unit.SpBars, unit.MaxSpBars);
-        }
+        // private void SpValueChanged()
+        // {
+        //     if (spBar != null && unit != null)
+        //         spBar.SetValue(unit.Sp, unit.Stats.MaxSp);
+        // }
+        // private void SpBarsValueChanged()
+        // {
+        //     if (spBars != null && unit != null)
+        //         spBars.SetValue(unit.SpBars, unit.MaxSpBars);
+        // }
       
 
         private void SetWaitingSprite(bool waiting)

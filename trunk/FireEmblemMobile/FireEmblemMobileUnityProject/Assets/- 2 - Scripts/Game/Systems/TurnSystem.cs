@@ -85,14 +85,14 @@ namespace Game.Mechanics
             if (!factionManager.ActiveFaction.IsPlayerControlled)
             {
 
-                if (factionManager.ActiveFaction.Units != null && factionManager.ActiveFaction.Units.Count != 0)
-                {
-                    foreach (var c in factionManager.ActiveFaction.Units)
-                    {
-
-                        c.SpBars++;
-                    }
-                }
+                // if (factionManager.ActiveFaction.Units != null && factionManager.ActiveFaction.Units.Count != 0)
+                // {
+                //     foreach (var c in factionManager.ActiveFaction.Units)
+                //     {
+                //
+                //         c.SpBars++;
+                //     }
+                // }
 
                // Debug.Log("AITurn");
                 gameStateManager.Feed(NextStateTrigger.Transition);
@@ -100,14 +100,14 @@ namespace Game.Mechanics
             }
             else
             {
-                if (factionManager.ActiveFaction.Units != null && factionManager.ActiveFaction.Units.Count != 0)
-                {
-                    foreach (var c in factionManager.ActiveFaction.Units)
-                    {
-
-                        c.SpBars++;
-                    }
-                }
+                // if (factionManager.ActiveFaction.Units != null && factionManager.ActiveFaction.Units.Count != 0)
+                // {
+                //     foreach (var c in factionManager.ActiveFaction.Units)
+                //     {
+                //
+                //         c.SpBars++;
+                //     }
+                // }
 
                 //Debug.Log("PlayerTurn");
                 gameStateManager.Feed(NextStateTrigger.Transition);

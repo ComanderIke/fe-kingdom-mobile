@@ -7,7 +7,7 @@ public class ParalaxController : MonoBehaviour
 {
     // Start is called before the first frame update
     public float speed;
-    public Transform camera;
+    public new Transform camera;
     private Vector3 lastCameraPos;
     private Vector3 cameraStartPos;
     private Vector3 transformStartPos;

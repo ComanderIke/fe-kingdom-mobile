@@ -27,7 +27,7 @@ namespace Game.GameActors.Players
         public Player()
         {
             convoy = new List<Item>();
-
+            
         }
 
         public PlayerData GetSaveData()

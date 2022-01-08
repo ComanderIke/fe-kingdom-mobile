@@ -1,6 +1,6 @@
 ﻿using Game.GameActors.Players;
 using Game.GameActors.Units;
-using Game.GameActors.Units.Attributes;
+using Game.GameActors.Units.Numbers;
 using Game.GameActors.Units.OnGameObject;
 using Game.Grid;
 using Game.Mechanics;
@@ -13,9 +13,9 @@ namespace Game.GameInput
         BattleComponent BattleComponent { get; set; }
         Stats Stats { get; set; }
         int Hp { get; set; }
-        int Sp { get; set; }
-        int SpBars{ get; set; }
-        int MaxSpBars { get; }
+      //  int Sp { get; set; }
+       // int SpBars{ get; set; }
+       // int MaxSpBars { get; }
         Faction Faction { get; set; }
         ExperienceManager ExperienceManager { get; }
         TurnStateManager TurnStateManager { get; set; }

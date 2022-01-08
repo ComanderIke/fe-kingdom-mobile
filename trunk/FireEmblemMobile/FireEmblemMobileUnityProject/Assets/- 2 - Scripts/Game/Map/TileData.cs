@@ -16,7 +16,7 @@ namespace Game.Map
             public int cost;
 
         }
-        public string name;
+        public new string name;
         public bool walkable = true;
         public int defenseBonus;
         public int avoBonus;

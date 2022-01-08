@@ -1,5 +1,5 @@
 ﻿using Game.GameActors.Units;
-using Game.GameActors.Units.Attributes;
+using Game.GameActors.Units.Numbers;
 using Game.GameResources;
 using UnityEngine;
 
@@ -13,7 +13,7 @@ namespace Game.GameActors.Players
         [SerializeField]
         private StatsData statsData;
         [SerializeField]
-        private GrowthsData growthsData;
+        private Attributes growthsData;
         [SerializeField]
         private int moveTypeId;
         [SerializeField]
@@ -31,7 +31,7 @@ namespace Game.GameActors.Players
             ExperienceManager = unit.ExperienceManager;
             TurnStateManager = unit.TurnStateManager;
             this.moveTypeId = unit.MoveType.moveTypeId;
-            this.growthsData = unit.Growths.GetSaveData();
+            this.growthsData = unit.Growths;
             this.statsData = unit.Stats.GetSaveData();
             spriteID = unit.visuals.CharacterSpriteSet.ID;
             vfxID = unit.visuals.UnitEffectVisual.ID;
@@ -40,10 +40,10 @@ namespace Game.GameActors.Players
         public virtual void Load(Unit unit)
         {
             unit.name = name;
-            unit.Stats = ScriptableObject.CreateInstance<Stats>();
+            unit.Stats = new Stats();//ScriptableObject.CreateInstance<Stats>();
             unit.Stats.LoadData(statsData);
-            unit.Growths = ScriptableObject.CreateInstance<Growths>();
-            unit.Growths.LoadData(growthsData);
+            unit.Growths = new Attributes(unit.Growths);//ScriptableObject.CreateInstance<Growths>();
+            // unit.Growths.LoadData(growthsData);
             unit.ExperienceManager = new ExperienceManager();
             unit.ExperienceManager.Exp = ExperienceManager.Exp;
             unit.ExperienceManager.Level = ExperienceManager.Level;

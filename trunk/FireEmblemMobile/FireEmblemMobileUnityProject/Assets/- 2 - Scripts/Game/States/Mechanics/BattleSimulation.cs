@@ -113,14 +113,14 @@ namespace Game.Mechanics
                     {
                         
                         attackerAttackCount--;
-                        if (Defender.SpBars <= 0)
-                        {
-                            defenderAttackCount = 0;
-                        }
-                        if (Attacker.SpBars <= 0)
-                        {
-                            attackerAttackCount = 0;
-                        }
+                        // if (Defender.SpBars <= 0)
+                        // {
+                        //     defenderAttackCount = 0;
+                        // }
+                        // if (Attacker.SpBars <= 0)
+                        // {
+                        //     attackerAttackCount = 0;
+                        // }
                     }
                     else
                     {
@@ -137,14 +137,14 @@ namespace Game.Mechanics
                     {
                        
                         defenderAttackCount--;
-                        if (Defender.SpBars <= 0)
-                        {
-                            defenderAttackCount = 0;
-                        }
-                        if (Attacker.SpBars <= 0)
-                        {
-                            attackerAttackCount = 0;
-                        }
+                        // if (Defender.SpBars <= 0)
+                        // {
+                        //     defenderAttackCount = 0;
+                        // }
+                        // if (Attacker.SpBars <= 0)
+                        // {
+                        //     attackerAttackCount = 0;
+                        // }
                     }
                     else
                     {
@@ -157,9 +157,9 @@ namespace Game.Mechanics
                
             }
             
-            Attacker.SpBars--; 
-            if(defenderAttackCount!=0)
-                Defender.SpBars--;
+            // Attacker.SpBars--; 
+            // if(defenderAttackCount!=0)
+            //     Defender.SpBars--;
         }
 
         

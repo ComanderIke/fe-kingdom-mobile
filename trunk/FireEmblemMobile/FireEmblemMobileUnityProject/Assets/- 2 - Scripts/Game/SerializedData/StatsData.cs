@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Game.GameActors.Units.Attributes;
+using Game.GameActors.Units.Numbers;
 using UnityEngine;
 
 namespace Game.GameActors.Players
@@ -18,11 +18,11 @@ namespace Game.GameActors.Players
 
 
         [SerializeField] public Attributes Attributes;
-        public StatsData(int maxHp, int maxSp, int mov, Attributes attributes,  List<int> attackRanges)
+        public StatsData(int maxHp, int mov, Attributes attributes,  List<int> attackRanges)
         {
             AttackRanges = attackRanges;
             MaxHp = maxHp;
-            MaxSp = maxSp;
+            // MaxSp = maxSp;
             Mov = mov;
             Attributes = attributes;
         }

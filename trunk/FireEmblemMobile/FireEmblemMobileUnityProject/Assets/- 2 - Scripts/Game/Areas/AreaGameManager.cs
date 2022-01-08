@@ -21,8 +21,14 @@ public class AreaGameManager : MonoBehaviour
     {
         Debug.Log("WHY IS START NOT CALLED?");
         actionSystem = new Area_ActionSystem();
+        if(PlayerPrefs.HasKey("CameraX")&&PlayerPrefs.HasKey("CameraY"))
+        {
+            WorldMapCameraController camera = FindObjectOfType<WorldMapCameraController>();
+            camera.transform.position = new Vector3(PlayerPrefs.GetFloat("CameraX"), PlayerPrefs.GetFloat("CameraY"),
+                camera.transform.position.z);
+        }
 
-       
+
         if (Player.Instance.Party == null)
         {
             Debug.Log("Player Null");

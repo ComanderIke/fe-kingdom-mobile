@@ -22,13 +22,22 @@ namespace Game.GameActors.Units.Humans
        public Relic EquippedRelic;
        public Consumable EquippedConsumable;
 
-        [SerializeField] private string[] weaponProficiencyLevels;
+       
 
         public Human()
         {
-            weaponProficiencyLevels = new string[]{
-                "E","E","E","E","E","E"
-            };
+           
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            Stats.AttackRanges.Clear();
+            if (EquippedWeapon != null)
+            {
+                foreach (int r in EquippedWeapon.AttackRanges)
+                    Stats.AttackRanges.Add(r);
+            }
         }
 
         // public void OnEnable()
@@ -40,21 +49,7 @@ namespace Game.GameActors.Units.Humans
         //     
         //     Equip(EquippedWeapon);
         // }
-      
-        public string GetWeaponProficiency(WeaponType weaponType)
-        {
-            switch (weaponType)
-            {
-                case WeaponType.Sword: return weaponProficiencyLevels[0];
-                case WeaponType.Spear: return weaponProficiencyLevels[1];
-                case WeaponType.Axe: return weaponProficiencyLevels[2];
-                case WeaponType.Bow: return weaponProficiencyLevels[3];
-                case WeaponType.Magic: return weaponProficiencyLevels[4];
-                case WeaponType.Staff: return weaponProficiencyLevels[5];
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(weaponType), weaponType, null);
-            }
-        }
+
 
         protected override void HandleCloned(Unit clone)
         {

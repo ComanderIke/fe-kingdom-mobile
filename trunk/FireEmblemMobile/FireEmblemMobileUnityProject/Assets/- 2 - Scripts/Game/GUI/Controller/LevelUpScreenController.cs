@@ -3,34 +3,41 @@ using System.Collections.Generic;
 using Game.States;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Utility;
 
 namespace Game.GUI
 {
     public class LevelUpScreenController : MonoBehaviour, ILevelUpRenderer
     {
-        [SerializeField] private TextMeshProUGUI levelUpText;
 
         [SerializeField] private TextMeshProUGUI nameText;
         [SerializeField] private TextMeshProUGUI levelText;
+        [SerializeField] private Image faceImage;
+        [SerializeField] private Color textBaseColor;
+        [SerializeField] private Color textIncreasedColor;
+        [SerializeField] private TextMeshProUGUI conLabelText;
+        [SerializeField] private TextMeshProUGUI agiLabelText;
+        [SerializeField] private TextMeshProUGUI strLabelText;
+        [SerializeField] private TextMeshProUGUI dexLabelText;
+        [SerializeField] private TextMeshProUGUI intLabelText;
+        [SerializeField] private TextMeshProUGUI fthLabelText;
+        [SerializeField] private TextMeshProUGUI conText;
+        [SerializeField] private TextMeshProUGUI agiText;
         [SerializeField] private TextMeshProUGUI strText;
-        [SerializeField] private TextMeshProUGUI spdText;
-        [SerializeField] private TextMeshProUGUI hpText;
-        [SerializeField] private TextMeshProUGUI spText;
-        [SerializeField] private TextMeshProUGUI defText;
-        [SerializeField] private TextMeshProUGUI resText;
-        [SerializeField] private TextMeshProUGUI magText;
-        [SerializeField] private TextMeshProUGUI sklText;
+        [SerializeField] private TextMeshProUGUI dexText;
+        [SerializeField] private TextMeshProUGUI intText;
+        [SerializeField] private TextMeshProUGUI fthText;
+
         [SerializeField] private TextMeshProUGUI strAddedText;
-        [SerializeField] private TextMeshProUGUI spdAddedText;
-        [SerializeField] private TextMeshProUGUI hpAddedText;
-        [SerializeField] private TextMeshProUGUI spAddedText;
-        [SerializeField] private TextMeshProUGUI defAddedText;
-        [SerializeField] private TextMeshProUGUI resAddedText;
-        [SerializeField] private TextMeshProUGUI magAddedText;
-        [SerializeField] private TextMeshProUGUI sklAddedText;
+        [SerializeField] private TextMeshProUGUI intAddedText;
+        [SerializeField] private TextMeshProUGUI conAddedText;
+        [SerializeField] private TextMeshProUGUI dexAddedText;
+        [SerializeField] private TextMeshProUGUI agiAddedText;
+        [SerializeField] private TextMeshProUGUI fthAddedText;
         [SerializeField] private CanvasGroup alphaCanvas;
-        private float delaybetweenPopups = 0.10f;
+        private float delaybetweenPopups = 0.13f;
+        private float endDelay = 1.35f;
         List<Action> actions = new List<Action>();
         int actionIndex = 0;
         private int[] stats;
@@ -46,107 +53,102 @@ namespace Game.GUI
         public void Play()
         {
             canvas.enabled = true;
-            LeanTween.alphaCanvas(levelUpText.GetComponent<CanvasGroup>(), 1, 0.15f).setEaseOutQuad();
-            LeanTween.scale(levelUpText.gameObject, Vector3.one, 0.15f).setEaseOutQuad();
-            LeanTween.moveLocalY(levelUpText.gameObject, levelUpText.transform.localPosition.y + 100, 0.15f).setEaseOutQuad().setOnComplete(
-                () =>
+           // LeanTween.alphaCanvas(levelUpText.GetComponent<CanvasGroup>(), 1, 0.15f).setEaseOutQuad();
+           // LeanTween.scale(levelUpText.gameObject, Vector3.one, 0.15f).setEaseOutQuad();
+            
+                   
+            LeanTween.alphaCanvas(alphaCanvas, 1, 0.55f).setEaseOutQuad();
+            LeanTween.scale(levelText.gameObject, levelText.transform.localScale * 1.2f, 0.5f).setEaseOutQuad().setDelay(0.65f).setOnStart(() => levelText.text = "Lv " + levelAfter)
+                .setOnComplete(() =>
                 {
-                    LeanTween.alphaCanvas(levelUpText.GetComponent<CanvasGroup>(), 0, 0.15f).setEaseInQuad().setDelay(1.8f);
-                    LeanTween.scale(levelUpText.gameObject, new Vector3(1, 0, 1), 0.15f).setEaseInQuad().setDelay(1.8f);
-                    LeanTween.moveLocalY(levelUpText.gameObject, levelUpText.transform.localPosition.y - 100, 0.15f).setDelay(1.8f).setEaseInQuad().setOnComplete(() => {
-                        LeanTween.alphaCanvas(alphaCanvas, 1, 0.55f).setEaseOutQuad();
-                        LeanTween.scale(levelText.gameObject, levelText.transform.localScale * 1.2f, 0.8f).setEaseOutQuad().setDelay(0.65f).setOnStart(() => levelText.text = "" + levelAfter)
-                            .setOnComplete(() =>
-                            {
-                                LeanTween.scale(levelText.gameObject, levelText.transform.localScale, 0.0f).setEaseInQuad().setDelay(delaybetweenPopups).setOnComplete(() =>
-                                {
-                                    if (actionIndex < actions.Count)
-                                        actions[actionIndex].Invoke();
-                                    actionIndex++;
-                                });
-                            });
+                    LeanTween.scale(levelText.gameObject, levelText.transform.localScale, 0.0f).setEaseInQuad().setDelay(delaybetweenPopups).setOnComplete(() =>
+                    {
+                        if (actionIndex < actions.Count)
+                            actions[actionIndex].Invoke();
+                        actionIndex++;
                     });
                 });
+           
+            
 
             if (statsIncreases[0] > 0) {
-                actions.Add(CreateStatPopUpActionAnimationIn(hpText, "" + (stats[0] + statsIncreases[0]), hpAddedText, statsIncreases[0]));
-                actions.Add(CreateStatPopUpActionAnimationOut(hpText));
-            }
-            if (statsIncreases[2] > 0)
-            {
-                actions.Add(CreateStatPopUpActionAnimationIn(strText, "" + (stats[2] +statsIncreases[2]), strAddedText, statsIncreases[2]));
+                actions.Add(CreateStatPopUpActionAnimationIn(strLabelText, strText, "" + (stats[0] + statsIncreases[0]), strAddedText, statsIncreases[0]));
                 actions.Add(CreateStatPopUpActionAnimationOut(strText));
-            }
-            if (statsIncreases[3] > 0)
-            {
-                actions.Add(CreateStatPopUpActionAnimationIn(magText, "" + (stats[3] + statsIncreases[3]), magAddedText, statsIncreases[3]));
-                actions.Add(CreateStatPopUpActionAnimationOut(magText));
-            }
-            if (statsIncreases[5] > 0)
-            {
-                actions.Add(CreateStatPopUpActionAnimationIn(sklText, "" + (stats[5] +statsIncreases[5]), sklAddedText, statsIncreases[5]));
-                actions.Add(CreateStatPopUpActionAnimationOut(sklText));
             }
             if (statsIncreases[1] > 0)
             {
-                actions.Add(CreateStatPopUpActionAnimationIn(spText, "" + (stats[1] +statsIncreases[1]), spAddedText, statsIncreases[1]));
-                actions.Add(CreateStatPopUpActionAnimationOut(spText));
+                actions.Add(CreateStatPopUpActionAnimationIn(intLabelText,intText, "" + (stats[1] +statsIncreases[1]), intAddedText, statsIncreases[1]));
+                actions.Add(CreateStatPopUpActionAnimationOut(intText));
+            }
+            if (statsIncreases[2] > 0)
+            {
+                actions.Add(CreateStatPopUpActionAnimationIn(dexLabelText,dexText, "" + (stats[2] + statsIncreases[2]), dexAddedText, statsIncreases[2]));
+                actions.Add(CreateStatPopUpActionAnimationOut(dexText));
+            }
+            if (statsIncreases[3] > 0)
+            {
+                actions.Add(CreateStatPopUpActionAnimationIn(agiLabelText,agiText, "" + (stats[3] +statsIncreases[3]), agiAddedText, statsIncreases[3]));
+                actions.Add(CreateStatPopUpActionAnimationOut(agiText));
             }
             if (statsIncreases[4] > 0)
             {
-                actions.Add(CreateStatPopUpActionAnimationIn(spdText, "" + (stats[4] + statsIncreases[4]), spdAddedText, statsIncreases[4]));
-                actions.Add(CreateStatPopUpActionAnimationOut(spdText));
+                actions.Add(CreateStatPopUpActionAnimationIn(conLabelText, conText, "" + (stats[4] +statsIncreases[4]), conAddedText, statsIncreases[4]));
+                actions.Add(CreateStatPopUpActionAnimationOut(conText));
             }
-            if (statsIncreases[6] > 0)
+            if (statsIncreases[5] > 0)
             {
-                actions.Add(CreateStatPopUpActionAnimationIn(defText, "" + (stats[6] + statsIncreases[6]), defAddedText, statsIncreases[6]));
-                actions.Add(CreateStatPopUpActionAnimationOut(defText));
+                actions.Add(CreateStatPopUpActionAnimationIn(fthLabelText, fthText, "" + (stats[5] + statsIncreases[5]), fthAddedText, statsIncreases[5]));
+                actions.Add(CreateStatPopUpActionAnimationOut(fthText));
             }
-            if (statsIncreases[7] > 0)
-            {
-                actions.Add(CreateStatPopUpActionAnimationIn(resText, "" + (stats[7] + statsIncreases[7]), resAddedText, statsIncreases[7]));
-                actions.Add(CreateStatPopUpActionAnimationOut(resText));
-            }
-            actions.Add(()=> LeanTween.alphaCanvas(alphaCanvas, 0, 0.65f).setEaseInQuad().setDelay(delaybetweenPopups)
+            actions.Add(()=> LeanTween.alphaCanvas(alphaCanvas, 0, 0.65f).setEaseInQuad().setDelay(endDelay)
                 .setOnComplete(()=>
                 {
                     AnimationQueue.OnAnimationEnded?.Invoke();
                 }));
         }
-        public void UpdateValues(string name, int levelBefore, int levelAfter, int[] stats, int[] statsIncreases)
+        public void UpdateValues(string name, Sprite sprite,int levelBefore, int levelAfter, int[] stats, int[] statsIncreases)
         {
             Debug.Log("Show Level Up!");
-
+            faceImage.sprite = sprite;
             this.statsIncreases = statsIncreases;
-            this.stats = stats;
+            this.stats = stats;//str, int ,dex,agi,con,fth
             this.levelAfter = levelAfter;
             nameText.text = "" + name;
-            levelText.text = "" + levelBefore;
-            strText.text = "" + stats[2];
-            spdText.text = "" + stats[5];
-            defText.text = "" + stats[6];
-            sklText.text = "" + stats[4]; 
-            magText.text = "" + stats[3];
-            hpText.text = "" + stats[0];
-            spText.text = "" +stats[1];
-            resText.text = "" + stats[7];
-
+            levelText.text = "Lv " + levelBefore;
+            strText.text = "" + stats[0];
+            intText.text = "" + stats[1];
+            dexText.text = "" + stats[2];
+            agiText.text = "" + stats[3]; 
+            conText.text = "" + stats[4];
+            fthText.text = "" + stats[5];
+            strLabelText.color = textBaseColor;
+            intLabelText.color = textBaseColor;
+            dexLabelText.color = textBaseColor;
+            agiLabelText.color = textBaseColor; 
+            conLabelText.color = textBaseColor;
+            fthLabelText.color = textBaseColor;
+            strText.color = textBaseColor;
+            intText.color = textBaseColor;
+            dexText.color = textBaseColor;
+            agiText.color = textBaseColor; 
+            conText.color = textBaseColor;
+            fthText.color = textBaseColor;
             strAddedText.text = "";
-            spdAddedText.text = "";
-            defAddedText.text = "";
-            sklAddedText.text = "";
-            magAddedText.text = "";
-            hpAddedText.text = "";
-            spAddedText.text = "";
-            resAddedText.text = "";
+            intAddedText.text = "";
+            dexAddedText.text = "";
+            agiAddedText.text = "";
+            conAddedText.text = "";
+            fthAddedText.text = "";
         }
-        private Action CreateStatPopUpActionAnimationIn(TMP_Text textObject, string text, TMP_Text textAddedObject, int statIncrease)
+        private Action CreateStatPopUpActionAnimationIn(TMP_Text label, TMP_Text textObject, string text, TMP_Text textAddedObject, int statIncrease)
         {
             return () => {
                 LeanTween.scale(textObject.gameObject, textObject.transform.localScale * 1.0f, 0.20f).setEaseOutQuad().setDelay(delaybetweenPopups)
                     .setOnComplete(() =>
                     {
                         textObject.text = text;
+                        textObject.color = textIncreasedColor;
+                        label.color = textIncreasedColor;
                         if (actionIndex < actions.Count)
                             actions[actionIndex].Invoke();
                         actionIndex++;

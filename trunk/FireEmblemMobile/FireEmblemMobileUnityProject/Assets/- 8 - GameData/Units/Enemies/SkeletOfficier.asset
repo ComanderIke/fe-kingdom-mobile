@@ -13,8 +13,25 @@ MonoBehaviour:
   m_Name: SkeletOfficier
   m_EditorClassIdentifier: 
   name: Skelet
-  stats: {fileID: 11400000, guid: 25c05c01280a83b4286f5e929bb9c3bd, type: 2}
-  growths: {fileID: 11400000, guid: be2dad7b271d63f46bc46127c178348b, type: 2}
+  jobClass: Officier
+  stats:
+    AttackRanges: 
+    Attributes:
+      STR: 5
+      INT: 5
+      DEX: 5
+      AGI: 5
+      CON: 5
+      FAITH: 5
+    MaxHp: 0
+    Mov: 3
+  growths:
+    STR: 30
+    INT: 30
+    DEX: 30
+    AGI: 30
+    CON: 30
+    FAITH: 30
   moveType: {fileID: 11400000, guid: d13592b1fa0af024a841b121149b8014, type: 2}
   visuals:
     CharacterSpriteSet: {fileID: 11400000, guid: 392c72f68c80c9149b520db7c54f784b,
@@ -23,13 +40,9 @@ MonoBehaviour:
   experienceManager:
     level: 1
     exp: 0
+    MaxExp: 100
   Class: {fileID: 11400000, guid: c9fb62633f511e34e9f6889cbde27e91, type: 2}
   EquippedWeapon: {fileID: 11400000, guid: 36a3c23465f75d6439de53d96dd0085b, type: 2}
-  Inventory: {fileID: 0}
-  weaponProficiencyLevels:
-  - E
-  - E
-  - E
-  - D
-  - E
-  - E
+  EquippedArmor: {fileID: 11400000, guid: 3721b2ef6bbccc84999f1178c277dbbc, type: 2}
+  EquippedRelic: {fileID: 0}
+  EquippedConsumable: {fileID: 0}

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class UIRecruitCharacterController : UIButtonController
 {
-    public TextMeshProUGUI name;
+    public new TextMeshProUGUI name;
     // Start is called before the first frame update
     public void SetValues(Unit unit)
     {

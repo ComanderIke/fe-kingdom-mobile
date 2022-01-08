@@ -1,4 +1,4 @@
-﻿using Game.GameActors.Units.Attributes;
+﻿using Game.GameActors.Units.Numbers;
 using UnityEngine;
 
 namespace Game.GUI

@@ -99,7 +99,7 @@ namespace Game.GUI
              //Debug.Log("HPBar: "+battlePreview.AttackerStats.MaxHp+" "+battlePreview.AttackerStats.CurrentHp+" "+battlePreview.AttackerStats.AfterBattleHp);
              hpBar.UpdateValues(battlePreview.AttackerStats.MaxHp, battlePreview.AttackerStats.CurrentHp, battlePreview.AttackerStats.AfterBattleHp, 
                  defenderDmg);
-             spBars.SetPreviewValue(battlePreview.AttackerStats.CurrentSpBars,battlePreview.AttackerStats.AfterSpBars,battlePreview.AttackerStats.MaxSpBars);
+            // spBars.SetPreviewValue(battlePreview.AttackerStats.CurrentSpBars,battlePreview.AttackerStats.AfterSpBars,battlePreview.AttackerStats.MaxSpBars);
              //spBar.UpdateValues(battlePreview.AttackerStats.MaxSp, battlePreview.AttackerStats.CurrentSp, battlePreview.AttackerStats.AfterBattleSp, battlePreview.AttackerStats.IncomingSpDamage);
              Debug.Log("AttackCount: "+battlePreview.DefenderStats.AttackCount);
              if (battlePreview.DefenderStats.AttackCount == 0)
@@ -119,7 +119,7 @@ namespace Game.GUI
              attackCountRight.text = "" + battlePreview.DefenderStats.AttackCount;
              hpBarRight.UpdateValues(battlePreview.DefenderStats.MaxHp, battlePreview.DefenderStats.CurrentHp, battlePreview.DefenderStats.AfterBattleHp,
                  attackerDmg);
-             spBarsRight.SetPreviewValue(battlePreview.DefenderStats.CurrentSpBars,battlePreview.DefenderStats.AfterSpBars,battlePreview.DefenderStats.MaxSpBars);
+            // spBarsRight.SetPreviewValue(battlePreview.DefenderStats.CurrentSpBars,battlePreview.DefenderStats.AfterSpBars,battlePreview.DefenderStats.MaxSpBars);
              //spBarRight.UpdateValues(battlePreview.DefenderStats.MaxSp, battlePreview.DefenderStats.CurrentSp, battlePreview.DefenderStats.AfterBattleSp, battlePreview.DefenderStats.IncomingSpDamage);
             
              faceSpriteRight.color = new Color(1, 1, 1, 1);

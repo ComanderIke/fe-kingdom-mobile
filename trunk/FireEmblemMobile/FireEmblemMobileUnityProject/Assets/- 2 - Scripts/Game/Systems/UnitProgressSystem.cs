@@ -66,15 +66,15 @@ namespace Game.Mechanics
 
         private void LevelUp(Unit unit)
         {
-            int[] statIncreases = CalculateStatIncreases(unit.Growths.GetGrowthsArray());
+            int[] statIncreases = CalculateStatIncreases(unit.Growths.AsArray());
 
-            // if (levelUpRenderer != null)
-            // {
-            //     levelUpRenderer.UpdateValues(unit.name, unit.ExperienceManager.Level - 1, unit.ExperienceManager.Level,
-            //         unit.Stats.GetStatArray(), statIncreases);
-            //     AnimationQueue.Add(((IAnimation) levelUpRenderer).Play);
-            // }
-            //
+            if (levelUpRenderer != null)
+            {
+                levelUpRenderer.UpdateValues(unit.name, unit.visuals.CharacterSpriteSet.FaceSprite,unit.ExperienceManager.Level - 1, unit.ExperienceManager.Level,
+                    unit.Stats.Attributes.AsArray(), statIncreases);
+                AnimationQueue.Add(((IAnimation) levelUpRenderer).Play);
+            }
+            
             // unit.Stats.MaxHp += statIncreases[0];
             // unit.Stats.MaxSp += statIncreases[1];
             // unit.Stats.STR += statIncreases[2];

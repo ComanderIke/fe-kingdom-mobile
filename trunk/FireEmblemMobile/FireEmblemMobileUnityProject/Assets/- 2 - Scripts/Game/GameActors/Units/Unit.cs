@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Game.AI;
 using Game.GameActors.Players;
-using Game.GameActors.Units.Attributes;
 using Game.GameActors.Units.CharStateEffects;
 using Game.GameActors.Units.Humans;
+using Game.GameActors.Units.Numbers;
 using Game.GameActors.Units.OnGameObject;
 using Game.GameInput;
 using Game.GameResources;
@@ -24,13 +24,13 @@ namespace Game.GameActors.Units
         public new string name;
         public string jobClass;
         [HideInInspector] private int hp;
-        [HideInInspector] private int sp;
-        [HideInInspector] private int spBars;
-        private const int SP_PER_BAR = 5;
+        // [HideInInspector] private int sp;
+        // [HideInInspector] private int spBars;
+        // private const int SP_PER_BAR = 5;
         [SerializeField]
         private Stats stats;
         [SerializeField]
-        private Growths growths;
+        private Attributes growths;
         [SerializeField]
         private MoveType moveType;
         public SkillManager SkillManager { get; set; }
@@ -44,7 +44,7 @@ namespace Game.GameActors.Units
             get => stats;
             set => stats = value;
         }
-        public Growths Growths
+        public Attributes Growths
         {
             get => growths;
             set => growths = value;
@@ -90,48 +90,48 @@ namespace Game.GameActors.Units
         }
 
 
-        public int SpBars
-        {
-            get => spBars;
-            set
-            {
-                spBars = value > stats.MaxSp/SP_PER_BAR ? stats.MaxSp/SP_PER_BAR : value;
+        // public int SpBars
+        // {
+        //     get => spBars;
+        //     set
+        //     {
+        //         spBars = value > stats.MaxSp/SP_PER_BAR ? stats.MaxSp/SP_PER_BAR : value;
+        //
+        //         if (spBars <= 0)
+        //         {
+        //             spBars = 0;
+        //            
+        //                 visuals.UnitEffectVisual.ShowNoStamina(this);
+        //             
+        //         }
+        //         else
+        //         {
+        //             
+        //             visuals.UnitEffectVisual.HideNoStamina();
+        //             
+        //         }
+        //         SpBarsValueChanged?.Invoke();
+        //     }
+        // }
 
-                if (spBars <= 0)
-                {
-                    spBars = 0;
-                   
-                        visuals.UnitEffectVisual.ShowNoStamina(this);
-                    
-                }
-                else
-                {
-                    
-                    visuals.UnitEffectVisual.HideNoStamina();
-                    
-                }
-                SpBarsValueChanged?.Invoke();
-            }
-        }
-
-        public int Sp
-        {
-            get => sp;
-            set
-            {
-                sp = value > stats.MaxSp ? stats.MaxSp : value;
-                if (sp <= 0) sp = 0;
-                SpValueChanged?.Invoke();
-            }
-        }
+        // public int Sp
+        // {
+        //     get => sp;
+        //     set
+        //     {
+        //         sp = value > stats.MaxSp ? stats.MaxSp : value;
+        //         if (sp <= 0) sp = 0;
+        //         SpValueChanged?.Invoke();
+        //     }
+        // }
 
         public List<int> AttackRanges => stats.AttackRanges;
         public int MovementRange => stats.Mov;
-        public int MaxSpBars
-        {
-            get => stats.MaxSp / SP_PER_BAR;
-        }
-        
+        // public int MaxSpBars
+        // {
+        //     get => stats.MaxSp / SP_PER_BAR;
+        // }
+        //
 
         void OnDestroy()
         {
@@ -141,7 +141,7 @@ namespace Game.GameActors.Units
         
 
 
-        public void Initialize()
+        public virtual void Initialize()
         {
 
             SkillManager = new SkillManager();
@@ -154,16 +154,18 @@ namespace Game.GameActors.Units
             GameTransformManager = new GameTransformManager();
             StatusEffectManager = new StatusEffectManager(this);
             AIComponent = new AIComponent();
-            stats = stats == null ? CreateInstance<Stats>() : Instantiate(stats);
-            growths = growths == null ? CreateInstance<Growths>() : Instantiate(growths);
+            // stats = stats == null ? CreateInstance<Stats>() : Instantiate(stats);
+            // growths = growths == null ? CreateInstance<Growths>() : Instantiate(growths);
             if (visuals.UnitEffectVisual != null)
             {
                 visuals.UnitEffectVisual = Instantiate(visuals.UnitEffectVisual);
             }
 
+            stats.Initialize();
+           
             hp = stats.MaxHp;
-            sp = stats.MaxSp;
-            spBars = Sp / SP_PER_BAR;
+            // sp = stats.MaxSp;
+            // spBars = Sp / SP_PER_BAR;
             ExperienceManager.ExpGained = null;
             ExperienceManager.ExpGained += ExpGained;
            
@@ -257,10 +259,10 @@ namespace Game.GameActors.Units
             clone.visuals = visuals;
             clone.SkillManager = (SkillManager) SkillManager.Clone();
             clone.hp = hp;
-            clone.sp = sp;
+            //clone.sp = sp;
         
             clone.Stats = (Stats) Stats.Clone();
-            clone.Growths = (Growths) Growths.Clone();
+            clone.Growths = (Attributes) Growths.Clone();
             clone.Motivation = Motivation;
             clone.MoveType = MoveType;
             clone.Faction = Faction;

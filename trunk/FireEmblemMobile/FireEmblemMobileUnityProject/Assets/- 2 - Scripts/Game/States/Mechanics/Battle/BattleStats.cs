@@ -35,8 +35,8 @@ namespace Game.Mechanics.Battle
         public int GetAttackCountAgainst(IBattleActor c)
         {
             int attackCount = 1;
-            if (owner.SpBars == 0)
-                return 0;
+            // if (owner.SpBars == 0)
+            //     return 0;
 
             if ( owner.BattleComponent.BattleStats.GetAttackSpeed()- (c.BattleComponent.BattleStats.GetAttackSpeed() + AGILITY_TO_DOUBLE) >= 0)
             {
@@ -92,10 +92,10 @@ namespace Game.Mechanics.Battle
         public int GetDamageAgainstTarget(IBattleActor target, List<float> atkMultiplier)
         {
             float dmgMult = 1;
-            if (target.SpBars <= 0)
-            {
-                dmgMult = 2;
-            }
+            // if (target.SpBars <= 0)
+            // {
+            //     dmgMult = 2;
+            // }
 
             int defense = 0;
             if (GetDamageType()==DamageType.Magic)
@@ -213,7 +213,7 @@ namespace Game.Mechanics.Battle
 
         public int GetArmor()
         {
-            if (owner is Human human)
+            if (owner is Human human&&human.EquippedArmor!=null)
             {
                 
                 return human.EquippedArmor.armor;

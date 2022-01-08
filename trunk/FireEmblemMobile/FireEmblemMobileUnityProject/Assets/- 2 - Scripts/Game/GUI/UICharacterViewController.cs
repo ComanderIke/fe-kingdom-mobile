@@ -47,7 +47,7 @@ public class UICharacterViewController : MonoBehaviour
     //     Show(party);
     // }
 
-    public void Show(Party player)
+    public void Show(Party party)
     {
         canvas.enabled = true;
         this.unit = party.members[currentUnitIndex];

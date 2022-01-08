@@ -23,8 +23,8 @@ namespace Game.GUI
         private IStatBar hpBar;
        // [SerializeField]
       //  private IStatBar spBar;
-        [SerializeField]
-        private ISPBarRenderer spBars;
+        // [SerializeField]
+        // private ISPBarRenderer spBars;
 
         [SerializeField] private ExpBarController expBar = default;
         // [SerializeField] private TextMeshProUGUI expLabel = default;
@@ -64,8 +64,7 @@ namespace Game.GUI
             expBar.SetText(unit.ExperienceManager.Exp);
             expBar.SetFillAmount(unit.ExperienceManager.Exp);
             hpBar.SetValue(unit.Hp, unit.Stats.MaxHp);
-           // spBar.SetValue(unit.Sp, unit.Stats.MaxSp);
-            spBars.SetValue(unit.SpBars, unit.MaxSpBars);
+            //  spBars.SetValue(unit.SpBars, unit.MaxSpBars);
             faceSprite.sprite = unit.visuals.CharacterSpriteSet.FaceSprite;
         }
 

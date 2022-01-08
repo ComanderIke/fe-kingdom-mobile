@@ -18,7 +18,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     public Volume volume;
     private GameObject characterLeft;
     private GameObject characterRight;
-    public Camera camera;
+    public new Camera camera;
     public GameObject battleBackground;
     public TimelineAsset cameraIntro;
     public TimelineAsset cameraIntroInverse;
@@ -33,7 +33,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     private IBattleActor defender;
     private bool leftCharacterDied;
     private bool rightCharacterDied;
-    public GameObject light;
+    public new GameObject light;
     public void Show(BattleSimulation battleSimulation, IBattleActor attackingActor, IBattleActor defendingActor)
     {
         this.battleSimulation = battleSimulation;

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class TileInfoPanel : MonoBehaviour
 {
-    public TextMeshProUGUI name;
+    public new TextMeshProUGUI name;
 
     public TextMeshProUGUI boni1;
 
