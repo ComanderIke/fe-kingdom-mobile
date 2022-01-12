@@ -24,15 +24,25 @@ namespace Game.AI
         {
             float oldDistance=0;
             float newDistance=0;
+            //TODO Performance if it checks this for all possible movement options store similar movement option data(like check the options at max range) and score the others the same -1 per sqare
+            //TODO for now just check manhatten distance
             foreach(Goal g in agent.AIComponent.AIGoals)
             {
                 if (agent is IGridActor actor)
                 {
-                    oldDistance = pathFinder.FindPath(agent.GridComponent.GridPosition.X,
-                        agent.GridComponent.GridPosition.Y, g.X, g.Y,
-                        actor, false, actor.AttackRanges).GetLength();
-                    newDistance = pathFinder.FindPath(newLoc.x, newLoc.y, g.X, g.Y,
-                        actor, false, actor.AttackRanges).GetLength();
+                    // var path = pathFinder.FindPath(agent.GridComponent.GridPosition.X,
+                    //     agent.GridComponent.GridPosition.Y, g.X, g.Y,
+                    //     actor, false, actor.AttackRanges);
+                    // if(path!=null)
+                    //     oldDistance = path.GetLength();
+                    // var pathNew = pathFinder.FindPath(newLoc.x, newLoc.y, g.X, g.Y,
+                    //     actor, false, actor.AttackRanges);
+                    // if(pathNew!=null)
+                    //     newDistance = pathNew.GetLength();
+                    oldDistance = Mathf.Abs(agent.GridComponent.GridPosition.X - g.X) +
+                                  Mathf.Abs(agent.GridComponent.GridPosition.Y - g.Y);
+                    newDistance = Mathf.Abs(newLoc.x - g.X) +
+                                  Mathf.Abs(newLoc.y - g.Y);
                 }
             }
 

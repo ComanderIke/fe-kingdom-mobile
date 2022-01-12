@@ -20,8 +20,23 @@ namespace Game.GUI
         public float AnimateStayDuration = 0.45f;
         public float AnimateOutDuration = 0.2f;
         // Start is called before the first frame update
+        private void Start()
+        {
+            ParticleAttractor.onParticleArrived += IncreaseExpText;
+            ParticleAttractor.onAllParticlesArrived += Hide;
+        }
+
+        void IncreaseExpText()
+        {
+            //Debug.Log("1EXP!");
+            currentExp = currentExp + 1;
+            text.text = "" + (currentExp);
+            LeanTween.scale(gameObject, new Vector3(1.4f, 1.4f, 1), 0.1f).setEaseSpring();
+            oldPosition = transform.localPosition;
+        }
         public void UpdateValues(int currentExp, int addedExp)
         {
+            Debug.Log("CurrentExp: "+currentExp+" Gained: "+addedExp);
             this.currentExp = currentExp;
             this.addedExp = addedExp;
         }
@@ -30,35 +45,35 @@ namespace Game.GUI
         {
             text.text = ""+currentExp;
             LeanTween.alphaCanvas(glow.GetComponent<CanvasGroup>(), 1, 1.0f).setLoopPingPong(1);
-            LeanTween.scale(gameObject, new Vector3(1.4f, 1.4f, 1), AnimateInDuration).setDelay(0.25f).setEaseSpring().setOnComplete(ShowTextAnimation);
-            oldPosition = transform.localPosition;
+           
         }
   
         void ShowTextAnimation()
         {
-            int exp = currentExp;
-            float fillAmount = 0;
-            float expLeft = 0;
-            LeanTween.value(gameObject, 0, addedExp, Math.Max(addedExp / 100f*1.5f, 0.4f)).setEaseOutQuad().setOnUpdate((float val) =>
-            {
-            
-                int intVal = (int)val;
-                int expVal = exp + intVal;
-                if (expVal > 100)
-                {
-                    expLeft = expVal - 100;
-                    expVal = 100;
-                  
-                }
-
-                text.text = "" + (expVal);
-                fillAmount =  (expVal) /100f;
-                fill.fillAmount = fillAmount;
-
-            }).setOnComplete(Hide).setDelay(0.10f);
+            // int exp = currentExp;
+            // float fillAmount = 0;
+            // float expLeft = 0;
+            // LeanTween.value(gameObject, 0, addedExp, Math.Max(addedExp / 100f*1.5f, 0.4f)).setEaseOutQuad().setOnUpdate((float val) =>
+            // {
+            //
+            //     int intVal = (int)val;
+            //     int expVal = exp + intVal;
+            //     if (expVal > 100)
+            //     {
+            //         expLeft = expVal - 100;
+            //         expVal = 100;
+            //       
+            //     }
+            //
+            //     text.text = "" + (expVal);
+            //     fillAmount =  (expVal) /100f;
+            //     fill.fillAmount = fillAmount;
+            //
+            // }).setOnComplete(Hide).setDelay(0.10f);
         }
         void Hide()
         {
+            Debug.Log("AllParticlesArrived!");
             LeanTween.scale(gameObject, new Vector3(1, 1, 1), AnimateOutDuration).setEaseInQuad().setDelay(AnimateStayDuration);
             LeanTween.moveLocal(gameObject, oldPosition, AnimateOutDuration).setEaseInQuad().setDelay(AnimateStayDuration)
                 .setOnComplete(() => { AnimationQueue.OnAnimationEnded?.Invoke(); });

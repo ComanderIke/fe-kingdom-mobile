@@ -8,7 +8,7 @@ namespace Game.GameActors.Units
     public class ExperienceManager
     {
         private const int MAX_EXP = 100;
-        public delegate void ExpGainedEvent(int expBefore, int expGained);
+        public delegate void ExpGainedEvent(Unit drained, int expBefore, int expGained);
         public delegate void LevelupEvent();
         public ExpGainedEvent ExpGained;
         public LevelupEvent LevelUp;
@@ -34,15 +34,15 @@ namespace Game.GameActors.Units
 
         public int MaxExp = 100;
 
-        public const int MAX_EXP_TO_DRAIN = 500;
+        public const int MAX_EXP_TO_DRAIN = 100;
         [NonSerialized]
-        public int ExpLeftToDrain = 500;
+        public int ExpLeftToDrain = 100;
 
-        public void AddExp(int exp)
+        public void AddExp(Unit drained, int exp)
         {
             if (exp > MAX_EXP)
                 exp = MAX_EXP;
-            ExpGained?.Invoke(Exp, exp);
+            ExpGained?.Invoke(drained, Exp, exp);
             Debug.Log("Add Exp: " + exp);
             Exp += exp;
             Debug.Log("EXP: " + Exp);

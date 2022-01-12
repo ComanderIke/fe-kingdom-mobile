@@ -28,17 +28,20 @@ namespace Game.AI
 
         public void Think()
         {
-            if (IsStartOfTurn()) goalManager.PrepareGoals();
-
-            var units = player.GetActiveUnits();
+             if (IsStartOfTurn()) goalManager.PrepareGoals();
+            // Debug.Log("PrepareGoals");
+             var units = player.GetActiveUnits();
             if (units.Count > 0)
             {
-                var action = decisionMaker.ChooseBestMove(units);
-                ExecuteAction(action);
-                // UnitActionSystem.OnAllCommandsFinished += FinishedAction;
+            //     Debug.Log("ChooseBestMove");
+                 var action = decisionMaker.ChooseBestMove(units);
+            //     Debug.Log("Execute Action");
+                 ExecuteAction(action);
+
             }
             else
             {
+                Debug.Log("Finished");
                 finished = true;
             }
         }

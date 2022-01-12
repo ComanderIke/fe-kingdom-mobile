@@ -171,9 +171,10 @@ namespace Game.GameActors.Units
            
         }
 
-        private void ExpGained(int expBefore, int expGained)
+        private void ExpGained(Unit drained, int expBefore, int expGained)
         {
             OnExpGained?.Invoke(this, expBefore, expGained);
+            GameObject.FindObjectOfType<DeathParticleController>().Play(drained.GameTransformManager.GameObject.transform.position+new Vector3(0.5f,0.5f,0), expGained);
         }
 
         private void LevelUp()
@@ -203,7 +204,8 @@ namespace Game.GameActors.Units
         {
             UnitDied(this);
             Faction.RemoveUnit(this);
-            GameTransformManager.Destroy();
+            GameTransformManager.Die();
+            
         }
 
       

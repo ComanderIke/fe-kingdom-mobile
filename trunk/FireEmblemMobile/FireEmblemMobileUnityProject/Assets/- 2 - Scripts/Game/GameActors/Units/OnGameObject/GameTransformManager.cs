@@ -69,5 +69,10 @@ namespace Game.GameActors.Units.OnGameObject
         {
             Object.Destroy(GameObject);
         }
+
+        public void Die()
+        {
+            Destroy();
+        }
     }
 }

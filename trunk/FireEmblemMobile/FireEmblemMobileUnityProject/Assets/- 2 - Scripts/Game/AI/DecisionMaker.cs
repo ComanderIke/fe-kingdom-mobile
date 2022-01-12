@@ -13,9 +13,12 @@ namespace Game.AI
 {
     public class DecisionMaker
     {
-     
+
+        public GridSystem GridSystem;
         public AIUnitAction ChooseBestMove(IEnumerable<Unit> units)
         {
+            if (GridSystem == null)
+                GridSystem=GridGameManager.Instance.GetSystem<GridSystem>();
             var bestScore = float.MinValue;
             AIUnitAction bestAction = null;
 
@@ -34,19 +37,20 @@ namespace Game.AI
         }
         private AIUnitAction CalculateBestMove(IAIAgent unit)
         {
+            
             var currentBestScore = float.MinValue;// always want to do something
             var currentBestMoveLocation = new Vector2Int(unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y); //By default stay on the same position
             UnitAction unitAction = UnitAction.Wait;
 
             Vector2 startLoc = new Vector2(unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y);
             Unit currentBestTarget = null;
-            var moveLocs = GridGameManager.Instance.GetSystem<GridSystem>().GridLogic.GetMoveLocations((IGridActor)unit);
+            var moveLocs = GridSystem.GridLogic.GetMoveLocations((IGridActor)unit);
 
             foreach (var loc in moveLocs)
             {
 //                Debug.Log("Possible Location: "+loc);
                 float locScore = ScoreCalculater.ScoreLocationForCharacter(loc, unit);
-                var targets = GridGameManager.Instance.GetSystem<GridSystem>().GridLogic.GetAttackTargets((IGridActor)unit, loc.x, loc.y);
+                var targets =GridSystem.GridLogic.GetAttackTargets((IGridActor)unit, loc.x, loc.y);
               //  Debug.Log("Targets: "+targets.Count);
                 foreach (var gridActor in targets)
                 {

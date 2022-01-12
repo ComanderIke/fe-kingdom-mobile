@@ -98,7 +98,7 @@ namespace Game.Mechanics
                 }
 
                 GridGameManager.Instance.GetSystem<UiSystem>().SelectedCharacter((Unit)attacker);
-                attacker.ExperienceManager.AddExp(exp);
+                attacker.ExperienceManager.AddExp((Unit)defender,exp);
             }
             if (defender.IsAlive() && defender.Faction.IsPlayerControlled)
             {
@@ -110,7 +110,7 @@ namespace Game.Mechanics
                 }
 
                 GridGameManager.Instance.GetSystem<UiSystem>().SelectedCharacter((Unit)defender);
-                defender.ExperienceManager.AddExp(exp);
+                defender.ExperienceManager.AddExp((Unit)attacker, exp);
             }
         }
         private int CalculateExperiencePoints(IBattleActor expReceiver, IBattleActor enemyFought)
@@ -152,9 +152,15 @@ namespace Game.Mechanics
         private int[] CalculateStatIncreases(int[] growths)
         {
             int[] increaseAmount = new int[growths.Length];
-            for (int i = 0; i < growths.Length; i++)
+            bool atleast1 = false;
+            while (!atleast1)
             {
-                increaseAmount[i] = Method(growths[i]);
+                for (int i = 0; i < growths.Length; i++)
+                {
+                    increaseAmount[i] = Method(growths[i]);
+                    if (increaseAmount[i] > 0)
+                        atleast1 = true;
+                }
             }
 
             return increaseAmount;

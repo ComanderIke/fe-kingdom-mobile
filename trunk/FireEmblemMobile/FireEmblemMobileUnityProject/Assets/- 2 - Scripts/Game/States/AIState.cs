@@ -8,7 +8,7 @@ namespace Game.AI
 {
     public class AIState : GameState<NextStateTrigger>
     {
-        public const float PAUSE_BETWEEN_ACTIONS = 0.5f;
+        public const float PAUSE_BETWEEN_ACTIONS = 0.25f;
         private Brain brain;
         private ConditionManager ConditionManager;
         private float pauseTime;

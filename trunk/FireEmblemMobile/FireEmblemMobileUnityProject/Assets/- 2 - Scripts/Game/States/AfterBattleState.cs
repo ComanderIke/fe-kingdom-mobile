@@ -1,4 +1,5 @@
-﻿using Game.GameInput;
+﻿using Game.GameActors.Units;
+using Game.GameInput;
 using Game.GUI.Text;
 using Game.Manager;
 using Game.Mechanics;
@@ -22,8 +23,11 @@ namespace Game.States
         }
         public override void Enter()
         {
-            GridGameManager.Instance.GetSystem<UnitProgressSystem>().DistributeExperience(attacker, defender);
             
+         
+    
+            GridGameManager.Instance.GetSystem<UnitProgressSystem>().DistributeExperience(attacker, defender);
+           
             AnimationQueue.OnAllAnimationsEnded += Finished;
         }
 
