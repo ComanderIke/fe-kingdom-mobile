@@ -62,7 +62,7 @@ namespace Game.GameInput
                             Mathf.Abs(tile.Y - target.GridComponent.GridPosition.Y);
                 foreach (int range in character.AttackRanges)
                 {
-                    if (delta == range)
+                    if (delta == range&& gridSystem.GetTileChecker().IsTileFree(tile.X,tile.Y))
                     {
                         tilesInAttackRange.Add(tile);
                     }

@@ -33,6 +33,7 @@ namespace Utility
         public static void Add(Action action, Action runAfterAction = null)
         {
             queue.Enqueue(new ActionContainer(action,runAfterAction));
+            Debug.Log("Queue Count: "+queue.Count+" "+action);
             if (queue.Count == 1)
             {
                 NextAnimation();
@@ -52,7 +53,11 @@ namespace Utility
             if (queue.Count > 0)
                 queue.Peek().action?.Invoke();
             else
+            {
+                Debug.Log("All Anims Ended");
                 OnAllAnimationsEnded?.Invoke();
+            }
+                
         }
    
     }

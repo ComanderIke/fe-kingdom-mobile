@@ -15,6 +15,8 @@ namespace Game.GUI
         public GameObject glow;
         int currentExp;
         int addedExp;
+
+        private int expAfter;
         // float textspeed = 3;
         public float AnimateInDuration=0.25f;
         public float AnimateStayDuration = 0.45f;
@@ -23,22 +25,27 @@ namespace Game.GUI
         private void Start()
         {
             ParticleAttractor.onParticleArrived += IncreaseExpText;
-            ParticleAttractor.onAllParticlesArrived += Hide;
+  
         }
-
+        
         void IncreaseExpText()
         {
-            //Debug.Log("1EXP!");
             currentExp = currentExp + 1;
             text.text = "" + (currentExp);
             LeanTween.scale(gameObject, new Vector3(1.4f, 1.4f, 1), 0.1f).setEaseSpring();
             oldPosition = transform.localPosition;
+           // Debug.Log("1EXP! " +currentExp+" of "+expAfter);
+            if (currentExp == expAfter)
+            {
+                Hide();
+            }
         }
         public void UpdateValues(int currentExp, int addedExp)
         {
             Debug.Log("CurrentExp: "+currentExp+" Gained: "+addedExp);
             this.currentExp = currentExp;
             this.addedExp = addedExp;
+            expAfter = currentExp + addedExp;
         }
 
         public void Play()
@@ -73,7 +80,7 @@ namespace Game.GUI
         }
         void Hide()
         {
-            //Debug.Log("AllParticlesArrived!");
+            Debug.Log("AllParticlesArrived!");
             LeanTween.scale(gameObject, new Vector3(1, 1, 1), AnimateOutDuration).setEaseInQuad().setDelay(AnimateStayDuration);
             LeanTween.moveLocal(gameObject, oldPosition, AnimateOutDuration).setEaseInQuad().setDelay(AnimateStayDuration)
                 .setOnComplete(() => { AnimationQueue.OnAnimationEnded?.Invoke(); });

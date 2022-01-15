@@ -34,9 +34,9 @@ namespace Game.GameActors.Units
 
         public int MaxExp = 100;
 
-        public const int MAX_EXP_TO_DRAIN = 100;
+        public const int MAX_EXP_TO_DRAIN = 500;
         [NonSerialized]
-        public int ExpLeftToDrain = 100;
+        public int ExpLeftToDrain = 500;
 
         public void AddExp(Vector3 drainPos, int exp)
         {
@@ -63,6 +63,13 @@ namespace Game.GameActors.Units
            
             
             
+        }
+
+        public int GetMaxEXP(int exp)
+        {
+            if (exp > MAX_EXP)
+                return MAX_EXP;
+            return exp;
         }
     }
 }

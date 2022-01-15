@@ -22,8 +22,7 @@ public class DeathParticleController : MonoBehaviour
         //Debug.Log("CycleCount: "+(int)(exp/2f));
         var em = system.emission;
         em.enabled = true;
-        em.SetBursts(new[] { new ParticleSystem.Burst(0.0f, 3,3,(int)(exp/3f),interval), 
-            new ParticleSystem.Burst(0.1f, (short)(exp%3),(short)(exp%3),1,interval)});
+        em.SetBursts(new[] { new ParticleSystem.Burst(0.0f, (short)exp,(short)exp,1,interval)});
         // system.emission.SetBurst(0,new ParticleSystem.Burst(0.0f, 1,1,exp,0.010f));
         // system.emission.
         system.Play();

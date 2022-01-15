@@ -62,7 +62,8 @@ public class BattleUI : MonoBehaviour
        
         dmgValueRight.text = !playerUnitIsAttacker? ""+ battleSimulation.AttackerDamage:""+battleSimulation.DefenderDamage;
         hitValueRight.text = !playerUnitIsAttacker?"" + battleSimulation.AttackerHit:""+battleSimulation.DefenderHit;
-       
+
+
         if(playerUnitIsAttacker){
                 attackCountX.SetActive(battleSimulation.AttackerAttackCount > 1);
                 attackCount.gameObject.SetActive(attackCountX.activeSelf);
@@ -70,6 +71,16 @@ public class BattleUI : MonoBehaviour
                 attackCountRightX.SetActive(battleSimulation.DefenderAttackCount > 1);
                 attackCountRight.gameObject.SetActive(attackCountRightX.activeSelf);
                 attackCountRight.text = "" + battleSimulation.DefenderAttackCount;
+                if (battleSimulation.DefenderAttackCount > 0)
+                {
+                    dmgValueRight.text = "" + battleSimulation.DefenderDamage;
+                    hitValueRight.text = "" + battleSimulation.DefenderHit;
+                }
+                else
+                {
+                    dmgValueRight.text = "-";
+                    hitValueRight.text = "-" ;
+                }
         }
         else{
             attackCountX.SetActive(battleSimulation.DefenderAttackCount > 1);
@@ -78,6 +89,18 @@ public class BattleUI : MonoBehaviour
             attackCountRightX.SetActive(battleSimulation.AttackerAttackCount > 1);
             attackCountRight.gameObject.SetActive(attackCountRightX.activeSelf);
             attackCountRight.text = "" + battleSimulation.AttackerAttackCount;
+            dmgValueRight.text = ""+ battleSimulation.AttackerDamage;
+            hitValueRight.text = "" + battleSimulation.AttackerHit;
+            if (battleSimulation.DefenderAttackCount > 0)
+            {
+                dmgValue.text = "" + battleSimulation.DefenderDamage;
+                hitValue.text = "" + battleSimulation.DefenderHit;
+            }
+            else
+            {
+                dmgValue.text = "-";
+                hitValue.text = "-" ;
+            }
         }
 
 

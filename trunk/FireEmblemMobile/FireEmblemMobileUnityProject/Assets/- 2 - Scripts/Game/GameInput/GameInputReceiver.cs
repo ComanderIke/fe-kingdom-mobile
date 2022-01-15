@@ -215,6 +215,8 @@ namespace Game.GameInput
                 }
                 else
                 {
+                    if(selectionDataProvider.GetSelectedAttackTarget()!=null)
+                        gameplayInput.UndoUnit(selectionDataProvider.SelectedActor);
                     gameplayInput.DeselectUnit();
                 }
                 ResetInput();

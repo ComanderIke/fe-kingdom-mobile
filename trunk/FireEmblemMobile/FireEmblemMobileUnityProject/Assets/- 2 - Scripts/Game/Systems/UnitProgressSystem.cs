@@ -72,6 +72,7 @@ namespace Game.Mechanics
             {
                 levelUpRenderer.UpdateValues(unit.name, unit.visuals.CharacterSpriteSet.FaceSprite,unit.ExperienceManager.Level - 1, unit.ExperienceManager.Level,
                     unit.Stats.Attributes.AsArray(), statIncreases);
+                Debug.Log("Add LevelUpAnimation!");
                 AnimationQueue.Add(((IAnimation) levelUpRenderer).Play);
             }
             
@@ -93,7 +94,7 @@ namespace Game.Mechanics
                 var exp = CalculateExperiencePoints(attacker, defender);
                 if (ExpRenderer != null)
                 {
-                    ExpRenderer.UpdateValues(attacker.ExperienceManager.Exp, exp);
+                    ExpRenderer.UpdateValues(attacker.ExperienceManager.Exp, attacker.ExperienceManager.GetMaxEXP(exp));
                     AnimationQueue.Add(((IAnimation) ExpRenderer).Play);
                 }
 
@@ -105,7 +106,7 @@ namespace Game.Mechanics
                 var exp = CalculateExperiencePoints(defender, attacker);
                 if (ExpRenderer != null)
                 {
-                    ExpRenderer.UpdateValues(defender.ExperienceManager.Exp, exp);
+                    ExpRenderer.UpdateValues(defender.ExperienceManager.Exp, defender.ExperienceManager.GetMaxEXP(exp));
                     AnimationQueue.Add(((IAnimation) ExpRenderer).Play);
                 }
 
