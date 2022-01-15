@@ -73,7 +73,7 @@ namespace Game.Grid
             return tiles[x, y].TileData.GetMovementCost(unit.MoveType);
         }
 
-        public bool IsValidLocation(IGridActor unit, int sx, int sy, int x, int y, bool isAdjacent)
+        public bool IsValidLocation(IGridActor unit, int sx, int sy, int x, int y)
         {
             bool invalid = (x < 0) || (y < 0) || (x >= width) || (y >= height);
             if (invalid)
@@ -91,11 +91,6 @@ namespace Game.Grid
                     if (tile.Actor.GridComponent.CanMoveThrough(unit))
                     {
                         invalid = true;
-                    }
-
-                    if (isAdjacent)
-                    {
-                        //Do nothing will be checked with attackRange Later Passthrough is ok but not stopping on it
                     }
                 }
             }

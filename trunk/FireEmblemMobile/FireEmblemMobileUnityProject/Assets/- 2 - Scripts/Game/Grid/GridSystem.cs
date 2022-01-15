@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Game.GameActors.Units;
 using Game.GameResources;
@@ -273,6 +274,20 @@ namespace Game.Map
                 Tiles[x, y].Actor = unit;
                 unit.GridComponent.SetInternPosition(x, y);
             }
+        }
+
+        public List<Tile> GetActiveTiles()
+        {
+            List<Tile> activeTiles = new List<Tile>();
+            foreach (var tile in Tiles)
+            {
+                if (GridLogic.gridSessionData.IsMoveableAndActive(tile.X, tile.Y))
+                {
+                    activeTiles.Add(tile);
+                }
+            }
+
+            return activeTiles;
         }
     }
 }

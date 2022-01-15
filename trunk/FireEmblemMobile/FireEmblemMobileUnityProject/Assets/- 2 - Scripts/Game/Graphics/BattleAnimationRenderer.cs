@@ -43,7 +43,9 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         this.attacker = battleSimulation.Attacker;
         this.defender = battleSimulation.Defender;
         Debug.Log(attacker.Hp+ " "+attackingActor.Hp);
+        
         BattleUI.Show(battleSimulation, (Unit)attackingActor, (Unit)defendingActor);
+        
         leftCharacterAttacker = battleSimulation.Attacker.Faction.IsPlayerControlled;
         if(characterLeft!=null)
             Destroy(characterLeft);

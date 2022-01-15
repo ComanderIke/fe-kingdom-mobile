@@ -73,7 +73,7 @@ namespace Game.GUI
         }
         void Hide()
         {
-            Debug.Log("AllParticlesArrived!");
+            //Debug.Log("AllParticlesArrived!");
             LeanTween.scale(gameObject, new Vector3(1, 1, 1), AnimateOutDuration).setEaseInQuad().setDelay(AnimateStayDuration);
             LeanTween.moveLocal(gameObject, oldPosition, AnimateOutDuration).setEaseInQuad().setDelay(AnimateStayDuration)
                 .setOnComplete(() => { AnimationQueue.OnAnimationEnded?.Invoke(); });

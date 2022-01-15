@@ -279,7 +279,7 @@ namespace Game.GameInput
                         {
                             //Debug.Log("Dont know");
                             selectedActor.GridComponent.ResetPosition();
-                            inputPathManager.CalculatePathToPosition(selectedActor, new Vector2(enemyActor.GridComponent.GridPosition.X, enemyActor.GridComponent.GridPosition.Y));
+                            inputPathManager.CalculateAttackPathToTarget(selectedActor, enemyActor);
                             if (!inputPathManager.IsMovementPathEmpty())
                             {
                                 var lastMovPathPos = inputPathManager.GetLastMovementPathPosition();
@@ -387,7 +387,7 @@ namespace Game.GameInput
                 }
                 else
                 {
-                    inputPathManager.CalculatePathToPosition(selectedActor, new Vector2(x, y));
+                    inputPathManager.CalculateAttackPathToTarget(selectedActor, enemy);
                 }
             }
             else  // Search for suitable AttackPosition
@@ -428,7 +428,7 @@ namespace Game.GameInput
                 }
                 else
                 {
-                    inputPathManager.CalculatePathToPosition(selectedActor, new Vector2(x, y));
+                    inputPathManager.CalculateAttackPathToTarget(selectedActor, enemy);
                 }
             }
         }

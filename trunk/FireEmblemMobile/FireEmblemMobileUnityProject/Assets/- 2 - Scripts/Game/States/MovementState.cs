@@ -38,7 +38,7 @@ namespace Game.Mechanics
         public void StartMovement(IGridActor c,  int x, int y, bool skipAnimation=false,List<GridPosition> path = null )
         {
             this.skipAnimation = skipAnimation;
-            Debug.Log("Move to: "+x+" "+y+" "+c);
+            //Debug.Log("Move to: "+x+" "+y+" "+c);
             mousePath = path;
             this.x = x;
             this.y = y;
@@ -64,7 +64,7 @@ namespace Game.Mechanics
             if (mousePath == null || mousePath.Count == 0)
             {
                 Path = gridGameManager.GetSystem<MoveSystem>().GetPath(unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y, x, y,
-                    unit, false, new List<int>());
+                    unit);
                 Path?.Reverse();
                 
             }

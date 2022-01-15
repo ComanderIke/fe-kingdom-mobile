@@ -64,10 +64,10 @@ namespace Game.Mechanics
         }
         
 
-        public MovementPath GetPath(int x, int y, int x2, int y2, IGridActor unit, bool toAdjacentPos, IEnumerable<int> range)
+        public MovementPath GetPath(int x, int y, int x2, int y2, IGridActor unit)
         {
             //GridGameManager.Instance.GetSystem<InputSystem>().AttackRangeFromPath = 0;
-            return pathFinder.FindPath(x, y, x2, y2, unit, toAdjacentPos, range);
+            return pathFinder.FindPath(x, y, x2, y2, unit);
         }
 
        

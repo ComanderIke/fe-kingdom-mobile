@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using Game.GameActors.Units;
 using Game.Graphics;
+using Game.Grid;
 using Game.Grid.GridPathFinding;
 using Game.Manager;
+using Game.Map;
 using Game.Mechanics;
 using UnityEngine;
 
@@ -40,7 +42,7 @@ namespace Game.GameInput
         {
             Reset();
             var p = pathProvider.FindPath(character.GridComponent.GridPosition.X,
-                character.GridComponent.GridPosition.Y, x, y, character, false, character.AttackRanges);
+                character.GridComponent.GridPosition.Y, x, y, character);
             if (p != null)
                 for (int i = p.GetLength() - 2; i >= 0; i--)
                     dragPath.Add(new Vector2Int(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
@@ -48,12 +50,56 @@ namespace Game.GameInput
             UpdatedMovementPath(character.GridComponent.GridPosition.X, character.GridComponent.GridPosition.Y);
         }
 
+        public void CalculateAttackPathToTarget(IGridActor character, IGridActor target)
+        {
+            Reset();
+            var gridSystem =  GridGameManager.Instance.GetSystem<GridSystem>();
+            var activeTiles = gridSystem.GetActiveTiles();
+            var tilesInAttackRange = new List<Tile>();
+            foreach (var tile in activeTiles)//sort tile by distance to target
+            {
+                var delta = Mathf.Abs(tile.X - target.GridComponent.GridPosition.X) +
+                            Mathf.Abs(tile.Y - target.GridComponent.GridPosition.Y);
+                foreach (int range in character.AttackRanges)
+                {
+                    if (delta == range)
+                    {
+                        tilesInAttackRange.Add(tile);
+                    }
+                }
+            }
+            
+            int max = 99;
+            int currentMax = 0;
+            Tile nearestTile = null;// find nearest tile with suitable AttackPosition and findPath to it
+            for (int i =0; i < tilesInAttackRange.Count; i++)//sort tile by distance to target
+            {
+                var delta = Mathf.Abs(tilesInAttackRange[i].X - target.GridComponent.GridPosition.X) +
+                            Mathf.Abs(tilesInAttackRange[i].Y - target.GridComponent.GridPosition.Y);
+                if (delta < max)
+                {
+                    max = delta;
+                    nearestTile = tilesInAttackRange[i];
+                }
+            }
+             
+            var p = pathProvider.FindPath(character.GridComponent.GridPosition.X,
+                character.GridComponent.GridPosition.Y,  nearestTile.X,  nearestTile.Y, character);
+            MovementPath = new List<Vector2Int>();
+            p.Reverse();
+            for (int i = 1; i < p.GetLength(); i++)
+            {
+                //Debug.Log(new Vector2(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
+                MovementPath.Add(new Vector2Int(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
+            }
+            
+            UpdatedMovementPath(character.GridComponent.GridPosition.X, character.GridComponent.GridPosition.Y);
+        }
         public void CalculatePathToPosition(IGridActor character, Vector2 position)
         {
             Reset();
             var p = pathProvider.FindPath(character.GridComponent.GridPosition.X,
-                character.GridComponent.GridPosition.Y, (int) position.x, (int) position.y, character, true,
-                character.AttackRanges);
+                character.GridComponent.GridPosition.Y, (int) position.x, (int) position.y, character);
             MovementPath = new List<Vector2Int>();
             p.Reverse();
             for (int i = 1; i < p.GetLength(); i++)
@@ -100,7 +146,7 @@ namespace Game.GameInput
          //   Debug.Log(gridActor);
          //   Debug.Log(pathProvider);
             var p = pathProvider.FindPath(gridActor.GridComponent.GridPosition.X,
-                gridActor.GridComponent.GridPosition.Y, x, y, gridActor, false, gridActor.AttackRanges);
+                gridActor.GridComponent.GridPosition.Y, x, y, gridActor);
             if (p != null)
                 for (int i = p.GetLength() - 2; i >= 0; i--)
                     dragPath.Add(new Vector2Int(p.GetStep(i).GetX(), p.GetStep(i).GetY()));

@@ -41,7 +41,7 @@ namespace GameEngine
             {
                 currentState.Exit();
                 nextState.PreviousState = currentState;
-                Debug.Log("SwitchState: "+ nextState+" PreviousState: "+nextState.PreviousState);
+                //Debug.Log("SwitchState: "+ nextState+" PreviousState: "+nextState.PreviousState);
                 currentState = nextState;
                 nextState.Enter();
             }

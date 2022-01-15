@@ -72,7 +72,7 @@ namespace Game.AI
                     unitAction = UnitAction.Wait;
                 }
             }
-            Debug.Log("Score : "+currentBestScore);
+           // Debug.Log("Score : "+currentBestScore);
             var action = new AIUnitAction {Performer= (Unit)unit, Score = currentBestScore, Location = currentBestMoveLocation, Target = currentBestTarget, UnitAction = unitAction};
             
             return action;

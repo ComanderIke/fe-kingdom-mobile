@@ -41,13 +41,13 @@ namespace Game.AI
             }
             else
             {
-                Debug.Log("Finished");
+                //Debug.Log("Finished");
                 finished = true;
             }
         }
         public void ExecuteAction( AIUnitAction action)
         {
-            Debug.Log("Execute ACtion: "+action.Performer+" "+action.UnitAction+ " "+action.Location);
+            //Debug.Log("Execute ACtion: "+action.Performer+" "+action.UnitAction+ " "+action.Location);
            
             unitActionSystem.AddCommand(new MoveCharacterCommand(action.Performer, action.Location));
             switch (action.UnitAction)

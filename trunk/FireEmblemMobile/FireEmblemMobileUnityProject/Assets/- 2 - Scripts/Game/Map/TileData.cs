@@ -36,7 +36,7 @@ namespace Game.Map
         {
             if (movementCosts.ContainsKey(moveType))
                 return movementCosts[moveType];
-            else return 1;
+            return 1;
         }
 
         public bool CanMoveThrough(MoveType moveType)

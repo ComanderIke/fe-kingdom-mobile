@@ -27,7 +27,15 @@ namespace Game.States
          
     
             GridGameManager.Instance.GetSystem<UnitProgressSystem>().DistributeExperience(attacker, defender);
-           
+            if (!attacker.IsAlive())
+            {
+                attacker.Die();
+            }
+            if (!defender.IsAlive())
+            {
+                defender.Die();
+            }
+
             AnimationQueue.OnAllAnimationsEnded += Finished;
         }
 

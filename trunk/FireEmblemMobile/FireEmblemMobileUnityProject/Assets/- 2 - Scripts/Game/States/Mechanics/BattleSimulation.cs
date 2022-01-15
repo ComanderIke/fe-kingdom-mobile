@@ -50,7 +50,9 @@ namespace Game.Mechanics
         {
             int damage = attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defender);
             //int spDamage= attacker.BattleComponent.BattleStats.GetTotalSpDamageAgainstTarget(defender);
-            attackData.hit = UnityEngine.Random.Range(0, 101) <= attacker.BattleComponent.BattleStats.GetHitAgainstTarget(defender);
+            var hitRng = UnityEngine.Random.Range(0, 101);
+            Debug.Log("HitRNG: Attacker: "+hitRng+ " hitRate: "+attacker.BattleComponent.BattleStats.GetHitAgainstTarget(defender));
+            attackData.hit =  hitRng<= attacker.BattleComponent.BattleStats.GetHitAgainstTarget(defender);
             if (attacker == Attacker)
             {
               

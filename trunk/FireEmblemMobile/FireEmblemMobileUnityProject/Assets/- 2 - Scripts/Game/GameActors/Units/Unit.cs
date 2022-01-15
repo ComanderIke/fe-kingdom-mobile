@@ -171,10 +171,10 @@ namespace Game.GameActors.Units
            
         }
 
-        private void ExpGained(Unit drained, int expBefore, int expGained)
+        private void ExpGained(Vector3 drainPos, int expBefore, int expGained)
         {
             OnExpGained?.Invoke(this, expBefore, expGained);
-            GameObject.FindObjectOfType<DeathParticleController>().Play(drained.GameTransformManager.GameObject.transform.position+new Vector3(0.5f,0.5f,0), expGained);
+            GameObject.FindObjectOfType<DeathParticleController>().Play(drainPos+new Vector3(0.5f,0.5f,0), expGained);
         }
 
         private void LevelUp()

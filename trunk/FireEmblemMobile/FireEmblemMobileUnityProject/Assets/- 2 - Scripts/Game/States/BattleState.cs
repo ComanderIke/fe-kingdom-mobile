@@ -80,15 +80,7 @@ namespace Game.Mechanics
             // if(battleSimulation.DefenderAttackCount!=0)
             //     defender.SpBars--; 
             // attacker.SpBars--;
-            if (!attacker.IsAlive())
-            {
-                attacker.Die();
-            }
-            if (!defender.IsAlive())
-            {
-                defender.Die();
-            }
-
+          
        
             //battleStarted = false;
             //BattleRenderer.Hide();

@@ -98,7 +98,7 @@ namespace Game.Mechanics
                 }
 
                 GridGameManager.Instance.GetSystem<UiSystem>().SelectedCharacter((Unit)attacker);
-                attacker.ExperienceManager.AddExp((Unit)defender,exp);
+                attacker.ExperienceManager.AddExp(defender.GameTransformManager.Transform.position,exp);
             }
             if (defender.IsAlive() && defender.Faction.IsPlayerControlled)
             {
@@ -110,7 +110,7 @@ namespace Game.Mechanics
                 }
 
                 GridGameManager.Instance.GetSystem<UiSystem>().SelectedCharacter((Unit)defender);
-                defender.ExperienceManager.AddExp((Unit)attacker, exp);
+                defender.ExperienceManager.AddExp(attacker.GameTransformManager.Transform.position, exp);
             }
         }
         private int CalculateExperiencePoints(IBattleActor expReceiver, IBattleActor enemyFought)
