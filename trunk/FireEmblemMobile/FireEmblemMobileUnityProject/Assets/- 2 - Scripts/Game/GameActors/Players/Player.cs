@@ -19,16 +19,11 @@ namespace Game.GameActors.Players
         [HideInInspector]
 
         public string Name;
-        [SerializeField] public List<Item> convoy = default;
-        [SerializeField] public int money = default;
+
         [HideInInspector]
         public bool dataLoaded = false;
 
-        public Player()
-        {
-            convoy = new List<Item>();
-            
-        }
+       
 
         public PlayerData GetSaveData()
         {
@@ -38,10 +33,10 @@ namespace Game.GameActors.Players
 
         public void LoadData(PlayerData data)
         {
-            money = data.money;
+            
             Name = data.Name;
             //data.factionData.Load((WM_Faction)faction);
-            convoy=data.convoy;
+           
             dataLoaded = true;
         }
        

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Game.GameActors.Players;
+using Game.WorldMapStuff.Model;
 using UnityEngine;
 
 public abstract class EncounterNode
@@ -29,5 +30,5 @@ public abstract class EncounterNode
         GameObject.FindObjectOfType<AreaGameManager>().Continue();
     }
 
-    public abstract void Activate();
+    public abstract void Activate(Party party);
 }

@@ -17,7 +17,7 @@ public class Merchant
 public class MerchantEncounterNode : EncounterNode
 {
     public Merchant merchant;
-    public Party party;
+   
     public MerchantEncounterNode(EncounterNode parent) : base(parent)
     {
         merchant = new Merchant();
@@ -27,12 +27,12 @@ public class MerchantEncounterNode : EncounterNode
         merchant.AddItem(GameData.Instance.GetRandomMagic());
         merchant.AddItem(GameData.Instance.GetRandomMagic());
         merchant.AddItem(GameData.Instance.GetRandomWeapon());
-        party = Player.Instance.Party;
+        
     }
 
-    public override void Activate()
+    public override void Activate(Party party)
     {
-        GameObject.FindObjectOfType<UIMerchantController>().Show(this);
+        GameObject.FindObjectOfType<UIMerchantController>().Show(this,party);
         //GameObject.FindObjectOfType<UIInnController>().Show(Player.Instance.Party);
         Debug.Log("Activate MerchantEncounterNode");
     }

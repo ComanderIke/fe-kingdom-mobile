@@ -71,7 +71,7 @@ namespace Game.WorldMapStuff.Manager
         private void InitializePlayerData()
         {
             Player.Instance.Name = "Player";
-            Player.Instance.money = 0;
+            //Player.Instance.Party.money = 0;
         }
         private void InitializeCampaignData()
         {

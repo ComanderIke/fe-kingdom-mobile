@@ -16,7 +16,7 @@ public class Smithy
 public class SmithyEncounterNode : EncounterNode
 {
     public Smithy smithy;
-    public Party party;
+
     public SmithyEncounterNode(EncounterNode parent) : base(parent)
     { 
         smithy = new Smithy();
@@ -24,13 +24,13 @@ public class SmithyEncounterNode : EncounterNode
         smithy.AddItem(GameData.Instance.GetRandomArmor());
         smithy.AddItem(GameData.Instance.GetRandomWeapon());
         smithy.AddItem(GameData.Instance.GetRandomWeapon());
-        party = Player.Instance.Party;
+    
 
     }
 
-    public override void Activate()
+    public override void Activate(Party party)
     {
-        GameObject.FindObjectOfType<UISmithyController>().Show(this);
+        GameObject.FindObjectOfType<UISmithyController>().Show(this,party);
         Debug.Log("Activate SmithyEncounterNode");
     }
 }

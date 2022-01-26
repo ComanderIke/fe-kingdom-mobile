@@ -13,7 +13,7 @@ public class BattleEncounterNode : EncounterNode
         this.enemyArmyData = enemyArmyData;
     }
 
-    public override void Activate()
+    public override void Activate(Party party)
     {
         Continue();
         GameSceneController.Instance.LoadBattleLevel(levelindex, enemyArmyData, this);

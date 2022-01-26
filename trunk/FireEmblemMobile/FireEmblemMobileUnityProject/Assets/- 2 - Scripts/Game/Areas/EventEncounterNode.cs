@@ -11,16 +11,16 @@ public class RandomEvent
 public class EventEncounterNode : EncounterNode
 {
     public RandomEvent randomEvent;
-    public Party party;
+   
     public EventEncounterNode(EncounterNode parent) : base(parent)
     {
         randomEvent = new RandomEvent();
 
     }
 
-    public override void Activate()
+    public override void Activate(Party party)
     {
-        GameObject.FindObjectOfType<UIEventController>().Show(this);
+        GameObject.FindObjectOfType<UIEventController>().Show(this,party);
         Debug.Log("Activate EventEncounterNode");
         
     }

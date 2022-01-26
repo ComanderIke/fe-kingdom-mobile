@@ -11,11 +11,11 @@ public class UIEventController : MonoBehaviour
     public Party party;
     private RandomEvent randomEvent;
     // Start is called before the first frame update
-    public void Show(EventEncounterNode node)
+    public void Show(EventEncounterNode node, Party party)
     {
         this.node = node;
         canvas.enabled = true;
-        this.party = node.party;
+        this.party = party;
         this.randomEvent = node.randomEvent;
         FindObjectOfType<UICharacterViewController>().Show(party);
         // for (int i=0; i<church.shopItems.Count; i++)

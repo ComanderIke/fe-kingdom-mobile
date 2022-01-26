@@ -13,11 +13,11 @@ public class UIMerchantController : MonoBehaviour
     //public TextMeshProUGUI talkText;
     public List<UIShopItemController> shopItems;
     private Merchant merchant;
-    public void Show(MerchantEncounterNode node)
+    public void Show(MerchantEncounterNode node, Party party)
     {
         canvas.enabled = true;
         this.node = node;
-        this.party = node.party;
+        this.party = party;
         this.merchant = node.merchant;
         for (int i=0; i<merchant.shopItems.Count; i++)
         {

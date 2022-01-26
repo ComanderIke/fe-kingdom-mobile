@@ -16,19 +16,19 @@ public class Church
 public class ChurchEncounterNode : EncounterNode
 {
     public Church church;
-    public Party party;
+
     public ChurchEncounterNode(EncounterNode parent) : base(parent)
     {
         church = new Church();
         church.AddItem(GameData.Instance.GetRandomRelic());
         church.AddItem(GameData.Instance.GetRandomMagic());
         church.AddItem(GameData.Instance.GetRandomStaff());
-        party = Player.Instance.Party;
+       
     }
 
-    public override void Activate()
+    public override void Activate(Party party)
     {
-        GameObject.FindObjectOfType<UIChurchController>().Show(this);
+        GameObject.FindObjectOfType<UIChurchController>().Show(this,party);
         Debug.Log("Activate ChurchEncounterNode");
     }
 }

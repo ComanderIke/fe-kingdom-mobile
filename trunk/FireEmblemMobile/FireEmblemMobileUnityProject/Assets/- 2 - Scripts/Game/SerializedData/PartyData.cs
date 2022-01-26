@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Game.GameActors.Items;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
 using Game.GameActors.Units.Monsters;
@@ -17,6 +18,10 @@ namespace Game.GameActors.Players
         public string name;
         [SerializeField]
         public List<HumanData> humanData;
+        [SerializeField]
+        public int money;
+        [SerializeField]
+        public List<Item> convoy;
         [SerializeField]
         public List<MonsterData> monsterData;
 

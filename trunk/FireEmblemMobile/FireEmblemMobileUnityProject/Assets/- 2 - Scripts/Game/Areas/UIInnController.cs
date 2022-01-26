@@ -21,13 +21,13 @@ public class UIInnController : MonoBehaviour
     public UIRecruitCharacterController recruitCharacter;
     private InnEncounterNode node;
 
-    public void Show(InnEncounterNode node)
+    public void Show(InnEncounterNode node, Party party)
     {
         canvas.enabled = true;
         this.node = node;
-        this.party = node.party;
+        this.party = party;
         this.inn = node.inn;
-
+    Debug.Log(party);
        
         for (int i=0; i<inn.shopItems.Count; i++)
         {

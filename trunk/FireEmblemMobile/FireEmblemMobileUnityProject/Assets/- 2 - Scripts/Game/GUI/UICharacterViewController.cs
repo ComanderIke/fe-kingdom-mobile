@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
 using Game.GameActors.Units.OnGameObject;
@@ -22,6 +23,7 @@ public class UICharacterViewController : MonoBehaviour
     public UIEquipmentController equipmentController;
     public UISkillsController skillsController;
     
+     public TextMeshProUGUI PartyGold;
 
     public TextMeshProUGUI Hitrate;
     public TextMeshProUGUI DodgeRate;
@@ -50,6 +52,8 @@ public class UICharacterViewController : MonoBehaviour
     public void Show(Party party)
     {
         canvas.enabled = true;
+        Debug.Log(party);
+        Debug.Log(currentUnitIndex+" "+party.members.Count);
         this.unit = party.members[currentUnitIndex];
         this.party = party;
         
@@ -70,6 +74,7 @@ public class UICharacterViewController : MonoBehaviour
         CON.SetText(""+unit.Stats.Attributes.CON);
         FTH.SetText(""+unit.Stats.Attributes.FAITH);
         
+        PartyGold.SetText(""+party.Money);
         HPBar.SetValue(unit.Hp, unit.Stats.MaxHp);
         equipmentController.Show((Human)unit);
         skillsController.Show(unit);

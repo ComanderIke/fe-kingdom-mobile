@@ -116,7 +116,7 @@ public class EncounterTree
                 }
                     
             }
-            Debug.Log(chosenKey);
+            //Debug.Log(chosenKey);
             EncounterNode node = chosenKey.CreateNode(parent);
             node.prefabIdx = GetNodeDataIndex(chosenKey);
             //CreateNodeGameObject(chosenKey.prefab, node);

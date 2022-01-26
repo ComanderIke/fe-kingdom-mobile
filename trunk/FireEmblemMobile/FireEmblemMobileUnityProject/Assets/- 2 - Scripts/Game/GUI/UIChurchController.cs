@@ -22,11 +22,11 @@ public class UIChurchController : MonoBehaviour
     {
         
     }
-    public void Show(ChurchEncounterNode node)
+    public void Show(ChurchEncounterNode node, Party party)
     {
         this.node = node;
         canvas.enabled = true;
-        this.party = node.party;
+        this.party = party;
         this.church = node.church;
         for (int i=0; i<church.shopItems.Count; i++)
         {

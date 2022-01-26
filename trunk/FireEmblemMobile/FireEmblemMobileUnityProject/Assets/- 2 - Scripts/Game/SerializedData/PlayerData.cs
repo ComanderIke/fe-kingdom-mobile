@@ -12,15 +12,11 @@ namespace Game.GameActors.Players
         public string Name;
         [SerializeField]
         public FactionData factionData;
-        [SerializeField]
-        public int money;
-        [SerializeField]
-        public List<Item> convoy;
+ 
         public PlayerData (Player player)
         {
             Name = player.Name;
-            money = player.money;
-            convoy = player.convoy;
+       
             //factionData = new FactionData((WM_Faction)player.faction);
 
         }

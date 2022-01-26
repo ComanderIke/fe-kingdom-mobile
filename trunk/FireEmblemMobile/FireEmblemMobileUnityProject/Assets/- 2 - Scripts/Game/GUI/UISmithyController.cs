@@ -12,11 +12,11 @@ public class UISmithyController : MonoBehaviour
     public List<UIShopItemController> shopItems;
     private Smithy smithy;
 
-    public void Show(SmithyEncounterNode node)
+    public void Show(SmithyEncounterNode node, Party party)
     {
         this.node = node;
         canvas.enabled = true;
-        this.party = node.party;
+        this.party = party;
         this.smithy = node.smithy;
         for (int i=0; i<smithy.shopItems.Count; i++)
         {

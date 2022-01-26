@@ -11,7 +11,8 @@ public class AreaGameManager : MonoBehaviour
     public GameObject playerPrefab;
     private Area_ActionSystem actionSystem;
     public GameObject moveOptionPrefab;
-    
+    public EncounterUIController uiCOntroller;
+    public UIPartyCharacterCircleController uiPartyController;
     public Party playerStartParty;
     public ColumnManager ColumnManager;
     // Start is called before the first frame update
@@ -19,7 +20,7 @@ public class AreaGameManager : MonoBehaviour
     private List<GameObject> moveOptions=new List<GameObject>();
     void Start()
     {
-        Debug.Log("WHY IS START NOT CALLED?");
+        //Debug.Log("WHY IS START NOT CALLED?");
         actionSystem = new Area_ActionSystem();
         if(PlayerPrefs.HasKey("CameraX")&&PlayerPrefs.HasKey("CameraY"))
         {
@@ -31,7 +32,7 @@ public class AreaGameManager : MonoBehaviour
 
         if (Player.Instance.Party == null)
         {
-            Debug.Log("Player Null");
+            //Debug.Log("Player Null");
             Player.Instance.Party = Instantiate(playerStartParty);
             Player.Instance.Party.Initialize();
             
@@ -41,20 +42,23 @@ public class AreaGameManager : MonoBehaviour
         {
             
         }
+        
         var go = Instantiate(playerPrefab, spawnParent, false);
         Player.Instance.Party.GameObject = go;
         if (Player.Instance.Party.EncounterNode == null)
         {
-            Debug.Log("Player Node Null");
+            //Debug.Log("Player Node Null");
            
             Player.Instance.Party.EncounterNode = EncounterTree.Instance.startNode;
         }
+        uiCOntroller.Init(Player.Instance.Party);
         go.transform.position = Player.Instance.Party.EncounterNode.gameObject.transform.position;
 
        Debug.Log(Player.Instance.Party.EncounterNode);
         ResetMoveOptions();
   
         ShowMoveOptions();
+        uiPartyController.Show(Player.Instance.Party);
         
     }
 
@@ -98,7 +102,7 @@ public class AreaGameManager : MonoBehaviour
             
            
             actionSystem.Move(encounterNode);
-            StartCoroutine( DelayAction(()=>encounterNode.Activate(), 1.0f));
+            StartCoroutine( DelayAction(()=>encounterNode.Activate(Player.Instance.Party), 1.0f));
             // ResetMoveOptions();
             // ShowMoveOptions();
         }

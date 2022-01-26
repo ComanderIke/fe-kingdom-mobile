@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.OnGameObject;
 using TMPro;
@@ -21,6 +22,13 @@ namespace Game.GUI
         private TextMeshProUGUI characterName;
         [SerializeField]
         private IStatBar hpBar;
+        [SerializeField]
+        private  Vector2 selectedSize;
+        [SerializeField]
+        private  Vector2 normalSize;
+
+        public UIPartyCharacterCircleController parentController;
+
        // [SerializeField]
       //  private IStatBar spBar;
         // [SerializeField]
@@ -36,13 +44,25 @@ namespace Game.GUI
         {
             // statPanel.gameObject.SetActive(!statPanel.gameObject.activeSelf);
         }
-
+        public void ShowActive(Unit unit)
+        {
+            this.unit = unit;
+            UpdateValues();
+            gameObject.SetActive(true);
+            GetComponent<RectTransform>().sizeDelta = selectedSize;
+        }
         public override void Show(Unit unit)
         {
             this.unit = unit;
             UpdateValues();
             gameObject.SetActive(true);
+            GetComponent<RectTransform>().sizeDelta = normalSize;
             
+        }
+
+        public void Clicked()
+        {
+            parentController.Clicked(unit);
         }
         public override void Hide()
         {
