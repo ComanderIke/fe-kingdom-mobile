@@ -42,7 +42,7 @@ public class UICharacterViewController : MonoBehaviour
     
     public Image image;
 
-    private int currentUnitIndex = 0;
+
 
     // private void OnEnable()
     // {
@@ -52,11 +52,18 @@ public class UICharacterViewController : MonoBehaviour
     public void Show(Party party)
     {
         canvas.enabled = true;
-        Debug.Log(party);
-        Debug.Log(currentUnitIndex+" "+party.members.Count);
-        this.unit = party.members[currentUnitIndex];
+
+
+
+        UpdateUI(party);
+
+    }
+
+    void UpdateUI(Party party)
+    {
         this.party = party;
         
+        this.unit = party.members[party.ActiveUnitIndex];
         charName.SetText(unit.name +", "+unit.jobClass);
         Lv.SetText("Lv. "+unit.ExperienceManager.Level);
         ExpBar.SetValue(unit.ExperienceManager.Exp, unit.ExperienceManager.MaxExp);
@@ -78,26 +85,29 @@ public class UICharacterViewController : MonoBehaviour
         HPBar.SetValue(unit.Hp, unit.Stats.MaxHp);
         equipmentController.Show((Human)unit);
         skillsController.Show(unit);
-       
-
     }
-
     public void NextCharacterClicked()
     {
-        
-        currentUnitIndex = currentUnitIndex >= party.members.Count-1 ? 0 : currentUnitIndex+1;
-        Debug.Log("Unit Index: " + currentUnitIndex);
+       
+        party.ActiveUnitIndex =  party.ActiveUnitIndex >= party.members.Count-1 ? 0 :  party.ActiveUnitIndex+1;
+        Debug.Log("Unit Index: " +  party.ActiveUnitIndex);
         Show(party);
     }
     public void PreviousCharacterClicked()
     {
-        currentUnitIndex = currentUnitIndex <= 0 ? party.members.Count-1 : currentUnitIndex-1;
-        Debug.Log("Unit Index: " + currentUnitIndex);
+        party.ActiveUnitIndex =  party.ActiveUnitIndex <= 0 ? party.members.Count-1 :  party.ActiveUnitIndex-1;
+        Debug.Log("Unit Index: " +  party.ActiveUnitIndex);
         Show(party);
     }
 
     public void Hide()
     {
         canvas.enabled = false;
+    }
+
+    public void UpdateParty(Party party)
+    {
+       
+        UpdateUI(party);
     }
 }
