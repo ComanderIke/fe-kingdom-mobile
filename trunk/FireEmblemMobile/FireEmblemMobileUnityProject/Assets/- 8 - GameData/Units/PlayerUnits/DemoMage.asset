@@ -15,7 +15,7 @@ MonoBehaviour:
   name: huhu
   jobClass: Witch
   stats:
-    AttackRanges: 
+    AttackRanges: 0100000002000000
     Attributes:
       STR: 2
       INT: 5
@@ -23,7 +23,7 @@ MonoBehaviour:
       AGI: 5
       CON: 4
       FAITH: 3
-    MaxHp: 0
+    MaxHp: 12
     Mov: 2
   growths:
     STR: 20
@@ -37,6 +37,10 @@ MonoBehaviour:
     CharacterSpriteSet: {fileID: 11400000, guid: eab4068f017df624f847ba1d9fa411c5,
       type: 2}
     UnitEffectVisual: {fileID: 0}
+    Prefabs:
+      MapAnimatedSprite: {fileID: 0}
+      EncounterAnimatedSprite: {fileID: 6168332596698552260, guid: e20f1ca45e0b37141a3902bf865aecd5,
+        type: 3}
   experienceManager:
     level: 1
     exp: 0

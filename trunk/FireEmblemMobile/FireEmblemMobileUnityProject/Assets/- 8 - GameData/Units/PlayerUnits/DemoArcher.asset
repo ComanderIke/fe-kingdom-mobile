@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Eldric
   jobClass: Ranger
   stats:
-    AttackRanges: 
+    AttackRanges: 02000000
     Attributes:
       STR: 3
       INT: 3
@@ -23,7 +23,7 @@ MonoBehaviour:
       AGI: 7
       CON: 4
       FAITH: 1
-    MaxHp: 0
+    MaxHp: 12
     Mov: 3
   growths:
     STR: 40
@@ -37,6 +37,10 @@ MonoBehaviour:
     CharacterSpriteSet: {fileID: 11400000, guid: 15c6559b2ce48d548a45dc0c7b7ffba6,
       type: 2}
     UnitEffectVisual: {fileID: 0}
+    Prefabs:
+      MapAnimatedSprite: {fileID: 0}
+      EncounterAnimatedSprite: {fileID: 6168332596698552260, guid: d004730b778feb548a0afe509ccacd4a,
+        type: 3}
   experienceManager:
     level: 1
     exp: 0

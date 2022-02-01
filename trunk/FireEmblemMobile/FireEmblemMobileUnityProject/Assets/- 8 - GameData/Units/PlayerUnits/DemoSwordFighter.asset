@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Guts
   jobClass: Knight
   stats:
-    AttackRanges: 
+    AttackRanges: 01000000
     Attributes:
       STR: 7
       INT: 2
@@ -23,7 +23,7 @@ MonoBehaviour:
       AGI: 5
       CON: 8
       FAITH: 1
-    MaxHp: 0
+    MaxHp: 24
     Mov: 2
   growths:
     STR: 55
@@ -37,6 +37,10 @@ MonoBehaviour:
     CharacterSpriteSet: {fileID: 11400000, guid: c185c26f8316f0e4085cfdb9f4d4d5d2,
       type: 2}
     UnitEffectVisual: {fileID: 0}
+    Prefabs:
+      MapAnimatedSprite: {fileID: 0}
+      EncounterAnimatedSprite: {fileID: 6168332596698552260, guid: 6e08e38ea6d6377438b38025eeb916b3,
+        type: 3}
   experienceManager:
     level: 1
     exp: 0

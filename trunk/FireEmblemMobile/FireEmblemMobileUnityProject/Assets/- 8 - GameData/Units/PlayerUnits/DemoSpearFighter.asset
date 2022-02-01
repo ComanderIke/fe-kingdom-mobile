@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Leila
   jobClass: Cavalry
   stats:
-    AttackRanges: 
+    AttackRanges: 01000000
     Attributes:
       STR: 5
       INT: 4
@@ -23,7 +23,7 @@ MonoBehaviour:
       AGI: 5
       CON: 5
       FAITH: 2
-    MaxHp: 0
+    MaxHp: 15
     Mov: 4
   growths:
     STR: 40
@@ -37,6 +37,10 @@ MonoBehaviour:
     CharacterSpriteSet: {fileID: 11400000, guid: 4485885652ebc5043a5f98f1b743190c,
       type: 2}
     UnitEffectVisual: {fileID: 0}
+    Prefabs:
+      MapAnimatedSprite: {fileID: 0}
+      EncounterAnimatedSprite: {fileID: 6168332596698552260, guid: 6494bc85f4d276d4191139a37bd0aefd,
+        type: 3}
   experienceManager:
     level: 1
     exp: 0

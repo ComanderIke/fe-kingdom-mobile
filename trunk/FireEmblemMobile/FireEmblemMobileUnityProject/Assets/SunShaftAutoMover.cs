@@ -9,11 +9,11 @@ public class SunShaftAutoMover : MonoBehaviour
 
     public Vector2 maxMovement;
 
-    private Vector2 startPos;
+    public Vector2 startPos;
     // Start is called before the first frame update
     void Start()
     {
-        startPos = transform.position;
+     //   startPos = transform.position;
     }
 
     // Update is called once per frame

@@ -70,6 +70,7 @@ public class UIPartyCharacterCircleController : MonoBehaviour
                 party.ActiveUnitIndex = i;
                 Show(party);
                 FindObjectOfType<UICharacterViewController>().Show(party);
+                FindObjectOfType<AreaGameManager>().UpdatePartyGameObjects();
                 break;
             }
         }

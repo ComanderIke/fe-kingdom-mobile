@@ -14,13 +14,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Elsa
   jobClass: 
-  stats: {fileID: 11400000, guid: 25c05c01280a83b4286f5e929bb9c3bd, type: 2}
-  growths: {fileID: 0}
+  stats:
+    AttackRanges: 
+    Attributes:
+      STR: 0
+      INT: 0
+      DEX: 0
+      AGI: 0
+      CON: 0
+      FAITH: 0
+    MaxHp: 0
+    Mov: 0
+  growths:
+    STR: 0
+    INT: 0
+    DEX: 0
+    AGI: 0
+    CON: 0
+    FAITH: 0
   moveType: {fileID: 11400000, guid: bff40a3de87900a4496abf2b9dfca7a2, type: 2}
   visuals:
     CharacterSpriteSet: {fileID: 11400000, guid: eab4068f017df624f847ba1d9fa411c5,
       type: 2}
     UnitEffectVisual: {fileID: 0}
+    Prefabs:
+      MapAnimatedSprite: {fileID: 0}
+      EncounterAnimatedSprite: {fileID: 6168332596698552260, guid: d004730b778feb548a0afe509ccacd4a,
+        type: 3}
   experienceManager:
     level: 1
     exp: 0
@@ -30,10 +50,3 @@ MonoBehaviour:
   EquippedArmor: {fileID: 11400000, guid: 3721b2ef6bbccc84999f1178c277dbbc, type: 2}
   EquippedRelic: {fileID: 0}
   EquippedConsumable: {fileID: 0}
-  weaponProficiencyLevels:
-  - E
-  - D
-  - E
-  - E
-  - E
-  - E

@@ -18,6 +18,7 @@ public class AreaGameManager : MonoBehaviour
     // Start is called before the first frame update
     public Transform spawnParent;
     private List<GameObject> moveOptions=new List<GameObject>();
+    public float offsetBetweenCharacters = 0.25f;
     void Start()
     {
         //Debug.Log("WHY IS START NOT CALLED?");
@@ -42,17 +43,18 @@ public class AreaGameManager : MonoBehaviour
         {
             
         }
+    
         
-        var go = Instantiate(playerPrefab, spawnParent, false);
-        Player.Instance.Party.GameObject = go;
+       
         if (Player.Instance.Party.EncounterNode == null)
         {
             //Debug.Log("Player Node Null");
            
             Player.Instance.Party.EncounterNode = EncounterTree.Instance.startNode;
         }
+        SpawnPartyMembers();
         uiCOntroller.Init(Player.Instance.Party);
-        go.transform.position = Player.Instance.Party.EncounterNode.gameObject.transform.position;
+       
 
        Debug.Log(Player.Instance.Party.EncounterNode);
         ResetMoveOptions();
@@ -60,6 +62,78 @@ public class AreaGameManager : MonoBehaviour
         ShowMoveOptions();
         uiPartyController.Show(Player.Instance.Party);
         
+    }
+
+  
+    private List<EncounterPlayerUnitController> partyGameObjects;
+    void SpawnPartyMembers()
+    {
+        int cnt = 1;
+        var partyGo = new GameObject("Party");
+        partyGo=Instantiate(partyGo, spawnParent);
+        partyGo.transform.position = Player.Instance.Party.EncounterNode.gameObject.transform.position;
+        partyGameObjects = new List<EncounterPlayerUnitController>();
+        //Spawn ActiveUnit first
+        var activeUnit = Player.Instance.Party.members[Player.Instance.Party.ActiveUnitIndex];
+        var go = Instantiate(activeUnit.visuals.Prefabs.EncounterAnimatedSprite, partyGo.transform, false);
+        go.transform.localPosition = new Vector3(0,0,0);
+        go.GetComponent<EncounterPlayerUnitController>().SetUnit(activeUnit);
+        go.GetComponent<EncounterPlayerUnitController>().SetActiveUnit(true);
+
+        go.GetComponent<EncounterPlayerUnitController>().SetSortOrder(Player.Instance.Party.members.Count);
+        partyGameObjects.Add( go.GetComponent<EncounterPlayerUnitController>());
+        foreach (var member in Player.Instance.Party.members)
+        {
+            if (member == activeUnit)
+                continue;
+            
+            go = Instantiate(member.visuals.Prefabs.EncounterAnimatedSprite, partyGo.transform, false);
+            go.transform.localPosition = new Vector3(-offsetBetweenCharacters*cnt,0,0);
+            go.GetComponent<EncounterPlayerUnitController>().SetUnit(member);
+            go.GetComponent<EncounterPlayerUnitController>().SetActiveUnit(false);
+
+            go.GetComponent<EncounterPlayerUnitController>().SetSortOrder(Player.Instance.Party.members.Count-cnt);
+            cnt++;
+            partyGameObjects.Add(go.GetComponent<EncounterPlayerUnitController>());
+        }
+        Player.Instance.Party.GameObject = partyGo;
+    }
+    public void UpdatePartyGameObjects()
+    {
+        Debug.Log("UpdatePartyMembes!");
+        var activeUnit = Player.Instance.Party.members[Player.Instance.Party.ActiveUnitIndex];
+        int cnt = 1;
+        foreach (var member in Player.Instance.Party.members)
+        {
+            if (member == activeUnit)
+            {
+                foreach (var unitController in partyGameObjects)
+                {
+                    if (unitController.Unit == member)
+                    {
+                        unitController.transform.localPosition = new Vector3(0,0,0);
+                        unitController.SetActiveUnit(true);
+                        unitController.SetSortOrder(Player.Instance.Party.members.Count);
+                    }
+                }
+               
+            }
+            else
+            {
+                foreach (var unitController in partyGameObjects)
+                {
+                    if (unitController.Unit == member)
+                    {
+                        unitController.transform.localPosition = new Vector3(-offsetBetweenCharacters*cnt,0,0);
+                        unitController.SetActiveUnit(false);
+                        unitController.SetSortOrder(Player.Instance.Party.members.Count-cnt);
+                    }
+                }
+            }
+
+            cnt++;
+
+        }
     }
 
     private void ResetMoveOptions()
