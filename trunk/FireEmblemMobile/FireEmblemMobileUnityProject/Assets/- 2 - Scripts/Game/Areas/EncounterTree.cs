@@ -5,47 +5,6 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [Serializable]
-public class EncounterSpawnData
-{
-    public int columnCount;
-    public float encounter2ChildPercentage=0.5f;
-    public float encounter3ChildPercentage=0.3f;
-    
-    public float chanceToShareChild = 0.3f;
-    
-    public int columnMaxEncounter = 4;
-    public EncounterNodeData startNodeData;
-    public List<EncounterNodeData> nodeDatas;
-    public EncounterNodeData endNodeData;
-    public float ChanceDistributionAfterOccurence = 0.05f;
-
-    [HideInInspector]
-    public float sumAllStartChances;
-    [HideInInspector]
-    public Dictionary<EncounterNodeData, float> EncounterChances = new Dictionary<EncounterNodeData, float>();
-    [HideInInspector]
-    public Dictionary<EncounterNodeData, float> StartEncounterChances = new Dictionary<EncounterNodeData, float>();
-    public void InitNodeAppearanceChances()
-    {
-        EncounterChances = new Dictionary<EncounterNodeData, float>();
-        StartEncounterChances = new Dictionary<EncounterNodeData, float>();
-        foreach (var encounterData in nodeDatas)
-        {
-            // Debug.Log("add: " + encounterData);
-            EncounterChances.Add(encounterData, encounterData.appearanceChance);
-            StartEncounterChances.Add(encounterData, encounterData.appearanceChance);
-        }
-     
-        sumAllStartChances = 0;
-        foreach (var keyvaluepair in EncounterChances)
-        {
-            sumAllStartChances += keyvaluepair.Value;
-        }
-        
-    }
-
-}
-[Serializable]
 public class EncounterTree
 {
     private static EncounterTree _instance;
@@ -53,7 +12,8 @@ public class EncounterTree
     public EncounterNode endNode;
     public List<Column> columns;
     public EncounterSpawnData spawnData;
-   
+
+    public Dictionary<EncounterNodeData, int> EncounterAppearanceCount = new Dictionary<EncounterNodeData, int>();
     public static EncounterTree Instance
     {
         get { return _instance ??= new EncounterTree(); }
@@ -104,18 +64,31 @@ public class EncounterTree
                 sumAllChances += spawnData.EncounterChances[key];
             }
 
-            float rng = Random.Range(0, sumAllChances);
-            foreach (var key in spawnData.EncounterChances.Keys)
+            while (chosenKey == null)
             {
-                threshold +=spawnData.EncounterChances[key];
-                if (rng <= threshold)
+                float rng = Random.Range(0, sumAllChances);
+                foreach (var key in spawnData.EncounterChances.Keys)
                 {
-                    UpdateEncounterChances(key);
-                    chosenKey = key;
-                    break;
+                    threshold += spawnData.EncounterChances[key];
+                    int indexOfKey = spawnData.nodeDatas.IndexOf(key);
+                    Debug.Log(indexOfKey);
+                    Debug.Log(key);
+                    if (rng <= threshold&& (!EncounterAppearanceCount.ContainsKey(key) ||EncounterAppearanceCount[key]< spawnData.nodeDatas[indexOfKey].maxAppearanceCountPerArea))
+                    {
+                        UpdateEncounterChances(key);
+                        chosenKey = key;
+                        if(EncounterAppearanceCount.ContainsKey(key))
+                            EncounterAppearanceCount[key]++;
+                        else
+                        {
+                            EncounterAppearanceCount.Add(key, 1);
+                        }
+                        break;
+                    }
+
                 }
-                    
             }
+
             //Debug.Log(chosenKey);
             EncounterNode node = chosenKey.CreateNode(parent);
             node.prefabIdx = GetNodeDataIndex(chosenKey);

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using __2___Scripts.Game.Areas;
 using Game.GameActors.Players;
 using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.Systems;
@@ -51,6 +52,7 @@ public class AreaGameManager : MonoBehaviour
             //Debug.Log("Player Node Null");
            
             Player.Instance.Party.EncounterNode = EncounterTree.Instance.startNode;
+            Player.Instance.Party.MovedEncounters.Add(EncounterTree.Instance.startNode);
         }
         SpawnPartyMembers();
         uiCOntroller.Init(Player.Instance.Party);
@@ -176,9 +178,19 @@ public class AreaGameManager : MonoBehaviour
             
            
             actionSystem.Move(encounterNode);
+            ShowMovedRoads();
             StartCoroutine( DelayAction(()=>encounterNode.Activate(Player.Instance.Party), 1.0f));
             // ResetMoveOptions();
             // ShowMoveOptions();
+        }
+    }
+
+    private void ShowMovedRoads()
+    {
+        for( int i= 0; i < Player.Instance.Party.MovedEncounters.Count-1; i++)
+        {
+            Road road = Player.Instance.Party.MovedEncounters[i].GetRoad(Player.Instance.Party.MovedEncounters[i + 1]);
+            road.SetMovedVisual();
         }
     }
 

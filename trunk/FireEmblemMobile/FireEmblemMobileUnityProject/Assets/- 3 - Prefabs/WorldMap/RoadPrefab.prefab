@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8412994387867442551}
   - component: {fileID: 8412994387867442552}
+  - component: {fileID: 925263948673838581}
   m_Layer: 0
   m_Name: RoadPrefab
   m_TagString: Untagged
@@ -75,7 +76,7 @@ LineRenderer:
   m_Positions: []
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.25
+    widthMultiplier: 1
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -123,8 +124,23 @@ LineRenderer:
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
-    textureMode: 0
+    textureMode: 1
     shadowBias: 0.5
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &925263948673838581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8412994387867442554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a148db35e4e040fc964f4f2f2e0ac52d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  standard: {fileID: 2100000, guid: 6230f2157bf992942a781972995a6136, type: 2}
+  moved: {fileID: 2100000, guid: b35eda9ff25535c49ae2e776f12beeff, type: 2}
+  line: {fileID: 0}

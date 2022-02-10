@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Linq;
+using __2___Scripts.Game.Areas;
 using Pathfinding;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -95,8 +96,11 @@ public class ColumnManager : MonoBehaviour
 
                 for (int k = 0; k < columns[i].children[j].children.Count; k++)
                 {
+                    
                     var go = Instantiate(LineRendererPrefab, columns[i].children[j].gameObject.transform);
-
+                    Road road = go.GetComponent<Road>();
+                    road.SetStartNode(columns[i].children[j]);
+                    road.end = columns[i].children[j].children[k];
                     UpdateLineRenderer(go.GetComponent<LineRenderer>(),
                         columns[i].children[j].gameObject.transform.position, columns[i].children[j].children[k].gameObject.transform.position);
                 }

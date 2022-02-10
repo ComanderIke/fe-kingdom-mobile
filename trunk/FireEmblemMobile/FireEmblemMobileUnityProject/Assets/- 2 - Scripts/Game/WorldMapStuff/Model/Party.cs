@@ -37,10 +37,12 @@ namespace Game.WorldMapStuff.Model
         {
             members = new List<Unit>();
             convoy = new List<Item>();
+            MovedEncounters = new List<EncounterNode>();
         }
 
         public EncounterNode EncounterNode { get; set; }
         public GameObject GameObject { get; set; }
+        public List<EncounterNode> MovedEncounters { get; set; }
 
         public bool IsAlive()
         {
