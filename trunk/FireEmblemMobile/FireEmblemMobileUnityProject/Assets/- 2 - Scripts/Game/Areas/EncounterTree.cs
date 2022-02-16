@@ -12,6 +12,7 @@ public class EncounterTree
     public EncounterNode endNode;
     public List<Column> columns;
     public EncounterSpawnData spawnData;
+    public List<FixedColumnNode> fixedColumns;
 
     public Dictionary<EncounterNodeData, int> EncounterAppearanceCount = new Dictionary<EncounterNodeData, int>();
     public static EncounterTree Instance
@@ -56,8 +57,21 @@ public class EncounterTree
         if (!ShareChild(parent, current, previous))
         {
             
+   
+           
             float threshold = 0;
             EncounterNodeData chosenKey =null;
+            if (fixedEncounters)
+            {
+                for (int j = 0; j < fixedColumns.Count; j++)
+                {
+                    if (fixedColumns[j].columnIndex == current.index)
+                    {
+                        chosenKey=fixedColumns[j].nodeData;
+                       
+                    }
+                }
+            }
             float sumAllChances = 0;
             foreach (var key in spawnData.EncounterChances.Keys)
             {
@@ -71,8 +85,6 @@ public class EncounterTree
                 {
                     threshold += spawnData.EncounterChances[key];
                     int indexOfKey = spawnData.nodeDatas.IndexOf(key);
-                    Debug.Log(indexOfKey);
-                    Debug.Log(key);
                     if (rng <= threshold&& (!EncounterAppearanceCount.ContainsKey(key) ||EncounterAppearanceCount[key]< spawnData.nodeDatas[indexOfKey].maxAppearanceCountPerArea))
                     {
                         UpdateEncounterChances(key);
@@ -130,14 +142,18 @@ public class EncounterTree
             //Debug.Log(columns.Last().children.Count);
             foreach (EncounterNode node in columns.Last().children)
             {
-                //Debug.Log("Spawn Encounter!"+ node+" "+column);
-                SpawnEncounters(node, column, columns[column.index-1]);
+                
+
+                
+                    //Debug.Log("Spawn Encounter!"+ node+" "+column);
+                    SpawnEncounters(node, column, columns[column.index - 1]);
+           
             }
             
             columns.Add(column);
         }
     }
-    void SpawnEncounters(EncounterNode parent, Column current, Column previous)
+    void SpawnEncounters(EncounterNode parent, Column current, Column previous, EncounterNodeData fixedData=null)
     {
         float rng = Random.value;
         if (previous.children.Count == 1)
@@ -193,8 +209,12 @@ public class EncounterTree
         columns.Add(endColumn);
     }
 
-    public void Create()
+    private bool fixedEncounters;
+
+    public void Create(bool fixedEncounters, List<FixedColumnNode> fixedColumns)
     {
+        this.fixedEncounters = fixedEncounters;
+        this.fixedColumns = fixedColumns;
         CreateStartColumn(spawnData.startNodeData);
         CreateMiddleColumns(spawnData.nodeDatas);
         CreateEndColumn(spawnData.endNodeData);

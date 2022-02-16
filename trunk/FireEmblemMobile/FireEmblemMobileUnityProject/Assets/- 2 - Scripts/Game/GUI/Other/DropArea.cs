@@ -8,6 +8,7 @@ namespace Game.GUI
     {
         public List<DropCondition> dropConditions = new List<DropCondition>();
         public event Action<UIDragable> OnDropHandler;
+        public event Action<UIDragable> OnDaggedOverHandler;
 
         public bool Accepts(UIDragable dragable)
         {
@@ -17,6 +18,10 @@ namespace Game.GUI
         public void Drop(UIDragable dragable)
         {
             OnDropHandler?.Invoke(dragable);
+        }
+        public void DraggedOver(UIDragable dragable)
+        {
+            OnDaggedOverHandler?.Invoke(dragable);
         }
 
     }

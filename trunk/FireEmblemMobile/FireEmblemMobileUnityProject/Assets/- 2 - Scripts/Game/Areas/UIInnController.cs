@@ -31,7 +31,8 @@ public class UIInnController : MonoBehaviour
        
         for (int i=0; i<inn.shopItems.Count; i++)
         {
-            shopItems[i].SetValues(inn.shopItems[i]);
+            bool affordable = party.money >= inn.shopItems[i].cost;
+            shopItems[i].SetValues(inn.shopItems[i], affordable);
         }
         questOption.SetValues(inn.quest);
         recruitCharacter.SetValues(inn.recruitableCharacter);

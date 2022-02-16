@@ -21,7 +21,8 @@ public class UISmithyController : MonoBehaviour
         for (int i=0; i<smithy.shopItems.Count; i++)
         {
             var item = smithy.shopItems[i];
-            shopItems[i].SetValues(new ShopItem(item.cost, item.Sprite, item.Description));
+            bool affordable = party.money >= item.cost;
+            shopItems[i].SetValues(new ShopItem(item.name, item.cost, item.Sprite, item.Description), affordable);
         }
         FindObjectOfType<UICharacterViewController>().Show(party);
     }

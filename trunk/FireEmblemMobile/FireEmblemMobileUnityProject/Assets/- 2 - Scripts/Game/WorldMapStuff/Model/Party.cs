@@ -17,7 +17,7 @@ namespace Game.WorldMapStuff.Model
         public static Action<Party> PartyDied;
         public static int MaxSize = 4;
         [SerializeField] public List<Item> convoy = default;
-        [SerializeField] private int money = default;
+        [SerializeField] public int money = default;
 
         public int ActiveUnitIndex = 0;
         public int Money

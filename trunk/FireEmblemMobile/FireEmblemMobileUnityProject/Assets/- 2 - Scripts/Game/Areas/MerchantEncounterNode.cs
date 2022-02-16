@@ -33,6 +33,8 @@ public class MerchantEncounterNode : EncounterNode
     public override void Activate(Party party)
     {
         GameObject.FindObjectOfType<UIMerchantController>().Show(this,party);
+        
+    
         //GameObject.FindObjectOfType<UIInnController>().Show(Player.Instance.Party);
         Debug.Log("Activate MerchantEncounterNode");
     }

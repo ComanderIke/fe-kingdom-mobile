@@ -8,6 +8,12 @@ using Pathfinding;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+[Serializable]
+public struct FixedColumnNode
+{
+    public int columnIndex;
+    public EncounterNodeData nodeData;
+}
 public class ColumnManager : MonoBehaviour
 {
     [SerializeField]
@@ -22,6 +28,8 @@ public class ColumnManager : MonoBehaviour
     public float xRandomMax = 0.7f;
     public float yRandomMin = -0.4f;
     public float yRandomMax = 0.4f;
+    public bool fixedEncounters = true;
+    public List< FixedColumnNode> fixedColumns;
 
 
 
@@ -41,7 +49,7 @@ public class ColumnManager : MonoBehaviour
             EncounterTree.Instance.spawnData = spawnData;
             EncounterTree.Instance.columns.Clear();
             EncounterTree.Instance.spawnData.InitNodeAppearanceChances();
-            EncounterTree.Instance.Create();
+            EncounterTree.Instance.Create(fixedEncounters, fixedColumns);
 
         }
        

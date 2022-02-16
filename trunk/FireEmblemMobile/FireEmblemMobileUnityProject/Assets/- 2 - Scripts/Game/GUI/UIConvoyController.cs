@@ -3,6 +3,10 @@
 public class UIConvoyController:MonoBehaviour{
     public void Show()
     {
-        throw new System.NotImplementedException();
+        GetComponent<Canvas>().enabled = true;
+    }
+    public void Hide()
+    {
+        GetComponent<Canvas>().enabled = false;
     }
 }

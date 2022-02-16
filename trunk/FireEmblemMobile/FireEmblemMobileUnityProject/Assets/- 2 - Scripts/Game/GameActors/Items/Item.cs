@@ -8,6 +8,7 @@ namespace Game.GameActors.Items
     [Serializable]
     public abstract class Item : ScriptableObject, ICloneable
     {
+        public string Name;
         public string Description;
         public List<ItemMixin> Mixins;
         public int NumberOfUses;
