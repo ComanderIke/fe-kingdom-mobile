@@ -10,13 +10,13 @@ namespace Game.States
     {
         [SerializeField]
         private List<Unit> units;
-        [SerializeField]
-        private List<Item> convoy;
+        // [SerializeField]
+        // private List<StockedItem> convoy;
 
         void Start()
         {
             Debug.LogError("TESTERROR");
-            Player.Instance.Party.convoy = convoy;
+            // Player.Instance.Party.convoy = convoy;
         }
         public List<Unit> GetUnits()
         {

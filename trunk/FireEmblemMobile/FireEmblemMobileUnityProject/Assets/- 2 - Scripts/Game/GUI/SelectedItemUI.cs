@@ -17,11 +17,17 @@ public class SelectedItemUI : MonoBehaviour
     // Start is called before the first frame update
     public void Show(ShopItem item, bool affordable)
     {
+        gameObject.SetActive(true);
         this.item = item;
         Icon.sprite = item.sprite;
         cost.text = ""+item.cost;
         description.text = "" + item.description;
         name.text = "" + item.name;
         buyButton.interactable = affordable;
+    }
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
     }
 }

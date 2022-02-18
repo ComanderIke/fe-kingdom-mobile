@@ -16,6 +16,8 @@ namespace Game.GUI
         {
             Debug.Log("Item Dropped on Convoy");
             dragable.transform.SetParent(transform);
+            dragable.transform.SetAsFirstSibling();
+            dragable.transform.localPosition = Vector3.zero;
         }
     }
 }

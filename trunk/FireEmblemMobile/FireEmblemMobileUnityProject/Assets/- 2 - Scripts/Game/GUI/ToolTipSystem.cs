@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game.GameActors.Items;
 using UnityEngine;
 
 public class ToolTipSystem : MonoBehaviour
@@ -12,9 +13,9 @@ public class ToolTipSystem : MonoBehaviour
         instance = this;
     }
 
-    public static void Show(Vector3 position, string header, string description, Sprite icon)
+    public static void Show(Item item, Vector3 position, string header, string description, Sprite icon)
     {
-        instance.ItemToolTip.SetValues(header,description,icon, position);
+        instance.ItemToolTip.SetValues(item, header,description,icon, position);
         
         instance.ItemToolTip.gameObject.SetActive(true);
     }

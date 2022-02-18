@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using __2___Scripts.Game.Areas;
+using Effects;
 using Game.GameActors.Players;
 using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.Systems;
@@ -20,8 +21,12 @@ public class AreaGameManager : MonoBehaviour
     public Transform spawnParent;
     private List<GameObject> moveOptions=new List<GameObject>();
     public float offsetBetweenCharacters = 0.25f;
+    public int hour = 6;
+    public TimeCircleUI circleUI;
+    public DynamicAmbientLight lightController;
     void Start()
     {
+        cursor = FindObjectOfType<EncounterCursorController>();
         //Debug.Log("WHY IS START NOT CALLED?");
         actionSystem = new Area_ActionSystem();
         if(PlayerPrefs.HasKey("CameraX")&&PlayerPrefs.HasKey("CameraY"))
@@ -31,7 +36,7 @@ public class AreaGameManager : MonoBehaviour
                 camera.transform.position.z);
         }
 
-
+       
         if (Player.Instance.Party == null)
         {
             //Debug.Log("Player Null");
@@ -63,7 +68,7 @@ public class AreaGameManager : MonoBehaviour
   
         ShowMoveOptions();
         uiPartyController.Show(Player.Instance.Party);
-        
+        lightController.UpdateHour(hour);
     }
 
   
@@ -81,8 +86,10 @@ public class AreaGameManager : MonoBehaviour
         go.transform.localPosition = new Vector3(0,0,0);
         go.GetComponent<EncounterPlayerUnitController>().SetUnit(activeUnit);
         go.GetComponent<EncounterPlayerUnitController>().SetActiveUnit(true);
-
+        go.GetComponent<EncounterPlayerUnitController>().SetTarget(null);
         go.GetComponent<EncounterPlayerUnitController>().SetSortOrder(Player.Instance.Party.members.Count);
+        activeMemberGo = go;
+        Debug.Log("Start ActivePos: "+activeMemberGo.transform.position);
         partyGameObjects.Add( go.GetComponent<EncounterPlayerUnitController>());
         foreach (var member in Player.Instance.Party.members)
         {
@@ -91,20 +98,33 @@ public class AreaGameManager : MonoBehaviour
             
             go = Instantiate(member.visuals.Prefabs.EncounterAnimatedSprite, partyGo.transform, false);
             go.transform.localPosition = new Vector3(-offsetBetweenCharacters*cnt,0,0);
+            Debug.Log("Start Pos: "+go.transform.position);
             go.GetComponent<EncounterPlayerUnitController>().SetUnit(member);
             go.GetComponent<EncounterPlayerUnitController>().SetActiveUnit(false);
-
+            go.GetComponent<EncounterPlayerUnitController>().SetTarget(activeMemberGo.transform);
+            go.GetComponent<EncounterPlayerUnitController>().SetOffsetCount(cnt);
             go.GetComponent<EncounterPlayerUnitController>().SetSortOrder(Player.Instance.Party.members.Count-cnt);
             cnt++;
             partyGameObjects.Add(go.GetComponent<EncounterPlayerUnitController>());
         }
         Player.Instance.Party.GameObject = partyGo;
     }
+
+    private GameObject activeMemberGo;
     public void UpdatePartyGameObjects()
     {
         Debug.Log("UpdatePartyMembes!");
         var activeUnit = Player.Instance.Party.members[Player.Instance.Party.ActiveUnitIndex];
         int cnt = 1;
+
+        foreach (var unitController in partyGameObjects)
+        {
+            if (unitController.Unit == activeUnit)
+            {
+                activeMemberGo = unitController.gameObject;
+            }
+        }
+
         foreach (var member in Player.Instance.Party.members)
         {
             if (member == activeUnit)
@@ -115,6 +135,7 @@ public class AreaGameManager : MonoBehaviour
                     {
                         unitController.transform.localPosition = new Vector3(0,0,0);
                         unitController.SetActiveUnit(true);
+                        unitController.SetTarget(null);
                         unitController.SetSortOrder(Player.Instance.Party.members.Count);
                     }
                 }
@@ -128,6 +149,9 @@ public class AreaGameManager : MonoBehaviour
                     {
                         unitController.transform.localPosition = new Vector3(-offsetBetweenCharacters*cnt,0,0);
                         unitController.SetActiveUnit(false);
+                        unitController.SetTarget(activeMemberGo.transform);
+                        unitController.SetOffsetCount(cnt);
+                        Debug.Log("SetOffset!");
                         unitController.SetSortOrder(Player.Instance.Party.members.Count-cnt);
                     }
                 }
@@ -170,19 +194,45 @@ public class AreaGameManager : MonoBehaviour
         
     }
 
+    private EncounterCursorController cursor;
     public void NodeClicked(EncounterNode encounterNode)
     {
-        FindObjectOfType<EncounterCursorController>().SetPosition(encounterNode.gameObject.transform.position);
+        Debug.Log("Node Clicked: "+encounterNode);
+        Debug.Log("Node Clicked GO: "+encounterNode.gameObject);
+        cursor.SetPosition(encounterNode.gameObject.transform.position);
         if (encounterNode.moveable)
         {
-            
-           
-            actionSystem.Move(encounterNode);
-            ShowMovedRoads();
-            StartCoroutine( DelayAction(()=>encounterNode.Activate(Player.Instance.Party), 1.0f));
+
+            StartCoroutine(MovementAnimation(encounterNode));
+            circleUI.Rotate();
+            hour += 6;
+            if (hour >= 24)
+                hour = 0;
+            lightController.UpdateHour(hour);
             // ResetMoveOptions();
             // ShowMoveOptions();
         }
+    }
+    IEnumerator MovementAnimation(EncounterNode target)
+    {
+        Vector3 targetPos = target.gameObject.transform.position;
+        Vector3 startPos = activeMemberGo.transform.position;
+        float distance = Vector3.Distance(targetPos, startPos);
+        float time = 0;
+        float speed = 3;
+        while ( activeMemberGo.transform.position!=targetPos)
+        {
+            time += Time.deltaTime *speed/distance;
+            activeMemberGo.transform.position = Vector3.Lerp(startPos, targetPos, time);
+            yield return null;
+
+        }
+        actionSystem.Move(target);
+        ShowMovedRoads();
+        Debug.Log("Before DelayAction!");
+        StartCoroutine( DelayAction(()=>target.Activate(Player.Instance.Party), 1.0f));
+       
+        
     }
 
     private void ShowMovedRoads()

@@ -11,6 +11,14 @@ public class EncounterPlayerUnitController : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
 
     public int baseSortOrder = 10;
+
+    public float speed = 2f;
+
+    private Transform follow;
+
+    public float baseOffset = 0.4f;
+
+    private float offset;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,9 +28,22 @@ public class EncounterPlayerUnitController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+        if (offset == 0)
+            offset = baseOffset;
+        if (follow != null && Vector2.Distance(transform.position, follow.position) > offset)
+        {
+            //Debug.Log("Distance: "+Vector2.Distance(transform.position, follow.position)+" "+transform.position+" "+follow.position);
+            transform.position = Vector2.MoveTowards(transform.position, follow.position, speed * Time.deltaTime);
+        }
     }
 
+    public void SetTarget(Transform target)
+    {
+        follow = target;
+    }
+
+    
     public void SetUnit(Unit unit)
     {
         this.Unit = unit;
@@ -34,5 +55,11 @@ public class EncounterPlayerUnitController : MonoBehaviour
     public void SetActiveUnit(bool active)
     {
         blueRing.SetActive(active);
+    }
+
+    public void SetOffsetCount(int cnt)
+    {
+        this.offset = baseOffset * cnt;
+        Debug.Log("offset: "+offset);
     }
 }

@@ -1,6 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.GameActors.Items;
+using Game.GameActors.Items.Weapons;
+using Game.GameActors.Players;
+using Game.GameActors.Units.Humans;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,7 +20,13 @@ public class ItemToolTip : MonoBehaviour
     public int characterWrapLimit;
     public Image itemIcon;
 
+    public Button useButton;
+    public TextMeshProUGUI useButtonText;
+    public Button dropButton;
+    private Item item;
     private RectTransform rectTransform;
+
+    public LayoutElement frame;
     // Start is called before the first frame update
     private void Start()
     {
@@ -32,8 +42,35 @@ public class ItemToolTip : MonoBehaviour
         }
     }
 
+    public void UseClicked()
+    {
+        Debug.Log("Use Item Clicked");
+        if (item is EquipableItem eitem)
+        {
+            Human human =(Human) Player.Instance.Party.ActiveUnit;
+            
+            human.Equip((eitem));
+            Player.Instance.Party.RemoveItem(item);
+        }
+        else
+        {
+            Player.Instance.Party.RemoveItem(item);
+        }
+        gameObject.SetActive(false);
+    }
+
+    public void DropClicked()
+    {
+        Debug.Log("Drop Item Clicked");
+        Player.Instance.Party.RemoveItem(item);
+        gameObject.SetActive(false);
+    }
     void UpdateTextWrap(Vector3 position)
     {
+        frame.enabled = false;
+        frame.enabled = true;
+        if(rectTransform==null)
+            rectTransform = GetComponent<RectTransform>();
         int headerLength = headerText.text.Length;
         int contentLength = descriptionText.text.Length;
         layoutElement.enabled =
@@ -46,8 +83,13 @@ public class ItemToolTip : MonoBehaviour
         transform.position = position;
     }
 
-    public void SetValues(string header, string description, Sprite icon, Vector3 position)
+    public void ExitClicked()
     {
+        gameObject.SetActive(false);
+    }
+    public void SetValues(Item item, string header, string description, Sprite icon, Vector3 position)
+    {
+        this.item = item;
         if (string.IsNullOrEmpty(header))
         {
             headerText.gameObject.SetActive(false);
@@ -57,7 +99,27 @@ public class ItemToolTip : MonoBehaviour
             headerText.gameObject.SetActive(true);
             headerText.text = header;
         }
-        
+
+        if (item is EquipableItem eitem)
+        {
+            Human human = (Human)Player.Instance.Party.ActiveUnit;
+            if (human.CanEquip(eitem))
+            {
+                useButton.interactable = true;
+            }
+            else
+            {
+                useButton.interactable = false;
+            }
+        }
+        else
+        {
+            useButton.interactable = true;
+        }
+
+        // useButton.interactable = 
+        useButtonText.text = item is EquipableItem ? "Equip" : "Use";
+       
         descriptionText.text = description;
         itemIcon.sprite = icon;
         

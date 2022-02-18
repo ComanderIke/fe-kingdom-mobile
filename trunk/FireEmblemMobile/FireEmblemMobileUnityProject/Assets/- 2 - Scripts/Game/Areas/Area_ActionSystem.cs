@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Game.GameActors.Players;
 using Game.Systems;
 using Game.WorldMapStuff.Controller;
@@ -25,9 +26,11 @@ namespace Game.WorldMapStuff.Systems
             var action = new MoveAction(location);
                 action.PerformAction();
                 action.Save(SaveData.currentSaveData);
-                
+           
 
         }
+
+        
 
         public void Init()
         {

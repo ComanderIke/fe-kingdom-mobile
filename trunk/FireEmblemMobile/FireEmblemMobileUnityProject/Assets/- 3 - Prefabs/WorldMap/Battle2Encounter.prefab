@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8658430399767502867}
   - component: {fileID: 6413996631644854991}
-  - component: {fileID: 2039398765306419389}
-  - component: {fileID: 8072867053212647740}
   m_Layer: 0
   m_Name: LocationMain (3)
   m_TagString: Untagged
@@ -85,34 +83,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2039398765306419389
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3845443028677247242}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c45f81cedc56df14e85029a06f58085c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!58 &8072867053212647740
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3845443028677247242}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 2.5599997
 --- !u!1 &4936250192480291125
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,7 +403,9 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.2
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6701857661032143170, guid: b9f4ef7d3874571469b84858a8158365, type: 3}
+    - {fileID: 104731889936141752, guid: b9f4ef7d3874571469b84858a8158365, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b9f4ef7d3874571469b84858a8158365, type: 3}
 --- !u!4 &6494752771037698038 stripped
 Transform:

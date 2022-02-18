@@ -30,8 +30,8 @@ namespace Game.GUI
         void OnEnable()
         {
             rectTransform = GetComponent<RectTransform>();
-            GetComponentInChildren<ItemDisplay>().item = item;
-            GetComponentInChildren<ItemDisplay>().UpdateSprite();
+            // GetComponentInChildren<ItemDisplay>().item = item;
+            // GetComponentInChildren<ItemDisplay>().UpdateSprite();
         }
 
         public void SetCanvas(Canvas canvas)
@@ -99,8 +99,8 @@ namespace Game.GUI
         public void SetItem(Item item1)
         {
             item = item1;
-            GetComponentInChildren<ItemDisplay>().item = item;
-            GetComponentInChildren<ItemDisplay>().UpdateSprite();
+            // GetComponentInChildren<ItemDisplay>().item = item;
+            // GetComponentInChildren<ItemDisplay>().UpdateSprite();
         }
     }
 }

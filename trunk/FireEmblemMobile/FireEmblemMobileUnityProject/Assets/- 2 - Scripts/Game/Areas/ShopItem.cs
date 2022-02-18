@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Game.GameActors.Items;
+using UnityEngine;
 
 public class ShopItem
 {
@@ -6,12 +7,17 @@ public class ShopItem
     public int cost;
     public Sprite sprite;
     public string description;
+    public int stock;
+    public Item item;
 
-    public ShopItem(string name, int cost, Sprite sprite, string description)
+  
+    public ShopItem(Item item, int stock = 1)
     {
-        this.name = name;
-        this.cost = cost;
-        this.sprite = sprite;
-        this.description = description;
+        this.item = item;
+        this.name = item.Name;
+        this.cost = item.cost;
+        this.sprite = item.Sprite;
+        this.description = item.Description;
+        this.stock = stock;
     }
 }

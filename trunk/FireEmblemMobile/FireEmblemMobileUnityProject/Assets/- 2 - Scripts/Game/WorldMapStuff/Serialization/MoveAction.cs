@@ -19,7 +19,7 @@ namespace Game.WorldMapStuff.Serialization
             Debug.Log("Perform Movement Action");
             Player.Instance.Party.MovedEncounters.Add(location);
             Player.Instance.Party.EncounterNode = location;
-            Player.Instance.Party.GameObject.transform.position = location.gameObject.transform.position;
+           // Player.Instance.Party.GameObject.transform.position = location.gameObject.transform.position;
 
         }
 

@@ -81,7 +81,17 @@ namespace Game.GameActors.Units.Humans
         {
             return true;
         }
+        public void Equip(EquipableItem e)
+        {
 
+            switch (e.EquipmentSlotType)
+            {
+                case EquipmentSlotType.Armor: Debug.LogError("TODO Equip Armor!"); break;
+                case EquipmentSlotType.Weapon: 
+                    Equip((Weapon) e);break;
+                case EquipmentSlotType.Relic: Debug.LogError("TODO Equip Relic!"); break;
+            }
+        }
         public void Equip(Weapon w)
         {
             
@@ -98,6 +108,12 @@ namespace Game.GameActors.Units.Humans
             // {
             //     Equip((Weapon)Inventory.Items.First(a=> a is Weapon weapon && CanUseWeapon(weapon)));
             // }
+        }
+
+        public bool CanEquip(EquipableItem eitem)
+        {
+            Debug.Log("TODO Check if item is equipable");
+            return true;
         }
     }
 

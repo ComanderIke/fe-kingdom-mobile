@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class UIShopItemController : UIButtonController
@@ -7,6 +9,7 @@ public class UIShopItemController : UIButtonController
     public Color tooExpensiveColor;
     public Color normalColor;
     private ShopItem item;
+    public TextMeshProUGUI stockCount;
     public void SetValues(ShopItem item, bool affordable)
     {
         this.item = item;
@@ -17,6 +20,8 @@ public class UIShopItemController : UIButtonController
             cost.color = tooExpensiveColor;
         }
         SetValues(item.sprite, item.cost, item.description);
+        stockCount.text = "" + item.stock+"x";
+        stockCount.gameObject.SetActive(item.stock > 1);
     }
 
     public void Clicked()

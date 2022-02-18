@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Game.GameActors.Items;
 using Game.GameActors.Items.Weapons;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
@@ -24,7 +25,7 @@ namespace Game.GameResources
         [SerializeField] private List<EquipableItem> staffs = default;
         [SerializeField] private List<Weapon> weapons = default;
         [SerializeField] private List<Weapon> magic = default;
-        [SerializeField] private List<EquipableItem> consumables = default;
+        [SerializeField] private List<Item> consumables = default;
         [SerializeField] private List<Human> humans = default;
         [SerializeField] private List<Monster> monster = default;
         [SerializeField] private List<Party> playerStartingParties = default;
@@ -78,10 +79,11 @@ namespace Game.GameResources
             return Instantiate(monster.Find(a => a.name == name));
         }
 
-        public EquipableItem GetRandomPotion()
+        public Item GetRandomPotion()
         {
             return Instantiate(consumables[Random.Range(0, consumables.Count-1)]);
         }
+        
 
         public EquipableItem GetRandomMagic()
         {
@@ -106,6 +108,16 @@ namespace Game.GameResources
         public EquipableItem GetRandomStaff()
         {
             return Instantiate(staffs[Random.Range(0, staffs.Count-1)]);
+        }
+
+        public Item GetHealthPotion()
+        {
+            return Instantiate(consumables[0]);
+        }
+
+        public Item GetSPotion()
+        {
+            return Instantiate(consumables[1]);
         }
     }
 }
