@@ -44,7 +44,7 @@ public class UIMerchantController : MonoBehaviour
             instantiatedItems.Add(go);
             shopItems.Add(go.GetComponent<UIShopItemController>());
             bool affordable = party.money >= item.cost;
-            Debug.Log("Merchant Item: "+item.name);
+    
             shopItems[i].SetValues(item, affordable);
         }
         

@@ -40,16 +40,14 @@ namespace Game.GUI
     
         
 
-        public void CharacterImageClicked()
-        {
-            // statPanel.gameObject.SetActive(!statPanel.gameObject.activeSelf);
-        }
+       
         public void ShowActive(Unit unit)
         {
             this.unit = unit;
             UpdateValues();
             gameObject.SetActive(true);
             GetComponent<RectTransform>().sizeDelta = selectedSize;
+            
         }
         public override void Show(Unit unit)
         {

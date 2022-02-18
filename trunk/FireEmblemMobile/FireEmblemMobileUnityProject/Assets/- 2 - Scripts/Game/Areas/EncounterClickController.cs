@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class EncounterClickController : MonoBehaviour
 {
@@ -21,10 +22,13 @@ public class EncounterClickController : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Debug.Log("EncounterClicked!" + gameObject.name);
-        Debug.Log("EncounterClicked: " + encounterNode);
+        if (EventSystem.current.IsPointerOverGameObject(0))
+        {
+            Debug.Log("EncounterClicked!" + gameObject.name);
+            Debug.Log("EncounterClicked: " + encounterNode);
             FindObjectOfType<AreaGameManager>().NodeClicked(encounterNode);
-          
-        
+        }
+
+
     }
 }

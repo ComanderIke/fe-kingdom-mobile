@@ -29,7 +29,7 @@ public abstract class EncounterNode
     public void Continue()
     {
         Player.Instance.Party.EncounterNode = this;
-        Debug.Log("ContinueNode: " + Player.Instance.Party.EncounterNode);
+     
         GameObject.FindObjectOfType<AreaGameManager>().Continue();
     }
 

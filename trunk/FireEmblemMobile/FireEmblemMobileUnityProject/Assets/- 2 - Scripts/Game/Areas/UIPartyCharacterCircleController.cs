@@ -14,6 +14,8 @@ public class UIPartyCharacterCircleController : MonoBehaviour
     private List<GameObject> characterUIgGameObjects;
 
     private Party party;
+
+    public GameObject layout;
     // Start is called before the first frame update
     public void Show(Party party)
     {
@@ -74,5 +76,7 @@ public class UIPartyCharacterCircleController : MonoBehaviour
                 break;
             }
         }
+        layout.SetActive(false);
+        layout.SetActive(true);
     }
 }
