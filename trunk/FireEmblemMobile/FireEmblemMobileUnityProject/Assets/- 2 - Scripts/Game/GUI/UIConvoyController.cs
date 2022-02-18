@@ -16,6 +16,9 @@ public class UIConvoyController:MonoBehaviour
     private List<GameObject> instantiatedItems;
     private List<StockedItem> convoy;
     private bool init = false;
+    public Canvas characterCanvas;
+    public Vector3 leftPosition;
+    public Vector3 rightPosition;
     public void Toogle()
     {
        
@@ -27,7 +30,14 @@ public class UIConvoyController:MonoBehaviour
     }
     public void UpdateValues()
     {
-      
+        if (characterCanvas.enabled)
+        {
+            GetComponent<RectTransform>().anchoredPosition = rightPosition;
+        }
+        else
+        {
+            GetComponent<RectTransform>().anchoredPosition = leftPosition;
+        }
         this.convoy = Player.Instance.Party.Convoy;
         if (!init)
         {

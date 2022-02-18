@@ -96,8 +96,8 @@ namespace Game.Manager
             //     .SelectMany(s => s.GetTypes())
             //     .Where(p => type.IsAssignableFrom(p));
             
-            var battleRenderers = FindObjectsOfType<MonoBehaviour>().OfType<IBattleRenderer>();
-            GetSystem<BattleSystem>().BattleRenderer = battleRenderers.First();
+            // var battleRenderers = FindObjectsOfType<MonoBehaviour>().OfType<IBattleRenderer>();
+            // GetSystem<BattleSystem>().BattleRenderer = battleRenderers.First();
             var gridSystem = GetSystem<GridSystem>();
             var tileChecker = new GridTileChecker(gridSystem.Tiles, gridSystem.GridData.width, gridSystem.GridData.height);
             gridSystem.GridLogic.tileChecker = tileChecker;

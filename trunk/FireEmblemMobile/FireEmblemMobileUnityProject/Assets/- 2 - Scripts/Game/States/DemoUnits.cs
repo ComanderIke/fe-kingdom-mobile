@@ -15,7 +15,7 @@ namespace Game.States
 
         void Start()
         {
-            Debug.LogError("TESTERROR");
+            //Debug.LogError("TESTERROR");
             // Player.Instance.Party.convoy = convoy;
         }
         public List<Unit> GetUnits()

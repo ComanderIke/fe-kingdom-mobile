@@ -60,6 +60,7 @@ namespace Menu
         }
         public static void UnLoadSceneAsync(Scenes buildIndex)
         {
+            Debug.Log("Try Unload Scene:");
             string pathToScene = SceneUtility.GetScenePathByBuildIndex((int)buildIndex);
             string sceneName = System.IO.Path.GetFileNameWithoutExtension(pathToScene);
             if (_instance != null&& SceneManager.GetSceneByName(sceneName).isLoaded)

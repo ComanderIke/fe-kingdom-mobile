@@ -89,7 +89,7 @@ public class AreaGameManager : MonoBehaviour
         go.GetComponent<EncounterPlayerUnitController>().SetTarget(null);
         go.GetComponent<EncounterPlayerUnitController>().SetSortOrder(Player.Instance.Party.members.Count);
         activeMemberGo = go;
-        Debug.Log("Start ActivePos: "+activeMemberGo.transform.position);
+
         partyGameObjects.Add( go.GetComponent<EncounterPlayerUnitController>());
         foreach (var member in Player.Instance.Party.members)
         {
@@ -98,7 +98,7 @@ public class AreaGameManager : MonoBehaviour
             
             go = Instantiate(member.visuals.Prefabs.EncounterAnimatedSprite, partyGo.transform, false);
             go.transform.localPosition = new Vector3(-offsetBetweenCharacters*cnt,0,0);
-            Debug.Log("Start Pos: "+go.transform.position);
+
             go.GetComponent<EncounterPlayerUnitController>().SetUnit(member);
             go.GetComponent<EncounterPlayerUnitController>().SetActiveUnit(false);
             go.GetComponent<EncounterPlayerUnitController>().SetTarget(activeMemberGo.transform);

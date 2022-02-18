@@ -28,13 +28,12 @@ public class EncounterClickController : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        Debug.Log("Clicked!");
+
         if(EventSystem.current.currentSelectedGameObject!=null)
             Debug.Log(EventSystem.current.currentSelectedGameObject.name);
         if (!IsPointerOverUIObject())
         {
-            Debug.Log("EncounterClicked!" + gameObject.name);
-            Debug.Log("EncounterClicked: " + encounterNode);
+         
             FindObjectOfType<AreaGameManager>().NodeClicked(encounterNode);
         }
 

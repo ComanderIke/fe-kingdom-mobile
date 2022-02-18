@@ -30,7 +30,7 @@ public class SunShaftAutoMover : MonoBehaviour
     private void OnEnable()
     {
         calculated = false;
-        transform.position = startPos;
+        transform.localPosition = startPos;
         CalculateEdges();
         leftGO.transform.localPosition = new Vector3(-(distanceBetweenEdges.x-offset), 0, 0);
         rightGO.transform.localPosition = new Vector3(distanceBetweenEdges.x-offset, 0, 0);
@@ -87,6 +87,7 @@ public class SunShaftAutoMover : MonoBehaviour
     private void CalculateEdges()
     {
         calculated = true;
+    
         rightEdge = transform.position.x +light.lightCookieSprite.bounds.extents.x / 1f;
         leftEdge = transform.position.x -light.lightCookieSprite.bounds.extents.x / 1f;
         distanceBetweenEdges = new Vector3(rightEdge - leftEdge, 0, 0);

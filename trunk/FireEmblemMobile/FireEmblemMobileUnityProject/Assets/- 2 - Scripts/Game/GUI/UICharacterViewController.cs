@@ -15,7 +15,7 @@ using UnityEngine.UI;
 public class UICharacterViewController : MonoBehaviour
 {
     public Canvas canvas;
-    public DropArea dropArea;
+    // public DropArea dropArea;
     public Unit unit;
     public Party party;
     public TextMeshProUGUI charName;
@@ -44,13 +44,14 @@ public class UICharacterViewController : MonoBehaviour
     public Image image;
 
     void Awake(){
-        dropArea.OnDropHandler += OnItemDropped;
+        // if(dropArea!=null)
+        //     dropArea.OnDropHandler += OnItemDropped;
     }
 
-    private void OnItemDropped(UIDragable dragable)
-    {
-        Debug.Log("Item Dropped!");
-    }
+    // private void OnItemDropped(UIDragable dragable)
+    // {
+    //     Debug.Log("Item Dropped!");
+    // }
 
     // private void OnEnable()
     // {

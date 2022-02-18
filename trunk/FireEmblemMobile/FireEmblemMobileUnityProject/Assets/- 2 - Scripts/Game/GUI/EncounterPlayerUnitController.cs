@@ -60,6 +60,6 @@ public class EncounterPlayerUnitController : MonoBehaviour
     public void SetOffsetCount(int cnt)
     {
         this.offset = baseOffset * cnt;
-        Debug.Log("offset: "+offset);
+      
     }
 }
