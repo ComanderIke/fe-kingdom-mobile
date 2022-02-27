@@ -7,7 +7,7 @@ using Utility;
 
 namespace Game.GUI
 {
-    public class ExpBarController : MonoBehaviour, IExpRenderer
+    public class ExpBarController : MonoBehaviour, IAnimation
     {
         Vector3 oldPosition;
         public TextMeshProUGUI text;
@@ -24,17 +24,19 @@ namespace Game.GUI
         // Start is called before the first frame update
         private void Start()
         {
-            ParticleAttractor.onParticleArrived += IncreaseExpText;
+           
   
         }
-        
-        void IncreaseExpText()
+
+     
+        public void ParticleArrived()
         {
-            currentExp = currentExp + 1;
-            text.text = "" + (currentExp);
-            LeanTween.scale(gameObject, new Vector3(1.4f, 1.4f, 1), 0.1f).setEaseSpring();
-            oldPosition = transform.localPosition;
-           // Debug.Log("1EXP! " +currentExp+" of "+expAfter);
+             currentExp = currentExp + 1;
+             fill.fillAmount = currentExp / 100f;
+            // text.text = "" + (currentExp);
+            // LeanTween.scale(gameObject, new Vector3(1.4f, 1.4f, 1), 0.1f).setEaseSpring();
+            // oldPosition = transform.localPosition;
+            Debug.Log("1EXP! " +currentExp+" of "+expAfter);
             if (currentExp == expAfter)
             {
                 Hide();
@@ -42,6 +44,7 @@ namespace Game.GUI
         }
         public void UpdateValues(int currentExp, int addedExp)
         {
+           // Debug.Log("UPDATE VALUEAS!");
             Debug.Log("CurrentExp: "+currentExp+" Gained: "+addedExp);
             this.currentExp = currentExp;
             this.addedExp = addedExp;
@@ -50,8 +53,9 @@ namespace Game.GUI
 
         public void Play()
         {
-            text.text = ""+currentExp;
-            LeanTween.alphaCanvas(glow.GetComponent<CanvasGroup>(), 1, 1.0f).setLoopPingPong(1);
+            Debug.Log("Play!");
+            //text.text = ""+currentExp;
+            //LeanTween.alphaCanvas(glow.GetComponent<CanvasGroup>(), 1, 1.0f).setLoopPingPong(1);
            
         }
   
@@ -81,9 +85,10 @@ namespace Game.GUI
         void Hide()
         {
             Debug.Log("AllParticlesArrived!");
-            LeanTween.scale(gameObject, new Vector3(1, 1, 1), AnimateOutDuration).setEaseInQuad().setDelay(AnimateStayDuration);
-            LeanTween.moveLocal(gameObject, oldPosition, AnimateOutDuration).setEaseInQuad().setDelay(AnimateStayDuration)
-                .setOnComplete(() => { AnimationQueue.OnAnimationEnded?.Invoke(); });
+            AnimationQueue.OnAnimationEnded?.Invoke();
+          //  LeanTween.scale(gameObject, new Vector3(1, 1, 1), AnimateOutDuration).setEaseInQuad().setDelay(AnimateStayDuration);
+            // LeanTween.moveLocal(gameObject, oldPosition, AnimateOutDuration).setEaseInQuad().setDelay(AnimateStayDuration)
+            //     .setOnComplete(() => { AnimationQueue.OnAnimationEnded?.Invoke(); });
         }
 
         public void SetText(int exp)

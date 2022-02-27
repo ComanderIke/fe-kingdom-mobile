@@ -35,13 +35,14 @@ namespace Game.GameActors.Units.OnGameObject
             unitRenderer.sprite = animatedSprite.GetComponent<SpriteRenderer>();
            // Debug.Log("Set Unit Renderer: " + unit.name + " " + unitRenderer);
             unitRenderer.Init();
+            unit.visuals.unitRenderer = unitRenderer;
             animatedSprite.GetComponent<UnitAnimator>().SetUnit(unit);
             
             //Debug.Log("Set Unit Animator: " + unit.name + " " + unitAnimator);
            // Debug.Log("Set Unit GameObject: " + unit.name + " " + unitGameObject);
             unit.GameTransformManager.GameObject = unitGameObject;
             GridGameManager.Instance.GetSystem<GridSystem>().SetUnitPosition(unit, x, y);
-            
+          
 
             //For Performance
             if(unitGameObject.GetComponentInChildren<Canvas>()!=null)

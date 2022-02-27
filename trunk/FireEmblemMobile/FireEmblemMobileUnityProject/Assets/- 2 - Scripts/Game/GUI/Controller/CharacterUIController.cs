@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.OnGameObject;
+using Game.GameInput;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +12,11 @@ using Object = UnityEngine.Object;
 
 namespace Game.GUI
 {
-    
+
+    public interface IClickedReceiver
+    {
+        void Clicked(Unit unit);
+    }
     public class CharacterUIController :  ICharacterUI
     {
         // [SerializeField]
@@ -26,8 +31,13 @@ namespace Game.GUI
         private  Vector2 selectedSize;
         [SerializeField]
         private  Vector2 normalSize;
-
-        public UIPartyCharacterCircleController parentController;
+         [SerializeField]
+                private  Vector2 normalSizeBars;
+                [SerializeField]
+                private  Vector2 selectedSizeBars;
+        [SerializeField]
+        private RectTransform attractor;
+        public IClickedReceiver parentController;
 
        // [SerializeField]
       //  private IStatBar spBar;
@@ -37,17 +47,25 @@ namespace Game.GUI
         [SerializeField] private ExpBarController expBar = default;
         // [SerializeField] private TextMeshProUGUI expLabel = default;
         public Unit unit;
-    
         
 
-       
+        private void Start()
+        {
+           
+        }
+
         public void ShowActive(Unit unit)
         {
             this.unit = unit;
             UpdateValues();
             gameObject.SetActive(true);
             GetComponent<RectTransform>().sizeDelta = selectedSize;
+            expBar.GetComponent<RectTransform>().sizeDelta = selectedSizeBars;
+            hpBar.GetComponent<RectTransform>().sizeDelta = selectedSizeBars;
+            //GameplayInput.SelectUnit(unit);
+           
             
+
         }
         public override void Show(Unit unit)
         {
@@ -55,16 +73,25 @@ namespace Game.GUI
             UpdateValues();
             gameObject.SetActive(true);
             GetComponent<RectTransform>().sizeDelta = normalSize;
+            expBar.GetComponent<RectTransform>().sizeDelta = normalSizeBars;
+            hpBar.GetComponent<RectTransform>().sizeDelta = normalSizeBars;
             
         }
 
         public void Clicked()
         {
+            Debug.Log("UnitCircleClicked: "+unit);
             parentController.Clicked(unit);
+            FindObjectOfType<PlayerPhaseUI>()?.UnitCircleClicked(unit);
         }
         public override void Hide()
         {
             gameObject.SetActive(false);
+        }
+
+        public override ExpBarController GetExpRenderer()
+        {
+            return expBar;
         }
 
         void OnEnable()
@@ -86,6 +113,16 @@ namespace Game.GUI
             faceSprite.sprite = unit.visuals.CharacterSpriteSet.FaceSprite;
         }
 
-        
+        public RectTransform GetUnitParticleAttractorTransform()
+        {
+           
+            return attractor;
+        }
+       
+
+        public ExpBarController GetExpBarController()
+        {
+            return expBar;
+        }
     }
 }

@@ -314,7 +314,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
 
     public void Hide()
     {
-        Debug.Log("HIDE!");
+     
         canvas.Hide();
         light.SetActive(false);
         LeanTween.value(volume.weight, 0, 0.4f).setEaseInQuad().setOnUpdate((value) =>

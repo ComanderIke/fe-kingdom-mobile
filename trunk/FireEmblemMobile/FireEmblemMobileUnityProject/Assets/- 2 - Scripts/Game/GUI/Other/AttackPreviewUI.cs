@@ -69,7 +69,7 @@ namespace Game.GUI
                 rectTransform = GetComponent<RectTransform>();
              if (Camera == null)
                  Camera = Camera.main;
-           
+             
 
              faceSpriteLeft.sprite = attackerSprite;
              faceSpriteRight.sprite = defenderSprite;

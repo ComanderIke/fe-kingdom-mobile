@@ -36,6 +36,7 @@ namespace Game.States
                 defender.Die();
             }
 
+            Debug.Log("TODO IS ANIMATION FINISHED THEN CALL FINISHED");
             AnimationQueue.OnAllAnimationsEnded += Finished;
         }
 

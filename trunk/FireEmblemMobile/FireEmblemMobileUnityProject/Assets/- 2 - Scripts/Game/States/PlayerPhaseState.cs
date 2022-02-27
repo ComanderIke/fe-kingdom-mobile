@@ -68,11 +68,17 @@ namespace Game.Mechanics
             unitInputSystem.SetActive(true);
             playerPhaseUI.Show(gridGameManager.GetSystem<TurnSystem>().TurnCount);
             playerPhaseUI.SubscribeOnBackClicked(Undo);
-            
+            playerPhaseUI.SubscribeOnCharacterCircleClicked(OnCharacterCircleClicked);
             SetUpInputForUnits();
             UnitSelectionSystem.OnSelectedInActiveCharacter += OnSelectedCharacter;
             UnitSelectionSystem.OnSelectedCharacter += OnSelectedCharacter;
+            UnitSelectionSystem.OnDeselectCharacter +=OnDeselectedCharacter;
             // add as InputReceiver to all units
+        }
+
+        private void OnCharacterCircleClicked(Unit unit)
+        {
+            gridInputSystem.inputReceiver.ClickedOnActor(unit);
         }
 
         public void Undo()
@@ -133,20 +139,34 @@ namespace Game.Mechanics
         private void OnSelectedCharacter(IGridActor character)
         {
             gridInputSystem.inputReceiver.ResetInput();
+            foreach (var unit in factionManager.Factions[1].Units)
+            {
+                unit.visuals.unitRenderer.ShowAttackDamage((Unit)character);
+            }
+        }
+        private void OnDeselectedCharacter(IGridActor character)
+        {
+            gridInputSystem.inputReceiver.ResetInput();
+            foreach (var unit in factionManager.Factions[1].Units)
+            {
+                unit.visuals.unitRenderer.HideAttackDamage();
+            }
         }
         public override void Exit()
         {
             playerPhaseUI.UnsubscribeOnBackClicked(Undo);
+            playerPhaseUI.UnsubscribeOnCharacterCircleClicked(OnCharacterCircleClicked);
             cameraSystem.RemoveMixin<DragCameraMixin>();
             cameraSystem.RemoveMixin<ClampCameraMixin>();
             cameraSystem.RemoveMixin<ViewOnGridMixin>();
             UnitSelectionSystem.OnSelectedInActiveCharacter -=OnSelectedCharacter;
+            UnitSelectionSystem.OnDeselectCharacter -= OnDeselectedCharacter;
             UnitSelectionSystem.OnSelectedCharacter -= OnSelectedCharacter;
             gridGameManager.GetSystem<GridSystem>().cursor.OnCursorPositionChanged -= CursorPosChanged;
             gridInputSystem.ResetInput();
             gridInputSystem.SetActive(false);
             unitInputSystem.SetActive(false);
-            Debug.Log("Exit");
+         //   Debug.Log("Exit");
             playerPhaseUI.Hide();
             playerPhaseUI.HideTileInfo();
             

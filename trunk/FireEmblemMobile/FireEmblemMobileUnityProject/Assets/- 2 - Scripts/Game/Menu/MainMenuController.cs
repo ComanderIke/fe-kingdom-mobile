@@ -33,7 +33,7 @@ namespace Game.GUI
         [SerializeField] private UIMenu optionsMenu;
         [SerializeField] private UIMenu campaignMenu;
         [SerializeField] private Canvas mainMenuCanvas;
-
+        [SerializeField] private Canvas mainCanvas;
         private void Awake()
         {
             if (Instance == null)
@@ -56,14 +56,19 @@ namespace Game.GUI
             mainMenuCanvas.enabled=true;
             optionsMenu.Hide();
             campaignMenu.Hide();
+            menuCam.gameObject.SetActive(true);
+            menuBackground.SetActive((true));
         }
 
+        public Camera menuCam;
+        public GameObject menuBackground;
         public void HideMenu()
         {
             mainMenuCanvas.enabled = false;
             optionsMenu.Hide();
             campaignMenu.Hide();
-            
+            menuCam.gameObject.SetActive(false);
+            menuBackground.SetActive((false));
         }
      
         
@@ -165,6 +170,7 @@ namespace Game.GUI
         public void NewGameClicked()
         {
             campaignMenu.Show();
+            mainMenuCanvas.enabled = false;
             //SceneController.SwitchScene("Base");
         }
 

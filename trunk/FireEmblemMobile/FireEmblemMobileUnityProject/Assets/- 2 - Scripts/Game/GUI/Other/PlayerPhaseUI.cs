@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.GameActors.Units;
 using Game.GameInput;
 using Game.Grid;
 using Game.Manager;
@@ -17,6 +18,7 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
     public TextMeshProUGUI turnText;
     public TileInfoPanel TileInfoPanel;
     public static Action OnBackClicked;
+    public static Action<Unit> OnUnitCircleClicked;
     public void ShowTileInfo(Tile selectedTile)
     {
         TileInfoPanel.Show(selectedTile);
@@ -38,6 +40,17 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
     {
         OnBackClicked -= action;
     }
+
+    public void SubscribeOnCharacterCircleClicked(Action<Unit> action)
+    {
+        OnUnitCircleClicked += action;
+    }
+
+    public void UnsubscribeOnCharacterCircleClicked(Action<Unit> action)
+    {
+        OnUnitCircleClicked -= action;
+    }
+
     public void Show(int turnCount)
     {
         GetComponent<Canvas>().enabled = true;
@@ -56,15 +69,19 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
 
     public void Hide()
     {
-        Debug.Log("Hide");
+        //Debug.Log("Hide");
         GetComponent<Canvas>().enabled = false;
         selectionUI.HideUndo();
 
     }
 
+    public void UnitCircleClicked(Unit u)
+    {
+        OnUnitCircleClicked?.Invoke(u);
+    }
     public void BackClicked()
     {
-        Debug.Log("BACK Clicked!");
+       // Debug.Log("BACK Clicked!");
         
         OnBackClicked?.Invoke();
         Invoke(nameof(HideUndo),0.05f);//Invoke after small time so the raycast of the button click doesnt go to the grid....

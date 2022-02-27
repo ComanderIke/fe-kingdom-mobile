@@ -18,7 +18,6 @@ namespace Game.Mechanics
     public class PopUpTextSystem : IEngineSystem, IDependecyInjection
     {
         public ILevelUpRenderer levelUpRenderer;//injected
-        public IExpRenderer ExpRenderer;
         private List<Faction> Factions;
 
         public void Init()

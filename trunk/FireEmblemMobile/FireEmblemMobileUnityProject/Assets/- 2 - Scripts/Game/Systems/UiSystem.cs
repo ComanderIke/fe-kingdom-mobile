@@ -21,8 +21,8 @@ namespace Game.GUI
         public IAttackPreviewUI attackPreviewUI;
         public IObjectiveUI objectiveUI;
         public IUnitPlacementUI unitPlacementUI;
-        
-        
+
+        public UIFactionCharacterCircleController characterCircleController;
         public void Init()
         {
            
@@ -95,7 +95,7 @@ namespace Game.GUI
         public void SelectedCharacter(IGridActor actor)
         {
             if(actor is Unit u)
-                characterUI.Show(u);
+                characterCircleController.SelectUnit(u);
         }
         public void SelectedEnemyCharacter(IGridActor actor)
         {
@@ -104,7 +104,7 @@ namespace Game.GUI
         }
         private void DeselectedCharacter(IGridActor actor)
         {
-            characterUI.Hide();
+            //characterUI.Hide();
             enemyCharacterUI.Hide();
         }
         // #region Events

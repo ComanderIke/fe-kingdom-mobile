@@ -5,7 +5,7 @@ using Game.GUI;
 using Game.WorldMapStuff.Model;
 using UnityEngine;
 
-public class UIPartyCharacterCircleController : MonoBehaviour
+public class UIPartyCharacterCircleController : MonoBehaviour, IClickedReceiver
 {
     public GameObject CircleCharacterUIPrefab;
 
@@ -37,6 +37,7 @@ public class UIPartyCharacterCircleController : MonoBehaviour
             cnt++;
         }
     }
+  
 
     private void SpawnGOs()
     {

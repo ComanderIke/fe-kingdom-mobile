@@ -120,7 +120,7 @@ namespace Game.Manager
             GameStateManager.PhaseTransitionState.phaseRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IPhaseRenderer>().First();
             GameStateManager.PlayerPhaseState.playerPhaseUI = FindObjectsOfType<MonoBehaviour>().OfType<IPlayerPhaseUI>().First();
             GetSystem<UnitProgressSystem>().levelUpRenderer = FindObjectsOfType<MonoBehaviour>().OfType<ILevelUpRenderer>().First();
-            GetSystem<UnitProgressSystem>().ExpRenderer = FindObjectsOfType<MonoBehaviour>().OfType<TopUi>().First().expRenderer;
+            
         }
 
         private void Update()

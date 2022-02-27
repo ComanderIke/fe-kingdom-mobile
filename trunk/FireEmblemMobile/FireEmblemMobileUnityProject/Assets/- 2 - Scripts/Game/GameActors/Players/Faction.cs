@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Game.GameActors.Units;
 using Game.Manager;
+using Game.WorldMapStuff.Model;
 using UnityEngine;
 
 namespace Game.GameActors.Players
@@ -14,6 +15,7 @@ namespace Game.GameActors.Players
         public FactionId Id;
         public bool IsPlayerControlled;
         public string Name;
+        public Party party;
         public List<Unit> Units { get; private set; }
 
         public Faction()

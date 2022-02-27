@@ -26,8 +26,24 @@ namespace Game.GameActors.Units.OnGameObject
         [SerializeField] private CanvasGroup alphaCanvas;
         [SerializeField] private CanvasGroup hoverCanvas;
         [SerializeField] public SpriteRenderer sprite;
+        [SerializeField] public GameObject attackDamageObject;
+        [SerializeField] private TextMeshProUGUI attackDamageText;
+        [SerializeField] private TextMeshProUGUI x2Text;
+        
         public Unit unit;
 
+        public void HideAttackDamage()
+        {
+            attackDamageObject.SetActive(false);
+        }
+        public void ShowAttackDamage(Unit compareUnit)
+        {
+            int dmg= unit.BattleComponent.BattleStats.GetDamageAgainstTarget(compareUnit);
+            bool doubleAttack = unit.BattleComponent.BattleStats.CanDoubleAttack(compareUnit);
+            attackDamageObject.SetActive(true);
+            attackDamageText.SetText("" + dmg);
+            x2Text.gameObject.SetActive(doubleAttack);
+        }
         private void Start()
         {
             Unit.HpValueChanged += HpValueChanged;
@@ -36,6 +52,7 @@ namespace Game.GameActors.Units.OnGameObject
             if(unit!=null)
                 unit.TurnStateManager.UnitWaiting += SetWaitingSprite;
             Human.OnEquippedWeapon += OnEquippedWeapon;
+            
            // hoverCanvas.alpha = 0;
             HpValueChanged();
             // SpValueChanged();

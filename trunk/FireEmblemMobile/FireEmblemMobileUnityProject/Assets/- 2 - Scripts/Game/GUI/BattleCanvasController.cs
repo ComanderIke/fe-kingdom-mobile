@@ -15,15 +15,27 @@ public class BattleCanvasController : MonoBehaviour
     public float fadeOutTime = 0.25f;
     public RenderTexture RenderTexture;
 
+    public Canvas canvas;
+    private float width;
+    private float height;
     private void Awake()
+    {
+        
+    }
+
+    private void Start()
     {
         battleCanvasGroup = battleCanvas.GetComponent<CanvasGroup>();
         RectTransform rawImageRect = image.GetComponent<RectTransform>();
-        rawImageRect.sizeDelta = new Vector2(Screen.width, Screen.height);
-        RenderTexture.width = Screen.width;
-        RenderTexture.height = Screen.height;
+       
+        width =canvas.pixelRect.width/canvas.scaleFactor;
+        height = canvas.pixelRect.height/canvas.scaleFactor;
+        Debug.Log("width: "+width+" height: "+height);
+        rawImageRect.sizeDelta = new Vector2(width, height);
+        RenderTexture.width =(int) width;
+        RenderTexture.height =(int)height;
+        
     }
-
   
 
     public void Show()
@@ -33,7 +45,7 @@ public class BattleCanvasController : MonoBehaviour
         RectTransform rectT = mask.rectTransform;
         rectT.sizeDelta = new Vector2(0, 0);
        
-        LeanTween.size(rectT, new Vector2(Screen.width+maskMaxSize.x, Screen.height+maskMaxSize.y), fadeInTime).setEaseOutQuad();
+        LeanTween.size(rectT, new Vector2(width+maskMaxSize.x, height+maskMaxSize.y), fadeInTime).setEaseOutQuad();
         battleCanvasGroup.alpha = 1;
         //LeanTween.scaleY(battleCanvas,1,1.2f).setEaseOutQuad();
         //LeanTween.alphaCanvas(battleCanvasGroup,.95f, fadeInTime).setEaseOutQuad();

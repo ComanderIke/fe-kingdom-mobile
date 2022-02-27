@@ -9,5 +9,8 @@ namespace Game.GUI
         public abstract void Show(Unit unit);
 
         public abstract void Hide();
+
+        public abstract ExpBarController GetExpRenderer();
+        
     }
 }

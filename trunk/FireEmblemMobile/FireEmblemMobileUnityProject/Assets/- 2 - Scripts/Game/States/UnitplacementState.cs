@@ -191,7 +191,11 @@ namespace Game.States
             SetUnits(factionManager.Factions[0].Units);
             SpawnEnemies();
             UnitPlacementUI.Show(units, chapter);
-            UnitPlacementUI.OnFinished += () => { finished = true;};
+            UnitPlacementUI.OnFinished += () =>
+            {
+                
+                GameObject.FindObjectOfType<UIFactionCharacterCircleController>().Show(factionManager.Factions[0]);
+                finished = true;};
         
            
             SpawnPlayerUnits(units);
@@ -265,25 +269,20 @@ namespace Game.States
             factionManager.Factions[0].ClearUnits();
             factionManager.Factions[1].ClearUnits();
             int cnt = 0;
-            if (Player.Instance.Party!=null&&Player.Instance.Party.members.Count!=0)
+           
+            if (Player.Instance.Party==null||Player.Instance.Party.members.Count!=0)
             {
-                foreach (var unit in Player.Instance.Party.members)
-                {
-                    cnt++;
-                    if (cnt <= 4)
-                        factionManager.Factions[0].AddUnit(unit);
-                }
+                var demoUnits = GameObject.FindObjectOfType<DemoUnits>().GetUnits();
+                Player.Instance.Party = ScriptableObject.CreateInstance<Party>();
+                Player.Instance.Party.members = demoUnits;
             }
-            else
+            foreach (var unit in Player.Instance.Party.members)
             {
-                var units = GameObject.FindObjectOfType<DemoUnits>().GetUnits();
-                foreach (var unit in units)
-                {
-                    cnt++;
-                    if (cnt <= 4)
-                        factionManager.Factions[0].AddUnit(unit);
-                }
+                cnt++;
+                if (cnt <= 4)
+                    factionManager.Factions[0].AddUnit(unit);
             }
+            
 
             if (SceneTransferData.Instance.EnemyUnits != null)
             {
