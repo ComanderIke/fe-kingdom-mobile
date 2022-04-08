@@ -2,16 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.GameActors.Units.Skills;
+using UnityEngine;
 
 namespace Game.GameActors.Units.Humans
 {
+    [System.Serializable]
     public class SkillManager : ICloneable
     {
+        [SerializeField]
         public List<Skill> Skills;
 
         public SkillManager()
         {
             Skills = new List<Skill>();
+        }
+        public SkillManager(SkillManager sm)
+        {
+            Skills = new List<Skill>();
+            foreach (var skill in sm.Skills)
+            {
+                Skills.Add(skill);
+            }
         }
 
         public bool HasSkill<T>()

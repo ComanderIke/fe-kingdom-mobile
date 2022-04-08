@@ -1,1 +1,0 @@
-No Camera game actions as due to their mode of working they need to be on the same gameobject as the camera. Use a component instead.

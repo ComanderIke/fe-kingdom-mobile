@@ -28,9 +28,7 @@ public class EncounterClickController : MonoBehaviour
     }
     private void OnMouseDown()
     {
-
-        if(EventSystem.current.currentSelectedGameObject!=null)
-            Debug.Log(EventSystem.current.currentSelectedGameObject.name);
+        
         if (!IsPointerOverUIObject())
         {
          

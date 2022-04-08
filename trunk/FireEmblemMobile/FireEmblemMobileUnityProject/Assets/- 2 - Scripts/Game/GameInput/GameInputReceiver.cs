@@ -207,9 +207,10 @@ namespace Game.GameInput
             }
             else if(selectionDataProvider.SelectedActor != null)
             {
-                Debug.Log("SelectedActor Null");
+               // Debug.Log("SelectedActor Null");
                 if (selectionDataProvider.SelectedActor.GridComponent.GridPosition.X == x && y == selectionDataProvider.SelectedActor.GridComponent.GridPosition.Y)
-                {  Debug.Log("ResetPos4");
+                { 
+                    //Debug.Log("ResetPos4");
                     selectionDataProvider.SelectedActor.GridComponent.ResetPosition();
                     gameplayInput.DeselectUnit();
                 }
@@ -223,7 +224,7 @@ namespace Game.GameInput
             }
             else
             {
-                Debug.Log("None");
+               // Debug.Log("None");
                 ResetInput();
                 gameplayInput.DeselectUnit();
             }

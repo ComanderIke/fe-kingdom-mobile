@@ -10,6 +10,7 @@ using Game.WorldMapStuff.Manager;
 using Game.WorldMapStuff.Systems;
 using TMPro;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
 {
@@ -79,6 +80,35 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
     {
         OnUnitCircleClicked?.Invoke(u);
     }
+
+    public GameObject SkillButtonPrefab;
+    public Transform SkillParentTransform;
+    public void SkillsClicked()
+    {
+        if (!SkillParentTransform.gameObject.activeSelf)
+        {
+            SkillParentTransform.gameObject.SetActive(true);
+            UnitSelectionSystem selectionSystem = GridGameManager.Instance.GetSystem<UnitSelectionSystem>();
+            Unit activeUnit = (Unit)GridGameManager.Instance.GetSystem<UnitSelectionSystem>().SelectedCharacter;
+            GUIUtility.ClearChildren(SkillParentTransform);
+            Debug.Log(activeUnit.name);
+            Debug.Log("SkillCount: "+activeUnit.SkillManager.Skills.Count);
+            foreach (var skill in activeUnit.SkillManager.Skills)
+            {
+                var go = Instantiate(SkillButtonPrefab, SkillParentTransform);
+                go.GetComponent<SkillButtonController>().SetSkill(skill);
+            }
+        }
+        else
+        {
+            SkillParentTransform.gameObject.SetActive(false);
+            GUIUtility.ClearChildren(SkillParentTransform);
+        }
+    }
+    public void ItemsClicked()
+    {
+        
+    }
     public void BackClicked()
     {
        // Debug.Log("BACK Clicked!");
@@ -112,4 +142,6 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
             }
         });
     }
+
+    
 }

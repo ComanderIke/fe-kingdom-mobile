@@ -5,34 +5,27 @@ using UnityEngine;
 namespace Game.GameActors.Units.Skills
 {
     [Serializable]
-    public abstract class Skill
+    public abstract class Skill: ScriptableObject
     {
         private const int MAX_LEVEL = 10;
-
-        protected Skill()
-        {
-            AttackRanges = new List<int>();
-        }
+        public Sprite Icon;
 
         public GameObject AnimationObject { get; private set; }
 
-        public List<int> AttackRanges { get; private set; }
-
-        public int Cooldown { get; private set; }
+        public int Cooldown;
 
         public int CooldownReduction { get; private set; } = 0;
 
         public int CurrentCooldown { get; private set; }
 
-        public string Description { get; private set; }
+        public string Description;
 
-        public int Level { get; private set; }
+        public int Level;
 
-        public string Name { get; private set; }
+        public string Name;
 
-        public SkillTarget Target { get; private set; }
-
-        public SkillSpriteSet SpriteSet { get; }
+       // public SkillTarget Target;
+       
 
         public abstract bool CanTargetCharacters();
 

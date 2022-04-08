@@ -119,7 +119,7 @@ namespace Game.GameInput
         }
         public void GridClicked(int x, int y)
         {
-            Debug.Log("Grid Clicked: "+x+" "+y);
+          //  Debug.Log("Grid Clicked: "+x+" "+y);
             inputReceiver.ClickedOnGrid(x, y);
         }
 

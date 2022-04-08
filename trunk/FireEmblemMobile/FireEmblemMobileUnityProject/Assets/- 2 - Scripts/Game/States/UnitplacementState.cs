@@ -272,7 +272,12 @@ namespace Game.States
            
             if (Player.Instance.Party==null||Player.Instance.Party.members.Count!=0)
             {
+                Debug.Log("Create Demo Units!");
                 var demoUnits = GameObject.FindObjectOfType<DemoUnits>().GetUnits();
+                Debug.Log("skillCount: "+demoUnits[0].SkillManager.Skills.Count);
+                Debug.Log("skillCount: "+demoUnits[1].SkillManager.Skills.Count);
+                Debug.Log("skillCount: "+demoUnits[2].SkillManager.Skills.Count);
+                Debug.Log("skillCount: "+demoUnits[3].SkillManager.Skills.Count);
                 Player.Instance.Party = ScriptableObject.CreateInstance<Party>();
                 Player.Instance.Party.members = demoUnits;
             }

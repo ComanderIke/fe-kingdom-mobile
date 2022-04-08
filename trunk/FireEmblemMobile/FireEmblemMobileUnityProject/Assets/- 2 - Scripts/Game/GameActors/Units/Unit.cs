@@ -33,7 +33,8 @@ namespace Game.GameActors.Units
         private Attributes growths;
         [SerializeField]
         private MoveType moveType;
-        public SkillManager SkillManager { get; set; }
+        [SerializeField]
+        public SkillManager SkillManager;
         public MoveType MoveType
         {
             get => moveType;
@@ -260,7 +261,7 @@ namespace Game.GameActors.Units
             clone.AIComponent = new AIComponent();
             clone.visuals.UnitEffectVisual = visuals.UnitEffectVisual;
             clone.visuals = visuals;
-            clone.SkillManager = (SkillManager) SkillManager.Clone();
+            clone.SkillManager = new SkillManager(clone.SkillManager);
             clone.hp = hp;
             //clone.sp = sp;
         

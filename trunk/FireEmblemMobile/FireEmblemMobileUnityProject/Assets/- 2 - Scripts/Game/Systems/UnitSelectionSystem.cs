@@ -56,7 +56,7 @@ namespace Game.Mechanics
 
         public void DeselectActiveCharacter()
         {
-            Debug.Log("DeselectACtiveCharacterGridSys");
+           // Debug.Log("DeselectACtiveCharacterGridSys");
             if (SelectedCharacter != null)
             {
                 SelectedCharacter.GridComponent.ResetPosition();

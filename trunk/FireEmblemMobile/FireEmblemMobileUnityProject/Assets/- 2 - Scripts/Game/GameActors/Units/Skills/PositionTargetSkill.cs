@@ -4,15 +4,32 @@ using UnityEngine;
 namespace Game.GameActors.Units.Skills
 {
     [Serializable]
-    public abstract class PositionTargetSkill : Skill
+    [CreateAssetMenu(menuName="GameData/Skills/PositionTarget", fileName = "PositionTargetSkill")]
+    public class PositionTargetSkill : Skill
     {
-        public virtual void Activate(Unit user, Vector3 target)
+        public int power;
+        public int range;
+        public int radius;
+        public bool diagonal;
+        public bool horizontal;
+        public bool vertical;
+        public void Activate(Unit user, Vector3 target)
         {
 
         }
 
-        public virtual void Effect(Unit user, Vector3 target)
+        public void Effect(Unit user, Vector3 target)
         {
+        }
+
+        public override bool CanTargetCharacters()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override int GetDamage(Unit user, bool justToShow)
+        {
+            throw new NotImplementedException();
         }
     }
 }

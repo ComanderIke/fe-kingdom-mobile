@@ -29,20 +29,22 @@ namespace Game.GameInput
  
         bool CheckUIObjectsInPosition(Vector2 position)
         {
-            //Debug.Log("Touch Position: " + position);
-            UnityEngine.EventSystems.PointerEventData pointer = new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current);
-            pointer.position = position;
-            List<UnityEngine.EventSystems.RaycastResult> raycastResults = new List<UnityEngine.EventSystems.RaycastResult>();
-            UnityEngine.EventSystems.EventSystem.current.RaycastAll(pointer, raycastResults);
+          
+            PointerEventData pointer = new PointerEventData(EventSystem.current);
+            pointer.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);;
+            List<RaycastResult> raycastResults = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(pointer, raycastResults);
+            Debug.Log("Raycast Position: " + pointer.position);
  
             if (raycastResults.Count > 0)
             {
+                Debug.Log("Results: " + raycastResults.Count);
                 foreach (var go in raycastResults)
                 {
                     if (!go.gameObject.CompareTag("Grid"))
                     {
                         Debug.Log("RAYCAST NOT GRID: "+go.gameObject.name);
-                        return true;
+                       
                     }
                     else
                     {
@@ -51,22 +53,18 @@ namespace Game.GameInput
                 }
             }
 
-            return false;
-        }
-        private bool IsPointerOverUIObject()
-        {
-            if (EventSystem.current.IsPointerOverGameObject())
+            if (raycastResults.Count > 0)
                 return true;
- 
-            for (int touchIndex = 0; touchIndex < Input.touchCount; touchIndex++)
-            {
-                Touch touch = Input.GetTouch(touchIndex);
-                if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
-                    return true;
-            }
- 
+
             return false;
         }
+        // private bool IsPointerOverUIObject() {
+        //     PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        //     eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        //     List<RaycastResult> results = new List<RaycastResult>();
+        //     EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        //     return results.Count > 0;
+        // }
         public void Update()
         {
             if(Input.touchCount ==1){
@@ -76,7 +74,7 @@ namespace Game.GameInput
 
                     if (!CheckUIObjectsInPosition(touch.position))
                     {
-
+                        Debug.Log("NoUIClicked!");
                         if (!CameraSystem.IsDragging)
                         {
 
