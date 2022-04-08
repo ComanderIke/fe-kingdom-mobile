@@ -12,10 +12,7 @@ namespace Game.GameActors.Units.Humans
         [SerializeField]
         public List<Skill> Skills;
 
-        public SkillManager()
-        {
-            Skills = new List<Skill>();
-        }
+        
         public SkillManager(SkillManager sm)
         {
             Skills = new List<Skill>();

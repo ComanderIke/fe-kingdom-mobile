@@ -18,7 +18,7 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
     public OKCancelDialogController OkCancelDialogController;
     public TextMeshProUGUI turnText;
     public TileInfoPanel TileInfoPanel;
-    public static Action OnBackClicked;
+
     public static Action<Unit> OnUnitCircleClicked;
     public void ShowTileInfo(Tile selectedTile)
     {
@@ -32,14 +32,14 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
     public void SubscribeOnBackClicked(Action action)
     {
         //Debug.Log("Subscribe BACK!");
-        OnBackClicked += action;
+        SelectionUI.OnBackClicked += action;
     }
 
     
 
     public void UnsubscribeOnBackClicked(Action action)
     {
-        OnBackClicked -= action;
+        SelectionUI.OnBackClicked -= action;
     }
 
     public void SubscribeOnCharacterCircleClicked(Action<Unit> action)
@@ -81,49 +81,10 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
         OnUnitCircleClicked?.Invoke(u);
     }
 
-    public GameObject SkillButtonPrefab;
-    public Transform SkillParentTransform;
-    public void SkillsClicked()
-    {
-        if (!SkillParentTransform.gameObject.activeSelf)
-        {
-            SkillParentTransform.gameObject.SetActive(true);
-            UnitSelectionSystem selectionSystem = GridGameManager.Instance.GetSystem<UnitSelectionSystem>();
-            Unit activeUnit = (Unit)GridGameManager.Instance.GetSystem<UnitSelectionSystem>().SelectedCharacter;
-            GUIUtility.ClearChildren(SkillParentTransform);
-            Debug.Log(activeUnit.name);
-            Debug.Log("SkillCount: "+activeUnit.SkillManager.Skills.Count);
-            foreach (var skill in activeUnit.SkillManager.Skills)
-            {
-                var go = Instantiate(SkillButtonPrefab, SkillParentTransform);
-                go.GetComponent<SkillButtonController>().SetSkill(skill);
-            }
-        }
-        else
-        {
-            SkillParentTransform.gameObject.SetActive(false);
-            GUIUtility.ClearChildren(SkillParentTransform);
-        }
-    }
-    public void ItemsClicked()
-    {
-        
-    }
-    public void BackClicked()
-    {
-       // Debug.Log("BACK Clicked!");
-        
-        OnBackClicked?.Invoke();
-        Invoke(nameof(HideUndo),0.05f);//Invoke after small time so the raycast of the button click doesnt go to the grid....
-        
-       
-    }
+   
 
-    private void HideUndo()
-    {
-        selectionUI.HideUndo();
-        
-    }
+    
+   
    
     public void EndTurnClicked()
     {

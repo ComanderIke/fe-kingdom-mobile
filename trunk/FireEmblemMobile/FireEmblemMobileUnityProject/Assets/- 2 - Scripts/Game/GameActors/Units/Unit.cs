@@ -144,8 +144,7 @@ namespace Game.GameActors.Units
 
         public virtual void Initialize()
         {
-
-            SkillManager = new SkillManager();
+            
             experienceManager ??= new ExperienceManager();
             ExperienceManager.LevelUp = null;
             ExperienceManager.LevelUp += LevelUp;

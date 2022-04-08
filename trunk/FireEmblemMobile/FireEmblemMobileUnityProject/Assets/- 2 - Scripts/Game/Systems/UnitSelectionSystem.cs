@@ -20,12 +20,14 @@ namespace Game.Mechanics
         private GridGameManager gridGameManager;
         public IGridActor SelectedCharacter { get; set; }
         private GameplayInput gameplayInput;
+        private ISelectionUI selectionUI;
+        
 
         public void Init()
         {
             gameplayInput = new GameplayInput();
             gridGameManager = GridGameManager.Instance;
-
+            selectionUI = GameObject.FindObjectOfType<SelectionUI>();
            
             //BattleState.OnExit += DeselectActiveCharacter;
         }
@@ -80,7 +82,7 @@ namespace Game.Mechanics
             }
             SelectedCharacter = c;
             c.TurnStateManager.IsSelected = true;
-            
+          
             OnSelectedCharacter?.Invoke(SelectedCharacter);
         }
 

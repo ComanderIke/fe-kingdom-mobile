@@ -30,6 +30,7 @@ namespace __2___Scripts.External.Editor
                 if (activeUnit != (Unit)system.SelectedCharacter)
                 {
                     activeUnit = (Unit)system.SelectedCharacter;
+                    
                     Repaint();
                     //Debug.Log("Repaint!");
                 }
@@ -45,8 +46,20 @@ namespace __2___Scripts.External.Editor
           
             string selectedUnitName = "";
             if (activeUnit != null)
+            {
                 selectedUnitName = activeUnit.name;
-            GUILayout.Label("Selected Unit: "+selectedUnitName);
+                GUILayout.Label("Selected Unit: " + selectedUnitName);
+                GUILayout.Label("Hp: " + activeUnit.Hp + "/" + activeUnit.Stats.MaxHp);
+                GUILayout.Label("SkillsCount: " + activeUnit.SkillManager.Skills.Count);
+                foreach (var skill in activeUnit.SkillManager.Skills)
+                {
+                    GUILayout.Label("Skill: " + skill.name);
+                }
+            }
+            else
+            {
+                GUILayout.Label("No Unit Selected!");
+            }
         }
     }
 }

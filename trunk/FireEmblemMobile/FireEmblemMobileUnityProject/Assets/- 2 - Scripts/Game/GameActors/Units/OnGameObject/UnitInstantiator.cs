@@ -14,6 +14,7 @@ namespace Game.GameActors.Units.OnGameObject
 
         public void PlaceCharacter(Unit unit, int x, int y)
         {
+            Debug.Log("Place Unit SkillCount: "+unit.SkillManager.Skills.Count);
             GameObject unitGameObject;
             if(GridGameManager.Instance.FactionManager.GetPlayerControlledFaction().Id==unit.Faction.Id)
                 unitGameObject = Instantiate(UnitNormal);
