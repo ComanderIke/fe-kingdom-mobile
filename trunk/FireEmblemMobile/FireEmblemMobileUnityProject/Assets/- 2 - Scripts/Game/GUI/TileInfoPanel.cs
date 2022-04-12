@@ -53,11 +53,10 @@ public class TileInfoPanel : MonoBehaviour
         {
             status.gameObject.SetActive(false);
         }
-        if(boni1.gameObject.activeSelf||boni2.gameObject.activeSelf||boni3.gameObject.activeSelf||status.gameObject.activeSelf)
+        if(tile.TileData.avoBonus != 0||tile.TileData.speedMalus != 0||tile.TileData.defenseBonus != 0||!tile.TileData.walkable)
             gameObject.SetActive(true);
         else
         {
-            
             gameObject.SetActive(false);
         }
     }

@@ -22,10 +22,12 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
     public static Action<Unit> OnUnitCircleClicked;
     public void ShowTileInfo(Tile selectedTile)
     {
+        Debug.Log("ShowTileInfo!");
         TileInfoPanel.Show(selectedTile);
     }
     public void HideTileInfo()
     {
+        Debug.Log("HideTileInfo!");
         TileInfoPanel.Hide();
     }
 

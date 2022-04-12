@@ -20,6 +20,11 @@ namespace Game.Map
         {
             return currentTile;
         }
+
+        public void ShowCast(int radius, bool vertical, bool horizontal, bool diagonal, bool fullbox)
+        {
+            renderer.ShowTargetRange(radius, vertical, horizontal, diagonal, fullbox);
+        }
         public void SetCurrentTile(Tile tile)
         {
             currentTile = tile;

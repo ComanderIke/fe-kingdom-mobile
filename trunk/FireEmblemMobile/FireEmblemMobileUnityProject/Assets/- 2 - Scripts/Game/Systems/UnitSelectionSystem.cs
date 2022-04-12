@@ -1,5 +1,7 @@
 ﻿using System;
+using Game.GameActors.Items;
 using Game.GameActors.Units;
+using Game.GameActors.Units.Skills;
 using Game.GameInput;
 using Game.Manager;
 using GameEngine;
@@ -16,9 +18,14 @@ namespace Game.Mechanics
         public static event Action<IGridActor> OnSelectedInActiveCharacter;
 
         public static event Action<IGridActor> OnEnemySelected;
+        public static event Action<Skill> OnSkillSelected;
+        public static event Action<Item> OnItemSelected;
 
         private GridGameManager gridGameManager;
         public IGridActor SelectedCharacter { get; set; }
+        public Skill SelectedSkill { get; set; }
+        public Item SelectedItem { get; set; }
+
         private GameplayInput gameplayInput;
         private ISelectionUI selectionUI;
         
@@ -34,6 +41,10 @@ namespace Game.Mechanics
 
         public void Deactivate()
         {
+            GameplayInput.OnSelectSkill -= SelectSkill;
+            GameplayInput.OnDeselectSkill -= DeselectSkill;
+            GameplayInput.OnSelectItem -= SelectItem;
+            GameplayInput.OnDeselectItem -= DeselectItem;
             GameplayInput.OnSelectUnit -= SelectUnit;
             GameplayInput.OnDeselectUnit -= DeselectActiveCharacter;
             gridGameManager.GetSystem<TurnSystem>().OnEndTurn -= DeselectActiveCharacter;
@@ -41,10 +52,34 @@ namespace Game.Mechanics
 
         public void Activate()
         {
+            GameplayInput.OnSelectSkill += SelectSkill;
+            GameplayInput.OnDeselectSkill += DeselectSkill;
+            GameplayInput.OnSelectItem += SelectItem;
+            GameplayInput.OnDeselectItem += DeselectItem;
             GameplayInput.OnSelectUnit += SelectUnit;
             GameplayInput.OnDeselectUnit += DeselectActiveCharacter;
             gridGameManager.GetSystem<TurnSystem>().OnEndTurn += DeselectActiveCharacter;
         }
+
+        private void SelectSkill(Skill skill)
+        {
+            SelectedSkill = skill;
+            OnSkillSelected?.Invoke(skill);
+        }
+        private void DeselectSkill()
+        {
+            SelectedSkill = null;
+        }
+        private void SelectItem(Item item)
+        {
+            SelectedItem = item;
+            OnItemSelected?.Invoke(item);
+        }
+        private void DeselectItem()
+        {
+            SelectedItem = null;
+        }
+
 
         public void Update()
         {

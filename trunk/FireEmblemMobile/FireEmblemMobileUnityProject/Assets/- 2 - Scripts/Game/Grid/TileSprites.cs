@@ -14,5 +14,6 @@ namespace Game.Grid
         public Sprite GridSpriteAlly;
         public Sprite GridSwapSprite;
         public Sprite BlockedSprite;
+        public Sprite CastSprite;
     }
 }

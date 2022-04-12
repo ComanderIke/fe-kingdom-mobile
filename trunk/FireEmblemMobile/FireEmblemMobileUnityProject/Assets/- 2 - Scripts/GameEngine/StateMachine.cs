@@ -12,6 +12,10 @@ namespace GameEngine
             currentState = initialState;
         }
 
+        public GameState<TFeed> GetCurrentState()
+        {
+            return currentState;
+        }
         public void Update()
         {
           

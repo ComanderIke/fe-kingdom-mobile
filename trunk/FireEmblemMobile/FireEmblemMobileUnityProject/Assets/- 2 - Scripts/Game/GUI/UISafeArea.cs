@@ -38,7 +38,10 @@ public class UISafeArea : MonoBehaviour
         
         maxAnchor.x /= canvas.pixelRect.width;
         maxAnchor.y /= canvas.pixelRect.height;
-
+        Debug.Log("Screen Size: "+Screen.width+" "+Screen.height);
+        Debug.Log("Canvas pixelRect: "+canvas.pixelRect.width+" "+canvas.pixelRect.height);
+        Debug.Log("Save Area Position: "+safeArea.position.x+" "+safeArea.position.y);
+        Debug.Log("Save Area Size: "+safeArea.size.x+" "+safeArea.size.y);
         panelSafeArea.anchorMin = minAnchor;
         panelSafeArea.anchorMax = maxAnchor;
 

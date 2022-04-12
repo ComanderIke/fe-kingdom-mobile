@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Game.GameActors.Items;
 using Game.GameActors.Units;
+using Game.GameActors.Units.Skills;
 using Game.Grid;
 using Game.Mechanics;
 using UnityEngine;
@@ -26,6 +27,12 @@ namespace Game.GameInput
         public static event AttackUnitEvent OnAttackUnit;
         public delegate void CheckAttackPreviewEvent(IBattleActor u, IBattleActor attackTarget, GridPosition attackPosition);
         public static event CheckAttackPreviewEvent OnCheckAttackPreview;
+        
+        public static event Event OnDeselectSkill;
+        public static event Event OnDeselectItem;
+        public static event Action<Skill> OnSelectSkill;
+        public static event Action<Item> OnSelectItem;
+
         public void AttackUnit(IBattleActor u, IBattleActor attackTarget)
         {
             Debug.Log("GameInput: Attack Unit: " + u+" Target: " +attackTarget);
@@ -59,7 +66,16 @@ namespace Game.GameInput
             Debug.Log("GameInput: Wait Unit: " + u);
             OnWait?.Invoke(u);
         }
-
+        public void SelectItem(Item item)
+        {
+            Debug.Log("SelectItem");
+            OnSelectItem(item);
+        }
+        public void SelectSkill(Skill s)
+        {
+            Debug.Log("SelectSkill");
+            OnSelectSkill(s);
+        }
         public void UseItem(Item i)
         {
             throw new NotImplementedException();
@@ -79,5 +95,7 @@ namespace Game.GameInput
         {
             OnUndoUnit?.Invoke();
         }
+
+      
     }
 }

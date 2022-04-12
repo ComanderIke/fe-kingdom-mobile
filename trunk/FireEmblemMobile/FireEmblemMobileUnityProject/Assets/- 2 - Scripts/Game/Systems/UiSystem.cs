@@ -21,7 +21,8 @@ namespace Game.GUI
         public IAttackPreviewUI attackPreviewUI;
         public IObjectiveUI objectiveUI;
         public IUnitPlacementUI unitPlacementUI;
-
+        public Canvas MainUICanvas;
+        
         public UIFactionCharacterCircleController characterCircleController;
         public void Init()
         {
@@ -295,6 +296,16 @@ namespace Game.GUI
         {
             objectiveUI.Hide();
         }
-     
+
+    
+        public void HideMainCanvas()
+        {
+            MainUICanvas.enabled = false;
+        }
+
+        public void ShowMainCanvas()
+        {
+            MainUICanvas.enabled = true;
+        }
     }
 }

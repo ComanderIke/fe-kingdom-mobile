@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.GameActors.Units.Numbers;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Skills
@@ -13,6 +14,8 @@ namespace Game.GameActors.Units.Skills
         public bool diagonal;
         public bool horizontal;
         public bool vertical;
+        public bool fullBox;
+
         public void Activate(Unit user, Vector3 target)
         {
 
@@ -30,6 +33,11 @@ namespace Game.GameActors.Units.Skills
         public override int GetDamage(Unit user, bool justToShow)
         {
             throw new NotImplementedException();
+        }
+
+        public int GetCastRangeIncrease(Attributes statsAttributes)
+        {
+            return statsAttributes.INT / 5;
         }
     }
 }

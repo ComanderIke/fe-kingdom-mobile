@@ -13,45 +13,78 @@ namespace Game.GameInput
         public GameObject SkillsButton;
         public GameObject ItemsButton;
         public GameObject CloseSkillButton;
+        public GameObject CloseItemButton;
         public GameObject SkillButtonPrefab;
+        public GameObject ItemButtonPrefab;
         public Transform SkillParentTransform;
+        public Transform ItemParentTransform;
         public static Action OnBackClicked;
 
+        private Unit selectedCharacter;
         private void Start()
         {
             UnitSelectionSystem.OnSelectedCharacter += CharacterGotSelected;
+            UnitSelectionSystem.OnDeselectCharacter += NoCharacterSelectedState;
         }
 
         private void CharacterGotSelected(IGridActor actor)
         {
             if (actor is Unit unit)
             {
-                if(unit.SkillManager.Skills.Count > 0)
-                    ShowSkills();
-                else
-                {
-                    HideSkills();
-                }
-                if(Player.Instance.Party.Convoy.Count > 0)
-                    ShowItems();
-                else
-                {
-                    HideItems();
-                }
+                CharacterSelectedState(unit);
             }
         }
 
-        public void CloseSkillsClicked()
+        private void CharacterSelectedState(Unit unit)
         {
-            SkillParentTransform.gameObject.SetActive(false);
-            GUIUtility.ClearChildren(SkillParentTransform);
-            SkillsButton.gameObject.SetActive(true);
-            CloseSkillButton.gameObject.SetActive(false);
+            selectedCharacter = unit;
+            if(unit.SkillManager.Skills.Count > 0)
+                SkillsButton.SetActive(true);
+            else
+            {
+                SkillsButton.SetActive(false);
+               
+            }
+            if(Player.Instance.Party.Convoy.Count > 0)
+                ItemsButton.SetActive(true);
+            else
+            {
+                ItemsButton.SetActive(false);
+            }
+            CloseSkillButton.SetActive(false);
+            CloseItemButton.SetActive(false);
         }
-        public void SkillsClicked()
+
+        private void NoCharacterSelectedState(IGridActor actor)
         {
-            SkillsButton.gameObject.SetActive(false);
-            CloseSkillButton.gameObject.SetActive(true);
+            ItemsButton.SetActive(false);
+            CloseItemButton.SetActive(false);
+            SkillsButton.SetActive(false);
+            CloseSkillButton.SetActive(false);
+        }
+
+        private void ItemsSelectedState()
+        {
+            
+            CharacterSelectedState(selectedCharacter);
+            ItemsButton.SetActive(false);
+            CloseItemButton.SetActive(true);
+            ItemParentTransform.gameObject.SetActive(true);
+          
+            GUIUtility.ClearChildren(ItemParentTransform);
+            foreach (var item in Player.Instance.Party.Convoy)
+            {
+                var go = Instantiate(ItemButtonPrefab, ItemParentTransform);
+                go.GetComponent<ItemButtonController>().SetItem(item);
+            }
+        }
+
+        private void SkillSelectedState()
+        {
+            CharacterSelectedState(selectedCharacter);
+            
+            SkillsButton.SetActive(false);
+            CloseSkillButton.SetActive(true);
             SkillParentTransform.gameObject.SetActive(true);
             UnitSelectionSystem selectionSystem = GridGameManager.Instance.GetSystem<UnitSelectionSystem>();
             Unit activeUnit = (Unit)GridGameManager.Instance.GetSystem<UnitSelectionSystem>().SelectedCharacter;
@@ -62,57 +95,55 @@ namespace Game.GameInput
             {
                 var go = Instantiate(SkillButtonPrefab, SkillParentTransform);
                 go.GetComponent<SkillButtonController>().SetSkill(skill);
+     
             }
         }
+
+      
+        public void CloseItemsClicked()
+        {
+            this.CallWithDelay(CloseSubMenuClickedDelayed, 0.005f);
+        }
+      
+        public void CloseSkillsClicked()
+        {
+            this.CallWithDelay(CloseSubMenuClickedDelayed, 0.005f);
+        }
+        private void CloseSubMenuClickedDelayed()
+        {
+            CharacterSelectedState(selectedCharacter);
+        }
+        public void SkillsClicked()
+        {
+            this.CallWithDelay(SkillSelectedState, 0.005f);
+        }
+        
         public void ItemsClicked()
         {
-        
+            this.CallWithDelay(ItemsSelectedState, 0.005f);
+           
         }
+        
         public void BackClicked()
         {
             // Debug.Log("BACK Clicked!");
         
             OnBackClicked?.Invoke();
-            Invoke(nameof(HideUndo),0.05f);//Invoke after small time so the raycast of the button click doesnt go to the grid....
+            this.CallWithDelay(HideUndo,0.05f);//Invoke after small time so the raycast of the button click doesnt go to the grid....
         
        
         }
-        
         public override void ShowUndo()
         {
            // Debug.Log("ShowUndo");
             UndoButton.SetActive(true);
             
         }
-
         public override void HideUndo()
         {
            // Debug.Log("HideUndo");
             UndoButton.SetActive(false);
         }
-        public override void ShowSkills()
-        {
-            // Debug.Log("ShowUndo");
-            SkillsButton.SetActive(true);
-            CloseSkillButton.SetActive(false);
-        }
 
-        public override void HideSkills()
-        {
-            // Debug.Log("HideUndo");
-            SkillsButton.SetActive(false);
-            CloseSkillButton.SetActive(false);
-        }
-        public override void ShowItems()
-        {
-            // Debug.Log("ShowUndo");
-            ItemsButton.SetActive(true);
-        }
-
-        public override void HideItems()
-        {
-            // Debug.Log("HideUndo");
-            ItemsButton.SetActive(false);
-        }
     }
 }

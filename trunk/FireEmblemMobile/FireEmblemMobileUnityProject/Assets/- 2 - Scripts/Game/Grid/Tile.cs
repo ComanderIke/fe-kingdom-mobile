@@ -65,6 +65,11 @@ namespace Game.Grid
             tileVfx.Hide(this);
         }
 
+        public void SetCastMaterial(FactionId playerId)
+        {
+            TileRenderer.SetVisualStyle(playerId);
+            TileRenderer.CastVisual();
+        }
         public void SetAttackMaterial(FactionId playerId, bool activeUnit, bool activePlayer)
         {
             Reset();

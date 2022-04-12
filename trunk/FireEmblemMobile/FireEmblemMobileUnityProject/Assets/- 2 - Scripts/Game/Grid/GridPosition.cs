@@ -29,5 +29,10 @@ namespace Game.Grid
         {
             return movePath.Select(t => new GridPosition(t.x, t.y)).ToList();
         }
+
+        public Vector2 AsVector()
+        {
+            return new Vector2(X, Y);
+        }
     }
 }

@@ -9,12 +9,6 @@ namespace Game.GameInput
         public abstract void ShowUndo();
 
         public abstract void HideUndo();
-        public abstract void ShowSkills();
 
-        public abstract void HideSkills();
-        public abstract void ShowItems();
-
-        public abstract void HideItems();
- 
     }
 }

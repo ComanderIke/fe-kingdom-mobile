@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Game.GameActors.Units.Skills
 {
     [Serializable]
-    public abstract class Skill: ScriptableObject
+    public abstract class Skill: ScriptableObject, ITargetableObject
     {
         private const int MAX_LEVEL = 10;
         public Sprite Icon;
@@ -23,6 +23,19 @@ namespace Game.GameActors.Units.Skills
         public int Level;
 
         public string Name;
+
+        public string GetName()
+        {
+            return Name;
+        }
+        public string GetDescription()
+        {
+            return Description;
+        }
+        public Sprite GetIcon()
+        {
+            return Icon;
+        }
 
        // public SkillTarget Target;
        

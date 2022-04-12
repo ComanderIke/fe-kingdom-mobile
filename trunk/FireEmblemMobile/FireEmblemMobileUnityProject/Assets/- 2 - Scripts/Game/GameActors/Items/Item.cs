@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Game.GameActors.Items
 {
     [Serializable]
-    public abstract class Item : ScriptableObject, ICloneable
+    public abstract class Item : ScriptableObject, ICloneable, ITargetableObject
     {
         public string Name;
         public string Description;
@@ -15,7 +15,18 @@ namespace Game.GameActors.Items
         public int cost;
 
         [Header("ItemAttributes")] public Sprite Sprite;
-
+        public string GetName()
+        {
+            return Name;
+        }
+        public string GetDescription()
+        {
+            return Description;
+        }
+        public Sprite GetIcon()
+        {
+            return Sprite;
+        }
         public virtual void Use(Human character)
         {
             foreach (var mixin in Mixins) mixin.Use(character);

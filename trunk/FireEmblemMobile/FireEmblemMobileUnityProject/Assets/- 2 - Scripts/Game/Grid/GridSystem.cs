@@ -143,6 +143,36 @@ namespace Game.Map
             GridLogic.ResetActiveFields();
             NodeHelper.Reset();
         }
+
+        public void ShowCastRange(IGridActor character, int castRange)
+        {
+            HideMoveRange();
+            Vector2 characterPos = character.GridComponent.GridPosition.AsVector();
+            for (int i = 0; i < castRange+1; i++)
+            {
+                for (int j = 0; j < castRange+1; j++)
+                {
+                    if (i == 0 && j == 0)
+                        continue;
+                    if (i + j <= castRange)
+                    {
+                        var pos = characterPos + new Vector2(i, j);
+                        if(!IsOutOfBounds(pos))
+                            GridRenderer.SetTileCastMaterial(characterPos + new Vector2(i, j), character.Faction.Id);
+                        pos = characterPos + new Vector2(-i, j);
+                        if(!IsOutOfBounds(pos))
+                            GridRenderer.SetTileCastMaterial(characterPos + new Vector2(-i, j), character.Faction.Id);
+                        pos = characterPos + new Vector2(i, -j);
+                        if(!IsOutOfBounds(pos))
+                            GridRenderer.SetTileCastMaterial(characterPos + new Vector2(i, -j), character.Faction.Id);
+                        pos = characterPos + new Vector2(-i, -j);
+                        if(!IsOutOfBounds(pos))
+                            GridRenderer.SetTileCastMaterial(characterPos + new Vector2(-i, -j), character.Faction.Id);
+                    }
+                }
+            }
+            
+        }
         public void ShowAttackRecursive(IGridActor character, int x, int y, int range, List<int> direction, bool soft=false)
         {
             if (range <= 0)
@@ -192,6 +222,7 @@ namespace Game.Map
                 }
             }
         }
+        
         private void ShowMovement(int x, int y, int range, int c, IGridActor unit)
         {
             if (range < 0)
@@ -225,6 +256,11 @@ namespace Game.Map
         {
             return x < 0 || x >= GridData.width || y < 0 ||
                    y >= GridData.height;
+        }
+        public bool IsOutOfBounds(Vector2 pos)
+        {
+            return pos.x < 0 || pos.x >= GridData.width || pos.y < 0 ||
+                   pos.y >= GridData.height;
         }
 
         public Tile GetTile(int x, int y)

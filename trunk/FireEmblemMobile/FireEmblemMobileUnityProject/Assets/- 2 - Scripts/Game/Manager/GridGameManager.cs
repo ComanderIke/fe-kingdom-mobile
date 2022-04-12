@@ -118,7 +118,8 @@ namespace Game.Manager
             GameStateManager.UnitPlacementState.chapter = chapterConfig.chapter;
             GameStateManager.UnitPlacementState.UnitPlacementUI =  FindObjectsOfType<MonoBehaviour>().OfType<IUnitPlacementUI>().First();
             GameStateManager.PhaseTransitionState.phaseRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IPhaseRenderer>().First();
-            GameStateManager.PlayerPhaseState.playerPhaseUI = FindObjectsOfType<MonoBehaviour>().OfType<IPlayerPhaseUI>().First();
+            GameStateManager.PlayerPhaseState.mainState.playerPhaseUI = FindObjectsOfType<MonoBehaviour>().OfType<IPlayerPhaseUI>().First();
+            GameStateManager.PlayerPhaseState.chooseTargetState.UI = FindObjectsOfType<MonoBehaviour>().OfType<IChooseTargetUI>().First();
             GetSystem<UnitProgressSystem>().levelUpRenderer = FindObjectsOfType<MonoBehaviour>().OfType<ILevelUpRenderer>().First();
             
         }

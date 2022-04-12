@@ -51,6 +51,10 @@ namespace Game.Grid
         {
             spriteRenderer.sprite = activeSpriteSet.GridAttackSprite;
         }
+        public void CastVisual()
+        {
+            spriteRenderer.sprite = activeSpriteSet.CastSprite;
+        }
 
         public void AllyVisual()
         {
