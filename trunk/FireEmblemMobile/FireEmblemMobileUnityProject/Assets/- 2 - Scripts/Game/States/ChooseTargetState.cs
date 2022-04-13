@@ -45,8 +45,20 @@ namespace Game.Mechanics
             {
                 selectedSkill = selectionSystem.SelectedSkill;
                 Debug.Log("Remove Magic NUmber!");
-                if(selectionSystem.SelectedSkill is PositionTargetSkill pts)
-                    gridGameManager.GetSystem<GridSystem>().ShowCastRange(selectionSystem.SelectedCharacter,pts.range+pts.GetCastRangeIncrease(((Unit) selectionSystem.SelectedCharacter).Stats.Attributes));
+                if (selectionSystem.SelectedSkill is PositionTargetSkill pts)
+                {
+                    if (pts.rooted)
+                    {
+                        gridGameManager.GetSystem<GridSystem>().ShowRootedCastRange(selectionSystem.SelectedCharacter, pts);
+                    }
+                    else
+                    {
+                        gridGameManager.GetSystem<GridSystem>().ShowCastRange(selectionSystem.SelectedCharacter,
+                            pts.range + pts.GetCastRangeIncrease(((Unit)selectionSystem.SelectedCharacter).Stats
+                                .Attributes));
+                    }
+                }
+
                 UI.Show((Unit)selectionSystem.SelectedCharacter, selectionSystem.SelectedSkill);
             }
             else if (selectionSystem.SelectedItem != null)
@@ -82,9 +94,11 @@ namespace Game.Mechanics
             if (IsInCastRange(x,y))
             {
                 gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
+                
                 if (selectedSkill is PositionTargetSkill pts)
                 {
-                    gridSystem.cursor.ShowCast(pts.radius, pts.horizontal, pts.vertical, pts.diagonal, pts.fullBox);
+                    if(!pts.rooted)
+                        gridSystem.cursor.ShowCast(pts.radius, pts.horizontal, pts.vertical, pts.diagonal, pts.fullBox);
                 }
             }
             else

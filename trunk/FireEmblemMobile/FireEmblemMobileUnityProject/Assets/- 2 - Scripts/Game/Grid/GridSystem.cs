@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Game.GameActors.Units;
+using Game.GameActors.Units.Skills;
 using Game.GameResources;
 using Game.Grid;
 using Game.Grid.GridPathFinding;
@@ -324,6 +325,98 @@ namespace Game.Map
             }
 
             return activeTiles;
+        }
+
+        public void ShowRootedCastRange(IGridActor character, PositionTargetSkill pts)
+        {
+            HideMoveRange();
+            Vector2 characterPos = character.GridComponent.GridPosition.AsVector();
+            if (pts.radius > 0)
+            {
+                if (pts.fullBox)
+                {
+                    for (int i = 0; i < pts.radius + 1; i++)
+                    {
+                        for (int j = 0; j< pts.radius + 1; j++)
+                        {
+                            var pos = characterPos + new Vector2(i, j);
+                            if(!IsOutOfBounds(pos))
+                                GridRenderer.SetTileCastMaterial(pos, character.Faction.Id);
+                            pos = characterPos + new Vector2(-i, j);
+                            if(!IsOutOfBounds(pos))
+                                GridRenderer.SetTileCastMaterial(pos, character.Faction.Id);
+                            pos = characterPos + new Vector2(i, -j);
+                            if(!IsOutOfBounds(pos))
+                                GridRenderer.SetTileCastMaterial(pos, character.Faction.Id);
+                            pos = characterPos + new Vector2(-i, -j);
+                            if(!IsOutOfBounds(pos))
+                                GridRenderer.SetTileCastMaterial(pos, character.Faction.Id);
+                           
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 1; i < pts.radius + 1; i++)
+                    {
+                        if (pts.horizontal)
+                        {
+                            var pos = characterPos + new Vector2(-i, 0);
+                            if(!IsOutOfBounds(pos))
+                                GridRenderer.SetTileCastMaterial(pos, character.Faction.Id);
+                            pos = characterPos + new Vector2(i, 0);
+                            if(!IsOutOfBounds(pos))
+                                GridRenderer.SetTileCastMaterial(pos, character.Faction.Id);
+                          
+                        }
+
+                        if (pts.vertical)
+                        {
+                            var pos = characterPos + new Vector2(0, -i);
+                            if(!IsOutOfBounds(pos))
+                                GridRenderer.SetTileCastMaterial(pos, character.Faction.Id);
+                            pos = characterPos + new Vector2(0, i);
+                            if(!IsOutOfBounds(pos))
+                                GridRenderer.SetTileCastMaterial(pos, character.Faction.Id);
+                        }
+
+                        
+                    }
+
+                    if (pts.diagonal)
+                    {
+                        for (int i = 0; i < pts.radius; i++)
+                        {
+                            for (int j = 0; j < pts.radius; j++)
+                            {
+                                if (i !=0 && j!=0&&(i+j)<=pts.radius)
+                                {
+                                    var pos = characterPos + new Vector2(i, j);
+                                    if(!IsOutOfBounds(pos))
+                                        GridRenderer.SetTileCastMaterial(pos, character.Faction.Id);
+                                    pos = characterPos + new Vector2(-i, j);
+                                    if(!IsOutOfBounds(pos))
+                                        GridRenderer.SetTileCastMaterial(pos, character.Faction.Id);
+                                    pos = characterPos + new Vector2(i, -j);
+                                    if(!IsOutOfBounds(pos))
+                                        GridRenderer.SetTileCastMaterial(pos, character.Faction.Id);
+                                    pos = characterPos + new Vector2(-i, -j);
+                                    if(!IsOutOfBounds(pos))
+                                        GridRenderer.SetTileCastMaterial(pos, character.Faction.Id);
+                                }
+                               
+                            }
+                        }
+                    }
+
+                    
+                }
+            }
+            
+                      
+                    
+                
+            
         }
     }
 }

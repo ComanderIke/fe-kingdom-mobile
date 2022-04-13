@@ -11,6 +11,7 @@ namespace Game.GameActors.Units.Skills
         public int power;
         public int range;
         public int radius;
+        public bool rooted;
         public bool diagonal;
         public bool horizontal;
         public bool vertical;
