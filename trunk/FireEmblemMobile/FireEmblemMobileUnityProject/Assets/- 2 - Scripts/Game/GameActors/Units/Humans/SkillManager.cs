@@ -11,6 +11,8 @@ namespace Game.GameActors.Units.Humans
     {
         [SerializeField]
         public List<Skill> Skills;
+        [SerializeField]
+        public Skill Favourite;
 
         
         public SkillManager(SkillManager sm)

@@ -18,6 +18,7 @@ namespace Game.GameInput
         public GameObject ItemButtonPrefab;
         public Transform SkillParentTransform;
         public Transform ItemParentTransform;
+        private GameObject favButton;
         public static Action OnBackClicked;
 
         private Unit selectedCharacter;
@@ -38,6 +39,15 @@ namespace Game.GameInput
         private void CharacterSelectedState(Unit unit)
         {
             selectedCharacter = unit;
+            if (selectedCharacter.SkillManager.Favourite != null)
+            {
+                if(!favButton)
+                    Destroy(favButton);
+                favButton = GameObject.Instantiate(SkillButtonPrefab, this.transform);
+                favButton.GetComponent<SkillButtonController>().SetSkill(selectedCharacter.SkillManager.Favourite);
+                
+            }
+
             if(unit.SkillManager.Skills.Count > 0)
                 SkillsButton.SetActive(true);
             else
@@ -61,6 +71,8 @@ namespace Game.GameInput
             CloseItemButton.SetActive(false);
             SkillsButton.SetActive(false);
             CloseSkillButton.SetActive(false);
+            if(favButton!=null)
+                favButton.SetActive(false);
         }
 
         private void ItemsSelectedState()
