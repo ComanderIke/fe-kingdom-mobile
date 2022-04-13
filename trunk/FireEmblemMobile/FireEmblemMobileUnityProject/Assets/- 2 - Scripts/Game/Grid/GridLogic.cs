@@ -249,5 +249,10 @@ namespace Game.Grid
         {
             return gridSessionData.IsAttackableAndActive(x, y);
         }
+
+        public bool IsFieldTargetable(int x, int y)
+        {
+            return gridSessionData.IsTargetable(x,y);
+        }
     }
 }

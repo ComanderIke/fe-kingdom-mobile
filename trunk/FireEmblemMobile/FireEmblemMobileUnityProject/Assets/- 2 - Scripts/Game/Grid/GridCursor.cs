@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.GameActors.Units.Skills;
 using Game.Grid;
 using UnityEngine;
 
@@ -21,9 +22,9 @@ namespace Game.Map
             return currentTile;
         }
 
-        public void ShowCast(int radius, bool vertical, bool horizontal, bool diagonal, bool fullbox)
+        public void ShowCast(int radius, SkillTargetArea skillTargetArea)
         {
-            renderer.ShowTargetRange(radius, vertical, horizontal, diagonal, fullbox);
+            renderer.ShowTargetRange(radius, skillTargetArea);
         }
         public void SetCurrentTile(Tile tile)
         {
@@ -48,6 +49,11 @@ namespace Game.Map
             gridPosition = null;
            // renderer.Hide();
             //OnResetCursor
+        }
+
+        public void ShowRootedCast(Vector2 pos, int radius, SkillTargetArea targetArea)
+        {
+            renderer.ShowRootedTargetRange(pos, gridPosition.AsVector(), radius, targetArea);
         }
     }
 }

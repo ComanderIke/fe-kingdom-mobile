@@ -1,4 +1,6 @@
-﻿using __2___Scripts.Game.Utility;
+﻿using System;
+using __2___Scripts.Game.Utility;
+using Game.GameActors.Units.Skills;
 using UnityEngine;
 
 namespace Game.Map
@@ -10,10 +12,8 @@ namespace Game.Map
         public Transform targetSquareParent;
         public SpriteRenderer cursorSprite;
         public int radius = 0;
-        public bool horizontal;
-        public bool vertical;
-        public bool diagonal;
-        public bool fullBox;
+        public SkillTargetArea skillTargetArea;
+   
         public void Show(Vector2 position)
         {
             //Debug.Log("SHOW");
@@ -27,14 +27,61 @@ namespace Game.Map
         {
             cursorSprite.enabled = true;
         }
-        public void ShowTargetRange(int radius, bool horizontal, bool vertical, bool diagonal, bool fullBox)
+        public void ShowRootedTargetRange(Vector2 rootedPos,Vector2 cursorPos,  int radius, SkillTargetArea targetArea)
+        {
+           //Difference between castRange Properties and ACtual Attack (
+           if(targetArea==SkillTargetArea.Line)
+               ShowRootedLine(rootedPos,cursorPos,radius);
+        }
+
+        private void ShowRootedLine(Vector2 rootedPos,Vector2 clickedPos, int length)
         {
             cursorSprite.enabled = false;
             targetSquareParent.DeleteAllChildren();
             GameObject go;
             if (radius > 0)
             {
-                if (fullBox)
+                for (int i = 1; i < length + 1; i++)
+                {
+                    go = Instantiate(targetSquarePrefab, targetSquareParent, false);
+                    if ((int)clickedPos.x == (int)rootedPos.x)
+                    {
+                        //vertical
+                        if (clickedPos.y > rootedPos.y)//up
+                        {
+                            
+                            go.transform.localPosition = new Vector3(0, i, 0);
+                        }
+                        else
+                        {
+                            go.transform.localPosition = new Vector3(0, -i, 0);
+                        }
+                    }
+                    else
+                    {
+                        if (clickedPos.x > rootedPos.x)//right
+                        {
+                            
+                            go.transform.localPosition = new Vector3(i, 0, 0);
+                        }
+                        else
+                        {
+                            go.transform.localPosition = new Vector3(-i, 0, 0);
+                        }
+              
+                        
+                    }
+                }
+            }
+        }
+        public void ShowTargetRange(int radius, SkillTargetArea skillTargetArea)
+        {
+            cursorSprite.enabled = false;
+            targetSquareParent.DeleteAllChildren();
+            GameObject go;
+            if (radius > 0)
+            {
+                if (skillTargetArea==SkillTargetArea.Block)
                 {
                     for (int i = 0; i < radius + 1; i++)
                     {
@@ -57,7 +104,7 @@ namespace Game.Map
                     go.transform.localPosition = Vector3.zero;
                     for (int i = 1; i < radius + 1; i++)
                     {
-                        if (horizontal)
+                        if (skillTargetArea==SkillTargetArea.Line||skillTargetArea==SkillTargetArea.Cross||skillTargetArea==SkillTargetArea.Star)
                         {
                             go = Instantiate(targetSquarePrefab, targetSquareParent, false);
                             go.transform.localPosition = new Vector3(-i, 0, 0);
@@ -65,7 +112,7 @@ namespace Game.Map
                             go.transform.localPosition = new Vector3(i, 0, 0);
                         }
 
-                        if (vertical)
+                        if (skillTargetArea==SkillTargetArea.NormalLine||skillTargetArea==SkillTargetArea.Cross||skillTargetArea==SkillTargetArea.Star)
                         {
                             go = Instantiate(targetSquarePrefab, targetSquareParent, false);
                             go.transform.localPosition = new Vector3(0, -i, 0);
@@ -76,7 +123,7 @@ namespace Game.Map
                         
                     }
 
-                    if (diagonal)
+                    if (skillTargetArea==SkillTargetArea.Star)
                     {
                         for (int i = 0; i < radius; i++)
                         {
@@ -120,5 +167,7 @@ namespace Game.Map
             //Debug.Log("Hide");
             gameObject.SetActive(false);
         }
+
+       
     }
 }

@@ -91,19 +91,25 @@ namespace Game.Mechanics
 
         public void ClickedOnGrid(int x, int y)
         {
-            if (IsInCastRange(x,y))
+            if (selectedSkill is PositionTargetSkill pts)
             {
-                gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
-                
-                if (selectedSkill is PositionTargetSkill pts)
+                if (!pts.rooted)
                 {
-                    if(!pts.rooted)
-                        gridSystem.cursor.ShowCast(pts.radius, pts.horizontal, pts.vertical, pts.diagonal, pts.fullBox);
+                    if (gridSystem.IsTargetAble(x, y))
+                    {
+                        gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
+                        gridSystem.cursor.ShowCast(pts.size, pts.targetArea);
+                    }
                 }
-            }
-            else
-            {
-                
+                else
+                {
+                    if (gridSystem.IsTargetAble(x, y))
+                    {
+                        gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
+                        gridSystem.cursor.ShowRootedCast(selectedUnit.GridComponent.GridPosition.AsVector(),pts.size, pts.targetArea);
+                    }
+                    
+                }
             }
         }
 

@@ -158,17 +158,16 @@ namespace Game.Map
                     if (i + j <= castRange)
                     {
                         var pos = characterPos + new Vector2(i, j);
-                        if(!IsOutOfBounds(pos))
-                            GridRenderer.SetTileCastMaterial(characterPos + new Vector2(i, j), character.Faction.Id);
+                        ShowCastRange(pos,character.Faction.Id);
+
                         pos = characterPos + new Vector2(-i, j);
-                        if(!IsOutOfBounds(pos))
-                            GridRenderer.SetTileCastMaterial(characterPos + new Vector2(-i, j), character.Faction.Id);
+                        ShowCastRange(pos,character.Faction.Id);
+
                         pos = characterPos + new Vector2(i, -j);
-                        if(!IsOutOfBounds(pos))
-                            GridRenderer.SetTileCastMaterial(characterPos + new Vector2(i, -j), character.Faction.Id);
+                        ShowCastRange(pos,character.Faction.Id);
+
                         pos = characterPos + new Vector2(-i, -j);
-                        if(!IsOutOfBounds(pos))
-                            GridRenderer.SetTileCastMaterial(characterPos + new Vector2(-i, -j), character.Faction.Id);
+                        ShowCastRange(pos,character.Faction.Id);
                     }
                 }
             }
@@ -327,82 +326,77 @@ namespace Game.Map
             return activeTiles;
         }
 
+        private void ShowCastRange(Vector2 pos, FactionId id)
+        {
+            if (!IsOutOfBounds(pos))
+            {
+                GridRenderer.SetTileCastMaterial(pos, id);
+                GridLogic.gridSessionData.AddValidTargetPosition(pos);
+            }
+        }
         public void ShowRootedCastRange(IGridActor character, PositionTargetSkill pts)
         {
             HideMoveRange();
             Vector2 characterPos = character.GridComponent.GridPosition.AsVector();
-            if (pts.radius > 0)
+            if (pts.size > 0)
             {
-                if (pts.fullBox)
+                if (pts.targetArea == SkillTargetArea.Block)
                 {
-                    for (int i = 0; i < pts.radius + 1; i++)
+                    for (int i = 0; i < pts.size + 1; i++)
                     {
-                        for (int j = 0; j< pts.radius + 1; j++)
+                        for (int j = 0; j< pts.size + 1; j++)
                         {
                             var pos = characterPos + new Vector2(i, j);
-                            if(!IsOutOfBounds(pos))
-                                GridRenderer.SetTileCastMaterial(pos, character.Faction.Id);
+                            ShowCastRange(pos,character.Faction.Id);
                             pos = characterPos + new Vector2(-i, j);
-                            if(!IsOutOfBounds(pos))
-                                GridRenderer.SetTileCastMaterial(pos, character.Faction.Id);
+                            ShowCastRange(pos,character.Faction.Id);
                             pos = characterPos + new Vector2(i, -j);
-                            if(!IsOutOfBounds(pos))
-                                GridRenderer.SetTileCastMaterial(pos, character.Faction.Id);
+                            ShowCastRange(pos,character.Faction.Id);
                             pos = characterPos + new Vector2(-i, -j);
-                            if(!IsOutOfBounds(pos))
-                                GridRenderer.SetTileCastMaterial(pos, character.Faction.Id);
-                           
+                            ShowCastRange(pos,character.Faction.Id);
                         }
                     }
                 }
                 else
                 {
-                    for (int i = 1; i < pts.radius + 1; i++)
+                    for (int i = 1; i < pts.size + 1; i++)
                     {
-                        if (pts.horizontal)
+                        if (pts.targetArea == SkillTargetArea.Line||pts.targetArea == SkillTargetArea.Star||pts.targetArea == SkillTargetArea.Cross)
                         {
                             var pos = characterPos + new Vector2(-i, 0);
-                            if(!IsOutOfBounds(pos))
-                                GridRenderer.SetTileCastMaterial(pos, character.Faction.Id);
+                            ShowCastRange(pos,character.Faction.Id);
                             pos = characterPos + new Vector2(i, 0);
-                            if(!IsOutOfBounds(pos))
-                                GridRenderer.SetTileCastMaterial(pos, character.Faction.Id);
+                            ShowCastRange(pos,character.Faction.Id);
                           
                         }
 
-                        if (pts.vertical)
+                        if (pts.targetArea == SkillTargetArea.NormalLine||pts.targetArea == SkillTargetArea.Star||pts.targetArea == SkillTargetArea.Cross)
                         {
                             var pos = characterPos + new Vector2(0, -i);
-                            if(!IsOutOfBounds(pos))
-                                GridRenderer.SetTileCastMaterial(pos, character.Faction.Id);
+                            ShowCastRange(pos,character.Faction.Id);
                             pos = characterPos + new Vector2(0, i);
-                            if(!IsOutOfBounds(pos))
-                                GridRenderer.SetTileCastMaterial(pos, character.Faction.Id);
+                            ShowCastRange(pos,character.Faction.Id);
                         }
 
                         
                     }
 
-                    if (pts.diagonal)
+                    if (pts.targetArea == SkillTargetArea.Star)
                     {
-                        for (int i = 0; i < pts.radius; i++)
+                        for (int i = 0; i < pts.size; i++)
                         {
-                            for (int j = 0; j < pts.radius; j++)
+                            for (int j = 0; j < pts.size; j++)
                             {
-                                if (i !=0 && j!=0&&(i+j)<=pts.radius)
+                                if (i !=0 && j!=0&&(i+j)<=pts.size)
                                 {
                                     var pos = characterPos + new Vector2(i, j);
-                                    if(!IsOutOfBounds(pos))
-                                        GridRenderer.SetTileCastMaterial(pos, character.Faction.Id);
+                                    ShowCastRange(pos,character.Faction.Id);
                                     pos = characterPos + new Vector2(-i, j);
-                                    if(!IsOutOfBounds(pos))
-                                        GridRenderer.SetTileCastMaterial(pos, character.Faction.Id);
+                                    ShowCastRange(pos,character.Faction.Id);
                                     pos = characterPos + new Vector2(i, -j);
-                                    if(!IsOutOfBounds(pos))
-                                        GridRenderer.SetTileCastMaterial(pos, character.Faction.Id);
+                                    ShowCastRange(pos,character.Faction.Id);
                                     pos = characterPos + new Vector2(-i, -j);
-                                    if(!IsOutOfBounds(pos))
-                                        GridRenderer.SetTileCastMaterial(pos, character.Faction.Id);
+                                    ShowCastRange(pos,character.Faction.Id);
                                 }
                                
                             }
@@ -417,6 +411,11 @@ namespace Game.Map
                     
                 
             
+        }
+        
+        public bool IsTargetAble(int x, int y)
+        {
+            return GridLogic.IsFieldTargetable(x, y);
         }
     }
 }
