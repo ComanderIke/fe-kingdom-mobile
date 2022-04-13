@@ -55,5 +55,10 @@ namespace Game.Map
         {
             renderer.ShowRootedTargetRange(pos, gridPosition.AsVector(), radius, targetArea);
         }
+
+        public void HideCast()
+        {
+            renderer.HideTargetRange();
+        }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using __2___Scripts.Game.Utility;
@@ -34,7 +35,8 @@ public class ChooseTargetUI : MonoBehaviour, IChooseTargetUI, IClickedReceiver
         
     }
 
-    
+    public event Action OnBackClicked;
+
     public void Show(Unit selectedUnit, ITargetableObject targetableObject)
     {
         CharacterCircleSpawnParent.DeleteAllChildren();
@@ -56,6 +58,11 @@ public class ChooseTargetUI : MonoBehaviour, IChooseTargetUI, IClickedReceiver
     {
         canvas.enabled = false;
         CharacterCircleSpawnParent.DeleteAllChildren();
+    }
+
+    public void BackClicked()
+    {
+        OnBackClicked?.Invoke();
     }
 
     public void Clicked(Unit unit)

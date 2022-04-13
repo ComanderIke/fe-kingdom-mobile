@@ -46,7 +46,7 @@ namespace Game.Mechanics
             unitInputSystem = new UnitInputSystem();
             
             mainState = new MainPlayerPhaseState(gridGameManager,factionManager,gridInputSystem, unitInputSystem, this);
-            chooseTargetState = new ChooseTargetState(gridGameManager,gridInputSystem, unitInputSystem);
+            chooseTargetState = new ChooseTargetState(gridGameManager,gridInputSystem, unitInputSystem, this);
             mainState.AddTransition(chooseTargetState,PPStateTrigger.ChooseTarget);
             chooseTargetState.AddTransition(mainState,PPStateTrigger.Cancel);
             

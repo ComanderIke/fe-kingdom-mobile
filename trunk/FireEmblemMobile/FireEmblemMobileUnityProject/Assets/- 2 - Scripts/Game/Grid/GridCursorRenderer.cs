@@ -25,6 +25,7 @@ namespace Game.Map
 
         public void HideTargetRange()
         {
+            targetSquareParent.DeleteAllChildren();
             cursorSprite.enabled = true;
         }
         public void ShowRootedTargetRange(Vector2 rootedPos,Vector2 cursorPos,  int radius, SkillTargetArea targetArea)

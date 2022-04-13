@@ -22,13 +22,15 @@ namespace Game.Mechanics
         private IUnitInputReceiver previousUnitInputReceiver;
         private Skill selectedSkill;
         private Unit selectedUnit;
-        public ChooseTargetState(GridGameManager gridGameManager, GridInputSystem gridInputSystem, UnitInputSystem unitInputSystem)
+        private PlayerPhaseState playerPhaseState;
+        public ChooseTargetState(GridGameManager gridGameManager, GridInputSystem gridInputSystem, UnitInputSystem unitInputSystem, PlayerPhaseState playerPhaseState)
         {
             this.gridGameManager = gridGameManager;
             factionManager = this.gridGameManager.FactionManager;
             this.gridInputSystem = gridInputSystem;
             this.unitInputSystem = unitInputSystem;
             gridSystem = gridGameManager.GetSystem<GridSystem>();
+            this.playerPhaseState = playerPhaseState;
         }
         public override void Enter()
         {
@@ -41,6 +43,7 @@ namespace Game.Mechanics
             gridInputSystem.inputReceiver = this;
             unitInputSystem.InputReceiver = this;
             selectedUnit = (Unit)selectionSystem.SelectedCharacter;
+            UI.OnBackClicked += BackClicked;
             if (selectionSystem.SelectedSkill != null)
             {
                 selectedSkill = selectionSystem.SelectedSkill;
@@ -75,11 +78,20 @@ namespace Game.Mechanics
         public override void Exit()
         {
             UI.Hide();
+            UI.OnBackClicked += BackClicked;
+            gridSystem.HideMoveRange();
+            gridSystem.cursor.HideCast();
+            gridInputSystem.ResetInput();
             gridInputSystem.SetActive(false);
             unitInputSystem.SetActive(false);
             gridGameManager.GetSystem<UiSystem>().ShowMainCanvas();
             gridInputSystem.inputReceiver = previousGridInputReceiver;
             unitInputSystem.InputReceiver = previousUnitInputReceiver;
+        }
+
+        private void BackClicked()
+        {
+            playerPhaseState.Feed(PPStateTrigger.Cancel);
         }
 
         public override GameState<PPStateTrigger> Update()
