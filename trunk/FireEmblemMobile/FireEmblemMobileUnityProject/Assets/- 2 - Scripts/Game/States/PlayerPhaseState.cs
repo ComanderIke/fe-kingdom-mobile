@@ -1,8 +1,6 @@
 ﻿using Game.AI;
 using Game.GameActors.Units;
 using Game.GameInput;
-using Game.Grid;
-using Game.GUI;
 using Game.Manager;
 using Game.Map;
 using GameCamera;
@@ -10,7 +8,6 @@ using GameEngine;
 using GameEngine.GameStates;
 using GameEngine.Input;
 using GameEngine.Tools;
-using UnityEditor.UI;
 using UnityEngine;
 
 namespace Game.Mechanics
