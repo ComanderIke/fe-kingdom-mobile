@@ -44,17 +44,17 @@ public class ItemToolTip : MonoBehaviour
 
     public void UseClicked()
     {
-        Debug.Log("Use Item Clicked");
+        Debug.Log("Use Item Clicked TODO dont Remove here also just in ItembaseClass!");
         if (item is EquipableItem eitem)
         {
             Human human =(Human) Player.Instance.Party.ActiveUnit;
             
             human.Equip((eitem));
-            Player.Instance.Party.RemoveItem(item);
+            Player.Instance.Party.Convoy.RemoveItem(item);
         }
         else
         {
-            Player.Instance.Party.RemoveItem(item);
+            Player.Instance.Party.Convoy.RemoveItem(item);
         }
         gameObject.SetActive(false);
     }
@@ -62,7 +62,7 @@ public class ItemToolTip : MonoBehaviour
     public void DropClicked()
     {
         Debug.Log("Drop Item Clicked");
-        Player.Instance.Party.RemoveItem(item);
+        Player.Instance.Party.Convoy.RemoveItem(item);
         gameObject.SetActive(false);
     }
     void UpdateTextWrap(Vector3 position)

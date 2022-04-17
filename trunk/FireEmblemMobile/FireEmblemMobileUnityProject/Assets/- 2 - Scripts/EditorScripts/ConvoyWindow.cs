@@ -6,6 +6,7 @@ using Game.GameActors.Units;
 using Game.GameResources;
 using Game.Manager;
 using Game.Mechanics;
+using Game.WorldMapStuff.Model;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -15,7 +16,7 @@ namespace __2___Scripts.External.Editor
    
     public class ConvoyWindow: EditorWindow
     {
-        private List<StockedItem> currentConvoy;
+        private Convoy currentConvoy;
         [MenuItem("Tools/Convoey_Window")]
         public static void ShowMyEditor()
         {
@@ -51,7 +52,7 @@ namespace __2___Scripts.External.Editor
               
                 GUILayout.Label("Items in Convoy: " );
                
-                foreach (var item in currentConvoy)
+                foreach (var item in currentConvoy.Items)
                 {
                     if (item != null)
                     {
@@ -61,10 +62,10 @@ namespace __2___Scripts.External.Editor
                         }
                     }
                 }
-                GUILayout.Label("Itemcount: "+currentConvoy.Count );
+                GUILayout.Label("Itemcount: "+currentConvoy.Items.Count );
                 if (GUILayout.Button("Add HealthPotion",GUILayout.Width(100)))
                 {
-                    Player.Instance.Party.Convoy.Add(new StockedItem(GameData.Instance.GetHealthPotion(), 1));
+                    Player.Instance.Party.Convoy.AddStockedItem(new StockedItem(GameData.Instance.GetHealthPotion(), 1));
                 }
 
                 

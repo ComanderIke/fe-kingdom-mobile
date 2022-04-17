@@ -16,53 +16,13 @@ namespace Game.WorldMapStuff.Model
         [SerializeField] public List<Unit> members;
         public static Action<Party> PartyDied;
         public static int MaxSize = 4;
-        [SerializeField] private List<StockedItem> convoy;
+        
         [SerializeField] public int money = default;
 
-        public event Action convoyUpdated;
-        public List<StockedItem> Convoy
-        {
-            get
-            {
-                return convoy;
-            }
-        }
-        public void AddItem(Item item)
-        {
-            bool instock = false;
-            foreach (var stockedItem in convoy)
-            {
-                if (stockedItem.item == item)
-                {
-                    instock = true;
-                    stockedItem.stock++;
-                    break;
-                }
-            }
-            if(!instock)
-                convoy.Add(new StockedItem(item, 1));
-            convoyUpdated?.Invoke();
-        }
-        public void RemoveItem(Item item)
-        {
-            StockedItem removeItem=null;
-            foreach (var stockedItem in convoy)
-            {
-                if (stockedItem.item == item)
-                {
-                    stockedItem.stock--;
-                    if (stockedItem.stock <= 0)
-                        removeItem = stockedItem;
-                    break;
+    
 
-                }
-            }
-
-            if (removeItem != null)
-                convoy.Remove(removeItem);
-            convoyUpdated?.Invoke();
-           
-        }
+        public Convoy Convoy;
+        
         public int ActiveUnitIndex = 0;
         public int Money
         {
@@ -80,7 +40,7 @@ namespace Game.WorldMapStuff.Model
         public Party():base()
         {
             members = new List<Unit>();
-            convoy = new List<StockedItem>();
+            Convoy = new Convoy();
             MovedEncounters = new List<EncounterNode>();
         }
 

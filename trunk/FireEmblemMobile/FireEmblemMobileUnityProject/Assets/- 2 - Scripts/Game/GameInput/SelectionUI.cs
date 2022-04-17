@@ -55,7 +55,7 @@ namespace Game.GameInput
                 SkillsButton.SetActive(false);
                
             }
-            if(Player.Instance.Party.Convoy.Count > 0)
+            if(Player.Instance.Party.Convoy.Items.Count > 0)
                 ItemsButton.SetActive(true);
             else
             {
@@ -84,7 +84,7 @@ namespace Game.GameInput
             ItemParentTransform.gameObject.SetActive(true);
           
             GUIUtility.ClearChildren(ItemParentTransform);
-            foreach (var item in Player.Instance.Party.Convoy)
+            foreach (var item in Player.Instance.Party.Convoy.Items)
             {
                 var go = Instantiate(ItemButtonPrefab, ItemParentTransform);
                 go.GetComponent<ItemButtonController>().SetItem(item);

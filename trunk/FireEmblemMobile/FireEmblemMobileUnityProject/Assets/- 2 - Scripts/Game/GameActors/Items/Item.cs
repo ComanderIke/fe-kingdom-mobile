@@ -1,10 +1,17 @@
 using System;
 using System.Collections.Generic;
 using Game.GameActors.Units.Humans;
+using Game.Mechanics;
 using UnityEngine;
 
 namespace Game.GameActors.Items
 {
+    public enum ItemTarget
+    {
+        Self,
+        Ally,
+        Enemy
+    }
     [Serializable]
     public abstract class Item : ScriptableObject, ICloneable, ITargetableObject
     {
@@ -15,6 +22,9 @@ namespace Game.GameActors.Items
         public int cost;
 
         [Header("ItemAttributes")] public Sprite Sprite;
+       
+        public ItemTarget target;
+
         public string GetName()
         {
             return Name;

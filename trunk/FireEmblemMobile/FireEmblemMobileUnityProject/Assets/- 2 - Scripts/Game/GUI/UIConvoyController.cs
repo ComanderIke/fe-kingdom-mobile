@@ -14,7 +14,7 @@ public class UIConvoyController:MonoBehaviour
     public List<ConvoyDropArea> DropAreas;
 
     private List<GameObject> instantiatedItems;
-    private List<StockedItem> convoy;
+    private Convoy convoy;
     private bool init = false;
     public Canvas characterCanvas;
     public Vector3 leftPosition;
@@ -42,7 +42,7 @@ public class UIConvoyController:MonoBehaviour
         if (!init)
         {
             init = true;
-            Player.Instance.Party.convoyUpdated += UpdateConvoy;
+            Player.Instance.Party.Convoy.convoyUpdated += UpdateConvoy;
             instantiatedItems = new List<GameObject>();
         }
 
@@ -55,12 +55,12 @@ public class UIConvoyController:MonoBehaviour
             instantiatedItems.Clear();
         }
         
-        for(int i=0; i < convoy.Count; i++)
+        for(int i=0; i < convoy.Items.Count; i++)
         {
             
             var go=Instantiate(convoyItemPrefab, DropAreas[i].transform);
-            go.GetComponent<UIConvoyItemController>().SetValues(convoy[i]);
-            go.GetComponent<UIDragable>().SetItem(convoy[i].item);
+            go.GetComponent<UIConvoyItemController>().SetValues(convoy.Items[i]);
+            go.GetComponent<UIDragable>().SetItem(convoy.Items[i].item);
             go.GetComponent<UIDragable>().SetCanvas(GetComponent<Canvas>());
             instantiatedItems.Add(go);
         }
@@ -69,7 +69,7 @@ public class UIConvoyController:MonoBehaviour
 
     private void OnDestroy()
     {
-        Player.Instance.Party.convoyUpdated -= UpdateConvoy;
+        Player.Instance.Party.Convoy.convoyUpdated -= UpdateConvoy;
     }
 
     private void UpdateConvoy()

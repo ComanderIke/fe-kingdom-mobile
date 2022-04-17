@@ -53,7 +53,7 @@ public class UIMerchantController : MonoBehaviour
     public void BuyClicked()
     {
         party.Money -= selectedItem.cost;
-        party.AddItem(selectedItem.item);
+        party.Convoy.AddItem(selectedItem.item);
         merchant.RemoveItem(selectedItem.item);
         selectedItemUI.Hide();
         UpdateUI();
