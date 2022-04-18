@@ -11,6 +11,7 @@ namespace Game.GameActors.Items.Weapons
         Staff,
         Spear,
         Axe,
-        Natural
+        Natural,
+        FaithMagic
     }
 }

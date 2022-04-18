@@ -4,6 +4,7 @@
     {
         Physical,
         Magic,
-        True
+        True,
+        Faith
     }
 }

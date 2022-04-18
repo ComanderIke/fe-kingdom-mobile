@@ -5,6 +5,7 @@ using Game.GameActors.Items.Weapons;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
 using Game.GameActors.Units.Monsters;
+using Game.GameActors.Units.Numbers;
 using Game.GameInput;
 using Game.GUI.PopUpText;
 using UnityEngine;
@@ -100,17 +101,18 @@ namespace Game.Mechanics.Battle
             int defense = 0;
             if (GetDamageType()==DamageType.Magic)
             {
-                defense = target.BattleComponent.BattleStats.GetResistance();
+                defense = target.BattleComponent.BattleStats.GetMagicResistance();
+            }
+            else if (GetDamageType()==DamageType.Faith)
+            {
+                defense = target.BattleComponent.BattleStats.GetFaithResistance();
             }
             else
                 defense = target.BattleComponent.BattleStats.GetDefense();
             return (int) (Mathf.Clamp((GetDamage(atkMultiplier) - defense)*dmgMult, 1, Mathf.Infinity));
         }
 
-        private int GetResistance()
-        {
-            return owner.Stats.Attributes.FAITH + owner.GetTile().TileData.defenseBonus;
-        }
+       
 
         public DamageType GetDamageType()
         {
@@ -125,8 +127,10 @@ namespace Game.Mechanics.Battle
         {
             if (owner is Human human && human.EquippedWeapon != null)
             {
-                if (human.EquippedWeapon.WeaponType != WeaponType.Magic)
+                if (human.EquippedWeapon.WeaponType != WeaponType.Magic&&human.EquippedWeapon.WeaponType != WeaponType.FaithMagic)
                     return human.Stats.Attributes.STR + human.EquippedWeapon.Dmg;
+                else if (human.EquippedWeapon.WeaponType == WeaponType.FaithMagic)
+                    return human.Stats.Attributes.FAITH + human.EquippedWeapon.Dmg;
                 else
                     return human.Stats.Attributes.INT + human.EquippedWeapon.Dmg;
             }
@@ -143,7 +147,11 @@ namespace Game.Mechanics.Battle
             int defense = 0;
             if (GetDamageType() == DamageType.Magic)
             {
-                defense = target.BattleComponent.BattleStats.GetResistance();
+                defense = target.BattleComponent.BattleStats.GetMagicResistance();
+            }
+            else if(GetDamageType() == DamageType.Faith)
+            {
+                defense = target.BattleComponent.BattleStats.GetFaithResistance();
             }
             else
             {
@@ -218,8 +226,31 @@ namespace Game.Mechanics.Battle
                 
                 return human.EquippedArmor.armor;
             }
-
+        
             return 0;
+        }
+
+        public int GetFaithResistance()
+        {
+            return owner.Stats.Attributes.FAITH+ owner.GetTile().TileData.defenseBonus;
+        }
+        public int GetMagicResistance()
+        {
+            return owner.Stats.Attributes.INT+ owner.GetTile().TileData.defenseBonus;
+        }
+
+        public int GetAttackDamage(DamageType damageType)
+        {
+           
+                if (damageType == DamageType.Magic)
+                    return owner.Stats.Attributes.INT;
+                else if (damageType == DamageType.Faith)
+                    return owner.Stats.Attributes.FAITH;
+                else
+                    return owner.Stats.Attributes.STR;
+            
+
+                return owner.Stats.Attributes.STR;
         }
     }
 }

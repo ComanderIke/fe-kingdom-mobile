@@ -26,21 +26,23 @@ namespace Game.Mechanics
 
         }
 
-        private void UnitDamaged(Unit unit, int dmg, bool magic, bool crit, bool eff)
+        private void UnitDamaged(Unit unit, int dmg, DamageType damageType, bool crit, bool eff)
         {
             if (unit.GameTransformManager.GameObject == null) //Only if Real instantiaed Unit takes dmg(not cloned battlepreview unit)
                 return;
            
             float scale = 1.0f;
             Color color = ColorManager.Instance.PhysicalDmgColor;
-            if (magic) //different color;
+            if (damageType == DamageType.Magic) //different color;
                 color = ColorManager.Instance.MagicDmgColor;
+            if (damageType == DamageType.Faith) //different color;
+                color = ColorManager.Instance.MainWhiteColor;
 
             if (crit) // Bigger and Brighter?
             {
           
                 scale = 1.20f;
-                if (!magic)
+                if (damageType != DamageType.Magic && damageType != DamageType.Faith)
                 {
                     color.r += 0.4f;
                     color.g -= 0.1f;
