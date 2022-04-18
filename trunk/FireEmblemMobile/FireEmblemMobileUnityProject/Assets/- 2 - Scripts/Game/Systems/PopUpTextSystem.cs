@@ -70,14 +70,27 @@ namespace Game.Mechanics
             DamagePopUp.Create(unit.GameTransformManager.GetCenterPosition(), dmg, color,scale);
             
         }
+
+        void UnitHealed(Unit unit, int healAmount)
+        {
+            if (unit.GameTransformManager.GameObject == null) //Only if Real instantiaed Unit takes dmg(not cloned battlepreview unit)
+                return;
+           
+            float scale = 1.0f;
+            Color color = ColorManager.Instance.MainGreenColor;
+            
+            DamagePopUp.Create(unit.GameTransformManager.GetCenterPosition(), healAmount, color,scale);
+        }
         public void Deactivate()
         {
             Unit.OnUnitDamaged -= UnitDamaged;
+            Unit.OnUnitHealed -= UnitHealed;
         }
 
         public void Activate()
         {
             Unit.OnUnitDamaged += UnitDamaged;
+            Unit.OnUnitHealed += UnitHealed;
         }
 
   

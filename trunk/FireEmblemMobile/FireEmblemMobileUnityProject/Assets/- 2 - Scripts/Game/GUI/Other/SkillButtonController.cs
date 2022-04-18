@@ -10,12 +10,13 @@ public class SkillButtonController:MonoBehaviour
     public Skill skill;
     public Image Icon;
     public TextMeshProUGUI text;
-    public ISkillClickedReceiver receiver;
+    public SelectionUI selectionUI;
 
-    public void SetSkill(Skill skill)
+    public void SetSkill(Skill skill, SelectionUI selectionUI)
     {
         this.skill = skill;
         UpdateValues();
+        this.selectionUI = selectionUI;
     }
 
     private void UpdateValues()
@@ -27,5 +28,6 @@ public class SkillButtonController:MonoBehaviour
     public void Clicked()
     {
         new GameplayInput().SelectSkill(skill);
+        selectionUI.CloseSkillsClicked();
     }
 }

@@ -128,6 +128,8 @@ namespace Game.GameActors.Units
 
         public List<int> AttackRanges => stats.AttackRanges;
         public int MovementRange => stats.Mov;
+
+       
         // public int MaxSpBars
         // {
         //     get => stats.MaxSp / SP_PER_BAR;
@@ -220,6 +222,8 @@ namespace Game.GameActors.Units
         public void Heal(int heal)
         {
             Hp += heal;
+            OnUnitHealed?.Invoke(this, heal);
+            
         }
 
         public bool IsAlive()
@@ -299,8 +303,10 @@ namespace Game.GameActors.Units
         public static event OnExpGainedEvent OnExpGained;
 
         public delegate void OnUnitDamagedEvent(Unit unit, int damage,bool magic, bool crit, bool eff);
+        public delegate void OnUnitHealedEvent(Unit unit, int damage);
 
         public static OnUnitDamagedEvent OnUnitDamaged;
+        public static OnUnitHealedEvent OnUnitHealed;
         public delegate void LevelupEvent(Unit unit);
         public LevelupEvent OnLevelUp;
 

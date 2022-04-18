@@ -44,7 +44,7 @@ namespace Game.GameInput
                 if(!favButton)
                     Destroy(favButton);
                 favButton = GameObject.Instantiate(SkillButtonPrefab, this.transform);
-                favButton.GetComponent<SkillButtonController>().SetSkill(selectedCharacter.SkillManager.Favourite);
+                favButton.GetComponent<SkillButtonController>().SetSkill(selectedCharacter.SkillManager.Favourite, this);
                 
             }
 
@@ -87,7 +87,7 @@ namespace Game.GameInput
             foreach (var item in Player.Instance.Party.Convoy.Items)
             {
                 var go = Instantiate(ItemButtonPrefab, ItemParentTransform);
-                go.GetComponent<ItemButtonController>().SetItem(item);
+                go.GetComponent<ItemButtonController>().SetItem(item, this);
             }
         }
 
@@ -106,7 +106,7 @@ namespace Game.GameInput
             foreach (var skill in activeUnit.SkillManager.Skills)
             {
                 var go = Instantiate(SkillButtonPrefab, SkillParentTransform);
-                go.GetComponent<SkillButtonController>().SetSkill(skill);
+                go.GetComponent<SkillButtonController>().SetSkill(skill, this);
      
             }
         }

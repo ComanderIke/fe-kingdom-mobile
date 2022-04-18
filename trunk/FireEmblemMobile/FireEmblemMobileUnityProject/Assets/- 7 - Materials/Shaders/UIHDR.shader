@@ -95,7 +95,7 @@ Shader "Custom/UIHDR"
                     OUT.color = v.color * _Color;
                     return OUT;
                 }
-
+          
                 fixed4 frag(v2f IN) : SV_Target
                 {
                     half4 color = (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd) * IN.color;

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Game.GameActors.Items;
+using Game.GameActors.Items.Weapons;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
@@ -8,6 +9,7 @@ using Game.GameInput;
 using Game.GUI;
 using Game.Manager;
 using Game.Map;
+using Game.WorldMapStuff.Model;
 using GameEngine.GameStates;
 using UnityEngine;
 
@@ -95,13 +97,22 @@ namespace Game.Mechanics
         
         private void ItemSelected(Item item)
         {
-            Debug.Log("Item Selected");
+            //Debug.Log("Item Selected2"+item.target);
             if (item.target == ItemTarget.Self)
             {
-                var selectedCharacter = gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter;
-                item.Use((Human)selectedCharacter);
+                if (item is Consumable cons)
+                {
+                    var selectedCharacter = gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter;
+                    //Debug.Log("SelectedCharacter: " + selectedCharacter);
+                    cons.Use((Human)selectedCharacter, Player.Instance.Party.Convoy);
+                    new GameplayInput().Wait(selectedCharacter);
+                    new GameplayInput().ExecuteInputActions(null);
+                }
             }
-            playerPhaseState.Feed(PPStateTrigger.ChooseTarget);
+            else
+            {
+                playerPhaseState.Feed(PPStateTrigger.ChooseTarget);
+            }
         }
         private void OnSelectedCharacter(IGridActor character)
         {

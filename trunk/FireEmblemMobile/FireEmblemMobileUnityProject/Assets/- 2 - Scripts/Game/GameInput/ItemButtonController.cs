@@ -10,11 +10,12 @@ namespace Game.GameInput
         private StockedItem item;
         public Image Icon;
         public TextMeshProUGUI text;
-        public IItemClickedReceiver receiver;
-        public void SetItem(StockedItem item)
+        public SelectionUI selectionUI;
+        public void SetItem(StockedItem item, SelectionUI selectionUI)
         {
             this.item = item;
             UpdateValues();
+            this.selectionUI = selectionUI;
         }
         private void UpdateValues()
         {
@@ -24,8 +25,8 @@ namespace Game.GameInput
 
         public void Clicked()
         {
-            receiver.ItemClicked(item);
             new GameplayInput().SelectItem(item.item);
+            selectionUI.CloseItemsClicked();
         }
     }
 }

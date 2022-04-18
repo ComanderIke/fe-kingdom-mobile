@@ -72,6 +72,7 @@ namespace Game.Mechanics
         }
         private void SelectItem(Item item)
         {
+            Debug.Log("Select Item: "+item.name);
             SelectedItem = item;
             OnItemSelected?.Invoke(item);
         }
