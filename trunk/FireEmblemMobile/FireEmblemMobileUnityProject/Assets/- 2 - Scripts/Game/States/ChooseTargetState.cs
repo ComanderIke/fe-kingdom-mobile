@@ -105,20 +105,52 @@ namespace Game.Mechanics
         {
             if (selectedSkill is PositionTargetSkill pts)
             {
+                
                 if (!pts.rooted)
                 {
                     if (gridSystem.IsTargetAble(x, y))
                     {
-                        gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
-                        gridSystem.cursor.ShowCast(pts.size, pts.targetArea);
+
+                        if (gridSystem.cursor.GetCurrentTile() == gridSystem.Tiles[x, y])
+                        {
+                            pts.Activate(selectedUnit, gridSystem.Tiles, x,y);
+                            new GameplayInput().Wait(selectedUnit);
+                            new GameplayInput().ExecuteInputActions(()=>
+                            {
+                                playerPhaseState.Feed(PPStateTrigger.Cancel);
+                            });
+                            //Selected same Tile again
+                        }
+                        else
+                        {
+                            gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
+                            gridSystem.cursor.ShowCast(pts.size, pts.targetArea);
+                        }
+
+
+
                     }
                 }
                 else
                 {
                     if (gridSystem.IsTargetAble(x, y))
                     {
-                        gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
-                        gridSystem.cursor.ShowRootedCast(selectedUnit.GridComponent.GridPosition.AsVector(),pts.size, pts.targetArea);
+                        if (gridSystem.cursor.GetCurrentTile() == gridSystem.Tiles[x, y])
+                        {
+                            pts.Activate(selectedUnit, gridSystem.Tiles, x,y);
+                            new GameplayInput().Wait(selectedUnit);
+                            new GameplayInput().ExecuteInputActions(()=>
+                            {
+                                playerPhaseState.Feed(PPStateTrigger.Cancel);
+                            });
+                            //Selected same Tile again
+                        }
+                        else
+                        {
+                            gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
+                            gridSystem.cursor.ShowRootedCast(selectedUnit.GridComponent.GridPosition.AsVector(),
+                                pts.size, pts.targetArea);
+                        }
                     }
                     
                 }

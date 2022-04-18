@@ -41,7 +41,7 @@ namespace Game.GameInput
             selectedCharacter = unit;
             if (selectedCharacter.SkillManager.Favourite != null)
             {
-                if(!favButton)
+                if(favButton!=null)
                     Destroy(favButton);
                 favButton = GameObject.Instantiate(SkillButtonPrefab, this.transform);
                 favButton.GetComponent<SkillButtonController>().SetSkill(selectedCharacter.SkillManager.Favourite, this);

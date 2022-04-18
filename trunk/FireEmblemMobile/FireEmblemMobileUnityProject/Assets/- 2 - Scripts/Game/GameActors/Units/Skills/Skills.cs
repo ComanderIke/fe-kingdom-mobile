@@ -10,7 +10,7 @@ namespace Game.GameActors.Units.Skills
         private const int MAX_LEVEL = 10;
         public Sprite Icon;
 
-        public GameObject AnimationObject { get; private set; }
+        public GameObject AnimationObject;
 
         public int Cooldown;
 
