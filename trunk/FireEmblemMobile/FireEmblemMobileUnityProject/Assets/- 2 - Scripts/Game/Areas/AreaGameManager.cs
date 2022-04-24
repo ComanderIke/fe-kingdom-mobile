@@ -12,6 +12,7 @@ public class AreaGameManager : MonoBehaviour
 {
     public GameObject playerPrefab;
     private Area_ActionSystem actionSystem;
+    public GameObject attackOptionPrefab;
     public GameObject moveOptionPrefab;
     public EncounterUIController uiCOntroller;
     public UIPartyCharacterCircleController uiPartyController;
@@ -85,7 +86,8 @@ public class AreaGameManager : MonoBehaviour
         var go = Instantiate(activeUnit.visuals.Prefabs.EncounterAnimatedSprite, partyGo.transform, false);
         go.transform.localPosition = new Vector3(0,0,0);
         go.GetComponent<EncounterPlayerUnitController>().SetUnit(activeUnit);
-        go.GetComponent<EncounterPlayerUnitController>().SetActiveUnit(true);
+        ShowActiveUnit(go.transform.position);
+        go.GetComponent<EncounterPlayerUnitController>().Show();
         go.GetComponent<EncounterPlayerUnitController>().SetTarget(null);
         go.GetComponent<EncounterPlayerUnitController>().SetSortOrder(Player.Instance.Party.members.Count);
         activeMemberGo = go;
@@ -98,9 +100,8 @@ public class AreaGameManager : MonoBehaviour
             
             go = Instantiate(member.visuals.Prefabs.EncounterAnimatedSprite, partyGo.transform, false);
             go.transform.localPosition = new Vector3(-offsetBetweenCharacters*cnt,0,0);
-
+            go.GetComponent<EncounterPlayerUnitController>().Hide();
             go.GetComponent<EncounterPlayerUnitController>().SetUnit(member);
-            go.GetComponent<EncounterPlayerUnitController>().SetActiveUnit(false);
             go.GetComponent<EncounterPlayerUnitController>().SetTarget(activeMemberGo.transform);
             go.GetComponent<EncounterPlayerUnitController>().SetOffsetCount(cnt);
             go.GetComponent<EncounterPlayerUnitController>().SetSortOrder(Player.Instance.Party.members.Count-cnt);
@@ -134,7 +135,8 @@ public class AreaGameManager : MonoBehaviour
                     if (unitController.Unit == member)
                     {
                         unitController.transform.localPosition = new Vector3(0,0,0);
-                        unitController.SetActiveUnit(true);
+                        ShowActiveUnit(unitController.transform.position);
+                        unitController.Show();
                         unitController.SetTarget(null);
                         unitController.SetSortOrder(Player.Instance.Party.members.Count);
                     }
@@ -148,7 +150,7 @@ public class AreaGameManager : MonoBehaviour
                     if (unitController.Unit == member)
                     {
                         unitController.transform.localPosition = new Vector3(-offsetBetweenCharacters*cnt,0,0);
-                        unitController.SetActiveUnit(false);
+                        unitController.Hide();
                         unitController.SetTarget(activeMemberGo.transform);
                         unitController.SetOffsetCount(cnt);
                         Debug.Log("SetOffset!");
@@ -175,13 +177,34 @@ public class AreaGameManager : MonoBehaviour
             child.moveable = false;
         }
     }
+
+    public GameObject activeUnitEffectPrefab;
+    private GameObject activeUnitEffect;
+    public void ShowActiveUnit(Vector3 position)
+    {
+        if (activeUnitEffect == null)
+        {
+            activeUnitEffect = Instantiate(activeUnitEffectPrefab, null, false);
+            
+        }
+        activeUnitEffect.transform.position = position;
+    }
     public void ShowMoveOptions()
     {
         moveOptions = new List<GameObject>();
         foreach (var child in Player.Instance.Party.EncounterNode.children)
         {
             child.moveable = true;
-            var go = Instantiate(moveOptionPrefab, spawnParent, false);
+            GameObject go = null;
+            if (child is BattleEncounterNode)
+            {
+                go = Instantiate(attackOptionPrefab, spawnParent, false);
+            }
+            else
+            {
+                go = Instantiate(moveOptionPrefab, spawnParent, false);
+            }
+
             go.transform.position = child.gameObject.transform.position;
             moveOptions.Add(go);
         }

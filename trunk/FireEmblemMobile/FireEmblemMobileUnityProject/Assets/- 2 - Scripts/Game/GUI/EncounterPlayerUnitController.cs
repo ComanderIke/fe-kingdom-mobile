@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class EncounterPlayerUnitController : MonoBehaviour
 {
-    public GameObject blueRing;
 
     public Unit Unit;
     [SerializeField] private SpriteRenderer spriteRenderer;
@@ -52,14 +51,23 @@ public class EncounterPlayerUnitController : MonoBehaviour
     {
         spriteRenderer.sortingOrder =baseSortOrder+ order;
     }
-    public void SetActiveUnit(bool active)
-    {
-        blueRing.SetActive(active);
-    }
+    // public void SetActiveUnit(bool active)
+    // {
+    //     Debug.Log("Show Active Unit Effect On direct Unit?");
+    //     }
 
     public void SetOffsetCount(int cnt)
     {
         this.offset = baseOffset * cnt;
       
+    }
+
+    public void Show()
+    {
+        gameObject.SetActive(true);
+    }
+    public void Hide()
+    {
+        gameObject.SetActive(false);
     }
 }
