@@ -7,7 +7,7 @@ public class InnEncounterNode : EncounterNode
 {
     public Inn inn;
 
-    public InnEncounterNode(EncounterNode parent) : base(parent)
+    public InnEncounterNode(EncounterNode parent,int depth, int childIndex) : base(parent, depth, childIndex)
     {
         inn = new Inn(new Quest("Demo Quest", new QuestReward(QuestRewardType.Gold,100, null)), GameData.Instance.GetHuman("Elsa"));
         // inn.AddItem(new ShopItem("Drink",25,GameAssets.Instance.visuals.InnSprites.drink , "Heal for 10%"));

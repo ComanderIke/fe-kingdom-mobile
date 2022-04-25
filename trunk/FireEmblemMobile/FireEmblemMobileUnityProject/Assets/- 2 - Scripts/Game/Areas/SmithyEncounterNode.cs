@@ -17,7 +17,7 @@ public class SmithyEncounterNode : EncounterNode
 {
     public Smithy smithy;
 
-    public SmithyEncounterNode(EncounterNode parent) : base(parent)
+    public SmithyEncounterNode(EncounterNode parent,int depth, int childIndex) : base(parent, depth, childIndex)
     { 
         smithy = new Smithy();
         smithy.AddItem(GameData.Instance.GetRandomArmor());

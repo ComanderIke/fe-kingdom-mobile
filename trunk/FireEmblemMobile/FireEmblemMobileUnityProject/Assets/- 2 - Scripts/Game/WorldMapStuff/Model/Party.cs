@@ -66,5 +66,26 @@ namespace Game.WorldMapStuff.Model
                 member.Initialize();
             }
         }
+
+        public override string ToString()
+        {
+            string party = "";
+            
+            party += "PartySize: " + members.Count;
+            foreach (var member in members)
+            {
+                party+= member.ToString()+",\n";
+            }
+            party += "Gold: " + money+"\n";
+            party += Convoy.ToString()+"\n";
+            party += "EncounterNode: "+EncounterNode.ToString()+"\n";
+            party += "ActiveUnit: "+ActiveUnitIndex+"\n";
+            party += "Moved Encounters: ";
+            foreach (var node in MovedEncounters)
+            {
+                party+= node.ToString()+", ";
+            }
+            return party;
+        }
     }
 }

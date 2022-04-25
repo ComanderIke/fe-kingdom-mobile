@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EncounterCursorController : MonoBehaviour
 {
+    public float rotationSpeed = 2;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,7 +14,7 @@ public class EncounterCursorController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.RotateAround(Vector3.forward, Time.deltaTime*rotationSpeed);
     }
 
     public void SetPosition(Vector3 transformPosition)

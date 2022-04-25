@@ -3,8 +3,8 @@
 [CreateAssetMenu(menuName = "GameData/SmithyEncounterData", fileName = "SmithyEncounterData")]
 public class SmithyEncounterNodeData: EncounterNodeData
 {
-    public override EncounterNode CreateNode(EncounterNode parent)
+    public override EncounterNode CreateNode(EncounterNode parent,int depth, int childIndex)
     {
-        return new SmithyEncounterNode(parent);
+        return new SmithyEncounterNode(parent, depth, childIndex);
     }
 }

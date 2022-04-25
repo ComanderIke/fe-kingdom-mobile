@@ -25,6 +25,10 @@ namespace Game.GameActors.Items
        
         public ItemTarget target;
 
+        public override string ToString()
+        {
+            return Name;
+        }
         public string GetName()
         {
             return Name;

@@ -24,6 +24,16 @@ namespace Game.WorldMapStuff.Model
             items = new List<StockedItem>();
         }
 
+        public override string ToString()
+        {
+            string convoy = "";
+            convoy += "StockedItemCount: " + items.Count;
+            foreach (var stock in items)
+            {
+                convoy += stock.item.ToString() + "x" + stock.stock;
+            }
+            return convoy;
+        }
         public void AddItem(Item item)
         {
             bool instock = false;

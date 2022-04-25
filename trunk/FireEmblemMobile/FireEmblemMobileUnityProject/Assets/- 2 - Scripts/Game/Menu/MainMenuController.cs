@@ -50,6 +50,8 @@ namespace Game.GUI
 
         public void ShowMainMenu()
         {
+            Debug.Log("Save Data: "+SaveData.currentSaveData);
+            Debug.Log("Continue Button: "+ContinueButton.name);
             ContinueButton.SetActive(SaveData.currentSaveData!=null);
             SaveButton.SetActive(SaveData.currentSaveData!=null);
             LoadButton.SetActive(GetLoadFiles()!=0);

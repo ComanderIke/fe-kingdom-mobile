@@ -41,7 +41,7 @@ public class AreaGameManager : MonoBehaviour
         if (Player.Instance.Party == null)
         {
             //Debug.Log("Player Null");
-            Player.Instance.Party = Instantiate(playerStartParty);
+            Player.Instance.Party = Instantiate(playerStartParty, spawnParent);
             Player.Instance.Party.Initialize();
             
 
@@ -77,8 +77,8 @@ public class AreaGameManager : MonoBehaviour
     void SpawnPartyMembers()
     {
         int cnt = 1;
-        var partyGo = new GameObject("Party");
-        partyGo=Instantiate(partyGo, spawnParent);
+        var partyGo = new GameObject("Partytest");
+        partyGo.transform.SetParent(spawnParent);
         partyGo.transform.position = Player.Instance.Party.EncounterNode.gameObject.transform.position;
         partyGameObjects = new List<EncounterPlayerUnitController>();
         //Spawn ActiveUnit first
@@ -184,7 +184,7 @@ public class AreaGameManager : MonoBehaviour
     {
         if (activeUnitEffect == null)
         {
-            activeUnitEffect = Instantiate(activeUnitEffectPrefab, null, false);
+            activeUnitEffect = Instantiate(activeUnitEffectPrefab, spawnParent, false);
             
         }
         activeUnitEffect.transform.position = position;

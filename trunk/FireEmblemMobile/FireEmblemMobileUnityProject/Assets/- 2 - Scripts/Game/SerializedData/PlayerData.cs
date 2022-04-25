@@ -10,17 +10,20 @@ namespace Game.GameActors.Players
     {
         [SerializeField]
         public string Name;
+        // [SerializeField]
+        // public FactionData factionData;
         [SerializeField]
-        public FactionData factionData;
+        public PartyData partyData;
  
         public PlayerData (Player player)
         {
             Name = player.Name;
-       
+            partyData = new PartyData(player.Party);
             //factionData = new FactionData((WM_Faction)player.faction);
 
         }
 
-        
+
+        //public object PartyData { get; set; }
     }
 }

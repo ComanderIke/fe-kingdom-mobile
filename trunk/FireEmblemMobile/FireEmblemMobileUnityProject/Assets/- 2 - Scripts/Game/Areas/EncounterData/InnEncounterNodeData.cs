@@ -3,8 +3,8 @@
 [CreateAssetMenu(menuName = "GameData/InnEncounterData", fileName = "InnEncounterData")]
 public class InnEncounterNodeData: EncounterNodeData
 {
-    public override EncounterNode CreateNode(EncounterNode parent)
+    public override EncounterNode CreateNode(EncounterNode parent,int depth, int childIndex)
     {
-        return new InnEncounterNode(parent);
+        return new InnEncounterNode(parent, depth, childIndex);
     }
 }

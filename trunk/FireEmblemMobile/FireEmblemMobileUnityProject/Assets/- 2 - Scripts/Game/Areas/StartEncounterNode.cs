@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class StartEncounterNode : EncounterNode
 {
-    public StartEncounterNode() : base(null)
+    public StartEncounterNode() : base(null,0,0)
     {
 
     }

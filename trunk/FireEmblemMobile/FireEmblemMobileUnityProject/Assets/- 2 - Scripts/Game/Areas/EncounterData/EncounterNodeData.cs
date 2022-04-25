@@ -7,6 +7,6 @@ public abstract class EncounterNodeData: ScriptableObject
     public float appearanceChance;
     public int maxAppearanceCountPerArea = 99;
 
-    public abstract EncounterNode CreateNode(EncounterNode parent);
+    public abstract EncounterNode CreateNode(EncounterNode parent,int depth, int childIndex);
     
 }

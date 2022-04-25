@@ -46,7 +46,7 @@ public class MerchantEncounterNode : EncounterNode
     public Merchant merchant;
   
    
-    public MerchantEncounterNode(EncounterNode parent) : base(parent)
+    public MerchantEncounterNode(EncounterNode parent,int depth, int childIndex) : base(parent, depth, childIndex)
     {
         merchant = new Merchant();
        

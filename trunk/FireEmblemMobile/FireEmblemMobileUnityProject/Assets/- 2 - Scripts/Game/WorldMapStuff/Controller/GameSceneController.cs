@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
+using Game.GUI;
 using Game.Manager;
 using Game.Systems;
 using Game.WorldMapStuff.Manager;
 using Game.WorldMapStuff.Model;
 using Menu;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Game.WorldMapStuff.Controller
 {
@@ -80,6 +82,17 @@ namespace Game.WorldMapStuff.Controller
         public void UnloadAllExceptMainMenu()
         {
             // SceneTransferData.Instance.Reset();
+            MainMenuController.Instance.ShowMainMenu();
+            for (int i = 0; i < SceneManager.sceneCount; i++)
+            {
+                var scene = SceneManager.GetSceneAt(i);
+                Scenes buildIndex = (Scenes)scene.buildIndex;
+                if (buildIndex != Scenes.MainMenu)
+                {
+                    SceneController.UnLoadSceneAsync((buildIndex));
+                }
+            }
+            
             // SceneController.UnLoadSceneAsync(Scenes.InsideLocation);
             // SceneController.UnLoadSceneAsync(Scenes.Battle1);
             // SceneController.UnLoadSceneAsync(Scenes.WM_Gameplay);

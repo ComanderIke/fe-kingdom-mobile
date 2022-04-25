@@ -130,6 +130,7 @@ namespace Menu
                     scene.task = SceneManager.LoadSceneAsync(scene.name,
                         scene.additive ? LoadSceneMode.Additive : LoadSceneMode.Single);
                     scene.task.allowSceneActivation = false;
+                   
                 }
             }
             sceneState = SceneState.Load;
@@ -138,6 +139,7 @@ namespace Menu
             progressBar.fillAmount = 0;
             progressText.text = "0%";
             loadTime = 0;
+           
             StartCoroutine(GenerateTip());
         }
 
@@ -155,12 +157,22 @@ namespace Menu
             bool done = true;
             foreach (var scene in scenesToLoad.Where(s=>s.task!=null))
             {
+
                 if (!scene.task.isDone)
+                {
                     done = false;
+                }
+                else
+                {
+                    var activeScene = SceneManager.GetSceneByBuildIndex((int)scene.scene);
+                    if(activeScene.IsValid())
+                        SceneManager.SetActiveScene(activeScene);
+                }
             }
 
             if (done)
             {
+                
                 sceneState = SceneState.Unload;
                 progressBar.fillAmount = 0;
                 progressText.text = "0%";
@@ -203,6 +215,7 @@ namespace Menu
         // handle anything that needs to happen immediately after loading
         private void UpdateScenePostload()
         {
+            
             for (int i=scenesToLoad.Count-1; i >=0; i--)
             {
                 if (scenesToLoad[i].task != null)
@@ -212,6 +225,7 @@ namespace Menu
             }
 
             scenesToLoad.Clear();
+            
             sceneState = SceneState.Ready;
         }
 

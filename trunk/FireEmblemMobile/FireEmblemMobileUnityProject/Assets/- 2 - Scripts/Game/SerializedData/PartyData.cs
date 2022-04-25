@@ -15,19 +15,18 @@ namespace Game.GameActors.Players
     public class PartyData
     {
         [SerializeField]
-        public string name;
-        [SerializeField]
         public List<HumanData> humanData;
         [SerializeField]
         public int money;
         [SerializeField]
-        public List<Item> convoy;
+        public Convoy convoy;
         [SerializeField]
-        public List<MonsterData> monsterData;
+        public int activeUnitIndex;
+        [SerializeField]
+        public Vector2Int currentEncounterNodeId;
+        [SerializeField]
+        public List<int> movedEncounterIds;
 
-        [SerializeField] public TurnStateManager turnStateManager;
-
-        [SerializeField] public string locationId;
         public PartyData(Party party)
         {
             SaveData(party);
@@ -63,6 +62,25 @@ namespace Game.GameActors.Players
 
         public void SaveData(Party party)
         {
+            if (party == null)
+                return;
+            currentEncounterNodeId = new Vector2Int(party.EncounterNode.depth, party.EncounterNode.childIndex);
+            movedEncounterIds = new List<int>();
+            foreach (var encounter in party.MovedEncounters)
+            {
+                movedEncounterIds.Add(encounter.childIndex);
+            }
+
+            convoy = party.Convoy;
+            money = party.money;
+            humanData = new List<HumanData>();
+            foreach (var member in party.members)
+            {
+                if (member is Human human)
+                {
+                    humanData.Add(new HumanData(human));
+                }
+            }
             // name = party.name;
             // humanData = new List<HumanData>();
             // monsterData = new List<MonsterData>();

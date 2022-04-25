@@ -102,7 +102,7 @@ public class EncounterTree
             }
 
             //Debug.Log(chosenKey);
-            EncounterNode node = chosenKey.CreateNode(parent);
+            EncounterNode node = chosenKey.CreateNode(parent, current.index,current.children.Count);
             node.prefabIdx = GetNodeDataIndex(chosenKey);
             //CreateNodeGameObject(chosenKey.prefab, node);
            
@@ -188,7 +188,7 @@ public class EncounterTree
     public void CreateStartColumn(EncounterNodeData startNodeData)
     {
         Column startColumn = new Column();
-        startNode = startNodeData.CreateNode(null);
+        startNode = startNodeData.CreateNode(null,0,0);
         startColumn.children.Add( startNode);
         startColumn.index = 0;
         columns.Add(startColumn);
@@ -200,7 +200,7 @@ public class EncounterTree
         Column endColumn = new Column();
         if (endNodeData is BattleEncounterNodeData data)
         {
-            endNode = new BattleEncounterNode(data.levelIndex, data.EnemyArmyData,null);
+            endNode = new BattleEncounterNode(data.levelIndex, data.EnemyArmyData,null,spawnData.columnCount,0);
         }
 
         endColumn.children.Add(endNode);

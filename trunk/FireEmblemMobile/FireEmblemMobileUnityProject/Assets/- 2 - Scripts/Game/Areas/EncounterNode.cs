@@ -16,16 +16,27 @@ public abstract class EncounterNode
     public bool moveable;
 
     public int prefabIdx;
-    //public Column column;
 
-    protected EncounterNode(EncounterNode parent)
+    public int depth = 0;
+
+    public int childIndex = 0;
+    //public Column column;
+ 
+
+    protected EncounterNode(EncounterNode parent,int depth, int childIndex)
     {
         children = new List<EncounterNode>();
         parents = new List<EncounterNode>();
         roads = new List<Road>();
         parents.Add(parent);
+        this.depth = depth;
+        this.childIndex = childIndex;
     }
 
+    public override string ToString()
+    {
+        return ""+this.GetType();
+    }
     public void Continue()
     {
         Player.Instance.Party.EncounterNode = this;

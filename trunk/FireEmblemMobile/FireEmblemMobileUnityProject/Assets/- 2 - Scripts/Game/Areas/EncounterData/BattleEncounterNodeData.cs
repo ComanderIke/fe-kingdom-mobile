@@ -8,8 +8,8 @@ public class BattleEncounterNodeData: EncounterNodeData
     public Scenes levelIndex;
     public EnemyArmyData EnemyArmyData;
 
-    public override EncounterNode CreateNode(EncounterNode parent)
+    public override EncounterNode CreateNode(EncounterNode parent,int depth, int childIndex)
     {
-        return new BattleEncounterNode(levelIndex, EnemyArmyData, parent);
+        return new BattleEncounterNode(levelIndex, EnemyArmyData, parent, depth, childIndex);
     }
 }

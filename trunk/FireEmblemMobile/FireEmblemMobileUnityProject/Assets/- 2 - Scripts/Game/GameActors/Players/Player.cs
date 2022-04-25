@@ -15,16 +15,26 @@ namespace Game.GameActors.Players
             get { return _instance ??= new Player(); }
         }
 
+        private Player()
+        {
+            Name = "Player1";
+        }
+
         public Party Party { get; set; }
         [HideInInspector]
 
         public string Name;
+        
 
-        [HideInInspector]
-        public bool dataLoaded = false;
 
-       
 
+        public override string ToString()
+        {
+            string player = "Name: " + Name+", ";
+            if(Party!=null)
+                player += "Party: " + Party.ToString();
+            return player;
+        }
         public PlayerData GetSaveData()
         {
             var playerData = new PlayerData(this);
@@ -35,9 +45,9 @@ namespace Game.GameActors.Players
         {
             
             Name = data.Name;
+            data.partyData.Load(Party);
             //data.factionData.Load((WM_Faction)faction);
-           
-            dataLoaded = true;
+
         }
        
     }

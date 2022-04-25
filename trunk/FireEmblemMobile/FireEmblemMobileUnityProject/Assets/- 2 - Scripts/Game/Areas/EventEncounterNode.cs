@@ -12,7 +12,7 @@ public class EventEncounterNode : EncounterNode
 {
     public RandomEvent randomEvent;
    
-    public EventEncounterNode(EncounterNode parent) : base(parent)
+    public EventEncounterNode(EncounterNode parent,int depth, int childIndex) : base(parent, depth, childIndex)
     {
         randomEvent = new RandomEvent();
 

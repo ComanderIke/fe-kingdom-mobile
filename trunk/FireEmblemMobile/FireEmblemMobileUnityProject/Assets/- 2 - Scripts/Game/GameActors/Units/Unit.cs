@@ -158,10 +158,10 @@ namespace Game.GameActors.Units
             AIComponent = new AIComponent();
             // stats = stats == null ? CreateInstance<Stats>() : Instantiate(stats);
             // growths = growths == null ? CreateInstance<Growths>() : Instantiate(growths);
-            if (visuals.UnitEffectVisual != null)
-            {
-                visuals.UnitEffectVisual = Instantiate(visuals.UnitEffectVisual);
-            }
+            // if (visuals.UnitEffectVisual != null)
+            // {
+            //     visuals.UnitEffectVisual = Instantiate(visuals.UnitEffectVisual);
+            // }
 
             stats.Initialize();
            
@@ -238,7 +238,7 @@ namespace Game.GameActors.Units
 
         public override string ToString()
         {
-            return name + " HP: " + Hp + "/" + stats.MaxHp;
+            return name + " HP: " + Hp + "/" + stats.MaxHp+"Level: "+experienceManager.Level+ " Exp: "+experienceManager.Exp;
         }
 
         public object Clone()
