@@ -237,5 +237,10 @@ namespace Game.Mechanics
         {
             //
         }
+
+        public void ClickedDownOnGrid(int x, int y)
+        {
+            //
+        }
     }
 }

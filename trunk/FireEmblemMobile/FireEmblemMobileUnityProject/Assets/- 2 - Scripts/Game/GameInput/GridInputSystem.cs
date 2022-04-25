@@ -123,6 +123,11 @@ namespace Game.GameInput
             inputReceiver.ClickedOnGrid(x, y);
         }
 
+        public void GridClickedDown(int x, int y)
+        {
+            inputReceiver.ClickedDownOnGrid(x, y);
+        }
+
         private bool IsOldDrag(int x, int y)
         {
             return x == lastDragPosX && y == lastDragPosY;

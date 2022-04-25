@@ -14,5 +14,7 @@ namespace Game.GameInput
         void StartDraggingActor(IGridActor actor);
         void ResetInput();
         void UndoClicked();
+        
+        void ClickedDownOnGrid(int x, int y);
     }
 }

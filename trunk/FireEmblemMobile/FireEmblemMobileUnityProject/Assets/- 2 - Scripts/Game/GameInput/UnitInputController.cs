@@ -1,4 +1,5 @@
 ﻿using System;
+using __2___Scripts.Game.Utility;
 using Game.GameActors.Units;
 using Game.GameActors.Units.OnGameObject;
 using UnityEngine;
@@ -37,13 +38,13 @@ namespace Game.GameInput
         
         private void OnMouseEnter()
         {
-           unitRenderer.ShowHover();
-            touchInputReceiver?.OnMouseEnter(this);
+          // unitRenderer.ShowHover();
+          //  touchInputReceiver?.OnMouseEnter(this);
         }
 
         private void OnMouseExit()
         {
-            unitRenderer.HideHover();
+           // unitRenderer.HideHover();
         }
 
         public void OnMouseDrag()
@@ -53,11 +54,17 @@ namespace Game.GameInput
         }
         public void OnMouseDown()
         {
-            touchInputReceiver?.OnMouseDown(this);
+            if (!UIClickChecker.CheckUIObjectsInPosition())
+            {
+                touchInputReceiver?.OnMouseDown(this);
+            }
         }
         public void OnMouseUp()
         {
-            touchInputReceiver?.OnMouseUp(this);
+            if (!UIClickChecker.CheckUIObjectsInPosition())
+            {
+                touchInputReceiver?.OnMouseUp(this);
+            }
         }
         
         public Transform GetTransform()
@@ -68,21 +75,28 @@ namespace Game.GameInput
    
         public void OnBeginDrag(PointerEventData eventData)
         {
-           
-           
-            touchInputReceiver?.OnBeginDrag(this, eventData);
+
+            if (!UIClickChecker.CheckUIObjectsInPosition())
+            {
+                touchInputReceiver?.OnBeginDrag(this, eventData);
+            }
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            
-            touchInputReceiver?.OnEndDrag(this, eventData);
-         
+            if (!UIClickChecker.CheckUIObjectsInPosition())
+            {
+                touchInputReceiver?.OnEndDrag(this, eventData);
+            }
+
         }
   
         public void OnDrag(PointerEventData eventData)
         {
-            touchInputReceiver?.OnMouseDrag(this, eventData);
+            if (!UIClickChecker.CheckUIObjectsInPosition())
+            {
+                touchInputReceiver?.OnMouseDrag(this, eventData);
+            }
         }
 
         public void OnDrop(PointerEventData eventData)

@@ -52,6 +52,8 @@ namespace Game.GameInput
             gameplayInput.UndoUnit(unit);
         }
 
+        
+
         public void DraggedOverGrid(int x, int y)
         {
             ResetDragSelectables();
@@ -146,6 +148,28 @@ namespace Game.GameInput
             }
         }
 
+        public void ClickedDownOnGrid(int x, int y)
+        {
+            Debug.Log("Show Movement Path if character is selected else still change cursor position");
+            gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
+            if(!gridSystem.GridLogic.IsTileFree(x,y))
+            {
+                Debug.Log("Somehow clicked on non empty Tile");
+                
+                return;
+            }
+
+            if (gridSystem.GridLogic.IsFieldFreeAndActive(x, y) && selectionDataProvider.SelectedActor != null &&
+                !selectionDataProvider.SelectedActor.TurnStateManager.HasMoved)
+            {
+
+                if (!selectionDataProvider.IsSelectedTile(x, y))
+                {
+                    inputPathManager.CalculateMousePathToPosition(selectionDataProvider.SelectedActor, x, y);
+                    
+                }
+            }
+        }
         public void ClickedOnGrid(int x, int y)
         {
         
