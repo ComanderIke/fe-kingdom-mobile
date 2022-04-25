@@ -63,8 +63,7 @@ public class AreaGameManager : MonoBehaviour
         SpawnPartyMembers();
         uiCOntroller.Init(Player.Instance.Party);
        
-
-       Debug.Log(Player.Instance.Party.EncounterNode);
+        
         ResetMoveOptions();
   
         ShowMoveOptions();

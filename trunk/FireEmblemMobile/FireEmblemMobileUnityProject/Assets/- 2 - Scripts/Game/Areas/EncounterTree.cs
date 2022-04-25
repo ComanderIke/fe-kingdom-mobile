@@ -133,7 +133,7 @@ public class EncounterTree
             }
         }
     }
-    public void CreateMiddleColumns(List<EncounterNodeData> data)
+    public void CreateMiddleColumns()
     {
         for (int i = 1; i < spawnData.columnCount; i++)
         {
@@ -151,6 +151,35 @@ public class EncounterTree
            
             }
             
+            columns.Add(column);
+        }
+    }
+    public void CreateMiddleColumns(EncounterTreeData encounterTreeData)
+    {
+        
+        for (int i = 1; i < encounterTreeData.columns.Count-1; i++)
+        {
+            Column column = new Column();
+            Column previous = columns.Last();
+            EncounterNode parent = null;
+            column.index = i;
+            Debug.Log("Create Column!"+i);
+            //Debug.Log(columns.Last().children.Count);
+            
+            for (int j=0; j< encounterTreeData.columns[i].nodeDatas.Count; j++)
+            {
+                var nodeSpawnData = spawnData.nodeDatas[encounterTreeData.columns[i].nodeDatas[j].nodeTypeIndex];
+                EncounterNode node = nodeSpawnData.CreateNode(parent, i,j);
+                node.prefabIdx = encounterTreeData.columns[i].nodeDatas[j].nodeTypeIndex;
+                column.children.Add(node);
+                foreach (var parentIndex in encounterTreeData.columns[i].nodeDatas[j].parentIndexes)
+                {
+                    node.parents.Add(previous.children[parentIndex]);//Adding parent to child
+                    previous.children[parentIndex].children.Add(node);//Adding child to parent
+                }
+                
+            }
+
             columns.Add(column);
         }
     }
@@ -217,7 +246,13 @@ public class EncounterTree
         this.fixedEncounters = fixedEncounters;
         this.fixedColumns = fixedColumns;
         CreateStartColumn(spawnData.startNodeData);
-        CreateMiddleColumns(spawnData.nodeDatas);
+        CreateMiddleColumns();
+        CreateEndColumn(spawnData.endNodeData);
+    }
+    public void CreateFromData(EncounterTreeData encounterTreeData)
+    {
+        CreateStartColumn(spawnData.startNodeData);
+        CreateMiddleColumns(encounterTreeData);
         CreateEndColumn(spawnData.endNodeData);
     }
 
@@ -225,4 +260,6 @@ public class EncounterTree
     {
         return new EncounterTreeData(this);
     }
+
+   
 }

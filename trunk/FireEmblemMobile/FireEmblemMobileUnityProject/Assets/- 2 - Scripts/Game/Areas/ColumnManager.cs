@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Linq;
 using __2___Scripts.Game.Areas;
+using Game.Systems;
 using Pathfinding;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -43,11 +44,18 @@ public class ColumnManager : MonoBehaviour
     void Start()
     {
         //OnDisable();
-        if (EncounterTree.Instance.startNode == null)
+        EncounterTree.Instance.spawnData = spawnData;
+        EncounterTree.Instance.columns.Clear();
+        if (LoadedSaveData())
+        {
+            Debug.Log("Load EncounterTreeData");
+           
+            EncounterTree.Instance.CreateFromData(SaveData.currentSaveData.encounterTreeData);
+            
+        }
+        else
         {
             Debug.Log("Create New EncounterTree!");
-            EncounterTree.Instance.spawnData = spawnData;
-            EncounterTree.Instance.columns.Clear();
             EncounterTree.Instance.spawnData.InitNodeAppearanceChances();
             EncounterTree.Instance.Create(fixedEncounters, fixedColumns);
 
@@ -59,6 +67,11 @@ public class ColumnManager : MonoBehaviour
         PositionEncounters(EncounterTree.Instance.columns, EncounterTree.Instance.endNode);
         CreateConnections(EncounterTree.Instance.columns);
 
+    }
+
+    private bool LoadedSaveData()
+    {
+        return SaveData.currentSaveData != null && SaveData.currentSaveData.encounterTreeData != null;
     }
 
     private void CreateMiddleNodesGameObject(List<Column> columns)
