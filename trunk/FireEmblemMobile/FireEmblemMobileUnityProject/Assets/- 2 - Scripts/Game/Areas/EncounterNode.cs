@@ -4,6 +4,7 @@ using Game.GameActors.Players;
 using Game.WorldMapStuff.Model;
 using UnityEngine;
 
+
 public abstract class EncounterNode
 {
     public string UniqueId { get; set; }
@@ -15,7 +16,7 @@ public abstract class EncounterNode
 
     public bool moveable;
 
-    public int prefabIdx;
+    public int prefabIdx=-1;
 
     public int depth = 0;
 

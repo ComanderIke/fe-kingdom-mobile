@@ -2,6 +2,7 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using Game.Systems;
+using Microsoft.Win32.SafeHandles;
 using UnityEngine;
 
 namespace SerializedData
@@ -89,9 +90,21 @@ namespace SerializedData
             }
         }
 
+        public static string[] GetLoadFiles()
+        {
+            string []saveFiles;
+            if (!Directory.Exists(Application.persistentDataPath + "/saves/"))
+            {
+                Directory.CreateDirectory(Application.persistentDataPath + "/saves/");
+            }
+
+            saveFiles = Directory.GetFiles(Application.persistentDataPath + "/saves/");
+            return saveFiles;
+        }
+       
         public static void SaveGame(string filename, SaveData saveData)
         {
-            
+            Game.Systems.SaveData.currentSaveData = saveData;
             SaveData(filename,saveData);
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Game.Systems;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -218,5 +219,10 @@ public class EncounterTree
         CreateStartColumn(spawnData.startNodeData);
         CreateMiddleColumns(spawnData.nodeDatas);
         CreateEndColumn(spawnData.endNodeData);
+    }
+
+    public EncounterTreeData GetSaveData()
+    {
+        return new EncounterTreeData(this);
     }
 }

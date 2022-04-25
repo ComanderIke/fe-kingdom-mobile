@@ -182,7 +182,7 @@ namespace Game.GUI
         }
         public void SaveGameClicked()
         {
-            SaveSystem.SaveGame(saveNameField.text.Trim(), new SaveData(Player.Instance, Campaign.Instance));
+            SaveSystem.SaveGame(saveNameField.text.Trim(), new SaveData(Player.Instance, Campaign.Instance,EncounterTree.Instance));
             LeanTween.scale(saveDialog, Vector3.zero, 0.3f).setEase(LeanTweenType.easeInBack)
                 .setOnComplete(HideSaveDialog);
         }

@@ -66,7 +66,7 @@ namespace Game.WorldMapStuff.Manager
 
         private void CreateSaveData()
         {
-            SaveData.currentSaveData = new SaveData(Player.Instance, Campaign.Instance);
+            SaveData.currentSaveData = new SaveData(Player.Instance, Campaign.Instance, EncounterTree.Instance);
         }
         private void InitializePlayerData()
         {
