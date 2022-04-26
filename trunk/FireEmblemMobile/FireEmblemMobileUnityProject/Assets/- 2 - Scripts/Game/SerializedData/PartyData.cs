@@ -14,50 +14,47 @@ namespace Game.GameActors.Players
     [System.Serializable]
     public class PartyData
     {
-        [SerializeField]
-        public List<HumanData> humanData;
-        [SerializeField]
-        public int money;
-        [SerializeField]
-        public Convoy convoy;
-        [SerializeField]
-        public int activeUnitIndex;
-        [SerializeField]
-        public Vector2Int currentEncounterNodeId;
-        [SerializeField]
-        public List<int> movedEncounterIds;
+        [SerializeField] public List<HumanData> humanData;
+        [SerializeField] public int money;
+        [SerializeField] public Convoy convoy;
+        [SerializeField] public int activeUnitIndex;
+
+        [SerializeField] public Vector2Int currentEncounterNodeId;
+        [SerializeField] public List<int> movedEncounterIds;
 
         public PartyData(Party party)
         {
             SaveData(party);
-            
         }
 
-        public void Load(Party party)
+        public Party Load()
         {
-            // party.name = name;
-            // party.members = new List<Unit>();
-            // party.location = WorldMapGameManager.Instance.World.Locations.FirstOrDefault(l=> l.UniqueId==locationId);
-            //
-            //
-            // // Debug.Log(party.members[0].name);
-            // // Debug.Log("loading Party: "+party.members[0].name+" "+party.location.worldMapPosition.name);
-            // party.TurnStateManager = turnStateManager;
-            // foreach (var data in humanData)
-            // {
-            //     var unit = ScriptableObject.CreateInstance<Human>();
-            //     data.Load(unit);
-            //     unit.Initialize();
-            //     party.members.Add(unit);
-            //
-            // }
-            // foreach (var data in monsterData)
-            // {
-            //     var unit = ScriptableObject.CreateInstance<Monster>();
-            //     data.Load(unit);
-            //     unit.Initialize();
-            //     party.members.Add(unit);
-            // }
+            Party party = ScriptableObject.CreateInstance<Party>();
+            party.members = new List<Unit>();
+
+            foreach (var data in humanData)
+            {
+                Unit unit=data.Load();
+                Debug.Log("Load UnitData!"+unit.name);
+                unit.Initialize();
+                party.members.Add(unit);
+            }
+
+            party.money = money;
+            party.Convoy = convoy;
+            party.ActiveUnitIndex = activeUnitIndex;
+            return party;
+
+        }
+
+        public void LoadEncounterAreaData(Party party, List<Column> columns){
+            int columnIndex = currentEncounterNodeId.x;
+            int childIndex = currentEncounterNodeId.y;
+            party.EncounterNode = columns[columnIndex].children[childIndex];
+            for (int i = 0; i < movedEncounterIds.Count; i++)
+            {
+                party.MovedEncounters.Add(columns[i].children[movedEncounterIds[i]]);
+            }
         }
 
         public void SaveData(Party party)
@@ -71,6 +68,7 @@ namespace Game.GameActors.Players
                 movedEncounterIds.Add(encounter.childIndex);
             }
 
+            activeUnitIndex = party.ActiveUnitIndex;
             convoy = party.Convoy;
             money = party.money;
             humanData = new List<HumanData>();
@@ -81,28 +79,6 @@ namespace Game.GameActors.Players
                     humanData.Add(new HumanData(human));
                 }
             }
-            // name = party.name;
-            // humanData = new List<HumanData>();
-            // monsterData = new List<MonsterData>();
-            // // Debug.Log("Saving Party: " +party.name);
-            // // Debug.Log(party.members.Count);
-            // // Debug.Log(party.members[0].name);
-            // // Debug.Log(party.location.name);
-            // foreach (var member in party.members)
-            // {
-            //     if (member is Human human)
-            //     {
-            //         humanData.Add(new HumanData(human));
-            //     }
-            //
-            //     if (member is Monster monster)
-            //     {
-            //         monsterData.Add(new MonsterData(monster));
-            //     }
-            // }
-            //
-            // turnStateManager = party.TurnStateManager;
-            // locationId = party.location.UniqueId;
         }
     }
 }

@@ -45,7 +45,7 @@ namespace Game.GameActors.Players
         {
             
             Name = data.Name;
-            data.partyData.Load(Party);
+            Party = data.partyData.Load();
             //data.factionData.Load((WM_Faction)faction);
 
         }

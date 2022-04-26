@@ -17,13 +17,16 @@ namespace Game.GameActors.Players
             weaponId = unit.EquippedWeapon.name;
         }
 
-        public override void Load(Unit unit)
+        public override Unit Load()
         {
-            base.Load(unit);
+            Human human = (Human)base.Load();
           
-            Human human = (Human) unit;
+           
             //Debug.Log("LOAD222222: "+unit.name+" "+unit.ExperienceManager.Exp);
-            human.EquippedWeapon = GameData.Instance.Weapons.FirstOrDefault(w=>w.name == weaponId);
+            Debug.LogError("WeaponId: "+weaponId);
+            // Debug.LogError("Loaded Weapon: "+GameData.Instance.Weapons.FirstOrDefault(w => w.name == weaponId).name);
+            human.EquippedWeapon = GameData.Instance.GetWeapon(weaponId);
+            return human;
         }
     }
 }

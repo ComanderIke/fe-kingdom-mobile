@@ -21,7 +21,9 @@ namespace Game.GameActors.Units.Numbers
         public int FAITH= 30;
 
         public const int CON_HP_Mult = 3;
-
+        public Attributes()
+        {
+        }
         public Attributes(Attributes attributes)
         {
             INT = attributes.INT;
@@ -34,6 +36,7 @@ namespace Game.GameActors.Units.Numbers
 
         public Attributes Clone()
         {
+            Debug.Log("CloneAttriubtes");
             return new Attributes(this);
             
         }

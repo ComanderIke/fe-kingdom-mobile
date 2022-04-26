@@ -54,9 +54,9 @@ public class MerchantEncounterNode : EncounterNode
         merchant.AddItem(new ShopItem(GameData.Instance.GetSPotion(),Random.Range(2,4)));
         //merchant.AddItem(new ShopItem(GameData.Instance.GetRandomPotion(),Random.Range(1,4)));
         merchant.AddItem(new ShopItem(GameData.Instance.GetRandomMagic()));
-        merchant.AddItem(new ShopItem(GameData.Instance.GetRandomArmor()));
+        merchant.AddItem(new ShopItem(GameData.Instance.GetRandomSword()));
         merchant.AddItem(new ShopItem(GameData.Instance.GetRandomRelic()));
-        merchant.AddItem(new ShopItem(GameData.Instance.GetRandomWeapon()));
+        merchant.AddItem(new ShopItem(GameData.Instance.GetRandomSword()));
         
     }
 

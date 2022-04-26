@@ -20,8 +20,12 @@ namespace Game.GameActors.Units.Numbers
         // public int MaxSp;
         [SerializeField]
         public int Mov;
-      
-       
+
+        public Stats()
+        {
+            Attributes = new Attributes();
+            AttackRanges = new List<int>();
+        }
         
 
         public StatsData GetSaveData()
@@ -44,6 +48,7 @@ namespace Game.GameActors.Units.Numbers
             }
             stats.MaxHp = MaxHp;
            // stats.MaxSp = MaxSp;
+           Debug.Log("Clone2Attriubtes");
             stats.Attributes = new Attributes(Attributes);
        
             stats.Mov = Mov;
@@ -57,6 +62,7 @@ namespace Game.GameActors.Units.Numbers
             //MaxSp = statsData.MaxSp;
             Mov = statsData.Mov;
             AttackRanges = statsData.AttackRanges;
+            Debug.Log("LoadStatsData");
             Attributes = new Attributes(statsData.Attributes);
         }
 

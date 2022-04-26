@@ -100,6 +100,7 @@ namespace Game.GUI
 
             Player.Instance.LoadData(SaveData.currentSaveData.playerData);
             Campaign.Instance.LoadData(SaveData.currentSaveData.campaignData);
+            
             LoadCampaignScene(Campaign.Instance);
 
             LeanTween.scale(loadDialog, Vector3.zero, 0.3f).setEase(LeanTweenType.easeInBack)

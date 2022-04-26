@@ -1,6 +1,7 @@
 ﻿using Game.GameActors.Units;
 using Game.GameActors.Units.Numbers;
 using Game.GameResources;
+using UnityEditor.SceneTemplate;
 using UnityEngine;
 
 namespace Game.GameActors.Players
@@ -15,46 +16,42 @@ namespace Game.GameActors.Players
         [SerializeField]
         private Attributes growthsData;
         [SerializeField]
-        private int moveTypeId;
-        [SerializeField]
         public ExperienceManager ExperienceManager;
         [SerializeField]
         public TurnStateManager TurnStateManager;
         [SerializeField]
-        public string spriteID;
-         [SerializeField]
-         public string vfxID;
+        public string unitBlueprintID;
+ 
         
         public UnitData(Unit unit)
         {
             this.name = unit.name;
             ExperienceManager = unit.ExperienceManager;
             TurnStateManager = unit.TurnStateManager;
-            this.moveTypeId = unit.MoveType.moveTypeId;
             this.growthsData = unit.Growths;
             this.statsData = unit.Stats.GetSaveData();
-            spriteID = unit.visuals.CharacterSpriteSet.ID;
-            if (unit.visuals.UnitEffectVisual!=null)
-                vfxID = unit.visuals.UnitEffectVisual.ID;
+            this.unitBlueprintID = unit.bluePrintID;
         }
 
-        public virtual void Load(Unit unit)
+        public virtual Unit Load()
         {
+            Unit unit = Object.Instantiate(GameData.Instance.GetHumanBlueprint(unitBlueprintID));
             unit.name = name;
             unit.Stats = new Stats();//ScriptableObject.CreateInstance<Stats>();
             unit.Stats.LoadData(statsData);
-            unit.Growths = new Attributes(unit.Growths);//ScriptableObject.CreateInstance<Growths>();
+            unit.Growths = new Attributes(growthsData);//ScriptableObject.CreateInstance<Growths>();
             // unit.Growths.LoadData(growthsData);
             unit.ExperienceManager = new ExperienceManager();
             unit.ExperienceManager.Exp = ExperienceManager.Exp;
             unit.ExperienceManager.Level = ExperienceManager.Level;
             unit.TurnStateManager = TurnStateManager;
-            
-            unit.visuals = new UnitVisual();
-            unit.visuals.CharacterSpriteSet = GameAssets.Instance.visuals.LoadCharacterSpriteSet(spriteID);
-             unit.visuals.UnitEffectVisual = GameAssets.Instance.visuals.LoadUnitEffectVisual(vfxID);
-            unit.MoveType = GameData.Instance.UnitData.GetMoveType(moveTypeId);
-           
+            return unit;
+            // unit.visuals = new UnitVisual();
+            //
+            // unit.visuals.CharacterSpriteSet = GameAssets.Instance.visuals.LoadCharacterSpriteSet(spriteID);
+            //  unit.visuals.UnitEffectVisual = GameAssets.Instance.visuals.LoadUnitEffectVisual(vfxID);
+            // unit.MoveType = GameData.Instance.UnitData.GetMoveType(moveTypeId);
+
         }
     }
 }

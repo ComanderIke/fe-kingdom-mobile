@@ -50,7 +50,7 @@ public class ColumnManager : MonoBehaviour
         {
             Debug.Log("Load EncounterTreeData");
            
-            EncounterTree.Instance.CreateFromData(SaveData.currentSaveData.encounterTreeData);
+            EncounterTree.Instance.LoadData(SaveData.currentSaveData.encounterTreeData);
             
         }
         else

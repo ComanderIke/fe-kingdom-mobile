@@ -20,10 +20,10 @@ public class SmithyEncounterNode : EncounterNode
     public SmithyEncounterNode(EncounterNode parent,int depth, int childIndex) : base(parent, depth, childIndex)
     { 
         smithy = new Smithy();
-        smithy.AddItem(GameData.Instance.GetRandomArmor());
-        smithy.AddItem(GameData.Instance.GetRandomArmor());
-        smithy.AddItem(GameData.Instance.GetRandomWeapon());
-        smithy.AddItem(GameData.Instance.GetRandomWeapon());
+        smithy.AddItem(GameData.Instance.GetRandomBow());
+        smithy.AddItem(GameData.Instance.GetRandomSpear());
+        smithy.AddItem(GameData.Instance.GetRandomSword());
+        smithy.AddItem(GameData.Instance.GetRandomSword());
     
 
     }

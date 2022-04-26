@@ -167,13 +167,10 @@ namespace Game.Mechanics.Battle
             if (owner is Human human)
             {
                 //Debug.Log("TODO ATTACK SPEED CALC");
-    
+                Debug.Log(human.EquippedWeapon.Hit);
+                Debug.Log(human.Stats.Attributes.DEX);
                 return (human.Stats.Attributes.DEX- human.EquippedWeapon.Weight) * 2 + human.EquippedWeapon.Hit;
-            }  if (owner is Monster monster)
-            {
-                //Debug.Log("TODO ATTACK SPEED CALC");
-                return monster.Stats.Attributes.DEX * 2 + monster.Weapon.Hit;
-            }
+            }  
 
             return owner.Stats.Attributes.DEX * 2;
         }

@@ -261,5 +261,11 @@ public class EncounterTree
         return new EncounterTreeData(this);
     }
 
-   
+
+    public void LoadData(EncounterTreeData encounterTreeData)
+    {
+        spawnData = spawnData;
+        columns.Clear();
+        CreateFromData(encounterTreeData);
+    }
 }

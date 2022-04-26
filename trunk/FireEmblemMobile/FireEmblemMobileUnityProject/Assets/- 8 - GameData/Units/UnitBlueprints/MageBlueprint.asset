@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7146e0387d138b14fa7b06fc9b6a1416, type: 3}
+  m_Name: MageBlueprint
+  m_EditorClassIdentifier: 
+  name: huhu
+  jobClass: Witch
+  stats:
+    AttackRanges: 0100000002000000
+    Attributes:
+      STR: 2
+      INT: 5
+      DEX: 4
+      AGI: 5
+      CON: 4
+      FAITH: 3
+    MaxHp: 12
+    Mov: 2
+  growths:
+    STR: 20
+    INT: 65
+    DEX: 45
+    AGI: 35
+    CON: 30
+    FAITH: 30
+  moveType: {fileID: 11400000, guid: bff40a3de87900a4496abf2b9dfca7a2, type: 2}
+  SkillManager:
+    Skills:
+    - {fileID: 11400000, guid: ec899c664435815459ec73935c252680, type: 2}
+    - {fileID: 11400000, guid: 8995adddbb3572a438be24147246d349, type: 2}
+    - {fileID: 11400000, guid: a4b4a4b3b507d094aaebbd141b0fef93, type: 2}
+    - {fileID: 11400000, guid: 30cdf5daa0cbaa14b82d2e89a2125b10, type: 2}
+    Favourite: {fileID: 11400000, guid: 30cdf5daa0cbaa14b82d2e89a2125b10, type: 2}
+  bluePrintID: mage
+  visuals:
+    CharacterSpriteSet: {fileID: 11400000, guid: eab4068f017df624f847ba1d9fa411c5,
+      type: 2}
+    UnitEffectVisual: {fileID: 0}
+    Prefabs:
+      MapAnimatedSprite: {fileID: 0}
+      EncounterAnimatedSprite: {fileID: 6168332596698552260, guid: e20f1ca45e0b37141a3902bf865aecd5,
+        type: 3}
+    UnitCharacterCircleUI: {fileID: 0}
+    unitRenderer: {fileID: 0}
+  experienceManager:
+    level: 1
+    exp: 0
+    MaxExp: 100
+  Class: {fileID: 11400000, guid: c9fb62633f511e34e9f6889cbde27e91, type: 2}
+  EquippedWeapon: {fileID: 11400000, guid: 122bb3087c2603442808446010728a78, type: 2}
+  EquippedArmor: {fileID: 11400000, guid: 3721b2ef6bbccc84999f1178c277dbbc, type: 2}
+  EquippedRelic: {fileID: 0}
+  EquippedConsumable: {fileID: 0}

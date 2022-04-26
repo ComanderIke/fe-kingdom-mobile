@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7146e0387d138b14fa7b06fc9b6a1416, type: 3}
+  m_Name: ArcherBlueprint
+  m_EditorClassIdentifier: 
+  name: Eldric
+  jobClass: Ranger
+  stats:
+    AttackRanges: 02000000
+    Attributes:
+      STR: 3
+      INT: 3
+      DEX: 7
+      AGI: 7
+      CON: 4
+      FAITH: 1
+    MaxHp: 12
+    Mov: 3
+  growths:
+    STR: 40
+    INT: 30
+    DEX: 65
+    AGI: 60
+    CON: 35
+    FAITH: 10
+  moveType: {fileID: 11400000, guid: d13592b1fa0af024a841b121149b8014, type: 2}
+  SkillManager:
+    Skills: []
+    Favourite: {fileID: 0}
+  bluePrintID: archer
+  visuals:
+    CharacterSpriteSet: {fileID: 11400000, guid: 15c6559b2ce48d548a45dc0c7b7ffba6,
+      type: 2}
+    UnitEffectVisual: {fileID: 0}
+    Prefabs:
+      MapAnimatedSprite: {fileID: 0}
+      EncounterAnimatedSprite: {fileID: 6168332596698552260, guid: d004730b778feb548a0afe509ccacd4a,
+        type: 3}
+    UnitCharacterCircleUI: {fileID: 0}
+    unitRenderer: {fileID: 0}
+  experienceManager:
+    level: 1
+    exp: 0
+    MaxExp: 100
+  Class: {fileID: 11400000, guid: c9fb62633f511e34e9f6889cbde27e91, type: 2}
+  EquippedWeapon: {fileID: 11400000, guid: 83e1761a127b1a54ca3c98ca2850f24a, type: 2}
+  EquippedArmor: {fileID: 11400000, guid: 3721b2ef6bbccc84999f1178c277dbbc, type: 2}
+  EquippedRelic: {fileID: 0}
+  EquippedConsumable: {fileID: 0}

@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7146e0387d138b14fa7b06fc9b6a1416, type: 3}
+  m_Name: CavalryBlueprint
+  m_EditorClassIdentifier: 
+  name: Leila
+  jobClass: Cavalry
+  stats:
+    AttackRanges: 01000000
+    Attributes:
+      STR: 5
+      INT: 4
+      DEX: 5
+      AGI: 5
+      CON: 5
+      FAITH: 2
+    MaxHp: 15
+    Mov: 4
+  growths:
+    STR: 40
+    INT: 30
+    DEX: 40
+    AGI: 40
+    CON: 45
+    FAITH: 25
+  moveType: {fileID: 11400000, guid: 580bbea6e1e3e824a81881f8e2a825ba, type: 2}
+  SkillManager:
+    Skills: []
+    Favourite: {fileID: 0}
+  bluePrintID: cavalry
+  visuals:
+    CharacterSpriteSet: {fileID: 11400000, guid: 4485885652ebc5043a5f98f1b743190c,
+      type: 2}
+    UnitEffectVisual: {fileID: 0}
+    Prefabs:
+      MapAnimatedSprite: {fileID: 0}
+      EncounterAnimatedSprite: {fileID: 6168332596698552260, guid: 6494bc85f4d276d4191139a37bd0aefd,
+        type: 3}
+    UnitCharacterCircleUI: {fileID: 0}
+    unitRenderer: {fileID: 0}
+  experienceManager:
+    level: 1
+    exp: 0
+    MaxExp: 100
+  Class: {fileID: 11400000, guid: c9fb62633f511e34e9f6889cbde27e91, type: 2}
+  EquippedWeapon: {fileID: 11400000, guid: 8e3e843ce5618b9429f4a4f0e60b142c, type: 2}
+  EquippedArmor: {fileID: 11400000, guid: 3721b2ef6bbccc84999f1178c277dbbc, type: 2}
+  EquippedRelic: {fileID: 0}
+  EquippedConsumable: {fileID: 0}

@@ -35,6 +35,7 @@ namespace Game.GameActors.Units
         private MoveType moveType;
         [SerializeField]
         public SkillManager SkillManager;
+        public string bluePrintID;
         public MoveType MoveType
         {
             get => moveType;
@@ -309,6 +310,7 @@ namespace Game.GameActors.Units
         public static OnUnitHealedEvent OnUnitHealed;
         public delegate void LevelupEvent(Unit unit);
         public LevelupEvent OnLevelUp;
+    
 
         // public void OnEnable()
         // {

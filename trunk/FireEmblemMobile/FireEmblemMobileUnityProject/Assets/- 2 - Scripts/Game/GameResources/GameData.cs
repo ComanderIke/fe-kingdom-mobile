@@ -9,6 +9,7 @@ using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.UI;
 using GameEngine;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game.GameResources
 {
@@ -20,14 +21,15 @@ namespace Game.GameResources
         public CharacterStateData CharacterStateData;
         
 
-        [SerializeField] private List<EquipableItem> armor = default;
+        // [SerializeField] private List<EquipableItem> armor = default;
         [SerializeField] private List<EquipableItem> relics = default;
-        [SerializeField] private List<EquipableItem> staffs = default;
-        [SerializeField] private List<Weapon> weapons = default;
+        [SerializeField] private List<Weapon> staffs = default;
+        [SerializeField] private List<Weapon> spears = default;
+        [SerializeField] private List<Weapon> bows = default;
+        [SerializeField] private List<Weapon> swords = default;
         [SerializeField] private List<Weapon> magic = default;
         [SerializeField] private List<Item> consumables = default;
-        [SerializeField] private List<Human> humans = default;
-        [SerializeField] private List<Monster> monster = default;
+        [FormerlySerializedAs("humans")] [SerializeField] private List<Human> humanBlueprints = default;
         [SerializeField] private List<Party> playerStartingParties = default;
         [SerializeField] public List<CampaignConfig> campaigns;
 
@@ -37,20 +39,20 @@ namespace Game.GameResources
             Debug.Log("Before Awake!");
         }
 
-        public List<Weapon> Weapons
-        {
-            get
-            {
-                var ret = new List<Weapon>();
-                foreach (var weapon in weapons)
-                {
-                    var weaponGameObject = Instantiate(weapon);
-                    weaponGameObject.name = weapon.name;
-                    ret.Add(weaponGameObject);
-                }
-                return ret;
-            }
-        }
+        // public List<Weapon> Weapons
+        // {
+        //     get
+        //     {
+        //         var ret = new List<Weapon>();
+        //         foreach (var weapon in weapons)
+        //         {
+        //             var weaponGameObject = Instantiate(weapon);
+        //             weaponGameObject.name = weapon.name;
+        //             ret.Add(weaponGameObject);
+        //         }
+        //         return ret;
+        //     }
+        // }
 
         public Party GetCampaignParty(int campaignIndex)
         {
@@ -68,16 +70,21 @@ namespace Game.GameResources
         }
         public Weapon GetWeapon(string name)
         {
-            return Instantiate(weapons.Find(a => a.name == name));
+            Weapon weapon = null;
+            weapon = swords.Find(a => a.name == name);
+            if(weapon==null)
+                weapon = bows.Find(a => a.name == name);
+            if(weapon==null)
+                weapon = magic.Find(a => a.name == name);
+            if(weapon==null)
+                weapon = spears.Find(a => a.name == name);
+            return Instantiate(weapon);
         }
-        public Human GetHuman(string name)
+        public Human GetHumanBlueprint(string name)
         {
-            return Instantiate(humans.Find(a => a.name == name));
+            return Instantiate(humanBlueprints.Find(a => a.bluePrintID == name));
         }
-        public Monster GetMonster(string name)
-        {
-            return Instantiate(monster.Find(a => a.name == name));
-        }
+
 
         public Item GetRandomPotion()
         {
@@ -90,15 +97,15 @@ namespace Game.GameResources
             return Instantiate(magic[Random.Range(0, magic.Count-1)]);
         }
 
-        public EquipableItem GetRandomWeapon()
+        public EquipableItem GetRandomSword()
         {
-            return Instantiate(weapons[Random.Range(0, weapons.Count-1)]);
+            return Instantiate(swords[Random.Range(0, swords.Count-1)]);
         }
 
-        public EquipableItem GetRandomArmor()
-        {
-            return Instantiate(armor[Random.Range(0, armor.Count-1)]);
-        }
+        // public EquipableItem GetRandomArmor()
+        // {
+        //     return Instantiate(armor[Random.Range(0, armor.Count-1)]);
+        // }
 
         public EquipableItem GetRandomRelic()
         {
@@ -118,6 +125,16 @@ namespace Game.GameResources
         public Item GetSPotion()
         {
             return Instantiate(consumables[1]);
+        }
+
+        public EquipableItem GetRandomBow()
+        {
+            return Instantiate(bows[Random.Range(0, bows.Count-1)]);
+        }
+
+        public EquipableItem GetRandomSpear()
+        {
+            return Instantiate(spears[Random.Range(0, spears.Count-1)]);
         }
     }
 }

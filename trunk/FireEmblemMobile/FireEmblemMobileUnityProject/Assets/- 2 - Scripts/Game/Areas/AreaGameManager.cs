@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using __2___Scripts.Game.Areas;
 using Effects;
 using Game.GameActors.Players;
+using Game.Systems;
 using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.Systems;
 using UnityEngine;
@@ -37,29 +38,29 @@ public class AreaGameManager : MonoBehaviour
                 camera.transform.position.z);
         }
 
-       
-        if (Player.Instance.Party == null)
+        if (LoadedSaveData())
+        {
+            Debug.Log("Use party saveData");
+            Player.Instance.Party.Initialize();
+            SaveData.currentSaveData.playerData.partyData.LoadEncounterAreaData(Player.Instance.Party, EncounterTree.Instance.columns);
+            
+            
+        }
+        else
         {
             //Debug.Log("Player Null");
             Player.Instance.Party = Instantiate(playerStartParty, spawnParent);
             Player.Instance.Party.Initialize();
-            
-
-        }
-        else
-        {
-            
-        }
-    
-        
-       
-        if (Player.Instance.Party.EncounterNode == null)
-        {
-            //Debug.Log("Player Node Null");
-           
             Player.Instance.Party.EncounterNode = EncounterTree.Instance.startNode;
             Player.Instance.Party.MovedEncounters.Add(EncounterTree.Instance.startNode);
         }
+
+
+        
+            //Debug.Log("Player Node Null");
+           
+            
+      
         SpawnPartyMembers();
         uiCOntroller.Init(Player.Instance.Party);
        
@@ -70,7 +71,10 @@ public class AreaGameManager : MonoBehaviour
         uiPartyController.Show(Player.Instance.Party);
         lightController.UpdateHour(hour);
     }
-
+    private bool LoadedSaveData()
+    {
+        return SaveData.currentSaveData != null && SaveData.currentSaveData.playerData != null;
+    }
   
     private List<EncounterPlayerUnitController> partyGameObjects;
     void SpawnPartyMembers()
