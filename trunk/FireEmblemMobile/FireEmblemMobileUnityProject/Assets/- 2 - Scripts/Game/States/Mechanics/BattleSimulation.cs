@@ -31,7 +31,13 @@ namespace Game.Mechanics
         public bool DttackerAlive{ get; set; }
 
         public List<AttackData> AttacksData;
-        public BattleSimulation(IBattleActor attacker, IBattleActor defender)
+        public GridPosition attackPosition;
+        public BattleSimulation(IBattleActor attacker, IBattleActor defender):this(attacker, defender, ((Unit)attacker).GridComponent.GridPosition)
+        {
+            
+            
+        }
+        public BattleSimulation(IBattleActor attacker, IBattleActor defender, GridPosition attackPosition)
         {
             
             Attacker = attacker.Clone() as IBattleActor;
@@ -45,6 +51,7 @@ namespace Game.Mechanics
             AttackerAttackCount = Attacker.BattleComponent.BattleStats.GetAttackCountAgainst(Defender);
             DefenderAttackCount = Defender.BattleComponent.BattleStats.GetAttackCountAgainst(Attacker);
             AttacksData = new List<AttackData>();
+            this.attackPosition =attackPosition;
         }
         public bool DoAttack(IBattleActor attacker, IBattleActor defender, ref AttackData attackData)
         {
@@ -95,7 +102,7 @@ namespace Game.Mechanics
             this.certainHit = certainHit;
             int attackerAttackCount = Attacker.BattleComponent.BattleStats.GetAttackCountAgainst(Defender);
             int defenderAttackCount = Defender.BattleComponent.BattleStats.GetAttackCountAgainst(Attacker);
-            GridPosition attackerGridPos = ((Unit)Attacker).GridComponent.GridPosition;
+            GridPosition attackerGridPos = attackPosition;
             Debug.Log("TODO GridPosition-1?!?!?!");
             if (!((IGridActor)Defender).GridComponent.CanAttack(attackerGridPos.X, attackerGridPos.Y))
             {

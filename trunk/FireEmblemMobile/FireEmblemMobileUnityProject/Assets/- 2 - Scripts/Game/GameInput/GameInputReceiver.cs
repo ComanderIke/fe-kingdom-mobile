@@ -399,7 +399,7 @@ namespace Game.GameInput
         private void DraggedOverEnemy(int x, int y, IGridActor enemy)
         {
             var selectedActor = selectionDataProvider.SelectedActor;
-            Debug.Log("Dragged on enemy: " + enemy +" at ["+x+"/"+y+"]");
+           // Debug.Log("Dragged on enemy: " + enemy +" at ["+x+"/"+y+"]");
             if (!IsTileAttackAble(x,y))
                 return;
             selectionDataProvider.SetSelectedAttackTarget(enemy);
@@ -407,6 +407,7 @@ namespace Game.GameInput
             {
                 if(selectedActor.GridComponent.CanAttack(x, y))
                 {
+                    Debug.Log("Check Attack Preview from HEre: "+x+" "+y);
                     
                     if(selectedActor is IBattleActor battleActor && enemy is IBattleActor enemyBattleActor)
                         gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, selectedActor.GridComponent.GridPosition);
@@ -424,8 +425,9 @@ namespace Game.GameInput
             if (inputPathManager.HasValidMovementPath(selectedActor.MovementRange))
             {
                 inputPathManager.UpdatedMovementPath(selectedActor.GridComponent.GridPosition.X, selectedActor.GridComponent.GridPosition.Y);
+                //Debug.Log("Check Attack Preview from HEre: "+x+" "+y+" "+inputPathManager.GetLastMovementPathPosition().x+" "+inputPathManager.GetLastMovementPathPosition().y);
                 if(selectedActor is IBattleActor battleActor && enemy is IBattleActor enemyBattleActor)
-                    gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, new GridPosition(x, y));
+                    gameplayInput.CheckAttackPreview(battleActor, enemyBattleActor, new GridPosition(inputPathManager.GetLastMovementPathPosition().x,inputPathManager.GetLastMovementPathPosition().y));
                 selectionDataProvider.SetUndoAbleActor(selectionDataProvider.SelectedActor);
             }
         }

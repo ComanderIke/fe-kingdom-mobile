@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 namespace Game.GameInput
 {
-    public class UnitInputController : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
+    public class UnitInputController : MonoBehaviour, IMyDropHandler//, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
     {
         // public delegate void OnUnitDraggedEvent(int x, int y, Unit character);
         // public static event OnUnitDraggedEvent OnUnitDragged;
@@ -49,9 +49,9 @@ namespace Game.GameInput
 
         public void OnMouseDrag()
         {
-
             touchInputReceiver?.OnMouseDrag(this);
         }
+       
         public void OnMouseDown()
         {
             if (!UIClickChecker.CheckUIObjectsInPosition())
@@ -72,36 +72,11 @@ namespace Game.GameInput
             return transform;
         }
 
-   
-        public void OnBeginDrag(PointerEventData eventData)
+        
+        
+        public void OnDrop()
         {
-
-            if (!UIClickChecker.CheckUIObjectsInPosition())
-            {
-                touchInputReceiver?.OnBeginDrag(this, eventData);
-            }
-        }
-
-        public void OnEndDrag(PointerEventData eventData)
-        {
-            if (!UIClickChecker.CheckUIObjectsInPosition())
-            {
-                touchInputReceiver?.OnEndDrag(this, eventData);
-            }
-
-        }
-  
-        public void OnDrag(PointerEventData eventData)
-        {
-            if (!UIClickChecker.CheckUIObjectsInPosition())
-            {
-                touchInputReceiver?.OnMouseDrag(this, eventData);
-            }
-        }
-
-        public void OnDrop(PointerEventData eventData)
-        {
-            touchInputReceiver?.OnDrop(this, eventData);
+            touchInputReceiver?.OnDrop(this);
         }
     }
 }

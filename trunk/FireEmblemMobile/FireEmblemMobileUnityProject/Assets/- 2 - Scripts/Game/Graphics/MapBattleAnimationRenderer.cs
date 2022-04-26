@@ -129,6 +129,18 @@ public class MapBattleAnimationRenderer : MonoBehaviour, IBattleAnimation
 
     public void Hide()
     {
+        if (attacker != null)
+        {
+            attacker.GameTransformManager.UnitAnimator.OnAttackAnimationConnected -= AttackerAttackConnected;
+            attacker.GameTransformManager.UnitAnimator.OnAnimationEnded -= BattleAnimation;
+        }
+
+        if (defender != null)
+        {
+            defender.GameTransformManager.UnitAnimator.OnAttackAnimationConnected -= DefenderAttackConnected;
+
+            defender.GameTransformManager.UnitAnimator.OnAnimationEnded -= BattleAnimation;
+        }
         //throw new NotImplementedException();
     }
 

@@ -96,6 +96,7 @@ namespace Game.States
             
             touchInputReceiver.unitDroppedOnStartPos += SwapPosition;
             touchInputReceiver.unitDroppedOnOtherUnit += SwapUnits;
+            touchInputReceiver.active = true;
             UnitSelectionSystem.OnDeselectCharacter += ShowSwapable;
             UnitSelectionSystem.OnSelectedCharacter += HideSwapable;
         }

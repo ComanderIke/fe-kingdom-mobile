@@ -154,8 +154,9 @@ namespace Game.Mechanics
         }
         public void CheckAttackPreview(IBattleActor u, IBattleActor target, GridPosition attackPosition)
         {
-            
-            var preview = GridGameManager.Instance.GetSystem<BattleSystem>().GetBattlePreview(u, target);
+            Debug.Log("GetBattlePreview from AttackPosition: "+attackPosition.X+" "+attackPosition.Y);
+            var preview = GridGameManager.Instance.GetSystem<BattleSystem>().GetBattlePreview(u, target, attackPosition);
+          
             OnCheckAttackPreview?.Invoke(preview);
         }
         public void MoveCharacter(IGridActor c, GridPosition destination, List<GridPosition> path = null)

@@ -110,21 +110,22 @@ namespace Game.States
 
                 
             }
-            SetUpInputForUnits();
+            SetUpInputForUnits(selectedUnits);
         }
-        public void SetUpInputForUnits()
+        public void SetUpInputForUnits(List<Unit> units)
         {
   
 
             // Debug.Log("TODO Only for Instantiated PartyMembers not extra Ones!");
-            foreach (var unit in GridGameManager.Instance.FactionManager.Factions.SelectMany(faction => faction.Units))
+            foreach (var unit in units)
             {
-                // Debug.Log(unit.name+" "+unit.Faction.Name);
-                // Debug.Log(unit.name+" "+  unit.GameTransformManager);
-                // Debug.Log(unit.name+" "+  unit.GameTransformManager.UnitController);
-                if(unit.GameTransformManager.GameObject!=null)
+
+                if (unit.GameTransformManager.GameObject != null)
+                {
+                    //Debug.Log("Setup Input for Unit: "+unit.name);
                     unit.GameTransformManager.UnitController.touchInputReceiver = touchInputReceiver;
-                
+                }
+
             }
         }
         public void DestroySpawns()

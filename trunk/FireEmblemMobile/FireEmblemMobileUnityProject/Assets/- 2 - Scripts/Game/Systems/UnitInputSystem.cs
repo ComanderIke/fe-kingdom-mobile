@@ -163,6 +163,16 @@ namespace Game.GameInput
             }
         }
 
+        public void OnDrop(UnitInputController unitInputController)
+        {
+            //just for interface
+        }
+
+        public void OnDrop(StartPosition startPosition)
+        {
+            //just for interface
+        }
+
         public void OnBeginDrag(UnitInputController unitInputController, PointerEventData eventData)
         {
             

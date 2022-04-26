@@ -101,7 +101,7 @@ namespace Game.GUI
                  defenderDmg);
             // spBars.SetPreviewValue(battlePreview.AttackerStats.CurrentSpBars,battlePreview.AttackerStats.AfterSpBars,battlePreview.AttackerStats.MaxSpBars);
              //spBar.UpdateValues(battlePreview.AttackerStats.MaxSp, battlePreview.AttackerStats.CurrentSp, battlePreview.AttackerStats.AfterBattleSp, battlePreview.AttackerStats.IncomingSpDamage);
-             Debug.Log("AttackCount: "+battlePreview.DefenderStats.AttackCount);
+             //Debug.Log("AttackCount: "+battlePreview.DefenderStats.AttackCount);
              if (battlePreview.DefenderStats.AttackCount == 0)
              {
                  dmgValueRight.text = "-";

@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 namespace Utility
 {
     [ExecuteInEditMode]
-    public class StartPosition : MonoBehaviour, IDropHandler {
+    public class StartPosition : MonoBehaviour, IMyDropHandler {
 
         void Start () {
             GetComponentInChildren<SpriteRenderer>().enabled = false;
@@ -25,15 +25,11 @@ namespace Utility
             return (int)transform.localPosition.y;
         }
         public IUnitTouchInputReceiver touchInputReceiver { get; set; }
-        public void OnDrop(PointerEventData eventData)
+        public void OnDrop()
         {
             
-            Debug.Log("Dropped on START POS");
-            touchInputReceiver?.OnDrop(this, eventData);
-            if (touchInputReceiver == null)
-            {
-                Debug.LogError("touchInputReceiver is null");
-            }
+            touchInputReceiver?.OnDrop(this);
+
         }
         void Update()
         {

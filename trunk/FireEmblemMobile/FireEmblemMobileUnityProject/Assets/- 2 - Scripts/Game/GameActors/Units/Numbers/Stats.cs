@@ -48,7 +48,7 @@ namespace Game.GameActors.Units.Numbers
             }
             stats.MaxHp = MaxHp;
            // stats.MaxSp = MaxSp;
-           Debug.Log("Clone2Attriubtes");
+         //  Debug.Log("Clone2Attriubtes");
             stats.Attributes = new Attributes(Attributes);
        
             stats.Mov = Mov;

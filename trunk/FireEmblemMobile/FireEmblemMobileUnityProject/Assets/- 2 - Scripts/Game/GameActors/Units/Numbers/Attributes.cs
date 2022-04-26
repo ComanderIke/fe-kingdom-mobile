@@ -36,7 +36,7 @@ namespace Game.GameActors.Units.Numbers
 
         public Attributes Clone()
         {
-            Debug.Log("CloneAttriubtes");
+            //Debug.Log("CloneAttriubtes");
             return new Attributes(this);
             
         }

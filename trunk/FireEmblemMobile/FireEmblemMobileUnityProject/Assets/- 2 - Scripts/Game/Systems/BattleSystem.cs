@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
 using Game.GameInput;
+using Game.Grid;
 using Game.GUI;
 using Game.Manager;
 using Game.Mechanics.Battle;
@@ -120,20 +121,20 @@ namespace Game.Mechanics
         }
 
 
-        public BattlePreview GetBattlePreview(IBattleActor attacker, IBattleActor defender)
+        public BattlePreview GetBattlePreview(IBattleActor attacker, IBattleActor defender, GridPosition attackPosition)
         {
             var battlePreview = ScriptableObject.CreateInstance<BattlePreview>();
             battlePreview.Attacker = attacker;
             battlePreview.Defender = defender;
-            battleSimulation = new BattleSimulation(attacker, defender);
+            battleSimulation = new BattleSimulation(attacker, defender, attackPosition);
             battleSimulation.StartBattle(true);
             battlePreview.AttacksData = battleSimulation.AttacksData;
-
+Debug.Log("BattlePreview: "+ battleSimulation.AttackerAttackCount + "DefenderAttackCount: "+ battleSimulation.DefenderAttackCount);
             battlePreview.AttackerStats = new BattlePreviewStats(attacker.BattleComponent.BattleStats.GetDamage(), 
                 attacker.Stats.Attributes.AGI, defender.BattleComponent.BattleStats.GetDamageType(), 
                 defender.BattleComponent.BattleStats.GetDamageType()==DamageType.Physical ? attacker.BattleComponent.BattleStats.GetArmor() : attacker.Stats.Attributes.FAITH, 
                 attacker.Stats.Attributes.DEX, attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defender), attacker.BattleComponent.BattleStats.GetHitAgainstTarget(defender),
-                attacker.BattleComponent.BattleStats.GetAttackCountAgainst(defender), attacker.Hp, attacker.Stats.MaxHp, 
+                battleSimulation.DefenderAttackCount, attacker.Hp, attacker.Stats.MaxHp, 
                 battleSimulation.Attacker.Hp);//, attacker.Sp, attacker.Stats.MaxSp, battleSimulation.Attacker.Sp, attacker.SpBars, battleSimulation.Attacker.SpBars, attacker.MaxSpBars);
 
             battlePreview.DefenderStats = new BattlePreviewStats(defender.BattleComponent.BattleStats.GetDamage(), 

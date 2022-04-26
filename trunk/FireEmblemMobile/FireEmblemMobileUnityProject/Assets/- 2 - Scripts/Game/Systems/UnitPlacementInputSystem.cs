@@ -26,18 +26,10 @@ namespace Game.States
             if (!active)
                 return;
             currentSelectedUnitController = unitInputController;
-
-            // unitInputController.transform += 
+            //unitInputController.transform.position=offset+ eventData.pointerCurrentRaycast.worldPosition;
         }
 
-        public void OnMouseDrag(UnitInputController unitInputController, PointerEventData eventData)
-        {
-            if (!active)
-                return;
-            currentSelectedUnitController = unitInputController;
-
-            unitInputController.transform.position=offset+ eventData.pointerCurrentRaycast.worldPosition;
-        }
+      
 
         public void OnMouseDown(UnitInputController unitInputController)
         {
@@ -48,34 +40,17 @@ namespace Game.States
 
         public void OnMouseUp(UnitInputController unitInputController)
         {
-           
-            //currentSelectedUnitController = null;
-        }
-
-        public void OnBeginDrag(UnitInputController unitInputController, PointerEventData eventData)
-        {
             if (!active)
                 return;
-            currentSelectedUnitController = unitInputController;
-            unitInputController.boxCollider.enabled = false;
-            offset = unitInputController.transform.position - eventData.pointerCurrentRaycast.worldPosition;
-        }
-
-        public void OnEndDrag(UnitInputController unitInputController, PointerEventData eventData)
-        {
-            if (!active)
-                return;
-            offset = Vector3.zero;
-            var screenRay = Camera.main.ScreenPointToRay(eventData.position);
-            // Perform Physics2D.GetRayIntersection from transform and see if any 2D object was under transform.position on drop.
+            var screenRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit2D = Physics2D.GetRayIntersection(screenRay);
             unitInputController.boxCollider.enabled = true;
             if (hit2D)
             {
-                var dropComponent = hit2D.transform.gameObject.GetComponent<IDropHandler>();
+                var dropComponent = hit2D.transform.gameObject.GetComponent<IMyDropHandler>();
                 if (dropComponent != null)
                 {
-                    dropComponent.OnDrop(eventData);
+                    dropComponent.OnDrop();
                     return;
                 }
 
@@ -83,8 +58,44 @@ namespace Game.States
             Debug.Log("End Drag Reset");
             unitInputController.unit.GridComponent.ResetPosition();
             currentSelectedUnitController = null;
+            //currentSelectedUnitController = null;
         }
-        public void OnDrop(StartPosition startPosition, PointerEventData eventData)
+
+        // public void OnBeginDrag(UnitInputController unitInputController)
+        // {
+        //     if (!active)
+        //         return;
+        //     Debug.Log("Begin Drag");
+        //     currentSelectedUnitController = unitInputController;
+        //     unitInputController.boxCollider.enabled = false;
+        //     offset = unitInputController.transform.position - eventData.pointerCurrentRaycast.worldPosition;
+        // }
+
+        // public void OnEndDrag(UnitInputController unitInputController)
+        // {
+        //     if (!active)
+        //         return;
+        //     Debug.Log("End Drag");
+        //     offset = Vector3.zero;
+        //     var screenRay = Camera.main.ScreenPointToRay(eventData.position);
+        //     // Perform Physics2D.GetRayIntersection from transform and see if any 2D object was under transform.position on drop.
+        //     RaycastHit2D hit2D = Physics2D.GetRayIntersection(screenRay);
+        //     unitInputController.boxCollider.enabled = true;
+        //     if (hit2D)
+        //     {
+        //         var dropComponent = hit2D.transform.gameObject.GetComponent<IMyDropHandler>();
+        //         if (dropComponent != null)
+        //         {
+        //             dropComponent.OnDrop();
+        //             return;
+        //         }
+        //
+        //     }
+        //     Debug.Log("End Drag Reset");
+        //     unitInputController.unit.GridComponent.ResetPosition();
+        //     currentSelectedUnitController = null;
+        // }
+        public void OnDrop(StartPosition startPosition)
         {
             if (!active)
                 return;
@@ -103,7 +114,7 @@ namespace Game.States
             }
             Debug.Log(startPosition.Actor.name+" "+currentSelectedUnitController.unit.name);
         }
-        public void OnDrop(UnitInputController unitInputController, PointerEventData eventData)
+        public void OnDrop(UnitInputController unitInputController)
         {
             if (!active)
                 return;
