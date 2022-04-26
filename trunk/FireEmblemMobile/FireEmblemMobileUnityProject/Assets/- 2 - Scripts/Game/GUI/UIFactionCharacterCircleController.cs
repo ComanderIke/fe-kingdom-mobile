@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using __2___Scripts.Game.Utility;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GUI;
@@ -20,17 +21,17 @@ public class UIFactionCharacterCircleController : MonoBehaviour,IClickedReceiver
 
     private List<GameObject> characterUIgGameObjects;
 
-    private Faction faction;
+    private List<Unit> units;
 
     public GameObject layout;
     // Start is called before the first frame update
-    public void Show(Faction faction)
+    public void Show(List<Unit> units)
     {
-        this.faction = faction;
-        if(characterUIgGameObjects==null||characterUIgGameObjects.Count!= faction.Units.Count)
+        this.units = units;
+        if(characterUIgGameObjects==null||characterUIgGameObjects.Count!= units.Count)
             SpawnGOs();
         int cnt = 0;
-        foreach (var unit in faction.Units)
+        foreach (var unit in units)
         {
             unit.visuals.UnitCharacterCircleUI = characterUIs[cnt];
             characterUIs[cnt].Show(unit);
@@ -41,7 +42,7 @@ public class UIFactionCharacterCircleController : MonoBehaviour,IClickedReceiver
     public void SelectUnit(Unit u)
     {
         int cnt = 0;
-        foreach (var unit in faction.Units)
+        foreach (var unit in units)
         {
             if (unit == u)
             {
@@ -57,13 +58,18 @@ public class UIFactionCharacterCircleController : MonoBehaviour,IClickedReceiver
 
     private void SpawnGOs()
     {
-        int cnt = 0;
-        if (characterUIgGameObjects == null)
+        if (characterUIgGameObjects != null)
         {
-            characterUIgGameObjects = new List<GameObject>();
-            characterUIs = new List<CharacterUIController>();
+            for (int i = characterUIgGameObjects.Count - 1; i >= 0; i--)
+            {
+                Destroy(characterUIgGameObjects[i]);
+            }
         }
-        foreach (var unit in faction.Units)
+        int cnt = 0;
+
+        characterUIgGameObjects = new List<GameObject>();
+        characterUIs = new List<CharacterUIController>();
+        foreach (var unit in units)
         {
             if (cnt >= characterUIs.Count)
             {
@@ -78,6 +84,7 @@ public class UIFactionCharacterCircleController : MonoBehaviour,IClickedReceiver
 
             cnt++;
         }
+        
     }
 
     public void Clicked(Unit unit)
@@ -100,7 +107,7 @@ public class UIFactionCharacterCircleController : MonoBehaviour,IClickedReceiver
     public RectTransform GetUnitParticleAttractorTransform(Unit unit)
     {
         int cnt = 0;
-        foreach (var u in faction.Units)
+        foreach (var u in units)
         {
             if (unit == u)
             {

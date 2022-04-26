@@ -10,8 +10,8 @@ namespace Game.GUI
     
 
         public Image UnitSpriteRenderer;
-        public Sprite normalSprite;
-        public Sprite selectedSprite;
+        public Color normalColor;
+        public Color selectedColor;
         public Image BackGroundRenderer;
         public RectTransform rectTransform;
         private CanvasGroup canvasGroup;
@@ -66,12 +66,12 @@ namespace Game.GUI
 
         public void ShowSelected()
         {
-            BackGroundRenderer.sprite = selectedSprite;
+            BackGroundRenderer.color = selectedColor;
         }
 
         public void HideSelected()
         {
-            BackGroundRenderer.sprite = normalSprite;
+            BackGroundRenderer.color = normalColor;
         }
     }
 }

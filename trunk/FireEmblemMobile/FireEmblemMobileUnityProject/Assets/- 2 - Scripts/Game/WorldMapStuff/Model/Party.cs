@@ -78,7 +78,8 @@ namespace Game.WorldMapStuff.Model
             }
             party += "Gold: " + money+"\n";
             party += Convoy.ToString()+"\n";
-            party += "EncounterNode: "+EncounterNode.ToString()+"\n";
+            if(EncounterNode!=null)
+                party += "EncounterNode: "+EncounterNode.ToString()+"\n";
             party += "ActiveUnit: "+ActiveUnitIndex+"\n";
             party += "Moved Encounters: ";
             foreach (var node in MovedEncounters)
