@@ -54,6 +54,7 @@ namespace Game.GameActors.Players
             for (int i = 0; i < movedEncounterIds.Count; i++)
             {
                 party.MovedEncounters.Add(columns[i].children[movedEncounterIds[i]]);
+                Debug.Log("MovedEncounters: "+columns[i].children[movedEncounterIds[i]]);
             }
         }
 

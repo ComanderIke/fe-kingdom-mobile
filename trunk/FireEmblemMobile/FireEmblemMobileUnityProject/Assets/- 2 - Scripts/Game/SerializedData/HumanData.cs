@@ -22,8 +22,7 @@ namespace Game.GameActors.Players
             Human human = (Human)base.Load();
           
            
-            //Debug.Log("LOAD222222: "+unit.name+" "+unit.ExperienceManager.Exp);
-            Debug.LogError("WeaponId: "+weaponId);
+
             // Debug.LogError("Loaded Weapon: "+GameData.Instance.Weapons.FirstOrDefault(w => w.name == weaponId).name);
             human.EquippedWeapon = GameData.Instance.GetWeapon(weaponId);
             return human;

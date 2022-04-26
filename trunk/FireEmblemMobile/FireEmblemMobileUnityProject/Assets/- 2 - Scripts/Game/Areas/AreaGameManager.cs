@@ -7,6 +7,8 @@ using Game.GameActors.Players;
 using Game.Systems;
 using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.Systems;
+using Menu;
+using SerializedData;
 using UnityEngine;
 
 public class AreaGameManager : MonoBehaviour
@@ -64,12 +66,14 @@ public class AreaGameManager : MonoBehaviour
         SpawnPartyMembers();
         uiCOntroller.Init(Player.Instance.Party);
        
-        
+      
         ResetMoveOptions();
-  
-        ShowMoveOptions();
+
         uiPartyController.Show(Player.Instance.Party);
         lightController.UpdateHour(hour);
+        this.CallWithDelay(ShowMovedRoads,0.1f);//Some other scripts not started yet thtas why
+       
+        ShowMoveOptions();
     }
     private bool LoadedSaveData()
     {
@@ -256,13 +260,14 @@ public class AreaGameManager : MonoBehaviour
         actionSystem.Move(target);
         ShowMovedRoads();
         Debug.Log("Before DelayAction!");
-        StartCoroutine( DelayAction(()=>target.Activate(Player.Instance.Party), 1.0f));
+        this.CallWithDelay(()=>target.Activate(Player.Instance.Party), 1.0f);
        
         
     }
 
     private void ShowMovedRoads()
     {
+        Debug.Log("============================ShowMovedRoads!");
         for( int i= 0; i < Player.Instance.Party.MovedEncounters.Count-1; i++)
         {
             Road road = Player.Instance.Party.MovedEncounters[i].GetRoad(Player.Instance.Party.MovedEncounters[i + 1]);
@@ -272,15 +277,13 @@ public class AreaGameManager : MonoBehaviour
 
     public void Continue()
     {
+        Debug.Log("AutoSaving!");
+        SaveSystem.SaveGame("AutoSave", new SaveData(Player.Instance, Campaign.Instance, EncounterTree.Instance));
         ResetMoveOptions();
         ShowMoveOptions();
     }
 
-    private IEnumerator DelayAction(Action action, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        action?.Invoke();
-    }
+    
 
    
 }

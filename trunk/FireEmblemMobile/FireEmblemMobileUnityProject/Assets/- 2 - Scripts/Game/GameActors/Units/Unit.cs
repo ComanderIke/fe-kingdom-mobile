@@ -23,7 +23,7 @@ namespace Game.GameActors.Units
     {
         public new string name;
         public string jobClass;
-        [HideInInspector] private int hp;
+        [HideInInspector] private int hp=-1;
         // [HideInInspector] private int sp;
         // [HideInInspector] private int spBars;
         // private const int SP_PER_BAR = 5;
@@ -165,8 +165,8 @@ namespace Game.GameActors.Units
             // }
 
             stats.Initialize();
-           
-            hp = stats.MaxHp;
+            if(hp==-1)//hp has never been set
+                hp = stats.MaxHp;
             // sp = stats.MaxSp;
             // spBars = Sp / SP_PER_BAR;
             ExperienceManager.ExpGained = null;

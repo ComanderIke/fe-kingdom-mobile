@@ -6,7 +6,7 @@ namespace __2___Scripts.Game.Areas
     {
         public Material standard;
         public Material moved;
-        [HideInInspector]
+       // [HideInInspector]
         public LineRenderer line;
         [HideInInspector]
         public EncounterNode start;
@@ -20,6 +20,7 @@ namespace __2___Scripts.Game.Areas
 
         public void SetMovedVisual()
         {
+            Debug.Log(transform.parent.name);
             line.material = moved;
         }
 

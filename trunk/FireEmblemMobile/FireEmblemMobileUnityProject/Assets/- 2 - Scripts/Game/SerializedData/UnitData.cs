@@ -12,6 +12,8 @@ namespace Game.GameActors.Players
         [SerializeField]
         public string name;
         [SerializeField]
+        public int hp;
+        [SerializeField]
         private StatsData statsData;
         [SerializeField]
         private Attributes growthsData;
@@ -31,6 +33,7 @@ namespace Game.GameActors.Players
             this.growthsData = unit.Growths;
             this.statsData = unit.Stats.GetSaveData();
             this.unitBlueprintID = unit.bluePrintID;
+            this.hp = unit.Hp;
         }
 
         public virtual Unit Load()
@@ -45,6 +48,7 @@ namespace Game.GameActors.Players
             unit.ExperienceManager.Exp = ExperienceManager.Exp;
             unit.ExperienceManager.Level = ExperienceManager.Level;
             unit.TurnStateManager = TurnStateManager;
+            unit.Hp = hp;
             return unit;
             // unit.visuals = new UnitVisual();
             //

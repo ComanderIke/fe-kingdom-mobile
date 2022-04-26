@@ -66,6 +66,7 @@ public class ColumnManager : MonoBehaviour
         EncounterTree.Instance.endNode.gameObject= CreateEndNodeGameObject(EncounterTree.Instance.endNode);
         PositionEncounters(EncounterTree.Instance.columns, EncounterTree.Instance.endNode);
         CreateConnections(EncounterTree.Instance.columns);
+      
 
     }
 
