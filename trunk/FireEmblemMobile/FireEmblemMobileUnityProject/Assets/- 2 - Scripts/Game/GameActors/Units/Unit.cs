@@ -183,6 +183,7 @@ namespace Game.GameActors.Units
 
         private void LevelUp()
         {
+            Debug.Log("On LevelUp Called!");
             OnLevelUp?.Invoke(this);
         }
 

@@ -66,6 +66,7 @@ namespace Game.Mechanics
 
         private void LevelUp(Unit unit)
         {
+            Debug.Log("LevelUp System Called!");
             int[] statIncreases = CalculateStatIncreases(unit.Growths.AsArray());
 
             if (levelUpRenderer != null)
