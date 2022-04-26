@@ -7,15 +7,15 @@ using UnityEngine.UI;
 public class BattleCanvasController : MonoBehaviour
 {
     public RawImage image;
-    public Image mask;
+
     public GameObject battleCanvas;
     private CanvasGroup battleCanvasGroup;
-    public Vector2 maskMaxSize;
     public float fadeInTime = 1.2f;
     public float fadeOutTime = 0.25f;
     public RenderTexture RenderTexture;
 
     public Canvas canvas;
+    public float fixedheight = 440;
     private float width;
     private float height;
     private void Awake()
@@ -29,7 +29,7 @@ public class BattleCanvasController : MonoBehaviour
         RectTransform rawImageRect = image.GetComponent<RectTransform>();
        
         width =canvas.pixelRect.width/canvas.scaleFactor;
-        height = canvas.pixelRect.height/canvas.scaleFactor;
+        height = fixedheight; //canvas.pixelRect.height/canvas.scaleFactor;
         Debug.Log("width: "+width+" height: "+height);
         rawImageRect.sizeDelta = new Vector2(width, height);
         RenderTexture.width =(int) width;
@@ -42,10 +42,10 @@ public class BattleCanvasController : MonoBehaviour
     {
       
         GetComponent<Canvas>().enabled = true;
-        RectTransform rectT = mask.rectTransform;
-        rectT.sizeDelta = new Vector2(0, 0);
+         RectTransform rectT = image.rectTransform;
+         rectT.sizeDelta = new Vector2(rectT.sizeDelta.x, 0);
        
-        LeanTween.size(rectT, new Vector2(width+maskMaxSize.x, height+maskMaxSize.y), fadeInTime).setEaseOutQuad();
+         LeanTween.size(rectT, new Vector2(width, height), fadeInTime).setEaseOutQuad();
         battleCanvasGroup.alpha = 1;
         //LeanTween.scaleY(battleCanvas,1,1.2f).setEaseOutQuad();
         //LeanTween.alphaCanvas(battleCanvasGroup,.95f, fadeInTime).setEaseOutQuad();
@@ -53,8 +53,8 @@ public class BattleCanvasController : MonoBehaviour
 
     public void Hide()
     {
-        RectTransform rectT = mask.rectTransform;
-        LeanTween.size(rectT, new Vector2(0, 0), fadeOutTime).setEaseInQuad().setOnComplete(()=>GetComponent<Canvas>().enabled = false);
+         RectTransform rectT = image.rectTransform;
+        LeanTween.size(rectT, new Vector2(rectT.sizeDelta.x, 0), fadeOutTime).setEaseInQuad().setOnComplete(()=>GetComponent<Canvas>().enabled = false);
        // LeanTween.scaleY(battleCanvas,0,0.4f).setEaseInQuad();
        // LeanTween.alphaCanvas(battleCanvasGroup,0, fadeOutTime).setEaseInQuad();
        
