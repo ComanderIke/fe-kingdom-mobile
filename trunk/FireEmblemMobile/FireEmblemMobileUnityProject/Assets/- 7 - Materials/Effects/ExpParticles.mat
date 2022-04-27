@@ -8,14 +8,14 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: ExpParticles
-  m_Shader: {fileID: 4800000, guid: 8516d7a69675844a7a0b7095af7c46af, type: 3}
-  m_ShaderKeywords: _ALPHATEST_ON _RECEIVE_SHADOWS_OFF
+  m_Shader: {fileID: -6465566751694194690, guid: ed2261f7c88840d498dc1b052fbce28e,
+    type: 3}
+  m_ShaderKeywords: _ALPHATEST_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
-  stringTagMap:
-    RenderType: Transparent
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses:
   - SHADOWCASTER
   m_SavedProperties:
@@ -38,7 +38,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: fd0523ff6a921744c8eb12d6d609a2ba, type: 3}
+        m_Texture: {fileID: 2800000, guid: 00f22d9f2016ae748a57e4777184eba6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:
@@ -57,8 +57,25 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - Animate: 1
+    - IntensityAnimation: 2
+    - MultiplyIntensity: 0
+    - SpeedMult: 10
+    - UnequalAnimation: 0
     - _AlphaClip: 1
     - _Blend: 2
     - _BlendOp: 0
@@ -93,6 +110,7 @@ Material:
     - _SrcBlend: 5
     - _Surface: 1
     - _ZWrite: 0
+    - intensity: 1.8
     m_Colors:
     - _BaseColor: {r: 0.93333334, g: 0.7606155, b: 0.09803918, a: 1}
     - _BaseColorAddSubDiff: {r: -1, g: 1, b: 0, a: 0}

@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: DarkMagicAttackTrail
-  m_Shader: {fileID: -6465566751694194690, guid: 8a75dbc8fc8038e4bab2d1750486e753,
+  m_Name: Merge2TextureAlpha
+  m_Shader: {fileID: -6465566751694194690, guid: 691cde2dacebd7a4a9abcd46676e6a82,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -20,16 +20,12 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - Gradient:
-        m_Texture: {fileID: 0}
+    - AlphaTexture:
+        m_Texture: {fileID: 8400000, guid: b4f9ac3f03fe1df45a3a9d95f9893f52, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - GradientTex:
-        m_Texture: {fileID: 2800000, guid: 7ec2feeb78892fe44a6b257a94845ca4, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Texture2D:
-        m_Texture: {fileID: 2800000, guid: 66b69407b0d8d6b449aa3504047ff8c0, type: 3}
+    - ColorTexture:
+        m_Texture: {fileID: 8400000, guid: 6b026a1394366664fafa71dc48ceb177, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -45,8 +41,6 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
-    m_Floats:
-    - Time: 0.6656354
-    - intensity: 2
+    m_Floats: []
     m_Colors: []
   m_BuildTextureStacks: []
