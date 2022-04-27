@@ -16,27 +16,27 @@ public class BattleAnimationSpriteController : MonoBehaviour
     public TimelineAsset death;
     // Start is called before the first frame update
     
-    public void WalkIn()
+    public void WalkIn(float playSpeed)
     {
-        PlayableDirector.Play(walkIn);
+        PlayAtSpeed(walkIn, playSpeed);
     }
-    public void Idle()
+    public void Idle(float playSpeed)
     {
-        PlayableDirector.Play(idle);
+        PlayAtSpeed(idle, playSpeed);
     }
-    public void Attack()
+    public void Attack(float playSpeed)
     {
-        PlayableDirector.Play(attack);
+        PlayAtSpeed(attack, playSpeed);
     }
-    public void Death()
+    public void Death(float playSpeed)
     {
-        PlayableDirector.Play(death);
+        PlayAtSpeed(death, playSpeed);
     }
 
 
-    public void Dodge()
+    public void Dodge(float playSpeed)
     {
-        PlayableDirector.Play(dodge);
+        PlayAtSpeed(dodge, playSpeed);
     }
 
     public double GetAttackDuration()
@@ -44,8 +44,16 @@ public class BattleAnimationSpriteController : MonoBehaviour
         return PlayableDirector.duration;
     }
 
-    public void Damaged()
+    public void Damaged(float playSpeed)
     {
-        PlayableDirector.Play(damaged);
+        PlayAtSpeed(damaged, playSpeed);
     }
+    void PlayAtSpeed(TimelineAsset clip, float speed)
+    {
+        PlayableDirector.playableAsset = clip;
+        PlayableDirector.RebuildGraph(); // the graph must be created before getting the playable graph
+        PlayableDirector.playableGraph.GetRootPlayable(0).SetSpeed(speed);
+        PlayableDirector.Play();
+    }
+
 }
