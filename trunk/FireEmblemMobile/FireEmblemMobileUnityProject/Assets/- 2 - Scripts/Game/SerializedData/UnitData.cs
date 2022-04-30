@@ -1,7 +1,6 @@
 ﻿using Game.GameActors.Units;
 using Game.GameActors.Units.Numbers;
 using Game.GameResources;
-using UnityEditor.SceneTemplate;
 using UnityEngine;
 
 namespace Game.GameActors.Players

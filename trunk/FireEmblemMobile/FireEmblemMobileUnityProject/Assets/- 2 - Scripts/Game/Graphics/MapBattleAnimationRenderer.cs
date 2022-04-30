@@ -37,12 +37,12 @@ public class MapBattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         if (attackData[index].hit)
         {
             DamagePopUp.CreateForBattleView(defender.GameTransformManager.GetCenterPosition()+new Vector3(0,0.2f),attackData[index].Dmg,
-                Color.red, 1.0f, new Vector3(0, .5f));
+                TextStyle.Damage, 1.0f, new Vector3(0, .5f));
         }
         else
         {
             DamagePopUp.CreateMiss(defender.GameTransformManager.GetCenterPosition()+new Vector3(0,0.2f),
-                Color.white, 0.8f, new Vector3(0, .5f));
+                TextStyle.Missed, 0.8f, new Vector3(0, .5f));
         }
     }
 
@@ -52,12 +52,12 @@ public class MapBattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         if (attackData[index].hit)
         {
             DamagePopUp.CreateForBattleView(attacker.GameTransformManager.GetCenterPosition()+new Vector3(0,0.2f),attackData[index].Dmg,
-                Color.red, 1.0f, new Vector3(0, .5f));
+                TextStyle.Damage, 1.0f, new Vector3(0, .5f));
         }
         else
         {
             DamagePopUp.CreateMiss(attacker.GameTransformManager.GetCenterPosition()+new Vector3(0,0.2f),
-                Color.white, 0.8f, new Vector3(0, .5f));
+                TextStyle.Missed, 0.8f, new Vector3(0, .5f));
         }
     }
     IEnumerator DelayAction(Action callback, float delay)

@@ -71,9 +71,9 @@ public class UICharacterViewController : MonoBehaviour
     void UpdateUI(Party party)
     {
         this.party = party;
-        
+        Debug.Log("Up");
         this.unit = party.members[party.ActiveUnitIndex];
-        charName.SetText(unit.name +", "+unit.jobClass);
+        charName.SetText(unit.name);//+", "+unit.jobClass);
         Lv.SetText("Lv. "+unit.ExperienceManager.Level);
         ExpBar.SetValue(unit.ExperienceManager.Exp, unit.ExperienceManager.MaxExp);
         image.sprite = unit.visuals.CharacterSpriteSet.FaceSprite;

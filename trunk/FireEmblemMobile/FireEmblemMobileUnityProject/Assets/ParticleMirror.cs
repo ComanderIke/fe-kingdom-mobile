@@ -20,6 +20,8 @@ public class ParticleMirror : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!mirrorGO)
+            return;
         if (!flipRotation)
         {
 

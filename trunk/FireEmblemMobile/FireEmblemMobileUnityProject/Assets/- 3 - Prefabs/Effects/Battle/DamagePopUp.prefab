@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0a9af24f381198c4ea7c2bc260800c4a, type: 2}
+  - {fileID: 2100000, guid: d1e1348fee7a09f4e98c7baa9db1f024, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -100,25 +100,26 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 10
+  m_text: ' 21 CRIT'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e2ebf6dd70f57dc41822d560046c0adb, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 0a9af24f381198c4ea7c2bc260800c4a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 45736dec9f743604fbcb90525bd86080, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: d1e1348fee7a09f4e98c7baa9db1f024, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294918144
-  m_fontColor: {r: 0, g: 0.25, b: 1, a: 1}
-  m_enableVertexGradient: 0
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 1
   m_colorMode: 3
   m_fontColorGradient:
     topLeft: {r: 1, g: 1, b: 1, a: 1}
     topRight: {r: 1, g: 1, b: 1, a: 1}
     bottomLeft: {r: 1, g: 1, b: 1, a: 1}
     bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
+  m_fontColorGradientPreset: {fileID: 11400000, guid: be22b18c0dc2a4e48987b8feff4838a0,
+    type: 2}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
@@ -127,8 +128,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 3.8
-  m_fontSizeBase: 3.8
+  m_fontSize: 6
+  m_fontSizeBase: 6
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -184,3 +185,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f5a80a4dc269ad468e59ba494cec7bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  missedColor: {fileID: 11400000, guid: 0fe8dee4769533f4382decaf94d6afed, type: 2}
+  damageColor: {fileID: 11400000, guid: 99990f1ef3a741b4395e55d9c138d4fa, type: 2}
+  noDamageColor: {fileID: 11400000, guid: 9a94492683885a640850f8f5c8934bda, type: 2}
+  criticalColor: {fileID: 11400000, guid: 6daf05c6c306c36469180b5575fe1bad, type: 2}
+  healColor: {fileID: 11400000, guid: be22b18c0dc2a4e48987b8feff4838a0, type: 2}

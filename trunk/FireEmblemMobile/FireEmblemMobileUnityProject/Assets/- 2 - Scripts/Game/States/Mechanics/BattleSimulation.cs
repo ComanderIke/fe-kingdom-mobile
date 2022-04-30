@@ -15,6 +15,7 @@ namespace Game.Mechanics
         public int Dmg;
         public bool hit;
         public bool kill;
+        public bool crit;
     }
     public class BattleSimulation
     {
