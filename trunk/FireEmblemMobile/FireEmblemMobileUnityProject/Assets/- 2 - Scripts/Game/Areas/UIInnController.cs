@@ -36,7 +36,7 @@ public class UIInnController : MonoBehaviour
         }
         questOption.SetValues(inn.quest);
         recruitCharacter.SetValues(inn.recruitableCharacter);
-        FindObjectOfType<UICharacterViewController>().Show(party);
+        FindObjectOfType<UICharacterViewController>().Show(party.members[party.ActiveUnitIndex]);
     }
 
     public void ContinueClicked()

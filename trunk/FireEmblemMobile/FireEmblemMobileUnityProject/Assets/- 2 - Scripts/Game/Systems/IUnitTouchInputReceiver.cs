@@ -15,5 +15,6 @@ namespace Game.GameInput
         // void OnEndDrag(UnitInputController unitInputController, PointerEventData eventData);
         void OnDrop(UnitInputController unitInputController);
         void OnDrop(StartPosition startPosition);
+        void OnMouseHold(UnitInputController unitInputController);
     }
 }

@@ -173,6 +173,12 @@ namespace Game.GameInput
             //just for interface
         }
 
+        public void OnMouseHold(UnitInputController unitInputController)
+        {
+            Debug.Log("OnTouchHold!");
+            InputReceiver.ActorLongHold(unitInputController.unit);
+        }
+
         public void OnBeginDrag(UnitInputController unitInputController, PointerEventData eventData)
         {
             

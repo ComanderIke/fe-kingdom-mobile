@@ -11,7 +11,7 @@ namespace Game.GUI.Text
         private Canvas canvas;
         public TextMeshProUGUI text;
         public Image BackGround;
-        public Material []textMaterials;
+        public TMP_ColorGradient []TextGradients;
         public string[] phaseTexts;
         private const float FADE_IN_DURATION =  0.20f;
         private const float FADE_OUT_DURATION = 0.20f;
@@ -28,7 +28,7 @@ namespace Game.GUI.Text
             canvas.enabled = true;
 
            // text.material = textMaterials[playerId];
-            text.fontMaterial = textMaterials[(int)playerId];
+            text.colorGradientPreset = TextGradients[(int)playerId];
 
             text.SetText(phaseTexts[(int)playerId]);
       

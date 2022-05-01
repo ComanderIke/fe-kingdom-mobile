@@ -23,6 +23,7 @@ public class UIFactionCharacterCircleController : MonoBehaviour,IClickedReceiver
 
     private List<Unit> units;
 
+    public UICharacterViewController characterView;
     public GameObject layout;
     // Start is called before the first frame update
     public void Show(List<Unit> units)
@@ -102,6 +103,12 @@ public class UIFactionCharacterCircleController : MonoBehaviour,IClickedReceiver
         // }
         // layout.SetActive(false);
         // layout.SetActive(true);
+    }
+
+    public void PlusClicked(Unit unit)
+    {
+        //
+        characterView.Show(unit);
     }
 
     public RectTransform GetUnitParticleAttractorTransform(Unit unit)

@@ -99,6 +99,12 @@ namespace Game.GameInput
             inputReceiver.DraggedOverActor(actor);
         }
 
+        public void ActorLongHold(IGridActor unit)
+        {
+            inputReceiver.LongClickOnCharacter(unit);
+            //Debug.Log("LongHoldInGridInputReceiver??! Intenden?");
+        }
+
         public void ActorDragged(IGridActor actor, int x, int y)
         {
             if (!Active || IsOldDrag(x, y) || gridSystem.IsOutOfBounds(x, y))

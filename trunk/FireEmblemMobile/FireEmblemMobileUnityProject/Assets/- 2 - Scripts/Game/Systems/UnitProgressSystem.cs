@@ -39,7 +39,7 @@ namespace Game.Mechanics
         }
         private void AddUnit(Unit u)
         {
-
+            u.OnLevelUp -= LevelUp;
             u.OnLevelUp += LevelUp;
             units.Add(u);
 
@@ -60,7 +60,11 @@ namespace Game.Mechanics
 
         public void Activate()
         {
-      
+            foreach (var unit in units)
+            {
+                unit.OnLevelUp -= LevelUp;
+                unit.OnLevelUp += LevelUp;
+            }
         }
 
 

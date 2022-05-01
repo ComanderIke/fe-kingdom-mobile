@@ -203,6 +203,11 @@ namespace Game.Mechanics
             //
         }
 
+        public void ActorLongHold(IGridActor unit)
+        {
+            Debug.Log("LongHoldinCHooseTarget");
+        }
+
         public void ActorDragEnded(IGridActor gridActor, int x, int y)
         {
             //
@@ -239,6 +244,11 @@ namespace Game.Mechanics
         }
 
         public void ClickedDownOnGrid(int x, int y)
+        {
+            //
+        }
+
+        public void LongClickOnCharacter(IGridActor unit)
         {
             //
         }

@@ -17,14 +17,11 @@ public class UICharacterViewController : MonoBehaviour
     public Canvas canvas;
     // public DropArea dropArea;
     public Unit unit;
-    public Party party;
     public TextMeshProUGUI charName;
     public TextMeshProUGUI Lv;
     public IStatBar ExpBar;
     public UIEquipmentController equipmentController;
     public UISkillsController skillsController;
-    
-     public TextMeshProUGUI PartyGold;
 
     public TextMeshProUGUI Hitrate;
     public TextMeshProUGUI DodgeRate;
@@ -58,21 +55,21 @@ public class UICharacterViewController : MonoBehaviour
     //     Show(party);
     // }
 
-    public void Show(Party party)
+    
+    public void Show(Unit unit)
     {
         canvas.enabled = true;
 
-
-
-        UpdateUI(party);
+        UpdateUI(unit);
 
     }
 
-    void UpdateUI(Party party)
+
+  
+    void UpdateUI(Unit unit)
     {
-        this.party = party;
         Debug.Log("Up");
-        this.unit = party.members[party.ActiveUnitIndex];
+        this.unit = unit;
         charName.SetText(unit.name);//+", "+unit.jobClass);
         Lv.SetText("Lv. "+unit.ExperienceManager.Level);
         ExpBar.SetValue(unit.ExperienceManager.Exp, unit.ExperienceManager.MaxExp);
@@ -90,33 +87,16 @@ public class UICharacterViewController : MonoBehaviour
         CON.SetText(""+unit.Stats.Attributes.CON);
         FTH.SetText(""+unit.Stats.Attributes.FAITH);
         
-        PartyGold.SetText(""+party.Money);
         HPBar.SetValue(unit.Hp, unit.Stats.MaxHp);
         equipmentController.Show((Human)unit);
         skillsController.Show(unit);
     }
-    public void NextCharacterClicked()
-    {
-       
-        party.ActiveUnitIndex =  party.ActiveUnitIndex >= party.members.Count-1 ? 0 :  party.ActiveUnitIndex+1;
-        Debug.Log("Unit Index: " +  party.ActiveUnitIndex);
-        Show(party);
-    }
-    public void PreviousCharacterClicked()
-    {
-        party.ActiveUnitIndex =  party.ActiveUnitIndex <= 0 ? party.members.Count-1 :  party.ActiveUnitIndex-1;
-        Debug.Log("Unit Index: " +  party.ActiveUnitIndex);
-        Show(party);
-    }
+ 
 
     public void Hide()
     {
         canvas.enabled = false;
     }
 
-    public void UpdateParty(Party party)
-    {
-       
-        UpdateUI(party);
-    }
+  
 }

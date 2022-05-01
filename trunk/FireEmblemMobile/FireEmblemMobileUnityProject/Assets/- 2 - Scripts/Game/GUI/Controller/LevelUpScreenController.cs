@@ -107,6 +107,7 @@ namespace Game.GUI
                     Debug.Log("LEVEL UP Complete");
                     levelText.transform.localScale = Vector3.one;
                     AnimationQueue.OnAnimationEnded?.Invoke();
+                    canvas.enabled = false;
                 }));
         }
         public void UpdateValues(string name, Sprite sprite,int levelBefore, int levelAfter, int[] stats, int[] statsIncreases)

@@ -45,6 +45,7 @@ namespace Game.Mechanics
             GameplayInput.OnMoveUnit -= MoveCharacter;
             GameplayInput.OnCheckAttackPreview -= CheckAttackPreview;
             GameplayInput.OnExecuteInputActions -= ExecuteActions;
+            GridGameManager.Instance.GetSystem<TurnSystem>().OnEndTurn -= ResetCharacterActions;
             OnCommandFinished -= ExecuteActions;
         }
 
@@ -54,9 +55,9 @@ namespace Game.Mechanics
             GameplayInput.OnWait += Wait;
             GameplayInput.OnAttackUnit += Fight;
             GameplayInput.OnMoveUnit += MoveCharacter;
-
             GameplayInput.OnCheckAttackPreview += CheckAttackPreview;
             GameplayInput.OnExecuteInputActions += ExecuteActions;
+            GridGameManager.Instance.GetSystem<TurnSystem>().OnEndTurn += ResetCharacterActions;
             lastActions = new Stack<Command>();
             lastCharacterActions = new Stack<Command>();
             currentActions = new Queue<Command>();

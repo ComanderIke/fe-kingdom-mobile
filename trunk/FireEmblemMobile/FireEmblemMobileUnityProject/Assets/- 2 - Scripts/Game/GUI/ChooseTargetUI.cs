@@ -69,4 +69,9 @@ public class ChooseTargetUI : MonoBehaviour, IChooseTargetUI, IClickedReceiver
     {
         throw new System.NotImplementedException();
     }
+
+    public void PlusClicked(Unit unit)
+    {
+        //
+    }
 }

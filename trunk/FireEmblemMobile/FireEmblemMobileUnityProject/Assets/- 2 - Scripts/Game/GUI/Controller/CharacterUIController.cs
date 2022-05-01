@@ -12,11 +12,6 @@ using Object = UnityEngine.Object;
 
 namespace Game.GUI
 {
-
-    public interface IClickedReceiver
-    {
-        void Clicked(Unit unit);
-    }
     public class CharacterUIController :  ICharacterUI
     {
         // [SerializeField]
@@ -76,6 +71,12 @@ namespace Game.GUI
             expBar.GetComponent<RectTransform>().sizeDelta = normalSizeBars;
             hpBar.GetComponent<RectTransform>().sizeDelta = normalSizeBars;
             
+        }
+
+        public void PlusClicked()
+        {
+            Debug.Log("UnitCirclePlusClicked: "+unit);
+            parentController.PlusClicked(unit);
         }
 
         public void Clicked()

@@ -47,20 +47,53 @@ namespace Game.GameInput
            // unitRenderer.HideHover();
         }
 
+       
+
         public void OnMouseDrag()
         {
             touchInputReceiver?.OnMouseDrag(this);
         }
-       
+
+        private bool downClicked = false;
+        private float holdDuration = 0;
+        public const float HOLD_DURATION=1.5f;
+        void Update()
+        {
+            if (downClicked)
+            {
+                if (Input.GetTouch(0).phase == TouchPhase.Stationary||Input.GetTouch(0).phase == TouchPhase.Began)
+                {
+                    holdDuration += Time.deltaTime;
+                    if (holdDuration > HOLD_DURATION)
+                    {
+                        touchInputReceiver.OnMouseHold(this);
+                    }
+                }
+                else
+                {
+                    holdDuration = 0;
+                    downClicked = false;
+                }
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+                downClicked = false;
+                holdDuration = 0;
+            }
+            
+        }
         public void OnMouseDown()
         {
             if (!UIClickChecker.CheckUIObjectsInPosition())
             {
+                downClicked = true;
+                holdDuration = 0;
                 touchInputReceiver?.OnMouseDown(this);
             }
         }
         public void OnMouseUp()
         {
+            
             if (!UIClickChecker.CheckUIObjectsInPosition())
             {
                 touchInputReceiver?.OnMouseUp(this);

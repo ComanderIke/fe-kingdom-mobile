@@ -170,6 +170,12 @@ namespace Game.GameInput
                 }
             }
         }
+
+        public void LongClickOnCharacter(IGridActor unit)
+        {
+            gameplayInput.ViewUnit((Unit)unit);
+        }
+
         public void ClickedOnGrid(int x, int y)
         {
         
@@ -206,9 +212,9 @@ namespace Game.GameInput
                    
                     gameplayInput.ExecuteInputActions( ()=>
                     {
-                        if (gridSystem.GridLogic.GetAttackTargets(selectionDataProvider.SelectedActor).Count > 0)
+                        Debug.Log("Buggy Here shoudl get attack targets friom new position");
+                        if (gridSystem.GridLogic.GetAttackTargets(selectionDataProvider.SelectedActor,x,y).Count > 0)
                         {
-                            Debug.Log(""+gridSystem.GridLogic.GetAttackTargets(selectionDataProvider.SelectedActor).Count);
                             gridSystem.ShowAttackFromPosition((Unit) selectionDataProvider.SelectedActor,x,y);
                             selectionDataProvider.SetUndoAbleActor(selectionDataProvider.SelectedActor);
                             

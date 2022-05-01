@@ -16,5 +16,6 @@ namespace Game.GameInput
         void UndoClicked();
         
         void ClickedDownOnGrid(int x, int y);
+        void LongClickOnCharacter(IGridActor unit);
     }
 }

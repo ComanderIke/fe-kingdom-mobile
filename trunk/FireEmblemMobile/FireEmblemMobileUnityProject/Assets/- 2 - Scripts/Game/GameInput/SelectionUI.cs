@@ -28,17 +28,34 @@ namespace Game.GameInput
             UnitSelectionSystem.OnDeselectCharacter += NoCharacterSelectedState;
         }
 
+        private void Update()
+        {
+            if (selectedCharacter != null && selectedCharacter.TurnStateManager.IsWaiting)
+            {
+                CharacterSelectedState(selectedCharacter);
+            }
+        }
+
         private void CharacterGotSelected(IGridActor actor)
         {
             if (actor is Unit unit)
             {
                 CharacterSelectedState(unit);
+               
             }
         }
 
         private void CharacterSelectedState(Unit unit)
         {
+            selectedCharacter = null;
+            if (unit.TurnStateManager.IsWaiting)
+            {
+                NoCharacterSelectedState(null);
+                return;
+            }
+
             selectedCharacter = unit;
+
             if (selectedCharacter.SkillManager.Favourite != null)
             {
                 if(favButton!=null)

@@ -21,8 +21,6 @@ public class UIUnitPlacement : IUnitPlacementUI
     private GameObject unitPrefab;
     // [SerializeField]
     // private Camera camera;
-    [SerializeField]
-    private Transform layoutGroup;
     private RaycastManager RaycastManager { get; set; }
     [SerializeField]
     private List<Unit> units;

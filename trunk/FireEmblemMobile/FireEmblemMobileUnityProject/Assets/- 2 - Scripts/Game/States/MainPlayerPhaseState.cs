@@ -48,6 +48,7 @@ namespace Game.Mechanics
             UnitSelectionSystem.OnDeselectCharacter +=OnDeselectedCharacter;
             UnitSelectionSystem.OnSkillSelected += SkillSelected;
             UnitSelectionSystem.OnItemSelected += ItemSelected;
+            GameplayInput.OnViewUnit += ViewUnit;
         }
 
         public override void Exit()
@@ -59,6 +60,7 @@ namespace Game.Mechanics
             UnitSelectionSystem.OnSelectedCharacter -= OnSelectedCharacter;
             UnitSelectionSystem.OnSkillSelected -= SkillSelected;
             UnitSelectionSystem.OnItemSelected -= ItemSelected;
+            GameplayInput.OnViewUnit -= ViewUnit;
             gridGameManager.GetSystem<GridSystem>().cursor.OnCursorPositionChanged -= CursorPosChanged;
             gridInputSystem.ResetInput();
             gridInputSystem.SetActive(false);
@@ -70,6 +72,11 @@ namespace Game.Mechanics
             //   Debug.Log("Exit");
             playerPhaseUI.Hide();
             playerPhaseUI.HideTileInfo();
+        }
+
+        void ViewUnit(IGridActor unit)
+        {
+            playerPhaseUI.ViewUnit((Unit)unit);
         }
         public void Undo()
         {

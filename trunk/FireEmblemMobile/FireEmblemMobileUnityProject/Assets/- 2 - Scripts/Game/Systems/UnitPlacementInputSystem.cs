@@ -114,6 +114,12 @@ namespace Game.States
             }
             Debug.Log(startPosition.Actor.name+" "+currentSelectedUnitController.unit.name);
         }
+
+        public void OnMouseHold(UnitInputController unitInputController)
+        {
+            
+        }
+
         public void OnDrop(UnitInputController unitInputController)
         {
             if (!active)

@@ -10,5 +10,6 @@ namespace Game.GameInput
         void ActorDoubleClicked(IGridActor unit);
         void StartDraggingActor(IGridActor actor);
         void DraggedOverActor(IGridActor actor);
+        void ActorLongHold(IGridActor unit);
     }
 }

@@ -17,7 +17,7 @@ public class UIEventController : MonoBehaviour
         canvas.enabled = true;
         this.party = party;
         this.randomEvent = node.randomEvent;
-        FindObjectOfType<UICharacterViewController>().Show(party);
+        FindObjectOfType<UICharacterViewController>().Show(party.members[party.ActiveUnitIndex]);
         // for (int i=0; i<church.shopItems.Count; i++)
         // {
         //     var item = church.shopItems[i];

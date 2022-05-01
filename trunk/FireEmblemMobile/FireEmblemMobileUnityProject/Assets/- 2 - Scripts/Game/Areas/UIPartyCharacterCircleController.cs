@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GUI;
 using Game.WorldMapStuff.Model;
@@ -12,6 +13,7 @@ public class UIPartyCharacterCircleController : MonoBehaviour, IClickedReceiver
     private List<CharacterUIController>characterUIs;
 
     private List<GameObject> characterUIgGameObjects;
+    public UICharacterViewController characterView;
 
     private Party party;
 
@@ -72,12 +74,17 @@ public class UIPartyCharacterCircleController : MonoBehaviour, IClickedReceiver
             {
                 party.ActiveUnitIndex = i;
                 Show(party);
-                FindObjectOfType<UICharacterViewController>().Show(party);
+                FindObjectOfType<UICharacterViewController>().Show(unit);
                 FindObjectOfType<AreaGameManager>().UpdatePartyGameObjects();
                 break;
             }
         }
         layout.SetActive(false);
         layout.SetActive(true);
+    }
+
+    public void PlusClicked(Unit unit)
+    {
+        characterView.Show(unit);
     }
 }

@@ -24,7 +24,7 @@ public class UISmithyController : MonoBehaviour
             bool affordable = party.money >= item.cost;
             // shopItems[i].SetValues(new ShopItem(item.name, item.cost, item.Sprite, item.Description), affordable);
         }
-        FindObjectOfType<UICharacterViewController>().Show(party);
+        FindObjectOfType<UICharacterViewController>().Show(party.members[party.ActiveUnitIndex]);
     }
 
     public void ContinueClicked()

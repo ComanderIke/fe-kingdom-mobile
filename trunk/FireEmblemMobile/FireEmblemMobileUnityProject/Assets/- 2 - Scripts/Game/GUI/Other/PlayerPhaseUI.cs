@@ -54,6 +54,11 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
         OnUnitCircleClicked -= action;
     }
 
+    public void ViewUnit(Unit unit)
+    {
+        FindObjectOfType<UICharacterViewController>().Show(unit);
+    }
+
     public void Show(int turnCount)
     {
         GetComponent<Canvas>().enabled = true;
