@@ -16,6 +16,7 @@ public class MainMenuButtonController : MonoBehaviour
 
     public void MainMenuClicked()
     {
+        Debug.Log("MainMenu ClickedS!");
         SaveSystem.SaveGame("AutoSave", new SaveData(Player.Instance, Campaign.Instance, EncounterTree.Instance));
         GameSceneController.Instance.UnloadAllExceptMainMenu();
         

@@ -81,6 +81,7 @@ namespace Game.WorldMapStuff.Controller
 
         public void UnloadAllExceptMainMenu()
         {
+            Debug.Log("Unload All ExceptMain!");
             // SceneTransferData.Instance.Reset();
             MainMenuController.Instance.ShowMainMenu();
             for (int i = 0; i < SceneManager.sceneCount; i++)

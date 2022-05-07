@@ -79,12 +79,13 @@ public class AreaGameManager : MonoBehaviour
     {
         return SaveData.currentSaveData != null && SaveData.currentSaveData.playerData != null;
     }
-  
+
+    private GameObject partyGo;
     private List<EncounterPlayerUnitController> partyGameObjects;
     void SpawnPartyMembers()
     {
         int cnt = 1;
-        var partyGo = new GameObject("Partytest");
+        partyGo = new GameObject("Partytest");
         partyGo.transform.SetParent(spawnParent);
         partyGo.transform.position = Player.Instance.Party.EncounterNode.gameObject.transform.position;
         partyGameObjects = new List<EncounterPlayerUnitController>();
@@ -95,8 +96,8 @@ public class AreaGameManager : MonoBehaviour
         go.GetComponent<EncounterPlayerUnitController>().SetUnit(activeUnit);
         ShowActiveUnit(go.transform.position);
         go.GetComponent<EncounterPlayerUnitController>().Show();
-        go.GetComponent<EncounterPlayerUnitController>().SetTarget(null);
-        go.GetComponent<EncounterPlayerUnitController>().SetSortOrder(Player.Instance.Party.members.Count);
+       // go.GetComponent<EncounterPlayerUnitController>().SetTarget(null);
+       // go.GetComponent<EncounterPlayerUnitController>().SetSortOrder(Player.Instance.Party.members.Count);
         activeMemberGo = go;
 
         partyGameObjects.Add( go.GetComponent<EncounterPlayerUnitController>());
@@ -106,12 +107,12 @@ public class AreaGameManager : MonoBehaviour
                 continue;
             
             go = Instantiate(member.visuals.Prefabs.EncounterAnimatedSprite, partyGo.transform, false);
-            go.transform.localPosition = new Vector3(-offsetBetweenCharacters*cnt,0,0);
+            go.transform.localPosition = new Vector3(0,0,0);
             go.GetComponent<EncounterPlayerUnitController>().Hide();
             go.GetComponent<EncounterPlayerUnitController>().SetUnit(member);
-            go.GetComponent<EncounterPlayerUnitController>().SetTarget(activeMemberGo.transform);
-            go.GetComponent<EncounterPlayerUnitController>().SetOffsetCount(cnt);
-            go.GetComponent<EncounterPlayerUnitController>().SetSortOrder(Player.Instance.Party.members.Count-cnt);
+          //  go.GetComponent<EncounterPlayerUnitController>().SetTarget(activeMemberGo.transform);
+           // go.GetComponent<EncounterPlayerUnitController>().SetOffsetCount(cnt);
+            //go.GetComponent<EncounterPlayerUnitController>().SetSortOrder(Player.Instance.Party.members.Count-cnt);
             cnt++;
             partyGameObjects.Add(go.GetComponent<EncounterPlayerUnitController>());
         }
@@ -121,7 +122,7 @@ public class AreaGameManager : MonoBehaviour
     private GameObject activeMemberGo;
     public void UpdatePartyGameObjects()
     {
-        Debug.Log("UpdatePartyMembes!");
+
         var activeUnit = Player.Instance.Party.members[Player.Instance.Party.ActiveUnitIndex];
         int cnt = 1;
 
@@ -141,11 +142,11 @@ public class AreaGameManager : MonoBehaviour
                 {
                     if (unitController.Unit == member)
                     {
-                        unitController.transform.localPosition = new Vector3(0,0,0);
+                        //unitController.transform.localPosition = new Vector3(0,0,0);
                         ShowActiveUnit(unitController.transform.position);
                         unitController.Show();
-                        unitController.SetTarget(null);
-                        unitController.SetSortOrder(Player.Instance.Party.members.Count);
+                        //unitController.SetTarget(null);
+                       // unitController.SetSortOrder(Player.Instance.Party.members.Count);
                     }
                 }
                
@@ -156,12 +157,12 @@ public class AreaGameManager : MonoBehaviour
                 {
                     if (unitController.Unit == member)
                     {
-                        unitController.transform.localPosition = new Vector3(-offsetBetweenCharacters*cnt,0,0);
+                        //unitController.transform.localPosition = new Vector3(-offsetBetweenCharacters*cnt,0,0);
                         unitController.Hide();
-                        unitController.SetTarget(activeMemberGo.transform);
-                        unitController.SetOffsetCount(cnt);
-                        Debug.Log("SetOffset!");
-                        unitController.SetSortOrder(Player.Instance.Party.members.Count-cnt);
+                       // unitController.SetTarget(activeMemberGo.transform);
+                        //unitController.SetOffsetCount(cnt);
+                        //Debug.Log("SetOffset!");
+                       // unitController.SetSortOrder(Player.Instance.Party.members.Count-cnt);
                     }
                 }
             }
@@ -246,14 +247,14 @@ public class AreaGameManager : MonoBehaviour
     IEnumerator MovementAnimation(EncounterNode target)
     {
         Vector3 targetPos = target.gameObject.transform.position;
-        Vector3 startPos = activeMemberGo.transform.position;
+        Vector3 startPos = partyGo.transform.position;
         float distance = Vector3.Distance(targetPos, startPos);
         float time = 0;
         float speed = 3;
-        while ( activeMemberGo.transform.position!=targetPos)
+        while ( partyGo.transform.position!=targetPos)
         {
             time += Time.deltaTime *speed/distance;
-            activeMemberGo.transform.position = Vector3.Lerp(startPos, targetPos, time);
+            partyGo.transform.position = Vector3.Lerp(startPos, targetPos, time);
             yield return null;
 
         }

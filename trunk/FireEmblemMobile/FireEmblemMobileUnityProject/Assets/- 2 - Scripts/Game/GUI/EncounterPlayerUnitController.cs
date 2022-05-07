@@ -15,7 +15,7 @@ public class EncounterPlayerUnitController : MonoBehaviour
 
     private Transform follow;
 
-    public float baseOffset = 0.4f;
+    public float baseOffset = 0.0f;
 
     private float offset;
     // Start is called before the first frame update

@@ -28,6 +28,7 @@ namespace Game.GameActors.Units.OnGameObject
         [SerializeField] public SpriteRenderer sprite;
         [SerializeField] public GameObject attackDamageObject;
         [SerializeField] private TextMeshProUGUI attackDamageText;
+        [SerializeField] private TextMeshProUGUI xText;
         [SerializeField] private TextMeshProUGUI x2Text;
         
         public Unit unit;
@@ -42,6 +43,7 @@ namespace Game.GameActors.Units.OnGameObject
             bool doubleAttack = unit.BattleComponent.BattleStats.CanDoubleAttack(compareUnit);
             attackDamageObject.SetActive(true);
             attackDamageText.SetText("" + dmg);
+            xText.gameObject.SetActive(doubleAttack);
             x2Text.gameObject.SetActive(doubleAttack);
         }
         private void Start()

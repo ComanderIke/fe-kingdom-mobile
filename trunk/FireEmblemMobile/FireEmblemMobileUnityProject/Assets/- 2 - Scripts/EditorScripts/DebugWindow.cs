@@ -48,6 +48,10 @@ namespace __2___Scripts.External.Editor
             if (activeUnit != null)
             {
                 selectedUnitName = activeUnit.name;
+                if (GUILayout.Button("+100 EXP"))
+                {
+                    activeUnit.ExperienceManager.AddExp(new Vector2(0,0),100);
+                }
                 GUILayout.Label("Selected Unit: " + selectedUnitName);
                 GUILayout.Label("Hp: " + activeUnit.Hp + "/" + activeUnit.Stats.MaxHp);
                 GUILayout.Label("SkillsCount: " + activeUnit.SkillManager.Skills.Count);

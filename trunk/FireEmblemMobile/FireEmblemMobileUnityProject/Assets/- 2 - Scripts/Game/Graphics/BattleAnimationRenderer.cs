@@ -34,7 +34,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     private IBattleActor defender;
     private bool leftCharacterDied;
     private bool rightCharacterDied;
-    public new GameObject light;
+   // public new GameObject light;
     public float playSpeed = 1.0f;
     public float introWalkInPlaySpeed = 1.0f;
     public float timeBetweenAttacks = 1.0f;
@@ -73,7 +73,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         if (characterRight != null)
             Destroy(characterRight);
         attackSequenzIndex = 0;
-        light.SetActive(true);
+        //light.SetActive(true);
         if (battleSimulation.Attacker.Faction.IsPlayerControlled)
         {
             characterLeft = Instantiate(
@@ -349,7 +349,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     public void Hide()
     {
         canvas.Hide();
-        light.SetActive(false);
+        //light.SetActive(false);
         LeanTween.value(volume.weight, 0, 0.4f).setEaseInQuad().setOnUpdate((value) => { volume.weight = value; })
             .setOnComplete(() => gameObject.SetActive(false));
     }

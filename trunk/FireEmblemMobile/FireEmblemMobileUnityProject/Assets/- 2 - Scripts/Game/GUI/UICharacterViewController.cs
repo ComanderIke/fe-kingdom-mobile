@@ -68,7 +68,7 @@ public class UICharacterViewController : MonoBehaviour
   
     void UpdateUI(Unit unit)
     {
-        Debug.Log("Up");
+  
         this.unit = unit;
         charName.SetText(unit.name);//+", "+unit.jobClass);
         Lv.SetText("Lv. "+unit.ExperienceManager.Level);
@@ -88,7 +88,7 @@ public class UICharacterViewController : MonoBehaviour
         FTH.SetText(""+unit.Stats.Attributes.FAITH);
         
         HPBar.SetValue(unit.Hp, unit.Stats.MaxHp);
-        equipmentController.Show((Human)unit);
+        //equipmentController.Show((Human)unit);
         skillsController.Show(unit);
     }
  
@@ -98,5 +98,9 @@ public class UICharacterViewController : MonoBehaviour
         canvas.enabled = false;
     }
 
-  
+
+    public void UpdateUnit(Unit unit1)
+    {
+       UpdateUI(unit1);
+    }
 }

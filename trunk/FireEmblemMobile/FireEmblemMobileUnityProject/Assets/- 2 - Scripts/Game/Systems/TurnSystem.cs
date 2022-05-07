@@ -26,7 +26,7 @@ namespace Game.Mechanics
         public GameStateManager gameStateManager{ get; set; }
         public FactionManager factionManager{ get; set; }
 
-        private int turnCount;
+        private int turnCount = 1;
         public int TurnCount
         {
             get

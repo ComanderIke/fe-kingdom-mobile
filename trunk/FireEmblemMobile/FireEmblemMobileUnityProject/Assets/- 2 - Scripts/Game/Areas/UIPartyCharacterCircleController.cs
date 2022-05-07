@@ -68,13 +68,14 @@ public class UIPartyCharacterCircleController : MonoBehaviour, IClickedReceiver
 
     public void Clicked(Unit unit)
     {
+        Debug.Log(("Clicked!"));
         for (int i = 0; i < party.members.Count; i++)
         {
             if (party.members[i] == unit)
             {
                 party.ActiveUnitIndex = i;
                 Show(party);
-                FindObjectOfType<UICharacterViewController>().Show(unit);
+                characterView.UpdateUnit(unit);
                 FindObjectOfType<AreaGameManager>().UpdatePartyGameObjects();
                 break;
             }
@@ -85,6 +86,7 @@ public class UIPartyCharacterCircleController : MonoBehaviour, IClickedReceiver
 
     public void PlusClicked(Unit unit)
     {
+        Debug.Log(("PlusClicked!"));
         characterView.Show(unit);
     }
 }

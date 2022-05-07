@@ -62,7 +62,8 @@ namespace Game.GameActors.Players
         {
             if (party == null)
                 return;
-            currentEncounterNodeId = new Vector2Int(party.EncounterNode.depth, party.EncounterNode.childIndex);
+            if(party.EncounterNode!=null)
+                currentEncounterNodeId = new Vector2Int(party.EncounterNode.depth, party.EncounterNode.childIndex);
             movedEncounterIds = new List<int>();
             foreach (var encounter in party.MovedEncounters)
             {

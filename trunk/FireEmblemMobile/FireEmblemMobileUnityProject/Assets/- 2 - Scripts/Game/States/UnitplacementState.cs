@@ -88,6 +88,9 @@ namespace Game.States
       
         private void InitCamera()
         {
+            int height = GridGameManager.Instance.GetSystem<GridSystem>().GridData.height;
+            int width = GridGameManager.Instance.GetSystem<GridSystem>().GridData.width;
+            cameraSystem.AddMixin<ViewOnGridMixin>().Construct(width, height);
             cameraSystem.AddMixin<DragCameraMixin>().Construct(new WorldPosDragPerformer(1f, cameraSystem.camera),
                 new ScreenPointToRayProvider(cameraSystem.camera), new HitChecker(TagManager.UnitTag),new MouseCameraInputProvider());
         }
