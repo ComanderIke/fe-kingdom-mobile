@@ -54,6 +54,12 @@ namespace Game.States
 
         public override GameState<NextStateTrigger> Update()
         {
+            if (AnimationQueue.IsNoAnimationRunning())
+            {
+                Debug.Log("AFTER BATTLE FINISHED!");
+                Finished();
+            }
+
             return NextState;
         }
     }

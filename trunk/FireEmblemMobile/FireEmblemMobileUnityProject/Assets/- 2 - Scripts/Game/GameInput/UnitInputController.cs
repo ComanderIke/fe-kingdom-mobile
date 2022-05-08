@@ -84,10 +84,12 @@ namespace Game.GameInput
         }
         public void OnMouseDown()
         {
+            Debug.Log("UnitMouseDown");
             if (!UIClickChecker.CheckUIObjectsInPosition())
             {
                 downClicked = true;
                 holdDuration = 0;
+                Debug.Log("NoUIOnUnit");
                 touchInputReceiver?.OnMouseDown(this);
             }
         }

@@ -46,7 +46,7 @@ namespace Game.GameInput
                             var x = (int)gridPos.x;
                             var y = (int)gridPos.y;
                             var hit = raycastManager.GetLatestHit();
-
+                            Debug.Log("Check Clicked on Grid?");
                             if (IsClickOnGrid(hit))
                             {
                                 Debug.Log("Player Input: Grid clicked: " + x + " " + y);

@@ -59,6 +59,11 @@ namespace Utility
             }
                 
         }
-   
+
+        public static bool IsNoAnimationRunning()
+        {
+            Debug.Log("animationQUeue COunt: "+queue.Count+" "+queue.Peek());
+            return queue.Count == 0;
+        }
     }
 }

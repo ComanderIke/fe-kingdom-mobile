@@ -63,6 +63,10 @@ namespace Game.Manager
             // BattleState.AddTransition(EnemyPhaseState, NextStateTrigger.AIBattleEnded);
         }
 
+        public GameState<NextStateTrigger> GetActiveState()
+        {
+            return stateMachine.GetCurrentState();
+        }
     }
 
   

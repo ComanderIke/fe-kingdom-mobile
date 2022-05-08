@@ -58,17 +58,7 @@ namespace Game.GUI
            // LeanTween.scale(levelUpText.gameObject, Vector3.one, 0.15f).setEaseOutQuad();
             
                    
-            LeanTween.alphaCanvas(alphaCanvas, 1, 0.55f).setEaseOutQuad();
-            LeanTween.scale(levelText.gameObject, levelText.transform.localScale * 1.2f, 0.5f).setEaseOutQuad().setDelay(0.65f).setOnStart(() => levelText.text = "Lv " + levelAfter)
-                .setOnComplete(() =>
-                {
-                    LeanTween.scale(levelText.gameObject, levelText.transform.localScale, 0.0f).setEaseInQuad().setDelay(delaybetweenPopups).setOnComplete(() =>
-                    {
-                        if (actionIndex < actions.Count)
-                            actions[actionIndex].Invoke();
-                        actionIndex++;
-                    });
-                });
+            
            
             
 
@@ -109,6 +99,17 @@ namespace Game.GUI
                     AnimationQueue.OnAnimationEnded?.Invoke();
                     canvas.enabled = false;
                 }));
+            LeanTween.alphaCanvas(alphaCanvas, 1, 0.55f).setEaseOutQuad();
+            LeanTween.scale(levelText.gameObject, levelText.transform.localScale * 1.2f, 0.5f).setEaseOutQuad().setDelay(0.65f).setOnStart(() => levelText.text = "Lv " + levelAfter)
+                .setOnComplete(() =>
+                {
+                    LeanTween.scale(levelText.gameObject, levelText.transform.localScale, 0.0f).setEaseInQuad().setDelay(delaybetweenPopups).setOnComplete(() =>
+                    {
+                        if (actionIndex < actions.Count)
+                            actions[actionIndex].Invoke();
+                        actionIndex++;
+                    });
+                });
         }
         public void UpdateValues(string name, Sprite sprite,int levelBefore, int levelAfter, int[] stats, int[] statsIncreases)
         {
