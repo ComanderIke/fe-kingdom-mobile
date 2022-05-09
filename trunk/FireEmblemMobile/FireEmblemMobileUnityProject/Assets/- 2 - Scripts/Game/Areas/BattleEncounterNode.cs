@@ -1,6 +1,8 @@
-﻿using Game.WorldMapStuff.Controller;
+﻿using Game.GameActors.Players;
+using Game.WorldMapStuff.Controller;
 using Game.WorldMapStuff.Model;
 using Menu;
+using UnityEngine;
 
 public class BattleEncounterNode : EncounterNode
 {
@@ -16,6 +18,7 @@ public class BattleEncounterNode : EncounterNode
     public override void Activate(Party party)
     {
         Continue();
+        Debug.Log("PartySize: "+ Player.Instance.Party.members.Count);
         GameSceneController.Instance.LoadBattleLevel(levelindex, enemyArmyData, this);
     }
 }

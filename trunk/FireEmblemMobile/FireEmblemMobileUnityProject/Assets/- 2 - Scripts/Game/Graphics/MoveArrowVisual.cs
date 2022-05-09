@@ -90,6 +90,7 @@ namespace Game.Graphics
         private GameObject GetOrCreateMoveArrowPart(int i)
         {
             GameObject dot;
+           
             if (i >= instantiatedMovePath.Count)
             {
                 dot = CreateArrowPart();
@@ -97,6 +98,11 @@ namespace Game.Graphics
             }
             else
             {
+                if (instantiatedMovePath[i]==null)
+                {
+                    instantiatedMovePath.Clear();
+                    return GetOrCreateMoveArrowPart(i);
+                }
                 dot = instantiatedMovePath[i];
                 dot.SetActive(true);
             }

@@ -94,7 +94,11 @@ namespace Game.GUI
             actions.Add(()=> LeanTween.alphaCanvas(alphaCanvas, 0, 0.65f).setEaseInQuad().setDelay(endDelay)
                 .setOnComplete(()=>
                 {
+                    Debug.Log("=============================================");
+                    Debug.Log("=============================================");
                     Debug.Log("LEVEL UP Complete");
+                    Debug.Log("=============================================");
+                    Debug.Log("=============================================");
                     levelText.transform.localScale = Vector3.one;
                     AnimationQueue.OnAnimationEnded?.Invoke();
                     canvas.enabled = false;

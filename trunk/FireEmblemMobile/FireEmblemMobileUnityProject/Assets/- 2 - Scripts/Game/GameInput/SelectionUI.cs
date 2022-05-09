@@ -28,6 +28,11 @@ namespace Game.GameInput
             UnitSelectionSystem.OnDeselectCharacter += NoCharacterSelectedState;
         }
 
+        private void OnDestroy()
+        {
+            UnitSelectionSystem.OnSelectedCharacter -= CharacterGotSelected;
+            UnitSelectionSystem.OnDeselectCharacter -= NoCharacterSelectedState;
+        }
         private void Update()
         {
             if (selectedCharacter != null && selectedCharacter.TurnStateManager.IsWaiting)

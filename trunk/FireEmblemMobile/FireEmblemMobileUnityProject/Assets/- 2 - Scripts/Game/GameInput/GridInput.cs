@@ -90,7 +90,9 @@ namespace Game.GameInput
         }
         private bool IsClickOnGrid(RaycastHit2D hit)
         {
-            
+            Debug.Log("ConnectedLatestHit: "+raycastManager.ConnectedLatestHit());
+            if(raycastManager.ConnectedLatestHit())
+                Debug.Log("Hit Tag: "+hit.collider.tag+" GO: "+hit.collider.gameObject.name);
             return raycastManager.ConnectedLatestHit() && hit.collider.CompareTag(TagManager.GridTag);
 
         }

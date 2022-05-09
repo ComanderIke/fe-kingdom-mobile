@@ -97,7 +97,12 @@ namespace Game.Mechanics
                 return NextState;
             if (!active)
                 return null;
+          
             MoveUnit();
+            if (Input.GetMouseButtonDown(0))
+            {
+                FinishMovement();
+            }
             return null;
         }
 

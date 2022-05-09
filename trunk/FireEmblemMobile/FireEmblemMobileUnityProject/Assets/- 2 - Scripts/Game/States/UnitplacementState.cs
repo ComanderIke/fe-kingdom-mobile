@@ -58,6 +58,7 @@ namespace Game.States
         }
         public override void Enter()
         {
+            Debug.Log("PartySizeEnterGameState: "+ Player.Instance.Party.members.Count);
             finished = false;
             factionManager = GridGameManager.Instance.FactionManager;
             NextState =  GridGameManager.Instance.GameStateManager.PhaseTransitionState;
@@ -97,6 +98,7 @@ namespace Game.States
 
         private void CreateDemoParty()
         {
+            Debug.Log("PartySizeBeforeDemo: "+ Player.Instance.Party.members.Count);
             Debug.Log("Create Demo Units!");
             var demoUnits = GameObject.FindObjectOfType<DemoUnits>().GetUnits();
             Player.Instance.Party = ScriptableObject.CreateInstance<Party>();
@@ -107,11 +109,12 @@ namespace Game.States
             factionManager.Factions[0].ClearUnits();
             factionManager.Factions[1].ClearUnits();
             int cnt = 0;
-           
-            if (Player.Instance.Party==null||Player.Instance.Party.members.Count!=0)
+            //Debug.Log("PartySizeBeforeInitFactions: "+ Player.Instance.Party.members.Count);
+            if (Player.Instance.Party==null||Player.Instance.Party.members.Count==0)
             {
                CreateDemoParty();
             }
+            
             foreach (var unit in Player.Instance.Party.members)
             {
                 cnt++;
