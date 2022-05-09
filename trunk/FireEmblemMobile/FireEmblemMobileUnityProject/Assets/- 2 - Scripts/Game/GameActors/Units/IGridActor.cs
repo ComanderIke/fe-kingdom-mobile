@@ -18,5 +18,6 @@ namespace Game.GameActors.Units
         bool IsEnemy(IGridActor unit);
         void SetAttackTarget(bool selected);
 
+        bool IsAlive();
     }
 }

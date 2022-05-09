@@ -212,7 +212,7 @@ namespace Game.GameInput
                    
                     gameplayInput.ExecuteInputActions( ()=>
                     {
-                        Debug.Log("Buggy Here shoudl get attack targets friom new position");
+                        Debug.Log("attack targets from new position: "+x+" "+y);
                         if (gridSystem.GridLogic.GetAttackTargets(selectionDataProvider.SelectedActor,x,y).Count > 0)
                         {
                             gridSystem.ShowAttackFromPosition((Unit) selectionDataProvider.SelectedActor,x,y);

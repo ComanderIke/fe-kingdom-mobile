@@ -62,12 +62,12 @@ namespace Utility
 
         public static bool IsNoAnimationRunning()
         {
-            if(queue.Count!=0)
-                Debug.Log("animationQUeue COunt: "+queue.Count+" "+queue.Peek());
-            else
-            {
-                Debug.Log("animationQUeue Empty");
-            }
+            // if(queue.Count!=0)
+            //     Debug.Log("animationQUeue COunt: "+queue.Count+" "+queue.Peek());
+            // else
+            // {
+            //     Debug.Log("animationQUeue Empty");
+            // }
             return queue.Count == 0;
         }
     }

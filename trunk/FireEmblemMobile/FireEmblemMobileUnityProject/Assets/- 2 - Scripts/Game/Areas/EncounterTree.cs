@@ -268,4 +268,9 @@ public class EncounterTree
         columns.Clear();
         CreateFromData(encounterTreeData);
     }
+
+    public static void Reset()
+    {
+        _instance = null;
+    }
 }

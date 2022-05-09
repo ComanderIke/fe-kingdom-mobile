@@ -147,11 +147,11 @@ namespace Game.GameActors.Units
 
         public virtual void Initialize()
         {
-            
+ 
             experienceManager ??= new ExperienceManager();
             ExperienceManager.LevelUp = null;
             ExperienceManager.LevelUp += LevelUp;
-            TurnStateManager ??= new TurnStateManager(this);
+            TurnStateManager ??= new TurnStateManager();
             GridComponent = new GridComponent(this);
             BattleComponent = new BattleComponent(this);
             GameTransformManager = new GameTransformManager();
@@ -255,7 +255,7 @@ namespace Game.GameActors.Units
         {
             clone.experienceManager = new ExperienceManager();
             clone.BattleComponent = new BattleComponent(clone);
-            clone.TurnStateManager = new TurnStateManager(clone);
+            clone.TurnStateManager = new TurnStateManager();
             clone.GridComponent = new GridComponent(clone);
             clone.GridComponent.GridPosition =
                 new GridPosition(GridComponent.GridPosition.X, GridComponent.GridPosition.Y);

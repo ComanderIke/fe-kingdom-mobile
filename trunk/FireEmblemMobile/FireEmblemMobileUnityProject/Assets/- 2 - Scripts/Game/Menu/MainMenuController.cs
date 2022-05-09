@@ -50,7 +50,7 @@ namespace Game.GUI
 
         public void ShowMainMenu()
         {
-            Debug.Log("Save Data: "+SaveData.currentSaveData);
+            
             Debug.Log("Continue Button: "+ContinueButton.name);
             ContinueButton.SetActive(SaveData.currentSaveData!=null);
             SaveButton.SetActive(SaveData.currentSaveData!=null);
@@ -79,6 +79,7 @@ namespace Game.GUI
         public void LoadCampaignScene(Campaign campaign)
         {
             HideMenu();
+            SaveData.Reset();
             SceneController.LoadSceneAsync(campaign.scene, true);
             // SceneController.LoadSceneAsync(Scenes.UI, true);
             // SceneController.LoadSceneAsync(Scenes.WM_Gameplay, true);

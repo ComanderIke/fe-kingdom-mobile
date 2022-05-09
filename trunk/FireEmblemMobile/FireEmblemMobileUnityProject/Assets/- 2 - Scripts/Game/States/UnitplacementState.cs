@@ -58,7 +58,7 @@ namespace Game.States
         }
         public override void Enter()
         {
-            Debug.Log("PartySizeEnterGameState: "+ Player.Instance.Party.members.Count);
+            
             finished = false;
             factionManager = GridGameManager.Instance.FactionManager;
             NextState =  GridGameManager.Instance.GameStateManager.PhaseTransitionState;

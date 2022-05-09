@@ -27,5 +27,13 @@ namespace Game.Systems
             // PlayerPrefs.SetFloat("CameraZ",cameraPos.z);
             // PlayerPrefs.Save();
         }
+
+        public static void Reset()
+        {
+            currentSaveData = null;
+            Player.Reset();
+            Campaign.Reset();
+            EncounterTree.Reset();
+        }
     }
 }

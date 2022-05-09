@@ -47,7 +47,7 @@ namespace Game.WorldMapStuff.Controller
            // SceneTransferData.Instance.EnemyUnits = enemyParty;
             //SceneTransferData.Instance.EnemyPartyID = enemyParty.name;
             //SceneTransferData.Instance.NodeData =new NodeData(node.UniqueId);
-            Debug.Log("PartySize: "+ Player.Instance.Party.members.Count);
+            
             SceneController.UnLoadSceneAsync(Scenes.EncounterArea);
             SceneController.LoadSceneAsync(buildIndex, true);
         }

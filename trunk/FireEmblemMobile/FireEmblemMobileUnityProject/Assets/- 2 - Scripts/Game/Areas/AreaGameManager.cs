@@ -51,7 +51,12 @@ public class AreaGameManager : MonoBehaviour
         else
         {
             //Debug.Log("Player Null");
+           
             Player.Instance.Party = Instantiate(playerStartParty, spawnParent);
+            for (int i=0; i < Player.Instance.Party.members.Count; i++)
+            {
+                Player.Instance.Party.members[i]= Instantiate(Player.Instance.Party.members[i]);
+            }
             Player.Instance.Party.Initialize();
             Player.Instance.Party.EncounterNode = EncounterTree.Instance.startNode;
             Player.Instance.Party.MovedEncounters.Add(EncounterTree.Instance.startNode);
@@ -269,10 +274,18 @@ public class AreaGameManager : MonoBehaviour
     private void ShowMovedRoads()
     {
         Debug.Log("============================ShowMovedRoads!");
-        for( int i= 0; i < Player.Instance.Party.MovedEncounters.Count-1; i++)
+        for( int i= Player.Instance.Party.MovedEncounters.Count-2; i >=0; i--)
         {
             Road road = Player.Instance.Party.MovedEncounters[i].GetRoad(Player.Instance.Party.MovedEncounters[i + 1]);
-            road.SetMovedVisual();
+            if (road==null||road.gameObject == null)
+            {
+                Player.Instance.Party.MovedEncounters.RemoveAt(i);
+            }
+            else
+            {
+                road.SetMovedVisual();
+            }
+
         }
     }
 

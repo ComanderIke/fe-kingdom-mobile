@@ -40,18 +40,21 @@ namespace Game.Grid
         public List<IGridActor> GetAttackTargets(IGridActor unit, int x, int y)
         {
             var targets = new List<IGridActor>();
+          
             foreach (int attackRange in unit.AttackRanges)
             {
+                Debug.Log("AttackRanges: " +attackRange);
                 for (int i = -attackRange; i <= +attackRange; i++)
                 {
                     for (int j = -attackRange; j <= attackRange; j++)
                     {
-                        if (Math.Abs(j + i) == attackRange)
+                        if (Math.Abs(j) + Math.Abs(i) == attackRange)
                         {
-                            // Debug.Log("attackTargets at "+ unit.GridPosition.GetPos()+": " +(i + x) + " " + (j + y));
+                            Debug.Log("Check Position: "+(i + x) + " " + (j + y));
                             if (IsOutOfBounds(new Vector2(x + i, y + j)))
                                 continue;
                             var unitOnTile = Tiles[i + x, j + y].Actor;
+                            Debug.Log("Unit On Tile: "+unitOnTile);
                             if (unitOnTile != null && unitOnTile.Faction.Id != unit.Faction.Id)
                             {
                                 targets.Add(unitOnTile);

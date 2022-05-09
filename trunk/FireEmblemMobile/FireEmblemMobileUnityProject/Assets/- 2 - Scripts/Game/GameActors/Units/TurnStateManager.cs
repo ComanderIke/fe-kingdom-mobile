@@ -17,12 +17,11 @@ namespace Game.GameActors.Units
    
         public OnActorCanMove UnitCanMove;
         [SerializeField] private UnitTurnState UnitTurnState;
-        private IActor actor;
+   
 
-        public TurnStateManager(IActor actor)
+        public TurnStateManager()
         {
             UnitTurnState = new UnitTurnState();
-            this.actor = actor;
         }
 
         public bool IsWaiting
@@ -86,8 +85,8 @@ namespace Game.GameActors.Units
 
         public void UpdateTurn()
         {
-            if(actor is Unit unit)
-                unit.StatusEffectManager.Update();
+            // if(actor is Unit unit)
+            //     unit.StatusEffectManager.Update();
           
             Reset();
         }
@@ -105,9 +104,9 @@ namespace Game.GameActors.Units
 
         public void Wait()
         {
-            actor.TurnStateManager.IsWaiting = true;
-            actor.TurnStateManager.IsSelected = false;
-            actor.TurnStateManager.HasMoved = true;
+            IsWaiting = true;
+            IsSelected = false;
+            HasMoved = true;
         }
     }
 }

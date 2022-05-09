@@ -18,7 +18,7 @@ public class BattleEncounterNode : EncounterNode
     public override void Activate(Party party)
     {
         Continue();
-        Debug.Log("PartySize: "+ Player.Instance.Party.members.Count);
+        
         GameSceneController.Instance.LoadBattleLevel(levelindex, enemyArmyData, this);
     }
 }

@@ -31,7 +31,7 @@ namespace Game.Manager
         private void Awake()
         {
             Instance = this;
-            Debug.Log("PartySizeAwake: "+ Player.Instance.Party.members.Count);
+          
             //Debug.Log("Initialize");
             FactionManager = new FactionManager();
             var playerFaction=new Faction();

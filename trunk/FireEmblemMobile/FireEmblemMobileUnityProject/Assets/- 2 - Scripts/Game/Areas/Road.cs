@@ -20,8 +20,23 @@ namespace __2___Scripts.Game.Areas
 
         public void SetMovedVisual()
         {
-            Debug.Log(transform.parent.name);
-            line.material = moved;
+            if (transform == null)
+            {
+                Debug.Log("TRANSFORM IS NULL PROB BUG");
+                return;
+                
+            }
+
+            if (transform.parent != null)
+            {
+                Debug.Log(transform.parent.name);
+                line.material = moved;
+            }
+            else
+            {
+                Debug.Log("TRANSFORM PARENT IS NULL PROB BUG");
+                
+            }
         }
 
         public void SetStartNode(EncounterNode child)

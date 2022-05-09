@@ -46,5 +46,10 @@ namespace Game.WorldMapStuff.Model
             victoryDefeatConditions = instanceCampaign.victoryDefeatConditions;
             scene = instanceCampaign.scene;
         }
+
+        public static void Reset()
+        {
+            _instance = null;
+        }
     }
 }

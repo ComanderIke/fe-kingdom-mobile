@@ -180,7 +180,7 @@ public class ColumnManager : MonoBehaviour
         var go = GameObject.Instantiate(prefab, this.transform);
         go.name = "EncounterNode Column:" + index;
         node.gameObject = go;
-        Debug.Log("Create Node: " + node + " Index: " + index);
+       // Debug.Log("Create Node: " + node + " Index: " + index);
         go.GetComponentInChildren<EncounterClickController>().encounterNode = node;
     }
     

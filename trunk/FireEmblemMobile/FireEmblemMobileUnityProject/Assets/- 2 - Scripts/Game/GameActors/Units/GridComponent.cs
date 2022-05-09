@@ -39,7 +39,8 @@ namespace Game.GameActors.Units
            // Debug.Log("GridActor: "+gridActor);
             if(previousTile!=null)
                  Tile = previousTile;
-            gridActor.GameTransformManager.SetPosition(GridPosition.X, GridPosition.Y);
+            if(gridActor.IsAlive())
+                gridActor.GameTransformManager.SetPosition(GridPosition.X, GridPosition.Y);
             // GameTransform.EnableCollider();
         }
         public virtual void SetPosition( int x, int y)

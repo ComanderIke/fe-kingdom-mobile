@@ -15,6 +15,12 @@ namespace Game.GameActors.Players
             get { return _instance ??= new Player(); }
         }
 
+        public static void Reset()
+        {
+            _instance = null;
+        }
+        
+
         private Player()
         {
             Name = "Player1";
