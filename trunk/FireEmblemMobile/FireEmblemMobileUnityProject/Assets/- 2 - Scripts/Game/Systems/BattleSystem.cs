@@ -132,15 +132,17 @@ namespace Game.Mechanics
 Debug.Log("BattlePreview: "+ battleSimulation.AttackerAttackCount + "DefenderAttackCount: "+ battleSimulation.DefenderAttackCount);
             battlePreview.AttackerStats = new BattlePreviewStats(attacker.BattleComponent.BattleStats.GetDamage(), 
                 attacker.Stats.Attributes.AGI, defender.BattleComponent.BattleStats.GetDamageType(), 
-                defender.BattleComponent.BattleStats.GetDamageType()==DamageType.Physical ? attacker.BattleComponent.BattleStats.GetArmor() : attacker.Stats.Attributes.FAITH, 
+                defender.BattleComponent.BattleStats.GetDamageType()==DamageType.Physical ? attacker.BattleComponent.BattleStats.GetPhysicalResistance() : attacker.Stats.Attributes.FAITH, 
                 attacker.Stats.Attributes.DEX, attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defender), attacker.BattleComponent.BattleStats.GetHitAgainstTarget(defender),
+                attacker.BattleComponent.BattleStats.GetCritAgainstTarget(defender),
                 battleSimulation.DefenderAttackCount, attacker.Hp, attacker.Stats.MaxHp, 
                 battleSimulation.Attacker.Hp);//, attacker.Sp, attacker.Stats.MaxSp, battleSimulation.Attacker.Sp, attacker.SpBars, battleSimulation.Attacker.SpBars, attacker.MaxSpBars);
 
             battlePreview.DefenderStats = new BattlePreviewStats(defender.BattleComponent.BattleStats.GetDamage(), 
                 defender.Stats.Attributes.AGI, attacker.BattleComponent.BattleStats.GetDamageType(), 
-                attacker.BattleComponent.BattleStats.GetDamageType()==DamageType.Physical? defender.BattleComponent.BattleStats.GetArmor() : defender.Stats.Attributes.FAITH,
+                attacker.BattleComponent.BattleStats.GetDamageType()==DamageType.Physical? defender.BattleComponent.BattleStats.GetPhysicalResistance() : defender.Stats.Attributes.FAITH,
                 defender.Stats.Attributes.DEX, defender.BattleComponent.BattleStats.GetDamageAgainstTarget(attacker),defender.BattleComponent.BattleStats.GetHitAgainstTarget(attacker),
+                defender.BattleComponent.BattleStats.GetCritAgainstTarget(attacker),
                 battleSimulation.DefenderAttackCount, defender.Hp, defender.Stats.MaxHp,
                 battleSimulation.Defender.Hp);//, defender.Sp, defender.Stats.MaxSp, battleSimulation.Defender.Sp,  defender.SpBars, battleSimulation.Defender.SpBars, defender.MaxSpBars);
             return battlePreview;

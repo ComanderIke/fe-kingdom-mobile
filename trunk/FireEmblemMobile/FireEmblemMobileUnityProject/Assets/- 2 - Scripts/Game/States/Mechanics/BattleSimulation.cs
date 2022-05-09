@@ -30,6 +30,8 @@ namespace Game.Mechanics
         public int DefenderAttackCount { get; set; }
         public bool AttackerAlive{ get; set; }
         public bool DttackerAlive{ get; set; }
+        public object AttackerCrit { get; set; }
+        public object DefenderCrit { get; set; }
 
         public List<AttackData> AttacksData;
         public GridPosition attackPosition;
@@ -48,6 +50,8 @@ namespace Game.Mechanics
             
             AttackerHit = Attacker.BattleComponent.BattleStats.GetHitAgainstTarget(Defender);
             DefenderHit = Defender.BattleComponent.BattleStats.GetHitAgainstTarget(Attacker);
+            AttackerCrit = Attacker.BattleComponent.BattleStats.GetCritAgainstTarget(Defender);
+            DefenderCrit = Defender.BattleComponent.BattleStats.GetCritAgainstTarget(attacker);
             
             AttackerAttackCount = Attacker.BattleComponent.BattleStats.GetAttackCountAgainst(Defender);
             DefenderAttackCount = Defender.BattleComponent.BattleStats.GetAttackCountAgainst(Attacker);
@@ -59,31 +63,30 @@ namespace Game.Mechanics
             int damage = attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defender);
             //int spDamage= attacker.BattleComponent.BattleStats.GetTotalSpDamageAgainstTarget(defender);
             var hitRng = UnityEngine.Random.Range(0, 101);
+            var critRng = UnityEngine.Random.Range(0, 101);
             Debug.Log("HitRNG: Attacker: "+hitRng+ " hitRate: "+attacker.BattleComponent.BattleStats.GetHitAgainstTarget(defender));
             attackData.hit =  hitRng<= attacker.BattleComponent.BattleStats.GetHitAgainstTarget(defender);
+            attackData.crit =  critRng<= attacker.BattleComponent.BattleStats.GetCritAgainstTarget(defender)&&attackData.hit;
+            if (attackData.crit)
+                damage *= 2;
             if (attacker == Attacker)
             {
-              
                 attackData.Dmg = Math.Min(defender.Hp, damage);
                 //AttackerSpDamage.Add(Math.Min(defender.Sp, spDamage));
                 if (attacker is Human humanAttacker && humanAttacker.EquippedWeapon != null)
                 {
                     //DefenderSpDamage.Add(Math.Min(attacker.Sp, humanAttacker.EquippedWeapon.Weight));
                     //attacker.Sp -= humanAttacker.EquippedWeapon.Weight;
-                    
-
                 }
             }
             else
             {
-                
                 attackData.Dmg = Math.Min(defender.Hp, damage);
                // DefenderSpDamage.Add(Math.Min(defender.Sp, spDamage));
                 if (attacker is Human humanAttacker && humanAttacker.EquippedWeapon != null)
                 {
                     //AttackerSpDamage.Add(Math.Min(attacker.Sp, humanAttacker.EquippedWeapon.Weight));
                     //attacker.Sp -= humanAttacker.EquippedWeapon.Weight;
-                   
                 }
             }
             if(attackData.hit||certainHit)

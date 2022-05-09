@@ -26,7 +26,7 @@ namespace Game.Mechanics.Battle
         {
             
             //Debug.Log(owner.GetTile().X+" "+owner.GetTile().Y);
-            return GetArmor() + owner.GetTile().TileData.defenseBonus;
+            return GetPhysicalResistance() + owner.GetTile().TileData.defenseBonus;
         }
         public bool CanKillTarget(IBattleActor target, float attackMultiplier)
         {
@@ -208,23 +208,23 @@ namespace Game.Mechanics.Battle
 
         public int GetCrit()
         {
-            return 0;
+            return owner.Stats.Attributes.LCK+owner.Stats.Attributes.DEX;
         }
 
         public int GetCritAvoid()
         {
-            return 0;
+            return owner.Stats.Attributes.LCK*2;
         }
 
-        public int GetArmor()
+        public int GetPhysicalResistance()
         {
-            if (owner is Human human&&human.EquippedArmor!=null)
-            {
-                
-                return human.EquippedArmor.armor;
-            }
+            // if (owner is Human human&&human.EquippedArmor!=null)
+            // {
+            //     
+            //     return human.EquippedArmor.armor;
+            // }
         
-            return 0;
+            return owner.Stats.Attributes.DEF+ owner.GetTile().TileData.defenseBonus;
         }
 
         public int GetFaithResistance()
@@ -248,6 +248,11 @@ namespace Game.Mechanics.Battle
             
 
                 return owner.Stats.Attributes.STR;
+        }
+
+        public int GetCritAgainstTarget(IBattleActor defender)
+        {
+            return Math.Max(0,GetCrit() - defender.BattleComponent.BattleStats.GetCritAvoid());
         }
     }
 }

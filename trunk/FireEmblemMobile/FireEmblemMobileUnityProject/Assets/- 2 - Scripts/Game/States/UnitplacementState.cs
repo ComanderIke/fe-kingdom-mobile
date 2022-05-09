@@ -98,7 +98,6 @@ namespace Game.States
 
         private void CreateDemoParty()
         {
-            Debug.Log("PartySizeBeforeDemo: "+ Player.Instance.Party.members.Count);
             Debug.Log("Create Demo Units!");
             var demoUnits = GameObject.FindObjectOfType<DemoUnits>().GetUnits();
             Player.Instance.Party = ScriptableObject.CreateInstance<Party>();

@@ -27,6 +27,7 @@ namespace Game.GUI
         [SerializeField] private Image faceSpriteLeft = default;
         [SerializeField] private TextMeshProUGUI dmgValue = default;
         [SerializeField] private TextMeshProUGUI hitValue = default;
+        [SerializeField] private TextMeshProUGUI critValue = default;
         [SerializeField] private TextMeshProUGUI attackCount = default;
         [SerializeField] private GameObject attackCountX = default;
         [SerializeField] private AttackPreviewStatBar hpBar = default;
@@ -42,6 +43,7 @@ namespace Game.GUI
         [SerializeField] private Image faceSpriteRight = default;
         [SerializeField] private TextMeshProUGUI dmgValueRight = default;
         [SerializeField] private TextMeshProUGUI hitValueRight = default;
+        [SerializeField] private TextMeshProUGUI critValueRight = default;
         [SerializeField] private TextMeshProUGUI attackCountRight = default;
         [SerializeField] private GameObject attackCountRightX = default;
         [SerializeField] private AttackPreviewStatBar hpBarRight = default;
@@ -75,7 +77,8 @@ namespace Game.GUI
              faceSpriteRight.sprite = defenderSprite;
 
              dmgValue.text = "" + battlePreview.AttackerStats.Damage;
-             hitValue.text = "" + battlePreview.AttackerStats.Hit;
+             hitValue.text = "" + battlePreview.AttackerStats.Hit+"%";
+             critValue.text = "" + battlePreview.AttackerStats.Crit+"%";
              //Debug.Log("ATTACKCOUNT: "+battlePreview.AttackerStats.AttackCount+" "+battlePreview.DefenderStats.AttackCount);
              attackCountX.SetActive(battlePreview.AttackerStats.AttackCount > 1);
              attackCount.gameObject.SetActive(battlePreview.AttackerStats.AttackCount > 1);
@@ -106,12 +109,14 @@ namespace Game.GUI
              {
                  dmgValueRight.text = "-";
                  hitValueRight.text = "-";
-                 
+                 critValueRight.text = "-";
+
              }
              else
              {
                  dmgValueRight.text = "" + battlePreview.DefenderStats.Damage;
-                 hitValueRight.text = "" + battlePreview.DefenderStats.Hit;
+                 hitValueRight.text = "" + battlePreview.DefenderStats.Hit+"%";
+                 critValueRight.text = "" + battlePreview.DefenderStats.Crit+"%";
                  
              }
              attackCountRightX.SetActive(battlePreview.DefenderStats.AttackCount > 1);

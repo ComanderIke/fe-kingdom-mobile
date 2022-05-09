@@ -34,6 +34,8 @@ public class UICharacterViewController : MonoBehaviour
     public TextMeshProUGUI AGI;
     public TextMeshProUGUI CON;
     public TextMeshProUGUI FTH;
+    public TextMeshProUGUI LCK;
+    public TextMeshProUGUI DEF;
     
     public IStatBar HPBar;
     public TextMeshProUGUI hpText;
@@ -86,6 +88,8 @@ public class UICharacterViewController : MonoBehaviour
         AGI.SetText(""+unit.Stats.Attributes.AGI);
         CON.SetText(""+unit.Stats.Attributes.CON);
         FTH.SetText(""+unit.Stats.Attributes.FAITH);
+        LCK.SetText(""+unit.Stats.Attributes.LCK);
+        DEF.SetText(""+unit.Stats.Attributes.DEF);
         
         HPBar.SetValue(unit.Hp, unit.Stats.MaxHp);
         //equipmentController.Show((Human)unit);

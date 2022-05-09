@@ -22,6 +22,8 @@ MonoBehaviour:
       DEX: 5
       AGI: 5
       CON: 6
+      LCK: 5
+      DEF: 4
       FAITH: 2
     MaxHp: 0
     Mov: 3
@@ -31,12 +33,23 @@ MonoBehaviour:
     DEX: 40
     AGI: 40
     CON: 40
+    LCK: 30
+    DEF: 30
     FAITH: 40
   moveType: {fileID: 11400000, guid: d13592b1fa0af024a841b121149b8014, type: 2}
+  SkillManager:
+    Skills: []
+    Favourite: {fileID: 0}
+  bluePrintID: 
   visuals:
     CharacterSpriteSet: {fileID: 11400000, guid: 392c72f68c80c9149b520db7c54f784b,
       type: 2}
     UnitEffectVisual: {fileID: 11400000, guid: af10e6087dc82f34ebed15c0092e0174, type: 2}
+    Prefabs:
+      MapAnimatedSprite: {fileID: 0}
+      EncounterAnimatedSprite: {fileID: 0}
+    UnitCharacterCircleUI: {fileID: 0}
+    unitRenderer: {fileID: 0}
   experienceManager:
     level: 1
     exp: 0

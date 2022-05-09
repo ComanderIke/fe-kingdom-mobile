@@ -17,7 +17,7 @@ public class UIEquipmentController:MonoBehaviour
     public void Show(Human unit)
     {
         Atk.SetText(""+unit.BattleComponent.BattleStats.GetDamage());
-        Armor.SetText(""+unit.BattleComponent.BattleStats.GetArmor());
+        Armor.SetText(""+unit.BattleComponent.BattleStats.GetPhysicalResistance());
 
         if (unit.EquippedWeapon != null)
         {

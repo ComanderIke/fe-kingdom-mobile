@@ -18,6 +18,10 @@ namespace Game.GameActors.Units.Numbers
         [SerializeField]
         public int CON= 30;
         [SerializeField]
+        public int LCK= 30;
+        [SerializeField]
+        public int DEF= 30;
+        [SerializeField]
         public int FAITH= 30;
 
         public const int CON_HP_Mult = 3;
@@ -32,6 +36,8 @@ namespace Game.GameActors.Units.Numbers
             AGI = attributes.AGI;
             STR = attributes.STR;
             FAITH = attributes.FAITH;
+            DEF = attributes.DEF;
+            LCK = attributes.LCK;
         }
 
         public Attributes Clone()
@@ -43,7 +49,7 @@ namespace Game.GameActors.Units.Numbers
 
         public int[] AsArray()
         {
-            return new []{STR,INT,DEX,AGI,CON,FAITH};
+            return new []{STR,INT,DEX,AGI,LCK,CON, DEF,FAITH};
         }
     }
 }

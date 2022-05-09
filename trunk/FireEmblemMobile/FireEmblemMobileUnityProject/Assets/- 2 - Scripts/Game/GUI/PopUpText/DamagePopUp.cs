@@ -104,7 +104,10 @@ namespace Game.GUI.PopUpText
                 new Vector3(transformPosition.x, transformPosition.y, transformPosition.z), Quaternion.identity);
             damagePopUpTransform.layer = LayerMask.NameToLayer("Characters");
             DamagePopUp damagePopUp = damagePopUpTransform.GetComponent<DamagePopUp>();
-            damagePopUp.Setup(dmg.ToString(), style, scale, moveVector);
+            if(style == TextStyle.Critical)
+                damagePopUp.Setup(dmg.ToString()+" Crit", style, scale, moveVector);
+            else
+                damagePopUp.Setup(dmg.ToString(), style, scale, moveVector);
             return damagePopUp;
         }
 

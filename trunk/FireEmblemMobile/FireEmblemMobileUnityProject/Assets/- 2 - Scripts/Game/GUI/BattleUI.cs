@@ -16,8 +16,10 @@ public class BattleUI : MonoBehaviour
     [SerializeField] private GameObject attackCountX = default;
     [SerializeField] private TextMeshProUGUI dmgValue = default;
     [SerializeField] private TextMeshProUGUI hitValue = default;
+    [SerializeField] private TextMeshProUGUI critValue = default;
     [SerializeField] private TextMeshProUGUI dmgValueRight = default;
     [SerializeField] private TextMeshProUGUI hitValueRight = default;
+    [SerializeField] private TextMeshProUGUI critValueRight = default;
     [SerializeField] private TextMeshProUGUI attackCountRight = default;
     [SerializeField] private TextMeshProUGUI hpText = default;
     [SerializeField] private TextMeshProUGUI hpTextRight = default;
@@ -59,9 +61,10 @@ public class BattleUI : MonoBehaviour
         
         dmgValue.text = playerUnitIsAttacker? ""+ battleSimulation.AttackerDamage:""+battleSimulation.DefenderDamage;
         hitValue.text = playerUnitIsAttacker?"" + battleSimulation.AttackerHit:""+battleSimulation.DefenderHit;
-       
+        critValue.text = playerUnitIsAttacker?"" + battleSimulation.AttackerCrit:""+battleSimulation.DefenderCrit;
         dmgValueRight.text = !playerUnitIsAttacker? ""+ battleSimulation.AttackerDamage:""+battleSimulation.DefenderDamage;
         hitValueRight.text = !playerUnitIsAttacker?"" + battleSimulation.AttackerHit:""+battleSimulation.DefenderHit;
+        critValueRight.text = !playerUnitIsAttacker?"" + battleSimulation.AttackerCrit:""+battleSimulation.DefenderCrit;
 
 
         if(playerUnitIsAttacker){
@@ -75,11 +78,13 @@ public class BattleUI : MonoBehaviour
                 {
                     dmgValueRight.text = "" + battleSimulation.DefenderDamage;
                     hitValueRight.text = "" + battleSimulation.DefenderHit;
+                    critValueRight.text = "" + battleSimulation.DefenderCrit;
                 }
                 else
                 {
                     dmgValueRight.text = "-";
                     hitValueRight.text = "-" ;
+                    critValueRight.text = "-" ;
                 }
         }
         else{
@@ -91,15 +96,18 @@ public class BattleUI : MonoBehaviour
             attackCountRight.text = "" + battleSimulation.AttackerAttackCount;
             dmgValueRight.text = ""+ battleSimulation.AttackerDamage;
             hitValueRight.text = "" + battleSimulation.AttackerHit;
+            critValueRight.text = "" + battleSimulation.AttackerCrit;
             if (battleSimulation.DefenderAttackCount > 0)
             {
                 dmgValue.text = "" + battleSimulation.DefenderDamage;
                 hitValue.text = "" + battleSimulation.DefenderHit;
+                critValue.text = "" + battleSimulation.DefenderCrit;
             }
             else
             {
                 dmgValue.text = "-";
                 hitValue.text = "-" ;
+                critValue.text = "-" ;
             }
         }
 
