@@ -80,15 +80,9 @@ namespace Game.Mechanics
                 Debug.Log("Add LevelUpAnimation!");
                 AnimationQueue.Add(((IAnimation) levelUpRenderer).Play);
             }
-            
-            // unit.Stats.MaxHp += statIncreases[0];
-            // unit.Stats.MaxSp += statIncreases[1];
-            // unit.Stats.STR += statIncreases[2];
-            // unit.Stats.INT += statIncreases[3];
-            // unit.Stats.AGI += statIncreases[4];
-            // unit.Stats.DEX += statIncreases[5];
-            // unit.Stats.Armor += statIncreases[6];
-            // unit.Stats.FAITH += statIncreases[7];
+
+            unit.Stats.Attributes.Update(statIncreases);
+           
         }
 
         public void DistributeExperience(IBattleActor attacker, IBattleActor defender)

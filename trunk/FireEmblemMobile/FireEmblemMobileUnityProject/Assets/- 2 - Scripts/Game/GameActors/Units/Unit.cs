@@ -87,6 +87,10 @@ namespace Game.GameActors.Units
                 hp = value > stats.MaxHp ? stats.MaxHp : value;
               
                 if (hp <= 0) hp = 0;
+                if (!IsAlive())
+                {
+                    Die();
+                }
                 HpValueChanged?.Invoke();
             }
         }
@@ -165,6 +169,7 @@ namespace Game.GameActors.Units
             // }
 
             stats.Initialize();
+            
             if(hp==-1)//hp has never been set
                 hp = stats.MaxHp;
             // sp = stats.MaxSp;
@@ -173,6 +178,8 @@ namespace Game.GameActors.Units
             ExperienceManager.ExpGained += ExpGained;
            
         }
+
+        
 
         private void ExpGained(Vector3 drainPos, int expBefore, int expGained)
         {

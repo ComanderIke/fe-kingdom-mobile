@@ -106,6 +106,8 @@ namespace Game.GUI
                   
             }
             fill.fillAmount = (expVal) / 100f;
+            if (Math.Abs(fill.fillAmount - 1) < 0.1f)
+                fill.fillAmount = 0;
         }
     }
 }

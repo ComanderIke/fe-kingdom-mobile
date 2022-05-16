@@ -26,20 +26,46 @@ public class UIFactionCharacterCircleController : MonoBehaviour,IClickedReceiver
     public UICharacterViewController characterView;
     public GameObject layout;
     // Start is called before the first frame update
+    private void OnDisable()
+    {
+        Unit.UnitDied -= DeleteUI;
+    }
+
     public void Show(List<Unit> units)
     {
         this.units = units;
+        Unit.UnitDied -= DeleteUI;
+        Unit.UnitDied += DeleteUI;
         if(characterUIgGameObjects==null||characterUIgGameObjects.Count!= units.Count)
             SpawnGOs();
         int cnt = 0;
         foreach (var unit in units)
         {
+            if(!unit.IsAlive())
+                continue;
             unit.visuals.UnitCharacterCircleUI = characterUIs[cnt];
+           
             characterUIs[cnt].Show(unit);
             cnt++;
         }
     }
 
+    private void DeleteUI(Unit died)
+    {
+        int cnt = 0;
+        foreach (var unit in units)
+        {
+            if (unit == died)
+            {
+                GameObject.Destroy(characterUIs[cnt]);
+                break;
+            }
+
+            cnt++;
+        }
+        layout.SetActive(false);
+        layout.SetActive(true);
+    }
     public void SelectUnit(Unit u)
     {
         int cnt = 0;

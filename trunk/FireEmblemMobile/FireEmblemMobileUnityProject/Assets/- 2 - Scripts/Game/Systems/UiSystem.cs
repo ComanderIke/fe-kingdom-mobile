@@ -100,13 +100,13 @@ namespace Game.GUI
         }
         public void SelectedEnemyCharacter(IGridActor actor)
         {
-            if(actor is Unit u)
-                enemyCharacterUI.Show(u);
+            // if(actor is Unit u)
+            //     enemyCharacterUI.Show(u);
         }
         private void DeselectedCharacter(IGridActor actor)
         {
             //characterUI.Hide();
-            enemyCharacterUI.Hide();
+            // enemyCharacterUI.Hide();
         }
         // #region Events
         // #endregion

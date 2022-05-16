@@ -68,6 +68,13 @@ namespace Game.GameActors.Units.Numbers
 
         public void Initialize()
         {
+            Attributes.OnAttributesUpdated -= AttributesUpdated;
+            
+            MaxHp = Attributes.CON*Attributes.CON_HP_Mult;
+        }
+
+        private void AttributesUpdated()
+        {
             MaxHp = Attributes.CON*Attributes.CON_HP_Mult;
         }
     }
