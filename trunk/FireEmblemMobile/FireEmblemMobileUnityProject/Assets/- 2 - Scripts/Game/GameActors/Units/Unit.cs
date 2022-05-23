@@ -214,6 +214,7 @@ namespace Game.GameActors.Units
 
         public void Die()
         {
+            Debug.Log("Die: " + name);
             UnitDied(this);
             Faction.RemoveUnit(this);
             GameTransformManager.Die();

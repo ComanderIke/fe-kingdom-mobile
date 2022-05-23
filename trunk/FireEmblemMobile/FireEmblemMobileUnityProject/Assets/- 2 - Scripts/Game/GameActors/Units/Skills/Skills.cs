@@ -7,7 +7,7 @@ namespace Game.GameActors.Units.Skills
     [Serializable]
     public abstract class Skill: ScriptableObject, ITargetableObject
     {
-        private const int MAX_LEVEL = 10;
+
         public Sprite Icon;
 
         public GameObject AnimationObject;
@@ -17,6 +17,7 @@ namespace Game.GameActors.Units.Skills
         public int CooldownReduction { get; private set; } = 0;
 
         public int CurrentCooldown { get; private set; }
+        public int MaxLevel = 1;
 
         public string Description;
 

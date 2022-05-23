@@ -16,8 +16,6 @@ namespace Game.GUI
 {
     public class UiSystem : MonoBehaviour, IEngineSystem
     {
-        public ICharacterUI characterUI;
-        public ICharacterUI enemyCharacterUI;
         public IAttackPreviewUI attackPreviewUI;
         public IObjectiveUI objectiveUI;
         public IUnitPlacementUI unitPlacementUI;

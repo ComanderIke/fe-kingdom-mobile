@@ -39,7 +39,7 @@ public class UICharacterViewController : MonoBehaviour
     
     public IStatBar HPBar;
     public TextMeshProUGUI hpText;
-    
+    public SkillTreeUI skillTreeUI;
     public Image image;
 
     void Awake(){
@@ -47,6 +47,10 @@ public class UICharacterViewController : MonoBehaviour
         //     dropArea.OnDropHandler += OnItemDropped;
     }
 
+    public void SkillTreeClicked()
+    {
+        skillTreeUI.Show(unit);
+    }
     // private void OnItemDropped(UIDragable dragable)
     // {
     //     Debug.Log("Item Dropped!");

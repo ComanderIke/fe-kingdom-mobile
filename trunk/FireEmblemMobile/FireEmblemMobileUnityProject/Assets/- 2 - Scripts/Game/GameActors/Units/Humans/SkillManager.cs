@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Game.GameActors.Units.Skills;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game.GameActors.Units.Humans
 {
@@ -13,6 +14,10 @@ namespace Game.GameActors.Units.Humans
         public List<Skill> Skills;
         [SerializeField]
         public Skill Favourite;
+        [SerializeField]
+        public int SkillPoints=0;
+
+        [FormerlySerializedAs("SkillTree")] [SerializeField] public SkillTree[] SkillTrees;
 
         
         public SkillManager(SkillManager sm)
@@ -46,5 +51,21 @@ namespace Game.GameActors.Units.Humans
             }
             return clone;
         }
+
+        public void LearnSkill(Skill clickedSkill)
+        {
+            if (SkillPoints >= 1)
+            {
+                Skills.Add(clickedSkill);
+                SkillPoints--;
+            }
+            else
+            {
+                Debug.LogError("Not enough SkillPoints to learn new skill!");
+            }
+        }
     }
+
+    
+    
 }

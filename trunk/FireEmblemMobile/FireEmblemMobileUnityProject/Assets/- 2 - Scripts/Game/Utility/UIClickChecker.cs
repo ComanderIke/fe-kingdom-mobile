@@ -14,21 +14,21 @@ namespace __2___Scripts.Game.Utility
             pointer.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);;
             List<RaycastResult> raycastResults = new List<RaycastResult>();
             EventSystem.current.RaycastAll(pointer, raycastResults);
-            Debug.Log("Raycast Position: " + pointer.position);
+            //Debug.Log("Raycast Position: " + pointer.position);
  
             if (raycastResults.Count > 0)
             {
-                Debug.Log("Results: " + raycastResults.Count);
+                //Debug.Log("Results: " + raycastResults.Count);
                 foreach (var go in raycastResults)
                 {
                     if (!go.gameObject.CompareTag("Grid"))
                     {
-                        Debug.Log("RAYCAST NOT GRID: "+go.gameObject.name);
+                        //Debug.Log("RAYCAST NOT GRID: "+go.gameObject.name);
                        
                     }
                     else
                     {
-                        Debug.Log("RAYCAST GRID: "+go.gameObject.name);
+                        //Debug.Log("RAYCAST GRID: "+go.gameObject.name);
                     }
                 }
             }

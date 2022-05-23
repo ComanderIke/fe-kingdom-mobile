@@ -72,7 +72,13 @@ namespace Game.GameActors.Units.OnGameObject
 
         public void Die()
         {
-            Destroy();
+            if (GameObject == null)
+            {
+                Debug.Log("GameObject is null: ");
+                return;
+            }
+            GameObject.SetActive(false);
+            //Destroy();
         }
     }
 }
