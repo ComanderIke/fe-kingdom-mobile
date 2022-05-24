@@ -7,7 +7,7 @@ namespace Game.GameActors.Items.Weapons
 {
     [Serializable]
     [CreateAssetMenu(menuName = "GameData/Items/Consumables/HealthPotion", fileName = "HealthPotion")]
-    public class Healthpotion : Consumable
+    public class Healthpotion : ConsumableItem
     {
         public int strength;
         public GameObject healEffect;

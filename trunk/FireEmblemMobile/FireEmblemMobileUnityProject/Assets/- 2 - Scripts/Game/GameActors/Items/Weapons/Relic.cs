@@ -15,10 +15,7 @@ namespace Game.GameActors.Items.Weapons
         //public List<WeaponMixin> WeaponMixins;
 
 
-        public override void Use(Human character)
-        {
-            base.Use(character);
-        }
+        
         
        
     }

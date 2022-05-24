@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Game.GameActors.Items;
 using Game.GameActors.Items.Weapons;
+using Game.WorldMapStuff.Model;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Humans
@@ -28,9 +29,9 @@ namespace Game.GameActors.Units.Humans
             Items.Remove(i);
         }
 
-        public void UseItem(Item i)
+        public void UseItem(ConsumableItem i, Convoy convoy)
         {
-            i.Use(Owner);
+            i.Use(Owner, convoy);
             if (i.NumberOfUses <= 0) Items.Remove(i);
         }
 

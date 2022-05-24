@@ -81,6 +81,11 @@ namespace Game.Mechanics
                 AnimationQueue.Add(((IAnimation) levelUpRenderer).Play);
             }
 
+            if (unit.ExperienceManager.Level % 2 == 0)
+            {
+                unit.SkillManager.SkillPoints += 1;
+            }
+
             unit.Stats.Attributes.Update(statIncreases);
            
         }
@@ -94,7 +99,6 @@ namespace Game.Mechanics
                 var exp = CalculateExperiencePoints(attacker, defender);
                 if (exp != 0)
                 {
-                    Debug.Log("EXP Renderer null?");
 
                     Debug.Log("Update EXP");
                     var expRenderer = ((Unit)attacker).visuals.UnitCharacterCircleUI.GetExpRenderer();

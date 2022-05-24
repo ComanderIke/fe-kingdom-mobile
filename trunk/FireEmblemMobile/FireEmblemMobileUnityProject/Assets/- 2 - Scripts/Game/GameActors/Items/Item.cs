@@ -1,29 +1,20 @@
 using System;
-using System.Collections.Generic;
-using Game.GameActors.Units.Humans;
 using Game.Mechanics;
 using UnityEngine;
 
 namespace Game.GameActors.Items
 {
-    public enum ItemTarget
-    {
-        Self,
-        Ally,
-        Enemy
-    }
+    
+
     [Serializable]
     public abstract class Item : ScriptableObject, ICloneable, ITargetableObject
     {
         public string Name;
         public string Description;
-        public List<ItemMixin> Mixins;
-        public int NumberOfUses;
         public int cost;
 
         [Header("ItemAttributes")] public Sprite Sprite;
-       
-        public ItemTarget target;
+        
 
         public override string ToString()
         {
@@ -41,10 +32,7 @@ namespace Game.GameActors.Items
         {
             return Sprite;
         }
-        public virtual void Use(Human character)
-        {
-            foreach (var mixin in Mixins) mixin.Use(character);
-        }
+        
 
         public object Clone()
         {

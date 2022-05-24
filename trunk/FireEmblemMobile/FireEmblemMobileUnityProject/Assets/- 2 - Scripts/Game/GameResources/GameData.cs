@@ -82,6 +82,7 @@ namespace Game.GameResources
         }
         public Human GetHumanBlueprint(string name)
         {
+            Debug.Log("name: " + name);
             return Instantiate(humanBlueprints.Find(a => a.bluePrintID == name));
         }
 

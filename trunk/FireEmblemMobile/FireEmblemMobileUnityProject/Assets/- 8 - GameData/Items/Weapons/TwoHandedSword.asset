@@ -12,16 +12,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4bcb2be67000cc48bbfb560d77890ea, type: 3}
   m_Name: TwoHandedSword
   m_EditorClassIdentifier: 
+  Name: 
   Description: A bow made of wood
-  Mixins: []
-  NumberOfUses: 30
   cost: 200
   Sprite: {fileID: 21300000, guid: 5fd50594014b70e48bd6993443d46b32, type: 3}
-  EquipmentSlotType: 0
+  EquipmentSlotType: 1
   AttackRanges: 01000000
-  Dmg: 5
-  Hit: 70
-  Weight: 1
-  WeaponMixins: []
+  WeaponAttributes:
+  - Dmg: 5
+    Hit: 65
+    Crit: 0
+    Weight: 3
+    WeaponMixins: []
+    upgradeGoldCost: 50
+    upgradeSmithingStoneCost: 1
+  - Dmg: 8
+    Hit: 70
+    Crit: 0
+    Weight: 4
+    WeaponMixins: []
+    upgradeGoldCost: 100
+    upgradeSmithingStoneCost: 2
+  - Dmg: 10
+    Hit: 75
+    Crit: 10
+    Weight: 5
+    WeaponMixins: []
+    upgradeGoldCost: 200
+    upgradeSmithingStoneCost: 3
+  weaponLevel: 1
+  maxLevel: 3
   WeaponType: 0
   DamageType: 0

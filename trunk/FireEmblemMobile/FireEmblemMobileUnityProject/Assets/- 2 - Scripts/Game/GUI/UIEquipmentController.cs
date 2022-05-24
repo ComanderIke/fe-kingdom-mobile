@@ -8,16 +8,16 @@ using UnityEngine.UI;
 public class UIEquipmentController:MonoBehaviour
 {
     public TextMeshProUGUI Atk;
-    public TextMeshProUGUI Armor;
-    public Image ArmorSlot;
+
+
     public Image WeaponSlot;
     public Image RelicSlot;
-    public Image ConsumeableSlot;
+
     public Color inActiveColor;
     public void Show(Human unit)
     {
         Atk.SetText(""+unit.BattleComponent.BattleStats.GetDamage());
-        Armor.SetText(""+unit.BattleComponent.BattleStats.GetPhysicalResistance());
+
 
         if (unit.EquippedWeapon != null)
         {
@@ -28,14 +28,7 @@ public class UIEquipmentController:MonoBehaviour
         {
             WeaponSlot.color = inActiveColor;
         }
-        if(unit.EquippedArmor!=null){
-            ArmorSlot.sprite = unit.EquippedArmor.Sprite;
-            ArmorSlot.color=Color.white;
-        }
-        else
-        {
-            ArmorSlot.color = inActiveColor;
-        }
+ 
 
         if (unit.EquippedRelic != null)
         {
@@ -47,14 +40,6 @@ public class UIEquipmentController:MonoBehaviour
             RelicSlot.color = inActiveColor;
         }
 
-        if (unit.EquippedConsumable != null)
-        {
-            ConsumeableSlot.sprite = unit.EquippedConsumable.Sprite;
-            ConsumeableSlot.color=Color.white;
-        }
-        else
-        {
-            ConsumeableSlot.color = inActiveColor;
-        }
+     
     }
 }

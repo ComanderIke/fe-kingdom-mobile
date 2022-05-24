@@ -17,8 +17,6 @@ namespace Game.GameActors.Items.Weapons
 
     public enum EquipmentSlotType
     {
-        Consumable,
-        Armor,
         Relic,
         Weapon
     }

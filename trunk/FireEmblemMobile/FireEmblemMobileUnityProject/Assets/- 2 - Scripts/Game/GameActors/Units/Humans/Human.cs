@@ -18,9 +18,8 @@ namespace Game.GameActors.Units.Humans
 
        // public Inventory Inventory;
 
-       public Armor EquippedArmor;
        public Relic EquippedRelic;
-       public Consumable EquippedConsumable;
+
 
        
 
@@ -86,7 +85,7 @@ namespace Game.GameActors.Units.Humans
 
             switch (e.EquipmentSlotType)
             {
-                case EquipmentSlotType.Armor: Debug.LogError("TODO Equip Armor!"); break;
+                //case EquipmentSlotType.Armor: Debug.LogError("TODO Equip Armor!"); break;
                 case EquipmentSlotType.Weapon: 
                     Equip((Weapon) e);break;
                 case EquipmentSlotType.Relic: Debug.LogError("TODO Equip Relic!"); break;

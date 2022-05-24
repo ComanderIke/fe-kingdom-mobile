@@ -104,21 +104,21 @@ namespace Game.Mechanics
         
         private void ItemSelected(Item item)
         {
-            //Debug.Log("Item Selected2"+item.target);
-            if (item.target == ItemTarget.Self)
+            if (item is ConsumableItem consumableItem)
             {
-                if (item is Consumable cons)
+                //Debug.Log("Item Selected2"+item.target);
+                if (consumableItem.target == ItemTarget.Self)
                 {
                     var selectedCharacter = gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter;
-                    //Debug.Log("SelectedCharacter: " + selectedCharacter);
-                    cons.Use((Human)selectedCharacter, Player.Instance.Party.Convoy);
-                    new GameplayInput().Wait(selectedCharacter);
-                    new GameplayInput().ExecuteInputActions(null);
+                        //Debug.Log("SelectedCharacter: " + selectedCharacter);
+                        consumableItem.Use((Human)selectedCharacter, Player.Instance.Party.Convoy);
+                        new GameplayInput().Wait(selectedCharacter);
+                        new GameplayInput().ExecuteInputActions(null);
                 }
-            }
-            else
-            {
-                playerPhaseState.Feed(PPStateTrigger.ChooseTarget);
+                else
+                {
+                    playerPhaseState.Feed(PPStateTrigger.ChooseTarget);
+                }
             }
         }
         private void OnSelectedCharacter(IGridActor character)

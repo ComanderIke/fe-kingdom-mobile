@@ -24,6 +24,7 @@ namespace Game.WorldMapStuff.Model
         public Convoy Convoy;
         
         public int ActiveUnitIndex = 0;
+        public int SmithingStones = 2;
         public int Money
         {
             get

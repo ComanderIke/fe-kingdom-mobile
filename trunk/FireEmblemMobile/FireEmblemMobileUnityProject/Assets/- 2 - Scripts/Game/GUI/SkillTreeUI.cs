@@ -9,7 +9,7 @@ public class SkillTreeUI : MonoBehaviour
     // Start is called before the first frame update
     public SkillTreeRenderer[] skillTreeRenderer;
     public TextMeshProUGUI skillPoints;
-
+    public Canvas canvas;
     private Unit u;
     public void Show(Unit u)
     {
@@ -21,6 +21,13 @@ public class SkillTreeUI : MonoBehaviour
             skillTreeRenderer[cnt].Show(skillTree, u, this);
             cnt++;
         }
+
+        canvas.enabled = true;
+    }
+
+    public void Hide()
+    {
+        canvas.enabled = false;
     }
 
     public void LearnSkillClicked(SkillUI clickedSkill)

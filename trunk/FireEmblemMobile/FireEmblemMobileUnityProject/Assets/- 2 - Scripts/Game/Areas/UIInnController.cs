@@ -46,17 +46,25 @@ public class UIInnController : MonoBehaviour
         FindObjectOfType<UICharacterViewController>().Hide();
     }
 
+    public void SpecialClicked()
+    {
+        inn.Special(party);
+        ContinueClicked();
+    }
     public void DrinkClicked()
     {
-        
+        inn.Drink(party);
+        ContinueClicked();
     }
     public void FoodCLicked()
     {
-        
+        inn.Eat(party);
+        ContinueClicked();
     }
     public void RestClicked()
     {
-        
+        inn.Rest(party);
+        ContinueClicked();
     }
 
     public void AcceptQuestClicked()
