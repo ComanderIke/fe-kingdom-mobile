@@ -23,6 +23,8 @@ public class SkillUI : MonoBehaviour
     public Color notLearnable;
     public Color locked;
     private SkillTreeRenderer controller;
+    private SkillState skillState;
+
     public void Setup(Skill skill, SkillState skillState, SkillTreeRenderer controller, List<SkillUI> parents=null)
     {
         this.controller = controller;
@@ -31,6 +33,7 @@ public class SkillUI : MonoBehaviour
         connectionsToParents = new List<GameObject>();
         skillIcon.sprite = skill.Icon;
         skillLevelText.text = ""+skill.Level+"/"+skill.MaxLevel;
+        this.skillState = skillState;
         switch (skillState)
         {
             case SkillState.Learnable:
@@ -56,6 +59,10 @@ public class SkillUI : MonoBehaviour
                 connection.GetComponent<RectTransform>().sizeDelta =
                     new Vector2((int)(Vector2.Distance(parent.transform.position, this.transform.position)), 100);
                 connectionsToParents.Add(connection);
+                if(parent.skillState == SkillState.Learned&&skillState==SkillState.Learned)
+                    connection.GetComponent<Image>().color = Color.white;
+                else
+                    connection.GetComponent<Image>().color = new Color(1,1,1, 0.3f);
             }
         }
 

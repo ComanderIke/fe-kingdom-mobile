@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class SkillTreeRenderer : MonoBehaviour
 {
     // Start is called before the first frame update
-     
+
     public Image skillPrefab;
     private List<SkillUI> skills;
     public Transform[] rows;
@@ -24,47 +24,92 @@ public class SkillTreeRenderer : MonoBehaviour
         {
             row.transform.DeleteAllChildren();
         }
+
         skills = new List<SkillUI>();
-        
-        skillsPerRow = new [] { new List<SkillUI>(),new List<SkillUI>(),new List<SkillUI>(),new List<SkillUI>(),new List<SkillUI>()};
-        
-        foreach (var skillEntry in skillTree.skills)
+
+        skillsPerRow = new[]
+            { new List<SkillUI>(), new List<SkillUI>(), new List<SkillUI>(), new List<SkillUI>(), new List<SkillUI>() };
+
+        foreach (var skillEntry in skillTree.skillsRow0)
         {
-            var go=Instantiate(skillPrefab, rows[skillEntry.depth]);
-            go.name=skillEntry.skill.name;
-            var skillUI=go.GetComponent<SkillUI>();
-            skillsPerRow[skillEntry.depth].Add(skillUI);
-            skills.Add(skillUI);
-           
+            InitSkill(skillEntry,0);
         }
-        this.CallWithDelay(()=>SetupSkills(u),0.05f);
+        foreach (var skillEntry in skillTree.skillsRow1)
+        {
+            InitSkill(skillEntry,1);
+        }
+        foreach (var skillEntry in skillTree.skillsRow2)
+        {
+            InitSkill(skillEntry,2);
+        }
+        foreach (var skillEntry in skillTree.skillsRow3)
+        {
+            InitSkill(skillEntry,3);
+        }
+        foreach (var skillEntry in skillTree.skillsRow4)
+        {
+            InitSkill(skillEntry,4);
+        }
+
+        this.CallWithDelay(() => SetupSkills(u), 0.05f);
     }
 
+    void InitSkill(SkillTreeEntry skillEntry, int depth)
+    {
+        var go = Instantiate(skillPrefab, rows[depth]);
+        go.name = skillEntry.skill.name;
+        var skillUI = go.GetComponent<SkillUI>();
+        skillsPerRow[depth].Add(skillUI);
+        skills.Add(skillUI);
+    }
+
+    void SetupSkill(SkillTreeEntry skillEntry, Unit u, int cnt, int depth=0)
+    {
+        var skillUI = skills[cnt];
+        SkillState state = SkillState.NotLearnable;
+        if (u.ExperienceManager.Level >= skillEntry.levelRequirement)
+            state = SkillState.Learnable;
+        if (u.SkillManager.Skills.Contains(skillEntry.skill))
+            state = SkillState.Learned;
+        if (depth == 0)
+            skillUI.Setup(skillEntry.skill, state, this);
+        else
+            skillUI.Setup(skillEntry.skill, state, this, skillsPerRow[depth - 1]);
+    }
     void SetupSkills(Unit u)
-    {
-        Debug.Log("TODO SKILLSTATE CHECK REQUIREMENTS");
-        int cnt = 0;
-        foreach (var skillEntry in skillTree.skills)
         {
-            var skillUI = skills[cnt];
-            SkillState state = SkillState.NotLearnable;
-            if (u.ExperienceManager.Level >= skillEntry.levelRequirement)
-                state = SkillState.Learnable;
-            if (u.SkillManager.Skills.Contains(skillEntry.skill))
-                state = SkillState.Learned;
-            if (skillEntry.depth == 0)
-                skillUI.Setup(skillEntry.skill, state, this);
-            else
-                skillUI.Setup(skillEntry.skill, state, this, skillsPerRow[skillEntry.depth - 1]);
-            cnt++;
+            Debug.Log("TODO SKILLSTATE CHECK REQUIREMENTS");
+            int cnt = 0;
+            foreach (var skillEntry in skillTree.skillsRow0)
+            {
+                SetupSkill(skillEntry,u, cnt,0);
+                cnt++;
+            }
+            foreach (var skillEntry in skillTree.skillsRow1)
+            {
+                SetupSkill(skillEntry,u, cnt,1);
+                cnt++;
+            }
+            foreach (var skillEntry in skillTree.skillsRow2)
+            {
+                SetupSkill(skillEntry,u, cnt,2);
+                cnt++;
+            }
+            foreach (var skillEntry in skillTree.skillsRow3)
+            {
+                SetupSkill(skillEntry,u, cnt,3);
+                cnt++;
+            }
+            foreach (var skillEntry in skillTree.skillsRow4)
+            {
+                SetupSkill(skillEntry,u, cnt,4);
+                cnt++;
+            }
+        }
+
+
+        public void LearnClicked(SkillUI skillUI)
+        {
+            controller.LearnSkillClicked(skillUI);
         }
     }
-
-   
-
-
-    public void LearnClicked(SkillUI skillUI)
-    {
-        controller.LearnSkillClicked(skillUI);
-    }
-}

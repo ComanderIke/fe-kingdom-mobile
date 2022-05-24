@@ -6,7 +6,15 @@ using UnityEngine;
 public class SkillTree :ScriptableObject
 {
     [SerializeField]
-    public List<SkillTreeEntry> skills;
+    public List<SkillTreeEntry> skillsRow0;
+    [SerializeField]
+    public List<SkillTreeEntry> skillsRow1;
+    [SerializeField]
+    public List<SkillTreeEntry> skillsRow2;
+    [SerializeField]
+    public List<SkillTreeEntry> skillsRow3;
+    [SerializeField]
+    public List<SkillTreeEntry> skillsRow4;
 
 }
 
@@ -14,8 +22,7 @@ public class SkillTree :ScriptableObject
 public class SkillTreeEntry
 {
     public int levelRequirement;
-    public int[] statRequirements;
-    public Skill[] skillRequirements;
-    public int depth;
+   // public int[] statRequirements;
+    //public Skill[] skillRequirements;
     public Skill skill;
 }
