@@ -4,9 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum SkillState{
-Learned, Learnable, NotLearnable, Locked
-}
 public class SkillUI : MonoBehaviour
 {
     public GameObject connectionPrefab;
@@ -24,6 +21,7 @@ public class SkillUI : MonoBehaviour
     public Color locked;
     private SkillTreeRenderer controller;
     private SkillState skillState;
+    public float offset = 30;
 
     public void Setup(Skill skill, SkillState skillState, SkillTreeRenderer controller, List<SkillUI> parents=null)
     {
@@ -49,20 +47,21 @@ public class SkillUI : MonoBehaviour
             {
                 var connection = Instantiate(connectionPrefab, this.transform);
 
-                connection.transform.localPosition = Vector3.zero;
-                Vector3 relative = transform.InverseTransformPoint(parent.transform.position);
-                Debug.Log("Self: "+this.gameObject.name+" Parent: " +parent.gameObject.name+" " +parent.transform.position+" "+this.transform.position);
+                connection.transform.localPosition = new Vector3(0,offset,0);
+                connection.transform.SetSiblingIndex(0);
+                Vector3 relative = connection.transform.InverseTransformPoint(parent.transform.position-new Vector3(0,offset,0));
+                //Debug.Log("Self: "+this.gameObject.name+" Parent: " +parent.gameObject.name+" " +parent.transform.position+" "+this.transform.position);
                 float angle = Mathf.Atan2(relative.x, relative.y) * Mathf.Rad2Deg;
-                Debug.Log("Angle: " + angle);
-                connection.transform.rotation = Quaternion.Euler(0, 0, -angle-90);
-                Debug.Log("Distance: " + Vector2.Distance(parent.transform.position, this.transform.position));
+             //   Debug.Log("Angle: " + angle);
+                connection.transform.rotation = Quaternion.Euler(0, 0, -angle);
+              //  Debug.Log("Distance: " + Vector2.Distance(parent.transform.position, this.transform.position));
                 connection.GetComponent<RectTransform>().sizeDelta =
-                    new Vector2((int)(Vector2.Distance(parent.transform.position, this.transform.position)), 100);
+                    new Vector2((int)(Vector2.Distance(parent.transform.position, connection.transform.position)-offset/2), 100);
                 connectionsToParents.Add(connection);
                 if(parent.skillState == SkillState.Learned&&skillState==SkillState.Learned)
                     connection.GetComponent<Image>().color = Color.white;
                 else
-                    connection.GetComponent<Image>().color = new Color(1,1,1, 0.3f);
+                    connection.GetComponent<Image>().color = new Color(1,1,1, 0.2f);
             }
         }
 
