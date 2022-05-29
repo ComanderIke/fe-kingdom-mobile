@@ -15,6 +15,7 @@ namespace Game.GameActors
         public int X => (int) transform.localPosition.x;
         public int Y => (int)transform.localPosition.y;
 
+        public SpriteRenderer spriteRenderer;
         void Update()
         {
             transform.localPosition = new Vector3((int) transform.localPosition.x, (int) transform.localPosition.y,

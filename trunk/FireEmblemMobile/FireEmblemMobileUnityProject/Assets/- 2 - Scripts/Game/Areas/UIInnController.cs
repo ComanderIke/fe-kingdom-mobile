@@ -29,14 +29,14 @@ public class UIInnController : MonoBehaviour
         this.inn = node.inn;
     Debug.Log(party);
        
-        for (int i=0; i<inn.shopItems.Count; i++)
-        {
-            bool affordable = party.money >= inn.shopItems[i].cost;
-            shopItems[i].SetValues(inn.shopItems[i], affordable);
-        }
-        questOption.SetValues(inn.quest);
-        recruitCharacter.SetValues(inn.recruitableCharacter);
-        FindObjectOfType<UICharacterViewController>().Show(party.members[party.ActiveUnitIndex]);
+        // for (int i=0; i<inn.shopItems.Count; i++)
+        // {
+        //     bool affordable = party.money >= inn.shopItems[i].cost;
+        //     shopItems[i].SetValues(inn.shopItems[i], affordable, this);
+        // }
+        //questOption.SetValues(inn.quest);
+        //recruitCharacter.SetValues(inn.recruitableCharacter);
+       // FindObjectOfType<UICharacterViewController>().Show(party.members[party.ActiveUnitIndex]);
     }
 
     public void ContinueClicked()
@@ -75,5 +75,10 @@ public class UIInnController : MonoBehaviour
     public void RecruitCharacterClicked()
     {
         
+    }
+
+    public void UpdateUI()
+    {
+        //
     }
 }

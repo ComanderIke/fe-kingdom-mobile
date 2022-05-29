@@ -48,7 +48,7 @@ public class ChurchEncounterNode : EncounterNode
         church = new Church();
         church.AddItem(new ShopItem(GameData.Instance.GetRandomRelic()));
         church.AddItem(new ShopItem(GameData.Instance.GetRandomMagic()));
-        church.AddItem(new ShopItem(GameData.Instance.GetRandomStaff()));
+        //church.AddItem(new ShopItem(GameData.Instance.GetRandomStaff()));
        
     }
 

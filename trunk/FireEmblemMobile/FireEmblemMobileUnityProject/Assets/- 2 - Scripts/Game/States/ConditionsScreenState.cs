@@ -13,7 +13,7 @@ namespace Game.States
     {
         private const float DELAY = 0.5f;
         private float time = 0;
-        public Chapter chapter;
+        public BattleMap chapter;
         
         public override void Enter()
         {

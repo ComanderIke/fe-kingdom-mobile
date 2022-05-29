@@ -41,27 +41,27 @@ namespace Game.GameActors.Items.Weapons
 
         public int GetDamage()
         {
-            return WeaponAttributes[weaponLevel].Dmg;
+            return WeaponAttributes[weaponLevel-1].Dmg;
         }
         public int GetHit()
         {
-            return WeaponAttributes[weaponLevel].Hit;
+            return WeaponAttributes[weaponLevel-1].Hit;
         }
         public int GetCrit()
         {
-            return WeaponAttributes[weaponLevel].Crit;
+            return WeaponAttributes[weaponLevel-1].Crit;
         }
         public int GetWeight()
         {
-            return WeaponAttributes[weaponLevel].Weight;
+            return WeaponAttributes[weaponLevel-1].Weight;
         }
         public int GetUpgradeCost()
         {
-            return WeaponAttributes[weaponLevel].upgradeGoldCost;
+            return WeaponAttributes[weaponLevel-1].upgradeGoldCost;
         }
         public int GetUpgradeSmithingStoneCost()
         {
-            return WeaponAttributes[weaponLevel].upgradeSmithingStoneCost;
+            return WeaponAttributes[weaponLevel-1].upgradeSmithingStoneCost;
         }
       
 
@@ -69,7 +69,7 @@ namespace Game.GameActors.Items.Weapons
 
         public void OnAttack(Unit attacker, Unit defender)
         {
-            foreach (var mixin in WeaponAttributes[weaponLevel].WeaponMixins) mixin.OnAttack(attacker, defender);
+            foreach (var mixin in WeaponAttributes[weaponLevel-1].WeaponMixins) mixin.OnAttack(attacker, defender);
         }
 
         public void Upgrade()
@@ -82,7 +82,7 @@ namespace Game.GameActors.Items.Weapons
         public object GetUpgradeableWeight()
         {
             if (weaponLevel + 1 <= maxLevel)
-                return WeaponAttributes[weaponLevel+1].Weight;
+                return WeaponAttributes[weaponLevel].Weight;
             else
                 return 0;
         }
@@ -90,7 +90,7 @@ namespace Game.GameActors.Items.Weapons
         public object GetUpgradeableCrit()
         {
             if (weaponLevel + 1 <= maxLevel)
-                return WeaponAttributes[weaponLevel+1].Crit;
+                return WeaponAttributes[weaponLevel].Crit;
             else
                 return 0;
         }
@@ -98,7 +98,7 @@ namespace Game.GameActors.Items.Weapons
         public object GetUpgradeableHit()
         {
             if (weaponLevel + 1 <= maxLevel)
-                return WeaponAttributes[weaponLevel+1].Hit;
+                return WeaponAttributes[weaponLevel].Hit;
             else
                 return 0;
         }
@@ -106,7 +106,7 @@ namespace Game.GameActors.Items.Weapons
         public object GetUpgradeableDmg()
         {
             if (weaponLevel + 1 <= maxLevel)
-                return WeaponAttributes[weaponLevel + 1].Dmg;
+                return WeaponAttributes[weaponLevel].Dmg;
             else
                 return 0;
         }

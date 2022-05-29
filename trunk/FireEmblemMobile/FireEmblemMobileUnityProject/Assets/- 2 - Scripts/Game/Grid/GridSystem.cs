@@ -19,23 +19,26 @@ namespace Game.Map
     {
         public const float GRID_X_OFFSET = 0.0f;
         private string MapName;
-        [HideInInspector]
-        public GridData GridData;
+ 
         public Tile[,] Tiles { get; private set; }
         public GridRenderer GridRenderer { get; set; }
         public GridLogic GridLogic { get; set; }
         public NodeHelper NodeHelper;
         public IPathFinder pathFinder { get; set; }
         public GridCursor cursor { get; set; }
+        public int width;
+        public int height;
 
         private void Awake()
         {
             Tiles = GetComponent<GridBuilder>().GetTiles();
-            GridData = GameAssets.Instance.grid.gridData;
+
             cursor = new GridCursor();
             GridRenderer = new GridRenderer(this);
             GridLogic = new GridLogic(this);
-            NodeHelper = new NodeHelper(GridData.width, GridData.height);
+            width = GridGameManager.Instance.BattleMap.width;
+            height= GridGameManager.Instance.BattleMap.height;
+            NodeHelper = new NodeHelper(width,height);
         }
 
         public void Init()
@@ -134,9 +137,9 @@ namespace Game.Map
         }
         public void HideMoveRange()//In Order to work with ActionEvent!!!
         {
-            for (int i = 0; i < GridData.width; i++)
+            for (int i = 0; i < width; i++)
             {
-                for (int j = 0; j < GridData.height; j++)
+                for (int j = 0; j <height; j++)
                 {
                     Tiles[i, j].Reset();
                 }
@@ -254,13 +257,13 @@ namespace Game.Map
         }
         public bool IsOutOfBounds(int x, int y)
         {
-            return x < 0 || x >= GridData.width || y < 0 ||
-                   y >= GridData.height;
+            return x < 0 || x >= width || y < 0 ||
+                   y >= height;
         }
         public bool IsOutOfBounds(Vector2 pos)
         {
-            return pos.x < 0 || pos.x >= GridData.width || pos.y < 0 ||
-                   pos.y >= GridData.height;
+            return pos.x < 0 || pos.x >= width || pos.y < 0 ||
+                   pos.y >= height;
         }
 
         public Tile GetTile(int x, int y)

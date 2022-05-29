@@ -15,7 +15,6 @@ namespace Game.Grid
         private readonly GridGameManager gridGameManager;
         private Tile[,] Tiles { get; }
         private GridSystem GridManager { get; }
-        private readonly GridData gridData;
         public GridSessionData gridSessionData;
         public ITileChecker tileChecker { get; set; }
 
@@ -25,8 +24,7 @@ namespace Game.Grid
             GridManager = gridManager;
             gridSessionData = new GridSessionData();
             Tiles = gridManager.Tiles;
-            gridData = gridManager.GridData;
-           
+
         }
 
         
@@ -112,12 +110,12 @@ namespace Game.Grid
 
         public bool IsOutOfBounds(Vector2 pos)
         {
-            return pos.x < 0 || pos.y < 0 || pos.x >= gridData.width || pos.y >= gridData.height;
+            return pos.x < 0 || pos.y < 0 || pos.x >= GridManager.width || pos.y >= GridManager.height;
         }
 
         public bool CheckField(int x, int y, IGridActor unit, int range)
         {
-            if (x >= 0 && y >= 0 && x < gridData.width && y < gridData.height)
+            if (x >= 0 && y >= 0 && x < GridManager.width && y < GridManager.height)
             {
                 var field = Tiles[x, y];
                 if (unit.GridComponent.CanMoveOnTo(field))
@@ -138,7 +136,7 @@ namespace Game.Grid
 
         public bool CheckAttackField(int x, int y)
         {
-            return x >= 0 && y >= 0 && x < gridData.width && y < gridData.height;
+            return x >= 0 && y >= 0 && x < GridManager.width && y < GridManager.height;
         }
 
         public bool IsFieldFreeAndActive(int x, int y)
@@ -186,7 +184,7 @@ namespace Game.Grid
 
         public bool IsValidLocation(IGridActor unit, int sx, int sy, int x, int y, bool isAdjacent)
         {
-            bool invalid = (x < 0) || (y < 0) || (x >= gridData.width) || (y >= gridData.height);
+            bool invalid = (x < 0) || (y < 0) || (x >= GridManager.width) || (y >= GridManager.height);
             var tile = Tiles[x, y];
             if ((!invalid) && ((sx != x) || (sy != y)))
             {
@@ -214,7 +212,7 @@ namespace Game.Grid
 
         public bool IsTileAccessible(int x, int y, IGridActor character)
         {
-            bool invalid = (x < 0) || (y < 0) || (x >= gridData.width) || (y >= gridData.height);
+            bool invalid = (x < 0) || (y < 0) || (x >= GridManager.width) || (y >= GridManager.height);
             var tile = Tiles[x, y];
             if (!invalid)
             {

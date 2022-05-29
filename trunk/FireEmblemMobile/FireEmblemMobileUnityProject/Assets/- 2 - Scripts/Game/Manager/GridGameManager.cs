@@ -27,6 +27,7 @@ namespace Game.Manager
         private List<IEngineSystem> Systems { get; set; }
         public FactionManager FactionManager { get; set; }
         public GridGameStateManager GameStateManager { get; set; }
+        public BattleMap BattleMap { get; set; }
 
         private void Awake()
         {
@@ -99,7 +100,7 @@ namespace Game.Manager
             // var battleRenderers = FindObjectsOfType<MonoBehaviour>().OfType<IBattleRenderer>();
             // GetSystem<BattleSystem>().BattleRenderer = battleRenderers.First();
             var gridSystem = GetSystem<GridSystem>();
-            var tileChecker = new GridTileChecker(gridSystem.Tiles, gridSystem.GridData.width, gridSystem.GridData.height);
+            var tileChecker = new GridTileChecker(gridSystem.Tiles, BattleMap.width, BattleMap.height);
             gridSystem.GridLogic.tileChecker = tileChecker;
             var pathFinder = new GridAStar(tileChecker);
             gridSystem.pathFinder = pathFinder;
@@ -114,8 +115,6 @@ namespace Game.Manager
             GameStateManager.BattleState.battleSystem = GetSystem<BattleSystem>();
             GameStateManager.BattleState.BattleAnimation = FindObjectsOfType<MonoBehaviour>().OfType<IBattleAnimation>().First();
             GameStateManager.BattleState.BattleAnimation.Hide();
-            var chapterConfig = FindObjectOfType<ChapterConfig>();
-            GameStateManager.UnitPlacementState.chapter = chapterConfig.chapter;
             GameStateManager.UnitPlacementState.UnitPlacementUI =  FindObjectsOfType<MonoBehaviour>().OfType<IUnitPlacementUI>().First();
             GameStateManager.PhaseTransitionState.phaseRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IPhaseRenderer>().First();
             GameStateManager.PlayerPhaseState.mainState.playerPhaseUI = FindObjectsOfType<MonoBehaviour>().OfType<IPlayerPhaseUI>().First();

@@ -8,7 +8,6 @@ namespace Game.GameResources
     [Serializable]
     public class GridResources
     {
-        public GridData gridData;
         public Material gridMaterial;
         public Sprite standardSprite;
         public MoveArrowVisual moveArrowVisual;

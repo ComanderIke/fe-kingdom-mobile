@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Game.WorldMapStuff.Model;
 using UnityEngine;
 
-public class UIChurchController : MonoBehaviour
+public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
 {
     public Canvas canvas;
     public ChurchEncounterNode node;
@@ -17,7 +17,7 @@ public class UIChurchController : MonoBehaviour
     private ShopItem selectedItem;
     private List<GameObject> instantiatedItems= new List<GameObject>();
  
-    private void UpdateUI()
+    public void UpdateUI()
     { 
         shopItems.Clear();
         for (int i = instantiatedItems.Count - 1; i >= 0; i--)
@@ -33,9 +33,14 @@ public class UIChurchController : MonoBehaviour
             shopItems.Add(go.GetComponent<UIShopItemController>());
             bool affordable = party.money >= item.cost;
     
-            shopItems[i].SetValues(item, affordable);
+            shopItems[i].SetValues(item, affordable, this);
         }
-        
+        if(church.shopItems.Count>=1)
+            selectedItemUI.Show(church.shopItems[0],  party.money >= church.shopItems[0].cost);
+        else
+        {
+            selectedItemUI.Hide();
+        }
     }
 
     public void BuyClicked()

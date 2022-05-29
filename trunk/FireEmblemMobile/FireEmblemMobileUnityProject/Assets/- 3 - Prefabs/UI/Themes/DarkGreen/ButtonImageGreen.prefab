@@ -34,10 +34,10 @@ RectTransform:
   m_Father: {fileID: 2064923176115300788}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 7.9}
-  m_SizeDelta: {x: 0, y: 92.7}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -30, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1719420234254311602
 CanvasRenderer:
@@ -147,7 +147,7 @@ PrefabInstance:
     - target: {fileID: 3538495385007584002, guid: 5eb73e42dc2db6542994450492710f3f,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: -0.00001335144
+      value: -25.700016
       objectReference: {fileID: 0}
     - target: {fileID: 3538495385007584002, guid: 5eb73e42dc2db6542994450492710f3f,
         type: 3}
@@ -192,7 +192,7 @@ PrefabInstance:
     - target: {fileID: 3538495385007584002, guid: 5eb73e42dc2db6542994450492710f3f,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -33.7
+      value: -20.850008
       objectReference: {fileID: 0}
     - target: {fileID: 3538495385007584002, guid: 5eb73e42dc2db6542994450492710f3f,
         type: 3}
@@ -211,8 +211,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3538495385007584003, guid: 5eb73e42dc2db6542994450492710f3f,
         type: 3}
+      propertyPath: m_text
+      value: skills
+      objectReference: {fileID: 0}
+    - target: {fileID: 3538495385007584003, guid: 5eb73e42dc2db6542994450492710f3f,
+        type: 3}
       propertyPath: m_fontSize
-      value: 40
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 3538495385007584003, guid: 5eb73e42dc2db6542994450492710f3f,
         type: 3}
@@ -228,7 +233,7 @@ PrefabInstance:
     - target: {fileID: 3538495385007584003, guid: 5eb73e42dc2db6542994450492710f3f,
         type: 3}
       propertyPath: m_fontSizeBase
-      value: 40
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 3538495385007584003, guid: 5eb73e42dc2db6542994450492710f3f,
         type: 3}
@@ -254,7 +259,7 @@ PrefabInstance:
     - target: {fileID: 962331462575283044, guid: faab818299f84464ca21b31975c1032d,
         type: 3}
       propertyPath: m_Name
-      value: ButtonImageGreen
+      value: SkillTreeOpenButton
       objectReference: {fileID: 0}
     - target: {fileID: 962331462575283045, guid: faab818299f84464ca21b31975c1032d,
         type: 3}
@@ -294,12 +299,12 @@ PrefabInstance:
     - target: {fileID: 962331462575283045, guid: faab818299f84464ca21b31975c1032d,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 200
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 962331462575283045, guid: faab818299f84464ca21b31975c1032d,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 120
+      value: 78
       objectReference: {fileID: 0}
     - target: {fileID: 962331462575283045, guid: faab818299f84464ca21b31975c1032d,
         type: 3}
@@ -339,12 +344,12 @@ PrefabInstance:
     - target: {fileID: 962331462575283045, guid: faab818299f84464ca21b31975c1032d,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -360
+      value: -582.5
       objectReference: {fileID: 0}
     - target: {fileID: 962331462575283045, guid: faab818299f84464ca21b31975c1032d,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -66
+      value: -80.3
       objectReference: {fileID: 0}
     - target: {fileID: 962331462575283045, guid: faab818299f84464ca21b31975c1032d,
         type: 3}
@@ -360,6 +365,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 962331462575283047, guid: faab818299f84464ca21b31975c1032d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 962331462575283047, guid: faab818299f84464ca21b31975c1032d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 962331462575283047, guid: faab818299f84464ca21b31975c1032d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 962331462575283047, guid: faab818299f84464ca21b31975c1032d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SkillTreeClicked
+      objectReference: {fileID: 0}
+    - target: {fileID: 962331462575283047, guid: faab818299f84464ca21b31975c1032d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UICharacterViewController, Game
+      objectReference: {fileID: 0}
+    - target: {fileID: 962331462575283047, guid: faab818299f84464ca21b31975c1032d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: faab818299f84464ca21b31975c1032d, type: 3}

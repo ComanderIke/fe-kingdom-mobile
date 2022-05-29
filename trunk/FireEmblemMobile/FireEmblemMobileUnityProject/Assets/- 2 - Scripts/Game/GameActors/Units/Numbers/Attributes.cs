@@ -66,5 +66,26 @@ namespace Game.GameActors.Units.Numbers
             FAITH += statIncreases[7];
             OnAttributesUpdated?.Invoke();
         }
+
+        public static object GetAsText(int textoptionStatIndex)
+        {
+            switch (textoptionStatIndex)
+            {
+                case 0: return "STR";
+                case 1: return "DEX";
+                case 2: return "INT";
+                case 3: return "AGI";
+                case 4: return "CON";
+                case 5: return "LCK";
+                case 6: return "DEF";
+                case 7: return "FAITH";
+                default: return "?";
+            }
+        }
+
+        public int GetFromIndex(int textoptionStatIndex)
+        {
+            return AsArray()[textoptionStatIndex];
+        }
     }
 }

@@ -87,7 +87,7 @@ public class UIUnitPlacement : IUnitPlacementUI
         Hide();
     }
 
-    public override void Show(List<Unit> units, Chapter chapter)
+    public override void Show(List<Unit> units, BattleMap chapter)
     {
         this.units = units;
         this.chapter = chapter;

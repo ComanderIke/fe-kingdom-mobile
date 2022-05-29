@@ -80,6 +80,7 @@ public class UIPartyCharacterCircleController : MonoBehaviour, IClickedReceiver
                 break;
             }
         }
+        FindObjectOfType<EncounterUIController>().UpdateUIScreens();
         layout.SetActive(false);
         layout.SetActive(true);
     }

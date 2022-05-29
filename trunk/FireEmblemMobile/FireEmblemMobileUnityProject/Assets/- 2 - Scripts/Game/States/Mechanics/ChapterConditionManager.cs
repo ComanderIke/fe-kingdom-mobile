@@ -9,9 +9,9 @@ namespace Game.Mechanics
 {
     public class ChapterConditionManager:ConditionManager
     {
-        private Chapter chapter;
+        private BattleMap chapter;
         private FactionManager factionManager;
-        public ChapterConditionManager(Chapter chapter, FactionManager factionManager)
+        public ChapterConditionManager(BattleMap chapter, FactionManager factionManager)
         {
             this.chapter = chapter;
             this.factionManager = factionManager;

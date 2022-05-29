@@ -33,7 +33,6 @@ namespace Game.States
         public UnitPlacementInputSystem UnitPlacementInputSystem { get; set; }
         
         private FactionManager factionManager;
-        public Chapter chapter;
         private CameraSystem cameraSystem;
         private UnitSpawnHelper unitSpawnHelper;
         private StartPositionManager startPositionManager;
@@ -73,7 +72,7 @@ namespace Game.States
             startPositionManager.SetUpInputForStartPos();
             startPositionManager.Init();
             startPositionManager.ShowStartPos();
-            UnitPlacementUI.Show(wholePartyUnits, chapter);
+            UnitPlacementUI.Show(wholePartyUnits, GridGameManager.Instance.BattleMap);
             UnitPlacementUI.OnFinished += () =>
             {
                 GameObject.FindObjectOfType<UIFactionCharacterCircleController>().Show(factionManager.Factions[0].Units);
@@ -89,8 +88,8 @@ namespace Game.States
       
         private void InitCamera()
         {
-            int height = GridGameManager.Instance.GetSystem<GridSystem>().GridData.height;
-            int width = GridGameManager.Instance.GetSystem<GridSystem>().GridData.width;
+            int height = GridGameManager.Instance.BattleMap.height;
+            int width = GridGameManager.Instance.BattleMap.width;
             cameraSystem.AddMixin<ViewOnGridMixin>().Construct(width, height);
             cameraSystem.AddMixin<DragCameraMixin>().Construct(new WorldPosDragPerformer(1f, cameraSystem.camera),
                 new ScreenPointToRayProvider(cameraSystem.camera), new HitChecker(TagManager.UnitTag),new MouseCameraInputProvider());
@@ -122,13 +121,13 @@ namespace Game.States
             }
             
 
-            if (SceneTransferData.Instance.EnemyUnits != null)
-            {
-                foreach (var unit in SceneTransferData.Instance.EnemyUnits.units)
-                {
-                    factionManager.Factions[1].AddUnit(unit.unit);
-                }
-            }
+            // if (SceneTransferData.Instance.EnemyUnits != null)
+            // {
+            //     foreach (var unit in SceneTransferData.Instance.EnemyUnits.unitLayout)
+            //     {
+            //         factionManager.Factions[1].AddUnit(unit.unit);
+            //     }
+            // }
             
         }
         

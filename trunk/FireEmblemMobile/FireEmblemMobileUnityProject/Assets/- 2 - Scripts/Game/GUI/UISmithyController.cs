@@ -26,7 +26,7 @@ public class UISmithyController : MonoBehaviour
         UpdateUI();
     }
 
-    private void UpdateUI()
+    public void UpdateUI()
     {
         this.currentWeapon = ((Human)party.ActiveUnit).EquippedWeapon;
         upgradeWeaponUI.Show(currentWeapon,  party.money >= currentWeapon.GetUpgradeCost()&&party.SmithingStones>=currentWeapon.GetUpgradeSmithingStoneCost());
@@ -37,6 +37,7 @@ public class UISmithyController : MonoBehaviour
         party.Money -= ((Human)party.ActiveUnit).EquippedWeapon.GetUpgradeCost();
         party.SmithingStones -= ((Human)party.ActiveUnit).EquippedWeapon.GetUpgradeSmithingStoneCost();
         ((Human)party.ActiveUnit).EquippedWeapon.Upgrade();
+        UpdateUI();
     }
     public void ContinueClicked()
     {

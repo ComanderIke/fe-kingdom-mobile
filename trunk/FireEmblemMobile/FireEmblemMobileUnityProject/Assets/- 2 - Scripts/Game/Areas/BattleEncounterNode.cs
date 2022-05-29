@@ -18,7 +18,7 @@ public class BattleEncounterNode : EncounterNode
     public override void Activate(Party party)
     {
         Continue();
-        
+        base.gameObject.GetComponent<BattleEncounterController>().Activate();
         GameSceneController.Instance.LoadBattleLevel(levelindex, enemyArmyData, this);
     }
 }

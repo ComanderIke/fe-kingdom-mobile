@@ -12,7 +12,7 @@ namespace Game.GUI
         [SerializeField] private TextMeshProUGUI victoryObjectivesText;
         [SerializeField] private TextMeshProUGUI defeatConditionsText;
         [SerializeField] private TextMeshProUGUI chapterNameText;
-        [SerializeField] private Chapter chapter;
+        [SerializeField] private BattleMap chapter;
         // Start is called before the first frame update
         void Start()
         {
@@ -48,7 +48,7 @@ namespace Game.GUI
             }
             defeatConditionsText.SetText(text);
         }
-        public override void Show(Chapter chapter)
+        public override void Show(BattleMap chapter)
         {
             this.chapter = chapter;
             GetComponent<Canvas>().enabled = true;

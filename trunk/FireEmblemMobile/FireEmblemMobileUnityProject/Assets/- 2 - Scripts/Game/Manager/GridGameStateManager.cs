@@ -24,7 +24,7 @@ namespace Game.Manager
         public GridGameStateManager()
         {
             ConditionManager conditionManager =
-                new ChapterConditionManager(GameObject.FindObjectOfType<ChapterConfig>().chapter, GridGameManager.Instance.FactionManager);
+                new ChapterConditionManager(GridGameManager.Instance.BattleMap, GridGameManager.Instance.FactionManager);
             PlayerPhaseState = new PlayerPhaseState(conditionManager);
             EnemyPhaseState = new AIState(conditionManager);
             GameOverState = new GameOverState();

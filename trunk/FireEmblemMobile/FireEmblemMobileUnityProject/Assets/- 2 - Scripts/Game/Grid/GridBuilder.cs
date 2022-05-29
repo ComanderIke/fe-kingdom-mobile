@@ -1,5 +1,6 @@
 ﻿using Game.GameResources;
 using Game.Graphics;
+using Game.Manager;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -11,18 +12,14 @@ namespace Game.Grid
         private const string CELL_TAG = "Grid";
         private const int CELL_LAYER = 10;
 
-        [HideInInspector]
-        public GridData gridData;
+      
         private int width;
         private int height;
         private Tile[,] tiles;
         public Transform gridTransform;
         private bool initialized;
 
-        void Awake()
-        {
-            gridData = GameAssets.Instance.grid.gridData;
-        }
+       
         public void Build(int width, int height)
         {
             foreach (var transform in gridTransform.GetComponentsInChildren<Transform>())
@@ -50,8 +47,8 @@ namespace Game.Grid
 
         private void InitTiles()
         {
-            width = gridData.width;
-            height = gridData.height;
+            width = GridGameManager.Instance.BattleMap.width;
+            height = GridGameManager.Instance.BattleMap.height;
             tiles = new Tile[width, height];
             var tileeffectVisualRenderer = FindObjectOfType<TileEffectRenderer>();
             for (int i = 0; i < width; i++)

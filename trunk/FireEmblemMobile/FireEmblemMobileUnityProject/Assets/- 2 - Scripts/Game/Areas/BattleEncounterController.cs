@@ -16,11 +16,12 @@ public class EncounterController : MonoBehaviour
 public class BattleEncounterController : EncounterController
 {
 
-    public Scenes sceneIndex;
+   
 
     public EnemyArmyData enemyArmyData;
-    public int level = 1;//Average Level of enemies
     
+
+    public GameObject enemySprite;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +36,7 @@ public class BattleEncounterController : EncounterController
 
     public override void Activate()
     {
+        GameObject.Destroy(enemySprite);
         //GameSceneController.Instance.LoadBattleLevel(sceneIndex, enemyArmyData);
     }
 }

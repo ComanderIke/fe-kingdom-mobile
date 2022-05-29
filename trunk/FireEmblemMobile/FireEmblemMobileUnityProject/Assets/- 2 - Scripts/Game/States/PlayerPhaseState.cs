@@ -75,8 +75,8 @@ namespace Game.Mechanics
 
            cameraSystem.AddMixin<DragCameraMixin>().Construct(new WorldPosDragPerformer(1f, cameraSystem.camera),
                 new ScreenPointToRayProvider(cameraSystem.camera), new HitChecker(),new MouseCameraInputProvider());
-            int height = gridGameManager.GetSystem<GridSystem>().GridData.height;
-            int width = gridGameManager.GetSystem<GridSystem>().GridData.width;
+            int height = gridGameManager.BattleMap.height;
+            int width = gridGameManager.BattleMap.width;
            // cameraSystem.AddMixin<ClampCameraMixin>().Construct(width, height);
             cameraSystem.AddMixin<ViewOnGridMixin>().Construct(width, height);
         }

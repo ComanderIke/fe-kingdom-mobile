@@ -204,6 +204,7 @@ public class AreaGameManager : MonoBehaviour
     }
     public void ShowMoveOptions()
     {
+        
         moveOptions = new List<GameObject>();
         foreach (var child in Player.Instance.Party.EncounterNode.children)
         {
@@ -231,11 +232,23 @@ public class AreaGameManager : MonoBehaviour
     }
 
     private EncounterCursorController cursor;
+
+    private void SetAllEncountersNotMovable()
+    {
+        foreach (var column in EncounterTree.Instance.columns)
+        {
+            foreach (var node in column.children)
+            {
+                node.moveable = false;
+            }
+        }
+    }
     public void NodeClicked(EncounterNode encounterNode)
     {
         Debug.Log("Node Clicked: "+encounterNode);
         Debug.Log("Node Clicked GO: "+encounterNode.gameObject);
         cursor.SetPosition(encounterNode.gameObject.transform.position);
+        
         if (encounterNode.moveable)
         {
 
@@ -293,6 +306,7 @@ public class AreaGameManager : MonoBehaviour
     {
         Debug.Log("AutoSaving!");
         SaveSystem.SaveGame("AutoSave", new SaveData(Player.Instance, Campaign.Instance, EncounterTree.Instance));
+        SetAllEncountersNotMovable();
         ResetMoveOptions();
         ShowMoveOptions();
     }

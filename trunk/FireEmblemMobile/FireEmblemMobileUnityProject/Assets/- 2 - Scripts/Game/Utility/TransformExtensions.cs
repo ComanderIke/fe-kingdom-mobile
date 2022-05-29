@@ -14,6 +14,15 @@ namespace __2___Scripts.Game.Utility
                     GameObject.Destroy(children[i].gameObject);
             }
         }
+        public static void DeleteAllChildrenImmediate(this Transform transform)
+        {
+            var children = transform.GetComponentsInChildren<Transform>();
+            for (int i = children.Length - 1; i >= 0; i--)
+            {
+                if(children[i]!=transform)
+                    GameObject.DestroyImmediate(children[i].gameObject);
+            }
+        }
 
       
     }

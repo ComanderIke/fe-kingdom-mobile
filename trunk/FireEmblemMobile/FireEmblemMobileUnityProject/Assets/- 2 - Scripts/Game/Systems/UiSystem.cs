@@ -76,7 +76,7 @@ namespace Game.GUI
             GridGameManager.Instance.GetSystem<GridSystem>().cursor.OnCursorPositionChanged += (Vector2Int v)=>HideAttackPreviewUI();
         }
 
-        public void ShowObjectiveCanvas(Chapter chapter)
+        public void ShowObjectiveCanvas(BattleMap chapter)
         {
             objectiveUI.Show(chapter);
         }

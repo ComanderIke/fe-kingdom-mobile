@@ -1,12 +1,31 @@
-﻿using Game.WorldMapStuff.Model;
+﻿using System.Collections.Generic;
+using Game.WorldMapStuff.Model;
 using UnityEngine;
 public class RandomEvent
 {
-   // public List<EquipableItem> shopItems = new List<EquipableItem>();
-    // public void AddItem(EquipableItem item)
-    // {
-    //     shopItems.Add(item);
-    // }
+    public List<TextOption> textOptions;
+    public string description;
+
+    public RandomEvent(string description, List<TextOption> textOptions)
+    {
+        this.textOptions = textOptions;
+        this.description = description;
+    }
+  
+}
+
+public class TextOption
+{
+    public string Text;
+    public int StatRequirement;
+    public int StatIndex;
+
+    public TextOption(string text,int statRequirement, int statIndex)
+    {
+        this.Text = text;
+        this.StatIndex = statIndex;
+        this.StatRequirement = statRequirement;
+    }
 }
 public class EventEncounterNode : EncounterNode
 {
@@ -14,7 +33,11 @@ public class EventEncounterNode : EncounterNode
    
     public EventEncounterNode(EncounterNode parent,int depth, int childIndex) : base(parent, depth, childIndex)
     {
-        randomEvent = new RandomEvent();
+        List<TextOption> options = new List<TextOption>();
+        options.Add(new TextOption("Option 1:", 10, 2));
+        options.Add(new TextOption("Option 2:", 15, 0));
+        options.Add(new TextOption("Option 3:", 5, 5));
+        randomEvent = new RandomEvent("testDescription", options);
 
     }
 
