@@ -26,8 +26,8 @@ namespace Game.Menu
         {
             campaignConfigs=GameData.Instance.campaigns;
             campaignImages = new List<RectTransform>();
-            nextCampaignButton.SetActive(selected != campaignImages.Count - 1);
-            prevCampaignButton.SetActive(selected != 0);
+           
+           
             for (int i = 0; i < campaignConfigs.Count; i++)
             {
                 var go = Instantiate(campaignImagePrefab, campaignParent);
@@ -53,6 +53,8 @@ namespace Game.Menu
                     go.transform.SetSiblingIndex(go.transform.parent.childCount-1-(i-selected));
                 }
             }
+            nextCampaignButton.SetActive(selected != campaignImages.Count - 1);
+            prevCampaignButton.SetActive(selected != 0);
         }
 
         public void StartClicked()

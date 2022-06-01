@@ -21,7 +21,15 @@ namespace Game.GameActors.Units.Skills
                 {
                     if (tiles[xPosition, yPosition].Actor != null)
                     {
-                        ((Unit)tiles[xPosition, yPosition].Actor).InflictFixedFaithDamage(user.BattleComponent.BattleStats.GetAttackDamage(damageType)+power);
+                        Unit target = (Unit)tiles[xPosition, yPosition].Actor;
+                        Debug.Log("Position: "+xPosition+" "+yPosition);
+                        Debug.Log("Deal " + (user.Stats.Attributes.FAITH+power)+" Damage to : "+target);
+                 
+                        target.InflictFixedFaithDamage(user.Stats.Attributes.FAITH+power);
+                        if (!target.IsAlive())
+                        {
+                           target.Die();
+                        }
                     }
                 }
             }

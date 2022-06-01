@@ -11,13 +11,13 @@ namespace Game.WorldMapStuff.Serialization
     public class AttackFinishedAction:SerializedAction
     {
 
-        private EnemyArmyData enemy;
+       // private EnemyArmyData enemy;
         private BattleOutcome battleOutCome;
         private string enemyId;
         private BattleEncounterController location;
         public AttackFinishedAction(BattleEncounterController location, BattleOutcome battleOutCome)
         {
-            this.enemy = location.enemyArmyData;
+           // this.enemy = location.enemyArmyData;
             this.location = location;
             this.battleOutCome = battleOutCome;
         }

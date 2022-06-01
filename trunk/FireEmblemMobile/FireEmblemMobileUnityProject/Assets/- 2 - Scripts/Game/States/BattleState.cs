@@ -66,7 +66,7 @@ namespace Game.Mechanics
         {
             if (IsFinished)
             {
-                GridGameManager.Instance.GameStateManager.SwitchState(new AfterBattleState(attacker, defender));
+                GridGameManager.Instance.GameStateManager.SwitchState(new AfterBattleState((Unit)attacker, (Unit)defender));
  
             }
             return null;

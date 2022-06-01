@@ -11,6 +11,7 @@ using Game.GUI;
 using Game.GUI.Text;
 using Game.Map;
 using Game.Mechanics;
+using Game.WorldMapStuff.Model;
 using GameEngine;
 using UnityEngine;
 
@@ -23,6 +24,7 @@ namespace Game.Manager
 
         public static event Action OnStartGame;
         private bool init;
+        public Transform Scene1InstantiatedContentParent;
 
         private List<IEngineSystem> Systems { get; set; }
         public FactionManager FactionManager { get; set; }
@@ -32,7 +34,8 @@ namespace Game.Manager
         private void Awake()
         {
             Instance = this;
-          
+            BattleMap = SceneTransferData.Instance.EnemyArmyData.battleMapPool.GetRandomMap();
+            Instantiate(BattleMap.mapPrefab, Scene1InstantiatedContentParent);
             //Debug.Log("Initialize");
             FactionManager = new FactionManager();
             var playerFaction=new Faction();

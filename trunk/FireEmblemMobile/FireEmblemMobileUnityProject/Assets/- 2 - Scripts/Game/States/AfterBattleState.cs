@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Units;
+﻿using System.Collections.Generic;
+using Game.GameActors.Units;
 using Game.GameInput;
 using Game.GUI.Text;
 using Game.Manager;
@@ -14,29 +15,40 @@ namespace Game.States
     public class AfterBattleState : GameState<NextStateTrigger>
     {
 
-        private IBattleActor attacker;
-        private IBattleActor defender;
-        public AfterBattleState(IBattleActor attacker, IBattleActor defender)
+        private Unit attacker;
+       
+        private List<Unit> defenders;
+        public AfterBattleState(Unit attacker, Unit defender)
         {
             this.attacker = attacker;
-            this.defender = defender;
+            defenders = new List<Unit>();
+            defenders.Add(defender);
+        }
+        public AfterBattleState(Unit attacker, List<Unit> defenders)
+        {
+            this.attacker = attacker;
+            this.defenders = defenders;
         }
         public override void Enter()
         {
-            
-         
-    
-            GridGameManager.Instance.GetSystem<UnitProgressSystem>().DistributeExperience(attacker, defender);
+
             if (!attacker.IsAlive())
             {
                 attacker.Die();
             }
-            if (!defender.IsAlive())
+            foreach (var defender in defenders)
             {
-                defender.Die();
+                
+                
+                if(attacker.IsAlive())
+                    GridGameManager.Instance.GetSystem<UnitProgressSystem>().DistributeExperience(attacker, defender);
+                if (!defender.IsAlive())
+                {
+                    defender.Die();
+                }
             }
-
-            Debug.Log("TODO IS ANIMATION FINISHED THEN CALL FINISHED");
+    
+            
             AnimationQueue.OnAllAnimationsEnded += Finished;
         }
 

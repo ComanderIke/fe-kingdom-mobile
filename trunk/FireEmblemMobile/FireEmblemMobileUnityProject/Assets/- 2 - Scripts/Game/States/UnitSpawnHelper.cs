@@ -35,35 +35,35 @@ namespace Game.States
 
         public void SpawnEnemies()
         {
-            var tmpEnemyUnits = factionManager.Factions[1].Units.Select(item => (Unit)item.Clone()).ToList();
+           // var tmpEnemyUnits = factionManager.Factions[1].Units.Select(item => (Unit)item.Clone()).ToList();
             factionManager.Factions[1].Units.Clear();
             foreach (var faction in factionManager.Factions)
             {
                 foreach (var spawn in spawner.Where(a => a.FactionId == faction.Id))
                 {
 
-                    if (tmpEnemyUnits.Count > spawn.id && tmpEnemyUnits[spawn.id] != null)
-                    {
-                        
-                        var unit = GameObject.Instantiate(tmpEnemyUnits[spawn.id]) as Unit;
-                      
-                        faction.AddUnit(unit);
-                        unit.Initialize();
-                        unit.AIComponent.WeightSet = spawn.AIWeightSet;
-                        unit.Faction = faction;
-
-                        unitInstantiator.PlaceCharacter(unit, spawn.X, spawn.Y);
-
-                    }
-                    else
-                    {
+                    // if (tmpEnemyUnits.Count > spawn.id && tmpEnemyUnits[spawn.id] != null)
+                    // {
+                    //     
+                    //     var unit = GameObject.Instantiate(tmpEnemyUnits[spawn.id]) as Unit;
+                    //   
+                    //     faction.AddUnit(unit);
+                    //     unit.Initialize();
+                    //     unit.AIComponent.WeightSet = spawn.AIWeightSet;
+                    //     unit.Faction = faction;
+                    //
+                    //     unitInstantiator.PlaceCharacter(unit, spawn.X, spawn.Y);
+                    //
+                    // }
+                    // else
+                    // {
                         var unit = GameObject.Instantiate(spawn.unit) as Unit;
                         faction.AddUnit(unit);
                         unit.Initialize();
                         unit.AIComponent.WeightSet = spawn.AIWeightSet;
 
                         unitInstantiator.PlaceCharacter(unit, spawn.X, spawn.Y);
-                    }
+                    //}
                 }
             }
         }

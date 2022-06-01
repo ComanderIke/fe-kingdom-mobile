@@ -87,10 +87,7 @@ namespace Game.GameActors.Units
                 hp = value > stats.MaxHp ? stats.MaxHp : value;
               
                 if (hp <= 0) hp = 0;
-                if (!IsAlive())
-                {
-                    Die();
-                }
+                
                 HpValueChanged?.Invoke();
             }
         }

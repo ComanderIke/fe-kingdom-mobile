@@ -40,7 +40,7 @@ namespace Game.GameActors.Units.OnGameObject
             animatedSprite.GetComponent<UnitAnimator>().SetUnit(unit);
             
             //Debug.Log("Set Unit Animator: " + unit.name + " " + unitAnimator);
-           // Debug.Log("Set Unit GameObject: " + unit.name + " " + unitGameObject);
+           // Debug.Log("Set Unit GameObject: " + unit.name + " " + unitGameObject+" "+x+" "+y);
             unit.GameTransformManager.GameObject = unitGameObject;
             GridGameManager.Instance.GetSystem<GridSystem>().SetUnitPosition(unit, x, y);
           

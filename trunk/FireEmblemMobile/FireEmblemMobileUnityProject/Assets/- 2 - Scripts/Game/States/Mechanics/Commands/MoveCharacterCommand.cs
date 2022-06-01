@@ -43,10 +43,11 @@ namespace Game.Mechanics.Commands
 
         public override void Undo()
         {
+            Debug.Log("Undo Move! " + unit+" From: "+unit.GridComponent.GridPosition.X+" "+unit.GridComponent.GridPosition.Y+" To: "+oldX+" "+oldY);
             GridGameManager.Instance.GetSystem<GridSystem>().SetUnitPosition(unit,oldX,oldY);
             //unit.GridComponent.SetPosition(oldX, oldY);
             unit.TurnStateManager.Reset();
-            Debug.Log("Undo Move!");
+            
         }
 
         public override void Update()

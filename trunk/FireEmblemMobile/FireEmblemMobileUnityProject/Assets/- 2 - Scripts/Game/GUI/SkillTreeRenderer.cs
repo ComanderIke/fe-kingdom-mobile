@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using __2___Scripts.Game.Utility;
 using Game.GameActors.Units;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,7 @@ public class SkillTreeRenderer : MonoBehaviour
 {
     // Start is called before the first frame update
 
+    public TextMeshProUGUI specializationName;
     public Image skillPrefab;
     private List<SkillUI> skills;
     public Transform[] rows;
@@ -20,6 +22,7 @@ public class SkillTreeRenderer : MonoBehaviour
     {
         this.skillTree = skillTree;
         this.controller = controller;
+        specializationName.text = skillTree.name;
         foreach (var row in rows)
         {
             row.transform.DeleteAllChildren();

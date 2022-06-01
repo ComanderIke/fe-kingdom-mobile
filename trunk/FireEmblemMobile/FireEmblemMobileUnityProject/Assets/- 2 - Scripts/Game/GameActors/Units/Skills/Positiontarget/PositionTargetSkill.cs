@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Game.GameActors.Units.Numbers;
+using Game.GameInput;
 using Game.Grid;
 using UnityEngine;
 
@@ -44,10 +45,14 @@ namespace Game.GameActors.Units.Skills
                     {
                         for (int j = 0; j < size + 1; j++)
                         {
-                            targetPositions.Add(new Vector2Int(i, -j));
-                            targetPositions.Add(new Vector2Int(-i, j));
-                            targetPositions.Add(new Vector2Int(i, j));
-                            targetPositions.Add(new Vector2Int(-i, -j));
+                            if(!targetPositions.Contains(new Vector2Int(i, -j)))
+                                targetPositions.Add(new Vector2Int(i, -j));
+                            if(!targetPositions.Contains(new Vector2Int(-i, j)))
+                                targetPositions.Add(new Vector2Int(-i, j));
+                            if(!targetPositions.Contains(new Vector2Int(i, j)))
+                                targetPositions.Add(new Vector2Int(i, j));
+                            if(!targetPositions.Contains(new Vector2Int(-i, -j)))
+                                targetPositions.Add(new Vector2Int(-i, -j));
                         }
                     }
                 }
@@ -59,15 +64,19 @@ namespace Game.GameActors.Units.Skills
                         if (targetArea == SkillTargetArea.Line || targetArea == SkillTargetArea.Cross ||
                             targetArea == SkillTargetArea.Star)
                         {
-                            targetPositions.Add(new Vector2Int(-i, 0));
-                            targetPositions.Add(new Vector2Int(i, 0));
+                            if(!targetPositions.Contains(new Vector2Int(-i, 0)))
+                             targetPositions.Add(new Vector2Int(-i, 0));
+                            if(!targetPositions.Contains(new Vector2Int(i, 0)))
+                                targetPositions.Add(new Vector2Int(i, 0));
                         }
 
                         if (targetArea == SkillTargetArea.NormalLine || targetArea == SkillTargetArea.Cross ||
                             targetArea == SkillTargetArea.Star)
                         {
-                            targetPositions.Add(new Vector2Int(0, -i));
-                            targetPositions.Add(new Vector2Int(0, i));
+                            if(!targetPositions.Contains(new Vector2Int(0, -i)))
+                                targetPositions.Add(new Vector2Int(0, -i));
+                            if(!targetPositions.Contains(new Vector2Int(0, i)))
+                                targetPositions.Add(new Vector2Int(0, i));
                         }
                     }
 
@@ -79,10 +88,14 @@ namespace Game.GameActors.Units.Skills
                             {
                                 if (i != 0 && j != 0 && (i + j) <= size)
                                 {
-                                    targetPositions.Add(new Vector2Int(i, -j));
-                                    targetPositions.Add(new Vector2Int(-i, j));
-                                    targetPositions.Add(new Vector2Int(i, j));
-                                    targetPositions.Add(new Vector2Int(-i, -j));
+                                    if(!targetPositions.Contains(new Vector2Int(i, -j)))
+                                        targetPositions.Add(new Vector2Int(i, -j));
+                                    if(!targetPositions.Contains(new Vector2Int(-i, j)))
+                                        targetPositions.Add(new Vector2Int(-i, j));
+                                    if(!targetPositions.Contains(new Vector2Int(i, j)))
+                                        targetPositions.Add(new Vector2Int(i, j));
+                                    if(!targetPositions.Contains(new Vector2Int(-i, -j)))
+                                        targetPositions.Add(new Vector2Int(-i, -j));
                                 }
 
                             }
@@ -94,7 +107,8 @@ namespace Game.GameActors.Units.Skills
             }
             else
             {
-                targetPositions.Add(new Vector2Int(0, 0));
+                if(!targetPositions.Contains(new Vector2Int(0, 0)))
+                    targetPositions.Add(new Vector2Int(0, 0));
 
                
             }
@@ -120,6 +134,25 @@ namespace Game.GameActors.Units.Skills
             return statsAttributes.INT / 5;
         }
 
-       
+
+        public List<Unit> GetAllTargets(Unit selectedUnit, Tile[,] tiles, int x, int y)
+        {
+            List<Unit> targets = new List<Unit>();
+            foreach (var pos in GetTargetPositions())
+            {
+                int xPosition = x + pos.x;
+                int yPosition = y + pos.y;
+                if (xPosition >= 0 && xPosition < tiles.GetLength(0) && yPosition >= 0 &&
+                    yPosition < tiles.GetLength(1))
+                {
+                    if (tiles[xPosition, yPosition].Actor!=null&&tiles[xPosition, yPosition].Actor.Faction.Id!=selectedUnit.Faction.Id)
+                    {
+                        targets.Add((Unit)tiles[xPosition, yPosition].Actor);
+                    }
+                }
+            }
+
+            return targets;
+        }
     }
 }

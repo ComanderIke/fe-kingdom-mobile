@@ -38,7 +38,7 @@ namespace Game.GameInput
 
                     if (!UIClickChecker.CheckUIObjectsInPosition())
                     {
-                        Debug.Log("NoUIClicked!");
+                        //Debug.Log("NoUIClicked!");
                         if (!CameraSystem.IsDragging)
                         {
 
@@ -46,7 +46,7 @@ namespace Game.GameInput
                             var x = (int)gridPos.x;
                             var y = (int)gridPos.y;
                             var hit = raycastManager.GetLatestHit();
-                            Debug.Log("Check Clicked on Grid?");
+                            //Debug.Log("Check Clicked on Grid?");
                             if (IsClickOnGrid(hit))
                             {
                                 Debug.Log("Player Input: Grid clicked: " + x + " " + y);
@@ -63,7 +63,7 @@ namespace Game.GameInput
 
                     if (!UIClickChecker.CheckUIObjectsInPosition())
                     {
-                        Debug.Log("NoUIClicked!");
+                        //Debug.Log("NoUIClicked!");
                         if (!CameraSystem.IsDragging)
                         {
 
@@ -90,9 +90,9 @@ namespace Game.GameInput
         }
         private bool IsClickOnGrid(RaycastHit2D hit)
         {
-            Debug.Log("ConnectedLatestHit: "+raycastManager.ConnectedLatestHit());
-            if(raycastManager.ConnectedLatestHit())
-                Debug.Log("Hit Tag: "+hit.collider.tag+" GO: "+hit.collider.gameObject.name);
+            //Debug.Log("ConnectedLatestHit: "+raycastManager.ConnectedLatestHit());
+            // if(raycastManager.ConnectedLatestHit())
+            //     Debug.Log("Hit Tag: "+hit.collider.tag+" GO: "+hit.collider.gameObject.name);
             return raycastManager.ConnectedLatestHit() && hit.collider.CompareTag(TagManager.GridTag);
 
         }

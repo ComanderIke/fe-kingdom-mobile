@@ -43,7 +43,7 @@ namespace Game.GameInput
         {
             inputPathManager.Reset();
             selectionDataProvider.ClearData();
-            gridSystem.cursor.Reset();
+            //gridSystem.cursor.Reset();
         }
 
         public void UndoClicked()
@@ -263,6 +263,8 @@ namespace Game.GameInput
         
         private void OwnedActorClicked(IGridActor unit)
         {
+            //Debug.Log("Set GridCursor Pos to: "+unit.GridComponent.GridPosition.X+" "+unit.GridComponent.GridPosition.Y);
+            gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y]);
             if ((int)unit.GameTransformManager.GetPosition().x == selectionDataProvider.GetSelectedTile().x && (int)unit.GameTransformManager.GetPosition().y == selectionDataProvider.GetSelectedTile().y)//Confirm Move
             {
                 ClickedOnGrid(selectionDataProvider.GetSelectedTile().x, selectionDataProvider.GetSelectedTile().y);
@@ -274,6 +276,7 @@ namespace Game.GameInput
         }
         private void EnemyClicked(IGridActor enemyActor)
         {
+            gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[enemyActor.GridComponent.GridPosition.X, enemyActor.GridComponent.GridPosition.Y]);
             Debug.Log("Enemy Clikced!");
             var selectedActor = selectionDataProvider.SelectedActor;
             if (selectedActor == null)

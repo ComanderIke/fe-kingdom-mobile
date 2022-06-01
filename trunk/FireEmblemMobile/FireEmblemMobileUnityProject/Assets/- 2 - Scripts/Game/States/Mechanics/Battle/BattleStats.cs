@@ -109,7 +109,8 @@ namespace Game.Mechanics.Battle
             }
             else
                 defense = target.BattleComponent.BattleStats.GetDefense();
-            return (int) (Mathf.Clamp((GetDamage(atkMultiplier) - defense)*dmgMult, 1, Mathf.Infinity));
+            
+            return (int) (Mathf.Clamp((GetDamage(atkMultiplier) - defense)*dmgMult, 0, Mathf.Infinity));
         }
 
        

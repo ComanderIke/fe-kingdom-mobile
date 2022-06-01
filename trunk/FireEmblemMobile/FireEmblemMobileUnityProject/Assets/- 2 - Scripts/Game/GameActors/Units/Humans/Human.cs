@@ -114,6 +114,14 @@ namespace Game.GameActors.Units.Humans
             Debug.Log("TODO Check if item is equipable");
             return true;
         }
+
+        public void InitEquipment()
+        {
+            if(EquippedWeapon!=null)
+                EquippedWeapon=Instantiate(EquippedWeapon);
+            if(EquippedRelic!=null)
+                EquippedRelic=Instantiate(EquippedRelic);
+        }
     }
 
     

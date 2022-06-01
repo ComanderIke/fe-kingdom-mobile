@@ -8,9 +8,9 @@ public class EnemyLayoutViewer : MonoBehaviour
 {
     public EnemyArmyData enemyLayout;
 
-    public Transform container;
+    // public Transform container;
 
-    public GameObject unitPrefab;
+    // public GameObject unitPrefab;
 
     private List<UnitSpawner> spawnedUnitLayouts;
 
@@ -35,7 +35,7 @@ public class EnemyLayoutViewer : MonoBehaviour
         //     spawnedUnitLayouts.Add(go.GetComponent<UnitSpawner>());
         // }
 
-        battleMapInstantiation = Instantiate(enemyLayout.battleMap.GetRandomMap().mapPrefab, null);
+        battleMapInstantiation = Instantiate(enemyLayout.battleMapPool.GetRandomMap().mapPrefab, null);
     }
 
     public void Hide()

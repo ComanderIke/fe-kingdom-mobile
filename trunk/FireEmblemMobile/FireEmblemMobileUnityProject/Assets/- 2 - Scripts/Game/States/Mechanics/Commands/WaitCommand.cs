@@ -30,7 +30,7 @@ namespace Game.Mechanics.Commands
 
         public override void Undo()
         {
-            Debug.Log("Undo Wait!");
+            Debug.Log("Undo Wait!" + unit);
             unit.TurnStateManager.IsWaiting = false;
         }
 

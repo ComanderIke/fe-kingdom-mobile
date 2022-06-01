@@ -31,14 +31,17 @@ namespace Game.Map
 
         private void Awake()
         {
+            width = GridGameManager.Instance.BattleMap.width;
+            height= GridGameManager.Instance.BattleMap.height;
+            GetComponent<GridBuilder>().Build(width,height);
             Tiles = GetComponent<GridBuilder>().GetTiles();
 
             cursor = new GridCursor();
             GridRenderer = new GridRenderer(this);
             GridLogic = new GridLogic(this);
-            width = GridGameManager.Instance.BattleMap.width;
-            height= GridGameManager.Instance.BattleMap.height;
+           
             NodeHelper = new NodeHelper(width,height);
+            
         }
 
         public void Init()
@@ -288,7 +291,7 @@ namespace Game.Map
         }
         public void SetUnitPosition(IGridActor unit, int x, int y)
         {
-            if (x != -1 && y != -1)
+            if (x != -1 && y != -1 && x < width && y < height)
             {
                 if (unit.GridComponent.GridPosition.X != -1 && unit.GridComponent.GridPosition.Y != -1)
                 {
@@ -298,6 +301,10 @@ namespace Game.Map
 
                 Tiles[x, y].Actor = unit;
                 unit.GridComponent.SetPosition(x, y);
+            }
+            else
+            {
+                Debug.LogError("Out of Bounds: "+x+" "+y +" "+unit);
             }
         }
         public void SetUnitInternPosition(IGridActor unit, int x, int y)

@@ -29,11 +29,14 @@ public class SunShaftAutoMover : MonoBehaviour
 
     private void OnEnable()
     {
-        calculated = false;
-        transform.localPosition = startPos;
-        CalculateEdges();
-        leftGO.transform.localPosition = new Vector3(-(distanceBetweenEdges.x-offset), 0, 0);
-        rightGO.transform.localPosition = new Vector3(distanceBetweenEdges.x-offset, 0, 0);
+        if (leftGO != null && rightGO != null)
+        {
+            calculated = false;
+            transform.localPosition = startPos;
+            CalculateEdges();
+            leftGO.transform.localPosition = new Vector3(-(distanceBetweenEdges.x - offset), 0, 0);
+            rightGO.transform.localPosition = new Vector3(distanceBetweenEdges.x - offset, 0, 0);
+        }
     }
 
     // Update is called once per frame
@@ -85,11 +88,14 @@ public class SunShaftAutoMover : MonoBehaviour
     private float rightEdge;
     private Vector3 distanceBetweenEdges;
     private void CalculateEdges()
-    {
-        calculated = true;
-    
-        rightEdge = transform.position.x +light.lightCookieSprite.bounds.extents.x / 1f;
-        leftEdge = transform.position.x -light.lightCookieSprite.bounds.extents.x / 1f;
-        distanceBetweenEdges = new Vector3(rightEdge - leftEdge, 0, 0);
+    {  
+        if (light != null)
+        {
+            calculated = true;
+      
+            rightEdge = transform.position.x + light.lightCookieSprite.bounds.extents.x / 1f;
+            leftEdge = transform.position.x - light.lightCookieSprite.bounds.extents.x / 1f;
+            distanceBetweenEdges = new Vector3(rightEdge - leftEdge, 0, 0);
+        }
     }
 }

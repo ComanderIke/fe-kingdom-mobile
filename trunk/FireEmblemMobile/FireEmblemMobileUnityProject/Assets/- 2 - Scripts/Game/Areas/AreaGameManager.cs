@@ -252,6 +252,7 @@ public class AreaGameManager : MonoBehaviour
         if (encounterNode.moveable)
         {
 
+            SetAllEncountersNotMovable();
             StartCoroutine(MovementAnimation(encounterNode));
             circleUI.Rotate();
             hour += 6;

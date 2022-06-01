@@ -90,9 +90,11 @@ namespace Game.States
         {
             int height = GridGameManager.Instance.BattleMap.height;
             int width = GridGameManager.Instance.BattleMap.width;
-            cameraSystem.AddMixin<ViewOnGridMixin>().Construct(width, height);
+            //Order of Mixins Matters!!!Laggy Camera otherwise
             cameraSystem.AddMixin<DragCameraMixin>().Construct(new WorldPosDragPerformer(1f, cameraSystem.camera),
                 new ScreenPointToRayProvider(cameraSystem.camera), new HitChecker(TagManager.UnitTag),new MouseCameraInputProvider());
+
+            cameraSystem.AddMixin<ViewOnGridMixin>().Construct(width, height);
         }
 
         private void CreateDemoParty()

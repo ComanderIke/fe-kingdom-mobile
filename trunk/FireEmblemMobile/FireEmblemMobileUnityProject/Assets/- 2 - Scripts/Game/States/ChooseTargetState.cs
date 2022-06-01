@@ -5,6 +5,7 @@ using Game.GameInput;
 using Game.GUI;
 using Game.Manager;
 using Game.Map;
+using Game.States;
 using GameEngine.GameStates;
 using UnityEngine;
 
@@ -98,6 +99,7 @@ namespace Game.Mechanics
         {
             unitInputSystem.Update();
             gridInputSystem.Update();
+           
             return NextState;
         }
 
@@ -113,11 +115,13 @@ namespace Game.Mechanics
 
                         if (gridSystem.cursor.GetCurrentTile() == gridSystem.Tiles[x, y])
                         {
+                            var targets = pts.GetAllTargets(selectedUnit, gridSystem.Tiles, x,y);
                             pts.Activate(selectedUnit, gridSystem.Tiles, x,y);
                             new GameplayInput().Wait(selectedUnit);
                             new GameplayInput().ExecuteInputActions(()=>
                             {
                                 playerPhaseState.Feed(PPStateTrigger.Cancel);
+                                GridGameManager.Instance.GameStateManager.SwitchState(new AfterBattleState(selectedUnit, targets));
                             });
                             //Selected same Tile again
                         }

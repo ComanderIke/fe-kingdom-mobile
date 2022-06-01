@@ -39,8 +39,10 @@ namespace Game.GameActors.Units.OnGameObject
         }
         public void ShowAttackDamage(Unit compareUnit)
         {
+            
             int dmg= unit.BattleComponent.BattleStats.GetDamageAgainstTarget(compareUnit);
             bool doubleAttack = unit.BattleComponent.BattleStats.CanDoubleAttack(compareUnit);
+         
             attackDamageObject.SetActive(true);
             attackDamageText.SetText("" + dmg);
             xText.gameObject.SetActive(doubleAttack);

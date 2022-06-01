@@ -36,7 +36,7 @@ namespace Game.GUI
             // text.text = "" + (currentExp);
             // LeanTween.scale(gameObject, new Vector3(1.4f, 1.4f, 1), 0.1f).setEaseSpring();
             // oldPosition = transform.localPosition;
-            Debug.Log("1EXP! " +currentExp+" of "+expAfter);
+           // Debug.Log("1EXP! " +currentExp+" of "+expAfter);
             if (currentExp == expAfter)
             {
                 Hide();

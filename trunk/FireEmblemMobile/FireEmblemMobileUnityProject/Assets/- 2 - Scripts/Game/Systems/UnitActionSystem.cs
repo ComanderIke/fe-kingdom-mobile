@@ -89,9 +89,9 @@ namespace Game.Mechanics
         public void Undo()
         {
             OnUndo?.Invoke();
-            Debug.Log("Undo: " + lastActions.Count);
-            Debug.Log("Undo only recent character related Actions!!!");
-            Debug.Log("Undo attackpreview movement also");
+            Debug.Log("Undo: " + lastCharacterActions.Count);
+           // Debug.Log("Undo only recent character related Actions!!!");
+           // Debug.Log("Undo attackpreview movement also");
             while (lastCharacterActions.Count != 0)
             {
                 lastCharacterActions.Pop().Undo();

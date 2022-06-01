@@ -11,7 +11,6 @@ namespace Game.GameActors
         public Unit unit;
         public FactionId FactionId;
         public WeightSet AIWeightSet;
-        public int id;
         public int X => (int) transform.localPosition.x;
         public int Y => (int)transform.localPosition.y;
 

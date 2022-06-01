@@ -27,7 +27,8 @@ namespace Game.GUI
 
         private void OnEnable()
         {
-            UpdateContent();
+            if(chapter!=null)
+                UpdateContent();
         }
 
         private void UpdateContent()
