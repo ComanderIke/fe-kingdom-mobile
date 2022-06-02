@@ -182,7 +182,7 @@ namespace Game.GameActors.Units
         {
             Debug.Log("Unit Exp Gained!" +expBefore+" "+expGained);
             OnExpGained?.Invoke(this, expBefore, expGained);
-            GameObject.FindObjectOfType<DeathParticleController>().Play(this, drainPos+new Vector3(0.5f,0.5f,0), expGained);
+            GameObject.FindObjectOfType<ExpParticleSystem>().Play(this, drainPos+new Vector3(0.5f,0.5f,0), expGained);
         }
 
         private void LevelUp()

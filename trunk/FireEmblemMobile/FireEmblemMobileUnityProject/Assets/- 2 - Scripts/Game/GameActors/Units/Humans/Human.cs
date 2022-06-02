@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Game.GameActors.Items;
 using Game.GameActors.Items.Weapons;
 using Game.Mechanics;
 using UnityEngine;
@@ -18,8 +19,8 @@ namespace Game.GameActors.Units.Humans
 
        // public Inventory Inventory;
 
-       public Relic EquippedRelic;
-
+       public Relic EquippedRelic1;
+       public Relic EquippedRelic2;
 
        
 
@@ -27,6 +28,8 @@ namespace Game.GameActors.Units.Humans
         {
            
         }
+
+     
 
         public override void Initialize()
         {
@@ -55,6 +58,8 @@ namespace Game.GameActors.Units.Humans
             base.HandleCloned(clone);
             var human = (Human) clone;
             human.EquippedWeapon = (Weapon)EquippedWeapon?.Clone();
+            human.EquippedRelic1= (Relic)EquippedRelic1?.Clone();
+            human.EquippedRelic2=(Relic)EquippedRelic2?.Clone();
             //human.Inventory = (Inventory)Inventory.Clone();
             human.Class = Class;
             
@@ -119,8 +124,32 @@ namespace Game.GameActors.Units.Humans
         {
             if(EquippedWeapon!=null)
                 EquippedWeapon=Instantiate(EquippedWeapon);
-            if(EquippedRelic!=null)
-                EquippedRelic=Instantiate(EquippedRelic);
+            if(EquippedRelic1!=null)
+                EquippedRelic1=Instantiate(EquippedRelic1);
+            if(EquippedRelic2!=null)
+                EquippedRelic2=Instantiate(EquippedRelic2);
+        }
+
+        public bool HasEquipped(Item item)
+        {
+            return EquippedRelic1 == item || (EquippedRelic2 == item || EquippedWeapon == item);
+        }
+
+        public void UnEquip(EquipableItem item)
+        {
+            if (EquippedWeapon == item)
+            {
+                Stats.AttackRanges.Clear();
+                EquippedWeapon = null;
+            }
+            else if (EquippedRelic1 == item)
+            {
+                EquippedRelic1 = null;
+            }
+            else if (EquippedRelic2 == item)
+            {
+                EquippedRelic2 = null;
+            }
         }
     }
 

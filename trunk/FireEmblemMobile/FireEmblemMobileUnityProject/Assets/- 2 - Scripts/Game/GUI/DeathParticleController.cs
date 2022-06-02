@@ -15,9 +15,9 @@ public class DeathParticleController : MonoBehaviour
         system.Stop();
     }
 
-    public void Play(Unit unit, Vector3 startPos, int exp)
+    public void Play(Unit unit, Vector3 startPos, int exp, Camera uiCamera)
     {
-        attractor.SetAttractorUnit(unit);
+        attractor.SetAttractorUnit(unit, uiCamera);
         transform.position = startPos;
         Debug.Log("expParticles:" +exp+ "AttractorUnit: "+unit);
         
@@ -29,7 +29,9 @@ public class DeathParticleController : MonoBehaviour
         // system.emission.
         system.Play();
         Debug.Log("Play P-System!");
+        Destroy(this.gameObject, 2.0f);
     }
+    
 
     // Update is called once per frame
     void Update()

@@ -36,6 +36,7 @@ namespace Game.States
             {
                 attacker.Die();
             }
+            AnimationQueue.Add(GameObject.FindObjectOfType<ExpParticleSystem>().Play);
             foreach (var defender in defenders)
             {
                 

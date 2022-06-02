@@ -17,7 +17,7 @@ public class ParticleAttractor : MonoBehaviour {
     private ExpBarController expController;
     public static event Action onParticleArrived;
 
-    public Camera uicamera;
+    private Camera uicamera;
     //private float speed = 1;
  
     public void Start ()
@@ -68,11 +68,13 @@ public class ParticleAttractor : MonoBehaviour {
     //        
     // }
 
-    public void SetAttractorUnit(Unit unit)
+    public void SetAttractorUnit(Unit unit, Camera uiCamera)
     {
-        IParticleAttractorTransformProvider provider = FindObjectsOfType<MonoBehaviour>().OfType<IParticleAttractorTransformProvider>().First();
+        this.uicamera = uiCamera;
+        IParticleAttractorTransformProvider provider =
+            FindObjectsOfType<MonoBehaviour>().OfType<IParticleAttractorTransformProvider>().First();
         expController = unit.visuals.UnitCharacterCircleUI.GetExpRenderer();
-        _attractorTransform =provider.GetUnitParticleAttractorTransform(unit);
+        _attractorTransform = provider.GetUnitParticleAttractorTransform(unit);
         // var go = Instantiate(CubePrefab);
         // go.name = "AttractorPosition!";
         // Vector3 pos = uicamera.ScreenToWorldPoint(_attractorTransform.transform.position);

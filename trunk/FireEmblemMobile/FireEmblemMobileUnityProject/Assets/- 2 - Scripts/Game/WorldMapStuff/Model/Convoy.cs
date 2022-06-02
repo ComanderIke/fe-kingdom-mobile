@@ -52,6 +52,7 @@ namespace Game.WorldMapStuff.Model
         }
         public void RemoveItem(Item item)
         {
+            
             StockedItem removeItem=null;
             foreach (var stockedItem in items)
             {
@@ -74,6 +75,19 @@ namespace Game.WorldMapStuff.Model
         public void AddStockedItem(StockedItem stockedItem)
         {
             items.Add(stockedItem);
+        }
+
+        public bool ContainsItem(Item item)
+        {
+            foreach (var stockedItem in items)
+            {
+                if (stockedItem.item == item)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

@@ -25,7 +25,7 @@ public class ItemToolTip : MonoBehaviour
     public Button dropButton;
     private Item item;
     private RectTransform rectTransform;
-
+    private Human itemOwner;
     public LayoutElement frame;
     // Start is called before the first frame update
     private void Start()
@@ -48,9 +48,17 @@ public class ItemToolTip : MonoBehaviour
         if (item is EquipableItem eitem)
         {
             Human human =(Human) Player.Instance.Party.ActiveUnit;
-            
-            human.Equip((eitem));
-            Player.Instance.Party.Convoy.RemoveItem(item);
+
+            if (human.HasEquipped(eitem))
+            {
+                human.UnEquip((eitem));
+                Player.Instance.Party.Convoy.AddItem(item);
+            }
+            else
+            {
+                human.Equip((eitem));
+                Player.Instance.Party.Convoy.RemoveItem(item);
+            }
         }
         else
         {
@@ -62,7 +70,11 @@ public class ItemToolTip : MonoBehaviour
     public void DropClicked()
     {
         Debug.Log("Drop Item Clicked");
-        Player.Instance.Party.Convoy.RemoveItem(item);
+        if (Player.Instance.Party.Convoy.ContainsItem(item))
+        {
+            Player.Instance.Party.Convoy.RemoveItem(item);
+        }
+
         gameObject.SetActive(false);
     }
     void UpdateTextWrap(Vector3 position)
@@ -99,10 +111,10 @@ public class ItemToolTip : MonoBehaviour
             headerText.gameObject.SetActive(true);
             headerText.text = header;
         }
-
+        Human human = (Human)Player.Instance.Party.ActiveUnit;
         if (item is EquipableItem eitem)
         {
-            Human human = (Human)Player.Instance.Party.ActiveUnit;
+            
             if (human.CanEquip(eitem))
             {
                 useButton.interactable = true;
@@ -117,9 +129,18 @@ public class ItemToolTip : MonoBehaviour
             useButton.interactable = true;
         }
 
-        // useButton.interactable = 
-        useButtonText.text = item is EquipableItem ? "Equip" : "Use";
-       
+        if (human.HasEquipped(item))
+        {
+            useButtonText.text = "Unequip";
+            dropButton.gameObject.SetActive(false);
+        }
+        else
+        {
+            // useButton.interactable = 
+            dropButton.gameObject.SetActive(true);
+            useButtonText.text = item is EquipableItem ? "Equip" : "Use";
+        }
+
         descriptionText.text = description;
         itemIcon.sprite = icon;
         

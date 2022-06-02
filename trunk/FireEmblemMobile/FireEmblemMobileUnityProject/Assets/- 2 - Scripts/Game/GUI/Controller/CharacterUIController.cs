@@ -42,7 +42,7 @@ namespace Game.GUI
         [SerializeField] private ExpBarController expBar = default;
         // [SerializeField] private TextMeshProUGUI expLabel = default;
         public Unit unit;
-        
+
 
         private void Start()
         {
@@ -52,11 +52,13 @@ namespace Game.GUI
         public void ShowActive(Unit unit)
         {
             this.unit = unit;
+          
             UpdateValues();
             gameObject.SetActive(true);
             GetComponent<RectTransform>().sizeDelta = selectedSize;
             expBar.GetComponent<RectTransform>().sizeDelta = selectedSizeBars;
             hpBar.GetComponent<RectTransform>().sizeDelta = selectedSizeBars;
+            
             //GameplayInput.SelectUnit(unit);
            
             
@@ -70,6 +72,7 @@ namespace Game.GUI
             GetComponent<RectTransform>().sizeDelta = normalSize;
             expBar.GetComponent<RectTransform>().sizeDelta = normalSizeBars;
             hpBar.GetComponent<RectTransform>().sizeDelta = normalSizeBars;
+           
             
         }
 

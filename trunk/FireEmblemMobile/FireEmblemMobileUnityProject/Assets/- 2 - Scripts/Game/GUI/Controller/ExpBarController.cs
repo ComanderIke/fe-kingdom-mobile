@@ -7,57 +7,51 @@ using Utility;
 
 namespace Game.GUI
 {
-    public class ExpBarController : MonoBehaviour, IAnimation
+    public class ExpBarController : MonoBehaviour
     {
         Vector3 oldPosition;
         public TextMeshProUGUI text;
         public Image fill;
         public GameObject glow;
-        int currentExp;
-        int addedExp;
+        public int currentExp;
 
-        private int expAfter;
+        private int addedExp;
+        
         // float textspeed = 3;
         public float AnimateInDuration=0.25f;
         public float AnimateStayDuration = 0.45f;
         public float AnimateOutDuration = 0.2f;
-        // Start is called before the first frame update
-        private void Start()
-        {
-           
-  
-        }
 
-     
+
         public void ParticleArrived()
         {
-             currentExp = currentExp + 1;
+            addedExp--;
+            currentExp++;
              fill.fillAmount = currentExp / 100f;
             // text.text = "" + (currentExp);
             // LeanTween.scale(gameObject, new Vector3(1.4f, 1.4f, 1), 0.1f).setEaseSpring();
             // oldPosition = transform.localPosition;
-           // Debug.Log("1EXP! " +currentExp+" of "+expAfter);
-            if (currentExp == expAfter)
+           // Debug.Log("1EXP! Arrived ");
+            if (addedExp <=0)
             {
-                Hide();
+                Debug.Log("AllParticlesArrived!");
+                animation = false;
+               FindObjectOfType<ExpParticleSystem>().AllFinished();
+               
             }
         }
-        public void UpdateValues(int currentExp, int addedExp)
+
+       
+        public void UpdateValues(int addedExp)
         {
            // Debug.Log("UPDATE VALUEAS!");
             Debug.Log("CurrentExp: "+currentExp+" Gained: "+addedExp);
-            this.currentExp = currentExp;
-            this.addedExp = addedExp;
-            expAfter = currentExp + addedExp;
+            //this.currentExp = currentExp;
+            animation = true;
+            this.addedExp +=  addedExp;
         }
 
-        public void Play()
-        {
-            Debug.Log("Play!");
-            //text.text = ""+currentExp;
-            //LeanTween.alphaCanvas(glow.GetComponent<CanvasGroup>(), 1, 1.0f).setLoopPingPong(1);
-           
-        }
+        
   
         void ShowTextAnimation()
         {
@@ -82,22 +76,20 @@ namespace Game.GUI
             //
             // }).setOnComplete(Hide).setDelay(0.10f);
         }
-        void Hide()
-        {
-            Debug.Log("AllParticlesArrived!");
-            AnimationQueue.OnAnimationEnded?.Invoke();
-          //  LeanTween.scale(gameObject, new Vector3(1, 1, 1), AnimateOutDuration).setEaseInQuad().setDelay(AnimateStayDuration);
-            // LeanTween.moveLocal(gameObject, oldPosition, AnimateOutDuration).setEaseInQuad().setDelay(AnimateStayDuration)
-            //     .setOnComplete(() => { AnimationQueue.OnAnimationEnded?.Invoke(); });
-        }
+       
 
         public void SetText(int exp)
         {
             text.text = "" + (exp);
         }
 
+        private bool animation = false;
         public void SetFillAmount(int expVal)
         {
+            if (animation)
+            {
+                return;
+            }
             float expLeft = 0;
             if (expVal > 100)
             {
@@ -105,7 +97,9 @@ namespace Game.GUI
                 expVal = 100;
                   
             }
-            fill.fillAmount = (expVal) / 100f;
+
+            this.currentExp = expVal;
+            fill.fillAmount = currentExp / 100f;
             if (Math.Abs(fill.fillAmount - 1) < 0.1f)
                 fill.fillAmount = 0;
         }

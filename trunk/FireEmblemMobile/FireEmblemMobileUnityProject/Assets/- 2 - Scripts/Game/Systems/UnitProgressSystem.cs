@@ -100,10 +100,10 @@ namespace Game.Mechanics
                 if (exp != 0)
                 {
 
-                    Debug.Log("Update EXP");
+                    
                     var expRenderer = ((Unit)attacker).visuals.UnitCharacterCircleUI.GetExpRenderer();
-                    expRenderer.UpdateValues(attacker.ExperienceManager.Exp, attacker.ExperienceManager.GetMaxEXP(exp));
-                    AnimationQueue.Add(((IAnimation)expRenderer).Play);
+                    expRenderer.UpdateValues(attacker.ExperienceManager.GetMaxEXP(exp));
+                 
 
 
                     GridGameManager.Instance.GetSystem<UiSystem>().SelectedCharacter((Unit)attacker);
@@ -118,8 +118,8 @@ namespace Game.Mechanics
 
 
                     var expRenderer = ((Unit)defender).visuals.UnitCharacterCircleUI.GetExpRenderer();
-                    expRenderer.UpdateValues(defender.ExperienceManager.Exp, defender.ExperienceManager.GetMaxEXP(exp));
-                    AnimationQueue.Add(((IAnimation)expRenderer).Play);
+                    expRenderer.UpdateValues(defender.ExperienceManager.GetMaxEXP(exp));
+                   
                     GridGameManager.Instance.GetSystem<UiSystem>().SelectedCharacter((Unit)defender);
 
                     defender.ExperienceManager.AddExp(attacker.GameTransformManager.Transform.position, exp);
