@@ -31,7 +31,7 @@ public class EncounterClickController : MonoBehaviour
         
         if (!IsPointerOverUIObject())
         {
-         
+           
             FindObjectOfType<AreaGameManager>().NodeClicked(encounterNode);
         }
 

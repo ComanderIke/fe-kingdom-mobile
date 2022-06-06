@@ -61,11 +61,10 @@ namespace Game.Mechanics.Battle
         public int GetDamage(List<float> attackModifier = null)
         {
             int weaponDamage = 0;
-            if (owner is Human c)
-            {
-                if (c.EquippedWeapon != null)
-                    weaponDamage = c.EquippedWeapon.GetDamage();
-            }
+            
+            if (owner.GetEquippedWeapon() != null)
+                weaponDamage = owner.GetEquippedWeapon().GetDamage();
+            
             int unmodifiedAttack = owner.Stats.Attributes.STR + weaponDamage;
             if (GetDamageType()==DamageType.Magic)
             {
@@ -117,23 +116,23 @@ namespace Game.Mechanics.Battle
 
         public DamageType GetDamageType()
         {
-            if (owner is Human human && human.EquippedWeapon != null)
+            if (owner.GetEquippedWeapon() != null)
             {
-                return human.EquippedWeapon.DamageType;
+                return owner.GetEquippedWeapon().DamageType;
             }
 
             return DamageType.Physical;
         }
         public int GetAttackDamage()
         {
-            if (owner is Human human && human.EquippedWeapon != null)
+            if (owner.GetEquippedWeapon() != null)
             {
-                if (human.EquippedWeapon.WeaponType != WeaponType.Magic&&human.EquippedWeapon.WeaponType != WeaponType.FaithMagic)
-                    return human.Stats.Attributes.STR + human.EquippedWeapon.GetDamage();
-                else if (human.EquippedWeapon.WeaponType == WeaponType.FaithMagic)
-                    return human.Stats.Attributes.FAITH + human.EquippedWeapon.GetDamage();
+                if (owner.GetEquippedWeapon().WeaponType != WeaponType.Magic&&owner.GetEquippedWeapon().WeaponType != WeaponType.FaithMagic)
+                    return owner.Stats.Attributes.STR + owner.GetEquippedWeapon().GetDamage();
+                else if (owner.GetEquippedWeapon().WeaponType == WeaponType.FaithMagic)
+                    return owner.Stats.Attributes.FAITH + owner.GetEquippedWeapon().GetDamage();
                 else
-                    return human.Stats.Attributes.INT + human.EquippedWeapon.GetDamage();
+                    return owner.Stats.Attributes.INT + owner.GetEquippedWeapon().GetDamage();
             }
 
             return owner.Stats.Attributes.STR;
@@ -165,13 +164,12 @@ namespace Game.Mechanics.Battle
         public int GetHitrate()
         {
        
-            if (owner is Human human)
-            {
+         
                 //Debug.Log("TODO ATTACK SPEED CALC");
                // Debug.Log(human.EquippedWeapon.Hit);
                 //Debug.Log(human.Stats.Attributes.DEX);
-                return (human.Stats.Attributes.DEX- human.EquippedWeapon.GetWeight()) * 2 + human.EquippedWeapon.GetHit();
-            }  
+            return (owner.Stats.Attributes.DEX- owner.GetEquippedWeapon().GetWeight()) * 2 + owner.GetEquippedWeapon().GetHit();
+            
 
             return owner.Stats.Attributes.DEX * 2;
         }
@@ -180,14 +178,10 @@ namespace Game.Mechanics.Battle
             var tileBonus = 0;
             if(owner.GetTile()!=null)
                 tileBonus=owner.GetTile().TileData.avoBonus;
-            if (owner is Human human)
-            {
-                //Debug.Log("TODO ATTACK SPEED CALC");
-                
-                return  tileBonus+ (human.Stats.Attributes.AGI  - human.EquippedWeapon.GetWeight())* 2;
-            }
+         
+           return  tileBonus+ (owner.Stats.Attributes.AGI  - owner.GetEquippedWeapon().GetWeight())* 2;
             
-            return tileBonus + owner.Stats.Attributes.AGI * 2;
+            
         }
 
         public int GetHitAgainstTarget(IBattleActor target)
@@ -198,13 +192,9 @@ namespace Game.Mechanics.Battle
 
         public int GetAttackSpeed()
         {
-            if (owner is Human human)
-            {
-                //Debug.Log("TODO ATTACK SPEED CALC");
-                return human.Stats.Attributes.AGI - human.EquippedWeapon.GetWeight()+ owner.GetTile().TileData.speedMalus;
-            }
-
-            return owner.Stats.Attributes.AGI + owner.GetTile().TileData.speedMalus;
+           
+            return owner.Stats.Attributes.AGI - owner.GetEquippedWeapon().GetWeight()+ owner.GetTile().TileData.speedMalus;
+           
         }
 
         public int GetCrit()

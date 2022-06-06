@@ -111,7 +111,7 @@ namespace Game.Mechanics
                 {
                     var selectedCharacter = gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter;
                         //Debug.Log("SelectedCharacter: " + selectedCharacter);
-                        consumableItem.Use((Human)selectedCharacter, Player.Instance.Party.Convoy);
+                        consumableItem.Use((Unit)selectedCharacter, Player.Instance.Party.Convoy);
                         new GameplayInput().Wait(selectedCharacter);
                         new GameplayInput().ExecuteInputActions(null);
                 }

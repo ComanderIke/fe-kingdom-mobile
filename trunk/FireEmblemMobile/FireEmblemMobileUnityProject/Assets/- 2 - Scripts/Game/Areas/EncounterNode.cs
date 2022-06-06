@@ -21,10 +21,14 @@ public abstract class EncounterNode
     public int depth = 0;
 
     public int childIndex = 0;
+
+    public Sprite sprite;
+
+    public string description;
     //public Column column;
  
 
-    protected EncounterNode(EncounterNode parent,int depth, int childIndex)
+    protected EncounterNode(EncounterNode parent,int depth, int childIndex, string description, Sprite icon)
     {
         children = new List<EncounterNode>();
         parents = new List<EncounterNode>();
@@ -32,6 +36,8 @@ public abstract class EncounterNode
         parents.Add(parent);
         this.depth = depth;
         this.childIndex = childIndex;
+        this.sprite = icon;
+        this.description = description;
     }
 
     public override string ToString()

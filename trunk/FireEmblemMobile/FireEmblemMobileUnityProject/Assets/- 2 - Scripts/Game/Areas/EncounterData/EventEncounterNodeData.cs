@@ -5,6 +5,6 @@ public class EventEncounterNodeData: EncounterNodeData
 {
     public override EncounterNode CreateNode(EncounterNode parent,int depth, int childIndex)
     {
-        return new EventEncounterNode(parent, depth, childIndex);
+        return new EventEncounterNode(parent, depth, childIndex, description, sprite);
     }
 }

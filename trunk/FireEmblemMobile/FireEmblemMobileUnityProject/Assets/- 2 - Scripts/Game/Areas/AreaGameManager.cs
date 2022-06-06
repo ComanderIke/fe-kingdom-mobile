@@ -252,16 +252,25 @@ public class AreaGameManager : MonoBehaviour
         if (encounterNode.moveable)
         {
 
-            SetAllEncountersNotMovable();
-            StartCoroutine(MovementAnimation(encounterNode));
-            circleUI.Rotate();
-            hour += 6;
-            if (hour >= 24)
-                hour = 0;
-            lightController.UpdateHour(hour);
+            ToolTipSystem.ShowEncounter(encounterNode, encounterNode.gameObject.transform.position, true, MoveClicked);
+          
             // ResetMoveOptions();
             // ShowMoveOptions();
         }
+        else
+        {
+            ToolTipSystem.ShowEncounter(encounterNode, encounterNode.gameObject.transform.position, false, null);
+        }
+    }
+    void MoveClicked(EncounterNode node)
+    {
+        SetAllEncountersNotMovable();
+        StartCoroutine(MovementAnimation(node));
+        circleUI.Rotate();
+        hour += 6;
+        if (hour >= 24)
+            hour = 0;
+        lightController.UpdateHour(hour);
     }
     IEnumerator MovementAnimation(EncounterNode target)
     {

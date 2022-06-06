@@ -55,7 +55,7 @@ namespace Game.GameActors.Units.OnGameObject
             // Unit.SpBarsValueChanged += SpBarsValueChanged;
             if(unit!=null)
                 unit.TurnStateManager.UnitWaiting += SetWaitingSprite;
-            Human.OnEquippedWeapon += OnEquippedWeapon;
+            Unit.OnEquippedWeapon += OnEquippedWeapon;
             
            // hoverCanvas.alpha = 0;
             HpValueChanged();
@@ -102,7 +102,7 @@ namespace Game.GameActors.Units.OnGameObject
             // Unit.SpBarsValueChanged -= SpBarsValueChanged;
             if(unit!=null)
                 unit.TurnStateManager.UnitWaiting -= SetWaitingSprite;
-            Human.OnEquippedWeapon -= OnEquippedWeapon;
+            Unit.OnEquippedWeapon -= OnEquippedWeapon;
         }
         public void SetVisible(bool visible)
         {

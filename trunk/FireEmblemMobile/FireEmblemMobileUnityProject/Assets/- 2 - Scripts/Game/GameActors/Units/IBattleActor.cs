@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Players;
+﻿using Game.GameActors.Items.Weapons;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Numbers;
 using Game.GameActors.Units.OnGameObject;
@@ -20,7 +21,7 @@ namespace Game.GameInput
         ExperienceManager ExperienceManager { get; }
         TurnStateManager TurnStateManager { get; set; }
         GameTransformManager GameTransformManager { get; set; }
-
+        Weapon GetEquippedWeapon();
         object Clone();
         bool IsAlive();
         void Die();

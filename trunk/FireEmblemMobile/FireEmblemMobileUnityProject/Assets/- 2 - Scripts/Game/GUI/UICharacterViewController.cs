@@ -96,8 +96,42 @@ public class UICharacterViewController : MonoBehaviour
         DEF.SetText(""+unit.Stats.Attributes.DEF);
         
         HPBar.SetValue(unit.Hp, unit.Stats.MaxHp);
-        equipmentController.Show((Human)unit);
+        equipmentController.Show(unit);
         skillsController.Show(unit);
+    }
+
+    public void STR_Clicked()
+    {
+        ToolTipSystem.ShowAttribute("Strength", "Increases ones physical damage output!",unit.Stats.Attributes.STR, STR.transform.position);
+    }
+    public void INT_Clicked()
+    {
+        ToolTipSystem.ShowAttribute("Intelligence", "Increases ones magical damage output and something else!",unit.Stats.Attributes.INT,INT.transform.position);
+    }
+    public void DEX_Clicked()
+    {
+        ToolTipSystem.ShowAttribute("Dexterity", "Increases ones accuracy and influences critical hitrate!",unit.Stats.Attributes.DEX,DEX.transform.position);
+    }
+    public void AGI_Clicked()
+    {
+        ToolTipSystem.ShowAttribute("Agility", "Increases ones ability to dodge as well as attack speed! Having 5 higher than your opponent allows for double attacks",unit.Stats.Attributes.AGI,AGI.transform.position);
+    }
+    public void DEF_Clicked()
+    {
+        ToolTipSystem.ShowAttribute("Defense", "Increases your physical damage resistance!",unit.Stats.Attributes.DEF,DEF.transform.position);
+    }
+    public void LCK_Clicked()
+    {
+        ToolTipSystem.ShowAttribute("Luck", "Increases ones critical hit rate and many other things!",unit.Stats.Attributes.LCK,LCK.transform.position);
+    }
+    public void CON_Clicked()
+    {
+        ToolTipSystem.ShowAttribute("Constitution", "Increases ones maximum Hitpoints and allows to wield heavier weapons!",unit.Stats.Attributes.CON,CON.transform.position);
+    }
+   
+    public void FTH_Clicked()
+    {
+        ToolTipSystem.ShowAttribute("Faith", "Increases ones holy and occult damage and increases magical damage resistance!",unit.Stats.Attributes.FAITH,FTH.transform.position);
     }
  
 

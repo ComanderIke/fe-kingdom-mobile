@@ -28,15 +28,15 @@ public class UISmithyController : MonoBehaviour
 
     public void UpdateUI()
     {
-        this.currentWeapon = ((Human)party.ActiveUnit).EquippedWeapon;
+        this.currentWeapon = party.ActiveUnit.EquippedWeapon;
         upgradeWeaponUI.Show(currentWeapon,  party.money >= currentWeapon.GetUpgradeCost()&&party.SmithingStones>=currentWeapon.GetUpgradeSmithingStoneCost());
         
     }
     public void UpgradeClicked()
     {
-        party.Money -= ((Human)party.ActiveUnit).EquippedWeapon.GetUpgradeCost();
-        party.SmithingStones -= ((Human)party.ActiveUnit).EquippedWeapon.GetUpgradeSmithingStoneCost();
-        ((Human)party.ActiveUnit).EquippedWeapon.Upgrade();
+        party.Money -= party.ActiveUnit.EquippedWeapon.GetUpgradeCost();
+        party.SmithingStones -=party.ActiveUnit.EquippedWeapon.GetUpgradeSmithingStoneCost();
+        party.ActiveUnit.EquippedWeapon.Upgrade();
         UpdateUI();
     }
     public void ContinueClicked()

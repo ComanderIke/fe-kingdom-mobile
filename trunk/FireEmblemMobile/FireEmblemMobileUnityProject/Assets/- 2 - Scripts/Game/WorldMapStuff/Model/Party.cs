@@ -13,6 +13,8 @@ namespace Game.WorldMapStuff.Model
     {
 
         public event Action<int> onGoldChanged;
+        public event Action<int> onSmithingStonesChanged;
+        
         [SerializeField] public List<Unit> members;
         public static Action<Party> PartyDied;
         public static int MaxSize = 4;
@@ -24,7 +26,20 @@ namespace Game.WorldMapStuff.Model
         public Convoy Convoy;
         
         public int ActiveUnitIndex = 0;
-        public int SmithingStones = 2;
+        public int smithingStones = 2;
+        
+        public int SmithingStones
+        {
+            get
+            {
+                return smithingStones;
+            }
+            set
+            {
+                smithingStones = value;
+                onSmithingStonesChanged?.Invoke(smithingStones);
+            }
+        }
         public int Money
         {
             get

@@ -32,7 +32,7 @@ public class UIEquipmentController:MonoBehaviour
         Debug.Log("ClickedWeapobn");
         ToolTipSystem.Show(weapon,WeaponSlot.transform.position, weapon.name, weapon.Description, weapon.GetIcon());
     }
-    public void Show(Human unit)
+    public void Show(Unit unit)
     {
         Atk.SetText(""+unit.BattleComponent.BattleStats.GetDamage());
 

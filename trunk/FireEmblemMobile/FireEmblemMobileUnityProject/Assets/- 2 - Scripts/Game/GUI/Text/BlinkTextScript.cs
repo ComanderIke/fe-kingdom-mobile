@@ -7,11 +7,13 @@ namespace Game.GUI.Text
     public class BlinkTextScript : MonoBehaviour
     {
         private TextMeshProUGUI text;
+        private CanvasGroup alphaCanvas;
 
         // Use this for initialization
         private void Awake()
         {
             text = GetComponent<TextMeshProUGUI>();
+            alphaCanvas = GetComponent<CanvasGroup>();
         }
 
         private void OnEnable()
@@ -28,10 +30,11 @@ namespace Game.GUI.Text
         {
             while (true)
             {
-                text.color = new Color(text.color.r, text.color.g, text.color.b, 0);
-                yield return new WaitForSeconds(0.25f);
-                text.color = new Color(text.color.r, text.color.g, text.color.b, 1);
-                yield return new WaitForSeconds(0.75f);
+                LeanTween.alphaCanvas(alphaCanvas, 0, 0.5f);
+                yield return new WaitForSeconds(0.5f);
+                LeanTween.alphaCanvas(alphaCanvas, 1, 0.5f);
+                yield return new WaitForSeconds(0.5f);
+      
             }
         }
     }

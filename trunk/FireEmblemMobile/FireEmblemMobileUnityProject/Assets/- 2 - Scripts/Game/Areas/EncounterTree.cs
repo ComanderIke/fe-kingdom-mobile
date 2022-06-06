@@ -29,6 +29,8 @@ public class EncounterTree
     {
         bool bindChild = false;
         float chance = spawnData.chanceToShareChild;
+        if (current.index <= 2)// dont share a child on first 2 columns
+            return false;
         if (current.children.Count > 0)
         {
             float rng2 = Random.value;
@@ -51,6 +53,7 @@ public class EncounterTree
                 }
             }
         }
+        
         return bindChild;
     }
     void SpawnSingleEncounter(EncounterNode parent, Column current,Column previous)
@@ -81,24 +84,34 @@ public class EncounterTree
 
             while (chosenKey == null)
             {
-                float rng = Random.Range(0, sumAllChances);
-                foreach (var key in spawnData.EncounterChances.Keys)
+                if (current.index == 1)
                 {
-                    threshold += spawnData.EncounterChances[key];
-                    int indexOfKey = spawnData.nodeDatas.IndexOf(key);
-                    if (rng <= threshold&& (!EncounterAppearanceCount.ContainsKey(key) ||EncounterAppearanceCount[key]< spawnData.nodeDatas[indexOfKey].maxAppearanceCountPerArea))
+                    chosenKey = spawnData.EncounterChances.Keys.First();
+                }
+                else
+                {
+                    float rng = Random.Range(0, sumAllChances);
+                    foreach (var key in spawnData.EncounterChances.Keys)
                     {
-                        UpdateEncounterChances(key);
-                        chosenKey = key;
-                        if(EncounterAppearanceCount.ContainsKey(key))
-                            EncounterAppearanceCount[key]++;
-                        else
+                        threshold += spawnData.EncounterChances[key];
+                        int indexOfKey = spawnData.nodeDatas.IndexOf(key);
+                        if (rng <= threshold && (!EncounterAppearanceCount.ContainsKey(key) ||
+                                                 EncounterAppearanceCount[key] < spawnData.nodeDatas[indexOfKey]
+                                                     .maxAppearanceCountPerArea))
                         {
-                            EncounterAppearanceCount.Add(key, 1);
-                        }
-                        break;
-                    }
+                            UpdateEncounterChances(key);
+                            chosenKey = key;
+                            if (EncounterAppearanceCount.ContainsKey(key))
+                                EncounterAppearanceCount[key]++;
+                            else
+                            {
+                                EncounterAppearanceCount.Add(key, 1);
+                            }
 
+                            break;
+                        }
+
+                    }
                 }
             }
 
@@ -185,34 +198,44 @@ public class EncounterTree
     }
     void SpawnEncounters(EncounterNode parent, Column current, Column previous, EncounterNodeData fixedData=null)
     {
-        float rng = Random.value;
-        if (previous.children.Count == 1)
+        if (current.index == 1) //First Column
         {
-            rng = Random.Range(0, spawnData.encounter2ChildPercentage);
-        }
-        if (previous.children.Count >= 4)
-        {
-            rng += spawnData.encounter3ChildPercentage;
-        }
-        if (rng <= spawnData.encounter3ChildPercentage)
-        {
-            //Debug.Log("Spawn Triple Node");
             SpawnSingleEncounter(parent, current, previous);
             SpawnSingleEncounter(parent, current, previous);
             SpawnSingleEncounter(parent, current, previous);
-        }
-        else if (rng <= spawnData.encounter2ChildPercentage)
-        {
-            
-            //Debug.Log("Spawn Double Node");
-            SpawnSingleEncounter(parent, current, previous);
-            SpawnSingleEncounter(parent, current, previous);
-
         }
         else
         {
-            //Debug.Log("Spawn Single Node");
-            SpawnSingleEncounter(parent, current, previous);
+            float rng = Random.value;
+            if (previous.children.Count == 1)
+            {
+                rng = Random.Range(0, spawnData.encounter2ChildPercentage);
+            }
+            if (previous.children.Count >= spawnData.columnMaxEncounter)
+            {
+                rng += spawnData.encounter3ChildPercentage;
+            }
+
+            if (rng <= spawnData.encounter3ChildPercentage)
+            {
+                //Debug.Log("Spawn Triple Node");
+                SpawnSingleEncounter(parent, current, previous);
+                SpawnSingleEncounter(parent, current, previous);
+                SpawnSingleEncounter(parent, current, previous);
+            }
+            else if (rng <= spawnData.encounter2ChildPercentage)
+            {
+
+                //Debug.Log("Spawn Double Node");
+                SpawnSingleEncounter(parent, current, previous);
+                SpawnSingleEncounter(parent, current, previous);
+
+            }
+            else
+            {
+                //Debug.Log("Spawn Single Node");
+                SpawnSingleEncounter(parent, current, previous);
+            }
         }
     }
     public void CreateStartColumn(EncounterNodeData startNodeData)
@@ -230,7 +253,7 @@ public class EncounterTree
         Column endColumn = new Column();
         if (endNodeData is BattleEncounterNodeData data)
         {
-            endNode = new BattleEncounterNode(data.levelIndex, data.EnemyArmyData,null,spawnData.columnCount,0);
+            endNode = new BattleEncounterNode(data.levelIndex, data.EnemyArmyData,null,spawnData.columnCount,0, "Area Boss Battle", null);
         }
 
         endColumn.children.Add(endNode);

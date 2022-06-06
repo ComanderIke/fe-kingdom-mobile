@@ -14,7 +14,7 @@ namespace Game.GameActors.Players
     [System.Serializable]
     public class PartyData
     {
-        [SerializeField] public List<HumanData> humanData;
+        [SerializeField] public List<UnitData> humanData;
         [SerializeField] public int money;
         [SerializeField] public Convoy convoy;
         [SerializeField] public int activeUnitIndex;
@@ -73,13 +73,10 @@ namespace Game.GameActors.Players
             activeUnitIndex = party.ActiveUnitIndex;
             convoy = party.Convoy;
             money = party.money;
-            humanData = new List<HumanData>();
+            humanData = new List<UnitData>();
             foreach (var member in party.members)
             {
-                if (member is Human human)
-                {
-                    humanData.Add(new HumanData(human));
-                }
+                humanData.Add(new UnitData(member));
             }
         }
     }

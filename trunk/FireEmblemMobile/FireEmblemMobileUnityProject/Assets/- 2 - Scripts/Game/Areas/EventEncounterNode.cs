@@ -31,7 +31,7 @@ public class EventEncounterNode : EncounterNode
 {
     public RandomEvent randomEvent;
    
-    public EventEncounterNode(EncounterNode parent,int depth, int childIndex) : base(parent, depth, childIndex)
+    public EventEncounterNode(EncounterNode parent,int depth, int childIndex, string description, Sprite sprite) : base(parent, depth, childIndex, description, sprite)
     {
         List<TextOption> options = new List<TextOption>();
         options.Add(new TextOption("Option 1:", 10, 2));

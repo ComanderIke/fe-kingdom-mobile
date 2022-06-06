@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af959c221bf9f9f4d9c129ad64f8415d, type: 3}
+  m_Name: ArcherBP
+  m_EditorClassIdentifier: 
+  Class: {fileID: 11400000, guid: c9fb62633f511e34e9f6889cbde27e91, type: 2}
+  EquippedWeapon: {fileID: 11400000, guid: 83e1761a127b1a54ca3c98ca2850f24a, type: 2}
+  EquippedRelic1: {fileID: 0}
+  EquippedRelic2: {fileID: 0}
+  name: Selena
+  jobClass: 
+  stats:
+    AttackRanges: 
+    Attributes:
+      STR: 3
+      INT: 3
+      DEX: 3
+      AGI: 3
+      <CON>k__BackingField: 3
+      LCK: 3
+      DEF: 3
+      FAITH: 3
+    MaxHp: 0
+    Mov: 3
+  growths:
+    STR: 30
+    INT: 30
+    DEX: 30
+    AGI: 30
+    <CON>k__BackingField: 30
+    LCK: 30
+    DEF: 30
+    FAITH: 30
+  moveType: {fileID: 11400000, guid: d13592b1fa0af024a841b121149b8014, type: 2}
+  SkillManager:
+    Skills: []
+    Favourite: {fileID: 0}
+    SkillPoints: 0
+    SkillTrees:
+    - {fileID: 11400000, guid: d676610ad1a369c408de326f8bbc89b0, type: 2}
+    - {fileID: 11400000, guid: c880e6abcb3e9af4e9c5bcac58e5682c, type: 2}
+    - {fileID: 11400000, guid: 92278023de2e5df40b3a867e2efa575c, type: 2}
+  bluePrintID: 
+  visuals:
+    CharacterSpriteSet: {fileID: 11400000, guid: 15c6559b2ce48d548a45dc0c7b7ffba6,
+      type: 2}
+    UnitEffectVisual: {fileID: 11400000, guid: af10e6087dc82f34ebed15c0092e0174, type: 2}
+    Prefabs:
+      MapAnimatedSprite: {fileID: 2861010742256422526, guid: 171415ab38e1bf24dbd1923f554bb171,
+        type: 3}
+      EncounterAnimatedSprite: {fileID: 6168332596698552260, guid: d004730b778feb548a0afe509ccacd4a,
+        type: 3}
+    UnitCharacterCircleUI: {fileID: 0}
+    unitRenderer: {fileID: 0}
+  experienceManager:
+    level: 1
+    exp: 0
+    MaxExp: 100

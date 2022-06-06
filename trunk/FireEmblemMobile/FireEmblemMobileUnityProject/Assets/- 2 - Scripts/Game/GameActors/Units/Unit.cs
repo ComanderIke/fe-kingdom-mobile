@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.AI;
+using Game.GameActors.Items;
+using Game.GameActors.Items.Weapons;
 using Game.GameActors.Players;
 using Game.GameActors.Units.CharStateEffects;
 using Game.GameActors.Units.Humans;
@@ -19,8 +21,16 @@ using UnityEngine;
 
 namespace Game.GameActors.Units
 {
-    public abstract class Unit : ScriptableObject, IActor, IGridActor, IBattleActor, ICloneable, IAIAgent
+    [Serializable]
+    [CreateAssetMenu(menuName = "GameData/Human", fileName = "Human")]
+    public class Unit : ScriptableObject, IActor, IGridActor, IBattleActor, ICloneable, IAIAgent
     {
+        public static event Action OnEquippedWeapon;
+        public RpgClass Class;
+
+        public Weapon EquippedWeapon;
+        public Relic EquippedRelic1;
+        public Relic EquippedRelic2;
         public new string name;
         public string jobClass;
         [HideInInspector] private int hp=-1;
@@ -57,6 +67,7 @@ namespace Game.GameActors.Units
    
         
         public GameTransformManager GameTransformManager { get; set; }
+  
 
         [SerializeField] private ExperienceManager experienceManager;
 
@@ -173,6 +184,12 @@ namespace Game.GameActors.Units
             // spBars = Sp / SP_PER_BAR;
             ExperienceManager.ExpGained = null;
             ExperienceManager.ExpGained += ExpGained;
+            Stats.AttackRanges.Clear();
+            if (EquippedWeapon != null)
+            {
+                foreach (int r in EquippedWeapon.AttackRanges)
+                    Stats.AttackRanges.Add(r);
+            }
            
         }
 
@@ -248,6 +265,11 @@ namespace Game.GameActors.Units
             return name + " HP: " + Hp + "/" + stats.MaxHp+"Level: "+experienceManager.Level+ " Exp: "+experienceManager.Exp;
         }
 
+        public Weapon GetEquippedWeapon()
+        {
+            return EquippedWeapon;
+        }
+
         public object Clone()
         {
             var clone = (Unit) MemberwiseClone();
@@ -280,7 +302,82 @@ namespace Game.GameActors.Units
             clone.Motivation = Motivation;
             clone.MoveType = MoveType;
             clone.Faction = Faction;
+            clone.EquippedWeapon = (Weapon)EquippedWeapon?.Clone();
+            clone.EquippedRelic1= (Relic)EquippedRelic1?.Clone();
+            clone.EquippedRelic2=(Relic)EquippedRelic2?.Clone();
+            //human.Inventory = (Inventory)Inventory.Clone();
+            clone.Class = Class;
             //Only for
+        }
+        public bool CanUseWeapon(Weapon w)
+        {
+            return true;
+        }
+         public void Equip(EquipableItem e)
+        {
+
+            switch (e.EquipmentSlotType)
+            {
+                //case EquipmentSlotType.Armor: Debug.LogError("TODO Equip Armor!"); break;
+                case EquipmentSlotType.Weapon: 
+                    Equip((Weapon) e);break;
+                case EquipmentSlotType.Relic: Debug.LogError("TODO Equip Relic!"); break;
+            }
+        }
+        public void Equip(Weapon w)
+        {
+            
+            Stats.AttackRanges.Clear();
+            EquippedWeapon = w;
+            foreach (int r in w.AttackRanges) Stats.AttackRanges.Add(r);
+            Debug.Log("Equip " + w.name + " on " + name + " " + w.AttackRanges.Length+" "+ Stats.AttackRanges.Count);
+            OnEquippedWeapon?.Invoke();
+        }
+        public void AutoEquip()
+        {
+           
+            // if (EquippedWeapon == null)
+            // {
+            //     Equip((Weapon)Inventory.Items.First(a=> a is Weapon weapon && CanUseWeapon(weapon)));
+            // }
+        }
+
+        public bool CanEquip(EquipableItem eitem)
+        {
+            Debug.Log("TODO Check if item is equipable");
+            return true;
+        }
+
+        public void InitEquipment()
+        {
+            if(EquippedWeapon!=null)
+                EquippedWeapon=Instantiate(EquippedWeapon);
+            if(EquippedRelic1!=null)
+                EquippedRelic1=Instantiate(EquippedRelic1);
+            if(EquippedRelic2!=null)
+                EquippedRelic2=Instantiate(EquippedRelic2);
+        }
+
+        public bool HasEquipped(Item item)
+        {
+            return EquippedRelic1 == item || (EquippedRelic2 == item || EquippedWeapon == item);
+        }
+
+        public void UnEquip(EquipableItem item)
+        {
+            if (EquippedWeapon == item)
+            {
+                Stats.AttackRanges.Clear();
+                EquippedWeapon = null;
+            }
+            else if (EquippedRelic1 == item)
+            {
+                EquippedRelic1 = null;
+            }
+            else if (EquippedRelic2 == item)
+            {
+                EquippedRelic2 = null;
+            }
         }
 
         #region Events

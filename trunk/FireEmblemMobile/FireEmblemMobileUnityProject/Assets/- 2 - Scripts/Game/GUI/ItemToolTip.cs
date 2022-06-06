@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Game.GameActors.Items;
 using Game.GameActors.Items.Weapons;
 using Game.GameActors.Players;
+using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
 using TMPro;
 using UnityEngine;
@@ -25,7 +26,7 @@ public class ItemToolTip : MonoBehaviour
     public Button dropButton;
     private Item item;
     private RectTransform rectTransform;
-    private Human itemOwner;
+    private Unit itemOwner;
     public LayoutElement frame;
     // Start is called before the first frame update
     private void Start()
@@ -47,7 +48,7 @@ public class ItemToolTip : MonoBehaviour
         Debug.Log("Use Item Clicked TODO dont Remove here also just in ItembaseClass!");
         if (item is EquipableItem eitem)
         {
-            Human human =(Human) Player.Instance.Party.ActiveUnit;
+            Unit human =Player.Instance.Party.ActiveUnit;
 
             if (human.HasEquipped(eitem))
             {
@@ -111,7 +112,7 @@ public class ItemToolTip : MonoBehaviour
             headerText.gameObject.SetActive(true);
             headerText.text = header;
         }
-        Human human = (Human)Player.Instance.Party.ActiveUnit;
+        Unit human = Player.Instance.Party.ActiveUnit;
         if (item is EquipableItem eitem)
         {
             

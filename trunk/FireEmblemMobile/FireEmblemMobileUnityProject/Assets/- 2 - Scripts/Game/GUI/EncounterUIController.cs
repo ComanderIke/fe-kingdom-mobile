@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Game.WorldMapStuff.Model;
@@ -8,22 +9,41 @@ using UnityEngine.Assertions.Must;
 public class EncounterUIController : MonoBehaviour
 {
     public TextMeshProUGUI Gold;
+    public TextMeshProUGUI SmithingStones;
 
     public UIInnController UIInnController;
     public UISmithyController UISmithyController;
     public UIChurchController UIChurchController;
     public UIEventController UIEventController;
     public UIMerchantController UIMerchantController;
+
+    private Party party;
     // Start is called before the first frame update
     public void Init(Party party)
     {
+        this.party = party;
         party.onGoldChanged += GoldChanged;
         GoldChanged(party.Money);
+        party.onSmithingStonesChanged += StonesChanged;
+        StonesChanged(party.SmithingStones);
+    }
+
+    private void OnDestroy()
+    {
+        if (party != null)
+        {
+            party.onGoldChanged -= GoldChanged;
+            party.onSmithingStonesChanged -= StonesChanged;
+        }
     }
 
     void GoldChanged(int gold)
     {
         Gold.SetText(""+gold);
+    }
+    void StonesChanged(int stones)
+    {
+        SmithingStones.SetText(""+stones);
     }
 
     public void UpdateUIScreens()

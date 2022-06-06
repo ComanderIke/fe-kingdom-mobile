@@ -73,7 +73,7 @@ namespace Game.Mechanics
             {
                 attackData.Dmg = Math.Min(defender.Hp, damage);
                 //AttackerSpDamage.Add(Math.Min(defender.Sp, spDamage));
-                if (attacker is Human humanAttacker && humanAttacker.EquippedWeapon != null)
+                if (attacker.GetEquippedWeapon() != null)
                 {
                     //DefenderSpDamage.Add(Math.Min(attacker.Sp, humanAttacker.EquippedWeapon.Weight));
                     //attacker.Sp -= humanAttacker.EquippedWeapon.Weight;
@@ -83,7 +83,7 @@ namespace Game.Mechanics
             {
                 attackData.Dmg = Math.Min(defender.Hp, damage);
                // DefenderSpDamage.Add(Math.Min(defender.Sp, spDamage));
-                if (attacker is Human humanAttacker && humanAttacker.EquippedWeapon != null)
+                if (attacker.GetEquippedWeapon() != null)
                 {
                     //AttackerSpDamage.Add(Math.Min(attacker.Sp, humanAttacker.EquippedWeapon.Weight));
                     //attacker.Sp -= humanAttacker.EquippedWeapon.Weight;

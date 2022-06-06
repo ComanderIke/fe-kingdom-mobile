@@ -15,8 +15,7 @@ namespace Game.GameActors.Units
         
         
         public CharacterSpriteSet CharacterSpriteSet;
-
-        [HideInInspector]
+        
         public IUnitEffectVisual UnitEffectVisual;
 
         public UnitPrefabs Prefabs;

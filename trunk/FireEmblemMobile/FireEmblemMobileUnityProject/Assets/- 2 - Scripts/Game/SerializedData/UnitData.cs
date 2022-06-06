@@ -11,6 +11,8 @@ namespace Game.GameActors.Players
         [SerializeField]
         public string name;
         [SerializeField]
+        public string weaponId;
+        [SerializeField]
         public int hp;
         [SerializeField]
         private StatsData statsData;
@@ -33,6 +35,7 @@ namespace Game.GameActors.Players
             this.statsData = unit.Stats.GetSaveData();
             this.unitBlueprintID = unit.bluePrintID;
             this.hp = unit.Hp;
+            weaponId = unit.EquippedWeapon.name;
         }
 
         public virtual Unit Load()
@@ -48,6 +51,7 @@ namespace Game.GameActors.Players
             unit.ExperienceManager.Level = ExperienceManager.Level;
             unit.TurnStateManager = TurnStateManager;
             unit.Hp = hp;
+            unit.EquippedWeapon = GameData.Instance.GetWeapon(weaponId);
             return unit;
             // unit.visuals = new UnitVisual();
             //

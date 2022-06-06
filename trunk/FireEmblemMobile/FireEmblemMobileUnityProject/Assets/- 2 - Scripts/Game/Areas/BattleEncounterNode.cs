@@ -9,7 +9,7 @@ public class BattleEncounterNode : EncounterNode
     private Scenes levelindex;
     private EnemyArmyData enemyArmyData;
     
-    public BattleEncounterNode(Scenes levelIndex, EnemyArmyData enemyArmyData, EncounterNode parent,int depth, int childIndex) : base(parent,depth, childIndex)
+    public BattleEncounterNode(Scenes levelIndex, EnemyArmyData enemyArmyData, EncounterNode parent,int depth, int childIndex, string description, Sprite sprite) : base(parent,depth, childIndex, description, sprite)
     {
         this.levelindex = levelIndex;
         this.enemyArmyData = enemyArmyData;

@@ -29,7 +29,7 @@ namespace Game.GameResources
         [SerializeField] private List<Weapon> swords = default;
         [SerializeField] private List<Weapon> magic = default;
         [SerializeField] private List<Item> consumables = default;
-        [FormerlySerializedAs("humans")] [SerializeField] private List<Human> humanBlueprints = default;
+        [FormerlySerializedAs("humans")] [SerializeField] private List<Unit> humanBlueprints = default;
         [SerializeField] private List<Party> playerStartingParties = default;
         [SerializeField] public List<CampaignConfig> campaigns;
 
@@ -80,7 +80,7 @@ namespace Game.GameResources
                 weapon = spears.Find(a => a.name == name);
             return Instantiate(weapon);
         }
-        public Human GetHumanBlueprint(string name)
+        public Unit GetHumanBlueprint(string name)
         {
             Debug.Log("name: " + name);
             var human = Instantiate(humanBlueprints.Find(a => a.bluePrintID == name));

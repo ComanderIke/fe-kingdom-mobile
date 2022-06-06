@@ -24,6 +24,7 @@ namespace Menu
       //  private AsyncOperation sceneLoadTask;
         private SceneState sceneState;
         [SerializeField] private Image progressBar = default;
+         [SerializeField] private TextMeshProUGUI clickContinueText = default;
         [SerializeField] private TextMeshProUGUI progressText = default;
         [SerializeField] private TextMeshProUGUI tipsText = default;
         [SerializeField] private CanvasGroup alphaCanvas = default;
@@ -139,7 +140,7 @@ namespace Menu
             progressBar.fillAmount = 0;
             progressText.text = "0%";
             loadTime = 0;
-           
+            clickContinueText.gameObject.SetActive(false);
             StartCoroutine(GenerateTip());
         }
 
@@ -164,6 +165,7 @@ namespace Menu
                 }
                 else
                 {
+                    
                     var activeScene = SceneManager.GetSceneByBuildIndex((int)scene.scene);
                     if(activeScene.IsValid())
                         SceneManager.SetActiveScene(activeScene);
@@ -172,12 +174,15 @@ namespace Menu
 
             if (done)
             {
-                
-                sceneState = SceneState.Unload;
-                progressBar.fillAmount = 0;
-                progressText.text = "0%";
-                LoadingScreen.SetActive(false);
-                OnSceneReady?.Invoke();
+                clickContinueText.gameObject.SetActive(true);
+                if (Input.touchCount > 0)
+                {
+                    sceneState = SceneState.Unload;
+                    progressBar.fillAmount = 0;
+                    progressText.text = "0%";
+                    LoadingScreen.SetActive(false);
+                    OnSceneReady?.Invoke();
+                }
             }
             else
             {
@@ -268,6 +273,7 @@ namespace Menu
         {
             tipCount = UnityEngine.Random.Range(0, Tips.Length);
             tipsText.text = Tips[tipCount];
+            
             while (sceneState != SceneState.Ready)
             {
                 yield return new WaitForSeconds(3f);
