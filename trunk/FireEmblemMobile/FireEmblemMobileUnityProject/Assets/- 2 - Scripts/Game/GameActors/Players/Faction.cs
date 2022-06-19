@@ -86,6 +86,9 @@ namespace Game.GameActors.Players
         }
 
 
-       
+        public void RemoveDestroyable(Destroyable dest)
+        {
+            if (Destroyables.Contains(dest)) Destroyables.Remove(dest);
+        }
     }
 }

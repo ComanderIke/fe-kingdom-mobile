@@ -23,12 +23,18 @@ public class DestroyableController : MonoBehaviour
     public GameObject canvasTransform;
     private void Start()
     {
-        Destroyable.HpValueChanged += HpValueChanged;
+        
         
     }
 
+    private void OnDestroy()
+    {
+        Destroyable.HpValueChanged -= HpValueChanged;
+    }
     public void Init()
     {
+        Destroyable.HpValueChanged += HpValueChanged;
+        HpValueChanged();
         hpBar.GetComponent<Image>().color = ColorManager.Instance.GetFactionColor(Destroyable.Faction.Id);
         if (Destroyable.Faction.Id != 0)
         {

@@ -52,8 +52,9 @@ public class TileManager : MonoBehaviour
     {
         foreach (var destroyable in destroyables)
         {
-            if (destroyable.IsOnPosition(x,y)&& destroyable.Destroyable.IsAlive())
-                return destroyable.Destroyable.terrainData;
+            if(destroyable.Destroyable.IsAlive())
+                if (destroyable.IsOnPosition(x,y)&& destroyable.Destroyable.IsAlive())
+                    return destroyable.Destroyable.terrainData;
         }
         foreach (var prop in props)
         {

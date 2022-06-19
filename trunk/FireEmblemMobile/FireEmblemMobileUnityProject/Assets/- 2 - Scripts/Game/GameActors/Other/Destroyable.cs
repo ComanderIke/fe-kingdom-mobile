@@ -87,6 +87,9 @@ namespace Game.GameActors.Players
         public void Die()
         {
             Controller.Die();
+            Faction.RemoveDestroyable(this);
+            GridComponent.Tile.GridObject = null;
+           
         }
 
         public void SetAttackTarget(bool selected)
