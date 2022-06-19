@@ -54,7 +54,7 @@ namespace Game.States
                         GridGameManager.Instance.GetSystem<UnitProgressSystem>()
                             .DistributeExperience(attacker, unitDefender);
                 }
-
+                Debug.Log(defender+" Check IsAlive");
                 if (!defender.IsAlive())
                 {
                     defender.Die();

@@ -21,9 +21,20 @@ namespace Game.GameActors.Players
     [CreateAssetMenu(menuName = "GameData/Destroyable", fileName="Destroyable")]
     public class Destroyable:ScriptableObject,IGridObject, IAttackableTarget
     {
-        public GridTerrainData terrainData;
+        [SerializeField]
+        private GridTerrainData terrainData;
+        [SerializeField]
+        private GridTerrainData terrainDataAfterDeath;
 
-        
+        public GridTerrainData TerrainData
+        {
+            get
+            {
+                if (IsAlive())
+                    return terrainData;
+                return terrainDataAfterDeath;
+            }
+        }
         [SerializeField]
         private int maxHp;
 
@@ -38,8 +49,21 @@ namespace Game.GameActors.Players
                 maxHp = value;
             }
         }
+        [SerializeField]
+        private Sprite sprite;
+        [SerializeField]
+        private Sprite spriteAfterDeath;
 
-        public Sprite sprite;
+        public Sprite Sprite
+        {
+            get
+            {
+                if (IsAlive())
+                    return sprite;
+                return spriteAfterDeath;
+
+            }
+        }
 
         
         public GridComponent GridComponent { get; set; }
@@ -62,7 +86,9 @@ namespace Game.GameActors.Players
             set
             {
                 hp = value;
+                
                 HpValueChanged?.Invoke();
+               
             }
         }
 
@@ -81,11 +107,12 @@ namespace Game.GameActors.Players
 
         public bool IsAlive()
         {
-            return Hp >= 0;
+            return Hp > 0;
         }
 
         public void Die()
         {
+            Debug.Log("Die Dest");
             Controller.Die();
             Faction.RemoveDestroyable(this);
             GridComponent.Tile.GridObject = null;

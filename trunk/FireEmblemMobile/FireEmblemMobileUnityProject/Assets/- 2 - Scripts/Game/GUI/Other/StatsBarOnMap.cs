@@ -21,7 +21,7 @@ namespace Game.GUI
         public bool dynamicColor = false;
         [SerializeField] private Image hpBar = default;
         [SerializeField] private Image losingHpBar = default;
-
+        [SerializeField] private Image background = default;
 
       
         float time = 0;
@@ -60,6 +60,13 @@ namespace Game.GUI
             //Debug.Log("value: "+value +" " +maxValue+ "CV "+currentHpValue);
             if (isActiveAndEnabled)
                 StartCoroutine(DelayedHp());
+        }
+
+        public void Hide()
+        {
+           background.gameObject.SetActive(false);
+           hpBar.gameObject.SetActive(false);
+           losingHpBar.gameObject.SetActive(false);
         }
     }
 }

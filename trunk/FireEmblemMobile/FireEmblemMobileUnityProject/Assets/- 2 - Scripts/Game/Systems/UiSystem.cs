@@ -92,7 +92,7 @@ namespace Game.GUI
                          battlePreview.TargetObject is Destroyable dest)
                 {
                     Debug.Log("Show DestoryPreview");
-                    attackPreviewUI.Show(battlePreview, attacker.visuals, dest.sprite);
+                    attackPreviewUI.Show(battlePreview, attacker.visuals, dest.Sprite);
                 }
 
             }

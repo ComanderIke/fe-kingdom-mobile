@@ -20,6 +20,7 @@ public class DestroyableController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI hpText;
     public StatsBarOnMap hpBar;
 
+    public SpriteRenderer sprite;
     public GameObject canvasTransform;
     private void Start()
     {
@@ -96,6 +97,9 @@ public class DestroyableController : MonoBehaviour
 
     public void Die()
     {
-        Destroy(gameObject);
+        sprite.sprite = Destroyable.Sprite;
+        hpBar.Hide();
+        hpText.gameObject.SetActive(false);
+        //Destroy(gameObject);
     }
 }
