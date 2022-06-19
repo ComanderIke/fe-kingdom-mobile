@@ -24,6 +24,7 @@ namespace Game.AI
 
             ResetGoals(units);
             CreateGoalsForAllEnemyUnits();
+            CreateGoalsForNPCTargets();
 
             // add all our units as potential resources for every goal
             AssignUnitsAsGoalResources();
@@ -41,6 +42,14 @@ namespace Game.AI
                 where unit.IsAlive()
                 select unit)
                 currentGoals.Add(new Goal(GoalType.Attack, unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y));
+        }
+        private void CreateGoalsForNPCTargets()
+        {
+            foreach (var destroyable in from faction in player.GetOpponentFactions()
+                     from des in faction.Destroyables
+                     where des.IsAlive()
+                     select des)
+                currentGoals.Add(new Goal(GoalType.Attack, destroyable.GridComponent.GridPosition.X, destroyable.GridComponent.GridPosition.Y));
         }
         private void AssignUnitsAsGoalResources()
         {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
 using Game.GameResources;
@@ -80,7 +81,7 @@ namespace Game.Map
         }
         void RemoveUnitFromGrid(IGridActor u)
         {
-            Tiles[u.GridComponent.GridPosition.X, u.GridComponent.GridPosition.Y].Actor = null;
+            Tiles[u.GridComponent.GridPosition.X, u.GridComponent.GridPosition.Y].GridObject = null;
         }
       
         private void OnEnemySelected(IGridActor gridActor)
@@ -281,11 +282,11 @@ namespace Game.Map
             var tmpPosY = unit.GridComponent.GridPosition.Y;
             var tmpPos2X = unit2.GridComponent.GridPosition.X;
             var tmpPos2Y = unit2.GridComponent.GridPosition.Y;
-            Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y].Actor = null;
-            Tiles[unit2.GridComponent.GridPosition.X, unit2.GridComponent.GridPosition.Y].Actor = null;
-            Tiles[tmpPos2X, tmpPos2Y].Actor = unit;
+            Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y].GridObject = null;
+            Tiles[unit2.GridComponent.GridPosition.X, unit2.GridComponent.GridPosition.Y].GridObject = null;
+            Tiles[tmpPos2X, tmpPos2Y].GridObject = unit;
             unit.GridComponent.SetPosition(tmpPos2X, tmpPos2Y);
-            Tiles[tmpPosX, tmpPosY].Actor = unit2;
+            Tiles[tmpPosX, tmpPosY].GridObject = unit2;
             unit2.GridComponent.SetPosition(tmpPosX, tmpPosY);
             
         }
@@ -296,10 +297,10 @@ namespace Game.Map
                 if (unit.GridComponent.GridPosition.X != -1 && unit.GridComponent.GridPosition.Y != -1)
                 {
 
-                    Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y].Actor = null;
+                    Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y].GridObject = null;
                 }
 
-                Tiles[x, y].Actor = unit;
+                Tiles[x, y].GridObject = unit;
                 unit.GridComponent.SetPosition(x, y);
             }
             else
@@ -314,10 +315,10 @@ namespace Game.Map
                 if (unit.GridComponent.GridPosition.X != -1 && unit.GridComponent.GridPosition.Y != -1)
                 {
 
-                    Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y].Actor = null;
+                    Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y].GridObject = null;
                 }
                 Debug.Log("UNIT: "+unit);
-                Tiles[x, y].Actor = unit;
+                Tiles[x, y].GridObject = unit;
                 unit.GridComponent.SetInternPosition(x, y);
             }
         }
@@ -426,6 +427,26 @@ namespace Game.Map
         public bool IsTargetAble(int x, int y)
         {
             return GridLogic.IsFieldTargetable(x, y);
+        }
+
+        
+        public void SetGridObjectPosition(IGridObject dest, int x, int y)
+        {
+            if (x != -1 && y != -1 && x < width && y < height)
+            {
+                if (dest.GridComponent.GridPosition.X != -1 && dest.GridComponent.GridPosition.Y != -1)
+                {
+
+                    Tiles[dest.GridComponent.GridPosition.X, dest.GridComponent.GridPosition.Y].GridObject = null;
+                }
+
+                Tiles[x, y].GridObject = dest;
+                dest.GridComponent.GridPosition.SetPosition(x, y);
+            }
+            else
+            {
+                Debug.LogError("Out of Bounds: "+x+" "+y +" "+dest);
+            }
         }
     }
 }

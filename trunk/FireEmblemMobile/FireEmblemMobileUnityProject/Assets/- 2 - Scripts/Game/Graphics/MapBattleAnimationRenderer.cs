@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameInput;
 using Game.GUI.PopUpText;
@@ -13,19 +14,32 @@ public class MapBattleAnimationRenderer : MonoBehaviour, IBattleAnimation
 
     private Unit attacker;
     private Unit defender;
+    private Destroyable Destroyable;
   
     private int attackSequenceIndex;
     private List<AttackData> attackData;
-    public void Show(BattleSimulation battleSimulation, IBattleActor attacker, IBattleActor defender)
+    public void Show(BattleSimulation battleSimulation, IBattleActor attacker, IAttackableTarget defender)
     {
         
         this.attacker = (Unit)attacker;
-        this.defender = (Unit)defender;
+        Destroyable = null;
         attackSequenceIndex = 0;
+        if (defender is Destroyable)
+        {
+            Destroyable = (Destroyable)defender;
+        }
+        else
+        {
+            this.defender = (Unit)defender;
+            
+            this.defender.GameTransformManager.UnitAnimator.OnAttackAnimationConnected += DefenderAttackConnected;
+            this.defender.GameTransformManager.UnitAnimator.OnAnimationEnded += BattleAnimation;
+        }
+
         attacker.GameTransformManager.UnitAnimator.OnAttackAnimationConnected += AttackerAttackConnected;
-        defender.GameTransformManager.UnitAnimator.OnAttackAnimationConnected += DefenderAttackConnected;
+       
         attacker.GameTransformManager.UnitAnimator.OnAnimationEnded += BattleAnimation;
-        defender.GameTransformManager.UnitAnimator.OnAnimationEnded += BattleAnimation;
+       
         attackData = battleSimulation.AttacksData;
         BattleAnimation();
         //Invoke("Finished",2.0f);
@@ -36,13 +50,32 @@ public class MapBattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         int index = attackSequenceIndex - 1;
         if (attackData[index].hit)
         {
-            DamagePopUp.CreateForBattleView(defender.GameTransformManager.GetCenterPosition()+new Vector3(0,0.2f),attackData[index].Dmg,
-                TextStyle.Damage, 1.0f, new Vector3(0, .5f));
+            if (Destroyable != null)
+            {
+                DamagePopUp.CreateForBattleView(
+                    Destroyable.Controller.GetCenterPosition() + new Vector3(0, 0.2f), attackData[index].Dmg,
+                    TextStyle.Damage, 1.0f, new Vector3(0, .5f));
+            }
+            else
+            {
+                DamagePopUp.CreateForBattleView(
+                    defender.GameTransformManager.GetCenterPosition() + new Vector3(0, 0.2f), attackData[index].Dmg,
+                    TextStyle.Damage, 1.0f, new Vector3(0, .5f));
+            }
         }
         else
         {
-            DamagePopUp.CreateMiss(defender.GameTransformManager.GetCenterPosition()+new Vector3(0,0.2f),
-                TextStyle.Missed, 0.8f, new Vector3(0, .5f));
+            if (Destroyable != null)
+            {
+                DamagePopUp.CreateForBattleView(
+                    Destroyable.Controller.GetCenterPosition() + new Vector3(0, 0.2f), attackData[index].Dmg,
+                    TextStyle.Damage, 1.0f, new Vector3(0, .5f));
+            }
+            else
+            {
+                DamagePopUp.CreateMiss(defender.GameTransformManager.GetCenterPosition() + new Vector3(0, 0.2f),
+                    TextStyle.Missed, 0.8f, new Vector3(0, .5f));
+            }
         }
     }
 
@@ -68,6 +101,7 @@ public class MapBattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     private void BattleAnimation()
         {
 
+            Debug.Log("Attack Round: "+attackSequenceIndex);
             if (attackSequenceIndex >= attackData.Count)
             {
                 StartCoroutine(DelayAction(Finished, 0.4f));
@@ -76,8 +110,19 @@ public class MapBattleAnimationRenderer : MonoBehaviour, IBattleAnimation
 
             int attackerX = (int)attacker.GameTransformManager.GetPosition().x;
             int attackerY = (int)attacker.GameTransformManager.GetPosition().y;
-            int defenderX = (int)defender.GameTransformManager.GetPosition().x;
-            int defenderY = (int)defender.GameTransformManager.GetPosition().y;
+            int defenderX=0;
+            int defenderY=0;
+            if (Destroyable == null)
+            {
+                defenderX = (int)defender.GameTransformManager.GetPosition().x;
+                defenderY = (int)defender.GameTransformManager.GetPosition().y;
+            }
+            else
+            {
+                defenderX = Destroyable.Controller.X;
+                defenderY = Destroyable.Controller.Y;
+            }
+
             if (attackData[attackSequenceIndex].attacker)
             {
                 if(attackerX> defenderX && attackerY == defenderY)
@@ -99,7 +144,7 @@ public class MapBattleAnimationRenderer : MonoBehaviour, IBattleAnimation
                     attacker.GameTransformManager.UnitAnimator.BattleAnimationDownRight();
           
             }
-            else
+            else if(Destroyable==null)
             {
                 if (attackerX> defenderX && attackerY == defenderY)
                     defender.GameTransformManager.UnitAnimator.BattleAnimationRight();
@@ -124,6 +169,7 @@ public class MapBattleAnimationRenderer : MonoBehaviour, IBattleAnimation
 
     void Finished()
     {
+        Debug.Log("BattleAnimationFinished");
         OnFinished?.Invoke();
     }
 

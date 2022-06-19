@@ -51,6 +51,8 @@ namespace Game.GameActors.Units
             get => moveType;
             set => moveType = value;
         }
+        [HideInInspector][SerializeField]
+        public int MaxHp { get; set; }
         public Stats Stats
         {
             get => stats;
@@ -80,12 +82,21 @@ namespace Game.GameActors.Units
         public BattleComponent BattleComponent { get; set; }
 
         public GridComponent GridComponent { get; set; }
+
+        public GridActorComponent GetActorGridComponent()
+        {
+            return (GridActorComponent)GridComponent;
+        }
         
+
+
         public TurnStateManager TurnStateManager { get; set; }
 
         public StatusEffectManager StatusEffectManager { get; set; }
         
         public AIComponent AIComponent { get; private set; }
+       
+
         public Faction Faction { get; set; }
         public Motivation Motivation { get; internal set; }
 
@@ -95,7 +106,7 @@ namespace Game.GameActors.Units
             set
             {
               
-                hp = value > stats.MaxHp ? stats.MaxHp : value;
+                hp = value > MaxHp ? MaxHp : value;
               
                 if (hp <= 0) hp = 0;
                 
@@ -164,7 +175,7 @@ namespace Game.GameActors.Units
             ExperienceManager.LevelUp = null;
             ExperienceManager.LevelUp += LevelUp;
             TurnStateManager ??= new TurnStateManager();
-            GridComponent = new GridComponent(this);
+            GridComponent = new GridActorComponent(this);
             BattleComponent = new BattleComponent(this);
             GameTransformManager = new GameTransformManager();
             StatusEffectManager = new StatusEffectManager(this);
@@ -176,10 +187,11 @@ namespace Game.GameActors.Units
             //     visuals.UnitEffectVisual = Instantiate(visuals.UnitEffectVisual);
             // }
 
-            stats.Initialize();
+           
+            MaxHp = stats.Attributes.CON*Attributes.CON_HP_Mult;
             
             if(hp==-1)//hp has never been set
-                hp = stats.MaxHp;
+                hp = MaxHp;
             // sp = stats.MaxSp;
             // spBars = Sp / SP_PER_BAR;
             ExperienceManager.ExpGained = null;
@@ -262,7 +274,7 @@ namespace Game.GameActors.Units
 
         public override string ToString()
         {
-            return name + " HP: " + Hp + "/" + stats.MaxHp+"Level: "+experienceManager.Level+ " Exp: "+experienceManager.Exp;
+            return name + " HP: " + Hp + "/" + MaxHp+"Level: "+experienceManager.Level+ " Exp: "+experienceManager.Exp;
         }
 
         public Weapon GetEquippedWeapon()
@@ -283,7 +295,7 @@ namespace Game.GameActors.Units
             clone.experienceManager = new ExperienceManager();
             clone.BattleComponent = new BattleComponent(clone);
             clone.TurnStateManager = new TurnStateManager();
-            clone.GridComponent = new GridComponent(clone);
+            clone.GridComponent = new GridActorComponent(clone);
             clone.GridComponent.GridPosition =
                 new GridPosition(GridComponent.GridPosition.X, GridComponent.GridPosition.Y);
             clone.GridComponent.Tile = GridComponent.Tile;

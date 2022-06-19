@@ -1,6 +1,7 @@
 ﻿using System;
 using Audio;
 using Game.AI;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameInput;
 using Game.GameResources;
@@ -20,10 +21,11 @@ namespace Game.Mechanics
         public static Action OnExit;
 
         private IBattleActor attacker;
-        private IBattleActor defender;
+        private IAttackableTarget defender;
         
         public BattleSystem battleSystem; //Injected
         public IBattleAnimation BattleAnimation;
+        public IBattleAnimation MapBattleAnimation;
 
         private string startMusic;
         public bool IsFinished;
@@ -39,10 +41,10 @@ namespace Game.Mechanics
 
         }
 
-        public void SetParticipants(IBattleActor attacker, IBattleActor defender)
+        public void SetParticipants(IBattleActor attacker, IGridObject defender)
         {
             this.attacker = attacker;
-            this.defender = defender;
+            this.defender = (IAttackableTarget)defender;
         }
 
         private BattleSimulation battleSimulation;
@@ -51,10 +53,20 @@ namespace Game.Mechanics
            // battleSystem = new BattleSystem(attacker, defender);
           
            IsFinished = false;
-          battleSimulation = battleSystem.GetBattleSimulation(attacker, defender);
-           BattleAnimation.Show(battleSimulation, attacker, defender);
+
+           if (defender is IBattleActor)
+           {
+               battleSimulation = battleSystem.GetBattleSimulation(attacker, (IBattleActor)defender);
+               BattleAnimation.Show(battleSimulation, attacker, (IBattleActor)defender);
+               BattleAnimation.OnFinished += EndBattle;
+           }
+           else{
+              battleSimulation = battleSystem.GetBattleSimulation(attacker, defender);
+             MapBattleAnimation.Show(battleSimulation, attacker, defender);
+             MapBattleAnimation.OnFinished += EndBattle;
+           }
          //  battleSystem.StartBattle(attacker, defender); TODO same RNG as battleAnimation
-           BattleAnimation.OnFinished += EndBattle;
+           
          
             //Debug.Log("ENTER FIGHTSTATE");
 
@@ -66,7 +78,7 @@ namespace Game.Mechanics
         {
             if (IsFinished)
             {
-                GridGameManager.Instance.GameStateManager.SwitchState(new AfterBattleState((Unit)attacker, (Unit)defender));
+                GridGameManager.Instance.GameStateManager.SwitchState(new AfterBattleState((Unit)attacker, defender));
  
             }
             return null;
@@ -76,7 +88,10 @@ namespace Game.Mechanics
         {
 
             attacker.Hp = battleSimulation.Attacker.Hp;
-            defender.Hp = battleSimulation.Defender.Hp;
+            if (battleSimulation.AttackableTarget == null)
+                defender.Hp = battleSimulation.Defender.Hp;
+            else
+                defender.Hp = battleSimulation.AttackableTarget.Hp;
             // if(battleSimulation.DefenderAttackCount!=0)
             //     defender.SpBars--; 
             // attacker.SpBars--;
@@ -99,7 +114,9 @@ namespace Game.Mechanics
             defender = null;
 
             BattleAnimation.Hide();
+            MapBattleAnimation.Hide();
             BattleAnimation.OnFinished -= EndBattle;
+            MapBattleAnimation.OnFinished -= EndBattle;
             GridGameManager.Instance.GetSystem<AudioSystem>().ChangeMusic(startMusic, "BattleTheme", true);
             OnExit?.Invoke();
         }
@@ -112,7 +129,7 @@ namespace Game.Mechanics
             GridGameManager.Instance.GetSystem<AudioSystem>().ChangeMusic("BattleTheme", startMusic);
         }
 
-        public void Start(IBattleActor battleActor, IBattleActor target)
+        public void Start(IBattleActor battleActor, IGridObject target)
         {
             SetParticipants(battleActor, target);
             GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.BattleStarted);
@@ -121,7 +138,7 @@ namespace Game.Mechanics
 
     public interface IBattleAnimation
     {
-        void Show(BattleSimulation battleSimulation, IBattleActor attacker, IBattleActor defender);
+        void Show(BattleSimulation battleSimulation, IBattleActor attacker, IAttackableTarget defender);
         void Hide();
         event Action OnFinished;
     }

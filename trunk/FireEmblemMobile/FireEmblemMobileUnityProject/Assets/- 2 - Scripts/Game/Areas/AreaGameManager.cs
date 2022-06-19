@@ -187,7 +187,8 @@ public class AreaGameManager : MonoBehaviour
         }
         foreach (var child in Player.Instance.Party.EncounterNode.children)
         {
-            child.moveable = false;
+            child.SetMoveable(false);
+
         }
     }
 
@@ -208,7 +209,7 @@ public class AreaGameManager : MonoBehaviour
         moveOptions = new List<GameObject>();
         foreach (var child in Player.Instance.Party.EncounterNode.children)
         {
-            child.moveable = true;
+            child.SetMoveable(true);
             GameObject go = null;
             if (child is BattleEncounterNode)
             {
@@ -239,27 +240,27 @@ public class AreaGameManager : MonoBehaviour
         {
             foreach (var node in column.children)
             {
-                node.moveable = false;
+                node.SetMoveable(false);
             }
         }
     }
     public void NodeClicked(EncounterNode encounterNode)
     {
         Debug.Log("Node Clicked: "+encounterNode);
-        Debug.Log("Node Clicked GO: "+encounterNode.gameObject);
+      
         cursor.SetPosition(encounterNode.gameObject.transform.position);
         
         if (encounterNode.moveable)
         {
 
-            ToolTipSystem.ShowEncounter(encounterNode, encounterNode.gameObject.transform.position, true, MoveClicked);
+            ToolTipSystem.ShowEncounter(encounterNode, encounterNode.gameObject.transform.position+new Vector3(2,0,0), true, MoveClicked);
           
             // ResetMoveOptions();
             // ShowMoveOptions();
         }
         else
         {
-            ToolTipSystem.ShowEncounter(encounterNode, encounterNode.gameObject.transform.position, false, null);
+            ToolTipSystem.ShowEncounter(encounterNode, encounterNode.gameObject.transform.position+new Vector3(2,0,0), false, null);
         }
     }
     void MoveClicked(EncounterNode node)

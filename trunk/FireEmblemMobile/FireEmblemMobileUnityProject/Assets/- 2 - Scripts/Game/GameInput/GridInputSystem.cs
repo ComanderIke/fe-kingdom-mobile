@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.Manager;
 using Game.Map;
@@ -67,7 +68,7 @@ namespace Game.GameInput
             }
             else
             {
-                inputReceiver.DraggedOnActor(tile.Actor);
+                inputReceiver.DraggedOnObject(tile.GridObject);
             }
 
             ResetInput();
@@ -94,9 +95,9 @@ namespace Game.GameInput
             inputReceiver.StartDraggingActor(actor);
         }
 
-        public void DraggedOverActor(IGridActor actor)
+        public void DraggedOverObject(IGridObject actor)
         {
-            inputReceiver.DraggedOverActor(actor);
+            inputReceiver.DraggedOverObject(actor);
         }
 
         public void ActorLongHold(IGridActor unit)
@@ -113,9 +114,9 @@ namespace Game.GameInput
             lastDragPosY = y;
             //Debug.Log("Dragged on: "+x+" "+y);
             var tile = gridSystem.GetTile(x, y);
-            if (tile.Actor != null)
+            if (tile.GridObject != null)
             {
-                inputReceiver.DraggedOverActor(tile.Actor);
+                inputReceiver.DraggedOverObject(tile.GridObject);
             }
             else
             {

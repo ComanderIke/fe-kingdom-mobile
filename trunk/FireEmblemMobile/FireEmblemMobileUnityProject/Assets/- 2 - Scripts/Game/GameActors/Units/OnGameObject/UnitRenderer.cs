@@ -140,7 +140,7 @@ namespace Game.GameActors.Units.OnGameObject
         private void HpValueChanged()
         {
             if (hpBar != null && unit != null){
-                hpBar.SetValue(unit.Hp, unit.Stats.MaxHp);
+                hpBar.SetValue(unit.Hp, unit.MaxHp);
                 hpText.SetText(""+unit.Hp);
             }
         }

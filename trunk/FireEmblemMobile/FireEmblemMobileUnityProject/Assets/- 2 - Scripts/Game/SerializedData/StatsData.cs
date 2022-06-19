@@ -9,19 +9,17 @@ namespace Game.GameActors.Players
     {
         [SerializeField]
         public List<int> AttackRanges;
-        [SerializeField]
-        public int MaxHp;
-        [SerializeField]
-        public int MaxSp;
+  
+  
         [SerializeField]
         public int Mov;
 
 
         [SerializeField] public Attributes Attributes;
-        public StatsData(int maxHp, int mov, Attributes attributes,  List<int> attackRanges)
+        public StatsData(int mov, Attributes attributes,  List<int> attackRanges)
         {
             AttackRanges = attackRanges;
-            MaxHp = maxHp;
+          
             // MaxSp = maxSp;
             Mov = mov;
             Attributes = attributes;

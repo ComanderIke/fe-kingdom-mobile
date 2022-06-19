@@ -56,9 +56,9 @@ namespace __2___Scripts.External.Editor
 
                 GUILayout.Label("Selected Tile: "+selectedTile);
                 GUILayout.Label("X: "+selectedTile.X+ " Y: "+selectedTile.Y);
-                if (selectedTile.Actor != null)
+                if (selectedTile.GridObject != null)
                 {
-                    GUILayout.Label("Actor: "+selectedTile.Actor);
+                    GUILayout.Label("Actor: "+selectedTile.GridObject);
                 }
                 else
                 {

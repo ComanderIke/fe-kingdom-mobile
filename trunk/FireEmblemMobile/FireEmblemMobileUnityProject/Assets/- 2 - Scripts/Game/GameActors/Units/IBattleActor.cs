@@ -9,11 +9,11 @@ using Game.Mechanics.Battle;
 
 namespace Game.GameInput
 {
-    public interface IBattleActor
+    public interface IBattleActor:IAttackableTarget
     {
         BattleComponent BattleComponent { get; set; }
         Stats Stats { get; set; }
-        int Hp { get; set; }
+  
       //  int Sp { get; set; }
        // int SpBars{ get; set; }
        // int MaxSpBars { get; }
@@ -22,7 +22,6 @@ namespace Game.GameInput
         TurnStateManager TurnStateManager { get; set; }
         GameTransformManager GameTransformManager { get; set; }
         Weapon GetEquippedWeapon();
-        object Clone();
         bool IsAlive();
         void Die();
         Tile GetTile();

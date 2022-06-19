@@ -9,10 +9,18 @@ namespace Game.GameActors.Units
 {
     public class GridComponent
     {
-       
-        public IGridActor gridActor;
         public GridPosition GridPosition { get; set; }
 
+        public virtual void ResetPosition()
+        {
+            if(previousTile!=null)
+                Tile = previousTile;
+        }
+
+        public GridComponent()
+        {
+            GridPosition = new GridPosition(-1,-1);
+        }
         private Tile tile;
         public Tile Tile
         {
@@ -32,22 +40,11 @@ namespace Game.GameActors.Units
             }
         }
 
-        private Tile previousTile;
+        protected Tile previousTile;
 
-        public void ResetPosition()
+        public virtual void SetPosition(int x, int y)
         {
-           // Debug.Log("GridActor: "+gridActor);
-            if(previousTile!=null)
-                 Tile = previousTile;
-            if(gridActor.IsAlive())
-                gridActor.GameTransformManager.SetPosition(GridPosition.X, GridPosition.Y);
-            // GameTransform.EnableCollider();
-        }
-        public virtual void SetPosition( int x, int y)
-        {
-            //previousTile = Tile;
             GridPosition.SetPosition(x, y);
-            gridActor.GameTransformManager.SetPosition(x, y);
         }
         public virtual void SetInternPosition( int x, int y)
         {
@@ -57,13 +54,28 @@ namespace Game.GameActors.Units
             //gridActor.GameTransformManager.SetPosition(x, y);
         }
 
+    }
+    public class GridActorComponent:GridComponent
+    {
+       
+        public IGridActor gridActor;
 
-  
-        public GridComponent(IGridActor actor)
+        public override void ResetPosition()
+        {
+            base.ResetPosition();
+            if(gridActor.IsAlive())
+                gridActor.GameTransformManager.SetPosition(GridPosition.X, GridPosition.Y);
+        }
+        public override void SetPosition( int x, int y)
+        {
+            //previousTile = Tile;
+            base.SetPosition(x, y);
+            gridActor.GameTransformManager.SetPosition(x, y);
+        }
+        
+        public GridActorComponent(IGridActor actor):base()
         {
             gridActor = actor;
-            GridPosition = new GridPosition(-1,-1);
-
         }
        
 
@@ -72,17 +84,12 @@ namespace Game.GameActors.Units
             //Debug.Log("Can move on to: "+field.X+ " "+field.Y+ " "+field.TileData.name+" "+field.TileData.CanMoveThrough(gridActor.MoveType) );
             return field.TileData.CanMoveThrough(gridActor.MoveType);
         }
-        public bool CanMoveThrough(IGridActor unit)
-        {
-            return gridActor.Faction.Id != unit.Faction.Id;
-        }
         public bool CanAttack(int range)
         {
             return gridActor.AttackRanges.Contains(range);
         }
         public bool CanAttack(int x, int y)
         {
-            Debug.Log("Can attack: "+x+ " "+y+ " from " + GridPosition.X+" "+GridPosition.Y);
             return gridActor.AttackRanges.Contains(DeltaPos(x, y));
         }
         public bool CanAttackFrom(GridPosition attackFromPosition, GridPosition targetPosition)

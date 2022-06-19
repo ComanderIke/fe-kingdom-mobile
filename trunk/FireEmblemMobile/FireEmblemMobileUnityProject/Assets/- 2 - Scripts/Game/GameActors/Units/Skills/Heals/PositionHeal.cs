@@ -17,9 +17,9 @@ namespace Game.GameActors.Units.Skills
                 if (xPosition >= 0 && xPosition < tiles.GetLength(0) && yPosition >= 0 &&
                     yPosition < tiles.GetLength(1))
                 {
-                    if (tiles[xPosition, yPosition].Actor != null)
+                    if (tiles[xPosition, yPosition].GridObject != null)
                     {
-                        ((Unit)tiles[xPosition, yPosition].Actor).Heal(power);
+                        ((Unit)tiles[xPosition, yPosition].GridObject).Heal(power);
                     }
                 }
             }

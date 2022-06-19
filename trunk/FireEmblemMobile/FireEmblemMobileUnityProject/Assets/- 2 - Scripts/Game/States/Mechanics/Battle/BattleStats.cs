@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.GameActors.Items.Weapons;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
 using Game.GameActors.Units.Monsters;
@@ -28,7 +29,7 @@ namespace Game.Mechanics.Battle
             //Debug.Log(owner.GetTile().X+" "+owner.GetTile().Y);
             return GetPhysicalResistance() + owner.GetTile().TileData.defenseBonus;
         }
-        public bool CanKillTarget(IBattleActor target, float attackMultiplier)
+        public bool CanKillTarget(IAttackableTarget target, float attackMultiplier)
         {
             return GetDamageAgainstTarget(target, attackMultiplier) >= target.Hp;
         }
@@ -81,7 +82,7 @@ namespace Game.Mechanics.Battle
             return (int) Mathf.Clamp(attack, 0, Mathf.Infinity);
         }
 
-        public int GetDamageAgainstTarget(IBattleActor target, float atkMultiplier = 1.0f)
+        public int GetDamageAgainstTarget(IAttackableTarget target, float atkMultiplier = 1.0f)
         {
             var atkMulti = new List<float> { atkMultiplier };
            
@@ -89,7 +90,7 @@ namespace Game.Mechanics.Battle
 
         }
 
-        public int GetDamageAgainstTarget(IBattleActor target, List<float> atkMultiplier)
+        public int GetDamageAgainstTarget(IAttackableTarget target, List<float> atkMultiplier)
         {
             float dmgMult = 1;
             // if (target.SpBars <= 0)
@@ -98,18 +99,27 @@ namespace Game.Mechanics.Battle
             // }
 
             int defense = 0;
-            if (GetDamageType()==DamageType.Magic)
+            if (target is Destroyable)
             {
-                defense = target.BattleComponent.BattleStats.GetMagicResistance();
+                return GetDamage();
             }
-            else if (GetDamageType()==DamageType.Faith)
+            else if (target is IBattleActor battleActor)
             {
-                defense = target.BattleComponent.BattleStats.GetFaithResistance();
+                if (GetDamageType() == DamageType.Magic)
+                {
+                    defense = battleActor.BattleComponent.BattleStats.GetMagicResistance();
+                }
+                else if (GetDamageType() == DamageType.Faith)
+                {
+                    defense = battleActor.BattleComponent.BattleStats.GetFaithResistance();
+                }
+                else
+                    defense = battleActor.BattleComponent.BattleStats.GetDefense();
+
+                return (int)(Mathf.Clamp((GetDamage(atkMultiplier) - defense) * dmgMult, 0, Mathf.Infinity));
             }
-            else
-                defense = target.BattleComponent.BattleStats.GetDefense();
-            
-            return (int) (Mathf.Clamp((GetDamage(atkMultiplier) - defense)*dmgMult, 0, Mathf.Infinity));
+
+            return 0;
         }
 
        
@@ -138,26 +148,37 @@ namespace Game.Mechanics.Battle
             return owner.Stats.Attributes.STR;
         }
 
-        public int GetTotalDamageAgainstTarget(IBattleActor target)
+        public int GetTotalDamageAgainstTarget(IAttackableTarget target)
         {
-            int attacks = 1;
-            float multiplier = 1.0f;
-            if (CanDoubleAttack(target))
-                attacks = 2;
-            int defense = 0;
-            if (GetDamageType() == DamageType.Magic)
+            if (target is Destroyable)
             {
-                defense = target.BattleComponent.BattleStats.GetMagicResistance();
+                return GetDamage();
             }
-            else if(GetDamageType() == DamageType.Faith)
+            else if(target is IBattleActor battleActor)
             {
-                defense = target.BattleComponent.BattleStats.GetFaithResistance();
+                
+                int attacks = 1;
+                float multiplier = 1.0f;
+                if (CanDoubleAttack(battleActor))
+                    attacks = 2;
+                int defense = 0;
+                if (GetDamageType() == DamageType.Magic)
+                {
+                    defense = battleActor.BattleComponent.BattleStats.GetMagicResistance();
+                }
+                else if (GetDamageType() == DamageType.Faith)
+                {
+                    defense = battleActor.BattleComponent.BattleStats.GetFaithResistance();
+                }
+                else
+                {
+                    defense = battleActor.BattleComponent.BattleStats.GetDefense();
+                }
+
+                return (int)(multiplier * attacks * Mathf.Clamp(GetDamage() - defense, 0, Mathf.Infinity));
             }
-            else
-            {
-                defense = target.BattleComponent.BattleStats.GetDefense();
-            }
-            return (int) (multiplier * attacks * Mathf.Clamp(GetDamage() -defense, 0, Mathf.Infinity));
+
+            return 0;
         }
 
         

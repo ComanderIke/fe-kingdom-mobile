@@ -59,7 +59,7 @@ namespace Game.GameInput
                 // if (EventSystem.current.currentSelectedGameObject==null||EventSystem.current.currentSelectedGameObject.CompareTag(TagManager.UnitTag))
                 // {
                 Debug.Log("Dragged over: " + unitController.unit);
-                InputReceiver.DraggedOverActor(unitController.unit);
+                InputReceiver.DraggedOverObject(unitController.unit);
                 // }
             }
         }

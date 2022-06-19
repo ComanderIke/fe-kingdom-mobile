@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameInput;
 using Game.Manager;
@@ -43,7 +44,7 @@ namespace Game.AI
             UnitAction unitAction = UnitAction.Wait;
 
             Vector2 startLoc = new Vector2(unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y);
-            Unit currentBestTarget = null;
+            IGridObject currentBestTarget = null;
             var moveLocs = GridSystem.GridLogic.GetMoveLocations((IGridActor)unit);
 
             foreach (var loc in moveLocs)
@@ -55,15 +56,21 @@ namespace Game.AI
                 foreach (var gridActor in targets)
                 {
                    // Debug.Log("Possible Target: "+gridActor);
-                    var t = (Unit) gridActor;
-                    float attackscore = ScoreCalculater.ScoreAttackForUnit((IBattleActor)unit, unit.AIComponent.WeightSet,loc, t);
-                    if ((locScore + attackscore) > currentBestScore)
-                    {
-                        currentBestMoveLocation = loc;
-                        currentBestScore = locScore + attackscore;
-                        currentBestTarget = t;
-                        unitAction = UnitAction.Attack;
-                    }
+                  
+                      
+                       float attackscore =
+                           ScoreCalculater.ScoreAttackForUnit((IBattleActor)unit, unit.AIComponent.WeightSet, loc, (IAttackableTarget)gridActor);
+                      
+                       if ((locScore + attackscore) > currentBestScore)
+                       {
+                           currentBestMoveLocation = loc;
+                           currentBestScore = locScore + attackscore;
+                           currentBestTarget = gridActor;
+                           unitAction = UnitAction.Attack;
+                       }
+                   
+
+
                 }
                 if (locScore > currentBestScore)
                 {

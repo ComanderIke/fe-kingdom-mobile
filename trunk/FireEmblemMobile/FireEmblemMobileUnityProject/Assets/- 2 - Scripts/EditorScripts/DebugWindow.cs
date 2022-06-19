@@ -53,7 +53,7 @@ namespace __2___Scripts.External.Editor
                     activeUnit.ExperienceManager.AddExp(new Vector2(0,0),100);
                 }
                 GUILayout.Label("Selected Unit: " + selectedUnitName);
-                GUILayout.Label("Hp: " + activeUnit.Hp + "/" + activeUnit.Stats.MaxHp);
+                GUILayout.Label("Hp: " + activeUnit.Hp + "/" + activeUnit.MaxHp);
                 GUILayout.Label("SkillsCount: " + activeUnit.SkillManager.Skills.Count);
                 foreach (var skill in activeUnit.SkillManager.Skills)
                 {

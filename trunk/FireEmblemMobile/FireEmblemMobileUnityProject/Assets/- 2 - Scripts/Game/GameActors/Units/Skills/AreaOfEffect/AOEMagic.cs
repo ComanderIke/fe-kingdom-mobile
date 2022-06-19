@@ -19,9 +19,9 @@ namespace Game.GameActors.Units.Skills
                 if (xPosition >= 0 && xPosition < tiles.GetLength(0) && yPosition >= 0 &&
                     yPosition < tiles.GetLength(1))
                 {
-                    if (tiles[xPosition, yPosition].Actor != null)
+                    if (tiles[xPosition, yPosition].GridObject != null)
                     {
-                        Unit target = (Unit)tiles[xPosition, yPosition].Actor;
+                        Unit target = (Unit)tiles[xPosition, yPosition].GridObject;
                         Debug.Log("Position: "+xPosition+" "+yPosition);
                         Debug.Log("Deal " + (user.Stats.Attributes.FAITH+power)+" Damage to : "+target);
                  

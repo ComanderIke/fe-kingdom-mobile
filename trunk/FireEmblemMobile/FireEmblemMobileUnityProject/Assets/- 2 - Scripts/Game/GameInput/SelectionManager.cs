@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Units;
+﻿using Game.GameActors.Players;
+using Game.GameActors.Units;
 using Game.Manager;
 using Game.Mechanics;
 using UnityEngine;
@@ -12,18 +13,18 @@ namespace Game.GameInput
         public IGridActor SelectedActor => unitSelectionSystem.SelectedCharacter;
         private int SelectedTileX { get; set; }
         private int SelectedTileY { get; set; }
-        private IGridActor selectedAttackTarget;
+        private IGridObject selectedAttackTarget;
         private IGridActor undoAbleActor;
         private ISelectionUI selectionUI;
 
-        public void SetSelectedAttackTarget(IGridActor target)
+        public void SetSelectedAttackTarget(IGridObject target)
         {
             selectedAttackTarget?.SetAttackTarget(false);
             selectedAttackTarget = target;
             target?.SetAttackTarget(true);
         }
 
-        public IGridActor GetSelectedAttackTarget()
+        public IGridObject GetSelectedAttackTarget()
         {
             return selectedAttackTarget;
         }

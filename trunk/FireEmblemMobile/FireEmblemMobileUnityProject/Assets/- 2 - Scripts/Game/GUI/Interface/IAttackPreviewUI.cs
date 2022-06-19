@@ -8,5 +8,6 @@ namespace Game.GUI
     {
         public abstract void Show(BattlePreview battlePreview, UnitVisual attackerVisual, UnitVisual defenderVisual);
         public abstract void Hide();
+        public abstract void Show(BattlePreview battlePreview, UnitVisual attackerVisual, Sprite attackableObjectSprite);
     }
 }

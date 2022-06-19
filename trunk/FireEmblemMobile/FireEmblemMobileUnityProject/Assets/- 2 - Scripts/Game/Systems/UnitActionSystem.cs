@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameInput;
 using Game.Grid;
@@ -144,7 +145,7 @@ namespace Game.Mechanics
             lastCharacter = unit;
             currentActions.Enqueue(mCc);
         }
-        public void Fight(IBattleActor attacker, IBattleActor target)
+        public void Fight(IBattleActor attacker, IGridObject target)
         {
             if((IGridActor)attacker!=lastCharacter)
                 ResetCharacterActions();
@@ -153,7 +154,7 @@ namespace Game.Mechanics
             var mCc = new AttackCommand(attacker, target);
             currentActions.Enqueue(mCc);
         }
-        public void CheckAttackPreview(IBattleActor u, IBattleActor target, GridPosition attackPosition)
+        public void CheckAttackPreview(IBattleActor u, IAttackableTarget target, GridPosition attackPosition)
         {
             Debug.Log("GetBattlePreview from AttackPosition: "+attackPosition.X+" "+attackPosition.Y);
             var preview = GridGameManager.Instance.GetSystem<BattleSystem>().GetBattlePreview(u, target, attackPosition);

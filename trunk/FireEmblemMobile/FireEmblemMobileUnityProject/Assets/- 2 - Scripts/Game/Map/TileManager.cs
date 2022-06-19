@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.GameActors.Players;
 using Game.Map;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -19,6 +20,7 @@ public class TileManager : MonoBehaviour
 
     [SerializeField] private Transform propsParent;
     private List<PropOnGrid> props;
+    private List<DestroyableController> destroyables;
 
     private Dictionary<TileBase, TileData> dataFromTiles;
     // Start is called before the first frame update
@@ -27,9 +29,14 @@ public class TileManager : MonoBehaviour
         Instance = this;
         dataFromTiles = new Dictionary<TileBase, TileData>();
         props = new List<PropOnGrid>();
+        destroyables = new List<DestroyableController>();
         foreach (var prop in propsParent.GetComponentsInChildren<PropOnGrid>())
         {
             props.Add(prop);
+        }
+        foreach (var destroyable in FindObjectsOfType<DestroyableController>())
+        {
+            destroyables.Add(destroyable);
         }
         foreach (var tileData in tileDatas)
         {
@@ -43,6 +50,11 @@ public class TileManager : MonoBehaviour
 
     public GridTerrainData GetData(int x, int y)
     {
+        foreach (var destroyable in destroyables)
+        {
+            if (destroyable.IsOnPosition(x,y)&& destroyable.Destroyable.IsAlive())
+                return destroyable.Destroyable.terrainData;
+        }
         foreach (var prop in props)
         {
             if (prop.IsOnPosition(x, y))

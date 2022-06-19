@@ -95,7 +95,7 @@ public class UICharacterViewController : MonoBehaviour
         LCK.SetText(""+unit.Stats.Attributes.LCK);
         DEF.SetText(""+unit.Stats.Attributes.DEF);
         
-        HPBar.SetValue(unit.Hp, unit.Stats.MaxHp);
+        HPBar.SetValue(unit.Hp, unit.MaxHp);
         equipmentController.Show(unit);
         skillsController.Show(unit);
     }

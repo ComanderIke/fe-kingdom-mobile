@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
 using Game.GameInput;
@@ -22,6 +23,7 @@ namespace Game.Mechanics
        
         public IBattleActor Attacker { get; private set; }
         public IBattleActor Defender { get; private set; }
+        public IAttackableTarget AttackableTarget { get; private set; }
         public int AttackerDamage { get; set; }
         public int AttackerHit { get; set; }
         public int AttackerAttackCount { get; set; }
@@ -35,6 +37,21 @@ namespace Game.Mechanics
 
         public List<AttackData> AttacksData;
         public GridPosition attackPosition;
+        public BattleSimulation(IBattleActor attacker, IAttackableTarget attackableTarget):this(attacker, attackableTarget, ((Unit)attacker).GridComponent.GridPosition)
+        {
+           
+        }
+
+        public BattleSimulation(IBattleActor attacker, IAttackableTarget attackableTarget, GridPosition attackPosition)
+        {
+            Attacker = attacker.Clone() as IBattleActor;
+            AttackableTarget = attackableTarget.Clone() as IAttackableTarget;
+            AttackerDamage = Attacker.BattleComponent.BattleStats.GetDamage();
+            AttackerAttackCount = 1;
+            AttacksData = new List<AttackData>();
+            this.attackPosition =attackPosition;
+        }
+
         public BattleSimulation(IBattleActor attacker, IBattleActor defender):this(attacker, defender, ((Unit)attacker).GridComponent.GridPosition)
         {
             
@@ -104,11 +121,23 @@ namespace Game.Mechanics
         public void StartBattle(bool certainHit)
         {
             this.certainHit = certainHit;
+            if (AttackableTarget != null)
+            {
+                AttackerDamage = Attacker.BattleComponent.BattleStats.GetDamage();
+                AttackableTarget.Hp -= AttackerDamage;
+                var AttackData = new AttackData();
+                AttackData.Dmg = AttackerDamage;
+                AttackData.hit = true;
+                AttackData.attacker = true;
+                AttackData.crit = false;
+                AttacksData.Add(AttackData);
+                return;
+            }
             int attackerAttackCount = Attacker.BattleComponent.BattleStats.GetAttackCountAgainst(Defender);
             int defenderAttackCount = Defender.BattleComponent.BattleStats.GetAttackCountAgainst(Attacker);
             GridPosition attackerGridPos = attackPosition;
             Debug.Log("TODO GridPosition-1?!?!?!");
-            if (!((IGridActor)Defender).GridComponent.CanAttack(attackerGridPos.X, attackerGridPos.Y))
+            if (!((IGridActor)Defender).GetActorGridComponent().CanAttack(attackerGridPos.X, attackerGridPos.Y))
             {
                 defenderAttackCount = 0;
             }

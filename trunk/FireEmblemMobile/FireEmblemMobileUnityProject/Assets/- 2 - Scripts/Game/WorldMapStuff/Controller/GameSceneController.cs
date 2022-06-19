@@ -44,6 +44,7 @@ namespace Game.WorldMapStuff.Controller
             PlayerPrefs.SetFloat("CameraX", cameraPos.y);
             PlayerPrefs.Save();
             SceneTransferData.Instance.Reset();
+            
             Debug.Log("Load Battle Level: "+enemyParty.level + " " + enemyParty.name);
             SceneTransferData.Instance.EnemyArmyData = enemyParty;
             //SceneTransferData.Instance.EnemyPartyID = enemyParty.name;

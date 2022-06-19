@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Units;
+﻿using Game.GameActors.Players;
+using Game.GameActors.Units;
 
 namespace Game.GameInput
 {
@@ -9,8 +10,8 @@ namespace Game.GameInput
         void DraggedOverGrid(int gridPosX, int gridPosY);
         void ClickedOnActor(IGridActor unit);
         void DoubleClickedActor(IGridActor unit);
-        void DraggedOnActor(IGridActor gridActor);
-        void DraggedOverActor(IGridActor gridActor);
+        void DraggedOnObject(IGridObject gridObject);
+        void DraggedOverObject(IGridObject gridObject);
         void StartDraggingActor(IGridActor actor);
         void ResetInput();
         void UndoClicked();

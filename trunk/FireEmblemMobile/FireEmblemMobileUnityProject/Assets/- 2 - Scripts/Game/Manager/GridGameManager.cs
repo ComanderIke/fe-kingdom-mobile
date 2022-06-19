@@ -35,6 +35,7 @@ namespace Game.Manager
         {
             Instance = this;
             BattleMap = SceneTransferData.Instance.EnemyArmyData.battleMapPool.GetRandomMap();
+            Debug.Log("Choose BattleMap: "+BattleMap);
             Instantiate(BattleMap.mapPrefab, Scene1InstantiatedContentParent);
             //Debug.Log("Initialize");
             FactionManager = new FactionManager();
@@ -116,8 +117,10 @@ namespace Game.Manager
             GameStateManager.WinState.renderer =  FindObjectsOfType<MonoBehaviour>().OfType<IBattleSuccessRenderer>().First();
             GameStateManager.GameOverState.renderer =  FindObjectsOfType<MonoBehaviour>().OfType<IBattleLostRenderer>().First();
             GameStateManager.BattleState.battleSystem = GetSystem<BattleSystem>();
-            GameStateManager.BattleState.BattleAnimation = FindObjectsOfType<MonoBehaviour>().OfType<IBattleAnimation>().First();
+            GameStateManager.BattleState.BattleAnimation = FindObjectsOfType<MonoBehaviour>().OfType<IBattleAnimation>().Last();
+            GameStateManager.BattleState.MapBattleAnimation = FindObjectsOfType<MonoBehaviour>().OfType<IBattleAnimation>().First();
             GameStateManager.BattleState.BattleAnimation.Hide();
+            GameStateManager.BattleState.MapBattleAnimation.Hide();
             GameStateManager.UnitPlacementState.UnitPlacementUI =  FindObjectsOfType<MonoBehaviour>().OfType<IUnitPlacementUI>().First();
             GameStateManager.PhaseTransitionState.phaseRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IPhaseRenderer>().First();
             GameStateManager.PlayerPhaseState.mainState.playerPhaseUI = FindObjectsOfType<MonoBehaviour>().OfType<IPlayerPhaseUI>().First();

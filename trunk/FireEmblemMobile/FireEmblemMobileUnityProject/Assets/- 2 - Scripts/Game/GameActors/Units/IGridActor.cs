@@ -6,9 +6,9 @@ using UnityEngine;
 
 namespace Game.GameActors.Units
 {
-    public interface IGridActor
+    public interface IGridActor : IGridObject
     {
-        GridComponent GridComponent { get; set; }
+        GridActorComponent GetActorGridComponent();
         List<int> AttackRanges { get; }
         int MovementRange { get; }
         Faction Faction { get; }
@@ -16,7 +16,7 @@ namespace Game.GameActors.Units
         GameTransformManager GameTransformManager { get; set; }
         TurnStateManager TurnStateManager { get; set; }
         bool IsEnemy(IGridActor unit);
-        void SetAttackTarget(bool selected);
+        
 
         bool IsAlive();
     }

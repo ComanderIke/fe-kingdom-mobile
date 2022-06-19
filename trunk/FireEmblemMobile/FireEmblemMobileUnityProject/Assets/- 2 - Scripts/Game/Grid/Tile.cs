@@ -1,4 +1,5 @@
 ﻿using System.Xml.Schema;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.Graphics;
 using Game.Map;
@@ -8,25 +9,27 @@ namespace Game.Grid
 {
     public class Tile
     {
-        private IGridActor actor;
-        public IGridActor Actor
+ 
+        private IGridObject gridObject;
+        public IGridObject GridObject
         {
             get
             {
-                return actor;
+                return gridObject;
             }
             set
             {
                 //Debug.Log("Actor: "+actor);
-                actor = value;
+                gridObject = value;
                //Debug.Log("Tile: "+this.X+" "+this.Y+ " "+actor);
-               if (actor != null)
+               if (gridObject != null)
                {
-                   actor.GridComponent.Tile = this;
+                   gridObject.GridComponent.Tile = this;
                }
 
             }
         }
+       
 
         public readonly int X;
         public readonly int Y;
@@ -78,7 +81,12 @@ namespace Game.Grid
 
             if (activeUnit)
             {
-                if (Actor!=null && playerId != Actor.Faction.Id && activePlayer)
+                if (GridObject != null&& playerId != GridObject.Faction.Id && activePlayer)
+                {
+                    tileVfx.ShowAttackable(this);
+                    TileRenderer.ActiveAttackVisual();
+                }
+                else if (GridObject!=null && playerId != GridObject.Faction.Id && activePlayer)
                 {
                     tileVfx.ShowAttackable(this);
                     TileRenderer.ActiveAttackVisual();
@@ -95,7 +103,11 @@ namespace Game.Grid
             }
             else
             {
-                if (Actor != null && playerId != Actor.Faction.Id && activePlayer)
+                if (GridObject != null && playerId != GridObject.Faction.Id && activePlayer)
+                {
+                    TileRenderer.AttackVisual();
+                }
+                else if (GridObject != null && playerId != GridObject.Faction.Id && activePlayer)
                 {
                     TileRenderer.AttackVisual();
                 }
@@ -111,14 +123,27 @@ namespace Game.Grid
         {
             Reset();
             TileRenderer.SetVisualStyle(playerId);
-            if (Actor == null)
+            if (GridObject != null)
+            {
+                if (GridObject.Faction.Id == playerId)
+                {
+                    TileRenderer.AllyVisual();
+                }
+                else
+                {
+                    SetAttackMaterial(playerId, activeUnit, activePlayer);
+                }
+
+                return;
+            }
+            if (GridObject == null)
             {
                 if(activeUnit)
                     TileRenderer.ActiveMoveVisual();
                 else
                     TileRenderer.MoveVisual();
             }
-            else if (Actor.Faction.Id == playerId)
+            else if (GridObject.Faction.Id == playerId)
             {
                 TileRenderer.AllyVisual();
             }
@@ -130,15 +155,9 @@ namespace Game.Grid
         
         public bool HasFreeSpace()
         {
-            return Actor == null;
+            return GridObject == null&&GridObject==null;
         }
-
-        public bool ContainsEnemyTo(IGridActor actor)
-        {
-            if (Actor == null)
-                return false;
-            return Actor.Faction.Id != actor.Faction.Id;
-        }
+        
 
 
     }

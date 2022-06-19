@@ -61,9 +61,9 @@ public class ColumnManager : MonoBehaviour
 
         }
        
-        EncounterTree.Instance.startNode.gameObject=CreateStartNodeGameObject(EncounterTree.Instance.startNode);
+        EncounterTree.Instance.startNode.SetGameObject(CreateStartNodeGameObject(EncounterTree.Instance.startNode));
         CreateMiddleNodesGameObject(EncounterTree.Instance.columns);
-        EncounterTree.Instance.endNode.gameObject= CreateEndNodeGameObject(EncounterTree.Instance.endNode);
+        EncounterTree.Instance.endNode.SetGameObject(CreateEndNodeGameObject(EncounterTree.Instance.endNode));
         PositionEncounters(EncounterTree.Instance.columns, EncounterTree.Instance.endNode);
         CreateConnections(EncounterTree.Instance.columns);
       
@@ -179,7 +179,7 @@ public class ColumnManager : MonoBehaviour
     {
         var go = GameObject.Instantiate(prefab, this.transform);
         go.name = "EncounterNode Column:" + index;
-        node.gameObject = go;
+        node.SetGameObject(go);
        // Debug.Log("Create Node: " + node + " Index: " + index);
         go.GetComponentInChildren<EncounterClickController>().encounterNode = node;
     }

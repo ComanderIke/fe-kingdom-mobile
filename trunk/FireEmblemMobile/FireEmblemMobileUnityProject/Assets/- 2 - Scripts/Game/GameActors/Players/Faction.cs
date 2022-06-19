@@ -17,9 +17,12 @@ namespace Game.GameActors.Players
         public string Name;
         public Party party;
         public List<Unit> Units { get; private set; }
+        public List<Destroyable> Destroyables { get; private set; }
+
 
         public Faction()
         {
+            Destroyables = new List<Destroyable>();
             Units = new List<Unit>();
         }
         public Faction(FactionId number, string name, bool isPlayerControlled):this()
@@ -51,7 +54,12 @@ namespace Game.GameActors.Players
         {
             return Units.Any(unit => unit.IsAlive());
         }
-
+        public void AddDestroyable(Destroyable dest)
+        {
+            dest.Faction = this;
+            dest.Faction.Id = Id;
+            Destroyables.Add(dest);
+        }
         public void AddUnit(Unit unit)
         {
             unit.Faction = this;
@@ -77,6 +85,7 @@ namespace Game.GameActors.Players
             Units.Clear();
         }
 
-   
+
+       
     }
 }

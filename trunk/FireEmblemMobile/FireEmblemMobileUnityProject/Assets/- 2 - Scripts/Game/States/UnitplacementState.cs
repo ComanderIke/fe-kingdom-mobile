@@ -79,6 +79,7 @@ namespace Game.States
                 finished = true;
                 
             };
+            unitSpawnHelper.SpawnDestroyables();
             unitSpawnHelper.SpawnEnemies();
             unitSpawnHelper.SpawnPlayerUnits(factionManager.Factions[0].Units, startPositionManager.startPositions);
             unitSpawnHelper.DestroySpawns();

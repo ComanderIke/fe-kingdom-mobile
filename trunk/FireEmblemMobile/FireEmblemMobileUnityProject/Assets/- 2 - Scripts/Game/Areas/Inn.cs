@@ -30,7 +30,7 @@ public class Inn
     {
         foreach (var member in party.members)
         {
-            member.Heal((int)((member.Stats.MaxHp/100f)*50f));
+            member.Heal((int)((member.MaxHp/100f)*50f));
         }
         party.money -= drinkCost;
     }
@@ -39,7 +39,7 @@ public class Inn
     {
         foreach (var member in party.members)
         {
-            member.Heal((member.Stats.MaxHp));
+            member.Heal((member.MaxHp));
         }
 
         party.money -= eatCost;
@@ -49,7 +49,7 @@ public class Inn
     {
         foreach (var member in party.members)
         {
-            member.Heal((int)((member.Stats.MaxHp/100f)*25f));
+            member.Heal((int)((member.MaxHp/100f)*25f));
         }
     }
 

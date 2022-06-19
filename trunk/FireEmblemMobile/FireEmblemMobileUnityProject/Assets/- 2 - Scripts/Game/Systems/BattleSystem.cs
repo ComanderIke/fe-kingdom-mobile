@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Runtime.InteropServices;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
 using Game.GameInput;
@@ -25,6 +26,7 @@ namespace Game.Mechanics
         private const float ATTACK_DELAY = 0.0f;
         private IBattleActor attacker;
         private IBattleActor defender;
+        private IAttackableTarget attackableTarget;
         private int attackCount;
         private bool battleStarted;
         private BattleSimulation battleSimulation;
@@ -35,7 +37,20 @@ namespace Game.Mechanics
         public IBattleRenderer BattleRenderer { get; set; }
 
 
-        
+        public void StartBattle(IBattleActor attacker, IAttackableTarget attackableTarget)
+        {
+            this.attacker = attacker;
+            this.attackableTarget = attackableTarget;
+            battleSimulation = new BattleSimulation(attacker,attackableTarget);
+            battleSimulation.StartBattle(false);
+            battleStarted = true;
+            IsFinished = false;
+            currentAttackIndex = 0;
+            attackerAttackCount = 1;
+            //defenderAttackCount = defender.BattleComponent.BattleStats.GetAttackCountAgainst(attacker);
+            //BattleRenderer.Show(attacker, defender, GetAttackSequence());
+            
+        }
         public void StartBattle(IBattleActor attacker, IBattleActor defender)
         {
             this.attacker = attacker;
@@ -119,32 +134,88 @@ namespace Game.Mechanics
 
             return battleSimulation;
         }
+        public BattleSimulation GetBattleSimulation(IBattleActor attacker, IAttackableTarget attackableTarget)
+        {
+            battleSimulation = new BattleSimulation(attacker, attackableTarget);
+            battleSimulation.StartBattle(false);
+
+            return battleSimulation;
+        }
 
 
-        public BattlePreview GetBattlePreview(IBattleActor attacker, IBattleActor defender, GridPosition attackPosition)
+        public BattlePreview GetBattlePreview(IBattleActor attacker, IAttackableTarget defender, GridPosition attackPosition)
         {
             var battlePreview = ScriptableObject.CreateInstance<BattlePreview>();
             battlePreview.Attacker = attacker;
-            battlePreview.Defender = defender;
-            battleSimulation = new BattleSimulation(attacker, defender, attackPosition);
-            battleSimulation.StartBattle(true);
-            battlePreview.AttacksData = battleSimulation.AttacksData;
-Debug.Log("BattlePreview: "+ battleSimulation.AttackerAttackCount + "DefenderAttackCount: "+ battleSimulation.DefenderAttackCount);
-            battlePreview.AttackerStats = new BattlePreviewStats(attacker.BattleComponent.BattleStats.GetDamage(), 
-                attacker.Stats.Attributes.AGI, defender.BattleComponent.BattleStats.GetDamageType(), 
-                defender.BattleComponent.BattleStats.GetDamageType()==DamageType.Physical ? attacker.BattleComponent.BattleStats.GetPhysicalResistance() : attacker.Stats.Attributes.FAITH, 
-                attacker.Stats.Attributes.DEX, attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defender), attacker.BattleComponent.BattleStats.GetHitAgainstTarget(defender),
-                attacker.BattleComponent.BattleStats.GetCritAgainstTarget(defender),
-                battleSimulation.DefenderAttackCount, attacker.Hp, attacker.Stats.MaxHp, 
-                battleSimulation.Attacker.Hp);//, attacker.Sp, attacker.Stats.MaxSp, battleSimulation.Attacker.Sp, attacker.SpBars, battleSimulation.Attacker.SpBars, attacker.MaxSpBars);
-
-            battlePreview.DefenderStats = new BattlePreviewStats(defender.BattleComponent.BattleStats.GetDamage(), 
-                defender.Stats.Attributes.AGI, attacker.BattleComponent.BattleStats.GetDamageType(), 
-                attacker.BattleComponent.BattleStats.GetDamageType()==DamageType.Physical? defender.BattleComponent.BattleStats.GetPhysicalResistance() : defender.Stats.Attributes.FAITH,
-                defender.Stats.Attributes.DEX, defender.BattleComponent.BattleStats.GetDamageAgainstTarget(attacker),defender.BattleComponent.BattleStats.GetHitAgainstTarget(attacker),
-                defender.BattleComponent.BattleStats.GetCritAgainstTarget(attacker),
-                battleSimulation.DefenderAttackCount, defender.Hp, defender.Stats.MaxHp,
-                battleSimulation.Defender.Hp);//, defender.Sp, defender.Stats.MaxSp, battleSimulation.Defender.Sp,  defender.SpBars, battleSimulation.Defender.SpBars, defender.MaxSpBars);
+            if (defender is IBattleActor defenderActor)
+            {
+                battlePreview.Defender = defenderActor;
+                battleSimulation = new BattleSimulation(attacker, defenderActor, attackPosition);
+                battleSimulation.StartBattle(true);
+                battlePreview.AttacksData = battleSimulation.AttacksData;
+                Debug.Log("BattlePreview: " + battleSimulation.AttackerAttackCount + "DefenderAttackCount: " +
+                          battleSimulation.DefenderAttackCount);
+                battlePreview.AttackerStats = new BattlePreviewStats(attacker.BattleComponent.BattleStats.GetDamage(),
+                    attacker.Stats.Attributes.AGI, defenderActor.BattleComponent.BattleStats.GetDamageType(),
+                    defenderActor.BattleComponent.BattleStats.GetDamageType() == DamageType.Physical
+                        ? attacker.BattleComponent.BattleStats.GetPhysicalResistance()
+                        : attacker.Stats.Attributes.FAITH,
+                    attacker.Stats.Attributes.DEX,
+                    attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defenderActor),
+                    attacker.BattleComponent.BattleStats.GetHitAgainstTarget(defenderActor),
+                    attacker.BattleComponent.BattleStats.GetCritAgainstTarget(defenderActor),
+                    battleSimulation.DefenderAttackCount, attacker.Hp, attacker.MaxHp,
+                    battleSimulation.Attacker
+                        .Hp); //, attacker.Sp, attacker.Stats.MaxSp, battleSimulation.Attacker.Sp, attacker.SpBars, battleSimulation.Attacker.SpBars, attacker.MaxSpBars);
+                Debug.Log(battleSimulation.Defender);
+                Debug.Log(battleSimulation.Defender.Hp);
+                Debug.Log( defenderActor.Stats.Attributes.AGI);
+                Debug.Log(defenderActor.BattleComponent.BattleStats.GetDamage() + " test ");
+                battlePreview.DefenderStats = new BattlePreviewStats(defenderActor.BattleComponent.BattleStats.GetDamage(),
+                    defenderActor.Stats.Attributes.AGI, defenderActor.BattleComponent.BattleStats.GetDamageType(),
+                    attacker.BattleComponent.BattleStats.GetDamageType() == DamageType.Physical
+                        ? defenderActor.BattleComponent.BattleStats.GetPhysicalResistance()
+                        : defenderActor.Stats.Attributes.FAITH,
+                    defenderActor.Stats.Attributes.DEX,
+                    defenderActor.BattleComponent.BattleStats.GetDamageAgainstTarget(attacker),
+                    defenderActor.BattleComponent.BattleStats.GetHitAgainstTarget(attacker),
+                    defenderActor.BattleComponent.BattleStats.GetCritAgainstTarget(attacker),
+                    battleSimulation.DefenderAttackCount, defender.Hp, defenderActor.MaxHp,
+                    battleSimulation.Defender.Hp); //, defender.Sp, defender.Stats.MaxSp, battleSimulation.Defender.Sp,  defender.SpBars, battleSimulation.Defender.SpBars, defender.MaxSpBars);
+            }
+            else
+            {
+                battlePreview.TargetObject = defender;
+                
+                battleSimulation = new BattleSimulation(attacker, defender, attackPosition);
+                battleSimulation.StartBattle(true);
+                
+                battlePreview.AttacksData = battleSimulation.AttacksData;
+                Debug.Log("BattlePreview: " + battleSimulation.AttackerAttackCount + "DefenderAttackCount: " +
+                          battleSimulation.DefenderAttackCount);
+                battlePreview.AttackerStats = new BattlePreviewStats(attacker.BattleComponent.BattleStats.GetDamage(),
+                    attacker.Stats.Attributes.AGI, attacker.BattleComponent.BattleStats.GetDamageType(),0,
+                    attacker.Stats.Attributes.DEX,
+                    attacker.BattleComponent.BattleStats.GetDamage(),
+                    100,
+                    0,
+                    battleSimulation.DefenderAttackCount, attacker.Hp, attacker.MaxHp,
+                    battleSimulation.Attacker
+                        .Hp); //, attacker.Sp, attacker.Stats.MaxSp, battleSimulation.Attacker.Sp, attacker.SpBars, battleSimulation.Attacker.SpBars, attacker.MaxSpBars);
+                Debug.Log(attacker.BattleComponent.BattleStats.GetDamageType());
+                Debug.Log(battlePreview.DefenderStats);
+                Debug.Log(battleSimulation.Defender);
+                battlePreview.DefenderStats = new BattlePreviewStats(0,
+                    0, attacker.BattleComponent.BattleStats.GetDamageType(),
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                   0, defender.Hp, defender.MaxHp,
+                    battleSimulation.AttackableTarget
+                        .Hp);
+            }
             return battlePreview;
         }
 

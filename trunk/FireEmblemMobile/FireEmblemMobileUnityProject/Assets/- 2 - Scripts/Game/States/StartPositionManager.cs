@@ -42,8 +42,10 @@ namespace Game.States
         }
         public void ShowStartPos()
         {
+            Debug.Log("GirdDimensions: "+gridSystem.width+" "+gridSystem.height);
             foreach (var startpos in startPositions)
             { 
+                Debug.Log("startPos: "+startpos.GetXOnGrid()+" "+startpos.GetYOnGrid());
                 var tile= gridSystem.GetTile(startpos.GetXOnGrid(), startpos.GetYOnGrid());
                 tile.tileVfx.ShowSwapable(tile);
                 //tile.TileRenderer.SwapVisual();

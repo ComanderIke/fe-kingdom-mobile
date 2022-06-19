@@ -18,6 +18,7 @@ namespace Game.States
         private FactionManager factionManager;
         private UnitInstantiator unitInstantiator;
         private UnitSpawner[] spawner;
+        private DestroyableController[]  destroyableControllers;
         private IUnitTouchInputReceiver touchInputReceiver;
         
         public UnitSpawnHelper( FactionManager factionManager,IUnitTouchInputReceiver touchInputReceiver)
@@ -25,6 +26,7 @@ namespace Game.States
             this.factionManager = factionManager;
             unitInstantiator = GameObject.FindObjectOfType<UnitInstantiator>();
             spawner = GameObject.FindObjectsOfType<UnitSpawner>();
+            destroyableControllers = GameObject.FindObjectsOfType<DestroyableController>();
             this.touchInputReceiver = touchInputReceiver;
 
         }
@@ -33,6 +35,22 @@ namespace Game.States
             SpawnPlayerUnits(units, startPositions);
         }
 
+        public void SpawnDestroyables()
+        {
+            foreach (var faction in factionManager.Factions)
+            {
+                foreach (var desController in destroyableControllers.Where(a => a.factionID == faction.Id))
+                {
+                    //Create Instan otherwise object is shared
+                    Destroyable dest =GameObject.Instantiate(desController.Destroyable);
+                    faction.AddDestroyable(dest);
+                    desController.Destroyable = dest;//Overwrite Blueprint
+                    dest.Init();
+
+                    unitInstantiator.PlaceDestroyable(desController, desController.X, desController.Y);
+                }
+            }
+        }
         public void SpawnEnemies()
         {
            // var tmpEnemyUnits = factionManager.Factions[1].Units.Select(item => (Unit)item.Clone()).ToList();

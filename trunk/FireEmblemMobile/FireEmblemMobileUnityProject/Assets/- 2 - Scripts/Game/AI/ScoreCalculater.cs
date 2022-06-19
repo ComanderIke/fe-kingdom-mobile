@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Units;
+﻿using Game.GameActors.Players;
+using Game.GameActors.Units;
 using Game.GameInput;
 using Game.Mechanics;
 using UnityEngine;
@@ -49,7 +50,7 @@ namespace Game.AI
             // return factor representing improvement in position, protect vs divide by 0
             return (oldDistance > 0) ? (1f - newDistance / oldDistance) : (1f - newDistance);
         }
-        public static float ScoreAttackForUnit(IBattleActor attacker,WeightSet aiWeightSet, Vector2 location, IBattleActor defender)
+        public static float ScoreAttackForUnit(IBattleActor attacker,WeightSet aiWeightSet, Vector2 location, IAttackableTarget defender)
         {
             
             WeightSet w = aiWeightSet;

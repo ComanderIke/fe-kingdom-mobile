@@ -50,8 +50,8 @@ public class BattleUI : MonoBehaviour
         var enemyUnit= playerUnitIsAttacker? defender : attacker;
         currentHPLeft = playerUnit.Hp;
         currentHPRight = enemyUnit.Hp;
-        maxHPLeft = playerUnit.Stats.MaxHp;
-        maxHPRight = enemyUnit.Stats.MaxHp;
+        maxHPLeft = playerUnit.MaxHp;
+        maxHPRight = enemyUnit.MaxHp;
       //  Debug.Log(currentHPLeft+" "+currentHPRight+" "+battleSimulation.Attacker.Stats.MaxHp+" "+battleSimulation.Attacker.Hp);
         hpText.SetText(""+currentHPLeft);
         hpTextRight.SetText(""+currentHPRight);
@@ -114,8 +114,8 @@ public class BattleUI : MonoBehaviour
 
            
         
-        leftHPBar.SetValues(playerUnit.Stats.MaxHp,playerUnit.Hp);
-        rightHPBar.SetValues(enemyUnit.Stats.MaxHp,enemyUnit.Hp);
+        leftHPBar.SetValues(playerUnit.MaxHp,playerUnit.Hp);
+        rightHPBar.SetValues(enemyUnit.MaxHp,enemyUnit.Hp);
    
     }
 

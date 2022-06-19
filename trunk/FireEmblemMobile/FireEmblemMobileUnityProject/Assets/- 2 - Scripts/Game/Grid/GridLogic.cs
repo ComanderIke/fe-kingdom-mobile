@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.Manager;
 using Game.Map;
@@ -29,15 +30,15 @@ namespace Game.Grid
 
         
 
-        public List<IGridActor> GetAttackTargets(IGridActor unit)
+        public List<IGridObject> GetAttackTargets(IGridActor unit)
         {
             int x = unit.GridComponent.GridPosition.X;
             int y = unit.GridComponent.GridPosition.Y;
             return GetAttackTargets(unit, x, y);
         }
-        public List<IGridActor> GetAttackTargets(IGridActor unit, int x, int y)
+        public List<IGridObject> GetAttackTargets(IGridActor unit, int x, int y)
         {
-            var targets = new List<IGridActor>();
+            var targets = new List<IGridObject>();
           
             foreach (int attackRange in unit.AttackRanges)
             {
@@ -51,7 +52,7 @@ namespace Game.Grid
                             Debug.Log("Check Position: "+(i + x) + " " + (j + y));
                             if (IsOutOfBounds(new Vector2(x + i, y + j)))
                                 continue;
-                            var unitOnTile = Tiles[i + x, j + y].Actor;
+                            var unitOnTile = Tiles[i + x, j + y].GridObject;
                             Debug.Log("Unit On Tile: "+unitOnTile);
                             if (unitOnTile != null && unitOnTile.Faction.Id != unit.Faction.Id)
                             {
@@ -65,11 +66,11 @@ namespace Game.Grid
             return targets;
         }
 
-        public List<IGridActor> GetAttackTargetsAtGameObjectPosition(Unit unit)
+        public List<IGridObject> GetAttackTargetsAtGameObjectPosition(Unit unit)
         {
             int x = (int) unit.GameTransformManager.GetPosition().x;
             int y = (int) unit.GameTransformManager.GetPosition().y;
-            var targets = new List<IGridActor>();
+            var targets = new List<IGridObject>();
             foreach (int attackRange in unit.Stats.AttackRanges)
             {
                 for (int i = -attackRange; i <= +attackRange; i++)
@@ -81,7 +82,7 @@ namespace Game.Grid
                             //Debug.Log("attackTargets at ["+ x+", "+y+"]: [" +(i + x) + ", " + (j + y)+"]");
                             if (IsOutOfBounds(new Vector2(x + i, y + j)))
                                 continue;
-                            var unitOnTile = Tiles[i + x, j + y].Actor;
+                            var unitOnTile = Tiles[i + x, j + y].GridObject;
                             if (unitOnTile != null && unitOnTile.Faction.Id != unit.Faction.Id)
                             {
                                 targets.Add(unitOnTile);
@@ -118,11 +119,11 @@ namespace Game.Grid
             if (x >= 0 && y >= 0 && x < GridManager.width && y < GridManager.height)
             {
                 var field = Tiles[x, y];
-                if (unit.GridComponent.CanMoveOnTo(field))
+                if (unit.GetActorGridComponent().CanMoveOnTo(field))
                 {
-                    if (field.Actor == null)
+                    if (field.GridObject == null)
                         return true;
-                    if (!field.Actor.IsEnemy(unit))
+                    if (!field.GridObject.IsEnemy(unit))
                         return true;
                 }
                 else
@@ -141,7 +142,7 @@ namespace Game.Grid
 
         public bool IsFieldFreeAndActive(int x, int y)
         {
-            return Tiles[x, y].Actor == null && gridSessionData.IsMoveableAndActive(x, y);
+            return Tiles[x, y].GridObject == null && gridSessionData.IsMoveableAndActive(x, y);
         }
 
         public void ResetActiveFields()
@@ -166,7 +167,7 @@ namespace Game.Grid
                 return;
             }
 
-            if (!locations.Contains(new Vector2Int(x, y)) && Tiles[x, y].Actor == null)
+            if (!locations.Contains(new Vector2Int(x, y)) && Tiles[x, y].GridObject == null)
                 locations.Add(new Vector2Int(x, y)); //TODO Height?!
             GridManager.NodeHelper.Nodes[x, y].C = c;
             c++;
@@ -188,14 +189,14 @@ namespace Game.Grid
             var tile = Tiles[x, y];
             if ((!invalid) && ((sx != x) || (sy != y)))
             {
-                invalid = !unit.GridComponent.CanMoveOnTo(tile);
+                invalid = !unit.GetActorGridComponent().CanMoveOnTo(tile);
             }
 
             if (!invalid)
             {
-                if (tile.Actor != null)
+                if (tile.GridObject != null)
                 {
-                    if (tile.Actor.GridComponent.CanMoveThrough(unit))
+                    if (tile.GridObject.IsEnemy(unit))
                     {
                         invalid = true;
                     }
@@ -216,10 +217,10 @@ namespace Game.Grid
             var tile = Tiles[x, y];
             if (!invalid)
             {
-                invalid = !character.GridComponent.CanMoveOnTo(tile);
-                if (tile.Actor != null)
+                invalid = !character.GetActorGridComponent().CanMoveOnTo(tile);
+                if (tile.GridObject != null)
                 {
-                    if (tile.Actor != character)
+                    if (tile.GridObject != character)
                         invalid = true;
                 }
             }
@@ -236,7 +237,7 @@ namespace Game.Grid
         {
             return (from Tile f in Tiles
                 where (f.X == character.GridComponent.GridPosition.X && f.Y == character.GridComponent.GridPosition.Y) ||
-                      (gridSessionData.IsMoveableAndActive(f.X, f.Y) && (f.Actor == null || f.Actor == character))
+                      (gridSessionData.IsMoveableAndActive(f.X, f.Y) && (f.GridObject == null || f.GridObject == character))
                 select f);
             //Todo fix on soft select tiles are not active so attack range from enemies not visible
         }

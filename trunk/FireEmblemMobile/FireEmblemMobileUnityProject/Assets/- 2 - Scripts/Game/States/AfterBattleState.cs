@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameInput;
 using Game.GUI.Text;
@@ -17,14 +18,14 @@ namespace Game.States
 
         private Unit attacker;
        
-        private List<Unit> defenders;
-        public AfterBattleState(Unit attacker, Unit defender)
+        private List<IAttackableTarget> defenders;
+        public AfterBattleState(Unit attacker, IAttackableTarget defender)
         {
             this.attacker = attacker;
-            defenders = new List<Unit>();
+            defenders = new List<IAttackableTarget>();
             defenders.Add(defender);
         }
-        public AfterBattleState(Unit attacker, List<Unit> defenders)
+        public AfterBattleState(Unit attacker, List<IAttackableTarget> defenders)
         {
             this.attacker = attacker;
             this.defenders = defenders;
@@ -36,13 +37,24 @@ namespace Game.States
             {
                 attacker.Die();
             }
-            AnimationQueue.Add(GameObject.FindObjectOfType<ExpParticleSystem>().Play);
+            bool gettingexp = false;
+          
             foreach (var defender in defenders)
             {
-                
-                
-                if(attacker.IsAlive())
-                    GridGameManager.Instance.GetSystem<UnitProgressSystem>().DistributeExperience(attacker, defender);
+
+                if (defender is Unit unitDefender)
+                {
+                    if (!gettingexp)
+                    {
+                        gettingexp = true;
+                        AnimationQueue.Add(GameObject.FindObjectOfType<ExpParticleSystem>().Play);
+                    }
+
+                    if (attacker.IsAlive())
+                        GridGameManager.Instance.GetSystem<UnitProgressSystem>()
+                            .DistributeExperience(attacker, unitDefender);
+                }
+
                 if (!defender.IsAlive())
                 {
                     defender.Die();

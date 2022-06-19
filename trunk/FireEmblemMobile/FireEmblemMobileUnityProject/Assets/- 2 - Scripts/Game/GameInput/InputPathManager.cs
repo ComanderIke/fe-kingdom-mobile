@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.Graphics;
 using Game.Grid;
@@ -50,7 +51,7 @@ namespace Game.GameInput
             UpdatedMovementPath(character.GridComponent.GridPosition.X, character.GridComponent.GridPosition.Y);
         }
 
-        public void CalculateAttackPathToTarget(IGridActor character, IGridActor target)
+        public void CalculateAttackPathToTarget(IGridActor character, IGridObject target)
         {
             Reset();
             var gridSystem =  GridGameManager.Instance.GetSystem<GridSystem>();

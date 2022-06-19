@@ -85,7 +85,7 @@ namespace Game.GUI
              attackCount.text = "" + battlePreview.AttackerStats.AttackCount;
              List<int> attackerDmg = new List<int>();
              List<int> defenderDmg = new List<int>();
-            
+             Debug.Log("TEST" + battlePreview.AttacksData);
              for (int i = 0; i < battlePreview.AttacksData.Count; i++)
              {
                  if (battlePreview.AttacksData[i].attacker)
@@ -122,8 +122,10 @@ namespace Game.GUI
              attackCountRightX.SetActive(battlePreview.DefenderStats.AttackCount > 1);
              attackCountRight.gameObject.SetActive(battlePreview.DefenderStats.AttackCount > 1);
              attackCountRight.text = "" + battlePreview.DefenderStats.AttackCount;
+             Debug.Log(battlePreview.DefenderStats.MaxHp + " " + battlePreview.DefenderStats.CurrentHp + " " +
+                       battlePreview.DefenderStats.AfterBattleHp + " " +attackerDmg);
              hpBarRight.UpdateValues(battlePreview.DefenderStats.MaxHp, battlePreview.DefenderStats.CurrentHp, battlePreview.DefenderStats.AfterBattleHp,
-                 attackerDmg);
+                     attackerDmg);
             // spBarsRight.SetPreviewValue(battlePreview.DefenderStats.CurrentSpBars,battlePreview.DefenderStats.AfterSpBars,battlePreview.DefenderStats.MaxSpBars);
              //spBarRight.UpdateValues(battlePreview.DefenderStats.MaxSp, battlePreview.DefenderStats.CurrentSp, battlePreview.DefenderStats.AfterBattleSp, battlePreview.DefenderStats.IncomingSpDamage);
             
@@ -150,6 +152,17 @@ namespace Game.GUI
             turnCount.SetActive(false);
            
         }
+        public override void Show(BattlePreview battlePreview, UnitVisual attackerVisual, Sprite attackableObjectSprite)
+        {
+            attackerSprite = attackerVisual.CharacterSpriteSet.FaceSprite;
+            defenderSprite = attackableObjectSprite;
+            this.battlePreview = battlePreview;
+            this.gameObject.SetActive(true);
+            UpdateValues();
+            turnCount.SetActive(false);
+           
+        }
+        
         public void Show(float yPos)
         {
 

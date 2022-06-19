@@ -2,6 +2,7 @@
 using __2___Scripts.Game.Areas;
 using Game.GameActors.Players;
 using Game.WorldMapStuff.Model;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 
@@ -12,9 +13,24 @@ public abstract class EncounterNode
     public List<EncounterNode> children;
 
     public List<Road> roads;
-    public GameObject gameObject;
+    public GameObject gameObject
+    {
+        get;
+        private set;
+    }
 
-    public bool moveable;
+    public void SetGameObject(GameObject gameObject)
+    {
+        this.gameObject = gameObject;
+        renderer = gameObject.GetComponentInChildren<NodeRenderer>();
+    }
+    public NodeRenderer renderer;
+
+    public bool moveable
+    {
+        get;
+        private set;
+    }
 
     public int prefabIdx=-1;
 
@@ -62,5 +78,18 @@ public abstract class EncounterNode
         }
 
         return null;
+    }
+
+    public void SetMoveable(bool b)
+    {
+        moveable = b;
+        if (moveable)
+        {
+            renderer.MovableAnimation();
+        }
+        else
+        {
+            renderer.Reset();
+        }
     }
 }

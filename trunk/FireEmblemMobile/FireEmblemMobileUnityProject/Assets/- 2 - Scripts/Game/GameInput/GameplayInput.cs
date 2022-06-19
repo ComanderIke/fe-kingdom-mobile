@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Game.GameActors.Items;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
 using Game.Grid;
@@ -23,9 +24,9 @@ namespace Game.GameInput
         public static event UnitEvent OnViewUnit;
         public delegate void MoveUnitEvent(IGridActor u, GridPosition position, List<GridPosition> movePath);
         public static event MoveUnitEvent OnMoveUnit;
-        public delegate void AttackUnitEvent(IBattleActor u, IBattleActor attackTarget);
+        public delegate void AttackUnitEvent(IBattleActor u, IGridObject attackTarget);
         public static event AttackUnitEvent OnAttackUnit;
-        public delegate void CheckAttackPreviewEvent(IBattleActor u, IBattleActor attackTarget, GridPosition attackPosition);
+        public delegate void CheckAttackPreviewEvent(IBattleActor u, IAttackableTarget attackTarget, GridPosition attackPosition);
         public static event CheckAttackPreviewEvent OnCheckAttackPreview;
         
         public static event Event OnDeselectSkill;
@@ -33,7 +34,7 @@ namespace Game.GameInput
         public static event Action<Skill> OnSelectSkill;
         public static event Action<Item> OnSelectItem;
 
-        public void AttackUnit(IBattleActor u, IBattleActor attackTarget)
+        public void AttackUnit(IBattleActor u, IGridObject attackTarget)
         {
             Debug.Log("GameInput: Attack Unit: " + u+" Target: " +attackTarget);
             OnAttackUnit?.Invoke(u, attackTarget);
@@ -86,8 +87,9 @@ namespace Game.GameInput
             OnExecuteInputActions?.Invoke();
         }
 
-        public void CheckAttackPreview(IBattleActor u, IBattleActor attackTarget, GridPosition attackPosition)
+        public void CheckAttackPreview(IBattleActor u, IAttackableTarget attackTarget, GridPosition attackPosition)
         {
+            Debug.Log("Check AttackPreview");
             OnCheckAttackPreview?.Invoke(u, attackTarget, attackPosition);
         }
 

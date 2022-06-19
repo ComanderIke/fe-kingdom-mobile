@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Units;
+﻿using Game.GameActors.Players;
+using Game.GameActors.Units;
 
 namespace Game.GameInput
 {
@@ -9,7 +10,7 @@ namespace Game.GameInput
         void ActorClicked(IGridActor unit);
         void ActorDoubleClicked(IGridActor unit);
         void StartDraggingActor(IGridActor actor);
-        void DraggedOverActor(IGridActor actor);
+        void DraggedOverObject(IGridObject gridObject);
         void ActorLongHold(IGridActor unit);
     }
 }

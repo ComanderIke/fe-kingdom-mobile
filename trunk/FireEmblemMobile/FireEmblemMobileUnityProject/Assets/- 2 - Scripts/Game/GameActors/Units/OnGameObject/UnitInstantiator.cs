@@ -1,4 +1,6 @@
-﻿using Game.GameInput;
+﻿using Game.GameActors.Players;
+using Game.GameInput;
+using Game.Grid;
 using Game.GUI;
 using Game.Manager;
 using Game.Map;
@@ -54,7 +56,17 @@ namespace Game.GameActors.Units.OnGameObject
         {
             GameObject.Destroy(unit.GameTransformManager.GameObject);
             GridGameManager.Instance.GetSystem<GridSystem>()
-                .GetTile(unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y).Actor = null;
+                .GetTile(unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y).GridObject = null;
+        }
+
+        public void PlaceDestroyable(DestroyableController dest, int x, int y)
+        {
+            Debug.Log("Place Destroyable: "+x +" "+y+" "+dest.Destroyable.Faction.Id);
+            dest.Destroyable.Controller = dest;
+            dest.Destroyable.GridComponent = new GridComponent();
+            
+            dest.Init();
+            GridGameManager.Instance.GetSystem<GridSystem>().SetGridObjectPosition(dest.Destroyable, x, y);
         }
     }
 }

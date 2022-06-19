@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
 using Game.GameInput;
@@ -197,12 +198,12 @@ namespace Game.Mechanics
             //
         }
 
-        public void DraggedOnActor(IGridActor gridActor)
+        public void DraggedOnObject(IGridObject gridActor)
         {
             //
         }
 
-        public void DraggedOverActor(IGridActor gridActor)
+        public void DraggedOverObject(IGridObject gridActor)
         {
             //
         }

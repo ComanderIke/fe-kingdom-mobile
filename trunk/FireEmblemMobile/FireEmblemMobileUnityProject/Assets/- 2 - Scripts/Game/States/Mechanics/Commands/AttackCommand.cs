@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameInput;
 using Game.Manager;
@@ -10,9 +11,9 @@ namespace Game.Mechanics.Commands
     public class AttackCommand : Command
     {
         private readonly IBattleActor attacker;
-        private readonly IBattleActor target;
+        private readonly IGridObject target;
 
-        public AttackCommand(IBattleActor attacker, IBattleActor target)
+        public AttackCommand(IBattleActor attacker, IGridObject target)
         {
             this.attacker = attacker;
             this.target = target;

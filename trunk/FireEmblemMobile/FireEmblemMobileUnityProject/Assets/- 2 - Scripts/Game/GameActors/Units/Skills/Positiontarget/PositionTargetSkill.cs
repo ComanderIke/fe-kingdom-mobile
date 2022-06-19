@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.GameActors.Players;
 using Game.GameActors.Units.Numbers;
 using Game.GameInput;
 using Game.Grid;
@@ -135,9 +136,9 @@ namespace Game.GameActors.Units.Skills
         }
 
 
-        public List<Unit> GetAllTargets(Unit selectedUnit, Tile[,] tiles, int x, int y)
+        public List<IAttackableTarget> GetAllTargets(Unit selectedUnit, Tile[,] tiles, int x, int y)
         {
-            List<Unit> targets = new List<Unit>();
+            List<IAttackableTarget> targets = new List<IAttackableTarget>();
             foreach (var pos in GetTargetPositions())
             {
                 int xPosition = x + pos.x;
@@ -145,9 +146,9 @@ namespace Game.GameActors.Units.Skills
                 if (xPosition >= 0 && xPosition < tiles.GetLength(0) && yPosition >= 0 &&
                     yPosition < tiles.GetLength(1))
                 {
-                    if (tiles[xPosition, yPosition].Actor!=null&&tiles[xPosition, yPosition].Actor.Faction.Id!=selectedUnit.Faction.Id)
+                    if (tiles[xPosition, yPosition].GridObject!=null&&tiles[xPosition, yPosition].GridObject.Faction.Id!=selectedUnit.Faction.Id)
                     {
-                        targets.Add((Unit)tiles[xPosition, yPosition].Actor);
+                        targets.Add((IAttackableTarget)tiles[xPosition, yPosition].GridObject);
                     }
                 }
             }

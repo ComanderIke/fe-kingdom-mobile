@@ -14,6 +14,7 @@ namespace Game.Map
 
         public GridCursor()
         {
+            Debug.Log("GridCursorConstructor");
             renderer = GameObject.FindObjectOfType<GridCursorRenderer>();
             renderer.Hide();
         }
@@ -33,7 +34,7 @@ namespace Game.Map
             gridPosition = new GridPosition(currentTile.X, currentTile.Y);
             OnCursorPositionChanged?.Invoke(new Vector2Int(gridPosition.X,gridPosition.Y));
             renderer.Show(new Vector2(gridPosition.X,gridPosition.Y));
-            if(tile.Actor==null)
+            if(tile.GridObject==null)
                 renderer.ShowTileInfo();
             else
             {

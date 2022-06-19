@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.Mechanics;
 using UnityEngine;
@@ -11,8 +12,8 @@ namespace Game.GameInput
 
         Vector2Int GetSelectedTile();
         void SetSelectedTile(int x, int y);
-        void SetSelectedAttackTarget(IGridActor target);
-        IGridActor GetSelectedAttackTarget();
+        void SetSelectedAttackTarget(IGridObject target);
+        IGridObject GetSelectedAttackTarget();
         void ClearData();
         bool IsSelectedTile(int i, int i1);
         void ClearAttackTarget();

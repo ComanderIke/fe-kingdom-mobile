@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameInput;
 using Game.GUI.PopUpText;
@@ -55,8 +56,9 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         playableDirector.Play();
     }
 
-    public void Show(BattleSimulation battleSimulation, IBattleActor attackingActor, IBattleActor defendingActor)
+    public void Show(BattleSimulation battleSimulation, IBattleActor attackingActor, IAttackableTarget defendingActor)
     {
+        
         this.battleSimulation = battleSimulation;
 
         leftCharacterDied = false;

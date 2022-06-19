@@ -1,0 +1,95 @@
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using Game.GameActors.Players;
+using Game.Grid;
+using Game.GUI;
+using Game.Map;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+using Utility;
+
+[ExecuteInEditMode]
+public class DestroyableController : MonoBehaviour
+{
+    
+    public Destroyable Destroyable;
+    public FactionId factionID = 0;
+    [SerializeField] private TextMeshProUGUI hpText;
+    public StatsBarOnMap hpBar;
+
+    public GameObject canvasTransform;
+    private void Start()
+    {
+        Destroyable.HpValueChanged += HpValueChanged;
+        
+    }
+
+    public void Init()
+    {
+        hpBar.GetComponent<Image>().color = ColorManager.Instance.GetFactionColor(Destroyable.Faction.Id);
+        if (Destroyable.Faction.Id != 0)
+        {
+            canvasTransform.GetComponent<RectTransform>().anchoredPosition = new Vector2(.9f,
+                canvasTransform.GetComponent<RectTransform>().anchoredPosition.y);
+        }
+        else
+        {
+            canvasTransform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0,
+                canvasTransform.GetComponent<RectTransform>().anchoredPosition.y);
+        }
+        hpText.color = ColorManager.Instance.GetFactionColor(Destroyable.Faction.Id);
+   
+    }
+    private void HpValueChanged()
+    {
+        if (hpBar != null && Destroyable != null){
+            hpBar.SetValue(Destroyable.Hp, Destroyable.MaxHp);
+            hpText.SetText(""+Destroyable.Hp);
+        }
+    }
+    public bool IsOnPosition(int x, int y)
+    {
+        for (int x1 = X; x1 <= X; x1++)
+        {
+            for (int y1 = Y; y1 <= Y; y1++)
+            {
+                if (x1 == x && y1 == y)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    void Update()
+    {
+        transform.localPosition = new Vector3((int) transform.localPosition.x, (int) transform.localPosition.y,
+            (int) transform.localPosition.z);
+    }
+    public int X
+    {
+        get
+        {
+            return (int)transform.localPosition.x;
+        }
+    }
+    public int Y
+    {
+        get
+        {
+            return (int)transform.localPosition.y;
+        }
+    }
+
+    public Vector3 GetCenterPosition()
+    {
+        return transform.position + new Vector3(.5f, .5f, 0);
+    }
+
+    public void Die()
+    {
+        Destroy(gameObject);
+    }
+}

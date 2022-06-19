@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Units;
+﻿using Game.GameActors.Players;
+using Game.GameActors.Units;
 using Game.GameInput;
 using Game.GameResources;
 using Game.Grid;
@@ -82,8 +83,19 @@ namespace Game.GUI
         }
         private void ShowAttackPreviewUI(BattlePreview battlePreview)
         {
-            if(battlePreview.Attacker is Unit attacker && battlePreview.Defender is Unit defender)
-                attackPreviewUI.Show(battlePreview, attacker.visuals, defender.visuals);
+            Debug.Log("Show AttackPreview");
+            if (battlePreview.Attacker is Unit attacker)
+            {
+                if (battlePreview.Defender is Unit defender)
+                    attackPreviewUI.Show(battlePreview, attacker.visuals, defender.visuals);
+                else if (battlePreview.TargetObject != null &&
+                         battlePreview.TargetObject is Destroyable dest)
+                {
+                    Debug.Log("Show DestoryPreview");
+                    attackPreviewUI.Show(battlePreview, attacker.visuals, dest.sprite);
+                }
+
+            }
         }
 
         private void HideAttackPreviewUI()

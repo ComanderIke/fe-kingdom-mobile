@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Units;
+﻿using Game.GameActors.Players;
+using Game.GameActors.Units;
 using UnityEngine;
 
 namespace Game.AI
@@ -7,7 +8,7 @@ namespace Game.AI
     {
         public float Score;
         public Vector2Int Location;
-        public Unit Target;
+        public IGridObject Target;
         public UnitAction UnitAction;
         public Unit Performer;
     }
