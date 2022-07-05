@@ -90,29 +90,12 @@ namespace Game.Mechanics
            
         }
 
-        public void DistributeExperience(IBattleActor attacker, IBattleActor defender)
+        public int DistributeDefenderExperience(IBattleActor attacker, IBattleActor defender)
         {
-            Debug.Log("Distribute EXP"+ attacker.Faction.IsPlayerControlled+ " "+attacker.IsAlive());
-            if (attacker.IsAlive()&&attacker.Faction.IsPlayerControlled)
-            {
-               
-                var exp = CalculateExperiencePoints(attacker, defender);
-                if (exp != 0)
-                {
-
-                    
-                    var expRenderer = ((Unit)attacker).visuals.UnitCharacterCircleUI.GetExpRenderer();
-                    expRenderer.UpdateValues(attacker.ExperienceManager.GetMaxEXP(exp));
-                 
-
-
-                    GridGameManager.Instance.GetSystem<UiSystem>().SelectedCharacter((Unit)attacker);
-                    attacker.ExperienceManager.AddExp(defender.GameTransformManager.Transform.position, exp);
-                }
-            }
+            int exp=0;
             if (defender.IsAlive() && defender.Faction.IsPlayerControlled)
             {
-                var exp = CalculateExperiencePoints(defender, attacker);
+                exp = CalculateExperiencePoints(defender, attacker);
                 if (exp != 0)
                 {
 
@@ -125,6 +108,33 @@ namespace Game.Mechanics
                     defender.ExperienceManager.AddExp(attacker.GameTransformManager.Transform.position, exp);
                 }
             }
+
+            return exp;
+        }
+        public int DistributeAttackerExperience(IBattleActor attacker, IBattleActor defender)
+        {
+            int exp = 0;
+            Debug.Log("Distribute EXP"+ attacker.Faction.IsPlayerControlled+ " "+attacker.IsAlive());
+            if (attacker.IsAlive()&&attacker.Faction.IsPlayerControlled)
+            {
+                exp = CalculateExperiencePoints(attacker, defender);
+                if (exp != 0)
+                {
+
+                    
+                    var expRenderer = ((Unit)attacker).visuals.UnitCharacterCircleUI.GetExpRenderer();
+                    expRenderer.UpdateValues(attacker.ExperienceManager.GetMaxEXP(exp));
+                 
+
+
+                    GridGameManager.Instance.GetSystem<UiSystem>().SelectedCharacter((Unit)attacker);
+                    attacker.ExperienceManager.AddExp(defender.GameTransformManager.Transform.position, exp);
+                }
+
+                
+            }
+            return exp;
+            
         }
         private int CalculateExperiencePoints(IBattleActor expReceiver, IBattleActor enemyFought)
         {

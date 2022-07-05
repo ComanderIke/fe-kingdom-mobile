@@ -93,7 +93,7 @@ public class ItemToolTip : MonoBehaviour
         float pivotX = position.x / Screen.width;
         float pivotY = position.y / Screen.height;
         rectTransform.pivot = new Vector2(pivotX, pivotY);
-        transform.position = position;
+        
     }
 
     public void ExitClicked()
@@ -132,8 +132,19 @@ public class ItemToolTip : MonoBehaviour
 
         if (human.HasEquipped(item))
         {
-            useButtonText.text = "Unequip";
-            dropButton.gameObject.SetActive(false);
+            if (item is Weapon)
+            {
+                useButton.interactable = false;
+                useButtonText.text = "Equipped";
+                dropButton.gameObject.SetActive(false);
+            }
+
+            if (item is Relic)
+            {
+                useButton.interactable = true;
+                useButtonText.text = "Unequip";
+                dropButton.gameObject.SetActive(true);
+            }
         }
         else
         {
@@ -144,7 +155,7 @@ public class ItemToolTip : MonoBehaviour
 
         descriptionText.text = description;
         itemIcon.sprite = icon;
-        
+        transform.position = position+ new Vector3(0,200,0);
         UpdateTextWrap(position);
 
     }

@@ -32,8 +32,10 @@ namespace Game.GUI
         public GameObject SaveButton;
         [SerializeField] private UIMenu optionsMenu;
         [SerializeField] private UIMenu campaignMenu;
+        [SerializeField] private UIMenu upgradeMenu;
         [SerializeField] private Canvas mainMenuCanvas;
         [SerializeField] private Canvas mainCanvas;
+      
         private void Awake()
         {
             if (Instance == null)
@@ -176,6 +178,10 @@ namespace Game.GUI
             campaignMenu.Show();
             mainMenuCanvas.enabled = false;
             //SceneController.SwitchScene("Base");
+        }
+        public void UpgradeClicked()
+        {
+            upgradeMenu.Show();
         }
 
         public void ExitClicked()

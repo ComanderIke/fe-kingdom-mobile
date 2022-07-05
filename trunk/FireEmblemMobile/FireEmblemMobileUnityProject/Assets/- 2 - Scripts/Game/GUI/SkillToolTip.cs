@@ -14,8 +14,7 @@ public class SkillToolTip : MonoBehaviour
     public TextMeshProUGUI descriptionText;
 
    
-    public LayoutElement layoutElement;
-    public int characterWrapLimit;
+
     public Image skillIcon;
 
     public Button learnButton;
@@ -23,7 +22,6 @@ public class SkillToolTip : MonoBehaviour
     private SkillUI skill;
     private RectTransform rectTransform;
 
-    public LayoutElement frame;
     // Start is called before the first frame update
     private void Start()
     {
@@ -47,20 +45,20 @@ public class SkillToolTip : MonoBehaviour
     }
     void UpdateTextWrap(Vector3 position)
     {
-        frame.enabled = false;
-        frame.enabled = true;
-        if(rectTransform==null)
-            rectTransform = GetComponent<RectTransform>();
-        int headerLength = headerText.text.Length;
-        int contentLength = descriptionText.text.Length;
-        layoutElement.enabled =
-            (headerLength > characterWrapLimit || contentLength > characterWrapLimit) ? true : false;
-
-        
-        float pivotX = position.x / Screen.width;
-        float pivotY = position.y / Screen.height;
-        rectTransform.pivot = new Vector2(pivotX, pivotY);
-        transform.position = position;
+        // frame.enabled = false;
+        // frame.enabled = true;
+        // if(rectTransform==null)
+        //     rectTransform = GetComponent<RectTransform>();
+        // int headerLength = headerText.text.Length;
+        // int contentLength = descriptionText.text.Length;
+        // layoutElement.enabled =
+        //     (headerLength > characterWrapLimit || contentLength > characterWrapLimit) ? true : false;
+        //
+        //
+        // float pivotX = position.x / Screen.width;
+        // float pivotY = position.y / Screen.height;
+        // rectTransform.pivot = new Vector2(pivotX, pivotY);
+        transform.position = position+ new Vector3(0,100,0);
     }
 
     public void ExitClicked()

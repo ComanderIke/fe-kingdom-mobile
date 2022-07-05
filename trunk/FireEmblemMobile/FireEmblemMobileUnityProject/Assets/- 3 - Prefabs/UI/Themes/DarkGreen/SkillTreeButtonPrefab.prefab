@@ -1,28 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &924236737815118076
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3534882632489646176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab7cbd97054f4fa7b81527f9a48ed8c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  connectionPrefab: {fileID: 926720016784285280, guid: 17b7ea769f3763544ad84deaf4b4be31,
-    type: 3}
-  skillIcon: {fileID: 1716371523481649279}
-  skill: {fileID: 0}
-  skillLevelText: {fileID: 2912668801134548808}
-  backGroundImage: {fileID: 3534882632489646204}
-  learned: {r: 0.3882353, g: 0.4509804, b: 0.4509804, a: 1}
-  notLearned: {r: 0.254717, g: 0.25087222, b: 0.25087222, a: 0.41960785}
-  notLearnable: {r: 0.7075472, g: 0, b: 0, a: 0.5058824}
-  locked: {r: 0, g: 0, b: 0, a: 0.16862746}
-  offset: 45
 --- !u!1 &4018500430667510238
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,6 +135,29 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &924236737815118076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3534882632489646176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab7cbd97054f4fa7b81527f9a48ed8c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectionPrefab: {fileID: 926720016784285280, guid: 17b7ea769f3763544ad84deaf4b4be31,
+    type: 3}
+  skillIcon: {fileID: 1716371523481649279}
+  skill: {fileID: 0}
+  skillLevelText: {fileID: 2912668801134548808}
+  backGroundImage: {fileID: 3534882632489646204}
+  learned: {r: 0.3882353, g: 0.4509804, b: 0.4509804, a: 1}
+  notLearned: {r: 0.254717, g: 0.25087222, b: 0.25087222, a: 0.41960785}
+  notLearnable: {r: 0.7075472, g: 0, b: 0, a: 0.5058824}
+  locked: {r: 0, g: 0, b: 0, a: 0.16862746}
+  offset: 45
 --- !u!1001 &7870098993326267682
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -328,12 +328,12 @@ PrefabInstance:
     - target: {fileID: 8564396752116946686, guid: b294b49d745bfdb40b448f29352bb17a,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 70
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 8564396752116946686, guid: b294b49d745bfdb40b448f29352bb17a,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 70
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 8564396752116946686, guid: b294b49d745bfdb40b448f29352bb17a,
         type: 3}

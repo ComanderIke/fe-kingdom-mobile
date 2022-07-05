@@ -27,15 +27,6 @@ public class UITabGroup : MonoBehaviour
             tabButton.backGround.sprite = idle;
         }
     }
-    public void OnTabEnter(UITabButton button)
-    {
-        ResetTabs();
-    }
-
-    public void OnTabExit(UITabButton button)
-    {
-        ResetTabs();
-    }
 
     public void OnTabSelected(UITabButton button)
     {

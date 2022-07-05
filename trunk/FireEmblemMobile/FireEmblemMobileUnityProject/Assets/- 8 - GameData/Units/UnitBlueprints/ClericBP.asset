@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af959c221bf9f9f4d9c129ad64f8415d, type: 3}
+  m_Name: ClericBP
+  m_EditorClassIdentifier: 
+  Class: {fileID: 11400000, guid: c9fb62633f511e34e9f6889cbde27e91, type: 2}
+  EquippedWeapon: {fileID: 11400000, guid: 14ec2b8d55058c24d8818cdbb2e963d9, type: 2}
+  EquippedRelic1: {fileID: 0}
+  EquippedRelic2: {fileID: 0}
+  name: Lydia
+  jobClass: 
+  stats:
+    AttackRanges: 
+    Attributes:
+      STR: 3
+      INT: 3
+      DEX: 3
+      AGI: 3
+      <CON>k__BackingField: 3
+      LCK: 3
+      DEF: 3
+      FAITH: 3
+    Mov: 2
+  growths:
+    STR: 30
+    INT: 30
+    DEX: 30
+    AGI: 30
+    <CON>k__BackingField: 30
+    LCK: 30
+    DEF: 30
+    FAITH: 30
+  moveType: {fileID: 11400000, guid: ca134ece578a7684db4f492a3756fdd2, type: 2}
+  SkillManager:
+    Skills: []
+    Favourite: {fileID: 0}
+    SkillPoints: 1
+    SkillTrees:
+    - {fileID: 11400000, guid: f5ddedda43b6ba547bcacccfe92dbbd4, type: 2}
+    - {fileID: 11400000, guid: 91eae55491a36c14b83860b1a0fd1291, type: 2}
+    - {fileID: 11400000, guid: a63254c588e7af64eb96f0905ce090f7, type: 2}
+  bluePrintID: 
+  visuals:
+    CharacterSpriteSet: {fileID: 11400000, guid: 360a4df67a83ed9479500506440226cb,
+      type: 2}
+    UnitEffectVisual: {fileID: 11400000, guid: af10e6087dc82f34ebed15c0092e0174, type: 2}
+    Prefabs:
+      MapAnimatedSprite: {fileID: 2861010742256422526, guid: be623a0cde1bf5e4485fb1d57310ccae,
+        type: 3}
+      EncounterAnimatedSprite: {fileID: 6168332596698552260, guid: ac8ca891a3492414c8212d6cbf8abd9a,
+        type: 3}
+    UnitCharacterCircleUI: {fileID: 0}
+    unitRenderer: {fileID: 0}
+  experienceManager:
+    level: 1
+    exp: 0
+    MaxExp: 100

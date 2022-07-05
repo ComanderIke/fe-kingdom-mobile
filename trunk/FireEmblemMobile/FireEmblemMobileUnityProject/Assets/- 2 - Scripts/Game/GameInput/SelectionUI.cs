@@ -26,11 +26,13 @@ namespace Game.GameInput
         {
             UnitSelectionSystem.OnSelectedCharacter += CharacterGotSelected;
             UnitSelectionSystem.OnDeselectCharacter += NoCharacterSelectedState;
+            MovementState.OnMovementFinished += CharacterGotSelected;
         }
 
         private void OnDestroy()
         {
             UnitSelectionSystem.OnSelectedCharacter -= CharacterGotSelected;
+            MovementState.OnMovementFinished -= CharacterGotSelected;
             UnitSelectionSystem.OnDeselectCharacter -= NoCharacterSelectedState;
         }
         private void Update()
@@ -43,6 +45,8 @@ namespace Game.GameInput
 
         private void CharacterGotSelected(IGridActor actor)
         {
+            if (!actor.Faction.IsPlayerControlled)
+                return;
             if (actor is Unit unit)
             {
                 CharacterSelectedState(unit);
@@ -120,7 +124,6 @@ namespace Game.GameInput
             SkillsButton.SetActive(false);
             CloseSkillButton.SetActive(true);
             SkillParentTransform.gameObject.SetActive(true);
-            UnitSelectionSystem selectionSystem = GridGameManager.Instance.GetSystem<UnitSelectionSystem>();
             Unit activeUnit = (Unit)GridGameManager.Instance.GetSystem<UnitSelectionSystem>().SelectedCharacter;
             GUIUtility.ClearChildren(SkillParentTransform);
             Debug.Log(activeUnit.name);

@@ -141,6 +141,7 @@ namespace Game.GameInput
             {
                 gameplayInput.Wait(unit);
                 gameplayInput.ExecuteInputActions(null);
+                selectionDataProvider.SetUndoAbleActor(unit);
             }
             else
             {

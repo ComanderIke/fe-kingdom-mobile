@@ -38,27 +38,28 @@ namespace Game.States
                 attacker.Die();
             }
             bool gettingexp = false;
+            int sumexp = 0;
           
             foreach (var defender in defenders)
             {
 
                 if (defender is Unit unitDefender)
                 {
-                    if (!gettingexp)
-                    {
-                        gettingexp = true;
-                        AnimationQueue.Add(GameObject.FindObjectOfType<ExpParticleSystem>().Play);
-                    }
-
-                    if (attacker.IsAlive())
-                        GridGameManager.Instance.GetSystem<UnitProgressSystem>()
-                            .DistributeExperience(attacker, unitDefender);
+                    
+                    sumexp+=GridGameManager.Instance.GetSystem<UnitProgressSystem>()
+                        .DistributeAttackerExperience(attacker, unitDefender);
+                    sumexp+=GridGameManager.Instance.GetSystem<UnitProgressSystem>()
+                            .DistributeDefenderExperience(attacker, unitDefender);
                 }
                 Debug.Log(defender+" Check IsAlive");
                 if (!defender.IsAlive())
                 {
                     defender.Die();
                 }
+            }
+            if (sumexp!=0)
+            {
+                AnimationQueue.Add(GameObject.FindObjectOfType<ExpParticleSystem>().Play);
             }
     
             

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using __2___Scripts.Game.Utility;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
@@ -36,7 +37,8 @@ public class UIFactionCharacterCircleController : MonoBehaviour,IClickedReceiver
         this.units = units;
         Unit.UnitDied -= DeleteUI;
         Unit.UnitDied += DeleteUI;
-        if(characterUIgGameObjects==null||characterUIgGameObjects.Count!= units.Count)
+      
+        if(characterUIgGameObjects==null||characterUIgGameObjects.Count!=   units.Count(u => u.IsAlive()))
             SpawnGOs();
         int cnt = 0;
         foreach (var unit in units)
@@ -57,7 +59,7 @@ public class UIFactionCharacterCircleController : MonoBehaviour,IClickedReceiver
         {
             if (unit == died)
             {
-                GameObject.Destroy(characterUIs[cnt]);
+                GameObject.Destroy(characterUIs[cnt].gameObject);
                 break;
             }
 

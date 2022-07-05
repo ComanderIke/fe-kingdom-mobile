@@ -125,6 +125,7 @@ public class MapBattleAnimationRenderer : MonoBehaviour, IBattleAnimation
 
             if (attackData[attackSequenceIndex].attacker)
             {
+                Debug.Log("BattleAnimationTest; "+ attackerX+" "+attackerY+" "+defenderX+" "+defenderY);
                 if(attackerX> defenderX && attackerY == defenderY)
                     attacker.GameTransformManager.UnitAnimator.BattleAnimationLeft();
                 if (attackerX < defenderX && attackerY ==defenderY)

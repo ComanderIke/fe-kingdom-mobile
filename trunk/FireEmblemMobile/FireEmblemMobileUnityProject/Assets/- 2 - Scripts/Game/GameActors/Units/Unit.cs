@@ -26,6 +26,9 @@ namespace Game.GameActors.Units
     public class Unit : ScriptableObject, IActor, IGridActor, IBattleActor, ICloneable, IAIAgent
     {
         public static event Action OnEquippedWeapon;
+        public static event Action<Relic> OnEquippedRelic1;
+        public static event Action<Relic> OnEquippedRelic2;
+        
         public RpgClass Class;
 
         public Weapon EquippedWeapon;
@@ -325,17 +328,39 @@ namespace Game.GameActors.Units
         {
             return true;
         }
-         public void Equip(EquipableItem e)
+
+        public void Equip(EquipableItem e)
         {
 
             switch (e.EquipmentSlotType)
             {
                 //case EquipmentSlotType.Armor: Debug.LogError("TODO Equip Armor!"); break;
-                case EquipmentSlotType.Weapon: 
-                    Equip((Weapon) e);break;
-                case EquipmentSlotType.Relic: Debug.LogError("TODO Equip Relic!"); break;
+                case EquipmentSlotType.Weapon:
+                    Equip((Weapon)e);
+                    break;
+                case EquipmentSlotType.Relic:
+                    Equip((Relic)e);
+                    break;
             }
         }
+
+        public void Equip(Relic r)
+        {
+            if (EquippedRelic1 == null)
+            {
+                EquippedRelic1 = r;
+                OnEquippedRelic1?.Invoke(r);
+            }
+            else if (EquippedRelic2 == null)
+            {
+                EquippedRelic2 = r;
+                OnEquippedRelic2?.Invoke(r);
+               
+            }
+            else return;
+           
+        }
+
         public void Equip(Weapon w)
         {
             
