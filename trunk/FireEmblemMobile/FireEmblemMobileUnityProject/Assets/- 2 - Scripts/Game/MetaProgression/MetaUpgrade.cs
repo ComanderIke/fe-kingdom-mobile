@@ -9,4 +9,6 @@ public class MetaUpgrade: ScriptableObject
     public string Description;
     public Sprite icon;
     public UpgradeState state;
+    public int xPosInTree=0;
+    public int yPosInTree=0;
 }

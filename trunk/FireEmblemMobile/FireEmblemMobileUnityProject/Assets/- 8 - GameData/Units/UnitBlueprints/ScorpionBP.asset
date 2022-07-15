@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af959c221bf9f9f4d9c129ad64f8415d, type: 3}
+  m_Name: ScorpionBP
+  m_EditorClassIdentifier: 
+  Class: {fileID: 11400000, guid: c9fb62633f511e34e9f6889cbde27e91, type: 2}
+  EquippedWeapon: {fileID: 11400000, guid: 7f44d82801c2b3147ab601f150b30e01, type: 2}
+  EquippedRelic1: {fileID: 0}
+  EquippedRelic2: {fileID: 0}
+  name: Aladdin
+  jobClass: 
+  stats:
+    AttackRanges: 
+    Attributes:
+      STR: 3
+      INT: 3
+      DEX: 3
+      AGI: 3
+      <CON>k__BackingField: 3
+      LCK: 3
+      DEF: 3
+      FAITH: 3
+    Mov: 4
+  growths:
+    STR: 30
+    INT: 30
+    DEX: 30
+    AGI: 30
+    <CON>k__BackingField: 30
+    LCK: 30
+    DEF: 30
+    FAITH: 30
+  moveType: {fileID: 11400000, guid: 580bbea6e1e3e824a81881f8e2a825ba, type: 2}
+  SkillManager:
+    Skills: []
+    Favourite: {fileID: 0}
+    SkillPoints: 1
+    SkillTrees:
+    - {fileID: 11400000, guid: 84a11801ae0a89444819083503e408d5, type: 2}
+    - {fileID: 11400000, guid: d5e47079ce5edbf4297a9fc52c174ef5, type: 2}
+    - {fileID: 11400000, guid: 6a4b3bf0483c8864b9a673bd387d6194, type: 2}
+  bluePrintID: 
+  visuals:
+    CharacterSpriteSet: {fileID: 11400000, guid: ac3cd740d62477c4e8c88deaafa90f83,
+      type: 2}
+    UnitEffectVisual: {fileID: 11400000, guid: af10e6087dc82f34ebed15c0092e0174, type: 2}
+    Prefabs:
+      MapAnimatedSprite: {fileID: 2861010742256422526, guid: 7e373fae0dfd0de4aa0656b3697e5c9f,
+        type: 3}
+      EncounterAnimatedSprite: {fileID: 6168332596698552260, guid: 6f675fcd02765934594b6ea438f44b17,
+        type: 3}
+    UnitCharacterCircleUI: {fileID: 0}
+    unitRenderer: {fileID: 0}
+  experienceManager:
+    level: 1
+    exp: 0
+    MaxExp: 100

@@ -26,6 +26,11 @@ public class MetaButtonController : MonoBehaviour
     public Color normalIconColor;
     public Color maxTextColor;
     public Color normalTextColor;
+    public float XPosMult;
+    public float YPosMult;
+    public float XOffset;
+    public float YOffset;
+    
     private void OnEnable()
     {
         if (metaSkill == null)
@@ -52,11 +57,14 @@ public class MetaButtonController : MonoBehaviour
             case UpgradeState.Maxed:
                 level.color = maxTextColor; break;
         }
-        
+
+        GetComponent<RectTransform>().anchoredPosition = new Vector2(metaSkill.xPosInTree*XPosMult+XOffset, metaSkill.yPosInTree*YPosMult+YOffset);
+
     }
 
     public void OnClick()
     {
         MetaUpgradeSelectCursorController.Instance.Show(gameObject);
+        MetaUpgradeDetailPanelController.Instance.Show(metaSkill);
     }
 }
