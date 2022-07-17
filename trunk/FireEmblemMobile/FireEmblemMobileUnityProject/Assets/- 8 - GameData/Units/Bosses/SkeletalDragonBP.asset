@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c817e1eeb6864dd2acca2f35f667b4bc, type: 3}
+  m_Name: SkeletalDragonBP
+  m_EditorClassIdentifier: 
+  Class: {fileID: 11400000, guid: c9fb62633f511e34e9f6889cbde27e91, type: 2}
+  EquippedWeapon: {fileID: 11400000, guid: 6579f023e03a59d429ac56b3c81b46e2, type: 2}
+  EquippedRelic1: {fileID: 0}
+  EquippedRelic2: {fileID: 0}
+  name: Skeletdragon
+  jobClass: 
+  stats:
+    AttackRanges: 
+    Attributes:
+      STR: 15
+      INT: 12
+      DEX: 9
+      AGI: 8
+      <CON>k__BackingField: 25
+      LCK: 0
+      DEF: 15
+      FAITH: 15
+    Mov: 0
+  growths:
+    STR: 30
+    INT: 30
+    DEX: 30
+    AGI: 30
+    <CON>k__BackingField: 0
+    LCK: 30
+    DEF: 30
+    FAITH: 30
+  moveType: {fileID: 11400000, guid: d13592b1fa0af024a841b121149b8014, type: 2}
+  SkillManager:
+    Skills: []
+    Favourite: {fileID: 0}
+    SkillPoints: 0
+    SkillTrees: []
+  bluePrintID: 
+  visuals:
+    CharacterSpriteSet: {fileID: 11400000, guid: d51b970715cf8f7439b546242042764e,
+      type: 2}
+    UnitEffectVisual: {fileID: 11400000, guid: af10e6087dc82f34ebed15c0092e0174, type: 2}
+    Prefabs:
+      MapAnimatedSprite: {fileID: 0}
+      EncounterAnimatedSprite: {fileID: 0}
+    UnitCharacterCircleUI: {fileID: 0}
+    unitRenderer: {fileID: 0}
+  experienceManager:
+    level: 1
+    exp: 0
+    MaxExp: 100
+  stages:
+  - {fileID: 11400000, guid: d063785250529a54fb764ad7936360f8, type: 2}
+  previewRenderer: {fileID: 0}
