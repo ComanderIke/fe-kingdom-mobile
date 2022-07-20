@@ -14,6 +14,10 @@ public class BattleAnimationSpriteController : MonoBehaviour
     public TimelineAsset dodge;
     public TimelineAsset damaged;
     public TimelineAsset death;
+
+    public TimelineAsset prepareAttack;
+
+    public bool hasPrepare = false;
     // Start is called before the first frame update
     
     public void WalkIn(float playSpeed)
@@ -39,7 +43,7 @@ public class BattleAnimationSpriteController : MonoBehaviour
         PlayAtSpeed(dodge, playSpeed);
     }
 
-    public double GetAttackDuration()
+    public double GetCurrentAnimationDuration()
     {
         return PlayableDirector.duration;
     }
@@ -56,4 +60,15 @@ public class BattleAnimationSpriteController : MonoBehaviour
         PlayableDirector.Play();
     }
 
+    
+
+    public bool HasPrepareAnimation()
+    {
+        return hasPrepare;
+    }
+
+    public void Prepare(float playSpeed)
+    {
+        PlayAtSpeed(prepareAttack, playSpeed);
+    }
 }

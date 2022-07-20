@@ -168,63 +168,67 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
             AllAttacksFinished();
             return;
         }
-
+        Debug.Log("Todo PrepareAttackAnimation then wait");
+       
+        
         StartCoroutine(cameraShake.Shake(duration, magnitude));
         var dmg = battleSimulation.AttacksData[attackSequenzIndex].Dmg;
 
-   
+        
         if (battleSimulation.AttacksData[attackSequenzIndex].attacker)
         {
+            Debug.Log("atttacker");
+            
             var attackingCharacter = leftCharacterAttacker ? characterLeft : characterRight;
-            var defendingCharacter = leftCharacterAttacker ? characterRight : characterLeft;
             var attackerSpriteController = attackingCharacter.GetComponentInChildren<BattleAnimationSpriteController>();
-            var defenderSpriteController = defendingCharacter.GetComponentInChildren<BattleAnimationSpriteController>();
-            var defenderImpactPosition = defendingCharacter.GetComponentInChildren<ImpactPosition>();
-
-            attackerSpriteController.Attack(playSpeed);
-            float textMoveDirection = leftCharacterAttacker ? 1 : -1;
-            if (battleSimulation.AttacksData[attackSequenzIndex].hit)
+            if (attackerSpriteController.HasPrepareAnimation())
             {
-                BattleUI.UpdateDefenderHPBar(battleSimulation.AttacksData[attackSequenzIndex]);
-                if (battleSimulation.AttacksData[attackSequenzIndex].kill)
-                {
-                    defenderSpriteController.Death(playSpeed);
-                    if (leftCharacterAttacker)
-                        rightCharacterDied = true;
-                    else
-                    {
-                        leftCharacterDied = true;
-                    }
-                }
-                else
-                    defenderSpriteController.Damaged(playSpeed);
-                TextStyle style = TextStyle.Damage;
-                if (dmg == 0)
-                    style = TextStyle.NoDamage;
-                if(battleSimulation.AttacksData[attackSequenzIndex].crit)
-                    style = TextStyle.Critical;
-               
-                StartCoroutine(Delay(0.05f, () =>
-                    DamagePopUp.CreateForBattleView(defenderImpactPosition.transform.position,
-                        dmg, style, 5.0f, new Vector3(textMoveDirection*Random.Range(DamageNumberHorizontalMinValue,DamageNumberHorizontalMaxValue), Random.Range(DamageNumberVerticalMinValue,DamageNumberVerticalMaxValue)) *BattleTextMovementScale)));
+                attackerSpriteController.Prepare(playSpeed);
+                Debug.Log("Prepare===================================");
+                //TODO 
+                StartCoroutine(Delay((float)attackerSpriteController.GetCurrentAnimationDuration(),AttackerAttack));
             }
             else
             {
-                defenderSpriteController.Dodge(playSpeed);
-                StartCoroutine(Delay(0.05f, () =>
-                    DamagePopUp.CreateMiss(defenderImpactPosition.transform.position,
-                       TextStyle.Missed, 4.0f, new Vector2(textMoveDirection*Random.Range(DamageNumberHorizontalMinValue,DamageNumberHorizontalMaxValue), Random.Range(DamageNumberVerticalMinValue,DamageNumberVerticalMaxValue)) * BattleTextMovementScale)));
+                AttackerAttack();
             }
-
-            attackDuration = (float)attackerSpriteController.GetAttackDuration();
+           
         }
         else
         {
+            Debug.Log("defendert");
+  
             var attackingCharacter = leftCharacterAttacker ? characterRight : characterLeft;
-            var defendingCharacter = leftCharacterAttacker ? characterLeft : characterRight;
             var attackerSpriteController = attackingCharacter.GetComponentInChildren<BattleAnimationSpriteController>();
-            var defenderSpriteController = defendingCharacter.GetComponentInChildren<BattleAnimationSpriteController>();
-            var defenderImpactPosition = defendingCharacter.GetComponentInChildren<ImpactPosition>();
+            if (attackerSpriteController.HasPrepareAnimation())
+            {
+                Debug.Log("Prepare===================================");
+                attackerSpriteController.Prepare(playSpeed);
+                
+                //TODO 
+                StartCoroutine(Delay((float)attackerSpriteController.GetCurrentAnimationDuration(),DefenderAttack));
+            }
+            else
+            {
+                DefenderAttack();
+            }
+            
+         
+        }
+Debug.Log("TODO Do all of this later if preparing!!!");
+
+        attackSequenzIndex++;
+        Invoke("FinishAttack", attackDuration / playSpeed);
+    }
+
+    private void DefenderAttack()
+    {
+        var dmg = battleSimulation.AttacksData[attackSequenzIndex].Dmg;
+        var attackingCharacter = leftCharacterAttacker ? characterRight : characterLeft;
+        var defendingCharacter = leftCharacterAttacker ? characterLeft : characterRight;
+        var attackerSpriteController = attackingCharacter.GetComponentInChildren<BattleAnimationSpriteController>();
+        var defenderSpriteController = defendingCharacter.GetComponentInChildren<BattleAnimationSpriteController>();
+        var defenderImpactPosition = defendingCharacter.GetComponentInChildren<ImpactPosition>();
             attackerSpriteController.Attack(playSpeed);
             float textMoveDirection = leftCharacterAttacker ? -1 : 1;
             if (battleSimulation.AttacksData[attackSequenzIndex].hit)
@@ -260,14 +264,53 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
                         TextStyle.Missed, 4.0f, new Vector2(textMoveDirection*Random.Range(DamageNumberHorizontalMinValue,DamageNumberHorizontalMaxValue), Random.Range(DamageNumberVerticalMinValue,DamageNumberVerticalMaxValue)) * BattleTextMovementScale)));
             }
 
-            attackDuration = (float)attackerSpriteController.GetAttackDuration();
-        }
-
-
-        attackSequenzIndex++;
-        Invoke("FinishAttack", attackDuration / playSpeed);
+            attackDuration = (float)attackerSpriteController.GetCurrentAnimationDuration();
     }
+    private void AttackerAttack()
+    {
+        var dmg = battleSimulation.AttacksData[attackSequenzIndex].Dmg;
+        var attackingCharacter = leftCharacterAttacker ? characterLeft : characterRight;
+        var defendingCharacter = leftCharacterAttacker ? characterRight : characterLeft;
+        var attackerSpriteController = attackingCharacter.GetComponentInChildren<BattleAnimationSpriteController>();
+        var defenderSpriteController = defendingCharacter.GetComponentInChildren<BattleAnimationSpriteController>();
+        var defenderImpactPosition = defendingCharacter.GetComponentInChildren<ImpactPosition>();
+        attackerSpriteController.Attack(playSpeed);
+            float textMoveDirection = leftCharacterAttacker ? 1 : -1;
+            if (battleSimulation.AttacksData[attackSequenzIndex].hit)
+            {
+                BattleUI.UpdateDefenderHPBar(battleSimulation.AttacksData[attackSequenzIndex]);
+                if (battleSimulation.AttacksData[attackSequenzIndex].kill)
+                {
+                    defenderSpriteController.Death(playSpeed);
+                    if (leftCharacterAttacker)
+                        rightCharacterDied = true;
+                    else
+                    {
+                        leftCharacterDied = true;
+                    }
+                }
+                else
+                    defenderSpriteController.Damaged(playSpeed);
+                TextStyle style = TextStyle.Damage;
+                if (dmg == 0)
+                    style = TextStyle.NoDamage;
+                if(battleSimulation.AttacksData[attackSequenzIndex].crit)
+                    style = TextStyle.Critical;
+               
+                StartCoroutine(Delay(0.05f, () =>
+                    DamagePopUp.CreateForBattleView(defenderImpactPosition.transform.position,
+                        dmg, style, 5.0f, new Vector3(textMoveDirection*Random.Range(DamageNumberHorizontalMinValue,DamageNumberHorizontalMaxValue), Random.Range(DamageNumberVerticalMinValue,DamageNumberVerticalMaxValue)) *BattleTextMovementScale)));
+            }
+            else
+            {
+                defenderSpriteController.Dodge(playSpeed);
+                StartCoroutine(Delay(0.05f, () =>
+                    DamagePopUp.CreateMiss(defenderImpactPosition.transform.position,
+                       TextStyle.Missed, 4.0f, new Vector2(textMoveDirection*Random.Range(DamageNumberHorizontalMinValue,DamageNumberHorizontalMaxValue), Random.Range(DamageNumberVerticalMinValue,DamageNumberVerticalMaxValue)) * BattleTextMovementScale)));
+            }
 
+            attackDuration = (float)attackerSpriteController.GetCurrentAnimationDuration();
+    }
 
     private void Update()
     {
