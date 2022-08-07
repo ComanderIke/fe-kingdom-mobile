@@ -3,12 +3,11 @@ using Game.GameActors.Players;
 
 namespace Game.GameActors.Units
 {
-    public interface IAIAgent
+    public interface IAIAgent :IGridActor
     {
         AIComponent AIComponent { get; }
-        GridComponent GridComponent { get; }
         
-        Faction Faction { get; }
-        
+        BattleComponent BattleComponent { get; }
+      
     }
 }

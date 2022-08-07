@@ -33,7 +33,15 @@ namespace Game.Mechanics.Battle
         {
             return GetDamageAgainstTarget(target, attackMultiplier) >= target.Hp;
         }
-
+        public bool IsMeleeOnly()
+        {
+            return owner.GetEquippedWeapon().AttackRanges.Length == 1 &&
+                   owner.GetEquippedWeapon().AttackRanges.Contains(1);
+        }
+        public bool IsRangeOnly()
+        {
+            return !owner.GetEquippedWeapon().AttackRanges.Contains(1);
+        }
         public int GetAttackCountAgainst(IBattleActor c)
         {
             int attackCount = 1;

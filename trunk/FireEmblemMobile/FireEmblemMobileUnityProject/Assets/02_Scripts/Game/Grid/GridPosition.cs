@@ -34,5 +34,15 @@ namespace Game.Grid
         {
             return new Vector2(X, Y);
         }
+
+        public bool IsSamePosition(Vector2Int location)
+        {
+            return  location.x == X && location.y == Y;
+        }
+
+        public override string ToString()
+        {
+            return "x: " + X + " y: " + Y;
+        }
     }
 }

@@ -28,7 +28,6 @@ namespace Game.AI
         [SerializeField] private int attackOwnDeathWeight = default;
         [SerializeField] private int attackStartWeight = default;
         [SerializeField] private float dealtDamageMultiplier = default;
-        [SerializeField] private GoalWeightSet goalWeightSet = default;
         [SerializeField] private int healAlmostFullHp = default;
         [SerializeField] private int healHalfHp = default;
         [SerializeField] private int healLowHp = default;
@@ -58,7 +57,6 @@ namespace Game.AI
         public float ReceivedDamageMultiplier => receivedDamageMultiplier;
 
         public float StayOnTile => stayOnTile;
-
-        public GoalWeightSet GoalWeightSet => goalWeightSet;
+        
     }
 }

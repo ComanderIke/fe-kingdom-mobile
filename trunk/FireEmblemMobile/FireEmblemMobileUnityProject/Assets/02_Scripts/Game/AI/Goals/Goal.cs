@@ -13,6 +13,7 @@ namespace Game.AI
         public int Priority { get; set; }
         private List<Unit> AsignedUnits { get; set; }
         private List<Unit> PotentialUnits { get; set; }
+        private const int MAX_UNITS_PER_GOAL = 99;
         public Goal(GoalType type, int x, int y)
         {
             Type = type;
@@ -54,7 +55,7 @@ namespace Game.AI
             var ws = unit.AIComponent.WeightSet;
             float suitability = 0;
             int distance1 = ManhattanDistance(unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y);
-            suitability -= distance1 * ws.GoalWeightSet.TargetDistanceKoefficient;
+            suitability -= distance1;
             return suitability;
         }
 
@@ -70,7 +71,7 @@ namespace Game.AI
 
         public bool HasSufficientResources()
         {
-            return PotentialUnits.Count >= 1;
+            return PotentialUnits.Count >= MAX_UNITS_PER_GOAL;
         }
 
         public void AssignGoalResources()

@@ -34,5 +34,17 @@ namespace Game.Grid.GridPathFinding
         {
             steps.Reverse();
         }
+
+        public int GetIndex(Step step)
+        {
+            for (int i = 0; i < steps.Count; i++)
+            {
+                Step s = (Step)steps[i];
+                if (s.GetX() == step.GetX() && s.GetY() == step.GetY())
+                    return i;
+            }
+
+            return -1;
+        }
     }
 }

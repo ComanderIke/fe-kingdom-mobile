@@ -20,6 +20,7 @@ namespace Game.AI
         {
             var units = player.GetActiveUnits();
 
+            Debug.Log("Prepare Goals");
             //Debug.Log("TODO:  Move Camera To Moving Character");
 
             ResetGoals(units);

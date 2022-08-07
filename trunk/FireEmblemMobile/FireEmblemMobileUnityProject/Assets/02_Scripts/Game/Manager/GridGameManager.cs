@@ -107,8 +107,7 @@ namespace Game.Manager
             gridSystem.GridLogic.tileChecker = tileChecker;
             var pathFinder = new GridAStar(tileChecker);
             gridSystem.pathFinder = pathFinder;
-            ScoreCalculater.pathFinder = pathFinder;
-          
+
             GetSystem<MoveSystem>().tileChecker = tileChecker;
             GetSystem<MoveSystem>().pathFinder = pathFinder;
             GetSystem<TurnSystem>().factionManager = FactionManager;
