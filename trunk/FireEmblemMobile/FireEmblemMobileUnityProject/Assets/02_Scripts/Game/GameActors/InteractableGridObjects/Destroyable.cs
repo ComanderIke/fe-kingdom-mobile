@@ -133,5 +133,9 @@ namespace Game.GameActors.Players
         {
             return selectedActor.Faction.Id != Faction.Id;
         }
+        public override string ToString()
+        {
+            return name;// + " HP: " + Hp + "/" + MaxHp+"Level: "+experienceManager.Level+ " Exp: "+experienceManager.Exp;
+        }
     }
 }

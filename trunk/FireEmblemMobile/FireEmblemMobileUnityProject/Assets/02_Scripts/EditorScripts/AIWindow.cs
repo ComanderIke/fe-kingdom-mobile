@@ -1,4 +1,6 @@
-﻿using Game.AI;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Game.AI;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.Manager;
@@ -39,11 +41,32 @@ namespace __2___Scripts.External.Editor
 
         private IAIAgent selectedAgent = null;
         private IAttackableTarget selectedTarget = null;
-        private ICombatResult combatResult = null;
+        private Dictionary<IAIAgent, List<ICombatResult>> agentCombatResults;
+
+        private void UpdateCombatResults()
+        {
+            agentCombatResults = new Dictionary<IAIAgent, List<ICombatResult>>();
+            foreach (var u in aiSystem.PlayerFaction.Units)
+            {
+                List<ICombatResult> results = new List<ICombatResult>();
+                foreach (var target in u.AIComponent.AttackableTargets)
+                {
+                    results.Add(battleSystem.GetCombatResultAtAttackLocation(u, target.Target, target.OptimalAttackPos));
+
+                }
+                agentCombatResults.Add(u, results);
+            }
+        }
         public void OnGUI()
         {
             if (aiSystem == null)
                 return;
+            if(agentCombatResults==null)
+                UpdateCombatResults();
+            if (GUILayout.Button("Update"))
+            {
+                UpdateCombatResults();
+            }
             if (GUILayout.Button("ShowTargets"))
             {
                 aiSystem.ShowInitTurnData();
@@ -59,24 +82,48 @@ namespace __2___Scripts.External.Editor
             {
                 if (u == selectedAgent)
                 {
+                    GUILayout.BeginHorizontal();
                     GUILayout.Label("Unit: " + u.name + ", ");
+                    int index = 0;
                     foreach (var target in u.AIComponent.AttackableTargets)
                     {
-                        if (GUILayout.Button("Target: "+target.Target+ "show CombatInfo:"))
-                        {
-                            selectedTarget = target.Target;
-                            combatResult = battleSystem.GetCombatResultAtAttackLocation(u, target.Target, target.OptimalAttackPos);
-                            Debug.Log(combatResult.GetDamageRatio());
-                          
-                        }
 
-                        if (selectedTarget == target.Target)
+                        string BattleResultString = "W";
+                        if(!agentCombatResults.ContainsKey(u))
+                            UpdateCombatResults();
+                        if (!agentCombatResults.ContainsKey(u))
                         {
-                            GUILayout.Label("Position: "+target.OptimalAttackPos);
-                            GUILayout.Label("Result: "+combatResult.BattleResult);
-                            GUILayout.Label("DamageRatio: "+combatResult.GetDamageRatio());
+                            continue;
                         }
+                        if(index>= agentCombatResults[u].Count())
+                            continue;
+                        var result = agentCombatResults[u][index];
+                            switch (result.BattleResult)
+                            {
+                                case BattleResult.Draw:
+                                    BattleResultString = "D";
+                                    break;
+                                case BattleResult.Loss:
+                                    BattleResultString = "L";
+                                    break;
+                            }
+
+                            if (GUILayout.Button("Target: " + target.Target + " " + BattleResultString + " " +
+                                                 result.GetDamageRatio()))
+                            {
+                                selectedTarget = target.Target;
+                            }
+                        
+
+                        index++;
+                        // if (selectedTarget == target.Target)
+                        // {
+                        //     GUILayout.Label("Position: "+target.OptimalAttackPos);
+                        //     GUILayout.Label("Result: "+combatResult.BattleResult);
+                        //     GUILayout.Label("DamageRatio: "+combatResult.GetDamageRatio());
+                        // }
                     }
+                    GUILayout.EndHorizontal();
                 }
                 else if (GUILayout.Button("Unit: " + u.name + ", "))
                 {

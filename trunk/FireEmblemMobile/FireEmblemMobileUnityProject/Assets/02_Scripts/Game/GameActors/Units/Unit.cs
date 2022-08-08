@@ -276,7 +276,7 @@ namespace Game.GameActors.Units
 
         public override string ToString()
         {
-            return name + " HP: " + Hp + "/" + MaxHp+"Level: "+experienceManager.Level+ " Exp: "+experienceManager.Exp;
+            return name;// + " HP: " + Hp + "/" + MaxHp+"Level: "+experienceManager.Level+ " Exp: "+experienceManager.Exp;
         }
 
         public Weapon GetEquippedWeapon()
