@@ -1,4 +1,5 @@
-﻿using Game.AI;
+﻿using System.Collections.Generic;
+using Game.AI;
 using Game.GameActors.Players;
 
 namespace Game.GameActors.Units
@@ -8,6 +9,6 @@ namespace Game.GameActors.Units
         AIComponent AIComponent { get; }
         
         BattleComponent BattleComponent { get; }
-      
+        
     }
 }

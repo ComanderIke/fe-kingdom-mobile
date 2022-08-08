@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
+using Game.Grid;
 using UnityEngine;
 
 namespace Game.AI
@@ -11,10 +13,15 @@ namespace Game.AI
         {
             AIGoals = new List<Goal>();
             Targets = new List<AITarget>();
+            MovementOptions = new List<Vector2Int>();
+            AttackableTargets = new List<AIAttackTarget>();
         }
 
        
 
+        public List<Vector2Int> MovementOptions{ get; set; }
+
+        public List<AIAttackTarget> AttackableTargets { get; set; }
         public List<Goal> AIGoals { get; set; }
         public WeightSet WeightSet { get; set; }
         public List<AITarget> Targets { get; set; }

@@ -9,7 +9,7 @@ namespace Game.AI
     public class AIState : GameState<NextStateTrigger>
     {
         public const float PAUSE_BETWEEN_ACTIONS = 0.25f;
-        private Brain brain;
+        private AISystem aiSystem;
         private ConditionManager ConditionManager;
         private float pauseTime;
 
@@ -20,7 +20,11 @@ namespace Game.AI
         public override void Enter()
         {
             //Debug.Log("Enter AI State");
-            brain = new Brain(GridGameManager.Instance.FactionManager.ActiveFaction);
+            if(aiSystem==null)
+                aiSystem = GridGameManager.Instance.GetSystem<AISystem>();
+            aiSystem.NewTurn();
+
+
         }
 
         public override void Exit()
@@ -46,10 +50,10 @@ namespace Game.AI
             {
                 pauseTime = 0;
 
-                if (!brain.IsFinished())
+                if (!aiSystem.IsFinished())
                 {
                    // Debug.Log("THINK");
-                    brain.Think();
+                    aiSystem.Think();
                 }
                 else
                 {

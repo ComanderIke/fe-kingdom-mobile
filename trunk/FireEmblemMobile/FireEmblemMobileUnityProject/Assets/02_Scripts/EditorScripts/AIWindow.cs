@@ -1,5 +1,8 @@
 ﻿using Game.AI;
 using Game.GameActors.Players;
+using Game.GameActors.Units;
+using Game.Manager;
+using Game.Mechanics;
 using Game.WorldMapStuff.Model;
 using UnityEditor;
 using UnityEngine;
@@ -8,7 +11,8 @@ namespace __2___Scripts.External.Editor
 {
     public class AIWindow: EditorWindow
     {
-        private AIRenderer renderer;
+        private AISystem aiSystem;
+        private BattleSystem battleSystem;
         [MenuItem("Tools/AI_Window")]
         public static void ShowMyEditor()
         {
@@ -20,31 +24,69 @@ namespace __2___Scripts.External.Editor
        
         public void Update()
         {
-            if(renderer==null)
-                renderer = FindObjectOfType<AIRenderer>();
-           
+            if (aiSystem == null)
+            {
+                if(GridGameManager.Instance!=null)
+                    aiSystem = GridGameManager.Instance.GetSystem<AISystem>();
+            }
+            if (battleSystem == null)
+            {
+                if(GridGameManager.Instance!=null)
+                    battleSystem = GridGameManager.Instance.GetSystem<BattleSystem>();
+            }
+
         }
 
+        private IAIAgent selectedAgent = null;
+        private IAttackableTarget selectedTarget = null;
+        private ICombatResult combatResult = null;
         public void OnGUI()
         {
-            if (renderer == null)
+            if (aiSystem == null)
                 return;
             if (GUILayout.Button("ShowTargets"))
             {
-                renderer.ShowInitTurnData();
+                aiSystem.ShowInitTurnData();
             }
             if (GUILayout.Button("HideTargets"))
             {
-                renderer.Hide();
+                aiSystem.AiRenderer.Hide();
             }
             GUILayout.Label("Current Units: ");
-            if (renderer.brain == null)
-                return;
+
             
-            foreach (var u in renderer.brain.PlayerFaction.Units)
+            foreach (var u in aiSystem.PlayerFaction.Units)
             {
-                GUILayout.Label("Unit: "+u.name+", ");
+                if (u == selectedAgent)
+                {
+                    GUILayout.Label("Unit: " + u.name + ", ");
+                    foreach (var target in u.AIComponent.AttackableTargets)
+                    {
+                        if (GUILayout.Button("Target: "+target.Target+ "show CombatInfo:"))
+                        {
+                            selectedTarget = target.Target;
+                            combatResult = battleSystem.GetCombatResultAtAttackLocation(u, target.Target, target.OptimalAttackPos);
+                            Debug.Log(combatResult.GetDamageRatio());
+                          
+                        }
+
+                        if (selectedTarget == target.Target)
+                        {
+                            GUILayout.Label("Position: "+target.OptimalAttackPos);
+                            GUILayout.Label("Result: "+combatResult.BattleResult);
+                            GUILayout.Label("DamageRatio: "+combatResult.GetDamageRatio());
+                        }
+                    }
+                }
+                else if (GUILayout.Button("Unit: " + u.name + ", "))
+                {
+                    selectedAgent = u;
+                    
+                    aiSystem.AiRenderer.ShowAgentData(selectedAgent);
+                }
             }
+
+           
         }
     }
     

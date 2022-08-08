@@ -157,6 +157,12 @@ namespace Game.AI
         {
             return GetDistanceToEnemy(new Vector2Int(unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y), enemyAgent, unit);
         }
+        public MovementPath GetPathToEnemy(IAIAgent unit, IGridActor enemyAgent)
+        {
+            var path = pathFinder.FindPath(unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y, enemyAgent.GridComponent.GridPosition.X, enemyAgent.GridComponent.GridPosition.Y, unit);
+            return path;
+            
+        }
         public int GetDistanceToEnemy(Vector2Int startPos, IGridActor enemyAgent, IGridActor unit)
         {
             var path = pathFinder.FindPath(startPos.x, startPos.y, enemyAgent.GridComponent.GridPosition.X, enemyAgent.GridComponent.GridPosition.Y, unit);

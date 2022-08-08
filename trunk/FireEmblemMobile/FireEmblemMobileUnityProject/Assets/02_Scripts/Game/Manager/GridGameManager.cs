@@ -11,6 +11,7 @@ using Game.GUI;
 using Game.GUI.Text;
 using Game.Map;
 using Game.Mechanics;
+using Game.States;
 using Game.WorldMapStuff.Model;
 using GameEngine;
 using UnityEngine;
@@ -34,7 +35,10 @@ namespace Game.Manager
         private void Awake()
         {
             Instance = this;
-            BattleMap = SceneTransferData.Instance.EnemyArmyData.battleMapPool.GetRandomMap();
+            if (SceneTransferData.Instance != null &&SceneTransferData.Instance.EnemyArmyData!=null&&SceneTransferData.Instance.EnemyArmyData.battleMapPool != null)
+                BattleMap = SceneTransferData.Instance.EnemyArmyData.battleMapPool.GetRandomMap();
+            else
+                BattleMap = FindObjectOfType<DemoUnits>().battleMap;
             Debug.Log("Choose BattleMap: "+BattleMap);
             Instantiate(BattleMap.mapPrefab, Scene1InstantiatedContentParent);
             //Debug.Log("Initialize");
@@ -65,8 +69,10 @@ namespace Game.Manager
                 new MoveSystem(),
                 new UnitProgressSystem(FactionManager),
                 new PopUpTextSystem(),
+                
                 FindObjectOfType<UnitSelectionSystem>()
             };
+            
 
         }
 
@@ -107,7 +113,8 @@ namespace Game.Manager
             gridSystem.GridLogic.tileChecker = tileChecker;
             var pathFinder = new GridAStar(tileChecker);
             gridSystem.pathFinder = pathFinder;
-
+            var combatInfo = GetSystem<BattleSystem>();
+            Systems.Add(new AISystem(FactionManager.Factions[1], GetSystem<UnitActionSystem>(),gridSystem.GridLogic,combatInfo, pathFinder));
             GetSystem<MoveSystem>().tileChecker = tileChecker;
             GetSystem<MoveSystem>().pathFinder = pathFinder;
             GetSystem<TurnSystem>().factionManager = FactionManager;

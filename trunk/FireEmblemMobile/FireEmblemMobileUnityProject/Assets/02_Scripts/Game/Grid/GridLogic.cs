@@ -31,15 +31,10 @@ namespace Game.Grid
 
         
 
-        public List<IGridObject> GetAttackTargets(IGridActor unit)
+       
+        public List<IAttackableTarget> GetAttackTargetsAtPosition(IGridActor unit, int x, int y)
         {
-            int x = unit.GridComponent.GridPosition.X;
-            int y = unit.GridComponent.GridPosition.Y;
-            return GetAttackTargets(unit, x, y);
-        }
-        public List<IGridObject> GetAttackTargets(IGridActor unit, int x, int y)
-        {
-            var targets = new List<IGridObject>();
+            var targets = new List<IAttackableTarget>();
           
             foreach (int attackRange in unit.AttackRanges)
             {
@@ -54,7 +49,7 @@ namespace Game.Grid
                             var unitOnTile = Tiles[i + x, j + y].GridObject;
                             if (unitOnTile != null && unitOnTile.Faction.Id != unit.Faction.Id)
                             {
-                                targets.Add(unitOnTile);
+                                targets.Add((IAttackableTarget)unitOnTile);
                             }
                         }
                     }

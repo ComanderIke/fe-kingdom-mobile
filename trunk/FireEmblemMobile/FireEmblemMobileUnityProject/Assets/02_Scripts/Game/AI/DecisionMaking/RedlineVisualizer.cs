@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Game.Grid.GridPathFinding;
 using UnityEngine;
 
 namespace Game.AI
@@ -49,5 +50,23 @@ namespace Game.AI
             instantiatedLines.Clear();
         }
 
+        public void ShowRedPath( MovementPath closestTargetPath)
+        {
+            ShowPath(redlinePrefab, closestTargetPath);
+        }
+        private void ShowPath(GameObject prefab, MovementPath closestTargetPath)
+        {
+            var line = Instantiate(prefab, transform);
+            var lineRenderer = line.GetComponent<LineRenderer>();
+            lineRenderer.positionCount = closestTargetPath.GetLength();
+            int cnt = instantiatedLines.Count();
+            for (int i = 0; i < closestTargetPath.GetLength(); i++)
+            {
+                var step = closestTargetPath.GetStep(i);
+                lineRenderer.SetPosition(i, new Vector3(step.GetX()+0.5f-0.02f*cnt,step.GetY()+0.5f-0.02f*cnt, 2.0f));
+            }
+            
+            instantiatedLines.Add(line);
+        }
     }
 }

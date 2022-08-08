@@ -8,6 +8,7 @@ namespace Game.AI
     public interface IGridInformation
     {
         List<Vector2Int> GetMoveLocations(IGridActor unit);
-        List<IGridObject> GetAttackTargets(IGridActor unit, int locX, int locY);
+        List<IAttackableTarget> GetAttackTargetsAtPosition(IGridActor unit, int locX, int locY);
+       
     }
 }

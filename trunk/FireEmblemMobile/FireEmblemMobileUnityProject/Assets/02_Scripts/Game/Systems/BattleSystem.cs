@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Runtime.InteropServices;
+using Game.AI;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
@@ -16,7 +17,7 @@ using UnityEngine;
 
 namespace Game.Mechanics
 {
-    public class BattleSystem : IEngineSystem
+    public class BattleSystem : IEngineSystem, ICombatInformation
     {
         public delegate void OnStartAttackEvent();
 
@@ -237,6 +238,23 @@ namespace Game.Mechanics
         public void Update()
         {
             
+        }
+
+        public ICombatResult GetCombatResultAtAttackLocation(IBattleActor attacker, IAttackableTarget targetTarget, Vector2Int tile)
+        {
+            BattleSimulation battleSim=null;
+             if (targetTarget is IBattleActor defender)
+            {
+                battleSim = new BattleSimulation(attacker, defender, new GridPosition(tile.x, tile.y));
+            }
+             else
+             {
+                 battleSim = new BattleSimulation(attacker,targetTarget, new GridPosition(tile.x, tile.y));
+              
+             }
+
+            battleSim.StartBattle(false);
+            return battleSim;
         }
     }
 }

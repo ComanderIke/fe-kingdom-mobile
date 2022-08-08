@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Runtime.CompilerServices;
 using Game.GameActors.Players;
 using Game.Manager;
 using Game.Map;
@@ -10,14 +11,14 @@ using Vector3 = System.Numerics.Vector3;
 
 namespace Game.AI
 {
-    public class Brain
+    public class AISystem:IEngineSystem
     {
         private bool finished;
         private Faction player;
         private GoalManager goalManager;
         private DecisionMaker decisionMaker;
         private UnitActionSystem unitActionSystem;
-        private AIRenderer aiRenderer;
+        public AIRenderer AiRenderer;
 
         public Faction PlayerFaction
         {
@@ -27,35 +28,39 @@ namespace Game.AI
             }
         }
 
-        public Brain(Faction player)
+        public AISystem(Faction player, UnitActionSystem unitActionSystem,IGridInformation gridInfo,ICombatInformation combatInfo, IPathFinder pathFinder)
         {
             this.player = player;
-            aiRenderer = GameObject.FindObjectOfType<AIRenderer>();
-            aiRenderer.Init(this);
+            AiRenderer = GameObject.FindObjectOfType<AIRenderer>();
             goalManager = new GoalManager(player);
-            decisionMaker = new DecisionMaker(GridGameManager.Instance.GetSystem<GridSystem>().GridLogic, GridGameManager.Instance.GetSystem<GridSystem>().pathFinder );
-            unitActionSystem = GridGameManager.Instance.GetSystem<UnitActionSystem>();
+            decisionMaker = new DecisionMaker(gridInfo,combatInfo, pathFinder );
+            this.unitActionSystem = unitActionSystem;
         }
 
         public void Think()
         {
             if (IsStartOfTurn())
             {
+              
                 //Sort units based on melee=> range
                 //if both same range distance to closest enemy as tie break
                 //if tie smaller x value then smaller y value
                 //StoreMovementDataOfAllUnit();
                 // store for each unit in AIAGent if they threaten an enemy in their current range
                 // optional store if they are threatend
+                Debug.Log("Start of Turn");
                 decisionMaker.InitTurnData(player.GetActiveUnits());
                 //goalManager.PrepareGoals();
             }
             // Debug.Log("PrepareGoals");
             if (player.GetActiveUnits().Count == 0)
+            {
                 finished = true;
+                Debug.Log("No Active Units");
+            }
             else
             {
-                var action = decisionMaker.ChooseBestMovementAction();
+                var action = decisionMaker.ChooseBestAction(player.GetActiveUnits());
                 ExecuteAction(action);
             }
 
@@ -115,6 +120,31 @@ namespace Game.AI
         public bool IsFinished()
         {
             return finished;
+        }
+
+        public void Init()
+        {
+            
+        }
+
+        public void Deactivate()
+        {
+            
+        }
+
+        public void Activate()
+        {
+            
+        }
+
+        public void ShowInitTurnData()
+        {
+            AiRenderer.ShowInitTurnData(PlayerFaction, decisionMaker.moveOrderList);
+        }
+
+        public void NewTurn()
+        {
+            finished = false;
         }
     }
 }

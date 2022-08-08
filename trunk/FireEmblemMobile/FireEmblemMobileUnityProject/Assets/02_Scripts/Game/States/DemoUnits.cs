@@ -10,6 +10,8 @@ namespace Game.States
     {
         [SerializeField]
         private List<Unit> units;
+        [SerializeField]
+        public BattleMap battleMap;
         // [SerializeField]
         // private List<StockedItem> convoy;
 

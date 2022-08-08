@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Game.AI;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
@@ -18,7 +19,7 @@ namespace Game.Mechanics
         public bool kill;
         public bool crit;
     }
-    public class BattleSimulation
+    public class BattleSimulation: ICombatResult
     {
        
         public IBattleActor Attacker { get; private set; }
@@ -204,6 +205,33 @@ namespace Game.Mechanics
             //     Defender.SpBars--;
         }
 
-        
+
+        public Vector2Int GetAttackPosition()
+        {
+            return new Vector2Int(attackPosition.X, attackPosition.Y);
+        }
+
+        public BattleResult BattleResult { get; set; }
+        public int GetDamageRatio()
+        {
+           
+            if (Defender == null)
+                return Attacker.BattleComponent.BattleStats.GetTotalDamageAgainstTarget(AttackableTarget);
+            Debug.Log("Damage Ration: "+Attacker+" "+Attacker.BattleComponent.BattleStats.GetTotalDamageAgainstTarget(Defender)+" Defender: "+Defender+" "+Defender.BattleComponent.BattleStats.GetTotalDamageAgainstTarget(Attacker));
+            if (DefenderAttackCount == 0)
+                return Attacker.BattleComponent.BattleStats.GetTotalDamageAgainstTarget(Defender);
+            return Attacker.BattleComponent.BattleStats.GetTotalDamageAgainstTarget(Defender) -
+                   Defender.BattleComponent.BattleStats.GetTotalDamageAgainstTarget(Attacker);
+        }
+
+        public int GetTileDefenseBonuses()
+        {
+            return Attacker.GetTile().TileData.defenseBonus;
+        }
+
+        public int GetTileAvoidBonuses()
+        {
+            return Attacker.GetTile().TileData.avoBonus;
+        }
     }
 }

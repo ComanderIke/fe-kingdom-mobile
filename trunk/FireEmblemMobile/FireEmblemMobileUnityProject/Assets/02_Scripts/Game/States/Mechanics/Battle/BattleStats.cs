@@ -26,8 +26,9 @@ namespace Game.Mechanics.Battle
         public int GetDefense()
         {
             
-            //Debug.Log(owner.GetTile().X+" "+owner.GetTile().Y);
-            return GetPhysicalResistance() + owner.GetTile().TileData.defenseBonus;
+            Debug.Log(owner.GetTile().X+" "+owner.GetTile().Y);
+            Debug.Log(owner.GetTile().TileData.defenseBonus);
+            return GetPhysicalResistance();
         }
         public bool CanKillTarget(IAttackableTarget target, float attackMultiplier)
         {
@@ -182,7 +183,11 @@ namespace Game.Mechanics.Battle
                 {
                     defense = battleActor.BattleComponent.BattleStats.GetDefense();
                 }
-
+                Debug.Log("Target: " + target);
+                Debug.Log("GetDamage: " + GetDamage());
+                Debug.Log("Defense: " + defense);
+                Debug.Log("Mult: " + multiplier);
+                Debug.Log("Attacks: " + attacks);
                 return (int)(multiplier * attacks * Mathf.Clamp(GetDamage() - defense, 0, Mathf.Infinity));
             }
 
