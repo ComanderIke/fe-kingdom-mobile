@@ -15,7 +15,7 @@ namespace Game.AI
         private readonly ICombatInformation combatInfo;
         private ScoreCalculator scoreCalculator;
         public List<IAIAgent> moveOrderList;
-        private List<IAIAgent> attackerList;
+        public List<IAIAgent> attackerList;
 
 
         public DecisionMaker(IGridInformation gridInfo,ICombatInformation combatInfo, IPathFinder pathFinder)
@@ -84,7 +84,7 @@ namespace Game.AI
             else
             {
                 Vector2Int location = ChooseBestLocationToChaseTarget(unit, chaseTarget);
-                return new AIUnitAction(0, location, null, UnitActionType.Wait, (Unit)unit);
+                return new AIUnitAction(location, null, UnitActionType.Wait, (Unit)unit);
             }
 
             return bestAction;
@@ -140,10 +140,35 @@ namespace Game.AI
             var bestScore = float.MinValue;
             
             CreateAttackerList(units);
-            CalculateOptimalTilesToAttack();
-
+            if (attackerList.Count != 0)
+            {
+                CalculateOptimalTilesToAttack();
+                ChooseBestAttackTargets();
+                var bestAttacker = ChooseBestAttacker();
+                return CreateAttackAction(bestAttacker);
+            }
             return ChooseBestMovementAction();
             //return bestAction;
+        }
+
+        private AIUnitAction CreateAttackAction(IAIAgent attacker)
+        {
+            return new AIUnitAction(attacker.AIComponent.BestAttackTarget.OptimalAttackPos,attacker.AIComponent.BestAttackTarget.Target, UnitActionType.Attack, attacker );
+
+        }
+        private void ChooseBestAttackTargets()
+        {
+            foreach (var attacker in attackerList)
+            {
+                attacker.AIComponent.AttackableTargets.Sort(new AttackTargetComparer());
+                attacker.AIComponent.BestAttackTarget = attacker.AIComponent.AttackableTargets[0];
+            }
+        }
+
+        private IAIAgent ChooseBestAttacker()
+        {
+            attackerList.Sort(new AttackerComparer());
+            return attackerList[0];
         }
 
         private void CalculateOptimalTilesToAttack()
@@ -167,35 +192,19 @@ namespace Game.AI
                     }
                     combatInfos.Sort(new CombatResultComparer());
                     target.OptimalAttackPos =combatInfos[0].GetAttackPosition() ;
+                    target.CombatResult = combatInfos[0];
                 }
             }
         }
 
         private AIUnitAction CreateMoveAction(IAIAgent unit, Vector2Int loc, float locScore)
         {
-            return new AIUnitAction(locScore, loc, null, UnitActionType.Wait, (Unit)unit);
+            return new AIUnitAction(loc, null, UnitActionType.Wait, (Unit)unit);
         }
-
-        private AIUnitAction CalculateBestAttackAction(IAIAgent unit, AIUnitAction bestAction, Vector2Int loc,
-            List<IGridObject> targets)
-        {
-            foreach (var gridActor in targets)
-            {
-                float attackscore = scoreCalculator.ScoreAttackForUnit((IBattleActor)unit, unit.AIComponent.WeightSet,
-                    (IAttackableTarget)gridActor);
-                if (attackscore > bestAction.Score)
-                {
-                    bestAction = new AIUnitAction(attackscore, loc, gridActor, UnitActionType.Attack, (Unit)unit);
-                }
-            }
-
-            return bestAction;
-        }
-
+        
         private AIUnitAction CreateDefaultAction(IAIAgent unit)
         {
             var bestAction = new AIUnitAction();
-            bestAction.Score = float.MinValue; // always want to do something
             bestAction.Location = new Vector2Int(unit.GridComponent.GridPosition.X,
                 unit.GridComponent.GridPosition.Y); // by default stay on the same position
             bestAction.Target = null;

@@ -429,7 +429,7 @@ namespace Game.GameInput
                         .CanAttack(enemy.GridComponent.GridPosition.X, enemy.GridComponent.GridPosition.Y))
                 {
                     if (character is IBattleActor battleActor)
-                        gameplayCommands.AttackUnit(battleActor,enemy);
+                        gameplayCommands.AttackUnit(battleActor,(IAttackableTarget)enemy);
                     gameplayCommands.Wait(character);
                     gameplayCommands.ExecuteInputActions(null);
                 }
@@ -444,7 +444,7 @@ namespace Game.GameInput
                     }
 
                     if (character is IBattleActor battleActor)
-                        gameplayCommands.AttackUnit(battleActor,enemy);
+                        gameplayCommands.AttackUnit(battleActor,(IAttackableTarget)enemy);
                     gameplayCommands.Wait(character);
                     gameplayCommands.ExecuteInputActions(null);
                 }

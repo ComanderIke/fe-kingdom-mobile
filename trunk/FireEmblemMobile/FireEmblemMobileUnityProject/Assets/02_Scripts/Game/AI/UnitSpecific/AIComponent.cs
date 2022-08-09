@@ -26,6 +26,7 @@ namespace Game.AI
         public WeightSet WeightSet { get; set; }
         public List<AITarget> Targets { get; set; }
         public AITarget ClosestTarget { get; set; }
+        public AIAttackTarget BestAttackTarget { get; set; }
 
         public int DistanceToClosestEnemy()
         {

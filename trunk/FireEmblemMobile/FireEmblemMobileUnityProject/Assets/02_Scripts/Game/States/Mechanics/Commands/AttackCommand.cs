@@ -11,9 +11,9 @@ namespace Game.Mechanics.Commands
     public class AttackCommand : Command
     {
         private readonly IBattleActor attacker;
-        private readonly IGridObject target;
+        private readonly IAttackableTarget target;
 
-        public AttackCommand(IBattleActor attacker, IGridObject target)
+        public AttackCommand(IBattleActor attacker, IAttackableTarget target)
         {
             this.attacker = attacker;
             this.target = target;

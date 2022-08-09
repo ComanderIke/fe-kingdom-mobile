@@ -145,7 +145,7 @@ namespace Game.Mechanics
             lastCharacter = unit;
             currentActions.Enqueue(mCc);
         }
-        public void Fight(IBattleActor attacker, IGridObject target)
+        public void Fight(IBattleActor attacker, IAttackableTarget target)
         {
             if((IGridActor)attacker!=lastCharacter)
                 ResetCharacterActions();

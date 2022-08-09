@@ -78,12 +78,26 @@ namespace __2___Scripts.External.Editor
             GUILayout.Label("Current Units: ");
 
             
-            foreach (var u in aiSystem.PlayerFaction.Units)
+            foreach (var u in aiSystem.GetMoveOrderList())
+            {
+                if (u == selectedAgent)
+                {
+                    GUILayout.Label("Unit: " + u + ", ");
+                }
+                else if (GUILayout.Button("Unit: " + u + ", "))
+                {
+                    selectedAgent = u;
+                    
+                    aiSystem.AiRenderer.ShowAgentData(selectedAgent);
+                }
+            }
+            GUILayout.Label("AttackerList: ");
+            foreach (var u in aiSystem.GetAttackerList())
             {
                 if (u == selectedAgent)
                 {
                     GUILayout.BeginHorizontal();
-                    GUILayout.Label("Unit: " + u.name + ", ");
+                    GUILayout.Label("Unit: " + u + ", ");
                     int index = 0;
                     foreach (var target in u.AIComponent.AttackableTargets)
                     {
@@ -125,7 +139,7 @@ namespace __2___Scripts.External.Editor
                     }
                     GUILayout.EndHorizontal();
                 }
-                else if (GUILayout.Button("Unit: " + u.name + ", "))
+                else if (GUILayout.Button("Unit: " + u+ ", "))
                 {
                     selectedAgent = u;
                     

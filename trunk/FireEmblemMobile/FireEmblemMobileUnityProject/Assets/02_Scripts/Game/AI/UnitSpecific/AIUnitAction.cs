@@ -6,15 +6,13 @@ namespace Game.AI
 {
     public struct AIUnitAction
     {
-        public float Score;
         public Vector2Int Location;
-        public IGridObject Target;
+        public IAttackableTarget Target;
         public UnitActionType UnitActionType;
-        public Unit Performer;
+        public IAIAgent Performer;
 
-        public AIUnitAction(float score, Vector2Int loc, IGridObject target, UnitActionType type, Unit performer)
+        public AIUnitAction(Vector2Int loc, IAttackableTarget target, UnitActionType type, IAIAgent performer)
         {
-            this.Score = score;
             this.Location = loc;
             this.Target = target;
             this.UnitActionType = type;

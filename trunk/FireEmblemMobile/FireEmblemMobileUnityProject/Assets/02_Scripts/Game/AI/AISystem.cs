@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Game.GameActors.Players;
+using Game.GameActors.Units;
 using Game.Manager;
 using Game.Map;
 using Game.Mechanics;
@@ -104,7 +106,7 @@ namespace Game.AI
             unitActionSystem.AddCommand(new MoveCharacterCommand(action.Performer, action.Location));
             switch (action.UnitActionType)
             {
-                case UnitActionType.Attack: unitActionSystem.AddCommand(new AttackCommand(action.Performer, action.Target));
+                case UnitActionType.Attack: unitActionSystem.AddCommand(new AttackCommand((Unit)action.Performer, action.Target));
                     break;
             }
             unitActionSystem.AddCommand(new WaitCommand(action.Performer));
@@ -145,6 +147,16 @@ namespace Game.AI
         public void NewTurn()
         {
             finished = false;
+        }
+
+        public IEnumerable<IAIAgent> GetAttackerList()
+        {
+            return decisionMaker.attackerList;
+        }
+
+        public IEnumerable<IAIAgent> GetMoveOrderList()
+        {
+            return decisionMaker.moveOrderList;
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Game.GameInput
         public static event UnitEvent OnViewUnit;
         public delegate void MoveUnitEvent(IGridActor u, GridPosition position, List<GridPosition> movePath);
         public static event MoveUnitEvent OnMoveUnit;
-        public delegate void AttackUnitEvent(IBattleActor u, IGridObject attackTarget);
+        public delegate void AttackUnitEvent(IBattleActor u, IAttackableTarget attackTarget);
         public static event AttackUnitEvent OnAttackUnit;
         public delegate void CheckAttackPreviewEvent(IBattleActor u, IAttackableTarget attackTarget, GridPosition attackPosition);
         public static event CheckAttackPreviewEvent OnCheckAttackPreview;
@@ -34,7 +34,7 @@ namespace Game.GameInput
         public static event Action<Skill> OnSelectSkill;
         public static event Action<Item> OnSelectItem;
 
-        public void AttackUnit(IBattleActor u, IGridObject attackTarget)
+        public void AttackUnit(IBattleActor u, IAttackableTarget attackTarget)
         {
             Debug.Log("GameInput: Attack Unit: " + u+" Target: " +attackTarget);
             OnAttackUnit?.Invoke(u, attackTarget);

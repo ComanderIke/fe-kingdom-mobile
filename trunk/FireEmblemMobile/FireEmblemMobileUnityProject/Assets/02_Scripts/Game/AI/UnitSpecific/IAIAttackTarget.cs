@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Game.GameActors.Players;
+using Game.Mechanics;
 using UnityEngine;
 
 namespace Game.AI
@@ -9,6 +10,7 @@ namespace Game.AI
         public Vector2Int OptimalAttackPos { get; set; }
         public IAttackableTarget Target { get; set; }
         public List<Vector2Int> AttackableTiles { get; set; }
+        public ICombatResult CombatResult { get; set; }
 
         public AIAttackTarget(IAttackableTarget target)
         {

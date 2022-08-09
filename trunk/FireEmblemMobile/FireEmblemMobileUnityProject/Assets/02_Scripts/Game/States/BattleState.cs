@@ -41,10 +41,10 @@ namespace Game.Mechanics
 
         }
 
-        public void SetParticipants(IBattleActor attacker, IGridObject defender)
+        public void SetParticipants(IBattleActor attacker, IAttackableTarget defender)
         {
             this.attacker = attacker;
-            this.defender = (IAttackableTarget)defender;
+            this.defender = defender;
         }
 
         private BattleSimulation battleSimulation;
@@ -129,7 +129,7 @@ namespace Game.Mechanics
             GridGameManager.Instance.GetSystem<AudioSystem>().ChangeMusic("BattleTheme", startMusic);
         }
 
-        public void Start(IBattleActor battleActor, IGridObject target)
+        public void Start(IBattleActor battleActor, IAttackableTarget target)
         {
             SetParticipants(battleActor, target);
             GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.BattleStarted);
