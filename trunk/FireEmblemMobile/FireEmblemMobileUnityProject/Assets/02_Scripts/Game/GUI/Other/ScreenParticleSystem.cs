@@ -19,6 +19,8 @@ namespace Game.GUI
                 SpawnTouchParticles();
             }
 
+            if (ReferenceEquals(screenParticles, null))
+                return;
             if (Input.GetMouseButton(0))
             {
                 screenParticles.anchoredPosition = Input.mousePosition;

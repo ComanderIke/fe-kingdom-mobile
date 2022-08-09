@@ -91,8 +91,10 @@ namespace Game.AI
             }
             Debug.Log("AttackableTargetsCount: "+selectedAgent.AIComponent.AttackableTargets.Count());
             int a = 1;
+            
             foreach (var attackOption in selectedAgent.AIComponent.AttackableTargets)
             {
+                Debug.Log("Target: "+ a  +" "+attackOption.Target);
                 var gridObject = (IGridObject)attackOption.Target;
                 textVisualizer.ShowText(new Vector3(gridObject.GridComponent.GridPosition.X+0.1f, gridObject.GridComponent.GridPosition.Y+0.1f,0), "Prio: "+a, Color.red);
                 a++;

@@ -16,6 +16,7 @@ namespace Game.AI
         private ScoreCalculator scoreCalculator;
         public List<IAIAgent> moveOrderList;
         public List<IAIAgent> attackerList;
+        public List<Vector2Int> blockedTiles;
 
 
         public DecisionMaker(IGridInformation gridInfo,ICombatInformation combatInfo, IPathFinder pathFinder)
@@ -97,6 +98,9 @@ namespace Game.AI
             Vector2Int bestloc = new Vector2Int(unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y);
             foreach (var loc in moveLocs)
             {
+                var gridObject = gridInfo.GetGridObject(loc);
+                if(gridObject!=null && gridObject != unit)
+                    continue;
                 int distanceToTarget = scoreCalculator.GetDistanceToEnemy(loc, chaseTarget.Actor, unit);
                 if (distanceToTarget < minDistance)
                 {
@@ -138,19 +142,28 @@ namespace Game.AI
         public AIUnitAction ChooseBestAction(IEnumerable<IAIAgent> units)
         {
             var bestScore = float.MinValue;
-            
+          
             CreateAttackerList(units);
             if (attackerList.Count != 0)
             {
                 CalculateOptimalTilesToAttack();
                 ChooseBestAttackTargets();
                 var bestAttacker = ChooseBestAttacker();
+                Debug.Log("Best Atttacker: "+bestAttacker);
+                Debug.Log("Best Target: "+bestAttacker.AIComponent.BestAttackTarget.Target+" "+bestAttacker.AIComponent.AttackableTargets[0].Target);
                 return CreateAttackAction(bestAttacker);
             }
             return ChooseBestMovementAction();
             //return bestAction;
         }
 
+        public void RemoveUnitFromListPool(IAIAgent unit)
+        {
+            if(moveOrderList.Contains(unit))
+                moveOrderList.Remove(unit);
+            if(attackerList.Contains(unit))
+                attackerList.Remove(unit);
+        }
         private AIUnitAction CreateAttackAction(IAIAgent attacker)
         {
             return new AIUnitAction(attacker.AIComponent.BestAttackTarget.OptimalAttackPos,attacker.AIComponent.BestAttackTarget.Target, UnitActionType.Attack, attacker );
@@ -197,21 +210,8 @@ namespace Game.AI
             }
         }
 
-        private AIUnitAction CreateMoveAction(IAIAgent unit, Vector2Int loc, float locScore)
-        {
-            return new AIUnitAction(loc, null, UnitActionType.Wait, (Unit)unit);
-        }
-        
-        private AIUnitAction CreateDefaultAction(IAIAgent unit)
-        {
-            var bestAction = new AIUnitAction();
-            bestAction.Location = new Vector2Int(unit.GridComponent.GridPosition.X,
-                unit.GridComponent.GridPosition.Y); // by default stay on the same position
-            bestAction.Target = null;
-            bestAction.UnitActionType = UnitActionType.Wait; // default action is wait;
-            bestAction.Performer = (Unit)unit;
-            return bestAction;
-        }
+       
+       
 
         private void CreateAttackerList(IEnumerable<IAIAgent> units)
         {
@@ -245,7 +245,8 @@ namespace Game.AI
 
             return attackTargetList;
         }
-        private void InitMoveOptions(IEnumerable<IAIAgent> units)
+
+        public void InitMoveOptions(IEnumerable<IAIAgent> units)
         {
             foreach (var unit in units)
             {
@@ -259,6 +260,7 @@ namespace Game.AI
             moveOrderList = CreateMoveOrderList(units);
             InitMoveOptions(units);
             attackerList = new List<IAIAgent>();
+            CreateAttackerList(units);
             Debug.Log("moveOrderlistCount: "+moveOrderList.Count());
         }
     }

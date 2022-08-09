@@ -10,5 +10,6 @@ namespace Game.Mechanics
         int GetDamageRatio();
         int GetTileDefenseBonuses();
         int GetTileAvoidBonuses();
+ 
     }
 }

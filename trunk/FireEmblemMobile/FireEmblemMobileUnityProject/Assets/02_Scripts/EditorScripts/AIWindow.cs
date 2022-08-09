@@ -57,6 +57,7 @@ namespace __2___Scripts.External.Editor
                 agentCombatResults.Add(u, results);
             }
         }
+        
         public void OnGUI()
         {
             if (aiSystem == null)
@@ -67,6 +68,9 @@ namespace __2___Scripts.External.Editor
             {
                 UpdateCombatResults();
             }
+
+            aiSystem.StopAIActions = GUILayout.Toggle(aiSystem.StopAIActions,"StopAIActions");
+            
             if (GUILayout.Button("ShowTargets"))
             {
                 aiSystem.ShowInitTurnData();
@@ -77,8 +81,10 @@ namespace __2___Scripts.External.Editor
             }
             GUILayout.Label("Current Units: ");
 
-            
-            foreach (var u in aiSystem.GetMoveOrderList())
+            var list = aiSystem.GetMoveOrderList();
+            if (list == null)
+                return;
+            foreach (var u in list)
             {
                 if (u == selectedAgent)
                 {
@@ -92,7 +98,10 @@ namespace __2___Scripts.External.Editor
                 }
             }
             GUILayout.Label("AttackerList: ");
-            foreach (var u in aiSystem.GetAttackerList())
+            var alist = aiSystem.GetAttackerList();
+            if (alist == null)
+                return;
+            foreach (var u in alist)
             {
                 if (u == selectedAgent)
                 {
@@ -101,7 +110,7 @@ namespace __2___Scripts.External.Editor
                     int index = 0;
                     foreach (var target in u.AIComponent.AttackableTargets)
                     {
-
+                       // Debug.Log("Target: "+ (index+1)  +" "+target.Target);
                         string BattleResultString = "W";
                         if(!agentCombatResults.ContainsKey(u))
                             UpdateCombatResults();
@@ -123,7 +132,7 @@ namespace __2___Scripts.External.Editor
                             }
 
                             if (GUILayout.Button("Target: " + target.Target + " " + BattleResultString + " " +
-                                                 result.GetDamageRatio()))
+                                                 result.GetDamageRatio()+ " "+result.GetAttackPosition()))
                             {
                                 selectedTarget = target.Target;
                             }

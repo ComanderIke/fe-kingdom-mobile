@@ -217,7 +217,7 @@ namespace Game.Mechanics
            
             if (Defender == null)
                 return Attacker.BattleComponent.BattleStats.GetTotalDamageAgainstTarget(AttackableTarget);
-            Debug.Log("Damage Ration: "+Attacker+" "+Attacker.BattleComponent.BattleStats.GetTotalDamageAgainstTarget(Defender)+" Defender: "+Defender+" "+Defender.BattleComponent.BattleStats.GetTotalDamageAgainstTarget(Attacker));
+            //Debug.Log("Damage Ration: "+Attacker+" "+Attacker.BattleComponent.BattleStats.GetTotalDamageAgainstTarget(Defender)+" Defender: "+Defender+" "+Defender.BattleComponent.BattleStats.GetTotalDamageAgainstTarget(Attacker));
             if (DefenderAttackCount == 0)
                 return Attacker.BattleComponent.BattleStats.GetTotalDamageAgainstTarget(Defender);
             return Attacker.BattleComponent.BattleStats.GetTotalDamageAgainstTarget(Defender) -
@@ -228,6 +228,8 @@ namespace Game.Mechanics
         {
             return Attacker.GetTile().TileData.defenseBonus;
         }
+
+       
 
         public int GetTileAvoidBonuses()
         {

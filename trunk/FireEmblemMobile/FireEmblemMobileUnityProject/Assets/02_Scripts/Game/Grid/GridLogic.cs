@@ -59,6 +59,11 @@ namespace Game.Grid
             return targets;
         }
 
+        public IGridObject GetGridObject(Vector2Int loc)
+        {
+            return Tiles[loc.x, loc.y].GridObject;
+        }
+
         public List<IGridObject> GetAttackTargetsAtGameObjectPosition(Unit unit)
         {
             int x = (int) unit.GameTransformManager.GetPosition().x;
@@ -151,6 +156,7 @@ namespace Game.Grid
             var locations = new List<Vector2Int>();
             GetMoveLocations(unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y, locations,
                 unit.MovementRange, 0, unit);
+            GridManager.NodeHelper.Reset();
             return locations;
         }
         private void GetMoveLocations(int x, int y, List<Vector2Int> locations, int range, int c, IGridActor unit)
@@ -160,7 +166,7 @@ namespace Game.Grid
                 return;
             }
 
-            if (!locations.Contains(new Vector2Int(x, y)) && (Tiles[x, y].GridObject == null||Tiles[x, y].GridObject==unit))
+            if (!locations.Contains(new Vector2Int(x, y)))//(Tiles[x, y].GridObject == null||Tiles[x, y].GridObject==unit)
                 locations.Add(new Vector2Int(x, y)); //TODO Height?!
             GridManager.NodeHelper.Nodes[x, y].C = c;
             c++;
