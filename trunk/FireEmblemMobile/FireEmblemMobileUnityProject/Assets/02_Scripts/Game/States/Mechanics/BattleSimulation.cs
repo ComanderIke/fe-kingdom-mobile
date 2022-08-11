@@ -82,7 +82,7 @@ namespace Game.Mechanics
             //int spDamage= attacker.BattleComponent.BattleStats.GetTotalSpDamageAgainstTarget(defender);
             var hitRng = UnityEngine.Random.Range(0, 101);
             var critRng = UnityEngine.Random.Range(0, 101);
-            Debug.Log("HitRNG: Attacker: "+hitRng+ " hitRate: "+attacker.BattleComponent.BattleStats.GetHitAgainstTarget(defender));
+           // Debug.Log("HitRNG: Attacker: "+hitRng+ " hitRate: "+attacker.BattleComponent.BattleStats.GetHitAgainstTarget(defender));
             attackData.hit =  hitRng<= attacker.BattleComponent.BattleStats.GetHitAgainstTarget(defender);
             attackData.crit =  critRng<= attacker.BattleComponent.BattleStats.GetCritAgainstTarget(defender)&&attackData.hit;
             if (attackData.crit)
@@ -136,6 +136,7 @@ namespace Game.Mechanics
             }
             int attackerAttackCount = Attacker.BattleComponent.BattleStats.GetAttackCountAgainst(Defender);
             int defenderAttackCount = Defender.BattleComponent.BattleStats.GetAttackCountAgainst(Attacker);
+            Debug.Log("Battle Base AttackCounts: "+attackerAttackCount + " " + defenderAttackCount);
             GridPosition attackerGridPos = attackPosition;
             Debug.Log("TODO GridPosition-1?!?!?!");
             if (!((IGridActor)Defender).GetActorGridComponent().CanAttack(attackerGridPos.X, attackerGridPos.Y))
@@ -144,8 +145,8 @@ namespace Game.Mechanics
             }
 
             DefenderAttackCount = defenderAttackCount;
-           
-            while (attackerAttackCount > 0||defenderAttackCount>0)
+            bool death = false;
+            while ((attackerAttackCount > 0||defenderAttackCount>0)&&!death)
             {
                 AttackData attackData=new AttackData();
                 
@@ -167,6 +168,7 @@ namespace Game.Mechanics
                     }
                     else
                     {
+                        death = true;
                         attackData.kill = true;
                         AttacksData.Add(attackData);
                         break;
@@ -191,6 +193,7 @@ namespace Game.Mechanics
                     }
                     else
                     {
+                        death = true;
                         attackData.kill = true;
                         AttacksData.Add(attackData);
                         break;

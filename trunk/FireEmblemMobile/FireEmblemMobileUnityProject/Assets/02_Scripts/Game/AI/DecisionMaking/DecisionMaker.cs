@@ -172,8 +172,8 @@ namespace Game.AI
                 CalculateOptimalTilesToAttack();
                 ChooseBestAttackTargets();
                 var bestAttacker = ChooseBestAttacker();
-                Debug.Log("Best Atttacker: "+bestAttacker);
-                Debug.Log("Best Target: "+bestAttacker.AIComponent.BestAttackTarget.Target+" "+bestAttacker.AIComponent.AttackableTargets.Last().Target);
+                //Debug.Log("Best Atttacker: "+bestAttacker);
+               // Debug.Log("Best Target: "+bestAttacker.AIComponent.BestAttackTarget.Target+" "+bestAttacker.AIComponent.AttackableTargets.Last().Target);
                 return CreateAttackAction(bestAttacker);
             }
             return ChooseBestMovementAction();
@@ -212,15 +212,15 @@ namespace Game.AI
         {
             foreach (var attacker in attackerList)
             {
-                Debug.Log("attacker in List: " +attacker);
-                Debug.Log("AttackTargetCount: " +attacker.AIComponent.AttackableTargets.Count());
+               // Debug.Log("attacker in List: " +attacker);
+               // Debug.Log("AttackTargetCount: " +attacker.AIComponent.AttackableTargets.Count());
                 foreach (var target in attacker.AIComponent.AttackableTargets)
                 {
                     var tiles = target.AttackableTiles;
                     var combatInfos = new List<ICombatResult>();
                     if (target.Target == null)
                     {
-                        Debug.Log("AttackableTargetTarget is null!" + target);
+                       // Debug.Log("AttackableTargetTarget is null!" + target);
                         continue;
                     }
                     foreach (var tile in tiles)
@@ -282,13 +282,13 @@ namespace Game.AI
         }
         public void InitTurnData(IEnumerable<IAIAgent> units)
         {
-            Debug.Log("InitTurnData");
+            //Debug.Log("InitTurnData");
             InitTargets(units);
             moveOrderList = CreateMoveOrderList(units);
             InitMoveOptions(units);
             attackerList = new List<IAIAgent>();
             CreateAttackerList(units);
-            Debug.Log("moveOrderlistCount: "+moveOrderList.Count());
+            //Debug.Log("moveOrderlistCount: "+moveOrderList.Count());
         }
     }
 }

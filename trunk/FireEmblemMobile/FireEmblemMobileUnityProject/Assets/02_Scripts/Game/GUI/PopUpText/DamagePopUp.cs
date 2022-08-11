@@ -99,7 +99,7 @@ namespace Game.GUI.PopUpText
         public static DamagePopUp CreateForBattleView(Vector3 transformPosition, int dmg, TextStyle style, float scale,
             Vector2 moveVector)
         {
-            Debug.Log("MoveVector for Dmg: " + moveVector);
+
             GameObject damagePopUpTransform = Instantiate(GameAssets.Instance.prefabs.DamagePopUptext,
                 new Vector3(transformPosition.x, transformPosition.y, transformPosition.z), Quaternion.identity);
             damagePopUpTransform.layer = LayerMask.NameToLayer("Characters");

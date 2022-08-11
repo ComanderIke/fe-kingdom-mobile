@@ -65,7 +65,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         rightCharacterDied = false;
         this.attacker = battleSimulation.Attacker;
         this.defender = battleSimulation.Defender;
-        Debug.Log(attacker.Hp + " " + attackingActor.Hp);
+       // Debug.Log(attacker.Hp + " " + attackingActor.Hp);
 
         BattleUI.Show(battleSimulation, (Unit)attackingActor, (Unit)defendingActor);
 
@@ -163,6 +163,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
 
     private void ContinueBattle()
     {
+        bool prepare = false;
         if (attackSequenzIndex >= battleSimulation.AttacksData.Count)
         {
             AllAttacksFinished();
@@ -177,16 +178,23 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         
         if (battleSimulation.AttacksData[attackSequenzIndex].attacker)
         {
-            Debug.Log("atttacker");
+           // Debug.Log("atttacker");
             
             var attackingCharacter = leftCharacterAttacker ? characterLeft : characterRight;
             var attackerSpriteController = attackingCharacter.GetComponentInChildren<BattleAnimationSpriteController>();
             if (attackerSpriteController.HasPrepareAnimation())
             {
+                prepare = true;
                 attackerSpriteController.Prepare(playSpeed);
                 Debug.Log("Prepare===================================");
                 //TODO 
-                StartCoroutine(Delay((float)attackerSpriteController.GetCurrentAnimationDuration(),AttackerAttack));
+                StartCoroutine(Delay((float)attackerSpriteController.GetCurrentAnimationDuration(),()=>
+                {
+
+                    AttackerAttack();
+                    attackSequenzIndex++;
+                    Invoke("FinishAttack", attackDuration / playSpeed);
+                }));
             }
             else
             {
@@ -203,10 +211,16 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
             if (attackerSpriteController.HasPrepareAnimation())
             {
                 Debug.Log("Prepare===================================");
+                prepare = true;
                 attackerSpriteController.Prepare(playSpeed);
                 
                 //TODO 
-                StartCoroutine(Delay((float)attackerSpriteController.GetCurrentAnimationDuration(),DefenderAttack));
+                StartCoroutine(Delay((float)attackerSpriteController.GetCurrentAnimationDuration(),()=>
+                {
+                    DefenderAttack();
+                    attackSequenzIndex++;
+                    Invoke("FinishAttack", attackDuration / playSpeed);
+                }));
             }
             else
             {
@@ -217,12 +231,17 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         }
 Debug.Log("TODO Do all of this later if preparing!!!");
 
-        attackSequenzIndex++;
-        Invoke("FinishAttack", attackDuration / playSpeed);
+        if (!prepare)
+        {
+            attackSequenzIndex++;
+            Invoke("FinishAttack", attackDuration / playSpeed);
+        }
+       
     }
 
     private void DefenderAttack()
     {
+        Debug.Log(attackSequenzIndex+" "+battleSimulation.AttacksData.Count);
         var dmg = battleSimulation.AttacksData[attackSequenzIndex].Dmg;
         var attackingCharacter = leftCharacterAttacker ? characterRight : characterLeft;
         var defendingCharacter = leftCharacterAttacker ? characterLeft : characterRight;
@@ -327,7 +346,7 @@ Debug.Log("TODO Do all of this later if preparing!!!");
         playableDirector.playableAsset = cameraZoomOut;
         PlayAtSpeed(playableDirector, 1);
 
-        Debug.Log("ALive: " + attacker.IsAlive() + " " + defender.IsAlive());
+       // Debug.Log("ALive: " + attacker.IsAlive() + " " + defender.IsAlive());
         if (leftCharacterDied)
         {
             characterLeft.SetActive(false);
@@ -366,7 +385,7 @@ Debug.Log("TODO Do all of this later if preparing!!!");
 
     private void BattleFinished()
     {
-        Debug.Log("BattleFINISHED!");
+
         OnFinished?.Invoke();
     }
 

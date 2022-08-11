@@ -165,9 +165,8 @@ namespace Game.Mechanics
                     attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defenderActor),
                     attacker.BattleComponent.BattleStats.GetHitAgainstTarget(defenderActor),
                     attacker.BattleComponent.BattleStats.GetCritAgainstTarget(defenderActor),
-                    battleSimulation.DefenderAttackCount, attacker.Hp, attacker.MaxHp,
-                    battleSimulation.Attacker
-                        .Hp); //, attacker.Sp, attacker.Stats.MaxSp, battleSimulation.Attacker.Sp, attacker.SpBars, battleSimulation.Attacker.SpBars, attacker.MaxSpBars);
+                    battleSimulation.AttackerAttackCount, attacker.Hp, attacker.MaxHp,
+                    battleSimulation.Attacker.Hp); //, attacker.Sp, attacker.Stats.MaxSp, battleSimulation.Attacker.Sp, attacker.SpBars, battleSimulation.Attacker.SpBars, attacker.MaxSpBars);
                 Debug.Log(battleSimulation.Defender);
                 Debug.Log(battleSimulation.Defender.Hp);
                 Debug.Log( defenderActor.Stats.Attributes.AGI);

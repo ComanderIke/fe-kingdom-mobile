@@ -18,9 +18,9 @@ public class UIFactionCharacterCircleController : MonoBehaviour,IClickedReceiver
     // Start is called before the first frame update
     public GameObject CircleCharacterUIPrefab;
 
-    private List<CharacterUIController>characterUIs;
-
-    private List<GameObject> characterUIgGameObjects;
+   
+    private Dictionary<Unit, GameObject>characterUIgGameObjects;
+    private Dictionary<Unit, CharacterUIController>characterUIs;
 
     private List<Unit> units;
 
@@ -30,6 +30,13 @@ public class UIFactionCharacterCircleController : MonoBehaviour,IClickedReceiver
     private void OnDisable()
     {
         Unit.UnitDied -= DeleteUI;
+  
+    }
+    private void OnEnable()
+    {
+        Unit.UnitDied -= DeleteUI;
+        Unit.UnitDied += DeleteUI;
+
     }
 
     public void Show(List<Unit> units)
@@ -37,6 +44,7 @@ public class UIFactionCharacterCircleController : MonoBehaviour,IClickedReceiver
         this.units = units;
         Unit.UnitDied -= DeleteUI;
         Unit.UnitDied += DeleteUI;
+
       
         if(characterUIgGameObjects==null||characterUIgGameObjects.Count!=   units.Count(u => u.IsAlive()))
             SpawnGOs();
@@ -45,41 +53,33 @@ public class UIFactionCharacterCircleController : MonoBehaviour,IClickedReceiver
         {
             if(!unit.IsAlive())
                 continue;
-            unit.visuals.UnitCharacterCircleUI = characterUIs[cnt];
+            unit.visuals.UnitCharacterCircleUI = characterUIs[unit];
            
-            characterUIs[cnt].Show(unit);
+            characterUIs[unit].Show(unit);
             cnt++;
         }
     }
 
     private void DeleteUI(Unit died)
     {
-        int cnt = 0;
-        foreach (var unit in units)
-        {
-            if (unit == died)
-            {
-                GameObject.Destroy(characterUIs[cnt].gameObject);
-                break;
-            }
-
-            cnt++;
-        }
+        Debug.Log("Unit Died so Delete CircleUI!");
+        
+        SpawnGOs();
         layout.SetActive(false);
         layout.SetActive(true);
     }
     public void SelectUnit(Unit u)
     {
-        int cnt = 0;
+
         foreach (var unit in units)
         {
             if (unit == u)
             {
-                characterUIs[cnt].ShowActive(unit);
+                characterUIs[unit].ShowActive(unit);
             }
             else
-                characterUIs[cnt].Show(unit);
-            cnt++;
+                characterUIs[unit].Show(unit);
+      
         }
         layout.SetActive(false);
         layout.SetActive(true);
@@ -87,31 +87,37 @@ public class UIFactionCharacterCircleController : MonoBehaviour,IClickedReceiver
 
     private void SpawnGOs()
     {
+        Debug.Log("SpawnCircles");
         if (characterUIgGameObjects != null)
         {
-            for (int i = characterUIgGameObjects.Count - 1; i >= 0; i--)
+            foreach (var unit in units)
             {
-                Destroy(characterUIgGameObjects[i]);
+                Debug.Log("Destroy Circle");
+                Destroy(characterUIgGameObjects[unit]);
             }
         }
-        int cnt = 0;
 
-        characterUIgGameObjects = new List<GameObject>();
-        characterUIs = new List<CharacterUIController>();
+
+        characterUIgGameObjects = new Dictionary<Unit, GameObject>();
+        characterUIs = new Dictionary<Unit, CharacterUIController>();
         foreach (var unit in units)
         {
-            if (cnt >= characterUIs.Count)
+            if (!unit.IsAlive())
+                
             {
-        
-                var go = Instantiate(CircleCharacterUIPrefab, transform);
-                var uiController = go.GetComponent<CharacterUIController>();
-                uiController.parentController = this;
-                uiController.Show(unit);
-                characterUIs.Add(uiController);
-                characterUIgGameObjects.Add(go);
+                Debug.Log("Skip Circle for: "+unit);
+               
+                continue;
             }
 
-            cnt++;
+            Debug.Log("Spawn Circle for: "+unit);
+            var go = Instantiate(CircleCharacterUIPrefab, transform);
+            var uiController = go.GetComponent<CharacterUIController>();
+            uiController.parentController = this;
+            uiController.Show(unit);
+            characterUIs.Add(unit, uiController);
+            characterUIgGameObjects.Add(unit,go);
+            
         }
         
     }
@@ -141,14 +147,14 @@ public class UIFactionCharacterCircleController : MonoBehaviour,IClickedReceiver
 
     public RectTransform GetUnitParticleAttractorTransform(Unit unit)
     {
-        int cnt = 0;
+
         foreach (var u in units)
         {
             if (unit == u)
             {
-                return characterUIs[cnt].GetUnitParticleAttractorTransform();
+                return characterUIs[unit].GetUnitParticleAttractorTransform();
             }
-            cnt++;
+
         }
 
         return null;

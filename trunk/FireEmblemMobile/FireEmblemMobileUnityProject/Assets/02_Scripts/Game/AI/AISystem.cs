@@ -136,7 +136,6 @@ namespace Game.AI
 
         private void UnitDiedOrMoved(IGridObject unit)
         {
-            Debug.Log("Unit Died: "+unit);
             ObstacleRemoved = true;
         }
 

@@ -114,7 +114,7 @@ namespace Game.Mechanics
         public int DistributeAttackerExperience(IBattleActor attacker, IBattleActor defender)
         {
             int exp = 0;
-            Debug.Log("Distribute EXP"+ attacker.Faction.IsPlayerControlled+ " "+attacker.IsAlive());
+           // Debug.Log("Distribute EXP"+ attacker.Faction.IsPlayerControlled+ " "+attacker.IsAlive());
             if (attacker.IsAlive()&&attacker.Faction.IsPlayerControlled)
             {
                 exp = CalculateExperiencePoints(attacker, defender);

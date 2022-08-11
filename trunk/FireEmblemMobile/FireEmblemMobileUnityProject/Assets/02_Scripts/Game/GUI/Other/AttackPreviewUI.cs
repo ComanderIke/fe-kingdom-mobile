@@ -79,7 +79,7 @@ namespace Game.GUI
              dmgValue.text = "" + battlePreview.AttackerStats.Damage;
              hitValue.text = "" + battlePreview.AttackerStats.Hit+"%";
              critValue.text = "" + battlePreview.AttackerStats.Crit+"%";
-             //Debug.Log("ATTACKCOUNT: "+battlePreview.AttackerStats.AttackCount+" "+battlePreview.DefenderStats.AttackCount);
+             Debug.Log("ATTACKCOUNT: "+battlePreview.AttackerStats.AttackCount+" "+battlePreview.DefenderStats.AttackCount);
              attackCountX.SetActive(battlePreview.AttackerStats.AttackCount > 1);
              attackCount.gameObject.SetActive(battlePreview.AttackerStats.AttackCount > 1);
              attackCount.text = "" + battlePreview.AttackerStats.AttackCount;

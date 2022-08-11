@@ -51,7 +51,6 @@ namespace Game.States
                     sumexp+=GridGameManager.Instance.GetSystem<UnitProgressSystem>()
                             .DistributeDefenderExperience(attacker, unitDefender);
                 }
-                Debug.Log(defender+" Check IsAlive");
                 if (!defender.IsAlive())
                 {
                     defender.Die();
@@ -82,7 +81,6 @@ namespace Game.States
         {
             if (AnimationQueue.IsNoAnimationRunning())
             {
-                Debug.Log("AFTER BATTLE FINISHED!");
                 Finished();
             }
 
