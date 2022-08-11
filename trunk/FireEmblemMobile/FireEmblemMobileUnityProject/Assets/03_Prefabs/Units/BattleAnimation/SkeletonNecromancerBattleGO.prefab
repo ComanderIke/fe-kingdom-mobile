@@ -104,8 +104,7 @@ SpriteRenderer:
   m_SortingLayerID: -796215603
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1281468204793118593, guid: f8c6cec1aa8be114b851c565016f92b3,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: ef26761b4e28cf947b8c93af427ab889, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0.38431373}
   m_FlipX: 0
   m_FlipY: 0
@@ -239,7 +238,7 @@ PlayableDirector:
   m_GameObject: {fileID: 4707009463004641532}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: cb550f61cd0dec54babe91b3ca575dad, type: 2}
+  m_PlayableAsset: {fileID: 11400000, guid: 7f9efe6d5e69e544fb8c168b3ec47236, type: 2}
   m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
@@ -435,6 +434,40 @@ PlayableDirector:
     value: {fileID: 13314375005509440}
   - key: {fileID: -6343946122318212357, guid: cb550f61cd0dec54babe91b3ca575dad, type: 2}
     value: {fileID: 860451276788237795}
+  - key: {fileID: 5923737400152184614, guid: 331d64dc694cba54f949716ecf8ebfb3, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -727431984298590324, guid: 331d64dc694cba54f949716ecf8ebfb3, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 2067833150072969467, guid: 331d64dc694cba54f949716ecf8ebfb3, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -1911820307721416275, guid: 331d64dc694cba54f949716ecf8ebfb3, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 3979292487956185844, guid: 331d64dc694cba54f949716ecf8ebfb3, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 5923737400152184614, guid: a407f8c38d4a38b468abe9ef7ce9a3c0, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -727431984298590324, guid: a407f8c38d4a38b468abe9ef7ce9a3c0, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 2569052881013621359, guid: a407f8c38d4a38b468abe9ef7ce9a3c0, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 5923737400152184614, guid: 56f7f8a00f77c2f46ac928f2bcf55efb, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -727431984298590324, guid: 56f7f8a00f77c2f46ac928f2bcf55efb, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -6343946122318212357, guid: 56f7f8a00f77c2f46ac928f2bcf55efb, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 5923737400152184614, guid: 88429df52fcbfa245b062b5ac7b7d41c, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -727431984298590324, guid: 88429df52fcbfa245b062b5ac7b7d41c, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 5923737400152184614, guid: 1f57e0ac1692c6049a270c3a619f49c6, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -727431984298590324, guid: 1f57e0ac1692c6049a270c3a619f49c6, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 5923737400152184614, guid: 7f9efe6d5e69e544fb8c168b3ec47236, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -727431984298590324, guid: 7f9efe6d5e69e544fb8c168b3ec47236, type: 2}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References: []
 --- !u!114 &4214050721747340073
@@ -450,12 +483,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayableDirector: {fileID: 7398306520116262879}
-  walkIn: {fileID: 11400000, guid: 378cd6a31d264fb48a17bf506ccc6146, type: 2}
-  attack: {fileID: 11400000, guid: cd4fe6c4689816e418afe8bcd62bf56e, type: 2}
-  idle: {fileID: 11400000, guid: f7e1e111b31e0fc4fbcf9276efaafe5c, type: 2}
-  dodge: {fileID: 11400000, guid: 34fcb0d22929709439755fdb94371b6c, type: 2}
-  damaged: {fileID: 11400000, guid: d86a9d6a454f4d74198379e1b061790a, type: 2}
-  death: {fileID: 11400000, guid: cb550f61cd0dec54babe91b3ca575dad, type: 2}
+  walkIn: {fileID: 11400000, guid: 7f9efe6d5e69e544fb8c168b3ec47236, type: 2}
+  attack: {fileID: 11400000, guid: 331d64dc694cba54f949716ecf8ebfb3, type: 2}
+  idle: {fileID: 11400000, guid: 1f57e0ac1692c6049a270c3a619f49c6, type: 2}
+  dodge: {fileID: 11400000, guid: 88429df52fcbfa245b062b5ac7b7d41c, type: 2}
+  damaged: {fileID: 11400000, guid: a407f8c38d4a38b468abe9ef7ce9a3c0, type: 2}
+  death: {fileID: 11400000, guid: 56f7f8a00f77c2f46ac928f2bcf55efb, type: 2}
+  prepareAttack: {fileID: 0}
+  hasPrepare: 0
 --- !u!114 &5076119964091048283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -485,7 +520,6 @@ GameObject:
   - component: {fileID: 5565116107653713506}
   - component: {fileID: 8834315866836090958}
   - component: {fileID: 6396728573585956521}
-  - component: {fileID: 8904799545063276712}
   m_Layer: 18
   m_Name: DustCloud
   m_TagString: Untagged
@@ -5353,18 +5387,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mirrorGO: {fileID: 153817705046855153}
   flipRotation: 0
---- !u!114 &8904799545063276712
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6399664310892835907}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe48e85d148c21a4083b27c3156acc30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6430277884580762204
 GameObject:
   m_ObjectHideFlags: 0
@@ -10280,7 +10302,6 @@ GameObject:
   - component: {fileID: 7498831443400600093}
   - component: {fileID: 8577168122243953825}
   - component: {fileID: 4633255660934354863}
-  - component: {fileID: 681740227972704275}
   m_Layer: 18
   m_Name: CircularDustCloud
   m_TagString: Untagged
@@ -15148,18 +15169,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mirrorGO: {fileID: 0}
   flipRotation: 1
---- !u!114 &681740227972704275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7952536411380656119}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe48e85d148c21a4083b27c3156acc30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8954967864396758523
 GameObject:
   m_ObjectHideFlags: 0
@@ -15454,7 +15463,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1932239018779597303, guid: 217cc166e0a7b9340967e0f248fbdc17, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 217cc166e0a7b9340967e0f248fbdc17, type: 3}
 --- !u!1 &5926949315503826306 stripped
 GameObject:
