@@ -38,7 +38,7 @@ public class EncounterTree
             {
                 chance *= 2;
             }
-            if (rng2 <= chance|| current.children.Count + 1 > spawnData.columnMaxEncounter)
+            if (rng2 <= chance|| current.children.Count>= spawnData.columnMaxEncounter)
             {
                 for (int i = current.children.Count-1; i >=0; i--)
                 {
@@ -198,32 +198,39 @@ public class EncounterTree
     }
     void SpawnEncounters(EncounterNode parent, Column current, Column previous, EncounterNodeData fixedData=null)
     {
+        if (current.children.Count >= spawnData.columnMaxEncounter)
+            return;
         if (current.index == 1) //First Column
         {
             SpawnSingleEncounter(parent, current, previous);
             SpawnSingleEncounter(parent, current, previous);
             SpawnSingleEncounter(parent, current, previous);
         }
+        else if (current.index == 2) //Second Column
+        {
+            SpawnSingleEncounter(parent, current, previous);
+          
+        }
         else
         {
             float rng = Random.value;
-            if (previous.children.Count == 1)
+         
+            /*if (current.children.Count<= spawnData.columnMaxEncounter-2)
             {
-                rng = Random.Range(0, spawnData.encounter2ChildPercentage);
+                rng += spawnData.encounter2ChildPercentage;
             }
-            if (previous.children.Count >= spawnData.columnMaxEncounter)
+            if (current.children.Count<= spawnData.columnMaxEncounter-3)
             {
                 rng += spawnData.encounter3ChildPercentage;
-            }
-
-            if (rng <= spawnData.encounter3ChildPercentage)
+            }*/
+            if (rng <= spawnData.encounter3ChildPercentage&& current.children.Count <=spawnData.columnMaxEncounter-3)
             {
                 //Debug.Log("Spawn Triple Node");
                 SpawnSingleEncounter(parent, current, previous);
                 SpawnSingleEncounter(parent, current, previous);
                 SpawnSingleEncounter(parent, current, previous);
             }
-            else if (rng <= spawnData.encounter2ChildPercentage)
+            else if (rng <= spawnData.encounter2ChildPercentage&& current.children.Count <=spawnData.columnMaxEncounter-2)
             {
 
                 //Debug.Log("Spawn Double Node");

@@ -70,15 +70,11 @@ public class ParticleAttractor : MonoBehaviour {
 
     public void SetAttractorUnit(Unit unit, Camera uiCamera)
     {
-        this.uicamera = uiCamera;
+        uicamera = uiCamera;
         IParticleAttractorTransformProvider provider =
             FindObjectsOfType<MonoBehaviour>().OfType<IParticleAttractorTransformProvider>().First();
         expController = unit.visuals.UnitCharacterCircleUI.GetExpRenderer();
         _attractorTransform = provider.GetUnitParticleAttractorTransform(unit);
-        // var go = Instantiate(CubePrefab);
-        // go.name = "AttractorPosition!";
-        // Vector3 pos = uicamera.ScreenToWorldPoint(_attractorTransform.transform.position);
-        // pos.z = 0;
-        // go.transform.position =pos;
+
     }
 }

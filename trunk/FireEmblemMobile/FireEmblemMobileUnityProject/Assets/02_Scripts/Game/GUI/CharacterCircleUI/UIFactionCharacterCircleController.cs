@@ -27,6 +27,12 @@ public class UIFactionCharacterCircleController : MonoBehaviour,IClickedReceiver
     public UICharacterViewController characterView;
     public GameObject layout;
     // Start is called before the first frame update
+    private void Start()
+    {
+        characterUIgGameObjects = new Dictionary<Unit, GameObject>();
+        characterUIs = new Dictionary<Unit, CharacterUIController>();
+    }
+
     private void OnDisable()
     {
         Unit.UnitDied -= DeleteUI;
@@ -64,7 +70,17 @@ public class UIFactionCharacterCircleController : MonoBehaviour,IClickedReceiver
     {
         Debug.Log("Unit Died so Delete CircleUI!");
         
-        SpawnGOs();
+        if (characterUIgGameObjects != null)
+        {
+            foreach (var unit in units)
+            {
+                if (!unit.IsAlive())
+                {
+                    Debug.Log("Destroy Circle");
+                    Destroy(characterUIgGameObjects[unit]);
+                }
+            }
+        }
         layout.SetActive(false);
         layout.SetActive(true);
     }
@@ -81,6 +97,7 @@ public class UIFactionCharacterCircleController : MonoBehaviour,IClickedReceiver
                 characterUIs[unit].Show(unit);
       
         }
+       
         layout.SetActive(false);
         layout.SetActive(true);
     }
@@ -88,18 +105,10 @@ public class UIFactionCharacterCircleController : MonoBehaviour,IClickedReceiver
     private void SpawnGOs()
     {
         Debug.Log("SpawnCircles");
-        if (characterUIgGameObjects != null)
-        {
-            foreach (var unit in units)
-            {
-                Debug.Log("Destroy Circle");
-                Destroy(characterUIgGameObjects[unit]);
-            }
-        }
+        
 
 
-        characterUIgGameObjects = new Dictionary<Unit, GameObject>();
-        characterUIs = new Dictionary<Unit, CharacterUIController>();
+        
         foreach (var unit in units)
         {
             if (!unit.IsAlive())
