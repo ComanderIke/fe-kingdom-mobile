@@ -199,7 +199,14 @@ namespace Game.Mechanics
                 }
                
             }
-            
+
+            if (Attacker.IsAlive() && Defender.IsAlive())
+                BattleResult = BattleResult.Draw;
+            if (!Defender.IsAlive())
+                BattleResult = BattleResult.Win;
+            if (!Attacker.IsAlive())
+                BattleResult = BattleResult.Loss;
+
             // Attacker.SpBars--; 
             // if(defenderAttackCount!=0)
             //     Defender.SpBars--;

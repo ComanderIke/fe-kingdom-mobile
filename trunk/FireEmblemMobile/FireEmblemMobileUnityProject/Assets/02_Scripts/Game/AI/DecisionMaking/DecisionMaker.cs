@@ -92,6 +92,7 @@ namespace Game.AI
             }
 
             moveOrderList.Sort(new UnitComparer());
+            moveOrderList.Reverse();
             return moveOrderList;
         }
 
@@ -164,8 +165,7 @@ namespace Game.AI
         }
         public AIUnitAction ChooseBestAction(IEnumerable<IAIAgent> units)
         {
-            var bestScore = float.MinValue;
-          
+
             CreateAttackerList(units);
             if (attackerList.Count != 0)
             {
@@ -173,7 +173,7 @@ namespace Game.AI
                 ChooseBestAttackTargets();
                 var bestAttacker = ChooseBestAttacker();
                 Debug.Log("Best Atttacker: "+bestAttacker);
-                Debug.Log("Best Target: "+bestAttacker.AIComponent.BestAttackTarget.Target+" "+bestAttacker.AIComponent.AttackableTargets[0].Target);
+                Debug.Log("Best Target: "+bestAttacker.AIComponent.BestAttackTarget.Target+" "+bestAttacker.AIComponent.AttackableTargets.Last().Target);
                 return CreateAttackAction(bestAttacker);
             }
             return ChooseBestMovementAction();
@@ -197,14 +197,15 @@ namespace Game.AI
             foreach (var attacker in attackerList)
             {
                 attacker.AIComponent.AttackableTargets.Sort(new AttackTargetComparer());
-                attacker.AIComponent.BestAttackTarget = attacker.AIComponent.AttackableTargets[0];
+
+                attacker.AIComponent.BestAttackTarget = attacker.AIComponent.AttackableTargets.Last();
             }
         }
 
         private IAIAgent ChooseBestAttacker()
         {
             attackerList.Sort(new AttackerComparer());
-            return attackerList[0];
+            return attackerList.Last();
         }
 
         private void CalculateOptimalTilesToAttack()
@@ -227,8 +228,8 @@ namespace Game.AI
                         combatInfos.Add(combatInfo.GetCombatResultAtAttackLocation((IBattleActor)attacker,target.Target, tile));
                     }
                     combatInfos.Sort(new CombatResultComparer());
-                    target.OptimalAttackPos =combatInfos[0].GetAttackPosition() ;
-                    target.CombatResult = combatInfos[0];
+                    target.OptimalAttackPos =combatInfos.Last().GetAttackPosition() ;
+                    target.CombatResult = combatInfos.Last();
                 }
             }
         }
