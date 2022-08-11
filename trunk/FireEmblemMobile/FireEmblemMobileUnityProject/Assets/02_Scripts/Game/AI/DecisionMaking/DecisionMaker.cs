@@ -27,7 +27,7 @@ namespace Game.AI
         }
 
 
-        private void InitTargets(IEnumerable<IAIAgent> units)
+        public void InitTargets(IEnumerable<IAIAgent> units)
         {
            
             foreach (var unit in units)
@@ -35,13 +35,36 @@ namespace Game.AI
                 var minDistance = int.MaxValue;
                 unit.AIComponent.ClosestTarget = null;
                 unit.AIComponent.Targets.Clear();
+                foreach (var destroyable in from faction in unit.Faction.GetOpponentFactions()
+                         from enemy in faction.Destroyables
+                         where enemy.IsAlive()
+                         select enemy)
+                {
+                    var AITarget = new AITarget();
+                    AITarget.TargetObject = destroyable;
+
+                    AITarget.Path = scoreCalculator.GetPathToEnemy(unit, destroyable);
+                    if(AITarget.Path!=null)
+                        AITarget.Distance = AITarget.Path.GetLength();
+                    else
+                    {
+                        AITarget.Distance = int.MaxValue;
+                    }
+                    unit.AIComponent.Targets.Add(AITarget);
+                    if ( AITarget.Distance <= minDistance)
+                    {
+                        minDistance = AITarget.Distance;
+                        unit.AIComponent.ClosestTarget = AITarget;
+                    }
+                }
+
                 foreach (var enemyAgent in from faction in unit.Faction.GetOpponentFactions()
                          from enemy in faction.Units
                          where enemy.IsAlive()
                          select enemy)
                 {
                     var AITarget = new AITarget();
-                    AITarget.Actor = enemyAgent;
+                    AITarget.TargetObject = enemyAgent;
 
                     AITarget.Path = scoreCalculator.GetPathToEnemy(unit, enemyAgent);
                     if(AITarget.Path!=null)
@@ -101,7 +124,7 @@ namespace Game.AI
                 var gridObject = gridInfo.GetGridObject(loc);
                 if(gridObject!=null && gridObject != unit)
                     continue;
-                int distanceToTarget = scoreCalculator.GetDistanceToEnemy(loc, chaseTarget.Actor, unit);
+                int distanceToTarget = scoreCalculator.GetDistanceToEnemy(loc, chaseTarget.TargetObject, unit);
                 if (distanceToTarget < minDistance)
                 {
                     bestloc = loc;
@@ -215,6 +238,7 @@ namespace Game.AI
 
         private void CreateAttackerList(IEnumerable<IAIAgent> units)
         {
+            attackerList.Clear();
             foreach (var unit in units)
             {
                 unit.AIComponent.AttackableTargets=GetAttackTargets(unit);
@@ -230,6 +254,8 @@ namespace Game.AI
             var targetList = new List<IAttackableTarget>();
             foreach (var moveOption in unit.AIComponent.MovementOptions)
             {
+                if (gridInfo.GetGridObject(moveOption) != null && gridInfo.GetGridObject(moveOption) != unit)
+                    continue;
                 var targets = gridInfo.GetAttackTargetsAtPosition(unit, moveOption.x, moveOption.y);
                 foreach (var target in targets)
                 {

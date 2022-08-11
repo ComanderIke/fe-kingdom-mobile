@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Units;
+﻿using Game.GameActors.Players;
+using Game.GameActors.Units;
 using Game.Grid.GridPathFinding;
 
 namespace Game.AI
@@ -7,6 +8,6 @@ namespace Game.AI
     {
         public int Distance { get; set;  }
         public MovementPath Path { get; set;  }
-        public IGridActor Actor { get; set; }
+        public IGridObject TargetObject { get; set; }
     }
 }

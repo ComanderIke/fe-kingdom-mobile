@@ -157,14 +157,14 @@ namespace Game.AI
         {
             return GetDistanceToEnemy(new Vector2Int(unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y), enemyAgent, unit);
         }
-        public MovementPath GetPathToEnemy(IAIAgent unit, IGridActor enemyAgent)
+        public MovementPath GetPathToEnemy(IAIAgent unit, IGridObject enemyAgent)
         {
             //TODO (SPECIAL NOTE: if enemy cannot be directly pathed to, unit paths toward closest tile from which they can attack. Choose by highest tile priority value if there is a tie. This only applies when chasing enemies.)
             var path = pathFinder.FindPath(unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y, enemyAgent.GridComponent.GridPosition.X, enemyAgent.GridComponent.GridPosition.Y, unit);
             return path;
             
         }
-        public int GetDistanceToEnemy(Vector2Int startPos, IGridActor enemyAgent, IGridActor unit)
+        public int GetDistanceToEnemy(Vector2Int startPos, IGridObject enemyAgent, IGridActor unit)
         {
             var path = pathFinder.FindPath(startPos.x, startPos.y, enemyAgent.GridComponent.GridPosition.X, enemyAgent.GridComponent.GridPosition.Y, unit);
             if (path!=null)

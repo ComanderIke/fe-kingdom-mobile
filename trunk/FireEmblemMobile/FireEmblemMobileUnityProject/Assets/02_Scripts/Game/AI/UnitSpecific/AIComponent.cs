@@ -39,7 +39,7 @@ namespace Game.AI
 
         public AITarget GetTarget(IGridActor unit)
         {
-            return Targets.Find(target => target.Actor == unit);
+            return Targets.Find(target => target.TargetObject == unit);
         }
     }
 }

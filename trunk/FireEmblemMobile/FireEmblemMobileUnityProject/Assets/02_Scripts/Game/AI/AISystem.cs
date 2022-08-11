@@ -73,6 +73,7 @@ namespace Game.AI
                 }
                 if (ObstacleRemoved)
                 {
+                    decisionMaker.InitTargets(player.GetActiveUnits());
                     decisionMaker.InitMoveOptions(player.GetActiveUnits());
                 }
 
@@ -130,9 +131,10 @@ namespace Game.AI
         public void Activate()
         {
             Unit.UnitDied += UnitDiedOrMoved;
+            Destroyable.OnDeath += UnitDiedOrMoved;
         }
 
-        private void UnitDiedOrMoved(Unit unit)
+        private void UnitDiedOrMoved(IGridObject unit)
         {
             Debug.Log("Unit Died: "+unit);
             ObstacleRemoved = true;

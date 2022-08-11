@@ -116,6 +116,7 @@ namespace Game.GameActors.Players
             Controller.Die();
             Faction.RemoveDestroyable(this);
             GridComponent.Tile.GridObject = null;
+            OnDeath?.Invoke(this);
            
         }
 
@@ -137,5 +138,7 @@ namespace Game.GameActors.Players
         {
             return name;// + " HP: " + Hp + "/" + MaxHp+"Level: "+experienceManager.Level+ " Exp: "+experienceManager.Exp;
         }
+
+        public static event Action<IGridObject> OnDeath;
     }
 }

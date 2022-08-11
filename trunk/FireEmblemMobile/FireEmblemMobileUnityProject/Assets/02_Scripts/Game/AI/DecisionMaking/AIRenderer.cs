@@ -64,7 +64,7 @@ namespace Game.AI
 
             var target = u.AIComponent.ClosestTarget;
                 var gridPos = u.GridComponent.GridPosition;
-                var targetGridPos = target.Actor.GridComponent.GridPosition;
+                var targetGridPos = target.TargetObject.GridComponent.GridPosition;
                 redlineVisualizer.ShowRedPath(u.AIComponent.ClosestTarget.Path);
                 //redlineVisualizer.ShowRed(new Vector3(gridPos.X+0.5f, gridPos.Y+0.5f,0.5f),new Vector3(targetGridPos.X+0.5f, targetGridPos.Y+0.5f,0.5f));
                 textVisualizer.ShowRed(new Vector3(gridPos.X+0.5f, gridPos.Y+0.5f,0.5f), ""+target.Distance);
