@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Game.GameActors.Units;
@@ -22,6 +23,11 @@ public class EncounterPlayerUnitController : MonoBehaviour
     void Start()
     {
         
+    }
+
+    public void Clicked()
+    {
+        FindObjectOfType<UICharacterViewController>().Show(Unit);
     }
 
     // Update is called once per frame

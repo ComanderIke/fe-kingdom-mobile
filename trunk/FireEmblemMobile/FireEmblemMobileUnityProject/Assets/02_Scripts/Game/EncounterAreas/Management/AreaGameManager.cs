@@ -249,7 +249,12 @@ public class AreaGameManager : MonoBehaviour
         Debug.Log("Node Clicked: "+encounterNode);
       
         cursor.SetPosition(encounterNode.gameObject.transform.position);
-        
+        if (encounterNode== Player.Instance.Party.EncounterNode)
+        {
+            FindObjectOfType<UICharacterViewController>().Show(Player.Instance.Party.ActiveUnit);
+            Debug.Log("Current Node Clicked!");
+            return;
+        }
         if (encounterNode.moveable)
         {
 

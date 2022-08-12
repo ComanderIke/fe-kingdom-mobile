@@ -43,8 +43,8 @@ GameObject:
   - component: {fileID: 4175706617689143088}
   - component: {fileID: 9219012315200835979}
   - component: {fileID: 6859037594731768447}
-  - component: {fileID: 6811264049831818201}
   - component: {fileID: 322166700516665009}
+  - component: {fileID: 873624671376952003}
   m_Layer: 0
   m_Name: ScorpionAnimatedSpritevalierAnimatedSprite
   m_TagString: Untagged
@@ -170,18 +170,6 @@ MonoBehaviour:
   shadowDirection: {x: 60, y: 0, z: 10}
   shadowScale: {x: 1, y: 1.2, z: 1}
   shadowMat: {fileID: 0}
---- !u!114 &6811264049831818201
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4972444510150215610}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c38ea7cef2c54d448891bae028391423, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!58 &322166700516665009
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -198,6 +186,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.75}
   serializedVersion: 2
   m_Radius: 0.74999994
+--- !u!114 &873624671376952003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4972444510150215610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aba5ecb10b74546af20df40374d6e59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  encounterPlayerUnitController: {fileID: 6411127344836920754}
 --- !u!1 &5749054212524228461
 GameObject:
   m_ObjectHideFlags: 0

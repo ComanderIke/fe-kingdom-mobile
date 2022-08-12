@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Game.WorldMapStuff.Model;
+using LostGrace;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,13 +17,14 @@ namespace Menu
         private static SceneController _instance;
 
 
-        public GameObject LoadingScreen;
+       
         private float loadTime;
         public float MinLoadTime = 0f;
 
         private AsyncOperation resourceUnloadTask;
       //  private AsyncOperation sceneLoadTask;
         private SceneState sceneState;
+        [SerializeField] private LoadingScreen LoadingScreen;
         [SerializeField] private Image progressBar = default;
          [SerializeField] private TextMeshProUGUI clickContinueText = default;
         [SerializeField] private TextMeshProUGUI progressText = default;
@@ -135,7 +137,7 @@ namespace Menu
                 }
             }
             sceneState = SceneState.Load;
-            LoadingScreen.SetActive(true);
+            LoadingScreen.Show();
             OnBeforeSceneReady?.Invoke();
             progressBar.fillAmount = 0;
             progressText.text = "0%";
@@ -180,7 +182,7 @@ namespace Menu
                     sceneState = SceneState.Unload;
                     progressBar.fillAmount = 0;
                     progressText.text = "0%";
-                    LoadingScreen.SetActive(false);
+                    LoadingScreen.Hide();
                     OnSceneReady?.Invoke();
                 }
             }
