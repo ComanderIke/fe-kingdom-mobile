@@ -40,6 +40,7 @@ public class UICharacterViewController : MonoBehaviour
     public TextMeshProUGUI hpText;
     public SkillTreeUI skillTreeUI;
     public Image image;
+    public Animator IdleAnimation;
 
     void Awake(){
         // if(dropArea!=null)
@@ -96,6 +97,7 @@ public class UICharacterViewController : MonoBehaviour
         
         HPBar.SetValue(unit.Hp, unit.MaxHp);
         equipmentController.Show(unit);
+        IdleAnimation.runtimeAnimatorController = unit.visuals.Prefabs.UIAnimatorController;
     }
 
     public void STR_Clicked()

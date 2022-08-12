@@ -8,5 +8,6 @@ namespace Game.GameActors.Units
     {
         public GameObject MapAnimatedSprite;
         public GameObject EncounterAnimatedSprite;
+        public AnimatorOverrideController UIAnimatorController;
     }
 }
