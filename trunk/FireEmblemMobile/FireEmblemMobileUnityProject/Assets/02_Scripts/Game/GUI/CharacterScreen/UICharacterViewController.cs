@@ -35,13 +35,14 @@ public class UICharacterViewController : MonoBehaviour
     public TextMeshProUGUI FTH;
     public TextMeshProUGUI LCK;
     public TextMeshProUGUI DEF;
-    
+
     public IStatBar HPBar;
     public TextMeshProUGUI hpText;
     public SkillTreeUI skillTreeUI;
     public Image image;
     public Animator IdleAnimation;
-
+    public GameObject skillPointPreview;
+    public TextMeshProUGUI skillPointText;
     void Awake(){
         // if(dropArea!=null)
         //     dropArea.OnDropHandler += OnItemDropped;
@@ -94,7 +95,13 @@ public class UICharacterViewController : MonoBehaviour
         FTH.SetText(""+unit.Stats.Attributes.FAITH);
         LCK.SetText(""+unit.Stats.Attributes.LCK);
         DEF.SetText(""+unit.Stats.Attributes.DEF);
-        
+        skillPointText.SetText(""+unit.SkillManager.SkillPoints);
+        if(unit.SkillManager.SkillPoints >=1)
+            skillPointPreview.gameObject.SetActive(true);
+        else
+        {
+            skillPointPreview.gameObject.SetActive(false);
+        }
         HPBar.SetValue(unit.Hp, unit.MaxHp);
         equipmentController.Show(unit);
         IdleAnimation.runtimeAnimatorController = unit.visuals.Prefabs.UIAnimatorController;
