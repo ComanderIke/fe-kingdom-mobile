@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class MetaUpgradeSelectCursorController : MonoBehaviour
+public class SelectCursorController : MonoBehaviour
 {
-    public static MetaUpgradeSelectCursorController Instance;
+    public static SelectCursorController Instance;
     public GameObject selected;
 
     void Start()

@@ -64,7 +64,7 @@ public class MetaButtonController : MonoBehaviour
 
     public void OnClick()
     {
-        MetaUpgradeSelectCursorController.Instance.Show(gameObject);
+        SelectCursorController.Instance.Show(gameObject);
         MetaUpgradeDetailPanelController.Instance.Show(metaSkill);
     }
 }

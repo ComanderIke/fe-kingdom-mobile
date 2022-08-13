@@ -8,6 +8,7 @@ namespace Game.GameActors.Units.Skills
     public abstract class Skill: ScriptableObject, ITargetableObject
     {
 
+        public SkillState State;
         public Sprite Icon;
 
         public GameObject AnimationObject;
