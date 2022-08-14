@@ -23,6 +23,7 @@ namespace Game.GUI
                 return;
             if (Input.GetMouseButton(0))
             {
+               
                 screenParticles.anchoredPosition = Input.mousePosition;
             }
             if (Input.GetMouseButtonUp(0))

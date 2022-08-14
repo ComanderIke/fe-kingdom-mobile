@@ -4,45 +4,38 @@ using Game.GameActors.Units.Skills;
 using LostGrace;
 using TMPro;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 public class SkillUI : MonoBehaviour
 {
+    public CanvasGroup CanvasGroup;
     public GameObject connectionPrefab;
     private List<SkillUI> children;
     private List<SkillUI> parents;
-    private List<GameObject> connectionsToParents;
+    private Dictionary<SkillUI,GameObject> connectionsToParents;
     public Image skillIcon;
     public SkillTreeEntry skillEntry;
     public TextMeshProUGUI skillLevelText;
-
+    public float secretAlpha = .5f;
     public Image backGroundImage;
     public Color learned;
     public Color notLearned;
     public Color notLearnable;
     public Color locked;
+    public Color secretIconColor;
+    public Color normalIconColor;
+    public Color maxTextColor;
+    public Color normalTextColor;
     private SkillTreeRenderer controller;
-    public SkillState skillState;
     public float offset = 30;
 
-    public void Setup(SkillTreeEntry skill, SkillState skillState, SkillTreeRenderer controller, List<SkillUI> parents=null)
+    public void Setup(SkillTreeEntry skill,  SkillTreeRenderer controller, List<SkillUI> parents=null)
     {
         this.controller = controller;
         this.skillEntry = skill;
         this.parents = parents;
-        connectionsToParents = new List<GameObject>();
-        skillIcon.sprite = skill.skill.Icon;
-        skillLevelText.text = ""+skill.skill.Level+"/"+skill.skill.MaxLevel;
-        this.skillState = skillState;
-        switch (skillState)
-        {
-            case SkillState.Learnable:
-                backGroundImage.color = notLearned; break;
-            case SkillState.NotLearnable:  backGroundImage.color = notLearnable; break;
-            case SkillState.Learned:  backGroundImage.color = learned; break;
-            case SkillState.Locked:  backGroundImage.color = locked; break;
-        }
-
+        connectionsToParents = new Dictionary<SkillUI, GameObject>();
         if (parents != null)
         {
             foreach (var parent in parents)
@@ -54,19 +47,53 @@ public class SkillUI : MonoBehaviour
                 Vector3 relative = connection.transform.InverseTransformPoint(parent.transform.position-new Vector3(0,offset,0));
                 //Debug.Log("Self: "+this.gameObject.name+" Parent: " +parent.gameObject.name+" " +parent.transform.position+" "+this.transform.position);
                 float angle = Mathf.Atan2(relative.x, relative.y) * Mathf.Rad2Deg;
-             //   Debug.Log("Angle: " + angle);
+                //   Debug.Log("Angle: " + angle);
                 connection.transform.rotation = Quaternion.Euler(0, 0, -angle);
-              //  Debug.Log("Distance: " + Vector2.Distance(parent.transform.position, this.transform.position));
+                //  Debug.Log("Distance: " + Vector2.Distance(parent.transform.position, this.transform.position));
                 connection.GetComponent<RectTransform>().sizeDelta =
                     new Vector2((int)(Vector2.Distance(parent.transform.position, connection.transform.position)-offset/2), 100);
-                connectionsToParents.Add(connection);
-                if(parent.skillState == SkillState.Learned&&skillState==SkillState.Learned)
-                    connection.GetComponent<Image>().color = Color.white;
-                else
-                    connection.GetComponent<Image>().color = new Color(1,1,1, 0.2f);
+                connectionsToParents.Add(parent, connection);
             }
+       
+       
+        }
+        UpdateUI();
+
+
+    }
+
+    public void UpdateUI()
+    {
+        Debug.Log("UPDATE SKILL BUTTON UI!!!!!! "+skillEntry.SkillState);
+        skillIcon.sprite = skillEntry.skill.Icon;
+        skillLevelText.text = ""+skillEntry.skill.Level+"/"+skillEntry.skill.MaxLevel;
+
+        skillLevelText.color = normalTextColor;
+        skillIcon.color = normalIconColor;
+        CanvasGroup.alpha  = 1;
+        switch (skillEntry.SkillState)
+        {
+            case SkillState.Learnable:
+                backGroundImage.color = notLearned; break;
+            case SkillState.NotLearnable:  backGroundImage.color = locked;
+                skillIcon.color = secretIconColor;
+                CanvasGroup.alpha = secretAlpha; break;
+            case SkillState.Learned:  backGroundImage.color = learned; break;
+            case SkillState.Maxed:  backGroundImage.color = learned;
+                skillLevelText.color = maxTextColor; break;
+            case SkillState.Locked:  backGroundImage.color = locked;
+                skillIcon.color = secretIconColor;
+                CanvasGroup.alpha = secretAlpha;
+                break;
         }
 
+        foreach (var keyvaluePair in connectionsToParents)
+        {
+            if (keyvaluePair.Key.skillEntry.SkillState == SkillState.Learned && skillEntry.SkillState == SkillState.Learned)
+                keyvaluePair.Value.GetComponent<Image>().color = Color.white;
+            else
+                keyvaluePair.Value.GetComponent<Image>().color = new Color(1, 1, 1, 0.2f);
+        }
 
     }
 
@@ -82,6 +109,7 @@ public class SkillUI : MonoBehaviour
     {
        
         controller.LearnClicked(this);
+        UpdateUI();
     }
 
   

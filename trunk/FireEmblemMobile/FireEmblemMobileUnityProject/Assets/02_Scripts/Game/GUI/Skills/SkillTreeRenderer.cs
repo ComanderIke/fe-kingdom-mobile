@@ -53,31 +53,17 @@ public class SkillTreeRenderer : MonoBehaviour
 
     void SetupSkill(SkillTreeEntry skillEntry, Unit u, int cnt, int depth=0)
     {
-        Skill skill = null;
+        u.SkillManager.UpdateSkillState(skillEntry);
         var skillUI = skills[cnt];
-        SkillState state = SkillState.NotLearnable;
-        
-        if (u.SkillManager.Skills.Contains(skillEntry.skill))
-        {
-            skill = u.SkillManager.Skills.Find((skill) => skillEntry.skill.name == skill.name);
-          
-            state = SkillState.Learned;
-            if (skill.Level == skill.MaxLevel)
-                state = SkillState.Maxed;
-        }
-        if (u.ExperienceManager.Level >= skillEntry.levelRequirement)
-            state = SkillState.Learnable;
-
-
         
         if (depth == 0)
-            skillUI.Setup(skillEntry, state, this);
+            skillUI.Setup(skillEntry,  this);
         else
-            skillUI.Setup(skillEntry, state, this, skillsPerRow[depth - 1]);
+            skillUI.Setup(skillEntry,  this, skillsPerRow[depth - 1]);
     }
     void SetupSkills(Unit u)
         {
-            Debug.Log("TODO SKILLSTATE CHECK REQUIREMENTS");
+            Debug.Log("SET UP SKILLS!!!!!!!!!!!!!!!!!!");
             int cnt = 0;
 
             foreach (var skillEntry in skillTree.skillEntries)

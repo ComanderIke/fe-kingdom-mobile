@@ -39,7 +39,7 @@ public class SkillTreeUI : MonoBehaviour
     }
     public void LearnSkillClicked(SkillUI clickedSkill)
     {
-        u.SkillManager.LearnSkill((clickedSkill.skillEntry.skill));
+        u.SkillManager.LearnSkill((clickedSkill.skillEntry));
         UpdateUI(u);
     }
 

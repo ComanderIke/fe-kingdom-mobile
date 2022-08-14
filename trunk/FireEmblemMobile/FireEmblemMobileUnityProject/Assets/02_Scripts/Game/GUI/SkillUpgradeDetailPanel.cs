@@ -17,9 +17,10 @@ namespace LostGrace
         private Unit user;
 
         public TextMeshProUGUI description;
-        public TextMeshProUGUI cost;
         public TextMeshProUGUI name;
         public TextMeshProUGUI level;
+        public TextMeshProUGUI currentText;
+        public TextMeshProUGUI upgText;
         public GameObject currentTextGo;
         public GameObject upgradeTextGo;
         public GameObject levelTextGo;
@@ -36,7 +37,6 @@ namespace LostGrace
 
      public void Show( SkillUI skillUI, Unit user)
     {
-        gameObject.SetActive(true);
 
         this.SkillUI = skillUI;
         SkillEntry = skillUI.skillEntry;
@@ -54,15 +54,19 @@ namespace LostGrace
     {
         Debug.Log("UpdateDetail");
         if (SkillEntry == null || SkillEntry.skill == null)
+        {
+            gameObject.SetActive(false);
             return;
-        Debug.Log("NotNull");
+        }
+        if(!gameObject.activeSelf)
+            gameObject.SetActive(true);
         name.text = SkillEntry.skill.name;
         description.text =  SkillEntry.skill.Description;
-        cost.text = "" + 1;
+      
         level.text = "" +  SkillEntry.skill.Level + "/" +  SkillEntry.skill.MaxLevel;
         icon.sprite =  SkillEntry.skill.GetIcon();
         level.transform.gameObject.SetActive(true);
-        cost.transform.gameObject.SetActive(true);
+   
         description.transform.gameObject.SetActive(true);
         name.transform.gameObject.SetActive(true);
         learnButton.gameObject.SetActive(true);
@@ -72,6 +76,8 @@ namespace LostGrace
         upgradeTextGo.gameObject.SetActive(false);
         levelTextGo.gameObject.SetActive(false);
         user.SkillManager.UpdateSkillState(SkillEntry);
+        currentText.SetText(SkillEntry.skill.CurrentUpgradeText());
+        upgText.SetText(SkillEntry.skill.NextUpgradeText());
    
         Debug.Log("SkillState; "+SkillEntry.SkillState);
 
@@ -86,7 +92,9 @@ namespace LostGrace
             case SkillState.Learnable: levelTextGo.gameObject.SetActive(true);
                 upgradeTextGo.gameObject.SetActive(true);break;
             case SkillState.NotLearnable: levelTextGo.gameObject.SetActive(true);
-                upgradeTextGo.gameObject.SetActive(true);break;
+                upgradeTextGo.gameObject.SetActive(true);
+                learnButton.interactable = false;
+                break;
             case SkillState.Maxed:
                 learnButtonText.text = "Maxed";
                 learnButton.interactable = false;
@@ -97,18 +105,21 @@ namespace LostGrace
                 icon.sprite = lockedSprite;
                 learnButton.gameObject.SetActive(false);
                 level.transform.gameObject.SetActive(false);
-                cost.transform.gameObject.SetActive(false);
                 description.transform.gameObject.SetActive(false);
                 name.transform.gameObject.SetActive(false);
                
                 break;
         }
+
+        if (user.SkillManager.SkillPoints == 0)
+        {
+            learnButton.interactable = false;
+        }
     }
 
     void OnEnable()
     {
-        if ( SkillEntry == null)
-            return;
+        
         UpdateUI();
     }
 

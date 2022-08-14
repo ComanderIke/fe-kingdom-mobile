@@ -147,17 +147,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab7cbd97054f4fa7b81527f9a48ed8c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CanvasGroup: {fileID: 6660427717327888576}
   connectionPrefab: {fileID: 926720016784285280, guid: 17b7ea769f3763544ad84deaf4b4be31,
     type: 3}
   skillIcon: {fileID: 1716371523481649279}
-  skill: {fileID: 0}
+  skillEntry:
+    levelRequirement: 0
+    row: 0
+    skill: {fileID: 0}
+    SkillState: 0
+    tree:
+      name: TestSkillTree
+      currentDepth: 0
+      skillEntries: []
   skillLevelText: {fileID: 2912668801134548808}
+  secretAlpha: 0.5
   backGroundImage: {fileID: 3534882632489646204}
-  learned: {r: 0.3882353, g: 0.4509804, b: 0.4509804, a: 1}
-  notLearned: {r: 0.254717, g: 0.25087222, b: 0.25087222, a: 0.41960785}
-  notLearnable: {r: 0.7075472, g: 0, b: 0, a: 0.5058824}
-  locked: {r: 0, g: 0, b: 0, a: 0.16862746}
+  learned: {r: 0.627451, g: 0.8392157, b: 0.6313726, a: 1}
+  notLearned: {r: 0.3882353, g: 0.4509804, b: 0.4509804, a: 1}
+  notLearnable: {r: 0.6981132, g: 0.15411176, b: 0.15411176, a: 1}
+  locked: {r: 0, g: 0, b: 0, a: 1}
+  secretIconColor: {r: 0.6, g: 0.6039216, b: 0.54509807, a: 1}
+  normalIconColor: {r: 0.85490197, g: 0.85882354, b: 0.78039217, a: 1}
+  maxTextColor: {r: 0, g: 1, b: 0.3137255, a: 1}
+  normalTextColor: {r: 0.85490197, g: 0.85882354, b: 0.78039217, a: 1}
+  skillState: 0
   offset: 45
+--- !u!225 &6660427717327888576
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3534882632489646176}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &7870098993326267682
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -20,6 +20,7 @@ namespace Game.GameActors.Units.Skills
         public int MaxLevel = 1;
 
         public string Description;
+        public string[] UpgradeDescriptions;
 
         public int Level;
 
@@ -63,6 +64,20 @@ namespace Game.GameActors.Units.Skills
         public bool OnCoolDown()
         {
             return CurrentCooldown != 0;
+        }
+
+        public string NextUpgradeText()
+        {
+            if(Level<UpgradeDescriptions.Length)
+                return UpgradeDescriptions[Level];
+            return "";
+        }
+
+        public string CurrentUpgradeText()
+        {
+            if (Level - 1 < 0)
+                return "";
+            return UpgradeDescriptions[Level-1];
         }
     }
 }

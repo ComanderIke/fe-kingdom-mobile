@@ -13,8 +13,9 @@ public class SkillTreeEntry
     //public Skill[] skillRequirements;
     public Skill skill;
     public SkillState SkillState = SkillState.NotLearnable;
-    
-    
+    public SkillTree tree;
+
+
     public void Init()
     {
         if(skill!=null)
