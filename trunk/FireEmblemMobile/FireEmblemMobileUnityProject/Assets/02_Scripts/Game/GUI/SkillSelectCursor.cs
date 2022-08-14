@@ -6,7 +6,7 @@ namespace LostGrace
 {
     public class SkillSelectCursor : MonoBehaviour
     {
-     public static SkillSelectCursor Instance;
+        public static SkillSelectCursor Instance;
         public GameObject selected;
         // Start is called before the first frame update
         void Start()

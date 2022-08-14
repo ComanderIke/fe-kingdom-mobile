@@ -1,28 +1,19 @@
-﻿using System.Collections.Generic;
-using Game.GameActors.Units.Skills;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName="GameData/Skills/SkillTree", fileName="SkillTree1")]
-public class SkillTree :ScriptableObject
+[Serializable]
+public class SkillTree
 {
-    [SerializeField]
-    public List<SkillTreeEntry> skillsRow0;
-    [SerializeField]
-    public List<SkillTreeEntry> skillsRow1;
-    [SerializeField]
-    public List<SkillTreeEntry> skillsRow2;
-    [SerializeField]
-    public List<SkillTreeEntry> skillsRow3;
-    [SerializeField]
-    public List<SkillTreeEntry> skillsRow4;
+    public string name="TestSkillTree";
+    [SerializeField] public List<SkillTreeEntry> skillEntries;
 
-}
-
-[System.Serializable]
-public class SkillTreeEntry
-{
-    public int levelRequirement;
-   // public int[] statRequirements;
-    //public Skill[] skillRequirements;
-    public Skill skill;
+    public void Init()
+    {
+        foreach (var skillEntry in skillEntries)
+        {
+            skillEntry.Init();
+        }
+     
+    }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using __2___Scripts.Game.Utility;
 using Game.GameActors.Units;
+using Game.GameActors.Units.Skills;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -33,25 +34,9 @@ public class SkillTreeRenderer : MonoBehaviour
         skillsPerRow = new[]
             { new List<SkillUI>(), new List<SkillUI>(), new List<SkillUI>(), new List<SkillUI>(), new List<SkillUI>() };
 
-        foreach (var skillEntry in skillTree.skillsRow0)
+        foreach (var skillEntry in skillTree.skillEntries)
         {
-            InitSkill(skillEntry,0);
-        }
-        foreach (var skillEntry in skillTree.skillsRow1)
-        {
-            InitSkill(skillEntry,1);
-        }
-        foreach (var skillEntry in skillTree.skillsRow2)
-        {
-            InitSkill(skillEntry,2);
-        }
-        foreach (var skillEntry in skillTree.skillsRow3)
-        {
-            InitSkill(skillEntry,3);
-        }
-        foreach (var skillEntry in skillTree.skillsRow4)
-        {
-            InitSkill(skillEntry,4);
+            InitSkill(skillEntry,skillEntry.row);
         }
 
         this.CallWithDelay(() => SetupSkills(u), 0.05f);
@@ -68,44 +53,36 @@ public class SkillTreeRenderer : MonoBehaviour
 
     void SetupSkill(SkillTreeEntry skillEntry, Unit u, int cnt, int depth=0)
     {
+        Skill skill = null;
         var skillUI = skills[cnt];
         SkillState state = SkillState.NotLearnable;
+        
+        if (u.SkillManager.Skills.Contains(skillEntry.skill))
+        {
+            skill = u.SkillManager.Skills.Find((skill) => skillEntry.skill.name == skill.name);
+          
+            state = SkillState.Learned;
+            if (skill.Level == skill.MaxLevel)
+                state = SkillState.Maxed;
+        }
         if (u.ExperienceManager.Level >= skillEntry.levelRequirement)
             state = SkillState.Learnable;
-        if (u.SkillManager.Skills.Contains(skillEntry.skill))
-            state = SkillState.Learned;
+
+
+        
         if (depth == 0)
-            skillUI.Setup(skillEntry.skill, state, this);
+            skillUI.Setup(skillEntry, state, this);
         else
-            skillUI.Setup(skillEntry.skill, state, this, skillsPerRow[depth - 1]);
+            skillUI.Setup(skillEntry, state, this, skillsPerRow[depth - 1]);
     }
     void SetupSkills(Unit u)
         {
             Debug.Log("TODO SKILLSTATE CHECK REQUIREMENTS");
             int cnt = 0;
-            foreach (var skillEntry in skillTree.skillsRow0)
+
+            foreach (var skillEntry in skillTree.skillEntries)
             {
-                SetupSkill(skillEntry,u, cnt,0);
-                cnt++;
-            }
-            foreach (var skillEntry in skillTree.skillsRow1)
-            {
-                SetupSkill(skillEntry,u, cnt,1);
-                cnt++;
-            }
-            foreach (var skillEntry in skillTree.skillsRow2)
-            {
-                SetupSkill(skillEntry,u, cnt,2);
-                cnt++;
-            }
-            foreach (var skillEntry in skillTree.skillsRow3)
-            {
-                SetupSkill(skillEntry,u, cnt,3);
-                cnt++;
-            }
-            foreach (var skillEntry in skillTree.skillsRow4)
-            {
-                SetupSkill(skillEntry,u, cnt,4);
+                SetupSkill(skillEntry,u, cnt,skillEntry.row);
                 cnt++;
             }
         }
@@ -114,5 +91,11 @@ public class SkillTreeRenderer : MonoBehaviour
         public void LearnClicked(SkillUI skillUI)
         {
             controller.LearnSkillClicked(skillUI);
+        }
+
+        public void Clicked(SkillUI skillUI)
+        {
+            controller.SkillSelected(skillUI);
+           
         }
     }

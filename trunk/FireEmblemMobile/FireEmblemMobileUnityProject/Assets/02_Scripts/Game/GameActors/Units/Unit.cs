@@ -26,6 +26,7 @@ namespace Game.GameActors.Units
     public class Unit : ScriptableObject, IActor, IGridActor, IBattleActor, ICloneable, IAIAgent
     {
         public static event Action OnEquippedWeapon;
+        public static event Action<Unit> OnUnitDataChanged;
         public static event Action<Relic> OnEquippedRelic1;
         public static event Action<Relic> OnEquippedRelic2;
         
@@ -168,11 +169,19 @@ namespace Game.GameActors.Units
         }
 
         
+        void SkillPointsUpdated(int skillPoints)
+        {
+            Debug.Log("SkillPoints changed");
+            OnUnitDataChanged?.Invoke(this);
+        }
+        
 
 
         public virtual void Initialize()
         {
- 
+
+            SkillManager.SkillPointsUpdated += SkillPointsUpdated;
+            SkillManager.Init();
             experienceManager ??= new ExperienceManager();
             ExperienceManager.LevelUp = null;
             ExperienceManager.LevelUp += LevelUp;

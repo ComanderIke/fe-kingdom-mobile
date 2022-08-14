@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
+using LostGrace;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +13,7 @@ public class SkillUI : MonoBehaviour
     private List<SkillUI> parents;
     private List<GameObject> connectionsToParents;
     public Image skillIcon;
-    public Skill skill;
+    public SkillTreeEntry skillEntry;
     public TextMeshProUGUI skillLevelText;
 
     public Image backGroundImage;
@@ -20,17 +22,17 @@ public class SkillUI : MonoBehaviour
     public Color notLearnable;
     public Color locked;
     private SkillTreeRenderer controller;
-    private SkillState skillState;
+    public SkillState skillState;
     public float offset = 30;
 
-    public void Setup(Skill skill, SkillState skillState, SkillTreeRenderer controller, List<SkillUI> parents=null)
+    public void Setup(SkillTreeEntry skill, SkillState skillState, SkillTreeRenderer controller, List<SkillUI> parents=null)
     {
         this.controller = controller;
-        this.skill = skill;
+        this.skillEntry = skill;
         this.parents = parents;
         connectionsToParents = new List<GameObject>();
-        skillIcon.sprite = skill.Icon;
-        skillLevelText.text = ""+skill.Level+"/"+skill.MaxLevel;
+        skillIcon.sprite = skill.skill.Icon;
+        skillLevelText.text = ""+skill.skill.Level+"/"+skill.skill.MaxLevel;
         this.skillState = skillState;
         switch (skillState)
         {
@@ -70,12 +72,17 @@ public class SkillUI : MonoBehaviour
 
     public void Clicked()
     {
-        ToolTipSystem.ShowSkill(this, transform.position, skill.Name, skill.Description, skill.Icon);
-        //controller.Clicked(this);
+    
+        Debug.Log("SkillUI Clicked");
+        //ToolTipSystem.ShowSkill(this, transform.position, skill.Name, skill.Description, skill.Icon);
+        controller.Clicked(this);
     }
 
     public void LearnClicked()
     {
+       
         controller.LearnClicked(this);
     }
+
+  
 }

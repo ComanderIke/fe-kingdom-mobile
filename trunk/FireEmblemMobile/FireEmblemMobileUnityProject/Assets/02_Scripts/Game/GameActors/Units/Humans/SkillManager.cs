@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.GameActors.Units.Skills;
+using UnityEditor.SceneTemplate;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -10,16 +11,26 @@ namespace Game.GameActors.Units.Humans
     [System.Serializable]
     public class SkillManager : ICloneable
     {
-        [SerializeField]
-        public List<Skill> Skills;
-        [SerializeField]
-        public Skill Favourite;
-        [SerializeField]
-        public int SkillPoints=0;
+        public Action<int> SkillPointsUpdated;
+        [SerializeField] public List<Skill> Skills;
+        [SerializeField] public Skill Favourite;
+        [SerializeField] private int skillPoints = 1;
 
-        [FormerlySerializedAs("SkillTree")] [SerializeField] public SkillTree[] SkillTrees;
+        public int SkillPoints
+        {
+            get { return skillPoints; }
+            set
+            {
+                skillPoints = value;
+                Debug.Log("SkillPoints value changed");
+                SkillPointsUpdated?.Invoke(skillPoints);
+            }
+        }
 
-        
+        [FormerlySerializedAs("SkillTree")] [SerializeField]
+        public SkillTree[] SkillTrees;
+
+
         public SkillManager(SkillManager sm)
         {
             Skills = new List<Skill>();
@@ -29,16 +40,10 @@ namespace Game.GameActors.Units.Humans
             }
         }
 
-        public bool HasSkill<T>()
-        {
-            return Skills.OfType<T>().Any();
-        }
 
-        public T GetSkill<T>()
+        public Skill GetSkill(string name)
         {
-            foreach (var s in Skills.OfType<T>())
-                return (T) Convert.ChangeType(s, typeof(T));
-            return default;
+            return Skills.Find(s => s.name == name);
         }
 
         public object Clone()
@@ -49,6 +54,7 @@ namespace Game.GameActors.Units.Humans
             {
                 clone.Skills.Add(skill);
             }
+
             return clone;
         }
 
@@ -56,7 +62,16 @@ namespace Game.GameActors.Units.Humans
         {
             if (SkillPoints >= 1)
             {
-                Skills.Add(clickedSkill);
+                if (Skills.Contains(clickedSkill))
+                {
+                    Skills.Find(s => clickedSkill.name == s.name).Level++;
+                }
+                else
+                {
+                    Skills.Add((clickedSkill));
+                    clickedSkill.Level++;
+                }
+
                 SkillPoints--;
             }
             else
@@ -64,8 +79,32 @@ namespace Game.GameActors.Units.Humans
                 Debug.LogError("Not enough SkillPoints to learn new skill!");
             }
         }
-    }
+        public void UpdateSkillState(SkillTreeEntry skillEntry)
+        {
+            SkillTreeEntry entry = null;
+            foreach (var skilltree in SkillTrees)
+            {
+                entry = skilltree.skillEntries.Find(se => se.skill == skillEntry.skill);
+            }
 
-    
-    
+            Debug.Log(skillEntry.skill.name);
+            entry.SkillState = SkillState.NotLearnable;
+        
+            if (Skills.Contains(entry.skill))
+            {
+                entry.SkillState = SkillState.Learned;
+                if ( entry.skill.Level ==  entry.skill.MaxLevel)
+                    entry.SkillState = SkillState.Maxed;
+            }
+            entry.SkillState = SkillState.Learnable;
+        }
+        public void Init()
+        {
+            for(int i=0; i < SkillTrees.Length; i++)
+            {
+                SkillTrees[i].Init();
+            }
+
+        }
+    }
 }

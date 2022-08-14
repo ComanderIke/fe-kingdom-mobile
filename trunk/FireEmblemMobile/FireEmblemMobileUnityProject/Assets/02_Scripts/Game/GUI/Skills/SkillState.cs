@@ -1,4 +1,4 @@
 ﻿public enum SkillState{
-    Learned, Learnable, NotLearnable, Locked,
+    NotLearnable,Learned, Learnable,  Locked,
     Maxed
 }

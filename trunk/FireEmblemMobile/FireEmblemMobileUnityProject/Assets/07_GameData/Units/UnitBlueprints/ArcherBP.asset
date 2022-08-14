@@ -43,11 +43,18 @@ MonoBehaviour:
   SkillManager:
     Skills: []
     Favourite: {fileID: 0}
-    SkillPoints: 1
+    skillPoints: 1
     SkillTrees:
-    - {fileID: 11400000, guid: d676610ad1a369c408de326f8bbc89b0, type: 2}
-    - {fileID: 11400000, guid: c880e6abcb3e9af4e9c5bcac58e5682c, type: 2}
-    - {fileID: 11400000, guid: 92278023de2e5df40b3a867e2efa575c, type: 2}
+    - name: Crafting Expert
+      skillEntries:
+      - levelRequirement: 0
+        row: 0
+        skill: {fileID: 0}
+        SkillState: 0
+    - name: MasterArcher
+      skillEntries: []
+    - name: Ranger
+      skillEntries: []
   bluePrintID: 
   visuals:
     CharacterSpriteSet: {fileID: 11400000, guid: 15c6559b2ce48d548a45dc0c7b7ffba6,

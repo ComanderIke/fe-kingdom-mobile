@@ -48,6 +48,17 @@ public class UICharacterViewController : MonoBehaviour
         //     dropArea.OnDropHandler += OnItemDropped;
     }
 
+    void OnEnable()
+    {
+        Debug.Log("WTF  Init Event!");
+        Unit.OnUnitDataChanged += UpdateUI;
+    }
+
+    private void OnDisable()
+    {
+        Unit.OnUnitDataChanged -= UpdateUI;
+    }
+
     public void SkillTreeClicked()
     {
         skillTreeUI.Show(unit);
@@ -75,7 +86,8 @@ public class UICharacterViewController : MonoBehaviour
   
     void UpdateUI(Unit unit)
     {
-  
+
+        Debug.Log("UpdateCharViewScreen");
         this.unit = unit;
         charName.SetText(unit.name);//+", "+unit.jobClass);
         Lv.SetText("Lv. "+unit.ExperienceManager.Level);

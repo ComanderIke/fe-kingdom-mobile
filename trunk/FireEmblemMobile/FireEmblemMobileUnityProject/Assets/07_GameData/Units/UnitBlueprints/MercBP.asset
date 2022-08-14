@@ -43,11 +43,18 @@ MonoBehaviour:
   SkillManager:
     Skills: []
     Favourite: {fileID: 0}
-    SkillPoints: 1
+    skillPoints: 0
     SkillTrees:
-    - {fileID: 11400000, guid: a68a5f745e156da409c9f1a03a60fd1a, type: 2}
-    - {fileID: 11400000, guid: ae63c0ec401f6244586a2b18c1ddd6b1, type: 2}
-    - {fileID: 11400000, guid: ccdac9331d84b544dbdff7c2aa59a3bb, type: 2}
+    - name: EarthSmasher
+      skillEntries:
+      - levelRequirement: 0
+        row: 0
+        skill: {fileID: 0}
+        SkillState: 0
+    - name: Berserker
+      skillEntries: []
+    - name: Blade Master
+      skillEntries: []
   bluePrintID: 
   visuals:
     CharacterSpriteSet: {fileID: 11400000, guid: c185c26f8316f0e4085cfdb9f4d4d5d2,

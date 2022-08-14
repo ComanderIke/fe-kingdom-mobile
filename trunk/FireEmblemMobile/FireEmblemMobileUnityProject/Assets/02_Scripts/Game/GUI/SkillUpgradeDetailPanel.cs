@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
 using TMPro;
 using UnityEngine;
@@ -11,7 +12,9 @@ namespace LostGrace
     public class SkillUpgradeDetailPanel : MonoBehaviour
     {
         public static SkillUpgradeDetailPanel Instance;
-        public Skill Skill;
+        public SkillTreeEntry SkillEntry;
+        public SkillUI SkillUI;
+        private Unit user;
 
         public TextMeshProUGUI description;
         public TextMeshProUGUI cost;
@@ -31,11 +34,15 @@ namespace LostGrace
             Instance = this;
         }
 
-     public void Show(Skill skill)
+     public void Show( SkillUI skillUI, Unit user)
     {
         gameObject.SetActive(true);
-        this.Skill = skill;
+
+        this.SkillUI = skillUI;
+        SkillEntry = skillUI.skillEntry;
+        this.user = user;
         UpdateUI();
+       
     }
 
     public void Hide()
@@ -45,11 +52,15 @@ namespace LostGrace
 
     void UpdateUI()
     {
-        name.text = Skill.name;
-        description.text = Skill.Description;
+        Debug.Log("UpdateDetail");
+        if (SkillEntry == null || SkillEntry.skill == null)
+            return;
+        Debug.Log("NotNull");
+        name.text = SkillEntry.skill.name;
+        description.text =  SkillEntry.skill.Description;
         cost.text = "" + 1;
-        level.text = "" + Skill.Level + "/" + Skill.MaxLevel;
-        icon.sprite = Skill.GetIcon();
+        level.text = "" +  SkillEntry.skill.Level + "/" +  SkillEntry.skill.MaxLevel;
+        icon.sprite =  SkillEntry.skill.GetIcon();
         level.transform.gameObject.SetActive(true);
         cost.transform.gameObject.SetActive(true);
         description.transform.gameObject.SetActive(true);
@@ -60,10 +71,11 @@ namespace LostGrace
         currentTextGo.gameObject.SetActive(false);
         upgradeTextGo.gameObject.SetActive(false);
         levelTextGo.gameObject.SetActive(false);
-       
-      
+        user.SkillManager.UpdateSkillState(SkillEntry);
+   
+        Debug.Log("SkillState; "+SkillEntry.SkillState);
 
-        switch (Skill.State)
+        switch (SkillEntry.SkillState)
         {
             case SkillState.Learned:
                 learnButtonText.text = "Upgrade";
@@ -95,14 +107,18 @@ namespace LostGrace
 
     void OnEnable()
     {
-        if (Skill == null)
+        if ( SkillEntry == null)
             return;
         UpdateUI();
     }
 
     public void LearnClicked()
     {
-        Debug.Log("Learn Clicked!");
+        
+        SkillUI.LearnClicked();
+        UpdateUI();
+    
+      
     }
     }
 }
