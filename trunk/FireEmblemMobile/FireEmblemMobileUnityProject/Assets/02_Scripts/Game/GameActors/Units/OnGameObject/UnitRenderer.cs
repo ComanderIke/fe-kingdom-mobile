@@ -50,7 +50,7 @@ namespace Game.GameActors.Units.OnGameObject
         }
         private void Start()
         {
-            Unit.HpValueChanged += HpValueChanged;
+            unit.HpValueChanged += HpValueChanged;
             // Unit.SpValueChanged += SpValueChanged;
             // Unit.SpBarsValueChanged += SpBarsValueChanged;
             if(unit!=null)
@@ -97,7 +97,7 @@ namespace Game.GameActors.Units.OnGameObject
         }
         void OnDestroy()
         {
-            Unit.HpValueChanged -= HpValueChanged;
+            unit.HpValueChanged -= HpValueChanged;
             // Unit.SpValueChanged -= SpValueChanged;
             // Unit.SpBarsValueChanged -= SpBarsValueChanged;
             if(unit!=null)

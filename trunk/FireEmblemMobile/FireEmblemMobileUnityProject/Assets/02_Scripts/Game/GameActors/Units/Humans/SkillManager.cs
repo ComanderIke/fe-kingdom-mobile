@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.GameActors.Units.Skills;
-using UnityEditor.SceneTemplate;
+
 using UnityEngine;
 using UnityEngine.Serialization;
 

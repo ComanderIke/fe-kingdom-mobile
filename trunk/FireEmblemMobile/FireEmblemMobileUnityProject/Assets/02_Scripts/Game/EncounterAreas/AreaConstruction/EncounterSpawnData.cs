@@ -13,6 +13,7 @@ public class EncounterSpawnData
     
     public int columnMaxEncounter = 4;
     public EncounterNodeData startNodeData;
+    public EncounterNodeData FirstEncounter;
     public List<EncounterNodeData> nodeDatas;
     public EncounterNodeData endNodeData;
     public float ChanceDistributionAfterOccurence = 0.05f;
@@ -23,6 +24,9 @@ public class EncounterSpawnData
     public Dictionary<EncounterNodeData, float> EncounterChances = new Dictionary<EncounterNodeData, float>();
     [HideInInspector]
     public Dictionary<EncounterNodeData, float> StartEncounterChances = new Dictionary<EncounterNodeData, float>();
+
+   
+
     public void InitNodeAppearanceChances()
     {
         EncounterChances = new Dictionary<EncounterNodeData, float>();

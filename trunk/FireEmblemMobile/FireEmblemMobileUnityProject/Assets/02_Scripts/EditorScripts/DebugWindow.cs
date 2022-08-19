@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.Manager;
 using Game.Mechanics;
@@ -22,11 +23,12 @@ namespace __2___Scripts.External.Editor
        
         public void Update()
         {
-            if (GridGameManager.Instance == null)
-                return;
-            UnitSelectionSystem system = GridGameManager.Instance.GetSystem<UnitSelectionSystem>();
+            UnitSelectionSystem system = null;
+            if (GridGameManager.Instance != null)
+                system = GridGameManager.Instance.GetSystem<UnitSelectionSystem>();
             if (system != null)
             {
+                
                 if (activeUnit != (Unit)system.SelectedCharacter)
                 {
                     activeUnit = (Unit)system.SelectedCharacter;
@@ -34,6 +36,13 @@ namespace __2___Scripts.External.Editor
                     Repaint();
                     //Debug.Log("Repaint!");
                 }
+            }
+            else
+            {
+               
+                if (Player.Instance != null && Player.Instance.Party != null &&
+                    Player.Instance.Party.ActiveUnit != null)
+                    activeUnit = Player.Instance.Party.ActiveUnit;
             }
 
            
@@ -58,6 +67,11 @@ namespace __2___Scripts.External.Editor
                 foreach (var skill in activeUnit.SkillManager.Skills)
                 {
                     GUILayout.Label("Skill: " + skill.name);
+                }
+
+                if (GUILayout.Button("Deal 5 DMG"))
+                {
+                    activeUnit.Hp -= 5;
                 }
             }
             else

@@ -1,6 +1,6 @@
 ﻿using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
-using UnityEditor.SceneTemplate;
+
 using UnityEngine;
 
 [System.Serializable]

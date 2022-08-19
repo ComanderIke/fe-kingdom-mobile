@@ -67,6 +67,8 @@ namespace Game.GUI
         public override void Show(Unit unit)
         {
             this.unit = unit;
+            unit.HpValueChanged -= UpdateValues;
+            unit.HpValueChanged += UpdateValues;
             UpdateValues();
             gameObject.SetActive(true);
             GetComponent<RectTransform>().sizeDelta = normalSize;
@@ -91,6 +93,7 @@ namespace Game.GUI
         public override void Hide()
         {
             gameObject.SetActive(false);
+            unit.HpValueChanged -= UpdateValues;
         }
 
         public override ExpBarController GetExpRenderer()

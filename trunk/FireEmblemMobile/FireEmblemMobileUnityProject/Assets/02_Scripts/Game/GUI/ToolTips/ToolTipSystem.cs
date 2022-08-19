@@ -2,13 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Game.GameActors.Items;
+using Game.GameActors.Items.Weapons;
 using Game.GameActors.Units.Skills;
+using LostGrace;
 using UnityEngine;
 
 public class ToolTipSystem : MonoBehaviour
 {
     private static ToolTipSystem instance;
     public ItemToolTip ItemToolTip;
+    public WeaponToolTip WeaponToolTip;
     public SkillToolTip SkillToolTip;
     public AttributeToolTip AttributeToolTip;
     public EncounterToolTip EncounterToolTip;
@@ -28,6 +31,12 @@ public class ToolTipSystem : MonoBehaviour
         instance.ItemToolTip.SetValues(item, header,description,icon, position);
         
         instance.ItemToolTip.gameObject.SetActive(true);
+    }
+    public static void Show(Weapon weapon, Vector3 position, string header, string description, Sprite icon)
+    {
+        instance.WeaponToolTip.SetValues(weapon, header,description,icon, position);
+        
+        instance.WeaponToolTip.gameObject.SetActive(true);
     }
     public static void ShowSkill(SkillUI skill, Vector3 position, string header, string description, Sprite icon)
     {

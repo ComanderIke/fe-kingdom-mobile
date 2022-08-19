@@ -80,7 +80,7 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
                 var item = party.Convoy.Items[i];
                 instantiatedItems.Add(go);
                 shopItems.Add(go.GetComponent<UIShopItemController>());
-                bool affordable = party.money >= item.item.cost;
+                bool affordable =true; //Because we are selling
     
                 shopItems[i].SetValues(new ShopItem(item.item, item.stock), affordable, this);
             }

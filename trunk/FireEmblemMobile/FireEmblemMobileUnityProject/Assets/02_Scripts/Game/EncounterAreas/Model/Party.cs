@@ -24,8 +24,25 @@ namespace Game.WorldMapStuff.Model
     
 
         public Convoy Convoy;
-        
-        public int ActiveUnitIndex = 0;
+int activeUnitIndex=0;
+        public int ActiveUnitIndex
+        {
+            get
+            {
+                return activeUnitIndex;
+            }
+            set
+            {
+                if (value >= members.Count)
+                    activeUnitIndex = 0;
+                else if (value < 0)
+                    activeUnitIndex = members.Count - 1;
+                else
+                {
+                    activeUnitIndex = value;
+                }
+            }
+        }
         public int smithingStones = 2;
         
         public int SmithingStones
@@ -106,6 +123,6 @@ namespace Game.WorldMapStuff.Model
         }
 
 
-       
+        
     }
 }

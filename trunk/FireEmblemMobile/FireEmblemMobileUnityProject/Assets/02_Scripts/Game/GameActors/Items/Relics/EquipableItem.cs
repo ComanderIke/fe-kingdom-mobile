@@ -13,6 +13,15 @@ namespace Game.GameActors.Items.Weapons
     {
         public EquipmentSlotType EquipmentSlotType;
 
+        public int GetUpgradeCost()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetUpgradeSmithingStoneCost()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public enum EquipmentSlotType

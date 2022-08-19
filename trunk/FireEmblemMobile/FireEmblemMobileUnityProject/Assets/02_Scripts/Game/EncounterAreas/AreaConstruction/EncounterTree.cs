@@ -86,7 +86,7 @@ public class EncounterTree
             {
                 if (current.index == 1)
                 {
-                    chosenKey = spawnData.EncounterChances.Keys.First();
+                    chosenKey = spawnData.FirstEncounter;
                 }
                 else
                 {

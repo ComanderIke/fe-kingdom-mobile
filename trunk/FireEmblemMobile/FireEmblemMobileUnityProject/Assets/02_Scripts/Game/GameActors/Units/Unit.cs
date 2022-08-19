@@ -426,9 +426,7 @@ namespace Game.GameActors.Units
 
         #region Events
 
-        public static event Action HpValueChanged;
-        public static event Action SpValueChanged;
-        public static event Action SpBarsValueChanged;
+        public event Action HpValueChanged;
 
 
 

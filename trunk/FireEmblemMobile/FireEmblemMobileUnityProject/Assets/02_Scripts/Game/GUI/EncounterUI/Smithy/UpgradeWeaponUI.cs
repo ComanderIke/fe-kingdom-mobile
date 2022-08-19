@@ -24,27 +24,30 @@ public class UpgradeWeaponUI : MonoBehaviour
     public TextMeshProUGUI cost;
     public TextMeshProUGUI stoneCost;
     public Button upgradeButton;
-    private Weapon weapon;
+    private EquipableItem equipable;
     // Start is called before the first frame update
-    public void Show(Weapon weapon, bool affordable)
+    public void Show(EquipableItem equipable, bool affordable)
     {
-        this.weapon = weapon;
-        Icon.sprite = weapon.Sprite;
-        cost.text = ""+weapon.GetUpgradeCost();
-        stoneCost.text = "" + weapon.GetUpgradeSmithingStoneCost();
-        description.text = "" + weapon.Description;
-        name.text = "" + weapon.name;
+        this.equipable = equipable;
+        Icon.sprite = equipable.Sprite;
+        cost.text = ""+equipable.GetUpgradeCost();
+        stoneCost.text = "" + equipable.GetUpgradeSmithingStoneCost();
+        description.text = "" + equipable.Description;
+        name.text = "" + equipable.name;
         effectAfter.text = "-";
         effectCurrent.text = "-";
-        //weightCurrent.text= ""+weapon.GetWeight();
-        critCurrent.text = ""+weapon.GetCrit();
-        hitCurrent.text = ""+weapon.GetHit();
-        dmgCurrent.text = ""+weapon.GetDamage();
-        //weightAfter.text =""+ weapon.GetUpgradeableWeight();
-        critAfter.text = ""+weapon.GetUpgradeableCrit();
-        hitAfter.text =""+ weapon.GetUpgradeableHit();
-        dmgAfter.text =""+ weapon.GetUpgradeableDmg();
-        
+        if (equipable is Weapon weapon)
+        {
+            //weightCurrent.text= ""+weapon.GetWeight();
+            critCurrent.text = "" + weapon.GetCrit();
+            hitCurrent.text = "" + weapon.GetHit();
+            dmgCurrent.text = "" + weapon.GetDamage();
+            //weightAfter.text =""+ weapon.GetUpgradeableWeight();
+            critAfter.text = "" + weapon.GetUpgradeableCrit();
+            hitAfter.text = "" + weapon.GetUpgradeableHit();
+            dmgAfter.text = "" + weapon.GetUpgradeableDmg();
+        }
+
         upgradeButton.interactable = affordable;
     }
     
