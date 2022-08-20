@@ -13,9 +13,13 @@ public class SelectedItemUI : MonoBehaviour
     public TextMeshProUGUI description;
     public TextMeshProUGUI cost;
     public Button buyButton;
+    public Image buyButtonBg;
+    public Color buyColor;
+    public Color sellColor;
     private ShopItem item;
+    public TextMeshProUGUI BuySellButtonText;
     // Start is called before the first frame update
-    public void Show(ShopItem item, bool affordable)
+    public void Show(ShopItem item, bool affordable, bool buy)
     {
         gameObject.SetActive(true);
         this.item = item;
@@ -24,6 +28,16 @@ public class SelectedItemUI : MonoBehaviour
         description.text = "" + item.description;
         name.text = "" + item.name;
         buyButton.interactable = affordable;
+        if (buy)
+        {
+            BuySellButtonText.text = "Buy";
+            buyButtonBg.color = buyColor;
+        }
+        else
+        {
+            BuySellButtonText.text = "Sell";
+            buyButtonBg.color = sellColor;
+        }
     }
 
     public void Hide()

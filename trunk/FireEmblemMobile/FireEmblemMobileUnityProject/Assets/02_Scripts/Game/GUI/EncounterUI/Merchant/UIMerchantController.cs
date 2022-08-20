@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Game.GameActors.Players;
 using Game.WorldMapStuff.Model;
 using TMPro;
 using UnityEngine;
@@ -14,6 +16,8 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
     // public TextMeshProUGUI personName;
     //public TextMeshProUGUI talkText;
     private List<UIShopItemController> shopItems;
+    [SerializeField] private UICharacterFace characterFace;
+    [SerializeField] private UIUnitIdleAnimation unitIdleAnimation;
     public Transform itemParent;
     public GameObject shopItemPrefab;
     private Merchant merchant;
@@ -22,9 +26,9 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
     private List<GameObject> instantiatedItems= new List<GameObject>();
     public Button switchBuyButton;
     public Button switchSellButton;
-    public TextMeshProUGUI BuySellButtonText;
+ 
     public TextMeshProUGUI InStoreLabel;
-    public TextMeshProUGUI MerchantDialog;
+
     public void Show(MerchantEncounterNode node, Party party)
     {
         canvas.enabled = true;
@@ -32,10 +36,22 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
         this.party = party;
         this.merchant = node.merchant;
         shopItems = new List<UIShopItemController>();
+        selectedItem = merchant.shopItems[0];
+        buying = true;
         UpdateUI();
         //GameObject.FindObjectOfType<UIConvoyController>().Show();
     }
+    public void NextClicked()
+    {
+        Player.Instance.Party.ActiveUnitIndex++;
+        UpdateUI();
+    }
 
+    public void PrevClicked()
+    {
+        Player.Instance.Party.ActiveUnitIndex--;
+        UpdateUI();
+    }
     public void UpdateUI()
     { 
         shopItems.Clear();
@@ -44,14 +60,15 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
             Destroy(instantiatedItems[i]);
         }
         instantiatedItems.Clear();
-        
+        unitIdleAnimation.Show(party.ActiveUnit);
+        characterFace.Show(party.ActiveUnit);
 
         if (buying)
         {
             Debug.Log("Buying");
-            BuySellButtonText.text = "Buy";
+       
             InStoreLabel.text = "In Store:";
-            MerchantDialog.text = "What are you buying?";
+           
             switchBuyButton.interactable = false;
             switchSellButton.interactable = true;
             for (int i=0; i<merchant.shopItems.Count; i++)
@@ -64,8 +81,8 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
     
                 shopItems[i].SetValues(item, affordable, this);
             }
-            if(merchant.shopItems.Count>=1)
-                selectedItemUI.Show(merchant.shopItems[0],  party.money >= merchant.shopItems[0].cost);
+            if(selectedItem!=null)
+                selectedItemUI.Show(selectedItem,  party.money >= merchant.shopItems[0].cost, buying);
             else
             {
                 selectedItemUI.Hide();
@@ -84,14 +101,13 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
     
                 shopItems[i].SetValues(new ShopItem(item.item, item.stock), affordable, this);
             }
-            if(party.Convoy.Items.Count>=1)
-                selectedItemUI.Show(new ShopItem(party.Convoy.Items[0].item, party.Convoy.Items[0].stock),  true);
+            if(selectedItem !=null)
+                selectedItemUI.Show(selectedItem,  true, buying);
             else
             {
                 selectedItemUI.Hide();
             }
-            BuySellButtonText.text = "Sell";
-            MerchantDialog.text = "What are you selling?";
+    
             switchBuyButton.interactable = true;
             switchSellButton.interactable = false;
             InStoreLabel.text = "In Convoy:";
@@ -122,9 +138,9 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
         selectedItem = item;
         Debug.Log(item.name+ " "+item.cost);
         if(buying)
-            selectedItemUI.Show(item,  party.money >= item.cost);
+            selectedItemUI.Show(item,  party.money >= item.cost, buying);
         else
-            selectedItemUI.Show(item,  true);
+            selectedItemUI.Show(item,  true, buying);
     }
 
     public void Hide()
@@ -142,11 +158,15 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
     public void SwitchBuyClicked()
     {
         buying = true;
+        if(merchant.shopItems.Count!=0)
+            selectedItem = merchant.shopItems[0];
         UpdateUI();
     }
     public void SwitchSellClicked()
     {
         buying = false;
+        if (party.Convoy.Items.Count != 0)
+            selectedItem = new ShopItem(party.Convoy.Items[0].item, party.Convoy.Items[0].stock);
         UpdateUI();
     }
 }

@@ -35,6 +35,11 @@ public class UISmithyController : MonoBehaviour
         UpdateUI();
     }
 
+    public void Hide()
+    {
+        canvas.enabled = false;
+    }
+
     public void UpdateUI()
     {
         unitIdleAnimation.Show(party.ActiveUnit);
@@ -69,6 +74,8 @@ public class UISmithyController : MonoBehaviour
         party.ActiveUnit.EquippedWeapon.Upgrade();
         UpdateUI();
     }
+
+  
 
     public void ContinueClicked()
     {
