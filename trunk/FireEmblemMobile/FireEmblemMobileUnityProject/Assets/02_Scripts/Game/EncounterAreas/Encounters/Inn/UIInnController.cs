@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game.GameActors.Players;
 using Game.WorldMapStuff.Model;
 using TMPro;
 using UnityEngine;
@@ -15,6 +16,8 @@ public class UIInnController : MonoBehaviour
     //public TextMeshProUGUI talkText;
 
     private Inn inn;
+    [SerializeField] private UICharacterFace characterFace;
+    [SerializeField] private UIUnitIdleAnimation unitIdleAnimation;
     
     public List<UIShopItemController> shopItems;
     public UIQuestItemController questOption;
@@ -28,43 +31,52 @@ public class UIInnController : MonoBehaviour
         this.party = party;
         this.inn = node.inn;
     Debug.Log(party);
-       
-        // for (int i=0; i<inn.shopItems.Count; i++)
-        // {
-        //     bool affordable = party.money >= inn.shopItems[i].cost;
-        //     shopItems[i].SetValues(inn.shopItems[i], affordable, this);
-        // }
-        //questOption.SetValues(inn.quest);
-        //recruitCharacter.SetValues(inn.recruitableCharacter);
-       // FindObjectOfType<UICharacterViewController>().Show(party.members[party.ActiveUnitIndex]);
+    UpdateUI();
+    // for (int i=0; i<inn.shopItems.Count; i++)
+    // {
+    //     bool affordable = party.money >= inn.shopItems[i].cost;
+    //     shopItems[i].SetValues(inn.shopItems[i], affordable, this);
+    // }
+    //questOption.SetValues(inn.quest);
+    //recruitCharacter.SetValues(inn.recruitableCharacter);
+    // FindObjectOfType<UICharacterViewController>().Show(party.members[party.ActiveUnitIndex]);
+    }
+    public void NextClicked()
+    {
+        Player.Instance.Party.ActiveUnitIndex++;
+        UpdateUI();
     }
 
-    public void ContinueClicked()
+    public void PrevClicked()
     {
-        canvas.enabled=false;
-        node.Continue();
-        FindObjectOfType<UICharacterViewController>().Hide();
+        Player.Instance.Party.ActiveUnitIndex--;
+        UpdateUI();
     }
+    public void Hide()
+    {
+        canvas.enabled = false;
+    }
+
 
     public void SpecialClicked()
     {
-        inn.Special(party);
-        ContinueClicked();
+        inn.Special(Player.Instance.Party.ActiveUnit);
+        UpdateUI();
     }
     public void DrinkClicked()
     {
-        inn.Drink(party);
-        ContinueClicked();
+        inn.Drink( Player.Instance.Party.ActiveUnit);
+        UpdateUI();
     }
     public void FoodCLicked()
     {
-        inn.Eat(party);
-        ContinueClicked();
+        inn.Eat(Player.Instance.Party.ActiveUnit);
+        UpdateUI();
     }
     public void RestClicked()
     {
-        inn.Rest(party);
-        ContinueClicked();
+        inn.Rest(Player.Instance.Party.ActiveUnit);
+        UpdateUI();
     }
 
     public void AcceptQuestClicked()
@@ -79,6 +91,7 @@ public class UIInnController : MonoBehaviour
 
     public void UpdateUI()
     {
-        //
+        unitIdleAnimation.Show(party.ActiveUnit);
+        characterFace.Show(party.ActiveUnit);
     }
 }

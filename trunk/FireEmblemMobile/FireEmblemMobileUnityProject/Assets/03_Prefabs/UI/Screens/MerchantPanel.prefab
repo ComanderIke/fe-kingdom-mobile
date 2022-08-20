@@ -2161,7 +2161,6 @@ MonoBehaviour:
   selectedItemUI: {fileID: 5181128838975822587}
   switchBuyButton: {fileID: 851959326}
   switchSellButton: {fileID: 887771034}
-  BuySellButtonText: {fileID: 5181128837898310840}
   InStoreLabel: {fileID: 5181128838791959654}
   buying: 1
 --- !u!223 &5181128838677330555
@@ -2509,6 +2508,10 @@ MonoBehaviour:
   description: {fileID: 5181128837355852326}
   cost: {fileID: 1159474940729106680}
   buyButton: {fileID: 1904432760007912821}
+  buyButtonBg: {fileID: 0}
+  buyColor: {r: 0, g: 0, b: 0, a: 0}
+  sellColor: {r: 0, g: 0, b: 0, a: 0}
+  BuySellButtonText: {fileID: 0}
 --- !u!1 &5313222332028616585
 GameObject:
   m_ObjectHideFlags: 0
@@ -3297,6 +3300,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5149265337391508748}
     m_Modifications:
+    - target: {fileID: 2427804529346373254, guid: 2120f8354dc7e7b4b93e8079f92ad1c6,
+        type: 3}
+      propertyPath: m_text
+      value: Merchant
+      objectReference: {fileID: 0}
     - target: {fileID: 2427804529505220021, guid: 2120f8354dc7e7b4b93e8079f92ad1c6,
         type: 3}
       propertyPath: m_Pivot.x

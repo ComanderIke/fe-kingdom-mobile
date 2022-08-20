@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.WorldMapStuff.Model;
 
@@ -26,35 +27,29 @@ public class Inn
         shopItems.Add(item);
     }
 
-    public void Drink(Party party)
+    public void Drink(Unit unit)
     {
-        foreach (var member in party.members)
-        {
-            member.Heal((int)((member.MaxHp/100f)*50f));
-        }
-        party.money -= drinkCost;
+        unit.Heal((int)((unit.MaxHp/100f)*50f));
+        Player.Instance.Party.money -= drinkCost;
     }
 
-    public void Eat(Party party)
+    public void Eat(Unit unit)
     {
-        foreach (var member in party.members)
-        {
-            member.Heal((member.MaxHp));
-        }
+        unit.Heal((unit.MaxHp));
+        
 
-        party.money -= eatCost;
+        Player.Instance.Party.money -= eatCost;
     }
 
-    public void Rest(Party party)
+    public void Rest(Unit unit)
     {
-        foreach (var member in party.members)
-        {
-            member.Heal((int)((member.MaxHp/100f)*25f));
-        }
+        unit.Heal((int)((unit.MaxHp/100f)*25f));
+        
     }
 
-    public void Special(Party party)
+    public void Special(Unit unit)
     {
-        throw new System.NotImplementedException();
+        unit.Heal((int)((unit.MaxHp/100f)*25f));
+        Player.Instance.Party.money -= specialCost;
     }
 }
