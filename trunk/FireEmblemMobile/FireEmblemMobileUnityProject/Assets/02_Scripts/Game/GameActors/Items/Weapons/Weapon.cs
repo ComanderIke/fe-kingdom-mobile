@@ -8,16 +8,23 @@ using UnityEngine;
 namespace Game.GameActors.Items.Weapons
 {
     [Serializable]
-    public class WeaponAttributes
+    public class WeaponAttributes : UpgradeAttributes
     {
         public int Dmg=3;
         public int Hit=70;
         public int Crit=0;
         public int Weight=1;
-        public List<WeaponMixin> WeaponMixins;
+        
+    }
+    [Serializable]
+    public class UpgradeAttributes
+    {
+
         public int upgradeGoldCost = 50;
         public int upgradeSmithingStoneCost = 1;
+        public EffectMixin effect;
     }
+    
     [Serializable]
     [CreateAssetMenu(menuName = "GameData/Weapons/Weapon", fileName = "Weapon")]
     public class Weapon : EquipableItem
@@ -55,22 +62,15 @@ namespace Game.GameActors.Items.Weapons
         {
             return WeaponAttributes[weaponLevel-1].Weight;
         }
-        public int GetUpgradeCost()
+        public override int GetUpgradeCost()
         {
             return WeaponAttributes[weaponLevel-1].upgradeGoldCost;
         }
-        public int GetUpgradeSmithingStoneCost()
+        public override int GetUpgradeSmithingStoneCost()
         {
             return WeaponAttributes[weaponLevel-1].upgradeSmithingStoneCost;
         }
-      
-
-      
-
-        public void OnAttack(Unit attacker, Unit defender)
-        {
-            foreach (var mixin in WeaponAttributes[weaponLevel-1].WeaponMixins) mixin.OnAttack(attacker, defender);
-        }
+        
 
         public void Upgrade()
         {

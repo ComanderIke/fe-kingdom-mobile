@@ -8,20 +8,13 @@ using UnityEngine;
 namespace Game.GameActors.Items.Weapons
 {
     [Serializable]
-    [CreateAssetMenu(menuName = "GameData/Items/EquipableItem", fileName = "EquipableItem")]
-    public class EquipableItem : Item
+    public abstract class EquipableItem : Item
     {
         public EquipmentSlotType EquipmentSlotType;
 
-        public int GetUpgradeCost()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract int GetUpgradeCost();
 
-        public int GetUpgradeSmithingStoneCost()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract int GetUpgradeSmithingStoneCost();
     }
 
     public enum EquipmentSlotType
