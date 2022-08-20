@@ -17,7 +17,7 @@ public class UISmithyController : MonoBehaviour
 
     //public List<UIShopItemController> shopItems;
     private Smithy smithy;
-    [SerializeField] UpgradeWeaponUI upgradeWeaponUI;
+    [SerializeField] UpgradeItemUI selectedItemUI;
     [SerializeField] private UICharacterFace characterFace;
     [SerializeField] private UIUnitIdleAnimation unitIdleAnimation;
     [SerializeField] private SmithingSlot weaponSlot;
@@ -48,7 +48,7 @@ public class UISmithyController : MonoBehaviour
         weaponSlot.Show(party.ActiveUnit.EquippedWeapon, currentEquipment==party.ActiveUnit.EquippedWeapon);
         relicSlot.Show(party.ActiveUnit.EquippedRelic1,currentEquipment==party.ActiveUnit.EquippedRelic1);
         relicSlot2.Show(party.ActiveUnit.EquippedRelic2,currentEquipment==party.ActiveUnit.EquippedRelic2);
-        upgradeWeaponUI.Show(currentEquipment,
+        selectedItemUI.Show(currentEquipment,
             party.money >= currentEquipment.GetUpgradeCost() &&
             party.SmithingStones >= currentEquipment.GetUpgradeSmithingStoneCost());
     }

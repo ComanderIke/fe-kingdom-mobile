@@ -14,15 +14,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Fire
   Description: Simple but effective Fire Magic
-  Mixins: []
-  NumberOfUses: 30
   cost: 200
   Sprite: {fileID: 21300000, guid: 30142994c7a32f8419363c945659ecc9, type: 3}
-  EquipmentSlotType: 0
+  EquipmentSlotType: 1
   AttackRanges: 0100000002000000
-  Dmg: 12
-  Hit: 80
-  Weight: 11
-  WeaponMixins: []
+  WeaponAttributes:
+  - upgradeGoldCost: 0
+    upgradeSmithingStoneCost: 0
+    effect: {fileID: 0}
+    Dmg: 0
+    Hit: 0
+    Crit: 0
+    Weight: 0
+  - upgradeGoldCost: 0
+    upgradeSmithingStoneCost: 0
+    effect: {fileID: 0}
+    Dmg: 0
+    Hit: 0
+    Crit: 0
+    Weight: 0
+  - upgradeGoldCost: 0
+    upgradeSmithingStoneCost: 0
+    effect: {fileID: 0}
+    Dmg: 0
+    Hit: 0
+    Crit: 0
+    Weight: 0
+  weaponLevel: 1
+  maxLevel: 3
   WeaponType: 1
   DamageType: 0

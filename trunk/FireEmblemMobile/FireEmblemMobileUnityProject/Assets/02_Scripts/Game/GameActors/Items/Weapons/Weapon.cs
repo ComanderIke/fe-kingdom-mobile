@@ -35,7 +35,7 @@ namespace Game.GameActors.Items.Weapons
 
         [Header("WeaponAttributes")] public WeaponAttributes[] WeaponAttributes;
         public int weaponLevel = 1;
-        public int maxLevel = 5;
+        public int maxLevel = 3;
         
         public WeaponType WeaponType;
         public DamageType DamageType;

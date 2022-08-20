@@ -21,7 +21,9 @@ namespace Game.GameActors.Items.Weapons
 
         public string GetAttributeDescription()
         {
-            return Attributes[Level -1].effect.GetDescription();
+            if(Attributes[Level -1].effect!=null)
+                return Attributes[Level -1].effect.GetDescription();
+            return "No Description?!";
         }
 
         public string GetUpgradeAttributeDescription()

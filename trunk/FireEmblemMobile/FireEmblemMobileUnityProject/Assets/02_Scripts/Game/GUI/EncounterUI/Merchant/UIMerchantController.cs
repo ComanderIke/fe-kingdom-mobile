@@ -21,7 +21,7 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
     public Transform itemParent;
     public GameObject shopItemPrefab;
     private Merchant merchant;
-    public SelectedItemUI selectedItemUI;
+    public BuyItemUI buyItemUI;
     private ShopItem selectedItem;
     private List<GameObject> instantiatedItems= new List<GameObject>();
     public Button switchBuyButton;
@@ -82,10 +82,10 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
                 shopItems[i].SetValues(item, affordable, this);
             }
             if(selectedItem!=null)
-                selectedItemUI.Show(selectedItem,  party.money >= merchant.shopItems[0].cost, buying);
+                buyItemUI.Show(selectedItem.item,  party.money >= merchant.shopItems[0].cost, buying);
             else
             {
-                selectedItemUI.Hide();
+                buyItemUI.Hide();
             }
         }
         else
@@ -102,10 +102,10 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
                 shopItems[i].SetValues(new ShopItem(item.item, item.stock), affordable, this);
             }
             if(selectedItem !=null)
-                selectedItemUI.Show(selectedItem,  true, buying);
+                buyItemUI.Show(selectedItem.item,  true, buying);
             else
             {
-                selectedItemUI.Hide();
+                buyItemUI.Hide();
             }
     
             switchBuyButton.interactable = true;
@@ -129,7 +129,7 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
             party.Convoy.RemoveItem(selectedItem.item);
         }
 
-        selectedItemUI.Hide();
+        buyItemUI.Hide();
         
         UpdateUI();
     }
@@ -138,9 +138,9 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
         selectedItem = item;
         Debug.Log(item.name+ " "+item.cost);
         if(buying)
-            selectedItemUI.Show(item,  party.money >= item.cost, buying);
+            buyItemUI.Show(item.item,  party.money >= item.cost, buying);
         else
-            selectedItemUI.Show(item,  true, buying);
+            buyItemUI.Show(item.item,  true, buying);
     }
 
     public void Hide()

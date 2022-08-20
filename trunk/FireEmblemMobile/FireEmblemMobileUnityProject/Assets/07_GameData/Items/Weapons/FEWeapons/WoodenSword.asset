@@ -14,15 +14,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Wooden Sword
   Description: A sword made of wood
-  Mixins: []
-  NumberOfUses: 30
   cost: 40
   Sprite: {fileID: 21300000, guid: 67180e93c1c2ccd459672aa0a6e5252b, type: 3}
-  EquipmentSlotType: 0
+  EquipmentSlotType: 1
   AttackRanges: 01000000
-  Dmg: 1
-  Hit: 80
-  Weight: 1
-  WeaponMixins: []
+  WeaponAttributes:
+  - upgradeGoldCost: 0
+    upgradeSmithingStoneCost: 0
+    effect: {fileID: 0}
+    Dmg: 0
+    Hit: 0
+    Crit: 0
+    Weight: 0
+  - upgradeGoldCost: 0
+    upgradeSmithingStoneCost: 0
+    effect: {fileID: 0}
+    Dmg: 0
+    Hit: 0
+    Crit: 0
+    Weight: 0
+  - upgradeGoldCost: 0
+    upgradeSmithingStoneCost: 0
+    effect: {fileID: 0}
+    Dmg: 0
+    Hit: 0
+    Crit: 0
+    Weight: 0
+  weaponLevel: 1
+  maxLevel: 3
   WeaponType: 0
   DamageType: 0

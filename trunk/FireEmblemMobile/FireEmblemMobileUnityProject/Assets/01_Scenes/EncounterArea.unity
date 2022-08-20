@@ -444,7 +444,7 @@ MonoBehaviour:
     chanceToShareChild: 0.3
     columnMaxEncounter: 4
     startNodeData: {fileID: 11400000, guid: 48889ab8cea10644f87e71f022dad1a2, type: 2}
-    FirstEncounter: {fileID: 11400000, guid: 36f973f75b744144b894814d6efd9adc, type: 2}
+    FirstEncounter: {fileID: 11400000, guid: f708728653f5cf54b90ff783cdd4c64d, type: 2}
     nodeDatas:
     - {fileID: 11400000, guid: 3a74b82d9cbdcd546864220dab0a1d21, type: 2}
     - {fileID: 11400000, guid: e9edc95566a14af41904a804677b418b, type: 2}
@@ -45148,6 +45148,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3975359895274987069, guid: a6f15fdc1e53bc9479daa66388cbbc39,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6f15fdc1e53bc9479daa66388cbbc39, type: 3}
 --- !u!114 &3975359895441940971 stripped
@@ -52168,6 +52173,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3911162503646990755}
     m_Modifications:
+    - target: {fileID: 2016604328, guid: 48cb75edef9d10340b11d5ea352f6fb4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -84
+      objectReference: {fileID: 0}
     - target: {fileID: 5181128838677330555, guid: 48cb75edef9d10340b11d5ea352f6fb4,
         type: 3}
       propertyPath: m_Enabled
@@ -52270,6 +52279,16 @@ PrefabInstance:
       propertyPath: BuySellButtonText
       value: 
       objectReference: {fileID: 1561138599}
+    - target: {fileID: 5181128838975822590, guid: 48cb75edef9d10340b11d5ea352f6fb4,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 5181128838975822590, guid: 48cb75edef9d10340b11d5ea352f6fb4,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 40
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48cb75edef9d10340b11d5ea352f6fb4, type: 3}
 --- !u!114 &5181128837307915438 stripped
@@ -63724,52 +63743,42 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3911162503646990755}
     m_Modifications:
-    - target: {fileID: 5107278679848776059, guid: 791cf87b284e5214d8942c4e9eac474c,
+    - target: {fileID: 5051932155209355032, guid: 791cf87b284e5214d8942c4e9eac474c,
         type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5107278679848776059, guid: 791cf87b284e5214d8942c4e9eac474c,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5107278679848776059, guid: 791cf87b284e5214d8942c4e9eac474c,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 5107278679848776059, guid: 791cf87b284e5214d8942c4e9eac474c,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 5107278679848776059, guid: 791cf87b284e5214d8942c4e9eac474c,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 139
+      propertyPath: buyColor.a
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5107278679848776059, guid: 791cf87b284e5214d8942c4e9eac474c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 450
+      value: -81
       objectReference: {fileID: 0}
-    - target: {fileID: 7629010624242910190, guid: 791cf87b284e5214d8942c4e9eac474c,
+    - target: {fileID: 5465713264198217070, guid: 791cf87b284e5214d8942c4e9eac474c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5753542710917773060, guid: 791cf87b284e5214d8942c4e9eac474c,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 877
+      value: 170
       objectReference: {fileID: 0}
-    - target: {fileID: 7629010624245297290, guid: 791cf87b284e5214d8942c4e9eac474c,
+    - target: {fileID: 5753542710917773060, guid: 791cf87b284e5214d8942c4e9eac474c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 7565083323334313584, guid: 791cf87b284e5214d8942c4e9eac474c,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 7629010625866059745}
-    - target: {fileID: 7629010624245297290, guid: 791cf87b284e5214d8942c4e9eac474c,
+    - target: {fileID: 7565083323334313584, guid: 791cf87b284e5214d8942c4e9eac474c,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: BuyClicked
       objectReference: {fileID: 0}
-    - target: {fileID: 7629010624245297290, guid: 791cf87b284e5214d8942c4e9eac474c,
+    - target: {fileID: 7565083323334313584, guid: 791cf87b284e5214d8942c4e9eac474c,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: UIChurchController, Game
@@ -63817,7 +63826,7 @@ PrefabInstance:
     - target: {fileID: 7629010625102671761, guid: 791cf87b284e5214d8942c4e9eac474c,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1400
+      value: 1600
       objectReference: {fileID: 0}
     - target: {fileID: 7629010625102671761, guid: 791cf87b284e5214d8942c4e9eac474c,
         type: 3}
@@ -63887,22 +63896,12 @@ PrefabInstance:
     - target: {fileID: 7629010625102671764, guid: 791cf87b284e5214d8942c4e9eac474c,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7629010625213732011, guid: 791cf87b284e5214d8942c4e9eac474c,
+    - target: {fileID: 7629010625393883150, guid: 791cf87b284e5214d8942c4e9eac474c,
         type: 3}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7629010625213732013, guid: 791cf87b284e5214d8942c4e9eac474c,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 7629010625393883151, guid: 791cf87b284e5214d8942c4e9eac474c,
-        type: 3}
-      propertyPath: m_RaycastTarget
-      value: 0
+      propertyPath: m_AnchoredPosition.y
+      value: 151
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 791cf87b284e5214d8942c4e9eac474c, type: 3}
@@ -66662,7 +66661,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8062191869468691485}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.3333335, y: 1.6970072, z: -0.4966948}
+  m_LocalPosition: {x: -1.1741533, y: 1.6970072, z: -0.4966948}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 524863289}
