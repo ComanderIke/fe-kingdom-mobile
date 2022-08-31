@@ -221,7 +221,7 @@ namespace Game.GameActors.Units
         private void ExpGained(Vector3 drainPos, int expBefore, int expGained)
         {
             Debug.Log("Unit Exp Gained!" +expBefore+" "+expGained);
-            OnExpGained?.Invoke(this, expBefore, expGained);
+            OnExpGained?.Invoke(expBefore, expGained);
             GameObject.FindObjectOfType<ExpParticleSystem>().Play(this, drainPos+new Vector3(0.5f,0.5f,0), expGained);
         }
 
@@ -444,9 +444,9 @@ namespace Game.GameActors.Units
 
 
 
-        public delegate void OnExpGainedEvent(Unit unit, int expBefore, int expGained);
+        public delegate void OnExpGainedEvent(int expBefore, int expGained);
 
-        public static event OnExpGainedEvent OnExpGained;
+        public event OnExpGainedEvent OnExpGained;
 
         public delegate void OnUnitDamagedEvent(Unit unit, int damage,DamageType damageType, bool crit, bool eff);
         public delegate void OnUnitHealedEvent(Unit unit, int damage);

@@ -9,6 +9,7 @@ using Game.GameActors.Units.Monsters;
 using Game.GameActors.Units.Numbers;
 using Game.GameInput;
 using Game.GUI.PopUpText;
+using LostGrace;
 using UnityEngine;
 
 namespace Game.Mechanics.Battle
@@ -277,6 +278,11 @@ namespace Game.Mechanics.Battle
         public int GetCritAgainstTarget(IBattleActor defender)
         {
             return Math.Max(0,GetCrit() - defender.BattleComponent.BattleStats.GetCritAvoid());
+        }
+
+        public void AddDamageInfluencer(AttackBonusBlessing attackBonusBlessing)
+        {
+            throw new NotImplementedException();
         }
     }
 }

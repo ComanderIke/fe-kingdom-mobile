@@ -1,51 +1,16 @@
-﻿using System.Collections.Generic;
-using Game.GameActors.Items;
-using Game.GameActors.Items.Weapons;
+﻿using Game.GameActors.Items.Weapons;
 using Game.GameActors.Players;
 using Game.GameResources;
 using Game.WorldMapStuff.Model;
 using UnityEngine;
 
-public class Church
-{
-    public List<ShopItem> shopItems = new List<ShopItem>();
-    public void AddItem(ShopItem item)
-    {
-        shopItems.Add(item);
-    }
-
-    public void RemoveItem(Item selectedItem)
-    {
-        ShopItem itemToRemove = null;
-        foreach (var shopItem in shopItems)
-        {
-            if (shopItem.item == selectedItem)
-            {
-              
-                itemToRemove = shopItem;
-                break;
-            }
-        }
-
-        if (itemToRemove != null)
-        {
-            itemToRemove.stock--;
-            if (itemToRemove.stock <= 0)
-                shopItems.Remove(itemToRemove);
-        }
-        else
-        {
-            Debug.Log("No item found to remove!");
-        }
-    }
-}
 public class ChurchEncounterNode : EncounterNode
 {
     public Church church;
 
     public ChurchEncounterNode(EncounterNode parent,int depth, int childIndex, string description, Sprite sprite) : base(parent, depth, childIndex, description, sprite)
     {
-        church = new Church();
+        church = new Church(GameData.Instance.GetBlessingData());
         church.AddItem(new ShopItem(GameData.Instance.GetRandomRelic()));
         church.AddItem(new ShopItem(GameData.Instance.GetRandomMagic()));
         //church.AddItem(new ShopItem(GameData.Instance.GetRandomStaff()));

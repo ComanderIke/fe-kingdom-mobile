@@ -10,6 +10,7 @@ using Game.WorldMapStuff.UI;
 using GameEngine;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 namespace Game.GameResources
 {
@@ -137,6 +138,11 @@ namespace Game.GameResources
         public EquipableItem GetRandomSpear()
         {
             return Instantiate(spears[Random.Range(0, spears.Count-1)]);
+        }
+
+        public IBlessingData GetBlessingData()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
