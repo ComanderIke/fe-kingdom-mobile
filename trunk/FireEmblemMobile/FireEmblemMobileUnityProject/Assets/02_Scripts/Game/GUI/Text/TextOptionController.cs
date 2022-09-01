@@ -19,10 +19,11 @@ public class TextOptionController : MonoBehaviour
     public Color textSecretColor;
     public Color textNotPossibleColor;
     public Color textHighColor;
+    public ResponseOption Option;
 
-
-    public void Setup(string text,string statText,TextOptionState textState, UIEventController controller)
+    public void Setup(ResponseOption option,string text,string statText,TextOptionState textState, UIEventController controller)
     {
+        Option = option;
         this.controller = controller;
         this.text.text = text;
         this.text.color = textNormalColor;

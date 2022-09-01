@@ -14,10 +14,11 @@ public class UIEventController : MonoBehaviour
     [HideInInspector]
     public Party party;
     private RandomEvent randomEvent;
-
+    public TextMeshProUGUI headline;
     public TextMeshProUGUI description;
     public Transform layout;
-
+    [SerializeField] private UICharacterFace characterFace;
+    [SerializeField] private UIUnitIdleAnimation unitIdleAnimation;
     public GameObject textOptionPrefab;
     public GameObject itemOptionPrefab;
     public GameObject blessingOptionPrefab;
@@ -25,6 +26,7 @@ public class UIEventController : MonoBehaviour
     public GameObject fightOptionPrefab;
     public GameObject goldStoneOptionPrefab;
 
+    private EventScene currentScene;
 
     // Start is called before the first frame update
     public void Show(EventEncounterNode node, Party party)
@@ -33,7 +35,8 @@ public class UIEventController : MonoBehaviour
         canvas.enabled = true;
         this.party = party;
         this.randomEvent = node.randomEvent;
-        this.description.text = randomEvent.scenes[0].MainText;
+        currentScene = randomEvent.scenes[0];
+       
         // if(instantiatedObjects==null)
         //     instantiatedObjects = new List<GameObject>();
         UpdateUI();
@@ -44,25 +47,64 @@ public class UIEventController : MonoBehaviour
         //     shopItems[i].SetValues(new ShopItem(item.cost, item.Sprite, item.Description));
         // }
     }
-    
-    public void ContinueClicked()
+    public void NextClicked()
     {
-        canvas.enabled = false;
-        FindObjectOfType<UICharacterViewController>().Hide();
-        node.Continue();
+        party.ActiveUnitIndex++;
+        UpdateUI();
+    }
+
+    public void PrevClicked()
+    {
+        party.ActiveUnitIndex--;
+        UpdateUI();
     }
 
     public void OptionClicked(TextOptionController textOptionController)
     {
-        Debug.Log("Option Clicked!");
+        if (textOptionController.Option.nextSceneIndex != -1)
+        {
+            currentScene = randomEvent.scenes[textOptionController.Option.nextSceneIndex];
+            UpdateUI();
+        }
+        else
+        {
+            Debug.Log("END EVENT Clicked!");
+        }
+        
     }
 
     public void UpdateUI()
     {
+        unitIdleAnimation.Show(party.ActiveUnit);
+        characterFace.Show(party.ActiveUnit);
         layout.DeleteAllChildren();
-        foreach (var textoption in randomEvent.scenes[0].textOptions)
+        this.description.text = currentScene.MainText;
+        foreach (var textoption in currentScene.textOptions)
         {
-            var go=Instantiate(textOptionPrefab, layout);
+            GameObject prefab = textOptionPrefab;
+            if (textoption.fight)
+                prefab = fightOptionPrefab;
+            if (textoption.reward != null)
+            {
+                if (textoption.reward.item != null)
+                {
+                    prefab = itemOptionPrefab;
+                }
+                else if (textoption.reward.skill !=null)
+                {
+                    prefab = skillOptionPrefab;
+                }
+                else if (textoption.reward.Blessing !=null)
+                {
+                    prefab = blessingOptionPrefab;
+                }
+                else if (textoption.reward.gold !=0 ||textoption.reward.smithingStones!=0||textoption.reward.experience!=0)
+                {
+                    prefab = goldStoneOptionPrefab;
+                }
+            }
+                
+            var go=Instantiate(prefab, layout);
             int stat = party.ActiveUnit.Stats.Attributes.GetFromIndex(textoption.StatIndex);
             string statText = stat+" "+Attributes.GetAsText(textoption.StatIndex);
             TextOptionState state = TextOptionState.Normal;
@@ -70,7 +112,7 @@ public class UIEventController : MonoBehaviour
                 state = TextOptionState.Impossible;
             else if(stat >= (textoption.StatRequirement+10))
                 state = TextOptionState.High;
-            go.GetComponent<TextOptionController>().Setup(textoption.Text,statText,state, this);
+            go.GetComponent<TextOptionController>().Setup(textoption, textoption.Text,statText,state, this);
         }
     }
 }
