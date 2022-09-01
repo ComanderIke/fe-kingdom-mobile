@@ -77,6 +77,7 @@ public class UIEventController : MonoBehaviour
     {
         unitIdleAnimation.Show(party.ActiveUnit);
         characterFace.Show(party.ActiveUnit);
+        headline.SetText(randomEvent.headline);
         layout.DeleteAllChildren();
         this.description.text = currentScene.MainText;
         foreach (var textoption in currentScene.textOptions)

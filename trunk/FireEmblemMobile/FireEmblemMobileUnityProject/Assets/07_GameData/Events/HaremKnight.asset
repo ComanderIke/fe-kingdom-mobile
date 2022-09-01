@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9012829e36bf401a88c7788430b8e38d, type: 3}
-  m_Name: Event1
+  m_Name: HaremKnight
   m_EditorClassIdentifier: 
+  headline: The knight and his harem
   scenes:
   - textOptions:
     - Text: 'Confront the knight and ask about the woman. '
@@ -26,6 +27,7 @@ MonoBehaviour:
         experience: 0
       nextSceneIndex: 1
       fight: 0
+      EnemyArmyData: {fileID: 0}
     - Text: 'Leave them be. '
       StatRequirement: 0
       StatIndex: 0
@@ -38,6 +40,7 @@ MonoBehaviour:
         experience: 0
       nextSceneIndex: -1
       fight: 0
+      EnemyArmyData: {fileID: 0}
     MainText: You come across a brown steed carrying a knight in worn down armor.
       Sitting behind him, a young frail woman, seemingly in a lot of discomfort.
       The knight glares at you shortly, before directing his horse in another direction.
@@ -54,6 +57,7 @@ MonoBehaviour:
         experience: 0
       nextSceneIndex: 2
       fight: 0
+      EnemyArmyData: {fileID: 0}
     - Text: 'Leave them be. '
       StatRequirement: 0
       StatIndex: 0
@@ -66,6 +70,7 @@ MonoBehaviour:
         experience: 0
       nextSceneIndex: -1
       fight: 0
+      EnemyArmyData: {fileID: 0}
     MainText: "The knight\u2019s facial expression turns cold. \u201CIt is my wife,
       what are you on about?\u201D. The woman avoids eye contact in silence."
   - textOptions:
@@ -81,6 +86,7 @@ MonoBehaviour:
         experience: 0
       nextSceneIndex: 3
       fight: 1
+      EnemyArmyData: {fileID: 11400000, guid: 9d51d257e57a6a944aa67bf574916fbb, type: 2}
     MainText: "His hand moves to the hilt of his sword - \u201CTry and make me!\u201D"
   - textOptions:
     - Text: Reward
@@ -95,6 +101,7 @@ MonoBehaviour:
         experience: 0
       nextSceneIndex: -1
       fight: 0
+      EnemyArmyData: {fileID: 0}
     MainText: "The woman approaches you. \u201CThank you kindly, I was hoping to
       get away from this cruel man. Take this, it belonged to my mother before she
       passed\u201D. "

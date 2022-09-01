@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9012829e36bf401a88c7788430b8e38d, type: 3}
+  m_Name: ChasedBySkeletons
+  m_EditorClassIdentifier: 
+  headline: Chased by Skeletons
+  scenes:
+  - textOptions:
+    - Text: 'Run up to them and fight off the monsters. '
+      StatRequirement: 0
+      StatIndex: 0
+      reward:
+        item: {fileID: 0}
+        skill: {fileID: 0}
+        Blessing: {fileID: 0}
+        gold: 0
+        smithingStones: 0
+        experience: 0
+      nextSceneIndex: 1
+      fight: 1
+      EnemyArmyData: {fileID: 0}
+      type: 2
+    - Text: 'Too dangerous, go the other way. '
+      StatRequirement: 0
+      StatIndex: 0
+      reward:
+        item: {fileID: 0}
+        skill: {fileID: 0}
+        Blessing: {fileID: 0}
+        gold: 0
+        smithingStones: 0
+        experience: 0
+      nextSceneIndex: 2
+      fight: 0
+      EnemyArmyData: {fileID: 0}
+      type: 0
+    MainText: 'Looking down the hill you spot two children, seemingly brother and
+      sister, running from a group of skeletons. You can hear their screams amongst
+      the clanking of armor and bones behind them.  '
+  - textOptions:
+    - Text: End
+      StatRequirement: 0
+      StatIndex: 0
+      reward:
+        item: {fileID: 0}
+        skill: {fileID: 0}
+        Blessing: {fileID: 0}
+        gold: 0
+        smithingStones: 0
+        experience: 0
+      nextSceneIndex: -1
+      fight: 0
+      EnemyArmyData: {fileID: 0}
+      type: 0
+    MainText: "After the fight is over, you can\u2019t find the children anywhere.
+      It seems they ran away, only *goddess\u2019 name* knows where to. "
+  - textOptions:
+    - Text: End
+      StatRequirement: 0
+      StatIndex: 0
+      reward:
+        item: {fileID: 0}
+        skill: {fileID: 0}
+        Blessing: {fileID: 0}
+        gold: 0
+        smithingStones: 0
+        experience: 0
+      nextSceneIndex: -1
+      fight: 0
+      EnemyArmyData: {fileID: 0}
+      type: 0
+    MainText: 'As you move on, you try not to think about what happened to those
+      children. '

@@ -6,6 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "GameData/Event", fileName = "Event1")]
 public class RandomEvent :ScriptableObject
 {
+    public string headline;
     public List<EventScene> scenes;
    
 

@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9012829e36bf401a88c7788430b8e38d, type: 3}
+  m_Name: MemoryGame
+  m_EditorClassIdentifier: 
+  headline: A game of memory and courage
+  scenes:
+  - textOptions:
+    - Text: 'Take her up on the intriguing offer.  '
+      StatRequirement: 0
+      StatIndex: 0
+      reward:
+        item: {fileID: 0}
+        skill: {fileID: 0}
+        Blessing: {fileID: 0}
+        gold: 0
+        smithingStones: 0
+        experience: 0
+      nextSceneIndex: 1
+      fight: 0
+      EnemyArmyData: {fileID: 0}
+      type: 0
+    - Text: "You don\u2019t have time for games, leave her be.  "
+      StatRequirement: 0
+      StatIndex: 0
+      reward:
+        item: {fileID: 0}
+        skill: {fileID: 0}
+        Blessing: {fileID: 0}
+        gold: 0
+        smithingStones: 0
+        experience: 0
+      nextSceneIndex: -1
+      fight: 0
+      EnemyArmyData: {fileID: 0}
+      type: 0
+    MainText: "You stumble upon an old caravan. The rider\u2019s face, almost completely
+      covered by a black hood, is ominously illuminated by the lantern hanging in
+      front. You can barely make out that it is an old woman. \u201CCare for a little
+      game\u201D? She speaks. "
+  - textOptions:
+    - Text: This would be the memory game I guess
+      StatRequirement: 0
+      StatIndex: 0
+      reward:
+        item: {fileID: 0}
+        skill: {fileID: 0}
+        Blessing: {fileID: 0}
+        gold: 0
+        smithingStones: 0
+        experience: 0
+      nextSceneIndex: -1
+      fight: 0
+      EnemyArmyData: {fileID: 0}
+      type: 1
+    MainText: "The woman lays out mysterious looking cards on the ground in front
+      of you. \u201CA test of memory\u2026 such as courage\u201D. The lantern\u2019s
+      light reveals a soft grin on her face. "
