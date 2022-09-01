@@ -77,7 +77,10 @@ public class UIEventController : MonoBehaviour
             {
                
                 var battleSystem = AreaGameManager.Instance.GetSystem<BattleSystem>();
-                battleSystem.StartBattle(party.ActiveUnit, Instantiate(current.EnemyToFight));
+                var enemy = Instantiate(current.EnemyToFight);
+                enemy.Initialize();
+                Debug.Log("Enemy Weapon: "+enemy.EquippedWeapon.name);
+                battleSystem.StartBattle(party.ActiveUnit, enemy, false);
                 BattleSystem.OnBattleFinished += BattleEnded;
                 Debug.Log("Fight!");
             }

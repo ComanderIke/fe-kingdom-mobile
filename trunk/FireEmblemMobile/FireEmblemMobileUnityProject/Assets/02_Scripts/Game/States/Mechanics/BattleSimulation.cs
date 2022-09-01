@@ -119,7 +119,7 @@ namespace Game.Mechanics
         }
 
         private bool certainHit = false;
-        public void StartBattle(bool certainHit)
+        public void StartBattle(bool certainHit, bool grid)
         {
             this.certainHit = certainHit;
             if (AttackableTarget != null)
@@ -139,11 +139,13 @@ namespace Game.Mechanics
             Debug.Log("Battle Base AttackCounts: "+attackerAttackCount + " " + defenderAttackCount);
             GridPosition attackerGridPos = attackPosition;
             Debug.Log("TODO GridPosition-1?!?!?!");
-            if (!((IGridActor)Defender).GetActorGridComponent().CanAttack(attackerGridPos.X, attackerGridPos.Y))
+            Debug.Log("DefenderAttackCount: "+defenderAttackCount);
+            if (grid&&!((IGridActor)Defender).GetActorGridComponent().CanAttack(attackerGridPos.X, attackerGridPos.Y))
             {
                 defenderAttackCount = 0;
             }
-
+            Debug.Log("AttackCount: "+attackerAttackCount);
+            Debug.Log("DefenderAttackCount: "+defenderAttackCount);
             DefenderAttackCount = defenderAttackCount;
             bool death = false;
             while ((attackerAttackCount > 0||defenderAttackCount>0)&&!death)

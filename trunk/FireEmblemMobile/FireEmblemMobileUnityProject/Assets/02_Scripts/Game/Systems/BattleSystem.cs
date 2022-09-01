@@ -44,7 +44,7 @@ namespace Game.Mechanics
             this.attacker = attacker;
             this.attackableTarget = attackableTarget;
             battleSimulation = new BattleSimulation(attacker,attackableTarget);
-            battleSimulation.StartBattle(false);
+            battleSimulation.StartBattle(false, true);
             battleStarted = true;
             IsFinished = false;
             currentAttackIndex = 0;
@@ -53,10 +53,10 @@ namespace Game.Mechanics
             //BattleRenderer.Show(attacker, defender, GetAttackSequence());
             
         }
-        public void StartBattle(IBattleActor attacker, IBattleActor defender)
+        public void StartBattle(IBattleActor attacker, IBattleActor defender, bool grid)
         {
-            // this.attacker = attacker;
-            // this.defender = defender;
+             this.attacker = attacker;
+            this.defender = defender;
             // battleSimulation = new BattleSimulation(attacker,defender);
             // battleSimulation.StartBattle(false);
             // battleStarted = true;
@@ -64,15 +64,19 @@ namespace Game.Mechanics
             // currentAttackIndex = 0;
             // attackerAttackCount = attacker.BattleComponent.BattleStats.GetAttackCountAgainst(defender);
             // defenderAttackCount = defender.BattleComponent.BattleStats.GetAttackCountAgainst(attacker);
-            battleSimulation = GetBattleSimulation(attacker, (IBattleActor)defender);
+            battleSimulation = GetBattleSimulation(attacker, (IBattleActor)defender, grid);
             Debug.Log(BattleAnimation+" "+battleSimulation);
             BattleAnimation.Show(battleSimulation, attacker, (IBattleActor)defender);
+            BattleAnimation.OnFinished -= EndBattle;
             BattleAnimation.OnFinished += EndBattle;
             //BattleRenderer.Show(attacker, defender, GetAttackSequence());
             
         }
         private void EndBattle()
         {
+            Debug.Log(attacker);
+            Debug.Log(battleSimulation);
+            Debug.Log(battleSimulation.Attacker);
             attacker.Hp = battleSimulation.Attacker.Hp;
             if (battleSimulation.AttackableTarget == null)
                 defender.Hp = battleSimulation.Defender.Hp;
@@ -142,17 +146,17 @@ namespace Game.Mechanics
         //
         // }
     
-        public BattleSimulation GetBattleSimulation(IBattleActor attacker, IBattleActor defender)
+        public BattleSimulation GetBattleSimulation(IBattleActor attacker, IBattleActor defender, bool grid)
         {
             battleSimulation = new BattleSimulation(attacker, defender);
-            battleSimulation.StartBattle(false);
+            battleSimulation.StartBattle(false, grid);
 
             return battleSimulation;
         }
         public BattleSimulation GetBattleSimulation(IBattleActor attacker, IAttackableTarget attackableTarget)
         {
             battleSimulation = new BattleSimulation(attacker, attackableTarget);
-            battleSimulation.StartBattle(false);
+            battleSimulation.StartBattle(false, true);
 
             return battleSimulation;
         }
@@ -166,7 +170,7 @@ namespace Game.Mechanics
             {
                 battlePreview.Defender = defenderActor;
                 battleSimulation = new BattleSimulation(attacker, defenderActor, attackPosition);
-                battleSimulation.StartBattle(true);
+                battleSimulation.StartBattle(true, true);
                 battlePreview.AttacksData = battleSimulation.AttacksData;
                 Debug.Log("BattlePreview: " + battleSimulation.AttackerAttackCount + "DefenderAttackCount: " +
                           battleSimulation.DefenderAttackCount);
@@ -202,7 +206,7 @@ namespace Game.Mechanics
                 battlePreview.TargetObject = defender;
                 
                 battleSimulation = new BattleSimulation(attacker, defender, attackPosition);
-                battleSimulation.StartBattle(true);
+                battleSimulation.StartBattle(true, true);
                 
                 battlePreview.AttacksData = battleSimulation.AttacksData;
                 Debug.Log("BattlePreview: " + battleSimulation.AttackerAttackCount + "DefenderAttackCount: " +
@@ -266,7 +270,7 @@ namespace Game.Mechanics
               
              }
 
-            battleSim.StartBattle(false);
+            battleSim.StartBattle(false, true);
             return battleSim;
         }
     }
