@@ -69,14 +69,14 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
 
         BattleUI.Show(battleSimulation, (Unit)attackingActor, (Unit)defendingActor);
 
-        leftCharacterAttacker = battleSimulation.Attacker.Faction.IsPlayerControlled;
+        leftCharacterAttacker = battleSimulation.Attacker.Faction==null||battleSimulation.Attacker.Faction.IsPlayerControlled;
         if (characterLeft != null)
             Destroy(characterLeft);
         if (characterRight != null)
             Destroy(characterRight);
         attackSequenzIndex = 0;
         //light.SetActive(true);
-        if (battleSimulation.Attacker.Faction.IsPlayerControlled)
+        if (battleSimulation.Attacker.Faction==null||battleSimulation.Attacker.Faction.IsPlayerControlled)
         {
             characterLeft = Instantiate(
                 ((Unit)battleSimulation.Attacker).visuals.CharacterSpriteSet.battleAnimatedSprite,
@@ -99,7 +99,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         canvas.Show();
         playableDirector.Stop();
 
-        if (battleSimulation.Attacker.Faction.IsPlayerControlled)
+        if (battleSimulation.Attacker.Faction==null||battleSimulation.Attacker.Faction.IsPlayerControlled)
         {
             playableDirector.playableAsset = cameraIntro;
             camera.transform.localPosition =
@@ -117,7 +117,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         var background = GameObject.Instantiate(battleBackground, transform);
         background.transform.position = new Vector3(camera.transform.position.x, background.transform.position.y,
             background.transform.position.z);
-        if (battleSimulation.Attacker.Faction.IsPlayerControlled)
+        if (battleSimulation.Attacker.Faction==null||battleSimulation.Attacker.Faction.IsPlayerControlled)
         {
             characterLeft.GetComponentInChildren<BattleAnimationSpriteController>().WalkIn(introWalkInPlaySpeed);
             characterRight.GetComponentInChildren<BattleAnimationSpriteController>().Idle(introWalkInPlaySpeed);

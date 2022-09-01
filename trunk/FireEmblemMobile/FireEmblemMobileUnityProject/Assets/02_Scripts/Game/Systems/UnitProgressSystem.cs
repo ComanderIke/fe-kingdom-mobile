@@ -8,6 +8,7 @@ using Game.GameInput;
 using Game.GUI;
 using Game.Manager;
 using Game.States;
+using Game.WorldMapStuff.Model;
 using GameEngine;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
@@ -21,6 +22,15 @@ namespace Game.Mechanics
         private List<Unit> units;
         private List<Faction> factions;
 
+        public UnitProgressSystem(Party party)
+        {
+            factions = new List<Faction>();
+            units = new List<Unit>();
+            foreach(var unit in party.members)
+                AddUnit(unit);
+            party.onAddUnit -= AddUnit;
+            party.onAddUnit += AddUnit;
+        }
         public UnitProgressSystem(FactionManager fm)
         {
             factions = new List<Faction>();
@@ -35,6 +45,7 @@ namespace Game.Mechanics
             {
                 AddUnit(unit);
             }
+            faction.OnAddUnit -= AddUnit;
             faction.OnAddUnit += AddUnit;
         }
         private void AddUnit(Unit u)

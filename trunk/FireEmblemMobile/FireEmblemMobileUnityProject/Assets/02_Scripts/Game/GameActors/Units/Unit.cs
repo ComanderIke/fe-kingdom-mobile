@@ -307,10 +307,14 @@ namespace Game.GameActors.Units
             clone.BattleComponent = new BattleComponent(clone);
             clone.TurnStateManager = new TurnStateManager();
             clone.GridComponent = new GridActorComponent(clone);
-            clone.GridComponent.GridPosition =
-                new GridPosition(GridComponent.GridPosition.X, GridComponent.GridPosition.Y);
-            clone.GridComponent.Tile = GridComponent.Tile;
-           // clone.GridComponent.previousTile = GridComponent.previousTile;
+            if (GridComponent!=null&&GridComponent.GridPosition != null)
+            {
+                clone.GridComponent.GridPosition =
+                    new GridPosition(GridComponent.GridPosition.X, GridComponent.GridPosition.Y);
+                clone.GridComponent.Tile = GridComponent.Tile;
+            }
+
+            // clone.GridComponent.previousTile = GridComponent.previousTile;
             clone.GameTransformManager = new GameTransformManager();
             clone.StatusEffectManager = new StatusEffectManager(clone);
             clone.AIComponent = new AIComponent();
@@ -489,7 +493,7 @@ namespace Game.GameActors.Units
         }
         public void InflictFixedMagicDamage(int damage)
         {
-            int dmg=damage-BattleComponent.BattleStats.GetMagicResistance();
+            int dmg=damage-BattleComponent.BattleStats.GetFaithResistance();
             Debug.Log("TODO Crits and EFF Dmg!");
             Hp -= dmg;
             OnUnitDamaged?.Invoke(this,dmg, DamageType.Magic,false, false);

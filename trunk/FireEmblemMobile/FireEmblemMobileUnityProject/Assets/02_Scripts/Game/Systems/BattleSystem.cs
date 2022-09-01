@@ -22,6 +22,7 @@ namespace Game.Mechanics
         public delegate void OnStartAttackEvent();
 
         public static OnStartAttackEvent OnStartAttack;
+        public  static event Action OnBattleFinished;
 
         private const float FIGHT_TIME = 3.8f;
         private const float ATTACK_DELAY = 0.0f;
@@ -35,7 +36,7 @@ namespace Game.Mechanics
         private int defenderAttackCount;
         private int currentAttackIndex;
         public bool IsFinished;
-        public IBattleRenderer BattleRenderer { get; set; }
+        public IBattleAnimation BattleAnimation { get; set; }
 
 
         public void StartBattle(IBattleActor attacker, IAttackableTarget attackableTarget)
@@ -54,19 +55,32 @@ namespace Game.Mechanics
         }
         public void StartBattle(IBattleActor attacker, IBattleActor defender)
         {
-            this.attacker = attacker;
-            this.defender = defender;
-            battleSimulation = new BattleSimulation(attacker,defender);
-            battleSimulation.StartBattle(false);
-            battleStarted = true;
-            IsFinished = false;
-            currentAttackIndex = 0;
-            attackerAttackCount = attacker.BattleComponent.BattleStats.GetAttackCountAgainst(defender);
-            defenderAttackCount = defender.BattleComponent.BattleStats.GetAttackCountAgainst(attacker);
+            // this.attacker = attacker;
+            // this.defender = defender;
+            // battleSimulation = new BattleSimulation(attacker,defender);
+            // battleSimulation.StartBattle(false);
+            // battleStarted = true;
+            // IsFinished = false;
+            // currentAttackIndex = 0;
+            // attackerAttackCount = attacker.BattleComponent.BattleStats.GetAttackCountAgainst(defender);
+            // defenderAttackCount = defender.BattleComponent.BattleStats.GetAttackCountAgainst(attacker);
+            battleSimulation = GetBattleSimulation(attacker, (IBattleActor)defender);
+            Debug.Log(BattleAnimation+" "+battleSimulation);
+            BattleAnimation.Show(battleSimulation, attacker, (IBattleActor)defender);
+            BattleAnimation.OnFinished += EndBattle;
             //BattleRenderer.Show(attacker, defender, GetAttackSequence());
             
         }
-
+        private void EndBattle()
+        {
+            attacker.Hp = battleSimulation.Attacker.Hp;
+            if (battleSimulation.AttackableTarget == null)
+                defender.Hp = battleSimulation.Defender.Hp;
+            else
+                defender.Hp = battleSimulation.AttackableTarget.Hp;
+            OnBattleFinished?.Invoke();
+        }
+       
         // public void ContinueBattle(IBattleActor attacker, IBattleActor defender)
         // {
         //     ContinueBattle(battleSimulation.AttackSequence[currentAttackIndex]);

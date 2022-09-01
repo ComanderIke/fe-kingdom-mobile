@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using __2___Scripts.Game.Utility;
 using Game.GameActors.Units.Numbers;
+using Game.Mechanics;
 using Game.WorldMapStuff.Model;
 using TMPro;
 using UnityEngine;
@@ -59,12 +60,33 @@ public class UIEventController : MonoBehaviour
         UpdateUI();
     }
 
+    void BattleEnded()
+    {
+        BattleSystem.OnBattleFinished -= BattleEnded;
+        currentScene = randomEvent.scenes[current.nextSceneIndex];
+        UpdateUI();
+    }
+
+    private ResponseOption current;
     public void OptionClicked(TextOptionController textOptionController)
     {
-        if (textOptionController.Option.nextSceneIndex != -1)
+        current = textOptionController.Option;
+        if (current.nextSceneIndex != -1)
         {
-            currentScene = randomEvent.scenes[textOptionController.Option.nextSceneIndex];
-            UpdateUI();
+            if (current.type == EventSceneType.Fight)
+            {
+               
+                var battleSystem = AreaGameManager.Instance.GetSystem<BattleSystem>();
+                battleSystem.StartBattle(party.ActiveUnit, Instantiate(current.EnemyToFight));
+                BattleSystem.OnBattleFinished += BattleEnded;
+                Debug.Log("Fight!");
+            }
+            else
+            {
+                currentScene = randomEvent.scenes[current.nextSceneIndex];
+
+                UpdateUI();
+            }
         }
         else
         {

@@ -1,18 +1,26 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using __2___Scripts.Game.Areas;
+using Audio;
 using Effects;
 using Game.GameActors.Players;
+using Game.GUI;
+using Game.Manager;
+using Game.Mechanics;
 using Game.Systems;
 using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.Systems;
+using GameEngine;
 using Menu;
 using SerializedData;
 using UnityEngine;
 
 public class AreaGameManager : MonoBehaviour
 {
+    public static AreaGameManager Instance;
+    private List<IEngineSystem> Systems { get; set; }
     public GameObject playerPrefab;
     private Area_ActionSystem actionSystem;
     public GameObject attackOptionPrefab;
@@ -30,6 +38,8 @@ public class AreaGameManager : MonoBehaviour
     public DynamicAmbientLight lightController;
     void Start()
     {
+        Instance = this;
+       
         cursor = FindObjectOfType<EncounterCursorController>();
         //Debug.Log("WHY IS START NOT CALLED?");
         actionSystem = new Area_ActionSystem();
@@ -66,7 +76,7 @@ public class AreaGameManager : MonoBehaviour
         
             //Debug.Log("Player Node Null");
            
-            
+            AddSystems();
       
         SpawnPartyMembers();
         uiCOntroller.Init(Player.Instance.Party);
@@ -79,6 +89,23 @@ public class AreaGameManager : MonoBehaviour
         this.CallWithDelay(ShowMovedRoads,0.1f);//Some other scripts not started yet thtas why
        
         ShowMoveOptions();
+    }
+    private void AddSystems()
+    {
+        Systems = new List<IEngineSystem>
+        {
+            FindObjectOfType<AudioSystem>(),
+            new BattleSystem(),
+            new UnitProgressSystem(Player.Instance.Party),
+        };
+        InjectDependencies();
+    }
+
+    private void InjectDependencies()
+    {
+        GetSystem<BattleSystem>().BattleAnimation = FindObjectsOfType<MonoBehaviour>().OfType<IBattleAnimation>().First();
+        GetSystem<BattleSystem>().BattleAnimation.Hide();
+        Debug.Log("BattleSys: "+ GetSystem<BattleSystem>().BattleAnimation);
     }
     private bool LoadedSaveData()
     {
@@ -327,7 +354,11 @@ public class AreaGameManager : MonoBehaviour
         ShowMoveOptions();
     }
 
-    
 
-   
+    public T GetSystem<T>()
+    {
+        foreach (var s in Systems.OfType<T>())
+            return (T) Convert.ChangeType(s, typeof(T));
+        return default;
+    }
 }

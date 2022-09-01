@@ -44,7 +44,8 @@ int activeUnitIndex=0;
             }
         }
         public int smithingStones = 2;
-        
+        public event Action<Unit> onAddUnit;
+
         public int SmithingStones
         {
             get
@@ -120,6 +121,12 @@ int activeUnitIndex=0;
                 party+= node.ToString()+", ";
             }
             return party;
+        }
+
+        public void AddMember(Unit unit)
+        {
+            members.Add(unit);
+            onAddUnit?.Invoke(unit);
         }
 
 

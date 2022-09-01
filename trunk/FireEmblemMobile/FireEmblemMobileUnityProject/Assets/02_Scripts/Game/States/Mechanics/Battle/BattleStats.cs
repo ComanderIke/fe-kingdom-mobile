@@ -114,11 +114,7 @@ namespace Game.Mechanics.Battle
             }
             else if (target is IBattleActor battleActor)
             {
-                if (GetDamageType() == DamageType.Magic)
-                {
-                    defense = battleActor.BattleComponent.BattleStats.GetMagicResistance();
-                }
-                else if (GetDamageType() == DamageType.Faith)
+                if (GetDamageType() == DamageType.Magic||GetDamageType() == DamageType.Faith)
                 {
                     defense = battleActor.BattleComponent.BattleStats.GetFaithResistance();
                 }
@@ -171,11 +167,7 @@ namespace Game.Mechanics.Battle
                 if (CanDoubleAttack(battleActor))
                     attacks = 2;
                 int defense = 0;
-                if (GetDamageType() == DamageType.Magic)
-                {
-                    defense = battleActor.BattleComponent.BattleStats.GetMagicResistance();
-                }
-                else if (GetDamageType() == DamageType.Faith)
+                if (GetDamageType() == DamageType.Magic||GetDamageType() == DamageType.Faith)
                 {
                     defense = battleActor.BattleComponent.BattleStats.GetFaithResistance();
                 }
@@ -226,8 +218,12 @@ namespace Game.Mechanics.Battle
 
         public int GetAttackSpeed()
         {
-           
-            return owner.Stats.Attributes.AGI - owner.GetEquippedWeapon().GetWeight()+ owner.GetTile().TileData.speedMalus;
+            int spd = owner.Stats.Attributes.AGI - owner.GetEquippedWeapon().GetWeight();
+            if (owner.GetTile() != null)
+            {
+                spd += owner.GetTile().TileData.speedMalus;
+            }
+            return spd;
            
         }
 
@@ -248,17 +244,18 @@ namespace Game.Mechanics.Battle
             //     
             //     return human.EquippedArmor.armor;
             // }
-        
-            return owner.Stats.Attributes.DEF+ owner.GetTile().TileData.defenseBonus;
+            int def = owner.Stats.Attributes.DEF;
+            if (owner.GetTile() != null)
+                def += owner.GetTile().TileData.defenseBonus;
+            return def;
         }
 
         public int GetFaithResistance()
         {
-            return owner.Stats.Attributes.FAITH+ owner.GetTile().TileData.defenseBonus;
-        }
-        public int GetMagicResistance()
-        {
-            return owner.Stats.Attributes.INT+ owner.GetTile().TileData.defenseBonus;
+            int fth = owner.Stats.Attributes.FAITH;
+            if (owner.GetTile() != null)
+                fth += owner.GetTile().TileData.defenseBonus;
+            return fth;
         }
 
         public int GetAttackDamage(DamageType damageType)

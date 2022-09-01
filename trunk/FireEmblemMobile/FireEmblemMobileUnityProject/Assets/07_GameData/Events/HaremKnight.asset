@@ -28,6 +28,8 @@ MonoBehaviour:
       nextSceneIndex: 1
       fight: 0
       EnemyArmyData: {fileID: 0}
+      type: 0
+      EnemyToFight: {fileID: 0}
     - Text: 'Leave them be. '
       StatRequirement: 0
       StatIndex: 0
@@ -41,6 +43,8 @@ MonoBehaviour:
       nextSceneIndex: -1
       fight: 0
       EnemyArmyData: {fileID: 0}
+      type: 0
+      EnemyToFight: {fileID: 0}
     MainText: You come across a brown steed carrying a knight in worn down armor.
       Sitting behind him, a young frail woman, seemingly in a lot of discomfort.
       The knight glares at you shortly, before directing his horse in another direction.
@@ -58,6 +62,8 @@ MonoBehaviour:
       nextSceneIndex: 2
       fight: 0
       EnemyArmyData: {fileID: 0}
+      type: 0
+      EnemyToFight: {fileID: 0}
     - Text: 'Leave them be. '
       StatRequirement: 0
       StatIndex: 0
@@ -71,6 +77,8 @@ MonoBehaviour:
       nextSceneIndex: -1
       fight: 0
       EnemyArmyData: {fileID: 0}
+      type: 0
+      EnemyToFight: {fileID: 0}
     MainText: "The knight\u2019s facial expression turns cold. \u201CIt is my wife,
       what are you on about?\u201D. The woman avoids eye contact in silence."
   - textOptions:
@@ -86,7 +94,9 @@ MonoBehaviour:
         experience: 0
       nextSceneIndex: 3
       fight: 1
-      EnemyArmyData: {fileID: 11400000, guid: 9d51d257e57a6a944aa67bf574916fbb, type: 2}
+      EnemyArmyData: {fileID: 0}
+      type: 2
+      EnemyToFight: {fileID: 11400000, guid: 8d0171e7cfb2f134bbfabaf8e9b89193, type: 2}
     MainText: "His hand moves to the hilt of his sword - \u201CTry and make me!\u201D"
   - textOptions:
     - Text: Reward
@@ -102,6 +112,8 @@ MonoBehaviour:
       nextSceneIndex: -1
       fight: 0
       EnemyArmyData: {fileID: 0}
+      type: 0
+      EnemyToFight: {fileID: 0}
     MainText: "The woman approaches you. \u201CThank you kindly, I was hoping to
       get away from this cruel man. Take this, it belonged to my mother before she
       passed\u201D. "

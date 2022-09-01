@@ -45,7 +45,7 @@ public class BattleUI : MonoBehaviour
     private bool playerUnitIsAttacker;
     public void Show(BattleSimulation battleSimulation, Unit attacker, Unit defender)
     {
-        playerUnitIsAttacker = attacker.Faction.Id == 0;
+        playerUnitIsAttacker = attacker.Faction==null||attacker.Faction.Id == 0;
         var playerUnit = playerUnitIsAttacker? attacker : defender;
         var enemyUnit= playerUnitIsAttacker? defender : attacker;
         currentHPLeft = playerUnit.Hp;

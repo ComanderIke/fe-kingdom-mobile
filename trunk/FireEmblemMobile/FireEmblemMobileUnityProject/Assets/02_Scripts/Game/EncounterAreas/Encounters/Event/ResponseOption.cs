@@ -1,4 +1,6 @@
 ﻿using System;
+using Game.GameActors.Players;
+using Game.GameActors.Units;
 using Game.GameInput;
 
 public enum EventSceneType
@@ -19,6 +21,7 @@ public class ResponseOption
     public bool fight = false;
     public EnemyArmyData EnemyArmyData;
     public EventSceneType type;
+    public Unit EnemyToFight;
     public ResponseOption(string text,int statRequirement, int statIndex, Reward reward)
     {
         this.Text = text;
@@ -26,4 +29,6 @@ public class ResponseOption
         this.StatRequirement = statRequirement;
         this.reward = reward;
     }
+
+    
 }
