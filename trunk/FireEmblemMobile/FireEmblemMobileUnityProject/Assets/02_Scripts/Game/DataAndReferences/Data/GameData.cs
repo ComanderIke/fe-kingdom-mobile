@@ -32,7 +32,8 @@ namespace Game.GameResources
         [FormerlySerializedAs("humans")] [SerializeField] private List<Unit> humanBlueprints = default;
         [SerializeField] private List<Party> playerStartingParties = default;
         [SerializeField] public List<CampaignConfig> campaigns;
-
+        [SerializeField] private BlessingData blessingData;
+        [SerializeField] private EventData eventData;
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void FirstInitialize()
         {
@@ -142,7 +143,11 @@ namespace Game.GameResources
 
         public IBlessingData GetBlessingData()
         {
-            throw new System.NotImplementedException();
+            return blessingData;
+        }
+        public IEventData GetEventData()
+        {
+            return eventData;
         }
     }
 }

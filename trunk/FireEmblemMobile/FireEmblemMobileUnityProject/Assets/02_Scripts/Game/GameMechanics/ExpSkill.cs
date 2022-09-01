@@ -1,9 +1,11 @@
 ﻿using Game.GameActors.Units;
+using Game.GameActors.Units.Skills;
 using UnityEngine;
 
 namespace LostGrace
 {
-    public class ExpBlessing : Blessing
+    [CreateAssetMenu(menuName = "GameData/Skills/ExpSkill", fileName = "ExpSkill")]
+    public class ExpSkill : PassiveSkill
     {
         [SerializeField] private float expMul = 1.2f;
         private Unit owner;
@@ -21,5 +23,14 @@ namespace LostGrace
             
         }
 
+        public override bool CanTargetCharacters()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override int GetDamage(Unit user, bool justToShow)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

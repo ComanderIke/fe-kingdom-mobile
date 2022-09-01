@@ -19,6 +19,11 @@ public class UIEventController : MonoBehaviour
     public Transform layout;
 
     public GameObject textOptionPrefab;
+    public GameObject itemOptionPrefab;
+    public GameObject blessingOptionPrefab;
+    public GameObject skillOptionPrefab;
+    public GameObject fightOptionPrefab;
+    public GameObject goldStoneOptionPrefab;
 
 
     // Start is called before the first frame update
@@ -28,7 +33,7 @@ public class UIEventController : MonoBehaviour
         canvas.enabled = true;
         this.party = party;
         this.randomEvent = node.randomEvent;
-        this.description.text = randomEvent.description;
+        this.description.text = randomEvent.scenes[0].MainText;
         // if(instantiatedObjects==null)
         //     instantiatedObjects = new List<GameObject>();
         UpdateUI();
@@ -55,7 +60,7 @@ public class UIEventController : MonoBehaviour
     public void UpdateUI()
     {
         layout.DeleteAllChildren();
-        foreach (var textoption in randomEvent.textOptions)
+        foreach (var textoption in randomEvent.scenes[0].textOptions)
         {
             var go=Instantiate(textOptionPrefab, layout);
             int stat = party.ActiveUnit.Stats.Attributes.GetFromIndex(textoption.StatIndex);

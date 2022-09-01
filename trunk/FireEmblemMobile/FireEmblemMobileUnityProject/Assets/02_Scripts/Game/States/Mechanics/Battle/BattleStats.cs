@@ -280,7 +280,7 @@ namespace Game.Mechanics.Battle
             return Math.Max(0,GetCrit() - defender.BattleComponent.BattleStats.GetCritAvoid());
         }
 
-        public void AddDamageInfluencer(AttackBonusBlessing attackBonusBlessing)
+        public void AddDamageInfluencer(IDamageInfluencer attackBonusBlessing)
         {
             throw new NotImplementedException();
         }

@@ -3,7 +3,8 @@ using UnityEngine;
 
 namespace LostGrace
 {
-    public abstract class Blessing : ScriptableObject
+    [CreateAssetMenu(menuName = "GameData/Blessing", fileName = "Blessing")]
+    public class Blessing : ScriptableObject
     {
         public Skill skill;
         public string effectDescription;
