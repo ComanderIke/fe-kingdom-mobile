@@ -69,10 +69,16 @@ public class UIEventController : MonoBehaviour
         else
         {
             Debug.Log("END EVENT Clicked!");
+            Hide();
+            node.Continue();
         }
         
     }
 
+    void Hide()
+    {
+        canvas.enabled = false;
+    }
     public void UpdateUI()
     {
         unitIdleAnimation.Show(party.ActiveUnit);
