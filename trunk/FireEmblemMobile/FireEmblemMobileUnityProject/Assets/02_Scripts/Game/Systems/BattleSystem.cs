@@ -77,11 +77,16 @@ namespace Game.Mechanics
             Debug.Log(attacker);
             Debug.Log(battleSimulation);
             Debug.Log(battleSimulation.Attacker);
+            
             attacker.Hp = battleSimulation.Attacker.Hp;
             if (battleSimulation.AttackableTarget == null)
                 defender.Hp = battleSimulation.Defender.Hp;
             else
                 defender.Hp = battleSimulation.AttackableTarget.Hp;
+          
+            attacker = null;
+            defender = null;
+            BattleAnimation.Hide();
             OnBattleFinished?.Invoke();
         }
        
@@ -171,9 +176,9 @@ namespace Game.Mechanics
                 battlePreview.Defender = defenderActor;
                 battleSimulation = new BattleSimulation(attacker, defenderActor, attackPosition);
                 battleSimulation.StartBattle(true, true);
-                battlePreview.AttacksData = battleSimulation.AttacksData;
-                Debug.Log("BattlePreview: " + battleSimulation.AttackerAttackCount + "DefenderAttackCount: " +
-                          battleSimulation.DefenderAttackCount);
+                battlePreview.AttacksData = battleSimulation.combatRounds[0].AttacksData;
+                Debug.Log("BattlePreview: " + battleSimulation.combatRounds[0].AttackerAttackCount + "DefenderAttackCount: " +
+                          battleSimulation.combatRounds[0].DefenderAttackCount);
                 battlePreview.AttackerStats = new BattlePreviewStats(attacker.BattleComponent.BattleStats.GetDamage(),
                     attacker.Stats.Attributes.AGI, defenderActor.BattleComponent.BattleStats.GetDamageType(),
                     defenderActor.BattleComponent.BattleStats.GetDamageType() == DamageType.Physical
@@ -183,7 +188,7 @@ namespace Game.Mechanics
                     attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defenderActor),
                     attacker.BattleComponent.BattleStats.GetHitAgainstTarget(defenderActor),
                     attacker.BattleComponent.BattleStats.GetCritAgainstTarget(defenderActor),
-                    battleSimulation.AttackerAttackCount, attacker.Hp, attacker.MaxHp,
+                    battleSimulation.combatRounds[0].AttackerAttackCount, attacker.Hp, attacker.MaxHp,
                     battleSimulation.Attacker.Hp); //, attacker.Sp, attacker.Stats.MaxSp, battleSimulation.Attacker.Sp, attacker.SpBars, battleSimulation.Attacker.SpBars, attacker.MaxSpBars);
                 Debug.Log(battleSimulation.Defender);
                 Debug.Log(battleSimulation.Defender.Hp);
@@ -198,7 +203,7 @@ namespace Game.Mechanics
                     defenderActor.BattleComponent.BattleStats.GetDamageAgainstTarget(attacker),
                     defenderActor.BattleComponent.BattleStats.GetHitAgainstTarget(attacker),
                     defenderActor.BattleComponent.BattleStats.GetCritAgainstTarget(attacker),
-                    battleSimulation.DefenderAttackCount, defender.Hp, defenderActor.MaxHp,
+                    battleSimulation.combatRounds[0].DefenderAttackCount, defender.Hp, defenderActor.MaxHp,
                     battleSimulation.Defender.Hp); //, defender.Sp, defender.Stats.MaxSp, battleSimulation.Defender.Sp,  defender.SpBars, battleSimulation.Defender.SpBars, defender.MaxSpBars);
             }
             else
@@ -208,16 +213,16 @@ namespace Game.Mechanics
                 battleSimulation = new BattleSimulation(attacker, defender, attackPosition);
                 battleSimulation.StartBattle(true, true);
                 
-                battlePreview.AttacksData = battleSimulation.AttacksData;
-                Debug.Log("BattlePreview: " + battleSimulation.AttackerAttackCount + "DefenderAttackCount: " +
-                          battleSimulation.DefenderAttackCount);
+                battlePreview.AttacksData = battleSimulation.combatRounds[0].AttacksData;
+                Debug.Log("BattlePreview: " + battleSimulation.combatRounds[0].AttackerAttackCount + "DefenderAttackCount: " +
+                          battleSimulation.combatRounds[0].DefenderAttackCount);
                 battlePreview.AttackerStats = new BattlePreviewStats(attacker.BattleComponent.BattleStats.GetDamage(),
                     attacker.Stats.Attributes.AGI, attacker.BattleComponent.BattleStats.GetDamageType(),0,
                     attacker.Stats.Attributes.DEX,
                     attacker.BattleComponent.BattleStats.GetDamage(),
                     100,
                     0,
-                    battleSimulation.DefenderAttackCount, attacker.Hp, attacker.MaxHp,
+                    battleSimulation.combatRounds[0].DefenderAttackCount, attacker.Hp, attacker.MaxHp,
                     battleSimulation.Attacker
                         .Hp); //, attacker.Sp, attacker.Stats.MaxSp, battleSimulation.Attacker.Sp, attacker.SpBars, battleSimulation.Attacker.SpBars, attacker.MaxSpBars);
                 Debug.Log(attacker.BattleComponent.BattleStats.GetDamageType());

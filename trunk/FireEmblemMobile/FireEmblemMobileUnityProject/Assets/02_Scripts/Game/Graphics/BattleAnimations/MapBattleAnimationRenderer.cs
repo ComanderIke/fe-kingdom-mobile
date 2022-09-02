@@ -40,7 +40,7 @@ public class MapBattleAnimationRenderer : MonoBehaviour, IBattleAnimation
        
         attacker.GameTransformManager.UnitAnimator.OnAnimationEnded += BattleAnimation;
        
-        attackData = battleSimulation.AttacksData;
+        attackData = battleSimulation.combatRounds[0].AttacksData;
         BattleAnimation();
         //Invoke("Finished",2.0f);
     }

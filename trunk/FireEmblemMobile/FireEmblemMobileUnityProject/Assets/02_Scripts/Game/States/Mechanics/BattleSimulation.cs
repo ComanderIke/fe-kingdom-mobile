@@ -19,24 +19,16 @@ namespace Game.Mechanics
         public bool kill;
         public bool crit;
     }
+
     public class BattleSimulation: ICombatResult
     {
        
         public IBattleActor Attacker { get; private set; }
         public IBattleActor Defender { get; private set; }
         public IAttackableTarget AttackableTarget { get; private set; }
-        public int AttackerDamage { get; set; }
-        public int AttackerHit { get; set; }
-        public int AttackerAttackCount { get; set; }
-        public int DefenderDamage { get; set; }
-        public int DefenderHit { get; set; }
-        public int DefenderAttackCount { get; set; }
-        public bool AttackerAlive{ get; set; }
-        public bool DttackerAlive{ get; set; }
-        public object AttackerCrit { get; set; }
-        public object DefenderCrit { get; set; }
+        
+        public List<CombatRound> combatRounds;
 
-        public List<AttackData> AttacksData;
         public GridPosition attackPosition;
         public BattleSimulation(IBattleActor attacker, IAttackableTarget attackableTarget):this(attacker, attackableTarget, ((Unit)attacker).GridComponent.GridPosition)
         {
@@ -45,12 +37,17 @@ namespace Game.Mechanics
 
         public BattleSimulation(IBattleActor attacker, IAttackableTarget attackableTarget, GridPosition attackPosition)
         {
+            combatRounds = new List<CombatRound>();
             Attacker = attacker.Clone() as IBattleActor;
             AttackableTarget = attackableTarget.Clone() as IAttackableTarget;
-            AttackerDamage = Attacker.BattleComponent.BattleStats.GetDamage();
-            AttackerAttackCount = 1;
-            AttacksData = new List<AttackData>();
+            var combatRound = new CombatRound()
+            {
+                AttackerDamage = Attacker.BattleComponent.BattleStats.GetDamage(),
+                AttackerAttackCount = 1,
+                AttacksData = new List<AttackData>()
+            };
             this.attackPosition =attackPosition;
+            combatRounds.Add(combatRound);
         }
 
         public BattleSimulation(IBattleActor attacker, IBattleActor defender):this(attacker, defender, ((Unit)attacker).GridComponent.GridPosition)
@@ -58,22 +55,34 @@ namespace Game.Mechanics
             
             
         }
-        public BattleSimulation(IBattleActor attacker, IBattleActor defender, GridPosition attackPosition)
+        public BattleSimulation(IBattleActor attacker, IBattleActor defender, GridPosition attackPosition, bool continuos = false)
         {
-            
+            combatRounds = new List<CombatRound>();
+            if (continuos)
+            {
+                //Multiple Rounds Get Count
+            }
+            else
+            {
+                //1 Round of Combat as normal
+                var combatRound = new CombatRound()
+                {
+                    AttackerDamage = Attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(Defender),
+                    DefenderDamage = Defender.BattleComponent.BattleStats.GetDamageAgainstTarget(Attacker),
+                    AttackerHit = Attacker.BattleComponent.BattleStats.GetHitAgainstTarget(Defender),
+                    DefenderHit = Defender.BattleComponent.BattleStats.GetHitAgainstTarget(Attacker),
+                    AttackerCrit = Attacker.BattleComponent.BattleStats.GetCritAgainstTarget(Defender),
+                    DefenderCrit = Defender.BattleComponent.BattleStats.GetCritAgainstTarget(attacker),
+                    AttackerAttackCount = Attacker.BattleComponent.BattleStats.GetAttackCountAgainst(Defender),
+                    DefenderAttackCount = Defender.BattleComponent.BattleStats.GetAttackCountAgainst(Attacker),
+                    AttacksData = new List<AttackData>()
+                };
+
+                combatRounds.Add(combatRound);
+
+            }
             Attacker = attacker.Clone() as IBattleActor;
             Defender = defender.Clone() as IBattleActor;
-            AttackerDamage = Attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(Defender);
-            DefenderDamage = Defender.BattleComponent.BattleStats.GetDamageAgainstTarget(Attacker);
-            
-            AttackerHit = Attacker.BattleComponent.BattleStats.GetHitAgainstTarget(Defender);
-            DefenderHit = Defender.BattleComponent.BattleStats.GetHitAgainstTarget(Attacker);
-            AttackerCrit = Attacker.BattleComponent.BattleStats.GetCritAgainstTarget(Defender);
-            DefenderCrit = Defender.BattleComponent.BattleStats.GetCritAgainstTarget(attacker);
-            
-            AttackerAttackCount = Attacker.BattleComponent.BattleStats.GetAttackCountAgainst(Defender);
-            DefenderAttackCount = Defender.BattleComponent.BattleStats.GetAttackCountAgainst(Attacker);
-            AttacksData = new List<AttackData>();
             this.attackPosition =attackPosition;
         }
         public bool DoAttack(IBattleActor attacker, IBattleActor defender, ref AttackData attackData)
@@ -119,19 +128,19 @@ namespace Game.Mechanics
         }
 
         private bool certainHit = false;
-        public void StartBattle(bool certainHit, bool grid)
+
+        private void StartRound(CombatRound combatRound, bool certainHit, bool grid)
         {
-            this.certainHit = certainHit;
             if (AttackableTarget != null)
             {
-                AttackerDamage = Attacker.BattleComponent.BattleStats.GetDamage();
-                AttackableTarget.Hp -= AttackerDamage;
+                combatRound.AttackerDamage = Attacker.BattleComponent.BattleStats.GetDamage();
+                AttackableTarget.Hp -= combatRound.AttackerDamage;
                 var AttackData = new AttackData();
-                AttackData.Dmg = AttackerDamage;
+                AttackData.Dmg = combatRound.AttackerDamage;
                 AttackData.hit = true;
                 AttackData.attacker = true;
                 AttackData.crit = false;
-                AttacksData.Add(AttackData);
+                combatRound.AttacksData.Add(AttackData);
                 return;
             }
             int attackerAttackCount = Attacker.BattleComponent.BattleStats.GetAttackCountAgainst(Defender);
@@ -146,7 +155,7 @@ namespace Game.Mechanics
             }
             Debug.Log("AttackCount: "+attackerAttackCount);
             Debug.Log("DefenderAttackCount: "+defenderAttackCount);
-            DefenderAttackCount = defenderAttackCount;
+            combatRound.DefenderAttackCount = defenderAttackCount;
             bool death = false;
             while ((attackerAttackCount > 0||defenderAttackCount>0)&&!death)
             {
@@ -172,10 +181,10 @@ namespace Game.Mechanics
                     {
                         death = true;
                         attackData.kill = true;
-                        AttacksData.Add(attackData);
+                        combatRound.AttacksData.Add(attackData);
                         break;
                     }
-                    AttacksData.Add(attackData);
+                    combatRound.AttacksData.Add(attackData);
                 }
                 if (defenderAttackCount > 0)
                 {
@@ -197,13 +206,22 @@ namespace Game.Mechanics
                     {
                         death = true;
                         attackData.kill = true;
-                        AttacksData.Add(attackData);
+                        combatRound.AttacksData.Add(attackData);
                         break;
                     }
-                    AttacksData.Add(attackData);
+                    combatRound.AttacksData.Add(attackData);
                 }
                
             }
+        }
+        public void StartBattle(bool certainHit, bool grid)
+        {
+            this.certainHit = certainHit;
+            foreach (var combatRound in combatRounds)
+            {
+                StartRound(combatRound, certainHit, grid);
+            }
+            
 
             if (Attacker.IsAlive() && Defender.IsAlive())
                 BattleResult = BattleResult.Draw;
@@ -230,7 +248,7 @@ namespace Game.Mechanics
             if (Defender == null)
                 return Attacker.BattleComponent.BattleStats.GetTotalDamageAgainstTarget(AttackableTarget);
             //Debug.Log("Damage Ration: "+Attacker+" "+Attacker.BattleComponent.BattleStats.GetTotalDamageAgainstTarget(Defender)+" Defender: "+Defender+" "+Defender.BattleComponent.BattleStats.GetTotalDamageAgainstTarget(Attacker));
-            if (DefenderAttackCount == 0)
+            if (combatRounds[0].DefenderAttackCount == 0)
                 return Attacker.BattleComponent.BattleStats.GetTotalDamageAgainstTarget(Defender);
             return Attacker.BattleComponent.BattleStats.GetTotalDamageAgainstTarget(Defender) -
                    Defender.BattleComponent.BattleStats.GetTotalDamageAgainstTarget(Attacker);

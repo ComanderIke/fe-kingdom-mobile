@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameInput;
 using Game.Mechanics;
@@ -39,10 +40,15 @@ public class BattleUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        BattleAnimationRenderer.OnShow += Show;
     }
 
     private bool playerUnitIsAttacker;
+
+    private void Show(BattleSimulation battleSimulation, IBattleActor attacker, IAttackableTarget defender)
+    {
+        Show(battleSimulation, (Unit)attacker, (Unit)defender);
+    }
     public void Show(BattleSimulation battleSimulation, Unit attacker, Unit defender)
     {
         playerUnitIsAttacker = attacker.Faction==null||attacker.Faction.Id == 0;
@@ -57,28 +63,29 @@ public class BattleUI : MonoBehaviour
         hpTextRight.SetText(""+currentHPRight);
         faceSpriteLeft.sprite = playerUnit.visuals.CharacterSpriteSet.FaceSprite;
         faceSpriteRight.sprite = enemyUnit.visuals.CharacterSpriteSet.FaceSprite;
+        var combatRound = battleSimulation.combatRounds[0];
         
         
-        dmgValue.text = playerUnitIsAttacker? ""+ battleSimulation.AttackerDamage:""+battleSimulation.DefenderDamage;
-        hitValue.text = playerUnitIsAttacker?"" + battleSimulation.AttackerHit:""+battleSimulation.DefenderHit;
-        critValue.text = playerUnitIsAttacker?"" + battleSimulation.AttackerCrit:""+battleSimulation.DefenderCrit;
-        dmgValueRight.text = !playerUnitIsAttacker? ""+ battleSimulation.AttackerDamage:""+battleSimulation.DefenderDamage;
-        hitValueRight.text = !playerUnitIsAttacker?"" + battleSimulation.AttackerHit:""+battleSimulation.DefenderHit;
-        critValueRight.text = !playerUnitIsAttacker?"" + battleSimulation.AttackerCrit:""+battleSimulation.DefenderCrit;
+        dmgValue.text = playerUnitIsAttacker? ""+ combatRound.AttackerDamage:""+combatRound.DefenderDamage;
+        hitValue.text = playerUnitIsAttacker?"" + combatRound.AttackerHit:""+combatRound.DefenderHit;
+        critValue.text = playerUnitIsAttacker?"" + combatRound.AttackerCrit:""+combatRound.DefenderCrit;
+        dmgValueRight.text = !playerUnitIsAttacker? ""+ combatRound.AttackerDamage:""+combatRound.DefenderDamage;
+        hitValueRight.text = !playerUnitIsAttacker?"" + combatRound.AttackerHit:""+combatRound.DefenderHit;
+        critValueRight.text = !playerUnitIsAttacker?"" + combatRound.AttackerCrit:""+combatRound.DefenderCrit;
 
 
         if(playerUnitIsAttacker){
-                attackCountX.SetActive(battleSimulation.AttackerAttackCount > 1);
+                attackCountX.SetActive(combatRound.AttackerAttackCount > 1);
                 attackCount.gameObject.SetActive(attackCountX.activeSelf);
-                attackCount.text = "" + battleSimulation.AttackerAttackCount;
-                attackCountRightX.SetActive(battleSimulation.DefenderAttackCount > 1);
+                attackCount.text = "" + combatRound.AttackerAttackCount;
+                attackCountRightX.SetActive(combatRound.DefenderAttackCount > 1);
                 attackCountRight.gameObject.SetActive(attackCountRightX.activeSelf);
-                attackCountRight.text = "" + battleSimulation.DefenderAttackCount;
-                if (battleSimulation.DefenderAttackCount > 0)
+                attackCountRight.text = "" + combatRound.DefenderAttackCount;
+                if (combatRound.DefenderAttackCount > 0)
                 {
-                    dmgValueRight.text = "" + battleSimulation.DefenderDamage;
-                    hitValueRight.text = "" + battleSimulation.DefenderHit;
-                    critValueRight.text = "" + battleSimulation.DefenderCrit;
+                    dmgValueRight.text = "" + combatRound.DefenderDamage;
+                    hitValueRight.text = "" + combatRound.DefenderHit;
+                    critValueRight.text = "" + combatRound.DefenderCrit;
                 }
                 else
                 {
@@ -88,20 +95,20 @@ public class BattleUI : MonoBehaviour
                 }
         }
         else{
-            attackCountX.SetActive(battleSimulation.DefenderAttackCount > 1);
+            attackCountX.SetActive(combatRound.DefenderAttackCount > 1);
             attackCount.gameObject.SetActive(attackCountX.activeSelf);
-            attackCount.text = "" + battleSimulation.DefenderAttackCount;
-            attackCountRightX.SetActive(battleSimulation.AttackerAttackCount > 1);
+            attackCount.text = "" + combatRound.DefenderAttackCount;
+            attackCountRightX.SetActive(combatRound.AttackerAttackCount > 1);
             attackCountRight.gameObject.SetActive(attackCountRightX.activeSelf);
-            attackCountRight.text = "" + battleSimulation.AttackerAttackCount;
-            dmgValueRight.text = ""+ battleSimulation.AttackerDamage;
-            hitValueRight.text = "" + battleSimulation.AttackerHit;
-            critValueRight.text = "" + battleSimulation.AttackerCrit;
-            if (battleSimulation.DefenderAttackCount > 0)
+            attackCountRight.text = "" + combatRound.AttackerAttackCount;
+            dmgValueRight.text = ""+ combatRound.AttackerDamage;
+            hitValueRight.text = "" + combatRound.AttackerHit;
+            critValueRight.text = "" + combatRound.AttackerCrit;
+            if (combatRound.DefenderAttackCount > 0)
             {
-                dmgValue.text = "" + battleSimulation.DefenderDamage;
-                hitValue.text = "" + battleSimulation.DefenderHit;
-                critValue.text = "" + battleSimulation.DefenderCrit;
+                dmgValue.text = "" + combatRound.DefenderDamage;
+                hitValue.text = "" + combatRound.DefenderHit;
+                critValue.text = "" + combatRound.DefenderCrit;
             }
             else
             {
@@ -111,8 +118,8 @@ public class BattleUI : MonoBehaviour
             }
         }
 
-
-           
+        CharacterCombatAnimations.OnDamageDealt -= UpdateDefenderHPBar;
+        CharacterCombatAnimations.OnDamageDealt += UpdateDefenderHPBar;
         
         leftHPBar.SetValues(playerUnit.MaxHp,playerUnit.Hp);
         rightHPBar.SetValues(enemyUnit.MaxHp,enemyUnit.Hp);
