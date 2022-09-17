@@ -95,8 +95,20 @@ public class AnimationStateManager
     
     private void AllAttacksFinished()
     {
-        Debug.Log("All Atttacks Finished!");
-        MonoUtility.DelayFunction(BattleFinished, EndBattleWaitDuration);
+        TimeLineController.zoomOutFinished -= AllAttacksFinished;
+        if (currentRound.RoundIndex >= battleSimulation.combatRounds.Count-1)
+        {
+            Debug.Log("All Atttacks Finished!");
+            MonoUtility.DelayFunction(BattleFinished, EndBattleWaitDuration);
+        }
+        else
+        {
+            
+            Debug.Log("Next Round: "+currentRound.RoundIndex + 1+" "+battleSimulation.combatRounds.Count);
+            currentRound = battleSimulation.combatRounds[currentRound.RoundIndex + 1];
+            attackSequenzIndex = 0;
+            MonoUtility.DelayFunction(TimeLineController.PlayZoomIn, timeBetweenAttacks);
+        }
     }
     public void BattleFinished()
     {

@@ -45,6 +45,7 @@ namespace Game.Mechanics
             AttackableTarget = attackableTarget.Clone() as IAttackableTarget;
             var combatRound = new CombatRound()
             {
+                RoundIndex = 0,
                 AttackerDamage = Attacker.BattleComponent.BattleStats.GetDamage(),
                 AttackerAttackCount = 1,
                 AttacksData = new List<AttackData>()
@@ -53,7 +54,7 @@ namespace Game.Mechanics
             combatRounds.Add(combatRound);
         }
 
-        public BattleSimulation(IBattleActor attacker, IBattleActor defender):this(attacker, defender, ((Unit)attacker).GridComponent.GridPosition)
+        public BattleSimulation(IBattleActor attacker, IBattleActor defender, bool continuos = false):this(attacker, defender, ((Unit)attacker).GridComponent.GridPosition, continuos)
         {
             
             
@@ -67,6 +68,38 @@ namespace Game.Mechanics
             if (continuos)
             {
                 //Multiple Rounds Get Count
+                
+                //Try out 2 rounds
+                var combatRound = new CombatRound()
+                {
+                    RoundIndex = 0,
+                    AttackerDamage = Attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(Defender),
+                    DefenderDamage = Defender.BattleComponent.BattleStats.GetDamageAgainstTarget(Attacker),
+                    AttackerHit = Attacker.BattleComponent.BattleStats.GetHitAgainstTarget(Defender),
+                    DefenderHit = Defender.BattleComponent.BattleStats.GetHitAgainstTarget(Attacker),
+                    AttackerCrit = Attacker.BattleComponent.BattleStats.GetCritAgainstTarget(Defender),
+                    DefenderCrit = Defender.BattleComponent.BattleStats.GetCritAgainstTarget(attacker),
+                    AttackerAttackCount = Attacker.BattleComponent.BattleStats.GetAttackCountAgainst(Defender),
+                    DefenderAttackCount = Defender.BattleComponent.BattleStats.GetAttackCountAgainst(Attacker),
+                    AttacksData = new List<AttackData>()
+                };
+
+                combatRounds.Add(combatRound);
+                var combatRound2 = new CombatRound()
+                {
+                    RoundIndex = 1,
+                    AttackerDamage = Attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(Defender),
+                    DefenderDamage = Defender.BattleComponent.BattleStats.GetDamageAgainstTarget(Attacker),
+                    AttackerHit = Attacker.BattleComponent.BattleStats.GetHitAgainstTarget(Defender),
+                    DefenderHit = Defender.BattleComponent.BattleStats.GetHitAgainstTarget(Attacker),
+                    AttackerCrit = Attacker.BattleComponent.BattleStats.GetCritAgainstTarget(Defender),
+                    DefenderCrit = Defender.BattleComponent.BattleStats.GetCritAgainstTarget(attacker),
+                    AttackerAttackCount = Attacker.BattleComponent.BattleStats.GetAttackCountAgainst(Defender),
+                    DefenderAttackCount = Defender.BattleComponent.BattleStats.GetAttackCountAgainst(Attacker),
+                    AttacksData = new List<AttackData>()
+                };
+
+                combatRounds.Add(combatRound2);
             }
             else
             {
@@ -74,6 +107,7 @@ namespace Game.Mechanics
        
                 var combatRound = new CombatRound()
                 {
+                    RoundIndex = 0,
                     AttackerDamage = Attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(Defender),
                     DefenderDamage = Defender.BattleComponent.BattleStats.GetDamageAgainstTarget(Attacker),
                     AttackerHit = Attacker.BattleComponent.BattleStats.GetHitAgainstTarget(Defender),

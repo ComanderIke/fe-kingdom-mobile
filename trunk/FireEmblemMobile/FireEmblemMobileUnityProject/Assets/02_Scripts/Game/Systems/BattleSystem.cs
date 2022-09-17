@@ -53,7 +53,7 @@ namespace Game.Mechanics
             //BattleRenderer.Show(attacker, defender, GetAttackSequence());
             
         }
-        public void StartBattle(IBattleActor attacker, IBattleActor defender, bool grid)
+        public void StartBattle(IBattleActor attacker, IBattleActor defender, bool grid, bool continuos =false)
         {
              this.attacker = attacker;
             this.defender = defender;
@@ -64,7 +64,7 @@ namespace Game.Mechanics
             // currentAttackIndex = 0;
             // attackerAttackCount = attacker.BattleComponent.BattleStats.GetAttackCountAgainst(defender);
             // defenderAttackCount = defender.BattleComponent.BattleStats.GetAttackCountAgainst(attacker);
-            battleSimulation = GetBattleSimulation(attacker, (IBattleActor)defender, grid);
+            battleSimulation = GetBattleSimulation(attacker, (IBattleActor)defender, grid, continuos);
             Debug.Log(BattleAnimation+" "+battleSimulation);
             BattleAnimation.Show(battleSimulation, attacker, (IBattleActor)defender);
             BattleAnimation.OnFinished -= EndBattle;
@@ -152,10 +152,10 @@ namespace Game.Mechanics
         //
         // }
     
-        public BattleSimulation GetBattleSimulation(IBattleActor attacker, IBattleActor defender, bool grid)
+        public BattleSimulation GetBattleSimulation(IBattleActor attacker, IBattleActor defender, bool grid, bool continuos=false)
         {
             Debug.Log("GetBattleSimulation Hereinstead");
-            battleSimulation = new BattleSimulation(attacker, defender);
+            battleSimulation = new BattleSimulation(attacker, defender, continuos);
             battleSimulation.StartBattle(false, grid);
 
             return battleSimulation;

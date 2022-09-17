@@ -4,6 +4,7 @@ namespace Game.Mechanics
 {
     public class CombatRound
     {
+        public int RoundIndex{ get; set; }
         public int AttackerHP;
         public int DefenderHP;
         public int AttackerDamage { get; set; }

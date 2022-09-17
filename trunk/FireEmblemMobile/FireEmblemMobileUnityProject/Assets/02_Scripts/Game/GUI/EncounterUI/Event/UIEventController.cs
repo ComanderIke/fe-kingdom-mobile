@@ -80,7 +80,7 @@ public class UIEventController : MonoBehaviour
                 var enemy = Instantiate(current.EnemyToFight);
                 enemy.Initialize();
                 Debug.Log("Enemy Weapon: "+enemy.EquippedWeapon.name);
-                battleSystem.StartBattle(party.ActiveUnit, enemy, false);
+                battleSystem.StartBattle(party.ActiveUnit, enemy, false, true);
                 BattleSystem.OnBattleFinished += BattleEnded;
                 Debug.Log("Fight!");
             }
