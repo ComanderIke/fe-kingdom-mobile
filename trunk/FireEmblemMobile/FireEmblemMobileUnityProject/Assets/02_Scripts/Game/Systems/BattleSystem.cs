@@ -74,6 +74,7 @@ namespace Game.Mechanics
         }
         private void EndBattle()
         {
+            Debug.Log("End Battle");
             Debug.Log(attacker);
             Debug.Log(battleSimulation);
             Debug.Log(battleSimulation.Attacker);

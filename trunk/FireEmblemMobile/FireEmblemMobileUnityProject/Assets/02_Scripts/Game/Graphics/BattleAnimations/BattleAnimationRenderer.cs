@@ -22,16 +22,25 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     public void Show(BattleSimulation battleSimulation, IBattleActor attackingActor, IAttackableTarget defendingActor)
     {
         gameObject.SetActive(true);
-        OnShow?.Invoke(battleSimulation, attackingActor, defendingActor);
+        Debug.Log("SHow Battle Canvdass!");
         canvas.Show();
+        OnShow?.Invoke(battleSimulation, attackingActor, defendingActor);
+       
         animationStateManager = new AnimationStateManager(battleSimulation, GetComponent<TimeLineController>(),GetComponent<CharacterCombatAnimations>());
         animationStateManager.Start();
-       
+        animationStateManager.OnFinished -= Finished;
+        animationStateManager.OnFinished += Finished;
         playing = true;
         LeanTween.value(volume.weight, 1, 1.2f).setEaseOutQuad().setOnUpdate((value) => { volume.weight = value; });
         
     }
-    
+
+    void Finished()
+    {
+        Debug.Log("BattleRenderer Finished");
+        OnFinished?.Invoke();
+    }
+
     private void Update()
     {
         if (Input.GetMouseButtonDown(0)&&animationStateManager!=null)

@@ -107,6 +107,11 @@ namespace Game.GUI
             
         }
 
+        private void OnDisable()
+        {
+            unit.HpValueChanged -= UpdateValues;
+        }
+
         void UpdateValues()
         {
             if (unit == null)

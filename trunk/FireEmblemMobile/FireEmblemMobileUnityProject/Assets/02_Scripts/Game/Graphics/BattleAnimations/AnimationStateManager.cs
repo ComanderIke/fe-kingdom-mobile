@@ -95,10 +95,12 @@ public class AnimationStateManager
     
     private void AllAttacksFinished()
     {
+        Debug.Log("All Atttacks Finished!");
         MonoUtility.DelayFunction(BattleFinished, EndBattleWaitDuration);
     }
     public void BattleFinished()
     {
+        Debug.Log("Battle Finished!");
         OnFinished?.Invoke();
     }
 

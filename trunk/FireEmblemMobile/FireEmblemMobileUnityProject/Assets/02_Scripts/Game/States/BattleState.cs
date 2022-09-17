@@ -54,14 +54,15 @@ namespace Game.Mechanics
           
            IsFinished = false;
 
-           if (defender is IBattleActor)
+           if (defender is IBattleActor actor)
            {
-               Debug.Log("Is BattleActor");
-               battleSimulation = battleSystem.GetBattleSimulation(attacker, (IBattleActor)defender, true);
-               BattleAnimation.Show(battleSimulation, attacker, (IBattleActor)defender);
+               Debug.Log("Defender is BattleActor so show Cutscene Battle Animations");
+               battleSimulation = battleSystem.GetBattleSimulation(attacker, actor, true);
+               BattleAnimation.Show(battleSimulation, attacker, actor);
                BattleAnimation.OnFinished += EndBattle;
            }
            else{
+               Debug.Log("Defender is no BattleActor so show Map Battle Animations");
               battleSimulation = battleSystem.GetBattleSimulation(attacker, defender, true);
              MapBattleAnimation.Show(battleSimulation, attacker, defender);
              MapBattleAnimation.OnFinished += EndBattle;
@@ -106,6 +107,7 @@ namespace Game.Mechanics
         }
         public override void Exit()
         {
+            Debug.Log("Exit BattleState");
             // HideFightVisuals();
             attacker.TurnStateManager.HasAttacked = true;
 

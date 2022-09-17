@@ -122,8 +122,8 @@ namespace Game.Manager
             GameStateManager.WinState.renderer =  FindObjectsOfType<MonoBehaviour>().OfType<IBattleSuccessRenderer>().First();
             GameStateManager.GameOverState.renderer =  FindObjectsOfType<MonoBehaviour>().OfType<IBattleLostRenderer>().First();
             GameStateManager.BattleState.battleSystem = GetSystem<BattleSystem>();
-            GameStateManager.BattleState.BattleAnimation = FindObjectsOfType<MonoBehaviour>().OfType<IBattleAnimation>().Last();
-            GameStateManager.BattleState.MapBattleAnimation = FindObjectsOfType<MonoBehaviour>().OfType<IBattleAnimation>().First();
+            GameStateManager.BattleState.BattleAnimation = FindObjectsOfType<MonoBehaviour>().OfType<IBattleAnimation>().First();
+            GameStateManager.BattleState.MapBattleAnimation = FindObjectsOfType<MonoBehaviour>().OfType<IBattleAnimation>().Last();
             GameStateManager.BattleState.BattleAnimation.Hide();
             GameStateManager.BattleState.MapBattleAnimation.Hide();
             GameStateManager.UnitPlacementState.UnitPlacementUI =  FindObjectsOfType<MonoBehaviour>().OfType<IUnitPlacementUI>().First();
