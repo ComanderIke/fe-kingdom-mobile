@@ -56,12 +56,13 @@ namespace Game.Mechanics
 
            if (defender is IBattleActor)
            {
-               battleSimulation = battleSystem.GetBattleSimulation(attacker, (IBattleActor)defender);
+               Debug.Log("Is BattleActor");
+               battleSimulation = battleSystem.GetBattleSimulation(attacker, (IBattleActor)defender, true);
                BattleAnimation.Show(battleSimulation, attacker, (IBattleActor)defender);
                BattleAnimation.OnFinished += EndBattle;
            }
            else{
-              battleSimulation = battleSystem.GetBattleSimulation(attacker, defender);
+              battleSimulation = battleSystem.GetBattleSimulation(attacker, defender, true);
              MapBattleAnimation.Show(battleSimulation, attacker, defender);
              MapBattleAnimation.OnFinished += EndBattle;
            }

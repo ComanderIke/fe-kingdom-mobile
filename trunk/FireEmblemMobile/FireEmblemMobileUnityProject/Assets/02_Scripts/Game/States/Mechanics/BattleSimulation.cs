@@ -37,6 +37,9 @@ namespace Game.Mechanics
 
         public BattleSimulation(IBattleActor attacker, IAttackableTarget attackableTarget, GridPosition attackPosition)
         {
+            Debug.Log("Constructor for IAttackableTarget");
+           
+                
             combatRounds = new List<CombatRound>();
             Attacker = attacker.Clone() as IBattleActor;
             AttackableTarget = attackableTarget.Clone() as IAttackableTarget;
@@ -57,7 +60,10 @@ namespace Game.Mechanics
         }
         public BattleSimulation(IBattleActor attacker, IBattleActor defender, GridPosition attackPosition, bool continuos = false)
         {
+            Debug.Log("Constructor for IBattleActor");
             combatRounds = new List<CombatRound>();
+            Attacker = attacker.Clone() as IBattleActor;
+            Defender = defender.Clone() as IBattleActor;
             if (continuos)
             {
                 //Multiple Rounds Get Count
@@ -65,6 +71,7 @@ namespace Game.Mechanics
             else
             {
                 //1 Round of Combat as normal
+       
                 var combatRound = new CombatRound()
                 {
                     AttackerDamage = Attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(Defender),
@@ -81,8 +88,7 @@ namespace Game.Mechanics
                 combatRounds.Add(combatRound);
 
             }
-            Attacker = attacker.Clone() as IBattleActor;
-            Defender = defender.Clone() as IBattleActor;
+           
             this.attackPosition =attackPosition;
         }
         public bool DoAttack(IBattleActor attacker, IBattleActor defender, ref AttackData attackData)
@@ -99,31 +105,13 @@ namespace Game.Mechanics
             if (attacker == Attacker)
             {
                 attackData.Dmg = Math.Min(defender.Hp, damage);
-                //AttackerSpDamage.Add(Math.Min(defender.Sp, spDamage));
-                if (attacker.GetEquippedWeapon() != null)
-                {
-                    //DefenderSpDamage.Add(Math.Min(attacker.Sp, humanAttacker.EquippedWeapon.Weight));
-                    //attacker.Sp -= humanAttacker.EquippedWeapon.Weight;
-                }
             }
             else
             {
                 attackData.Dmg = Math.Min(defender.Hp, damage);
-               // DefenderSpDamage.Add(Math.Min(defender.Sp, spDamage));
-                if (attacker.GetEquippedWeapon() != null)
-                {
-                    //AttackerSpDamage.Add(Math.Min(attacker.Sp, humanAttacker.EquippedWeapon.Weight));
-                    //attacker.Sp -= humanAttacker.EquippedWeapon.Weight;
-                }
             }
             if(attackData.hit||certainHit)
                 defender.Hp -= damage;
-          //  defender.Sp -= spDamage;
-           
-            //if (defender is Human humanDefender && humanDefender.EquippedWeapon != null)
-            //{
-            //    defender.Sp -= humanDefender.EquippedWeapon.Weight;
-            //}
             return defender.Hp > 0;
         }
 
@@ -193,14 +181,6 @@ namespace Game.Mechanics
                     {
                        
                         defenderAttackCount--;
-                        // if (Defender.SpBars <= 0)
-                        // {
-                        //     defenderAttackCount = 0;
-                        // }
-                        // if (Attacker.SpBars <= 0)
-                        // {
-                        //     attackerAttackCount = 0;
-                        // }
                     }
                     else
                     {
@@ -211,18 +191,20 @@ namespace Game.Mechanics
                     }
                     combatRound.AttacksData.Add(attackData);
                 }
-               
             }
         }
         public void StartBattle(bool certainHit, bool grid)
         {
             this.certainHit = certainHit;
+            Debug.Log(Attacker);
+            Debug.Log(Defender);
             foreach (var combatRound in combatRounds)
             {
                 StartRound(combatRound, certainHit, grid);
             }
-            
 
+            Debug.Log(Attacker);
+            Debug.Log(Defender);
             if (Attacker.IsAlive() && Defender.IsAlive())
                 BattleResult = BattleResult.Draw;
             if (!Defender.IsAlive())
@@ -250,6 +232,12 @@ namespace Game.Mechanics
             //Debug.Log("Damage Ration: "+Attacker+" "+Attacker.BattleComponent.BattleStats.GetTotalDamageAgainstTarget(Defender)+" Defender: "+Defender+" "+Defender.BattleComponent.BattleStats.GetTotalDamageAgainstTarget(Attacker));
             if (combatRounds[0].DefenderAttackCount == 0)
                 return Attacker.BattleComponent.BattleStats.GetTotalDamageAgainstTarget(Defender);
+            Debug.Log(Attacker+" ");
+            Debug.Log(" "+Defender);
+            Debug.Log(Attacker.BattleComponent+" ");
+            Debug.Log(" "+Defender.BattleComponent);
+            Debug.Log(Attacker.BattleComponent.BattleStats+" ");
+            Debug.Log(" "+Defender.BattleComponent.BattleStats);
             return Attacker.BattleComponent.BattleStats.GetTotalDamageAgainstTarget(Defender) -
                    Defender.BattleComponent.BattleStats.GetTotalDamageAgainstTarget(Attacker);
         }

@@ -8,7 +8,7 @@ public class AnimatedCombatCharacter
     private ImpactPosition impactPosition;
     private GameObject gameObject;
     private bool left;
-    
+
 
     public AnimatedCombatCharacter(GameObject gameObject, bool left)
     {
@@ -27,12 +27,13 @@ public class AnimatedCombatCharacter
     public void Destroy()
     {
         GameObject.Destroy(gameObject);
-        
     }
+
     public void Idle(float playSpeed)
     {
         spriteController.Idle(playSpeed);
     }
+
     public void WalkIn(float playSpeed)
     {
         spriteController.WalkIn(playSpeed);
@@ -51,13 +52,25 @@ public class AnimatedCombatCharacter
     public void Prepare(float playSpeed)
     {
         spriteController.Prepare(playSpeed);
+        MonoUtility.DelayFunction(PrepareFinished, (float)spriteController.GetCurrentAnimationDuration());
     }
-
+    void PrepareFinished()
+    {
+        OnPrepareFinished?.Invoke();
+    }
+    public Action OnPrepareFinished;
     public Action OnAttackFinished;
+
     public void Attack(float playSpeed)
     {
         spriteController.Attack(playSpeed);
-        MonoUtility.DelayFunction(OnAttackFinished, (float)spriteController.GetCurrentAnimationDuration());
+        Debug.Log("Attack Duration: "+(float)spriteController.GetCurrentAnimationDuration());
+        MonoUtility.DelayFunction(AttackFinished, (float)spriteController.GetCurrentAnimationDuration());
+    }
+
+    void AttackFinished()
+    {
+        OnAttackFinished?.Invoke();
     }
 
     public void Damaged(float playSpeed)

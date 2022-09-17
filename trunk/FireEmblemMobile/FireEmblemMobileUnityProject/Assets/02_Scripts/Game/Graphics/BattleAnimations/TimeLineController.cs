@@ -50,7 +50,7 @@ public class TimeLineController : MonoBehaviour
         zoomInFinished?.Invoke();
     }
 
-    public void Start(bool introReverse=false)
+    public void Init(bool introReverse=false)
     {
         playableDirector.Stop();
         PlayIntro(introReverse);

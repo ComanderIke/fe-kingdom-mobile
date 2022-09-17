@@ -14,7 +14,7 @@ public class CharacterCombatAnimations : MonoBehaviour
     public Action OnAttackFinished;
     private bool leftCharacterDied;
     private bool rightCharacterDied;
-   
+
     private float attackDuration = 0.0f;
     private bool leftCharacterAttacker;
 
@@ -30,20 +30,26 @@ public class CharacterCombatAnimations : MonoBehaviour
     {
         leftCharacterAttacker = b;
     }
+
     public void SpawnLeftCharacter(Unit character)
     {
-        characterLeft = new AnimatedCombatCharacter(Instantiate(character.visuals.CharacterSpriteSet.battleAnimatedSprite, transform), true);
+        characterLeft =
+            new AnimatedCombatCharacter(
+                Instantiate(character.visuals.CharacterSpriteSet.battleAnimatedSprite, transform), true);
     }
+
     public void SpawnRightCharacter(Unit character)
     {
-        characterRight = new AnimatedCombatCharacter(Instantiate(character.visuals.CharacterSpriteSet.battleAnimatedSprite, transform), false);
-
+        characterRight =
+            new AnimatedCombatCharacter(
+                Instantiate(character.visuals.CharacterSpriteSet.battleAnimatedSprite, transform), false);
     }
 
     public void SetPlaySpeed(float speed)
     {
         playSpeed = speed;
     }
+
     public void WalkIn(bool left)
     {
         if (left)
@@ -53,7 +59,6 @@ public class CharacterCombatAnimations : MonoBehaviour
         }
         else
         {
-
             characterLeft.Idle(playSpeed);
             characterRight.WalkIn(playSpeed);
         }
@@ -68,102 +73,92 @@ public class CharacterCombatAnimations : MonoBehaviour
         }
         else
         {
+            Debug.Log("PlayIdle");
             characterLeft.Idle(playSpeed);
         }
+        
         if (rightCharacterDied)
         {
             characterRight.Hide();
         }
         else
         {
+            Debug.Log("PlayIdle");
             characterRight.Idle(playSpeed);
         }
+        
     }
-    public void CharacterAttack(bool attacker, bool leftCharacterAttacker)
-    {
-        if (attacker)
-            leftCharacterAttacker = !leftCharacterAttacker;
-        var attackingCharacter = leftCharacterAttacker ? characterLeft : characterRight;
 
+    public void CharacterAttack(AttackData attackData, bool attacker, bool leftCharacterAttacker)
+    {
+        Debug.Log("attacker: "+attacker+" LeftAttacker: "+this.leftCharacterAttacker);
+        // if (attacker)
+        //     leftCharacterAttacker = !leftCharacterAttacker;
+        bool b = (leftCharacterAttacker == attacker);
+        var attackingCharacter = b ? characterLeft : characterRight;
+        var defendingCharacter = b ? characterRight : characterLeft;
+Debug.Log("Attacking Character: "+(leftCharacterAttacker ? "characterLeft" : "characterRight"));
 
         if (attackingCharacter.HasPrepareAnimation())
         {
             attackingCharacter.Prepare(playSpeed);
-            
-            MonoUtility.DelayFunction(()=>
-            {
-                if (attacker)
+            attackingCharacter.OnPrepareFinished = null;
+            attackingCharacter.OnPrepareFinished += () =>
                 {
-                    Attack(leftCharacterAttacker ? characterLeft : characterRight);
-                    Defend(leftCharacterAttacker ? characterRight : characterLeft);
-                }
-                else
-                {
-                    Attack(leftCharacterAttacker ? characterRight : characterLeft);
-                    Defend(leftCharacterAttacker ? characterLeft : characterRight);
-                }
-            },(float)attackerSpriteController.GetCurrentAnimationDuration());
+                    Attack(attackingCharacter);
+                    Defend(attackData, defendingCharacter);
+                };
         }
         else
         {
-            if (attacker)
+            Attack(attackingCharacter);
+            Defend(attackData, defendingCharacter);
+        }
+    }
+
+   
+
+    private void Attack(AnimatedCombatCharacter attacker)
+        {
+            attacker.Attack(playSpeed);
+            attacker.OnAttackFinished -= AttackFinished;
+            attacker.OnAttackFinished += AttackFinished;
+        }
+
+        private void Defend(AttackData attackData, AnimatedCombatCharacter defender)
+        {
+            if (attackData.hit)
             {
-                Attack(leftCharacterAttacker ? characterLeft : characterRight);
-                Defend(leftCharacterAttacker ? characterRight : characterLeft);
+                OnDamageDealt?.Invoke(attackData);
+                if (attackData.kill)
+                    Death(defender, attackData.Dmg, attackData.crit);
+                else
+                    Damaged(defender, attackData.Dmg, attackData.crit);
             }
             else
             {
-                Attack(leftCharacterAttacker ? characterRight : characterLeft);
-                Defend(leftCharacterAttacker ? characterLeft : characterRight);
+                Dodge(defender);
             }
-
-            
         }
-    }
-    private void Attack(AnimatedCombatCharacter attacker)
-    {
-        attacker.Attack(playSpeed);
-        attacker.OnAttackFinished -= OnAttackFinishedAncor;
-        attacker.OnAttackFinished += OnAttackFinishedAncor;
-    }
 
-    private void Defend(AttackData attackData, AnimatedCombatCharacter defender)
-    {
-        if (attackData.hit)
-         {
-             OnDamageDealt?.Invoke(attackData);
-             if (attackData.kill)
-                 Death(defender, attackData.Dmg, attackData.crit);
-             else
-                 Damaged(defender, attackData.Dmg, attackData.crit);
-         }
-         else
-         {
-             Dodge(defender);
-         }
-    }
-     
-    void OnAttackFinishedAncor()
-    {
-        OnAttackFinished?.Invoke();
-    }
+      
+
     public static event Action<AttackData> OnDamageDealt;
     public static event Action<AnimatedCombatCharacter> OnDodge;
     public static event Action<AnimatedCombatCharacter, int, bool> OnDamaged;
+
     void Dodge(AnimatedCombatCharacter character)
     {
         character.Dodge(playSpeed);
         OnDodge?.Invoke(character);
-        
-         
     }
+
     void Damaged(AnimatedCombatCharacter character, int dmg, bool critical)
     {
         character.Damaged(playSpeed);
         OnDamaged?.Invoke(character, dmg, critical);
-        
-         
     }
+
     void Death(AnimatedCombatCharacter character, int dmg, bool critical)
     {
         character.Death(playSpeed);
@@ -172,7 +167,5 @@ public class CharacterCombatAnimations : MonoBehaviour
         else
             leftCharacterDied = true;
         OnDamaged?.Invoke(character, dmg, critical);
-        
-         
     }
 }

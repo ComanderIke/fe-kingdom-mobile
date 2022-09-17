@@ -13,8 +13,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     
     private AnimationStateManager animationStateManager;
     public static event Action<BattleSimulation, IBattleActor, IAttackableTarget> OnShow;
-
-    public BattleUI BattleUI;
+    
     public Volume volume;
     public event Action OnFinished;
     
@@ -25,7 +24,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         gameObject.SetActive(true);
         OnShow?.Invoke(battleSimulation, attackingActor, defendingActor);
         canvas.Show();
-        animationStateManager = new AnimationStateManager(battleSimulation);
+        animationStateManager = new AnimationStateManager(battleSimulation, GetComponent<TimeLineController>(),GetComponent<CharacterCombatAnimations>());
         animationStateManager.Start();
        
         playing = true;
@@ -35,7 +34,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0)&&animationStateManager!=null)
         {
             CancelInvoke();//TODO DO THIS ON COROUTINE MONOBEHAVIOUR 
             Debug.Log("TODO Reset Cameras and Volumes!");

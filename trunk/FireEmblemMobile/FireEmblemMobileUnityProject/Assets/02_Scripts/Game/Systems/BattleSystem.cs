@@ -153,15 +153,17 @@ namespace Game.Mechanics
     
         public BattleSimulation GetBattleSimulation(IBattleActor attacker, IBattleActor defender, bool grid)
         {
+            Debug.Log("GetBattleSimulation Hereinstead");
             battleSimulation = new BattleSimulation(attacker, defender);
             battleSimulation.StartBattle(false, grid);
 
             return battleSimulation;
         }
-        public BattleSimulation GetBattleSimulation(IBattleActor attacker, IAttackableTarget attackableTarget)
+        public BattleSimulation GetBattleSimulation(IBattleActor attacker, IAttackableTarget attackableTarget, bool grid)
         {
+            Debug.Log("GetBattleSimulation Here");
             battleSimulation = new BattleSimulation(attacker, attackableTarget);
-            battleSimulation.StartBattle(false, true);
+            battleSimulation.StartBattle(false, grid);
 
             return battleSimulation;
         }

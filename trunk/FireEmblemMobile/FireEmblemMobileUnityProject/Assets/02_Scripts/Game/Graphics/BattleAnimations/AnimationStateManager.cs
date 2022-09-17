@@ -4,15 +4,16 @@ using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameInput;
 using Game.Mechanics;
+using UnityEngine;
 
 public class AnimationStateManager
 {
     public event Action OnFinished;
     
-    public TimeLineController TimeLineController;
+    private TimeLineController TimeLineController;
     public float timeBetweenAttacks = 1.0f;
     public float EndBattleWaitDuration = 0.5f;
-    public CharacterCombatAnimations characterAnimations;
+    private CharacterCombatAnimations characterAnimations;
     public CombatTextRenderer CombatTextRenderer;
     private BattleSimulation battleSimulation;
     private CombatRound currentRound;
@@ -21,14 +22,18 @@ public class AnimationStateManager
     private bool playerControlled;
  
     
-    public AnimationStateManager(BattleSimulation battleSimulation)
+    public AnimationStateManager(BattleSimulation battleSimulation, TimeLineController timeLineController, CharacterCombatAnimations characterAnimations)
     {
         this.battleSimulation = battleSimulation;
+        this.TimeLineController = timeLineController;
+        this.characterAnimations = characterAnimations;
         TimeLineController.zoomInFinished += ContinueBattle;
         leftCharacterAttacker = battleSimulation.Attacker.Faction==null||battleSimulation.Attacker.Faction.IsPlayerControlled;
+        Debug.Log("LeftCharacterAttacker: "+leftCharacterAttacker);
         characterAnimations.Reset();
         characterAnimations.SetLeftCharacterAttacker(leftCharacterAttacker);
-        playerControlled = battleSimulation.Attacker.Faction == null || battleSimulation.Attacker.Faction.IsPlayerControlled;
+        playerControlled = (Player.Instance.Party.members.Contains((Unit)battleSimulation.Attacker)) ||(battleSimulation.Attacker.Faction == null && battleSimulation.Attacker.Faction.IsPlayerControlled);
+        Debug.Log("Attacker is PlayerControlled: "+playerControlled);
         attackSequenzIndex = 0;
         CombatTextRenderer = new CombatTextRenderer();
         
@@ -46,21 +51,21 @@ public class AnimationStateManager
             characterAnimations.SpawnLeftCharacter((Unit)battleSimulation.Defender);
             characterAnimations.SpawnRightCharacter((Unit)battleSimulation.Attacker);
         }
-        TimeLineController.Start(playerControlled);
+        TimeLineController.Init(playerControlled);
         
         characterAnimations.SetPlaySpeed(TimeLineController.introWalkInPlaySpeed);
         characterAnimations.WalkIn(playerControlled);
+        characterAnimations.SetPlaySpeed(1.0f);
     }
     private void ContinueBattle()
     {
-        bool prepare = false;
         if (attackSequenzIndex >= currentRound.AttacksData.Count)
         {
             AllAttacksFinished();
             return;
         }
         
-        characterAnimations.CharacterAttack(currentRound.AttacksData[attackSequenzIndex].attacker, leftCharacterAttacker);
+        characterAnimations.CharacterAttack(currentRound.AttacksData[attackSequenzIndex],currentRound.AttacksData[attackSequenzIndex].attacker, leftCharacterAttacker);
         characterAnimations.OnAttackFinished -= AttackFinished;
         characterAnimations.OnAttackFinished += AttackFinished;
         TimeLineController.CameraShake();
@@ -77,15 +82,15 @@ public class AnimationStateManager
     {
         TimeLineController.PlayZoomOut();
        
-        if (attackSequenzIndex >= currentRound.AttacksData.Count)
-        {
-            TimeLineController.zoomOutFinished -= AllAttacksFinished;
-            TimeLineController.zoomOutFinished += AllAttacksFinished;
-        }
-        else
-        {
-            MonoUtility.DelayFunction(TimeLineController.PlayZoomIn, timeBetweenAttacks);
-        }
+         if (attackSequenzIndex >= currentRound.AttacksData.Count)
+         {
+             TimeLineController.zoomOutFinished -= AllAttacksFinished;
+             TimeLineController.zoomOutFinished += AllAttacksFinished;
+         }
+         else
+         {
+             MonoUtility.DelayFunction(TimeLineController.PlayZoomIn, timeBetweenAttacks);
+         }
     }
     
     private void AllAttacksFinished()
