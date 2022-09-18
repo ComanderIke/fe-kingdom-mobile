@@ -129,8 +129,8 @@ public class BattleUI : MonoBehaviour
             }
         }
 
-        CharacterCombatAnimations.OnDamageDealt -= UpdateDefenderHPBar;
-        CharacterCombatAnimations.OnDamageDealt += UpdateDefenderHPBar;
+        CharacterCombatAnimations.OnDamageDealt -= UpdateHpBars;
+        CharacterCombatAnimations.OnDamageDealt += UpdateHpBars;
         
         leftHPBar.SetValues(playerUnit.MaxHp,playerUnit.Hp);
         rightHPBar.SetValues(enemyUnit.MaxHp,enemyUnit.Hp);
@@ -138,36 +138,58 @@ public class BattleUI : MonoBehaviour
     }
 
    
-    public void UpdateAttackerHPBar(AttackData attackData)
+    // public void UpdateAttackerHPBar(AttackData attackData)
+    // {
+    //     if (playerUnitIsAttacker)
+    //     {
+    //         currentHPLeft -= attackData.Dmg;
+    //         hpText.SetText("" + currentHPLeft);
+    //         leftHPBar.SetValues(maxHPLeft, currentHPLeft);
+    //     }
+    //     else
+    //     {
+    //         currentHPRight -= attackData.Dmg;
+    //   
+    //         hpTextRight.SetText(""+currentHPRight);
+    //         rightHPBar.SetValues(maxHPRight,currentHPRight);
+    //     }
+    // }
+    public void UpdateHpBars(AttackData attackData)
     {
+        
         if (playerUnitIsAttacker)
         {
-            currentHPLeft -= attackData.Dmg;
-            hpText.SetText("" + currentHPLeft);
-            leftHPBar.SetValues(maxHPLeft, currentHPLeft);
+            if (attackData.attacker)
+            {
+                currentHPRight -= attackData.Dmg;
+
+                hpTextRight.SetText("" + currentHPRight);
+                rightHPBar.SetValues(maxHPRight, currentHPRight);
+            }
+            else
+            {
+                currentHPLeft -= attackData.Dmg;
+                hpText.SetText("" + currentHPLeft);
+                leftHPBar.SetValues(maxHPLeft, currentHPLeft);
+            }
+
         }
         else
         {
-            currentHPRight -= attackData.Dmg;
-      
-            hpTextRight.SetText(""+currentHPRight);
-            rightHPBar.SetValues(maxHPRight,currentHPRight);
-        }
-    }
-    public void UpdateDefenderHPBar(AttackData attackData)
-    {
-        if (playerUnitIsAttacker)
-        {currentHPRight -= attackData.Dmg;
-      
-            hpTextRight.SetText(""+currentHPRight);
-            rightHPBar.SetValues(maxHPRight,currentHPRight);
-           
-        }
-        else
-        {
-            currentHPLeft -= attackData.Dmg;
-            hpText.SetText("" + currentHPLeft);
-            leftHPBar.SetValues(maxHPLeft, currentHPLeft);
+            if (attackData.attacker)
+            {
+                currentHPLeft -= attackData.Dmg;
+                hpText.SetText("" + currentHPLeft);
+                leftHPBar.SetValues(maxHPLeft, currentHPLeft);
+               
+            }
+            else
+            {
+                currentHPRight -= attackData.Dmg;
+
+                hpTextRight.SetText("" + currentHPRight);
+                rightHPBar.SetValues(maxHPRight, currentHPRight);
+            }
         }
     }
 }
