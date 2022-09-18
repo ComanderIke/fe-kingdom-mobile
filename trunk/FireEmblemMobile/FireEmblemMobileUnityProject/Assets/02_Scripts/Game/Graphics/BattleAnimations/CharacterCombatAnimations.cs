@@ -91,12 +91,14 @@ public class CharacterCombatAnimations : MonoBehaviour
 
     public void CharacterAttack(AttackData attackData, bool attacker, bool leftCharacterAttacker)
     {
-        Debug.Log("attacker: "+attacker+" LeftAttacker: "+this.leftCharacterAttacker);
+       // Debug.Log("attacker: "+attacker+" LeftAttacker: "+this.leftCharacterAttacker);
         // if (attacker)
         //     leftCharacterAttacker = !leftCharacterAttacker;
         bool b = (leftCharacterAttacker == attacker);
         var attackingCharacter = b ? characterLeft : characterRight;
         var defendingCharacter = b ? characterRight : characterLeft;
+        this.leftCharacterAttacker = leftCharacterAttacker;
+      //  Debug.Log("LeftCharacterAttacker: "+leftCharacterAttacker);
 Debug.Log("Attacking Character: "+(leftCharacterAttacker ? "characterLeft" : "characterRight"));
 
         if (attackingCharacter.HasPrepareAnimation())
@@ -125,7 +127,7 @@ Debug.Log("Attacking Character: "+(leftCharacterAttacker ? "characterLeft" : "ch
             attacker.OnAttackFinished += AttackFinished;
         }
 
-        private void Defend(AttackData attackData, AnimatedCombatCharacter defender)
+    private void Defend(AttackData attackData, AnimatedCombatCharacter defender)
         {
             if (attackData.hit)
             {
@@ -162,10 +164,21 @@ Debug.Log("Attacking Character: "+(leftCharacterAttacker ? "characterLeft" : "ch
     void Death(AnimatedCombatCharacter character, int dmg, bool critical)
     {
         character.Death(playSpeed);
-        if (leftCharacterAttacker)
-            rightCharacterDied = true;
-        else
+        if (character == characterLeft)
+        {
+            Debug.Log("Left Character Died");
+
             leftCharacterDied = true;
+            rightCharacterDied = false;
+        }
+        else
+        {
+            Debug.Log("Right Character Died");
+            rightCharacterDied = true;
+            leftCharacterDied = false;
+        }
+        
+
         OnDamaged?.Invoke(character, dmg, critical);
     }
 }
