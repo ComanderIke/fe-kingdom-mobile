@@ -56,9 +56,12 @@ namespace Menu
             string sceneName = System.IO.Path.GetFileNameWithoutExtension(pathToScene);
             if (_instance != null)
             {
+               
                 //Debug.Log("Current Scene Name: "+_instance.currentSceneName);
+                _instance.PrepareLoadScene();
                 _instance.scenesToLoad.Add(new SceneLoadData(){name=sceneName, scene=buildIndex, additive = additive});
                 Debug.Log("Load Scene: " + sceneName);
+                
             }
         }
         public static void UnLoadSceneAsync(Scenes buildIndex)
@@ -74,7 +77,19 @@ namespace Menu
             }
         }
 
-     
+        void PrepareLoadScene()
+        {
+            LoadingScreen.Show();
+            LoadingScreen.onBlack += StartLoadingProcess;
+            
+        }
+
+        void StartLoadingProcess()
+        {
+            LoadingScreen.onBlack -= StartLoadingProcess;
+            sceneState = SceneState.Reset;
+        }
+        
 
         private void Awake()
         {
@@ -99,7 +114,7 @@ namespace Menu
             updateDelegates[(int) SceneState.Unload] = UpdateSceneUnload;
             updateDelegates[(int) SceneState.PostLoading] = UpdateScenePostload;
             updateDelegates[(int) SceneState.Ready] = UpdateSceneReady;
-            updateDelegates[(int) SceneState.Run] = UpdateSceneRun;
+            updateDelegates[(int) SceneState.Run] = UpdateIdle;
 
             //nextSceneName = "MainMenu";
             sceneState = SceneState.Run;
@@ -115,6 +130,7 @@ namespace Menu
         private void UpdateSceneReset()
         {
             GC.Collect();
+           
             sceneState = SceneState.PreLoading;
         }
 
@@ -137,14 +153,17 @@ namespace Menu
                 }
             }
             sceneState = SceneState.Load;
-            LoadingScreen.Show();
+           
             OnBeforeSceneReady?.Invoke();
             progressBar.fillAmount = 0;
             progressText.text = "0%";
             loadTime = 0;
             clickContinueText.gameObject.SetActive(false);
             StartCoroutine(GenerateTip());
+
         }
+
+       
 
         // show the loading screen until it's loaded
         private void UpdateSceneLoad()
@@ -249,11 +268,12 @@ namespace Menu
         }
 
         // wait for scene change
-        private void UpdateSceneRun()
+        private void UpdateIdle()
         {
-            if ( scenesToLoad.Count!=0) sceneState = SceneState.Reset;
+           // if ( scenesToLoad.Count!=0) sceneState = SceneState.Reset;
             
         }
+        
 
         private void OnDestroy()
         {

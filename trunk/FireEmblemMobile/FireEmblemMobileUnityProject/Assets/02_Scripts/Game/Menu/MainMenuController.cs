@@ -79,7 +79,7 @@ namespace Game.GUI
        
         public void LoadCampaignScene(Campaign campaign)
         {
-            HideMenu();
+            Invoke("HideMenu",.6f);
             SaveData.Reset();
             SceneController.LoadSceneAsync(campaign.scene, true);
             // SceneController.LoadSceneAsync(Scenes.UI, true);

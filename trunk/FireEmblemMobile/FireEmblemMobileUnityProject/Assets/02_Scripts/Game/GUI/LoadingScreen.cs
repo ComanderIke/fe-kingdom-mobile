@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,15 +9,16 @@ namespace LostGrace
     {
         public CanvasGroup Fade;
         public GameObject Content;
+        public Action onBlack;
 
         public void Show()
         {
             gameObject.SetActive(true);
-            LeanTween.alphaCanvas(Fade, 1, .6f).setEaseOutQuad().setOnComplete(()=>
+            LeanTween.alphaCanvas(Fade, 1, .6f).setEaseInQuad().setOnComplete(()=>
             {
-                
+                onBlack?.Invoke();
                 Content.SetActive(true);
-                LeanTween.alphaCanvas(Fade, 0, .4f).setEaseInQuad();
+                LeanTween.alphaCanvas(Fade, 0, .4f).setEaseOutQuad();
             });
             
         }
