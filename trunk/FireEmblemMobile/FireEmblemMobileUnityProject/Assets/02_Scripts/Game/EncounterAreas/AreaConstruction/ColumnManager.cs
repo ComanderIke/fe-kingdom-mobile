@@ -5,6 +5,7 @@ using System.Diagnostics.Tracing;
 using System.Linq;
 using __2___Scripts.Game.Areas;
 using Game.Systems;
+using LostGrace;
 using Pathfinding;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -24,6 +25,7 @@ public class ColumnManager : MonoBehaviour
     public float columnHeight= 2f;
 
     public GameObject LineRendererPrefab;
+    
     private List<GameObject> connections = new List<GameObject>();
     public float xRandomMin = -0.7f;
     public float xRandomMax = 0.7f;
@@ -133,6 +135,7 @@ public class ColumnManager : MonoBehaviour
     {
         lineRenderer.positionCount = 2;
         Vector3[] pos = new Vector3[2];
+      
         pos[0] = startPos;
         pos[1] = endPos;
         lineRenderer.SetPositions(pos);

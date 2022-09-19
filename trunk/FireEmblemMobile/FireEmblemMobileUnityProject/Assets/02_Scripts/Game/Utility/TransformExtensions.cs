@@ -5,6 +5,11 @@ namespace __2___Scripts.Game.Utility
 {
     public static class TransformExtensions
     {
+        public static void DeleteChildren(this Transform transform)
+        {
+            
+            foreach(Transform child in transform)Object.Destroy(child.gameObject);
+        }
         public static void DeleteAllChildren(this Transform transform)
         {
             var children = transform.GetComponentsInChildren<Transform>();

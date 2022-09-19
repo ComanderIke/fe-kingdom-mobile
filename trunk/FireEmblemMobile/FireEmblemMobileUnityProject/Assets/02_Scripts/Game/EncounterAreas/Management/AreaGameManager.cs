@@ -234,9 +234,14 @@ public class AreaGameManager : MonoBehaviour
     {
         
         moveOptions = new List<GameObject>();
+        foreach (var road in Player.Instance.Party.EncounterNode.roads)
+        {
+            road.SetMoveable(true);
+        }
         foreach (var child in Player.Instance.Party.EncounterNode.children)
         {
             child.SetMoveable(true);
+            
             GameObject go = null;
             if (child is BattleEncounterNode)
             {
@@ -295,8 +300,17 @@ public class AreaGameManager : MonoBehaviour
             ToolTipSystem.ShowEncounter(encounterNode, encounterNode.gameObject.transform.position+new Vector3(2,0,0), false, null);
         }
     }
+
+    void HideMoveOptions()
+    {
+        foreach (var road in Player.Instance.Party.EncounterNode.roads)
+        {
+            road.SetMoveable(false);
+        }
+    }
     void MoveClicked(EncounterNode node)
     {
+        HideMoveOptions();
         SetAllEncountersNotMovable();
         StartCoroutine(MovementAnimation(node));
         circleUI.Rotate();
