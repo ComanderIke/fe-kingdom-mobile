@@ -17,6 +17,7 @@ public class MetaUpgradeDetailPanelController : MonoBehaviour
     public GameObject currentTextGo;
     public GameObject upgradeTextGo;
     public GameObject levelTextGo;
+    public GameObject costTextGo;
 
     public Button learnButton;
     public TextMeshProUGUI learnButtonText;
@@ -51,6 +52,7 @@ public class MetaUpgradeDetailPanelController : MonoBehaviour
         icon.sprite = MetaUpgrade.icon;
         level.transform.gameObject.SetActive(true);
         cost.transform.gameObject.SetActive(true);
+     
         description.transform.gameObject.SetActive(true);
         name.transform.gameObject.SetActive(true);
         learnButton.gameObject.SetActive(true);
@@ -59,6 +61,7 @@ public class MetaUpgradeDetailPanelController : MonoBehaviour
         currentTextGo.gameObject.SetActive(false);
         upgradeTextGo.gameObject.SetActive(false);
         levelTextGo.gameObject.SetActive(false);
+        
        
       
 
@@ -69,14 +72,17 @@ public class MetaUpgradeDetailPanelController : MonoBehaviour
                 currentTextGo.gameObject.SetActive(true);
                 upgradeTextGo.gameObject.SetActive(true);
                 levelTextGo.gameObject.SetActive(true);
+                costTextGo.gameObject.SetActive(false);
                 break;
             case UpgradeState.NotLearned: levelTextGo.gameObject.SetActive(true);
-                upgradeTextGo.gameObject.SetActive(true);break;
+                upgradeTextGo.gameObject.SetActive(true);
+                costTextGo.gameObject.SetActive(true);break;
             case UpgradeState.Maxed:
                 learnButtonText.text = "Maxed";
                 learnButton.interactable = false;
                 currentTextGo.gameObject.SetActive(true);
                 levelTextGo.gameObject.SetActive(true);
+                costTextGo.gameObject.SetActive(false);
                 break;
             case UpgradeState.Locked:
                 icon.sprite = lockedSprite;
@@ -85,7 +91,7 @@ public class MetaUpgradeDetailPanelController : MonoBehaviour
                 cost.transform.gameObject.SetActive(false);
                 description.transform.gameObject.SetActive(false);
                 name.transform.gameObject.SetActive(false);
-               
+                costTextGo.gameObject.SetActive(false);
                 break;
         }
     }

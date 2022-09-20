@@ -49,13 +49,19 @@ namespace Game.GUI
             }
         }
 
+        void EnableCanvas()
+        {
+            mainMenuCanvas.enabled = true;
+        }
         public void ShowMainMenu()
         {
+            campaignMenu.onBackClicked += EnableCanvas;
+            optionsMenu.onBackClicked += EnableCanvas;
             
             Debug.Log("Continue Button: "+ContinueButton.name);
-            ContinueButton.SetActive(SaveData.currentSaveData!=null);
-            SaveButton.SetActive(SaveData.currentSaveData!=null);
-            LoadButton.SetActive(GetLoadFiles()!=0);
+            //ContinueButton.SetActive(SaveData.currentSaveData!=null);
+            //SaveButton.SetActive(SaveData.currentSaveData!=null);
+            //LoadButton.SetActive(GetLoadFiles()!=0);
             mainMenuCanvas.enabled=true;
             optionsMenu.Hide();
             campaignMenu.Hide();
@@ -72,6 +78,8 @@ namespace Game.GUI
             campaignMenu.Hide();
             menuCam.gameObject.SetActive(false);
             menuBackground.SetActive((false));
+            campaignMenu.onBackClicked -= EnableCanvas;
+            optionsMenu.onBackClicked -= EnableCanvas;
         }
      
         
