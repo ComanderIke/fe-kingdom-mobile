@@ -40,10 +40,12 @@ public abstract class EncounterNode
     public Sprite sprite;
 
     public string description;
+
+    public string label;
     //public Column column;
  
 
-    protected EncounterNode(EncounterNode parent,int depth, int childIndex, string description, Sprite icon)
+    protected EncounterNode(EncounterNode parent,int depth, int childIndex, string label, string description, Sprite icon)
     {
         children = new List<EncounterNode>();
         parents = new List<EncounterNode>();
@@ -53,6 +55,7 @@ public abstract class EncounterNode
         this.childIndex = childIndex;
         this.sprite = icon;
         this.description = description;
+        this.label = label;
     }
 
     public override string ToString()

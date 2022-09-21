@@ -23,7 +23,7 @@ public class ToolTipSystem : MonoBehaviour
 
     public static void ShowEncounter(EncounterNode node, Vector3 worldPosition, bool moveable, Action<EncounterNode> moveClicked)
     {
-        instance.EncounterToolTip.Updatevalues(node, node.ToString(), worldPosition, moveable, moveClicked);
+        instance.EncounterToolTip.Updatevalues(node, node.label, worldPosition, moveable, moveClicked);
         instance.EncounterToolTip.gameObject.SetActive(true);
     }
     public static void Show(Item item, Vector3 position, string header, string description, Sprite icon)

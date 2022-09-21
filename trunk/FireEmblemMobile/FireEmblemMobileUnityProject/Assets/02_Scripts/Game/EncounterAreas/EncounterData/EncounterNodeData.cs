@@ -2,7 +2,7 @@
 
 public abstract class EncounterNodeData: ScriptableObject
 {
-
+    public string label;
     public GameObject prefab;
     public float appearanceChance;
     public int maxAppearanceCountPerArea = 99;

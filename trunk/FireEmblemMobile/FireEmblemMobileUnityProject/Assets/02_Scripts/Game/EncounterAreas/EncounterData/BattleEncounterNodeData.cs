@@ -10,6 +10,6 @@ public class BattleEncounterNodeData: EncounterNodeData
 
     public override EncounterNode CreateNode(EncounterNode parent,int depth, int childIndex)
     {
-        return new BattleEncounterNode(levelIndex, EnemyArmyData, parent, depth, childIndex, description, sprite);
+        return new BattleEncounterNode(levelIndex, EnemyArmyData, parent, depth, childIndex, label,description, sprite);
     }
 }

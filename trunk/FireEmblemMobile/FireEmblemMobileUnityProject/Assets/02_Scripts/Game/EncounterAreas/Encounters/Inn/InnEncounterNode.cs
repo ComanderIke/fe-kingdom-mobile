@@ -7,7 +7,7 @@ public class InnEncounterNode : EncounterNode
 {
     public Inn inn;
 
-    public InnEncounterNode(EncounterNode parent,int depth, int childIndex, string description, Sprite sprite) : base(parent, depth, childIndex, description, sprite)
+    public InnEncounterNode(EncounterNode parent,int depth, int childIndex, string label, string description, Sprite sprite) : base(parent, depth, childIndex, label, description, sprite)
     {
         inn = new Inn();
         //inn = new Inn(new Quest("Demo Quest", new QuestReward(QuestRewardType.Gold,100, null)), GameData.Instance.GetHumanBlueprint("Elsa"));

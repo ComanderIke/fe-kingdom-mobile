@@ -291,7 +291,13 @@ public class AreaGameManager : MonoBehaviour
         {
 
             ToolTipSystem.ShowEncounter(encounterNode, encounterNode.gameObject.transform.position+new Vector3(2,0,0), true, MoveClicked);
-          
+            foreach (var road in Player.Instance.Party.EncounterNode.roads)
+            {
+                if(road.end==encounterNode)
+                    road.NodeSelected();
+                else
+                    road.NodeDeselected();
+            }
             // ResetMoveOptions();
             // ShowMoveOptions();
         }

@@ -8,7 +8,7 @@ public class ChurchEncounterNode : EncounterNode
 {
     public Church church;
 
-    public ChurchEncounterNode(EncounterNode parent,int depth, int childIndex, string description, Sprite sprite) : base(parent, depth, childIndex, description, sprite)
+    public ChurchEncounterNode(EncounterNode parent,int depth, int childIndex, string label, string description, Sprite sprite) : base(parent, depth, childIndex, label, description, sprite)
     {
         church = new Church(GameData.Instance.GetBlessingData());
         church.AddItem(new ShopItem(GameData.Instance.GetRandomRelic()));

@@ -260,7 +260,7 @@ public class EncounterTree
         Column endColumn = new Column();
         if (endNodeData is BattleEncounterNodeData data)
         {
-            endNode = new BattleEncounterNode(data.levelIndex, data.EnemyArmyData,null,spawnData.columnCount,0, "Area Boss Battle", null);
+            endNode = new BattleEncounterNode(data.levelIndex, data.EnemyArmyData,null,spawnData.columnCount,0, "Boss Battle", "Area Boss Battle", null);
         }
 
         endColumn.children.Add(endNode);
