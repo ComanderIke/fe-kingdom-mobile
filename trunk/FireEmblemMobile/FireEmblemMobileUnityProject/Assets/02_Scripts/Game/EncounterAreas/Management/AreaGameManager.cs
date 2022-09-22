@@ -23,8 +23,6 @@ public class AreaGameManager : MonoBehaviour
     private List<IEngineSystem> Systems { get; set; }
     public GameObject playerPrefab;
     private Area_ActionSystem actionSystem;
-    public GameObject attackOptionPrefab;
-    public GameObject moveOptionPrefab;
     public EncounterUIController uiCOntroller;
     public UIPartyCharacterCircleController uiPartyController;
     public Party playerStartParty;
@@ -125,9 +123,12 @@ public class AreaGameManager : MonoBehaviour
         var activeUnit = Player.Instance.Party.members[Player.Instance.Party.ActiveUnitIndex];
         var go = Instantiate(activeUnit.visuals.Prefabs.EncounterAnimatedSprite, partyGo.transform, false);
         go.transform.localPosition = new Vector3(0,0,0);
-        go.GetComponent<EncounterPlayerUnitController>().SetUnit(activeUnit);
+        var uc =  go.GetComponent<EncounterPlayerUnitController>();
+        uc.SetUnit(activeUnit);
         ShowActiveUnit(go.transform.position);
-        go.GetComponent<EncounterPlayerUnitController>().Show();
+        uc.Show();
+        uc.onClicked -= UnitClicked;
+        uc.onClicked += UnitClicked;
        // go.GetComponent<EncounterPlayerUnitController>().SetTarget(null);
        // go.GetComponent<EncounterPlayerUnitController>().SetSortOrder(Player.Instance.Party.members.Count);
         activeMemberGo = go;
@@ -140,8 +141,11 @@ public class AreaGameManager : MonoBehaviour
             
             go = Instantiate(member.visuals.Prefabs.EncounterAnimatedSprite, partyGo.transform, false);
             go.transform.localPosition = new Vector3(0,0,0);
-            go.GetComponent<EncounterPlayerUnitController>().Hide();
-            go.GetComponent<EncounterPlayerUnitController>().SetUnit(member);
+            uc =  go.GetComponent<EncounterPlayerUnitController>();
+            uc.Hide();
+            uc.SetUnit(member);
+            uc.onClicked -= UnitClicked;
+            uc.onClicked += UnitClicked;
           //  go.GetComponent<EncounterPlayerUnitController>().SetTarget(activeMemberGo.transform);
            // go.GetComponent<EncounterPlayerUnitController>().SetOffsetCount(cnt);
             //go.GetComponent<EncounterPlayerUnitController>().SetSortOrder(Player.Instance.Party.members.Count-cnt);
@@ -151,6 +155,11 @@ public class AreaGameManager : MonoBehaviour
         Player.Instance.Party.GameObject = partyGo;
     }
 
+    private void UnitClicked(EncounterPlayerUnitController clickedUnitController)
+    {
+       
+        MovementHint();
+    }
     private GameObject activeMemberGo;
     public void UpdatePartyGameObjects()
     {
@@ -233,28 +242,17 @@ public class AreaGameManager : MonoBehaviour
     public void ShowMoveOptions()
     {
         
-        moveOptions = new List<GameObject>();
-        foreach (var road in Player.Instance.Party.EncounterNode.roads)
-        {
-            road.SetMoveable(true);
-        }
         foreach (var child in Player.Instance.Party.EncounterNode.children)
         {
             child.SetMoveable(true);
-            
-            GameObject go = null;
-            if (child is BattleEncounterNode)
-            {
-                go = Instantiate(attackOptionPrefab, spawnParent, false);
-            }
-            else
-            {
-                go = Instantiate(moveOptionPrefab, spawnParent, false);
-            }
 
-            go.transform.position = child.gameObject.transform.position;
-            moveOptions.Add(go);
         }
+        foreach (var road in Player.Instance.Party.EncounterNode.roads)
+        {
+            road.SetMoveable(true);
+           
+        }
+      
     }
 
   
@@ -276,6 +274,15 @@ public class AreaGameManager : MonoBehaviour
             }
         }
     }
+
+    void MovementHint()
+    {
+        Debug.Log("Show Movement Hint");
+        foreach (var road in Player.Instance.Party.EncounterNode.roads)
+        {
+            road.end.Grow();
+        }
+    }
     public void NodeClicked(EncounterNode encounterNode)
     {
         Debug.Log("Node Clicked: "+encounterNode);
@@ -283,8 +290,9 @@ public class AreaGameManager : MonoBehaviour
         cursor.SetPosition(encounterNode.gameObject.transform.position);
         if (encounterNode== Player.Instance.Party.EncounterNode)
         {
-            FindObjectOfType<UICharacterViewController>().Show(Player.Instance.Party.ActiveUnit);
-            Debug.Log("Current Node Clicked!");
+            MovementHint();
+            //FindObjectOfType<UICharacterViewController>().Show(Player.Instance.Party.ActiveUnit);
+            
             return;
         }
         if (encounterNode.moveable)

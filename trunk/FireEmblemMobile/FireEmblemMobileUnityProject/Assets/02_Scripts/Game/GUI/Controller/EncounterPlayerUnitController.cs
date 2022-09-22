@@ -20,6 +20,8 @@ public class EncounterPlayerUnitController : MonoBehaviour
     public float baseOffset = 0.0f;
 
     private float offset;
+
+    public event Action<EncounterPlayerUnitController> onClicked;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,8 +30,12 @@ public class EncounterPlayerUnitController : MonoBehaviour
     
     public void Clicked()
     {
-        if(!UIClickChecker.CheckUIObjectsInPosition())
-            FindObjectOfType<UICharacterViewController>().Show(Unit);
+
+        if (!UIClickChecker.CheckUIObjectsInPosition())
+        {
+            onClicked?.Invoke(this);
+            //     FindObjectOfType<UICharacterViewController>().Show(Unit);
+        }
     }
 
     // Update is called once per frame

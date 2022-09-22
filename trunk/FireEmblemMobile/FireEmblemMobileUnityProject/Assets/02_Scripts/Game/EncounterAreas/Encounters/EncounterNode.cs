@@ -94,4 +94,9 @@ public abstract class EncounterNode
             renderer.Reset();
         }
     }
+
+    public void Grow()
+    {
+        renderer.GrowAnimation();
+    }
 }
