@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameInput;
+using UnityEngine;
 
 public enum EventSceneType
 {
@@ -17,11 +19,14 @@ public class ResponseOption
     public int StatRequirement;
     public int StatIndex;
     public Reward reward;
-    public int nextSceneIndex=-1;
+
     public bool fight = false;
     public EnemyArmyData EnemyArmyData;
     public EventSceneType type;
     public Unit EnemyToFight;
+    public bool statcheck;
+    public List<EventOutcome> outcomes;
+
     public ResponseOption(string text,int statRequirement, int statIndex, Reward reward)
     {
         this.Text = text;
@@ -31,4 +36,10 @@ public class ResponseOption
     }
 
     
+}
+
+[Serializable]
+public class EventOutcome
+{
+    public int nextSceneIndex=-1;
 }

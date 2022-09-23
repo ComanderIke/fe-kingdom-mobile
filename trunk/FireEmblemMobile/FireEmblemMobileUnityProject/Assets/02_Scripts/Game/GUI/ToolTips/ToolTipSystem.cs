@@ -15,6 +15,7 @@ public class ToolTipSystem : MonoBehaviour
     public SkillToolTip SkillToolTip;
     public AttributeToolTip AttributeToolTip;
     public EncounterToolTip EncounterToolTip;
+    public EncounterToolTip EncounterAttackToolTip;
 
     public void Awake()
     {
@@ -23,8 +24,16 @@ public class ToolTipSystem : MonoBehaviour
 
     public static void ShowEncounter(EncounterNode node, Vector3 worldPosition, bool moveable, Action<EncounterNode> moveClicked)
     {
-        instance.EncounterToolTip.Updatevalues(node, node.label, worldPosition, moveable, moveClicked);
-        instance.EncounterToolTip.gameObject.SetActive(true);
+        if (!(node is BattleEncounterNode))
+        {
+            instance.EncounterToolTip.Updatevalues(node, node.label, worldPosition, moveable, moveClicked);
+            instance.EncounterToolTip.gameObject.SetActive(true);
+        }
+        else
+        {
+            instance.EncounterAttackToolTip.Updatevalues(node, node.label, worldPosition, moveable, moveClicked);
+            instance.EncounterAttackToolTip.gameObject.SetActive(true);
+        }
     }
     public static void Show(Item item, Vector3 position, string header, string description, Sprite icon)
     {

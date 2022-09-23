@@ -43,6 +43,12 @@ namespace Game.GameActors.Units
             if (exp > MAX_EXP)
                 exp = MAX_EXP;
             ExpGained?.Invoke(drainPos, Exp, exp);
+           DoExp(exp);
+            
+        }
+
+        private void DoExp(int exp)
+        {
             Debug.Log("Add Exp: " + exp);
             Exp += exp;
             Debug.Log("EXP: " + Exp);
@@ -51,7 +57,10 @@ namespace Game.GameActors.Units
                 Exp -= MAX_EXP;
                 PerformLevelUp();
             }
-            
+        }
+        public void AddExp(int exp)
+        {
+            AddExp(new Vector3(-1,-1,-1), exp);
         }
 
         private void PerformLevelUp()

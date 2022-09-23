@@ -222,7 +222,8 @@ namespace Game.GameActors.Units
         {
             Debug.Log("Unit Exp Gained!" +expBefore+" "+expGained);
             OnExpGained?.Invoke(expBefore, expGained);
-            GameObject.FindObjectOfType<ExpParticleSystem>().Play(this, drainPos+new Vector3(0.5f,0.5f,0), expGained);
+            if( GameObject.FindObjectOfType<ExpParticleSystem>()!=null)
+                GameObject.FindObjectOfType<ExpParticleSystem>().Play(this, drainPos+new Vector3(0.5f,0.5f,0), expGained);
         }
 
         private void LevelUp()

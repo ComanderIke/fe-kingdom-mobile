@@ -25,11 +25,13 @@ MonoBehaviour:
         gold: 0
         smithingStones: 0
         experience: 0
-      nextSceneIndex: 1
       fight: 0
       EnemyArmyData: {fileID: 0}
       type: 0
       EnemyToFight: {fileID: 0}
+      statcheck: 0
+      outcomes:
+      - nextSceneIndex: 1
     - Text: 'Leave them be. '
       StatRequirement: 0
       StatIndex: 0
@@ -40,11 +42,13 @@ MonoBehaviour:
         gold: 0
         smithingStones: 0
         experience: 0
-      nextSceneIndex: -1
       fight: 0
       EnemyArmyData: {fileID: 0}
       type: 0
       EnemyToFight: {fileID: 0}
+      statcheck: 0
+      outcomes:
+      - nextSceneIndex: -1
     MainText: You come across a brown steed carrying a knight in worn down armor.
       Sitting behind him, a young frail woman, seemingly in a lot of discomfort.
       The knight glares at you shortly, before directing his horse in another direction.
@@ -59,11 +63,13 @@ MonoBehaviour:
         gold: 0
         smithingStones: 0
         experience: 0
-      nextSceneIndex: 2
       fight: 0
       EnemyArmyData: {fileID: 0}
       type: 0
       EnemyToFight: {fileID: 0}
+      statcheck: 0
+      outcomes:
+      - nextSceneIndex: 2
     - Text: 'Leave them be. '
       StatRequirement: 0
       StatIndex: 0
@@ -74,15 +80,17 @@ MonoBehaviour:
         gold: 0
         smithingStones: 0
         experience: 0
-      nextSceneIndex: -1
       fight: 0
       EnemyArmyData: {fileID: 0}
       type: 0
       EnemyToFight: {fileID: 0}
+      statcheck: 0
+      outcomes:
+      - nextSceneIndex: -1
     MainText: "The knight\u2019s facial expression turns cold. \u201CIt is my wife,
       what are you on about?\u201D. The woman avoids eye contact in silence."
   - textOptions:
-    - Text: Fight!!!
+    - Text: Duel!
       StatRequirement: 0
       StatIndex: 0
       reward:
@@ -92,11 +100,14 @@ MonoBehaviour:
         gold: 0
         smithingStones: 0
         experience: 0
-      nextSceneIndex: 3
       fight: 1
       EnemyArmyData: {fileID: 0}
       type: 2
       EnemyToFight: {fileID: 11400000, guid: 8d0171e7cfb2f134bbfabaf8e9b89193, type: 2}
+      statcheck: 0
+      outcomes:
+      - nextSceneIndex: 3
+      - nextSceneIndex: 4
     MainText: "His hand moves to the hilt of his sword - \u201CTry and make me!\u201D"
   - textOptions:
     - Text: Reward
@@ -106,14 +117,36 @@ MonoBehaviour:
         item: {fileID: 11400000, guid: b4861a55f2e99854ab9f7b9b973eb143, type: 2}
         skill: {fileID: 0}
         Blessing: {fileID: 0}
-        gold: 0
+        gold: 50
         smithingStones: 0
-        experience: 0
-      nextSceneIndex: -1
+        experience: 50
       fight: 0
       EnemyArmyData: {fileID: 0}
       type: 0
       EnemyToFight: {fileID: 0}
+      statcheck: 0
+      outcomes:
+      - nextSceneIndex: -1
     MainText: "The woman approaches you. \u201CThank you kindly, I was hoping to
       get away from this cruel man. Take this, it belonged to my mother before she
       passed\u201D. "
+  - textOptions:
+    - Text: Leave.
+      StatRequirement: 0
+      StatIndex: 0
+      reward:
+        item: {fileID: 0}
+        skill: {fileID: 0}
+        Blessing: {fileID: 0}
+        gold: 0
+        smithingStones: 0
+        experience: 0
+      fight: 0
+      EnemyArmyData: {fileID: 0}
+      type: 0
+      EnemyToFight: {fileID: 0}
+      statcheck: 0
+      outcomes:
+      - nextSceneIndex: -1
+    MainText: Having defeated his opponent the knight takes his leave after taking
+      most of the valuables of the defeated challenger.

@@ -130,6 +130,14 @@ int activeUnitIndex=0;
         }
 
 
-        
+        public void AddGold(int gold)
+        {
+            Money += gold;
+        }
+
+        public void AddSmithingStones(int smithingStones)
+        {
+            SmithingStones += smithingStones;
+        }
     }
 }

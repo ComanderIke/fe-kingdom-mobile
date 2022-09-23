@@ -22,7 +22,7 @@ namespace Game.Mechanics
         public delegate void OnStartAttackEvent();
 
         public static OnStartAttackEvent OnStartAttack;
-        public  static event Action OnBattleFinished;
+        public  static event Action<BattleResult> OnBattleFinished;
 
         private const float FIGHT_TIME = 3.8f;
         private const float ATTACK_DELAY = 0.0f;
@@ -88,7 +88,7 @@ namespace Game.Mechanics
             attacker = null;
             defender = null;
             BattleAnimation.Hide();
-            OnBattleFinished?.Invoke();
+            OnBattleFinished?.Invoke(battleSimulation.BattleResult);
         }
        
         // public void ContinueBattle(IBattleActor attacker, IBattleActor defender)

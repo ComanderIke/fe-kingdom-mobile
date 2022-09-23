@@ -45,6 +45,14 @@ public class TextOptionController : MonoBehaviour
        
 
     }
+    public void Setup(ResponseOption option,string text, UIEventController controller)
+    {
+        Option = option;
+        this.controller = controller;
+        this.text.text = text;
+        this.text.color = textNormalColor;
+        this.StatPreview.text = "";
+    }
 
     public void Clicked()
     {
