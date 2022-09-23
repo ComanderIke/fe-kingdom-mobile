@@ -111,6 +111,7 @@ public class UIEventController : MonoBehaviour
         headline.SetText(randomEvent.headline);
         layout.DeleteAllChildren();
         this.description.text = currentScene.MainText;
+        int index = 0;
         foreach (var textoption in currentScene.textOptions)
         {
             GameObject prefab = textOptionPrefab;
@@ -137,6 +138,7 @@ public class UIEventController : MonoBehaviour
             }
                 
             var go=Instantiate(prefab, layout);
+            go.GetComponent<TextOptionController>().SetIndex(index);
             int stat = party.ActiveUnit.Stats.Attributes.GetFromIndex(textoption.StatIndex);
             string statText = stat+" "+Attributes.GetAsText(textoption.StatIndex);
             TextOptionState state = TextOptionState.Normal;
@@ -145,6 +147,7 @@ public class UIEventController : MonoBehaviour
             else if(stat >= (textoption.StatRequirement+10))
                 state = TextOptionState.High;
             go.GetComponent<TextOptionController>().Setup(textoption, textoption.Text,statText,state, this);
+            index++;
         }
     }
 }

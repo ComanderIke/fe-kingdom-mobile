@@ -20,6 +20,13 @@ public class TextOptionController : MonoBehaviour
     public Color textNotPossibleColor;
     public Color textHighColor;
     public ResponseOption Option;
+    [SerializeField] private float delay = 0.25f;
+    
+    public void SetIndex(int index)
+    {
+        gameObject.SetActive(false);
+        MonoUtility.DelayFunction(()=>gameObject.SetActive(true),delay*index);
+    }
 
     public void Setup(ResponseOption option,string text,string statText,TextOptionState textState, UIEventController controller)
     {
