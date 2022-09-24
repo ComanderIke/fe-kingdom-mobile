@@ -16,6 +16,7 @@ public class ParticleAttractor : MonoBehaviour {
 
     private ExpBarController expController;
     public static event Action onParticleArrived;
+    [SerializeField] private bool CalculateVersion2 = false;
 
     private Camera uicamera;
     //private float speed = 1;
@@ -32,10 +33,16 @@ public class ParticleAttractor : MonoBehaviour {
         if (_particleSystem.isPlaying) {
             int length = _particleSystem.GetParticles (_particles);
             Vector3 pos = _attractorTransform.position;
-            Vector3 attractorPosition = uicamera.ScreenToWorldPoint(pos);
-            attractorPosition.z = 0;
-          //  Debug.Log(attractorPosition+" "+pos+" "+_attractorTransform.transform.position);
-          
+            Vector3 attractorPosition;
+            
+            if (CalculateVersion2)
+                attractorPosition = _attractorTransform.transform.position;
+            else
+            {
+                attractorPosition = uicamera.ScreenToWorldPoint(pos);
+                attractorPosition.z = 0;
+            }
+            Debug.Log(attractorPosition+" "+pos+" "+_attractorTransform.transform.position);
             for (int i=0; i < length; i++) {
                 _particles [i].position = _particles [i].position + (attractorPosition - _particles [i].position) / (_particles [i].remainingLifetime) * Time.deltaTime;
                 if (_particles[i].position.x+offset >= attractorPosition.x && _particles[i].position.x -offset<=attractorPosition.x

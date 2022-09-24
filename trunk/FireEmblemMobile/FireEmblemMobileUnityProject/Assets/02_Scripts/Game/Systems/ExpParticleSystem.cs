@@ -14,7 +14,9 @@ public class ExpParticleSystem : MonoBehaviour, IAnimation
     public void Play(Unit unit, Vector3 startPos, int exp)
     {
         Debug.Log("play Exp Particly");
+        Debug.Log("Position: "+startPos);
         var go = Instantiate(ExpParticlePrefab, transform);
+        //go.transform.position = startPos;
         var controller=go.GetComponent<DeathParticleController>();
         controller.Play(unit, startPos, exp, uiCamera);
     }

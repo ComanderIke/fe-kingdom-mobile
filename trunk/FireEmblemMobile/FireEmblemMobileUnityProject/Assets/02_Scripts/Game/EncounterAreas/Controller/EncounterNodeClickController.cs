@@ -22,5 +22,6 @@ public class EncounterNodeClickController : MonoBehaviour
            
             FindObjectOfType<AreaGameManager>().NodeClicked(encounterNode);
         }
+        Debug.Log("Hello");
     }
 }

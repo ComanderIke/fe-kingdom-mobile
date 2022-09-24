@@ -28,11 +28,13 @@ public class ToolTipSystem : MonoBehaviour
         {
             instance.EncounterToolTip.Updatevalues(node, node.label, worldPosition, moveable, moveClicked);
             instance.EncounterToolTip.gameObject.SetActive(true);
+            instance.EncounterAttackToolTip.gameObject.SetActive(false);
         }
         else
         {
             instance.EncounterAttackToolTip.Updatevalues(node, node.label, worldPosition, moveable, moveClicked);
             instance.EncounterAttackToolTip.gameObject.SetActive(true);
+            instance.EncounterToolTip.gameObject.SetActive(false);
         }
     }
     public static void Show(Item item, Vector3 position, string header, string description, Sprite icon)

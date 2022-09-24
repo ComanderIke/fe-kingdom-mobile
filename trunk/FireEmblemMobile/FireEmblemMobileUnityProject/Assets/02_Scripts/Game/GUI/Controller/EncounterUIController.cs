@@ -2,13 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Game.WorldMapStuff.Model;
+using LostGrace;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 
 public class EncounterUIController : MonoBehaviour
 {
-    public TextMeshProUGUI Gold;
+    public UIGold Gold;
     public TextMeshProUGUI SmithingStones;
 
     public UIInnController UIInnController;
@@ -39,7 +40,7 @@ public class EncounterUIController : MonoBehaviour
 
     void GoldChanged(int gold)
     {
-        Gold.SetText(""+gold);
+        Gold.GoldAmount = gold;
     }
     void StonesChanged(int stones)
     {

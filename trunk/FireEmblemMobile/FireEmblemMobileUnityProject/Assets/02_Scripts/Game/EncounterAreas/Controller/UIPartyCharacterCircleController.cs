@@ -6,11 +6,11 @@ using Game.GUI;
 using Game.WorldMapStuff.Model;
 using UnityEngine;
 
-public class UIPartyCharacterCircleController : MonoBehaviour, IClickedReceiver
+public class UIPartyCharacterCircleController : MonoBehaviour, IClickedReceiver, IParticleAttractorTransformProvider
 {
     public GameObject CircleCharacterUIPrefab;
 
-    private List<CharacterUIController>characterUIs;
+    private Dictionary<Unit, CharacterUIController>characterUIs;
 
     private List<GameObject> characterUIgGameObjects;
     public UICharacterViewController characterView;
@@ -24,45 +24,45 @@ public class UIPartyCharacterCircleController : MonoBehaviour, IClickedReceiver
         this.party = party;
         if(characterUIgGameObjects==null||characterUIgGameObjects.Count!= party.members.Count)
             SpawnGOs();
-        int cnt = 0;
         foreach (var unit in party.members)
         {
-            if (cnt == party.ActiveUnitIndex)
+            if (unit == party.ActiveUnit)
             {
-                characterUIs[cnt].ShowActive(unit);
+                characterUIs[unit].ShowActive(unit);
+                unit.visuals.UnitCharacterCircleUI = characterUIs[unit];
             }
             else
             {
-                characterUIs[cnt].Show(unit);
+                unit.visuals.UnitCharacterCircleUI = characterUIs[unit];
+                characterUIs[unit].Show(unit);
             }
 
-            cnt++;
+           
         }
     }
   
 
     private void SpawnGOs()
     {
-        int cnt = 0;
+    
         if (characterUIgGameObjects == null)
         {
             characterUIgGameObjects = new List<GameObject>();
-            characterUIs = new List<CharacterUIController>();
+            characterUIs = new Dictionary<Unit, CharacterUIController>();
         }
         foreach (var unit in party.members)
         {
-            if (cnt >= characterUIs.Count)
+            if (!characterUIs.ContainsKey(unit))
             {
         
                 var go = Instantiate(CircleCharacterUIPrefab, transform);
                 var uiController = go.GetComponent<CharacterUIController>();
                 uiController.parentController = this;
                 uiController.Show(unit);
-                characterUIs.Add(uiController);
+                characterUIs.Add(unit,uiController);
                 characterUIgGameObjects.Add(go);
             }
 
-            cnt++;
         }
     }
 
@@ -89,5 +89,19 @@ public class UIPartyCharacterCircleController : MonoBehaviour, IClickedReceiver
     {
         Debug.Log(("PlusClicked!"));
         characterView.Show(unit);
+    }
+
+    public RectTransform GetUnitParticleAttractorTransform(Unit unit)
+    {
+        foreach (var u in party.members)
+        {
+            if (unit == u)
+            {
+                return characterUIs[u].GetUnitParticleAttractorTransform();
+            }
+
+        }
+
+        return null;
     }
 }

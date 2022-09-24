@@ -19,6 +19,7 @@ public class DeathParticleController : MonoBehaviour
     {
         attractor.SetAttractorUnit(unit, uiCamera);
         transform.position = startPos;
+        Debug.Log("Position: "+startPos);
         Debug.Log("expParticles:" +exp+ "AttractorUnit: "+unit);
         
         //Debug.Log("CycleCount: "+(int)(exp/2f));

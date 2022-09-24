@@ -116,7 +116,7 @@ namespace Game.Mechanics
                    
                     GridGameManager.Instance.GetSystem<UiSystem>().SelectedCharacter((Unit)defender);
 
-                    defender.ExperienceManager.AddExp(attacker.GameTransformManager.Transform.position, exp);
+                    defender.ExperienceManager.AddExp(attacker.GameTransformManager.Transform.position+new Vector3(0.5f,0.5f,0), exp);
                 }
             }
 
@@ -139,7 +139,7 @@ namespace Game.Mechanics
 
 
                     GridGameManager.Instance.GetSystem<UiSystem>().SelectedCharacter((Unit)attacker);
-                    attacker.ExperienceManager.AddExp(defender.GameTransformManager.Transform.position, exp);
+                    attacker.ExperienceManager.AddExp(defender.GameTransformManager.Transform.position+new Vector3(0.5f,0.5f,0), exp);
                 }
 
                 

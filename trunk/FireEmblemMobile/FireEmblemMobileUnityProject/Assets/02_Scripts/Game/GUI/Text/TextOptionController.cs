@@ -21,11 +21,13 @@ public class TextOptionController : MonoBehaviour
     public Color textHighColor;
     public ResponseOption Option;
     [SerializeField] private float delay = 0.25f;
+    [SerializeField] private Animator animator;
     
     public void SetIndex(int index)
     {
-        gameObject.SetActive(false);
-        MonoUtility.DelayFunction(()=>gameObject.SetActive(true),delay*index);
+        gameObject.SetActive(true);
+        animator.enabled = false;
+        MonoUtility.DelayFunction(()=>animator.enabled=true,delay*index);
     }
 
     public void Setup(ResponseOption option,string text,string statText,TextOptionState textState, UIEventController controller)
