@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameInput;
@@ -13,78 +15,67 @@ using Utility;
 
 namespace Game.States
 {
-    public class AfterBattleState : GameState<NextStateTrigger>
+    public class AfterBattleTasks
     {
 
+        public event Action OnFinished;
         private Unit attacker;
+        private UnitProgressSystem progressSystem;
        
         private List<IAttackableTarget> defenders;
-        public AfterBattleState(Unit attacker, IAttackableTarget defender)
+        public AfterBattleTasks(UnitProgressSystem system,Unit attacker, IAttackableTarget defender)
         {
+            this.progressSystem = system;
             this.attacker = attacker;
             defenders = new List<IAttackableTarget>();
             defenders.Add(defender);
         }
-        public AfterBattleState(Unit attacker, List<IAttackableTarget> defenders)
+        public AfterBattleTasks(UnitProgressSystem system,Unit attacker, List<IAttackableTarget> defenders)
         {
+            this.progressSystem = system;
             this.attacker = attacker;
             this.defenders = defenders;
         }
-        public override void Enter()
+        public void StartTask()
         {
+            Debug.Log("Start AfterBattle task");
+           
+            Debug.Log("Attacker: "+attacker+" , DefenderCount: "+defenders.Count);
 
-            if (!attacker.IsAlive())
-            {
-                attacker.Die();
-            }
-            bool gettingexp = false;
-            int sumexp = 0;
-          
+            ServiceProvider.Instance.StartChildCoroutine(ExpCoroutine());
+
+
+        }
+
+        IEnumerator ExpCoroutine()
+        {
             foreach (var defender in defenders)
             {
-
+                if (!attacker.IsAlive())
+                {
+                    attacker.Die();
+                }
                 if (defender is Unit unitDefender)
                 {
                     
-                    sumexp+=GridGameManager.Instance.GetSystem<UnitProgressSystem>()
-                        .DistributeAttackerExperience(attacker, unitDefender);
-                    sumexp+=GridGameManager.Instance.GetSystem<UnitProgressSystem>()
-                            .DistributeDefenderExperience(attacker, unitDefender);
+                    progressSystem.DistributeExperience(attacker, unitDefender);
+                    yield return new WaitUntil(()=>progressSystem.IsFinished());
+                    progressSystem.DistributeExperience(unitDefender, attacker);
+                    yield return new WaitUntil(()=>progressSystem.IsFinished());
                 }
                 if (!defender.IsAlive())
                 {
                     defender.Die();
                 }
             }
-            if (sumexp!=0)
-            {
-                AnimationQueue.Add(GameObject.FindObjectOfType<ExpParticleSystem>().Play);
-            }
-    
+            Finished();
             
-            AnimationQueue.OnAllAnimationsEnded += Finished;
         }
-
         void Finished()
         {
-            if(GridGameManager.Instance.FactionManager.ActiveFaction.IsPlayerControlled)
-                GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.PlayerPhaseState);
-            else
-                GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.EnemyPhaseState);
-        }
-        public override void Exit()
-        {
-            AnimationQueue.OnAllAnimationsEnded -= Finished;
-        }
-
-        public override GameState<NextStateTrigger> Update()
-        {
-            if (AnimationQueue.IsNoAnimationRunning())
-            {
-                Finished();
-            }
-
-            return NextState;
+            Debug.Log("Finished AfterBattle task");
+            OnFinished?.Invoke();
+            
         }
     }
 }

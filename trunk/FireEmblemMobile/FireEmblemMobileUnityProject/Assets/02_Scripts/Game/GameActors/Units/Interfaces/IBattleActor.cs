@@ -6,6 +6,7 @@ using Game.GameActors.Units.OnGameObject;
 using Game.Grid;
 using Game.Mechanics;
 using Game.Mechanics.Battle;
+using UnityEngine;
 
 namespace Game.GameInput
 {
@@ -21,10 +22,12 @@ namespace Game.GameInput
         ExperienceManager ExperienceManager { get; }
         TurnStateManager TurnStateManager { get; set; }
         GameTransformManager GameTransformManager { get; set; }
+        AnimatedCombatCharacter BattleGO { get; set; }
         Weapon GetEquippedWeapon();
         bool IsAlive();
         void Die();
         Tile GetTile();
 
+        bool IsPlayerControlled();
     }
 }

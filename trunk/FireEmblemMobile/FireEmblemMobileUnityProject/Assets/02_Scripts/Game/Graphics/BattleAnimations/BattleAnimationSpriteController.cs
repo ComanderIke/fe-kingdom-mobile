@@ -1,25 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game.GUI;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
+#if UNITY_EDITOR
+[CustomEditor(typeof(BattleAnimationSpriteController))]
+public class BattleAnimationSpriteControllerEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        DrawDefaultInspector(); // for other non-HideInInspector fields
+ 
+        BattleAnimationSpriteController script = (BattleAnimationSpriteController)target;
+ 
+        // draw checkbox for the bool
+        script.hasPrepare = EditorGUILayout.Toggle("Has Prepare Animation: ", script.hasPrepare);
+        if (script.hasPrepare) // if bool is true, show other fields
+        {
+            script.prepareAttack = EditorGUILayout.ObjectField("Prepare Animation", script.prepareAttack, typeof(TimelineAsset), true) as TimelineAsset;
+        }
+    }
+}
+#endif
 public class BattleAnimationSpriteController : MonoBehaviour
 {
     public PlayableDirector PlayableDirector;
-
+    [SerializeField]
+    RectTransform attractorTransform;
+    [SerializeField]
+    ExpBarController expBar;
+    
     public TimelineAsset walkIn;
     public TimelineAsset attack;
     public TimelineAsset idle;
     public TimelineAsset dodge;
     public TimelineAsset damaged;
     public TimelineAsset death;
-
+    [HideInInspector]
+    public bool hasPrepare = false;
+    [HideInInspector]
     public TimelineAsset prepareAttack;
 
-    public bool hasPrepare = false;
-    // Start is called before the first frame update
-    
     public void WalkIn(float playSpeed)
     {
         PlayAtSpeed(walkIn, playSpeed);
@@ -36,22 +60,19 @@ public class BattleAnimationSpriteController : MonoBehaviour
     {
         PlayAtSpeed(death, playSpeed);
     }
-
-
     public void Dodge(float playSpeed)
     {
         PlayAtSpeed(dodge, playSpeed);
     }
-
+    public void Damaged(float playSpeed)
+    {
+        PlayAtSpeed(damaged, playSpeed);
+    }
     public double GetCurrentAnimationDuration()
     {
         return PlayableDirector.duration;
     }
 
-    public void Damaged(float playSpeed)
-    {
-        PlayAtSpeed(damaged, playSpeed);
-    }
     void PlayAtSpeed(TimelineAsset clip, float speed)
     {
         PlayableDirector.playableAsset = clip;
@@ -59,9 +80,6 @@ public class BattleAnimationSpriteController : MonoBehaviour
         PlayableDirector.playableGraph.GetRootPlayable(0).SetSpeed(speed);
         PlayableDirector.Play();
     }
-
-    
-
     public bool HasPrepareAnimation()
     {
         return hasPrepare;
@@ -70,5 +88,15 @@ public class BattleAnimationSpriteController : MonoBehaviour
     public void Prepare(float playSpeed)
     {
         PlayAtSpeed(prepareAttack, playSpeed);
+    }
+
+    public RectTransform GetAttractorTransform()
+    {
+        return attractorTransform;
+    }
+
+    public ExpBarController GetExpRenderer()
+    {
+        return expBar;
     }
 }

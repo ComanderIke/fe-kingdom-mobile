@@ -14,7 +14,7 @@ namespace Game.WorldMapStuff.Model
 
         public event Action<int> onGoldChanged;
         public event Action<int> onSmithingStonesChanged;
-        
+        [SerializeField] private bool isPlayerControlled;
         [SerializeField] public List<Unit> members;
         public static Action<Party> PartyDied;
         public static int MaxSize = 4;
@@ -46,6 +46,8 @@ int activeUnitIndex=0;
         public int smithingStones = 2;
         public event Action<Unit> onAddUnit;
 
+        public bool IsPlayerControlled => isPlayerControlled;
+    
         public int SmithingStones
         {
             get
@@ -87,6 +89,8 @@ int activeUnitIndex=0;
             get { return members[ActiveUnitIndex]; }
         }
 
+      
+
         public bool IsAlive()
         {
             return members.Count(a => a.IsAlive()) != 0;
@@ -98,6 +102,7 @@ int activeUnitIndex=0;
             foreach (var member in members)
             {
                 member.Initialize();
+                member.Party = this;
             }
         }
 
@@ -125,6 +130,7 @@ int activeUnitIndex=0;
 
         public void AddMember(Unit unit)
         {
+            unit.Party = this;
             members.Add(unit);
             onAddUnit?.Invoke(unit);
         }

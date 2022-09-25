@@ -80,8 +80,7 @@ namespace Game.Mechanics
         {
             if (IsFinished)
             {
-                GridGameManager.Instance.GameStateManager.SwitchState(new AfterBattleState((Unit)attacker, defender));
- 
+                
             }
             return null;
         }
@@ -101,7 +100,16 @@ namespace Game.Mechanics
        
             //battleStarted = false;
             //BattleRenderer.Hide();
-            IsFinished = true;
+            var task = new AfterBattleTasks(ServiceProvider.Instance.GetSystem<UnitProgressSystem>(),(Unit)attacker, defender);
+            task.StartTask();
+            task.OnFinished += () =>
+            {
+                if(GridGameManager.Instance.FactionManager.ActiveFaction.IsPlayerControlled)
+                    GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.PlayerPhaseState);
+                else
+                    GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.EnemyPhaseState);
+            };
+           
             //GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.BattleEnded);
 
         }

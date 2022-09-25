@@ -12,7 +12,7 @@ namespace LostGrace
         public void Init(Unit unit)
         {
             this.owner = unit;
-            unit.OnExpGained += AddExtraExp;
+           // unit.ExperienceManager.ExpGained += AddExtraExp;
         }
 
         public void AddExtraExp(int expBefore, int expGained)

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using System.Linq;
 using Audio;
 using Game.AI;
@@ -18,7 +20,7 @@ using UnityEngine;
 
 namespace Game.Manager
 {
-    public class GridGameManager : MonoBehaviour
+    public class GridGameManager : MonoBehaviour, IServiceProvider
     {
 
         public static GridGameManager Instance;
@@ -131,6 +133,7 @@ namespace Game.Manager
             GameStateManager.PlayerPhaseState.mainState.playerPhaseUI = FindObjectsOfType<MonoBehaviour>().OfType<IPlayerPhaseUI>().First();
             GameStateManager.PlayerPhaseState.chooseTargetState.UI = FindObjectsOfType<MonoBehaviour>().OfType<IChooseTargetUI>().First();
             GetSystem<UnitProgressSystem>().levelUpRenderer = FindObjectsOfType<MonoBehaviour>().OfType<ILevelUpRenderer>().First();
+            GetSystem<UnitProgressSystem>().expRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IExpRenderer>().First();
             
         }
 
@@ -155,6 +158,11 @@ namespace Game.Manager
             foreach (var s in Systems.OfType<T>())
                 return (T) Convert.ChangeType(s, typeof(T));
             return default;
+        }
+
+        public void StartChildCoroutine(IEnumerator coroutine)
+        {
+            StartCoroutine(coroutine);
         }
 
         private bool active = true;

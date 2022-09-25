@@ -1,18 +1,21 @@
 ﻿using System;
 using Game.GameActors.Players;
+using Game.GameInput;
+using Game.GUI;
 using UnityEngine;
 
 public class AnimatedCombatCharacter
 {
     private BattleAnimationSpriteController spriteController;
     private ImpactPosition impactPosition;
-    private GameObject gameObject;
+    public GameObject GameObject { get; set; }
     private bool left;
+    public IBattleActor Actor { get; set; }
 
-
-    public AnimatedCombatCharacter(GameObject gameObject, bool left)
+    public AnimatedCombatCharacter(IBattleActor actor,GameObject gameObject, bool left)
     {
-        this.gameObject = gameObject;
+        Actor = actor;
+        this.GameObject = gameObject;
         this.impactPosition = gameObject.GetComponentInChildren<ImpactPosition>();
         this.spriteController = gameObject.GetComponentInChildren<BattleAnimationSpriteController>();
         this.left = left;
@@ -26,7 +29,7 @@ public class AnimatedCombatCharacter
 
     public void Destroy()
     {
-        GameObject.Destroy(gameObject);
+        GameObject.Destroy(GameObject);
     }
 
     public void Idle(float playSpeed)
@@ -41,8 +44,8 @@ public class AnimatedCombatCharacter
 
     public void Hide()
     {
-        Debug.Log("Hide Character: "+left+" "+gameObject.name);
-        gameObject.SetActive(false);
+        Debug.Log("Hide Character: "+left+" "+GameObject.name);
+        GameObject.SetActive(false);
     }
 
     public bool HasPrepareAnimation()
@@ -97,5 +100,22 @@ public class AnimatedCombatCharacter
     public bool IsLeft()
     {
         return left;
+    }
+
+    
+    private  Camera camera;
+    public void InitCamera(Camera camera)
+    {
+        this.camera = camera;
+    }
+
+    public RectTransform GetAttractorTransform()
+    {
+        return spriteController.GetAttractorTransform();
+    }
+
+    public ExpBarController GetExpRenderer()
+    {
+        return spriteController.GetExpRenderer();
     }
 }

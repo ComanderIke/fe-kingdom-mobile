@@ -16,8 +16,9 @@ using GameEngine;
 using Menu;
 using SerializedData;
 using UnityEngine;
+using IServiceProvider = Game.Manager.IServiceProvider;
 
-public class AreaGameManager : MonoBehaviour
+public class AreaGameManager : MonoBehaviour, IServiceProvider
 {
     public static AreaGameManager Instance;
     private List<IEngineSystem> Systems { get; set; }
@@ -104,6 +105,8 @@ public class AreaGameManager : MonoBehaviour
         GetSystem<BattleSystem>().BattleAnimation = FindObjectsOfType<MonoBehaviour>().OfType<IBattleAnimation>().First();
         GetSystem<BattleSystem>().BattleAnimation.Hide();
         Debug.Log("BattleSys: "+ GetSystem<BattleSystem>().BattleAnimation);
+        GetSystem<UnitProgressSystem>().levelUpRenderer = FindObjectsOfType<MonoBehaviour>().OfType<ILevelUpRenderer>().First();
+        GetSystem<UnitProgressSystem>().expRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IExpRenderer>().First();
     }
     private bool LoadedSaveData()
     {
@@ -380,6 +383,7 @@ public class AreaGameManager : MonoBehaviour
         SetAllEncountersNotMovable();
         ResetMoveOptions();
         ShowMoveOptions();
+        
     }
 
 
@@ -388,5 +392,10 @@ public class AreaGameManager : MonoBehaviour
         foreach (var s in Systems.OfType<T>())
             return (T) Convert.ChangeType(s, typeof(T));
         return default;
+    }
+
+    public void StartChildCoroutine(IEnumerator coroutine)
+    {
+        StartCoroutine(coroutine);
     }
 }

@@ -12,6 +12,7 @@ using Game.Grid;
 using Game.GUI;
 using Game.Manager;
 using Game.Mechanics.Battle;
+using Game.States;
 using GameEngine;
 using UnityEngine;
 
@@ -85,73 +86,27 @@ namespace Game.Mechanics
             else
                 defender.Hp = battleSimulation.AttackableTarget.Hp;
           
+            CheckExp();
             attacker = null;
             defender = null;
-            BattleAnimation.Hide();
-            OnBattleFinished?.Invoke(battleSimulation.BattleResult);
+           
+            //After Exp Animation and possibly level up animation finished hide battleAnimation and invoke battle finished
+
         }
-       
-        // public void ContinueBattle(IBattleActor attacker, IBattleActor defender)
-        // {
-        //     ContinueBattle(battleSimulation.AttackSequence[currentAttackIndex]);
-        // }
-        // private void ContinueBattle(bool attackerAttacking)
-        // {
-        //    
-        //     if (attackerAttacking)
-        //         DoAttack(attacker, defender);
-        //     else
-        //         DoAttack(defender, attacker);
-        //     currentAttackIndex++;
-        // }
 
-        // private static bool DoAttack(IBattleActor attacker, IBattleActor defender)
-        // {
-        //     bool crit = defender.SpBars == 0;
-        //     bool magic = attacker.BattleComponent.BattleStats.GetDamageType() == DamageType.Magic;
-        //     bool eff = false;
-        //
-        //     defender.BattleComponent.InflictDamage(attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defender),magic, crit,eff, defender);
-        //     return defender.Hp > 0;
-        // }
-
-        // public bool[] GetAttackSequence()
-        // {
-        //     return battleStarted ? battleSimulation.AttackSequence.ToArray() : null;
-        // }
-
-
-      
-        IEnumerator Delay(float delay, Action action)
+        void CheckExp()
         {
-            yield return new WaitForSeconds(delay);
-            action?.Invoke();
+            Debug.Log("Calculate Exp and do Animation then invoke battle finished");
+            
+            var system = ServiceProvider.Instance.GetSystem<UnitProgressSystem>();
+            var task = new AfterBattleTasks(system, (Unit)attacker, defender);
+            task.StartTask();
+            task.OnFinished += () =>
+            {
+                BattleAnimation.Hide();
+                OnBattleFinished?.Invoke(battleSimulation.BattleResult);
+            };
         }
-        // public void EndBattle()
-        // {
-        //         //
-        //         // defender.SpBars--;
-        //         // attacker.SpBars--;
-        //         if (!attacker.IsAlive())
-        //         {
-        //             attacker.Die();
-        //         }
-        //         if (!defender.IsAlive())
-        //         {
-        //             defender.Die();
-        //         }
-        //
-        //    
-        //         battleStarted = false;
-        //         //BattleRenderer.Hide();
-        //         IsFinished = true;
-        //         //GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.BattleEnded);
-        //     
-        //
-        //
-        //
-        // }
-    
         public BattleSimulation GetBattleSimulation(IBattleActor attacker, IBattleActor defender, bool grid, bool continuos=false)
         {
             Debug.Log("GetBattleSimulation Hereinstead");
@@ -168,7 +123,6 @@ namespace Game.Mechanics
 
             return battleSimulation;
         }
-
 
         public BattlePreview GetBattlePreview(IBattleActor attacker, IAttackableTarget defender, GridPosition attackPosition)
         {
@@ -258,11 +212,6 @@ namespace Game.Mechanics
         public void Activate()
         {
          
-        }
-
-        public void Update()
-        {
-            
         }
 
         public ICombatResult GetCombatResultAtAttackLocation(IBattleActor attacker, IAttackableTarget targetTarget, Vector2Int tile)

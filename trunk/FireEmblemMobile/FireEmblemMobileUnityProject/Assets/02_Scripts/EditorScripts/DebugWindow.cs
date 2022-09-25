@@ -59,7 +59,7 @@ namespace __2___Scripts.External.Editor
                 selectedUnitName = activeUnit.name;
                 if (GUILayout.Button("+100 EXP"))
                 {
-                    activeUnit.ExperienceManager.AddExp(new Vector2(0,0),100);
+                    activeUnit.ExperienceManager.AddExp(100);
                 }
                 GUILayout.Label("Selected Unit: " + selectedUnitName);
                 GUILayout.Label("Hp: " + activeUnit.Hp + "/" + activeUnit.MaxHp);

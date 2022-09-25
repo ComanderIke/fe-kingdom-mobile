@@ -26,7 +26,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         canvas.Show();
         OnShow?.Invoke(battleSimulation, attackingActor, defendingActor);
        
-        animationStateManager = new AnimationStateManager(battleSimulation, GetComponent<TimeLineController>(),GetComponent<CharacterCombatAnimations>());
+        animationStateManager = new AnimationStateManager(attackingActor, defendingActor, battleSimulation, GetComponent<TimeLineController>(),GetComponent<CharacterCombatAnimations>());
         animationStateManager.Start();
         animationStateManager.OnFinished -= Finished;
         animationStateManager.OnFinished += Finished;
@@ -52,6 +52,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     }
     public void Hide()
     {
+        animationStateManager?.CleanUp();
         canvas.Hide();
         //light.SetActive(false);
         LeanTween.value(volume.weight, 0, 0.4f).setEaseInQuad().setOnUpdate((value) => { volume.weight = value; })

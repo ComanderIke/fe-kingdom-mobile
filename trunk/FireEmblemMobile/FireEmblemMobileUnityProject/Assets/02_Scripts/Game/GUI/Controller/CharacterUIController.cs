@@ -117,9 +117,8 @@ namespace Game.GUI
             if (unit == null)
                 return;
             characterName.SetText(unit.name);
-           
-            expBar.SetText(unit.ExperienceManager.Exp);
-            expBar.SetFillAmount(unit.ExperienceManager.Exp);
+            
+            expBar.UpdateInstant(unit.ExperienceManager.Exp);
             hpBar.SetValue(unit.Hp, unit.MaxHp);
             //  spBars.SetValue(unit.SpBars, unit.MaxSpBars);
             faceSprite.sprite = unit.visuals.CharacterSpriteSet.FaceSprite;

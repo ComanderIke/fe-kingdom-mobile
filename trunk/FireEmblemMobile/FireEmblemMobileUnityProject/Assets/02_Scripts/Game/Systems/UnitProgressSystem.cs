@@ -11,17 +11,25 @@ using Game.States;
 using Game.WorldMapStuff.Model;
 using GameEngine;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.PlayerLoop;
 using Utility;
 
 namespace Game.Mechanics
 {
+    public interface IExpRenderer
+    {
+        void Play(Unit unit, Vector3 startPos, int exp);
+        event Action OnFinished;
+    }
     public class UnitProgressSystem : IEngineSystem
     {
         public ILevelUpRenderer levelUpRenderer;//injected
         private List<Unit> units;
         private List<Faction> factions;
-
+        public event Action onFinished;
+        public IExpRenderer expRenderer;
+        private bool finished = false;
         public UnitProgressSystem(Party party)
         {
             factions = new List<Faction>();
@@ -101,51 +109,42 @@ namespace Game.Mechanics
            
         }
 
-        public int DistributeDefenderExperience(IBattleActor attacker, IBattleActor defender)
+        
+        public void DistributeExperience(IBattleActor attacker, IBattleActor defender)
         {
+            finished = false;
             int exp=0;
             if (defender.IsAlive() && defender.Faction.IsPlayerControlled)
             {
                 exp = CalculateExperiencePoints(defender, attacker);
                 if (exp != 0)
                 {
-
-
-                    var expRenderer = ((Unit)defender).visuals.UnitCharacterCircleUI.GetExpRenderer();
-                    expRenderer.UpdateValues(defender.ExperienceManager.GetMaxEXP(exp));
-                   
-                    GridGameManager.Instance.GetSystem<UiSystem>().SelectedCharacter((Unit)defender);
-
-                    defender.ExperienceManager.AddExp(attacker.GameTransformManager.Transform.position+new Vector3(0.5f,0.5f,0), exp);
+                    //var expRenderer = ((Unit)defender).visuals.UnitCharacterCircleUI.GetExpRenderer();
+                    ServiceProvider.Instance.GetSystem<UiSystem>().SelectedCharacter((Unit)defender);
+                    Vector3 pos = new Vector3();
+                    if (defender.BattleGO != null)//In BattleAnimation use this
+                    {
+                        pos = defender.BattleGO.GameObject.transform.position;
+                    }
+                    else if (defender.GameTransformManager != null)//Map Animations use this
+                    {
+                        pos = defender.GameTransformManager.Transform.position + new Vector3(0.5f, 0.5f, 0);
+                    }
+                    defender.ExperienceManager.AddExp(exp);
+                    expRenderer.Play((Unit)defender, pos, exp);
+                    expRenderer.OnFinished += FinishedOnce;
+                    return;
                 }
-            }
-
-            return exp;
-        }
-        public int DistributeAttackerExperience(IBattleActor attacker, IBattleActor defender)
-        {
-            int exp = 0;
-           // Debug.Log("Distribute EXP"+ attacker.Faction.IsPlayerControlled+ " "+attacker.IsAlive());
-            if (attacker.IsAlive()&&attacker.Faction.IsPlayerControlled)
-            {
-                exp = CalculateExperiencePoints(attacker, defender);
-                if (exp != 0)
-                {
-
-                    
-                    var expRenderer = ((Unit)attacker).visuals.UnitCharacterCircleUI.GetExpRenderer();
-                    expRenderer.UpdateValues(attacker.ExperienceManager.GetMaxEXP(exp));
-                 
-
-
-                    GridGameManager.Instance.GetSystem<UiSystem>().SelectedCharacter((Unit)attacker);
-                    attacker.ExperienceManager.AddExp(defender.GameTransformManager.Transform.position+new Vector3(0.5f,0.5f,0), exp);
-                }
-
                 
             }
-            return exp;
-            
+            FinishedOnce();
+        }
+
+        
+        void FinishedOnce()
+        {
+            finished = true;
+            onFinished?.Invoke();
         }
         private int CalculateExperiencePoints(IBattleActor expReceiver, IBattleActor enemyFought)
         {
@@ -215,6 +214,10 @@ namespace Game.Mechanics
             return 0;
         }
 
-       
+
+        public bool IsFinished()
+        {
+            return finished;
+        }
     }
 }

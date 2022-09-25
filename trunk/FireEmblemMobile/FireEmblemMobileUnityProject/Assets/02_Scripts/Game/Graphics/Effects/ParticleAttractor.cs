@@ -8,26 +8,20 @@ using UnityEngine;
 
 public class ParticleAttractor : MonoBehaviour {
      
-    [SerializeField]
-    private RectTransform _attractorTransform;
+    public static event Action onParticleArrived;
+    
+    [SerializeField] private RectTransform _attractorTransform;
+    [SerializeField] private bool CalculateVersion2 = false;
+    [SerializeField] float offset = 0.1f;
     private ParticleSystem _particleSystem;
     private ParticleSystem.Particle[] _particles = new ParticleSystem.Particle[100];
-    public GameObject CubePrefab;
-
     private ExpBarController expController;
-    public static event Action onParticleArrived;
-    [SerializeField] private bool CalculateVersion2 = false;
-
     private Camera uicamera;
-    //private float speed = 1;
- 
     public void Start ()
     {
         _particleSystem = GetComponent<ParticleSystem> ();
-      
     }
 
-    public float offset = 0.1f;
     public void LateUpdate()
     {
         if (_particleSystem.isPlaying) {
@@ -42,46 +36,32 @@ public class ParticleAttractor : MonoBehaviour {
                 attractorPosition = uicamera.ScreenToWorldPoint(pos);
                 attractorPosition.z = 0;
             }
-            Debug.Log(attractorPosition+" "+pos+" "+_attractorTransform.transform.position);
+           // Debug.Log(attractorPosition+" "+pos+" "+_attractorTransform.transform.position);
             for (int i=0; i < length; i++) {
                 _particles [i].position = _particles [i].position + (attractorPosition - _particles [i].position) / (_particles [i].remainingLifetime) * Time.deltaTime;
                 if (_particles[i].position.x+offset >= attractorPosition.x && _particles[i].position.x -offset<=attractorPosition.x
                                                                            &&_particles[i].position.y+offset >= attractorPosition.y&& _particles[i].position.y-offset <=attractorPosition.y)
                 {
-                   // Debug.Log("PosReached!");
-                    //Debug.Log(_particles[i].position.x+" "+attractorPosition.x+ " "+_particles [i].remainingLifetime);
                     _particles[i].remainingLifetime = 0;
                     expController.ParticleArrived();
-
                 }
-            
-               
             }
-            
-            
             _particleSystem.SetParticles (_particles, length);
         }
  
     }
 
-    // private void OnDrawGizmos()
-    // {
-    //     if (_attractorTransform.transform.position != null)
-    //     {
-    //         
-    //         Gizmos.DrawCube(_attractorTransform.transform.position, new Vector3(0.2f,0.2f,0.2f));
-    //         Gizmos.DrawCube(uicamera.ScreenToWorldPoint(_attractorTransform.position), new Vector3(0.2f,0.2f,0.2f));
-    //     }
-    //        
-    // }
-
     public void SetAttractorUnit(Unit unit, Camera uiCamera)
     {
         uicamera = uiCamera;
-        IParticleAttractorTransformProvider provider =
-            FindObjectsOfType<MonoBehaviour>().OfType<IParticleAttractorTransformProvider>().First();
-        expController = unit.visuals.UnitCharacterCircleUI.GetExpRenderer();
-        _attractorTransform = provider.GetUnitParticleAttractorTransform(unit);
+        // IParticleAttractorTransformProvider provider =
+        //     FindObjectsOfType<MonoBehaviour>().OfType<IParticleAttractorTransformProvider>().First();
+        //expController = unit.visuals.UnitCharacterCircleUI.GetExpRenderer();
+        expController = unit.BattleGO.GetExpRenderer();
+        expController.Show();
+        expController.UpdateInstant(unit.ExperienceManager.Exp);
+        Debug.Log("TODO MapBattleAnimations Do it the old way?");
+        _attractorTransform =unit.BattleGO.GetAttractorTransform();// provider.GetUnitParticleAttractorTransform(unit);
 
     }
 }

@@ -669,7 +669,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9109097678819418039}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 2
   m_Camera: {fileID: 0}
@@ -721,15 +721,7 @@ MonoBehaviour:
   unitIdleAnimation: {fileID: 4203343807962208583}
   textOptionPrefab: {fileID: 7568291982716112290, guid: 4e924c0749f37c340b1c24ef24d4b8ed,
     type: 3}
-  itemOptionPrefab: {fileID: 7568291982716112290, guid: f97afd1d1f2496e4cba17b54dd1fe3e8,
-    type: 3}
-  blessingOptionPrefab: {fileID: 7568291982716112290, guid: 45f1fac23ff03dd4a9797e4aa87dcccd,
-    type: 3}
-  skillOptionPrefab: {fileID: 7568291982716112290, guid: 806ddfd1adc76a8479e23a56d82cb822,
-    type: 3}
   fightOptionPrefab: {fileID: 1671244601332586680, guid: ade04ed25233483418d90fb6722732fb,
-    type: 3}
-  goldStoneOptionPrefab: {fileID: 7568291982716112290, guid: df824b641784c1e47830be44a4b4406b,
     type: 3}
 --- !u!1 &9109097678909981822
 GameObject:
@@ -784,10 +776,10 @@ MonoBehaviour:
   m_Padding:
     m_Left: 30
     m_Right: 0
-    m_Top: 20
+    m_Top: 30
     m_Bottom: 50
   m_ChildAlignment: 0
-  m_Spacing: 0
+  m_Spacing: 10
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
@@ -1186,6 +1178,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ExitButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 4274981052698718939, guid: 46e67aab7f63f514eb4cc4c8361c2061,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4274981052698718940, guid: 46e67aab7f63f514eb4cc4c8361c2061,
         type: 3}

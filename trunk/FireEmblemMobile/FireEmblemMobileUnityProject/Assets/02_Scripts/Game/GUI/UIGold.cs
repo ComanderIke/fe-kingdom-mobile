@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game.GUI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -8,14 +9,10 @@ namespace LostGrace
 {
     public class UIGold : MonoBehaviour
     {
-        [SerializeField] TextMeshProUGUI goldAmountText;
-
-        [SerializeField] private int countFPS= 30;
-
-        [SerializeField] private float duration = 1.0f;
-
+        [SerializeField] private UIAnimatedCountingText countingText;
         [SerializeField] private ParticleSystem goldEarnedEffect;
         [SerializeField] private ParticleSystem goldLostEffect;
+        
         private int goldAmount;
         private bool init = true;
 
@@ -27,7 +24,7 @@ namespace LostGrace
                 {
                     goldAmount = value;
                     init = false;
-                    goldAmountText.SetText(goldAmount.ToString());
+                    countingText.SetText(goldAmount.ToString());
                     return;
                 }
                 if (value > goldAmount)
@@ -38,63 +35,15 @@ namespace LostGrace
                 {
                     goldLostEffect.Play();
                 }
-                UpdateText(value);
+                countingText.SetTextCounting(goldAmount, value);
                 goldAmount = value;
             }
         }
 
-        private Coroutine countingCoroutine;
-        private void UpdateText(int newValue)
-        {
-            if (countingCoroutine != null)
-            {
-                StopCoroutine(countingCoroutine);
-            }
-            countingCoroutine = StartCoroutine(CountText(newValue));
-        }
+       
+        
 
-        private IEnumerator CountText(int newValue)
-        {
-            WaitForSeconds Wait = new WaitForSeconds(1f / countFPS);
-            int previousValue = goldAmount;
-            int stepAmount;
-            if (newValue - previousValue < 0)
-            {
-                stepAmount = Mathf.FloorToInt((newValue - previousValue) / (countFPS * duration));
-            }
-            else
-            {
-                stepAmount = Mathf.CeilToInt((newValue - previousValue) / (countFPS * duration));
-            }
-
-            if (previousValue < newValue)
-            {
-                while (previousValue < newValue)
-                {
-                    previousValue += stepAmount;
-                    if (previousValue > newValue)
-                    {
-                        previousValue = newValue;
-                    }
-                    goldAmountText.SetText(previousValue.ToString());
-                    yield return Wait;
-                }
-            }
-            else
-            {
-                while (previousValue > newValue)
-                {
-                    previousValue += stepAmount;
-                    if (previousValue < newValue)
-                    {
-                        previousValue = newValue;
-                    }
-                    goldAmountText.SetText(previousValue.ToString());
-                    yield return Wait;
-                }
-            }
-            
-        }
+       
 
         
     }

@@ -20,13 +20,19 @@ public class AnimationStateManager
     private bool leftCharacterAttacker;
     private int attackSequenzIndex;
     private bool playerControlled;
+    private IBattleActor realAttacker;
+    private IBattleActor realDefender;
  
     
-    public AnimationStateManager(BattleSimulation battleSimulation, TimeLineController timeLineController, CharacterCombatAnimations characterAnimations)
+    public AnimationStateManager(IBattleActor realAttacker, IAttackableTarget realDefender, BattleSimulation battleSimulation, TimeLineController timeLineController, CharacterCombatAnimations characterAnimations)
     {
+        this.realAttacker = realAttacker;
+        if(realDefender is IBattleActor)
+            this.realDefender = (IBattleActor)realDefender;
         this.battleSimulation = battleSimulation;
         this.TimeLineController = timeLineController;
         this.characterAnimations = characterAnimations;
+       
         TimeLineController.zoomInFinished += ContinueBattle;
         leftCharacterAttacker = battleSimulation.Attacker.Faction==null||battleSimulation.Attacker.Faction.IsPlayerControlled;
         Debug.Log("LeftCharacterAttacker: "+leftCharacterAttacker);
@@ -43,14 +49,15 @@ public class AnimationStateManager
         currentRound = battleSimulation.combatRounds[0];
         if (playerControlled)
         {
-            characterAnimations.SpawnLeftCharacter((Unit)battleSimulation.Attacker);
-            characterAnimations.SpawnRightCharacter((Unit)battleSimulation.Defender);
+            characterAnimations.SpawnLeftCharacter((Unit)realAttacker);
+            characterAnimations.SpawnRightCharacter((Unit)realDefender);
         }
         else
         {
-            characterAnimations.SpawnLeftCharacter((Unit)battleSimulation.Defender);
-            characterAnimations.SpawnRightCharacter((Unit)battleSimulation.Attacker);
+            characterAnimations.SpawnLeftCharacter((Unit)realDefender);
+            characterAnimations.SpawnRightCharacter((Unit)realAttacker);
         }
+        characterAnimations.Init(TimeLineController.camera);
         TimeLineController.Init(playerControlled);
         
         characterAnimations.SetPlaySpeed(TimeLineController.introWalkInPlaySpeed);
@@ -112,8 +119,16 @@ public class AnimationStateManager
     }
     public void BattleFinished()
     {
+      
+     
         Debug.Log("Battle Finished!");
         OnFinished?.Invoke();
+    }
+
+    public void CleanUp()
+    {
+        Debug.Log("CLEAN UP COMBAT ANIMATED UNITS!");
+        characterAnimations.Cleanup();
     }
 
    

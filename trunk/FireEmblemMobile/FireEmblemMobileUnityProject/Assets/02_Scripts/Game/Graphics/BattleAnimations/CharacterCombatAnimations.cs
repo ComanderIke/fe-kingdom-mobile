@@ -34,15 +34,17 @@ public class CharacterCombatAnimations : MonoBehaviour
     public void SpawnLeftCharacter(Unit character)
     {
         characterLeft =
-            new AnimatedCombatCharacter(
+            new AnimatedCombatCharacter(character,
                 Instantiate(character.visuals.CharacterSpriteSet.battleAnimatedSprite, transform), true);
+        character.BattleGO = characterLeft;
     }
 
     public void SpawnRightCharacter(Unit character)
     {
         characterRight =
-            new AnimatedCombatCharacter(
+            new AnimatedCombatCharacter(character,
                 Instantiate(character.visuals.CharacterSpriteSet.battleAnimatedSprite, transform), false);
+        character.BattleGO = characterRight;
     }
 
     public void SetPlaySpeed(float speed)
@@ -86,7 +88,8 @@ public class CharacterCombatAnimations : MonoBehaviour
             Debug.Log("PlayIdle");
             characterRight.Idle(playSpeed);
         }
-        
+
+      
     }
 
     public void CharacterAttack(AttackData attackData, bool attacker, bool leftCharacterAttacker)
@@ -180,5 +183,18 @@ Debug.Log("Attacking Character: "+(leftCharacterAttacker ? "characterLeft" : "ch
         
 
         OnDamaged?.Invoke(character, dmg, critical);
+    }
+
+    public void Cleanup()
+    {
+        characterLeft.Actor.BattleGO = null;
+        characterRight.Actor.BattleGO = null;
+    }
+      
+    public void Init(Camera camera1)
+    {
+        characterLeft.InitCamera(camera1);
+        characterRight.InitCamera(camera1);
+        
     }
 }

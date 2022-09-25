@@ -17,6 +17,7 @@ using Game.GUI;
 using Game.Manager;
 using Game.Mechanics;
 using Game.Mechanics.Battle;
+using Game.WorldMapStuff.Model;
 using UnityEngine;
 
 namespace Game.GameActors.Units
@@ -55,7 +56,9 @@ namespace Game.GameActors.Units
             get => moveType;
             set => moveType = value;
         }
-        [HideInInspector][SerializeField]
+
+        public Party Party { get; set; }
+            [HideInInspector][SerializeField]
         public int MaxHp { get; set; }
         public Stats Stats
         {
@@ -73,7 +76,8 @@ namespace Game.GameActors.Units
    
         
         public GameTransformManager GameTransformManager { get; set; }
-  
+        public AnimatedCombatCharacter BattleGO { get; set; }
+
 
         [SerializeField] private ExperienceManager experienceManager;
 
@@ -116,66 +120,20 @@ namespace Game.GameActors.Units
                 HpValueChanged?.Invoke();
             }
         }
-
-
-        // public int SpBars
-        // {
-        //     get => spBars;
-        //     set
-        //     {
-        //         spBars = value > stats.MaxSp/SP_PER_BAR ? stats.MaxSp/SP_PER_BAR : value;
-        //
-        //         if (spBars <= 0)
-        //         {
-        //             spBars = 0;
-        //            
-        //                 visuals.UnitEffectVisual.ShowNoStamina(this);
-        //             
-        //         }
-        //         else
-        //         {
-        //             
-        //             visuals.UnitEffectVisual.HideNoStamina();
-        //             
-        //         }
-        //         SpBarsValueChanged?.Invoke();
-        //     }
-        // }
-
-        // public int Sp
-        // {
-        //     get => sp;
-        //     set
-        //     {
-        //         sp = value > stats.MaxSp ? stats.MaxSp : value;
-        //         if (sp <= 0) sp = 0;
-        //         SpValueChanged?.Invoke();
-        //     }
-        // }
-
+        
         public List<int> AttackRanges => stats.AttackRanges;
         public int MovementRange => stats.Mov;
-
-       
-        // public int MaxSpBars
-        // {
-        //     get => stats.MaxSp / SP_PER_BAR;
-        // }
-        //
-
+        
         void OnDestroy()
         {
             ExperienceManager.LevelUp -= LevelUp;
         }
-
         
         void SkillPointsUpdated(int skillPoints)
         {
             Debug.Log("SkillPoints changed");
             OnUnitDataChanged?.Invoke(this);
         }
-        
-
 
         public virtual void Initialize()
         {
@@ -191,22 +149,12 @@ namespace Game.GameActors.Units
             GameTransformManager = new GameTransformManager();
             StatusEffectManager = new StatusEffectManager(this);
             AIComponent = new AIComponent();
-            // stats = stats == null ? CreateInstance<Stats>() : Instantiate(stats);
-            // growths = growths == null ? CreateInstance<Growths>() : Instantiate(growths);
-            // if (visuals.UnitEffectVisual != null)
-            // {
-            //     visuals.UnitEffectVisual = Instantiate(visuals.UnitEffectVisual);
-            // }
-
-           
             MaxHp = stats.Attributes.CON*Attributes.CON_HP_Mult;
             
             if(hp==-1)//hp has never been set
                 hp = MaxHp;
-            // sp = stats.MaxSp;
-            // spBars = Sp / SP_PER_BAR;
             ExperienceManager.ExpGained = null;
-            ExperienceManager.ExpGained += ExpGained;
+           // ExperienceManager.ExpGained += ExpGained;
             Stats.AttackRanges.Clear();
             if (EquippedWeapon != null)
             {
@@ -216,16 +164,13 @@ namespace Game.GameActors.Units
            
         }
 
-        
-
-        private void ExpGained(Vector3 drainPos, int expBefore, int expGained)
-        {
-            Debug.Log("Unit Exp Gained!" +expBefore+" "+expGained);
-            if (expGained == 0)
-                return;
-            OnExpGained?.Invoke(expBefore, expGained);
-            GameObject.FindObjectOfType<ExpParticleSystem>().Play(this, drainPos, expGained);
-        }
+        // private void ExpGained(int expBefore, int expGained)
+        // {
+        //     Debug.Log("Unit Exp Gained!" +expBefore+" "+expGained);
+        //     if (expGained == 0)
+        //         return;
+        //
+        // }
 
         private void LevelUp()
         {
@@ -254,9 +199,10 @@ namespace Game.GameActors.Units
         public void Die()
         {
             Debug.Log("Die: " + name);
-            UnitDied(this);
-            Faction.RemoveUnit(this);
-            GameTransformManager.Die();
+            UnitDied?.Invoke(this);
+            
+            Faction?.RemoveUnit(this);
+            GameTransformManager?.Die();
             
         }
 
@@ -266,7 +212,16 @@ namespace Game.GameActors.Units
             return GridComponent.Tile;
         }
 
- 
+        public bool IsPlayerControlled()
+        {
+            if(Faction!=null)
+                return Faction.IsPlayerControlled;
+            else
+            {
+                return Party.IsPlayerControlled;
+            }
+        }
+
 
         public void Heal(int heal)
         {
@@ -434,9 +389,6 @@ namespace Game.GameActors.Units
 
         public event Action HpValueChanged;
 
-
-
-
         public delegate void OnUnitShowActiveEffect(Unit unit, bool canMove, bool disableOthers);
 
         public static OnUnitShowActiveEffect OnUnitActiveStateUpdated;
@@ -445,14 +397,9 @@ namespace Game.GameActors.Units
 
         public static OnUnitDied UnitDied;
 
-        #endregion
-        
-
-
-
-        public delegate void OnExpGainedEvent(int expBefore, int expGained);
-
-        public event OnExpGainedEvent OnExpGained;
+        // public delegate void OnExpGainedEvent(Unit unit, Vector3 drainPos, int expBefore, int expGained);
+        //
+        // public static event OnExpGainedEvent OnExpGained;
 
         public delegate void OnUnitDamagedEvent(Unit unit, int damage,DamageType damageType, bool crit, bool eff);
         public delegate void OnUnitHealedEvent(Unit unit, int damage);
@@ -461,12 +408,8 @@ namespace Game.GameActors.Units
         public static OnUnitHealedEvent OnUnitHealed;
         public delegate void LevelupEvent(Unit unit);
         public LevelupEvent OnLevelUp;
-    
-
-        // public void OnEnable()
-        // {
-        //     Initialize();
-        // }
+        #endregion
+        
         public void InflictFaithDamage(Unit attacker)
         {
             int dmg=attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(this);

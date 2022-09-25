@@ -122,7 +122,15 @@ namespace Game.Mechanics
                             new GameplayCommands().ExecuteInputActions(()=>
                             {
                                 playerPhaseState.Feed(PPStateTrigger.Cancel);
-                                GridGameManager.Instance.GameStateManager.SwitchState(new AfterBattleState(selectedUnit, targets));
+                                var task = new AfterBattleTasks(ServiceProvider.Instance.GetSystem<UnitProgressSystem>(),(Unit)selectedUnit, targets);
+                                task.StartTask();
+                                task.OnFinished += () =>
+                                {
+                                    if(GridGameManager.Instance.FactionManager.ActiveFaction.IsPlayerControlled)
+                                        GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.PlayerPhaseState);
+                                    else
+                                        GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.EnemyPhaseState);
+                                };
                             });
                             //Selected same Tile again
                         }
