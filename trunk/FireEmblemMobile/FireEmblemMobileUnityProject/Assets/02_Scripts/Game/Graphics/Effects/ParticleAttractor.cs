@@ -15,7 +15,8 @@ public class ParticleAttractor : MonoBehaviour {
     [SerializeField] float offset = 0.1f;
     private ParticleSystem _particleSystem;
     private ParticleSystem.Particle[] _particles = new ParticleSystem.Particle[100];
-    private ExpBarController expController;
+
+    public event Action ParticleArrived;
     private Camera uicamera;
     public void Start ()
     {
@@ -43,7 +44,8 @@ public class ParticleAttractor : MonoBehaviour {
                                                                            &&_particles[i].position.y+offset >= attractorPosition.y&& _particles[i].position.y-offset <=attractorPosition.y)
                 {
                     _particles[i].remainingLifetime = 0;
-                    expController.ParticleArrived();
+                    ParticleArrived?.Invoke();
+                    
                 }
             }
             _particleSystem.SetParticles (_particles, length);
@@ -57,9 +59,7 @@ public class ParticleAttractor : MonoBehaviour {
         // IParticleAttractorTransformProvider provider =
         //     FindObjectsOfType<MonoBehaviour>().OfType<IParticleAttractorTransformProvider>().First();
         //expController = unit.visuals.UnitCharacterCircleUI.GetExpRenderer();
-        expController = unit.BattleGO.GetExpRenderer();
-        expController.Show();
-        expController.UpdateInstant(unit.ExperienceManager.Exp);
+     
         Debug.Log("TODO MapBattleAnimations Do it the old way?");
         _attractorTransform =unit.BattleGO.GetAttractorTransform();// provider.GetUnitParticleAttractorTransform(unit);
 

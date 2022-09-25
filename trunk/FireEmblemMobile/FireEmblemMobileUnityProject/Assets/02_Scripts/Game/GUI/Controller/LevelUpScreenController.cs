@@ -116,7 +116,7 @@ namespace Game.GUI
                     Debug.Log("=============================================");
                     Debug.Log("=============================================");
                     levelText.transform.localScale = Vector3.one;
-                    AnimationQueue.OnAnimationEnded?.Invoke();
+                    OnFinished?.Invoke();
                     canvas.enabled = false;
                 }));
             LeanTween.alphaCanvas(alphaCanvas, 1, 0.55f).setEaseOutQuad();
@@ -173,6 +173,9 @@ namespace Game.GUI
             defAddedText.text = "";
             lckAddedText.text = "";
         }
+
+        public event Action OnFinished;
+
         private Action CreateStatPopUpActionAnimationIn(TMP_Text label, TMP_Text textObject, string text, TMP_Text textAddedObject, int statIncrease)
         {
             return () => {

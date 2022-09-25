@@ -9,6 +9,8 @@ public class DeathParticleController : MonoBehaviour
     public ParticleSystem system;
     public ParticleAttractor attractor;
     public float interval = 0.2f;
+
+    public event Action OnParticleArrived;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -17,6 +19,9 @@ public class DeathParticleController : MonoBehaviour
 
     public void Play(Unit unit, Vector3 startPos, int exp, Camera uiCamera)
     {
+        attractor.ParticleArrived -= Function;
+        attractor.ParticleArrived += Function;
+       
         attractor.SetAttractorUnit(unit, uiCamera);
         transform.position = startPos;
         Debug.Log("Position: "+startPos);
@@ -32,7 +37,11 @@ public class DeathParticleController : MonoBehaviour
         Debug.Log("Play P-System!");
         Destroy(this.gameObject, 2.0f);
     }
-    
+
+    void Function()
+    {
+        OnParticleArrived?.Invoke();
+    }
 
     // Update is called once per frame
     void Update()

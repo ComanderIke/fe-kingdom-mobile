@@ -38,16 +38,18 @@ namespace Game.GameActors.Units
         [NonSerialized]
         public int ExpLeftToDrain = 100;
 
-        public void AddExp(int exp)
+   
+
+        public bool AddExp(int exp)
         {
             if (exp > MAX_EXP)
                 exp = MAX_EXP;
             ExpGained?.Invoke(Exp, exp);
-           DoExp(exp);
+           return DoExp(exp);
             
         }
 
-        private void DoExp(int exp)
+        private bool DoExp(int exp)
         {
             Debug.Log("Add Exp: " + exp);
             Exp += exp;
@@ -56,7 +58,10 @@ namespace Game.GameActors.Units
             {
                 Exp -= MAX_EXP;
                 PerformLevelUp();
+                return true;
             }
+
+            return false;
         }
 
         private void PerformLevelUp()
@@ -64,10 +69,6 @@ namespace Game.GameActors.Units
             Debug.Log("Level Up");
             Level++;
             LevelUp?.Invoke();
-            
-           
-            
-            
         }
 
         public int GetMaxEXP(int exp)
@@ -76,5 +77,8 @@ namespace Game.GameActors.Units
                 return MAX_EXP;
             return exp;
         }
+
+        public bool HasLevelUp { get; set; }
+        
     }
 }

@@ -27,6 +27,11 @@ public class ExpParticleSystem : MonoBehaviour, IExpRenderer
         {
             //Do Battle Animation Version
             go = Instantiate(expParticlePrefabBattleVersion, transform);
+            var controller=go.GetComponent<DeathParticleController>();
+            controller.OnParticleArrived -= unit.BattleGO.GetExpRenderer().ParticleArrived;
+            controller.OnParticleArrived += unit.BattleGO.GetExpRenderer().ParticleArrived;
+            controller.Play(unit, startPos, exp, uiCamera);
+            ;
             unit.BattleGO.GetExpRenderer().onAllParticlesArrived -= AllFinished;
             unit.BattleGO.GetExpRenderer().onAllParticlesArrived += AllFinished;
         }
@@ -34,17 +39,21 @@ public class ExpParticleSystem : MonoBehaviour, IExpRenderer
         {
             //Do Grid Map Version
             go = Instantiate(expParticlePrefab, transform);
+            var controller=go.GetComponent<DeathParticleController>();
+            controller.Play(unit, startPos, exp, uiCamera);
+            controller.OnParticleArrived -=  unit.visuals.UnitCharacterCircleUI.GetExpRenderer().ParticleArrived;
+            controller.OnParticleArrived +=  unit.visuals.UnitCharacterCircleUI.GetExpRenderer().ParticleArrived;
             unit.visuals.UnitCharacterCircleUI.GetExpRenderer().onAllParticlesArrived -= AllFinished;
             unit.visuals.UnitCharacterCircleUI.GetExpRenderer().onAllParticlesArrived += AllFinished;
         }
-        var controller=go.GetComponent<DeathParticleController>();
-        controller.Play(unit, startPos, exp, uiCamera);
-    }
 
+    }
+    
     public event Action OnFinished;
 
     private void AllFinished()
     {
+        Debug.Log("all Particles Arrived!");
         OnFinished?.Invoke();
     }
 

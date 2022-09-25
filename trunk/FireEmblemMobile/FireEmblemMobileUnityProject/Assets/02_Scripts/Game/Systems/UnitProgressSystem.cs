@@ -58,8 +58,8 @@ namespace Game.Mechanics
         }
         private void AddUnit(Unit u)
         {
-            u.OnLevelUp -= LevelUp;
-            u.OnLevelUp += LevelUp;
+            // u.OnLevelUp -= LevelUp;
+            // u.OnLevelUp += LevelUp;
             units.Add(u);
 
         }
@@ -71,23 +71,23 @@ namespace Game.Mechanics
 
         public void Deactivate()
         {
-            foreach (var unit in units)
-            {
-                unit.OnLevelUp -= LevelUp;
-            }
+            // foreach (var unit in units)
+            // {
+            //     unit.OnLevelUp -= LevelUp;
+            // }
         }
 
         public void Activate()
         {
-            foreach (var unit in units)
-            {
-                unit.OnLevelUp -= LevelUp;
-                unit.OnLevelUp += LevelUp;
-            }
+            // foreach (var unit in units)
+            // {
+            //     unit.OnLevelUp -= LevelUp;
+            //     unit.OnLevelUp += LevelUp;
+            // }
         }
 
 
-        private void LevelUp(Unit unit)
+        public void LevelUp(Unit unit)
         {
             Debug.Log("LevelUp System Called!");
             int[] statIncreases = CalculateStatIncreases(unit.Growths.AsArray());
@@ -97,7 +97,9 @@ namespace Game.Mechanics
                 levelUpRenderer.UpdateValues(unit.name, unit.visuals.CharacterSpriteSet.FaceSprite,unit.ExperienceManager.Level - 1, unit.ExperienceManager.Level,
                     unit.Stats.Attributes.AsArray(), statIncreases);
                 Debug.Log("Add LevelUpAnimation!");
-                AnimationQueue.Add(((IAnimation) levelUpRenderer).Play);
+                levelUpRenderer.Play();
+                levelUpRenderer.OnFinished -= FinishedOnce;
+                levelUpRenderer.OnFinished += FinishedOnce;
             }
 
             if (unit.ExperienceManager.Level % 2 == 0)
@@ -114,32 +116,41 @@ namespace Game.Mechanics
         {
             finished = false;
             int exp=0;
-            if (defender.IsAlive() && defender.Faction.IsPlayerControlled)
+            if (defender.IsAlive() && defender.IsPlayerControlled())
             {
                 exp = CalculateExperiencePoints(defender, attacker);
                 if (exp != 0)
                 {
                     //var expRenderer = ((Unit)defender).visuals.UnitCharacterCircleUI.GetExpRenderer();
-                    ServiceProvider.Instance.GetSystem<UiSystem>().SelectedCharacter((Unit)defender);
+                    ServiceProvider.Instance.GetSystem<UiSystem>()?.SelectedCharacter((Unit)defender);
                     Vector3 pos = new Vector3();
                     if (defender.BattleGO != null)//In BattleAnimation use this
                     {
                         pos = defender.BattleGO.GameObject.transform.position;
+                        var expController = defender.BattleGO.GetExpRenderer();
+                        expController.Show(defender.ExperienceManager.Exp);
+                        expController.UpdateAnimated(exp);
                     }
                     else if (defender.GameTransformManager != null)//Map Animations use this
                     {
                         pos = defender.GameTransformManager.Transform.position + new Vector3(0.5f, 0.5f, 0);
                     }
-                    defender.ExperienceManager.AddExp(exp);
+                    Debug.Log("Calculated Exp: "+exp);
                     expRenderer.Play((Unit)defender, pos, exp);
+
+                    defender.ExperienceManager.AddExp(exp);
+                    
                     expRenderer.OnFinished += FinishedOnce;
+                    
+                    
+                   
                     return;
                 }
                 
             }
             FinishedOnce();
         }
-
+        
         
         void FinishedOnce()
         {
@@ -218,6 +229,12 @@ namespace Game.Mechanics
         public bool IsFinished()
         {
             return finished;
+        }
+        
+        public void DoLevelUp(Unit unit)
+        {
+            finished = false;
+            LevelUp(unit);
         }
     }
 }

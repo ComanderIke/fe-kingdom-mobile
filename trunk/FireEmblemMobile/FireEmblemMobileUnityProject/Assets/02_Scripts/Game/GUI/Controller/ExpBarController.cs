@@ -25,6 +25,7 @@ namespace Game.GUI
             if (currentExp > 100)
                 currentExp -= 100;
             fill.fillAmount = currentExp / 100f;
+            countingText?.SetText(currentExp.ToString());
             if (addedExp <=0)
             {
                 Debug.Log("AllParticlesArrived!");
@@ -39,7 +40,7 @@ namespace Game.GUI
             Debug.Log("CurrentExp: "+currentExp+" Gained: "+addedExp);
             animation = true;
             this.addedExp +=  addedExp;
-            countingText?.SetTextCounting(currentExp, currentExp+this.addedExp);
+            //countingText?.SetTextCounting(currentExp, currentExp+this.addedExp);
         }
 
 
@@ -63,8 +64,9 @@ namespace Game.GUI
             countingText?.SetText(currentExp.ToString());
         }
 
-        public void Show()
+        public void Show(int CurrentExp)
         {
+            UpdateInstant(currentExp);
             TweenUtility.FadeIn(canvasGroup);
         }
         public void Hide()

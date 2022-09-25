@@ -216,10 +216,12 @@ namespace Game.GameActors.Units
         {
             if(Faction!=null)
                 return Faction.IsPlayerControlled;
-            else
+            else if(Party!=null)
             {
                 return Party.IsPlayerControlled;
             }
+
+            return false;
         }
 
 
