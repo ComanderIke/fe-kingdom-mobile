@@ -267,14 +267,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayableDirector: {fileID: 7398306520116262879}
+  attractorTransform: {fileID: 0}
+  expBar: {fileID: 0}
   walkIn: {fileID: 11400000, guid: 4fc5bed012c58b64d80900ce3026b20a, type: 2}
   attack: {fileID: 11400000, guid: de1f5b6296d831745a7c18dc5acbbd7f, type: 2}
   idle: {fileID: 11400000, guid: 0aff69e06fd396145884edd13d69d043, type: 2}
   dodge: {fileID: 11400000, guid: e9d4e2a17807a814ea2ba14d13a3d5a4, type: 2}
   damaged: {fileID: 11400000, guid: 5b4188cf7fdead3439ed189866fa3a03, type: 2}
   death: {fileID: 11400000, guid: 36b0e9d8c71994b49a8d24e1d08d932f, type: 2}
-  prepareAttack: {fileID: 0}
   hasPrepare: 0
+  prepareAttack: {fileID: 0}
 --- !u!114 &5545725568445660331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10146,7 +10148,7 @@ SpriteRenderer:
   m_SortingLayerID: -796215603
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: -8949566613715383924, guid: 1b3356dbfb1157649b3bee16d604a8fd,
+  m_Sprite: {fileID: -7482938356582656407, guid: 960debc2156c06a4992911ee387fd8dd,
     type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0.38431373}
   m_FlipX: 0
@@ -10170,6 +10172,11 @@ PrefabInstance:
       propertyPath: time
       value: 0.7688655
       objectReference: {fileID: 0}
+    - target: {fileID: 621044198818372484, guid: db29fe1d06d73c145b6216b195c25564,
+        type: 3}
+      propertyPath: material
+      value: 
+      objectReference: {fileID: 2100000, guid: 863b28a8a316d704999419b21a023899, type: 2}
     - target: {fileID: 795437318843078829, guid: db29fe1d06d73c145b6216b195c25564,
         type: 3}
       propertyPath: m_Name

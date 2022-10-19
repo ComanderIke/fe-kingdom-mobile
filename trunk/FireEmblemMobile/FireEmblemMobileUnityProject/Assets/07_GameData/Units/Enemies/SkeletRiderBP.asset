@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af959c221bf9f9f4d9c129ad64f8415d, type: 3}
+  m_Name: SkeletRiderBP
+  m_EditorClassIdentifier: 
+  Class: {fileID: 11400000, guid: c9fb62633f511e34e9f6889cbde27e91, type: 2}
+  EquippedWeapon: {fileID: 11400000, guid: f1c1c884af0a0a14cb2d196a524fcbb8, type: 2}
+  EquippedRelic1: {fileID: 0}
+  EquippedRelic2: {fileID: 0}
+  name: SkeletonRider
+  jobClass: 
+  stats:
+    AttackRanges: 
+    Attributes:
+      STR: 4
+      INT: 1
+      DEX: 2
+      AGI: 4
+      <CON>k__BackingField: 3
+      LCK: 1
+      DEF: 2
+      FAITH: 1
+    Mov: 3
+  growths:
+    STR: 30
+    INT: 30
+    DEX: 30
+    AGI: 30
+    <CON>k__BackingField: 30
+    LCK: 30
+    DEF: 30
+    FAITH: 30
+  moveType: {fileID: 11400000, guid: 580bbea6e1e3e824a81881f8e2a825ba, type: 2}
+  SkillManager:
+    Skills: []
+    Favourite: {fileID: 0}
+    skillPoints: 0
+    SkillTrees: []
+  bluePrintID: 
+  visuals:
+    CharacterSpriteSet: {fileID: 11400000, guid: 21ad3e9768d1ab444a617f8586816cc5,
+      type: 2}
+    UnitEffectVisual: {fileID: 11400000, guid: af10e6087dc82f34ebed15c0092e0174, type: 2}
+    Prefabs:
+      MapAnimatedSprite: {fileID: 2861010742256422526, guid: f782b017bae238340ba6faff38e743c9,
+        type: 3}
+      EncounterAnimatedSprite: {fileID: 2861010742256422526, guid: f782b017bae238340ba6faff38e743c9,
+        type: 3}
+      UIAnimatorController: {fileID: 22100000, guid: 935d962dbfa06f247a8c933d24007ffd,
+        type: 2}
+    UnitCharacterCircleUI: {fileID: 0}
+    unitRenderer: {fileID: 0}
+  experienceManager:
+    level: 1
+    exp: 0
+    MaxExp: 100
