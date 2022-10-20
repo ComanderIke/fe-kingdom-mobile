@@ -39,6 +39,10 @@ namespace Game.GameActors.Items.Weapons
         
         public WeaponType WeaponType;
         public DamageType DamageType;
+        [SerializeField] private List<MoveType> effectiveAgainst;
+        [SerializeField] private List<MoveType> inEffectiveAgainst;
+        [SerializeField] private List<WeaponType> effectiveAgainstWeapons;
+        [SerializeField] private List<WeaponType> inEffectiveAgainstWeapons;
 
         public void OnEnable()
         {
@@ -109,6 +113,23 @@ namespace Game.GameActors.Items.Weapons
                 return WeaponAttributes[weaponLevel].Dmg;
             else
                 return 0;
+        }
+
+        public bool IsEffective(MoveType unitMoveType)
+        {
+            return effectiveAgainst.Contains(unitMoveType)||WeaponType.IsEffective(unitMoveType);
+        }
+        public bool IsInEffective(MoveType unitMoveType)
+        {
+            return inEffectiveAgainst.Contains(unitMoveType)||WeaponType.IsInEffective(unitMoveType);
+        }
+        public bool IsEffective(WeaponType weaponType)
+        {
+            return effectiveAgainstWeapons.Contains(weaponType)||WeaponType.IsEffective(weaponType);
+        }
+        public bool IsInEffective(WeaponType weaponType)
+        {
+            return inEffectiveAgainstWeapons.Contains(weaponType)||WeaponType.IsInEffective(weaponType);
         }
     }
 }

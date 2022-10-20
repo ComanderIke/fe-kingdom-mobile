@@ -21,6 +21,8 @@ namespace Game.GameActors.Units.OnGameObject
         [SerializeField] private GameObject pointLight;
         [SerializeField] private Image weaponTypeIcon;
         [SerializeField] private Image moveTypeIcon;
+        [SerializeField] private Animator weaponTypeAnimator;
+        [SerializeField] private Animator moveTypeAnimator;
         [SerializeField] private Image EquippedItemIcon;
         //[SerializeField] private Image EquippedItemBackground;
         [SerializeField] private GameObject spriteMask;
@@ -33,6 +35,8 @@ namespace Game.GameActors.Units.OnGameObject
         [SerializeField] private TextMeshProUGUI x2Text;
         
         public Unit unit;
+        private static readonly int Effective = Animator.StringToHash("effective");
+        private static readonly int Ineffective = Animator.StringToHash("ineffective");
 
         public void HideAttackDamage()
         {
@@ -169,6 +173,47 @@ namespace Game.GameActors.Units.OnGameObject
         }
 
 
+        public void ShowEffectiveness(Unit character)
+        {
+            if (character.BattleComponent.IsEffective(unit.MoveType))
+            {
+                moveTypeAnimator.SetBool(Effective, true);
+                moveTypeAnimator.SetBool(Ineffective, false);
+            }
+            else if(character.BattleComponent.IsInEffective(unit.MoveType))
+            {
+                moveTypeAnimator.SetBool(Effective, false);
+                moveTypeAnimator.SetBool(Ineffective, true);
+            }
+            else
+            {
+                moveTypeAnimator.SetBool(Effective, false);
+                moveTypeAnimator.SetBool(Ineffective, false);
+            }
+            if (character.BattleComponent.IsEffective(unit.EquippedWeapon.WeaponType))
+            {
+                weaponTypeAnimator.SetBool(Effective, true);
+                weaponTypeAnimator.SetBool(Ineffective, false);
+            }
+            else if(character.BattleComponent.IsInEffective(unit.EquippedWeapon.WeaponType))
+            {
+                weaponTypeAnimator.SetBool(Effective, false);
+                weaponTypeAnimator.SetBool(Ineffective, true);
+            }
+            else
+            {
+                weaponTypeAnimator.SetBool(Effective, false);
+                weaponTypeAnimator.SetBool(Ineffective, false);
+            }
+        }
 
+        public void HideTemporaryVisuals()
+        {
+            HideAttackDamage();
+            moveTypeAnimator.SetBool(Effective, false);
+            moveTypeAnimator.SetBool(Ineffective, false);
+            weaponTypeAnimator.SetBool(Effective, false);
+            weaponTypeAnimator.SetBool(Ineffective, false);
+        }
     }
 }

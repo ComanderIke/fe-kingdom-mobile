@@ -67,7 +67,7 @@ namespace Game.Mechanics
             unitInputSystem.SetActive(false);
             foreach (var unit in factionManager.Factions[1].Units)
             {
-                unit.visuals.unitRenderer.HideAttackDamage();
+                unit.visuals.unitRenderer.HideTemporaryVisuals();
             }
             //   Debug.Log("Exit");
             playerPhaseUI.Hide();
@@ -124,9 +124,13 @@ namespace Game.Mechanics
         private void OnSelectedCharacter(IGridActor character)
         {
             gridInputSystem.inputReceiver.ResetInput();
+            // foreach (var unit in factionManager.Factions[1].Units)
+            // {
+            //     unit.visuals.unitRenderer.ShowAttackDamage((Unit)character);
+            // }
             foreach (var unit in factionManager.Factions[1].Units)
             {
-                unit.visuals.unitRenderer.ShowAttackDamage((Unit)character);
+                unit.visuals.unitRenderer.ShowEffectiveness((Unit)character);
             }
         }
         private void OnDeselectedCharacter(IGridActor character)
@@ -134,7 +138,7 @@ namespace Game.Mechanics
             gridInputSystem.inputReceiver.ResetInput();
             foreach (var unit in factionManager.Factions[1].Units)
             {
-                unit.visuals.unitRenderer.HideAttackDamage();
+                unit.visuals.unitRenderer.HideTemporaryVisuals();
             }
         }
         public override GameState<PPStateTrigger> Update()
