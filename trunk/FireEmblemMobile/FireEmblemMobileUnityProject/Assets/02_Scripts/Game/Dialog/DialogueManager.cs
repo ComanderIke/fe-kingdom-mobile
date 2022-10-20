@@ -10,11 +10,10 @@ namespace Game.Dialog
     {
         public Conversation Conversation;
 
-        public Dialogue leftDialog;
-        public Dialogue rightDialog;
+        public Dialogue dialog;
         private int index=-1;
         public Action dialogEnd;
-        private bool active = false;
+        private bool active = true;
 
         public void ShowDialog(Conversation conversation)
         {
@@ -41,25 +40,16 @@ namespace Game.Dialog
             {
                 index++;
                 var line = Conversation.lines[index];
-                if (line.left)
-                {
-                    leftDialog.gameObject.SetActive(true);
-                    rightDialog.gameObject.SetActive(false);
-                    leftDialog.NextLine(line.sentence, line.unit.name, line.unit.visuals.CharacterSpriteSet.FaceSprite);
-                }
-                else
-                {
-                    leftDialog.gameObject.SetActive(false);
-                    rightDialog.gameObject.SetActive(true);
-                    rightDialog.NextLine(line.sentence,line.unit.name, line.unit.visuals.CharacterSpriteSet.FaceSprite );
-                }
+                dialog.gameObject.SetActive(true);
+                dialog.NextLine(line.sentence, line.unit.name, line.unit.visuals.CharacterSpriteSet.FaceSprite, line.left);
+                
+               
             }
             else
             {
                 Debug.Log("Dialog end!");
                 dialogEnd?.Invoke();
-                rightDialog.gameObject.SetActive(false);
-                leftDialog.gameObject.SetActive(false);
+                dialog.gameObject.SetActive(false);
                 active = false;
 
             }
