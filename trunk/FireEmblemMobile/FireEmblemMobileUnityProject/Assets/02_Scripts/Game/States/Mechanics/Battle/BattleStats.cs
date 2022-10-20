@@ -142,9 +142,9 @@ namespace Game.Mechanics.Battle
         {
             if (owner.GetEquippedWeapon() != null)
             {
-                if (owner.GetEquippedWeapon().WeaponType != WeaponType.Magic&&owner.GetEquippedWeapon().WeaponType != WeaponType.FaithMagic)
+                if (owner.GetEquippedWeapon().DamageType != DamageType.Magic&&owner.GetEquippedWeapon().DamageType != DamageType.Faith)
                     return owner.Stats.Attributes.STR + owner.GetEquippedWeapon().GetDamage();
-                else if (owner.GetEquippedWeapon().WeaponType == WeaponType.FaithMagic)
+                else if (owner.GetEquippedWeapon().DamageType == DamageType.Faith)
                     return owner.Stats.Attributes.FAITH + owner.GetEquippedWeapon().GetDamage();
                 else
                     return owner.Stats.Attributes.INT + owner.GetEquippedWeapon().GetDamage();

@@ -19,7 +19,8 @@ namespace Game.GameActors.Units.OnGameObject
         [SerializeField] private ISPBarRenderer spBars;
         [SerializeField] private TextMeshProUGUI hpText;
         [SerializeField] private GameObject pointLight;
-        
+        [SerializeField] private Image weaponTypeIcon;
+        [SerializeField] private Image moveTypeIcon;
         [SerializeField] private Image EquippedItemIcon;
         //[SerializeField] private Image EquippedItemBackground;
         [SerializeField] private GameObject spriteMask;
@@ -75,6 +76,9 @@ namespace Game.GameActors.Units.OnGameObject
             hpBar.GetComponent<Image>().color = ColorManager.Instance.GetFactionColor(unit.Faction.Id);
             hpText.color = ColorManager.Instance.GetFactionColor(unit.Faction.Id);
             float intensity = 2;
+            moveTypeIcon.sprite = unit.MoveType.icon;
+            if(moveTypeIcon.sprite==null)
+                moveTypeIcon.gameObject.SetActive(false);
             sprite.material.SetColor("_OutLineColor", ColorManager.Instance.GetFactionColor(unit.Faction.Id)*intensity);
             //spBar.GetComponent<Image>().color = ColorManager.Instance.GetFactionColor(Unit.Faction.Id);
             HpValueChanged();
@@ -119,6 +123,7 @@ namespace Game.GameActors.Units.OnGameObject
         }
         private void OnEquippedWeapon()
         {
+            weaponTypeIcon.sprite = unit.EquippedWeapon.WeaponType.Icon;
             // EquippedItemBackground.color = ColorManager.Instance.GetFactionColor(unit.Faction.Id);
             // if (unit is Human human) {
             //     if (human.EquippedWeapon != null)
