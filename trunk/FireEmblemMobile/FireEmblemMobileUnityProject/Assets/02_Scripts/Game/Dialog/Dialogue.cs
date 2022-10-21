@@ -11,6 +11,7 @@ namespace Unused.Dialogs
 	[System.Serializable]
 	public class Dialogue : MonoBehaviour
 	{
+		[SerializeField] CanvasGroup mainCanvasGroup;
 		[SerializeField] CanvasGroup speakerNameCanvasGroup;
 		[SerializeField] CanvasGroup speakerImageLeftCanvasGroup;
 		[SerializeField] CanvasGroup speakerImageRightCanvasGroup;
@@ -25,7 +26,9 @@ namespace Unused.Dialogs
 		public float typingSpeed;
 		private string line;
 		public GameObject continueObject;
+		private Coroutine textCoroutine;
 
+		
 		IEnumerator TextAnimation()
 		{
 			foreach (char letter in line)
@@ -68,7 +71,17 @@ namespace Unused.Dialogs
 
 			this.line = sentence;
 			textDisplay.text = "";
-			StartCoroutine(TextAnimation());
+			if(textCoroutine!=null)
+				StopCoroutine(textCoroutine);
+			textCoroutine = StartCoroutine(TextAnimation());
+		}
+
+		
+		public void Show()
+		{
+			gameObject.SetActive(true);
+			mainCanvasGroup.alpha = 0;
+			TweenUtility.FadeIn(mainCanvasGroup);
 		}
 	}
 }

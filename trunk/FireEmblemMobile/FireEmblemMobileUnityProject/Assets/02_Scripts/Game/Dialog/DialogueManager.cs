@@ -13,13 +13,15 @@ namespace Game.Dialog
         public Dialogue dialog;
         private int index=-1;
         public Action dialogEnd;
-        private bool active = true;
+        private bool active = false;
 
         public void ShowDialog(Conversation conversation)
         {
             this.Conversation = conversation;
             active = true;
             index = -1;
+            dialog.Show();
+            NextLine();
         }
 
         
@@ -40,7 +42,7 @@ namespace Game.Dialog
             {
                 index++;
                 var line = Conversation.lines[index];
-                dialog.gameObject.SetActive(true);
+                
                 dialog.NextLine(line.sentence, line.Actor.Name, line.Actor.FaceSprite, line.left);
                 
                

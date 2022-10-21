@@ -13,24 +13,24 @@ namespace LostGrace
         [SerializeField] private ParticleSystem glow;
         [SerializeField] private ParticleSystem clouds;
         [SerializeField] private Animator animator;
-        private void OnEnable()
-        {
-            Show();
-        }
+        // private void OnEnable()
+        // {
+        //     Show();
+        // }
 
         private bool show = true;
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                show = !show;
-                if(show)
-                    Show();
-                else
-                {
-                    Hide();
-                }
-            }
+            // if (Input.GetMouseButtonDown(0))
+            // {
+            //     show = !show;
+            //     if(show)
+            //         Show();
+            //     else
+            //     {
+            //         Hide();
+            //     }
+            // }
            
         }
 
@@ -44,7 +44,7 @@ namespace LostGrace
             StopCoroutine(nameof(HideGoddessAnimation));
             animator.enabled = false;
             canvasGroup.alpha = 0;
-           
+            glow.gameObject.SetActive(false);
             clouds.gameObject.SetActive(true);
             clouds.Play();
             yield return new WaitForSeconds(.6f);
@@ -76,10 +76,13 @@ namespace LostGrace
             yield return new WaitForSeconds(0.5f);
             particles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
             clouds.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+            yield return new WaitForSeconds(1.5f);
+            gameObject.SetActive(false);
         }
 
         public void Show()
         {
+            gameObject.SetActive(true);
             StartCoroutine(ShowGoddessAnimation());
         }
         public void Hide()

@@ -17,7 +17,9 @@ namespace Game.GUI
         [SerializeField] private CanvasGroup optionsButtonCanvasGroup;
         [SerializeField] private CanvasGroup exitButtonCanvasGroup;
         [SerializeField] private CanvasGroup Fade;
-      
+        [SerializeField] private Animator optionsButtonAnimator;
+        private static readonly int Selected = Animator.StringToHash("Selected");
+
         private void Awake()
         {
             if (Instance == null)
@@ -39,6 +41,7 @@ namespace Game.GUI
             TweenUtility.FadeIn(playButtonCanvasGroup);
             TweenUtility.FadeIn(optionsButtonCanvasGroup);
             TweenUtility.FadeIn(exitButtonCanvasGroup);
+            optionsButtonAnimator.SetBool(Selected, false);
             base.Show();
         }
         
@@ -46,6 +49,7 @@ namespace Game.GUI
         {
             animator.SetBool(Show1, false);
             animator.SetBool(Side, false);
+            
             base.Hide();
         }
 
@@ -72,6 +76,7 @@ namespace Game.GUI
         public void OptionsClicked()
         {
             optionsMenu.Show();
+            optionsButtonAnimator.SetBool(Selected, true);
         }
         public void ExitClicked()
         {

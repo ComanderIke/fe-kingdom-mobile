@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Game.Dialog;
 using Game.GameActors.Players;
 using Game.GameResources;
 using Game.Menu;
@@ -20,7 +21,7 @@ namespace LostGrace
         
         [SerializeField] private UIMenu campaignMenu;
         [SerializeField] private UIMenu upgradeMenu;
-        
+        [Header("SaveLoadStuff: ")]
         public GameObject ContinueButton;
         [SerializeField] private TMP_InputField saveNameField = default;
         [SerializeField] private GameObject saveDialog = default;
@@ -31,21 +32,30 @@ namespace LostGrace
         private string lastestSaveFile;
         public GameObject LoadButton;
         public GameObject SaveButton;
-       
+       [Header("Canvas Groups: ")]
         [SerializeField] private CanvasGroup titleCanvasGroup;
         [SerializeField] private CanvasGroup newGameButtonCanvasGroup;
         [SerializeField] private CanvasGroup upgradeButtonCanvasGroup;
         [SerializeField] private CanvasGroup backButtonCanvasGroup;
-
         [SerializeField] private CanvasGroup Fade;
-
+        [Header("Buttons: ")]
+        [SerializeField] private Button newCampaignButton;
+        [SerializeField] private Button upgradesButton;
+        [SerializeField] private Button backButton;
+        [Header("Experimental: ")]
+        [SerializeField] private GoddessUI goddessUI;
+        [SerializeField] private DialogueManager dialogueManager;
+        [SerializeField] private Conversation introConversation;
         public override void Show()
         {
             //ContinueButton.SetActive(SaveData.currentSaveData!=null);
             //SaveButton.SetActive(SaveData.currentSaveData!=null);
             //LoadButton.SetActive(GetLoadFiles()!=0);
             StartCoroutine(ShowCoroutine());
-         
+            newCampaignButton.interactable = false;
+            upgradesButton.interactable = false;
+            backButton.interactable = false;
+
         }
 
         IEnumerator ShowCoroutine()
@@ -56,9 +66,21 @@ namespace LostGrace
             TweenUtility.FadeIn(newGameButtonCanvasGroup);
             TweenUtility.FadeIn(upgradeButtonCanvasGroup);
             TweenUtility.FadeIn(backButtonCanvasGroup);
-            
+            yield return new WaitForSeconds(.6f);
+            goddessUI.Show();
+            yield return new WaitForSeconds(4.5f);
+            dialogueManager.ShowDialog(introConversation);
+            dialogueManager.dialogEnd += IntroFinished;
+
         }
 
+        void IntroFinished()
+        {
+            goddessUI.Hide();
+            newCampaignButton.interactable = true;
+            upgradesButton.interactable = false;
+            backButton.interactable = false;
+        }
         IEnumerator HideCoroutine()
         {
            
