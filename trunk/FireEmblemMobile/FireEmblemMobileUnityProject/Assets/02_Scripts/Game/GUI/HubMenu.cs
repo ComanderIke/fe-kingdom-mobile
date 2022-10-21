@@ -12,14 +12,14 @@ using Menu;
 using SerializedData;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace LostGrace
 {
     public class HubMenu : UIMenu
     {
-        
-        [SerializeField] private UIMenu campaignMenu;
+        [SerializeField] private UIMenu characterSelectMenu;
         [SerializeField] private UIMenu upgradeMenu;
         [Header("SaveLoadStuff: ")]
         public GameObject ContinueButton;
@@ -35,11 +35,13 @@ namespace LostGrace
        [Header("Canvas Groups: ")]
         [SerializeField] private CanvasGroup titleCanvasGroup;
         [SerializeField] private CanvasGroup newGameButtonCanvasGroup;
+        [SerializeField] private CanvasGroup tutorialButtonCanvasGroup;
         [SerializeField] private CanvasGroup upgradeButtonCanvasGroup;
         [SerializeField] private CanvasGroup backButtonCanvasGroup;
         [SerializeField] private CanvasGroup Fade;
         [Header("Buttons: ")]
         [SerializeField] private Button newCampaignButton;
+        [SerializeField] private Button tutorialButton;
         [SerializeField] private Button upgradesButton;
         [SerializeField] private Button backButton;
         [Header("Experimental: ")]
@@ -55,6 +57,7 @@ namespace LostGrace
             newCampaignButton.interactable = false;
             upgradesButton.interactable = false;
             backButton.interactable = false;
+            tutorialButton.interactable = false;
 
         }
 
@@ -66,6 +69,7 @@ namespace LostGrace
             TweenUtility.FadeIn(newGameButtonCanvasGroup);
             TweenUtility.FadeIn(upgradeButtonCanvasGroup);
             TweenUtility.FadeIn(backButtonCanvasGroup);
+            TweenUtility.FadeIn(tutorialButtonCanvasGroup);
             yield return new WaitForSeconds(.6f);
             goddessUI.Show();
             yield return new WaitForSeconds(4.5f);
@@ -77,7 +81,8 @@ namespace LostGrace
         void IntroFinished()
         {
             goddessUI.Hide();
-            newCampaignButton.interactable = true;
+            tutorialButton.interactable = true;
+            newCampaignButton.interactable = false;
             upgradesButton.interactable = false;
             backButton.interactable = false;
         }
@@ -86,6 +91,8 @@ namespace LostGrace
            
             TweenUtility.FadeOut(upgradeButtonCanvasGroup);
             TweenUtility.FadeOut(newGameButtonCanvasGroup);
+            TweenUtility.FadeOut(tutorialButtonCanvasGroup);
+           
             yield return new WaitForSeconds(.4f);
             TweenUtility.FadeOut(titleCanvasGroup);
             TweenUtility.FadeOut(backButtonCanvasGroup);
@@ -114,8 +121,29 @@ namespace LostGrace
         }
         public void NewGameClicked()
         {
-            campaignMenu.Show();
-            Hide();
+            StartCoroutine(CharacterSelectCoroutine());
+           
+        }
+        public void TutorialClicked()
+        {
+            SceneController.LoadSceneAsync(Scenes.Battle1, false);
+        }
+        IEnumerator CharacterSelectCoroutine()
+        {
+            TweenUtility.FadeOut(upgradeButtonCanvasGroup);
+            TweenUtility.FadeOut(backButtonCanvasGroup);
+            TweenUtility.FadeOut(tutorialButtonCanvasGroup);
+            yield return new WaitForSeconds(.4f);
+            TweenUtility.FadeOut(titleCanvasGroup);
+            TweenUtility.FadeOut(newGameButtonCanvasGroup);
+           
+
+            TweenUtility.FadeIn(Fade).setOnComplete(()=>
+            {
+                base.Hide();
+                characterSelectMenu.Show();
+                TweenUtility.FadeOut(Fade);
+            });
         }
         public void UpgradeClicked()
         {
@@ -134,7 +162,6 @@ namespace LostGrace
         }
         public void LoadCampaignScene(Campaign campaign)
         {
-            Invoke("HideMenu",.6f);
             SaveData.Reset();
             SceneController.LoadSceneAsync(campaign.scene, true);
             // SceneController.LoadSceneAsync(Scenes.UI, true);
