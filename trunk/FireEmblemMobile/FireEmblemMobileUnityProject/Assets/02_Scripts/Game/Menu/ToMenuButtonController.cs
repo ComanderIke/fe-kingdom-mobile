@@ -13,6 +13,6 @@ public class ToMenuButtonController : MonoBehaviour
 
     public void OnClick()
     {
-        MainMenuController.Instance.ShowMainMenu();
+        MainMenuController.Instance.Show();
     }
 }

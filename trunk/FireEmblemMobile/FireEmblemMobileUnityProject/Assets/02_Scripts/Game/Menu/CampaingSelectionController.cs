@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Game.GameResources;
 using Game.GUI;
@@ -22,6 +23,7 @@ namespace Game.Menu
         public GameObject nextCampaignButton;
         public GameObject prevCampaignButton;
         private Vector2 sizeOffset = new Vector2(25, 25);
+        public event Action<int> LoadCampaignClicked;
         void Start()
         {
             campaignConfigs=GameData.Instance.campaigns;
@@ -59,7 +61,7 @@ namespace Game.Menu
 
         public void StartClicked()
         {
-            MainMenuController.Instance.LoadCampaignClicked(selected);
+            LoadCampaignClicked?.Invoke(selected);
         }
         public void UpdatePosition()
         {

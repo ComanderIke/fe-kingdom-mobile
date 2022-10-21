@@ -24,7 +24,7 @@ namespace Game.GameActors.Units
 {
     [Serializable]
     [CreateAssetMenu(menuName = "GameData/Human", fileName = "Human")]
-    public class Unit : ScriptableObject, IActor, IGridActor, IBattleActor, ICloneable, IAIAgent
+    public class Unit : ScriptableObject, IActor, IGridActor, IBattleActor, ICloneable, IAIAgent, IDialogActor
     {
         public static event Action OnEquippedWeapon;
         public static event Action<Unit> OnUnitDataChanged;
@@ -446,5 +446,9 @@ namespace Game.GameActors.Units
             OnUnitDamaged?.Invoke(this,dmg, DamageType.Magic,false, false);
            
         }
+
+        public string Name => name;
+
+        public Sprite FaceSprite => visuals.CharacterSpriteSet.FaceSprite;
     }
 }

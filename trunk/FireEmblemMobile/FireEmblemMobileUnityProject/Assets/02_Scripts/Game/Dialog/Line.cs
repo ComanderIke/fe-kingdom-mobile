@@ -6,6 +6,7 @@ using UnityEngine;
 public class Line
 {
     public string sentence;
-    public Unit unit;
+    [SerializeField] ScriptableObject actor;
     public bool left = true;
+    public IDialogActor Actor => (IDialogActor)actor;
 }

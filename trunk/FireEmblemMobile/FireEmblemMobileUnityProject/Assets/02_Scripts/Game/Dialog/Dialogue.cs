@@ -7,15 +7,14 @@ using UnityEngine.UI;
 
 namespace Unused.Dialogs
 {
+	
 	[System.Serializable]
 	public class Dialogue : MonoBehaviour
 	{
-		[SerializeField] CanvasGroup speakerNameLeftCanvasGroup;
-		[SerializeField] CanvasGroup speakerNameRightCanvasGroup;
+		[SerializeField] CanvasGroup speakerNameCanvasGroup;
 		[SerializeField] CanvasGroup speakerImageLeftCanvasGroup;
 		[SerializeField] CanvasGroup speakerImageRightCanvasGroup;
-		public TextMeshProUGUI speakerNameLeft;
-		public TextMeshProUGUI speakerNameRight;
+		public TextMeshProUGUI speakerName;
 		public Image speakerImageLeft;
 		public Image speakerImageRight;
 		public TextMeshProUGUI textDisplay;
@@ -48,28 +47,23 @@ namespace Unused.Dialogs
 
 		public void NextLine(string sentence, string speakerName, Sprite speakerSprite, bool left)
 		{
-			dialogCanvas.alpha = 0;
+			//dialogCanvas.alpha = 0;
 			nextLineSource.Play();
 			LeanTween.alphaCanvas(dialogCanvas, 1, 0.2f).setEaseOutQuad();
 			continueObject.SetActive(false);
-			
+			this.speakerName.text = speakerName;
 			if (left)
 			{
-				speakerNameRightCanvasGroup.alpha = 0;
-				TweenUtility.FastFadeIn(speakerNameLeftCanvasGroup);
 				speakerImageRightCanvasGroup.alpha = 0;
 				TweenUtility.FastFadeIn(speakerImageLeftCanvasGroup);
 				speakerImageLeft.sprite = speakerSprite;
-				this.speakerNameLeft.text = speakerName;
+				
 			}
 			else
 			{
-				speakerNameLeftCanvasGroup.alpha = 0;
-				TweenUtility.FastFadeIn(speakerNameRightCanvasGroup);
 				speakerImageLeftCanvasGroup.alpha = 0;
 				TweenUtility.FastFadeIn(speakerImageRightCanvasGroup);
 				speakerImageRight.sprite = speakerSprite;
-				this.speakerNameRight.text = speakerName;
 			}
 
 			this.line = sentence;

@@ -42,7 +42,7 @@ using Object = UnityEngine.Object;
                    // EditorGUILayout.PropertyField(transformProp);
                     var sentenceProp = transformProp.FindPropertyRelative("sentence");
                     EditorGUILayout.PropertyField(sentenceProp);
-                    var charNameProp = transformProp.FindPropertyRelative("unit");
+                    var charNameProp = transformProp.FindPropertyRelative("actor");
                     EditorGUILayout.PropertyField(charNameProp);
                     // var lineTypeProp = transformProp.FindPropertyRelative("LineType");
                     // EditorGUILayout.PropertyField(lineTypeProp);

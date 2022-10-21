@@ -85,7 +85,7 @@ namespace Game.WorldMapStuff.Controller
         {
             Debug.Log("Unload All ExceptMain!");
             // SceneTransferData.Instance.Reset();
-            MainMenuController.Instance.ShowMainMenu();
+            MainMenuController.Instance.Show();
             for (int i = 0; i < SceneManager.sceneCount; i++)
             {
                 var scene = SceneManager.GetSceneAt(i);

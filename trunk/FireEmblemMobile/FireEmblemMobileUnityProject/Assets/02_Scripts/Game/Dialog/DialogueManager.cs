@@ -41,7 +41,7 @@ namespace Game.Dialog
                 index++;
                 var line = Conversation.lines[index];
                 dialog.gameObject.SetActive(true);
-                dialog.NextLine(line.sentence, line.unit.name, line.unit.visuals.CharacterSpriteSet.FaceSprite, line.left);
+                dialog.NextLine(line.sentence, line.Actor.Name, line.Actor.FaceSprite, line.left);
                 
                
             }
