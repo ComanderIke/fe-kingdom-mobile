@@ -48,6 +48,7 @@ namespace LostGrace
         [SerializeField] private GoddessUI goddessUI;
         [SerializeField] private DialogueManager dialogueManager;
         [SerializeField] private Conversation introConversation;
+        [SerializeField] private EnemyArmyData tutorialBattleData;
         public override void Show()
         {
             //ContinueButton.SetActive(SaveData.currentSaveData!=null);
@@ -126,6 +127,8 @@ namespace LostGrace
         }
         public void TutorialClicked()
         {
+            SceneTransferData.Instance.Reset();
+            SceneTransferData.Instance.EnemyArmyData = tutorialBattleData;
             SceneController.LoadSceneAsync(Scenes.Battle1, false);
         }
         IEnumerator CharacterSelectCoroutine()

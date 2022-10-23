@@ -138,6 +138,7 @@ namespace Game.GameActors.Units
         public virtual void Initialize()
         {
 
+            Fielded = false;
             SkillManager.SkillPointsUpdated += SkillPointsUpdated;
             SkillManager.Init();
             experienceManager ??= new ExperienceManager();
@@ -450,5 +451,6 @@ namespace Game.GameActors.Units
         public string Name => name;
 
         public Sprite FaceSprite => visuals.CharacterSpriteSet.FaceSprite;
+        public bool Fielded { get; set; }
     }
 }

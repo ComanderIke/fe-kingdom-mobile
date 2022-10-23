@@ -138,7 +138,7 @@ namespace Game.States
             foreach (var unit in units)
             {
 
-                if (unit.GameTransformManager.GameObject != null)
+                if (unit.GameTransformManager!=null &&unit.GameTransformManager.GameObject != null)
                 {
                     //Debug.Log("Setup Input for Unit: "+unit.name);
                     unit.GameTransformManager.UnitController.touchInputReceiver = touchInputReceiver;
@@ -158,9 +158,9 @@ namespace Game.States
             
             unit.Faction = faction;
             unit.Initialize();
-                       
+            unit.Fielded = true;          
             unitInstantiator.PlaceCharacter(unit, x, y);
-            //Debug.Log("Spawn Unit"+ unit.name + " " + spawn.X + " " + spawn.Y+" ");
+            Debug.Log("Spawn Unit"+ unit.name + " " + x + " " + y+" ");
         }
         
        

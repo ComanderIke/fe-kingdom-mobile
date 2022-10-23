@@ -19,6 +19,7 @@ namespace Game.GameActors
         {
             transform.localPosition = new Vector3((int) transform.localPosition.x, (int) transform.localPosition.y,
                 (int) transform.localPosition.z);
+            spriteRenderer.sprite = unit.visuals.CharacterSpriteSet.MapSprite;
         }
     }
 }

@@ -22,12 +22,7 @@ public class DestroyableController : MonoBehaviour
 
     public SpriteRenderer sprite;
     public GameObject canvasTransform;
-    private void Start()
-    {
-        
-        
-    }
-
+   
     private void OnDestroy()
     {
         Destroyable.HpValueChanged -= HpValueChanged;
@@ -74,6 +69,9 @@ public class DestroyableController : MonoBehaviour
     {
         transform.localPosition = new Vector3((int) transform.localPosition.x, (int) transform.localPosition.y,
             (int) transform.localPosition.z);
+        #if UNITY_EDITOR
+        sprite.sprite = Destroyable.SpriteNotDestroyed;
+        #endif
     }
     public int X
     {

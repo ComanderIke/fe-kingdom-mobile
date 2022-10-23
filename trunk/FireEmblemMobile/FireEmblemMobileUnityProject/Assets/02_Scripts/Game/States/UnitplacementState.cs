@@ -23,7 +23,6 @@ namespace Game.States
 {
     public class UnitPlacementState : GameState<NextStateTrigger>
     {
-        private const int MAX_DEPLOYCOUNT = 5;
         private const float EXIT_DELAY = 0.5f;
         private float time = 0;
         private bool finished;
@@ -109,7 +108,6 @@ namespace Game.States
         {
             factionManager.Factions[0].ClearUnits();
             factionManager.Factions[1].ClearUnits();
-            int cnt = 0;
             //Debug.Log("PartySizeBeforeInitFactions: "+ Player.Instance.Party.members.Count);
             if (Player.Instance.Party==null||Player.Instance.Party.members.Count==0)
             {
@@ -118,9 +116,7 @@ namespace Game.States
             
             foreach (var unit in Player.Instance.Party.members)
             {
-                cnt++;
-                if (cnt <= MAX_DEPLOYCOUNT)
-                    factionManager.Factions[0].AddUnit(unit);
+                factionManager.Factions[0].AddUnit(unit);
             }
             
 
@@ -138,8 +134,9 @@ namespace Game.States
         {
             foreach (var faction in factionManager.Factions)
             {
-                foreach (var unit in faction.Units)
+                foreach (var unit in faction.FieldedUnits)
                 {
+                    Debug.Log(unit.name+" Fielded: "+unit.Fielded);
                     unit.TurnStateManager.HasAttacked = false;
                     unit.TurnStateManager.HasMoved = false;
                     unit.TurnStateManager.IsSelected = false;
@@ -171,7 +168,7 @@ namespace Game.States
           
             var gridSystem = GridGameManager.Instance.GetSystem<GridSystem>();
             
-            foreach (var unit in   factionManager.Factions[0].Units)
+            foreach (var unit in factionManager.Factions[0].FieldedUnits)
             {
                 
                 var tile= gridSystem.GetTile(unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y);

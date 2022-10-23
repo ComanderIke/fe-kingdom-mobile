@@ -53,7 +53,14 @@ namespace Game.GameActors.Players
         private Sprite sprite;
         [SerializeField]
         private Sprite spriteAfterDeath;
+        public Sprite SpriteNotDestroyed
+        {
+            get
+            {
+                return sprite;
 
+            }
+        }
         public Sprite Sprite
         {
             get
@@ -76,7 +83,7 @@ namespace Game.GameActors.Players
         }
 
 
-        private int hp = 0;
+        private int hp = 1;
         public int Hp
         {
             get

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Game.GameActors.Units;
@@ -18,6 +19,14 @@ namespace Game.GameActors.Players
         public Party party;
         public List<Unit> Units { get; private set; }
         public List<Destroyable> Destroyables { get; private set; }
+
+        public List<Unit> FieldedUnits
+        {
+            get
+            {
+                return Units.Where(a => a.Fielded).ToList();
+            }
+        }
 
 
         public Faction()
