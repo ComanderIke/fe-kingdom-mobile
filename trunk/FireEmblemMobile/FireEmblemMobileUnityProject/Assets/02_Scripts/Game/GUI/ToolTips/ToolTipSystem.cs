@@ -6,13 +6,15 @@ using Game.GameActors.Items.Weapons;
 using Game.GameActors.Units.Skills;
 using LostGrace;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ToolTipSystem : MonoBehaviour
 {
     private static ToolTipSystem instance;
     public ItemToolTip ItemToolTip;
     public WeaponToolTip WeaponToolTip;
-    public SkillToolTip SkillToolTip;
+    [FormerlySerializedAs("SkillToolTip")] public SkillTreeToolTip skillTreeToolTip;
+    public SkillToolTip skillToolTip;
     public AttributeToolTip AttributeToolTip;
     public EncounterToolTip EncounterToolTip;
     public EncounterToolTip EncounterAttackToolTip;
@@ -49,15 +51,21 @@ public class ToolTipSystem : MonoBehaviour
         
         instance.WeaponToolTip.gameObject.SetActive(true);
     }
-    public static void ShowSkill(SkillUI skill, Vector3 position, string header, string description, Sprite icon)
+    public static void ShowSkill(Skill skill, Vector3 position)
     {
-        instance.SkillToolTip.SetValues(skill, header,description,icon, position);
+        instance.skillToolTip.SetValues(skill, skill.name,skill.Description,skill.Icon, position);
         
-        instance.SkillToolTip.gameObject.SetActive(true);
+        instance.skillToolTip.gameObject.SetActive(true);
+    }
+    public static void ShowSkill(SkillTreeEntryUI skillTreeEntry, Vector3 position, string header, string description, Sprite icon)
+    {
+        instance.skillTreeToolTip.SetValues(skillTreeEntry, header,description,icon, position);
+        
+        instance.skillTreeToolTip.gameObject.SetActive(true);
     }
     public static void HideSkill()
     {
-        instance.SkillToolTip.gameObject.SetActive(false);
+        instance.skillTreeToolTip.gameObject.SetActive(false);
     }
 
     public static void Hide()

@@ -37,16 +37,16 @@ public class SkillTreeUI : MonoBehaviour
             cnt++;
         }
     }
-    public void LearnSkillClicked(SkillUI clickedSkill)
+    public void LearnSkillClicked(SkillTreeEntryUI clickedSkillTreeEntry)
     {
-        u.SkillManager.LearnSkill((clickedSkill.skillEntry));
+        u.SkillManager.LearnSkill((clickedSkillTreeEntry.skillEntry));
         UpdateUI(u);
     }
 
-    public void SkillSelected(SkillUI skillUI)
+    public void SkillSelected(SkillTreeEntryUI skillTreeEntryUI)
     {
         Debug.Log("Show Cursor and DetailPanel");
-        cursor.Show(skillUI.gameObject);
-        detailPanel.Show(skillUI, u);
+        cursor.Show(skillTreeEntryUI.gameObject);
+        detailPanel.Show(skillTreeEntryUI, u);
     }
 }

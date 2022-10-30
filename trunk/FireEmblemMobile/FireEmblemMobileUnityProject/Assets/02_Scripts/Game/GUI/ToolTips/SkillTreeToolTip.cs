@@ -1,16 +1,25 @@
-﻿using Game.GameActors.Units.Skills;
+﻿using Game.GameActors.Items;
+using Game.GameActors.Items.Weapons;
+using Game.GameActors.Players;
+using Game.GameActors.Units.Humans;
+using Game.GameActors.Units.Skills;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class SkillToolTip : MonoBehaviour
+public class SkillTreeToolTip : MonoBehaviour
 {
     public TextMeshProUGUI headerText;
     public TextMeshProUGUI descriptionText;
+
+   
+
     public Image skillIcon;
 
-
-    private Skill skill;
+    public Button learnButton;
+    public TextMeshProUGUI useButtonText;
+    private SkillTreeEntryUI skillTreeEntry;
     private RectTransform rectTransform;
 
     // Start is called before the first frame update
@@ -27,6 +36,13 @@ public class SkillToolTip : MonoBehaviour
             UpdateTextWrap(transform.position);
         }
     }
+
+    public void LearnClicked()
+    {
+        Debug.Log("LearnSkillClicked");
+        skillTreeEntry.LearnClicked();
+        gameObject.SetActive(false);
+    }
     void UpdateTextWrap(Vector3 position)
     {
 
@@ -37,9 +53,9 @@ public class SkillToolTip : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
-    public void SetValues(Skill skill, string header, string description, Sprite icon, Vector3 position)
+    public void SetValues(SkillTreeEntryUI skillTreeEntry, string header, string description, Sprite icon, Vector3 position)
     {
-        this.skill = skill;
+        this.skillTreeEntry = skillTreeEntry;
         if (string.IsNullOrEmpty(header))
         {
             headerText.gameObject.SetActive(false);
@@ -49,7 +65,9 @@ public class SkillToolTip : MonoBehaviour
             headerText.gameObject.SetActive(true);
             headerText.text = header;
         }
-
+        
+        useButtonText.text = "Learn";
+       
         descriptionText.text = description;
         skillIcon.sprite = icon;
         

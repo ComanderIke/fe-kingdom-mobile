@@ -13,10 +13,10 @@ public class SkillTreeRenderer : MonoBehaviour
 
     public TextMeshProUGUI specializationName;
     public Image skillPrefab;
-    private List<SkillUI> skills;
+    private List<SkillTreeEntryUI> skills;
     public Transform[] rows;
     private SkillTree skillTree;
-    private List<SkillUI>[] skillsPerRow;
+    private List<SkillTreeEntryUI>[] skillsPerRow;
     private SkillTreeUI controller;
 
     public void Show(SkillTree skillTree, Unit u, SkillTreeUI controller)
@@ -29,10 +29,10 @@ public class SkillTreeRenderer : MonoBehaviour
             row.transform.DeleteAllChildren();
         }
 
-        skills = new List<SkillUI>();
+        skills = new List<SkillTreeEntryUI>();
 
         skillsPerRow = new[]
-            { new List<SkillUI>(), new List<SkillUI>(), new List<SkillUI>(), new List<SkillUI>(), new List<SkillUI>() };
+            { new List<SkillTreeEntryUI>(), new List<SkillTreeEntryUI>(), new List<SkillTreeEntryUI>(), new List<SkillTreeEntryUI>(), new List<SkillTreeEntryUI>() };
 
         foreach (var skillEntry in skillTree.skillEntries)
         {
@@ -46,7 +46,7 @@ public class SkillTreeRenderer : MonoBehaviour
     {
         var go = Instantiate(skillPrefab, rows[depth]);
         go.name = skillEntry.skill.name;
-        var skillUI = go.GetComponent<SkillUI>();
+        var skillUI = go.GetComponent<SkillTreeEntryUI>();
         skillsPerRow[depth].Add(skillUI);
         skills.Add(skillUI);
     }
@@ -74,14 +74,14 @@ public class SkillTreeRenderer : MonoBehaviour
         }
 
 
-        public void LearnClicked(SkillUI skillUI)
+        public void LearnClicked(SkillTreeEntryUI skillTreeEntryUI)
         {
-            controller.LearnSkillClicked(skillUI);
+            controller.LearnSkillClicked(skillTreeEntryUI);
         }
 
-        public void Clicked(SkillUI skillUI)
+        public void Clicked(SkillTreeEntryUI skillTreeEntryUI)
         {
-            controller.SkillSelected(skillUI);
+            controller.SkillSelected(skillTreeEntryUI);
            
         }
     }

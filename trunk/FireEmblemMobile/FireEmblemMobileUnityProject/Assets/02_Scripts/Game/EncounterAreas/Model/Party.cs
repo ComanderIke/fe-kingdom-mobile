@@ -44,7 +44,8 @@ int activeUnitIndex=0;
             }
         }
         public int smithingStones = 2;
-        public event Action<Unit> onAddUnit;
+        public event Action<Unit> onMemberRemoved;
+        public event Action<Unit> onMemberAdded;
 
         public bool IsPlayerControlled => isPlayerControlled;
     
@@ -132,7 +133,7 @@ int activeUnitIndex=0;
         {
             unit.Party = this;
             members.Add(unit);
-            onAddUnit?.Invoke(unit);
+            onMemberAdded?.Invoke(unit);
         }
 
 
@@ -144,6 +145,13 @@ int activeUnitIndex=0;
         public void AddSmithingStones(int smithingStones)
         {
             SmithingStones += smithingStones;
+        }
+
+        public void RemoveMember(Unit unit)
+        {
+            unit.Party = null;
+            members.Remove(unit);
+            onMemberRemoved?.Invoke(unit);
         }
     }
 }

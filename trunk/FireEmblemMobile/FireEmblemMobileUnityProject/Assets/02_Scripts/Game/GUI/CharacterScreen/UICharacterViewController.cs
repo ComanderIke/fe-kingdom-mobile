@@ -5,6 +5,7 @@ using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
 using Game.GameActors.Units.OnGameObject;
+using Game.GUI;
 using Game.WorldMapStuff.Model;
 using TMPro;
 using UnityEngine;
@@ -25,6 +26,8 @@ public class UICharacterViewController : MonoBehaviour
     
     public TextMeshProUGUI Atk;
     public TextMeshProUGUI AtkSpeed;
+    public TextMeshProUGUI PhysArmor;
+    public TextMeshProUGUI MagicArmor;
     public TextMeshProUGUI Hitrate;
     public TextMeshProUGUI DodgeRate;
     public TextMeshProUGUI Crit;
@@ -38,7 +41,7 @@ public class UICharacterViewController : MonoBehaviour
     public TextMeshProUGUI FTH;
     public TextMeshProUGUI LCK;
     public TextMeshProUGUI DEF;
-    
+    public IStatBar HPBar;
     public TextMeshProUGUI hpText;
     public Image image;
 
@@ -82,8 +85,23 @@ public class UICharacterViewController : MonoBehaviour
         FTH.SetText(""+unit.Stats.Attributes.FAITH);
         LCK.SetText(""+unit.Stats.Attributes.LCK);
         DEF.SetText(""+unit.Stats.Attributes.DEF);
+        HPBar.SetValue(unit.Hp, unit.MaxHp);
     }
 
+    public void CombatStatsButtonClicked()
+    {
+        baseAttributeButton.GetComponent<CanvasGroup>().alpha = 1;
+        combatStatsButton.GetComponent<CanvasGroup>().alpha = .6f;
+        baseAttributePanel.SetActive(true);
+        combatStatsPanel.SetActive(false);
+    }
+    public void BaseAttributeButtonClicked()
+    {
+        baseAttributeButton.GetComponent<CanvasGroup>().alpha = .6f;
+        combatStatsButton.GetComponent<CanvasGroup>().alpha = 1f;
+        baseAttributePanel.SetActive(false);
+        combatStatsPanel.SetActive(true);
+    }
     public void STR_Clicked()
     {
         ToolTipSystem.ShowAttribute("Strength", "Increases ones physical damage output!",unit.Stats.Attributes.STR, STR.transform.position);

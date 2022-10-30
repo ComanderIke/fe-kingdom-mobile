@@ -35,9 +35,9 @@ namespace Game.Mechanics
             factions = new List<Faction>();
             units = new List<Unit>();
             foreach(var unit in party.members)
-                AddUnit(unit);
-            party.onAddUnit -= AddUnit;
-            party.onAddUnit += AddUnit;
+                MemberAdded(unit);
+            party.onMemberAdded -= MemberAdded;
+            party.onMemberAdded += MemberAdded;
         }
         public UnitProgressSystem(FactionManager fm)
         {
@@ -51,12 +51,12 @@ namespace Game.Mechanics
             factions.Add(faction);
             foreach (var unit in faction.Units)
             {
-                AddUnit(unit);
+                MemberAdded(unit);
             }
-            faction.OnAddUnit -= AddUnit;
-            faction.OnAddUnit += AddUnit;
+            faction.OnAddUnit -= MemberAdded;
+            faction.OnAddUnit += MemberAdded;
         }
-        private void AddUnit(Unit u)
+        private void MemberAdded(Unit u)
         {
             // u.OnLevelUp -= LevelUp;
             // u.OnLevelUp += LevelUp;

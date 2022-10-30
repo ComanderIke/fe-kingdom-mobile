@@ -1,5 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game.GameActors.Players;
+using Game.GameActors.Units;
+using Game.WorldMapStuff.Model;
 using UnityEngine;
 
 namespace LostGrace
@@ -7,8 +10,10 @@ namespace LostGrace
     public class CharacterSelectUI : UIMenu
     {
         [SerializeField] private Canvas sortingCanvas;
+        [SerializeField] private Canvas charViewCanvas;
         [SerializeField] private CanvasGroup speechBubbleCanvasGroup;
         [SerializeField] private CanvasGroup charCirclesCanvasGroup;
+      
         [SerializeField] private CanvasGroup charViewCanvasGroup;
         [SerializeField] private CanvasGroup charButtonsCanvasGroup;
         [SerializeField] private CanvasGroup titleCanvasGroup;
@@ -16,11 +21,16 @@ namespace LostGrace
         [SerializeField] private CanvasGroup backButtonCanvasGroup;
         [SerializeField] private CanvasGroup Fade;
         [SerializeField] private GoddessUI goddessUI;
+        [SerializeField] private CharacterSelector characterSelector;
+        [SerializeField] private UIPartyCharacterCircleController characterCircles;
        
         
         public override void Show()
         {
             StartCoroutine(ShowCoroutine());
+            Player.Instance.Party = ScriptableObject.CreateInstance<Party>();
+            Player.Instance.Party.onMemberRemoved += PartyChanged;
+            Player.Instance.Party.onMemberAdded += PartyChanged;
         }
 
         IEnumerator ShowCoroutine()
@@ -34,6 +44,7 @@ namespace LostGrace
             charViewCanvasGroup.alpha = 0;
             charButtonsCanvasGroup.alpha = 0;
             speechBubbleCanvasGroup.alpha = 0;
+            charViewCanvas.enabled = true;
             yield return new WaitForSeconds(.5f);
            
             TweenUtility.FadeIn(newGameButtonCanvasGroup);
@@ -42,11 +53,21 @@ namespace LostGrace
             TweenUtility.FadeIn(charCirclesCanvasGroup);
             TweenUtility.FadeIn(charViewCanvasGroup);
             TweenUtility.FadeIn(charButtonsCanvasGroup);
+            characterSelector.Show(GameConfig.Instance.config.selectableCharacters);
+            
+            characterCircles.Show(Player.Instance.Party);
             yield return new WaitForSeconds(.6f);
             goddessUI.Show();
             yield return new WaitForSeconds(4.5f);
             TweenUtility.FadeIn(speechBubbleCanvasGroup);
+            if (GameConfig.Instance.config.tutorial)
+                yield return TutorialCoroutine();
 
+        }
+
+        IEnumerator TutorialCoroutine()
+        {
+            yield return null;
         }
         
         
@@ -78,8 +99,15 @@ namespace LostGrace
                 TweenUtility.FadeOut(Fade);
             });
         }
+
+        void PartyChanged(Unit u)
+        {
+            characterCircles.Show(Player.Instance.Party);
+        }
         public override void Hide()
         {
+            Player.Instance.Party.onMemberAdded -= PartyChanged;
+            Player.Instance.Party.onMemberRemoved -= PartyChanged;
             StartCoroutine(HideCoroutine());
         }
     }

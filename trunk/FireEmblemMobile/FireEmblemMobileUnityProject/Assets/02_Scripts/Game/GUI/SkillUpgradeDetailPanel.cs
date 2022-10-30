@@ -4,6 +4,7 @@ using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 
@@ -13,7 +14,7 @@ namespace LostGrace
     {
         public static SkillUpgradeDetailPanel Instance;
         public SkillTreeEntry SkillEntry;
-        public SkillUI SkillUI;
+        [FormerlySerializedAs("SkillUI")] public SkillTreeEntryUI skillTreeEntryUI;
         private Unit user;
 
         public TextMeshProUGUI description;
@@ -35,11 +36,11 @@ namespace LostGrace
             Instance = this;
         }
 
-     public void Show( SkillUI skillUI, Unit user)
+     public void Show( SkillTreeEntryUI skillTreeEntryUI, Unit user)
     {
 
-        this.SkillUI = skillUI;
-        SkillEntry = skillUI.skillEntry;
+        this.skillTreeEntryUI = skillTreeEntryUI;
+        SkillEntry = skillTreeEntryUI.skillEntry;
         this.user = user;
         UpdateUI();
        
@@ -126,7 +127,7 @@ namespace LostGrace
     public void LearnClicked()
     {
         
-        SkillUI.LearnClicked();
+        skillTreeEntryUI.LearnClicked();
         UpdateUI();
     
       

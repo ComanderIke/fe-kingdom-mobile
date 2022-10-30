@@ -7,13 +7,13 @@ using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
-public class SkillUI : MonoBehaviour
+public class SkillTreeEntryUI : MonoBehaviour
 {
     public CanvasGroup CanvasGroup;
     public GameObject connectionPrefab;
-    private List<SkillUI> children;
-    private List<SkillUI> parents;
-    private Dictionary<SkillUI,GameObject> connectionsToParents;
+    private List<SkillTreeEntryUI> children;
+    private List<SkillTreeEntryUI> parents;
+    private Dictionary<SkillTreeEntryUI,GameObject> connectionsToParents;
     public Image skillIcon;
     public SkillTreeEntry skillEntry;
     public TextMeshProUGUI skillLevelText;
@@ -30,12 +30,12 @@ public class SkillUI : MonoBehaviour
     private SkillTreeRenderer controller;
     public float offset = 30;
 
-    public void Setup(SkillTreeEntry skill,  SkillTreeRenderer controller, List<SkillUI> parents=null)
+    public void Setup(SkillTreeEntry skill,  SkillTreeRenderer controller, List<SkillTreeEntryUI> parents=null)
     {
         this.controller = controller;
         this.skillEntry = skill;
         this.parents = parents;
-        connectionsToParents = new Dictionary<SkillUI, GameObject>();
+        connectionsToParents = new Dictionary<SkillTreeEntryUI, GameObject>();
         if (parents != null)
         {
             foreach (var parent in parents)

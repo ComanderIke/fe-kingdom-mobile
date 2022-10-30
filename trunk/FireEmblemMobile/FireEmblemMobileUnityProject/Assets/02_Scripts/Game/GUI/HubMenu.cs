@@ -72,12 +72,24 @@ namespace LostGrace
             TweenUtility.FadeIn(upgradeButtonCanvasGroup);
             TweenUtility.FadeIn(backButtonCanvasGroup);
             TweenUtility.FadeIn(tutorialButtonCanvasGroup);
+            if (GameConfig.Instance.config.tutorial)
+                yield return TutorialCoroutine();
+            else
+            {
+                tutorialButton.interactable = true;
+                newCampaignButton.interactable = true;
+                upgradesButton.interactable = true;
+                backButton.interactable = true;
+            }
+        }
+
+        IEnumerator TutorialCoroutine()
+        {
             yield return new WaitForSeconds(.6f);
             goddessUI.Show();
             yield return new WaitForSeconds(4.5f);
             dialogueManager.ShowDialog(introConversation);
             dialogueManager.dialogEnd += IntroFinished;
-
         }
 
         void IntroFinished()
