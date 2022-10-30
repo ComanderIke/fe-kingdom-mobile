@@ -58,13 +58,14 @@ namespace LostGrace
             newCampaignButton.interactable = false;
             upgradesButton.interactable = false;
             backButton.interactable = false;
-            tutorialButton.interactable = false;
+            tutorialButton.interactable = true;
 
         }
 
         IEnumerator ShowCoroutine()
         {
             base.Show();
+            tutorialButtonCanvasGroup.alpha = 1;
             yield return new WaitForSeconds(.5f);
             TweenUtility.FadeIn(titleCanvasGroup);
             TweenUtility.FadeIn(newGameButtonCanvasGroup);
@@ -129,6 +130,7 @@ namespace LostGrace
         {
             SceneTransferData.Instance.Reset();
             SceneTransferData.Instance.EnemyArmyData = tutorialBattleData;
+            SceneTransferData.Instance.TutorialBattle1 = true;
             SceneController.LoadSceneAsync(Scenes.Battle1, false);
         }
         IEnumerator CharacterSelectCoroutine()

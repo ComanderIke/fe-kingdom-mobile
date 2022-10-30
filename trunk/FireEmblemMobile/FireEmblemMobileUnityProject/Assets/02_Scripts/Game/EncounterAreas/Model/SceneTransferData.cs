@@ -16,6 +16,8 @@ namespace Game.WorldMapStuff.Model
         public string PartyID { get; set; }
         public Party Party{ get; set; }
         public string EnemyPartyID { get; set; }
+
+        public bool TutorialBattle1 { get; set; }
         // public LocationData LocationData { get; set; }
 
      

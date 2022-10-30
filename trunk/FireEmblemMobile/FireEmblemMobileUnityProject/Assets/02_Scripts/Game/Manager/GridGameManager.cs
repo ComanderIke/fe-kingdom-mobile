@@ -34,6 +34,8 @@ namespace Game.Manager
         public GridGameStateManager GameStateManager { get; set; }
         public BattleMap BattleMap { get; set; }
 
+        public bool tutorial = false;
+
         private void Awake()
         {
             Instance = this;
@@ -42,6 +44,10 @@ namespace Game.Manager
             else
                 BattleMap = FindObjectOfType<DemoUnits>().battleMap;
             Debug.Log("Choose BattleMap: "+BattleMap);
+            if (SceneTransferData.Instance != null)
+            {
+                tutorial = SceneTransferData.Instance.TutorialBattle1;
+            }
             Instantiate(BattleMap.mapPrefab, Scene1InstantiatedContentParent);
             //Debug.Log("Initialize");
             FactionManager = new FactionManager();
@@ -74,6 +80,8 @@ namespace Game.Manager
                 
                 FindObjectOfType<UnitSelectionSystem>()
             };
+            if(tutorial)
+                Systems.Add(FindObjectOfType<TutorialSystem>());
             
 
         }
