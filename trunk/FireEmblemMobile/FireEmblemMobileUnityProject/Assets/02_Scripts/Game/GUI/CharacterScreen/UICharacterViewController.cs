@@ -5,23 +5,26 @@ using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
 using Game.GameActors.Units.OnGameObject;
-using Game.GUI;
 using Game.WorldMapStuff.Model;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-[ExecuteInEditMode]
 public class UICharacterViewController : MonoBehaviour
 {
     public Canvas canvas;
     // public DropArea dropArea;
     public Unit unit;
     public TextMeshProUGUI charName;
-    public TextMeshProUGUI Lv;
-    public IStatBar ExpBar;
-    public UIEquipmentController equipmentController;
 
+
+    public GameObject baseAttributePanel;
+    public GameObject combatStatsPanel;
+    public GameObject baseAttributeButton;
+    public GameObject combatStatsButton;
+    
+    public TextMeshProUGUI Atk;
+    public TextMeshProUGUI AtkSpeed;
     public TextMeshProUGUI Hitrate;
     public TextMeshProUGUI DodgeRate;
     public TextMeshProUGUI Crit;
@@ -35,22 +38,12 @@ public class UICharacterViewController : MonoBehaviour
     public TextMeshProUGUI FTH;
     public TextMeshProUGUI LCK;
     public TextMeshProUGUI DEF;
-
-    public IStatBar HPBar;
+    
     public TextMeshProUGUI hpText;
-    public SkillTreeUI skillTreeUI;
     public Image image;
-    public Animator IdleAnimation;
-    public GameObject skillPointPreview;
-    public TextMeshProUGUI skillPointText;
-    void Awake(){
-        // if(dropArea!=null)
-        //     dropArea.OnDropHandler += OnItemDropped;
-    }
 
     void OnEnable()
     {
-        Debug.Log("WTF  Init Event!");
         Unit.OnUnitDataChanged += UpdateUI;
     }
 
@@ -59,21 +52,6 @@ public class UICharacterViewController : MonoBehaviour
         Unit.OnUnitDataChanged -= UpdateUI;
     }
 
-    public void SkillTreeClicked()
-    {
-        skillTreeUI.Show(unit);
-    }
-    // private void OnItemDropped(UIDragable dragable)
-    // {
-    //     Debug.Log("Item Dropped!");
-    // }
-
-    // private void OnEnable()
-    // {
-    //     Show(party);
-    // }
-
-    
     public void Show(Unit unit)
     {
         canvas.enabled = true;
@@ -84,14 +62,11 @@ public class UICharacterViewController : MonoBehaviour
 
 
   
-    void UpdateUI(Unit unit)
+    protected virtual void UpdateUI(Unit unit)
     {
-
         Debug.Log("UpdateCharViewScreen");
         this.unit = unit;
         charName.SetText(unit.name);//+", "+unit.jobClass);
-        Lv.SetText("Lv. "+unit.ExperienceManager.Level);
-        ExpBar.SetValue(unit.ExperienceManager.Exp, unit.ExperienceManager.MaxExp);
         image.sprite = unit.visuals.CharacterSpriteSet.FaceSprite;
         
         Hitrate.SetText(""+unit.BattleComponent.BattleStats.GetHitrate()+"%");
@@ -107,16 +82,6 @@ public class UICharacterViewController : MonoBehaviour
         FTH.SetText(""+unit.Stats.Attributes.FAITH);
         LCK.SetText(""+unit.Stats.Attributes.LCK);
         DEF.SetText(""+unit.Stats.Attributes.DEF);
-        skillPointText.SetText(""+unit.SkillManager.SkillPoints);
-        if(unit.SkillManager.SkillPoints >=1)
-            skillPointPreview.gameObject.SetActive(true);
-        else
-        {
-            skillPointPreview.gameObject.SetActive(false);
-        }
-        HPBar.SetValue(unit.Hp, unit.MaxHp);
-        equipmentController.Show(unit);
-        IdleAnimation.runtimeAnimatorController = unit.visuals.Prefabs.UIAnimatorController;
     }
 
     public void STR_Clicked()
@@ -147,19 +112,15 @@ public class UICharacterViewController : MonoBehaviour
     {
         ToolTipSystem.ShowAttribute("Constitution", "Increases ones maximum Hitpoints and allows to wield heavier weapons!",unit.Stats.Attributes.CON,CON.transform.position);
     }
-   
     public void FTH_Clicked()
     {
         ToolTipSystem.ShowAttribute("Faith", "Increases ones holy and occult damage and increases magical damage resistance!",unit.Stats.Attributes.FAITH,FTH.transform.position);
     }
- 
-
+    
     public void Hide()
     {
         canvas.enabled = false;
     }
-
-
     public void UpdateUnit(Unit unit1)
     {
        UpdateUI(unit1);
