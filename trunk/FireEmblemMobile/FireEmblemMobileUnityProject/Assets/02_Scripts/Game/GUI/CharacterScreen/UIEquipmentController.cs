@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class UIEquipmentController:MonoBehaviour
 {
-    public TextMeshProUGUI Atk;
+
 
 
     public Image WeaponSlot;
@@ -34,7 +34,6 @@ public class UIEquipmentController:MonoBehaviour
     }
     public void Show(Unit unit)
     {
-        Atk.SetText(""+unit.BattleComponent.BattleStats.GetDamage());
 
         Debug.Log("Show");
         if (unit.EquippedWeapon != null)

@@ -15,31 +15,41 @@ namespace LostGrace
 
         [SerializeField] private GameObject selectableCharacterPrefab;
 
+        [SerializeField] private UICharacterViewController characterView;
         private List<Unit> selectableUnits;
         public void Show(List<Unit> selectableUnits)
         {
             this.selectableUnits = selectableUnits;
+            int cnt = 0;
             foreach (var unit in selectableUnits)
             {
                 var go = Instantiate(selectableCharacterPrefab, characterContainer);
-                go.GetComponent<SelectableCharacterUI>().SetCharacter(unit);
-                go.GetComponent<SelectableCharacterUI>().onClicked += UnitClicked;
+                var last = go.GetComponent<SelectableCharacterUI>();
+                last.SetCharacter(unit);
+                last.onClicked += UnitClicked;
+                if(cnt==0)
+                    Select(last);
+                cnt++;
+
             }
-            Select(selectableUnits[0]);
+           
         }
 
-        public void Select(Unit unit)
+        public void Select(SelectableCharacterUI unit)
         {
-            Player.Instance.Party.AddMember(unit);
+            Player.Instance.Party.AddMember(unit.unit);
+            unit.Select();
+            characterView.Show(unit.unit);
         }
-        public void Deselect(Unit unit)
+        public void Deselect(SelectableCharacterUI unit)
         {
-            Player.Instance.Party.RemoveMember(unit);
+            Player.Instance.Party.RemoveMember(unit.unit);
+            unit.Deselect();
         }
 
-        public void UnitClicked(Unit unit)
+        public void UnitClicked(SelectableCharacterUI unit)
         {
-            if (Player.Instance.Party.members.Contains(unit))
+            if (Player.Instance.Party.members.Contains(unit.unit))
             {
                 Deselect(unit);
             }

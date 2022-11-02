@@ -53,7 +53,7 @@ namespace LostGrace
             TweenUtility.FadeIn(charCirclesCanvasGroup);
             TweenUtility.FadeIn(charViewCanvasGroup);
             TweenUtility.FadeIn(charButtonsCanvasGroup);
-            characterSelector.Show(GameConfig.Instance.config.selectableCharacters);
+            characterSelector.Show(GameConfig.Instance.config.GetUnits());
             
             characterCircles.Show(Player.Instance.Party);
             yield return new WaitForSeconds(.6f);

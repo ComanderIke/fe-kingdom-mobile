@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using __2___Scripts.Game.Utility;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GUI;
@@ -22,8 +23,8 @@ public class UIPartyCharacterCircleController : MonoBehaviour, IClickedReceiver,
     public void Show(Party party)
     {
         this.party = party;
-        if(characterUIgGameObjects==null||characterUIgGameObjects.Count!= party.members.Count)
-            SpawnGOs();
+        DeleteGOs();
+        SpawnGOs();
         foreach (var unit in party.members)
         {
             if (unit == party.ActiveUnit)
@@ -40,16 +41,16 @@ public class UIPartyCharacterCircleController : MonoBehaviour, IClickedReceiver,
            
         }
     }
-  
 
+    void DeleteGOs()
+    {
+        transform.DeleteAllChildren();
+        characterUIgGameObjects = new List<GameObject>();
+        characterUIs = new Dictionary<Unit, CharacterUIController>();
+    }
     private void SpawnGOs()
     {
-    
-        if (characterUIgGameObjects == null)
-        {
-            characterUIgGameObjects = new List<GameObject>();
-            characterUIs = new Dictionary<Unit, CharacterUIController>();
-        }
+        
         foreach (var unit in party.members)
         {
             if (!characterUIs.ContainsKey(unit))

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Game.GameActors.Units;
 using UnityEngine;
 
@@ -8,6 +9,13 @@ namespace LostGrace
     public class GameConfigFile : ScriptableObject
     {
         public bool tutorial = false;
-        public List<Unit> selectableCharacters;
+        [SerializeField] List<Unit> selectableCharacters;
+
+        public  List<Unit> GetUnits()
+        {
+            foreach(var unit in selectableCharacters)
+                unit.Initialize();
+            return selectableCharacters;
+        }
     }
 }

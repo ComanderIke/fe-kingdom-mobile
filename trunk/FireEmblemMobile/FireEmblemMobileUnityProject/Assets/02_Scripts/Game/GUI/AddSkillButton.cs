@@ -12,7 +12,7 @@ namespace LostGrace
         {
             if (points > 0)
             {
-                skillpointsText.SetText(""+skillpointsText);
+                skillpointsText.SetText(""+points);
                 skillPointsPreview.gameObject.SetActive(true);
             }
             else
