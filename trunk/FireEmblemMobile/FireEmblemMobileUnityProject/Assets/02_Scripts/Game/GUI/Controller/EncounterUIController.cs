@@ -6,10 +6,11 @@ using LostGrace;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
+using UnityEngine.Serialization;
 
 public class EncounterUIController : MonoBehaviour
 {
-    public UIGold Gold;
+    [FormerlySerializedAs("Gold")] public UIRessourceAmount ressourceAmount;
     public TextMeshProUGUI SmithingStones;
 
     public UIInnController UIInnController;
@@ -40,7 +41,7 @@ public class EncounterUIController : MonoBehaviour
 
     void GoldChanged(int gold)
     {
-        Gold.GoldAmount = gold;
+        ressourceAmount.Amount = gold;
     }
     void StonesChanged(int stones)
     {

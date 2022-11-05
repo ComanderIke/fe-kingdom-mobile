@@ -11,7 +11,7 @@ namespace Game.GUI
         [SerializeField] private UIMenu hubMenu;
         private static readonly int Show1 = Animator.StringToHash("Show");
         private static readonly int Side = Animator.StringToHash("Side");
-        [SerializeField] private Animator animator;
+       // [SerializeField] private Animator animator;
         [SerializeField] private CanvasGroup titleCanvasGroup;
         [SerializeField] private CanvasGroup playButtonCanvasGroup;
         [SerializeField] private CanvasGroup optionsButtonCanvasGroup;
@@ -35,8 +35,9 @@ namespace Game.GUI
         }
         public override void Show()
         {
-            animator.SetBool(Show1, true);
-            animator.SetBool(Side, false);
+            // animator.SetBool(Show1, true);
+            // animator.SetBool(Side, false);
+        
             TweenUtility.FadeIn(titleCanvasGroup);
             TweenUtility.FadeIn(playButtonCanvasGroup);
             TweenUtility.FadeIn(optionsButtonCanvasGroup);
@@ -47,8 +48,8 @@ namespace Game.GUI
         
         public override void Hide()
         {
-            animator.SetBool(Show1, false);
-            animator.SetBool(Side, false);
+            // animator.SetBool(Show1, false);
+            // animator.SetBool(Side, false);
             
             base.Hide();
         }
@@ -65,6 +66,7 @@ namespace Game.GUI
             yield return new WaitForSeconds(.4f);
             TweenUtility.FadeIn(Fade).setOnComplete(() =>
             {
+                base.Hide();
                 hubMenu.Show();
                 TweenUtility.FadeOut(Fade);
             });

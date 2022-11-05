@@ -14,6 +14,7 @@ public class RestoreGraceController :UIMenu
     [SerializeField] private CanvasGroup tabGroup;
     [SerializeField] private GoddessUI goddessUI;
     [SerializeField] private CanvasGroup Fade;
+    [SerializeField] private UIRessourceAmount graceAmount;
     public override void Show()
     {
         StartCoroutine(ShowCoroutine());
@@ -37,13 +38,14 @@ public class RestoreGraceController :UIMenu
         yield return new WaitForSeconds(.6f);
         goddessUI.Show();
         yield return new WaitForSeconds(4.5f);
-        if (GameConfig.Instance.config.tutorial)
+       // if (GameConfig.Instance.config.tutorial)
             yield return TutorialCoroutine();
 
     }
     IEnumerator TutorialCoroutine()
     {
-        yield return null;
+        graceAmount.Amount += 100;
+        yield return new WaitForSeconds(4.5f);
     }
     public override void Hide()
     {
