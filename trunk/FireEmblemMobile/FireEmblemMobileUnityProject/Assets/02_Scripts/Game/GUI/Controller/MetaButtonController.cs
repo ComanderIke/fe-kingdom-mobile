@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Mime;
+using Game.GameActors.Players;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,45 +27,56 @@ public class MetaButtonController : MonoBehaviour
     public Color normalIconColor;
     public Color maxTextColor;
     public Color normalTextColor;
-    public float XPosMult;
-    public float YPosMult;
-    public float XOffset;
-    public float YOffset;
+   
     
     private void OnEnable()
     {
-        if (metaSkill == null)
-            return;
-        icon.sprite = metaSkill.icon;
-        level.color = normalTextColor;
-        header.text = metaSkill.name;
-        header.transform.gameObject.SetActive(true);
-        level.transform.gameObject.SetActive(true);
-        level.text = metaSkill.level + "/" + metaSkill.maxLevel;
-        background.color = normalColor;
-        CanvasGroup.alpha = 1;
-        icon.color = normalIconColor;
-        switch (metaSkill.state)
-        {
-            case UpgradeState.Learned:  background.color = learnedColor;break;
-            case UpgradeState.NotLearned: break;
-            case UpgradeState.Locked:
-                header.transform.gameObject.SetActive(false);icon.sprite = secretSprite;
-                level.transform.gameObject.SetActive(false);
-                CanvasGroup.alpha = secretAlpha;
-                icon.color = secretIconColor;
-                background.color = secretBgColor;break;
-            case UpgradeState.Maxed:
-                level.color = maxTextColor; break;
-        }
-
-        GetComponent<RectTransform>().anchoredPosition = new Vector2(metaSkill.xPosInTree*XPosMult+XOffset, metaSkill.yPosInTree*YPosMult+YOffset);
+       
 
     }
 
     public void OnClick()
     {
+        Debug.Log("Upgrade Clicked: "+metaSkill.blueprint.name);
         SelectCursorController.Instance.Show(gameObject);
         MetaUpgradeDetailPanelController.Instance.Show(metaSkill);
+    }
+
+    public void SetUpgrade(MetaUpgrade upg)
+    {
+        metaSkill = upg;
+        UpdateUI();
+
+    }
+
+    public void UpdateUI()
+    {
+        icon.sprite = metaSkill.blueprint.icon;
+        level.color = normalTextColor;
+        header.text = metaSkill.blueprint.name;
+        header.transform.gameObject.SetActive(true);
+        level.transform.gameObject.SetActive(true);
+        level.text = metaSkill.level + "/" + metaSkill.blueprint.maxLevel;
+        background.color = normalColor;
+        CanvasGroup.alpha = 1;
+        icon.color = normalIconColor;
+        if (metaSkill.locked)
+        {
+            header.transform.gameObject.SetActive(false);icon.sprite = secretSprite;
+            level.transform.gameObject.SetActive(false);
+            CanvasGroup.alpha = secretAlpha;
+            icon.color = secretIconColor;
+            background.color = secretBgColor;
+        }
+        else if (metaSkill.IsMaxed())
+        {
+            background.color = learnedColor;
+            level.color = maxTextColor;
+        }
+        else if (Player.Instance.HasLearned(metaSkill))
+        {
+            background.color = learnedColor;
+        }
+
     }
 }

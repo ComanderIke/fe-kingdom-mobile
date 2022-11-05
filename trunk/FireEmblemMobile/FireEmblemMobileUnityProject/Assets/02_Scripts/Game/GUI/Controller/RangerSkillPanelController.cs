@@ -1,56 +1,97 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using __2___Scripts.Game.Utility;
+using Game.GameActors.Players;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [ExecuteInEditMode]
 public class RangerSkillPanelController : MonoBehaviour
 {
-    private MetaUpgrade[,] upgrades;
-    private int xSize = 5;
-    private int ySize = 3;
+    [SerializeField] private MetaUpgradeBP[] upgradeBPs;
+    [SerializeField]private int xSize = 5;
+    [SerializeField]private int ySize = 3;
+    [SerializeField] private GameObject metaUpgradePrefab;
+    private MetaUpgrade[,] upgradeGrid;
+    private List<MetaButtonController> instantiatedButtonControllers;
+    public float XPosMult = 180;
+    public float YPosMult=180;
+    public float XOffset=120;
+    public float YOffset=170;
     void OnEnable()
     {
-        upgrades = new MetaUpgrade[xSize,ySize];
-        foreach (var upg in GetComponentsInChildren<MetaButtonController>())
+        #if UNITY_EDITOR
+            transform.DeleteAllChildrenImmediate();
+        #else
+            transform.DeleteAllChildren();
+        #endif
+        Player.Instance.onMetaUpgradesChanged -= CheckDependencies;
+        Player.Instance.onMetaUpgradesChanged += CheckDependencies;
+        upgradeGrid = new MetaUpgrade[9,9];
+        instantiatedButtonControllers = new List<MetaButtonController>();
+        // upgrades = new MetaUpgrade[xSize,ySize];
+        foreach (var upg in upgradeBPs)
         {
-            upgrades[upg.metaSkill.xPosInTree, upg.metaSkill.yPosInTree] = upg.metaSkill;
+            var go=Instantiate(metaUpgradePrefab, transform);
+            var metaUpgrade=new MetaUpgrade(upg);
+            go.GetComponent<MetaButtonController>().SetUpgrade(metaUpgrade);
+            upgradeGrid[upg.xPosInTree, upg.yPosInTree] = metaUpgrade;
+            instantiatedButtonControllers.Add( go.GetComponent<MetaButtonController>());
+            go.GetComponent<RectTransform>().anchoredPosition = new Vector2(upg.xPosInTree*XPosMult+XOffset, upg.yPosInTree*YPosMult+YOffset);
+            //upgrades[upg.metaSkill.xPosInTree, upg.metaSkill.yPosInTree] = upg.metaSkill;
         }
 
         CheckDependencies();
+       
     }
 
+    private void OnDisable()
+    {
+        Player.Instance.onMetaUpgradesChanged -= CheckDependencies;
+    }
+
+    void UpdateUI()
+    {
+        foreach (var controller in instantiatedButtonControllers)
+        {
+            controller.UpdateUI();
+        }
+    }
     void CheckDependencies()
     {
-        for (int x = 0; x < xSize; x++)
+        foreach (var upg in upgradeGrid)
         {
-            for (int y = 0; y < ySize; y++)
-            {
-                if(upgrades[x,y]==null)
+            
+                if(upg==null)
                     continue;
-                if(upgrades[x, y].state == UpgradeState.Maxed||upgrades[x, y].state == UpgradeState.Learned)
+                if(Player.Instance.HasLearned(upg))
                     continue;
                 
-                if (CheckNeighborsLearned(upgrades[x, y]))
+                if (CheckNeighborsLearned(upg))
                 {
-                    upgrades[x, y].state = UpgradeState.NotLearned;
+                    upg.locked = false;
                 }
                 else
                 {
-                    upgrades[x, y].state = UpgradeState.Locked;
+                    if (upg.blueprint.availableAtStart)
+                        upg.locked = false;
+                    else
+                        upg.locked = true;
                 }
-            }
         }
+        UpdateUI();
     }
 
-    bool CheckNeighborsLearned(MetaUpgrade upgrade)
+    bool CheckNeighborsLearned(MetaUpgrade upgradeBp)
     {
-        int xPos = upgrade.xPosInTree;
-        int yPos = upgrade.yPosInTree;
+        int xPos = upgradeBp.blueprint.xPosInTree;
+        int yPos = upgradeBp.blueprint.yPosInTree;
         xPos--;
         if (xPos >= 0)
         {
-            var leftNeighbor = upgrades[xPos, yPos];
-            if (leftNeighbor != null&&(leftNeighbor.state == UpgradeState.Learned || leftNeighbor.state == UpgradeState.Maxed))
+            var leftNeighbor = upgradeGrid[xPos, yPos];
+            if (leftNeighbor != null&&(Player.Instance.HasLearned(leftNeighbor)))
             {
                 return true;
             }
@@ -59,8 +100,8 @@ public class RangerSkillPanelController : MonoBehaviour
         xPos++;
         if (xPos < xSize)
         {
-            var rightNeighbor = upgrades[xPos, yPos];
-            if (rightNeighbor != null&&(rightNeighbor.state == UpgradeState.Learned || rightNeighbor.state == UpgradeState.Maxed))
+            var rightNeighbor = upgradeGrid[xPos, yPos];
+            if (rightNeighbor != null&&(Player.Instance.HasLearned(rightNeighbor)))
             {
                 return true;
             }
@@ -71,8 +112,8 @@ public class RangerSkillPanelController : MonoBehaviour
         yPos--;
         if (yPos >= 0)
         {
-            var topNeighbor = upgrades[xPos, yPos];
-            if (topNeighbor != null&&(topNeighbor.state == UpgradeState.Learned || topNeighbor.state == UpgradeState.Maxed))
+            var topNeighbor = upgradeGrid[xPos, yPos];
+            if (topNeighbor != null&&Player.Instance.HasLearned(topNeighbor))
             {
                 return true;
             }
@@ -81,8 +122,8 @@ public class RangerSkillPanelController : MonoBehaviour
         yPos++;
         if (yPos < ySize)
         {
-            var bottomNeighbor = upgrades[xPos, yPos];
-            if (bottomNeighbor != null&&(bottomNeighbor.state == UpgradeState.Learned || bottomNeighbor.state == UpgradeState.Maxed))
+            var bottomNeighbor = upgradeGrid[xPos, yPos];
+            if (bottomNeighbor != null&&Player.Instance.HasLearned(bottomNeighbor))
             {
                 return true;
             }

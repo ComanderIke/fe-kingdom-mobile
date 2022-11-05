@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Game.GameActors.Items;
 using Game.WorldMapStuff.Model;
 using UnityEngine;
@@ -24,6 +25,7 @@ namespace Game.GameActors.Players
         private Player()
         {
             Name = "Player1";
+            upgrades = new List<MetaUpgrade>();
         }
 
         public Party Party { get; set; }
@@ -33,7 +35,7 @@ namespace Game.GameActors.Players
 
         public int startPartyMemberCount = 2;
 
-
+        private List<MetaUpgrade> upgrades;
 
         public override string ToString()
         {
@@ -56,6 +58,22 @@ namespace Game.GameActors.Players
             //data.factionData.Load((WM_Faction)faction);
 
         }
-       
+
+        public event Action onMetaUpgradesChanged;
+        public void LearnMetaUpgrade(MetaUpgrade metaUpgrade)
+        {
+            if (metaUpgrade.IsMaxed())
+                return;
+            if(!HasLearned(metaUpgrade))
+                upgrades.Add(metaUpgrade);
+            metaUpgrade.level++;
+            
+            onMetaUpgradesChanged?.Invoke();
+        }
+
+        public bool HasLearned(MetaUpgrade upg)
+        {
+            return upgrades.Contains(upg);
+        }
     }
 }
