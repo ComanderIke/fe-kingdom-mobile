@@ -17,14 +17,18 @@ namespace Game.WorldMapStuff.Model
         [SerializeField] private bool isPlayerControlled;
         [SerializeField] public List<Unit> members;
         public static Action<Party> PartyDied;
-        public static int MaxSize = 4;
-        
+        [SerializeField] int maxSize = 4;
         [SerializeField] public int money = default;
 
-    
+        
+        public int MaxSize
+        {
+            get => maxSize;
+            set => maxSize = value;
+        }
 
         public Convoy Convoy;
-int activeUnitIndex=0;
+        int activeUnitIndex=0;
         public int ActiveUnitIndex
         {
             get
@@ -131,11 +135,16 @@ int activeUnitIndex=0;
 
         public void AddMember(Unit unit)
         {
+            if (IsFull())
+            {
+                Debug.LogError("Party Size To Big");
+                return;
+            }
+
             unit.Party = this;
             members.Add(unit);
             onMemberAdded?.Invoke(unit);
         }
-
 
         public void AddGold(int gold)
         {
@@ -152,6 +161,11 @@ int activeUnitIndex=0;
             unit.Party = null;
             members.Remove(unit);
             onMemberRemoved?.Invoke(unit);
+        }
+
+        public bool IsFull()
+        {
+            return members.Count >= maxSize;
         }
     }
 }

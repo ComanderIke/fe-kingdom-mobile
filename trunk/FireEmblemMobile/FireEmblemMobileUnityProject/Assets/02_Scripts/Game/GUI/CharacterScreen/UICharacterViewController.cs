@@ -92,15 +92,15 @@ public class UICharacterViewController : MonoBehaviour
     {
         baseAttributeButton.GetComponent<CanvasGroup>().alpha = 1;
         combatStatsButton.GetComponent<CanvasGroup>().alpha = .6f;
-        baseAttributePanel.SetActive(true);
-        combatStatsPanel.SetActive(false);
+        baseAttributePanel.SetActive(false);
+        combatStatsPanel.SetActive(true);
     }
     public void BaseAttributeButtonClicked()
     {
         baseAttributeButton.GetComponent<CanvasGroup>().alpha = .6f;
         combatStatsButton.GetComponent<CanvasGroup>().alpha = 1f;
-        baseAttributePanel.SetActive(false);
-        combatStatsPanel.SetActive(true);
+        baseAttributePanel.SetActive(true);
+        combatStatsPanel.SetActive(false);
     }
     public void STR_Clicked()
     {

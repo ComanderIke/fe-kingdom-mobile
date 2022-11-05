@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GUI;
 using Game.WorldMapStuff.Model;
@@ -24,7 +25,7 @@ public class UnitSelectionUI : IUnitSelectionUI
         selectedUnitUIs = new List<UIUnitDragObject>();
         GetComponent<Canvas>().enabled = true;
         InstantiateUnits();
-        for (int i = 0; i < Party.MaxSize && i < allUnitUis.Count; i++)
+        for (int i = 0; i < Player.Instance.Party.MaxSize && i < allUnitUis.Count; i++)
         {
             if (selectedUnits.Contains(allUnitUis[i].unit))
             {
@@ -38,7 +39,7 @@ public class UnitSelectionUI : IUnitSelectionUI
             }
         }
         unitSelectionChanged?.Invoke(selectedUnitUIs.Select(s=>s.unit).ToList());
-        unitText.SetText("Units: "+selectedUnitUIs.Count+"/"+Party.MaxSize);
+        unitText.SetText("Units: "+selectedUnitUIs.Count+"/"+Player.Instance.Party.MaxSize);
     }
 
     private void InstantiateUnits()
@@ -68,7 +69,7 @@ public class UnitSelectionUI : IUnitSelectionUI
     {
         if (!selectedUnitUIs.Contains(unitUI))
         {
-            if (selectedUnitUIs.Count < Party.MaxSize)
+            if (selectedUnitUIs.Count < Player.Instance.Party.MaxSize)
             {
                 selectedUnitUIs.Add(unitUI);
                 unitSelectionChanged?.Invoke(selectedUnitUIs.Select(s=>s.unit).ToList());
@@ -92,7 +93,7 @@ public class UnitSelectionUI : IUnitSelectionUI
                 unitUI.HideSelected();
             }
         }
-        unitText.SetText("Units: "+selectedUnitUIs.Count+"/"+Party.MaxSize);
+        unitText.SetText("Units: "+selectedUnitUIs.Count+"/"+Player.Instance.Party.MaxSize);
         
     }
 }

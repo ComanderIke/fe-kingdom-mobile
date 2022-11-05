@@ -1,14 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.WorldMapStuff.Model;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 namespace LostGrace
 {
     public class CharacterSelectUI : UIMenu
     {
+       
         [SerializeField] private Canvas sortingCanvas;
         [SerializeField] private Canvas charViewCanvas;
         [SerializeField] private CanvasGroup speechBubbleCanvasGroup;
@@ -16,6 +20,7 @@ namespace LostGrace
       
         [SerializeField] private CanvasGroup charViewCanvasGroup;
         [SerializeField] private CanvasGroup charButtonsCanvasGroup;
+        [SerializeField] private CanvasGroup partySizeCanvasGroup;
         [SerializeField] private CanvasGroup titleCanvasGroup;
         [SerializeField] private CanvasGroup newGameButtonCanvasGroup;
         [SerializeField] private CanvasGroup backButtonCanvasGroup;
@@ -27,10 +32,13 @@ namespace LostGrace
         
         public override void Show()
         {
-            StartCoroutine(ShowCoroutine());
             Player.Instance.Party = ScriptableObject.CreateInstance<Party>();
             Player.Instance.Party.onMemberRemoved += PartyChanged;
             Player.Instance.Party.onMemberAdded += PartyChanged;
+            UpdateButtonState();
+            StartCoroutine(ShowCoroutine());
+          
+          
         }
 
         IEnumerator ShowCoroutine()
@@ -44,15 +52,18 @@ namespace LostGrace
             charViewCanvasGroup.alpha = 0;
             charButtonsCanvasGroup.alpha = 0;
             speechBubbleCanvasGroup.alpha = 0;
+            partySizeCanvasGroup.alpha = 0;
             charViewCanvas.enabled = true;
             yield return new WaitForSeconds(.5f);
-           
-            TweenUtility.FadeIn(newGameButtonCanvasGroup);
+
+            LeanTween.alphaCanvas(newGameButtonCanvasGroup, UIUtility.INACTIVE_CANVAS_GROUP_ALPHA,
+                TweenUtility.fadeInDuration).setEase(TweenUtility.easeFadeIn);
             TweenUtility.FadeIn(titleCanvasGroup);
             TweenUtility.FadeIn(backButtonCanvasGroup);
             TweenUtility.FadeIn(charCirclesCanvasGroup);
             TweenUtility.FadeIn(charViewCanvasGroup);
             TweenUtility.FadeIn(charButtonsCanvasGroup);
+            TweenUtility.FadeIn(partySizeCanvasGroup);
             characterSelector.Show(GameConfig.Instance.config.GetUnits());
             
             characterCircles.Show(Player.Instance.Party);
@@ -86,6 +97,7 @@ namespace LostGrace
             yield return new WaitForSeconds(0.5f);
            
             TweenUtility.FadeOut(titleCanvasGroup);
+            TweenUtility.FadeOut(partySizeCanvasGroup);
             TweenUtility.FadeOut(charCirclesCanvasGroup);
             TweenUtility.FadeOut(charViewCanvasGroup);
             TweenUtility.FadeOut(charButtonsCanvasGroup);
@@ -103,6 +115,21 @@ namespace LostGrace
         void PartyChanged(Unit u)
         {
             characterCircles.Show(Player.Instance.Party);
+            UpdateButtonState();
+        }
+
+        private void UpdateButtonState()
+        {
+            if (Player.Instance.Party.members.Count<Player.Instance.startPartyMemberCount)
+            {
+                newGameButtonCanvasGroup.alpha = UIUtility.INACTIVE_CANVAS_GROUP_ALPHA;
+                newGameButtonCanvasGroup.GetComponent<Button>().interactable = false;
+            }
+            else
+            {
+                newGameButtonCanvasGroup.alpha = 1;
+                newGameButtonCanvasGroup.GetComponent<Button>().interactable = true;
+            }
         }
         public override void Hide()
         {

@@ -2,11 +2,11 @@
 
 public class TweenUtility
 {
-    private const float fadeInDuration = 0.65f;
+    public const float fadeInDuration = 0.65f;
     private const float fastFadeInDuration = 0.25f;
     private const float fadeOutDuration = 0.4f;
     private const float slowFadeInDuration = 1.6f;
-    private const LeanTweenType easeFadeIn = LeanTweenType.easeOutQuad;
+    public const LeanTweenType easeFadeIn = LeanTweenType.easeOutQuad;
     private const LeanTweenType easeFadeOut =  LeanTweenType.easeInQuad;
 
     public static LTDescr FadeIn(CanvasGroup a)

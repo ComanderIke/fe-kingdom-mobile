@@ -30,7 +30,8 @@ namespace Game.GameActors.Players
         [HideInInspector]
 
         public string Name;
-        
+
+        public int startPartyMemberCount = 2;
 
 
 
