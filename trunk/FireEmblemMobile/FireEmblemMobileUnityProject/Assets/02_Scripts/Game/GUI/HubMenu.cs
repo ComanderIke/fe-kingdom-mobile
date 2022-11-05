@@ -100,7 +100,7 @@ namespace LostGrace
             upgradesButton.interactable = false;
             backButton.interactable = false;
         }
-        IEnumerator HideCoroutine()
+        IEnumerator HideCoroutine(UIMenu nextMenu)
         {
            
             TweenUtility.FadeOut(upgradeButtonCanvasGroup);
@@ -114,13 +114,13 @@ namespace LostGrace
             TweenUtility.FadeIn(Fade).setOnComplete(()=>
             {
                 base.Hide();
-                parent?.Show();
+                nextMenu?.Show();
                 TweenUtility.FadeOut(Fade);
             });
         }
         public override void Hide()
         {
-            StartCoroutine(HideCoroutine());
+            StartCoroutine(HideCoroutine(parent));
         }
         public override void BackClicked()
         {
@@ -135,7 +135,7 @@ namespace LostGrace
         }
         public void NewGameClicked()
         {
-            StartCoroutine(CharacterSelectCoroutine());
+            StartCoroutine(HideCoroutine(characterSelectMenu));
            
         }
         public void TutorialClicked()
@@ -145,28 +145,13 @@ namespace LostGrace
             SceneTransferData.Instance.TutorialBattle1 = true;
             SceneController.LoadSceneAsync(Scenes.Battle1, false);
         }
-        IEnumerator CharacterSelectCoroutine()
-        {
-            TweenUtility.FadeOut(upgradeButtonCanvasGroup);
-            TweenUtility.FadeOut(backButtonCanvasGroup);
-            TweenUtility.FadeOut(tutorialButtonCanvasGroup);
-            yield return new WaitForSeconds(.4f);
-            TweenUtility.FadeOut(titleCanvasGroup);
-            TweenUtility.FadeOut(newGameButtonCanvasGroup);
-           
-
-            TweenUtility.FadeIn(Fade).setOnComplete(()=>
-            {
-                base.Hide();
-                characterSelectMenu.Show();
-                TweenUtility.FadeOut(Fade);
-            });
-        }
+        
+       
         public void UpgradeClicked()
         {
-            
-            upgradeMenu.Show();
-            Hide();
+            StartCoroutine(HideCoroutine(upgradeMenu));
+            //upgradeMenu.Show();
+            //Hide();
         }
        
        
