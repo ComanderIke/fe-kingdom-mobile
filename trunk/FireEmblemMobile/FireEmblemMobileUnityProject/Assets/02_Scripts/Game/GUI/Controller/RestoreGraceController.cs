@@ -22,6 +22,7 @@ public class RestoreGraceController :UIMenu
     IEnumerator ShowCoroutine()
     {
         base.Show();
+        graceAmount.Amount = 0;
         detailPanel.alpha = 0;
         buttonBackGroup.alpha = 0;
         gracePanel.alpha = 0;

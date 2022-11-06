@@ -3,6 +3,7 @@
 [CreateAssetMenu(menuName = "GameData/Upgrades/MetaUpgrade", fileName = "MetaUpgrade1")]
 public class MetaUpgradeBP: ScriptableObject
 {
+    public string label;
     public int maxLevel;
     public int[] costToLevel;
     public string Description;
