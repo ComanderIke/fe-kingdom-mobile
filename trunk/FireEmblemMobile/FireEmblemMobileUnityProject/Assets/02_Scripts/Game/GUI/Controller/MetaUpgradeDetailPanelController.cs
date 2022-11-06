@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class MetaUpgradeDetailPanelController : MonoBehaviour
 {
     public static MetaUpgradeDetailPanelController Instance;
-     public MetaUpgrade metaUpgrade;
+     [SerializeField]private MetaUpgrade metaUpgrade;
 
     public TextMeshProUGUI description;
     public TextMeshProUGUI cost;
@@ -49,6 +49,8 @@ public class MetaUpgradeDetailPanelController : MonoBehaviour
 
     void UpdateUI()
     {
+        if (metaUpgrade == null|| metaUpgrade.blueprint==null)
+            return;
         name.text = metaUpgrade.blueprint.name;
         description.text = metaUpgrade.blueprint.Description;
         cost.text = "" + metaUpgrade.blueprint.costToLevel[0];

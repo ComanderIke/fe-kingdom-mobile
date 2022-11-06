@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 [ExecuteInEditMode]
-public class RangerSkillPanelController : MonoBehaviour
+public class MetaUpgradeController : MonoBehaviour
 {
     [SerializeField] private MetaUpgradeBP[] upgradeBPs;
     [SerializeField]private int xSize = 5;
@@ -28,6 +28,12 @@ public class RangerSkillPanelController : MonoBehaviour
         #endif
         Player.Instance.onMetaUpgradesChanged -= CheckDependencies;
         Player.Instance.onMetaUpgradesChanged += CheckDependencies;
+        Show();
+       
+    }
+
+    public void Show()
+    {
         upgradeGrid = new MetaUpgrade[9,9];
         instantiatedButtonControllers = new List<MetaButtonController>();
         // upgrades = new MetaUpgrade[xSize,ySize];
@@ -43,7 +49,6 @@ public class RangerSkillPanelController : MonoBehaviour
         }
 
         CheckDependencies();
-       
     }
 
     private void OnDisable()
@@ -55,7 +60,12 @@ public class RangerSkillPanelController : MonoBehaviour
     {
         foreach (var controller in instantiatedButtonControllers)
         {
-            controller.UpdateUI();
+            if(Player.Instance.HasLearned(controller.metaSkill))
+                controller.SetUpgrade(Player.Instance.GetMetaUpgrade(controller.metaSkill));
+            else
+            {
+                controller.UpdateUI();
+            }
         }
     }
     void CheckDependencies()

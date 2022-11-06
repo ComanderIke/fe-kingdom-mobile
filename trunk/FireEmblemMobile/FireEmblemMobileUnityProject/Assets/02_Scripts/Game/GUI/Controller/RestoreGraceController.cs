@@ -15,10 +15,13 @@ public class RestoreGraceController :UIMenu
     [SerializeField] private GoddessUI goddessUI;
     [SerializeField] private CanvasGroup Fade;
     [SerializeField] private UIRessourceAmount graceAmount;
+    [SerializeField] private MetaUpgradeController upgradeController;
     public override void Show()
     {
+        Player.Instance.LoadUpgradeDataFromConfig();
         StartCoroutine(ShowCoroutine());
     }
+    
     IEnumerator ShowCoroutine()
     {
         base.Show();
@@ -29,6 +32,7 @@ public class RestoreGraceController :UIMenu
         titleGroup.alpha = 0;
         tabGroup.alpha = 0;
         yield return new WaitForSeconds(.5f);
+        upgradeController.Show();
         TweenUtility.FadeIn(tabGroup);
         TweenUtility.FadeIn(titleGroup);
         yield return new WaitForSeconds(.5f);

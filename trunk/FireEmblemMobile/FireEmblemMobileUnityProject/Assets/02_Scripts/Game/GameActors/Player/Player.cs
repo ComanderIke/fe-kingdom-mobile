@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Game.GameActors.Items;
 using Game.WorldMapStuff.Model;
+using LostGrace;
 using UnityEngine;
 
 namespace Game.GameActors.Players
@@ -74,6 +75,19 @@ namespace Game.GameActors.Players
         public bool HasLearned(MetaUpgrade upg)
         {
             return upgrades.Contains(upg);
+        }
+
+        public void LoadUpgradeDataFromConfig()
+        {
+            Debug.Log("Load Upgrades!");
+            upgrades = GameConfig.Instance.config.GetUpgrades();
+        }
+
+        public MetaUpgrade GetMetaUpgrade(MetaUpgrade upg)
+        {
+            if (HasLearned(upg))
+                return upgrades.Find(u=> u.Equals(upg));
+            return null;
         }
     }
 }

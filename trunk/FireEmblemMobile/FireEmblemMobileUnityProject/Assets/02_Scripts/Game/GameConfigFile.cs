@@ -10,12 +10,16 @@ namespace LostGrace
     {
         public bool tutorial = false;
         [SerializeField] List<Unit> selectableCharacters;
-
+        [SerializeField] private List<MetaUpgrade> metaUpgrades;
         public  List<Unit> GetUnits()
         {
             foreach(var unit in selectableCharacters)
                 unit.Initialize();
             return selectableCharacters;
+        }
+        public  List<MetaUpgrade> GetUpgrades()
+        {
+            return metaUpgrades;
         }
     }
 }
