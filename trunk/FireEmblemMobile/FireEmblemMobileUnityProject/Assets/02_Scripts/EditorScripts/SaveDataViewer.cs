@@ -8,7 +8,6 @@ using Game.Mechanics;
 using Game.Systems;
 using Game.WorldMapStuff.Model;
 using Menu;
-using SerializedData;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -47,75 +46,75 @@ namespace __2___Scripts.External.Editor
 
         public void OnGUI()
         {
-            loadFiles = SaveSystem.GetLoadFiles();
-            //Debug.Log("OnGUI");
-            GUILayout.BeginHorizontal();
-
-            if (GUILayout.Button("ShowPlayerData!", GUILayout.Width(150)))
-            {
-                activeIndex = 0;
-                playerData = new PlayerData(Player.Instance);
-            }
-            else if (GUILayout.Button("Show EncounterData!", GUILayout.Width(150)))
-            {
-                activeIndex = 1;
-                encounterData = new EncounterTreeData(EncounterTree.Instance);
-            }
-
-            if (GUILayout.Button("Save Data!", GUILayout.Width(150)))
-            {
-                SaveSystem.SaveGame("AutoSave",
-                    new SaveData(Player.Instance, Campaign.Instance, EncounterTree.Instance));
-                loadFiles = SaveSystem.GetLoadFiles();
-            }
-
-            if (GUILayout.Button("Load Autosave Data!", GUILayout.Width(150)))
-            {
-                SaveData.currentSaveData = SaveSystem.LoadGame("AutoSave.fe");
-                playerData = SaveData.currentSaveData.playerData;
-                encounterData = SaveData.currentSaveData.encounterTreeData;
-            }
-
-            
-         
-          
-
-
-            GUILayout.EndHorizontal();
-            GUILayout.BeginHorizontal();
-          
-            if (activeIndex == 0)
-                ShowPlayerData();
-            else
-            {
-                ShowEncounterTreeData();
-            }
-            GUILayout.BeginVertical();
-            GUILayout.Label("SaveGames: ");
-            scrollPositionLoadFiles=GUILayout.BeginScrollView(scrollPositionLoadFiles);
-            foreach (string loadFile in loadFiles)
-            {
-                string shortName = Path.GetFileNameWithoutExtension(loadFile);
-                if(GUILayout.Button(shortName, GUILayout.Width(150)))
-                {
-                    chosenFile = shortName;
-                    SaveData.currentSaveData =SaveSystem.LoadGame(chosenFile+".fe");
-                    playerData = SaveData.currentSaveData.playerData;
-                    encounterData = SaveData.currentSaveData.encounterTreeData;
-                }
-            }
-            GUILayout.EndScrollView();
-            GUILayout.EndVertical();
-            GUILayout.BeginVertical();
-            
-            saveName = GUILayout.TextField(saveName);
-            if (GUILayout.Button("Save File: " + saveName, GUILayout.Width(150)))
-            {
-                SaveSystem.SaveGame(saveName, new SaveData(Player.Instance, Campaign.Instance, EncounterTree.Instance));
-                
-            }
-            GUILayout.EndVertical();
-            GUILayout.EndHorizontal();
+            // loadFiles = SaveSystem.GetLoadFiles();
+            // //Debug.Log("OnGUI");
+            // GUILayout.BeginHorizontal();
+            //
+            // if (GUILayout.Button("ShowPlayerData!", GUILayout.Width(150)))
+            // {
+            //     activeIndex = 0;
+            //     playerData = new PlayerData(Player.Instance);
+            // }
+            // else if (GUILayout.Button("Show EncounterData!", GUILayout.Width(150)))
+            // {
+            //     activeIndex = 1;
+            //     encounterData = new EncounterTreeData(EncounterTree.Instance);
+            // }
+            //
+            // if (GUILayout.Button("Save Data!", GUILayout.Width(150)))
+            // {
+            //     SaveSystem.SaveGame("AutoSave",
+            //         new SaveData(Player.Instance, Campaign.Instance, EncounterTree.Instance));
+            //     loadFiles = SaveSystem.GetLoadFiles();
+            // }
+            //
+            // if (GUILayout.Button("Load Autosave Data!", GUILayout.Width(150)))
+            // {
+            //     SaveData.currentSaveData = SaveSystem.LoadGame("AutoSave.fe");
+            //     playerData = SaveData.currentSaveData.playerData;
+            //     encounterData = SaveData.currentSaveData.encounterTreeData;
+            // }
+            //
+            //
+            //
+            //
+            //
+            //
+            // GUILayout.EndHorizontal();
+            // GUILayout.BeginHorizontal();
+            //
+            // if (activeIndex == 0)
+            //     ShowPlayerData();
+            // else
+            // {
+            //     ShowEncounterTreeData();
+            // }
+            // GUILayout.BeginVertical();
+            // GUILayout.Label("SaveGames: ");
+            // scrollPositionLoadFiles=GUILayout.BeginScrollView(scrollPositionLoadFiles);
+            // foreach (string loadFile in loadFiles)
+            // {
+            //     string shortName = Path.GetFileNameWithoutExtension(loadFile);
+            //     if(GUILayout.Button(shortName, GUILayout.Width(150)))
+            //     {
+            //         chosenFile = shortName;
+            //         SaveData.currentSaveData =SaveSystem.LoadGame(chosenFile+".fe");
+            //         playerData = SaveData.currentSaveData.playerData;
+            //         encounterData = SaveData.currentSaveData.encounterTreeData;
+            //     }
+            // }
+            // GUILayout.EndScrollView();
+            // GUILayout.EndVertical();
+            // GUILayout.BeginVertical();
+            //
+            // saveName = GUILayout.TextField(saveName);
+            // if (GUILayout.Button("Save File: " + saveName, GUILayout.Width(150)))
+            // {
+            //     SaveSystem.SaveGame(saveName, new SaveData(Player.Instance, Campaign.Instance, EncounterTree.Instance));
+            //     
+            // }
+            // GUILayout.EndVertical();
+            // GUILayout.EndHorizontal();
         }
 
         private void ShowEncounterTreeData()

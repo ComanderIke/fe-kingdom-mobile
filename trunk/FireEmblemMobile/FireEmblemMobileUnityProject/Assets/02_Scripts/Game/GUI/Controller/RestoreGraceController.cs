@@ -2,10 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Game.GameActors.Players;
+using Game.Systems;
 using LostGrace;
 using UnityEngine;
 
-public class RestoreGraceController :UIMenu
+public class RestoreGraceController :UIMenu, IDataPersistance
 {
     [SerializeField] private CanvasGroup detailPanel;
     [SerializeField] private CanvasGroup buttonBackGroup;
@@ -18,7 +19,6 @@ public class RestoreGraceController :UIMenu
     [SerializeField] private MetaUpgradeController upgradeController;
     public override void Show()
     {
-        Player.Instance.LoadUpgradeDataFromConfig();
         StartCoroutine(ShowCoroutine());
     }
     
@@ -74,5 +74,16 @@ public class RestoreGraceController :UIMenu
             parent?.Show();
             TweenUtility.FadeOut(Fade);
         });
+    }
+
+    public void LoadData(SaveData data)
+    {
+        Debug.Log("Load Data form RestoreGrace: "+gameObject.name);
+        
+    }
+
+    public void SaveData(ref SaveData data)
+    {
+        throw new NotImplementedException();
     }
 }

@@ -29,6 +29,7 @@ namespace Game.GameResources
         [SerializeField] private List<Weapon> swords = default;
         [SerializeField] private List<Weapon> magic = default;
         [SerializeField] private List<Item> consumables = default;
+        [SerializeField] private List<MetaUpgradeBP> metaUpgradeBps = default;
         [FormerlySerializedAs("humans")] [SerializeField] private List<Unit> humanBlueprints = default;
         [SerializeField] private List<Party> playerStartingParties = default;
         [SerializeField] public List<CampaignConfig> campaigns;
@@ -87,6 +88,12 @@ namespace Game.GameResources
             var human = Instantiate(humanBlueprints.Find(a => a.bluePrintID == name));
             human.InitEquipment();
             return human;
+        }
+        public MetaUpgradeBP GetMetaUpgradeBlueprints(string name)
+        {
+            Debug.Log("name: " + name);
+            var upg = Instantiate(metaUpgradeBps.Find(a => a.name == name));
+            return upg;
         }
 
 

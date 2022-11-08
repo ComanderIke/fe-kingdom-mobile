@@ -1,42 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
 using Game.GameActors.Items;
+using Game.Systems;
 using Game.WorldMapStuff.Model;
 using LostGrace;
+using UnityEditor;
 using UnityEngine;
 
 namespace Game.GameActors.Players
 {
 
     [System.Serializable]
-    public class Player
+    [CreateAssetMenu(menuName = "GameData/Player")]
+    public class Player :ScriptableObject, IDataPersistance
     {
         private static Player _instance;
         public static Player Instance
         {
-            get { return _instance ??= new Player(); }
+            get { return _instance; }
         }
 
         public static void Reset()
         {
             _instance = null;
         }
-        
 
-        private Player()
+
+        private void OnEnable()
         {
-            Name = "Player1";
-            upgrades = new List<MetaUpgrade>();
+            if (_instance == null)
+                _instance = this;
+            else
+            {
+                if(_instance!=this)
+                    Destroy(this);
+            }
         }
 
+        [field: SerializeField]
         public Party Party { get; set; }
         [HideInInspector]
 
         public string Name;
 
         public int startPartyMemberCount = 2;
-
-        private List<MetaUpgrade> upgrades;
+        [field: SerializeField] public MetaUpgradeManager MetaUpgradeManager { get; set; }
 
         public override string ToString()
         {
@@ -45,20 +53,25 @@ namespace Game.GameActors.Players
                 player += "Party: " + Party.ToString();
             return player;
         }
+
+        private MetaUpgradeManager metaSaveGame;
         public PlayerData GetSaveData()
         {
             var playerData = new PlayerData(this);
             return playerData;
         }
 
-        public void LoadData(PlayerData data)
-        {
-            
-            Name = data.Name;
-            Party = data.partyData.Load();
-            //data.factionData.Load((WM_Faction)faction);
+        
 
-        }
+        // public void LoadData(PlayerData data)
+        // {
+        //     
+        //     Name = data.Name;
+        //     Party = data.partyData.Load();
+        //     MetaUpgradeManager.Load(data.metaUpgradeManagerData);
+        //     //data.factionData.Load((WM_Faction)faction);
+        //
+        // }
 
         public event Action onMetaUpgradesChanged;
         public void LearnMetaUpgrade(MetaUpgrade metaUpgrade)
@@ -66,7 +79,7 @@ namespace Game.GameActors.Players
             if (metaUpgrade.IsMaxed())
                 return;
             if(!HasLearned(metaUpgrade))
-                upgrades.Add(metaUpgrade);
+                MetaUpgradeManager.Add(metaUpgrade);
             metaUpgrade.level++;
             
             onMetaUpgradesChanged?.Invoke();
@@ -74,20 +87,27 @@ namespace Game.GameActors.Players
 
         public bool HasLearned(MetaUpgrade upg)
         {
-            return upgrades.Contains(upg);
+            return MetaUpgradeManager.Contains(upg);
         }
-
-        public void LoadUpgradeDataFromConfig()
-        {
-            Debug.Log("Load Upgrades!");
-            upgrades = GameConfig.Instance.config.GetUpgrades();
-        }
+        
 
         public MetaUpgrade GetMetaUpgrade(MetaUpgrade upg)
         {
             if (HasLearned(upg))
-                return upgrades.Find(u=> u.Equals(upg));
+                return MetaUpgradeManager.Find(upg);
             return null;
+        }
+
+        public void LoadData(SaveData data)
+        {
+            Name = data.playerData.Name;
+            Party.Load(data.playerData.partyData);
+            MetaUpgradeManager.Load(data.playerData.metaUpgradeManagerData);
+        }
+
+        public void SaveData(ref SaveData data)
+        {
+            data.playerData = new PlayerData(this);
         }
     }
 }

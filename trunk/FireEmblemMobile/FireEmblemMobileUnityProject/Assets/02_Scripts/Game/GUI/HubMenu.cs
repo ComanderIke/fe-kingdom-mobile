@@ -9,7 +9,6 @@ using Game.Systems;
 using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.UI;
 using Menu;
-using SerializedData;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -158,9 +157,9 @@ namespace LostGrace
         
         public void SaveGameClicked()
         {
-            SaveSystem.SaveGame(saveNameField.text.Trim(), new SaveData(Player.Instance, Campaign.Instance,EncounterTree.Instance));
-            LeanTween.scale(saveDialog, Vector3.zero, 0.3f).setEase(LeanTweenType.easeInBack)
-                .setOnComplete(HideSaveDialog);
+            // SaveSystem.SaveGame(saveNameField.text.Trim(), new SaveData(Player.Instance, Campaign.Instance,EncounterTree.Instance));
+            // LeanTween.scale(saveDialog, Vector3.zero, 0.3f).setEase(LeanTweenType.easeInBack)
+            //     .setOnComplete(HideSaveDialog);
         }
         public void LoadCampaignScene(Campaign campaign)
         {
@@ -176,25 +175,25 @@ namespace LostGrace
         }
         public void LoadGame(string name)
         {
-            SaveData.currentSaveData= SaveSystem.LoadGame(name);
-
-            CampaignConfig first = null;
-            foreach (var c in GameData.Instance.campaigns)
-            {
-                if (c.campaignId == SaveData.currentSaveData.campaignData.campaignId)
-                {
-                    first = c;
-                    break;
-                }
-            }
-
-            Player.Instance.LoadData(SaveData.currentSaveData.playerData);
-            Campaign.Instance.LoadData(SaveData.currentSaveData.campaignData);
-            
-            LoadCampaignScene(Campaign.Instance);
-
-            LeanTween.scale(loadDialog, Vector3.zero, 0.3f).setEase(LeanTweenType.easeInBack)
-                .setOnComplete(HideLoadDialog);
+            // SaveData.currentSaveData= SaveSystem.LoadGame(name);
+            //
+            // CampaignConfig first = null;
+            // foreach (var c in GameData.Instance.campaigns)
+            // {
+            //     if (c.campaignId == SaveData.currentSaveData.campaignData.campaignId)
+            //     {
+            //         first = c;
+            //         break;
+            //     }
+            // }
+            //
+            // Player.Instance.LoadData(SaveData.currentSaveData.playerData);
+            // Campaign.Instance.LoadData(SaveData.currentSaveData.campaignData);
+            //
+            // LoadCampaignScene(Campaign.Instance);
+            //
+            // LeanTween.scale(loadDialog, Vector3.zero, 0.3f).setEase(LeanTweenType.easeInBack)
+            //     .setOnComplete(HideLoadDialog);
         }
         #region LoadSaveDialog
         public void OpenSaveDialog()

@@ -303,4 +303,20 @@ public class EncounterTree
     {
         _instance = null;
     }
+
+    public EncounterNode GetEncounterNodeById(string id)
+    {
+        foreach (var column in columns)
+        {
+            foreach (var child in column.children)
+            {
+                if (child.GetId() == id)
+                {
+                    return child;
+                }
+            }
+        }
+
+        return null;
+    }
 }

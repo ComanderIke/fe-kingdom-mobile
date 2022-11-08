@@ -14,11 +14,14 @@ namespace Game.GameActors.Players
         // public FactionData factionData;
         [SerializeField]
         public PartyData partyData;
+        [SerializeField]
+        public MetaUpgradeManagerSaveData metaUpgradeManagerData;
  
         public PlayerData (Player player)
         {
             Name = player.Name;
             partyData = new PartyData(player.Party);
+            metaUpgradeManagerData = new MetaUpgradeManagerSaveData(player.MetaUpgradeManager);
             //factionData = new FactionData((WM_Faction)player.faction);
 
         }

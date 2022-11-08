@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using LostGrace;
 using UnityEngine;
 
 namespace Game.GUI
@@ -9,6 +10,7 @@ namespace Game.GUI
         
         [SerializeField] private UIMenu optionsMenu;
         [SerializeField] private UIMenu hubMenu;
+        [SerializeField] private SelectFileUI selectFileUI;
         private static readonly int Show1 = Animator.StringToHash("Show");
         private static readonly int Side = Animator.StringToHash("Side");
        // [SerializeField] private Animator animator;
@@ -56,7 +58,8 @@ namespace Game.GUI
 
         public void StartClicked()
         {
-            StartCoroutine(TransitionAnimation());
+            selectFileUI.Show();
+           // StartCoroutine(TransitionAnimation());
 
         }
         IEnumerator TransitionAnimation()

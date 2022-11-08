@@ -13,8 +13,8 @@ using Game.Systems;
 using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.Systems;
 using GameEngine;
+using LostGrace;
 using Menu;
-using SerializedData;
 using UnityEngine;
 using IServiceProvider = Game.Manager.IServiceProvider;
 
@@ -53,7 +53,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         {
             Debug.Log("Use party saveData");
             Player.Instance.Party.Initialize();
-            SaveData.currentSaveData.playerData.partyData.LoadEncounterAreaData(Player.Instance.Party, EncounterTree.Instance.columns);
+            LoadEncounterAreaData(Player.Instance.Party, EncounterTree.Instance);
             
             
         }
@@ -67,11 +67,11 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
                 Player.Instance.Party.members[i]= Instantiate(Player.Instance.Party.members[i]);
             }
             Player.Instance.Party.Initialize();
-            Player.Instance.Party.EncounterNode = EncounterTree.Instance.startNode;
-            Player.Instance.Party.MovedEncounters.Add(EncounterTree.Instance.startNode);
+            Player.Instance.Party.EncounterComponent.EncounterNode = EncounterTree.Instance.startNode;
+            Player.Instance.Party.EncounterComponent.AddMovedEncounter(EncounterTree.Instance.startNode);
         }
 
-
+       
         
             //Debug.Log("Player Node Null");
            
@@ -88,6 +88,14 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         this.CallWithDelay(ShowMovedRoads,0.1f);//Some other scripts not started yet thtas why
        
         ShowMoveOptions();
+    }
+    public void LoadEncounterAreaData(Party party, EncounterTree tree){
+      
+        party.EncounterComponent.EncounterNode = tree.GetEncounterNodeById(party.EncounterComponent.EncounterNodeId);
+        for (int i = 0; i < party.EncounterComponent.MovedEncounterIds.Count; i++)
+        {
+            party.EncounterComponent.AddMovedEncounter(tree.GetEncounterNodeById(party.EncounterComponent.MovedEncounterIds[i]));
+        }
     }
     private void AddSystems()
     {
@@ -120,7 +128,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         int cnt = 1;
         partyGo = new GameObject("Partytest");
         partyGo.transform.SetParent(spawnParent);
-        partyGo.transform.position = Player.Instance.Party.EncounterNode.gameObject.transform.position;
+        partyGo.transform.position = Player.Instance.Party.EncounterComponent.EncounterNode.gameObject.transform.position;
         partyGameObjects = new List<EncounterPlayerUnitController>();
         //Spawn ActiveUnit first
         var activeUnit = Player.Instance.Party.members[Player.Instance.Party.ActiveUnitIndex];
@@ -224,7 +232,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
 
             
         }
-        foreach (var child in Player.Instance.Party.EncounterNode.children)
+        foreach (var child in Player.Instance.Party.EncounterComponent.EncounterNode.children)
         {
             child.SetMoveable(false);
 
@@ -245,12 +253,12 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     public void ShowMoveOptions()
     {
         
-        foreach (var child in Player.Instance.Party.EncounterNode.children)
+        foreach (var child in Player.Instance.Party.EncounterComponent.EncounterNode.children)
         {
             child.SetMoveable(true);
 
         }
-        foreach (var road in Player.Instance.Party.EncounterNode.roads)
+        foreach (var road in Player.Instance.Party.EncounterComponent.EncounterNode.roads)
         {
             road.SetMoveable(true);
            
@@ -281,7 +289,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     void MovementHint()
     {
         Debug.Log("Show Movement Hint");
-        foreach (var road in Player.Instance.Party.EncounterNode.roads)
+        foreach (var road in Player.Instance.Party.EncounterComponent.EncounterNode.roads)
         {
             road.end.Grow();
         }
@@ -291,7 +299,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         Debug.Log("Node Clicked: "+encounterNode);
       
         cursor.SetPosition(encounterNode.gameObject.transform.position);
-        if (encounterNode== Player.Instance.Party.EncounterNode)
+        if (encounterNode== Player.Instance.Party.EncounterComponent.EncounterNode)
         {
             MovementHint();
             //FindObjectOfType<UICharacterViewController>().Show(Player.Instance.Party.ActiveUnit);
@@ -302,7 +310,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         {
 
             ToolTipSystem.ShowEncounter(encounterNode, encounterNode.gameObject.transform.position+new Vector3(2,0,0), true, MoveClicked);
-            foreach (var road in Player.Instance.Party.EncounterNode.roads)
+            foreach (var road in Player.Instance.Party.EncounterComponent.EncounterNode.roads)
             {
                 if(road.end==encounterNode)
                     road.NodeSelected();
@@ -320,7 +328,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
 
     void HideMoveOptions()
     {
-        foreach (var road in Player.Instance.Party.EncounterNode.roads)
+        foreach (var road in Player.Instance.Party.EncounterComponent.EncounterNode.roads)
         {
             road.SetMoveable(false);
         }
@@ -358,15 +366,19 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         
     }
 
+    EncounterNode GetEncounterNodeById(string id)
+    {
+        return EncounterTree.Instance.GetEncounterNodeById(id);
+    }
     private void ShowMovedRoads()
     {
         Debug.Log("============================ShowMovedRoads!");
-        for( int i= Player.Instance.Party.MovedEncounters.Count-2; i >=0; i--)
+        for( int i= Player.Instance.Party.EncounterComponent.MovedEncounters.Count-2; i >=0; i--)
         {
-            Road road = Player.Instance.Party.MovedEncounters[i].GetRoad(Player.Instance.Party.MovedEncounters[i + 1]);
+            Road road = Player.Instance.Party.EncounterComponent.MovedEncounters[i].GetRoad(Player.Instance.Party.EncounterComponent.MovedEncounters[i + 1]);
             if (road==null||road.gameObject == null)
             {
-                Player.Instance.Party.MovedEncounters.RemoveAt(i);
+                Player.Instance.Party.EncounterComponent.RemoveMovedEncounterAt(i);
             }
             else
             {
@@ -378,8 +390,8 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
 
     public void Continue()
     {
-        Debug.Log("AutoSaving!");
-        SaveSystem.SaveGame("AutoSave", new SaveData(Player.Instance, Campaign.Instance, EncounterTree.Instance));
+        // Debug.Log("AutoSaving!");
+        // SaveGameManager.Save();// new SaveData(Player.Instance, Campaign.Instance, EncounterTree.Instance));
         SetAllEncountersNotMovable();
         ResetMoveOptions();
         ShowMoveOptions();

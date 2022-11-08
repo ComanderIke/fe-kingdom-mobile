@@ -64,7 +64,7 @@ public abstract class EncounterNode
     }
     public void Continue()
     {
-        Player.Instance.Party.EncounterNode = this;
+        Player.Instance.Party.EncounterComponent.EncounterNodeId = GetId();
      
         GameObject.FindObjectOfType<AreaGameManager>().Continue();
     }
@@ -98,5 +98,10 @@ public abstract class EncounterNode
     public void Grow()
     {
         renderer.GrowAnimation();
+    }
+
+    public string GetId()
+    {
+        return depth + "_" + childIndex;
     }
 }

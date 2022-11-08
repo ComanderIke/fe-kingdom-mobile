@@ -1,13 +1,61 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Game.GameActors.Items;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.OnGameObject;
 using UnityEngine;
 
 namespace Game.WorldMapStuff.Model
 {
+    public class EncounterPosition
+    {
+        public List<string> MovedEncounterIds { get; set; }
+        public string EncounterNodeId { get; set; }
+
+        private EncounterNode encounterNode;
+        public EncounterNode EncounterNode
+        {
+            get
+            {
+                return encounterNode;
+            }
+            set
+            {
+                encounterNode = value;
+                EncounterNodeId = encounterNode.GetId();
+            }
+        }
+
+        private List<EncounterNode> movedEncounters;
+
+        public IReadOnlyList<EncounterNode> MovedEncounters
+        {
+            get
+            {
+                return movedEncounters.AsReadOnly();
+            }
+        }
+
+        public void AddMovedEncounter(EncounterNode node)
+        {
+            movedEncounters.Add(node);
+            MovedEncounterIds.Add(node.GetId());
+        }
+        public EncounterPosition()
+        {
+            movedEncounters = new List<EncounterNode>();
+            MovedEncounterIds = new List<string>();
+        }
+
+        public void RemoveMovedEncounterAt(int i)
+        {
+            movedEncounters.RemoveAt(i);
+            MovedEncounterIds.RemoveAt(i);
+        }
+    }
     [CreateAssetMenu(fileName = "Party", menuName = "GameData/Party")]
     public class Party:ScriptableObject
     {
@@ -82,12 +130,13 @@ namespace Game.WorldMapStuff.Model
         {
             members = new List<Unit>();
             Convoy = new Convoy();
-            MovedEncounters = new List<EncounterNode>();
+            EncounterComponent = new EncounterPosition();
         }
 
-        public EncounterNode EncounterNode { get; set; }
+        public EncounterPosition EncounterComponent{ get; set; }
+     
         public GameObject GameObject { get; set; }
-        public List<EncounterNode> MovedEncounters { get; set; }
+   
 
         public Unit ActiveUnit
         {
@@ -122,11 +171,10 @@ namespace Game.WorldMapStuff.Model
             }
             party += "Gold: " + money+"\n";
             party += Convoy.ToString()+"\n";
-            if(EncounterNode!=null)
-                party += "EncounterNode: "+EncounterNode.ToString()+"\n";
+            party += "EncounterNode: "+EncounterComponent.EncounterNodeId+"\n";
             party += "ActiveUnit: "+ActiveUnitIndex+"\n";
             party += "Moved Encounters: ";
-            foreach (var node in MovedEncounters)
+            foreach (var node in EncounterComponent.MovedEncounterIds)
             {
                 party+= node.ToString()+", ";
             }
@@ -166,6 +214,28 @@ namespace Game.WorldMapStuff.Model
         public bool IsFull()
         {
             return members.Count >= maxSize;
+        }
+
+        public void Load(PartyData playerDataPartyData)
+        {
+            money = playerDataPartyData.money;
+            members = new List<Unit>();
+
+            foreach (var data in playerDataPartyData.humanData)
+            {
+                Unit unit=data.Load();
+                Debug.Log("Load UnitData!"+unit.name);
+                unit.Initialize();
+                members.Add(unit);
+            }
+            
+            Convoy = playerDataPartyData.convoy;
+            ActiveUnitIndex = activeUnitIndex;
+            EncounterComponent = new EncounterPosition
+            {
+                EncounterNodeId = playerDataPartyData.currentEncounterNodeId,
+                MovedEncounterIds = playerDataPartyData.movedEncounterIds
+            };
         }
     }
 }

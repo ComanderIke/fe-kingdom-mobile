@@ -8,16 +8,19 @@ namespace Game.Systems
     [System.Serializable]
     public class SaveData
     {
+        public int saveSlot;
+        public string fileLabel;
         public static SaveData currentSaveData;
         public PlayerData playerData;
         public EncounterTreeData encounterTreeData;
         public CampaignData campaignData;
         
-        public SaveData()
+        public SaveData(int saveSlot, string label)
         {
-            
+            this.saveSlot = saveSlot;
+            this.fileLabel = label;
         }
-        public SaveData(Player player, Campaign campaign, EncounterTree encounterTree)
+        public SaveData(int saveSlot,string label, Player player, Campaign campaign, EncounterTree encounterTree):this(saveSlot, label)
         {
             playerData = player.GetSaveData();
             campaignData = campaign.GetSaveData();

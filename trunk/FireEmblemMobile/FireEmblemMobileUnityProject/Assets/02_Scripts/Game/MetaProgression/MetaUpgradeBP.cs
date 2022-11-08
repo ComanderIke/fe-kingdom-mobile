@@ -11,4 +11,5 @@ public class MetaUpgradeBP: ScriptableObject
     public int xPosInTree=0;
     public int yPosInTree=0;
     public bool availableAtStart = false;
+    
 }
