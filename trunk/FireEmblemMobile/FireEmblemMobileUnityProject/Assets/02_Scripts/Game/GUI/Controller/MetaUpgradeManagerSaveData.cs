@@ -9,6 +9,7 @@ public class MetaUpgradeManagerSaveData
 
     public MetaUpgradeManagerSaveData(MetaUpgradeManager manager)
     {
+        metaUpgrades = new List<MetaUpgradeSaveData>();
         SaveData(manager);
     }
 

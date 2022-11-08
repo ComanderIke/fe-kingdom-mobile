@@ -15,9 +15,14 @@ namespace Game.GameActors.Players
     [CreateAssetMenu(menuName = "GameData/Player")]
     public class Player :SingletonScriptableObject<Player>, IDataPersistance
     {
-        
-
-        
+        private void OnEnable()
+        {
+            SaveGameManager.RegisterDataPersistanceObject(this);
+        }
+        private void OnDisable()
+        {
+            SaveGameManager.RegisterDataPersistanceObject(this);
+        }
 
         [field: SerializeField]
         public Party Party { get; set; }
@@ -80,6 +85,7 @@ namespace Game.GameActors.Players
 
         public void LoadData(SaveData data)
         {
+            Debug.Log("LoadPlayerData");
             Name = data.playerData.Name;
             Party.Load(data.playerData.partyData);
             MetaUpgradeManager.Load(data.playerData.metaUpgradeManagerData);
@@ -87,6 +93,7 @@ namespace Game.GameActors.Players
 
         public void SaveData(ref SaveData data)
         {
+            Debug.Log("Save Player Data");
             data.playerData = new PlayerData(this);
         }
     }

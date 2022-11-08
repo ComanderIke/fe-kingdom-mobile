@@ -92,8 +92,18 @@ namespace Game.GameResources
         public MetaUpgradeBP GetMetaUpgradeBlueprints(string name)
         {
             Debug.Log("name: " + name);
-            var upg = Instantiate(metaUpgradeBps.Find(a => a.name == name));
-            return upg;
+            var find = metaUpgradeBps.Find(a => a.name == name);
+            if (find == null)
+            {
+                Debug.LogError("Did not find: " + name + " in metaupgrade collection");
+                return null;
+            }
+            else
+            {
+                Debug.Log("Found: " + find.name+" "+find.label);
+            }
+            //Dont Instantiate use original
+            return find;
         }
 
 
