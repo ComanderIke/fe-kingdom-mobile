@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Game.GameActors.Items;
 using Game.Systems;
 using Game.WorldMapStuff.Model;
+using GameEngine;
 using LostGrace;
 using UnityEditor;
 using UnityEngine;
@@ -12,30 +13,11 @@ namespace Game.GameActors.Players
 
     [System.Serializable]
     [CreateAssetMenu(menuName = "GameData/Player")]
-    public class Player :ScriptableObject, IDataPersistance
+    public class Player :SingletonScriptableObject<Player>, IDataPersistance
     {
-        private static Player _instance;
-        public static Player Instance
-        {
-            get { return _instance; }
-        }
+        
 
-        public static void Reset()
-        {
-            _instance = null;
-        }
-
-
-        private void OnEnable()
-        {
-            if (_instance == null)
-                _instance = this;
-            else
-            {
-                if(_instance!=this)
-                    Destroy(this);
-            }
-        }
+        
 
         [field: SerializeField]
         public Party Party { get; set; }
@@ -53,8 +35,6 @@ namespace Game.GameActors.Players
                 player += "Party: " + Party.ToString();
             return player;
         }
-
-        private MetaUpgradeManager metaSaveGame;
         public PlayerData GetSaveData()
         {
             var playerData = new PlayerData(this);

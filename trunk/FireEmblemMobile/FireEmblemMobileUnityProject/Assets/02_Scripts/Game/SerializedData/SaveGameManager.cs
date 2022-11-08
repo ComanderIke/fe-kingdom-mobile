@@ -180,6 +180,7 @@ namespace LostGrace
         public static bool FileSlotExists(int slot)
         {
             string folder = Application.persistentDataPath + "/saves/";
+            Debug.Log("Check Exists: " + Path.Combine(folder, SaveFileName + slot + ".fe"));
             Debug.Log("Check Exists: "+File.Exists(Path.Combine(folder, SaveFileName + slot + ".fe")));
             return File.Exists(Path.Combine(folder, SaveFileName + slot + ".fe"));
         }

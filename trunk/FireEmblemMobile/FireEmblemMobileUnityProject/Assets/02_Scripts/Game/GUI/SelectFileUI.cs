@@ -1,23 +1,26 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using __2___Scripts.Game.Utility;
+using Game.GUI;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
 namespace LostGrace
 {
-    public class SelectFileUI : MonoBehaviour
+    public class SelectFileUI : UIMenu
     {
-        [SerializeField] private Transform layout;
         [SerializeField] private SaveFileUI slot1Button;
         [SerializeField] private SaveFileUI slot2Button;
         [SerializeField] private SaveFileUI slot3Button;
         [SerializeField] private TextFieldPopUp textFieldPopUp;
-        
-        public void Show()
+        [SerializeField] private Animator animator;
+        [SerializeField] private MainMenuController mainMenu;
+        private static readonly int Show1 = Animator.StringToHash("Show");
+        public override void Show()
         {
             Debug.Log("CheckLoadFiles");
-            gameObject.SetActive(true);
+            animator.SetBool(Show1, true);
             if (SaveGameManager.FileSlotExists(1))
             {
                 Debug.Log("Slot 1 Exists"); 
@@ -54,28 +57,48 @@ namespace LostGrace
             slot1Button.SetInteractable(true);
             slot2Button.SetInteractable(true);
             slot3Button.SetInteractable(true);
-            
+            base.Show();
             // layout.DeleteAllChildren();
             // for (int i = 0; i < SaveGameManager.SaveFileCount; i++)
             // {
             //     var go=Instantiate(loadFilePrefab, layout);
             // }
         }
-        public void Hide()
+        public override void Hide()
         {
-            gameObject.SetActive(false);
+            StartCoroutine(HideCoroutine());
         }
 
         private int selected = -1;
         public void SaveFileClicked(int slot)
         {
             selected = slot;
-            textFieldPopUp.onSubmittedText -= FileNameSubmitted;
-            textFieldPopUp.onSubmittedText += FileNameSubmitted;
-            textFieldPopUp.Show("File "+slot);
             slot1Button.SetInteractable(false);
             slot2Button.SetInteractable(false);
             slot3Button.SetInteractable(false);
+            if (!SaveGameManager.FileSlotExists(slot))
+            {
+                textFieldPopUp.onSubmittedText -= FileNameSubmitted;
+                textFieldPopUp.onSubmittedText += FileNameSubmitted;
+                textFieldPopUp.Show("File " + slot);
+            }
+            else
+            {
+                StartCoroutine(StartSaveFileCoroutine(slot));
+            }
+
+           
+            
+        }
+
+        IEnumerator StartSaveFileCoroutine(int slot)
+        {
+            animator.SetBool(Show1, false);
+            SaveGameManager.Load(slot);
+            yield return new WaitForSeconds(1.0f);
+            base.Hide();
+            mainMenu.StartGame();
+            
         }
 
         void FileNameSubmitted(string name)
@@ -107,8 +130,16 @@ namespace LostGrace
                 case 3:  slot3Button.UpdateText(name);
                     SaveGameManager.NewGame(3, name);break;
             }
+            slot1Button.SetInteractable(true);
+            slot2Button.SetInteractable(true);
+            slot3Button.SetInteractable(true);
+        }
+
+        IEnumerator HideCoroutine()
+        {
+            animator.SetBool(Show1, false);
             yield return new WaitForSeconds(1.0f);
-            Hide();
+            base.Hide();
         }
     }
 }

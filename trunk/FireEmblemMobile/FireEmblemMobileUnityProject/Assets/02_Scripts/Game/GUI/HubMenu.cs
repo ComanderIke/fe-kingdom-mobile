@@ -163,7 +163,6 @@ namespace LostGrace
         }
         public void LoadCampaignScene(Campaign campaign)
         {
-            SaveData.Reset();
             SceneController.LoadSceneAsync(campaign.scene, true);
             // SceneController.LoadSceneAsync(Scenes.UI, true);
             // SceneController.LoadSceneAsync(Scenes.WM_Gameplay, true);

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using LostGrace;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ namespace Game.GUI
         
         [SerializeField] private UIMenu optionsMenu;
         [SerializeField] private UIMenu hubMenu;
-        [SerializeField] private SelectFileUI selectFileUI;
+        [SerializeField] private UIMenu selectFileUI;
         private static readonly int Show1 = Animator.StringToHash("Show");
         private static readonly int Side = Animator.StringToHash("Side");
        // [SerializeField] private Animator animator;
@@ -20,6 +21,7 @@ namespace Game.GUI
         [SerializeField] private CanvasGroup exitButtonCanvasGroup;
         [SerializeField] private CanvasGroup Fade;
         [SerializeField] private Animator optionsButtonAnimator;
+        [SerializeField] private Animator playButtonAnimator;
         private static readonly int Selected = Animator.StringToHash("Selected");
 
         private void Awake()
@@ -39,12 +41,13 @@ namespace Game.GUI
         {
             // animator.SetBool(Show1, true);
             // animator.SetBool(Side, false);
-        
+        Debug.Log("SHoW MAIN");
             TweenUtility.FadeIn(titleCanvasGroup);
             TweenUtility.FadeIn(playButtonCanvasGroup);
             TweenUtility.FadeIn(optionsButtonCanvasGroup);
             TweenUtility.FadeIn(exitButtonCanvasGroup);
             optionsButtonAnimator.SetBool(Selected, false);
+            playButtonAnimator.SetBool(Selected, false);
             base.Show();
         }
         
@@ -59,9 +62,16 @@ namespace Game.GUI
         public void StartClicked()
         {
             selectFileUI.Show();
+            playButtonAnimator.SetBool(Selected, true);
            // StartCoroutine(TransitionAnimation());
 
         }
+
+        public void StartGame()
+        {
+            StartCoroutine(TransitionAnimation());
+        }
+
         IEnumerator TransitionAnimation()
         {
             TweenUtility.FadeOut(optionsButtonCanvasGroup);
