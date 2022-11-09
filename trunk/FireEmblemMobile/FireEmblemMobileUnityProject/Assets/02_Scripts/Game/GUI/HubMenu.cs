@@ -93,6 +93,7 @@ namespace LostGrace
 
         void IntroFinished()
         {
+            dialogueManager.dialogEnd -= IntroFinished;
             goddessUI.Hide();
             tutorialButton.interactable = true;
             newCampaignButton.interactable = false;
@@ -152,97 +153,6 @@ namespace LostGrace
             //upgradeMenu.Show();
             //Hide();
         }
-       
-       
-        
-        public void SaveGameClicked()
-        {
-            // SaveSystem.SaveGame(saveNameField.text.Trim(), new SaveData(Player.Instance, Campaign.Instance,EncounterTree.Instance));
-            // LeanTween.scale(saveDialog, Vector3.zero, 0.3f).setEase(LeanTweenType.easeInBack)
-            //     .setOnComplete(HideSaveDialog);
-        }
-        public void LoadCampaignScene(Campaign campaign)
-        {
-            SceneController.LoadSceneAsync(campaign.scene, true);
-            // SceneController.LoadSceneAsync(Scenes.UI, true);
-            // SceneController.LoadSceneAsync(Scenes.WM_Gameplay, true);
-        }
-        public void LoadCampaignClicked(int campaignIndex)
-        {
-            Campaign.Instance.LoadConfig(GameData.Instance.campaigns[campaignIndex]);
-            LoadCampaignScene(Campaign.Instance);
-        }
-        public void LoadGame(string name)
-        {
-            // SaveData.currentSaveData= SaveSystem.LoadGame(name);
-            //
-            // CampaignConfig first = null;
-            // foreach (var c in GameData.Instance.campaigns)
-            // {
-            //     if (c.campaignId == SaveData.currentSaveData.campaignData.campaignId)
-            //     {
-            //         first = c;
-            //         break;
-            //     }
-            // }
-            //
-            // Player.Instance.LoadData(SaveData.currentSaveData.playerData);
-            // Campaign.Instance.LoadData(SaveData.currentSaveData.campaignData);
-            //
-            // LoadCampaignScene(Campaign.Instance);
-            //
-            // LeanTween.scale(loadDialog, Vector3.zero, 0.3f).setEase(LeanTweenType.easeInBack)
-            //     .setOnComplete(HideLoadDialog);
-        }
-        #region LoadSaveDialog
-        public void OpenSaveDialog()
-        {
-            saveDialog.gameObject.SetActive(true);
-            LeanTween.scale(saveDialog, Vector3.one, 0.3f).setEase(LeanTweenType.easeOutBack);
-        }
-        void HideSaveDialog()
-        {
-            saveDialog.SetActive(false);
-        }
-       
-        void HideLoadDialog()
-        {
-            loadDialog.SetActive(false);
-        }
-        public void OpenLoadDialog()
-        {
-            loadDialog.gameObject.SetActive(true);
-            ShowLoadScreen();
-            LeanTween.scale(loadDialog, Vector3.one, 0.3f).setEase(LeanTweenType.easeOutBack);
-
-        }
-        public int GetLoadFiles()
-        {
-            if (!Directory.Exists(Application.persistentDataPath + "/saves/"))
-            {
-                Directory.CreateDirectory(Application.persistentDataPath + "/saves/");
-            }
-
-            saveFiles = Directory.GetFiles(Application.persistentDataPath + "/saves/");
-            return saveFiles.Length;
-        }
-
-        public void ShowLoadScreen()
-        {
-            GetLoadFiles();
-            foreach (var button in loadArea.GetComponentsInChildren<Button>())
-            {
-                Destroy(button.gameObject);
-            }
-            foreach (string file in saveFiles)
-            {
-                var buttonObject = Instantiate(loadFilePrefab);
-                string fileName = file.Replace(Application.persistentDataPath + "/saves/", "");
-                buttonObject.transform.SetParent(loadArea.transform, false);
-                buttonObject.GetComponent<Button>().onClick.AddListener(() => { LoadGame(fileName);});
-                buttonObject.GetComponentInChildren<TextMeshProUGUI>().text = fileName;
-            }
-        }
-        #endregion
+   
     }
 }

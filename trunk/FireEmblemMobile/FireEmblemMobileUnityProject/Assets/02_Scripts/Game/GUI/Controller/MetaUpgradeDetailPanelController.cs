@@ -118,4 +118,9 @@ public class MetaUpgradeDetailPanelController : MonoBehaviour
         UpdateUI();
         Debug.Log("Learn Clicked!");
     }
+
+    public void SetButtonInteractable(bool value)
+    {
+        learnButton.interactable = value;
+    }
 }

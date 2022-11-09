@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.Dialog;
 using Game.GameActors.Players;
 using Game.Systems;
 using LostGrace;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class RestoreGraceController :UIMenu, IDataPersistance
+public class RestoreGraceController : UIMenu, IDataPersistance
 {
     [SerializeField] private CanvasGroup detailPanel;
     [SerializeField] private CanvasGroup buttonBackGroup;
@@ -17,6 +19,12 @@ public class RestoreGraceController :UIMenu, IDataPersistance
     [SerializeField] private CanvasGroup Fade;
     [SerializeField] private UIRessourceAmount graceAmount;
     [SerializeField] private MetaUpgradeController upgradeController;
+    [SerializeField] private DialogueManager dialogueManager;
+    [SerializeField] private Conversation tutorialConversation;
+    // [SerializeField] private Button backButton;
+    [SerializeField] private GameObject tutorialRaycastBlocker;
+
+[SerializeField] private MetaUpgradeDetailPanelController detailPanelController;
     public override void Show()
     {
         StartCoroutine(ShowCoroutine());
@@ -31,6 +39,8 @@ public class RestoreGraceController :UIMenu, IDataPersistance
         gracePanel.alpha = 0;
         titleGroup.alpha = 0;
         tabGroup.alpha = 0;
+        tutorialRaycastBlocker.gameObject.SetActive(true);
+        detailPanelController.SetButtonInteractable(false);
         yield return new WaitForSeconds(.5f);
         upgradeController.Show();
         TweenUtility.FadeIn(tabGroup);
@@ -43,14 +53,28 @@ public class RestoreGraceController :UIMenu, IDataPersistance
         yield return new WaitForSeconds(.6f);
         goddessUI.Show();
         yield return new WaitForSeconds(4.5f);
-       // if (GameConfig.Instance.config.tutorial)
+        //if (GameConfig.Instance.config.tutorial)
             yield return TutorialCoroutine();
+        // else
+        // {
+        //  tutorialRaycastBlocker.gameObject.SetActive(false);
+        //     detailPanelController.SetButtonInteractable(true);
+        // }
 
     }
     IEnumerator TutorialCoroutine()
     {
         graceAmount.Amount += 100;
-        yield return new WaitForSeconds(4.5f);
+        yield return new WaitForSeconds(3.0f);
+        dialogueManager.ShowDialog(tutorialConversation);
+        dialogueManager.dialogEnd += TutorialSequenceFinished;
+    }
+    void TutorialSequenceFinished()
+    {
+        dialogueManager.dialogEnd -= TutorialSequenceFinished;
+        goddessUI.Hide();
+        tutorialRaycastBlocker.gameObject.SetActive(false);
+        detailPanelController.SetButtonInteractable(true);
     }
     public override void Hide()
     {
