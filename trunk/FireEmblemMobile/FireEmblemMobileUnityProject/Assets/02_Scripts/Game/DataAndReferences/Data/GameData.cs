@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Game.GameActors.Items;
 using Game.GameActors.Items.Weapons;
 using Game.GameActors.Units;
@@ -8,6 +9,7 @@ using Game.Map;
 using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.UI;
 using GameEngine;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
@@ -23,6 +25,7 @@ namespace Game.GameResources
 
         // [SerializeField] private List<EquipableItem> armor = default;
         [SerializeField] private List<EquipableItem> relics = default;
+        [SerializeField] private Weapon[] allWeapons;
         [SerializeField] private List<Weapon> staffs = default;
         [SerializeField] private List<Weapon> spears = default;
         [SerializeField] private List<Weapon> bows = default;
@@ -55,6 +58,26 @@ namespace Game.GameResources
         //         return ret;
         //     }
         // }
+        #if UNITY_EDITOR
+        private void OnValidate()
+        {
+            allWeapons = GetAllInstances<Weapon>();
+        }
+
+        public static T[] GetAllInstances<T>() where T : ScriptableObject
+        {
+            string[] guids = AssetDatabase.FindAssets("t:"+ typeof(T).Name);  //FindAssets uses tags check documentation for more info
+            T[] a = new T[guids.Length];
+            for(int i =0;i<guids.Length;i++)         //probably could get optimized 
+            {
+                string path = AssetDatabase.GUIDToAssetPath(guids[i]);
+                a[i] = AssetDatabase.LoadAssetAtPath<T>(path);
+            }
+ 
+            return a;
+ 
+        }
+#endif
 
         public Party GetCampaignParty(int campaignIndex)
         {
@@ -70,6 +93,7 @@ namespace Game.GameResources
 
             return party;
         }
+      
         public Weapon GetWeapon(string name)
         {
             Weapon weapon = null;
