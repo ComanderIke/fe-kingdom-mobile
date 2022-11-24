@@ -1,10 +1,11 @@
 ﻿using System;
 using Game.GameActors.Items;
+using UnityEngine.Serialization;
 
 [Serializable]
 public class StockedItem
 {
-    public Item item;
+    [FormerlySerializedAs("itemBp")] public Item item;
     public int stock = 1;
 
     public StockedItem(Item item,int stock)

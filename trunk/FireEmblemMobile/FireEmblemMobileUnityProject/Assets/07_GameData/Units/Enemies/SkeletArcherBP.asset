@@ -9,15 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af959c221bf9f9f4d9c129ad64f8415d, type: 3}
+  m_Script: {fileID: 11500000, guid: bbb843360a1e2024e9821031d19ee784, type: 3}
   m_Name: SkeletArcherBP
   m_EditorClassIdentifier: 
-  Class: {fileID: 11400000, guid: c9fb62633f511e34e9f6889cbde27e91, type: 2}
-  EquippedWeapon: {fileID: 11400000, guid: b7ec5b038934c97419753b54c5673315, type: 2}
+  equippedWeaponBp: {fileID: 11400000, guid: b7ec5b038934c97419753b54c5673315, type: 2}
   EquippedRelic1: {fileID: 0}
   EquippedRelic2: {fileID: 0}
   name: Skeleton Archer
-  jobClass: 
   stats:
     AttackRanges: 
     Attributes:
@@ -43,7 +41,7 @@ MonoBehaviour:
   SkillManager:
     Skills: []
     Favourite: {fileID: 0}
-    SkillPoints: 0
+    skillPoints: 0
     SkillTrees: []
   bluePrintID: 
   visuals:

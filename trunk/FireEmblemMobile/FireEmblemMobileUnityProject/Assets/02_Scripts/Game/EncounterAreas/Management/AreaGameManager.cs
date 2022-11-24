@@ -49,7 +49,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
                 camera.transform.position.z);
         }
 
-        if (LoadedSaveData())
+        if (Player.Instance.Party!=null)
         {
             Debug.Log("Use party saveData");
             Player.Instance.Party.Initialize();
@@ -61,11 +61,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         {
             //Debug.Log("Player Null");
            
-            Player.Instance.Party = Instantiate(playerStartParty, spawnParent);
-            for (int i=0; i < Player.Instance.Party.members.Count; i++)
-            {
-                Player.Instance.Party.members[i]= Instantiate(Player.Instance.Party.members[i]);
-            }
+            Player.Instance.Party = new Party();
             Player.Instance.Party.Initialize();
             Player.Instance.Party.EncounterComponent.EncounterNode = EncounterTree.Instance.startNode;
             Player.Instance.Party.EncounterComponent.AddMovedEncounter(EncounterTree.Instance.startNode);
@@ -112,7 +108,6 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     {
         GetSystem<BattleSystem>().BattleAnimation = FindObjectsOfType<MonoBehaviour>().OfType<IBattleAnimation>().First();
         GetSystem<BattleSystem>().BattleAnimation.Hide();
-        Debug.Log("BattleSys: "+ GetSystem<BattleSystem>().BattleAnimation);
         GetSystem<UnitProgressSystem>().levelUpRenderer = FindObjectsOfType<MonoBehaviour>().OfType<ILevelUpRenderer>().First();
         GetSystem<UnitProgressSystem>().expRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IExpRenderer>().First();
     }
@@ -125,7 +120,14 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     private List<EncounterPlayerUnitController> partyGameObjects;
     void SpawnPartyMembers()
     {
+        Debug.Log("Party Count: "+Player.Instance.Party.members.Count);
         int cnt = 1;
+        if (Player.Instance.Party.EncounterComponent.EncounterNode == null)
+        {
+            Player.Instance.Party.EncounterComponent.EncounterNode = EncounterTree.Instance.startNode;
+            Player.Instance.Party.EncounterComponent.AddMovedEncounter(EncounterTree.Instance.startNode);
+        }
+
         partyGo = new GameObject("Partytest");
         partyGo.transform.SetParent(spawnParent);
         partyGo.transform.position = Player.Instance.Party.EncounterComponent.EncounterNode.gameObject.transform.position;
@@ -147,6 +149,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         partyGameObjects.Add( go.GetComponent<EncounterPlayerUnitController>());
         foreach (var member in Player.Instance.Party.members)
         {
+            Debug.Log("Party Member: "+member);
             if (member == activeUnit)
                 continue;
             
@@ -180,7 +183,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
 
         foreach (var unitController in partyGameObjects)
         {
-            if (unitController.Unit == activeUnit)
+            if (unitController.unit == activeUnit)
             {
                 activeMemberGo = unitController.gameObject;
             }
@@ -192,7 +195,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
             {
                 foreach (var unitController in partyGameObjects)
                 {
-                    if (unitController.Unit == member)
+                    if (unitController.unit == member)
                     {
                         //unitController.transform.localPosition = new Vector3(0,0,0);
                         ShowActiveUnit(unitController.transform.position);
@@ -207,7 +210,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
             {
                 foreach (var unitController in partyGameObjects)
                 {
-                    if (unitController.Unit == member)
+                    if (unitController.unit == member)
                     {
                         //unitController.transform.localPosition = new Vector3(-offsetBetweenCharacters*cnt,0,0);
                         unitController.Hide();

@@ -64,7 +64,7 @@ public abstract class EncounterNode
     }
     public void Continue()
     {
-        Player.Instance.Party.EncounterComponent.EncounterNodeId = GetId();
+        Player.Instance.Party.EncounterComponent.EncounterNode = this;
      
         GameObject.FindObjectOfType<AreaGameManager>().Continue();
     }

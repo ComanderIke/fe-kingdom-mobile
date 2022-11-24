@@ -43,7 +43,7 @@ namespace Game.GUI
        
 
         }
-        public void Show(Unit c)//Unused
+        public void Show(UnitBP c)//Unused
         {
            
             characterScreen.enabled = true;

@@ -31,7 +31,7 @@ public class UISmithyController : MonoBehaviour
         canvas.enabled = true;
         this.party = party;
         this.smithy = node.smithy;
-        this.currentEquipment = party.ActiveUnit.EquippedWeapon;
+        this.currentEquipment = party.ActiveUnit.equippedWeapon;
         UpdateUI();
     }
 
@@ -45,7 +45,7 @@ public class UISmithyController : MonoBehaviour
         unitIdleAnimation.Show(party.ActiveUnit);
         characterFace.Show(party.ActiveUnit);
       
-        weaponSlot.Show(party.ActiveUnit.EquippedWeapon, currentEquipment==party.ActiveUnit.EquippedWeapon);
+        weaponSlot.Show(party.ActiveUnit.equippedWeapon, currentEquipment==party.ActiveUnit.equippedWeapon);
         relicSlot.Show(party.ActiveUnit.EquippedRelic1,currentEquipment==party.ActiveUnit.EquippedRelic1);
         relicSlot2.Show(party.ActiveUnit.EquippedRelic2,currentEquipment==party.ActiveUnit.EquippedRelic2);
         selectedItemUI.Show(currentEquipment,
@@ -56,22 +56,22 @@ public class UISmithyController : MonoBehaviour
     public void NextClicked()
     {
         Player.Instance.Party.ActiveUnitIndex++;
-        this.currentEquipment = party.ActiveUnit.EquippedWeapon;
+        this.currentEquipment = party.ActiveUnit.equippedWeapon;
         UpdateUI();
     }
 
     public void PrevClicked()
     {
         Player.Instance.Party.ActiveUnitIndex--;
-        this.currentEquipment = party.ActiveUnit.EquippedWeapon;
+        this.currentEquipment = party.ActiveUnit.equippedWeapon;
         UpdateUI();
     }
 
     public void UpgradeClicked()
     {
-        party.Money -= party.ActiveUnit.EquippedWeapon.GetUpgradeCost();
-        party.SmithingStones -= party.ActiveUnit.EquippedWeapon.GetUpgradeSmithingStoneCost();
-        party.ActiveUnit.EquippedWeapon.Upgrade();
+        party.Money -= party.ActiveUnit.equippedWeapon.GetUpgradeCost();
+        party.SmithingStones -= party.ActiveUnit.equippedWeapon.GetUpgradeSmithingStoneCost();
+        party.ActiveUnit.equippedWeapon.Upgrade();
         UpdateUI();
     }
 
@@ -86,9 +86,9 @@ public class UISmithyController : MonoBehaviour
 
     public void WeaponClicked()
     {
-        if (party.ActiveUnit.EquippedWeapon == null)
+        if (party.ActiveUnit.equippedWeapon == null)
             return;
-        this.currentEquipment = party.ActiveUnit.EquippedWeapon;
+        this.currentEquipment = party.ActiveUnit.equippedWeapon;
         UpdateUI();
     }
     public void Relic1Clicked()

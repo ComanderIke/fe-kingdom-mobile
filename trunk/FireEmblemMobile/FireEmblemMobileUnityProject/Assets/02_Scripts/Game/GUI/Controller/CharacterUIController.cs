@@ -7,6 +7,7 @@ using Game.GameActors.Units.OnGameObject;
 using Game.GameInput;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
@@ -41,7 +42,7 @@ namespace Game.GUI
 
         [SerializeField] private ExpBarController expBar = default;
         // [SerializeField] private TextMeshProUGUI expLabel = default;
-        public Unit unit;
+        [FormerlySerializedAs("unitBp")] public Unit unit;
 
 
         private void Start()
@@ -123,7 +124,11 @@ namespace Game.GUI
             expBar.UpdateInstant(unit.ExperienceManager.Exp);
             hpBar.SetValue(unit.Hp, unit.MaxHp);
             //  spBars.SetValue(unit.SpBars, unit.MaxSpBars);
-            faceSprite.sprite = unit.visuals.CharacterSpriteSet.FaceSprite;
+            // Debug.Log(faceSprite.sprite+" "+unit.visuals);
+            // Debug.Log("CSS: "+unit.visuals.CharacterSpriteSet);
+            // Debug.Log("FS: "+unit.visuals.CharacterSpriteSet.FaceSprite);
+            if(unit.visuals.CharacterSpriteSet!=null)
+                faceSprite.sprite = unit.visuals.CharacterSpriteSet.FaceSprite;
         }
 
         public RectTransform GetUnitParticleAttractorTransform()

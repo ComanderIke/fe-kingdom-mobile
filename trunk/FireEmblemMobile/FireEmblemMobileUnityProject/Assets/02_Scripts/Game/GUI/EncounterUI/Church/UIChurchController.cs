@@ -63,7 +63,7 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
             }
 
             if (church.shopItems.Count >= 1)
-                buyItemUI.Show(church.shopItems[0].item, party.money >= church.shopItems[0].cost, true);
+                buyItemUI.Show(church.shopItems[0].Item, party.money >= church.shopItems[0].cost, true);
             else
             {
                 buyItemUI.Hide();
@@ -101,15 +101,15 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
     public void BuyClicked()
     {
         party.Money -= selectedItem.cost;
-        party.Convoy.AddItem(selectedItem.item);
-        church.RemoveItem(selectedItem.item);
+        party.Convoy.AddItem(selectedItem.Item);
+        church.RemoveItem(selectedItem.Item);
         buyItemUI.Hide();
         UpdateUI();
     }
     public void ItemClicked(ShopItem item)
     {
         selectedItem = item;
-        buyItemUI.Show(item.item,  party.money >= item.cost, true);
+        buyItemUI.Show(item.Item,  party.money >= item.cost, true);
     }
 
     public void Hide()

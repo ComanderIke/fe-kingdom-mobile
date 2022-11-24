@@ -35,8 +35,8 @@ public class BattleCanvasController : MonoBehaviour
         Debug.Log("width: "+width+" height: "+height);
         rawImageRect.sizeDelta = new Vector2(width, height);
         rawCharImageRect.sizeDelta = new Vector2(width, height);
-        RenderTexture.width =(int) width;
-        RenderTexture.height =(int)height;
+        //RenderTexture.width =(int) width;
+        //RenderTexture.height =(int)height;
         
     }
   

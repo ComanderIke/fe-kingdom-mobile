@@ -33,7 +33,7 @@ public class BuyItemUI : MonoBehaviour
         Icon.sprite = item.Sprite;
         cost.text = "" + item.cost;
         description.text = "" + item.Description;
-        name.text = "" + item.name;
+        name.text = "" + item.Name;
         buttonText.text = "BUY";
         effectCurrent.text = "";
         weaponSection.gameObject.SetActive(false);

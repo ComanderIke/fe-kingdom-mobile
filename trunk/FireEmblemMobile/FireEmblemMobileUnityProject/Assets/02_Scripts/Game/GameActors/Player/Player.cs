@@ -12,17 +12,32 @@ namespace Game.GameActors.Players
 {
 
     [System.Serializable]
-    [CreateAssetMenu(menuName = "GameData/Player")]
-    public class Player :SingletonScriptableObject<Player>, IDataPersistance
+    public class Player : MonoBehaviour, IDataPersistance
     {
-        private void OnEnable()
+        
+        public event Action onMetaUpgradesChanged;
+        
+        private static Player instance;
+        public static Player Instance
+        {
+            get
+            {
+                return instance;
+            }
+        }
+
+        private void Awake()
+        {
+            if(instance!=null)
+                Destroy(this);
+            instance = this;
+        }
+
+        void Start()
         {
             SaveGameManager.RegisterDataPersistanceObject(this);
         }
-        private void OnDisable()
-        {
-            SaveGameManager.RegisterDataPersistanceObject(this);
-        }
+    
 
         [field: SerializeField]
         public Party Party { get; set; }
@@ -46,19 +61,6 @@ namespace Game.GameActors.Players
             return playerData;
         }
 
-        
-
-        // public void LoadData(PlayerData data)
-        // {
-        //     
-        //     Name = data.Name;
-        //     Party = data.partyData.Load();
-        //     MetaUpgradeManager.Load(data.metaUpgradeManagerData);
-        //     //data.factionData.Load((WM_Faction)faction);
-        //
-        // }
-
-        public event Action onMetaUpgradesChanged;
         public void LearnMetaUpgrade(MetaUpgrade metaUpgrade)
         {
             if (metaUpgrade.IsMaxed())
@@ -85,7 +87,9 @@ namespace Game.GameActors.Players
 
         public void LoadData(SaveData data)
         {
-            Debug.Log("LoadPlayerData");
+            Debug.Log("LoadPlayerData" + Party);
+            Debug.Log("Data" + data.playerData);
+            Debug.Log("Data" + data.playerData.partyData);
             Name = data.playerData.Name;
             Party.Load(data.playerData.partyData);
             MetaUpgradeManager.Load(data.playerData.metaUpgradeManagerData);

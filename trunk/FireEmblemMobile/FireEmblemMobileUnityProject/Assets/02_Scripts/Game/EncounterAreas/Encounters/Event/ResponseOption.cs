@@ -23,7 +23,7 @@ public class ResponseOption
     public bool fight = false;
     public EnemyArmyData EnemyArmyData;
     public EventSceneType type;
-    public Unit EnemyToFight;
+    public UnitBP EnemyToFight;
     public bool statcheck;
     public List<EventOutcome> outcomes;
 

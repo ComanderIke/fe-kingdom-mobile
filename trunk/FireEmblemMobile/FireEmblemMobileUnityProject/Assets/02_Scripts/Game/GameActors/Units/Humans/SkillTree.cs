@@ -14,7 +14,6 @@ public class SkillTree
         foreach (var skillEntry in skillEntries)
         {
             skillEntry.tree = this;
-            skillEntry.Init();
         }
      
     }

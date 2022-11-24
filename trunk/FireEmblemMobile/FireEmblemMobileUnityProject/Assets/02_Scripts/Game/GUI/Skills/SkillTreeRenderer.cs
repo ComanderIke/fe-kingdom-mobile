@@ -45,7 +45,7 @@ public class SkillTreeRenderer : MonoBehaviour
     void InitSkill(SkillTreeEntry skillEntry, int depth)
     {
         var go = Instantiate(skillPrefab, rows[depth]);
-        go.name = skillEntry.skill.name;
+        go.name = skillEntry.Skill.Name;
         var skillUI = go.GetComponent<SkillTreeEntryUI>();
         skillsPerRow[depth].Add(skillUI);
         skills.Add(skillUI);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 [System.Serializable]
 [CreateAssetMenu(menuName = "GameData/Boss", fileName = "Boss")]
-public class Boss : Unit
+public class Boss : UnitBP
 {
     public BossStage[] stages;
     private BossStage activeStage;

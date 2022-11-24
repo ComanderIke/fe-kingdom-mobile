@@ -66,7 +66,7 @@ namespace __2___Scripts.External.Editor
                 GUILayout.Label("SkillsCount: " + activeUnit.SkillManager.Skills.Count);
                 foreach (var skill in activeUnit.SkillManager.Skills)
                 {
-                    GUILayout.Label("Skill: " + skill.name);
+                    GUILayout.Label("Skill: " + skill.Name);
                 }
 
                 if (GUILayout.Button("Deal 5 DMG"))

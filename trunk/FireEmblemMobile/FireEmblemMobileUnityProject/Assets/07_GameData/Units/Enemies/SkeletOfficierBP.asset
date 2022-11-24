@@ -9,57 +9,51 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af959c221bf9f9f4d9c129ad64f8415d, type: 3}
+  m_Script: {fileID: 11500000, guid: bbb843360a1e2024e9821031d19ee784, type: 3}
   m_Name: SkeletOfficierBP
   m_EditorClassIdentifier: 
-  Class: {fileID: 11400000, guid: c9fb62633f511e34e9f6889cbde27e91, type: 2}
-  EquippedWeapon: {fileID: 11400000, guid: c585b61dded3c7c46b63fe7aaa651ab0, type: 2}
+  equippedWeaponBp: {fileID: 0}
   EquippedRelic1: {fileID: 0}
   EquippedRelic2: {fileID: 0}
-  name: Skelet Officier
-  jobClass: 
+  name: 
   stats:
     AttackRanges: 
     Attributes:
-      STR: 5
-      INT: 3
-      DEX: 4
-      AGI: 5
-      <CON>k__BackingField: 5
-      LCK: 2
-      DEF: 5
-      FAITH: 2
-    Mov: 3
+      STR: 30
+      INT: 30
+      DEX: 30
+      AGI: 30
+      <CON>k__BackingField: 0
+      LCK: 30
+      DEF: 30
+      FAITH: 30
+    Mov: 0
   growths:
     STR: 30
     INT: 30
     DEX: 30
     AGI: 30
-    <CON>k__BackingField: 30
+    <CON>k__BackingField: 0
     LCK: 30
     DEF: 30
     FAITH: 30
-  moveType: {fileID: 11400000, guid: d13592b1fa0af024a841b121149b8014, type: 2}
+  moveType: {fileID: 0}
   SkillManager:
     Skills: []
     Favourite: {fileID: 0}
-    SkillPoints: 0
+    skillPoints: 0
     SkillTrees: []
   bluePrintID: 
   visuals:
-    CharacterSpriteSet: {fileID: 11400000, guid: 392c72f68c80c9149b520db7c54f784b,
-      type: 2}
-    UnitEffectVisual: {fileID: 11400000, guid: af10e6087dc82f34ebed15c0092e0174, type: 2}
+    CharacterSpriteSet: {fileID: 0}
+    UnitEffectVisual: {fileID: 0}
     Prefabs:
-      MapAnimatedSprite: {fileID: 2861010742256422526, guid: 2103419a607df6f49b01cab5ef383302,
-        type: 3}
-      EncounterAnimatedSprite: {fileID: 2861010742256422526, guid: 2103419a607df6f49b01cab5ef383302,
-        type: 3}
-      UIAnimatorController: {fileID: 22100000, guid: ea4c9310a8034e041ad2f2875502cf58,
-        type: 2}
+      MapAnimatedSprite: {fileID: 0}
+      EncounterAnimatedSprite: {fileID: 0}
+      UIAnimatorController: {fileID: 0}
     UnitCharacterCircleUI: {fileID: 0}
     unitRenderer: {fileID: 0}
   experienceManager:
-    level: 1
+    level: 0
     exp: 0
-    MaxExp: 100
+    MaxExp: 0

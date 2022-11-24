@@ -1,21 +1,27 @@
-using System;
-using Game.Mechanics;
+﻿using System;
 using UnityEngine;
 
 namespace Game.GameActors.Items
 {
-    
-
     [Serializable]
-    public abstract class Item : ScriptableObject, ICloneable, ITargetableObject
+    public abstract class Item : ICloneable, ITargetableObject
     {
         public string Name;
         public string Description;
         public int cost;
 
         [Header("ItemAttributes")] public Sprite Sprite;
-        
 
+        public Item(string name, string description, int cost, Sprite sprite)
+        {
+            this.Name = name;
+            this.Description = description;
+            this.cost = cost;
+            this.Sprite = sprite;
+            
+        }
+
+       
         public override string ToString()
         {
             return Name;
@@ -32,7 +38,7 @@ namespace Game.GameActors.Items
         {
             return Sprite;
         }
-        
+         
 
         public object Clone()
         {

@@ -32,7 +32,7 @@ namespace LostGrace
         
         public override void Show()
         {
-            Player.Instance.Party = ScriptableObject.CreateInstance<Party>();
+            Player.Instance.Party = new Party();
             Player.Instance.Party.onMemberRemoved += PartyChanged;
             Player.Instance.Party.onMemberAdded += PartyChanged;
             UpdateButtonState();

@@ -1,35 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Game.GameActors.Units;
-using Game.GameActors.Units.Humans;
 using Game.Mechanics;
 using UnityEngine;
 
 namespace Game.GameActors.Items.Weapons
 {
     [Serializable]
-    public class WeaponAttributes : UpgradeAttributes
-    {
-        public int Dmg=3;
-        public int Hit=70;
-        public int Crit=0;
-        public int Weight=1;
-        
-    }
-    [Serializable]
-    public class UpgradeAttributes
-    {
-
-        public int upgradeGoldCost = 50;
-        public int upgradeSmithingStoneCost = 1;
-        public EffectMixin effect;
-    }
-    
-    [Serializable]
-    [CreateAssetMenu(menuName = "GameData/Weapons/Weapon", fileName = "Weapon")]
     public class Weapon : EquipableItem
     {
-        
         [Range(1, 4)] public int[] AttackRanges;
 
 
@@ -39,11 +19,19 @@ namespace Game.GameActors.Items.Weapons
         
         public WeaponType WeaponType;
         public DamageType DamageType;
-        [SerializeField] private List<MoveType> effectiveAgainst;
-        [SerializeField] private List<MoveType> inEffectiveAgainst;
-        [SerializeField] private List<WeaponType> effectiveAgainstWeapons;
-        [SerializeField] private List<WeaponType> inEffectiveAgainstWeapons;
+        [SerializeField] private Dictionary<EffectType, float> effectiveAgainst;
 
+        public Weapon(string name, string description, int cost, Sprite sprite, EquipmentSlotType slotType, int weaponLevel, int maxLevel,int[] attackRanges, WeaponAttributes[] weaponAttributes, WeaponType weaponType, DamageType damageType, Dictionary<EffectType, float> effectiveAgainst=null) : base(name, description, cost, sprite, slotType)
+        {
+            this.weaponLevel = weaponLevel;
+            this.maxLevel = maxLevel;
+            this.AttackRanges = attackRanges;
+            this.WeaponAttributes = weaponAttributes;
+            this.WeaponType = weaponType;
+            this.DamageType = damageType;
+            this.effectiveAgainst = effectiveAgainst;
+      
+        }
         public void OnEnable()
         {
             EquipmentSlotType = EquipmentSlotType.Weapon;
@@ -115,21 +103,18 @@ namespace Game.GameActors.Items.Weapons
                 return 0;
         }
 
-        public bool IsEffective(MoveType unitMoveType)
+        public bool IsEffective(EffectType effectType)
         {
-            return effectiveAgainst.Contains(unitMoveType)||WeaponType.IsEffective(unitMoveType);
+            return effectiveAgainst.ContainsKey(effectType)||WeaponType.IsEffective(effectType);
         }
-        public bool IsInEffective(MoveType unitMoveType)
+        public float GetEffectiveCoefficient(EffectType effectType)
         {
-            return inEffectiveAgainst.Contains(unitMoveType)||WeaponType.IsInEffective(unitMoveType);
+            if (effectiveAgainst.ContainsKey(effectType))
+            {
+                return effectiveAgainst[effectType];
+            }
+            return WeaponType.GetEffectiveCoefficient(effectType);
         }
-        public bool IsEffective(WeaponType weaponType)
-        {
-            return effectiveAgainstWeapons.Contains(weaponType)||WeaponType.IsEffective(weaponType);
-        }
-        public bool IsInEffective(WeaponType weaponType)
-        {
-            return inEffectiveAgainstWeapons.Contains(weaponType)||WeaponType.IsInEffective(weaponType);
-        }
+        
     }
 }

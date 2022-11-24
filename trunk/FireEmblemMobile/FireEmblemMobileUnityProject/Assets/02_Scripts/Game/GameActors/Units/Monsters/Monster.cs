@@ -1,14 +1,15 @@
 ﻿using Game.GameActors.Items.Weapons;
 using Game.Grid;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game.GameActors.Units.Monsters
 {
     [CreateAssetMenu(menuName = "GameData/Monster", fileName = "Monster")]
-    public class Monster : Unit
+    public class Monster : UnitBP
     {
         
         public MonsterType Type;
-        public Weapon Weapon;
+        [FormerlySerializedAs("Weapon")] public WeaponBP weaponBp;
     }
 }

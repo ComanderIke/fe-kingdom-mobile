@@ -4,6 +4,7 @@ using Game.GameActors.Units;
 using Game.GameActors.Units.OnGameObject;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 
 namespace Game.GameInput
 {
@@ -20,7 +21,7 @@ namespace Game.GameInput
         // public static event OnUnitClickedEvent OnUnitClicked;
         // public static event OnUnitClickedEvent OnUnitDoubleClicked;
 
-        public Unit unit;
+        [FormerlySerializedAs("unitBp")] public Unit unit;
         public BoxCollider2D boxCollider;
 
         public IUnitTouchInputReceiver touchInputReceiver { get; set; }

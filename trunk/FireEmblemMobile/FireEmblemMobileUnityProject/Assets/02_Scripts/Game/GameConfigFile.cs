@@ -9,13 +9,18 @@ namespace LostGrace
     public class GameConfigFile : ScriptableObject
     {
         public bool tutorial = false;
-        [SerializeField] List<Unit> selectableCharacters;
+        [SerializeField] List<UnitBP> selectableCharacters;
        
         public  List<Unit> GetUnits()
         {
-            foreach(var unit in selectableCharacters)
-                unit.Initialize();
-            return selectableCharacters;
+            var list = new List<Unit>();
+            foreach (var unitbp in selectableCharacters)
+            {
+                var unit = unitbp.Create();
+                Debug.Log("Name: "+unit.Name+" "+"Skills: "+unit.SkillManager.Skills);
+                list.Add(unit);
+            }
+            return list;
         }
        
     }

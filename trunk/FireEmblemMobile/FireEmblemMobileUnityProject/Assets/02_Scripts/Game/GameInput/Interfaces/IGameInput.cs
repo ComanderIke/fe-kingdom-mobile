@@ -14,7 +14,7 @@ namespace Game.GameInput
         void CheckAttackPreview(IBattleActor u, IAttackableTarget attackTarget, GridPosition attackPosition);
         void AttackUnit(IBattleActor u, IAttackableTarget attackTarget);
         void DeselectUnit();
-        void UseItem(Item i);
+        void UseItem(ItemBP i);
     
         void ExecuteInputActions(Action after);
     

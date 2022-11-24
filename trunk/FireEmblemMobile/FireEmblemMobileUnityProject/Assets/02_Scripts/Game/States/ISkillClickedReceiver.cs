@@ -4,6 +4,6 @@ namespace Game.Mechanics
 {
     public interface ISkillClickedReceiver
     {
-        void SkillClicked(Skill skill);
+        void SkillClicked(SkillBP skillBp);
     }
 }

@@ -4,6 +4,7 @@ using Game.GameActors.Items;
 using Game.GameActors.Units;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Game.GUI
@@ -25,7 +26,7 @@ namespace Game.GUI
         public bool CanDrag { get; set; } = true;
         private Transform startParent;
 
-        public Item item;
+        [FormerlySerializedAs("itemBp")] public Item item;
         // Start is called before the first frame update
         void OnEnable()
         {

@@ -9,6 +9,7 @@ using Game.Mechanics;
 using Game.WorldMapStuff.Model;
 using TMPro;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public class UIEventController : MonoBehaviour
 {
@@ -101,9 +102,8 @@ public class UIEventController : MonoBehaviour
             {
                
                 var battleSystem = AreaGameManager.Instance.GetSystem<BattleSystem>();
-                var enemy = Instantiate(current.EnemyToFight);
-                enemy.Initialize();
-                Debug.Log("Enemy Weapon: "+enemy.EquippedWeapon.name);
+                var enemy = current.EnemyToFight.Create();
+                Debug.Log("Enemy Weapon: "+enemy.equippedWeapon.Name);
                 battleSystem.StartBattle(party.ActiveUnit, enemy, false, true);
                 BattleSystem.OnBattleFinished += BattleEnded;
                 Debug.Log("Fight!");

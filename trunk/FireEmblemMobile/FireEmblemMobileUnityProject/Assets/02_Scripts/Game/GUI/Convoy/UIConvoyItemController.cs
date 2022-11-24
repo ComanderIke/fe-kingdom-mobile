@@ -17,7 +17,7 @@ public class UIConvoyItemController : UIButtonController
 
     public void Clicked()
     {
-        Debug.Log("ItemClicked!" + item.item.name);
+        Debug.Log("ItemClicked!" + item.item.Name);
         ToolTipSystem.Show(item.item, transform.position, item.item.Name, item.item.Description, item.item.Sprite);
         //FindObjectOfType<UIMerchantController>().ItemClicked(item.item);
         // ToolTipSystem.Show(transform.position, item.name, item.description, item.sprite);

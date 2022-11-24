@@ -97,7 +97,7 @@ namespace LostGrace
             SaveGameManager.Load(slot);
             yield return new WaitForSeconds(1.0f);
             base.Hide();
-            mainMenu.StartGame();
+            mainMenu.StartHub();
             
         }
 

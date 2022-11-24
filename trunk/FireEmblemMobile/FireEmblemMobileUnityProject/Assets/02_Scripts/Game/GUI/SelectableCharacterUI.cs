@@ -1,13 +1,14 @@
 ﻿using System;
 using Game.GameActors.Units;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace LostGrace
 {
     public class SelectableCharacterUI : MonoBehaviour
     {
-        public Unit unit;
+        [FormerlySerializedAs("unitBp")] public Unit unit;
         [SerializeField]private UIUnitIdleAnimation unitUIIdleAnimation;
         public event Action<SelectableCharacterUI> onClicked;
         [SerializeField] private Color normalColor;

@@ -21,7 +21,7 @@ public class Merchant
         ShopItem itemToRemove = null;
         foreach (var shopItem in shopItems)
         {
-            if (shopItem.item == selectedItem)
+            if (shopItem.Item == selectedItem)
             {
               
                 itemToRemove = shopItem;
@@ -51,7 +51,7 @@ public class MerchantEncounterNode : EncounterNode
         merchant = new Merchant();
        
         merchant.AddItem(new ShopItem(GameData.Instance.GetHealthPotion(),Random.Range(2,4)));
-        merchant.AddItem(new ShopItem(GameData.Instance.GetSPotion(),Random.Range(2,4)));
+        merchant.AddItem(new ShopItem(GameData.Instance.GetHealthPotion(),Random.Range(2,4)));
         //merchant.AddItem(new ShopItem(GameData.Instance.GetRandomPotion(),Random.Range(1,4)));
         merchant.AddItem(new ShopItem(GameData.Instance.GetRandomMagic()));
         merchant.AddItem(new ShopItem(GameData.Instance.GetRandomSword()));

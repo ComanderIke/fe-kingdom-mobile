@@ -49,8 +49,8 @@ namespace Game.WorldMapStuff.Controller
             //SceneTransferData.Instance.EnemyPartyID = enemyParty.name;
             //SceneTransferData.Instance.NodeData =new NodeData(node.UniqueId);
             
-            SceneController.UnLoadSceneAsync(Scenes.EncounterArea);
-            SceneController.LoadSceneAsync(buildIndex, true);
+            //SceneController.UnLoadSceneAsync(Scenes.EncounterArea);
+            SceneController.LoadSceneAsync(buildIndex, false);
         }
         public void LoadWorldMapFromInside()
         {

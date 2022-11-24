@@ -35,23 +35,24 @@ namespace Game.GameActors.Players
             this.statsData = unit.Stats.GetSaveData();
             this.unitBlueprintID = unit.bluePrintID;
             this.hp = unit.Hp;
-            weaponId = unit.EquippedWeapon.name;
+            weaponId = unit.equippedWeapon.Name;
         }
 
         public virtual Unit Load()
         {
-            Unit unit = Object.Instantiate(GameData.Instance.GetHumanBlueprint(unitBlueprintID));
+            Debug.Log("TODO MAKE CLEAN AND CONSISTENT");
+            Unit unit = GameData.Instance.GetHumanFromBlueprint(unitBlueprintID);
             unit.name = name;
             unit.Stats = new Stats();//ScriptableObject.CreateInstance<Stats>();
             unit.Stats.LoadData(statsData);
             unit.Growths = new Attributes(growthsData);//ScriptableObject.CreateInstance<Growths>();
             // unit.Growths.LoadData(growthsData);
-            unit.ExperienceManager = new ExperienceManager();
+            unit.ExperienceManager = new ExperienceManager(ExperienceManager);
             unit.ExperienceManager.Exp = ExperienceManager.Exp;
             unit.ExperienceManager.Level = ExperienceManager.Level;
             unit.TurnStateManager = TurnStateManager;
             unit.Hp = hp;
-            unit.EquippedWeapon = GameData.Instance.GetWeapon(weaponId);
+            unit.equippedWeapon = GameData.Instance.GetWeapon(weaponId);
             return unit;
             // unit.visuals = new UnitVisual();
             //

@@ -28,6 +28,7 @@ namespace Game.Manager
         private EndTurnState endTurnState;
         private AttackTutorial2State attackTutorial2State;
         private UseItemState useItemState;
+        private bool enabled = false;
         public void Init()
         {
             selectTutorialState=new SelectTutorialState(goddess, dialogManager, tutorialDialogs[0]);
@@ -41,17 +42,19 @@ namespace Game.Manager
 
         public void Update()
         {
+            if (!enabled)
+                return;
             stateMachine.Update();
         }
 
         public void Deactivate()
         {
-            throw new NotImplementedException();
+            enabled = false;
         }
 
         public void Activate()
         {
-            throw new NotImplementedException();
+            enabled = true;
         }
     }
 

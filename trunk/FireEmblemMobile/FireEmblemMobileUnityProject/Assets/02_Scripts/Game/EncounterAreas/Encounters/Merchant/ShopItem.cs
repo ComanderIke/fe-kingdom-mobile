@@ -8,12 +8,12 @@ public class ShopItem
     public Sprite sprite;
     public string description;
     public int stock;
-    public Item item;
+    public Item Item;
 
   
     public ShopItem(Item item, int stock = 1)
     {
-        this.item = item;
+        this.Item = item;
         this.name = item.Name;
         this.cost = item.cost;
         this.sprite = item.Sprite;

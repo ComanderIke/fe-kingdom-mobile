@@ -28,21 +28,13 @@ namespace Game.GameActors.Units
         //     return dmg;
         // }
 
-        public bool IsInEffective(MoveType unitMoveType)
+        public bool IsEffective(EffectType effect)
         {
-            return owner.GetEquippedWeapon().IsInEffective(unitMoveType);
+            return owner.GetEquippedWeapon().IsEffective(effect);
         }
-        public bool IsEffective(MoveType unitMoveType)
+        public float GetEffectiveCoefficient(EffectType effect)
         {
-            return owner.GetEquippedWeapon().IsEffective(unitMoveType);
-        }
-        public bool IsInEffective(WeaponType weaponType)
-        {
-            return owner.GetEquippedWeapon().IsInEffective(weaponType);
-        }
-        public bool IsEffective(WeaponType weaponType)
-        {
-            return owner.GetEquippedWeapon().IsEffective(weaponType);
+            return owner.GetEquippedWeapon().GetEffectiveCoefficient(effect);
         }
     }
 }

@@ -7,12 +7,12 @@ public class Inn
 {
     public List<ShopItem> shopItems = new List<ShopItem>();
     public Quest quest;
-    public Unit recruitableCharacter;
+    public UnitBP recruitableCharacter;
     public int drinkCost=25;
     public int eatCost=50;
     public int specialCost=80;
 
-    public Inn(Quest quest, Unit recruitableCharacter)
+    public Inn(Quest quest, UnitBP recruitableCharacter)
     {
         this.quest = quest;
         this.recruitableCharacter = recruitableCharacter;

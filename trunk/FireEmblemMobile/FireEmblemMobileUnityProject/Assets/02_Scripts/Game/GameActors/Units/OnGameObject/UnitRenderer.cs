@@ -5,6 +5,7 @@ using Game.GUI;
 using Game.Manager;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 using Utility;
@@ -34,7 +35,7 @@ namespace Game.GameActors.Units.OnGameObject
         [SerializeField] private TextMeshProUGUI xText;
         [SerializeField] private TextMeshProUGUI x2Text;
         
-        public Unit unit;
+        [FormerlySerializedAs("unitBp")] public Unit unit;
         private static readonly int Effective = Animator.StringToHash("effective");
         private static readonly int Ineffective = Animator.StringToHash("ineffective");
 
@@ -127,7 +128,7 @@ namespace Game.GameActors.Units.OnGameObject
         }
         private void OnEquippedWeapon()
         {
-            weaponTypeIcon.sprite = unit.EquippedWeapon.WeaponType.Icon;
+            weaponTypeIcon.sprite = unit.equippedWeapon.WeaponType.Icon;
             // EquippedItemBackground.color = ColorManager.Instance.GetFactionColor(unit.Faction.Id);
             // if (unit is Human human) {
             //     if (human.EquippedWeapon != null)
@@ -177,28 +178,39 @@ namespace Game.GameActors.Units.OnGameObject
         {
             if (character.BattleComponent.IsEffective(unit.MoveType))
             {
-                moveTypeAnimator.SetBool(Effective, true);
-                moveTypeAnimator.SetBool(Ineffective, false);
-            }
-            else if(character.BattleComponent.IsInEffective(unit.MoveType))
-            {
-                moveTypeAnimator.SetBool(Effective, false);
-                moveTypeAnimator.SetBool(Ineffective, true);
+                float eff = character.BattleComponent.GetEffectiveCoefficient(unit.MoveType);
+                
+                if(eff<1)
+                {
+                    moveTypeAnimator.SetBool(Effective, false);
+                    moveTypeAnimator.SetBool(Ineffective, true);
+                }
+                else
+                {
+                    moveTypeAnimator.SetBool(Effective, true);
+                    moveTypeAnimator.SetBool(Ineffective, false);
+                }
             }
             else
             {
                 moveTypeAnimator.SetBool(Effective, false);
                 moveTypeAnimator.SetBool(Ineffective, false);
             }
-            if (character.BattleComponent.IsEffective(unit.EquippedWeapon.WeaponType))
+
+            if (character.BattleComponent.IsEffective(unit.equippedWeapon.WeaponType))
             {
-                weaponTypeAnimator.SetBool(Effective, true);
-                weaponTypeAnimator.SetBool(Ineffective, false);
-            }
-            else if(character.BattleComponent.IsInEffective(unit.EquippedWeapon.WeaponType))
-            {
-                weaponTypeAnimator.SetBool(Effective, false);
-                weaponTypeAnimator.SetBool(Ineffective, true);
+                float eff= character.BattleComponent.GetEffectiveCoefficient(unit.equippedWeapon.WeaponType);
+                if(eff<1)
+                {
+                    weaponTypeAnimator.SetBool(Effective, false);
+                    weaponTypeAnimator.SetBool(Ineffective, true);
+                }
+                else 
+                {
+                    
+                    weaponTypeAnimator.SetBool(Effective, true);
+                    weaponTypeAnimator.SetBool(Ineffective, false);
+                }
             }
             else
             {

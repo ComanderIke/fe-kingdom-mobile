@@ -1,22 +1,21 @@
 ﻿using System;
-using System.Linq;
-using Game.GameActors.Units.Humans;
 using UnityEngine;
 
 namespace Game.GameActors.Items.Weapons
 {
     [Serializable]
-    [CreateAssetMenu(menuName = "GameData/Items/Relic", fileName = "Relic")]
-    public class Relic : EquipableItem
+    public class Relic:EquipableItem
     {
         [Header("RelicAttributes")] public UpgradeAttributes[] Attributes;
         public int Level = 1;
 
         public int maxLevel = 5;
-        //public int Weight;
-        //public int armor;
 
-        //public List<WeaponMixin> WeaponMixins;
+        public Relic(string name, string description, int cost, Sprite sprite, EquipmentSlotType slotType, int level, int maxLevel) : base(name, description, cost, sprite, slotType)
+        {
+            this.Level = level;
+            this.maxLevel = maxLevel;
+        }
 
 
         public string GetAttributeDescription()
@@ -44,6 +43,5 @@ namespace Game.GameActors.Items.Weapons
             return Attributes[Level-1].upgradeSmithingStoneCost;
         }
 
-      
     }
 }

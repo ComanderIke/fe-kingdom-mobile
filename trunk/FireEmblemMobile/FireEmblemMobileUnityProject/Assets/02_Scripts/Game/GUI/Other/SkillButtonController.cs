@@ -3,11 +3,12 @@ using Game.GameInput;
 using Game.Mechanics;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class SkillButtonController:MonoBehaviour
 {
-    public Skill skill;
+    [FormerlySerializedAs("skill")] public Skill skill;
     public Image Icon;
     public TextMeshProUGUI text;
     public SelectionUI selectionUI;

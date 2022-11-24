@@ -75,9 +75,8 @@ namespace Game.States
                     // }
                     // else
                     // {
-                        var unit = GameObject.Instantiate(spawn.unit) as Unit;
+                        var unit = spawn.GetUnit();
                         faction.AddUnit(unit);
-                        unit.Initialize();
                         unit.AIComponent.WeightSet = spawn.AIWeightSet;
 
                         unitInstantiator.PlaceCharacter(unit, spawn.X, spawn.Y);
@@ -157,7 +156,6 @@ namespace Game.States
         {
             
             unit.Faction = faction;
-            unit.Initialize();
             unit.Fielded = true;          
             unitInstantiator.PlaceCharacter(unit, x, y);
             Debug.Log("Spawn Unit"+ unit.name + " " + x + " " + y+" ");

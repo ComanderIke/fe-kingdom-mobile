@@ -1,6 +1,7 @@
 ﻿using Game.AI;
 using Game.GameActors.Units;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game.GameActors
 {
@@ -8,7 +9,7 @@ namespace Game.GameActors
     public class UnitSpawner : MonoBehaviour
     {
 
-        public Unit unit;
+        [FormerlySerializedAs("unit")] [SerializeField]private UnitBP unitBp;
         public FactionId FactionId;
         public WeightSet AIWeightSet;
         public int X => (int) transform.localPosition.x;
@@ -19,7 +20,12 @@ namespace Game.GameActors
         {
             transform.localPosition = new Vector3((int) transform.localPosition.x, (int) transform.localPosition.y,
                 (int) transform.localPosition.z);
-            spriteRenderer.sprite = unit.visuals.CharacterSpriteSet.MapSprite;
+            spriteRenderer.sprite = unitBp.visuals.CharacterSpriteSet.MapSprite;
+        }
+
+        public Unit GetUnit()
+        {
+            return unitBp.Create();
         }
     }
 }

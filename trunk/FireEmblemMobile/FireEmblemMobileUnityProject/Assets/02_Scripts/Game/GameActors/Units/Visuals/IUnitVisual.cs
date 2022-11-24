@@ -23,6 +23,15 @@ namespace Game.GameActors.Units
         public ICharacterUI UnitCharacterCircleUI;
         [HideInInspector]
         public UnitRenderer unitRenderer;
+
+        public UnitVisual(UnitVisual other)
+        {
+            CharacterSpriteSet = other.CharacterSpriteSet;
+            UnitEffectVisual = other.UnitEffectVisual;
+            Prefabs = other.Prefabs;
+            UnitCharacterCircleUI = other.UnitCharacterCircleUI;
+            unitRenderer = other.unitRenderer;
+        }
     }
 
    

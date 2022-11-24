@@ -10,59 +10,12 @@ using UnityEngine;
 
 namespace Game.WorldMapStuff.Model
 {
-    public class EncounterPosition
-    {
-        public List<string> MovedEncounterIds { get; set; }
-        public string EncounterNodeId { get; set; }
-
-        private EncounterNode encounterNode;
-        public EncounterNode EncounterNode
-        {
-            get
-            {
-                return encounterNode;
-            }
-            set
-            {
-                encounterNode = value;
-                EncounterNodeId = encounterNode.GetId();
-            }
-        }
-
-        private List<EncounterNode> movedEncounters;
-
-        public IReadOnlyList<EncounterNode> MovedEncounters
-        {
-            get
-            {
-                return movedEncounters.AsReadOnly();
-            }
-        }
-
-        public void AddMovedEncounter(EncounterNode node)
-        {
-            movedEncounters.Add(node);
-            MovedEncounterIds.Add(node.GetId());
-        }
-        public EncounterPosition()
-        {
-            movedEncounters = new List<EncounterNode>();
-            MovedEncounterIds = new List<string>();
-        }
-
-        public void RemoveMovedEncounterAt(int i)
-        {
-            movedEncounters.RemoveAt(i);
-            MovedEncounterIds.RemoveAt(i);
-        }
-    }
-    [CreateAssetMenu(fileName = "Party", menuName = "GameData/Party")]
-    public class Party:ScriptableObject
+    [System.Serializable]
+    public class Party
     {
 
         public event Action<int> onGoldChanged;
         public event Action<int> onSmithingStonesChanged;
-        [SerializeField] private bool isPlayerControlled;
         [SerializeField] public List<Unit> members;
         public static Action<Party> PartyDied;
         [SerializeField] int maxSize = 4;
@@ -99,8 +52,6 @@ namespace Game.WorldMapStuff.Model
         public event Action<Unit> onMemberRemoved;
         public event Action<Unit> onMemberAdded;
 
-        public bool IsPlayerControlled => isPlayerControlled;
-    
         public int SmithingStones
         {
             get
@@ -143,7 +94,14 @@ namespace Game.WorldMapStuff.Model
             get { return members[ActiveUnitIndex]; }
         }
 
-      
+        private void OnEnable()
+        {
+            for(int i=members.Count-1; i >=0; i--)
+            {
+                if (members[i] == null)
+                    members.RemoveAt(i);
+            }
+        }
 
         public bool IsAlive()
         {
@@ -155,7 +113,7 @@ namespace Game.WorldMapStuff.Model
             Debug.Log("Init Party");
             foreach (var member in members)
             {
-                member.Initialize();
+                Debug.Log(member.name + " initialized");
                 member.Party = this;
             }
         }
@@ -225,7 +183,6 @@ namespace Game.WorldMapStuff.Model
             {
                 Unit unit=data.Load();
                 Debug.Log("Load UnitData!"+unit.name);
-                unit.Initialize();
                 members.Add(unit);
             }
             

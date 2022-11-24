@@ -12,8 +12,18 @@ namespace Game.GameActors.Units.Humans
     public class SkillManager : ICloneable
     {
         public Action<int> SkillPointsUpdated;
-        [SerializeField] public List<Skill> Skills;
-        [SerializeField] public Skill Favourite;
+        private List<Skill> skills;
+
+        public List<Skill> Skills
+        {
+            get
+            {
+                if (skills == null)
+                    skills = new List<Skill>();
+                return skills;
+            }
+        }
+        public Skill Favourite;
         [SerializeField] private int skillPoints = 1;
 
         public int SkillPoints
@@ -27,13 +37,14 @@ namespace Game.GameActors.Units.Humans
             }
         }
 
-        [FormerlySerializedAs("SkillTree")] [SerializeField]
-        public SkillTree[] SkillTrees;
+        [SerializeField]
+     // [HideInInspector]
+        public SkillTree[] SkillBuildTrees;
 
+         
 
         public SkillManager(SkillManager sm)
         {
-            Skills = new List<Skill>();
             foreach (var skill in sm.Skills)
             {
                 Skills.Add(skill);
@@ -43,13 +54,12 @@ namespace Game.GameActors.Units.Humans
 
         public Skill GetSkill(string name)
         {
-            return Skills.Find(s => s.name == name);
+            return Skills.Find(s => s.Name == name);
         }
 
         public object Clone()
         {
             var clone = (SkillManager)MemberwiseClone();
-            clone.Skills = new List<Skill>();
             foreach (Skill skill in Skills)
             {
                 clone.Skills.Add(skill);
@@ -62,19 +72,19 @@ namespace Game.GameActors.Units.Humans
         {
             if (SkillPoints >= 1)
             {
-                if (Skills.Contains(clickedSkill.skill))
+                if (Skills.Contains(clickedSkill.Skill))
                 {
-                    Skills.Find(s => clickedSkill.skill.name == s.name).Level++;
+                    Skills.Find(s => clickedSkill.Skill.Name == s.Name).Level++;
                 }
                 else
                 {
-                    Skills.Add((clickedSkill.skill));
+                    Skills.Add((clickedSkill.Skill));
                     
-                    clickedSkill.skill.Level++;
-                    foreach (var skilltree in SkillTrees)
+                    clickedSkill.Skill.Level++;
+                    foreach (var skilltree in SkillBuildTrees)
                     {
                 
-                        var entry = skilltree.skillEntries.Find(se => se.skill.name == clickedSkill.skill.name);
+                        var entry = skilltree.skillEntries.Find(se => se.Skill.Name == clickedSkill.Skill.Name);
                         if (entry != null)
                         {
                             if(clickedSkill.row+1 > skilltree.currentDepth)
@@ -96,10 +106,10 @@ namespace Game.GameActors.Units.Humans
         {
             SkillTreeEntry entry = null;
             SkillTree tree = null;
-            foreach (var skilltree in SkillTrees)
+            foreach (var skilltree in SkillBuildTrees)
             {
                 
-                entry = skilltree.skillEntries.Find(se => se.skill.name == skillEntry.skill.name
+                entry = skilltree.skillEntries.Find(se => se.Skill.Name == skillEntry.Skill.Name
                                                           &&se.tree==skillEntry.tree
                                                           && se.row==skillEntry.row);
                 if (entry != null)
@@ -110,7 +120,7 @@ namespace Game.GameActors.Units.Humans
                 }
             }
 
-            Debug.Log(skillEntry.skill.name+" "+tree.currentDepth+" "+skillEntry.row);
+            Debug.Log(skillEntry.Skill.Name+" "+tree.currentDepth+" "+skillEntry.row);
             if(tree.currentDepth<skillEntry.row)
                 entry.SkillState = SkillState.NotLearnable;
             else
@@ -118,10 +128,10 @@ namespace Game.GameActors.Units.Humans
                 entry.SkillState = SkillState.Learnable;
             }
         
-            if (Skills.Contains(entry.skill))
+            if (Skills.Contains(entry.Skill))
             {
                 entry.SkillState = SkillState.Learned;
-                if ( entry.skill.Level ==  entry.skill.MaxLevel)
+                if ( entry.Skill.Level ==  entry.Skill.MaxLevel)
                     entry.SkillState = SkillState.Maxed;
             }
 
@@ -130,10 +140,11 @@ namespace Game.GameActors.Units.Humans
         }
         public void Init()
         {
-            for(int i=0; i < SkillTrees.Length; i++)
-            {
-                SkillTrees[i].Init();
-            }
+            if(SkillBuildTrees!=null)
+                foreach(var skillTree in SkillBuildTrees)
+                {
+                    skillTree.Init();
+                }
 
         }
     }

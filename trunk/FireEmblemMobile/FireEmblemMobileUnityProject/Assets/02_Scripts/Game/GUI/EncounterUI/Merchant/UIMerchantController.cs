@@ -82,7 +82,7 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
                 shopItems[i].SetValues(item, affordable, this);
             }
             if(selectedItem!=null)
-                buyItemUI.Show(selectedItem.item,  party.money >= merchant.shopItems[0].cost, buying);
+                buyItemUI.Show(selectedItem.Item,  party.money >= merchant.shopItems[0].cost, buying);
             else
             {
                 buyItemUI.Hide();
@@ -102,7 +102,7 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
                 shopItems[i].SetValues(new ShopItem(item.item, item.stock), affordable, this);
             }
             if(selectedItem !=null)
-                buyItemUI.Show(selectedItem.item,  true, buying);
+                buyItemUI.Show(selectedItem.Item,  true, buying);
             else
             {
                 buyItemUI.Hide();
@@ -120,13 +120,13 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
         if (buying)
         {
             party.Money -= selectedItem.cost;
-            party.Convoy.AddItem(selectedItem.item);
-            merchant.RemoveItem(selectedItem.item);
+            party.Convoy.AddItem(selectedItem.Item);
+            merchant.RemoveItem(selectedItem.Item);
         }
         else
         {
             party.Money += selectedItem.cost;
-            party.Convoy.RemoveItem(selectedItem.item);
+            party.Convoy.RemoveItem(selectedItem.Item);
         }
 
         buyItemUI.Hide();
@@ -138,9 +138,9 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
         selectedItem = item;
         Debug.Log(item.name+ " "+item.cost);
         if(buying)
-            buyItemUI.Show(item.item,  party.money >= item.cost, buying);
+            buyItemUI.Show(item.Item,  party.money >= item.cost, buying);
         else
-            buyItemUI.Show(item.item,  true, buying);
+            buyItemUI.Show(item.Item,  true, buying);
     }
 
     public void Hide()

@@ -4,13 +4,13 @@ public class QuestReward
 {
     public QuestRewardType RewardType;
     public int rewardAmount;
-    public EquipableItem rewardItem;
+    public EquipableItemBP RewardItemBp;
 
-    public QuestReward(QuestRewardType rewardType, int rewardAmount, EquipableItem rewardItem)
+    public QuestReward(QuestRewardType rewardType, int rewardAmount, EquipableItemBP rewardItemBp)
     {
         RewardType = rewardType;
         this.rewardAmount = rewardAmount;
-        this.rewardItem = rewardItem;
+        this.RewardItemBp = rewardItemBp;
     }
 }public enum QuestRewardType
 {

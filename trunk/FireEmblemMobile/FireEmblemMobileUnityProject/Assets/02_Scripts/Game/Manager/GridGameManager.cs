@@ -80,9 +80,13 @@ namespace Game.Manager
                 
                 FindObjectOfType<UnitSelectionSystem>()
             };
-            if(tutorial)
+            if (tutorial)
+            {
                 Systems.Add(FindObjectOfType<TutorialSystem>());
-            
+                GetSystem<TutorialSystem>().Activate();
+                Debug.Log("Adding TutorialSystem!");
+            }
+
 
         }
 

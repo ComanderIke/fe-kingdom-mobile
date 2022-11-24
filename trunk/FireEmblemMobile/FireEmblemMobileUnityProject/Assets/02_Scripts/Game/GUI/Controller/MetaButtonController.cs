@@ -73,7 +73,7 @@ public class MetaButtonController : MonoBehaviour
             background.color = learnedColor;
             level.color = maxTextColor;
         }
-        else if (Player.Instance.HasLearned(metaSkill))
+        else if (Player.Instance!=null&&Player.Instance.HasLearned(metaSkill))
         {
             background.color = learnedColor;
         }

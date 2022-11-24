@@ -26,9 +26,14 @@ public class MetaUpgradeController : MonoBehaviour
         #else
             transform.DeleteAllChildren();
         #endif
-        Player.Instance.onMetaUpgradesChanged -= CheckDependencies;
-        Player.Instance.onMetaUpgradesChanged += CheckDependencies;
+        if (Player.Instance != null)
+        {
+            Player.Instance.onMetaUpgradesChanged -= CheckDependencies;
+            Player.Instance.onMetaUpgradesChanged += CheckDependencies;
+        }
+
         Show();
+        
        
     }
 
@@ -53,14 +58,15 @@ public class MetaUpgradeController : MonoBehaviour
 
     private void OnDisable()
     {
-        Player.Instance.onMetaUpgradesChanged -= CheckDependencies;
+        if(Player.Instance!=null)
+            Player.Instance.onMetaUpgradesChanged -= CheckDependencies;
     }
 
     void UpdateUI()
     {
         foreach (var controller in instantiatedButtonControllers)
         {
-            if(Player.Instance.HasLearned(controller.metaSkill))
+            if(Player.Instance!=null&&Player.Instance.HasLearned(controller.metaSkill))
                 controller.SetUpgrade(Player.Instance.GetMetaUpgrade(controller.metaSkill));
             else
             {
@@ -75,7 +81,7 @@ public class MetaUpgradeController : MonoBehaviour
             
                 if(upg==null)
                     continue;
-                if(Player.Instance.HasLearned(upg))
+                if(Player.Instance!=null&&Player.Instance.HasLearned(upg))
                     continue;
                 
                 if (CheckNeighborsLearned(upg))
@@ -101,7 +107,7 @@ public class MetaUpgradeController : MonoBehaviour
         if (xPos >= 0)
         {
             var leftNeighbor = upgradeGrid[xPos, yPos];
-            if (leftNeighbor != null&&(Player.Instance.HasLearned(leftNeighbor)))
+            if (leftNeighbor != null&&(Player.Instance!=null&&Player.Instance.HasLearned(leftNeighbor)))
             {
                 return true;
             }
@@ -111,7 +117,7 @@ public class MetaUpgradeController : MonoBehaviour
         if (xPos < xSize)
         {
             var rightNeighbor = upgradeGrid[xPos, yPos];
-            if (rightNeighbor != null&&(Player.Instance.HasLearned(rightNeighbor)))
+            if (rightNeighbor != null&&(Player.Instance!=null&&Player.Instance.HasLearned(rightNeighbor)))
             {
                 return true;
             }
@@ -123,7 +129,7 @@ public class MetaUpgradeController : MonoBehaviour
         if (yPos >= 0)
         {
             var topNeighbor = upgradeGrid[xPos, yPos];
-            if (topNeighbor != null&&Player.Instance.HasLearned(topNeighbor))
+            if (topNeighbor != null&&Player.Instance!=null&&Player.Instance.HasLearned(topNeighbor))
             {
                 return true;
             }
@@ -133,7 +139,7 @@ public class MetaUpgradeController : MonoBehaviour
         if (yPos < ySize)
         {
             var bottomNeighbor = upgradeGrid[xPos, yPos];
-            if (bottomNeighbor != null&&Player.Instance.HasLearned(bottomNeighbor))
+            if (bottomNeighbor != null&&Player.Instance!=null&&Player.Instance.HasLearned(bottomNeighbor))
             {
                 return true;
             }

@@ -54,18 +54,18 @@ namespace LostGrace
     void UpdateUI()
     {
         Debug.Log("UpdateDetail");
-        if (SkillEntry == null || SkillEntry.skill == null)
+        if (SkillEntry == null || SkillEntry.Skill == null)
         {
             gameObject.SetActive(false);
             return;
         }
         if(!gameObject.activeSelf)
             gameObject.SetActive(true);
-        name.text = SkillEntry.skill.name;
-        description.text =  SkillEntry.skill.Description;
+        name.text = SkillEntry.Skill.Name;
+        description.text =  SkillEntry.Skill.Description;
       
-        level.text = "" +  SkillEntry.skill.Level + "/" +  SkillEntry.skill.MaxLevel;
-        icon.sprite =  SkillEntry.skill.GetIcon();
+        level.text = "" +  SkillEntry.Skill.Level + "/" +  SkillEntry.Skill.MaxLevel;
+        icon.sprite =  SkillEntry.Skill.GetIcon();
         level.transform.gameObject.SetActive(true);
    
         description.transform.gameObject.SetActive(true);
@@ -77,8 +77,8 @@ namespace LostGrace
         upgradeTextGo.gameObject.SetActive(false);
         levelTextGo.gameObject.SetActive(false);
         user.SkillManager.UpdateSkillState(SkillEntry);
-        currentText.SetText(SkillEntry.skill.CurrentUpgradeText());
-        upgText.SetText(SkillEntry.skill.NextUpgradeText());
+        currentText.SetText(SkillEntry.Skill.CurrentUpgradeText());
+        upgText.SetText(SkillEntry.Skill.NextUpgradeText());
    
         Debug.Log("SkillState; "+SkillEntry.SkillState);
 

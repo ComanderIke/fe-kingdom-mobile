@@ -9,13 +9,14 @@ using Game.GUI;
 using Game.WorldMapStuff.Model;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class UICharacterViewController : MonoBehaviour
 {
     public Canvas canvas;
     // public DropArea dropArea;
-    public Unit unit;
+    [FormerlySerializedAs("unitBp")] public Unit unit;
     public TextMeshProUGUI charName;
 
 

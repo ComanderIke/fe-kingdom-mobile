@@ -31,7 +31,7 @@ public class SkillTreeUI : MonoBehaviour
         this.u = u;
         int cnt = 0;
         skillPoints.SetText(""+u.SkillManager.SkillPoints);
-        foreach (var skillTree in u.SkillManager.SkillTrees)
+        foreach (var skillTree in u.SkillManager.SkillBuildTrees)
         {
             skillTreeRenderer[cnt].Show(skillTree, u, this);
             cnt++;

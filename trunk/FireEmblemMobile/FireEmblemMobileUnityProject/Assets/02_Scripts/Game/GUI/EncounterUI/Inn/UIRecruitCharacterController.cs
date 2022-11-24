@@ -8,9 +8,9 @@ public class UIRecruitCharacterController : UIButtonController
 {
     public new TextMeshProUGUI name;
     // Start is called before the first frame update
-    public void SetValues(Unit unit)
+    public void SetValues(UnitBP unit)
     {
         name.SetText(unit.name);
-        SetValues(unit.visuals.CharacterSpriteSet.FaceSprite, 50, unit.jobClass);
+        SetValues(unit.visuals.CharacterSpriteSet.FaceSprite, 50, "Class");
     }
 }

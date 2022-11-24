@@ -12,6 +12,7 @@ using GameEngine;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 namespace Game.GameResources
@@ -24,16 +25,16 @@ namespace Game.GameResources
         
 
         // [SerializeField] private List<EquipableItem> armor = default;
-        [SerializeField] private List<EquipableItem> relics = default;
-        [SerializeField] private Weapon[] allWeapons;
-        [SerializeField] private List<Weapon> staffs = default;
-        [SerializeField] private List<Weapon> spears = default;
-        [SerializeField] private List<Weapon> bows = default;
-        [SerializeField] private List<Weapon> swords = default;
-        [SerializeField] private List<Weapon> magic = default;
-        [SerializeField] private List<Item> consumables = default;
+        [SerializeField] private List<EquipableItemBP> relics = default;
+        [SerializeField] private WeaponBP[] allWeapons;
+        [SerializeField] private List<WeaponBP> staffs = default;
+        [SerializeField] private List<WeaponBP> spears = default;
+        [SerializeField] private List<WeaponBP> bows = default;
+        [SerializeField] private List<WeaponBP> swords = default;
+        [SerializeField] private List<WeaponBP> magic = default;
+        [SerializeField] private List<ItemBP> consumables = default;
         [SerializeField] private List<MetaUpgradeBP> metaUpgradeBps = default;
-        [FormerlySerializedAs("humans")] [SerializeField] private List<Unit> humanBlueprints = default;
+        [FormerlySerializedAs("humans")] [SerializeField] private List<UnitBP> humanBlueprints = default;
         [SerializeField] private List<Party> playerStartingParties = default;
         [SerializeField] public List<CampaignConfig> campaigns;
         [SerializeField] private BlessingData blessingData;
@@ -61,7 +62,7 @@ namespace Game.GameResources
         #if UNITY_EDITOR
         private void OnValidate()
         {
-            allWeapons = GetAllInstances<Weapon>();
+            allWeapons = GetAllInstances<WeaponBP>();
         }
 
         public static T[] GetAllInstances<T>() where T : ScriptableObject
@@ -78,40 +79,26 @@ namespace Game.GameResources
  
         }
 #endif
-
-        public Party GetCampaignParty(int campaignIndex)
-        {
-            var tmpMembers = playerStartingParties[campaignIndex].members;
-            var party =  (playerStartingParties[campaignIndex]);
-            party.members = new List<Unit>();
-            foreach (var member in tmpMembers)
-            {
-                Unit unit = Instantiate(member);
-                unit.Initialize();
-                party.members.Add(unit);
-            }
-
-            return party;
-        }
+        
       
         public Weapon GetWeapon(string name)
         {
-            Weapon weapon = null;
-            weapon = swords.Find(a => a.name == name);
-            if(weapon==null)
-                weapon = bows.Find(a => a.name == name);
-            if(weapon==null)
-                weapon = magic.Find(a => a.name == name);
-            if(weapon==null)
-                weapon = spears.Find(a => a.name == name);
-            return Instantiate(weapon);
+            WeaponBP weaponBp = null;
+            weaponBp = swords.Find(a => ((Object)a).name == name);
+            if(weaponBp==null)
+                weaponBp = bows.Find(a => ((Object)a).name == name);
+            if(weaponBp==null)
+                weaponBp = magic.Find(a => ((Object)a).name == name);
+            if(weaponBp==null)
+                weaponBp = spears.Find(a => ((Object)a).name == name);
+            if (weaponBp == null)
+                return null;
+            return (Weapon)weaponBp.Create();
         }
-        public Unit GetHumanBlueprint(string name)
+        public Unit GetHumanFromBlueprint(string name)
         {
             Debug.Log("name: " + name);
-            var human = Instantiate(humanBlueprints.Find(a => a.bluePrintID == name));
-            human.InitEquipment();
-            return human;
+            return humanBlueprints.Find(a => a.bluePrintID == name).Create();
         }
         public MetaUpgradeBP GetMetaUpgradeBlueprints(string name)
         {
@@ -129,22 +116,15 @@ namespace Game.GameResources
             //Dont Instantiate use original
             return find;
         }
-
-
-        public Item GetRandomPotion()
-        {
-            return Instantiate(consumables[Random.Range(0, consumables.Count-1)]);
-        }
         
-
-        public EquipableItem GetRandomMagic()
+        public Weapon GetRandomMagic()
         {
-            return Instantiate(magic[Random.Range(0, magic.Count-1)]);
+            return (Weapon)magic[Random.Range(0, magic.Count-1)].Create();
         }
 
-        public EquipableItem GetRandomSword()
+        public Weapon GetRandomSword()
         {
-            return Instantiate(swords[Random.Range(0, swords.Count-1)]);
+            return (Weapon)swords[Random.Range(0, swords.Count-1)].Create();
         }
 
         // public EquipableItem GetRandomArmor()
@@ -154,32 +134,28 @@ namespace Game.GameResources
 
         public EquipableItem GetRandomRelic()
         {
-            return Instantiate(relics[Random.Range(0, relics.Count-1)]);
+            return (EquipableItem)relics[Random.Range(0, relics.Count-1)].Create();
         }
 
-        public EquipableItem GetRandomStaff()
+        public Weapon GetRandomStaff()
         {
-            return Instantiate(staffs[Random.Range(0, staffs.Count-1)]);
+            return (Weapon)staffs[Random.Range(0, staffs.Count-1)].Create();
         }
 
-        public Item GetHealthPotion()
+        public HealthPotion GetHealthPotion()
         {
-            return Instantiate(consumables[0]);
+            return (HealthPotion)consumables[0].Create();
+        }
+        
+
+        public Weapon GetRandomBow()
+        {
+            return (Weapon)bows[Random.Range(0, bows.Count-1)].Create();
         }
 
-        public Item GetSPotion()
+        public Weapon GetRandomSpear()
         {
-            return Instantiate(consumables[1]);
-        }
-
-        public EquipableItem GetRandomBow()
-        {
-            return Instantiate(bows[Random.Range(0, bows.Count-1)]);
-        }
-
-        public EquipableItem GetRandomSpear()
-        {
-            return Instantiate(spears[Random.Range(0, spears.Count-1)]);
+            return (Weapon)spears[Random.Range(0, spears.Count-1)].Create();
         }
 
         public IBlessingData GetBlessingData()

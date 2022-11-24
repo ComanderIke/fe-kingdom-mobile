@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Game.Mechanics;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game.GameActors.Units.OnGameObject
 {
@@ -22,7 +23,7 @@ namespace Game.GameActors.Units.OnGameObject
         private static readonly int AnimationDownRight = Animator.StringToHash("BattleAnimationDownRight");
         private static readonly int AnimationUpLeft = Animator.StringToHash("BattleAnimationUpLeft");
         private static readonly int AnimationUpRight = Animator.StringToHash("BattleAnimationUpRight");
-        public Unit unit;
+        [FormerlySerializedAs("unitBp")] public Unit unit;
         private Vector3 lastPosition;
         private bool moving;
         void Start()

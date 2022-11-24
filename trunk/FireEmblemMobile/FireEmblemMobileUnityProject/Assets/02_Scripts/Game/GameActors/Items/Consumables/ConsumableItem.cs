@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using Game.GameActors.Units;
-using Game.GameActors.Units.Humans;
 using Game.WorldMapStuff.Model;
+using UnityEngine;
 
 namespace Game.GameActors.Items
 {
-    public enum ItemTarget
-    {
-        Self,
-        Ally,
-        Enemy
-    }
     [Serializable]
     public abstract class ConsumableItem:Item{
         public ItemTarget target;
@@ -19,6 +12,11 @@ namespace Game.GameActors.Items
         public virtual void Use(Unit character, Convoy convoy)
         {
             convoy.RemoveItem(this);
+        }
+
+        protected ConsumableItem(string name, string description, int cost, Sprite sprite, ItemTarget target) : base(name, description, cost, sprite)
+        {
+            this.target = target;
         }
     }
 }

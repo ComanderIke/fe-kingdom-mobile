@@ -9,37 +9,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af959c221bf9f9f4d9c129ad64f8415d, type: 3}
+  m_Script: {fileID: 11500000, guid: bbb843360a1e2024e9821031d19ee784, type: 3}
   m_Name: SkeletRiderBP
   m_EditorClassIdentifier: 
-  Class: {fileID: 11400000, guid: c9fb62633f511e34e9f6889cbde27e91, type: 2}
-  EquippedWeapon: {fileID: 11400000, guid: f1c1c884af0a0a14cb2d196a524fcbb8, type: 2}
+  equippedWeaponBp: {fileID: 0}
   EquippedRelic1: {fileID: 0}
   EquippedRelic2: {fileID: 0}
-  name: SkeletonRider
-  jobClass: 
+  name: 
   stats:
     AttackRanges: 
     Attributes:
-      STR: 4
-      INT: 1
-      DEX: 2
-      AGI: 4
-      <CON>k__BackingField: 3
-      LCK: 1
-      DEF: 2
-      FAITH: 1
-    Mov: 3
+      STR: 30
+      INT: 30
+      DEX: 30
+      AGI: 30
+      <CON>k__BackingField: 0
+      LCK: 30
+      DEF: 30
+      FAITH: 30
+    Mov: 0
   growths:
     STR: 30
     INT: 30
     DEX: 30
     AGI: 30
-    <CON>k__BackingField: 30
+    <CON>k__BackingField: 0
     LCK: 30
     DEF: 30
     FAITH: 30
-  moveType: {fileID: 11400000, guid: 580bbea6e1e3e824a81881f8e2a825ba, type: 2}
+  moveType: {fileID: 0}
   SkillManager:
     Skills: []
     Favourite: {fileID: 0}
@@ -47,19 +45,15 @@ MonoBehaviour:
     SkillTrees: []
   bluePrintID: 
   visuals:
-    CharacterSpriteSet: {fileID: 11400000, guid: 21ad3e9768d1ab444a617f8586816cc5,
-      type: 2}
-    UnitEffectVisual: {fileID: 11400000, guid: af10e6087dc82f34ebed15c0092e0174, type: 2}
+    CharacterSpriteSet: {fileID: 0}
+    UnitEffectVisual: {fileID: 0}
     Prefabs:
-      MapAnimatedSprite: {fileID: 2861010742256422526, guid: f782b017bae238340ba6faff38e743c9,
-        type: 3}
-      EncounterAnimatedSprite: {fileID: 2861010742256422526, guid: f782b017bae238340ba6faff38e743c9,
-        type: 3}
-      UIAnimatorController: {fileID: 22100000, guid: 935d962dbfa06f247a8c933d24007ffd,
-        type: 2}
+      MapAnimatedSprite: {fileID: 0}
+      EncounterAnimatedSprite: {fileID: 0}
+      UIAnimatorController: {fileID: 0}
     UnitCharacterCircleUI: {fileID: 0}
     unitRenderer: {fileID: 0}
   experienceManager:
-    level: 1
+    level: 0
     exp: 0
-    MaxExp: 100
+    MaxExp: 0

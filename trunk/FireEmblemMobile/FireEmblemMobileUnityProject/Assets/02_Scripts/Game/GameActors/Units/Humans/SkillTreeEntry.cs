@@ -2,6 +2,7 @@
 using Game.GameActors.Units.Skills;
 
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [System.Serializable]
 public class SkillTreeEntry
@@ -11,14 +12,21 @@ public class SkillTreeEntry
     public int row;
     // public int[] statRequirements;
     //public Skill[] skillRequirements;
-    public Skill skill;
+    [SerializeField] private SkillBP skillBp;
     public SkillState SkillState = SkillState.NotLearnable;
     public SkillTree tree;
 
-
-    public void Init()
+    private Skill skill;
+    public Skill Skill
     {
-        if(skill!=null)
-            skill = ScriptableObject.Instantiate(skill);
+        get
+        {
+            if (skill == null&&skillBp!=null)
+                skill = skillBp.Create();
+            return skill;
+        }
     }
+
+
+
 }

@@ -22,7 +22,7 @@ public class Church
         ShopItem itemToRemove = null;
         foreach (var shopItem in shopItems)
         {
-            if (shopItem.item == selectedItem)
+            if (shopItem.Item == selectedItem)
             {
               
                 itemToRemove = shopItem;

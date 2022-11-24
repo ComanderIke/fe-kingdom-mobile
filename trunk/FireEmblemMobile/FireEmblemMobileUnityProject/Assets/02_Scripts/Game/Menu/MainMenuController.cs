@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
+using Game.WorldMapStuff.Model;
 using LostGrace;
+using Menu;
 using UnityEngine;
 
 namespace Game.GUI
@@ -68,6 +70,12 @@ namespace Game.GUI
         }
 
         public void StartGame()
+        {
+            SceneTransferData.Instance.Reset();
+            //SceneTransferData.Instance.TutorialBattle1 = true;
+            SceneController.LoadSceneAsync(Scenes.EncounterArea, false);
+        }
+        public void StartHub()
         {
             StartCoroutine(TransitionAnimation());
         }

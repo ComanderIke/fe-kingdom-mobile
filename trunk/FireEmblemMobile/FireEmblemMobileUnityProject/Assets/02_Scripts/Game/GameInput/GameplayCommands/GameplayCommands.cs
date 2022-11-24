@@ -59,7 +59,7 @@ namespace Game.GameInput
         }
         public void ViewUnit(Unit u)
         {
-            Debug.Log("GameInput: View Unit: " + ((Object) u).name);
+            Debug.Log("GameInput: View Unit: " + u.name);
             OnViewUnit?.Invoke(u);
         }
         public void Wait(IGridActor u)
@@ -77,7 +77,7 @@ namespace Game.GameInput
             Debug.Log("SelectSkill");
             OnSelectSkill(s);
         }
-        public void UseItem(Item i)
+        public void UseItem(ItemBP i)
         {
             throw new NotImplementedException();
         }

@@ -53,7 +53,7 @@ public class ToolTipSystem : MonoBehaviour
     }
     public static void ShowSkill(Skill skill, Vector3 position)
     {
-        instance.skillToolTip.SetValues(skill, skill.name,skill.Description,skill.Icon, position);
+        instance.skillToolTip.SetValues(skill, skill.Name,skill.Description,skill.Icon, position);
         
         instance.skillToolTip.gameObject.SetActive(true);
     }

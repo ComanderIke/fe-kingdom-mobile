@@ -9,57 +9,51 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af959c221bf9f9f4d9c129ad64f8415d, type: 3}
+  m_Script: {fileID: 11500000, guid: bbb843360a1e2024e9821031d19ee784, type: 3}
   m_Name: SkeletNecroBP
   m_EditorClassIdentifier: 
-  Class: {fileID: 11400000, guid: c9fb62633f511e34e9f6889cbde27e91, type: 2}
-  EquippedWeapon: {fileID: 11400000, guid: 5e31920663f79f74c876da00046ef3e1, type: 2}
+  equippedWeaponBp: {fileID: 0}
   EquippedRelic1: {fileID: 0}
   EquippedRelic2: {fileID: 0}
-  name: Skeleton Necromancer
-  jobClass: 
+  name: 
   stats:
     AttackRanges: 
     Attributes:
-      STR: 2
-      INT: 5
-      DEX: 3
-      AGI: 2
-      <CON>k__BackingField: 5
-      LCK: 1
-      DEF: 3
-      FAITH: 4
-    Mov: 2
+      STR: 30
+      INT: 30
+      DEX: 30
+      AGI: 30
+      <CON>k__BackingField: 0
+      LCK: 30
+      DEF: 30
+      FAITH: 30
+    Mov: 0
   growths:
     STR: 30
     INT: 30
     DEX: 30
     AGI: 30
-    <CON>k__BackingField: 30
+    <CON>k__BackingField: 0
     LCK: 30
     DEF: 30
     FAITH: 30
-  moveType: {fileID: 11400000, guid: bff40a3de87900a4496abf2b9dfca7a2, type: 2}
+  moveType: {fileID: 0}
   SkillManager:
     Skills: []
     Favourite: {fileID: 0}
-    SkillPoints: 0
+    skillPoints: 0
     SkillTrees: []
   bluePrintID: 
   visuals:
-    CharacterSpriteSet: {fileID: 11400000, guid: 3431388b4a93f654daeab5a45aba55f5,
-      type: 2}
-    UnitEffectVisual: {fileID: 11400000, guid: af10e6087dc82f34ebed15c0092e0174, type: 2}
+    CharacterSpriteSet: {fileID: 0}
+    UnitEffectVisual: {fileID: 0}
     Prefabs:
-      MapAnimatedSprite: {fileID: 2861010742256422526, guid: 4f13a150b2b1d1a4fa59a7896592d6ea,
-        type: 3}
-      EncounterAnimatedSprite: {fileID: 2861010742256422526, guid: 4f13a150b2b1d1a4fa59a7896592d6ea,
-        type: 3}
-      UIAnimatorController: {fileID: 22100000, guid: 047b7a03fa29eec4eb9cbfdd6f5ac585,
-        type: 2}
+      MapAnimatedSprite: {fileID: 0}
+      EncounterAnimatedSprite: {fileID: 0}
+      UIAnimatorController: {fileID: 0}
     UnitCharacterCircleUI: {fileID: 0}
     unitRenderer: {fileID: 0}
   experienceManager:
-    level: 1
+    level: 0
     exp: 0
-    MaxExp: 100
+    MaxExp: 0

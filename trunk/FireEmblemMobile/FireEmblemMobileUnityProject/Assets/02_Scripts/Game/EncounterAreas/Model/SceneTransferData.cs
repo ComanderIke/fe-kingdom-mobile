@@ -21,7 +21,7 @@ namespace Game.WorldMapStuff.Model
         // public LocationData LocationData { get; set; }
 
      
-        public List<Unit> UnitsGoingIntoBattle;
+        public List<UnitBP> UnitsGoingIntoBattle;
         public BattleOutcome BattleOutCome = BattleOutcome.None;
         public Action BattleFinished;
 
@@ -29,7 +29,7 @@ namespace Game.WorldMapStuff.Model
         {
             BattleOutCome = BattleOutcome.None;
             EnemyArmyData = null;
-            UnitsGoingIntoBattle = new List<Unit>();
+            UnitsGoingIntoBattle = new List<UnitBP>();
         }
     }
 }

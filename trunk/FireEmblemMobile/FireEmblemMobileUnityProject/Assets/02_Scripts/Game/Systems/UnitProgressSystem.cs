@@ -19,7 +19,7 @@ namespace Game.Mechanics
 {
     public interface IExpRenderer
     {
-        void Play(Unit unit, Vector3 startPos, int exp);
+        void Play(Unit unitBp, Vector3 startPos, int exp);
         event Action OnFinished;
     }
     public class UnitProgressSystem : IEngineSystem

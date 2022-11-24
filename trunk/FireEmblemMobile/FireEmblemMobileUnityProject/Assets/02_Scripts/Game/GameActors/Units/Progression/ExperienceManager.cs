@@ -14,6 +14,13 @@ namespace Game.GameActors.Units
         public LevelupEvent LevelUp;
 
 
+        public ExperienceManager(ExperienceManager otherExpManager)
+        {
+            this.exp = otherExpManager.exp;
+            this.level = otherExpManager.level;
+            this.MaxExp = otherExpManager.MaxExp;
+            this.ExpLeftToDrain = otherExpManager.ExpLeftToDrain;
+        }
 
         [SerializeField]
         private int level = 1;

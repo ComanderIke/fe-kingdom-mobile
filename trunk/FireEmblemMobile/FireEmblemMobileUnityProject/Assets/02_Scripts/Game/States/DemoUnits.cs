@@ -9,7 +9,7 @@ namespace Game.States
     public class DemoUnits:MonoBehaviour
     {
         [SerializeField]
-        private List<Unit> units;
+        private List<UnitBP> units;
         [SerializeField]
         public BattleMap battleMap;
         // [SerializeField]
@@ -25,7 +25,7 @@ namespace Game.States
             var list = new List<Unit>();
             foreach (var unit in units)
             {
-                list.Add(Instantiate(unit));
+                list.Add(unit.Create());
             }
 
             return list;

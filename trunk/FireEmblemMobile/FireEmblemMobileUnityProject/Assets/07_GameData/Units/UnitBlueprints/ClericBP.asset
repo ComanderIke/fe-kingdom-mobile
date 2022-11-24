@@ -9,17 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af959c221bf9f9f4d9c129ad64f8415d, type: 3}
+  m_Script: {fileID: 11500000, guid: bbb843360a1e2024e9821031d19ee784, type: 3}
   m_Name: ClericBP
   m_EditorClassIdentifier: 
-  Class: {fileID: 11400000, guid: c9fb62633f511e34e9f6889cbde27e91, type: 2}
-  EquippedWeapon: {fileID: 11400000, guid: 14ec2b8d55058c24d8818cdbb2e963d9, type: 2}
+  equippedWeaponBp: {fileID: 11400000, guid: 14ec2b8d55058c24d8818cdbb2e963d9, type: 2}
   EquippedRelic1: {fileID: 0}
   EquippedRelic2: {fileID: 0}
   name: Lydia
-  jobClass: 
   stats:
-    AttackRanges: 
+    AttackRanges: 01000000
     Attributes:
       STR: 3
       INT: 3
@@ -45,9 +43,15 @@ MonoBehaviour:
     Favourite: {fileID: 0}
     skillPoints: 1
     SkillTrees:
-    - {fileID: 11400000, guid: f5ddedda43b6ba547bcacccfe92dbbd4, type: 2}
-    - {fileID: 11400000, guid: 91eae55491a36c14b83860b1a0fd1291, type: 2}
-    - {fileID: 11400000, guid: a63254c588e7af64eb96f0905ce090f7, type: 2}
+    - name: TestSkillTree
+      currentDepth: 0
+      skillEntries: []
+    - name: TestSkillTree
+      currentDepth: 0
+      skillEntries: []
+    - name: TestSkillTree
+      currentDepth: 0
+      skillEntries: []
   bluePrintID: 
   visuals:
     CharacterSpriteSet: {fileID: 11400000, guid: 360a4df67a83ed9479500506440226cb,

@@ -1,6 +1,7 @@
 using Game.GameActors.Units;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Game.GUI
@@ -16,7 +17,7 @@ namespace Game.GUI
         public RectTransform rectTransform;
         private CanvasGroup canvasGroup;
 
-        public Unit unit;
+        [FormerlySerializedAs("unitBp")] public Unit unit;
         public UnitSelectionUI UnitSelectionUI
         {
             get;

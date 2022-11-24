@@ -8,9 +8,8 @@ using UnityEngine;
 
 namespace Game.GameActors.Units.Skills
 {
-    [Serializable]
-    [CreateAssetMenu(menuName="GameData/Skills/PositionTarget", fileName = "PositionTargetSkill")]
-    public class PositionTargetSkill : Skill
+    [System.Serializable]
+        public class PositionTargetSkill : Skill
     {
         public int power;
         public int range;
@@ -29,7 +28,7 @@ namespace Game.GameActors.Units.Skills
                     yPosition < tiles.GetLength(1))
                 {
 
-                    Instantiate(AnimationObject, tiles[xPosition, yPosition].GetTransform().position, Quaternion.identity, null);
+                    GameObject.Instantiate(AnimationObject, tiles[xPosition, yPosition].GetTransform().position, Quaternion.identity, null);
                 }
             }
             
