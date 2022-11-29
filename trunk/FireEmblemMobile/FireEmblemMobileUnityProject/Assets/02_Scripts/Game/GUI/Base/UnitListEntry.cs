@@ -7,15 +7,15 @@ namespace Game.GUI.Base
 {
     public class UnitListEntry : MonoBehaviour
     {
-        private UnitBP unitBp;
+        private Unit unit;
         [SerializeField] private Image sprite = default;
         [SerializeField] private TextMeshProUGUI nameText = default;
 
-        public void SetUnit(UnitBP unitBp)
+        public void SetUnit(Unit unit)
         {
-            this.unitBp = unitBp;
-            sprite.sprite = unitBp.visuals.CharacterSpriteSet.MapSprite;
-            nameText.text = unitBp.name;
+            this.unit = unit;
+            sprite.sprite = this.unit.visuals.CharacterSpriteSet.MapSprite;
+            nameText.text = this.unit.name;
         }
     }
 }

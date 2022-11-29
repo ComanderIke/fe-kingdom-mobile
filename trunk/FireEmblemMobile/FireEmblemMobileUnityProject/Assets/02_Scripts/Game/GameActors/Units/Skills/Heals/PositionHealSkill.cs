@@ -1,4 +1,5 @@
 ﻿using Game.Grid;
+using UnityEngine;
 
 namespace Game.GameActors.Units.Skills
 {
@@ -24,6 +25,10 @@ namespace Game.GameActors.Units.Skills
             //Heall all Targets
             //make List of Target
             base.Activate(user,tiles, x, y);
+        }
+
+        public PositionHealSkill(string name, string description, Sprite icon, GameObject animationObject, int cooldown, string[] upgradeDescriptions, int power, int range, int size, SkillTargetArea targetArea, bool rooted) : base(name, description, icon, animationObject, cooldown, upgradeDescriptions, power, range, size, targetArea, rooted)
+        {
         }
     }
 }

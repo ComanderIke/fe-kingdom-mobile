@@ -66,15 +66,18 @@ public class AnimationStateManager
     }
     private void ContinueBattle()
     {
+        Debug.Log("Continue Battle");
         if (attackSequenzIndex >= currentRound.AttacksData.Count)
         {
             AllAttacksFinished();
+            Debug.Log("Finished");
             return;
         }
         
         characterAnimations.CharacterAttack(currentRound.AttacksData[attackSequenzIndex],currentRound.AttacksData[attackSequenzIndex].attacker, leftCharacterAttacker);
         characterAnimations.OnAttackFinished -= AttackFinished;
         characterAnimations.OnAttackFinished += AttackFinished;
+        Debug.Log("CameraShake Battle");
         TimeLineController.CameraShake();
 
     }

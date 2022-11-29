@@ -9,6 +9,7 @@ using Game.Map;
 using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.UI;
 using GameEngine;
+using LostGrace;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -39,6 +40,8 @@ namespace Game.GameResources
         [SerializeField] public List<CampaignConfig> campaigns;
         [SerializeField] private BlessingData blessingData;
         [SerializeField] private EventData eventData;
+        [SerializeField]public BattleRewardConfig BattleRewardConfig { get; set; }
+
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void FirstInitialize()
         {

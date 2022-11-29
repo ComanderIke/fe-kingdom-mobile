@@ -26,7 +26,12 @@ namespace Game.GameActors.Units
 
         public UnitVisual(UnitVisual other)
         {
-            CharacterSpriteSet = other.CharacterSpriteSet;
+            CharacterSpriteSet = ScriptableObject.CreateInstance<CharacterSpriteSet>();
+            CharacterSpriteSet.animatedSprite = other.CharacterSpriteSet.animatedSprite;
+            CharacterSpriteSet.battleAnimatedSprite = other.CharacterSpriteSet.battleAnimatedSprite;
+            CharacterSpriteSet.FaceSprite = other.CharacterSpriteSet.FaceSprite;
+            CharacterSpriteSet.MapSprite = other.CharacterSpriteSet.MapSprite;
+            
             UnitEffectVisual = other.UnitEffectVisual;
             Prefabs = other.Prefabs;
             UnitCharacterCircleUI = other.UnitCharacterCircleUI;

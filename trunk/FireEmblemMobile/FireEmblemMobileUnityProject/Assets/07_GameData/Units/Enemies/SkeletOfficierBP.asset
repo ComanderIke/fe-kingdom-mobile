@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbb843360a1e2024e9821031d19ee784, type: 3}
   m_Name: SkeletOfficierBP
   m_EditorClassIdentifier: 
-  equippedWeaponBp: {fileID: 0}
+  equippedWeaponBp: {fileID: 11400000, guid: 136dc8b2823646443a535054778970a5, type: 2}
   EquippedRelic1: {fileID: 0}
   EquippedRelic2: {fileID: 0}
-  name: 
+  Name: 
   stats:
     AttackRanges: 
     Attributes:
@@ -27,7 +27,7 @@ MonoBehaviour:
       LCK: 30
       DEF: 30
       FAITH: 30
-    Mov: 0
+    Mov: 2
   growths:
     STR: 30
     INT: 30
@@ -37,20 +37,22 @@ MonoBehaviour:
     LCK: 30
     DEF: 30
     FAITH: 30
-  moveType: {fileID: 0}
+  moveType: {fileID: 11400000, guid: d13592b1fa0af024a841b121149b8014, type: 2}
   SkillManager:
-    Skills: []
-    Favourite: {fileID: 0}
     skillPoints: 0
-    SkillTrees: []
+    SkillBuildTrees: []
   bluePrintID: 
   visuals:
-    CharacterSpriteSet: {fileID: 0}
-    UnitEffectVisual: {fileID: 0}
+    CharacterSpriteSet: {fileID: 11400000, guid: 392c72f68c80c9149b520db7c54f784b,
+      type: 2}
+    UnitEffectVisual: {fileID: 11400000, guid: af10e6087dc82f34ebed15c0092e0174, type: 2}
     Prefabs:
-      MapAnimatedSprite: {fileID: 0}
-      EncounterAnimatedSprite: {fileID: 0}
-      UIAnimatorController: {fileID: 0}
+      MapAnimatedSprite: {fileID: 2861010742256422526, guid: 2103419a607df6f49b01cab5ef383302,
+        type: 3}
+      EncounterAnimatedSprite: {fileID: 2861010742256422526, guid: 2103419a607df6f49b01cab5ef383302,
+        type: 3}
+      UIAnimatorController: {fileID: 22100000, guid: ea4c9310a8034e041ad2f2875502cf58,
+        type: 2}
     UnitCharacterCircleUI: {fileID: 0}
     unitRenderer: {fileID: 0}
   experienceManager:

@@ -15,15 +15,33 @@ namespace Game.GameActors.Items.Weapons
         [SerializeField] private Sprite icon;
 
         public string Name => name;
-        [SerializeField] private Dictionary<EffectType, float> effectiveAgainst;
+        [SerializeField] private List<EffectType> effectiveAgainst;
+        [SerializeField] private List<float> effectiveAgainstCoefficients;
+        private Dictionary<EffectType, float> effectiveAgainstDict;
         public Sprite Icon => icon;
+        private Dictionary<EffectType, float> EffectiveAgainst{
+            get
+            {
+                if (effectiveAgainstDict == null)
+                { 
+                    effectiveAgainstDict = new Dictionary<EffectType, float>();
+                    for (int i = 0; i < effectiveAgainst.Count; i++)
+                    {
+                        effectiveAgainstDict.Add(effectiveAgainst[i], effectiveAgainstCoefficients[i]);
+                    }
+                }
+
+                return effectiveAgainstDict;
+            }
+        }
+
         public bool IsEffective(EffectType effectType)
         {
-            return effectiveAgainst.ContainsKey(effectType);
+            return EffectiveAgainst.ContainsKey(effectType);
         }
         public float GetEffectiveCoefficient(EffectType effectType)
         {
-            return effectiveAgainst[effectType];
+            return EffectiveAgainst[effectType];
         }
         
     }

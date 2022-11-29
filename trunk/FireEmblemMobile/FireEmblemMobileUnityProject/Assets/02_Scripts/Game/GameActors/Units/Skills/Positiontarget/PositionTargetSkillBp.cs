@@ -20,7 +20,8 @@ namespace Game.GameActors.Units.Skills
         
         public override Skill Create()
         {
-            return new PositionTargetSkill();
+            return new PositionTargetSkill(Name, Description, Icon, AnimationObject,Cooldown,UpgradeDescriptions,power, range, size, targetArea, rooted);
         }
     }
+    
 }

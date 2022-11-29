@@ -10,7 +10,7 @@ namespace LostGrace
         [SerializeField] private float expMul = 1.2f;
         public override Skill Create()
         {
-            return new ExpSkill();
+            return new ExpSkill(Name, Description, Icon, AnimationObject,Cooldown,UpgradeDescriptions, expMul);
         }
     }
 }

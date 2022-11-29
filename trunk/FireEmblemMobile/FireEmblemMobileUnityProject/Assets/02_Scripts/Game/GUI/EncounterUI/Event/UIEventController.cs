@@ -63,19 +63,19 @@ public class UIEventController : MonoBehaviour
         UpdateUI();
     }
 
-    void BattleEnded(BattleResult result)
+    void BattleEnded(AttackResult result)
     {
         BattleSystem.OnBattleFinished -= BattleEnded;
         var battleOutcome =current.outcomes[0];
         switch (result)
         {
-            case BattleResult.Draw: 
+            case AttackResult.Draw: 
                 if(current.outcomes.Count>=3)
                     battleOutcome = current.outcomes[2];
                 break;
-            case BattleResult.Win: battleOutcome = current.outcomes[0];
+            case AttackResult.Win: battleOutcome = current.outcomes[0];
                 break;
-            case BattleResult.Loss: if(current.outcomes.Count>=2)
+            case AttackResult.Loss: if(current.outcomes.Count>=2)
                     battleOutcome = current.outcomes[1];
                 break;
         }

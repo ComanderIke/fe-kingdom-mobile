@@ -14,7 +14,7 @@ namespace Game.GameActors.Units.Skills
         public string Description;
         public string[] UpgradeDescriptions;
         public string Name;
-
+        
         public abstract Skill Create();
     }
 }

@@ -11,7 +11,7 @@ namespace LostGrace
 
         public override Skill Create()
         {
-            return new AttackBonusSkill();
+            return new AttackBonusSkill(Name, Description, Icon, AnimationObject,Cooldown,UpgradeDescriptions, attackBonus);
         }
     }
 }

@@ -272,11 +272,11 @@ namespace Game.Mechanics
             Debug.Log(Attacker);
             Debug.Log(Defender);
             if (Attacker.IsAlive() && Defender.IsAlive())
-                BattleResult = BattleResult.Draw;
+                AttackResult = AttackResult.Draw;
             if (!Defender.IsAlive())
-                BattleResult = BattleResult.Win;
+                AttackResult = AttackResult.Win;
             if (!Attacker.IsAlive())
-                BattleResult = BattleResult.Loss;
+                AttackResult = AttackResult.Loss;
             foreach (var combatRound in combatRounds)
             {
                 Debug.Log("Combat Round: " +combatRound.RoundIndex);
@@ -302,7 +302,7 @@ namespace Game.Mechanics
             return new Vector2Int(attackPosition.X, attackPosition.Y);
         }
 
-        public BattleResult BattleResult { get; set; }
+        public AttackResult AttackResult { get; set; }
         public int GetDamageRatio()
         {
            

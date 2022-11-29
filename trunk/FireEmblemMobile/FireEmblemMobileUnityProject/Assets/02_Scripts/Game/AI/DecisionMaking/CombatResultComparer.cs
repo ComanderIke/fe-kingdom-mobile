@@ -4,7 +4,7 @@ using Game.Mechanics;
 
 namespace Game.AI
 {
-    public enum BattleResult
+    public enum AttackResult
     {
         Win,
         Draw,
@@ -59,17 +59,17 @@ namespace Game.AI
 
         private int CompareBattleResult(ICombatResult x, ICombatResult y)
         {
-            switch (x.BattleResult)
+            switch (x.AttackResult)
             {
-                case BattleResult.Win:
-                    return y.BattleResult == BattleResult.Win ? 0 : 1;
-                case BattleResult.Draw when y.BattleResult == BattleResult.Win:
+                case AttackResult.Win:
+                    return y.AttackResult == AttackResult.Win ? 0 : 1;
+                case AttackResult.Draw when y.AttackResult == AttackResult.Win:
                     return -1;
-                case BattleResult.Draw when y.BattleResult == BattleResult.Draw:
+                case AttackResult.Draw when y.AttackResult == AttackResult.Draw:
                     return 0;
-                case BattleResult.Draw:
+                case AttackResult.Draw:
                     return 1;
-                case BattleResult.Loss when y.BattleResult != BattleResult.Loss:
+                case AttackResult.Loss when y.AttackResult != AttackResult.Loss:
                     return -1;
                 default:
                     return 0;

@@ -19,5 +19,10 @@ namespace Game.GameActors.Units.Skills.Buffs
         {
             return user.Faction.Id == target.Faction.Id;
         }
+
+        public AllyTargetBuffSkill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, string[] upgradeDescr, Buff appliedBuff) : base(Name, description, icon, animationObject, cooldown, upgradeDescr)
+        {
+            this.appliedBuff = appliedBuff;
+        }
     }
 }

@@ -12,7 +12,7 @@ public class MonoUtility : MonoBehaviour
             Instance = this;
         else
         {
-            Destroy(gameObject);
+            Destroy(this);
         }
     }
 

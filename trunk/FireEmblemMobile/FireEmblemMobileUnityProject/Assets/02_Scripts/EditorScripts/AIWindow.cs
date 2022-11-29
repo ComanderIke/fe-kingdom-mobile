@@ -121,12 +121,12 @@ namespace __2___Scripts.External.Editor
                         if(index>= agentCombatResults[u].Count())
                             continue;
                         var result = agentCombatResults[u][index];
-                            switch (result.BattleResult)
+                            switch (result.AttackResult)
                             {
-                                case BattleResult.Draw:
+                                case AttackResult.Draw:
                                     BattleResultString = "D";
                                     break;
-                                case BattleResult.Loss:
+                                case AttackResult.Loss:
                                     BattleResultString = "L";
                                     break;
                             }

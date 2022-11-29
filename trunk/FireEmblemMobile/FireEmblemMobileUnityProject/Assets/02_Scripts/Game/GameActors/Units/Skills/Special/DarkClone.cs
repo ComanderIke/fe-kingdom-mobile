@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Game.GameActors.Units.Skills.Special
 {
@@ -11,6 +12,9 @@ namespace Game.GameActors.Units.Skills.Special
         {
             return 0;
         }
-        
+
+        public DarkClone(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, string[] upgradeDescr) : base(Name, description, icon, animationObject, cooldown, upgradeDescr)
+        {
+        }
     }
 }

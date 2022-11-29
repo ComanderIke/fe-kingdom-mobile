@@ -90,21 +90,19 @@ namespace Game.GUI
              {
                  if (battlePreview.AttacksData[i].attacker)
                  {
-                    // Debug.Log("AttackerDmg: "+battlePreview.AttacksData[i].Dmg);
+                   
                      attackerDmg.Add(battlePreview.AttacksData[i].Dmg);
                  }
                  else
                  {
-                    // Debug.Log("DefenderDmg: "+battlePreview.AttacksData[i].Dmg);
+       
                      defenderDmg.Add(battlePreview.AttacksData[i].Dmg);
                  }
              }
-             //Debug.Log("HPBar: "+battlePreview.AttackerStats.MaxHp+" "+battlePreview.AttackerStats.CurrentHp+" "+battlePreview.AttackerStats.AfterBattleHp);
+            
              hpBar.UpdateValues(battlePreview.AttackerStats.MaxHp, battlePreview.AttackerStats.CurrentHp, battlePreview.AttackerStats.AfterBattleHp, 
                  defenderDmg);
-            // spBars.SetPreviewValue(battlePreview.AttackerStats.CurrentSpBars,battlePreview.AttackerStats.AfterSpBars,battlePreview.AttackerStats.MaxSpBars);
-             //spBar.UpdateValues(battlePreview.AttackerStats.MaxSp, battlePreview.AttackerStats.CurrentSp, battlePreview.AttackerStats.AfterBattleSp, battlePreview.AttackerStats.IncomingSpDamage);
-             //Debug.Log("AttackCount: "+battlePreview.DefenderStats.AttackCount);
+
              if (battlePreview.DefenderStats.AttackCount == 0)
              {
                  dmgValueRight.text = "-";
@@ -126,34 +124,17 @@ namespace Game.GUI
                        battlePreview.DefenderStats.AfterBattleHp + " " +attackerDmg);
              hpBarRight.UpdateValues(battlePreview.DefenderStats.MaxHp, battlePreview.DefenderStats.CurrentHp, battlePreview.DefenderStats.AfterBattleHp,
                      attackerDmg);
-            // spBarsRight.SetPreviewValue(battlePreview.DefenderStats.CurrentSpBars,battlePreview.DefenderStats.AfterSpBars,battlePreview.DefenderStats.MaxSpBars);
-             //spBarRight.UpdateValues(battlePreview.DefenderStats.MaxSp, battlePreview.DefenderStats.CurrentSp, battlePreview.DefenderStats.AfterBattleSp, battlePreview.DefenderStats.IncomingSpDamage);
-            
              faceSpriteRight.color = new Color(1, 1, 1, 1);
 
-             //spdValue.text = "" + battlePreview.Attacker.Speed;
-             //defLabel.text = battlePreview.Attacker.IsPhysical ? "Def" : "Res";
-             //defValue.text = "" + battlePreview.Attacker.Defense;
-             //sklValue.text = "" + battlePreview.Attacker.Skill;
-           
-             //spdValueRight.text = "" + battlePreview.Defender.Speed;
-             //defLabelRight.text = battlePreview.Defender.IsPhysical ? "Def" : "Res";
-             //defValueRight.text = "" + battlePreview.Defender.Defense;
-             //sklValueRight.text = "" + battlePreview.Defender.Skill;
         }
 
         public override void Show(BattlePreview battlePreview, UnitVisual attackerVisual, UnitVisual defenderVisual)
         {
-            attackerSprite = attackerVisual.CharacterSpriteSet.FaceSprite;
-            defenderSprite = defenderVisual.CharacterSpriteSet.FaceSprite;
-            this.battlePreview = battlePreview;
-            this.gameObject.SetActive(true);
-            UpdateValues();
-            turnCount.SetActive(false);
-           
+            Show(battlePreview, attackerVisual, defenderVisual.CharacterSpriteSet.FaceSprite);
         }
         public override void Show(BattlePreview battlePreview, UnitVisual attackerVisual, Sprite attackableObjectSprite)
         {
+            Debug.Log("Show AttackPreview");
             attackerSprite = attackerVisual.CharacterSpriteSet.FaceSprite;
             defenderSprite = attackableObjectSprite;
             this.battlePreview = battlePreview;
@@ -196,11 +177,7 @@ namespace Game.GUI
             LeanTween.cancel(left);
             LeanTween.cancel(right);
         }
-
-        private void Update()
-        {
-            //UpdateValues();//TODO Remove after Testing
-        }
+        
 
         void OnEnable()
         {
@@ -215,32 +192,10 @@ namespace Game.GUI
        
         public override void Hide()
         {
+            Debug.Log("HideAttackPreview");
             turnCount.SetActive(true);
             this.gameObject.SetActive(false);
-            // if (!visible)
-            //     return;
-            // if (rectTransform == null)
-            //     rectTransform = GetComponent<RectTransform>();
-            // visible = false;
-            // ClearTweens();
-            // LeanTween.alphaCanvas(canvasGroup, 0, 0.2f).setEaseOutQuad();
-            //
-            // LeanTween.moveLocalX(left, -rectTransform.rect.width, 0.2f).setEaseOutQuad();
-            // LeanTween.moveLocalX(right, rectTransform.rect.width, 0.2f).setEaseOutQuad().setOnComplete(() => {
-            //     canvas.enabled = false;
-            //     foreach(var animation in uvAnimations)
-            //     {
-            //         animation.enabled = false;
-            //     }
-            //     foreach (var animation in fadeAnimations)
-            //     {
-            //         animation.enabled = false;
-            //     }
-            //     foreach (var animation in scaleAnimations)
-            //     {
-            //         animation.enabled = false;
-            //     }
-            // }) ;
+           
         }
     }
 }

@@ -28,13 +28,21 @@ namespace Game.GameActors.Players
 
         private void Awake()
         {
-            if(instance!=null)
+            Debug.Log("Awake player");
+            if (instance != null)
+            {
+                Debug.Log("Destroy player instance (duplicate)");
                 Destroy(this);
+                
+            }
+
             instance = this;
         }
 
         void Start()
         {
+            if(Party!=null)
+                Party.Initialize();
             SaveGameManager.RegisterDataPersistanceObject(this);
         }
     

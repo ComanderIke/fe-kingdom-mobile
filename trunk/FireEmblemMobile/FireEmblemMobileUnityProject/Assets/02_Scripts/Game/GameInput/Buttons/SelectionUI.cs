@@ -81,6 +81,7 @@ namespace Game.GameInput
                 SkillsButton.SetActive(false);
                
             }
+            Debug.Log("Convoy: "+Player.Instance.Party.Convoy);
             if(Player.Instance.Party.Convoy.Items.Count > 0)
                 ItemsButton.SetActive(true);
             else
@@ -124,11 +125,11 @@ namespace Game.GameInput
             SkillsButton.SetActive(false);
             CloseSkillButton.SetActive(true);
             SkillParentTransform.gameObject.SetActive(true);
-            UnitBP activeUnitBp = (UnitBP)GridGameManager.Instance.GetSystem<UnitSelectionSystem>().SelectedCharacter;
+            Unit activeUnit = (Unit)GridGameManager.Instance.GetSystem<UnitSelectionSystem>().SelectedCharacter;
             GUIUtility.ClearChildren(SkillParentTransform);
-            Debug.Log(activeUnitBp.name);
-            Debug.Log("SkillCount: "+activeUnitBp.SkillManager.Skills.Count);
-            foreach (var skill in activeUnitBp.SkillManager.Skills)
+            Debug.Log(activeUnit.name);
+            Debug.Log("SkillCount: "+activeUnit.SkillManager.Skills.Count);
+            foreach (var skill in activeUnit.SkillManager.Skills)
             {
                 var go = Instantiate(SkillButtonPrefab, SkillParentTransform);
                 go.GetComponent<SkillButtonController>().SetSkill(skill, this);

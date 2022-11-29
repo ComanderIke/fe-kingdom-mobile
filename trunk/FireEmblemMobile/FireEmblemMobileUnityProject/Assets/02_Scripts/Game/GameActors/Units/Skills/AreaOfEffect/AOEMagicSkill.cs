@@ -37,5 +37,9 @@ namespace Game.GameActors.Units.Skills
             //make List of Target
             base.Activate(user,tiles, x, y);
         }
+
+        public AOEMagicSkill(string name, string description, Sprite icon, GameObject animationObject, int cooldown, string[] upgradeDescriptions, int power, int range, int size, SkillTargetArea targetArea, bool rooted) : base(name, description, icon, animationObject, cooldown, upgradeDescriptions, power, range, size, targetArea, rooted)
+        {
+        }
     }
 }

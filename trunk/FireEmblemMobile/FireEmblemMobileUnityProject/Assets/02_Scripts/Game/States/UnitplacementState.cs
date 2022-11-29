@@ -101,7 +101,6 @@ namespace Game.States
         {
             Debug.Log("Create Demo Units!");
             var demoUnits = GameObject.FindObjectOfType<DemoUnits>().GetUnits();
-            Player.Instance.Party = new Party();
             Player.Instance.Party.members = demoUnits;
         }
         void InitFactions()

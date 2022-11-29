@@ -8,20 +8,20 @@ namespace Game.WorldMapStuff.Model
     [Serializable]
     public class Convoy
     {
+        [SerializeField] private List<ItemBP> startItems;
         [SerializeField] private List<StockedItem> items;
         [SerializeField] public event Action convoyUpdated;
         
-        public List<StockedItem> Items
-        {
-            get
-            {
-                return items;
-            }
-        }
+        public List<StockedItem> Items => items;
+        
 
-        public Convoy()
+        public void Init()
         {
-            items = new List<StockedItem>();
+            //items = new List<StockedItem>();
+            foreach (var itemBp in startItems)
+            {
+                AddItem(itemBp.Create());
+            }
         }
 
         public override string ToString()
@@ -39,7 +39,7 @@ namespace Game.WorldMapStuff.Model
             bool instock = false;
             foreach (var stockedItem in items)
             {
-                if (stockedItem.item == item)
+                if (stockedItem.item.Equals(item))
                 {
                     instock = true;
                     stockedItem.stock++;
@@ -56,7 +56,7 @@ namespace Game.WorldMapStuff.Model
             StockedItem removeItem=null;
             foreach (var stockedItem in items)
             {
-                if (stockedItem.item == item)
+                if (stockedItem.item.Equals(item))
                 {
                     stockedItem.stock--;
                     if (stockedItem.stock <= 0)
@@ -81,7 +81,7 @@ namespace Game.WorldMapStuff.Model
         {
             foreach (var stockedItem in items)
             {
-                if (stockedItem.item == item)
+                if (stockedItem.item.Equals(item))
                 {
                     return true;
                 }

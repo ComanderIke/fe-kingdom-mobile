@@ -6,7 +6,7 @@ namespace Game.Mechanics
     public interface ICombatResult
     {
         Vector2Int GetAttackPosition();
-        BattleResult BattleResult { get; set; }
+        AttackResult AttackResult { get; set; }
         int GetDamageRatio();
         int GetTileDefenseBonuses();
         int GetTileAvoidBonuses();

@@ -64,7 +64,7 @@ namespace LostGrace
         name.text = SkillEntry.Skill.Name;
         description.text =  SkillEntry.Skill.Description;
       
-        level.text = "" +  SkillEntry.Skill.Level + "/" +  SkillEntry.Skill.MaxLevel;
+        level.text = "" +  SkillEntry.Skill.Level;
         icon.sprite =  SkillEntry.Skill.GetIcon();
         level.transform.gameObject.SetActive(true);
    

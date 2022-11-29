@@ -16,7 +16,7 @@ namespace Game.GameActors.Units.SpecialAttacks
         public string Description { get; set; }
         public int Cooldown { get; set; }
         public SpecialAttackVisual SpecialAttackVisual { get; set; }
-        public abstract void UseSpecial(UnitBP user, int normalAttackDamage, UnitBP defender);
-        public abstract int GetSpecialDmg(UnitBP user, UnitBP defender);
+        public abstract void UseSpecial(Unit user, int normalAttackDamage, Unit defender);
+        public abstract int GetSpecialDmg(Unit user, Unit defender);
     }
 }

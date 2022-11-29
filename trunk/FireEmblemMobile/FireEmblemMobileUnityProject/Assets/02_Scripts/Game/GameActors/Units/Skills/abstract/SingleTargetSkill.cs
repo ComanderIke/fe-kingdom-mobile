@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Game.GameActors.Units.Skills
 {
@@ -21,6 +22,10 @@ namespace Game.GameActors.Units.Skills
         public override bool CanTargetCharacters()
         {
             return true;
+        }
+
+        protected SingleTargetSkill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, string[] upgradeDescr) : base(Name, description, icon, animationObject, cooldown, upgradeDescr)
+        {
         }
     }
 }

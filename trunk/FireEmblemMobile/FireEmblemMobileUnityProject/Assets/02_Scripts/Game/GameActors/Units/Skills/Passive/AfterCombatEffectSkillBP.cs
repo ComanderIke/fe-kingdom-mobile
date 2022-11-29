@@ -9,7 +9,7 @@ namespace Game.GameActors.Units.Skills.Passive
     {
         public override Skill Create()
         {
-            return new AfterCombatEffectSkill();
+            return new AfterCombatEffectSkill(Name, Description, Icon, AnimationObject,Cooldown,UpgradeDescriptions);
         }
     }
 }

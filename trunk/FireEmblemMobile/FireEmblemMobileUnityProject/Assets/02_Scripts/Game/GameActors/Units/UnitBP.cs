@@ -30,7 +30,7 @@ namespace Game.GameActors.Units
         [FormerlySerializedAs("EquippedWeapon")] public WeaponBP equippedWeaponBp;
         public RelicBP EquippedRelic1;
         public RelicBP EquippedRelic2;
-        public new string name;
+        public string Name;
 
         [SerializeField]
         public Stats stats;
@@ -40,6 +40,8 @@ namespace Game.GameActors.Units
         public MoveType moveType;
         [SerializeField]
         public SkillManager SkillManager;
+        [SerializeField]
+        public RpgClass rpgClass;
         public string bluePrintID;
         
         [SerializeField] public UnitVisual visuals;
@@ -51,6 +53,22 @@ namespace Game.GameActors.Units
             return name;// + " HP: " + Hp + "/" + MaxHp+"Level: "+experienceManager.Level+ " Exp: "+experienceManager.Exp;
         }
 
+        private void OnEnable()
+        {
+            if(visuals.CharacterSpriteSet==null)
+                Debug.LogWarning("No Character Sprite Set on Blueprint: "+name);
+            if(moveType==null)
+                Debug.LogWarning("No moveType on Blueprint: "+name);
+            if(visuals.UnitEffectVisual==null)
+                Debug.LogWarning("No UnitEffectVisual on Blueprint: "+name);
+            if(visuals.Prefabs.EncounterAnimatedSprite==null)
+                Debug.LogWarning("No EncounterAnimatedSprite on Blueprint: "+name);
+            if(visuals.Prefabs.UIAnimatorController==null)
+                Debug.LogWarning("No UIAnimatorController on Blueprint: "+name);
+            if(visuals.Prefabs.MapAnimatedSprite==null)
+                Debug.LogWarning("No MapAnimatedSprite on Blueprint: "+name);
+            
+        }
 
         public Unit Create()
         {
@@ -64,8 +82,10 @@ namespace Game.GameActors.Units
             Relic relic2 = null;
             if(EquippedRelic2!=null)
                 relic2 = (Relic)EquippedRelic2.Create();
-
-            return new Unit(name, stats, growths, moveType, weapon, relic1,relic2, visuals, new SkillManager(SkillManager),
+            Debug.Log("Create Unit: "+name );
+            Debug.Log("CSS: "+visuals.CharacterSpriteSet);
+            Debug.Log("CSS: "+visuals.CharacterSpriteSet.FaceSprite);
+            return new Unit(Name, rpgClass, stats, growths, moveType, weapon, relic1,relic2, visuals, new SkillManager(SkillManager),
                 new ExperienceManager(experienceManager));
         }
     }

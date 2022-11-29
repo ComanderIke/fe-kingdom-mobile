@@ -12,22 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbb843360a1e2024e9821031d19ee784, type: 3}
   m_Name: SkeletNecroBP
   m_EditorClassIdentifier: 
-  equippedWeaponBp: {fileID: 0}
+  equippedWeaponBp: {fileID: 11400000, guid: 5e31920663f79f74c876da00046ef3e1, type: 2}
   EquippedRelic1: {fileID: 0}
   EquippedRelic2: {fileID: 0}
-  name: 
+  Name: 
   stats:
     AttackRanges: 
     Attributes:
-      STR: 30
-      INT: 30
-      DEX: 30
-      AGI: 30
-      <CON>k__BackingField: 0
-      LCK: 30
-      DEF: 30
-      FAITH: 30
-    Mov: 0
+      STR: 1
+      INT: 2
+      DEX: 2
+      AGI: 1
+      <CON>k__BackingField: 2
+      LCK: 2
+      DEF: 2
+      FAITH: 1
+    Mov: 2
   growths:
     STR: 30
     INT: 30
@@ -37,20 +37,22 @@ MonoBehaviour:
     LCK: 30
     DEF: 30
     FAITH: 30
-  moveType: {fileID: 0}
+  moveType: {fileID: 11400000, guid: d13592b1fa0af024a841b121149b8014, type: 2}
   SkillManager:
-    Skills: []
-    Favourite: {fileID: 0}
     skillPoints: 0
-    SkillTrees: []
+    SkillBuildTrees: []
   bluePrintID: 
   visuals:
-    CharacterSpriteSet: {fileID: 0}
-    UnitEffectVisual: {fileID: 0}
+    CharacterSpriteSet: {fileID: 11400000, guid: 3431388b4a93f654daeab5a45aba55f5,
+      type: 2}
+    UnitEffectVisual: {fileID: 11400000, guid: af10e6087dc82f34ebed15c0092e0174, type: 2}
     Prefabs:
-      MapAnimatedSprite: {fileID: 0}
-      EncounterAnimatedSprite: {fileID: 0}
-      UIAnimatorController: {fileID: 0}
+      MapAnimatedSprite: {fileID: 2861010742256422526, guid: 4f13a150b2b1d1a4fa59a7896592d6ea,
+        type: 3}
+      EncounterAnimatedSprite: {fileID: 2861010742256422526, guid: 4f13a150b2b1d1a4fa59a7896592d6ea,
+        type: 3}
+      UIAnimatorController: {fileID: 22100000, guid: 047b7a03fa29eec4eb9cbfdd6f5ac585,
+        type: 2}
     UnitCharacterCircleUI: {fileID: 0}
     unitRenderer: {fileID: 0}
   experienceManager:

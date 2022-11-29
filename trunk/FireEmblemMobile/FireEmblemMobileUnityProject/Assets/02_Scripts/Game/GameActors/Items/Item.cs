@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Game.GameActors.Items
 {
     [Serializable]
-    public abstract class Item : ICloneable, ITargetableObject
+    public class Item : ICloneable, ITargetableObject
     {
         public string Name;
         public string Description;
@@ -26,6 +26,39 @@ namespace Game.GameActors.Items
         {
             return Name;
         }
+
+        public override bool Equals(object obj)
+        {
+            Debug.Log("Compare");
+            if (obj is Item item)
+            {
+                Debug.Log("Compare Items"+item.Name +" "+Name);
+                if (item.Name == Name)
+                    return true;
+                Debug.Log("Not Equal");
+            }
+            
+            return base.Equals(obj);
+        }
+
+        protected bool Equals(Item other)
+        {
+            return Name == other.Name && Description == other.Description && cost == other.cost && Equals(Sprite, other.Sprite);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = (Name != null ? Name.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Description != null ? Description.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ cost;
+                hashCode = (hashCode * 397) ^ (Sprite != null ? Sprite.GetHashCode() : 0);
+                return hashCode;
+            }
+        }
+
+
         public string GetName()
         {
             return Name;

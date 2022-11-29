@@ -12,7 +12,7 @@ namespace Game.GameActors.Units.Skills.Debuff
         public CharStateEffects.Debuff appliedDebuff;
         public override Skill Create()
         {
-            return new EnemyTargetDebuffSkill();
+            return new EnemyTargetDebuffSkill(Name, Description, Icon, AnimationObject,Cooldown,UpgradeDescriptions, appliedDebuff);
         }
     }
 }

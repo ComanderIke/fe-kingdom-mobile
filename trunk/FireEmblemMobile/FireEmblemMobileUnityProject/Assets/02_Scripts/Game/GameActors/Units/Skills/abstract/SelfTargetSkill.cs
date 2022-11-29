@@ -1,4 +1,6 @@
-﻿namespace Game.GameActors.Units.Skills
+﻿using UnityEngine;
+
+namespace Game.GameActors.Units.Skills
 {
     public abstract class SelfTargetSkill : Skill
     {
@@ -15,6 +17,10 @@
         public virtual void Activate(Unit user)
         {
 
+        }
+
+        protected SelfTargetSkill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, string[] upgradeDescr) : base(Name, description, icon, animationObject, cooldown, upgradeDescr)
+        {
         }
     }
 }

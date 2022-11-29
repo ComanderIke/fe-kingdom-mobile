@@ -66,7 +66,7 @@ public class SkillTreeEntryUI : MonoBehaviour
     {
         Debug.Log("UPDATE SKILL BUTTON UI!!!!!! "+skillEntry.SkillState);
         skillIcon.sprite = skillEntry.Skill.Icon;
-        skillLevelText.text = ""+skillEntry.Skill.Level+"/"+skillEntry.Skill.MaxLevel;
+        skillLevelText.text = ""+skillEntry.Skill.Level;
 
         skillLevelText.color = normalTextColor;
         skillIcon.color = normalIconColor;

@@ -12,6 +12,7 @@ namespace Game.GameActors.Units.Humans
     public class SkillManager : ICloneable
     {
         public Action<int> SkillPointsUpdated;
+        [SerializeField] private List<SkillBP> startSkills;
         private List<Skill> skills;
 
         public List<Skill> Skills
@@ -19,7 +20,15 @@ namespace Game.GameActors.Units.Humans
             get
             {
                 if (skills == null)
+                {
                     skills = new List<Skill>();
+                    if(startSkills!=null)
+                        foreach (var skillbp in startSkills)
+                        {
+                            skills.Add(skillbp.Create());
+                        }
+                }
+
                 return skills;
             }
         }
@@ -131,8 +140,8 @@ namespace Game.GameActors.Units.Humans
             if (Skills.Contains(entry.Skill))
             {
                 entry.SkillState = SkillState.Learned;
-                if ( entry.Skill.Level ==  entry.Skill.MaxLevel)
-                    entry.SkillState = SkillState.Maxed;
+                // if ( entry.Skill.Level ==  entry.Skill.MaxLevel)
+                //     entry.SkillState = SkillState.Maxed;
             }
 
            

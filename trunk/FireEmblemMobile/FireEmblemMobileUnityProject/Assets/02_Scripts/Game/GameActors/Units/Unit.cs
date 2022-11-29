@@ -84,13 +84,14 @@ namespace Game.GameActors.Units
             get => growths;
             set => growths = value;
         }
-
+        public RpgClass rpgClass;
         [SerializeField] public UnitVisual visuals;
 
-        public Unit(string name,Stats stats, Attributes growths, MoveType moveType, Weapon equippedWeapon, Relic equippedRelic1,
+        public Unit(string name,RpgClass rpgClass,Stats stats, Attributes growths, MoveType moveType, Weapon equippedWeapon, Relic equippedRelic1,
             Relic equippedRelic2, UnitVisual visuals, SkillManager skillManager, ExperienceManager experienceManager)
         {
             Fielded = false;
+            this.rpgClass = rpgClass;
             this.stats = stats;
             this.growths = growths;
             this.moveType = moveType;
@@ -131,6 +132,7 @@ namespace Game.GameActors.Units
 
 
         [SerializeField] private ExperienceManager experienceManager;
+        
 
         public ExperienceManager ExperienceManager
         {

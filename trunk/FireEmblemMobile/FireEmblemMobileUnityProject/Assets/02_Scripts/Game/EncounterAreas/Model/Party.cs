@@ -17,6 +17,7 @@ namespace Game.WorldMapStuff.Model
         public event Action<int> onGoldChanged;
         public event Action<int> onSmithingStonesChanged;
         [SerializeField] public List<Unit> members;
+      
         public static Action<Party> PartyDied;
         [SerializeField] int maxSize = 4;
         [SerializeField] public int money = default;
@@ -79,6 +80,7 @@ namespace Game.WorldMapStuff.Model
 
         public Party():base()
         {
+            Debug.Log("New Party");
             members = new List<Unit>();
             Convoy = new Convoy();
             EncounterComponent = new EncounterPosition();
@@ -111,6 +113,7 @@ namespace Game.WorldMapStuff.Model
         public void Initialize()
         {
             Debug.Log("Init Party");
+            Convoy.Init();
             foreach (var member in members)
             {
                 Debug.Log(member.name + " initialized");
