@@ -4,6 +4,7 @@
     {
         Self,
         Ally,
-        Enemy
+        Enemy,
+        Position
     }
 }

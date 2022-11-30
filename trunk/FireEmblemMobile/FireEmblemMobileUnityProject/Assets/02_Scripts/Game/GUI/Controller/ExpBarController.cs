@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Game.GameActors.Units;
 using Game.States;
 using UnityEngine;
@@ -10,10 +11,13 @@ namespace Game.GUI
     public class ExpBarController : MonoBehaviour
     {
         [SerializeField] Image fill;
+        [SerializeField] Image tmpFill;
         [SerializeField] int currentExp;
+        [SerializeField] int tmpExp;
         [SerializeField] CanvasGroup canvasGroup;
         [SerializeField] UIAnimatedCountingText countingText;
         private int addedExp;
+        private int tmpAddedExp;
         private bool animation;
 
 
@@ -35,7 +39,7 @@ namespace Game.GUI
             }
         }
         
-        public void UpdateAnimated(int addedExp)
+        public void UpdateWithAnimatedParticles(int addedExp)
         {
             Debug.Log("CurrentExp: "+currentExp+" Gained: "+addedExp);
             animation = true;
@@ -43,10 +47,46 @@ namespace Game.GUI
             //countingText?.SetTextCounting(currentExp, currentExp+this.addedExp);
         }
 
-
+        IEnumerator AnimatedText()
+        {
+            while (addedExp != 0)
+            {
+                addedExp--;
+                currentExp++;
+                if (currentExp > 100)
+                    currentExp -= 100;
+                fill.fillAmount = currentExp / 100f;
+                countingText?.SetText(currentExp.ToString());
+                yield return new WaitForSeconds(.05f);
+            }
+            
+        }
+        IEnumerator AnimatedTmpFillText()
+        {
+            while (tmpAddedExp != 0)
+            {
+                tmpAddedExp--;
+                tmpExp++;
+                if (tmpExp > 100)
+                    tmpExp -= 100;
+                tmpFill.fillAmount = tmpExp / 100f;
+                yield return new WaitForSeconds(.01f);
+            }
+            
+        }
+        public void UpdateWithAnimatedTextOnly(int expgained)
+        {
+            Debug.Log("CurrentExp: "+currentExp+" Gained: "+addedExp);
+            
+            this.addedExp += expgained;
+            this.tmpAddedExp += expgained;
+            StartCoroutine(AnimatedText());
+            StartCoroutine(AnimatedTmpFillText());
+        }
 
         public void UpdateInstant(int expVal)
         {
+            Debug.Log("UpdateInstant: "+expVal);
             if (animation)
             {
                 return;
@@ -58,9 +98,13 @@ namespace Game.GUI
             }
 
             currentExp = expVal;
+            tmpExp = currentExp;
+            Debug.Log("Currentexp: "+currentExp);
             fill.fillAmount = currentExp / 100f;
+          
             if (Math.Abs(fill.fillAmount - 1) < 0.1f)
                 fill.fillAmount = 0;
+            tmpFill.fillAmount = fill.fillAmount;
             countingText?.SetText(currentExp.ToString());
         }
 
@@ -73,5 +117,7 @@ namespace Game.GUI
         {
             TweenUtility.FadeOut(canvasGroup);
         }
+
+      
     }
 }

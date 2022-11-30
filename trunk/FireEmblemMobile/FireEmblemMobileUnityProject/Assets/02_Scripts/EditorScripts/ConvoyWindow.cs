@@ -65,7 +65,7 @@ namespace __2___Scripts.External.Editor
                 GUILayout.Label("Itemcount: "+currentConvoy.Items.Count );
                 if (GUILayout.Button("Add HealthPotion",GUILayout.Width(100)))
                 {
-                    Player.Instance.Party.Convoy.AddStockedItem(new StockedItem(GameData.Instance.GetHealthPotion(), 1));
+                    Player.Instance.Party.Convoy.AddStockedItem(new StockedItem(GameData.Instance.GetItemByName("HealthPotion"), 1));
                 }
 
                 

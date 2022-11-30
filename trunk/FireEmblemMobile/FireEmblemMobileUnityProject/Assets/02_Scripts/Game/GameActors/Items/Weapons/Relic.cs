@@ -11,7 +11,7 @@ namespace Game.GameActors.Items.Weapons
 
         public int maxLevel = 5;
 
-        public Relic(string name, string description, int cost, Sprite sprite, EquipmentSlotType slotType, int level, int maxLevel) : base(name, description, cost, sprite, slotType)
+        public Relic(string name, string description, int cost, int rarity, Sprite sprite, EquipmentSlotType slotType, int level, int maxLevel) : base(name, description, cost,rarity, sprite, slotType)
         {
             this.Level = level;
             this.maxLevel = maxLevel;

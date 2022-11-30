@@ -70,6 +70,8 @@ namespace Game.GUI
             this.unit = unit;
             unit.HpValueChanged -= UpdateValues;
             unit.HpValueChanged += UpdateValues;
+            unit.ExperienceManager.ExpGained -= UpdateExp;
+            unit.ExperienceManager.ExpGained += UpdateExp;
             UpdateValues();
             gameObject.SetActive(true);
             GetComponent<RectTransform>().sizeDelta = normalSize;
@@ -78,6 +80,15 @@ namespace Game.GUI
            
             
         }
+
+        private void UpdateExp(int expbefore, int expgained)
+        {
+            Debug.Log("UpdateExp: "+expbefore+" "+expgained);
+            expBar.UpdateInstant(expbefore);
+            expBar.UpdateWithAnimatedTextOnly(expgained);
+        }
+
+        
 
         public void PlusClicked()
         {
@@ -113,6 +124,7 @@ namespace Game.GUI
             if (unit == null)
                 return;
             unit.HpValueChanged -= UpdateValues;
+            unit.ExperienceManager.ExpGained -= UpdateExp;
         }
 
         void UpdateValues()

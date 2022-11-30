@@ -7,7 +7,7 @@ namespace Game.GameActors.Items.Weapons
     public abstract class EquipableItem : Item
     {
         public EquipmentSlotType EquipmentSlotType;
-        public EquipableItem(string name, string description, int cost, Sprite sprite, EquipmentSlotType slotType) : base(name, description, cost, sprite)
+        public EquipableItem(string name, string description, int cost,int rarity, Sprite sprite, EquipmentSlotType slotType) : base(name, description, cost,rarity, sprite)
         {
             EquipmentSlotType = slotType;
         }

@@ -16,14 +16,20 @@ public class UIShopItemController : UIButtonController
     private ShopItem item;
     public TextMeshProUGUI stockCount;
     private IShopItemClickedReceiver clickedReceiver;
+    [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private float tooExpensiveAlpha = 0.6f;
     public void SetValues(ShopItem item, bool affordable,IShopItemClickedReceiver receiver)
     {
         this.item = item;
         if (affordable)
+        {
             cost.color = normalColor;
+            canvasGroup.alpha = 1;
+        }
         else
         {
             cost.color = tooExpensiveColor;
+            canvasGroup.alpha = tooExpensiveAlpha;
         }
 
         this.clickedReceiver = receiver;

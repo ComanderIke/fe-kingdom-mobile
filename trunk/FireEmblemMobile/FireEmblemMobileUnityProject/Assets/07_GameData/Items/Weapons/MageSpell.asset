@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4bcb2be67000cc48bbfb560d77890ea, type: 3}
   m_Name: MageSpell
   m_EditorClassIdentifier: 
-  Name: 
-  Description: A bow made of wood
+  name: 
+  description: A bow made of wood
   cost: 100
-  Sprite: {fileID: 21300000, guid: 2fbf423207f06b649a8890947410ff46, type: 3}
-  EquipmentSlotType: 1
+  rarity: 1
+  sprite: {fileID: 21300000, guid: 2fbf423207f06b649a8890947410ff46, type: 3}
+  equipmentSlotType: 1
   AttackRanges: 0100000002000000
   WeaponAttributes:
   - upgradeGoldCost: 50
@@ -44,3 +45,5 @@ MonoBehaviour:
   maxLevel: 3
   WeaponType: {fileID: 11400000, guid: 4a032fe779bb9294ca0e868c56e4ff8d, type: 2}
   DamageType: 1
+  effectiveAgainst: []
+  effectiveAgainstCoefficients: []

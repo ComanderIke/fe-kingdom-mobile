@@ -61,9 +61,12 @@ namespace Game.Mechanics
             // u.OnLevelUp -= LevelUp;
             // u.OnLevelUp += LevelUp;
             units.Add(u);
+          
 
         }
 
+        
+        
         public void Init()
         {
             
@@ -129,7 +132,7 @@ namespace Game.Mechanics
                         pos = defender.BattleGO.GameObject.transform.position;
                         var expController = defender.BattleGO.GetExpRenderer();
                         expController.Show(defender.ExperienceManager.Exp);
-                        expController.UpdateAnimated(exp);
+                        expController.UpdateWithAnimatedParticles(exp);
                     }
                     else if (defender.GameTransformManager != null)//Map Animations use this
                     {

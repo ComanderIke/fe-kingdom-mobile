@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4bcb2be67000cc48bbfb560d77890ea, type: 3}
   m_Name: DragonBreath
   m_EditorClassIdentifier: 
-  Name: 
-  Description: The Breath of a Dragon
+  name: 
+  description: The Breath of a Dragon
   cost: 0
-  Sprite: {fileID: 21300000, guid: 5d7061fc7da05ce44add317708ec7215, type: 3}
-  EquipmentSlotType: 1
+  rarity: 1
+  sprite: {fileID: 21300000, guid: 5d7061fc7da05ce44add317708ec7215, type: 3}
+  equipmentSlotType: 1
   AttackRanges: 0100000002000000
   WeaponAttributes:
   - upgradeGoldCost: 0
@@ -44,3 +45,5 @@ MonoBehaviour:
   maxLevel: 3
   WeaponType: {fileID: 11400000, guid: 48b607d735eec554dab890fdb767143b, type: 2}
   DamageType: 0
+  effectiveAgainst: []
+  effectiveAgainstCoefficients: []

@@ -666,6 +666,7 @@ GameObject:
   - component: {fileID: 5418534795582065702}
   - component: {fileID: 570948488444696356}
   - component: {fileID: 6254587848116699313}
+  - component: {fileID: 2115974050289364206}
   m_Layer: 5
   m_Name: TextLayout
   m_TagString: Untagged
@@ -734,6 +735,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 2
+--- !u!225 &2115974050289364206
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344516207826141256}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1744678864694839356
 GameObject:
   m_ObjectHideFlags: 0
@@ -827,9 +840,11 @@ MonoBehaviour:
   image: {fileID: 1324607217149707684}
   cost: {fileID: 1324607216674685152}
   description: {fileID: 7354959347940480981}
-  tooExpensiveColor: {r: 0.7264151, g: 0.11381844, b: 0.065103225, a: 1}
+  tooExpensiveColor: {r: 1, g: 1, b: 1, a: 1}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   stockCount: {fileID: 7214767043996999130}
+  canvasGroup: {fileID: 2115974050289364206}
+  tooExpensiveAlpha: 0.6
 --- !u!1 &2888977589234347631
 GameObject:
   m_ObjectHideFlags: 0

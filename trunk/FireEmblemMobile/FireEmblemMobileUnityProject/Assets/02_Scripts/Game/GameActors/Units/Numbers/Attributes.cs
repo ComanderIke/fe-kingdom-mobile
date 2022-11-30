@@ -88,4 +88,16 @@ namespace Game.GameActors.Units.Numbers
             return AsArray()[textoptionStatIndex];
         }
     }
+
+    public enum AttributeType
+    {
+        STR,
+        DEX,
+        INT,
+        AGI,
+        CON,
+        LCK,
+        DEF,
+        FTH
+    }
 }

@@ -16,7 +16,7 @@ namespace Game.GameActors.Items.Weapons
 
         public override Item Create()
         {
-            return new Relic(name, description, cost, sprite, equipmentSlotType, Level, maxLevel);
+            return new Relic(name, description, cost, rarity,sprite, equipmentSlotType, Level, maxLevel);
         }
     }
 }

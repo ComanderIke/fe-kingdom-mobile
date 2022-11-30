@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using _02_Scripts.Game.GameActors.Items.Consumables;
 using Game.GameActors.Items;
+using Game.GameActors.Items.Gems;
 using Game.GameActors.Items.Weapons;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
@@ -28,12 +31,20 @@ namespace Game.GameResources
         // [SerializeField] private List<EquipableItem> armor = default;
         [SerializeField] private List<EquipableItemBP> relics = default;
         [SerializeField] private WeaponBP[] allWeapons;
+        [SerializeField] private GemBP[] allGems;
+        [SerializeField] private GemBP[] allSmallGems;
+        [SerializeField] private GemBP[] allMediumGems;
+        [SerializeField] private GemBP[] allLargeGems;
+        [SerializeField] private ItemBP[] allItems;
+        [SerializeField] private ConsumableItemBp[] allConsumables;
+        [SerializeField] private AttributePotionBP[] allAttributePotions;
+        [SerializeField] private BuffPotionBP[] allBuffPotions;
+        [SerializeField] private BombBP[] allBombs;
         [SerializeField] private List<WeaponBP> staffs = default;
         [SerializeField] private List<WeaponBP> spears = default;
         [SerializeField] private List<WeaponBP> bows = default;
         [SerializeField] private List<WeaponBP> swords = default;
         [SerializeField] private List<WeaponBP> magic = default;
-        [SerializeField] private List<ItemBP> consumables = default;
         [SerializeField] private List<MetaUpgradeBP> metaUpgradeBps = default;
         [FormerlySerializedAs("humans")] [SerializeField] private List<UnitBP> humanBlueprints = default;
         [SerializeField] private List<Party> playerStartingParties = default;
@@ -65,7 +76,16 @@ namespace Game.GameResources
         #if UNITY_EDITOR
         private void OnValidate()
         {
+            allGems = GetAllInstances<GemBP>();
+            allSmallGems = Array.FindAll(allGems,a => a.GetRarity() == 1);
+            allMediumGems = Array.FindAll(allGems,a => a.GetRarity() == 2);
+            allLargeGems = Array.FindAll(allGems,a => a.GetRarity() == 3);
             allWeapons = GetAllInstances<WeaponBP>();
+            allBombs = GetAllInstances<BombBP>();
+            allBuffPotions = GetAllInstances<BuffPotionBP>();
+            allAttributePotions = GetAllInstances<AttributePotionBP>();
+            allConsumables = GetAllInstances<ConsumableItemBp>();
+            allItems = GetAllInstances<ItemBP>();
         }
 
         public static T[] GetAllInstances<T>() where T : ScriptableObject
@@ -145,9 +165,12 @@ namespace Game.GameResources
             return (Weapon)staffs[Random.Range(0, staffs.Count-1)].Create();
         }
 
-        public HealthPotion GetHealthPotion()
+        public Item GetItemByName(string name)
         {
-            return (HealthPotion)consumables[0].Create();
+            var item = Array.Find(allItems, a => a.name == name);
+            if(item!=null)
+                return item.Create();
+            return null;
         }
         
 
@@ -168,6 +191,37 @@ namespace Game.GameResources
         public IEventData GetEventData()
         {
             return eventData;
+        }
+
+        public Item GetRandomConsumeables()
+        {
+            return allConsumables[Random.Range(0,allConsumables.Length)].Create();
+        }
+
+        public Item GetRandomGem()
+        {
+            return allGems[Random.Range(0, allGems.Length)].Create();
+        }
+
+        public Item GetRandomBomb()
+        {
+            return allBombs[Random.Range(0, allBombs.Length)].Create();
+        }
+
+        public Item GetRandomCommonConsumeables()
+        {
+            var commonConsumables = Array.FindAll(allConsumables, a => a.rarity == 1);
+            return commonConsumables[Random.Range(0, commonConsumables.Length)].Create();
+        }
+        public Item GetRandomRareConsumeable()
+        {
+            var commonConsumables = Array.FindAll(allConsumables, a => a.rarity == 2);
+            return commonConsumables[Random.Range(0, commonConsumables.Length)].Create();
+        }
+        public Item GetRandomEpicConsumeable()
+        {
+            var commonConsumables = Array.FindAll(allConsumables, a => a.rarity == 3);
+            return commonConsumables[Random.Range(0, commonConsumables.Length)].Create();
         }
     }
 }

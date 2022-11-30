@@ -9,16 +9,17 @@ namespace Game.GameActors.Items
         public string Name;
         public string Description;
         public int cost;
+        public int rarity;
 
         [Header("ItemAttributes")] public Sprite Sprite;
 
-        public Item(string name, string description, int cost, Sprite sprite)
+        public Item(string name, string description, int cost, int rarity,Sprite sprite)
         {
             this.Name = name;
             this.Description = description;
             this.cost = cost;
             this.Sprite = sprite;
-            
+            this.rarity = rarity;
         }
 
        

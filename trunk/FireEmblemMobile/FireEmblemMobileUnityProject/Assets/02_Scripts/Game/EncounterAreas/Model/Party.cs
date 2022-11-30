@@ -80,7 +80,6 @@ namespace Game.WorldMapStuff.Model
 
         public Party()
         {
-            Debug.Log("New Party");
             members = new List<Unit>();
             Convoy = new Convoy();
             EncounterComponent = new EncounterPosition();

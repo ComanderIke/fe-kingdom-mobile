@@ -50,14 +50,15 @@ public class MerchantEncounterNode : EncounterNode
     {
         merchant = new Merchant();
        
-        merchant.AddItem(new ShopItem(GameData.Instance.GetHealthPotion(),Random.Range(2,4)));
-        merchant.AddItem(new ShopItem(GameData.Instance.GetHealthPotion(),Random.Range(2,4)));
+        merchant.AddItem(new ShopItem(GameData.Instance.GetItemByName("HealthPotion"),Random.Range(2,4)));
+        merchant.AddItem(new ShopItem(GameData.Instance.GetRandomCommonConsumeables(),Random.Range(1,3)));
+        merchant.AddItem(new ShopItem(GameData.Instance.GetRandomCommonConsumeables(),Random.Range(1,2)));
+        merchant.AddItem(new ShopItem(GameData.Instance.GetRandomRareConsumeable()));
+        merchant.AddItem(new ShopItem(GameData.Instance.GetRandomGem()));
+        merchant.AddItem(new ShopItem(GameData.Instance.GetRandomGem()));
         //merchant.AddItem(new ShopItem(GameData.Instance.GetRandomPotion(),Random.Range(1,4)));
-        merchant.AddItem(new ShopItem(GameData.Instance.GetRandomMagic()));
-        merchant.AddItem(new ShopItem(GameData.Instance.GetRandomSword()));
-        merchant.AddItem(new ShopItem(GameData.Instance.GetRandomRelic()));
-        merchant.AddItem(new ShopItem(GameData.Instance.GetRandomSword()));
-        
+
+
     }
 
     public override void Activate(Party party)
