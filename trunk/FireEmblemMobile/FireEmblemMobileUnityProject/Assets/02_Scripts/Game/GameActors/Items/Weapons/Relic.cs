@@ -20,13 +20,16 @@ namespace Game.GameActors.Items.Weapons
 
         public string GetAttributeDescription()
         {
-            if(Attributes[Level -1].effect!=null)
-                return Attributes[Level -1].effect.GetDescription();
+            if(Attributes!=null&&Attributes.Length>Level-1)
+                if(Attributes[Level -1].effect!=null)
+                    return Attributes[Level -1].effect.GetDescription();
             return "No Description?!";
         }
 
         public string GetUpgradeAttributeDescription()
         {
+            if (Attributes == null)
+                return null;
             if (Level + 1 <= maxLevel)
             {
                 return Attributes[Level].effect.GetDescription();
@@ -36,10 +39,14 @@ namespace Game.GameActors.Items.Weapons
         }
         public override int GetUpgradeCost()
         {
+            if (Attributes == null)
+                return 0;
             return Attributes[Level-1].upgradeGoldCost;
         }
         public override int GetUpgradeSmithingStoneCost()
         {
+            if (Attributes == null)
+                return 0;
             return Attributes[Level-1].upgradeSmithingStoneCost;
         }
 

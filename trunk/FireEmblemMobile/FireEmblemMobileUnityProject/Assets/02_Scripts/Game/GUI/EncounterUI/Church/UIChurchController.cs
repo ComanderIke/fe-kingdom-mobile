@@ -79,7 +79,7 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
             inStoreText.gameObject.SetActive(false);
             prayUI.Show(party.ActiveUnit);
         }
-        if (state == ChurchUIState.Blessing)
+        else if (state == ChurchUIState.Blessing)
         {
             saleButton.gameObject.SetActive(true);
             prayButton.gameObject.SetActive(false);

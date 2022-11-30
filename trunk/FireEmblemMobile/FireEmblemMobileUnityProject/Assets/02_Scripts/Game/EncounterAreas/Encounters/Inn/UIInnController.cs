@@ -18,7 +18,15 @@ public class UIInnController : MonoBehaviour
     private Inn inn;
     [SerializeField] private UICharacterFace characterFace;
     [SerializeField] private UIUnitIdleAnimation unitIdleAnimation;
-    
+    [SerializeField] private TextMeshProUGUI restDescription;
+    [SerializeField] private TextMeshProUGUI drinkDescription;
+    [SerializeField] private TextMeshProUGUI eatDescription;
+    [SerializeField] private TextMeshProUGUI restPriceText;
+    [SerializeField] private TextMeshProUGUI drinkPriceText;
+    [SerializeField] private TextMeshProUGUI eatPriceText;
+    [SerializeField] private GameObject restCoinIcon;
+    [SerializeField] private GameObject drinkCoinIcon;
+    [SerializeField] private GameObject eatCoinIcon;
     public List<UIShopItemController> shopItems;
     public UIQuestItemController questOption;
     public UIRecruitCharacterController recruitCharacter;
@@ -78,7 +86,12 @@ public class UIInnController : MonoBehaviour
         inn.Rest(Player.Instance.Party.ActiveUnit);
         UpdateUI();
     }
-
+    public void ContinueClicked()
+    {
+        canvas.enabled=false;
+        node.Continue();
+        FindObjectOfType<UICharacterViewController>().Hide();
+    }
     public void AcceptQuestClicked()
     {
         
@@ -93,5 +106,32 @@ public class UIInnController : MonoBehaviour
     {
         unitIdleAnimation.Show(party.ActiveUnit);
         characterFace.Show(party.ActiveUnit);
+        
+
+        restPriceText.text = GetCostText(inn.GetRestPrice(), restCoinIcon);
+        drinkPriceText.text = GetCostText(inn.GetDrinkPrice(), drinkCoinIcon);
+        eatPriceText.text = GetCostText(inn.GetEatPrice(), eatCoinIcon);
+
+        restDescription.text = GetDescriptionText(inn.GetRestHeal());
+
+        drinkDescription.text = GetDescriptionText(inn.GetDrinkHeal());
+        eatDescription.text = GetDescriptionText(inn.GetEatHeal());
+    }
+    private string GetDescriptionText(int heal)
+    {
+        return "Heal " + heal + " % Hp";
+    }
+    private string GetCostText(int cost, GameObject coinIcon)
+    {
+        
+        string costText = ""+cost;
+        coinIcon.gameObject.SetActive(cost != 0);
+        if (cost == 0)
+        {
+            costText = "Free";
+            
+        }
+
+        return costText;
     }
 }
