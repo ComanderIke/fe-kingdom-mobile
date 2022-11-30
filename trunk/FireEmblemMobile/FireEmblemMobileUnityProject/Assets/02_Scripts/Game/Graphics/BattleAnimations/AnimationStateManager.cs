@@ -34,11 +34,14 @@ public class AnimationStateManager
         this.characterAnimations = characterAnimations;
        
         TimeLineController.zoomInFinished += ContinueBattle;
-        leftCharacterAttacker = battleSimulation.Attacker.Faction==null||battleSimulation.Attacker.Faction.IsPlayerControlled;
+        playerControlled = (Player.Instance.Party.members.Contains((Unit)battleSimulation.Attacker));
+        leftCharacterAttacker = playerControlled;
         Debug.Log("LeftCharacterAttacker: "+leftCharacterAttacker);
         characterAnimations.Reset();
         characterAnimations.SetLeftCharacterAttacker(leftCharacterAttacker);
-        playerControlled = (Player.Instance.Party.members.Contains((Unit)battleSimulation.Attacker)) ||(battleSimulation.Attacker.Faction == null && battleSimulation.Attacker.Faction.IsPlayerControlled);
+        Debug.Log("Attacker:"+(Unit)battleSimulation.Attacker);
+        Debug.Log("Defender:"+(Unit)battleSimulation.Defender);
+       
         Debug.Log("Attacker is PlayerControlled: "+playerControlled);
         attackSequenzIndex = 0;
         CombatTextRenderer = new CombatTextRenderer();

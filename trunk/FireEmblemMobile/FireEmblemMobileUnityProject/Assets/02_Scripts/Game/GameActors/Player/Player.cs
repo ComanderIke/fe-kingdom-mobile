@@ -31,12 +31,15 @@ namespace Game.GameActors.Players
             Debug.Log("Awake player");
             if (instance != null)
             {
-                Debug.Log("Destroy player instance (duplicate)");
+                Debug.LogWarning("Destroy player instance (duplicate)");
                 Destroy(this);
                 
             }
+            else
+            {
 
-            instance = this;
+                instance = this;
+            }
         }
 
         void Start()

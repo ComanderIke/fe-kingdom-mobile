@@ -78,7 +78,7 @@ namespace Game.WorldMapStuff.Model
             }
         }
 
-        public Party():base()
+        public Party()
         {
             Debug.Log("New Party");
             members = new List<Unit>();

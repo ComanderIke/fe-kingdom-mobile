@@ -57,6 +57,10 @@ namespace __2___Scripts.External.Editor
             if (activeUnit != null)
             {
                 selectedUnitName = activeUnit.name;
+                if (GUILayout.Button("+30 EXP"))
+                {
+                    activeUnit.ExperienceManager.AddExp(30);
+                }
                 if (GUILayout.Button("+100 EXP"))
                 {
                     activeUnit.ExperienceManager.AddExp(100);
@@ -69,9 +73,13 @@ namespace __2___Scripts.External.Editor
                     GUILayout.Label("Skill: " + skill.Name);
                 }
 
-                if (GUILayout.Button("Deal 5 DMG"))
+                if (GUILayout.Button("Lose 5 HP"))
                 {
                     activeUnit.Hp -= 5;
+                }
+                if (GUILayout.Button("Heal 5"))
+                {
+                    activeUnit.Heal(5);
                 }
             }
             else

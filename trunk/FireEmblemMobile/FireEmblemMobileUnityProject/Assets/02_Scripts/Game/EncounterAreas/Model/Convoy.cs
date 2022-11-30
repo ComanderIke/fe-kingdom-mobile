@@ -11,24 +11,34 @@ namespace Game.WorldMapStuff.Model
         [SerializeField] private List<ItemBP> startItems;
         [SerializeField] private List<StockedItem> items;
         [SerializeField] public event Action convoyUpdated;
-        
-        public List<StockedItem> Items => items;
+
+        public List<StockedItem> Items
+        {
+            get
+            {
+                if (items == null)
+                    items = new List<StockedItem>();
+                return items;
+            }
+        } 
         
 
         public void Init()
         {
-            //items = new List<StockedItem>();
-            foreach (var itemBp in startItems)
+            if (startItems != null)
             {
-                AddItem(itemBp.Create());
+                foreach (var itemBp in startItems)
+                {
+                    AddItem(itemBp.Create());
+                }
             }
         }
 
         public override string ToString()
         {
             string convoy = "";
-            convoy += "StockedItemCount: " + items.Count;
-            foreach (var stock in items)
+            convoy += "StockedItemCount: " + Items.Count;
+            foreach (var stock in Items)
             {
                 convoy += stock.item.ToString() + "x" + stock.stock;
             }
@@ -37,7 +47,7 @@ namespace Game.WorldMapStuff.Model
         public void AddItem(Item item)
         {
             bool instock = false;
-            foreach (var stockedItem in items)
+            foreach (var stockedItem in Items)
             {
                 if (stockedItem.item.Equals(item))
                 {
@@ -47,14 +57,14 @@ namespace Game.WorldMapStuff.Model
                 }
             }
             if(!instock)
-                items.Add(new StockedItem(item, 1));
+                Items.Add(new StockedItem(item, 1));
             convoyUpdated?.Invoke();
         }
         public void RemoveItem(Item item)
         {
             
             StockedItem removeItem=null;
-            foreach (var stockedItem in items)
+            foreach (var stockedItem in Items)
             {
                 if (stockedItem.item.Equals(item))
                 {
@@ -67,7 +77,7 @@ namespace Game.WorldMapStuff.Model
             }
 
             if (removeItem != null)
-                items.Remove(removeItem);
+                Items.Remove(removeItem);
             convoyUpdated?.Invoke();
            
         }
@@ -79,7 +89,7 @@ namespace Game.WorldMapStuff.Model
 
         public bool ContainsItem(Item item)
         {
-            foreach (var stockedItem in items)
+            foreach (var stockedItem in Items)
             {
                 if (stockedItem.item.Equals(item))
                 {

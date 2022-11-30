@@ -18,7 +18,7 @@ using UnityEngine.Serialization;
 namespace Game.GameActors.Units
 {
     [Serializable]
-    public class Unit : IActor, IGridActor, IBattleActor, ICloneable, IAIAgent, IDialogActor
+    public class Unit : IActor, IGridActor, IBattleActor, ICloneable, IAIAgent, IDialogActor, IEquatable<Unit>
     {
         public static event Action OnEquippedWeapon;
         public static event Action<Unit> OnUnitDataChanged;
@@ -425,6 +425,27 @@ namespace Game.GameActors.Units
         }
 
 
+        public bool Equals(Unit other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return name == other.name && Equals(Party, other.Party);
+        }
 
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Unit)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((name != null ? name.GetHashCode() : 0) * 397) ^ (Party != null ? Party.GetHashCode() : 0);
+            }
+        }
     }
 }

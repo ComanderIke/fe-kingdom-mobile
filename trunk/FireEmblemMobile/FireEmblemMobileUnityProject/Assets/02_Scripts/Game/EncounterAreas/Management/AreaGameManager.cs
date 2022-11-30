@@ -9,6 +9,7 @@ using Game.GameActors.Players;
 using Game.GUI;
 using Game.Manager;
 using Game.Mechanics;
+using Game.States;
 using Game.Systems;
 using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.Systems;
@@ -57,11 +58,19 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
             
             
         }
-        else
+
+        if (Player.Instance.Party != null)
         {
-            //Debug.Log("Player Null");
+            Debug.Log("Player GO Name: "+Player.Instance.gameObject.name);
+            Debug.Log("party Count:" + Player.Instance.Party.members.Count);
+        }
+
+        if (Player.Instance.Party == null || Player.Instance.Party.members.Count == 0){
+            Debug.LogWarning("No party Members! Creating DemoUnits");
            
             Player.Instance.Party = new Party();
+            var demoUnits = GameObject.FindObjectOfType<DemoUnits>().GetUnits();
+            Player.Instance.Party.members = demoUnits;
             Player.Instance.Party.Initialize();
             Player.Instance.Party.EncounterComponent.EncounterNode = EncounterTree.Instance.startNode;
             Player.Instance.Party.EncounterComponent.AddMovedEncounter(EncounterTree.Instance.startNode);

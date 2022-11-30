@@ -32,6 +32,7 @@ namespace LostGrace
         
         public override void Show()
         {
+            Debug.Log("Create Party");
             Player.Instance.Party = new Party();
             Player.Instance.Party.onMemberRemoved += PartyChanged;
             Player.Instance.Party.onMemberAdded += PartyChanged;
