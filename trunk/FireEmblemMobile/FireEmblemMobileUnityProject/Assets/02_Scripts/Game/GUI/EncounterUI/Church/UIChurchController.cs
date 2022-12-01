@@ -57,13 +57,13 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
                 var item = church.shopItems[i];
                 instantiatedItems.Add(go);
                 shopItems.Add(go.GetComponent<UIShopItemController>());
-                bool affordable = party.money >= item.cost;
+                bool affordable = party.CanAfford(item.cost);
 
                 shopItems[i].SetValues(item, affordable, this);
             }
 
             if (church.shopItems.Count >= 1)
-                buyItemUI.Show(church.shopItems[0].Item, party.money >= church.shopItems[0].cost, true);
+                buyItemUI.Show(church.shopItems[0].Item, party.CanAfford(church.shopItems[0].cost), true);
             else
             {
                 buyItemUI.Hide();
@@ -109,7 +109,7 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
     public void ItemClicked(ShopItem item)
     {
         selectedItem = item;
-        buyItemUI.Show(item.Item,  party.money >= item.cost, true);
+        buyItemUI.Show(item.Item,  party.CanAfford(item.cost), true);
     }
 
     public void Hide()

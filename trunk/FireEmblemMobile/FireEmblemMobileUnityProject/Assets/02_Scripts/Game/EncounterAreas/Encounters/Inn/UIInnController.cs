@@ -39,6 +39,11 @@ public class UIInnController : MonoBehaviour
         this.party = party;
         this.inn = node.inn;
     Debug.Log(party);
+    foreach (var shopItem in shopItems)
+    {
+        shopItem.Select();
+    }
+    
     UpdateUI();
     // for (int i=0; i<inn.shopItems.Count; i++)
     // {
@@ -106,16 +111,35 @@ public class UIInnController : MonoBehaviour
     {
         unitIdleAnimation.Show(party.ActiveUnit);
         characterFace.Show(party.ActiveUnit);
-        
+
+        shopItems[0].SetAffordable(Player.Instance.Party.CanAfford(inn.GetRestPrice()));
+        shopItems[1].SetAffordable(Player.Instance.Party.CanAfford(inn.GetDrinkPrice()));
+        shopItems[2].SetAffordable(Player.Instance.Party.CanAfford(inn.GetEatPrice()));
+        restDescription.text = GetDescriptionText(inn.GetRestHeal());
+
+        drinkDescription.text = GetDescriptionText(inn.GetDrinkHeal());
+        eatDescription.text = GetDescriptionText(inn.GetEatHeal());
+        if (!inn.CanUnitRest(party.ActiveUnit))
+        {
+            shopItems[0].SetAffordable(false);
+            restDescription.text = "Already rested.";
+        }
+        if (!inn.CanUnitDrink(party.ActiveUnit))
+        {
+            shopItems[1].SetAffordable(false);
+            drinkDescription.text = "Already drank.";
+        }
+        if (!inn.CanUnitEat(party.ActiveUnit))
+        {
+            shopItems[2].SetAffordable(false);
+            eatDescription.text = "Already ate.";
+        }
 
         restPriceText.text = GetCostText(inn.GetRestPrice(), restCoinIcon);
         drinkPriceText.text = GetCostText(inn.GetDrinkPrice(), drinkCoinIcon);
         eatPriceText.text = GetCostText(inn.GetEatPrice(), eatCoinIcon);
 
-        restDescription.text = GetDescriptionText(inn.GetRestHeal());
-
-        drinkDescription.text = GetDescriptionText(inn.GetDrinkHeal());
-        eatDescription.text = GetDescriptionText(inn.GetEatHeal());
+       
     }
     private string GetDescriptionText(int heal)
     {

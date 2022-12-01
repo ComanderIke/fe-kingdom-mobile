@@ -24,7 +24,9 @@ public class BuyItemUI : MonoBehaviour
     [SerializeField]  TextMeshProUGUI relicEffectCurrent;
     [SerializeField] protected TextMeshProUGUI buttonText;
     [SerializeField]  Color sellColor;
+    [SerializeField] private Color sellColorPressed;
     [SerializeField] private Color buyColor;
+    [SerializeField] private Color buyColorPressed;
 
     // Start is called before the first frame update
     public void Show(Item item, bool affordable, bool buying)
@@ -38,19 +40,34 @@ public class BuyItemUI : MonoBehaviour
         effectCurrent.text = "";
         weaponSection.gameObject.SetActive(false);
         relicSection.gameObject.SetActive(false);
-        buttonBg.color = buyColor;
+        button.interactable = affordable;
         if (affordable)
         {
-            buttonBg.color = buyColor;
+            //buttonBg.color = buyColor;
+            var colors = button.colors;
+            colors.normalColor = buyColor;
+            colors.highlightedColor = buyColor;
+            colors.pressedColor = buyColorPressed;
+            colors.selectedColor = buyColor;
+            button.colors = colors;
         }
         else
         {
-            buttonBg.color = sellColor;
+            var colors = button.colors;
+            colors.normalColor = sellColor;
+            colors.pressedColor = sellColorPressed;
+            colors.selectedColor = sellColor;
+            button.colors = colors;
         }
         if (!buying)
         {
+            button.interactable = true;
             buttonText.text = "SELL";
-            buttonBg.color = sellColor;
+            var colors = button.colors;
+            colors.normalColor = sellColor;
+            colors.pressedColor = sellColorPressed;
+            colors.selectedColor = sellColor;
+            button.colors = colors;
         }
         if (item is Weapon weapon)
         {
@@ -67,7 +84,8 @@ public class BuyItemUI : MonoBehaviour
             relicEffectCurrent.text = relic.GetAttributeDescription();
         }
 
-        button.interactable = affordable;
+        
+        
     }
 
     public void Hide()

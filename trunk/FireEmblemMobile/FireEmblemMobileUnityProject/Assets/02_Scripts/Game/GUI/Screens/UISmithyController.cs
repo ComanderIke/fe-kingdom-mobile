@@ -49,7 +49,7 @@ public class UISmithyController : MonoBehaviour
         relicSlot.Show(party.ActiveUnit.EquippedRelic1,currentEquipment==party.ActiveUnit.EquippedRelic1);
         relicSlot2.Show(party.ActiveUnit.EquippedRelic2,currentEquipment==party.ActiveUnit.EquippedRelic2);
         selectedItemUI.Show(currentEquipment,
-            party.money >= currentEquipment.GetUpgradeCost() &&
+            party.CanAfford(currentEquipment.GetUpgradeCost()) &&
             party.SmithingStones >= currentEquipment.GetUpgradeSmithingStoneCost());
     }
 

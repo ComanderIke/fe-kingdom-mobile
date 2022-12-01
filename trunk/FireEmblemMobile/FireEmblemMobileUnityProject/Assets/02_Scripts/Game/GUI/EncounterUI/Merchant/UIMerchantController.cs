@@ -62,7 +62,7 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
         instantiatedItems.Clear();
         unitIdleAnimation.Show(party.ActiveUnit);
         characterFace.Show(party.ActiveUnit);
-
+      
         if (buying)
         {
             Debug.Log("Buying");
@@ -77,20 +77,20 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
                 var item = merchant.shopItems[i];
                 instantiatedItems.Add(go);
                 shopItems.Add(go.GetComponent<UIShopItemController>());
-                bool affordable = party.money >= item.cost;
+                bool affordable = party.CanAfford(item.cost);
     
                 shopItems[i].SetValues(item, affordable, this);
             }
             if(selectedItem!=null)
-                buyItemUI.Show(selectedItem.Item,  party.money >= merchant.shopItems[0].cost, buying);
+                buyItemUI.Show(selectedItem.Item,  party.Money >= merchant.shopItems[0].cost, buying);
             else
             {
                 buyItemUI.Hide();
             }
+            
         }
         else
         {
-            Debug.Log("Selling");
             for (int i=0; i<party.Convoy.Items.Count; i++)
             {
                 var go=Instantiate(shopItemPrefab, itemParent);
@@ -112,7 +112,8 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
             switchSellButton.interactable = false;
             InStoreLabel.text = "In Convoy:";
         }
-
+        UpdateSelectionColors();
+        
     }
 
     public void BuyClicked()
@@ -129,16 +130,55 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
             party.Convoy.RemoveItem(selectedItem.Item);
         }
 
-        buyItemUI.Hide();
+        SelectNextItem();
+        //buyItemUI.Hide();
         
         UpdateUI();
+    }
+
+    private void SelectNextItem()
+    {
+        if (buying)
+        {
+            if(merchant.shopItems.Count!=0)
+                selectedItem = merchant.shopItems[0];
+            else
+            {
+                selectedItem = null;
+            }
+        }
+        else
+        {
+            if (party.Convoy.Items.Count != 0)
+                selectedItem = new ShopItem(party.Convoy.Items[0].item, party.Convoy.Items[0].stock);
+            else
+            {
+                selectedItem = null;
+            }
+        }
+    }
+
+    void UpdateSelectionColors()
+    {
+        Debug.Log("Update Selection Colors");
+        foreach (var shopItem in shopItems)
+        {
+            shopItem.Deselect();
+            Debug.Log("Deselect Item: "+shopItem.item.name);
+            if (shopItem.item.Equals(selectedItem))
+            {
+                Debug.Log("Select Item: "+shopItem.item.name);
+                shopItem.Select();
+            }
+        }
     }
     public void ItemClicked(ShopItem item)
     {
         selectedItem = item;
+        UpdateUI();
         Debug.Log(item.name+ " "+item.cost);
         if(buying)
-            buyItemUI.Show(item.Item,  party.money >= item.cost, buying);
+            buyItemUI.Show(item.Item,  party.CanAfford(item.cost), buying);
         else
             buyItemUI.Show(item.Item,  true, buying);
     }
@@ -158,8 +198,12 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
     public void SwitchBuyClicked()
     {
         buying = true;
-        if(merchant.shopItems.Count!=0)
+        if (merchant.shopItems.Count != 0)
             selectedItem = merchant.shopItems[0];
+        else
+        {
+            selectedItem = null;
+        }
         UpdateUI();
     }
     public void SwitchSellClicked()
@@ -167,6 +211,11 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
         buying = false;
         if (party.Convoy.Items.Count != 0)
             selectedItem = new ShopItem(party.Convoy.Items[0].item, party.Convoy.Items[0].stock);
+        else
+        {
+            selectedItem = null;
+            
+        }
         UpdateUI();
     }
 }

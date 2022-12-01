@@ -20,7 +20,7 @@ namespace Game.WorldMapStuff.Model
       
         public static Action<Party> PartyDied;
         [SerializeField] int maxSize = 4;
-        [SerializeField] public int money = default;
+        [SerializeField] private int money = default;
 
         
         public int MaxSize
@@ -195,6 +195,11 @@ namespace Game.WorldMapStuff.Model
                 EncounterNodeId = playerDataPartyData.currentEncounterNodeId,
                 MovedEncounterIds = playerDataPartyData.movedEncounterIds
             };
+        }
+
+        public bool CanAfford(int price)
+        {
+            return Money >= price;
         }
     }
 }

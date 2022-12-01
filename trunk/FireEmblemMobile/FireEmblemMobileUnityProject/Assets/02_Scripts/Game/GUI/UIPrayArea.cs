@@ -22,18 +22,18 @@ namespace LostGrace
             smallDonateButton.interactable = true;
             mediumDonateButton.interactable = true;
             highDonateButton.interactable = true;
-            if (Player.Instance.Party.money < 25)
+            if (!Player.Instance.Party.CanAfford(25))
             {
                 smallDonateButton.interactable = false;
                 mediumDonateButton.interactable = false;
                 highDonateButton.interactable = false;
             }
-            else if (Player.Instance.Party.money < 50)
+            else if (!Player.Instance.Party.CanAfford(50))
             {
                 mediumDonateButton.interactable = false;
                 highDonateButton.interactable = false;
             }
-            if (Player.Instance.Party.money < 100)
+            if (!Player.Instance.Party.CanAfford(100))
             {
                 highDonateButton.interactable = false;
             }

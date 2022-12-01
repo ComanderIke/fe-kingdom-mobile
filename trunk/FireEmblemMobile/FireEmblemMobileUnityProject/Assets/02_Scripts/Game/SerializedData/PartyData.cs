@@ -70,7 +70,7 @@ namespace Game.GameActors.Players
 
             activeUnitIndex = party.ActiveUnitIndex;
             convoy = party.Convoy;
-            money = party.money;
+            money = party.Money;
             humanData = new List<UnitData>();
             foreach (var member in party.members)
             {

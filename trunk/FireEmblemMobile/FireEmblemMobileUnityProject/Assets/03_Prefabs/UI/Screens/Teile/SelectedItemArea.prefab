@@ -1228,6 +1228,8 @@ MonoBehaviour:
   tooExpensiveColor: {r: 0.7264151, g: 0.11381844, b: 0.065103225, a: 1}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   stockCount: {fileID: 0}
+  canvasGroup: {fileID: 0}
+  tooExpensiveAlpha: 0.6
 --- !u!1 &7944821550425892048
 GameObject:
   m_ObjectHideFlags: 0
@@ -1430,7 +1432,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8bfbfbffa0b35c34db5c7e5f30c95b15, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c6dbf650bf6dbf943bb56fbb55e4958d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1461,7 +1463,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 0.54901963, g: 1, b: 0.4, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -2359,7 +2361,9 @@ MonoBehaviour:
   relicEffectCurrent: {fileID: 3483045904375519582}
   buttonText: {fileID: 7944821550231725076}
   sellColor: {r: 0.7264151, g: 0.11381844, b: 0.065103225, a: 1}
-  buyColor: {r: 1, g: 1, b: 1, a: 1}
+  sellColorPressed: {r: 0.6037736, g: 0.11981896, b: 0.08259169, a: 1}
+  buyColor: {r: 0.5479108, g: 1, b: 0.4009434, a: 1}
+  buyColorPressed: {r: 0.4622654, g: 0.8301887, b: 0.34069067, a: 1}
 --- !u!1 &8670416768343253421
 GameObject:
   m_ObjectHideFlags: 0

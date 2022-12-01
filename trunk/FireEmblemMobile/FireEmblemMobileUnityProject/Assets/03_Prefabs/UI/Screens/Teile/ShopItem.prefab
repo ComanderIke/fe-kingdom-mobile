@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5479108, g: 1, b: 0.4009434, a: 1}
+  m_Color: {r: 0.568245, g: 0.745283, b: 0.5097454, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -759,6 +759,7 @@ GameObject:
   - component: {fileID: 3778156147291639590}
   - component: {fileID: 5637437545576646837}
   - component: {fileID: 7626247200117925601}
+  - component: {fileID: 9076614791518698388}
   m_Layer: 5
   m_Name: ShopItem
   m_TagString: Untagged
@@ -842,9 +843,24 @@ MonoBehaviour:
   description: {fileID: 7354959347940480981}
   tooExpensiveColor: {r: 1, g: 1, b: 1, a: 1}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
+  normalBgColor: {r: 0.5686275, g: 0.74509805, b: 0.50980395, a: 1}
+  selectedBgColor: {r: 0.5479108, g: 1, b: 0.4009434, a: 1}
+  backGround: {fileID: 1324607215422980414}
   stockCount: {fileID: 7214767043996999130}
-  canvasGroup: {fileID: 2115974050289364206}
+  canvasGroup: {fileID: 9076614791518698388}
   tooExpensiveAlpha: 0.6
+--- !u!225 &9076614791518698388
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1744678864694839356}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2888977589234347631
 GameObject:
   m_ObjectHideFlags: 0
@@ -1130,7 +1146,7 @@ GameObject:
   - component: {fileID: 2526680743155406696}
   - component: {fileID: 5950670449268287007}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
