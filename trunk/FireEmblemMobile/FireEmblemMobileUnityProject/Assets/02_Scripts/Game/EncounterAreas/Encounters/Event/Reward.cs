@@ -9,7 +9,7 @@ public class Reward
 {
     [FormerlySerializedAs("item")] public ItemBP itemBp;
     [FormerlySerializedAs("skill")] public SkillBP skillBp;
-    public Blessing Blessing;
+    public BlessingBP blessingBp;
     public int gold;
     public int smithingStones;
     public int experience;

@@ -7,16 +7,17 @@ using UnityEngine;
 public class ChurchEncounterNode : EncounterNode
 {
     public Church church;
-
+   
     public ChurchEncounterNode(EncounterNode parent,int depth, int childIndex, string label, string description, Sprite sprite) : base(parent, depth, childIndex, label, description, sprite)
     {
         church = new Church(GameData.Instance.GetBlessingData());
-        church.AddItem(new ShopItem(GameData.Instance.GetRandomRelic()));
-        church.AddItem(new ShopItem(GameData.Instance.GetRandomMagic()));
+        var relics = GameData.Instance.GetRandomRelics(2);
+        church.AddItem(new ShopItem(relics[0]));
+        church.AddItem(new ShopItem(relics[1]));
         //church.AddItem(new ShopItem(GameData.Instance.GetRandomStaff()));
        
     }
-
+   
     public override void Activate(Party party)
     {
         GameObject.FindObjectOfType<UIChurchController>().Show(this,party);

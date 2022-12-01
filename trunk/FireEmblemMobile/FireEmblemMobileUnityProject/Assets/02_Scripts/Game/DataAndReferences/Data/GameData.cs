@@ -76,6 +76,7 @@ namespace Game.GameResources
         #if UNITY_EDITOR
         private void OnValidate()
         {
+            blessingData.Validate();
             allGems = GetAllInstances<GemBP>();
             allSmallGems = Array.FindAll(allGems,a => a.GetRarity() == 1);
             allMediumGems = Array.FindAll(allGems,a => a.GetRarity() == 2);
@@ -142,12 +143,12 @@ namespace Game.GameResources
         
         public Weapon GetRandomMagic()
         {
-            return (Weapon)magic[Random.Range(0, magic.Count-1)].Create();
+            return (Weapon)magic[Random.Range(0, magic.Count)].Create();
         }
 
         public Weapon GetRandomSword()
         {
-            return (Weapon)swords[Random.Range(0, swords.Count-1)].Create();
+            return (Weapon)swords[Random.Range(0, swords.Count)].Create();
         }
 
         // public EquipableItem GetRandomArmor()
@@ -157,12 +158,27 @@ namespace Game.GameResources
 
         public EquipableItem GetRandomRelic()
         {
-            return (EquipableItem)relics[Random.Range(0, relics.Count-1)].Create();
+            return (EquipableItem)relics[Random.Range(0, relics.Count)].Create();
         }
 
+        public List<Relic> GetRandomRelics(int count)
+        {
+            var list = new List<Relic>();
+            if (count >relics.Count)
+            {
+                count = relics.Count;
+            }
+            while (list.Count != count)
+            {
+                var relic = (Relic)relics[Random.Range(0, relics.Count)].Create();
+                if(!list.Contains(relic))
+                    list.Add(relic);
+            }
+            return list;
+        }
         public Weapon GetRandomStaff()
         {
-            return (Weapon)staffs[Random.Range(0, staffs.Count-1)].Create();
+            return (Weapon)staffs[Random.Range(0, staffs.Count)].Create();
         }
 
         public Item GetItemByName(string name)
@@ -176,12 +192,12 @@ namespace Game.GameResources
 
         public Weapon GetRandomBow()
         {
-            return (Weapon)bows[Random.Range(0, bows.Count-1)].Create();
+            return (Weapon)bows[Random.Range(0, bows.Count)].Create();
         }
 
         public Weapon GetRandomSpear()
         {
-            return (Weapon)spears[Random.Range(0, spears.Count-1)].Create();
+            return (Weapon)spears[Random.Range(0, spears.Count)].Create();
         }
 
         public IBlessingData GetBlessingData()
@@ -223,5 +239,7 @@ namespace Game.GameResources
             var commonConsumables = Array.FindAll(allConsumables, a => a.rarity == 3);
             return commonConsumables[Random.Range(0, commonConsumables.Length)].Create();
         }
+
+      
     }
 }

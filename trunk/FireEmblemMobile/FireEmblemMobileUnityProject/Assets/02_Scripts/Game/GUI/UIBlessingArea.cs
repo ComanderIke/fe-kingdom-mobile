@@ -16,13 +16,13 @@ namespace LostGrace
         [SerializeField] private Button AcceptButton;
         [SerializeField] UIChurchController churchController;
 
-        public void Show(Unit unit, Blessing blessing, bool alreadyAccepted)
+        public void Show(Unit unit, BlessingBP blessingBp, bool alreadyAccepted)
         {
             gameObject.SetActive(true);
             Faith.SetText("" + unit.Stats.Attributes.FAITH);
-            name.SetText(blessing.name);
-            Description.SetText(blessing.Description);
-            effect.SetText(blessing.effectDescription);
+            name.SetText(blessingBp.name);
+            Description.SetText(blessingBp.Description);
+            effect.SetText(blessingBp.effectDescription);
             AcceptButton.interactable = !alreadyAccepted;
         }
 

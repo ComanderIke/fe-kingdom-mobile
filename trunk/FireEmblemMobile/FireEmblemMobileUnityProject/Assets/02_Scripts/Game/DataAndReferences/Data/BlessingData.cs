@@ -8,13 +8,14 @@ namespace Game.GameResources
     [Serializable]
     public class BlessingData : IBlessingData
     {
-        [SerializeField] List<Blessing> tier0Blessings;
-        [SerializeField] List<Blessing> tier1Blessings;
-        [SerializeField] List<Blessing> tier2Blessings;
-        [SerializeField] List<Blessing> tier3Blessings;
-        [SerializeField] List<Blessing> tier4Blessings;
+        [SerializeField] BlessingBP[] allBlessings;
+        [SerializeField] BlessingBP[]  tier0Blessings;
+        [SerializeField] BlessingBP[]  tier1Blessings;
+        [SerializeField] BlessingBP[]  tier2Blessings;
+        [SerializeField] BlessingBP[]  tier3Blessings;
+   
         
-        public List<Blessing> GetBlessingPool(int tier)
+        public BlessingBP[]  GetBlessingPool(int tier)
         {
             switch (tier)
             {
@@ -22,9 +23,17 @@ namespace Game.GameResources
                 case 1: return tier1Blessings;
                 case 2: return tier2Blessings;
                 case 3: return tier3Blessings;
-                case 4: return tier4Blessings;
                 default: return null;
             }
+        }
+
+        public void Validate()
+        {
+            allBlessings = GameData.GetAllInstances<BlessingBP>();
+            tier0Blessings = Array.FindAll(allBlessings,a => a.tier == 0);
+            tier1Blessings = Array.FindAll(allBlessings,a => a.tier == 1);
+            tier2Blessings = Array.FindAll(allBlessings,a => a.tier == 2);
+            tier3Blessings = Array.FindAll(allBlessings,a => a.tier == 3);
         }
     }
 }

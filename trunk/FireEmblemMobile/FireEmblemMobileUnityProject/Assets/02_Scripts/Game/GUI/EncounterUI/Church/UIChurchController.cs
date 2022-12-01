@@ -32,10 +32,14 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
     private ShopItem selectedItem;
     private List<GameObject> instantiatedItems= new List<GameObject>();
     private ChurchUIState state = ChurchUIState.Store;
-    private Blessing blessing;
+    private BlessingBP blessingBp;
  
     public void UpdateUI()
-    { 
+    {
+        if (state == ChurchUIState.Pray && !church.CanDonate(party.ActiveUnit))
+            state = ChurchUIState.Blessing;
+        if (state == ChurchUIState.Blessing && church.CanDonate(party.ActiveUnit))
+            state = ChurchUIState.Pray;
         shopItems.Clear();
         saleButton.gameObject.SetActive(false);
         prayButton.gameObject.SetActive(false);
@@ -84,8 +88,9 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
             saleButton.gameObject.SetActive(true);
             prayButton.gameObject.SetActive(false);
             inStoreText.gameObject.SetActive(false);
-            blessingUI.Show(party.ActiveUnit,blessing, false);
+            blessingUI.Show(party.ActiveUnit,blessingBp, false);
         }
+        UpdateSelectionColors();
     }
     public void NextClicked()
     {
@@ -103,12 +108,26 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
         party.Money -= selectedItem.cost;
         party.Convoy.AddItem(selectedItem.Item);
         church.RemoveItem(selectedItem.Item);
+        SelectNextItem();
         buyItemUI.Hide();
         UpdateUI();
+    }
+    private void SelectNextItem()
+    {
+        
+        if(church.shopItems.Count!=0)
+            selectedItem = church.shopItems[0];
+        else
+        {
+            selectedItem = null;
+        }
+        
+     
     }
     public void ItemClicked(ShopItem item)
     {
         selectedItem = item;
+        UpdateUI();
         buyItemUI.Show(item.Item,  party.CanAfford(item.cost), true);
     }
 
@@ -118,12 +137,13 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
     }
     public void Show(ChurchEncounterNode node, Party party)
     {
-        blessing = null;
+        blessingBp = null;
         this.node = node;
         canvas.enabled = true;
         this.party = party;
         this.church = node.church;
         shopItems = new List<UIShopItemController>();
+        selectedItem = church.shopItems[0];
         UpdateUI();
         //FindObjectOfType<UICharacterViewController>().Show(party.members[party.ActiveUnitIndex]);
     }
@@ -132,6 +152,8 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
     public void PrayClicked()
     {
         state = ChurchUIState.Pray;
+        if (!church.CanDonate(party.ActiveUnit))
+            state = ChurchUIState.Blessing;
         UpdateUI();
     }
     public void SaleClicked()
@@ -145,22 +167,41 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
         FindObjectOfType<UICharacterViewController>().Hide();
         node.Continue();
     }
-
+    void UpdateSelectionColors()
+    {
+        Debug.Log("Update Selection Colors");
+        foreach (var shopItem in shopItems)
+        {
+            shopItem.Deselect();
+            Debug.Log("Deselect Item: "+shopItem.item.name);
+            if (shopItem.item.Equals(selectedItem))
+            {
+                Debug.Log("Select Item: "+shopItem.item.name);
+                shopItem.Select();
+            }
+        }
+    }
     
     public void DonateSmall()
     {
-        blessing=church.DonateSmall(party.ActiveUnit.Stats.Attributes.FAITH);
+        blessingBp=church.DonateSmall(party.ActiveUnit, party.ActiveUnit.Stats.Attributes.FAITH);
+        state = ChurchUIState.Blessing;
+        UpdateUI();
         
     }
 
     public void DonateMedium()
     {
-        blessing=church.DonateMedium(party.ActiveUnit.Stats.Attributes.FAITH);
+        blessingBp=church.DonateMedium(party.ActiveUnit,party.ActiveUnit.Stats.Attributes.FAITH);
+        state = ChurchUIState.Blessing;
+        UpdateUI();
     }
 
     public void DonateHigh()
     {
-        blessing=church.DonateHigh(party.ActiveUnit.Stats.Attributes.FAITH);
+        blessingBp=church.DonateHigh(party.ActiveUnit,party.ActiveUnit.Stats.Attributes.FAITH);
+        state = ChurchUIState.Blessing;
+        UpdateUI();
     }
 
     public void AcceptBlessing()
