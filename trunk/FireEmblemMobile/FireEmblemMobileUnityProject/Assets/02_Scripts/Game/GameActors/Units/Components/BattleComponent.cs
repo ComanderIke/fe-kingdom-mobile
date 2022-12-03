@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Items.Weapons;
+﻿using System;
+using Game.GameActors.Items.Weapons;
 using Game.GameInput;
 using Game.Mechanics;
 using Game.Mechanics.Battle;
@@ -36,5 +37,10 @@ namespace Game.GameActors.Units
         {
             return owner.GetEquippedWeapon().GetEffectiveCoefficient(effect);
         }
+
+        public event Action<Unit> OnEndCombat;
+        public event Action<Unit> OnInitiateCombat;
+        public event Action<Unit> OnCombat;
+        public event Action<Unit> OnAttack;
     }
 }

@@ -86,5 +86,13 @@ namespace Game.GameActors.Units.Skills
                 return "";
             return UpgradeDescriptions[Level-1];
         }
+        public virtual void BindSkill(Unit unit)
+        {
+            Debug.Log("Bind Skill");
+        }
+        public virtual void UnbindSkill(Unit unit)
+        {
+            Debug.Log("Unbind Skill");
+        }
     }
 }

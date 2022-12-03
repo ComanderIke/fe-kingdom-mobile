@@ -132,14 +132,14 @@ public class ItemToolTip : MonoBehaviour
 
         if (human.HasEquipped(item))
         {
-            if (item is WeaponBP)
+            if (item is Weapon)
             {
                 useButton.interactable = false;
                 useButtonText.text = "Equipped";
                 dropButton.gameObject.SetActive(false);
             }
 
-            if (item is RelicBP)
+            if (item is Relic)
             {
                 useButton.interactable = true;
                 useButtonText.text = "Unequip";

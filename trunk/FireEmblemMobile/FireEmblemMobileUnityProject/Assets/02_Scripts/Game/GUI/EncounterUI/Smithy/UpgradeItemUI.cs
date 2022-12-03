@@ -13,6 +13,7 @@ public class UpgradeItemUI : BuyItemUI
     public TextMeshProUGUI effectAfter;
     public TextMeshProUGUI stoneCost;
     [SerializeField]  TextMeshProUGUI relicEffectAfter;
+   
 
     // Start is called before the first frame update
     public void Show(EquipableItem equip, bool affordable)

@@ -17,21 +17,27 @@ public class UISmithyController : MonoBehaviour
 
     //public List<UIShopItemController> shopItems;
     private Smithy smithy;
-    [SerializeField] UpgradeItemUI selectedItemUI;
+    [SerializeField] CombineGemUI combineGemUI;
+    [SerializeField] InsertGemUI insertGemUI;
+    [SerializeField] UpgradeItemUI smithingArea;
     [SerializeField] private UICharacterFace characterFace;
     [SerializeField] private UIUnitIdleAnimation unitIdleAnimation;
     [SerializeField] private SmithingSlot weaponSlot;
     [SerializeField] private SmithingSlot relicSlot;
     [SerializeField] private SmithingSlot relicSlot2;
-    private EquipableItem currentEquipment;
-
+    [SerializeField] private CanvasGroup smithingButtonAlpha;
+    [SerializeField] private CanvasGroup insertGemsButtonAlpha;
+    [SerializeField] private CanvasGroup combineGemsButtonAlpha;
+    private Weapon selectedWeapon;
+    private Relic selectedRelic;
+    public SmithyUIState state = SmithyUIState.Smithing;
     public void Show(SmithyEncounterNode node, Party party)
     {
         this.node = node;
         canvas.enabled = true;
         this.party = party;
         this.smithy = node.smithy;
-        this.currentEquipment = party.ActiveUnit.equippedWeapon;
+        this.selectedWeapon = party.ActiveUnit.equippedWeapon;
         UpdateUI();
     }
 
@@ -44,26 +50,64 @@ public class UISmithyController : MonoBehaviour
     {
         unitIdleAnimation.Show(party.ActiveUnit);
         characterFace.Show(party.ActiveUnit);
-      
-        weaponSlot.Show(party.ActiveUnit.equippedWeapon, currentEquipment==party.ActiveUnit.equippedWeapon);
-        relicSlot.Show(party.ActiveUnit.EquippedRelic1,currentEquipment==party.ActiveUnit.EquippedRelic1);
-        relicSlot2.Show(party.ActiveUnit.EquippedRelic2,currentEquipment==party.ActiveUnit.EquippedRelic2);
-        selectedItemUI.Show(currentEquipment,
-            party.CanAfford(currentEquipment.GetUpgradeCost()) &&
-            party.SmithingStones >= currentEquipment.GetUpgradeSmithingStoneCost());
+        if (state == SmithyUIState.Smithing)
+        {
+            weaponSlot.Show(party.ActiveUnit.equippedWeapon, selectedWeapon == party.ActiveUnit.equippedWeapon);
+            insertGemUI.Hide();
+            combineGemUI.Hide();
+            smithingArea.Show(selectedWeapon,
+                party.CanAfford(selectedWeapon.GetUpgradeCost()) &&
+                party.SmithingStones >= selectedWeapon.GetUpgradeSmithingStoneCost());
+            smithingButtonAlpha.alpha = 1.0f;
+            combineGemsButtonAlpha.alpha = 0.6f;
+            insertGemsButtonAlpha.alpha = 0.6f;
+        }
+
+        if (state == SmithyUIState.InsertGems)
+        {
+            smithingArea.Hide();
+            combineGemUI.Hide();
+            if (selectedRelic == null)
+            {
+                selectedRelic = party.ActiveUnit.EquippedRelic1;
+                if(selectedRelic==null)
+                    selectedRelic = party.ActiveUnit.EquippedRelic2;
+            }
+
+            if (selectedRelic != null)
+            {
+                insertGemUI.Show(selectedRelic);
+            }
+
+            relicSlot.Show(party.ActiveUnit.EquippedRelic1, selectedRelic == party.ActiveUnit.EquippedRelic1);
+            relicSlot2.Show(party.ActiveUnit.EquippedRelic2, selectedRelic == party.ActiveUnit.EquippedRelic2);
+            smithingButtonAlpha.alpha = 0.6f;
+            combineGemsButtonAlpha.alpha = 0.6f;
+            insertGemsButtonAlpha.alpha = 1.0f;
+        }
+
+        if (state == SmithyUIState.CombineGems)
+        {
+            insertGemUI.Hide();
+            smithingArea.Hide();
+            smithingButtonAlpha.alpha = 0.6f;
+            combineGemsButtonAlpha.alpha = 1.0f;
+            insertGemsButtonAlpha.alpha = 0.6f;
+            combineGemUI.Show();
+        }
     }
 
     public void NextClicked()
     {
         Player.Instance.Party.ActiveUnitIndex++;
-        this.currentEquipment = party.ActiveUnit.equippedWeapon;
+        this.selectedWeapon = party.ActiveUnit.equippedWeapon;
         UpdateUI();
     }
 
     public void PrevClicked()
     {
         Player.Instance.Party.ActiveUnitIndex--;
-        this.currentEquipment = party.ActiveUnit.equippedWeapon;
+        this.selectedWeapon = party.ActiveUnit.equippedWeapon;
         UpdateUI();
     }
 
@@ -84,25 +128,49 @@ public class UISmithyController : MonoBehaviour
         node.Continue();
     }
 
+  
+    public void InsertGemsClicked()
+    {
+        Debug.Log("InsertGemsClicked");
+        state = SmithyUIState.InsertGems;
+        UpdateUI();
+    }
+    public void SmithingClicked()
+    {
+        Debug.Log("SmithingClicked");
+        state = SmithyUIState.Smithing;
+        UpdateUI();
+    }
+    public void CombineGemsClicked()
+    {
+        Debug.Log("CombineGems");
+        state = SmithyUIState.CombineGems;
+        UpdateUI();
+    }
+
     public void WeaponClicked()
     {
         if (party.ActiveUnit.equippedWeapon == null)
             return;
-        this.currentEquipment = party.ActiveUnit.equippedWeapon;
+        this.selectedWeapon = party.ActiveUnit.equippedWeapon;
         UpdateUI();
     }
     public void Relic1Clicked()
     {
-        if (party.ActiveUnit.EquippedRelic1 == null)
-            return;
-        this.currentEquipment = party.ActiveUnit.EquippedRelic1;
+        this.selectedRelic = party.ActiveUnit.EquippedRelic1;
         UpdateUI();
     }
     public void Relic2Clicked()
     { 
-        if (party.ActiveUnit.EquippedRelic2 == null)
-            return;
-        this.currentEquipment = party.ActiveUnit.EquippedRelic2;
+
+        this.selectedRelic = party.ActiveUnit.EquippedRelic2;
         UpdateUI();
+    }
+
+    public enum SmithyUIState
+    {
+        InsertGems,
+        CombineGems,
+        Smithing
     }
 }

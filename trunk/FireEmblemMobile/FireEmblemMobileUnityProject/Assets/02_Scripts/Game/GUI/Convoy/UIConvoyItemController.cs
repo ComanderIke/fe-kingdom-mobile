@@ -7,12 +7,22 @@ public class UIConvoyItemController : UIButtonController
 {
     private StockedItem item;
     public TextMeshProUGUI stockCount;
-    public void SetValues(StockedItem stockeditem)
+    public void SetValues(StockedItem stockeditem, bool grayedOut=false)
     {
         this.item = stockeditem;
-        SetValues(stockeditem.item.Sprite, stockeditem.item.cost, stockeditem.item.Description);
+        SetValues(stockeditem.item.Sprite, stockeditem.item.Description, grayedOut);
         stockCount.text = "" + stockeditem.stock+"x";
         stockCount.gameObject.SetActive(stockeditem.stock > 1);
+        if (grayedOut)
+        {
+            canvasGroup.alpha = .6f;
+            button.interactable = false;
+        }
+        else
+        {
+            button.interactable = true;
+            canvasGroup.alpha = 1.0f;
+        }
     }
 
     public void Clicked()

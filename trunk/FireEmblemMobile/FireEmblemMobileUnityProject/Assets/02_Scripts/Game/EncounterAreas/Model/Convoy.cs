@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Game.GameActors.Items;
+using Game.GameActors.Items.Gems;
 using UnityEngine;
 
 namespace Game.WorldMapStuff.Model
@@ -20,11 +21,14 @@ namespace Game.WorldMapStuff.Model
                     items = new List<StockedItem>();
                 return items;
             }
-        } 
-        
+        }
 
+        private bool init = false;
         public void Init()
         {
+            if (init)
+                return;
+            init = true;
             if (startItems != null)
             {
                 foreach (var itemBp in startItems)
@@ -98,6 +102,26 @@ namespace Game.WorldMapStuff.Model
             }
 
             return false;
+        }
+
+        
+        public IEnumerable<StockedItem> GetAllGems()
+        {
+            return items.FindAll(a => a.item is Gem);
+        }
+
+        public int GetGemCount(Gem searchGem)
+        {
+            int sum = 0;
+            foreach (var stockedGem in GetAllGems())
+            {
+                if (stockedGem.item == searchGem)
+                {
+                    sum += stockedGem.stock;
+                }
+            }
+
+            return sum;
         }
     }
 }

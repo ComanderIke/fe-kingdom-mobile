@@ -27,7 +27,7 @@ public class UIQuestItemController : UIButtonController
                 rewardIcon.sprite = goldSprite;break;
             case QuestRewardType.Item: rewardIcon.sprite = quest.Reward.RewardItemBp.sprite;break;
         }
-        SetValues(QuestSprite, "Accept", quest.description);
+        SetValues(QuestSprite, "Accept");
     }
 }
 

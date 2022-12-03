@@ -8,19 +8,7 @@ namespace LostGrace
     {
         [SerializeField] private float expMul = 1.2f;
         private Unit owner;
-        public void Init(Unit unit)
-        {
-            this.owner = unit;
-            // unit.ExperienceManager.ExpGained += AddExtraExp;
-        }
-
-        public void AddExtraExp(int expBefore, int expGained)
-        {
-            float extraexp=(expGained * expMul) - expGained;
-            //TODO STACKOVERFLOW
-            //owner.ExperienceManager.AddExp(extraexp);
-            
-        }
+      
 
         public override bool CanTargetCharacters()
         {
@@ -36,5 +24,21 @@ namespace LostGrace
         {
             this.expMul = expMul;
         }
+        public override void BindSkill(Unit unit)
+        {
+            this.owner = unit;
+            unit.ExperienceManager.ExpGained += ReactToExpGain;
+        }
+        public override void UnbindSkill(Unit unit)
+        {
+            owner.ExperienceManager.ExpMultiplier = 1;
+            unit.ExperienceManager.ExpGained -= ReactToExpGain;
+            this.owner = null;
+        }
+        private void ReactToExpGain(int expGained, int exp)
+        {
+            owner.ExperienceManager.ExpMultiplier = expMul;
+        }
+      
     }
 }

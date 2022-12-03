@@ -4,6 +4,7 @@ using Game.GameActors.Units;
 using Game.GameResources;
 using LostGrace;
 using UnityEngine;
+using Random = System.Random;
 
 public class Church
 {
@@ -45,10 +46,10 @@ public class Church
         }
     }
 
-    BlessingBP GenerateBlessing(int faith, int donation)
+    Blessing GenerateBlessing(int faith, int donation)
     {
        
-        BlessingBP ret;
+        Blessing ret;
         BlessingBP[] tier0BlessingPool= blessingData.GetBlessingPool(0);//400 points
         BlessingBP[] tier1BlessingPool= blessingData.GetBlessingPool(1);//300
         BlessingBP[]  tier2BlessingPool= blessingData.GetBlessingPool(2);//200
@@ -57,23 +58,23 @@ public class Church
         //100 points=upgrade in tier so 10 Faith +1 Tier guarantued
         //10 FAith = 50%
         //+donate High ~100%
-        ret = tier0BlessingPool[0];
+        ret = tier3BlessingPool[UnityEngine.Random.Range(0, tier3BlessingPool.Length)].Create();
         return ret;
     }
-    public BlessingBP DonateSmall(Unit unit, int faith)
+    public Blessing DonateSmall(Unit unit, int faith)
     {
         alreadyDonated.Add(unit);
         return GenerateBlessing(faith,25);
         //lowtier 0-25%
     }
 
-    public BlessingBP DonateMedium(Unit unit, int faith)
+    public Blessing DonateMedium(Unit unit, int faith)
     {
         alreadyDonated.Add(unit);
         return GenerateBlessing(faith, 100);
     }
 
-    public BlessingBP DonateHigh(Unit unit, int faith)
+    public Blessing DonateHigh(Unit unit, int faith)
     {
         alreadyDonated.Add(unit);
         return GenerateBlessing(faith, 200);

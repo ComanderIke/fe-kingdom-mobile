@@ -13,10 +13,11 @@ namespace Game.GameActors.Items.Weapons
         public int Level = 1;
         public int maxLevel = 5;
 
+        public int slotCount=1;
 
         public override Item Create()
         {
-            return new Relic(name, description, cost, rarity,sprite, equipmentSlotType, Level, maxLevel);
+            return new Relic(name, description, cost, rarity,sprite, equipmentSlotType, Level, maxLevel, slotCount);
         }
     }
 }

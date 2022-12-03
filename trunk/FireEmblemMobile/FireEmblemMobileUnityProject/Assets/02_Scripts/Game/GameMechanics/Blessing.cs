@@ -5,27 +5,23 @@ namespace LostGrace
     public class Blessing
     {
         private Skill skill;
-        private string effectDescription;
         private string name;
-        private string Description;
+        private string description;
         private int tier;
 
-        public Blessing(Skill skill, string effectDescription, string name, string description, int tier)
+        public Blessing(Skill skill, string name, string description, int tier)
         {
             this.skill = skill;
-            this.effectDescription = effectDescription;
             this.name = name;
-            Description = description;
+            this.description = description;
             this.tier = tier;
         }
 
         public Skill Skill => skill;
 
-        public string EffectDescription => effectDescription;
-
         public string Name => name;
 
-        public string Description1 => Description;
+        public string Description => description;
 
         public int Tier => tier;
     }

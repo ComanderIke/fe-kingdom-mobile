@@ -86,6 +86,6 @@ namespace Game.GameActors.Units
         }
 
         public bool HasLevelUp { get; set; }
-        
+        public float ExpMultiplier { get; set; }
     }
 }

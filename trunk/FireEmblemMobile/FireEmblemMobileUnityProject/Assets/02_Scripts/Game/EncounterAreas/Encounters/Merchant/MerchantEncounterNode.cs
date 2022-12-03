@@ -50,7 +50,7 @@ public class MerchantEncounterNode : EncounterNode
     {
         merchant = new Merchant();
        
-        merchant.AddItem(new ShopItem(GameData.Instance.GetItemByName("HealthPotion"),Random.Range(2,4)));
+        merchant.AddItem(new ShopItem(GameData.Instance.GetItemByName("Health Potion"),Random.Range(2,4)));
         merchant.AddItem(new ShopItem(GameData.Instance.GetRandomCommonConsumeables(),Random.Range(1,3)));
         merchant.AddItem(new ShopItem(GameData.Instance.GetRandomCommonConsumeables(),Random.Range(1,2)));
         merchant.AddItem(new ShopItem(GameData.Instance.GetRandomRareConsumeable()));

@@ -7,9 +7,10 @@ namespace Game.GameActors.Units.Skills.Passive
     [CreateAssetMenu(menuName = "GameData/Skills/Passive/Immunity", fileName = "Immunity")]
     public class ImmunitySkillBP:PassiveSkillBp
     {
+        [SerializeField]private ImmunityType type;
         public override Skill Create()
         {
-            return new Immunity(Name, Description, Icon, AnimationObject,Cooldown,UpgradeDescriptions);
+            return new Immunity(Name, Description, Icon, AnimationObject,Cooldown,UpgradeDescriptions, type);
         }
     }
 }

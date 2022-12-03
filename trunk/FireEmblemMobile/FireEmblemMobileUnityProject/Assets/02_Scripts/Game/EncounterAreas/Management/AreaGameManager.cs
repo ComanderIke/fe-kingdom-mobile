@@ -68,7 +68,8 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         if (Player.Instance.Party == null || Player.Instance.Party.members.Count == 0){
             Debug.LogWarning("No party Members! Creating DemoUnits");
            
-            Player.Instance.Party = new Party();
+            if(Player.Instance.Party==null)
+                Player.Instance.Party = new Party();
             var demoUnits = GameObject.FindObjectOfType<DemoUnits>().GetUnits();
             Player.Instance.Party.members = demoUnits;
             Player.Instance.Party.Initialize();

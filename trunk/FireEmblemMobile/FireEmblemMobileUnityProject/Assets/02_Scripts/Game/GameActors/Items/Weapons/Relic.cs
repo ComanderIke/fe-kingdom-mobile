@@ -1,8 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
+using Game.GameActors.Items.Gems;
+using UnityEditor.Graphs;
 using UnityEngine;
 
 namespace Game.GameActors.Items.Weapons
 {
+    [Serializable]
+    public class GemSlot
+    {
+        public Gem gem;
+
+        public bool IsEmpty()
+        {
+            return gem == null;
+        }
+    }
+    
     [Serializable]
     public class Relic:EquipableItem
     {
@@ -11,13 +25,38 @@ namespace Game.GameActors.Items.Weapons
 
         public int maxLevel = 5;
 
-        public Relic(string name, string description, int cost, int rarity, Sprite sprite, EquipmentSlotType slotType, int level, int maxLevel) : base(name, description, cost,rarity, sprite, slotType)
+        public int slotCount = 0;
+        public List<GemSlot> slots;
+        public Relic(string name, string description, int cost, int rarity, Sprite sprite, EquipmentSlotType slotType, int level, int maxLevel,int slotCount) : base(name, description, cost,rarity, sprite, slotType)
         {
             this.Level = level;
             this.maxLevel = maxLevel;
+            this.slotCount = slotCount;
+            slots = new List<GemSlot>();
         }
 
+        public void InsertGem(Gem gem, int slotindex)
+        {
+            slots[slotindex].gem = gem;
 
+        }
+        public Gem RemoveGem(int slotindex)
+        {
+            var gem = slots[slotindex].gem;
+            slots[slotindex].gem = null;
+            return gem;
+
+        }
+        public bool HasEmptySlot()
+        {
+            foreach (var slot in slots)
+            {
+                if (slot.IsEmpty())
+                    return true;
+            }
+
+            return false;
+        }
         public string GetAttributeDescription()
         {
             if(Attributes!=null&&Attributes.Length>Level-1)
@@ -50,5 +89,16 @@ namespace Game.GameActors.Items.Weapons
             return Attributes[Level-1].upgradeSmithingStoneCost;
         }
 
+        public int GetSlotCount()
+        {
+            return slotCount;
+        }
+
+        public Gem GetGem(int index)
+        {
+            if (slots.Count < index)
+                return slots[index].gem;
+            return null;
+        }
     }
 }

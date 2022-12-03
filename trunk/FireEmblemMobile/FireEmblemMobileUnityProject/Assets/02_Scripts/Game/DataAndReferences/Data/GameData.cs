@@ -186,6 +186,7 @@ namespace Game.GameResources
             var item = Array.Find(allItems, a => a.name == name);
             if(item!=null)
                 return item.Create();
+            Debug.LogError("No Item found with name: "+name);
             return null;
         }
         

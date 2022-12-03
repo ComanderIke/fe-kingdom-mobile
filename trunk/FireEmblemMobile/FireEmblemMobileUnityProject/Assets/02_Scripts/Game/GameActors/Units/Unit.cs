@@ -4,6 +4,7 @@ using Game.AI;
 using Game.GameActors.Items;
 using Game.GameActors.Items.Weapons;
 using Game.GameActors.Players;
+using Game.GameActors.Units.CharStateEffects;
 using Game.GameActors.Units.Humans;
 using Game.GameActors.Units.Numbers;
 using Game.GameActors.Units.OnGameObject;
@@ -12,6 +13,7 @@ using Game.Grid;
 using Game.Manager;
 using Game.Mechanics;
 using Game.WorldMapStuff.Model;
+using LostGrace;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -56,7 +58,8 @@ namespace Game.GameActors.Units
         public Relic EquippedRelic2;
         public string name;
         [HideInInspector] private int hp=-1;
-        
+        [SerializeField]
+        private Blessing blessing;
         [SerializeField]
         private Stats stats;
         [SerializeField]
@@ -79,6 +82,9 @@ namespace Game.GameActors.Units
             get => stats;
             set => stats = value;
         }
+
+        public Blessing Blessing => blessing;
+
         public Attributes Growths
         {
             get => growths;
@@ -261,6 +267,10 @@ namespace Game.GameActors.Units
 
         public Sprite FaceSprite => visuals.CharacterSpriteSet.FaceSprite;
         public bool Fielded { get; set; }
+        public float HealingMultiplier { get; set; }
+        public float BonusSkillProcChance { get; set; }
+
+
         public void Equip(Weapon w)
         {
             
@@ -447,5 +457,16 @@ namespace Game.GameActors.Units
                 return ((name != null ? name.GetHashCode() : 0) * 397) ^ (Party != null ? Party.GetHashCode() : 0);
             }
         }
+
+       
+        public void ReceiveBlessing(Blessing blessing)
+        {
+            this.blessing = blessing;
+        }
+
+        public event Action<Unit, Debuff> OnDebuff;
+        public event Action<int> BeforeHealingReceived;
+        public event Action<EncounterNode> OnNodeTravel;
+        public event Action OnLethalDamage;
     }
 }

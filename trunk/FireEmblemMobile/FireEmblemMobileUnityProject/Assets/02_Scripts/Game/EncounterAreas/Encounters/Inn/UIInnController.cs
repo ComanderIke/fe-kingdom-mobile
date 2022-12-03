@@ -29,7 +29,6 @@ public class UIInnController : MonoBehaviour
     [SerializeField] private GameObject eatCoinIcon;
     public List<UIShopItemController> shopItems;
     public UIQuestItemController questOption;
-    public UIRecruitCharacterController recruitCharacter;
     private InnEncounterNode node;
 
     public void Show(InnEncounterNode node, Party party)

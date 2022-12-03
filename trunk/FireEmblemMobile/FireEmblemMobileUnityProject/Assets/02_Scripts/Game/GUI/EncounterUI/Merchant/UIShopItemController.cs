@@ -14,25 +14,24 @@ public class UIShopItemController : UIButtonController
 {
     public Color tooExpensiveColor;
     public Color normalColor;
-    public Color normalBgColor;
-    public Color selectedBgColor;
-    [SerializeField] private Image backGround;
+    public TextMeshProUGUI cost;
     public ShopItem item;
     public TextMeshProUGUI stockCount;
     private IShopItemClickedReceiver clickedReceiver;
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private float tooExpensiveAlpha = 0.6f;
-    private bool selected = false;
+  
     private bool affordable = false;
     public void SetValues(ShopItem item, bool affordable,IShopItemClickedReceiver receiver)
     {
+        this.cost.SetText(""+item.cost);
         this.item = item;
         this.clickedReceiver = receiver;
         this.affordable = affordable;
         UpdateUI();
     }
 
-    private void UpdateUI()
+    protected override void UpdateUI()
     {
         if (affordable)
         {
@@ -48,24 +47,16 @@ public class UIShopItemController : UIButtonController
 
         if (item != null)
         {
-            SetValues(item.sprite, item.cost, item.description);
             stockCount.text = "" + item.stock + "x";
             stockCount.gameObject.SetActive(item.stock > 1);
+
+
+            base.UpdateUI();
         }
 
-        backGround.color = selected ? selectedBgColor : normalBgColor;
     }
 
-    public void Select()
-    {
-        selected = true;
-        UpdateUI();
-    }
-    public void Deselect()
-    {
-        selected = false;
-        UpdateUI();
-    }
+  
     public void Clicked()
     {
         Debug.Log("ItemClicked!" + item.name);

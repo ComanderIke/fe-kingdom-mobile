@@ -8,22 +8,23 @@ namespace Game.GameActors.Units.Numbers
     {
         public Action OnAttributesUpdated;
         [SerializeField]
-        public int STR= 30;
+        public int STR= 0;
 
         [SerializeField]
-        public int INT = 30;
+        public int INT = 0;
         [SerializeField]
-        public int DEX= 30;
+        public int DEX= 0;
         [SerializeField]
-        public int AGI= 30;
+        public int AGI= 0;
 
-        [field:SerializeField]public int CON { get; private set; }
+        [SerializeField] 
+        public int CON = 0;
         [SerializeField]
-        public int LCK= 30;
+        public int LCK= 0;
         [SerializeField]
-        public int DEF= 30;
+        public int DEF= 0;
         [SerializeField]
-        public int FAITH= 30;
+        public int FAITH= 0;
 
         public const int CON_HP_Mult = 3;
         public Attributes()
@@ -86,6 +87,18 @@ namespace Game.GameActors.Units.Numbers
         public int GetFromIndex(int textoptionStatIndex)
         {
             return AsArray()[textoptionStatIndex];
+        }
+
+        public void Reset()
+        {
+            STR = 0;
+            DEX = 0;
+            INT = 0;
+            AGI = 0;
+            LCK = 0;
+            CON = 0;
+            DEF = 0;
+            FAITH = 0;
         }
     }
 

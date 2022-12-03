@@ -23,9 +23,13 @@ namespace Game.GameActors.Units.Numbers
         public Stats()
         {
             Attributes = new Attributes();
+            BonusAttributes = new Attributes();
             AttackRanges = new List<int>();
         }
-        
+
+        public Attributes BonusAttributes { get; set; }
+        public Attributes BonusGrowths { get; set; }
+
 
         public StatsData GetSaveData()
         {

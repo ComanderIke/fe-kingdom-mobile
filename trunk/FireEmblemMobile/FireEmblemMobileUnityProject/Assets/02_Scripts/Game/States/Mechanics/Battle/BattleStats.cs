@@ -7,6 +7,7 @@ using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
 using Game.GameActors.Units.Monsters;
 using Game.GameActors.Units.Numbers;
+using Game.GameActors.Units.Skills.Passive;
 using Game.GameInput;
 using Game.GUI.PopUpText;
 using LostGrace;
@@ -14,15 +15,46 @@ using UnityEngine;
 
 namespace Game.Mechanics.Battle
 {
+    public class BonusAttackStats
+    {
+        public bool BonusAttack { get; set; }
+        public AttackEffects AttackEffects { get; set; }
+
+        public BonusAttackStats()
+        {
+            BonusAttack = false;
+        }
+    }
+    public class BonusStats
+    {
+        public int Hit { get; set; }
+        public int Avoid { get; set; }
+        public int CritAvoid { get; set; }
+        public int Crit { get; set; }
+        public int AttackSpeed { get; set; }
+        public int Armor { get; set; }
+        public int MagicResistance { get; set; }
+        public int Attack { get; set; }
+
+        public void Reset()
+        {
+            Debug.Log("TODO Reset Stats");
+        }
+    }
     public class BattleStats
     {
         private const int AGILITY_TO_DOUBLE = 5;
 
         private readonly IBattleActor owner;
 
+        public BonusStats BonusStats { get; set; }
+        public List<ImmunityType> Immunities { get; set; }
+        public BonusAttackStats BonusAttackStats { get; set; }
+
         public BattleStats(IBattleActor owner)
         {
             this.owner = owner;
+            BonusStats = new BonusStats();
         }
         public int GetDefense()
         {

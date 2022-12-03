@@ -18,7 +18,8 @@ public class ToolTipSystem : MonoBehaviour
     public AttributeToolTip AttributeToolTip;
     public EncounterToolTip EncounterToolTip;
     public EncounterToolTip EncounterAttackToolTip;
-
+    public BlessingToolTip blessingToolTip;
+    public RelicToolTip relicToolTip;
     public void Awake()
     {
         instance = this;
@@ -39,9 +40,22 @@ public class ToolTipSystem : MonoBehaviour
             instance.EncounterToolTip.gameObject.SetActive(false);
         }
     }
+    public static void Show(Relic relic, Vector3 position, string header, string description, Sprite icon)
+    {
+        Debug.Log("Show Relic Tooltip");
+        instance.relicToolTip.SetValues(relic, header,description,icon, Camera.main.WorldToScreenPoint(position));
+        
+        instance.relicToolTip.gameObject.SetActive(true);
+    }
     public static void Show(Item item, Vector3 position, string header, string description, Sprite icon)
     {
-        instance.ItemToolTip.SetValues(item, header,description,icon, position);
+        if (item is Relic relic)
+        {
+            Show(relic, position, header, description, icon);
+            return;
+        }
+
+        instance.ItemToolTip.SetValues(item, header,description,icon, Camera.main.WorldToScreenPoint(position));
         
         instance.ItemToolTip.gameObject.SetActive(true);
     }
@@ -50,6 +64,16 @@ public class ToolTipSystem : MonoBehaviour
         instance.WeaponToolTip.SetValues(weapon, header,description,icon, position);
         
         instance.WeaponToolTip.gameObject.SetActive(true);
+    }
+    public static void Show(Blessing blessing, Vector3 position)
+    {
+        Debug.Log("Show Blessing: "+blessing.Name);
+        Debug.Log("Show Blessing: "+blessing.Skill);
+        Debug.Log("Show Blessing: "+blessing.Skill.Icon);
+        Debug.Log("Show Blessing: "+blessing.Skill.Description);
+        instance.blessingToolTip.SetValues(blessing, blessing.Name,blessing.Skill.Description,blessing.Skill.Icon, Camera.main.WorldToScreenPoint(position));
+        
+        instance.blessingToolTip.gameObject.SetActive(true);
     }
     public static void ShowSkill(Skill skill, Vector3 position)
     {

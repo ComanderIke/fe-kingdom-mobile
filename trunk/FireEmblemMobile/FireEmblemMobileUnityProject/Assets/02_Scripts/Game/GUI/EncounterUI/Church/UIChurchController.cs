@@ -32,7 +32,7 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
     private ShopItem selectedItem;
     private List<GameObject> instantiatedItems= new List<GameObject>();
     private ChurchUIState state = ChurchUIState.Store;
-    private BlessingBP blessingBp;
+    private Blessing blessing;
  
     public void UpdateUI()
     {
@@ -88,7 +88,7 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
             saleButton.gameObject.SetActive(true);
             prayButton.gameObject.SetActive(false);
             inStoreText.gameObject.SetActive(false);
-            blessingUI.Show(party.ActiveUnit,blessingBp, false);
+            blessingUI.Show(party.ActiveUnit,blessing, false);
         }
         UpdateSelectionColors();
     }
@@ -137,7 +137,7 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
     }
     public void Show(ChurchEncounterNode node, Party party)
     {
-        blessingBp = null;
+        blessing = null;
         this.node = node;
         canvas.enabled = true;
         this.party = party;
@@ -184,7 +184,7 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
     
     public void DonateSmall()
     {
-        blessingBp=church.DonateSmall(party.ActiveUnit, party.ActiveUnit.Stats.Attributes.FAITH);
+        blessing=church.DonateSmall(party.ActiveUnit, party.ActiveUnit.Stats.Attributes.FAITH);
         state = ChurchUIState.Blessing;
         UpdateUI();
         
@@ -192,20 +192,21 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
 
     public void DonateMedium()
     {
-        blessingBp=church.DonateMedium(party.ActiveUnit,party.ActiveUnit.Stats.Attributes.FAITH);
+        blessing=church.DonateMedium(party.ActiveUnit,party.ActiveUnit.Stats.Attributes.FAITH);
         state = ChurchUIState.Blessing;
         UpdateUI();
     }
 
     public void DonateHigh()
     {
-        blessingBp=church.DonateHigh(party.ActiveUnit,party.ActiveUnit.Stats.Attributes.FAITH);
+        blessing=church.DonateHigh(party.ActiveUnit,party.ActiveUnit.Stats.Attributes.FAITH);
         state = ChurchUIState.Blessing;
         UpdateUI();
     }
 
     public void AcceptBlessing()
     {
+        party.ActiveUnit.ReceiveBlessing(blessing);
         Debug.Log("Accept Blessing");
     }
 }
