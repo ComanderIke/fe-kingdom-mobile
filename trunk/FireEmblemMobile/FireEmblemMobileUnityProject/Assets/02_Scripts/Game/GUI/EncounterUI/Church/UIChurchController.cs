@@ -88,7 +88,26 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
             saleButton.gameObject.SetActive(true);
             prayButton.gameObject.SetActive(false);
             inStoreText.gameObject.SetActive(false);
-            blessingUI.Show(party.ActiveUnit,blessing, false);
+            if (blessing != null)
+            {
+                blessingUI.Show(party.ActiveUnit, blessing, church.AlreadyAcceptedBlessing(party.ActiveUnit));
+            }
+            else if(church.AlreadyAcceptedBlessing(party.ActiveUnit))
+            {
+                blessingUI.Show(party.ActiveUnit, church.GetAlreadyAcceptedBlessing(party.ActiveUnit), church.AlreadyAcceptedBlessing(party.ActiveUnit));
+            }
+            else
+            {
+                if (church.AlreadyGeneratedBlessing(party.ActiveUnit))
+                {
+                    blessing = church.GetAlreadyGeneratedBlessing(party.ActiveUnit);
+                    blessingUI.Show(party.ActiveUnit, blessing, church.AlreadyAcceptedBlessing(party.ActiveUnit));
+                }
+                else
+                {
+                    blessingUI.Hide();
+                }
+            }
         }
         UpdateSelectionColors();
     }
@@ -139,6 +158,7 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
     }
     void ActiveUnitChanged()
     {
+        blessing = null;
         UpdateUI();
         
     }
@@ -215,7 +235,10 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
 
     public void AcceptBlessing()
     {
-        party.ActiveUnit.ReceiveBlessing(blessing);
+        church.BlessUnit(party.ActiveUnit, blessing);
+       
+        blessing = null;
+        UpdateUI();
         Debug.Log("Accept Blessing");
     }
 }

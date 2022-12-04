@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using __2___Scripts.Game.Utility;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +12,9 @@ namespace LostGrace
          
            public TextMeshProUGUI headerText;
            public TextMeshProUGUI descriptionText;
-           
+           public TextMeshProUGUI durationDescription;
+           public GameObject extraEffectPrefab;
+           public Transform extraEffectParent;
            public Image skillIcon;
            
            private Blessing blessing;
@@ -55,7 +58,7 @@ namespace LostGrace
            {
                gameObject.SetActive(false);
            }
-           public void SetValues(Blessing blessing, string header, string description, Sprite icon, Vector3 position)
+           public void SetValues(Blessing blessing, string header, string description,Sprite icon, Vector3 position)
            {
                this.blessing = blessing;
                if (string.IsNullOrEmpty(header))
@@ -68,8 +71,28 @@ namespace LostGrace
                    headerText.text = header;
                }
 
+               durationDescription.text = blessing.GetShortDurationDescription();
                descriptionText.text = description;
                skillIcon.sprite = icon;
+               var effects = blessing.Skill.GetEffectDescription();
+               if (effects != null)
+               {
+                   extraEffectParent.gameObject.SetActive(true);
+                   extraEffectParent.DeleteAllChildren();
+                   foreach (var effect in effects)
+                   {
+                       var go = Instantiate(extraEffectPrefab, extraEffectParent);
+                       go.GetComponent<TextMeshProUGUI>().text = effect.label;
+                       go = Instantiate(extraEffectPrefab, extraEffectParent);
+                       go.GetComponent<TextMeshProUGUI>().text = effect.value;
+                       
+                   }
+               }
+               else
+               {
+                   extraEffectParent.gameObject.SetActive(false);
+                   extraEffectParent.DeleteAllChildren();
+               }
                
                UpdateTextWrap(position);
        

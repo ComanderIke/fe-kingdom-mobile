@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Units;
+﻿using System.Collections.Generic;
+using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
 using UnityEngine;
 
@@ -22,6 +23,12 @@ namespace LostGrace
         public HealPerNode(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, string[] upgradeDescr, int hpRestored) : base(Name, description, icon, animationObject, cooldown, upgradeDescr)
         {
             this.hpRestored = hpRestored;
+        }
+        public override List<EffectDescription> GetEffectDescription()
+        {
+            var list = new List<EffectDescription>();
+            list.Add(new EffectDescription("HP Restored: ", hpRestored.ToString()));
+            return list;
         }
         public override void BindSkill(Unit unit)
         {

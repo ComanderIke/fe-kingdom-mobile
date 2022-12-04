@@ -16,7 +16,7 @@ namespace LostGrace
 
         public void Clicked()
         {
-            ToolTipSystem.ShowSkill(skill, transform.position);
+            //ToolTipSystem.ShowSkill(skill, transform.position);
         }
     }
 }

@@ -10,11 +10,15 @@ public class Church
 {
     public List<ShopItem> shopItems = new List<ShopItem>();
     private List<Unit> alreadyDonated;
+    private Dictionary<Unit, Blessing> alreadyGeneratedBlessing;
+    private Dictionary<Unit, Blessing> alreadyAcceptedBlessing;
     private IBlessingData blessingData;
     public Church(IBlessingData blessingData)
     {
         this.blessingData = blessingData;
         alreadyDonated = new List<Unit>();
+        alreadyAcceptedBlessing = new Dictionary<Unit, Blessing>();
+        alreadyGeneratedBlessing = new Dictionary<Unit, Blessing>();
     }
     public void AddItem(ShopItem item)
     {
@@ -64,25 +68,60 @@ public class Church
     public Blessing DonateSmall(Unit unit, int faith)
     {
         alreadyDonated.Add(unit);
-        return GenerateBlessing(faith,25);
+        unit.Party.Money -= 25;
+        var blessing=GenerateBlessing(faith,25);
+        alreadyGeneratedBlessing.Add(unit, blessing);
+        return blessing;
         //lowtier 0-25%
     }
 
     public Blessing DonateMedium(Unit unit, int faith)
     {
         alreadyDonated.Add(unit);
-        return GenerateBlessing(faith, 100);
+        unit.Party.Money -= 50;
+        var blessing =GenerateBlessing(faith, 100);
+        alreadyGeneratedBlessing.Add(unit, blessing);
+        return blessing;
     }
 
     public Blessing DonateHigh(Unit unit, int faith)
     {
         alreadyDonated.Add(unit);
-        return GenerateBlessing(faith, 200);
+        unit.Party.Money -= 100;
+        var blessing = GenerateBlessing(faith, 200);
+        alreadyGeneratedBlessing.Add(unit, blessing);
+        return blessing;
     }
 
+   
     public bool CanDonate(Unit unit)
     {
         return !alreadyDonated.Contains(unit);
+    }
+
+    public void BlessUnit(Unit unit, Blessing blessing)
+    {
+        unit.ReceiveBlessing(blessing);
+        alreadyAcceptedBlessing.Add(unit, blessing);
+    }
+
+    public bool AlreadyAcceptedBlessing(Unit unit)
+    {
+        return alreadyAcceptedBlessing.ContainsKey(unit);
+    }
+
+    public Blessing GetAlreadyAcceptedBlessing(Unit unit)
+    {
+        return alreadyAcceptedBlessing[unit];
+    }
+    public bool AlreadyGeneratedBlessing(Unit unit)
+    {
+        return alreadyGeneratedBlessing.ContainsKey(unit);
+    }
+
+    public Blessing GetAlreadyGeneratedBlessing(Unit unit)
+    {
+        return alreadyGeneratedBlessing[unit];
     }
 }
 

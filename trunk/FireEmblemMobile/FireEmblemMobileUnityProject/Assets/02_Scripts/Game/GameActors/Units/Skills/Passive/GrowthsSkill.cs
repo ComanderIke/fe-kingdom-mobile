@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Numbers;
 using Game.GameActors.Units.Skills;
@@ -24,6 +25,8 @@ namespace LostGrace
         {
             this.growths = growths;
         }
+
+      
         public override void BindSkill(Unit unit)
         {
      

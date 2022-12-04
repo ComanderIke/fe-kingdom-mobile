@@ -27,7 +27,7 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
     public Button switchBuyButton;
     public Button switchSellButton;
  
-    public TextMeshProUGUI InStoreLabel;
+   
 
     public void Show(MerchantEncounterNode node, Party party)
     {
@@ -73,8 +73,7 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
         if (buying)
         {
             Debug.Log("Buying");
-       
-            InStoreLabel.text = "In Store:";
+            
            
             switchBuyButton.interactable = false;
             switchSellButton.interactable = true;
@@ -117,7 +116,7 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
     
             switchBuyButton.interactable = true;
             switchSellButton.interactable = false;
-            InStoreLabel.text = "In Convoy:";
+       
         }
         UpdateSelectionColors();
         

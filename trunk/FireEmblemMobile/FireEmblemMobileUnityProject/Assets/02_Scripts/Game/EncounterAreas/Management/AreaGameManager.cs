@@ -405,6 +405,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     {
         // Debug.Log("AutoSaving!");
         // SaveGameManager.Save();// new SaveData(Player.Instance, Campaign.Instance, EncounterTree.Instance));
+        Player.Instance.Party.EncounterTick();
         SetAllEncountersNotMovable();
         ResetMoveOptions();
         ShowMoveOptions();

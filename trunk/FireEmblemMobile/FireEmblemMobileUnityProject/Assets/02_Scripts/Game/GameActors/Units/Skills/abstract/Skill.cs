@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using LostGrace;
+using UnityEngine;
 
 namespace Game.GameActors.Units.Skills
 {
@@ -33,6 +35,11 @@ namespace Game.GameActors.Units.Skills
             //this.MaxLevel = maxLevel;
             this.UpgradeDescriptions = upgradeDescr;
         }
+
+        public abstract List<EffectDescription> GetEffectDescription();
+        
+            
+        
         public string GetName()
         {
             return Name;

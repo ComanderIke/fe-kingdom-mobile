@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Units;
+﻿using System.Collections.Generic;
+using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
 using UnityEngine;
 using Random = System.Random;
@@ -24,6 +25,12 @@ namespace LostGrace
         public Miracle(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, string[] upgradeDescr, float procChance) : base(Name, description, icon, animationObject, cooldown, upgradeDescr)
         {
             this.procChance = procChance;
+        }
+        public override List<EffectDescription> GetEffectDescription()
+        {
+            var list = new List<EffectDescription>();
+            list.Add(new EffectDescription("Activation rate: ", procChance.ToString()));
+            return list;
         }
         public override void BindSkill(Unit unit)
         {
@@ -63,6 +70,12 @@ namespace LostGrace
         public SkillActivation(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, string[] upgradeDescr, float procChance) : base(Name, description, icon, animationObject, cooldown, upgradeDescr)
         {
             this.procChance = procChance;
+        }
+        public override List<EffectDescription> GetEffectDescription()
+        {
+            var list = new List<EffectDescription>();
+            list.Add(new EffectDescription("Activation rate: ", procChance.ToString()));
+            return list;
         }
         public override void BindSkill(Unit unit)
         {

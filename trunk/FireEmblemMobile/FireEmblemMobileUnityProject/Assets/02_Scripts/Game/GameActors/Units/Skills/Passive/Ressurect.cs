@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Units;
+﻿using System.Collections.Generic;
+using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
 using UnityEngine;
 
@@ -23,6 +24,12 @@ namespace LostGrace
         public Ressurect(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, string[] upgradeDescr, float hpRegPercentage) : base(Name, description, icon, animationObject, cooldown, upgradeDescr)
         {
             this.hpRegPercentage = hpRegPercentage;
+        }
+        public override List<EffectDescription> GetEffectDescription()
+        {
+            var list = new List<EffectDescription>();
+            list.Add(new EffectDescription("Regenerated HP: ", hpRegPercentage.ToString()+"%"));
+            return list;
         }
         public override void BindSkill(Unit unit)
         {

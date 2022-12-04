@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using LostGrace;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Skills
@@ -6,6 +8,11 @@ namespace Game.GameActors.Units.Skills
     [Serializable]
     public class PassiveSkill : Skill
     {
+        public override List<EffectDescription> GetEffectDescription()
+        {
+            return null;
+        }
+
         public override bool CanTargetCharacters()
         {
             return false;
@@ -19,5 +26,6 @@ namespace Game.GameActors.Units.Skills
         public PassiveSkill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, string[] upgradeDescr) : base(Name, description, icon, animationObject, cooldown, upgradeDescr)
         {
         }
+       
     }
 }

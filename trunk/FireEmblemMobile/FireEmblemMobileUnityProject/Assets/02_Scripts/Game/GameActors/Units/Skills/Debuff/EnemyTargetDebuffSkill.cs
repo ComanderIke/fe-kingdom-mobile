@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using LostGrace;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Skills.Debuff
@@ -8,6 +10,12 @@ namespace Game.GameActors.Units.Skills.Debuff
     {
         [SerializeField]
         public CharStateEffects.Debuff appliedDebuff;
+
+        public override List<EffectDescription> GetEffectDescription()
+        {
+            return null;
+        }
+
         public override int GetDamage(Unit user, bool justToShow)
         {
             return 0;

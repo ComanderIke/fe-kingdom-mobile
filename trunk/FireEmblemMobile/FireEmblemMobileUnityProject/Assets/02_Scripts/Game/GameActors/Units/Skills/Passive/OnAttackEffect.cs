@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using Game.GameActors.Units.Numbers;
 using Game.Mechanics.Battle;
+using LostGrace;
 using UnityEngine;
 using Random = System.Random;
 
@@ -16,6 +18,13 @@ namespace Game.GameActors.Units.Skills.Passive
         {
             this.procChance = procChance;
             this.attackEffects = attackEffects;
+        }
+
+        public override List<EffectDescription> GetEffectDescription()
+        {
+            var list = new List<EffectDescription>();
+            list.Add(new EffectDescription("Activation rate: ", procChance.ToString()));
+            return list;
         }
         public override void BindSkill(Unit unit)
         {

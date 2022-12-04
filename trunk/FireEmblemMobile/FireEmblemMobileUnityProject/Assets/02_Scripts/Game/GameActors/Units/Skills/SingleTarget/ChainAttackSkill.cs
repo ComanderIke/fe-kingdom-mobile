@@ -1,9 +1,16 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using LostGrace;
+using UnityEngine;
 
 namespace Game.GameActors.Units.Skills
 {
     public class ChainAttackSkill:SingleTargetSkill
     {
+        public override List<EffectDescription> GetEffectDescription()
+        {
+            return null;
+        }
+
         public override int GetDamage(Unit user, bool justToShow)
         {
             return 1;

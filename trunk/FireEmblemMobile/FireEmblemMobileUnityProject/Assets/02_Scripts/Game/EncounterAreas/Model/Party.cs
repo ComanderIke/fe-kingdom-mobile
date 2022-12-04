@@ -204,5 +204,13 @@ namespace Game.WorldMapStuff.Model
         {
             return Money >= price;
         }
+
+        public void EncounterTick()
+        {
+            foreach (var member in members)
+            {
+                member.EncounterTick();
+            }
+        }
     }
 }

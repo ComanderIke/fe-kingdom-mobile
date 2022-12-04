@@ -43,9 +43,11 @@ public class UIShopItemController : UIButtonController
             canvasGroup.alpha = tooExpensiveAlpha;
         }
 
+        
 
         if (item != null)
         {
+            image.sprite = item.Item.Sprite;
             stockCount.text = "" + item.stock + "x";
             stockCount.gameObject.SetActive(item.stock > 1);
 

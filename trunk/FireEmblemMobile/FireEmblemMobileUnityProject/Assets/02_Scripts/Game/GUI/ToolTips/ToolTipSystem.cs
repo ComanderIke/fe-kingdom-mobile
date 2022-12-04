@@ -14,7 +14,7 @@ public class ToolTipSystem : MonoBehaviour
     public ItemToolTip ItemToolTip;
     public WeaponToolTip WeaponToolTip;
     [FormerlySerializedAs("SkillToolTip")] public SkillTreeToolTip skillTreeToolTip;
-    public SkillToolTip skillToolTip;
+  //  public SkillToolTip skillToolTip;
     public AttributeToolTip AttributeToolTip;
     public EncounterToolTip EncounterToolTip;
     public EncounterToolTip EncounterAttackToolTip;
@@ -25,8 +25,21 @@ public class ToolTipSystem : MonoBehaviour
         instance = this;
     }
 
+    static void CloseAllToolTips()
+    {
+        instance.blessingToolTip.gameObject.SetActive(false);
+        instance.EncounterAttackToolTip.gameObject.SetActive(false);
+        instance.relicToolTip.gameObject.SetActive(false);
+        instance.WeaponToolTip.gameObject.SetActive(false);
+        instance.EncounterToolTip.gameObject.SetActive(false);
+       // instance.skillToolTip.gameObject.SetActive(false);
+        instance.AttributeToolTip.gameObject.SetActive(false);
+        instance.skillTreeToolTip.gameObject.SetActive(false);
+        instance.ItemToolTip.gameObject.SetActive(false);
+    }
     public static void ShowEncounter(EncounterNode node, Vector3 worldPosition, bool moveable, Action<EncounterNode> moveClicked)
     {
+        CloseAllToolTips();
         if (!(node is BattleEncounterNode))
         {
             instance.EncounterToolTip.Updatevalues(node, node.label, worldPosition, moveable, moveClicked);
@@ -42,6 +55,7 @@ public class ToolTipSystem : MonoBehaviour
     }
     public static void Show(Relic relic, Vector3 position, string header, string description, Sprite icon)
     {
+        CloseAllToolTips();
         Debug.Log("Show Relic Tooltip");
         instance.relicToolTip.SetValues(relic, header,description,icon, Camera.main.WorldToScreenPoint(position));
         
@@ -49,6 +63,7 @@ public class ToolTipSystem : MonoBehaviour
     }
     public static void Show(Item item, Vector3 position, string header, string description, Sprite icon)
     {
+        CloseAllToolTips();
         if (item is Relic relic)
         {
             Show(relic, position, header, description, icon);
@@ -61,28 +76,29 @@ public class ToolTipSystem : MonoBehaviour
     }
     public static void Show(Weapon weapon, Vector3 position, string header, string description, Sprite icon)
     {
+        CloseAllToolTips();
         instance.WeaponToolTip.SetValues(weapon, header,description,icon, position);
         
         instance.WeaponToolTip.gameObject.SetActive(true);
     }
     public static void Show(Blessing blessing, Vector3 position)
     {
-        Debug.Log("Show Blessing: "+blessing.Name);
-        Debug.Log("Show Blessing: "+blessing.Skill);
-        Debug.Log("Show Blessing: "+blessing.Skill.Icon);
-        Debug.Log("Show Blessing: "+blessing.Skill.Description);
+        CloseAllToolTips();
+    
         instance.blessingToolTip.SetValues(blessing, blessing.Name,blessing.Skill.Description,blessing.Skill.Icon, Camera.main.WorldToScreenPoint(position));
         
         instance.blessingToolTip.gameObject.SetActive(true);
     }
-    public static void ShowSkill(Skill skill, Vector3 position)
-    {
-        instance.skillToolTip.SetValues(skill, skill.Name,skill.Description,skill.Icon, position);
-        
-        instance.skillToolTip.gameObject.SetActive(true);
-    }
+    // public static void ShowSkill(Skill skill, Vector3 position)
+    // {
+    //     CloseAllToolTips();
+    //     instance.skillToolTip.SetValues(skill, skill.Name,skill.Description,skill.Icon, position);
+    //     
+    //     instance.skillToolTip.gameObject.SetActive(true);
+    // }
     public static void ShowSkill(SkillTreeEntryUI skillTreeEntry, Vector3 position, string header, string description, Sprite icon)
     {
+        CloseAllToolTips();
         instance.skillTreeToolTip.SetValues(skillTreeEntry, header,description,icon, position);
         
         instance.skillTreeToolTip.gameObject.SetActive(true);
@@ -99,6 +115,7 @@ public class ToolTipSystem : MonoBehaviour
 
     public static void ShowAttribute(string header, string description, int value, Vector3 position)
     {
+        CloseAllToolTips();
         instance.AttributeToolTip.gameObject.SetActive(true);
         instance.AttributeToolTip.SetValues(header,description, value, position);
     }

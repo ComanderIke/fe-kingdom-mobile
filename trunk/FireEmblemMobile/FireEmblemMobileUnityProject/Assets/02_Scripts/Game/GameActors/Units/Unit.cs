@@ -479,11 +479,23 @@ namespace Game.GameActors.Units
         public void ReceiveBlessing(Blessing blessing)
         {
             this.blessing = blessing;
+            blessing.BlessUnit(this);
         }
 
         public event Action<Unit, Debuff> OnDebuff;
         public event Action<int> BeforeHealingReceived;
         public event Action<EncounterNode> OnNodeTravel;
         public event Action OnLethalDamage;
+
+        public void RemoveBlessing()
+        {
+            blessing = null;
+        }
+
+        public void EncounterTick()
+        {
+            if(blessing!=null)
+                blessing.DecreaseDuration();
+        }
     }
 }

@@ -11,6 +11,7 @@ namespace LostGrace
         public string name;
         public string Description;
         public int tier=3;
+       //faith / 2 minimum 3
 
         public Blessing Create()
         {

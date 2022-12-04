@@ -4,6 +4,7 @@ using Game.GameActors.Players;
 using Game.GameActors.Units.Numbers;
 using Game.GameInput;
 using Game.Grid;
+using LostGrace;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Skills
@@ -127,6 +128,11 @@ namespace Game.GameActors.Units.Skills
 
         public void Effect(Unit user, Vector3 target)
         {
+        }
+
+        public override List<EffectDescription> GetEffectDescription()
+        {
+            return null;
         }
 
         public override bool CanTargetCharacters()

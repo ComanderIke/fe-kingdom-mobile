@@ -1,9 +1,21 @@
-﻿using Game.GameActors.Units;
+﻿using System.Collections.Generic;
+using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
 using UnityEngine;
 
 namespace LostGrace
 {
+    public struct EffectDescription
+    {
+        public string label;
+        public string value;
+
+        public EffectDescription(string label, string value)
+        {
+            this.label = label;
+            this.value = value;
+        }
+    }
     public class OnHealingReceivedSkill : PassiveSkill
     {
         [SerializeField] private float healMult = 1.2f;
@@ -23,6 +35,14 @@ namespace LostGrace
         public OnHealingReceivedSkill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, string[] upgradeDescr, float healMult) : base(Name, description, icon, animationObject, cooldown, upgradeDescr)
         {
             this.healMult = healMult;
+        }
+
+       
+        public override List<EffectDescription> GetEffectDescription()
+        {
+            var list = new List<EffectDescription>();
+            list.Add(new EffectDescription("Heal Multiplier: ", healMult.ToString()));
+            return list;
         }
         public override void BindSkill(Unit unit)
         {

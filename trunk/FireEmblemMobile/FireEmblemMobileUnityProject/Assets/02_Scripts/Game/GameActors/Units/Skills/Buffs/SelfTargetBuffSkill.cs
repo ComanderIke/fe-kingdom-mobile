@@ -1,4 +1,6 @@
-﻿using Game.GameActors.Units.CharStateEffects;
+﻿using System.Collections.Generic;
+using Game.GameActors.Units.CharStateEffects;
+using LostGrace;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Skills.Buffs
@@ -8,6 +10,12 @@ namespace Game.GameActors.Units.Skills.Buffs
     {
         [SerializeField]
         public Buff appliedBuff;
+
+        public override List<EffectDescription> GetEffectDescription()
+        {
+            return null;
+        }
+
         public override int GetDamage(Unit user, bool justToShow)
         {
             return 0;
