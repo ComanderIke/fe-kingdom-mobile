@@ -40,7 +40,8 @@ public class UIEventController : MonoBehaviour
         this.party = party;
         this.randomEvent = node.randomEvent;
         currentScene = randomEvent.scenes[0];
-       
+        party.onActiveUnitChanged -= ActiveUnitChanged;
+        party.onActiveUnitChanged += ActiveUnitChanged;
         // if(instantiatedObjects==null)
         //     instantiatedObjects = new List<GameObject>();
         UpdateUI();
@@ -123,10 +124,14 @@ public class UIEventController : MonoBehaviour
         }
         
     }
-
+    void ActiveUnitChanged()
+    {
+        UpdateUI();
+    }
     void Hide()
     {
         canvas.enabled = false;
+        party.onActiveUnitChanged -= ActiveUnitChanged;
     }
     public void UpdateUI()
     {

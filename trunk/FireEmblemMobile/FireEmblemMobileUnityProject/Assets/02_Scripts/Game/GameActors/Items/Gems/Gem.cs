@@ -10,12 +10,18 @@ namespace Game.GameActors.Items.Gems
         private GemType gemType;
 
         private bool inserted = false;
-        public Gem(string name, string description, int cost, Sprite sprite, int rarity, GemType gemType) : base(name, description, cost, rarity,sprite)
+        private Gem upgradeTo;
+        public Gem(string name, string description, int cost, Sprite sprite, int rarity, GemType gemType, Gem upgradeTo) : base(name, description, cost, rarity,sprite)
         {
             
             this.gemType = gemType;
+            this.upgradeTo = upgradeTo;
         }
 
+        public GemType GetGemType(GemType gemType)
+        {
+            return gemType;
+        }
         public void Insert()
         {
             inserted = true;
@@ -27,6 +33,16 @@ namespace Game.GameActors.Items.Gems
         public bool IsInserted()
         {
             return inserted;
+        }
+
+        public Gem GetUpgradedGem()
+        {
+            return upgradeTo;
+        }
+
+        public bool HasUpgrade()
+        {
+            return upgradeTo != null;
         }
     }
 }

@@ -4,6 +4,7 @@ using __2___Scripts.Game.Utility;
 using Game.GameActors.Items.Gems;
 using Game.GameActors.Items.Weapons;
 using Game.GameActors.Players;
+using Game.GameResources;
 using Game.WorldMapStuff.Model;
 using TMPro;
 using UnityEngine;
@@ -21,8 +22,11 @@ public class CombineGemUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI gemEffect;
     [SerializeField] TextMeshProUGUI requiredText;
     [SerializeField] Image smallIcon;
-    private List<SelectableItemController> instantiatedItems;
-    private SelectableItemController selectedGem;
+    [SerializeField] private Button combineButton;
+
+    [SerializeField] private int combineCount = 3;
+private List<SelectableItemController> instantiatedItems;
+    private StockedItem selected;
     
     public void Show()
     {
@@ -33,7 +37,7 @@ public class CombineGemUI : MonoBehaviour
     void UpdateUI()
     {
         instantiatedItems = new List<SelectableItemController>();
-        
+        combineButton.interactable = false;
      
         gemParent.DeleteAllChildren();
        Debug.Log("GemCount: "+Player.Instance.Party.Convoy.GetAllGems().Count());
@@ -42,23 +46,41 @@ public class CombineGemUI : MonoBehaviour
             var gemGO=Instantiate(gemPrefab, gemParent);
             var selectableItemUI =gemGO.GetComponent<SelectableItemController>();
             selectableItemUI.SetValues(gem);
+            if(selected==gem)
+                selectableItemUI.Select();
             selectableItemUI.onClicked += ItemClicked;
             instantiatedItems.Add(selectableItemUI);
         }
-        if (selectedGem == null)
+        if (selected == null)
         {
             if(instantiatedItems.Count!=0)
-                selectedGem = instantiatedItems[0];
+                selected = instantiatedItems[0].item;
         }
-
-        if (selectedGem != null)
+        if (selected != null)
         {
-            Icon.sprite = selectedGem.item.item.Sprite;
-            nameText.text = selectedGem.item.item.Name;
-            description.text = selectedGem.item.item.Description;
-            int count = Player.Instance.Party.Convoy.GetGemCount((Gem)selectedGem.item.item);
-            smallIcon.sprite = selectedGem.item.item.Sprite;
-            requiredText.text = "Required " + count + "/4";
+            var gem = (Gem)selected.item;
+            Icon.sprite = selected.item.Sprite;
+            nameText.text = selected.item.Name;
+            description.text = selected.item.Description;
+            int count = Player.Instance.Party.Convoy.GetGemCount((Gem)selected.item);
+            smallIcon.sprite = selected.item.Sprite;
+            if (gem.HasUpgrade())
+            {
+                requiredText.text = "Required " + count + "/" + combineCount;
+            }
+            else
+            {
+                requiredText.text = "Maxed Out";
+            }
+
+            if (count >= combineCount&& gem.HasUpgrade() )
+            {
+                combineButton.interactable = true;
+            }
+            else
+            {
+                combineButton.interactable = false;
+            }
         }
     }
     public void Hide()
@@ -67,11 +89,17 @@ public class CombineGemUI : MonoBehaviour
     }
     public void CombineClicked()
     {
+        for (int i = 0; i < combineCount; i++)
+        {
+            Player.Instance.Party.Convoy.RemoveItem(selected.item);
+        }
+        Player.Instance.Party.Convoy.AddItem(((Gem)selected.item).GetUpgradedGem());
+
         UpdateUI();
     }
     void ItemClicked(SelectableItemController item)
     {
-        selectedGem = item;
+        selected = item.item;
         foreach (var itemUI in instantiatedItems)
         {
             if(itemUI==item)

@@ -11,7 +11,7 @@ public class UIEquipmentController:MonoBehaviour
 
 
 
-    public Image WeaponSlot;
+    public SmithingSlot WeaponSlot;
     public SmithingSlot RelicSlotUpper;
     public SmithingSlot RelicSlotLower;
 
@@ -35,19 +35,15 @@ public class UIEquipmentController:MonoBehaviour
     }
     public void Show(Unit unit)
     {
-
-        Debug.Log("Show");
+        WeaponSlot.Show(unit.equippedWeapon);
         if (unit.equippedWeapon != null)
         {
-            Debug.Log("Weaponnotnull");
+          
             weapon = unit.equippedWeapon;
-            WeaponSlot.sprite = unit.equippedWeapon.Sprite;
-            WeaponSlot.color=Color.white;
         }
         else
         {
             weapon = null;
-            WeaponSlot.color = inActiveColor;
         }
  
         RelicSlotUpper.Show(unit.EquippedRelic1);

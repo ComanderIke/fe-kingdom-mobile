@@ -38,19 +38,26 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
         shopItems = new List<UIShopItemController>();
         selectedItem = merchant.shopItems[0];
         buying = true;
+        party.onActiveUnitChanged -= ActiveUnitChanged;
+        party.onActiveUnitChanged += ActiveUnitChanged;
         UpdateUI();
         //GameObject.FindObjectOfType<UIConvoyController>().Show();
+    }
+    void ActiveUnitChanged()
+    {
+        UpdateUI();
+        
     }
     public void NextClicked()
     {
         Player.Instance.Party.ActiveUnitIndex++;
-        UpdateUI();
+        
     }
 
     public void PrevClicked()
     {
         Player.Instance.Party.ActiveUnitIndex--;
-        UpdateUI();
+        
     }
     public void UpdateUI()
     { 
@@ -186,6 +193,8 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
     public void Hide()
     {
         canvas.enabled = false;
+        party.onActiveUnitChanged -= ActiveUnitChanged;
+     
     }
     public void ContinueClicked()
     {

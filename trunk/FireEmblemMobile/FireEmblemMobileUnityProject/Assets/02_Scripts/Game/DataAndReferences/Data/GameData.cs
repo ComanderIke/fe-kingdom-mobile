@@ -241,6 +241,7 @@ namespace Game.GameResources
             return commonConsumables[Random.Range(0, commonConsumables.Length)].Create();
         }
 
-      
+
+        
     }
 }

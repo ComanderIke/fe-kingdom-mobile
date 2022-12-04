@@ -139,13 +139,11 @@ public class InsertGemUI : MonoBehaviour
     }
     void ItemClicked(SelectableItemController item)
     {
-        Debug.Log("Item Clicked: "+item.item.item.Name);
         selected = item.item;
         foreach (var itemUI in instantiatedItems)
         {
             if (itemUI.item == selected)
             {
-                Debug.Log("SELECT ITEM");
                 itemUI.Select();
             }
             else

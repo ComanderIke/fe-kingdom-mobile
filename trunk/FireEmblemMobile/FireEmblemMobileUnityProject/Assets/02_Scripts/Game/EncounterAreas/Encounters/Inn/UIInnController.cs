@@ -42,6 +42,8 @@ public class UIInnController : MonoBehaviour
     {
         shopItem.Select();
     }
+    party.onActiveUnitChanged -= ActiveUnitChanged;
+    party.onActiveUnitChanged += ActiveUnitChanged;
     
     UpdateUI();
     // for (int i=0; i<inn.shopItems.Count; i++)
@@ -56,20 +58,24 @@ public class UIInnController : MonoBehaviour
     public void NextClicked()
     {
         Player.Instance.Party.ActiveUnitIndex++;
-        UpdateUI();
     }
 
     public void PrevClicked()
     {
         Player.Instance.Party.ActiveUnitIndex--;
-        UpdateUI();
     }
     public void Hide()
     {
         canvas.enabled = false;
+        party.onActiveUnitChanged -= ActiveUnitChanged;
+   
     }
 
-
+    void ActiveUnitChanged()
+    {
+        UpdateUI();
+        
+    }
     public void SpecialClicked()
     {
         inn.Special(Player.Instance.Party.ActiveUnit);

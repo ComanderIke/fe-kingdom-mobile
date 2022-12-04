@@ -47,9 +47,12 @@ namespace Game.WorldMapStuff.Model
                 {
                     activeUnitIndex = value;
                 }
+
+                onActiveUnitChanged?.Invoke();
             }
         }
         public int smithingStones = 2;
+        public event Action onActiveUnitChanged;
         public event Action<Unit> onMemberRemoved;
         public event Action<Unit> onMemberAdded;
 

@@ -39,11 +39,14 @@ public class UISmithyController : MonoBehaviour
         this.smithy = node.smithy;
         this.selectedWeapon = party.ActiveUnit.equippedWeapon;
         UpdateUI();
+        party.onActiveUnitChanged -= ActiveUnitChanged;
+        party.onActiveUnitChanged += ActiveUnitChanged;
     }
 
     public void Hide()
     {
         canvas.enabled = false;
+        party.onActiveUnitChanged-= ActiveUnitChanged;
     }
 
     public void UpdateUI()
@@ -106,17 +109,21 @@ public class UISmithyController : MonoBehaviour
     public void NextClicked()
     {
         Player.Instance.Party.ActiveUnitIndex++;
-        this.selectedWeapon = null;
-        this.selectedRelic = null;
-        UpdateUI();
+       
     }
 
     public void PrevClicked()
     {
         Player.Instance.Party.ActiveUnitIndex--;
+       
+    }
+
+    void ActiveUnitChanged()
+    {   
         this.selectedWeapon = null;
         this.selectedRelic = null;
         UpdateUI();
+        
     }
 
     public void UpgradeClicked()

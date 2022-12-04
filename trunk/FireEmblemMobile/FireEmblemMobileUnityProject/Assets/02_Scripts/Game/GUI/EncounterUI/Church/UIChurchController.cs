@@ -95,13 +95,13 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
     public void NextClicked()
     {
         Player.Instance.Party.ActiveUnitIndex++;
-        UpdateUI();
+        
     }
 
     public void PrevClicked()
     {
         Player.Instance.Party.ActiveUnitIndex--;
-        UpdateUI();
+        
     }
     public void BuyClicked()
     {
@@ -134,6 +134,13 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
     public void Hide()
     {
         canvas.enabled = false;
+        party.onActiveUnitChanged -= ActiveUnitChanged;
+      
+    }
+    void ActiveUnitChanged()
+    {
+        UpdateUI();
+        
     }
     public void Show(ChurchEncounterNode node, Party party)
     {
@@ -144,6 +151,8 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
         this.church = node.church;
         shopItems = new List<UIShopItemController>();
         selectedItem = church.shopItems[0];
+        party.onActiveUnitChanged -= ActiveUnitChanged;
+        party.onActiveUnitChanged += ActiveUnitChanged;
         UpdateUI();
         //FindObjectOfType<UICharacterViewController>().Show(party.members[party.ActiveUnitIndex]);
     }

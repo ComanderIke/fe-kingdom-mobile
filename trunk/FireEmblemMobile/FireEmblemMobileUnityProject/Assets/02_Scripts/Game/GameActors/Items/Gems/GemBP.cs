@@ -16,9 +16,12 @@ namespace Game.GameActors.Items.Gems
     public class GemBP: ItemBP
     {
         [SerializeField] private GemType gemType;
+        [SerializeField] private GemBP upgradeTo;
         public override Item Create()
         {
-            return new Gem(name, description, cost, sprite,rarity , gemType);
+            if(upgradeTo!=null)
+                return new Gem(name, description, cost, sprite,rarity , gemType,(Gem) upgradeTo.Create());
+            return new Gem(name, description, cost, sprite,rarity , gemType,null);
         }
 
         
