@@ -18,7 +18,6 @@ public class UIShopItemController : UIButtonController
     public ShopItem item;
     public TextMeshProUGUI stockCount;
     private IShopItemClickedReceiver clickedReceiver;
-    [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private float tooExpensiveAlpha = 0.6f;
   
     private bool affordable = false;

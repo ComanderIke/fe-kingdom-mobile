@@ -12,8 +12,8 @@ public class UIEquipmentController:MonoBehaviour
 
 
     public Image WeaponSlot;
-    public Image RelicSlotUpper;
-    public Image RelicSlotLower;
+    public SmithingSlot RelicSlotUpper;
+    public SmithingSlot RelicSlotLower;
 
     public Color inActiveColor;
     [FormerlySerializedAs("weaponBp")] public Weapon weapon;
@@ -50,29 +50,11 @@ public class UIEquipmentController:MonoBehaviour
             WeaponSlot.color = inActiveColor;
         }
  
-
-        if (unit.EquippedRelic1 != null)
-        {
-            relic = unit.EquippedRelic1;
-            RelicSlotUpper.sprite = unit.EquippedRelic1.Sprite;
-            RelicSlotUpper.color=Color.white;
-        }
-        else
-        {
-            relic = null;
-            RelicSlotUpper.color = inActiveColor;
-        }
-        if (unit.EquippedRelic2 != null)
-        {
-            relic2 = unit.EquippedRelic2;
-            RelicSlotLower.sprite = unit.EquippedRelic2.Sprite;
-            RelicSlotLower.color=Color.white;
-        }
-        else
-        {
-            relic2 = null;
-            RelicSlotLower.color = inActiveColor;
-        }
+        RelicSlotUpper.Show(unit.EquippedRelic1);
+        relic = unit.EquippedRelic1;
+        RelicSlotLower.Show(unit.EquippedRelic2);
+        relic2 = unit.EquippedRelic2;
+        
 
      
     }

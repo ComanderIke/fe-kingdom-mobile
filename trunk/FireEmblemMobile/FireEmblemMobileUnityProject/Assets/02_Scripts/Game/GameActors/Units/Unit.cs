@@ -54,7 +54,9 @@ namespace Game.GameActors.Units
         public UnitBP unitBP;
         public string bluePrintID;
         [FormerlySerializedAs("equippedWeaponBp")] [FormerlySerializedAs("EquippedWeapon")] public Weapon equippedWeapon;
+        [SerializeReference]
         public Relic EquippedRelic1;
+        [SerializeReference]
         public Relic EquippedRelic2;
         public string name;
         [HideInInspector] private int hp=-1;
@@ -102,8 +104,23 @@ namespace Game.GameActors.Units
             this.growths = growths;
             this.moveType = moveType;
             this.equippedWeapon = equippedWeapon;
-            EquippedRelic1 = equippedRelic1;
-            EquippedRelic2 = equippedRelic2;
+            if (equippedRelic1 == null)
+            {
+                EquippedRelic1 = null;
+            }
+            else
+            {
+                EquippedRelic1 = equippedRelic1;
+            }
+
+            if (equippedRelic2 == null)
+            {
+                EquippedRelic2 = null;
+            }
+            else
+            {
+                EquippedRelic2 = equippedRelic2;
+            }
             this.visuals = visuals;
             this.name = name;
             Debug.Log("Create: "+name);

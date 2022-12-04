@@ -52,6 +52,8 @@ public class UISmithyController : MonoBehaviour
         characterFace.Show(party.ActiveUnit);
         if (state == SmithyUIState.Smithing)
         {
+            if (selectedWeapon == null)
+                selectedWeapon = party.ActiveUnit.equippedWeapon;
             weaponSlot.Show(party.ActiveUnit.equippedWeapon, selectedWeapon == party.ActiveUnit.equippedWeapon);
             insertGemUI.Hide();
             combineGemUI.Hide();
@@ -78,6 +80,10 @@ public class UISmithyController : MonoBehaviour
             {
                 insertGemUI.Show(selectedRelic);
             }
+            else
+            {
+                insertGemUI.Hide();
+            }
 
             relicSlot.Show(party.ActiveUnit.EquippedRelic1, selectedRelic == party.ActiveUnit.EquippedRelic1);
             relicSlot2.Show(party.ActiveUnit.EquippedRelic2, selectedRelic == party.ActiveUnit.EquippedRelic2);
@@ -100,14 +106,16 @@ public class UISmithyController : MonoBehaviour
     public void NextClicked()
     {
         Player.Instance.Party.ActiveUnitIndex++;
-        this.selectedWeapon = party.ActiveUnit.equippedWeapon;
+        this.selectedWeapon = null;
+        this.selectedRelic = null;
         UpdateUI();
     }
 
     public void PrevClicked()
     {
         Player.Instance.Party.ActiveUnitIndex--;
-        this.selectedWeapon = party.ActiveUnit.equippedWeapon;
+        this.selectedWeapon = null;
+        this.selectedRelic = null;
         UpdateUI();
     }
 

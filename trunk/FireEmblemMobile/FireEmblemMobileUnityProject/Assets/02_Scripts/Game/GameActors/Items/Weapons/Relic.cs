@@ -9,8 +9,13 @@ namespace Game.GameActors.Items.Weapons
     [Serializable]
     public class GemSlot
     {
+        [SerializeReference]
         public Gem gem;
 
+        public GemSlot()
+        {
+            gem = null;
+        }
         public bool IsEmpty()
         {
             return gem == null;
@@ -26,23 +31,29 @@ namespace Game.GameActors.Items.Weapons
         public int maxLevel = 5;
 
         public int slotCount = 0;
-        public List<GemSlot> slots;
+        public GemSlot[] slots;
         public Relic(string name, string description, int cost, int rarity, Sprite sprite, EquipmentSlotType slotType, int level, int maxLevel,int slotCount) : base(name, description, cost,rarity, sprite, slotType)
         {
             this.Level = level;
             this.maxLevel = maxLevel;
             this.slotCount = slotCount;
-            slots = new List<GemSlot>();
+            slots = new GemSlot[slotCount];
+            for (int i=0; i < slotCount; i++)
+            {
+                slots[i] = new GemSlot();
+            }
         }
 
         public void InsertGem(Gem gem, int slotindex)
         {
             slots[slotindex].gem = gem;
+            gem.Insert();
 
         }
         public Gem RemoveGem(int slotindex)
         {
             var gem = slots[slotindex].gem;
+            gem.Remove();
             slots[slotindex].gem = null;
             return gem;
 
@@ -96,7 +107,9 @@ namespace Game.GameActors.Items.Weapons
 
         public Gem GetGem(int index)
         {
-            if (slots.Count < index)
+            if (slots == null)
+                return null;
+            if (slots.Length > index)
                 return slots[index].gem;
             return null;
         }
