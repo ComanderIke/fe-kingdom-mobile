@@ -137,11 +137,11 @@ namespace Game.Mechanics
                 Debug.Log("BattlePreview: " + battleSimulation.combatRounds[0].AttackerAttackCount + "DefenderAttackCount: " +
                           battleSimulation.combatRounds[0].DefenderAttackCount);
                 battlePreview.AttackerStats = new BattlePreviewStats(attacker.BattleComponent.BattleStats.GetDamage(),
-                    attacker.Stats.Attributes.AGI, defenderActor.BattleComponent.BattleStats.GetDamageType(),
+                    attacker.Stats.BaseAttributes.AGI, defenderActor.BattleComponent.BattleStats.GetDamageType(),
                     defenderActor.BattleComponent.BattleStats.GetDamageType() == DamageType.Physical
                         ? attacker.BattleComponent.BattleStats.GetPhysicalResistance()
-                        : attacker.Stats.Attributes.FAITH,
-                    attacker.Stats.Attributes.DEX,
+                        : attacker.Stats.BaseAttributes.FAITH,
+                    attacker.Stats.BaseAttributes.DEX,
                     attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defenderActor),
                     attacker.BattleComponent.BattleStats.GetHitAgainstTarget(defenderActor),
                     attacker.BattleComponent.BattleStats.GetCritAgainstTarget(defenderActor),
@@ -149,14 +149,14 @@ namespace Game.Mechanics
                     battleSimulation.Attacker.Hp); //, attacker.Sp, attacker.Stats.MaxSp, battleSimulation.Attacker.Sp, attacker.SpBars, battleSimulation.Attacker.SpBars, attacker.MaxSpBars);
                 Debug.Log(battleSimulation.Defender);
                 Debug.Log(battleSimulation.Defender.Hp);
-                Debug.Log( defenderActor.Stats.Attributes.AGI);
+                Debug.Log( defenderActor.Stats.BaseAttributes.AGI);
                 Debug.Log(defenderActor.BattleComponent.BattleStats.GetDamage() + " test ");
                 battlePreview.DefenderStats = new BattlePreviewStats(defenderActor.BattleComponent.BattleStats.GetDamage(),
-                    defenderActor.Stats.Attributes.AGI, defenderActor.BattleComponent.BattleStats.GetDamageType(),
+                    defenderActor.Stats.BaseAttributes.AGI, defenderActor.BattleComponent.BattleStats.GetDamageType(),
                     attacker.BattleComponent.BattleStats.GetDamageType() == DamageType.Physical
                         ? defenderActor.BattleComponent.BattleStats.GetPhysicalResistance()
-                        : defenderActor.Stats.Attributes.FAITH,
-                    defenderActor.Stats.Attributes.DEX,
+                        : defenderActor.Stats.BaseAttributes.FAITH,
+                    defenderActor.Stats.BaseAttributes.DEX,
                     defenderActor.BattleComponent.BattleStats.GetDamageAgainstTarget(attacker),
                     defenderActor.BattleComponent.BattleStats.GetHitAgainstTarget(attacker),
                     defenderActor.BattleComponent.BattleStats.GetCritAgainstTarget(attacker),
@@ -174,8 +174,8 @@ namespace Game.Mechanics
                 Debug.Log("BattlePreview: " + battleSimulation.combatRounds[0].AttackerAttackCount + "DefenderAttackCount: " +
                           battleSimulation.combatRounds[0].DefenderAttackCount);
                 battlePreview.AttackerStats = new BattlePreviewStats(attacker.BattleComponent.BattleStats.GetDamage(),
-                    attacker.Stats.Attributes.AGI, attacker.BattleComponent.BattleStats.GetDamageType(),0,
-                    attacker.Stats.Attributes.DEX,
+                    attacker.Stats.BaseAttributes.AGI, attacker.BattleComponent.BattleStats.GetDamageType(),0,
+                    attacker.Stats.BaseAttributes.DEX,
                     attacker.BattleComponent.BattleStats.GetDamage(),
                     100,
                     0,

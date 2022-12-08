@@ -30,13 +30,13 @@ namespace Game.GameActors.Items
 
         public override bool Equals(object obj)
         {
-            Debug.Log("Compare");
+           // Debug.Log("Compare");
             if (obj is Item item)
             {
-                Debug.Log("Compare Items"+item.Name +" "+Name);
+                //Debug.Log("Compare Items"+item.Name +" "+Name);
                 if (item.Name == Name)
                     return true;
-                Debug.Log("Not Equal");
+               // Debug.Log("Not Equal");
             }
             
             return base.Equals(obj);

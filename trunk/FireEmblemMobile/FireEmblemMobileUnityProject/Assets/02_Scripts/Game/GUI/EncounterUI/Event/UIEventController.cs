@@ -171,7 +171,7 @@ public class UIEventController : MonoBehaviour
             go.GetComponent<TextOptionController>().SetIndex(index);
             if (textoption.statcheck)
             {
-                int stat = party.ActiveUnit.Stats.Attributes.GetFromIndex(textoption.StatIndex);
+                int stat = party.ActiveUnit.Stats.BaseAttributes.GetFromIndex(textoption.StatIndex);
                 string statText = stat + " " + Attributes.GetAsText(textoption.StatIndex);
                 TextOptionState state = TextOptionState.Normal;
                 if (stat < textoption.StatRequirement)

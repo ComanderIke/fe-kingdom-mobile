@@ -18,7 +18,7 @@ namespace LostGrace
         public void Show(Unit user)
         {
             gameObject.SetActive(true);
-            Faith.SetText(""+user.Stats.Attributes.FAITH);
+            Faith.SetText(""+user.Stats.BaseAttributes.FAITH);
             smallDonateButton.interactable = true;
             mediumDonateButton.interactable = true;
             highDonateButton.interactable = true;

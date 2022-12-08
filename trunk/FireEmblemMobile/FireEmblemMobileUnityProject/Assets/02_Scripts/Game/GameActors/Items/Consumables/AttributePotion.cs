@@ -1,4 +1,6 @@
-﻿using Game.GameActors.Units.Numbers;
+﻿using Game.GameActors.Units;
+using Game.GameActors.Units.Numbers;
+using Game.WorldMapStuff.Model;
 using UnityEngine;
 
 namespace Game.GameActors.Items.Weapons
@@ -11,6 +13,13 @@ namespace Game.GameActors.Items.Weapons
         {
             this.value = value;
             this.attributeType = type;
+        }
+
+        public override void Use(Unit character, Convoy convoy)
+        {
+            Debug.Log("use AttributePotion "+value+" "+attributeType);
+            character.Stats.BaseAttributes.IncreaseAttribute(value, attributeType);
+            base.Use(character, convoy);
         }
     }
 }

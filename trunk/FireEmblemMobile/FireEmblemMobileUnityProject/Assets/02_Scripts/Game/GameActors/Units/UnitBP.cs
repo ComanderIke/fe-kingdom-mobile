@@ -82,10 +82,7 @@ namespace Game.GameActors.Units
             Relic relic2 = null;
             if(EquippedRelic2!=null)
                 relic2 = (Relic)EquippedRelic2.Create();
-            Debug.Log("Create Unit: "+name );
-            Debug.Log("CSS: "+visuals.CharacterSpriteSet);
-            Debug.Log("CSS: "+visuals.CharacterSpriteSet.FaceSprite);
-            return new Unit(Name, rpgClass, stats, growths, moveType, weapon, relic1,relic2, visuals, new SkillManager(SkillManager),
+            return new Unit(Name, rpgClass, (Stats)stats.Clone(), growths, moveType, weapon, relic1,relic2, visuals, new SkillManager(SkillManager),
                 new ExperienceManager(experienceManager));
         }
     }

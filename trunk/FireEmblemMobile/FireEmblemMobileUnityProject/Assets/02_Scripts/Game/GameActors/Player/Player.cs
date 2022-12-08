@@ -28,7 +28,6 @@ namespace Game.GameActors.Players
 
         private void Awake()
         {
-            Debug.Log("Awake player");
             if (instance != null)
             {
                 Debug.LogWarning("Destroy player instance (duplicate)");

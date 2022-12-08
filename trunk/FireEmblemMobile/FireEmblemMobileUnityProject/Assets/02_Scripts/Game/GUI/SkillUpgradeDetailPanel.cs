@@ -53,7 +53,6 @@ namespace LostGrace
 
     void UpdateUI()
     {
-        Debug.Log("UpdateDetail");
         if (SkillEntry == null || SkillEntry.Skill == null)
         {
             gameObject.SetActive(false);

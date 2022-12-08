@@ -98,7 +98,7 @@ namespace Game.Mechanics
             if (levelUpRenderer != null)
             {
                 levelUpRenderer.UpdateValues(unit.name, unit.visuals.CharacterSpriteSet.FaceSprite,unit.ExperienceManager.Level - 1, unit.ExperienceManager.Level,
-                    unit.Stats.Attributes.AsArray(), statIncreases);
+                    unit.Stats.BaseAttributes.AsArray(), statIncreases);
                 Debug.Log("Add LevelUpAnimation!");
                 levelUpRenderer.Play();
                 levelUpRenderer.OnFinished -= FinishedOnce;
@@ -110,7 +110,7 @@ namespace Game.Mechanics
                 unit.SkillManager.SkillPoints += 1;
             }
 
-            unit.Stats.Attributes.Update(statIncreases);
+            unit.Stats.BaseAttributes.Update(statIncreases);
            
         }
 

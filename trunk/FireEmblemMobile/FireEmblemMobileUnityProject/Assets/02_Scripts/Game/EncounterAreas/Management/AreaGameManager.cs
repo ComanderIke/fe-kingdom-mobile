@@ -59,11 +59,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
             
         }
 
-        if (Player.Instance.Party != null)
-        {
-            Debug.Log("Player GO Name: "+Player.Instance.gameObject.name);
-            Debug.Log("party Count:" + Player.Instance.Party.members.Count);
-        }
+    
 
         if (Player.Instance.Party == null || Player.Instance.Party.members.Count == 0){
             Debug.LogWarning("No party Members! Creating DemoUnits");

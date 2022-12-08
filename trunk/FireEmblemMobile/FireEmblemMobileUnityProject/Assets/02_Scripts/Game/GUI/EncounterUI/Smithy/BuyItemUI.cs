@@ -13,6 +13,7 @@ public class BuyItemUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI hitCurrent;
     [SerializeField] TextMeshProUGUI dmgCurrent;
     [SerializeField] TextMeshProUGUI critCurrent;
+    [SerializeField] TextMeshProUGUI weightCurrent;
     // public TextMeshProUGUI weightCurrent;
     // public TextMeshProUGUI weightAfter;
     [SerializeField] TextMeshProUGUI effectCurrent;
@@ -61,7 +62,7 @@ public class BuyItemUI : MonoBehaviour
         }
         if (!buying)
         {
-            button.interactable = true;
+            
             buttonText.text = "SELL";
             var colors = button.colors;
             colors.normalColor = sellColor;

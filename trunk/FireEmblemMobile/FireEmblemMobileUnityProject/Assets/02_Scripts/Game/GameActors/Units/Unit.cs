@@ -46,6 +46,8 @@ namespace Game.GameActors.Units
         public delegate void OnUnitDamagedEvent(Unit unit, int damage,DamageType damageType, bool crit, bool eff);
         public delegate void OnUnitHealedEvent(Unit unit, int damage);
 
+        public delegate void OnUnitStatsChanged(Unit unit);
+
         public static OnUnitDamagedEvent OnUnitDamaged;
         public static OnUnitHealedEvent OnUnitHealed;
         public delegate void LevelupEvent(Unit unit);
@@ -61,7 +63,12 @@ namespace Game.GameActors.Units
         public string name;
         [HideInInspector] private int hp=-1;
         [SerializeField]
-        private Blessing blessing;
+        private List<Blessing> blessings;
+        [SerializeField]
+        private List<Curse> curses;
+
+        private int maxBlessings = 3;
+        private int maxCurses = 3;
         [SerializeField]
         private Stats stats;
         [SerializeField]
@@ -70,6 +77,7 @@ namespace Game.GameActors.Units
         private MoveType moveType;
         [SerializeField]
         public SkillManager SkillManager;
+        private List<EncounterBasedBuff> encounterBuffs;
         public MoveType MoveType
         {
             get => moveType;
@@ -85,7 +93,8 @@ namespace Game.GameActors.Units
             set => stats = value;
         }
 
-        public Blessing Blessing => blessing;
+        public List<Blessing> Blessings => blessings;
+        public List<Curse> Curses => curses;
 
         public Attributes Growths
         {
@@ -99,6 +108,7 @@ namespace Game.GameActors.Units
             Relic equippedRelic2, UnitVisual visuals, SkillManager skillManager, ExperienceManager experienceManager)
         {
             Fielded = false;
+            encounterBuffs = new List<EncounterBasedBuff>();
             this.rpgClass = rpgClass;
             this.stats = stats;
             this.growths = growths;
@@ -140,7 +150,7 @@ namespace Game.GameActors.Units
             GameTransformManager = new GameTransformManager();
             StatusEffectManager = new StatusEffectManager(this);
             AIComponent = new AIComponent();
-            MaxHp = stats.Attributes.CON*Attributes.CON_HP_Mult;
+            MaxHp = stats.BaseAttributes.CON*Attributes.CON_HP_Mult;
             hp = MaxHp;
             Stats.AttackRanges.Clear();
             if (equippedWeapon != null)
@@ -475,27 +485,51 @@ namespace Game.GameActors.Units
             }
         }
 
-       
+
         public void ReceiveBlessing(Blessing blessing)
         {
-            this.blessing = blessing;
-            blessing.BlessUnit(this);
+            if (blessings.Count < maxBlessings)
+            {
+                this.blessings.Add(blessing);
+                blessing.BlessUnit(this);
+            }
         }
+
+        public void ReceiveCurse(Curse curse)
+            {
+                if (curses.Count < maxCurses)
+                {
+                    this.curses.Add(curse);
+                    curse.BlessUnit(this);
+                }
+            }
 
         public event Action<Unit, Debuff> OnDebuff;
         public event Action<int> BeforeHealingReceived;
         public event Action<EncounterNode> OnNodeTravel;
         public event Action OnLethalDamage;
 
-        public void RemoveBlessing()
+        public void RemoveBlessing(Blessing blessing)
         {
-            blessing = null;
+            blessings.Remove(blessing);
+        }
+        public void RemoveCurse(Curse curse)
+        {
+            curses.Remove(curse);
         }
 
         public void EncounterTick()
         {
-            if(blessing!=null)
-                blessing.DecreaseDuration();
+            // if(blessing!=null)
+            //     blessing.DecreaseDuration();
+        }
+
+        
+        public void ApplyEncounterBuff(EncounterBasedBuff buff)
+        {
+            encounterBuffs.Add(buff);
+            buff.Apply(this);
+            
         }
     }
 }

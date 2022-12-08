@@ -18,25 +18,25 @@ MonoBehaviour:
   Name: Cleric
   stats:
     AttackRanges: 01000000
-    Attributes:
-      STR: 3
-      INT: 3
-      DEX: 3
-      AGI: 3
-      CON: 3
-      LCK: 4
-      DEF: 2
-      FAITH: 5
+    BaseAttributes:
+      str: 3
+      intel: 3
+      dex: 3
+      agi: 3
+      con: 3
+      lck: 3
+      def: 3
+      faith: 3
     Mov: 2
   growths:
-    STR: 30
-    INT: 40
-    DEX: 35
-    AGI: 35
-    CON: 0
-    LCK: 45
-    DEF: 20
-    FAITH: 60
+    str: 0
+    intel: 0
+    dex: 0
+    agi: 0
+    con: 0
+    lck: 0
+    def: 0
+    faith: 0
   moveType: {fileID: 11400000, guid: ca134ece578a7684db4f492a3756fdd2, type: 2}
   SkillManager:
     startSkills: []

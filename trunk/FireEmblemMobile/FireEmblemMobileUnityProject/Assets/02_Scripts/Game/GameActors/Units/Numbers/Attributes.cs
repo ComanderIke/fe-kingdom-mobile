@@ -8,23 +8,42 @@ namespace Game.GameActors.Units.Numbers
     {
         public Action OnAttributesUpdated;
         [SerializeField]
-        public int STR= 0;
+        private int str= 0;
 
         [SerializeField]
-        public int INT = 0;
+        private int intel = 0;
         [SerializeField]
-        public int DEX= 0;
+        private int dex= 0;
         [SerializeField]
-        public int AGI= 0;
+        private int agi= 0;
 
         [SerializeField] 
-        public int CON = 0;
+        private int con = 0;
+
+        public Action AttributesUpdated => OnAttributesUpdated;
+
+        public int STR => str;
+
+        public int INT => intel;
+
+        public int DEX => dex;
+
+        public int AGI => agi;
+
+        public int CON => con;
+
+        public int LCK => lck;
+
+        public int DEF => def;
+
+        public int FAITH => faith;
+
         [SerializeField]
-        public int LCK= 0;
+        private int lck= 0;
         [SerializeField]
-        public int DEF= 0;
+        private int def= 0;
         [SerializeField]
-        public int FAITH= 0;
+        private int faith= 0;
 
         public const int CON_HP_Mult = 3;
         public Attributes()
@@ -32,14 +51,14 @@ namespace Game.GameActors.Units.Numbers
         }
         public Attributes(Attributes attributes)
         {
-            INT = attributes.INT;
-            CON = attributes.CON;
-            DEX = attributes.DEX;
-            AGI = attributes.AGI;
-            STR = attributes.STR;
-            FAITH = attributes.FAITH;
-            DEF = attributes.DEF;
-            LCK = attributes.LCK;
+            intel = attributes.INT;
+            con = attributes.CON;
+            dex = attributes.DEX;
+            agi = attributes.AGI;
+            str = attributes.STR;
+            faith = attributes.FAITH;
+            def = attributes.DEF;
+            lck = attributes.LCK;
            
         }
 
@@ -57,14 +76,14 @@ namespace Game.GameActors.Units.Numbers
 
         public void Update(int[] statIncreases)
         {
-            STR += statIncreases[0];
-            DEX += statIncreases[1];
-            INT+= statIncreases[2];
-            AGI += statIncreases[3];
-            CON += statIncreases[4];
-            LCK += statIncreases[5];
-            DEF += statIncreases[6];
-            FAITH += statIncreases[7];
+            str += statIncreases[0];
+            dex += statIncreases[1];
+            intel+= statIncreases[2];
+            agi += statIncreases[3];
+            con += statIncreases[4];
+            lck += statIncreases[5];
+            def += statIncreases[6];
+            faith += statIncreases[7];
             OnAttributesUpdated?.Invoke();
         }
 
@@ -91,14 +110,38 @@ namespace Game.GameActors.Units.Numbers
 
         public void Reset()
         {
-            STR = 0;
-            DEX = 0;
-            INT = 0;
-            AGI = 0;
-            LCK = 0;
-            CON = 0;
-            DEF = 0;
-            FAITH = 0;
+            str = 0;
+            dex = 0;
+            intel = 0;
+            agi = 0;
+            lck = 0;
+            con = 0;
+            def = 0;
+            faith = 0;
+        }
+
+        public void IncreaseAttribute(int value, AttributeType attributeType)
+        {
+            switch (attributeType)
+            {
+                case AttributeType.STR:
+                    str += value; break;
+                case AttributeType.DEX:
+                    dex += value; break;
+                case AttributeType.INT:
+                    intel += value; break;
+                case AttributeType.AGI:
+                    agi += value; break;
+                case AttributeType.CON:
+                    con += value; break;
+                case AttributeType.LCK:
+                    lck += value; break;
+                case AttributeType.DEF:
+                    def += value; break;
+                case AttributeType.FTH:
+                    faith += value; break;
+            }
+            OnAttributesUpdated?.Invoke();
         }
     }
 

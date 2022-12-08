@@ -4,7 +4,13 @@ using Game.GameActors.Units.Skills;
 
 namespace LostGrace
 {
-    public class Blessing
+    public interface ITemporaryEffect
+    {
+        void DecreaseDuration();
+        int GetDuration(int faith);
+    }
+
+    public class Blessing : ITemporaryEffect
     {
         private Skill skill;
         private string name;
@@ -33,7 +39,7 @@ namespace LostGrace
 
         public void BlessUnit(Unit blessedUnit)
         {
-            currentDuration = GetDuration(blessedUnit.Stats.Attributes.FAITH);
+            currentDuration = GetDuration(blessedUnit.Stats.BaseAttributes.FAITH);
             this.blessedUnit = blessedUnit;
         }
 
@@ -42,7 +48,7 @@ namespace LostGrace
             currentDuration--;
             if (currentDuration <= 0)
             {
-                blessedUnit.RemoveBlessing();
+                blessedUnit.RemoveBlessing(this);
                 blessedUnit = null;
             }
         }
@@ -57,7 +63,7 @@ namespace LostGrace
         }
         public string GetShortDurationDescription()
         {
-            return "Active next " + GetDuration(blessedUnit.Stats.Attributes.FAITH) + " encounters:";
+            return "Active next " + GetDuration(blessedUnit.Stats.BaseAttributes.FAITH) + " encounters:";
         }
     }
 }

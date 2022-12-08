@@ -60,7 +60,7 @@ namespace Game.Mechanics
                     {
                         gridGameManager.GetSystem<GridSystem>().ShowCastRange(selectionSystem.SelectedCharacter,
                             pts.range + pts.GetCastRangeIncrease(((Unit)selectionSystem.SelectedCharacter).Stats
-                                .Attributes));
+                                .BaseAttributes));
                     }
                 }
 
@@ -176,7 +176,7 @@ namespace Game.Mechanics
             {
                 int diff = Math.Abs(selectedUnit.GridComponent.GridPosition.X - x) +
                            Math.Abs(selectedUnit.GridComponent.GridPosition.Y - y);
-                return diff <= pts.range + pts.GetCastRangeIncrease(selectedUnit.Stats.Attributes);
+                return diff <= pts.range + pts.GetCastRangeIncrease(selectedUnit.Stats.BaseAttributes);
 
             }
             else

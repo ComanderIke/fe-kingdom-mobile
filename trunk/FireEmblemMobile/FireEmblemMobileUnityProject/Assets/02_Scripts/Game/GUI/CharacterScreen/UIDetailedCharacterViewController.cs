@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Units;
+﻿using __2___Scripts.Game.Utility;
+using Game.GameActors.Units;
 using Game.GUI;
 using LostGrace;
 using TMPro;
@@ -15,8 +16,10 @@ public class UIDetailedCharacterViewController : UICharacterViewController
     public SkillTreeUI skillTreeUI;
     public Animator IdleAnimation;
     public SkillsUI skillsUI;
-    public Image blessingImage;
-   
+    [SerializeField]  Transform blessingParent;
+    [SerializeField]  Transform curseParent;
+    [SerializeField] private GameObject cursePrefab;
+    [SerializeField] private GameObject blessingPrefab;
     
     
     public void SkillTreeClicked()
@@ -24,27 +27,39 @@ public class UIDetailedCharacterViewController : UICharacterViewController
         skillTreeUI.Show(unit);
     }
 
-    public void BlessingClicked()
-    {
-        if (unit.Blessing == null)
-            return;
-        ToolTipSystem.Show(unit.Blessing, blessingImage.transform.position);
-    }
+    // public void BlessingClicked()
+    // {
+    //     if (unit.Blessing == null)
+    //         return;
+    //     ToolTipSystem.Show(unit.Blessing, blessingImage.transform.position);
+    // }
     protected override void UpdateUI(Unit unit)
     {
         base.UpdateUI(unit);
         Lv.SetText("Lv. "+unit.ExperienceManager.Level);
         ExpBar.SetValue(unit.ExperienceManager.Exp, unit.ExperienceManager.MaxExp);
         skillsUI.Show(unit.SkillManager.Skills, unit.SkillManager.SkillPoints);
-        if (unit.Blessing != null)
+        blessingParent.DeleteAllChildren();
+        curseParent.DeleteAllChildren();
+        if (unit.Blessings != null)
         {
-            blessingImage.gameObject.SetActive(true);
-            blessingImage.sprite = unit.Blessing.Skill.Icon;
+            foreach (var blessing in unit.Blessings)
+            {
+                var go = Instantiate(blessingPrefab, blessingParent);
+                go.GetComponent<Image>().sprite = blessing.Skill.Icon;
+            }
+          
         }
-        else
+        if (unit.Curses != null)
         {
-            blessingImage.gameObject.SetActive(false);
+            foreach (var curse in unit.Curses)
+            {
+                var go = Instantiate(cursePrefab, curseParent);
+                go.GetComponent<Image>().sprite = curse.Skill.Icon;
+            }
+          
         }
+       
 
         equipmentController.Show(unit);
         IdleAnimation.runtimeAnimatorController = unit.visuals.Prefabs.UIAnimatorController;

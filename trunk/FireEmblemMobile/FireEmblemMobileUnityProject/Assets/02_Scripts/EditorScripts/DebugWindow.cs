@@ -57,6 +57,14 @@ namespace __2___Scripts.External.Editor
             if (activeUnit != null)
             {
                 selectedUnitName = activeUnit.name;
+                if (GUILayout.Button("+1 Stone"))
+                {
+                    Player.Instance.Party.AddSmithingStones(1);
+                }
+                if (GUILayout.Button("-1 Stone"))
+                {
+                    Player.Instance.Party.AddSmithingStones(-1);
+                }
                 if (GUILayout.Button("+50 Gold"))
                 {
                     Player.Instance.Party.AddGold(50);

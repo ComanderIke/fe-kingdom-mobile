@@ -8,10 +8,10 @@ namespace Game.GameActors.Items.Weapons
     [CreateAssetMenu(menuName = "GameData/Items/Consumables/BuffPotion", fileName = "BuffPotion")]
     public class BuffPotionBP : ConsumableItemBp
     {
-        public Buff buff;
+        public EncounterBasedBuffBP buff;
         public override Item Create()
         {
-            return new BuffPotion(name, description, cost, rarity, sprite, target, buff);
+            return new BuffPotion(name, description, cost, rarity, sprite, target, buff.Create());
 
         }
     }

@@ -27,13 +27,13 @@ namespace Game.GameActors.Units.Skills.Passive
         }
         private void ReactToEndCombat(Unit unit)
         {
-            unit.Stats.BonusAttributes.DEX -= BonusAttributes.DEF;
-            unit.BattleComponent.BattleStats.BonusStats.Hit -= BonusStats.Hit;
+            //unit.Stats.BonusAttributes.IncreaseAttribute(BonusAttributes.DEF, ;
+            //unit.BattleComponent.BattleStats.BonusStats.Hit -= BonusStats.Hit;
         }
         private void ReactToInitiateCombat(Unit unit)
         {
-            unit.Stats.BonusAttributes.DEX += BonusAttributes.DEX;
-            unit.BattleComponent.BattleStats.BonusStats.Hit += BonusStats.Hit;
+            //unit.Stats.BonusAttributes.DEX += BonusAttributes.DEX;
+          //  unit.BattleComponent.BattleStats.BonusStats.Hit += BonusStats.Hit;
         }
     }
 }

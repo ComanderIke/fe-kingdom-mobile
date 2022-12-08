@@ -61,9 +61,16 @@ public class ItemToolTip : MonoBehaviour
                 Player.Instance.Party.Convoy.RemoveItem(item);
             }
         }
-        else
+        else 
         {
-            Player.Instance.Party.Convoy.RemoveItem(item);
+            if (item is ConsumableItem cItem)
+            {
+                cItem.Use(Player.Instance.Party.ActiveUnit, Player.Instance.Party.Convoy);
+            }
+            else
+            {
+                Player.Instance.Party.Convoy.RemoveItem(item);
+            }
         }
         gameObject.SetActive(false);
     }
@@ -103,6 +110,7 @@ public class ItemToolTip : MonoBehaviour
     public void SetValues(Item item, string header, string description, Sprite icon, Vector3 position)
     {
         this.item = item;
+        useButton.gameObject.SetActive(true);
         if (string.IsNullOrEmpty(header))
         {
             headerText.gameObject.SetActive(false);
@@ -127,13 +135,23 @@ public class ItemToolTip : MonoBehaviour
         }
         else
         {
-            useButton.interactable = true;
+            if (item is ConsumableItem uitem)
+            {
+                useButton.interactable = true;
+            }
+            else
+            {
+                useButton.interactable = false;
+                useButton.gameObject.SetActive(false);
+            }
+            
         }
 
         if (human.HasEquipped(item))
         {
             if (item is Weapon)
             {
+       
                 useButton.interactable = false;
                 useButtonText.text = "Equipped";
                 dropButton.gameObject.SetActive(false);
@@ -141,6 +159,7 @@ public class ItemToolTip : MonoBehaviour
 
             if (item is Relic)
             {
+         
                 useButton.interactable = true;
                 useButtonText.text = "Unequip";
                 dropButton.gameObject.SetActive(true);

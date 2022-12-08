@@ -7,6 +7,7 @@ using UnityEngine;
 public class UpgradeItemUI : BuyItemUI
 {
 
+    public TextMeshProUGUI weightAfter;
     public TextMeshProUGUI hitAfter;
     public TextMeshProUGUI dmgAfter;
     public TextMeshProUGUI critAfter;

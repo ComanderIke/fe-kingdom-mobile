@@ -213,7 +213,7 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
     
     public void DonateSmall()
     {
-        blessing=church.DonateSmall(party.ActiveUnit, party.ActiveUnit.Stats.Attributes.FAITH);
+        blessing=church.DonateSmall(party.ActiveUnit, party.ActiveUnit.Stats.BaseAttributes.FAITH);
         state = ChurchUIState.Blessing;
         UpdateUI();
         
@@ -221,14 +221,14 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
 
     public void DonateMedium()
     {
-        blessing=church.DonateMedium(party.ActiveUnit,party.ActiveUnit.Stats.Attributes.FAITH);
+        blessing=church.DonateMedium(party.ActiveUnit,party.ActiveUnit.Stats.BaseAttributes.FAITH);
         state = ChurchUIState.Blessing;
         UpdateUI();
     }
 
     public void DonateHigh()
     {
-        blessing=church.DonateHigh(party.ActiveUnit,party.ActiveUnit.Stats.Attributes.FAITH);
+        blessing=church.DonateHigh(party.ActiveUnit,party.ActiveUnit.Stats.BaseAttributes.FAITH);
         state = ChurchUIState.Blessing;
         UpdateUI();
     }

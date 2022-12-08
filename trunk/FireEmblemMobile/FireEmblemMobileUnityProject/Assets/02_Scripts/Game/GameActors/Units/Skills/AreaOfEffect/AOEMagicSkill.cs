@@ -22,9 +22,9 @@ namespace Game.GameActors.Units.Skills
                     {
                         Unit target = (Unit)tiles[xPosition, yPosition].GridObject;
                         Debug.Log("Position: "+xPosition+" "+yPosition);
-                        Debug.Log("Deal " + (user.Stats.Attributes.FAITH+power)+" Damage to : "+target);
+                        Debug.Log("Deal " + (user.Stats.BaseAttributes.FAITH+power)+" Damage to : "+target);
                  
-                        target.InflictFixedFaithDamage(user.Stats.Attributes.FAITH+power);
+                        target.InflictFixedFaithDamage(user.Stats.BaseAttributes.FAITH+power);
                         if (!target.IsAlive())
                         {
                             target.Die();

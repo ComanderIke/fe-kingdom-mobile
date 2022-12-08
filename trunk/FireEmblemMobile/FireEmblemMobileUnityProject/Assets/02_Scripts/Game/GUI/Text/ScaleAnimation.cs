@@ -12,7 +12,6 @@ namespace Game.GUI.Text
             if (!LeanTween.isTweening(rectT))
             {
                 gameObject.transform.localScale = Vector3.one;
-                Debug.Log("RectT: "+rectT.anchoredPosition.x);
                 LeanTween.scale(rectT, Vector3.one * 1.05f, 0.5f).setLoopPingPong();
                
             }
