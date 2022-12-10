@@ -133,10 +133,6 @@ namespace Game.GameActors.Units
             }
             this.visuals = visuals;
             this.name = name;
-            Debug.Log("Create: "+name);
-            Debug.Log("UnitVisual: "+visuals);
-            Debug.Log("CSS: "+visuals.CharacterSpriteSet);
-            Debug.Log("FS: "+visuals.CharacterSpriteSet.FaceSprite);
             SkillManager = skillManager;
             SkillManager.SkillPointsUpdated += SkillPointsUpdated;
             SkillManager.Init();

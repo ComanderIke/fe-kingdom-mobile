@@ -22,7 +22,7 @@ public class MetaUpgradeSaveData
 
     public MetaUpgrade Load()
     {
-        MetaUpgrade ret = new MetaUpgrade(GameData.Instance.GetMetaUpgradeBlueprints(blueprintName));
+        MetaUpgrade ret = new MetaUpgrade(GameBPData.Instance.GetMetaUpgradeBlueprints(blueprintName));
         ret.level = level;
         return ret;
     }

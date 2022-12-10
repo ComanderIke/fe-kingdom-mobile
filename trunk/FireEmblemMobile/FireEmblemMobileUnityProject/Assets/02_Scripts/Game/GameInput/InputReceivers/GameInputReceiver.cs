@@ -312,7 +312,7 @@ namespace Game.GameInput
             {
                 gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[enemyActor.GridComponent.GridPosition.X,
                     enemyActor.GridComponent.GridPosition.Y]);
-                Debug.Log("Enemy Clikced!");
+               
                 var selectedActor = selectionDataProvider.SelectedActor;
                 if (selectedActor == null)
                 {
@@ -326,7 +326,7 @@ namespace Game.GameInput
                     {
                         if (selectionDataProvider.GetSelectedAttackTarget() != enemyActor)
                         {
-                            Debug.Log("Selected Different target!");
+                      
                             selectionDataProvider.ClearPositionData();
                             selectionDataProvider.ClearAttackData();
                             var gridPos = new GridPosition((int)selectedActor.GameTransformManager.GetPosition().x,
@@ -402,7 +402,7 @@ namespace Game.GameInput
                         }
                         else
                         {
-                            Debug.Log("Attack Clikced!");
+                       
                             AttackEnemy(selectedActor, enemyActor, inputPathManager.MovementPath);
                         }
                     }

@@ -17,9 +17,12 @@ namespace Game.GameActors.Players
         bool IsAlive();
         void Die();
     }
+    public interface IAttackableTargetThatCantFightBack:IAttackableTarget
+    {
+    }
     [Serializable]
     [CreateAssetMenu(menuName = "GameData/Destroyable", fileName="Destroyable")]
-    public class Destroyable:ScriptableObject,IGridObject, IAttackableTarget
+    public class Destroyable:ScriptableObject,IGridObject, IAttackableTargetThatCantFightBack
     {
         [SerializeField]
         private GridTerrainData terrainData;

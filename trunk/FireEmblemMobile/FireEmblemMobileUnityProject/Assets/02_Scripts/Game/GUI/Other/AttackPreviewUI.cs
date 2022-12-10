@@ -79,13 +79,13 @@ namespace Game.GUI
              dmgValue.text = "" + battlePreview.AttackerStats.Damage;
              hitValue.text = "" + battlePreview.AttackerStats.Hit+"%";
              critValue.text = "" + battlePreview.AttackerStats.Crit+"%";
-             Debug.Log("ATTACKCOUNT: "+battlePreview.AttackerStats.AttackCount+" "+battlePreview.DefenderStats.AttackCount);
+           
              attackCountX.SetActive(battlePreview.AttackerStats.AttackCount > 1);
              attackCount.gameObject.SetActive(battlePreview.AttackerStats.AttackCount > 1);
              attackCount.text = "" + battlePreview.AttackerStats.AttackCount;
              List<int> attackerDmg = new List<int>();
              List<int> defenderDmg = new List<int>();
-             Debug.Log("TEST" + battlePreview.AttacksData);
+    
              for (int i = 0; i < battlePreview.AttacksData.Count; i++)
              {
                  if (battlePreview.AttacksData[i].attacker)
@@ -120,8 +120,7 @@ namespace Game.GUI
              attackCountRightX.SetActive(battlePreview.DefenderStats.AttackCount > 1);
              attackCountRight.gameObject.SetActive(battlePreview.DefenderStats.AttackCount > 1);
              attackCountRight.text = "" + battlePreview.DefenderStats.AttackCount;
-             Debug.Log(battlePreview.DefenderStats.MaxHp + " " + battlePreview.DefenderStats.CurrentHp + " " +
-                       battlePreview.DefenderStats.AfterBattleHp + " " +attackerDmg);
+
              hpBarRight.UpdateValues(battlePreview.DefenderStats.MaxHp, battlePreview.DefenderStats.CurrentHp, battlePreview.DefenderStats.AfterBattleHp,
                      attackerDmg);
              faceSpriteRight.color = new Color(1, 1, 1, 1);
@@ -134,7 +133,7 @@ namespace Game.GUI
         }
         public override void Show(BattlePreview battlePreview, UnitVisual attackerVisual, Sprite attackableObjectSprite)
         {
-            Debug.Log("Show AttackPreview");
+           
             attackerSprite = attackerVisual.CharacterSpriteSet.FaceSprite;
             defenderSprite = attackableObjectSprite;
             this.battlePreview = battlePreview;
@@ -192,7 +191,6 @@ namespace Game.GUI
        
         public override void Hide()
         {
-            Debug.Log("HideAttackPreview");
             turnCount.SetActive(true);
             this.gameObject.SetActive(false);
            

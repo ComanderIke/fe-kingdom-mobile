@@ -32,8 +32,8 @@ public class ExpParticleSystem : MonoBehaviour, IExpRenderer
             controller.OnParticleArrived += unit.BattleGO.GetExpRenderer().ParticleArrived;
             controller.Play(unit, startPos, exp, uiCamera);
             ;
-            unit.BattleGO.GetExpRenderer().onAllParticlesArrived -= AllFinished;
-            unit.BattleGO.GetExpRenderer().onAllParticlesArrived += AllFinished;
+            unit.BattleGO.GetExpRenderer().onFinished -= AllFinished;
+            unit.BattleGO.GetExpRenderer().onFinished += AllFinished;
         }
         else
         {
@@ -43,8 +43,8 @@ public class ExpParticleSystem : MonoBehaviour, IExpRenderer
             controller.Play(unit, startPos, exp, uiCamera);
             controller.OnParticleArrived -=  unit.visuals.UnitCharacterCircleUI.GetExpRenderer().ParticleArrived;
             controller.OnParticleArrived +=  unit.visuals.UnitCharacterCircleUI.GetExpRenderer().ParticleArrived;
-            unit.visuals.UnitCharacterCircleUI.GetExpRenderer().onAllParticlesArrived -= AllFinished;
-            unit.visuals.UnitCharacterCircleUI.GetExpRenderer().onAllParticlesArrived += AllFinished;
+            unit.visuals.UnitCharacterCircleUI.GetExpRenderer().onFinished -= AllFinished;
+            unit.visuals.UnitCharacterCircleUI.GetExpRenderer().onFinished += AllFinished;
         }
 
     }

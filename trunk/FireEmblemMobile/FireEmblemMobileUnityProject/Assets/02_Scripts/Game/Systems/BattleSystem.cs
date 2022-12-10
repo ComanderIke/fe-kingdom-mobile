@@ -38,9 +38,10 @@ namespace Game.Mechanics
         private int currentAttackIndex;
         public bool IsFinished;
         public IBattleAnimation BattleAnimation { get; set; }
+ 
 
 
-        public void StartBattle(IBattleActor attacker, IAttackableTarget attackableTarget)
+        public void StartBattle(IBattleActor attacker, IAttackableTargetThatCantFightBack attackableTarget)
         {
             this.attacker = attacker;
             this.attackableTarget = attackableTarget;
@@ -75,17 +76,13 @@ namespace Game.Mechanics
         }
         private void EndBattle()
         {
-            Debug.Log("End Battle");
-            Debug.Log(attacker);
-            Debug.Log(battleSimulation);
-            Debug.Log(battleSimulation.Attacker);
-            
+  
             attacker.Hp = battleSimulation.Attacker.Hp;
             if (battleSimulation.AttackableTarget == null)
                 defender.Hp = battleSimulation.Defender.Hp;
             else
                 defender.Hp = battleSimulation.AttackableTarget.Hp;
-          
+            BattleAnimation.Hide();
             CheckExp();
             attacker = null;
             defender = null;
@@ -103,13 +100,13 @@ namespace Game.Mechanics
             task.StartTask();
             task.OnFinished += () =>
             {
-                BattleAnimation.Hide();
+                
                 OnBattleFinished?.Invoke(battleSimulation.AttackResult);
             };
         }
         public BattleSimulation GetBattleSimulation(IBattleActor attacker, IBattleActor defender, bool grid, bool continuos=false)
         {
-            Debug.Log("GetBattleSimulation Hereinstead");
+   
             battleSimulation = new BattleSimulation(attacker, defender, continuos);
             battleSimulation.StartBattle(false, grid);
 
@@ -117,7 +114,7 @@ namespace Game.Mechanics
         }
         public BattleSimulation GetBattleSimulation(IBattleActor attacker, IAttackableTarget attackableTarget, bool grid)
         {
-            Debug.Log("GetBattleSimulation Here");
+         
             battleSimulation = new BattleSimulation(attacker, attackableTarget);
             battleSimulation.StartBattle(false, grid);
 
@@ -134,8 +131,7 @@ namespace Game.Mechanics
                 battleSimulation = new BattleSimulation(attacker, defenderActor, attackPosition);
                 battleSimulation.StartBattle(true, true);
                 battlePreview.AttacksData = battleSimulation.combatRounds[0].AttacksData;
-                Debug.Log("BattlePreview: " + battleSimulation.combatRounds[0].AttackerAttackCount + "DefenderAttackCount: " +
-                          battleSimulation.combatRounds[0].DefenderAttackCount);
+            
                 battlePreview.AttackerStats = new BattlePreviewStats(attacker.BattleComponent.BattleStats.GetDamage(),
                     attacker.Stats.BaseAttributes.AGI, defenderActor.BattleComponent.BattleStats.GetDamageType(),
                     defenderActor.BattleComponent.BattleStats.GetDamageType() == DamageType.Physical
@@ -147,10 +143,7 @@ namespace Game.Mechanics
                     attacker.BattleComponent.BattleStats.GetCritAgainstTarget(defenderActor),
                     battleSimulation.combatRounds[0].AttackerAttackCount, attacker.Hp, attacker.MaxHp,
                     battleSimulation.Attacker.Hp); //, attacker.Sp, attacker.Stats.MaxSp, battleSimulation.Attacker.Sp, attacker.SpBars, battleSimulation.Attacker.SpBars, attacker.MaxSpBars);
-                Debug.Log(battleSimulation.Defender);
-                Debug.Log(battleSimulation.Defender.Hp);
-                Debug.Log( defenderActor.Stats.BaseAttributes.AGI);
-                Debug.Log(defenderActor.BattleComponent.BattleStats.GetDamage() + " test ");
+      
                 battlePreview.DefenderStats = new BattlePreviewStats(defenderActor.BattleComponent.BattleStats.GetDamage(),
                     defenderActor.Stats.BaseAttributes.AGI, defenderActor.BattleComponent.BattleStats.GetDamageType(),
                     attacker.BattleComponent.BattleStats.GetDamageType() == DamageType.Physical
@@ -212,6 +205,11 @@ namespace Game.Mechanics
         public void Activate()
         {
          
+        }
+
+        public void CleanUp()
+        {
+            BattleAnimation.Cleanup();
         }
 
         public ICombatResult GetCombatResultAtAttackLocation(IBattleActor attacker, IAttackableTarget targetTarget, Vector2Int tile)

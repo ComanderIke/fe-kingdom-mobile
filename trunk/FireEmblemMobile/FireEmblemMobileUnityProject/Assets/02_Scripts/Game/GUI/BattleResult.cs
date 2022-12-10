@@ -19,7 +19,7 @@ namespace LostGrace
             this.defeatedEnemyCount = defeatedEnemyCount;
             this.defeatedEliteEnemyCount = defeatedEliteEnemyCount;
             this.turnCount = turnCount;
-            config = GameData.Instance.BattleRewardConfig;
+            config = GameBPData.Instance.BattleRewardConfig;
         }
         public int GetExpFromEnemies()
         {

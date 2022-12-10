@@ -72,7 +72,6 @@ namespace Game.GameActors.Units
 
         public Unit Create()
         {
-            Debug.Log("Name: "+name+" "+"Skills: "+SkillManager.Skills);
             Weapon weapon = null;
             if(equippedWeaponBp!=null)
                 weapon = (Weapon)equippedWeaponBp.Create();

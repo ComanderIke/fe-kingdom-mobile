@@ -113,7 +113,7 @@ namespace Game.GUI.PopUpText
 
         public static DamagePopUp CreateMiss(Vector3 transformPosition, TextStyle style, float scale, Vector2 moveVector)
         {
-            Debug.Log("MoveVector for Miss: " + moveVector);
+            
             GameObject damagePopUpTransform = Instantiate(GameAssets.Instance.prefabs.DamagePopUptext,
                 new Vector3(transformPosition.x, transformPosition.y, transformPosition.z), Quaternion.identity);
             damagePopUpTransform.layer = LayerMask.NameToLayer("Characters");

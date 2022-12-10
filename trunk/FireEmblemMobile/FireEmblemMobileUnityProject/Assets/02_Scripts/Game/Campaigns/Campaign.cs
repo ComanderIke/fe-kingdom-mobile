@@ -28,7 +28,7 @@ namespace Game.WorldMapStuff.Model
         {
             campaignId = campaignData.campaignId;
             turnCount = campaignData.turnCount;
-            scene =  GameData.Instance.campaigns[campaignId].scene;
+            scene =  GameBPData.Instance.campaigns[campaignId].scene;
             dataLoaded = true;
            
     

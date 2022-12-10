@@ -111,7 +111,6 @@ namespace Game.Mechanics
 
         private void SelectCharacter(IGridActor c)
         {
-            Debug.Log("SELECT CHARACTER "+c);
             if (SelectedCharacter != null)
             {
                 DeselectActiveCharacter();

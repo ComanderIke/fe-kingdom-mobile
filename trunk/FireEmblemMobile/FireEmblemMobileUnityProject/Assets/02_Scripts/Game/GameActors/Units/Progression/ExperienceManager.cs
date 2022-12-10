@@ -7,7 +7,7 @@ namespace Game.GameActors.Units
     [System.Serializable]
     public class ExperienceManager
     {
-        private const int MAX_EXP = 100;
+        public const int MAX_EXP = 100;
         public delegate void ExpGainedEvent(int expBefore, int expGained);
         public delegate void LevelupEvent();
         public ExpGainedEvent ExpGained;
@@ -18,8 +18,13 @@ namespace Game.GameActors.Units
         {
             this.exp = otherExpManager.exp;
             this.level = otherExpManager.level;
-            this.MaxExp = otherExpManager.MaxExp;
-            this.ExpLeftToDrain = otherExpManager.ExpLeftToDrain;
+            this.expLeftToDrain = otherExpManager.expLeftToDrain;
+            this.drainableExp = otherExpManager.drainableExp;
+        }
+
+        public ExperienceManager()
+        {
+            expLeftToDrain = drainableExp;
         }
 
         [SerializeField]
@@ -39,13 +44,13 @@ namespace Game.GameActors.Units
             set => exp = value;
         }
 
-        public int MaxExp = 100;
+    
 
-        public const int MAX_EXP_TO_DRAIN = 100;
-        [NonSerialized]
-        public int ExpLeftToDrain = 100;
+        public int drainableExp = 100;
+[HideInInspector]
+        public int expLeftToDrain;
 
-   
+
 
         public bool AddExp(int exp)
         {

@@ -22,7 +22,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     public void Show(BattleSimulation battleSimulation, IBattleActor attackingActor, IAttackableTarget defendingActor)
     {
         gameObject.SetActive(true);
-        Debug.Log("SHow Battle Canvdass!");
+    
         canvas.Show();
         OnShow?.Invoke(battleSimulation, attackingActor, defendingActor);
        
@@ -37,7 +37,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
 
     void Finished()
     {
-        Debug.Log("BattleRenderer Finished");
+       
         OnFinished?.Invoke();
     }
 
@@ -48,11 +48,15 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
             CancelInvoke();//TODO DO THIS ON COROUTINE MONOBEHAVIOUR 
             Debug.Log("TODO Reset Cameras and Volumes!");
             animationStateManager.BattleFinished();
+            Hide();
         }
+    }
+    public void Cleanup()
+    {
+        animationStateManager?.CleanUp();
     }
     public void Hide()
     {
-        animationStateManager?.CleanUp();
         canvas.Hide();
         //light.SetActive(false);
         LeanTween.value(volume.weight, 0, 0.4f).setEaseInQuad().setOnUpdate((value) => { volume.weight = value; })

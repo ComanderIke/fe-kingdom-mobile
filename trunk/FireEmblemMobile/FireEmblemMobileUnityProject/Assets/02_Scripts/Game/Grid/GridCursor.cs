@@ -14,7 +14,6 @@ namespace Game.Map
 
         public GridCursor()
         {
-            Debug.Log("GridCursorConstructor");
             renderer = GameObject.FindObjectOfType<GridCursorRenderer>();
             renderer.Hide();
         }

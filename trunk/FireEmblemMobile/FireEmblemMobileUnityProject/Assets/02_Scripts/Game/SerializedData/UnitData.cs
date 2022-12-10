@@ -41,7 +41,7 @@ namespace Game.GameActors.Players
         public virtual Unit Load()
         {
             Debug.Log("TODO MAKE CLEAN AND CONSISTENT");
-            Unit unit = GameData.Instance.GetHumanFromBlueprint(unitBlueprintID);
+            Unit unit = GameBPData.Instance.GetHumanFromBlueprint(unitBlueprintID);
             unit.name = name;
             unit.Stats = new Stats();//ScriptableObject.CreateInstance<Stats>();
             unit.Stats.LoadData(statsData);
@@ -52,7 +52,7 @@ namespace Game.GameActors.Players
             unit.ExperienceManager.Level = ExperienceManager.Level;
             unit.TurnStateManager = TurnStateManager;
             unit.Hp = hp;
-            unit.equippedWeapon = GameData.Instance.GetWeapon(weaponId);
+            unit.equippedWeapon = GameBPData.Instance.GetWeapon(weaponId);
             return unit;
             // unit.visuals = new UnitVisual();
             //

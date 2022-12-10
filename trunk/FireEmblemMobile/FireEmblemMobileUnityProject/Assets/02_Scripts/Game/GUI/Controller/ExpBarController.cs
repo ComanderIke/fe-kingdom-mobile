@@ -21,7 +21,7 @@ namespace Game.GUI
         private bool animation;
 
 
-        public Action onAllParticlesArrived;
+        public Action onFinished;
         public void ParticleArrived()
         {
             addedExp--;
@@ -34,7 +34,7 @@ namespace Game.GUI
             {
                 Debug.Log("AllParticlesArrived!");
                 animation = false;
-                onAllParticlesArrived?.Invoke();
+                onFinished?.Invoke();
 
             }
         }
@@ -59,6 +59,9 @@ namespace Game.GUI
                 countingText?.SetText(currentExp.ToString());
                 yield return new WaitForSeconds(.05f);
             }
+
+            yield return new WaitForSeconds(1.1f);
+            onFinished?.Invoke();
             
         }
         IEnumerator AnimatedTmpFillText()
@@ -76,7 +79,7 @@ namespace Game.GUI
         }
         public void UpdateWithAnimatedTextOnly(int expgained)
         {
-            Debug.Log("CurrentExp: "+currentExp+" Gained: "+addedExp);
+            //Debug.Log("CurrentExp: "+currentExp+" Gained: "+addedExp);
             
             this.addedExp += expgained;
             this.tmpAddedExp += expgained;
@@ -86,7 +89,7 @@ namespace Game.GUI
 
         public void UpdateInstant(int expVal)
         {
-            Debug.Log("UpdateInstant: "+expVal);
+           // Debug.Log("UpdateInstant: "+expVal);
             if (animation)
             {
                 return;
@@ -99,7 +102,7 @@ namespace Game.GUI
 
             currentExp = expVal;
             tmpExp = currentExp;
-            Debug.Log("Currentexp: "+currentExp);
+            //Debug.Log("Currentexp: "+currentExp);
             fill.fillAmount = currentExp / 100f;
           
             if (Math.Abs(fill.fillAmount - 1) < 0.1f)

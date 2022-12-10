@@ -95,10 +95,77 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UnitSpriteRenderer: {fileID: 7906781510031797797}
   normalColor: {r: 0.3882353, g: 0.4509804, b: 0.4509804, a: 1}
-  selectedColor: {r: 0.3254902, g: 0.7254902, b: 0.3647059, a: 1}
+  normalColorBG2: {r: 0.3764706, g: 0.3764706, b: 0.25882354, a: 0.69803923}
+  selectedColor: {r: 0.5479108, g: 1, b: 0.4009434, a: 1}
+  selectedColorBG2: {r: 0.5479108, g: 1, b: 0.4009434, a: 0.69803923}
   BackGroundRenderer: {fileID: 5432797093680125478}
+  BackGround2: {fileID: 655335631367005390}
   rectTransform: {fileID: 3642237625208803085}
-  unit: {fileID: 0}
+  unit:
+    unitBP: {fileID: 0}
+    bluePrintID: 
+    equippedWeapon:
+      Name: 
+      Description: 
+      cost: 0
+      rarity: 0
+      Sprite: {fileID: 0}
+      EquipmentSlotType: 0
+      AttackRanges: 
+      WeaponAttributes: []
+      weaponLevel: 0
+      maxLevel: 0
+      WeaponType: {fileID: 0}
+      DamageType: 0
+    EquippedRelic1:
+      id: 0
+    EquippedRelic2:
+      id: 0
+    name: 
+    stats:
+      AttackRanges: 
+      BaseAttributes:
+        str: 0
+        intel: 0
+        dex: 0
+        agi: 0
+        con: 0
+        lck: 0
+        def: 0
+        faith: 0
+      Mov: 0
+    growths:
+      str: 0
+      intel: 0
+      dex: 0
+      agi: 0
+      con: 0
+      lck: 0
+      def: 0
+      faith: 0
+    moveType: {fileID: 0}
+    SkillManager:
+      startSkills: []
+      skillPoints: 0
+      SkillBuildTrees: []
+    rpgClass: 0
+    visuals:
+      CharacterSpriteSet: {fileID: 0}
+      UnitEffectVisual: {fileID: 0}
+      Prefabs:
+        MapAnimatedSprite: {fileID: 0}
+        EncounterAnimatedSprite: {fileID: 0}
+        UIAnimatorController: {fileID: 0}
+      UnitCharacterCircleUI: {fileID: 0}
+      unitRenderer: {fileID: 0}
+    experienceManager:
+      level: 0
+      exp: 0
+      MaxExp: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: , ns: , asm: }
 --- !u!225 &8713074193146897597
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -515,6 +582,18 @@ RectTransform:
 --- !u!114 &5432797093680125478 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6644595403744421214, guid: b294b49d745bfdb40b448f29352bb17a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1680815164111532920}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &655335631367005390 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2182922232118663094, guid: b294b49d745bfdb40b448f29352bb17a,
     type: 3}
   m_PrefabInstance: {fileID: 1680815164111532920}
   m_PrefabAsset: {fileID: 0}

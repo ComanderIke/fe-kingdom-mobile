@@ -135,17 +135,16 @@ namespace Game.Manager
             GetSystem<TurnSystem>().gameStateManager = GameStateManager;
             GameStateManager.WinState.renderer =  FindObjectsOfType<MonoBehaviour>().OfType<IBattleSuccessRenderer>().First();
             GameStateManager.GameOverState.renderer =  FindObjectsOfType<MonoBehaviour>().OfType<IBattleLostRenderer>().First();
+            GetSystem<BattleSystem>().BattleAnimation = FindObjectsOfType<MonoBehaviour>().OfType<IBattleAnimation>().First();
             GameStateManager.BattleState.battleSystem = GetSystem<BattleSystem>();
-            GameStateManager.BattleState.BattleAnimation = FindObjectsOfType<MonoBehaviour>().OfType<IBattleAnimation>().First();
-            GameStateManager.BattleState.MapBattleAnimation = FindObjectsOfType<MonoBehaviour>().OfType<IBattleAnimation>().Last();
-            GameStateManager.BattleState.BattleAnimation.Hide();
-            GameStateManager.BattleState.MapBattleAnimation.Hide();
+            GetSystem<BattleSystem>().BattleAnimation.Hide();
             GameStateManager.UnitPlacementState.UnitPlacementUI =  FindObjectsOfType<MonoBehaviour>().OfType<IUnitPlacementUI>().First();
             GameStateManager.PhaseTransitionState.phaseRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IPhaseRenderer>().First();
             GameStateManager.PlayerPhaseState.mainState.playerPhaseUI = FindObjectsOfType<MonoBehaviour>().OfType<IPlayerPhaseUI>().First();
             GameStateManager.PlayerPhaseState.chooseTargetState.UI = FindObjectsOfType<MonoBehaviour>().OfType<IChooseTargetUI>().First();
             GetSystem<UnitProgressSystem>().levelUpRenderer = FindObjectsOfType<MonoBehaviour>().OfType<ILevelUpRenderer>().First();
             GetSystem<UnitProgressSystem>().expRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IExpRenderer>().First();
+            GetSystem<UnitProgressSystem>().ExpBarController = FindObjectsOfType<MonoBehaviour>().OfType<ExpBarController>().First();
             
         }
 

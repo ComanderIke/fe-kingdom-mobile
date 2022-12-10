@@ -36,13 +36,11 @@ public class AnimationStateManager
         TimeLineController.zoomInFinished += ContinueBattle;
         playerControlled = (Player.Instance.Party.members.Contains((Unit)battleSimulation.Attacker));
         leftCharacterAttacker = playerControlled;
-        Debug.Log("LeftCharacterAttacker: "+leftCharacterAttacker);
+      
         characterAnimations.Reset();
         characterAnimations.SetLeftCharacterAttacker(leftCharacterAttacker);
-        Debug.Log("Attacker:"+(Unit)battleSimulation.Attacker);
-        Debug.Log("Defender:"+(Unit)battleSimulation.Defender);
-       
-        Debug.Log("Attacker is PlayerControlled: "+playerControlled);
+        
+     
         attackSequenzIndex = 0;
         CombatTextRenderer = new CombatTextRenderer();
         
@@ -69,18 +67,18 @@ public class AnimationStateManager
     }
     private void ContinueBattle()
     {
-        Debug.Log("Continue Battle");
+     
         if (attackSequenzIndex >= currentRound.AttacksData.Count)
         {
             AllAttacksFinished();
-            Debug.Log("Finished");
+           
             return;
         }
         
         characterAnimations.CharacterAttack(currentRound.AttacksData[attackSequenzIndex],currentRound.AttacksData[attackSequenzIndex].attacker, leftCharacterAttacker);
         characterAnimations.OnAttackFinished -= AttackFinished;
         characterAnimations.OnAttackFinished += AttackFinished;
-        Debug.Log("CameraShake Battle");
+
         TimeLineController.CameraShake();
 
     }
@@ -111,13 +109,12 @@ public class AnimationStateManager
         TimeLineController.zoomOutFinished -= AllAttacksFinished;
         if (currentRound.RoundIndex >= battleSimulation.combatRounds.Count-1)
         {
-            Debug.Log("All Atttacks Finished!");
+           
             MonoUtility.DelayFunction(BattleFinished, EndBattleWaitDuration);
         }
         else
         {
             
-            Debug.Log("Next Round: "+currentRound.RoundIndex + 1+" "+battleSimulation.combatRounds.Count);
             currentRound = battleSimulation.combatRounds[currentRound.RoundIndex + 1];
             attackSequenzIndex = 0;
             MonoUtility.DelayFunction(TimeLineController.PlayZoomIn, timeBetweenAttacks);
@@ -125,15 +122,11 @@ public class AnimationStateManager
     }
     public void BattleFinished()
     {
-      
-     
-        Debug.Log("Battle Finished!");
         OnFinished?.Invoke();
     }
 
     public void CleanUp()
     {
-        Debug.Log("CLEAN UP COMBAT ANIMATED UNITS!");
         characterAnimations.Cleanup();
     }
 

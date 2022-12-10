@@ -12,8 +12,11 @@ namespace Game.GUI
 
         public Image UnitSpriteRenderer;
         public Color normalColor;
+        public Color normalColorBG2;
         public Color selectedColor;
+        public Color selectedColorBG2;
         public Image BackGroundRenderer;
+        public Image BackGround2;
         public RectTransform rectTransform;
         private CanvasGroup canvasGroup;
 
@@ -68,11 +71,15 @@ namespace Game.GUI
         public void ShowSelected()
         {
             BackGroundRenderer.color = selectedColor;
+            if(BackGround2!=null)
+                BackGround2.color = selectedColorBG2;
         }
 
         public void HideSelected()
         {
             BackGroundRenderer.color = normalColor;
+            if(BackGround2!=null)
+                BackGround2.color = normalColorBG2;
         }
     }
 }

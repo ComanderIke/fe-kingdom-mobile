@@ -25,9 +25,12 @@ namespace Game.GameActors.Items.Weapons
                 if (effectiveAgainstDict == null)
                 { 
                     effectiveAgainstDict = new Dictionary<EffectType, float>();
-                    for (int i = 0; i < effectiveAgainst.Count; i++)
+                    if (effectiveAgainst != null)
                     {
-                        effectiveAgainstDict.Add(effectiveAgainst[i], effectiveAgainstCoefficients[i]);
+                        for (int i = 0; i < effectiveAgainst.Count; i++)
+                        {
+                            effectiveAgainstDict.Add(effectiveAgainst[i], i<effectiveAgainstCoefficients.Count ? effectiveAgainstCoefficients[i]:1);
+                        }
                     }
                 }
 

@@ -26,7 +26,7 @@ namespace Game.Menu
         public event Action<int> LoadCampaignClicked;
         void Start()
         {
-            campaignConfigs=GameData.Instance.campaigns;
+            campaignConfigs=GameBPData.Instance.campaigns;
             campaignImages = new List<RectTransform>();
            
            

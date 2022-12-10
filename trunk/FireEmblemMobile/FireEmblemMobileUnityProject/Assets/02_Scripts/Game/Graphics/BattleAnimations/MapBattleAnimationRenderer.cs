@@ -192,4 +192,8 @@ public class MapBattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     }
 
     public event Action OnFinished;
+    public void Cleanup()
+    {
+        
+    }
 }

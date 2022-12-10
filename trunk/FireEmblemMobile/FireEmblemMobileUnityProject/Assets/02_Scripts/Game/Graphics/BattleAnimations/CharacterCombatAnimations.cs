@@ -75,7 +75,6 @@ public class CharacterCombatAnimations : MonoBehaviour
         }
         else
         {
-            Debug.Log("PlayIdle");
             characterLeft.Idle(playSpeed);
         }
         
@@ -85,7 +84,6 @@ public class CharacterCombatAnimations : MonoBehaviour
         }
         else
         {
-            Debug.Log("PlayIdle");
             characterRight.Idle(playSpeed);
         }
 
@@ -102,7 +100,7 @@ public class CharacterCombatAnimations : MonoBehaviour
         var defendingCharacter = b ? characterRight : characterLeft;
         this.leftCharacterAttacker = leftCharacterAttacker;
       //  Debug.Log("LeftCharacterAttacker: "+leftCharacterAttacker);
-Debug.Log("Attacking Character: "+(leftCharacterAttacker ? "characterLeft" : "characterRight"));
+
 
         if (attackingCharacter.HasPrepareAnimation())
         {

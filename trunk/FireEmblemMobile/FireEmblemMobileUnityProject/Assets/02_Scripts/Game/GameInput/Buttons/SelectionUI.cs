@@ -81,7 +81,6 @@ namespace Game.GameInput
                 SkillsButton.SetActive(false);
                
             }
-            Debug.Log("Convoy: "+Player.Instance.Party.Convoy);
             if(Player.Instance.Party.Convoy.Items.Count > 0)
                 ItemsButton.SetActive(true);
             else

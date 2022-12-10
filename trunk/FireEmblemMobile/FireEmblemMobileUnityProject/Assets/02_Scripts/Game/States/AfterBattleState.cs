@@ -22,7 +22,7 @@ namespace Game.States
         private Unit attacker;
         private UnitProgressSystem progressSystem;
         private const float WaitTimeWhenFinished = 1.5f;
-       
+        private const float initialDelay= 0.5f;
         private List<IAttackableTarget> defenders;
         public AfterBattleTasks(UnitProgressSystem system,Unit attacker, IAttackableTarget defender)
         {
@@ -39,62 +39,75 @@ namespace Game.States
         }
         public void StartTask()
         {
-            Debug.Log("Start AfterBattle task");
-           
-            Debug.Log("Attacker: "+attacker+" , DefenderCount: "+defenders.Count);
+         
 
             ServiceProvider.Instance.StartChildCoroutine(ExpCoroutine());
 
 
         }
 
+        IEnumerator ExpForAttacker(Unit defenderAsUnit)
+        {
+            int lvl = attacker.ExperienceManager.Level;
+            progressSystem.DistributeExperience(defenderAsUnit, attacker);
+            yield return new WaitUntil(() => progressSystem.IsFinished());
+            if (lvl < attacker.ExperienceManager.Level)
+            {
+                  
+                yield return new WaitForSeconds(.5f);
+                progressSystem.DoLevelUp(attacker);
+                yield return new WaitUntil(() => progressSystem.IsFinished());
+            }
+        }
+
+        IEnumerator ExpForDefender(Unit defenderAsUnit)
+        {
+            int lvl = defenderAsUnit.ExperienceManager.Level;
+            progressSystem.DistributeExperience(attacker, defenderAsUnit);
+            yield return new WaitUntil(() => progressSystem.IsFinished());
+            if (lvl < defenderAsUnit.ExperienceManager.Level)
+            {
+
+                yield return new WaitForSeconds(.5f);
+                progressSystem.DoLevelUp(defenderAsUnit);
+                yield return new WaitUntil(() => progressSystem.IsFinished());
+            }
+        }
         IEnumerator ExpCoroutine()
         {
+            yield return new WaitForSeconds(initialDelay);
             Debug.Log("Start EXP Coroutine: "+attacker+" "+defenders.Count);
             foreach (var defender in defenders)
             {
-                Debug.Log( "Attacker: "+attacker+"Defender: "+defender);
+             
                 if (!attacker.IsAlive())
                 {
                     attacker.Die();
                 }
                 if (defender is Unit unitDefender)
                 {
-                    int lvl = unitDefender.ExperienceManager.Level;
-                    progressSystem.DistributeExperience(attacker, unitDefender);
-                    yield return new WaitUntil(() => progressSystem.IsFinished());
-                    if (lvl < unitDefender.ExperienceManager.Level)
+
+                    yield return ExpForAttacker(unitDefender);
+                    
+                    if (defender.IsAlive() && unitDefender.IsPlayerControlled())
                     {
-                        Debug.Log("Start LevelUp  defender");
-                        yield return new WaitForSeconds(.5f);
-                        progressSystem.DoLevelUp(unitDefender);
-                        yield return new WaitUntil(() => progressSystem.IsFinished());
+                        yield return ExpForDefender(unitDefender);
                     }
 
-                    progressSystem.DistributeExperience(unitDefender, attacker);
-                    yield return new WaitUntil(()=>progressSystem.IsFinished());
-                    if (lvl < attacker.ExperienceManager.Level)
-                    {
-                        Debug.Log("Start LevelUp  attacker");
-                        yield return new WaitForSeconds(.5f);
-                        progressSystem.DoLevelUp(attacker);
-                        yield return new WaitUntil(() => progressSystem.IsFinished());
-                    }
-             
                 }
                 if (!defender.IsAlive())
                 {
                     defender.Die();
                 }
             }
-            Debug.Log("Almost Finished");
+      
             yield return new WaitForSeconds(WaitTimeWhenFinished);
             Finished();
             
         }
         void Finished()
         {
-            Debug.Log("Finished AfterBattle task");
+     
             OnFinished?.Invoke();
             
         }

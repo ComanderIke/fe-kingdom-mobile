@@ -83,7 +83,7 @@ namespace Game.GUI
         }
         private void ShowAttackPreviewUI(BattlePreview battlePreview)
         {
-            Debug.Log("Show AttackPreview");
+         
             if (battlePreview.Attacker is Unit attacker)
             {
                 if (battlePreview.Defender is Unit defender)
@@ -91,7 +91,7 @@ namespace Game.GUI
                 else if (battlePreview.TargetObject != null &&
                          battlePreview.TargetObject is Destroyable dest)
                 {
-                    Debug.Log("Show DestoryPreview");
+         
                     attackPreviewUI.Show(battlePreview, attacker.visuals, dest.Sprite);
                 }
 

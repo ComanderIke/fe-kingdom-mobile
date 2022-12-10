@@ -68,7 +68,7 @@ public class AnimatedCombatCharacter
     public void Attack(float playSpeed)
     {
         spriteController.Attack(playSpeed);
-        Debug.Log("Attack Duration: "+(float)spriteController.GetCurrentAnimationDuration());
+    
         MonoUtility.DelayFunction(AttackFinished, (float)spriteController.GetCurrentAnimationDuration());
     }
 

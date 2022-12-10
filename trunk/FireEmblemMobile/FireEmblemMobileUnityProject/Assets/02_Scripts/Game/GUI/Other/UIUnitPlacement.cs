@@ -36,6 +36,7 @@ public class UIUnitPlacement : IUnitPlacementUI
     [SerializeField] private IUnitSelectionUI unitSelectionUI;
     [SerializeField] private UIObjectiveController conditionUI;
 
+    [SerializeField] private Image darkenBackground;
     private List<Unit> selectedUnits;
     // Update is called once per frame
  
@@ -112,11 +113,13 @@ public class UIUnitPlacement : IUnitPlacementUI
     }
     public void ShowGrid()
     {
+        darkenBackground.enabled = true;
         PrepUI.SetActive(true);
         ShowPrepUIButton.gameObject.SetActive(false);
     }
     public void MapButtonCLicked()
     {
+        darkenBackground.enabled = false;
         HideGrid();
     }
     public void ConditionButtonClicked()

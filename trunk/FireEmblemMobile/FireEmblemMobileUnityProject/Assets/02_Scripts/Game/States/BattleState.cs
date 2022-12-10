@@ -21,54 +21,36 @@ namespace Game.Mechanics
         public static Action OnExit;
 
         private IBattleActor attacker;
-        private IAttackableTarget defender;
+        private IAttackableTarget attackedTarget;
         
         public BattleSystem battleSystem; //Injected
-        public IBattleAnimation BattleAnimation;
-        public IBattleAnimation MapBattleAnimation;
 
         private string startMusic;
         public bool IsFinished;
+        
 
-        public BattleState()
-        {
-            //battleRenderer = GameObject.FindObjectOfType<IBattleRenderer>();
-            //battleRenderer = DataScript.Instance.battleRenderer;
-            //battleRenderer = Resources.Load(BattlerendererPrefab);
-            // Inject from Constructor
-            // Inject with Setter
-            // No BattleRenderer dependency at all and use Events
-
-        }
-
-        public void SetParticipants(IBattleActor attacker, IAttackableTarget defender)
+        public void SetParticipants(IBattleActor attacker, IAttackableTarget attackedTarget)
         {
             this.attacker = attacker;
-            this.defender = defender;
+            this.attackedTarget = attackedTarget;
         }
 
-        private BattleSimulation battleSimulation;
+       
         public override void Enter()
         {
            // battleSystem = new BattleSystem(attacker, defender);
           
            IsFinished = false;
 
-           if (defender is IBattleActor actor)
+           if(attackedTarget is IBattleActor actor)
+            battleSystem.StartBattle(attacker, actor, true, false);
+           else if(attackedTarget is IAttackableTargetThatCantFightBack target)
            {
-               Debug.Log("Defender is BattleActor so show Cutscene Battle Animations");
-               battleSimulation = battleSystem.GetBattleSimulation(attacker, actor, true);
-               BattleAnimation.Show(battleSimulation, attacker, actor);
-               BattleAnimation.OnFinished += EndBattle;
+               battleSystem.StartBattle(attacker, target);
            }
-           else{
-               Debug.Log("Defender is no BattleActor so show Map Battle Animations");
-              battleSimulation = battleSystem.GetBattleSimulation(attacker, defender, true);
-             MapBattleAnimation.Show(battleSimulation, attacker, defender);
-             MapBattleAnimation.OnFinished += EndBattle;
-           }
-         //  battleSystem.StartBattle(attacker, defender); TODO same RNG as battleAnimation
            
+           BattleSystem.OnBattleFinished -= EndBattle;
+           BattleSystem.OnBattleFinished += EndBattle;
          
             //Debug.Log("ENTER FIGHTSTATE");
 
@@ -85,48 +67,26 @@ namespace Game.Mechanics
             return null;
         }
 
-        private void EndBattle()
+        private void EndBattle(AttackResult result)
         {
-
-            attacker.Hp = battleSimulation.Attacker.Hp;
-            if (battleSimulation.AttackableTarget == null)
-                defender.Hp = battleSimulation.Defender.Hp;
+            BattleSystem.OnBattleFinished -= EndBattle;
+            if(GridGameManager.Instance.FactionManager.ActiveFaction.IsPlayerControlled)
+                GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.PlayerPhaseState);
             else
-                defender.Hp = battleSimulation.AttackableTarget.Hp;
-            // if(battleSimulation.DefenderAttackCount!=0)
-            //     defender.SpBars--; 
-            // attacker.SpBars--;
-          
-       
-            //battleStarted = false;
-            //BattleRenderer.Hide();
-            var task = new AfterBattleTasks(ServiceProvider.Instance.GetSystem<UnitProgressSystem>(),(Unit)attacker, defender);
-            task.StartTask();
-            task.OnFinished += () =>
-            {
-                if(GridGameManager.Instance.FactionManager.ActiveFaction.IsPlayerControlled)
-                    GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.PlayerPhaseState);
-                else
-                    GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.EnemyPhaseState);
-            };
-           
-            //GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.BattleEnded);
+                GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.EnemyPhaseState);
+            
 
         }
         public override void Exit()
         {
-            Debug.Log("Exit BattleState");
+            
             // HideFightVisuals();
             attacker.TurnStateManager.HasAttacked = true;
 
-
+            battleSystem.CleanUp();
             attacker = null;
-            defender = null;
+            attackedTarget = null;
 
-            BattleAnimation.Hide();
-            MapBattleAnimation.Hide();
-            BattleAnimation.OnFinished -= EndBattle;
-            MapBattleAnimation.OnFinished -= EndBattle;
             GridGameManager.Instance.GetSystem<AudioSystem>().ChangeMusic(startMusic, "BattleTheme", true);
             OnExit?.Invoke();
         }
@@ -144,12 +104,5 @@ namespace Game.Mechanics
             SetParticipants(battleActor, target);
             GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.BattleStarted);
         }
-    }
-
-    public interface IBattleAnimation
-    {
-        void Show(BattleSimulation battleSimulation, IBattleActor attacker, IAttackableTarget defender);
-        void Hide();
-        event Action OnFinished;
     }
 }

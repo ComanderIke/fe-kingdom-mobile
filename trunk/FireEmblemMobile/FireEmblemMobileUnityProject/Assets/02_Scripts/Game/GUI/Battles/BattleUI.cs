@@ -67,11 +67,7 @@ public class BattleUI : MonoBehaviour
       //  Debug.Log(currentHPLeft+" "+currentHPRight+" "+battleSimulation.Attacker.Stats.MaxHp+" "+battleSimulation.Attacker.Hp);
         hpText.SetText(""+currentHPLeft);
         hpTextRight.SetText(""+currentHPRight);
-        Debug.Log("GameObject: "+gameObject.name);
-        Debug.Log("GameObject: "+faceSpriteLeft.gameObject.name);
-        Debug.Log("GameObject: "+faceSpriteRight.gameObject.name);
-        Debug.Log("Sprite: "+ playerUnit.visuals.CharacterSpriteSet.FaceSprite.name);
-        Debug.Log("Sprite: "+ enemyUnit.visuals.CharacterSpriteSet.FaceSprite.name);
+
         faceSpriteLeft.sprite = playerUnit.visuals.CharacterSpriteSet.FaceSprite;
         faceSpriteRight.sprite = enemyUnit.visuals.CharacterSpriteSet.FaceSprite;
         var combatRound = battleSimulation.combatRounds[0];

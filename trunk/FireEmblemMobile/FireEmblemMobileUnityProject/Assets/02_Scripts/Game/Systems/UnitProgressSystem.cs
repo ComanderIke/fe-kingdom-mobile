@@ -29,6 +29,7 @@ namespace Game.Mechanics
         private List<Faction> factions;
         public event Action onFinished;
         public IExpRenderer expRenderer;
+        public ExpBarController ExpBarController;
         private bool finished = false;
         public UnitProgressSystem(Party party)
         {
@@ -115,33 +116,36 @@ namespace Game.Mechanics
         }
 
         
-        public void DistributeExperience(IBattleActor attacker, IBattleActor defender)
+        public void DistributeExperience(IBattleActor opponent, IBattleActor expReceiver)
         {
             finished = false;
             int exp=0;
-            if (defender.IsAlive() && defender.IsPlayerControlled())
+            if (expReceiver.IsAlive() && expReceiver.IsPlayerControlled())
             {
-                exp = CalculateExperiencePoints(defender, attacker);
+                exp = CalculateExperiencePoints(expReceiver, opponent);
                 if (exp != 0)
                 {
                     //var expRenderer = ((Unit)defender).visuals.UnitCharacterCircleUI.GetExpRenderer();
-                    ServiceProvider.Instance.GetSystem<UiSystem>()?.SelectedCharacter((Unit)defender);
+                    ServiceProvider.Instance.GetSystem<UiSystem>()?.SelectedCharacter((Unit)expReceiver);
                     Vector3 pos = new Vector3();
-                    if (defender.BattleGO != null)//In BattleAnimation use this
+                    if (expReceiver.BattleGO != null)//In BattleAnimation use this
                     {
-                        pos = defender.BattleGO.GameObject.transform.position;
-                        var expController = defender.BattleGO.GetExpRenderer();
-                        expController.Show(defender.ExperienceManager.Exp);
-                        expController.UpdateWithAnimatedParticles(exp);
+                        pos = expReceiver.BattleGO.GameObject.transform.position;
+                      
+                        ExpBarController.Show(expReceiver.ExperienceManager.Exp);
+                        ExpBarController.UpdateWithAnimatedTextOnly(exp);
+                        ExpBarController.onFinished -= FinishedOnce;
+                        ExpBarController.onFinished += FinishedOnce;
+                        //ExpBarController.UpdateWithAnimatedParticles(exp);
                     }
-                    else if (defender.GameTransformManager != null)//Map Animations use this
+                    else if (expReceiver.GameTransformManager != null)//Map Animations use this
                     {
-                        pos = defender.GameTransformManager.Transform.position + new Vector3(0.5f, 0.5f, 0);
+                        pos = expReceiver.GameTransformManager.Transform.position + new Vector3(0.5f, 0.5f, 0);
                     }
                     Debug.Log("Calculated Exp: "+exp);
-                    expRenderer.Play((Unit)defender, pos, exp);
+                   // expRenderer.Play((Unit)expReceiver, pos, exp);
 
-                    defender.ExperienceManager.AddExp(exp);
+                    expReceiver.ExperienceManager.AddExp(exp);
                     
                     expRenderer.OnFinished += FinishedOnce;
                     
@@ -157,6 +161,7 @@ namespace Game.Mechanics
         
         void FinishedOnce()
         {
+            ExpBarController.Hide();
             finished = true;
             onFinished?.Invoke();
         }
@@ -165,24 +170,23 @@ namespace Game.Mechanics
  
             int levelDifference = expReceiver.ExperienceManager.Level - enemyFought.ExperienceManager.Level;
             bool killEXP = !enemyFought.IsAlive();
-            int expLeft = enemyFought.ExperienceManager.ExpLeftToDrain;
-            int maxEXPDrain = ExperienceManager.MAX_EXP_TO_DRAIN;
+            int expLeft = enemyFought.ExperienceManager.expLeftToDrain;
+            int maxEXPDrain = enemyFought.ExperienceManager.drainableExp;
   
             float chipExpPercent = 0.2f;
             float killExpPercent = 1.0f;
-            int exp =(int)( killEXP == true ? killExpPercent * maxEXPDrain : chipExpPercent * maxEXPDrain);
-      
+            Debug.Log("EXP : " +maxEXPDrain);
+            int exp =(int)( killEXP ? killExpPercent * maxEXPDrain : chipExpPercent * maxEXPDrain);
+            Debug.Log("EXP : " +exp);
             if(exp > expLeft)
             {
                 exp = expLeft;
             }
-            if(!killEXP&&expLeft-exp < maxEXPDrain / 5)
-            {
-                exp = expLeft - maxEXPDrain / 5;
-            }
-            enemyFought.ExperienceManager.ExpLeftToDrain -= exp;
-            if (enemyFought.ExperienceManager.ExpLeftToDrain < 0)
-                enemyFought.ExperienceManager.ExpLeftToDrain = 0;
+            Debug.Log("EXP : " +exp);
+            enemyFought.ExperienceManager.expLeftToDrain-= exp;
+            if (enemyFought.ExperienceManager.expLeftToDrain < 0)
+                enemyFought.ExperienceManager.expLeftToDrain = 0;
+            Debug.Log("EXP : " +exp);
             if (levelDifference < 0)
             {
                 exp = (int)(exp * (1f + ((levelDifference * -1) / 10f)));

@@ -156,7 +156,6 @@ namespace Game.Mechanics
         }
         public void CheckAttackPreview(IBattleActor u, IAttackableTarget target, GridPosition attackPosition)
         {
-            Debug.Log("GetBattlePreview from AttackPosition: "+attackPosition.X+" "+attackPosition.Y);
             var preview = GridGameManager.Instance.GetSystem<BattleSystem>().GetBattlePreview(u, target, attackPosition);
           
             OnCheckAttackPreview?.Invoke(preview);

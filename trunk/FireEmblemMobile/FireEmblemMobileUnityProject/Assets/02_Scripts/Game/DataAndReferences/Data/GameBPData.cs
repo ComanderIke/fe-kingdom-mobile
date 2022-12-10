@@ -22,7 +22,7 @@ using Random = UnityEngine.Random;
 namespace Game.GameResources
 {
     [CreateAssetMenu(fileName = "GameData", menuName = "GameData/Config/GameData")]
-    public class GameData : SingletonScriptableObject<GameData>    {
+    public class GameBPData : SingletonScriptableObject<GameBPData> , IBlessingData   {
         public DialogData DialogTexts;
         public UnitData UnitData;
         public CharacterStateData CharacterStateData;
@@ -49,8 +49,28 @@ namespace Game.GameResources
         [FormerlySerializedAs("humans")] [SerializeField] private List<UnitBP> humanBlueprints = default;
         [SerializeField] private List<Party> playerStartingParties = default;
         [SerializeField] public List<CampaignConfig> campaigns;
-        [SerializeField] private BlessingData blessingData;
+       
         [SerializeField] private EventData eventData;
+        [SerializeField] BlessingBP[] allBlessings;
+        [SerializeField] BlessingBP[]  tier0Blessings;
+        [SerializeField] BlessingBP[]  tier1Blessings;
+        [SerializeField] BlessingBP[]  tier2Blessings;
+        [SerializeField] BlessingBP[]  tier3Blessings;
+   
+        
+        public BlessingBP[]  GetBlessingPool(int tier)
+        {
+            switch (tier)
+            {
+                case 0: return tier0Blessings;
+                case 1: return tier1Blessings;
+                case 2: return tier2Blessings;
+                case 3: return tier3Blessings;
+                default: return null;
+            }
+        }
+
+        
         [SerializeField]public BattleRewardConfig BattleRewardConfig { get; set; }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -76,7 +96,11 @@ namespace Game.GameResources
         #if UNITY_EDITOR
         private void OnValidate()
         {
-            blessingData.Validate();
+            allBlessings = GetAllInstances<BlessingBP>();
+            tier0Blessings = Array.FindAll(allBlessings,a => a.tier == 0);
+            tier1Blessings = Array.FindAll(allBlessings,a => a.tier == 1);
+            tier2Blessings = Array.FindAll(allBlessings,a => a.tier == 2);
+            tier3Blessings = Array.FindAll(allBlessings,a => a.tier == 3);
             allGems = GetAllInstances<GemBP>();
             allSmallGems = Array.FindAll(allGems,a => a.GetRarity() == 1);
             allMediumGems = Array.FindAll(allGems,a => a.GetRarity() == 2);
@@ -200,11 +224,7 @@ namespace Game.GameResources
         {
             return (Weapon)spears[Random.Range(0, spears.Count)].Create();
         }
-
-        public IBlessingData GetBlessingData()
-        {
-            return blessingData;
-        }
+        
         public IEventData GetEventData()
         {
             return eventData;

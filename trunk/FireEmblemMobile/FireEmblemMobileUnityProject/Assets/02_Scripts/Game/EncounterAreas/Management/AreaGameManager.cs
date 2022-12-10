@@ -116,6 +116,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         GetSystem<BattleSystem>().BattleAnimation.Hide();
         GetSystem<UnitProgressSystem>().levelUpRenderer = FindObjectsOfType<MonoBehaviour>().OfType<ILevelUpRenderer>().First();
         GetSystem<UnitProgressSystem>().expRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IExpRenderer>().First();
+        GetSystem<UnitProgressSystem>().ExpBarController = FindObjectsOfType<MonoBehaviour>().OfType<ExpBarController>().First();
     }
     private bool LoadedSaveData()
     {

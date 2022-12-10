@@ -21,7 +21,7 @@ namespace Game.Mechanics.Commands
 
         public override void Execute()
         {
-            Debug.Log("Execute Attack Command!");
+            
             GridGameManager.Instance.GameStateManager.BattleState.Start(attacker, target);
             
             
@@ -29,7 +29,7 @@ namespace Game.Mechanics.Commands
 
         public override void Undo()
         {
-            Debug.Log("Undo Attack should not be undoable!");
+            Debug.LogWarning("Undo Attack should not be undoable!");
         }
 
         public override void Update()

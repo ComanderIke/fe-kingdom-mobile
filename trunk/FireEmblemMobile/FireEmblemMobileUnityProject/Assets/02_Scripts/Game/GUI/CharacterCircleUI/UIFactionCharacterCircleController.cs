@@ -104,8 +104,6 @@ public class UIFactionCharacterCircleController : MonoBehaviour,IClickedReceiver
 
     private void SpawnGOs()
     {
-        Debug.Log("SpawnCircles");
-        
 
 
         
@@ -118,8 +116,6 @@ public class UIFactionCharacterCircleController : MonoBehaviour,IClickedReceiver
                
                 continue;
             }
-
-            Debug.Log("Spawn Circle for: "+unit);
             var go = Instantiate(CircleCharacterUIPrefab, transform);
             var uiController = go.GetComponent<CharacterUIController>();
             uiController.parentController = this;
