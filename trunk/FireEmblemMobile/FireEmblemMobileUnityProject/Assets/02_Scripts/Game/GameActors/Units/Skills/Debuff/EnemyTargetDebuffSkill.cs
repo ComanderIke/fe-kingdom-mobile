@@ -26,7 +26,7 @@ namespace Game.GameActors.Units.Skills.Debuff
             return user.Faction.Id != target.Faction.Id;
         }
 
-        public EnemyTargetDebuffSkill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, string[] upgradeDescr, CharStateEffects.Debuff appliedDebuff) : base(Name, description, icon, animationObject, cooldown, upgradeDescr)
+        public EnemyTargetDebuffSkill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier, string[] upgradeDescr, CharStateEffects.Debuff appliedDebuff) : base(Name, description, icon, animationObject, cooldown, tier, upgradeDescr)
         {
             this.appliedDebuff = appliedDebuff;
         }

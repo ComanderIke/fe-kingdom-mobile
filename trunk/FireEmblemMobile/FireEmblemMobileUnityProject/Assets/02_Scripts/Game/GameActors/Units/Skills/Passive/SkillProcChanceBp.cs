@@ -9,7 +9,7 @@ namespace LostGrace
         [SerializeField] float procChance;
         public override Skill Create()
         {
-            return new SkillActivation(Name, Description, Icon, AnimationObject,Cooldown,UpgradeDescriptions, procChance);
+            return new SkillActivation(Name, Description, Icon, AnimationObject,Cooldown,Tier,UpgradeDescriptions, procChance);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Game.GameActors.Units.Skills.Passive
     {
         public AttackEffects attackEffects;
         public float procChance;
-        public OnAttackEffect(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, string[] upgradeDescr, float procChance, AttackEffects attackEffects) : base(Name, description, icon, animationObject, cooldown, upgradeDescr)
+        public OnAttackEffect(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier,string[] upgradeDescr, float procChance, AttackEffects attackEffects) : base(Name, description, icon, animationObject, cooldown, tier,upgradeDescr)
         {
             this.procChance = procChance;
             this.attackEffects = attackEffects;

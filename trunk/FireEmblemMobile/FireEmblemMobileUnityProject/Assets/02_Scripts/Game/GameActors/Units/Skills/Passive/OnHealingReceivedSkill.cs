@@ -32,7 +32,7 @@ namespace LostGrace
             throw new System.NotImplementedException();
         }
 
-        public OnHealingReceivedSkill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, string[] upgradeDescr, float healMult) : base(Name, description, icon, animationObject, cooldown, upgradeDescr)
+        public OnHealingReceivedSkill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown,int tier,string[] upgradeDescr, float healMult) : base(Name, description, icon, animationObject, cooldown, tier,upgradeDescr)
         {
             this.healMult = healMult;
         }

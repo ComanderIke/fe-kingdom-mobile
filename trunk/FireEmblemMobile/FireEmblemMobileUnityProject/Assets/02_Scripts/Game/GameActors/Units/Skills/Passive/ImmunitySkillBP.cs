@@ -10,7 +10,7 @@ namespace Game.GameActors.Units.Skills.Passive
         [SerializeField]private ImmunityType type;
         public override Skill Create()
         {
-            return new Immunity(Name, Description, Icon, AnimationObject,Cooldown,UpgradeDescriptions, type);
+            return new Immunity(Name, Description, Icon, AnimationObject,Cooldown,Tier,UpgradeDescriptions, type);
         }
     }
 }

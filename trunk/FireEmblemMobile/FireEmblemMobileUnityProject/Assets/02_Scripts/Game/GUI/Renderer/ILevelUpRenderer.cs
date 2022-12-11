@@ -8,6 +8,7 @@ namespace Game.GUI
 {
     public interface ILevelUpRenderer : IAnimation
     {
+        void Play();
         void UpdateValues(string name, Sprite sprite, int levelBefore, int levelAfter, int[] stats, int[] statsIncreases);
         event Action OnFinished;
     }

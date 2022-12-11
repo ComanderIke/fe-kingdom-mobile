@@ -12,7 +12,7 @@ namespace Game.GameActors.Units.Skills.Passive
         
         public override Skill Create()
         {
-            return new OnAttackEffect(Name, Description, Icon, AnimationObject, Cooldown, UpgradeDescriptions, procChance, attackEffects);
+            return new OnAttackEffect(Name, Description, Icon, AnimationObject, Cooldown, Tier,UpgradeDescriptions, procChance, attackEffects);
         }
     }
 }

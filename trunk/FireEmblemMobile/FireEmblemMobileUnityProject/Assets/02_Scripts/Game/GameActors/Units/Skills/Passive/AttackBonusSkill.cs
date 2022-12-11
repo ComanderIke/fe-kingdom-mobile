@@ -29,7 +29,7 @@ namespace LostGrace
             throw new System.NotImplementedException();
         }
 
-        public AttackBonusSkill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, string[] upgradeDescr, int attackBonus) : base(Name, description, icon, animationObject, cooldown, upgradeDescr)
+        public AttackBonusSkill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier,string[] upgradeDescr, int attackBonus) : base(Name, description, icon, animationObject, cooldown, tier,upgradeDescr)
         {
             this.attackBonus = this.attackBonus;
         }

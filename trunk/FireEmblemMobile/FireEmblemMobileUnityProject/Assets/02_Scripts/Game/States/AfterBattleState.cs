@@ -51,13 +51,6 @@ namespace Game.States
             int lvl = attacker.ExperienceManager.Level;
             progressSystem.DistributeExperience(defenderAsUnit, attacker);
             yield return new WaitUntil(() => progressSystem.IsFinished());
-            if (lvl < attacker.ExperienceManager.Level)
-            {
-                  
-                yield return new WaitForSeconds(.5f);
-                progressSystem.DoLevelUp(attacker);
-                yield return new WaitUntil(() => progressSystem.IsFinished());
-            }
         }
 
         IEnumerator ExpForDefender(Unit defenderAsUnit)
@@ -65,13 +58,6 @@ namespace Game.States
             int lvl = defenderAsUnit.ExperienceManager.Level;
             progressSystem.DistributeExperience(attacker, defenderAsUnit);
             yield return new WaitUntil(() => progressSystem.IsFinished());
-            if (lvl < defenderAsUnit.ExperienceManager.Level)
-            {
-
-                yield return new WaitForSeconds(.5f);
-                progressSystem.DoLevelUp(defenderAsUnit);
-                yield return new WaitUntil(() => progressSystem.IsFinished());
-            }
         }
         IEnumerator ExpCoroutine()
         {

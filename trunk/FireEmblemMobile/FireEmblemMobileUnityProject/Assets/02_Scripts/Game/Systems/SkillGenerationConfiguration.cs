@@ -49,6 +49,7 @@ public class SkillGenerationConfiguration : ScriptableObject
         classPools.Add(RpgClass.Witch, witchSkillPool);
         classPools.Add(RpgClass.ScorpionRider, scorpionRiderSkillPool);
         classPools.Add(RpgClass.Cleric, clericSkillPool);
+       
     }
 
     public IEnumerable<SkillBP> GetClassSkillPool(RpgClass unitRpgClass)

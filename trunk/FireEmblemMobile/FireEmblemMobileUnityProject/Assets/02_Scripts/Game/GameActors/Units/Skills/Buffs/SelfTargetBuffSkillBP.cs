@@ -13,7 +13,7 @@ namespace Game.GameActors.Units.Skills.Buffs
         
         public override Skill Create()
         {
-            return new SelfTargetBuffSkill(Name, Description, Icon, AnimationObject,Cooldown,UpgradeDescriptions, appliedBuff);
+            return new SelfTargetBuffSkill(Name, Description, Icon, AnimationObject,Cooldown,Tier, UpgradeDescriptions, appliedBuff);
         }
     }
 }

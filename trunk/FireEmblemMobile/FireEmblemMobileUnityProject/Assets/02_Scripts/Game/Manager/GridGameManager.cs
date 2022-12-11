@@ -7,6 +7,7 @@ using Audio;
 using Game.AI;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
+using Game.GameResources;
 using Game.Grid;
 using Game.Grid.GridPathFinding;
 using Game.GUI;
@@ -77,6 +78,7 @@ namespace Game.Manager
                 new MoveSystem(),
                 new UnitProgressSystem(FactionManager),
                 new PopUpTextSystem(),
+                new SkillSystem(GameBPData.Instance.SkillGenerationConfig,FindObjectsOfType<MonoBehaviour>().OfType<ISkillUIRenderer>().First()),
                 
                 FindObjectOfType<UnitSelectionSystem>()
             };
@@ -145,6 +147,7 @@ namespace Game.Manager
             GetSystem<UnitProgressSystem>().levelUpRenderer = FindObjectsOfType<MonoBehaviour>().OfType<ILevelUpRenderer>().First();
             GetSystem<UnitProgressSystem>().expRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IExpRenderer>().First();
             GetSystem<UnitProgressSystem>().ExpBarController = FindObjectsOfType<MonoBehaviour>().OfType<ExpBarController>().First();
+          
             
         }
 

@@ -9,7 +9,7 @@ namespace LostGrace
         [SerializeField] float hpRegainPercentage;
         public override Skill Create()
         {
-            return new Ressurect(Name, Description, Icon, AnimationObject,Cooldown,UpgradeDescriptions, hpRegainPercentage);
+            return new Ressurect(Name, Description, Icon, AnimationObject,Cooldown,Tier,UpgradeDescriptions, hpRegainPercentage);
         }
     }
 }

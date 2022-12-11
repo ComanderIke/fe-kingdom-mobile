@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
 using GameEngine;
+using UnityEngine;
+using Utility;
 using Random = UnityEngine.Random;
 
 public enum SkillRarity
@@ -13,17 +15,32 @@ public enum SkillRarity
 public class SkillSystem : IEngineSystem
 {
     private SkillGenerationConfiguration config;
+    private ISkillUIRenderer renderer;
 
-    public SkillSystem(SkillGenerationConfiguration config)
+    public SkillSystem(SkillGenerationConfiguration config, ISkillUIRenderer renderer)
     {
         this.config = config;
+        this.renderer = renderer;
     }
     public void Init()
     {
         
+
     }
 
-    public List<Skill> GenerateSkills(Unit unit)
+    public void LearnNewSkill(Unit unit)
+    {
+        var skills = GenerateSkills(unit);
+        renderer.OnFinished += FinishedAnimation;
+        AnimationQueue.Add(()=>renderer.Show(unit, skills[0], skills[1], skills[2]));
+    }
+
+    void FinishedAnimation()
+    {
+        renderer.OnFinished -= FinishedAnimation;
+        AnimationQueue.OnAnimationEnded?.Invoke();
+    }
+    private List<Skill> GenerateSkills(Unit unit)
     {
         List<Skill> skills = new List<Skill>();
         while (skills.Count != 3)
@@ -37,37 +54,43 @@ public class SkillSystem : IEngineSystem
 
         return skills;
     }
-    public Skill GenerateSkill(Unit unit)
+    private Skill GenerateSkill(Unit unit)
     {
-        var skillPool = config.CommonSkillPool;
+        var skillPool = new List<SkillBP>(config.CommonSkillPool);
         skillPool.AddRange(config.GetClassSkillPool(unit.rpgClass));
         int rng = Random.Range(0, skillPool.Count);
         var skill = skillPool[rng].Create();
         GenerateSkillRarity(skill);
         return skill;
     }
-    public void GenerateSkillRarity(Skill skill)
+    private void GenerateSkillRarity(Skill skill)
     {
         float rng = Random.value;
         float epicChance = config.EpicChance;
+        Debug.Log("rng: "+rng);
         if (rng <= config.MythicChance)
         {
+            skill.Tier = 0;
             skill.Level = 5;
         }
         else if (rng <= config.LegendaryChance)
         {
+            skill.Tier = 1;
             skill.Level = 4;
         }
         else if (rng <= config.EpicChance)
         {
+            skill.Tier = 2;
             skill.Level = 3;
         }
         else if (rng <= config.RareChance)
         {
+            skill.Tier = 3;
             skill.Level = 2;
         }
         else
         {
+            skill.Tier = 4;
             skill.Level = 1;
         }
     }

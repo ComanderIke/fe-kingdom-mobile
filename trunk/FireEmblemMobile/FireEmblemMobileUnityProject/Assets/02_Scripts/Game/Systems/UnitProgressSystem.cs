@@ -31,6 +31,7 @@ namespace Game.Mechanics
         public IExpRenderer expRenderer;
         public ExpBarController ExpBarController;
         private bool finished = false;
+        private SkillSystem skillSystem;
         public UnitProgressSystem(Party party)
         {
             factions = new List<Faction>();
@@ -39,6 +40,7 @@ namespace Game.Mechanics
                 MemberAdded(unit);
             party.onMemberAdded -= MemberAdded;
             party.onMemberAdded += MemberAdded;
+           
         }
         public UnitProgressSystem(FactionManager fm)
         {
@@ -70,9 +72,35 @@ namespace Game.Mechanics
         
         public void Init()
         {
-            
+            skillSystem = ServiceProvider.Instance.GetSystem<SkillSystem>();
+            Unit.OnExpGained += Expgained;
+            Unit.OnLevelUp += OnLevelUp;
         }
 
+        void OnLevelUp(Unit u)
+        {
+            //check if Exp Animation Finished
+            //check if Couroutine is active or flag finished or whatever
+            AnimationQueue.Add(()=>LevelUp(u));
+            skillSystem.LearnNewSkill(u);
+        }
+
+        void Expgained(Unit unit, int exp)
+        {
+            AnimationQueue.Add(() =>
+            {
+                ExpBarController.Show(unit.ExperienceManager.Exp);
+                ExpBarController.UpdateWithAnimatedTextOnly(exp);
+                ExpBarController.onFinished -= FinishedExpAnimation;
+                ExpBarController.onFinished += FinishedExpAnimation;
+            });
+           
+        }
+        void FinishedExpAnimation()
+        {
+            ExpBarController.Hide();
+            AnimationQueue.OnAnimationEnded?.Invoke();
+        }
         public void Deactivate()
         {
             // foreach (var unit in units)
@@ -102,8 +130,8 @@ namespace Game.Mechanics
                     unit.Stats.BaseAttributes.AsArray(), statIncreases);
                 Debug.Log("Add LevelUpAnimation!");
                 levelUpRenderer.Play();
-                levelUpRenderer.OnFinished -= FinishedOnce;
-                levelUpRenderer.OnFinished += FinishedOnce;
+                levelUpRenderer.OnFinished -= LevelUpFinished;
+                levelUpRenderer.OnFinished += LevelUpFinished;
             }
 
             if (unit.ExperienceManager.Level % 2 == 0)
@@ -115,9 +143,19 @@ namespace Game.Mechanics
            
         }
 
-        
+        void LevelUpFinished()
+        {
+            AnimationQueue.OnAnimationEnded?.Invoke();
+        }
+
+        void DistributeBattleExperienceFinished()
+        {
+            AnimationQueue.OnAllAnimationsEnded -= DistributeBattleExperienceFinished;
+            finished = true;
+        }
         public void DistributeExperience(IBattleActor opponent, IBattleActor expReceiver)
         {
+            AnimationQueue.OnAllAnimationsEnded += DistributeBattleExperienceFinished;
             finished = false;
             int exp=0;
             if (expReceiver.IsAlive() && expReceiver.IsPlayerControlled())
@@ -132,10 +170,10 @@ namespace Game.Mechanics
                     {
                         pos = expReceiver.BattleGO.GameObject.transform.position;
                       
-                        ExpBarController.Show(expReceiver.ExperienceManager.Exp);
-                        ExpBarController.UpdateWithAnimatedTextOnly(exp);
-                        ExpBarController.onFinished -= FinishedOnce;
-                        ExpBarController.onFinished += FinishedOnce;
+                        // ExpBarController.Show(expReceiver.ExperienceManager.Exp);
+                        // ExpBarController.UpdateWithAnimatedTextOnly(exp);
+                        // ExpBarController.onFinished -= FinishedOnce;
+                        // ExpBarController.onFinished += FinishedOnce;
                         //ExpBarController.UpdateWithAnimatedParticles(exp);
                     }
                     else if (expReceiver.GameTransformManager != null)//Map Animations use this
@@ -147,7 +185,7 @@ namespace Game.Mechanics
 
                     expReceiver.ExperienceManager.AddExp(exp);
                     
-                    expRenderer.OnFinished += FinishedOnce;
+                    //expRenderer.OnFinished += FinishedOnce;
                     
                     
                    
@@ -155,16 +193,16 @@ namespace Game.Mechanics
                 }
                 
             }
-            FinishedOnce();
+            // FinishedOnce();
         }
         
         
-        void FinishedOnce()
-        {
-            ExpBarController.Hide();
-            finished = true;
-            onFinished?.Invoke();
-        }
+        // void FinishedOnce()
+        // {
+        //     ExpBarController.Hide();
+        //     finished = true;
+        //     onFinished?.Invoke();
+        // }
         private int CalculateExperiencePoints(IBattleActor expReceiver, IBattleActor enemyFought)
         {
  

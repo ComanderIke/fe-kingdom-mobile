@@ -71,7 +71,8 @@ namespace Game.GameResources
         }
 
         
-        [SerializeField]public BattleRewardConfig BattleRewardConfig { get; set; }
+        [field:SerializeField]public BattleRewardConfig BattleRewardConfig { get; set; }
+        [field:SerializeField] public SkillGenerationConfiguration SkillGenerationConfig { get; set; }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void FirstInitialize()

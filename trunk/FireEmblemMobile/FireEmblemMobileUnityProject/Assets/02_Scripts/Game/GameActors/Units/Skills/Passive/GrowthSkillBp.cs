@@ -10,7 +10,7 @@ namespace LostGrace
         [SerializeField] private Attributes growths;
         public override Skill Create()
         {
-            return new GrowthsSkill(Name, Description, Icon, AnimationObject,Cooldown,UpgradeDescriptions, growths);
+            return new GrowthsSkill(Name, Description, Icon, AnimationObject,Cooldown,Tier,UpgradeDescriptions, growths);
         }
     }
 }

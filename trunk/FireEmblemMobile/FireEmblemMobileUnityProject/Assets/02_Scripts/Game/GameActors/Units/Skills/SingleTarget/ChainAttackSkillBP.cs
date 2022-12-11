@@ -9,7 +9,7 @@ namespace Game.GameActors.Units.Skills
     {
         public override Skill Create()
         {
-            return new ChainAttackSkill(Name, Description, Icon, AnimationObject,Cooldown,UpgradeDescriptions);
+            return new ChainAttackSkill(Name, Description, Icon, AnimationObject,Cooldown,Tier,UpgradeDescriptions);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace LostGrace
             throw new System.NotImplementedException();
         }
 
-        public Miracle(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, string[] upgradeDescr, float procChance) : base(Name, description, icon, animationObject, cooldown, upgradeDescr)
+        public Miracle(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier, string[] upgradeDescr, float procChance) : base(Name, description, icon, animationObject, cooldown, tier, upgradeDescr)
         {
             this.procChance = procChance;
         }
@@ -47,45 +47,6 @@ namespace LostGrace
             Debug.Log("TODO Event Before Death but after damage received");
             if(UnityEngine.Random.value<=procChance)
                 owner.Hp = 1;
-        }
-      
-    }
-    
-    public class SkillActivation : PassiveSkill
-    {
-
-        private Unit owner;
-        [SerializeField] float procChance;
-
-        public override bool CanTargetCharacters()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override int GetDamage(Unit user, bool justToShow)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public SkillActivation(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, string[] upgradeDescr, float procChance) : base(Name, description, icon, animationObject, cooldown, upgradeDescr)
-        {
-            this.procChance = procChance;
-        }
-        public override List<EffectDescription> GetEffectDescription()
-        {
-            var list = new List<EffectDescription>();
-            list.Add(new EffectDescription("Activation rate: ", procChance.ToString()));
-            return list;
-        }
-        public override void BindSkill(Unit unit)
-        {
-            this.owner = unit;
-            unit.BonusSkillProcChance += procChance;
-        }
-        public override void UnbindSkill(Unit unit)
-        {
-            unit.BonusSkillProcChance -= procChance;
-            this.owner = null;
         }
       
     }

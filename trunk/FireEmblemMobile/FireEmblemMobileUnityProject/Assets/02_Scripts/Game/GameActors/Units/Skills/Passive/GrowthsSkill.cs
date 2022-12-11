@@ -21,7 +21,7 @@ namespace LostGrace
             throw new System.NotImplementedException();
         }
 
-        public GrowthsSkill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, string[] upgradeDescr, Attributes growths) : base(Name, description, icon, animationObject, cooldown, upgradeDescr)
+        public GrowthsSkill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier, string[] upgradeDescr, Attributes growths) : base(Name, description, icon, animationObject, cooldown, tier,upgradeDescr)
         {
             this.growths = growths;
         }

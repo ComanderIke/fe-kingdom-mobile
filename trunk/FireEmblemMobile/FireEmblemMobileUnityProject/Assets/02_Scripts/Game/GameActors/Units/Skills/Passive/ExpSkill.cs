@@ -21,7 +21,7 @@ namespace LostGrace
             throw new System.NotImplementedException();
         }
 
-        public ExpSkill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, string[] upgradeDescr, float expMul) : base(Name, description, icon, animationObject, cooldown, upgradeDescr)
+        public ExpSkill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown,int tier,string[] upgradeDescr, float expMul) : base(Name, description, icon, animationObject, cooldown,tier, upgradeDescr)
         {
             this.expMul = expMul;
         }

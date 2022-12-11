@@ -9,7 +9,7 @@ namespace Game.GameActors.Units.Skills.Passive
     {
         public override Skill Create()
         {
-            return new AttackModifierSkill(Name, Description, Icon, AnimationObject,Cooldown,UpgradeDescriptions);
+            return new AttackModifierSkill(Name, Description, Icon, AnimationObject,Cooldown,Tier,UpgradeDescriptions);
         }
     }
 }

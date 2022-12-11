@@ -51,7 +51,7 @@ namespace Game.GameActors.Units
         public static OnUnitDamagedEvent OnUnitDamaged;
         public static OnUnitHealedEvent OnUnitHealed;
         public delegate void LevelupEvent(Unit unit);
-        public LevelupEvent OnLevelUp;
+        public static LevelupEvent OnLevelUp;
         #endregion
         public UnitBP unitBP;
         public string bluePrintID;
@@ -140,6 +140,7 @@ namespace Game.GameActors.Units
             ExperienceManager.LevelUp = null;
             ExperienceManager.LevelUp += LevelUp;
             ExperienceManager.ExpGained = null;
+            ExperienceManager.ExpGained += ExpGained;
             TurnStateManager = new TurnStateManager();
             GridComponent = new GridActorComponent(this);
             BattleComponent = new BattleComponent(this);
@@ -155,7 +156,11 @@ namespace Game.GameActors.Units
                     Stats.AttackRanges.Add(r);
             }
         }
-                
+
+        void ExpGained(int expBefore, int expGained)
+        {
+            OnExpGained?.Invoke(this, expGained);
+        }
         public GameTransformManager GameTransformManager { get; set; }
         public AnimatedCombatCharacter BattleGO { get; set; }
 
@@ -527,5 +532,7 @@ namespace Game.GameActors.Units
             buff.Apply(this);
             
         }
+
+        public static event Action<Unit, int> OnExpGained;
     }
 }

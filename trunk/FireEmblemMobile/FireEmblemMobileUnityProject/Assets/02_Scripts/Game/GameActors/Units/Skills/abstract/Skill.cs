@@ -16,7 +16,9 @@ namespace Game.GameActors.Units.Skills
         public int CooldownReduction { get; private set; } = 0;
 
         public int CurrentCooldown { get; private set; }
-       // public int MaxLevel = 5;
+
+        public SkillType SkillType { get; set; }
+        // public int MaxLevel = 5;
 
         public string Description;
         public string[] UpgradeDescriptions;
@@ -24,14 +26,16 @@ namespace Game.GameActors.Units.Skills
         public int Level;
 
         public string Name;
+        public int Tier;
 
-        public Skill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, string[] upgradeDescr)
+        public Skill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier,string[] upgradeDescr)
         {
             this.Name = Name;
             this.Description = description;
             this.Icon = icon;
             this.AnimationObject = animationObject;
             this.Cooldown = cooldown;
+            this.Tier = tier;
             //this.MaxLevel = maxLevel;
             this.UpgradeDescriptions = upgradeDescr;
         }
@@ -89,7 +93,7 @@ namespace Game.GameActors.Units.Skills
 
         public string CurrentUpgradeText()
         {
-            if (Level - 1 < 0)
+            if (Level - 1 < 0 || Level-1 >= UpgradeDescriptions.Length)
                 return "";
             return UpgradeDescriptions[Level-1];
         }

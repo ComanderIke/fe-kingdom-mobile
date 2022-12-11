@@ -11,7 +11,7 @@ namespace Game.GameActors.Units.Skills.Passive
     {
         public Attributes BonusAttributes;
         public BonusStats BonusStats;
-        public DuringCombatEffect(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, string[] upgradeDescr) : base(Name, description, icon, animationObject, cooldown, upgradeDescr)
+        public DuringCombatEffect(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier,string[] upgradeDescr) : base(Name, description, icon, animationObject, cooldown, tier,upgradeDescr)
         {
         }
         public override void BindSkill(Unit unit)

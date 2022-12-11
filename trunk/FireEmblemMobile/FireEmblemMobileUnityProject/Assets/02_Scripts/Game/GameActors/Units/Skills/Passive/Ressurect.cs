@@ -21,7 +21,7 @@ namespace LostGrace
             throw new System.NotImplementedException();
         }
 
-        public Ressurect(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, string[] upgradeDescr, float hpRegPercentage) : base(Name, description, icon, animationObject, cooldown, upgradeDescr)
+        public Ressurect(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier,string[] upgradeDescr, float hpRegPercentage) : base(Name, description, icon, animationObject, cooldown, tier,upgradeDescr)
         {
             this.hpRegPercentage = hpRegPercentage;
         }

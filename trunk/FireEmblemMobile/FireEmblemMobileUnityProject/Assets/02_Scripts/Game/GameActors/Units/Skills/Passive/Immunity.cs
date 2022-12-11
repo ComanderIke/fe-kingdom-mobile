@@ -27,7 +27,7 @@ namespace Game.GameActors.Units.Skills.Passive
             throw new System.NotImplementedException();
         }
 
-        public Immunity(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, string[] upgradeDescr, ImmunityType type) : base(Name, description, icon, animationObject, cooldown, upgradeDescr)
+        public Immunity(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier, string[] upgradeDescr, ImmunityType type) : base(Name, description, icon, animationObject, cooldown, tier,upgradeDescr)
         {
             this.type = type;
         }

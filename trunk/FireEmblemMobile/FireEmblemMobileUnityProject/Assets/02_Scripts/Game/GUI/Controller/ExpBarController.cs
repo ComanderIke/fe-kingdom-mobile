@@ -19,6 +19,8 @@ namespace Game.GUI
         private int addedExp;
         private int tmpAddedExp;
         private bool animation;
+        [SerializeField] private float tmpFillSecondsPerUnit= 0.1f;
+        [SerializeField] private float fillSecondsPerUnit= 0.5f;
 
 
         public Action onFinished;
@@ -57,7 +59,7 @@ namespace Game.GUI
                     currentExp -= 100;
                 fill.fillAmount = currentExp / 100f;
                 countingText?.SetText(currentExp.ToString());
-                yield return new WaitForSeconds(.05f);
+                yield return new WaitForSeconds(fillSecondsPerUnit);
             }
 
             yield return new WaitForSeconds(1.1f);
@@ -73,7 +75,7 @@ namespace Game.GUI
                 if (tmpExp > 100)
                     tmpExp -= 100;
                 tmpFill.fillAmount = tmpExp / 100f;
-                yield return new WaitForSeconds(.01f);
+                yield return new WaitForSeconds(tmpFillSecondsPerUnit);
             }
             
         }

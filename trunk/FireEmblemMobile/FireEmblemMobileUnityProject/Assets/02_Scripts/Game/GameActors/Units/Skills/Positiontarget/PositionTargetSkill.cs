@@ -19,7 +19,7 @@ namespace Game.GameActors.Units.Skills
         public SkillTargetArea targetArea;
         public bool rooted;
 
-        public PositionTargetSkill(string name, string description, Sprite icon, GameObject animationObject, int cooldown, string[] upgradeDescriptions, int power, int range, int size, SkillTargetArea targetArea, bool rooted) : base(name,description, icon, animationObject, cooldown, upgradeDescriptions)
+        public PositionTargetSkill(string name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier,string[] upgradeDescriptions, int power, int range, int size, SkillTargetArea targetArea, bool rooted) : base(name,description, icon, animationObject, cooldown,tier, upgradeDescriptions)
         {
             this.rooted = rooted;
             this.targetArea = targetArea;

@@ -4,6 +4,6 @@ namespace Game.States
 {
     public interface IAnimation
     {
-        void Play();
+        
     }
 }

@@ -11,7 +11,7 @@ namespace Game.GameActors.Units.Skills.Passive
     {
       
         public float procChance;
-        public OnDebuff(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, string[] upgradeDescr, float procChance) : base(Name, description, icon, animationObject, cooldown, upgradeDescr)
+        public OnDebuff(string Name, string description, Sprite icon, GameObject animationObject, int cooldown,int tier, string[] upgradeDescr, float procChance) : base(Name, description, icon, animationObject, cooldown, tier,upgradeDescr)
         {
             this.procChance = procChance;
         }

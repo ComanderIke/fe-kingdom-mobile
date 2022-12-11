@@ -26,7 +26,7 @@ namespace Game.GameActors.Units.Skills.Buffs
             return user == target;
         }
 
-        public SelfTargetBuffSkill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, string[] upgradeDescr, Buff appliedBuff) : base(Name, description, icon, animationObject, cooldown, upgradeDescr)
+        public SelfTargetBuffSkill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier, string[] upgradeDescr, Buff appliedBuff) : base(Name, description, icon, animationObject, cooldown, tier, upgradeDescr)
         {
             this.appliedBuff = appliedBuff;
         }
