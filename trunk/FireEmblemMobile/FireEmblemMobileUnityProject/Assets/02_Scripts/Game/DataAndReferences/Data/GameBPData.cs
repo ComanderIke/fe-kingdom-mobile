@@ -263,6 +263,9 @@ namespace Game.GameResources
         }
 
 
-        
+        public Item GetRandomItem()
+        {
+            return allItems[Random.Range(0, allItems.Length)].Create();
+        }
     }
 }

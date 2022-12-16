@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Players;
+﻿using System.Collections.Generic;
+using Game.GameActors.Players;
 using Game.WorldMapStuff.Controller;
 using Game.WorldMapStuff.Model;
 using Menu;
@@ -9,7 +10,7 @@ public class BattleEncounterNode : EncounterNode
     private Scenes levelindex;
     private EnemyArmyData enemyArmyData;
     
-    public BattleEncounterNode(Scenes levelIndex, EnemyArmyData enemyArmyData, EncounterNode parent,int depth, int childIndex,string label, string description, Sprite sprite) : base(parent,depth, childIndex, label, description, sprite)
+    public BattleEncounterNode(Scenes levelIndex, EnemyArmyData enemyArmyData, List<EncounterNode> parents,int depth, int childIndex,string label, string description, Sprite sprite) : base(parents,depth, childIndex, label, description, sprite)
     {
         this.levelindex = levelIndex;
         this.enemyArmyData = enemyArmyData;

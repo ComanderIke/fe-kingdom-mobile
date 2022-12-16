@@ -8,7 +8,7 @@ public class EventEncounterNode : EncounterNode
 {
     public RandomEvent randomEvent;
    
-    public EventEncounterNode(EncounterNode parent,int depth, int childIndex, string label, string description, Sprite sprite) : base(parent, depth, childIndex, label, description, sprite)
+    public EventEncounterNode(List<EncounterNode> parents,int depth, int childIndex, string label, string description, Sprite sprite) : base(parents, depth, childIndex, label, description, sprite)
     {
         randomEvent = GameBPData.Instance.GetEventData().GetRandomEvent(1);
     }

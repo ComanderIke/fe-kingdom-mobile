@@ -54,6 +54,14 @@ namespace Game.GameActors.Units
             //gridActor.GameTransformManager.SetPosition(x, y);
         }
 
+        public bool IsInRange(GridComponent gridComponent, int range)
+        {
+            return Math.Abs(GridPosition.X - gridComponent.GridPosition.X) + Math.Abs(GridPosition.Y -
+                gridComponent.GridPosition.Y) <=range;
+
+        }
+
+       
     }
     public class GridActorComponent:GridComponent
     {

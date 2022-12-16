@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.GameActors.Players;
+using Game.Mechanics.Battle;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Numbers
@@ -14,7 +15,8 @@ namespace Game.GameActors.Units.Numbers
         public List<int> AttackRanges;
         [SerializeField]
         public Attributes BaseAttributes;
-      
+
+        public BonusStats BonusStats;
         // [SerializeField]
         // public int MaxSp;
         [SerializeField]

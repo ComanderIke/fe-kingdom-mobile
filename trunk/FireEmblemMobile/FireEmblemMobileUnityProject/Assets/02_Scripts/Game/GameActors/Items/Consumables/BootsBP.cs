@@ -1,0 +1,17 @@
+﻿using System;
+using UnityEngine;
+
+namespace Game.GameActors.Items.Weapons
+{
+    [Serializable]
+    [CreateAssetMenu(menuName = "GameData/Items/Consumables/Boots", fileName = "Boots")]
+    public class BootsBP : ConsumableItemBp
+    {
+        public int movIncrease;
+        public override Item Create()
+        {
+            return new Boots(name, description, cost, rarity,sprite, target, movIncrease);
+
+        }
+    }
+}

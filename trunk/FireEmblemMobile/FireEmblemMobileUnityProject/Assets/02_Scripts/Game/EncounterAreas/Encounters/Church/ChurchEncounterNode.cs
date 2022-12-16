@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Items.Weapons;
+﻿using System.Collections.Generic;
+using Game.GameActors.Items.Weapons;
 using Game.GameActors.Players;
 using Game.GameResources;
 using Game.WorldMapStuff.Model;
@@ -8,7 +9,7 @@ public class ChurchEncounterNode : EncounterNode
 {
     public Church church;
    
-    public ChurchEncounterNode(EncounterNode parent,int depth, int childIndex, string label, string description, Sprite sprite) : base(parent, depth, childIndex, label, description, sprite)
+    public ChurchEncounterNode(List<EncounterNode> parents,int depth, int childIndex, string label, string description, Sprite sprite) : base(parents, depth, childIndex, label, description, sprite)
     {
         church = new Church(GameBPData.Instance);
         var relics = GameBPData.Instance.GetRandomRelics(2);

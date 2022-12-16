@@ -17,7 +17,7 @@ public class SmithyEncounterNode : EncounterNode
 {
     public Smithy smithy;
 
-    public SmithyEncounterNode(EncounterNode parent,int depth, int childIndex,string label, string description, Sprite sprite) : base(parent, depth, childIndex,label, description, sprite)
+    public SmithyEncounterNode(List<EncounterNode> parents,int depth, int childIndex,string label, string description, Sprite sprite) : base(parents, depth, childIndex,label, description, sprite)
     { 
         smithy = new Smithy();
         smithy.AddItem(GameBPData.Instance.GetRandomBow());

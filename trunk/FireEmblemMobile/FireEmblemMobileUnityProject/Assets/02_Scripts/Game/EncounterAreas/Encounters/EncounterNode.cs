@@ -45,12 +45,12 @@ public abstract class EncounterNode
     //public Column column;
  
 
-    protected EncounterNode(EncounterNode parent,int depth, int childIndex, string label, string description, Sprite icon)
+    protected EncounterNode(List<EncounterNode> parents,int depth, int childIndex, string label, string description, Sprite icon)
     {
         children = new List<EncounterNode>();
         parents = new List<EncounterNode>();
         roads = new List<Road>();
-        parents.Add(parent);
+        parents.AddRange(parents);
         this.depth = depth;
         this.childIndex = childIndex;
         this.sprite = icon;

@@ -84,7 +84,7 @@ public class ColumnManager : MonoBehaviour
         {
             foreach (var node in columns[i].children)
             {
-                CreateNodeGameObject(spawnData.nodeDatas[node.prefabIdx].prefab, node, i);
+                CreateNodeGameObject(spawnData.allNodeDatas[node.prefabIdx].prefab, node, i);
             }
         }
         

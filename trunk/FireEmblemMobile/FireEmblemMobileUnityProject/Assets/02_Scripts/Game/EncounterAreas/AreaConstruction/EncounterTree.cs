@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.Systems;
+using UnityEditor.UIElements;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -56,9 +57,9 @@ public class EncounterTree
         
         return bindChild;
     }
-    void SpawnSingleEncounter(EncounterNode parent, Column current,Column previous)
+    void SpawnSingleEncounter(List<EncounterNode> parents, Column current,Column previous)
     {
-        if (!ShareChild(parent, current, previous))
+       // if (!ShareChild(parent, current, previous))
         {
             
    
@@ -116,18 +117,29 @@ public class EncounterTree
             }
 
             //Debug.Log(chosenKey);
-            EncounterNode node = chosenKey.CreateNode(parent, current.index,current.children.Count);
+            EncounterNode node = chosenKey.CreateNode(parents, current.index,current.children.Count);
             node.prefabIdx = GetNodeDataIndex(chosenKey);
             //CreateNodeGameObject(chosenKey.prefab, node);
            
             current.children.Add((node));
-            parent.children.Add(node);
+            foreach(var parent in parents)
+                parent.children.Add(node);
             //Debug.Log("Spawn New Node!");
         }
     }
+     void SpawnSpecificEncounter(EncounterNodeData encounterData, List<EncounterNode> parents, Column current,Column previous)
+    {
+        EncounterNode node = encounterData.CreateNode(parents, current.index,current.children.Count);
+        node.prefabIdx = GetNodeDataIndex(encounterData);
+
+        current.children.Add((node));
+        foreach(var parent in parents)
+            parent.children.Add(node);
+
+    }
     private int GetNodeDataIndex(EncounterNodeData data)
     {
-        return spawnData.nodeDatas.IndexOf(data);
+        return spawnData.allNodeDatas.IndexOf(data);
     }
     private void UpdateEncounterChances(EncounterNodeData paramkey)
     {
@@ -136,13 +148,13 @@ public class EncounterTree
         {
             if (key==paramkey)
             {
-                spawnData.EncounterChances[key] = spawnData.StartEncounterChances[key]-spawnData.ChanceDistributionAfterOccurence;
+                // spawnData.EncounterChances[key] = spawnData.StartEncounterChances[key]-spawnData.ChanceDistributionAfterOccurence;
                 if (spawnData.EncounterChances[key] < 0)
                     spawnData.EncounterChances[key] = 0;
             }
             else
             {
-                spawnData.EncounterChances[key] += spawnData.ChanceDistributionAfterOccurence*(spawnData.StartEncounterChances[key]/spawnData.sumAllStartChances);
+                // spawnData.EncounterChances[key] += spawnData.ChanceDistributionAfterOccurence*(spawnData.StartEncounterChances[key]/spawnData.sumAllStartChances);
             }
         }
     }
@@ -154,15 +166,10 @@ public class EncounterTree
             column.index = i;
             //Debug.Log("Create Column!");
             //Debug.Log(columns.Last().children.Count);
-            foreach (EncounterNode node in columns.Last().children)
-            {
-                
-
-                
-                    //Debug.Log("Spawn Encounter!"+ node+" "+column);
-                    SpawnEncounters(node, column, columns[column.index - 1]);
+         
+            SpawnEncounters(column, columns[column.index - 1]);
            
-            }
+            
             
             columns.Add(column);
         }
@@ -182,7 +189,7 @@ public class EncounterTree
             for (int j=0; j< encounterTreeData.columns[i].nodeDatas.Count; j++)
             {
                 var nodeSpawnData = spawnData.nodeDatas[encounterTreeData.columns[i].nodeDatas[j].nodeTypeIndex];
-                EncounterNode node = nodeSpawnData.CreateNode(parent, i,j);
+                EncounterNode node = nodeSpawnData.CreateNode(null, i,j);
                 node.prefabIdx = encounterTreeData.columns[i].nodeDatas[j].nodeTypeIndex;
                 column.children.Add(node);
                 foreach (var parentIndex in encounterTreeData.columns[i].nodeDatas[j].parentIndexes)
@@ -196,53 +203,121 @@ public class EncounterTree
             columns.Add(column);
         }
     }
-    void SpawnEncounters(EncounterNode parent, Column current, Column previous, EncounterNodeData fixedData=null)
+    void SpawnEncounters(Column current, Column previous, EncounterNodeData fixedData=null)
     {
         if (current.children.Count >= spawnData.columnMaxEncounter)
             return;
         if (current.index == 1) //First Column
         {
-            SpawnSingleEncounter(parent, current, previous);
-            SpawnSingleEncounter(parent, current, previous);
-            SpawnSingleEncounter(parent, current, previous);
-        }
-        else if (current.index == 2) //Second Column
-        {
-            SpawnSingleEncounter(parent, current, previous);
-          
+            SpawnSingleEncounter(columns.Last().children, current, previous);
         }
         else
         {
             float rng = Random.value;
-         
-            /*if (current.children.Count<= spawnData.columnMaxEncounter-2)
+            if (rng <= 0.4f)
             {
-                rng += spawnData.encounter2ChildPercentage;
-            }
-            if (current.children.Count<= spawnData.columnMaxEncounter-3)
-            {
-                rng += spawnData.encounter3ChildPercentage;
-            }*/
-            if (rng <= spawnData.encounter3ChildPercentage&& current.children.Count <=spawnData.columnMaxEncounter-3)
-            {
-                //Debug.Log("Spawn Triple Node");
-                SpawnSingleEncounter(parent, current, previous);
-                SpawnSingleEncounter(parent, current, previous);
-                SpawnSingleEncounter(parent, current, previous);
-            }
-            else if (rng <= spawnData.encounter2ChildPercentage&& current.children.Count <=spawnData.columnMaxEncounter-2)
-            {
+                current.battle = true;
+                float sumAllChances = 0;
+                foreach (var key in spawnData.BattleEncounterChances.Keys)
+                {
+                    sumAllChances += spawnData.BattleEncounterChances[key];
+                }
+                rng = Random.Range(0, sumAllChances);
+                float threshold = 0;
+                var parents = new List<EncounterNode>();
+                int index = 0;
 
-                //Debug.Log("Spawn Double Node");
-                SpawnSingleEncounter(parent, current, previous);
-                SpawnSingleEncounter(parent, current, previous);
+                
+                foreach (var key in spawnData.BattleEncounterChances.Keys)
+                {
+                    threshold += spawnData.BattleEncounterChances[key];
+                    int indexOfKey = spawnData.nodeDatas.IndexOf(key);
+                    if (rng <= threshold)
+                    {
+                        if (previous.battle)
+                        {
+                            parents.Clear();
+                            foreach (var parent in previous.children)
+                            {
+                                if(parent.children.Count<1&& Math.Abs(parent.childIndex-index)<=1)
+                                    parents.Add(parent);
+                            }
+                        }
 
+                        SpawnSpecificEncounter(key,parents, current, previous); //just one
+                        index++;
+                    }
+                }
+
+                if (index == 0)
+                {
+                    //single Encounter
+                    parents = previous.children;
+                }
+                SpawnSpecificEncounter(spawnData.normalBattleNodeData,parents, current, previous); //just one
+              
             }
             else
             {
-                //Debug.Log("Spawn Single Node");
-                SpawnSingleEncounter(parent, current, previous);
+               // Inn/Smithy etc. encounter
+               rng = Random.value;
+               if (rng <= spawnData.encounter3ChildPercentage)
+               {
+                   if (previous.battle)
+                   {
+                       SpawnSingleEncounter(previous.children, current, previous);
+                       SpawnSingleEncounter(previous.children, current, previous);
+                       SpawnSingleEncounter(previous.children, current, previous);
+                   }
+                   else
+                   {
+                       //Debug.Log("Spawn Triple Node");
+                       var parents = new List<EncounterNode>();
+                       parents.Add(previous.children[0]);
+                       SpawnSingleEncounter(parents, current, previous);
+                       if (previous.children.Count > 1)
+                       {
+                           parents.Clear();
+                           parents.Add(previous.children[1]);
+                       }
+
+                       SpawnSingleEncounter(parents, current, previous);
+                       if (previous.children.Count > 2)
+                       {
+                           parents.Clear();
+                           parents.Add(previous.children[2]);
+                       }
+
+                       SpawnSingleEncounter(parents, current, previous);
+                   }
+                   
+               }
+               else 
+               {
+                   if (previous.battle)
+                   {
+                       SpawnSingleEncounter(previous.children, current, previous);
+                       SpawnSingleEncounter(previous.children, current, previous);
+                   }
+                   else
+                   {
+                       var parents = new List<EncounterNode>();
+                       parents.Add(previous.children[0]);
+                       //Debug.Log("Spawn Double Node");
+                       SpawnSingleEncounter(parents, current, previous);
+                       if (previous.children.Count > 1)
+                       {
+                           parents.Clear();
+                           parents.Add(previous.children[1]);
+                       }
+                       SpawnSingleEncounter(parents, current, previous);
+                   }
+
+                 
+
+               }
             }
+           
         }
     }
     public void CreateStartColumn(EncounterNodeData startNodeData)

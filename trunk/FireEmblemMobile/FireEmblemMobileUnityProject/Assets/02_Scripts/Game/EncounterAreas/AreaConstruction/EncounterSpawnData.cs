@@ -14,8 +14,11 @@ public class EncounterSpawnData
     public int columnMaxEncounter = 4;
     public EncounterNodeData startNodeData;
     public EncounterNodeData FirstEncounter;
+    public List<EncounterNodeData> allNodeDatas;
     public List<EncounterNodeData> nodeDatas;
+    public List<EncounterNodeData> battleNodeDatas;
     public EncounterNodeData endNodeData;
+    public EncounterNodeData normalBattleNodeData;
     public float ChanceDistributionAfterOccurence = 0.05f;
 
     [HideInInspector]
@@ -23,26 +26,35 @@ public class EncounterSpawnData
     [HideInInspector]
     public Dictionary<EncounterNodeData, float> EncounterChances = new Dictionary<EncounterNodeData, float>();
     [HideInInspector]
-    public Dictionary<EncounterNodeData, float> StartEncounterChances = new Dictionary<EncounterNodeData, float>();
+    public Dictionary<EncounterNodeData, float> BattleEncounterChances = new Dictionary<EncounterNodeData, float>();
+    // [HideInInspector]
+    // public Dictionary<EncounterNodeData, float> StartEncounterChances = new Dictionary<EncounterNodeData, float>();
 
    
 
     public void InitNodeAppearanceChances()
     {
         EncounterChances = new Dictionary<EncounterNodeData, float>();
-        StartEncounterChances = new Dictionary<EncounterNodeData, float>();
+        BattleEncounterChances = new Dictionary<EncounterNodeData, float>();
+        // StartEncounterChances = new Dictionary<EncounterNodeData, float>();
         foreach (var encounterData in nodeDatas)
         {
             // Debug.Log("add: " + encounterData);
             EncounterChances.Add(encounterData, encounterData.appearanceChance);
-            StartEncounterChances.Add(encounterData, encounterData.appearanceChance);
+            // StartEncounterChances.Add(encounterData, encounterData.appearanceChance);
+        }
+        foreach (var encounterData in battleNodeDatas)
+        {
+            // Debug.Log("add: " + encounterData);
+            BattleEncounterChances.Add(encounterData, encounterData.appearanceChance);
+            // StartEncounterChances.Add(encounterData, encounterData.appearanceChance);
         }
      
-        sumAllStartChances = 0;
-        foreach (var keyvaluepair in EncounterChances)
-        {
-            sumAllStartChances += keyvaluepair.Value;
-        }
+        // sumAllStartChances = 0;
+        // foreach (var keyvaluepair in EncounterChances)
+        // {
+        //     sumAllStartChances += keyvaluepair.Value;
+        // }
         
     }
 

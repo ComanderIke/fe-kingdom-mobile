@@ -143,6 +143,33 @@ namespace Game.GameActors.Units.Numbers
             }
             OnAttributesUpdated?.Invoke();
         }
+
+        public void Add(Attributes bonusAttributes)
+        {
+            str += bonusAttributes.STR;
+            dex += bonusAttributes.DEX;
+            intel += bonusAttributes.INT;
+            agi += bonusAttributes.AGI;
+            con += bonusAttributes.CON;
+            lck += bonusAttributes.LCK;
+            def += bonusAttributes.DEF;
+            faith += bonusAttributes.FAITH;
+            OnAttributesUpdated?.Invoke();
+            
+        }
+
+        public void Decrease(Attributes bonusAttributes)
+        {
+            str -= bonusAttributes.STR;
+            dex -= bonusAttributes.DEX;
+            intel -= bonusAttributes.INT;
+            agi -= bonusAttributes.AGI;
+            con -= bonusAttributes.CON;
+            lck -= bonusAttributes.LCK;
+            def -= bonusAttributes.DEF;
+            faith -= bonusAttributes.FAITH;
+            OnAttributesUpdated?.Invoke();
+        }
     }
 
     public enum AttributeType

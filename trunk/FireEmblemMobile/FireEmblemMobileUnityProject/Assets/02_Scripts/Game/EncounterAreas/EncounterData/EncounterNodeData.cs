@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public abstract class EncounterNodeData: ScriptableObject
 {
@@ -9,6 +10,6 @@ public abstract class EncounterNodeData: ScriptableObject
     public string description;
     public Sprite sprite;
 
-    public abstract EncounterNode CreateNode(EncounterNode parent,int depth, int childIndex);
+    public abstract EncounterNode CreateNode(List<EncounterNode> parents,int depth, int childIndex);
     
 }

@@ -25,22 +25,7 @@ namespace Game.Mechanics.Battle
             BonusAttack = false;
         }
     }
-    public class BonusStats
-    {
-        public int Hit { get; set; }
-        public int Avoid { get; set; }
-        public int CritAvoid { get; set; }
-        public int Crit { get; set; }
-        public int AttackSpeed { get; set; }
-        public int Armor { get; set; }
-        public int MagicResistance { get; set; }
-        public int Attack { get; set; }
 
-        public void Reset()
-        {
-            Debug.Log("TODO Reset Stats");
-        }
-    }
     public class BattleStats
     {
         private const int AGILITY_TO_DOUBLE = 5;

@@ -16,6 +16,7 @@ using Game.WorldMapStuff.Model;
 using LostGrace;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 namespace Game.GameActors.Units
 {
@@ -166,7 +167,8 @@ namespace Game.GameActors.Units
 
 
         [SerializeField] private ExperienceManager experienceManager;
-        
+        public static event Action<Unit> OnAnyUnitMoved;
+
 
         public ExperienceManager ExperienceManager
         {
@@ -509,6 +511,8 @@ namespace Game.GameActors.Units
         public event Action<int> BeforeHealingReceived;
         public event Action<EncounterNode> OnNodeTravel;
         public event Action OnLethalDamage;
+        public static event Action<Unit, int> OnExpGained;
+        public static event Action<Unit> OnAnyUnitsCombat;
 
         public void RemoveBlessing(Blessing blessing)
         {
@@ -533,6 +537,15 @@ namespace Game.GameActors.Units
             
         }
 
-        public static event Action<Unit, int> OnExpGained;
+
+        public void RemoveRandomCurse()
+        {
+            RemoveCurse(curses[Random.Range(0,curses.Count)]);
+        }
+
+        public void RemoveDebuffs()
+        {
+            Debug.Log("TODO Remove Debuffs");
+        }
     }
 }
