@@ -13,7 +13,7 @@ namespace Game.GameActors.Items.Weapons
 
         public override Item Create()
         {
-            return new HealthPotion(name, description, cost, rarity, sprite, target, strength, healEffect);
+            return new HealthPotion(name, description, cost, rarity, maxStack,sprite, target, strength, healEffect);
 
         }
     }

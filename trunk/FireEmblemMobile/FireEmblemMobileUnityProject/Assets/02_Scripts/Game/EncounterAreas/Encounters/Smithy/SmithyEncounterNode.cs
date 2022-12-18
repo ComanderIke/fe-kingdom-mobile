@@ -7,10 +7,29 @@ using UnityEngine;
 
 public class Smithy
 {
+    private List<int> upgradeGoldCost = new List<int>(){ 100,200,300 };
+    private List<int> upgradeStoneCost = new List<int>(){ 1,2,0 };
+    private List<int> upgradeDragonScaleCost = new List<int>(){ 0,0,1 };
+    
     public List<EquipableItem> shopItems = new List<EquipableItem>();
     public void AddItem(EquipableItem item)
     {
         shopItems.Add(item);
+    }
+
+    public int GetGoldUpgradeCost(Weapon equippedWeapon)
+    {
+        return upgradeGoldCost[equippedWeapon.weaponLevel - 1];
+    }
+
+    public int GetStoneUpgradeCost(Weapon equippedWeapon)
+    {
+        return upgradeStoneCost[equippedWeapon.weaponLevel - 1];
+    }
+
+    public int GetDragonScaleUpgradeCost(Weapon equippedWeapon)
+    {
+        return upgradeDragonScaleCost[equippedWeapon.weaponLevel - 1];
     }
 }
 public class SmithyEncounterNode : EncounterNode

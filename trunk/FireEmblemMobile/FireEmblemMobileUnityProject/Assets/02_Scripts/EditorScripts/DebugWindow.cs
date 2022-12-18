@@ -1,6 +1,7 @@
 ﻿using System;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
+using Game.GameResources;
 using Game.Manager;
 using Game.Mechanics;
 using UnityEditor;
@@ -59,11 +60,19 @@ namespace __2___Scripts.External.Editor
                 selectedUnitName = activeUnit.name;
                 if (GUILayout.Button("+1 Stone"))
                 {
-                    Player.Instance.Party.AddSmithingStones(1);
+                    Player.Instance.Party.Convoy.AddItem(GameBPData.Instance.GetSmithingStone());
                 }
                 if (GUILayout.Button("-1 Stone"))
                 {
-                    Player.Instance.Party.AddSmithingStones(-1);
+                    Player.Instance.Party.Convoy.RemoveItem(GameBPData.Instance.GetSmithingStone());
+                }
+                if (GUILayout.Button("+1 DragonScale"))
+                {
+                    Player.Instance.Party.Convoy.AddItem(GameBPData.Instance.GetDragonScale());
+                }
+                if (GUILayout.Button("-1 DragonScale"))
+                {
+                    Player.Instance.Party.Convoy.RemoveItem(GameBPData.Instance.GetDragonScale());
                 }
                 if (GUILayout.Button("+50 Gold"))
                 {

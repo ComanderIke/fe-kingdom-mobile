@@ -93,7 +93,7 @@ public class UIEventController : MonoBehaviour
         if (current.reward != null)
         {
             Player.Instance.Party.AddGold(current.reward.gold);
-            Player.Instance.Party.AddSmithingStones(current.reward.smithingStones);
+            //Player.Instance.Party.AddSmithingStones(current.reward.smithingStones);
             Debug.Log("Node Position: "+node.gameObject.transform.position);
             Player.Instance.Party.ActiveUnit.ExperienceManager.AddExp(current.reward.experience);
         }

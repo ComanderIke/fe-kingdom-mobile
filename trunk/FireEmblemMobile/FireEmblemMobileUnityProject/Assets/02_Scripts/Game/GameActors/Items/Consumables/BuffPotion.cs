@@ -8,7 +8,7 @@ namespace Game.GameActors.Items.Weapons
     public class BuffPotion : ConsumableItem
     {
         public EncounterBasedBuff buff;
-        public BuffPotion(string name, string description, int cost, int rarity,Sprite sprite, ItemTarget target, EncounterBasedBuff buff) : base(name, description, cost, rarity,sprite, target)
+        public BuffPotion(string name, string description, int cost, int rarity,int maxStack,Sprite sprite, ItemTarget target, EncounterBasedBuff buff) : base(name, description, cost, rarity,maxStack,sprite, target)
         {
             this.buff = buff;
         }

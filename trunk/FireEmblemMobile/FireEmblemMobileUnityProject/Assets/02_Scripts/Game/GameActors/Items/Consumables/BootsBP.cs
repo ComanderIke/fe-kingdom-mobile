@@ -10,7 +10,7 @@ namespace Game.GameActors.Items.Weapons
         public int movIncrease;
         public override Item Create()
         {
-            return new Boots(name, description, cost, rarity,sprite, target, movIncrease);
+            return new Boots(name, description, cost, rarity,maxStack,sprite, target, movIncrease);
 
         }
     }

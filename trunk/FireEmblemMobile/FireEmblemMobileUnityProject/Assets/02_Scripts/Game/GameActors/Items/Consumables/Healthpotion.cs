@@ -9,7 +9,7 @@ namespace Game.GameActors.Items.Weapons
         public int strength;
         public GameObject healEffect;
 
-        public HealthPotion(string name, string description, int cost, int rarity, Sprite sprite, ItemTarget target, int strength, GameObject healEffect):base (name, description, cost, rarity, sprite, target)
+        public HealthPotion(string name, string description, int cost, int rarity, int maxStack,Sprite sprite, ItemTarget target, int strength, GameObject healEffect):base (name, description, cost, rarity, maxStack,sprite, target)
         {
             this.strength = strength;
             this.healEffect = healEffect;

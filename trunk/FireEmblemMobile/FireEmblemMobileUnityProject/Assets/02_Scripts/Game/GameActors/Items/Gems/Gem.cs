@@ -11,7 +11,7 @@ namespace Game.GameActors.Items.Gems
 
         private bool inserted = false;
         private Gem upgradeTo;
-        public Gem(string name, string description, int cost, Sprite sprite, int rarity, GemType gemType, Gem upgradeTo) : base(name, description, cost, rarity,sprite)
+        public Gem(string name, string description, int cost, int maxStack,Sprite sprite, int rarity, GemType gemType, Gem upgradeTo) : base(name, description, cost, rarity,maxStack,sprite)
         {
             
             this.gemType = gemType;

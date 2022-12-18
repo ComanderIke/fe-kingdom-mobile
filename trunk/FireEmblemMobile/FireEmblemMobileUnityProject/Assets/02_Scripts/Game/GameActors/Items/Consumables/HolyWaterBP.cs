@@ -10,7 +10,7 @@ namespace Game.GameActors.Items.Weapons
     {
         public override Item Create()
         {
-            return new HolyWater(name, description, cost, rarity,sprite, target);
+            return new HolyWater(name, description, cost, rarity,maxStack,sprite, target);
 
         }
     }

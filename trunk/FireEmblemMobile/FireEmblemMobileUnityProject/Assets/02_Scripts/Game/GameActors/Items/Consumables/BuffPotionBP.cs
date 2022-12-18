@@ -11,7 +11,7 @@ namespace Game.GameActors.Items.Weapons
         public EncounterBasedBuffBP buff;
         public override Item Create()
         {
-            return new BuffPotion(name, description, cost, rarity, sprite, target, buff.Create());
+            return new BuffPotion(name, description, cost, rarity, maxStack,sprite, target, buff.Create());
 
         }
     }

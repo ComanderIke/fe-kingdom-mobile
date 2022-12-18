@@ -15,7 +15,6 @@ namespace Game.WorldMapStuff.Model
     {
 
         public event Action<int> onGoldChanged;
-        public event Action<int> onSmithingStonesChanged;
         [SerializeField] public List<Unit> members;
       
         public static Action<Party> PartyDied;
@@ -51,23 +50,10 @@ namespace Game.WorldMapStuff.Model
                 onActiveUnitChanged?.Invoke();
             }
         }
-        public int smithingStones = 2;
         public event Action onActiveUnitChanged;
         public event Action<Unit> onMemberRemoved;
         public event Action<Unit> onMemberAdded;
-
-        public int SmithingStones
-        {
-            get
-            {
-                return smithingStones;
-            }
-            set
-            {
-                smithingStones = value;
-                onSmithingStonesChanged?.Invoke(smithingStones);
-            }
-        }
+        
         public int Money
         {
             get
@@ -161,12 +147,7 @@ namespace Game.WorldMapStuff.Model
         {
             Money += gold;
         }
-
-        public void AddSmithingStones(int smithingStones)
-        {
-            SmithingStones += smithingStones;
-        }
-
+        
         public void RemoveMember(Unit unit)
         {
             unit.Party = null;

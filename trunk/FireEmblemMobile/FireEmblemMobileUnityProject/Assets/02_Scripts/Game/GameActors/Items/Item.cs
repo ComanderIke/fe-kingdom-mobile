@@ -11,15 +11,17 @@ namespace Game.GameActors.Items
         public int cost;
         public int rarity;
 
+        public int maxStack;
         [Header("ItemAttributes")] public Sprite Sprite;
 
-        public Item(string name, string description, int cost, int rarity,Sprite sprite)
+        public Item(string name, string description, int cost, int rarity,int maxStack,Sprite sprite)
         {
             this.Name = name;
             this.Description = description;
             this.cost = cost;
             this.Sprite = sprite;
             this.rarity = rarity;
+            this.maxStack = maxStack;
         }
 
        

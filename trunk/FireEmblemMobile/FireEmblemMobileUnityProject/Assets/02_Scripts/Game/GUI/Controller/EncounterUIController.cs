@@ -26,8 +26,7 @@ public class EncounterUIController : MonoBehaviour
         this.party = party;
         party.onGoldChanged += GoldChanged;
         GoldChanged(party.Money);
-        party.onSmithingStonesChanged += StonesChanged;
-        StonesChanged(party.SmithingStones);
+
     }
 
     private void OnDestroy()
@@ -35,17 +34,12 @@ public class EncounterUIController : MonoBehaviour
         if (party != null)
         {
             party.onGoldChanged -= GoldChanged;
-            party.onSmithingStonesChanged -= StonesChanged;
         }
     }
 
     void GoldChanged(int gold)
     {
         ressourceAmount.Amount = gold;
-    }
-    void StonesChanged(int stones)
-    {
-        SmithingStones.SetText(""+stones);
     }
 
     public void UpdateUIScreens()

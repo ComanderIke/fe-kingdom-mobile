@@ -14,7 +14,7 @@ namespace Game.GameActors.Items
             convoy.RemoveItem(this);
         }
 
-        protected ConsumableItem(string name, string description, int cost,int rarity, Sprite sprite, ItemTarget target) : base(name, description, cost,rarity, sprite)
+        protected ConsumableItem(string name, string description, int cost,int rarity,int maxStack, Sprite sprite, ItemTarget target) : base(name, description, cost,rarity, maxStack,sprite)
         {
             this.target = target;
         }

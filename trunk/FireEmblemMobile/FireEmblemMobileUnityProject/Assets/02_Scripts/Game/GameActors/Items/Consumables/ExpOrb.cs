@@ -8,7 +8,7 @@ namespace Game.GameActors.Items.Weapons
     public class ExpOrb : ConsumableItem
     {
         public int expvalue;
-        public ExpOrb(string name, string description, int cost,int rarity, Sprite sprite, ItemTarget target, int expvalue) : base(name, description, cost, rarity,sprite, target)
+        public ExpOrb(string name, string description, int cost,int rarity, int maxStack,Sprite sprite, ItemTarget target, int expvalue) : base(name, description, cost, rarity,maxStack,sprite, target)
         {
             this.expvalue = expvalue;
         }

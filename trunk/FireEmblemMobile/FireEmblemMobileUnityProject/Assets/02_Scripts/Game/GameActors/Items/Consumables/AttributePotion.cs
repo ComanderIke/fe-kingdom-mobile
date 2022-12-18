@@ -9,7 +9,7 @@ namespace Game.GameActors.Items.Weapons
     {
         public int value;
         public AttributeType attributeType;
-        public AttributePotion(string name, string description, int cost,int rarity, Sprite sprite, ItemTarget target, int value, AttributeType type) : base(name, description, cost, rarity,sprite, target)
+        public AttributePotion(string name, string description, int cost,int rarity, int maxStack, Sprite sprite, ItemTarget target, int value, AttributeType type) : base(name, description, cost, rarity,maxStack,sprite, target)
         {
             this.value = value;
             this.attributeType = type;

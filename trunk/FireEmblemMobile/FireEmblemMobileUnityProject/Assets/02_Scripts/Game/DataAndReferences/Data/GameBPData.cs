@@ -49,6 +49,8 @@ namespace Game.GameResources
         [FormerlySerializedAs("humans")] [SerializeField] private List<UnitBP> humanBlueprints = default;
         [SerializeField] private List<Party> playerStartingParties = default;
         [SerializeField] public List<CampaignConfig> campaigns;
+        [SerializeField] private ItemBP smithingStone;
+        [SerializeField] private ItemBP dragonScale;
        
         [SerializeField] private EventData eventData;
         [SerializeField] BlessingBP[] allBlessings;
@@ -111,7 +113,7 @@ namespace Game.GameResources
             allBuffPotions = GetAllInstances<BuffPotionBP>();
             allAttributePotions = GetAllInstances<AttributePotionBP>();
             allConsumables = GetAllInstances<ConsumableItemBp>();
-            allItems = GetAllInstances<ItemBP>();
+            allItems = Array.FindAll(GetAllInstances<ItemBP>(), a => !(a is WeaponBP));
         }
 
         public static T[] GetAllInstances<T>() where T : ScriptableObject
@@ -266,6 +268,16 @@ namespace Game.GameResources
         public Item GetRandomItem()
         {
             return allItems[Random.Range(0, allItems.Length)].Create();
+        }
+
+        public Item GetSmithingStone()
+        {
+            return smithingStone.Create();
+        }
+
+        public Item GetDragonScale()
+        {
+            return dragonScale.Create();
         }
     }
 }

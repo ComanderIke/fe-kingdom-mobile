@@ -19,7 +19,7 @@ namespace _02_Scripts.Game.GameActors.Items.Consumables
 
         public override Item Create()
         {
-            return new Bomb(power, range, size, targetArea, appliedDebuff, name, description, cost, rarity,sprite);
+            return new Bomb(power, range, size, targetArea, appliedDebuff, name, description, cost, rarity,maxStack,sprite);
         }
     }
 }

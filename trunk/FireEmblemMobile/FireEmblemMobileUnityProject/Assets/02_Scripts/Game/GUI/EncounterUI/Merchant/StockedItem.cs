@@ -13,4 +13,8 @@ public class StockedItem
         this.stock = stock;
         this.item = item;
     }
+
+   
+
+   
 }

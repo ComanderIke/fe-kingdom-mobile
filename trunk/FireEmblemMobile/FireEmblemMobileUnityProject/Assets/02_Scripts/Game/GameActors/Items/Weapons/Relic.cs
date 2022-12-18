@@ -31,7 +31,7 @@ namespace Game.GameActors.Items.Weapons
 
         public int slotCount = 0;
         public GemSlot[] slots;
-        public Relic(string name, string description, int cost, int rarity, Sprite sprite, EquipmentSlotType slotType, int level, int maxLevel,int slotCount) : base(name, description, cost,rarity, sprite, slotType)
+        public Relic(string name, string description, int cost, int rarity, int maxStack,Sprite sprite, EquipmentSlotType slotType, int level, int maxLevel,int slotCount) : base(name, description, cost,rarity, maxStack,sprite, slotType)
         {
             this.Level = level;
             this.maxLevel = maxLevel;
@@ -86,18 +86,7 @@ namespace Game.GameActors.Items.Weapons
             else
                 return null;
         }
-        public override int GetUpgradeCost()
-        {
-            if (Attributes == null)
-                return 0;
-            return Attributes[Level-1].upgradeGoldCost;
-        }
-        public override int GetUpgradeSmithingStoneCost()
-        {
-            if (Attributes == null)
-                return 0;
-            return Attributes[Level-1].upgradeSmithingStoneCost;
-        }
+  
 
         public int GetSlotCount()
         {

@@ -13,7 +13,7 @@ namespace _02_Scripts.Game.GameActors.Items.Consumables
         public int size;
         
         public SkillTargetArea targetArea;
-    public Bomb(int power, int range, int size, SkillTargetArea targetArea, Debuff appliedDebuff, string name, string description, int cost, int rarity,Sprite sprite) : base(name, description, cost,rarity, sprite, ItemTarget.Position)
+    public Bomb(int power, int range, int size, SkillTargetArea targetArea, Debuff appliedDebuff, string name, string description, int cost, int rarity,int maxStack,Sprite sprite) : base(name, description, cost,rarity, maxStack,sprite, ItemTarget.Position)
     {
         this.power = power;
         this.range = range;

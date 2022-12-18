@@ -11,7 +11,7 @@ namespace Game.GameActors.Items.Weapons
         public int expvalue;
         public override Item Create()
         {
-            return new ExpOrb(name, description, cost, rarity,sprite, target, expvalue);
+            return new ExpOrb(name, description, cost, rarity,maxStack,sprite, target, expvalue);
 
         }
     }

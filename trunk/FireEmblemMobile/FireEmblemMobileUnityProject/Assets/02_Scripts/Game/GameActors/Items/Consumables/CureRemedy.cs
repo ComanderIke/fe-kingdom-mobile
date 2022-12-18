@@ -8,7 +8,7 @@ namespace Game.GameActors.Items.Weapons
 {
     public class CureRemedy : ConsumableItem
     {
-        public CureRemedy(string name, string description, int cost,int rarity, Sprite sprite, ItemTarget target) : base(name, description, cost, rarity,sprite, target)
+        public CureRemedy(string name, string description, int cost,int rarity, int maxStack,Sprite sprite, ItemTarget target) : base(name, description, cost, rarity,maxStack,sprite, target)
         {
        
         }

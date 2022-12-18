@@ -20,8 +20,8 @@ namespace Game.GameActors.Items.Gems
         public override Item Create()
         {
             if(upgradeTo!=null)
-                return new Gem(name, description, cost, sprite,rarity , gemType,(Gem) upgradeTo.Create());
-            return new Gem(name, description, cost, sprite,rarity , gemType,null);
+                return new Gem(name, description, cost, maxStack,sprite,rarity , gemType,(Gem) upgradeTo.Create());
+            return new Gem(name, description, cost, maxStack,sprite,rarity , gemType,null);
         }
 
         

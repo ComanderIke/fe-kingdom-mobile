@@ -21,7 +21,7 @@ namespace Game.GameActors.Items.Weapons
         public DamageType DamageType;
         [SerializeField] private Dictionary<EffectType, float> effectiveAgainst;
 
-        public Weapon(string name, string description, int cost,int rarity, Sprite sprite, EquipmentSlotType slotType, int weaponLevel, int maxLevel,int[] attackRanges, WeaponAttributes[] weaponAttributes, WeaponType weaponType, DamageType damageType, Dictionary<EffectType, float> effectiveAgainst=null) : base(name, description, cost, rarity,sprite, slotType)
+        public Weapon(string name, string description, int cost,int rarity, int maxStack,Sprite sprite, EquipmentSlotType slotType, int weaponLevel, int maxLevel,int[] attackRanges, WeaponAttributes[] weaponAttributes, WeaponType weaponType, DamageType damageType, Dictionary<EffectType, float> effectiveAgainst=null) : base(name, description, cost, rarity,maxStack,sprite, slotType)
         {
             this.weaponLevel = weaponLevel;
             this.maxLevel = maxLevel;
@@ -54,15 +54,7 @@ namespace Game.GameActors.Items.Weapons
         {
             return WeaponAttributes[weaponLevel-1].Weight;
         }
-        public override int GetUpgradeCost()
-        {
-            return WeaponAttributes[weaponLevel-1].upgradeGoldCost;
-        }
-        public override int GetUpgradeSmithingStoneCost()
-        {
-            return WeaponAttributes[weaponLevel-1].upgradeSmithingStoneCost;
-        }
-        
+
 
         public void Upgrade()
         {

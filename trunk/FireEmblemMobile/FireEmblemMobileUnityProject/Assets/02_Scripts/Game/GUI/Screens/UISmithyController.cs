@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Game.GameActors.Items.Weapons;
 using Game.GameActors.Players;
 using Game.GameActors.Units.Humans;
+using Game.GameResources;
 using Game.WorldMapStuff.Model;
 using Pathfinding;
 using UnityEngine;
@@ -60,9 +61,9 @@ public class UISmithyController : MonoBehaviour
             weaponSlot.Show(party.ActiveUnit.equippedWeapon, selectedWeapon == party.ActiveUnit.equippedWeapon);
             insertGemUI.Hide();
             combineGemUI.Hide();
-            smithingArea.Show(selectedWeapon,
-                party.CanAfford(selectedWeapon.GetUpgradeCost()) &&
-                party.SmithingStones >= selectedWeapon.GetUpgradeSmithingStoneCost());
+            smithingArea.Show(selectedWeapon,smithy.GetGoldUpgradeCost(selectedWeapon), smithy.GetStoneUpgradeCost(selectedWeapon), smithy.GetDragonScaleUpgradeCost(selectedWeapon),
+                party.CanAfford(smithy.GetGoldUpgradeCost(selectedWeapon)) && party.Convoy.GetItemCount(GameBPData.Instance.GetSmithingStone())>= smithy.GetStoneUpgradeCost(selectedWeapon)&&
+                party.Convoy.GetItemCount(GameBPData.Instance.GetDragonScale())>=smithy.GetDragonScaleUpgradeCost(selectedWeapon));
             smithingButtonAlpha.alpha = 1.0f;
             combineGemsButtonAlpha.alpha = 0.6f;
             insertGemsButtonAlpha.alpha = 0.6f;
@@ -128,8 +129,9 @@ public class UISmithyController : MonoBehaviour
 
     public void UpgradeClicked()
     {
-        party.Money -= party.ActiveUnit.equippedWeapon.GetUpgradeCost();
-        party.SmithingStones -= party.ActiveUnit.equippedWeapon.GetUpgradeSmithingStoneCost();
+        party.Money -=smithy.GetGoldUpgradeCost(party.ActiveUnit.equippedWeapon);
+        party.Convoy.RemoveSmithingStones(smithy.GetStoneUpgradeCost(party.ActiveUnit.equippedWeapon));
+        party.Convoy.RemoveDragonScales(smithy.GetDragonScaleUpgradeCost(party.ActiveUnit.equippedWeapon));
         party.ActiveUnit.equippedWeapon.Upgrade();
         UpdateUI();
     }

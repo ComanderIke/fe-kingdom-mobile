@@ -12,7 +12,7 @@ namespace Game.GameActors.Items.Weapons
         public AttributeType attributeType;
         public override Item Create()
         {
-            return new AttributePotion(name, description, cost, rarity,sprite, target, value, attributeType);
+            return new AttributePotion(name, description, cost, rarity,maxStack,sprite, target, value, attributeType);
 
         }
     }

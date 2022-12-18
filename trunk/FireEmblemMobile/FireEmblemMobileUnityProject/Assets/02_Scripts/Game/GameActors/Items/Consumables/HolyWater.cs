@@ -8,7 +8,7 @@ namespace Game.GameActors.Items.Weapons
 {
     public class HolyWater : ConsumableItem
     {
-        public HolyWater(string name, string description, int cost,int rarity, Sprite sprite, ItemTarget target) : base(name, description, cost, rarity,sprite, target)
+        public HolyWater(string name, string description, int cost,int rarity, int maxStack,Sprite sprite, ItemTarget target) : base(name, description, cost, rarity,maxStack,sprite, target)
         {
        
         }
