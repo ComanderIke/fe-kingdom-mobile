@@ -83,12 +83,12 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
                 var item = merchant.shopItems[i];
                 instantiatedItems.Add(go);
                 shopItems.Add(go.GetComponent<UIShopItemController>());
-                bool affordable = party.CanAfford(item.cost);
+                bool affordable = party.CanAfford(merchant.GetCost( merchant.shopItems[0]));
     
                 shopItems[i].SetValues(item, affordable, this);
             }
             if(selectedItem!=null)
-                buyItemUI.Show(selectedItem.Item,  party.Money >= merchant.shopItems[0].cost, buying);
+                buyItemUI.Show(selectedItem.Item,  party.CanAfford(merchant.GetCost( merchant.shopItems[0])), buying);
             else
             {
                 buyItemUI.Hide();
@@ -126,14 +126,13 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
     {
         if (buying)
         {
-            party.Money -= selectedItem.cost;
-            party.Convoy.AddItem(selectedItem.Item);
-            merchant.RemoveItem(selectedItem.Item);
+            merchant.Buy(selectedItem);
+            
         }
         else
         {
-            party.Money += selectedItem.cost;
-            party.Convoy.RemoveItem(selectedItem.Item);
+            merchant.Sell(selectedItem);
+          
         }
 
         SelectNextItem();
@@ -184,7 +183,7 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
         UpdateUI();
         Debug.Log(item.name+ " "+item.cost);
         if(buying)
-            buyItemUI.Show(item.Item,  party.CanAfford(item.cost), buying);
+            buyItemUI.Show(item.Item,  party.CanAfford(merchant.GetCost(item)), buying);
         else
             buyItemUI.Show(item.Item,  true, buying);
     }

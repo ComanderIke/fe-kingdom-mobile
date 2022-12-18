@@ -54,10 +54,6 @@ public class UpgradeItemUI : BuyItemUI
             hitAfter.text = "" + weapon.GetUpgradeableHit();
             dmgAfter.text = "" + weapon.GetUpgradeableDmg();
         }
-
-        if (equip is Relic relic)
-        {
-            relicEffectAfter.text = relic.GetUpgradeAttributeDescription();
-        }
+        
     }
 }

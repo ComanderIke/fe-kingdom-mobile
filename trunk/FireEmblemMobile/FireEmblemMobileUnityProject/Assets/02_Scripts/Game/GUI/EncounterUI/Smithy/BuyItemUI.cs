@@ -79,11 +79,7 @@ public class BuyItemUI : MonoBehaviour
             dmgCurrent.text = "" + weapon.GetDamage();
 
         }
-        if (item is Relic relic)
-        {
-            relicSection.gameObject.SetActive(true);
-            relicEffectCurrent.text = relic.GetAttributeDescription();
-        }
+     
 
         
         

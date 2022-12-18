@@ -1,4 +1,7 @@
-﻿using Game.GameActors.Units;
+﻿using System.Net;
+using Game.GameActors.Units;
+using Game.Manager;
+using Game.Mechanics;
 using Game.WorldMapStuff.Model;
 using UnityEngine;
 
@@ -12,7 +15,7 @@ namespace Game.GameActors.Items.Weapons
 
         public override void Use(Unit character, Convoy convoy)
         {
-            Debug.Log("TODO Use SKillScrolls");
+            ServiceProvider.Instance.GetSystem<UnitProgressSystem>().LearnNewSkill(character);
             base.Use(character, convoy);
         }
     }

@@ -12,9 +12,10 @@ public class ChurchEncounterNode : EncounterNode
     public ChurchEncounterNode(List<EncounterNode> parents,int depth, int childIndex, string label, string description, Sprite sprite) : base(parents, depth, childIndex, label, description, sprite)
     {
         church = new Church(GameBPData.Instance);
-        var relics = GameBPData.Instance.GetRandomRelics(2);
-        church.AddItem(new ShopItem(relics[0]));
-        church.AddItem(new ShopItem(relics[1]));
+        
+        church.AddItem(new ShopItem(GameBPData.Instance.GetRandomRelic(1)));
+        church.AddItem(new ShopItem(GameBPData.Instance.GetRandomRelic(2)));
+        church.AddItem(new ShopItem(GameBPData.Instance.GetRandomRelic(3)));
         //church.AddItem(new ShopItem(GameData.Instance.GetRandomStaff()));
        
     }

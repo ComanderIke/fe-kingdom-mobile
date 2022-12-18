@@ -82,6 +82,11 @@ namespace Game.Mechanics
             //check if Exp Animation Finished
             //check if Couroutine is active or flag finished or whatever
             AnimationQueue.Add(()=>LevelUp(u));
+            LearnNewSkill(u);
+        }
+
+        public void LearnNewSkill(Unit u)
+        {
             skillSystem.LearnNewSkill(u);
         }
 

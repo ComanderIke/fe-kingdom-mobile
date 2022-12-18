@@ -1,11 +1,15 @@
 ﻿using System.Collections.Generic;
 using Game.GameActors.Items;
+using Game.GameActors.Players;
+using Game.GameResources;
+using UnityEditor.UIElements;
 using UnityEngine;
 
 public class Merchant
 {
     public List<ShopItem> shopItems = new List<ShopItem>();
-   
+
+    public float priceMultiplier = 1.0f;
     public void AddItem(ShopItem item)
     {
         shopItems.Add(item);
@@ -34,5 +38,31 @@ public class Merchant
         {
             Debug.Log("No item found to remove!");
         }
+    }
+
+    public void Buy(ShopItem selectedItem)
+    {
+        Player.Instance.Party.Money -=GetCost(selectedItem);
+        Player.Instance.Party.Convoy.AddItem(selectedItem.Item);
+        RemoveItem(selectedItem.Item);
+    }
+
+    public void Sell(ShopItem selectedItem)
+    {
+        Player.Instance.Party.Money += GetCost(selectedItem);
+        Player.Instance.Party.Convoy.RemoveItem(selectedItem.Item);
+    }
+
+  
+    public int GetCost(ShopItem item)
+    {
+        if (Player.Instance.Party.Convoy.ContainsItem(GameBPData.Instance.GetMemberCard()))
+            priceMultiplier = 0.8f;
+        else
+        {
+            priceMultiplier = 1.0f;
+        }
+        return (int)(item.cost*priceMultiplier);
+
     }
 }

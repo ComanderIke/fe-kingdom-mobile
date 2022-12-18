@@ -8,6 +8,7 @@ using Game.GameActors.Items.Weapons;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
 using Game.GameActors.Units.Monsters;
+using Game.GameActors.Units.Skills;
 using Game.Map;
 using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.UI;
@@ -29,7 +30,10 @@ namespace Game.GameResources
         
 
         // [SerializeField] private List<EquipableItem> armor = default;
-        [SerializeField] private List<EquipableItemBP> relics = default;
+        [SerializeField] private RelicBP[] relics = default;
+        [SerializeField] private RelicBP[] rareRelics = default;
+        [SerializeField] private RelicBP[] uncommonRelics = default;
+        [SerializeField] private RelicBP[]superRareRelics = default;
         [SerializeField] private WeaponBP[] allWeapons;
         [SerializeField] private GemBP[] allGems;
         [SerializeField] private GemBP[] allSmallGems;
@@ -51,7 +55,8 @@ namespace Game.GameResources
         [SerializeField] public List<CampaignConfig> campaigns;
         [SerializeField] private ItemBP smithingStone;
         [SerializeField] private ItemBP dragonScale;
-       
+        [SerializeField] private ItemBP memberCard;
+        [SerializeField] private List<SkillBP> relicSkillPool;
         [SerializeField] private EventData eventData;
         [SerializeField] BlessingBP[] allBlessings;
         [SerializeField] BlessingBP[]  tier0Blessings;
@@ -114,6 +119,11 @@ namespace Game.GameResources
             allAttributePotions = GetAllInstances<AttributePotionBP>();
             allConsumables = GetAllInstances<ConsumableItemBp>();
             allItems = Array.FindAll(GetAllInstances<ItemBP>(), a => !(a is WeaponBP));
+            relics = GetAllInstances<RelicBP>();
+            uncommonRelics = Array.FindAll(relics, a => a.rarity == 1);
+            rareRelics = Array.FindAll(relics, a => a.rarity == 2);
+            superRareRelics = Array.FindAll(relics, a => a.rarity == 3);
+
         }
 
         public static T[] GetAllInstances<T>() where T : ScriptableObject
@@ -183,26 +193,18 @@ namespace Game.GameResources
         //     return Instantiate(armor[Random.Range(0, armor.Count-1)]);
         // }
 
-        public EquipableItem GetRandomRelic()
+        public Relic GetRandomRelic(int rarity)
         {
-            return (EquipableItem)relics[Random.Range(0, relics.Count)].Create();
-        }
+            switch (rarity)
+            {
+                case 1: return (Relic)uncommonRelics[Random.Range(0, uncommonRelics.Length)].Create();
+                case 2: return (Relic)rareRelics[Random.Range(0, rareRelics.Length)].Create();
+                case 3: return (Relic)superRareRelics[Random.Range(0, superRareRelics.Length)].Create();
+            }
 
-        public List<Relic> GetRandomRelics(int count)
-        {
-            var list = new List<Relic>();
-            if (count >relics.Count)
-            {
-                count = relics.Count;
-            }
-            while (list.Count != count)
-            {
-                var relic = (Relic)relics[Random.Range(0, relics.Count)].Create();
-                if(!list.Contains(relic))
-                    list.Add(relic);
-            }
-            return list;
+            return null;
         }
+        
         public Weapon GetRandomStaff()
         {
             return (Weapon)staffs[Random.Range(0, staffs.Count)].Create();
@@ -278,6 +280,15 @@ namespace Game.GameResources
         public Item GetDragonScale()
         {
             return dragonScale.Create();
+        }
+        public Item GetMemberCard()
+        {
+            return memberCard.Create();
+        }
+
+        public Skill GetRandomRelicSkill()
+        {
+            return relicSkillPool[Random.Range(0, relicSkillPool.Count)].Create();
         }
     }
 }

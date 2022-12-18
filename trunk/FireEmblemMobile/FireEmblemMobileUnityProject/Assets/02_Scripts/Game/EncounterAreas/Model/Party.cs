@@ -72,6 +72,7 @@ namespace Game.WorldMapStuff.Model
             members = new List<Unit>();
             Convoy = new Convoy();
             EncounterComponent = new EncounterPosition();
+            DeadCharacters = new List<Unit>();
         }
 
         public EncounterPosition EncounterComponent{ get; set; }
@@ -83,6 +84,8 @@ namespace Game.WorldMapStuff.Model
         {
             get { return members[ActiveUnitIndex]; }
         }
+
+        public List<Unit> DeadCharacters { get; set; }
 
         private void OnEnable()
         {
@@ -192,6 +195,11 @@ namespace Game.WorldMapStuff.Model
             {
                 member.EncounterTick();
             }
+        }
+
+        public void ReviveCharacter(Unit unitToRevive)
+        {
+            throw new NotImplementedException();
         }
     }
 }

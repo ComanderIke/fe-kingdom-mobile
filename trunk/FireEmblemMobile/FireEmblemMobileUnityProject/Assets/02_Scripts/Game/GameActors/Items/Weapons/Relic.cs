@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Game.GameActors.Items.Gems;
+using Game.GameActors.Units;
+using Game.GameActors.Units.Numbers;
+using Game.GameActors.Units.Skills;
 using UnityEngine;
 
 namespace Game.GameActors.Items.Weapons
@@ -24,18 +27,19 @@ namespace Game.GameActors.Items.Weapons
     [Serializable]
     public class Relic:EquipableItem
     {
-        [Header("RelicAttributes")] public UpgradeAttributes[] Attributes;
-        public int Level = 1;
-
-        public int maxLevel = 5;
-
+        [Header("RelicAttributes")]
         public int slotCount = 0;
         public GemSlot[] slots;
-        public Relic(string name, string description, int cost, int rarity, int maxStack,Sprite sprite, EquipmentSlotType slotType, int level, int maxLevel,int slotCount) : base(name, description, cost,rarity, maxStack,sprite, slotType)
+        public Attributes attributes;
+        public RelicPassiveEffectType passiveEffect;
+        public Skill activeSkill;
+        private Unit user;
+        public Relic(string name, string description, int cost, int rarity, int maxStack,Sprite sprite, EquipmentSlotType slotType,Attributes attributes,RelicPassiveEffectType passiveEffect,Skill activeSkill,int slotCount) : base(name, description, cost,rarity, maxStack,sprite, slotType)
         {
-            this.Level = level;
-            this.maxLevel = maxLevel;
             this.slotCount = slotCount;
+            this.activeSkill = activeSkill;
+            this.passiveEffect = passiveEffect;
+            this.attributes = attributes;
             slots = new GemSlot[slotCount];
             for (int i=0; i < slotCount; i++)
             {
@@ -43,10 +47,38 @@ namespace Game.GameActors.Items.Weapons
             }
         }
 
+        public void Equip(Unit unit)
+        {
+           
+            user = unit;
+            unit.Equip(this);
+            UpdateUser();
+        }
+
+        public void Unequip(Unit unit)
+        {
+            unit.UnEquip(this);
+            user = null;
+            UpdateUser();
+        }
+
+        void UpdateUser()
+        {
+            if (user != null)
+            {
+                Debug.Log("TODO add Bonus Attributes on Equip and only remove on unequip");
+                Debug.Log("TODO add Skill to bonus skill list in skillmanager and remove on unequip");
+                Debug.Log("TODO look at gems and see how they handly gemtype effects do also on relic");
+                Debug.Log("TODO on insert remove slot update everything");
+                Debug.Log("Subscribe to right event for each gemstone type/ passive skill effect");
+            }
+        }
+
         public void InsertGem(Gem gem, int slotindex)
         {
             slots[slotindex].gem = gem;
             gem.Insert();
+            UpdateUser();
 
         }
         public Gem RemoveGem(int slotindex)
@@ -54,9 +86,11 @@ namespace Game.GameActors.Items.Weapons
             var gem = slots[slotindex].gem;
             gem.Remove();
             slots[slotindex].gem = null;
+            UpdateUser();
             return gem;
 
         }
+
         public bool HasEmptySlot()
         {
             foreach (var slot in slots)
@@ -67,26 +101,7 @@ namespace Game.GameActors.Items.Weapons
 
             return false;
         }
-        public string GetAttributeDescription()
-        {
-            if(Attributes!=null&&Attributes.Length>Level-1)
-                if(Attributes[Level -1].effect!=null)
-                    return Attributes[Level -1].effect.GetDescription();
-            return "No Description?!";
-        }
 
-        public string GetUpgradeAttributeDescription()
-        {
-            if (Attributes == null)
-                return null;
-            if (Level + 1 <= maxLevel)
-            {
-                return Attributes[Level].effect.GetDescription();
-            }
-            else
-                return null;
-        }
-  
 
         public int GetSlotCount()
         {
