@@ -122,19 +122,25 @@ public class EncounterTree
             //CreateNodeGameObject(chosenKey.prefab, node);
            
             current.children.Add((node));
-            foreach(var parent in parents)
-                parent.children.Add(node);
+            if (parents != null)
+            {
+                foreach (var parent in parents)
+                    parent.children.Add(node);
+            }
             //Debug.Log("Spawn New Node!");
         }
     }
-     void SpawnSpecificEncounter(EncounterNodeData encounterData, List<EncounterNode> parents, Column current,Column previous)
+    void SpawnSpecificEncounter(EncounterNodeData encounterData, List<EncounterNode> parents, Column current,Column previous)
     {
         EncounterNode node = encounterData.CreateNode(parents, current.index,current.children.Count);
         node.prefabIdx = GetNodeDataIndex(encounterData);
 
         current.children.Add((node));
-        foreach(var parent in parents)
-            parent.children.Add(node);
+        if (parents != null)
+        {
+            foreach (var parent in parents)
+                parent.children.Add(node);
+        }
 
     }
     private int GetNodeDataIndex(EncounterNodeData data)
@@ -209,7 +215,7 @@ public class EncounterTree
             return;
         if (current.index == 1) //First Column
         {
-            SpawnSingleEncounter(columns.Last().children, current, previous);
+            SpawnSingleEncounter(null, current, previous);
         }
         else
         {
@@ -224,100 +230,36 @@ public class EncounterTree
                 }
                 rng = Random.Range(0, sumAllChances);
                 float threshold = 0;
-                var parents = new List<EncounterNode>();
-                int index = 0;
 
-                
+
                 foreach (var key in spawnData.BattleEncounterChances.Keys)
                 {
                     threshold += spawnData.BattleEncounterChances[key];
-                    int indexOfKey = spawnData.nodeDatas.IndexOf(key);
                     if (rng <= threshold)
                     {
-                        if (previous.battle)
-                        {
-                            parents.Clear();
-                            foreach (var parent in previous.children)
-                            {
-                                if(parent.children.Count<1&& Math.Abs(parent.childIndex-index)<=1)
-                                    parents.Add(parent);
-                            }
-                        }
-
-                        SpawnSpecificEncounter(key,parents, current, previous); //just one
-                        index++;
+                        SpawnSpecificEncounter(key,null, current, previous); //just one
                     }
                 }
-
-                if (index == 0)
-                {
-                    //single Encounter
-                    parents = previous.children;
-                }
-                SpawnSpecificEncounter(spawnData.normalBattleNodeData,parents, current, previous); //just one
+                
+                SpawnSpecificEncounter(spawnData.normalBattleNodeData,null, current, previous); //just one
               
             }
             else
             {
-               // Inn/Smithy etc. encounter
-               rng = Random.value;
+                rng = Random.value;
                if (rng <= spawnData.encounter3ChildPercentage)
                {
-                   if (previous.battle)
-                   {
-                       SpawnSingleEncounter(previous.children, current, previous);
-                       SpawnSingleEncounter(previous.children, current, previous);
-                       SpawnSingleEncounter(previous.children, current, previous);
-                   }
-                   else
-                   {
-                       //Debug.Log("Spawn Triple Node");
-                       var parents = new List<EncounterNode>();
-                       parents.Add(previous.children[0]);
-                       SpawnSingleEncounter(parents, current, previous);
-                       if (previous.children.Count > 1)
-                       {
-                           parents.Clear();
-                           parents.Add(previous.children[1]);
-                       }
+                   SpawnSingleEncounter(null, current, previous);
+                   SpawnSingleEncounter(null, current, previous);
+                   SpawnSingleEncounter(null, current, previous);
 
-                       SpawnSingleEncounter(parents, current, previous);
-                       if (previous.children.Count > 2)
-                       {
-                           parents.Clear();
-                           parents.Add(previous.children[2]);
-                       }
-
-                       SpawnSingleEncounter(parents, current, previous);
-                   }
-                   
                }
                else 
                {
-                   if (previous.battle)
-                   {
-                       SpawnSingleEncounter(previous.children, current, previous);
-                       SpawnSingleEncounter(previous.children, current, previous);
-                   }
-                   else
-                   {
-                       var parents = new List<EncounterNode>();
-                       parents.Add(previous.children[0]);
-                       //Debug.Log("Spawn Double Node");
-                       SpawnSingleEncounter(parents, current, previous);
-                       if (previous.children.Count > 1)
-                       {
-                           parents.Clear();
-                           parents.Add(previous.children[1]);
-                       }
-                       SpawnSingleEncounter(parents, current, previous);
-                   }
-
-                 
-
+                   SpawnSingleEncounter(null, current, previous);
+                   SpawnSingleEncounter(null, current, previous);
                }
             }
-           
         }
     }
     public void CreateStartColumn(EncounterNodeData startNodeData)

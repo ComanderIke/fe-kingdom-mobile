@@ -48,9 +48,10 @@ public abstract class EncounterNode
     protected EncounterNode(List<EncounterNode> parents,int depth, int childIndex, string label, string description, Sprite icon)
     {
         children = new List<EncounterNode>();
-        parents = new List<EncounterNode>();
+        this.parents = new List<EncounterNode>();
         roads = new List<Road>();
-        parents.AddRange(parents);
+        if(parents!=null)
+            this.parents.AddRange(parents);
         this.depth = depth;
         this.childIndex = childIndex;
         this.sprite = icon;
@@ -58,6 +59,14 @@ public abstract class EncounterNode
         this.label = label;
     }
 
+    public void AddParent(EncounterNode parent)
+    {
+        if (!parents.Contains(parent))
+        {
+            parents.Add(parent);
+            parent.children.Add(this);
+        }
+    }
     public override string ToString()
     {
         return ""+this.GetType();

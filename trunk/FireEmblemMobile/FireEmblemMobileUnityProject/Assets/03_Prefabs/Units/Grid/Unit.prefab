@@ -365,9 +365,84 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 036f35b970aae6543865a0d63d7ede4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unit: {fileID: 0}
+  unit:
+    unitBP: {fileID: 0}
+    bluePrintID: 
+    equippedWeapon:
+      Name: 
+      Description: 
+      cost: 0
+      rarity: 0
+      maxStack: 0
+      Sprite: {fileID: 0}
+      EquipmentSlotType: 0
+      AttackRanges: 
+      WeaponAttributes: []
+      weaponLevel: 0
+      maxLevel: 0
+      WeaponType: {fileID: 0}
+      DamageType: 0
+    EquippedRelic1:
+      id: 0
+    EquippedRelic2:
+      id: 0
+    name: 
+    stats:
+      AttackRanges: 
+      BaseAttributes:
+        str: 0
+        intel: 0
+        dex: 0
+        agi: 0
+        con: 0
+        lck: 0
+        def: 0
+        faith: 0
+      BonusStats:
+        <Hit>k__BackingField: 0
+        <Avoid>k__BackingField: 0
+        <CritAvoid>k__BackingField: 0
+        <Crit>k__BackingField: 0
+        <AttackSpeed>k__BackingField: 0
+        <Armor>k__BackingField: 0
+        <MagicResistance>k__BackingField: 0
+        <Attack>k__BackingField: 0
+      Mov: 0
+    growths:
+      str: 0
+      intel: 0
+      dex: 0
+      agi: 0
+      con: 0
+      lck: 0
+      def: 0
+      faith: 0
+    moveType: {fileID: 0}
+    SkillManager:
+      startSkills: []
+      skillPoints: 0
+      SkillBuildTrees: []
+    rpgClass: 0
+    visuals:
+      CharacterSpriteSet: {fileID: 0}
+      UnitEffectVisual: {fileID: 0}
+      Prefabs:
+        MapAnimatedSprite: {fileID: 0}
+        EncounterAnimatedSprite: {fileID: 0}
+        UIAnimatorController: {fileID: 0}
+      UnitCharacterCircleUI: {fileID: 0}
+      unitRenderer: {fileID: 0}
+    experienceManager:
+      level: 1
+      exp: 0
+      drainableExp: 100
+      expLeftToDrain: 100
   boxCollider: {fileID: 4441671329973932289}
   unitRenderer: {fileID: -1266776011978455679}
+  references:
+    version: 1
+    00000000:
+      type: {class: , ns: , asm: }
 --- !u!114 &-1266776011978455679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -398,7 +473,82 @@ MonoBehaviour:
   attackDamageText: {fileID: 0}
   xText: {fileID: 0}
   x2Text: {fileID: 0}
-  unit: {fileID: 0}
+  unit:
+    unitBP: {fileID: 0}
+    bluePrintID: 
+    equippedWeapon:
+      Name: 
+      Description: 
+      cost: 0
+      rarity: 0
+      maxStack: 0
+      Sprite: {fileID: 0}
+      EquipmentSlotType: 0
+      AttackRanges: 
+      WeaponAttributes: []
+      weaponLevel: 0
+      maxLevel: 0
+      WeaponType: {fileID: 0}
+      DamageType: 0
+    EquippedRelic1:
+      id: 0
+    EquippedRelic2:
+      id: 0
+    name: 
+    stats:
+      AttackRanges: 
+      BaseAttributes:
+        str: 0
+        intel: 0
+        dex: 0
+        agi: 0
+        con: 0
+        lck: 0
+        def: 0
+        faith: 0
+      BonusStats:
+        <Hit>k__BackingField: 0
+        <Avoid>k__BackingField: 0
+        <CritAvoid>k__BackingField: 0
+        <Crit>k__BackingField: 0
+        <AttackSpeed>k__BackingField: 0
+        <Armor>k__BackingField: 0
+        <MagicResistance>k__BackingField: 0
+        <Attack>k__BackingField: 0
+      Mov: 0
+    growths:
+      str: 0
+      intel: 0
+      dex: 0
+      agi: 0
+      con: 0
+      lck: 0
+      def: 0
+      faith: 0
+    moveType: {fileID: 0}
+    SkillManager:
+      startSkills: []
+      skillPoints: 0
+      SkillBuildTrees: []
+    rpgClass: 0
+    visuals:
+      CharacterSpriteSet: {fileID: 0}
+      UnitEffectVisual: {fileID: 0}
+      Prefabs:
+        MapAnimatedSprite: {fileID: 0}
+        EncounterAnimatedSprite: {fileID: 0}
+        UIAnimatorController: {fileID: 0}
+      UnitCharacterCircleUI: {fileID: 0}
+      unitRenderer: {fileID: 0}
+    experienceManager:
+      level: 1
+      exp: 0
+      drainableExp: 100
+      expLeftToDrain: 100
+  references:
+    version: 1
+    00000000:
+      type: {class: , ns: , asm: }
 --- !u!61 &4441671329973932289
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1011,7 +1161,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 0
+  m_Spacing: 0.01
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0

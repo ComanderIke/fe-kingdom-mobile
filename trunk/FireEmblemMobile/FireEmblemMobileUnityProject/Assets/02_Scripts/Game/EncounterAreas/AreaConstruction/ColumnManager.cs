@@ -8,6 +8,7 @@ using Game.Systems;
 using LostGrace;
 using Pathfinding;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 [Serializable]
@@ -31,6 +32,7 @@ public class ColumnManager : MonoBehaviour
     public float xRandomMax = 0.7f;
     public float yRandomMin = -0.4f;
     public float yRandomMax = 0.4f;
+    [SerializeField] float columspacing = 1.5f;
     public bool fixedEncounters = true;
     public List< FixedColumnNode> fixedColumns;
 
@@ -66,6 +68,7 @@ public class ColumnManager : MonoBehaviour
         EncounterTree.Instance.startNode.SetGameObject(CreateStartNodeGameObject(EncounterTree.Instance.startNode));
         CreateMiddleNodesGameObject(EncounterTree.Instance.columns);
         EncounterTree.Instance.endNode.SetGameObject(CreateEndNodeGameObject(EncounterTree.Instance.endNode));
+        ConnectEncounters(EncounterTree.Instance.columns,EncounterTree.Instance.startNode, EncounterTree.Instance.endNode);
         PositionEncounters(EncounterTree.Instance.columns, EncounterTree.Instance.endNode);
         CreateConnections(EncounterTree.Instance.columns);
       
@@ -140,6 +143,52 @@ public class ColumnManager : MonoBehaviour
         pos[1] = endPos;
         lineRenderer.SetPositions(pos);
     }
+
+    void ConnectEncounters(List<Column> columns, EncounterNode startNode, EncounterNode endNode)
+    {
+        
+        for (int i = 0; i < columns[0].children.Count; i++)
+        {
+            columns[0].children[i].parents.Add(startNode);
+            startNode.children.Add(columns[0].children[i]);
+        }
+        
+        for (int i = 1; i < spawnData.columnCount; i++)
+        {
+            int prevChildCount = columns[i - 1].children.Count;
+            int childCount = columns[i].children.Count;
+            var prevColumn = columns[i - 1];
+            var currColumn = columns[i];
+            for (int o = 0; o < (childCount>prevChildCount?childCount/2f:prevChildCount/2f); o++)
+            {
+                if (o < prevChildCount&& o < childCount)
+                {
+                     int randomMin = Math.Max(0,  o - 1);
+                     int randomMax = Math.Min(o+1, prevColumn.children.Count-1);
+                     int randomParentIndex = Random.Range(randomMin, randomMax+1);
+                    currColumn.children[o].AddParent(prevColumn.children[o]);
+                    currColumn.children[o].AddParent(prevColumn.children[randomParentIndex]);
+                     randomMin = Math.Max(0, childCount - 1 - o - 1);
+                     randomMax = Math.Min(childCount - 1 - o+1, prevColumn.children.Count-1);
+                     randomParentIndex = Random.Range(randomMin, randomMax+1);
+                    currColumn.children[childCount - 1 - o].AddParent(prevColumn.children[prevChildCount - 1 - o]);
+                    currColumn.children[childCount - 1 - o].AddParent(prevColumn.children[randomParentIndex]);
+                }
+            }
+
+            for (int j = 0; j < columns[i].children.Count; j++)
+            {
+                if (columns[i].children[j].parents.Count == 0)
+                {
+                    int randomMin = Math.Max(0, j - 1);
+                    int randomMax = Math.Min(j+1,columns[i-1].children.Count-1);
+                    int randomParentIndex = Random.Range(randomMin, randomMax+1);
+                    columns[i].children[j].AddParent(columns[i-1].children[randomParentIndex]);
+                }
+            }
+        }
+    }
+
     void PositionEncounters(List<Column> columns, EncounterNode endNode)
     {
         for (int i = 1; i < spawnData.columnCount; i++)
@@ -153,14 +202,17 @@ public class ColumnManager : MonoBehaviour
                     if (columns[i].children.Count == 1)
                     {
                         columns[i].children[j].gameObject.transform.localPosition = new Vector3(
-                            columns[i].index * (columnWidth*1.0f) + Random.Range(xRandomMin, xRandomMax),  Random.Range(yRandomMin, yRandomMax));
+                            columns[i].index * (columnWidth*1.0f) ,  0);
                     }
                     else
                     {
+                        
+                        float direction = j % 2 == 0 ? 1 : -1;
+                        float maxDistance = -(columns[i].children.Count-1)/2f*columspacing;
+                       
                         columns[i].children[j].gameObject.transform.localPosition = new Vector3(
-                            columns[i].index * columnWidth+ Random.Range(xRandomMin, xRandomMax),
-                            (j * (columnHeight*1.0f / (columns[i].children.Count-1)) -
-                            (columnHeight*1.0f / 2)+ Random.Range(yRandomMin, yRandomMax)));
+                            columns[i].index * columnWidth,maxDistance+
+                            (j * columspacing));
                     }
                 }
             }
