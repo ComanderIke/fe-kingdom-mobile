@@ -42,5 +42,10 @@ namespace Game.GameActors.Units
         public event Action<Unit> OnInitiateCombat;
         public event Action<Unit> OnCombat;
         public event Action<Unit> OnAttack;
+
+        public bool HasAdvantage(EffectType type)
+        {
+            return owner.GetEquippedWeapon().HasAdvantage(type);
+        }
     }
 }

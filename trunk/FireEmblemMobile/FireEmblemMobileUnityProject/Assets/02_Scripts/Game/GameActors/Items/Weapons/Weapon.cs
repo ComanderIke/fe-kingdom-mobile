@@ -20,6 +20,7 @@ namespace Game.GameActors.Items.Weapons
         public WeaponType WeaponType;
         public DamageType DamageType;
         [SerializeField] private Dictionary<EffectType, float> effectiveAgainst;
+        
 
         public Weapon(string name, string description, int cost,int rarity, int maxStack,Sprite sprite, EquipmentSlotType slotType, int weaponLevel, int maxLevel,int[] attackRanges, WeaponAttributes[] weaponAttributes, WeaponType weaponType, DamageType damageType, Dictionary<EffectType, float> effectiveAgainst=null) : base(name, description, cost, rarity,maxStack,sprite, slotType)
         {
@@ -107,6 +108,10 @@ namespace Game.GameActors.Items.Weapons
             }
             return WeaponType.GetEffectiveCoefficient(effectType);
         }
-        
+
+        public bool HasAdvantage(EffectType type)
+        {
+            return WeaponType.HasAdvantage(type);
+        }
     }
 }

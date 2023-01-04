@@ -16,7 +16,9 @@ namespace Game.GameActors.Items.Weapons
 
         public string Name => name;
         [SerializeField] private List<EffectType> effectiveAgainst;
+  
         [SerializeField] private List<float> effectiveAgainstCoefficients;
+        [SerializeField] private List<EffectType> advantageAgainst;
         private Dictionary<EffectType, float> effectiveAgainstDict;
         public Sprite Icon => icon;
         private Dictionary<EffectType, float> EffectiveAgainst{
@@ -38,6 +40,10 @@ namespace Game.GameActors.Items.Weapons
             }
         }
 
+        public bool HasAdvantage(EffectType effectType)
+        {
+            return advantageAgainst.Contains(effectType);
+        }
         public bool IsEffective(EffectType effectType)
         {
             return EffectiveAgainst.ContainsKey(effectType);

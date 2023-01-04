@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.Manager;
@@ -9,32 +10,31 @@ namespace Game.GameInput
 {
     public class SelectionUI : ISelectionUI
     {
-        public GameObject UndoButton;
-        public GameObject SkillsButton;
-        public GameObject ItemsButton;
-        public GameObject CloseSkillButton;
-        public GameObject CloseItemButton;
-        public GameObject SkillButtonPrefab;
-        public GameObject ItemButtonPrefab;
-        public Transform SkillParentTransform;
-        public Transform ItemParentTransform;
-        private GameObject favButton;
+        [SerializeField] GameObject roundButtonPrefab;
+        [SerializeField] Transform buttonContainer;
+        [SerializeField] private GameObject itemButton;
+        [SerializeField] private GameObject waitButton;
+        [SerializeField] private GameObject undoButton;
+        private List<GameObject> buttons;
+        private List<GameObject> skillButtons;
         public static Action OnBackClicked;
 
         private Unit selectedCharacter;
-        // private void Start()
-        // {
-        //     UnitSelectionSystem.OnSelectedCharacter += CharacterGotSelected;
-        //     UnitSelectionSystem.OnDeselectCharacter += NoCharacterSelectedState;
-        //     MovementState.OnMovementFinished += CharacterGotSelected;
-        // }
-        //
-        // private void OnDestroy()
-        // {
-        //     UnitSelectionSystem.OnSelectedCharacter -= CharacterGotSelected;
-        //     MovementState.OnMovementFinished -= CharacterGotSelected;
-        //     UnitSelectionSystem.OnDeselectCharacter -= NoCharacterSelectedState;
-        // }
+        private void Start()
+        {
+            buttons = new List<GameObject>();
+            skillButtons = new List<GameObject>();
+            UnitSelectionSystem.OnSelectedCharacter += CharacterGotSelected;
+            UnitSelectionSystem.OnDeselectCharacter += NoCharacterSelectedState;
+            MovementState.OnMovementFinished += CharacterGotSelected;
+        }
+        
+        private void OnDestroy()
+        {
+            UnitSelectionSystem.OnSelectedCharacter -= CharacterGotSelected;
+            MovementState.OnMovementFinished -= CharacterGotSelected;
+            UnitSelectionSystem.OnDeselectCharacter -= NoCharacterSelectedState;
+        }
         private void Update()
         {
             if (selectedCharacter != null && selectedCharacter.TurnStateManager.IsWaiting)
@@ -56,6 +56,18 @@ namespace Game.GameInput
 
         private void CharacterSelectedState(Unit unit)
         {
+            for (int i = skillButtons.Count - 1; i >= 0; i--)
+            {
+                Destroy(skillButtons[i]);
+            }
+            buttons.Clear();
+            foreach (var skill in skillButtons)
+            {
+                var go = Instantiate(roundButtonPrefab, buttonContainer);
+                buttons.Add(go);
+                skillButtons.Add(go);
+            }
+            
             selectedCharacter = null;
             if (unit.TurnStateManager.IsWaiting)
             {
@@ -64,92 +76,63 @@ namespace Game.GameInput
             }
 
             selectedCharacter = unit;
+            
 
-            if (selectedCharacter.SkillManager.Favourite != null)
-            {
-                if(favButton!=null)
-                    Destroy(favButton);
-                favButton = GameObject.Instantiate(SkillButtonPrefab, this.transform);
-                favButton.GetComponent<SkillButtonController>().SetSkill(selectedCharacter.SkillManager.Favourite, this);
-                
-            }
-
-            if(unit.SkillManager.Skills.Count > 0)
-                SkillsButton.SetActive(true);
-            else
-            {
-                SkillsButton.SetActive(false);
-               
-            }
+      
             if(Player.Instance.Party.Convoy.Items.Count > 0)
-                ItemsButton.SetActive(true);
+                itemButton.SetActive(true);
             else
             {
-                ItemsButton.SetActive(false);
+                itemButton.SetActive(false);
             }
-            CloseSkillButton.SetActive(false);
-            CloseItemButton.SetActive(false);
+            waitButton.SetActive(true);
+            //undoButton.SetActive(true);
         }
 
         private void NoCharacterSelectedState(IGridActor actor)
         {
-            ItemsButton.SetActive(false);
-            CloseItemButton.SetActive(false);
-            SkillsButton.SetActive(false);
-            CloseSkillButton.SetActive(false);
-            if(favButton!=null)
-                favButton.SetActive(false);
+            foreach(var button in buttons)
+                button.SetActive(false);
         }
 
         private void ItemsSelectedState()
         {
             
-            CharacterSelectedState(selectedCharacter);
-            ItemsButton.SetActive(false);
-            CloseItemButton.SetActive(true);
-            ItemParentTransform.gameObject.SetActive(true);
-          
-            GUIUtility.ClearChildren(ItemParentTransform);
-            foreach (var item in Player.Instance.Party.Convoy.Items)
-            {
-                var go = Instantiate(ItemButtonPrefab, ItemParentTransform);
-                go.GetComponent<ItemButtonController>().SetItem(item, this);
-            }
+            // CharacterSelectedState(selectedCharacter);
+            // ItemsButton.SetActive(false);
+            // CloseItemButton.SetActive(true);
+            // ItemParentTransform.gameObject.SetActive(true);
+            //
+            // GUIUtility.ClearChildren(ItemParentTransform);
+            // foreach (var item in Player.Instance.Party.Convoy.Items)
+            // {
+            //     var go = Instantiate(ItemButtonPrefab, ItemParentTransform);
+            //     go.GetComponent<ItemButtonController>().SetItem(item, this);
+            // }
         }
 
         private void SkillSelectedState()
         {
             CharacterSelectedState(selectedCharacter);
-            
-            SkillsButton.SetActive(false);
-            CloseSkillButton.SetActive(true);
-            SkillParentTransform.gameObject.SetActive(true);
-            Unit activeUnit = (Unit)GridGameManager.Instance.GetSystem<UnitSelectionSystem>().SelectedCharacter;
-            GUIUtility.ClearChildren(SkillParentTransform);
-            Debug.Log(activeUnit.name);
-            Debug.Log("SkillCount: "+activeUnit.SkillManager.Skills.Count);
-            foreach (var skill in activeUnit.SkillManager.Skills)
-            {
-                var go = Instantiate(SkillButtonPrefab, SkillParentTransform);
-                go.GetComponent<SkillButtonController>().SetSkill(skill, this);
-     
-            }
+            //
+            // SkillsButton.SetActive(false);
+            // CloseSkillButton.SetActive(true);
+            // SkillParentTransform.gameObject.SetActive(true);
+            // Unit activeUnit = (Unit)GridGameManager.Instance.GetSystem<UnitSelectionSystem>().SelectedCharacter;
+            // GUIUtility.ClearChildren(SkillParentTransform);
+            // Debug.Log(activeUnit.name);
+            // Debug.Log("SkillCount: "+activeUnit.SkillManager.Skills.Count);
+            // foreach (var skill in activeUnit.SkillManager.Skills)
+            // {
+            //     var go = Instantiate(SkillButtonPrefab, SkillParentTransform);
+            //     go.GetComponent<SkillButtonController>().SetSkill(skill, this);
+            //
+            // }
         }
 
       
-        public void CloseItemsClicked()
-        {
-            this.CallWithDelay(CloseSubMenuClickedDelayed, 0.005f);
-        }
-      
-        public void CloseSkillsClicked()
-        {
-            this.CallWithDelay(CloseSubMenuClickedDelayed, 0.005f);
-        }
-        private void CloseSubMenuClickedDelayed()
-        {
-            CharacterSelectedState(selectedCharacter);
-        }
+
+    
         public void SkillsClicked()
         {
             this.CallWithDelay(SkillSelectedState, 0.005f);
@@ -173,13 +156,13 @@ namespace Game.GameInput
         public override void ShowUndo()
         {
            // Debug.Log("ShowUndo");
-            UndoButton.SetActive(true);
+            undoButton.SetActive(true);
             
         }
         public override void HideUndo()
         {
            // Debug.Log("HideUndo");
-            UndoButton.SetActive(false);
+            undoButton.SetActive(false);
         }
 
     }

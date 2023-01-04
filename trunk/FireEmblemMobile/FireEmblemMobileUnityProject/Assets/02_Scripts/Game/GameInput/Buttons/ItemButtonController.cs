@@ -26,7 +26,7 @@ namespace Game.GameInput
         public void Clicked()
         {
             new GameplayCommands().SelectItem(item.item);
-            selectionUI.CloseItemsClicked();
+            //selectionUI.CloseItemsClicked();
         }
     }
 }

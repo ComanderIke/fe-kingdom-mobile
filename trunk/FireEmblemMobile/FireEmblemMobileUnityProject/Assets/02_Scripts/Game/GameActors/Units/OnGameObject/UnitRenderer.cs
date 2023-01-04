@@ -196,12 +196,10 @@ namespace Game.GameActors.Units.OnGameObject
                 moveTypeAnimator.SetBool(Effective, false);
                 moveTypeAnimator.SetBool(Ineffective, false);
             }
-Debug.Log(transform.position);
-            Debug.Log(unit.GridComponent.GridPosition+" "+unit.equippedWeapon.WeaponType.Name+" "+character.equippedWeapon.WeaponType.Name);
+
             if (character.BattleComponent.IsEffective(unit.equippedWeapon.WeaponType))
             {
                 float eff= character.BattleComponent.GetEffectiveCoefficient(unit.equippedWeapon.WeaponType);
-                Debug.Log(unit.GridComponent.GridPosition+" "+eff);
                 if(eff<1)
                 {
                     weaponTypeAnimator.SetBool(Effective, false);

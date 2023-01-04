@@ -29,6 +29,6 @@ public class SkillButtonController:MonoBehaviour
     public void Clicked()
     {
         new GameplayCommands().SelectSkill(skill);
-        selectionUI.CloseSkillsClicked();
+        //selectionUI.CloseSkillsClicked();
     }
 }
