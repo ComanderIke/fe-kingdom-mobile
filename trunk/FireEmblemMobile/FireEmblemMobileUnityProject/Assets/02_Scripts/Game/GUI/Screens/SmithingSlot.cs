@@ -65,4 +65,9 @@ public class SmithingSlot : MonoBehaviour
         }
        
     }
+
+    public void Hide()
+    {
+        throw new System.NotImplementedException();
+    }
 }

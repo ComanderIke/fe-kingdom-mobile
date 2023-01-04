@@ -22,19 +22,19 @@ namespace Game.GameInput
         public static Action OnBackClicked;
 
         private Unit selectedCharacter;
-        private void Start()
-        {
-            UnitSelectionSystem.OnSelectedCharacter += CharacterGotSelected;
-            UnitSelectionSystem.OnDeselectCharacter += NoCharacterSelectedState;
-            MovementState.OnMovementFinished += CharacterGotSelected;
-        }
-
-        private void OnDestroy()
-        {
-            UnitSelectionSystem.OnSelectedCharacter -= CharacterGotSelected;
-            MovementState.OnMovementFinished -= CharacterGotSelected;
-            UnitSelectionSystem.OnDeselectCharacter -= NoCharacterSelectedState;
-        }
+        // private void Start()
+        // {
+        //     UnitSelectionSystem.OnSelectedCharacter += CharacterGotSelected;
+        //     UnitSelectionSystem.OnDeselectCharacter += NoCharacterSelectedState;
+        //     MovementState.OnMovementFinished += CharacterGotSelected;
+        // }
+        //
+        // private void OnDestroy()
+        // {
+        //     UnitSelectionSystem.OnSelectedCharacter -= CharacterGotSelected;
+        //     MovementState.OnMovementFinished -= CharacterGotSelected;
+        //     UnitSelectionSystem.OnDeselectCharacter -= NoCharacterSelectedState;
+        // }
         private void Update()
         {
             if (selectedCharacter != null && selectedCharacter.TurnStateManager.IsWaiting)

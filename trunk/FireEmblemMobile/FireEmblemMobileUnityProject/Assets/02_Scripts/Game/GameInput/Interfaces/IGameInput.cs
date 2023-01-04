@@ -13,7 +13,7 @@ namespace Game.GameInput
         void MoveUnit(IGridActor u, GridPosition position, List<GridPosition> path);
         void CheckAttackPreview(IBattleActor u, IAttackableTarget attackTarget, GridPosition attackPosition);
         void AttackUnit(IBattleActor u, IAttackableTarget attackTarget);
-        void DeselectUnit();
+        void DeselectUnit(IGridActor u);
         void UseItem(ItemBP i);
     
         void ExecuteInputActions(Action after);

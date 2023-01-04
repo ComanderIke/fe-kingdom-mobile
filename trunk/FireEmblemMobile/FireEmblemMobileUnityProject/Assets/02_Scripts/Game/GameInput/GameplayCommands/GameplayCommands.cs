@@ -14,9 +14,10 @@ namespace Game.GameInput
     public class GameplayCommands : IGameInput
     {
         public delegate void Event();
-        public static event Event OnDeselectUnit;
+ 
         public static event Event OnExecuteInputActions;
         public delegate void UnitEvent(IGridActor u);
+        public static event UnitEvent OnDeselectUnit;
         public delegate void SelectEvent(IGridActor actor);
         public static event SelectEvent OnSelectUnit;
         public static event SelectEvent OnWait;
@@ -39,10 +40,11 @@ namespace Game.GameInput
             Debug.Log("GameInput: Attack Unit: " + u+" Target: " +attackTarget);
             OnAttackUnit?.Invoke(u, attackTarget);
         }
-        public void DeselectUnit()
+        public void DeselectUnit(IGridActor unit)
         {
             Debug.Log("GameInput: Deselect Unit");
-            OnDeselectUnit?.Invoke();
+            if(unit!=null)
+                OnDeselectUnit?.Invoke(unit);
         }
 
         public void MoveUnit(IGridActor u, GridPosition position, List<GridPosition> movePath)

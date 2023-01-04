@@ -156,6 +156,9 @@ namespace Game.GameActors.Units
                 foreach (int r in equippedWeapon.AttackRanges)
                     Stats.AttackRanges.Add(r);
             }
+
+            blessings = new List<Blessing>();
+            curses = new List<Curse>();
         }
 
         void ExpGained(int expBefore, int expGained)

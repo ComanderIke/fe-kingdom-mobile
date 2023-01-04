@@ -90,7 +90,7 @@ namespace Game.GameInput
             }
             else
             {
-                gameplayCommands.DeselectUnit();
+                gameplayCommands.DeselectUnit(selectionDataProvider.SelectedActor);
             }
         }
 
@@ -272,13 +272,13 @@ namespace Game.GameInput
                     {
                         //Debug.Log("ResetPos4");
                         selectionDataProvider.SelectedActor.GridComponent.ResetPosition();
-                        gameplayCommands.DeselectUnit();
+                        gameplayCommands.DeselectUnit(selectionDataProvider.SelectedActor);
                     }
                     else
                     {
                         if (selectionDataProvider.GetSelectedAttackTarget() != null)
                             gameplayCommands.UndoUnit(selectionDataProvider.SelectedActor);
-                        gameplayCommands.DeselectUnit();
+                        gameplayCommands.DeselectUnit(selectionDataProvider.SelectedActor);
                     }
 
                     ResetInput();
@@ -287,7 +287,7 @@ namespace Game.GameInput
                 {
                     // Debug.Log("None");
                     ResetInput();
-                    gameplayCommands.DeselectUnit();
+                    gameplayCommands.DeselectUnit(selectionDataProvider.SelectedActor);
                 }
             }
 
@@ -579,7 +579,7 @@ namespace Game.GameInput
 
             private void ClickedOnUndefined()
             {
-                gameplayCommands.DeselectUnit();
+                gameplayCommands.DeselectUnit(selectionDataProvider.SelectedActor);
             }
         }
     }

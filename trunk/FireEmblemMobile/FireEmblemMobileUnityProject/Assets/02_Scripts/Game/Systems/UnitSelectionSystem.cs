@@ -17,12 +17,14 @@ namespace Game.Mechanics
 
         public static event Action<IGridActor> OnSelectedInActiveCharacter;
 
+        public static event Action<IGridActor> OnEnemyDeselected;
         public static event Action<IGridActor> OnEnemySelected;
         public static event Action<Skill> OnSkillSelected;
         public static event Action<Item> OnItemSelected;
 
         private GridGameManager gridGameManager;
         public IGridActor SelectedCharacter { get; set; }
+        public IGridActor SelectedEnemy { get; set; }
         public Skill SelectedSkill { get; set; }
         public Item SelectedItem { get; set; }
 
@@ -47,7 +49,7 @@ namespace Game.Mechanics
             GameplayCommands.OnDeselectItem -= DeselectItem;
             GameplayCommands.OnSelectUnit -= SelectUnit;
             GameplayCommands.OnDeselectUnit -= DeselectActiveCharacter;
-            gridGameManager.GetSystem<TurnSystem>().OnEndTurn -= DeselectActiveCharacter;
+            gridGameManager.GetSystem<TurnSystem>().OnEndTurn -= EndTurnDeselectUnit;
         }
 
         public void Activate()
@@ -58,9 +60,13 @@ namespace Game.Mechanics
             GameplayCommands.OnDeselectItem += DeselectItem;
             GameplayCommands.OnSelectUnit += SelectUnit;
             GameplayCommands.OnDeselectUnit += DeselectActiveCharacter;
-            gridGameManager.GetSystem<TurnSystem>().OnEndTurn += DeselectActiveCharacter;
+            gridGameManager.GetSystem<TurnSystem>().OnEndTurn += EndTurnDeselectUnit;
         }
 
+        void EndTurnDeselectUnit()
+        {
+            DeselectActiveCharacter(SelectedCharacter);
+        }
         private void SelectSkill(Skill skill)
         {
             SelectedSkill = skill;
@@ -92,7 +98,7 @@ namespace Game.Mechanics
             SelectCharacter(SelectedCharacter);
         }
 
-        public void DeselectActiveCharacter()
+        public void DeselectActiveCharacter(IGridActor unit)
         {
            // Debug.Log("DeselectACtiveCharacterGridSys");
             if (SelectedCharacter != null)
@@ -113,7 +119,7 @@ namespace Game.Mechanics
         {
             if (SelectedCharacter != null)
             {
-                DeselectActiveCharacter();
+                DeselectActiveCharacter(SelectedCharacter);
             }
             SelectedCharacter = c;
             c.TurnStateManager.IsSelected = true;
@@ -128,7 +134,20 @@ namespace Game.Mechanics
             {
                 SelectedCharacter.TurnStateManager.IsSelected = false;
             }
+            if (SelectedEnemy != null)
+            {
+                DeselectEnemy(SelectedEnemy);
+            }
+            SelectedEnemy = c;
+            //c.TurnStateManager.IsSelected = true;
             OnEnemySelected?.Invoke(c);
+        }
+
+        void DeselectEnemy(IGridActor enemy)
+        {
+            
+            OnEnemyDeselected?.Invoke(SelectedEnemy);
+            SelectedEnemy = null;
         }
 
         private void SelectInActiveCharacter(IGridActor c)
