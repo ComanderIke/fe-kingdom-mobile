@@ -84,7 +84,7 @@ namespace LostGrace
             foreach (var skill in unit.SkillManager.Skills)
             {
                 var go =Instantiate(skillprefab, skillContainer);
-                go.GetComponent<Image>().sprite = skill.Icon;
+                go.GetComponent<SkillUI>().SetSkill(skill);
             }
         }
 
