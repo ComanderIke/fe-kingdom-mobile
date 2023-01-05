@@ -4,6 +4,7 @@ using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.Manager;
 using Game.Mechanics;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -85,12 +86,18 @@ namespace Game.GameInput
             {
                 skill1Button.GetComponentsInChildren<Image>()[1].sprite =
                     selectedCharacter.SkillManager.ActiveSkills[0].Icon;
+                skill1Button.GetComponentInChildren<TextMeshProUGUI>().text =
+                    selectedCharacter.SkillManager.ActiveSkills[0].CurrentCooldown + "/" +
+                    selectedCharacter.SkillManager.ActiveSkills[0].Cooldown;
             }
 
             if (skillCount >= 2)
             {
                 skill2Button.GetComponentsInChildren<Image>()[1].sprite =
                     selectedCharacter.SkillManager.ActiveSkills[1].Icon;
+                skill2Button.GetComponentInChildren<TextMeshProUGUI>().text =
+                    selectedCharacter.SkillManager.ActiveSkills[1].CurrentCooldown + "/" +
+                    selectedCharacter.SkillManager.ActiveSkills[1].Cooldown;
             }
 
             if(Player.Instance.Party.Convoy.Items.Count > 0)
