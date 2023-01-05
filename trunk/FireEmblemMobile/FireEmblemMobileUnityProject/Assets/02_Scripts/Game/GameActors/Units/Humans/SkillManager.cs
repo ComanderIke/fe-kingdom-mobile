@@ -14,6 +14,8 @@ namespace Game.GameActors.Units.Humans
         public Action<int> SkillPointsUpdated;
         [SerializeField] private List<SkillBP> startSkills;
         private List<Skill> skills;
+      
+
 
         public List<Skill> Skills
         {
@@ -44,6 +46,11 @@ namespace Game.GameActors.Units.Humans
                 Debug.Log("SkillPoints value changed");
                 SkillPointsUpdated?.Invoke(skillPoints);
             }
+        }
+
+        public List<Skill> ActiveSkills
+        {
+            get { return skills.FindAll(s => !(s is PassiveSkill)); }
         }
 
         [SerializeField]

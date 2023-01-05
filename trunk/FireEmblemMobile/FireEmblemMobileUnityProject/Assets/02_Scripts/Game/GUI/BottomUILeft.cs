@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using __2___Scripts.Game.Utility;
@@ -36,7 +37,9 @@ namespace LostGrace
         [SerializeField] private TextMeshProUGUI critavo;
         [SerializeField] private Transform skillContainer;
         [SerializeField] private GameObject skillprefab;
+
         
+
         public void Show(Unit unit)
         {
             base.Show();

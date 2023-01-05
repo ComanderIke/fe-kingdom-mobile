@@ -117,13 +117,15 @@ namespace Game.Mechanics
 
         private void SelectCharacter(IGridActor c)
         {
+            Debug.Log("Select Character!"+c);
             if (SelectedCharacter != null)
             {
+                Debug.Log("DeSelect Character!");
                 DeselectActiveCharacter(SelectedCharacter);
             }
             SelectedCharacter = c;
             c.TurnStateManager.IsSelected = true;
-          
+            Debug.Log("Invoke this shit!"+c);
             OnSelectedCharacter?.Invoke(SelectedCharacter);
         }
 
