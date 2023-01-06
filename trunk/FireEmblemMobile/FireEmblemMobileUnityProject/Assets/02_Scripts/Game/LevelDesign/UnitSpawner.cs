@@ -21,6 +21,7 @@ namespace Game.GameActors
             transform.localPosition = new Vector3((int) transform.localPosition.x, (int) transform.localPosition.y,
                 (int) transform.localPosition.z);
             spriteRenderer.sprite = unitBp.visuals.CharacterSpriteSet.MapSprite;
+            gameObject.name = "Enemy" + unitBp.name;
         }
 
         public Unit GetUnit()
