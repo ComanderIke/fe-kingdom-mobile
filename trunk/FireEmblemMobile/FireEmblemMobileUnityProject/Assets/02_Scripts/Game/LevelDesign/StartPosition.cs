@@ -9,7 +9,11 @@ namespace Utility
     public class StartPosition : MonoBehaviour, IMyDropHandler {
 
         void Start () {
-            GetComponentInChildren<SpriteRenderer>().enabled = false;
+            #if UNITY_EDITOR
+                GetComponentInChildren<SpriteRenderer>().enabled = true;
+            #else
+              GetComponentInChildren<SpriteRenderer>().enabled = false;
+            #endif
         }
 
         public void Destroy()

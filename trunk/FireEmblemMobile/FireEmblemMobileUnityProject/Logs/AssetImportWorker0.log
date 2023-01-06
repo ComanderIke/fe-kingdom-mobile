@@ -15,11 +15,11 @@ D:/Projects/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProjec
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-61609
+59471
 Successfully changed project path to: D:/Projects/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject
 D:/Projects/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 97.51 ms, found 0 plugins.
+Refreshing native plugins compatible for Editor in 94.21 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2021.1.7f1 (d91830b65d9b)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2021.1.7f1/Editor/Data/Resources/UnitySubsystems
@@ -37,631 +37,652 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2021.1.7f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2021.1.7f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2021.1.7f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56088
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56464
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.1.7f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.001021 seconds.
+Registered in 0.001054 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 96.17 ms, found 0 plugins.
+Refreshing native plugins compatible for Editor in 89.17 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.526 seconds
+- Completed reload, in  1.488 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.002752 seconds.
+Registered in 0.002812 seconds.
 Begin MonoManager ReloadAssembly
 OnLevelWasLoaded was found on LeanTween
 This message has been deprecated and will be removed in a later version of Unity.
 Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
 
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 92.66 ms, found 0 plugins.
+Refreshing native plugins compatible for Editor in 96.53 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.838 seconds
+- Completed reload, in  0.870 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
 Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
 Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
 Launched and connected shader compiler UnityShaderCompiler.exe after 0.03 seconds
+Refreshing native plugins compatible for Editor in 1.19 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4955 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 281.2 MB.
+System memory in use after: 281.7 MB.
+
+Unloading 71 unused Assets to reduce memory usage. Loaded Objects now: 5394.
+Total: 5.199300 ms (FindLiveObjects: 0.349000 ms CreateObjectMapping: 0.188700 ms MarkObjects: 4.609000 ms  DeleteObjects: 0.051500 ms)
+
+========================================================================
+Received Import Request.
+  path: Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_2 1.prefab
+  artifactKey: Guid(e9e68e4aa62bc62418a5f2d6ad35f51d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_2 1.prefab using Guid(e9e68e4aa62bc62418a5f2d6ad35f51d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) Recursive Serialization is not supported. You can't dereference a PPtr while loading. (Constructors of C# classes may not load objects either. See stacktrace.)
+
+Serialization depth limit 10 exceeded at 'SkillTree.skillEntries'. There may be an object composition cycle in one or more of your serialized classes.
+
+Serialization hierarchy:
+11: SkillTree.skillEntries
+10: SkillTreeEntry.tree
+9: SkillTree.skillEntries
+8: SkillTreeEntry.tree
+7: SkillTree.skillEntries
+6: SkillTreeEntry.tree
+5: SkillTree.skillEntries
+4: SkillTreeEntry.tree
+3: SkillTree.skillEntries
+2: Game.GameActors.Units.Humans::SkillManager.SkillBuildTrees
+1: Game.GameActors.Units::Unit.SkillManager
+0: Utility::StartPosition.<Actor>k__BackingField
+
+Recursive Serialization is not supported. You can't dereference a PPtr while loading. (Constructors of C# classes may not load objects either. See stacktrace.)
+
+Serialization depth limit 10 exceeded at 'SkillTreeEntry.skillBp'. There may be an object composition cycle in one or more of your serialized classes.
+
+Serialization hierarchy:
+11: SkillTreeEntry.skillBp
+10: SkillTree.skillEntries
+9: SkillTreeEntry.tree
+8: SkillTree.skillEntries
+7: SkillTreeEntry.tree
+6: SkillTree.skillEntries
+5: SkillTreeEntry.tree
+4: SkillTree.skillEntries
+3: SkillTreeEntry.tree
+2: SkillTree.skillEntries
+1: Game.GameActors.Units.Humans::SkillManager.SkillBuildTrees
+0: Game.GameActors.Units::UnitBP.SkillManager
+
+Serialization depth limit 10 exceeded at 'SkillTreeEntry.skillBp'. There may be an object composition cycle in one or more of your serialized classes.
+
+Serialization hierarchy:
+11: SkillTreeEntry.skillBp
+10: SkillTree.skillEntries
+9: SkillTreeEntry.tree
+8: SkillTree.skillEntries
+7: SkillTreeEntry.tree
+6: SkillTree.skillEntries
+5: SkillTreeEntry.tree
+4: SkillTree.skillEntries
+3: SkillTreeEntry.tree
+2: SkillTree.skillEntries
+1: SkillTreeEntry.tree
+0: SkillTree.skillEntries
+
+Serialization depth limit 10 exceeded at 'SkillTree.skillEntries'. There may be an object composition cycle in one or more of your serialized classes.
+
+Serialization hierarchy:
+11: SkillTree.skillEntries
+10: SkillTreeEntry.tree
+9: SkillTree.skillEntries
+8: SkillTreeEntry.tree
+7: SkillTree.skillEntries
+6: SkillTreeEntry.tree
+5: SkillTree.skillEntries
+4: Game.GameActors.Units.Humans::SkillManager.SkillBuildTrees
+3: Game.GameActors.Units::Unit.SkillManager
+2: Game.WorldMapStuff.Model::Party.members
+1: Game.GameActors.Players::Faction.party
+0: Game.GameActors.Players::Destroyable.<Faction>k__BackingField
+
+Serialization depth limit 10 exceeded at 'SkillTree.skillEntries'. There may be an object composition cycle in one or more of your serialized classes.
+
+Serialization hierarchy:
+11: SkillTree.skillEntries
+10: SkillTreeEntry.tree
+9: SkillTree.skillEntries
+8: SkillTreeEntry.tree
+7: SkillTree.skillEntries
+6: SkillTreeEntry.tree
+5: SkillTree.skillEntries
+4: SkillTreeEntry.tree
+3: SkillTree.skillEntries
+2: Game.GameActors.Units.Humans::SkillManager.SkillBuildTrees
+1: Game.GameActors.Units::Unit.SkillManager
+0: Game.GameActors.Units.OnGameObject::UnitAnimator.unit
+
+ -> (artifact id: 'f40355bbc20e9102b02af6accd2d43e7') in 1.215719 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.296780 seconds.
+  path: Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_3.prefab
+  artifactKey: Guid(e9e68e4aa62bc62418a5f2d6ad35f51d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_3.prefab using Guid(e9e68e4aa62bc62418a5f2d6ad35f51d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1ab40bc684897ae56026721ed2924f5b') in 0.079242 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 539.368299 seconds.
+  path: Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_3.prefab
+  artifactKey: Guid(e9e68e4aa62bc62418a5f2d6ad35f51d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_3.prefab using Guid(e9e68e4aa62bc62418a5f2d6ad35f51d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f9672d346531cccaedae670cf6734166') in 0.349214 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.672450 seconds.
+  path: Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_3 1.prefab
+  artifactKey: Guid(86f970e4279aafa48b37f7ab7b521375) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_3 1.prefab using Guid(86f970e4279aafa48b37f7ab7b521375) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5276628e21f8f68315a81d80fcb98c17') in 0.079427 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.201927 seconds.
+  path: Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_4.prefab
+  artifactKey: Guid(86f970e4279aafa48b37f7ab7b521375) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_4.prefab using Guid(86f970e4279aafa48b37f7ab7b521375) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e749d6c89b729cbe98601c419d982baa') in 0.077859 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 45.123123 seconds.
+  path: Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_3 1.prefab
+  artifactKey: Guid(62f67e828570cb4478ebe969186d50db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_3 1.prefab using Guid(62f67e828570cb4478ebe969186d50db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8defca12236f62208d2ab7437e414534') in 0.075118 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.828334 seconds.
+  path: Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_4.prefab
+  artifactKey: Guid(62f67e828570cb4478ebe969186d50db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_4.prefab using Guid(62f67e828570cb4478ebe969186d50db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '989d4b1e3ab60e769a227a003ed962a8') in 0.078369 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 14.561143 seconds.
+  path: Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_1.prefab
+  artifactKey: Guid(a3417224f0f87114e80e1b31df1a8790) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_1.prefab using Guid(a3417224f0f87114e80e1b31df1a8790) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fe2da81696bda45f8a008c2fc35d6fe1') in 0.114691 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 11.773532 seconds.
+  path: Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_2.prefab
+  artifactKey: Guid(e875ed6a5963e5347a19c3e19f8a3e58) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_2.prefab using Guid(e875ed6a5963e5347a19c3e19f8a3e58) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '405f212181c5d9d43a5e21896d8c29f1') in 0.074624 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 93.470046 seconds.
+  path: Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_1.prefab
+  artifactKey: Guid(e875ed6a5963e5347a19c3e19f8a3e58) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_1.prefab using Guid(e875ed6a5963e5347a19c3e19f8a3e58) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9007bec7e522008245c0186b612911fa') in 0.082404 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.815497 seconds.
+  path: Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_1 1.prefab
+  artifactKey: Guid(874c9bd77dbd3054297223f895260a83) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_1 1.prefab using Guid(874c9bd77dbd3054297223f895260a83) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7203ec1182896396ffdb55ecbadddd9d') in 0.076362 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.033810 seconds.
+  path: Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_2.prefab
+  artifactKey: Guid(874c9bd77dbd3054297223f895260a83) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_2.prefab using Guid(874c9bd77dbd3054297223f895260a83) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6b59dcbf3b9013ddfa682246e8eb289c') in 0.077969 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.825816 seconds.
+  path: Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_3.prefab
+  artifactKey: Guid(a3417224f0f87114e80e1b31df1a8790) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_3.prefab using Guid(a3417224f0f87114e80e1b31df1a8790) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '13fa578dc513514fa15062ef2194e482') in 0.102208 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 97.622955 seconds.
+  path: Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_2.prefab
+  artifactKey: Guid(874c9bd77dbd3054297223f895260a83) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_2.prefab using Guid(874c9bd77dbd3054297223f895260a83) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '751d1726989fae2bc439a5ef29248d3c') in 0.077191 seconds 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003103 seconds.
+OnLevelWasLoaded was found on LeanTween
+This message has been deprecated and will be removed in a later version of Unity.
+Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
+
+Begin MonoManager ReloadAssembly
+OnLevelWasLoaded was found on LeanTween
+This message has been deprecated and will be removed in a later version of Unity.
+Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
+
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 1.16 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.935 seconds
+Platform modules already initialized, skipping
+Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Refreshing native plugins compatible for Editor in 1.38 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4775 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 272.7 MB.
+System memory in use after: 273.1 MB.
+
+Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5447.
+Total: 5.963700 ms (FindLiveObjects: 0.437300 ms CreateObjectMapping: 0.290400 ms MarkObjects: 5.210100 ms  DeleteObjects: 0.024900 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
+========================================================================
+Received Import Request.
+  Time since last request: 190.191529 seconds.
+  path: Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_3.prefab
+  artifactKey: Guid(a3417224f0f87114e80e1b31df1a8790) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_3.prefab using Guid(a3417224f0f87114e80e1b31df1a8790) Importer(815301076,1909f56bfc062723c751e8b465ee728b) Recursive Serialization is not supported. You can't dereference a PPtr while loading. (Constructors of C# classes may not load objects either. See stacktrace.)
+
+Serialization depth limit 10 exceeded at 'SkillTree.skillEntries'. There may be an object composition cycle in one or more of your serialized classes.
+
+Serialization hierarchy:
+11: SkillTree.skillEntries
+10: SkillTreeEntry.tree
+9: SkillTree.skillEntries
+8: SkillTreeEntry.tree
+7: SkillTree.skillEntries
+6: SkillTreeEntry.tree
+5: SkillTree.skillEntries
+4: SkillTreeEntry.tree
+3: SkillTree.skillEntries
+2: Game.GameActors.Units.Humans::SkillManager.SkillBuildTrees
+1: Game.GameActors.Units::Unit.SkillManager
+0: Utility::StartPosition.<Actor>k__BackingField
+
+Recursive Serialization is not supported. You can't dereference a PPtr while loading. (Constructors of C# classes may not load objects either. See stacktrace.)
+
+Serialization depth limit 10 exceeded at 'SkillTreeEntry.skillBp'. There may be an object composition cycle in one or more of your serialized classes.
+
+Serialization hierarchy:
+11: SkillTreeEntry.skillBp
+10: SkillTree.skillEntries
+9: SkillTreeEntry.tree
+8: SkillTree.skillEntries
+7: SkillTreeEntry.tree
+6: SkillTree.skillEntries
+5: SkillTreeEntry.tree
+4: SkillTree.skillEntries
+3: SkillTreeEntry.tree
+2: SkillTree.skillEntries
+1: Game.GameActors.Units.Humans::SkillManager.SkillBuildTrees
+0: Game.GameActors.Units::UnitBP.SkillManager
+
+Serialization depth limit 10 exceeded at 'SkillTreeEntry.skillBp'. There may be an object composition cycle in one or more of your serialized classes.
+
+Serialization hierarchy:
+11: SkillTreeEntry.skillBp
+10: SkillTree.skillEntries
+9: SkillTreeEntry.tree
+8: SkillTree.skillEntries
+7: SkillTreeEntry.tree
+6: SkillTree.skillEntries
+5: SkillTreeEntry.tree
+4: SkillTree.skillEntries
+3: SkillTreeEntry.tree
+2: SkillTree.skillEntries
+1: SkillTreeEntry.tree
+0: SkillTree.skillEntries
+
+Serialization depth limit 10 exceeded at 'SkillTree.skillEntries'. There may be an object composition cycle in one or more of your serialized classes.
+
+Serialization hierarchy:
+11: SkillTree.skillEntries
+10: SkillTreeEntry.tree
+9: SkillTree.skillEntries
+8: SkillTreeEntry.tree
+7: SkillTree.skillEntries
+6: SkillTreeEntry.tree
+5: SkillTree.skillEntries
+4: Game.GameActors.Units.Humans::SkillManager.SkillBuildTrees
+3: Game.GameActors.Units::Unit.SkillManager
+2: Game.WorldMapStuff.Model::Party.members
+1: Game.GameActors.Players::Faction.party
+0: Game.GameActors.Players::Destroyable.<Faction>k__BackingField
+
+Serialization depth limit 10 exceeded at 'SkillTree.skillEntries'. There may be an object composition cycle in one or more of your serialized classes.
+
+Serialization hierarchy:
+11: SkillTree.skillEntries
+10: SkillTreeEntry.tree
+9: SkillTree.skillEntries
+8: SkillTreeEntry.tree
+7: SkillTree.skillEntries
+6: SkillTreeEntry.tree
+5: SkillTree.skillEntries
+4: SkillTreeEntry.tree
+3: SkillTree.skillEntries
+2: Game.GameActors.Units.Humans::SkillManager.SkillBuildTrees
+1: Game.GameActors.Units::Unit.SkillManager
+0: Game.GameActors.Units.OnGameObject::UnitAnimator.unit
+
+ -> (artifact id: 'b2d945c48546ca85fb181c7a63128f9d') in 1.205701 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000142 seconds.
+  path: Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_2.prefab
+  artifactKey: Guid(874c9bd77dbd3054297223f895260a83) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_2.prefab using Guid(874c9bd77dbd3054297223f895260a83) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '423108e7ca5aa573113f641351060641') in 0.072132 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.998473 seconds.
+  path: Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small.prefab
+  artifactKey: Guid(fadb21d1aedb38e418c8c747cce5a91c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small.prefab using Guid(fadb21d1aedb38e418c8c747cce5a91c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1f277f0e0b93ce075b33af8653891624') in 0.238614 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 37.372100 seconds.
+  path: Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_1.prefab
+  artifactKey: Guid(e875ed6a5963e5347a19c3e19f8a3e58) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_1.prefab using Guid(e875ed6a5963e5347a19c3e19f8a3e58) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f629d9a430628563dd1099e452c3c346') in 0.076056 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.754116 seconds.
+  path: Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_3 1.prefab
+  artifactKey: Guid(fc2bd94ef89a06b42981118b27c26e50) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_3 1.prefab using Guid(fc2bd94ef89a06b42981118b27c26e50) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '73867a13066036af9b1937b1174daaf8') in 0.098755 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.053482 seconds.
+  path: Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_4.prefab
+  artifactKey: Guid(fc2bd94ef89a06b42981118b27c26e50) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_4.prefab using Guid(fc2bd94ef89a06b42981118b27c26e50) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c47cacb6db888fcd0debb1e7fde3900f') in 0.093215 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 282.338126 seconds.
+  path: Assets/06_ Materials/BattleAnimation/SkeletonRiderAttackTrail.mat
+  artifactKey: Guid(c4b1a0b2c0e0cb84e8e17a4e069a46db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/06_ Materials/BattleAnimation/SkeletonRiderAttackTrail.mat using Guid(c4b1a0b2c0e0cb84e8e17a4e069a46db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '744bd6d5b6f15fb277c2170f7874395b') in 0.029394 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000140 seconds.
+  path: Assets/06_ Materials/Unused/SpriteOutlineSkeletonGreen.mat
+  artifactKey: Guid(2cbd467fd23518b4f8374351dfe86413) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/06_ Materials/Unused/SpriteOutlineSkeletonGreen.mat using Guid(2cbd467fd23518b4f8374351dfe86413) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6a21f8e8616ca3c9b770cc344a9fd30f') in 0.016703 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000114 seconds.
+  path: Assets/06_ Materials/Unused/SpriteOutlineSkeletonPurple.mat
+  artifactKey: Guid(657a9dda302e3bb41bbae907c52d3b54) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/06_ Materials/Unused/SpriteOutlineSkeletonPurple.mat using Guid(657a9dda302e3bb41bbae907c52d3b54) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cc3e5df987f66e90bdba9138b65ef37d') in 0.017204 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000125 seconds.
+  path: Assets/06_ Materials/EnvironmentParticles/WorldParticlesBig.mat
+  artifactKey: Guid(89be18155f0bc694fb1af9483899ad1b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/06_ Materials/EnvironmentParticles/WorldParticlesBig.mat using Guid(89be18155f0bc694fb1af9483899ad1b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '316f0df715572eaa7449748e29045326') in 0.008421 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000186 seconds.
+  path: Assets/06_ Materials/EnvironmentParticles/WorldParticlesSmaller 1.mat
+  artifactKey: Guid(dada473ab0ad2a543a7d3cd6c209bfb5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/06_ Materials/EnvironmentParticles/WorldParticlesSmaller 1.mat using Guid(dada473ab0ad2a543a7d3cd6c209bfb5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd2c51cb5ff47c19c83339c0dc8257882') in 0.011308 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000126 seconds.
+  path: Assets/06_ Materials/BattleAnimation/SoldierAttackTrail.mat
+  artifactKey: Guid(38f816368923b1e46acff0c957e76dbf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/06_ Materials/BattleAnimation/SoldierAttackTrail.mat using Guid(38f816368923b1e46acff0c957e76dbf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '50d60ce41a83f934673ba09f9e077bf2') in 0.013783 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000126 seconds.
+  path: Assets/06_ Materials/EnvironmentParticles/WorldParticles.mat
+  artifactKey: Guid(3ce45097dfcc5ae4abecbc0289ee1406) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/06_ Materials/EnvironmentParticles/WorldParticles.mat using Guid(3ce45097dfcc5ae4abecbc0289ee1406) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '86ebaf0284067aa202030aab81712c67') in 0.008361 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 43.370150 seconds.
+  path: Assets/04_Textures/TileMaps/stone2 1.png
+  artifactKey: Guid(a2086b241be8ca84c8d6e96cfb6738ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/04_Textures/TileMaps/stone2 1.png using Guid(a2086b241be8ca84c8d6e96cfb6738ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '632fbb1329dcd70c621e012790f67acc') in 0.042438 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 4.282613 seconds.
+  path: Assets/04_Textures/TileMaps/stone2_Big.png
+  artifactKey: Guid(a2086b241be8ca84c8d6e96cfb6738ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/04_Textures/TileMaps/stone2_Big.png using Guid(a2086b241be8ca84c8d6e96cfb6738ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '62af44ebd55d0512c87094387019d587') in 0.025005 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 14.682460 seconds.
+  path: Assets/04_Textures/TileMaps/stone2_Big.png
+  artifactKey: Guid(a2086b241be8ca84c8d6e96cfb6738ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/04_Textures/TileMaps/stone2_Big.png using Guid(a2086b241be8ca84c8d6e96cfb6738ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e449181de471a67bc6c05dc6ff48ab51') in 0.016379 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 240.526990 seconds.
+  path: Assets/04_Textures/TileMaps/stone2_Big.png
+  artifactKey: Guid(a2086b241be8ca84c8d6e96cfb6738ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/04_Textures/TileMaps/stone2_Big.png using Guid(a2086b241be8ca84c8d6e96cfb6738ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0fd45c6a932d41405324dc6266354b23') in 0.015088 seconds 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003099 seconds.
+OnLevelWasLoaded was found on LeanTween
+This message has been deprecated and will be removed in a later version of Unity.
+Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
+
+Begin MonoManager ReloadAssembly
+OnLevelWasLoaded was found on LeanTween
+This message has been deprecated and will be removed in a later version of Unity.
+Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
+
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 1.12 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.786 seconds
+Platform modules already initialized, skipping
+Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
 Refreshing native plugins compatible for Editor in 1.09 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4954 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 281.1 MB.
-System memory in use after: 281.5 MB.
+Unloading 4776 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 275.2 MB.
+System memory in use after: 275.7 MB.
 
-Unloading 71 unused Assets to reduce memory usage. Loaded Objects now: 5393.
-Total: 5.578700 ms (FindLiveObjects: 0.372600 ms CreateObjectMapping: 0.134300 ms MarkObjects: 5.011700 ms  DeleteObjects: 0.059100 ms)
-
-========================================================================
-Received Import Request.
-  path: Assets/04_Textures/Icons/Common
-  artifactKey: Guid(5b01d930c5716cb4380cf321a593805b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/04_Textures/Icons/Common using Guid(5b01d930c5716cb4380cf321a593805b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1e58c8e468bec9c18a2090bb7a76b1b7') in 0.008929 seconds 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002822 seconds.
-OnLevelWasLoaded was found on LeanTween
-This message has been deprecated and will be removed in a later version of Unity.
-Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
-
-Begin MonoManager ReloadAssembly
-OnLevelWasLoaded was found on LeanTween
-This message has been deprecated and will be removed in a later version of Unity.
-Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
-
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.15 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.722 seconds
-Platform modules already initialized, skipping
-Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 1.13 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4774 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 266.0 MB.
-System memory in use after: 266.3 MB.
-
-Unloading 62 unused Assets to reduce memory usage. Loaded Objects now: 5395.
-Total: 5.260600 ms (FindLiveObjects: 0.327100 ms CreateObjectMapping: 0.188700 ms MarkObjects: 4.720300 ms  DeleteObjects: 0.023600 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002529 seconds.
-OnLevelWasLoaded was found on LeanTween
-This message has been deprecated and will be removed in a later version of Unity.
-Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
-
-Begin MonoManager ReloadAssembly
-OnLevelWasLoaded was found on LeanTween
-This message has been deprecated and will be removed in a later version of Unity.
-Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
-
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.15 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.760 seconds
-Platform modules already initialized, skipping
-Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 1.20 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4774 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 266.1 MB.
-System memory in use after: 266.4 MB.
-
-Unloading 62 unused Assets to reduce memory usage. Loaded Objects now: 5397.
-Total: 5.363800 ms (FindLiveObjects: 0.289700 ms CreateObjectMapping: 0.125400 ms MarkObjects: 4.926100 ms  DeleteObjects: 0.021800 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002751 seconds.
-OnLevelWasLoaded was found on LeanTween
-This message has been deprecated and will be removed in a later version of Unity.
-Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
-
-Begin MonoManager ReloadAssembly
-OnLevelWasLoaded was found on LeanTween
-This message has been deprecated and will be removed in a later version of Unity.
-Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
-
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.16 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.775 seconds
-Platform modules already initialized, skipping
-Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 1.15 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4774 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 266.2 MB.
-System memory in use after: 266.4 MB.
-
-Unloading 62 unused Assets to reduce memory usage. Loaded Objects now: 5399.
-Total: 5.930100 ms (FindLiveObjects: 0.345600 ms CreateObjectMapping: 0.198200 ms MarkObjects: 5.358200 ms  DeleteObjects: 0.027400 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002709 seconds.
-OnLevelWasLoaded was found on LeanTween
-This message has been deprecated and will be removed in a later version of Unity.
-Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
-
-Begin MonoManager ReloadAssembly
-OnLevelWasLoaded was found on LeanTween
-This message has been deprecated and will be removed in a later version of Unity.
-Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
-
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.14 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.748 seconds
-Platform modules already initialized, skipping
-Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 1.13 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4774 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 266.2 MB.
-System memory in use after: 266.5 MB.
-
-Unloading 62 unused Assets to reduce memory usage. Loaded Objects now: 5401.
-Total: 5.317600 ms (FindLiveObjects: 0.305300 ms CreateObjectMapping: 0.128300 ms MarkObjects: 4.861800 ms  DeleteObjects: 0.021200 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002602 seconds.
-OnLevelWasLoaded was found on LeanTween
-This message has been deprecated and will be removed in a later version of Unity.
-Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
-
-Begin MonoManager ReloadAssembly
-OnLevelWasLoaded was found on LeanTween
-This message has been deprecated and will be removed in a later version of Unity.
-Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
-
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.12 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.730 seconds
-Platform modules already initialized, skipping
-Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 1.14 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4774 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 266.0 MB.
-System memory in use after: 266.5 MB.
-
-Unloading 62 unused Assets to reduce memory usage. Loaded Objects now: 5403.
-Total: 4.633400 ms (FindLiveObjects: 0.300000 ms CreateObjectMapping: 0.131400 ms MarkObjects: 4.167600 ms  DeleteObjects: 0.033800 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
-========================================================================
-Received Prepare
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 6.57 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 49 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 172.0 MB.
-System memory in use after: 172.2 MB.
-
-Unloading 48 unused Assets to reduce memory usage. Loaded Objects now: 5403.
-Total: 5.413700 ms (FindLiveObjects: 0.353900 ms CreateObjectMapping: 0.185800 ms MarkObjects: 4.856200 ms  DeleteObjects: 0.017000 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002667 seconds.
-OnLevelWasLoaded was found on LeanTween
-This message has been deprecated and will be removed in a later version of Unity.
-Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
-
-Begin MonoManager ReloadAssembly
-OnLevelWasLoaded was found on LeanTween
-This message has been deprecated and will be removed in a later version of Unity.
-Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
-
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.12 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.750 seconds
-Platform modules already initialized, skipping
-Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 1.18 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4774 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 266.2 MB.
-System memory in use after: 266.7 MB.
-
-Unloading 62 unused Assets to reduce memory usage. Loaded Objects now: 5405.
-Total: 5.578600 ms (FindLiveObjects: 0.357400 ms CreateObjectMapping: 0.221300 ms MarkObjects: 4.974700 ms  DeleteObjects: 0.024300 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002804 seconds.
-OnLevelWasLoaded was found on LeanTween
-This message has been deprecated and will be removed in a later version of Unity.
-Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
-
-Begin MonoManager ReloadAssembly
-OnLevelWasLoaded was found on LeanTween
-This message has been deprecated and will be removed in a later version of Unity.
-Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
-
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.14 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.780 seconds
-Platform modules already initialized, skipping
-Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 1.15 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4774 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 266.3 MB.
-System memory in use after: 266.7 MB.
-
-Unloading 62 unused Assets to reduce memory usage. Loaded Objects now: 5407.
-Total: 5.145600 ms (FindLiveObjects: 0.337900 ms CreateObjectMapping: 0.223800 ms MarkObjects: 4.561600 ms  DeleteObjects: 0.021600 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
-========================================================================
-Received Prepare
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 6.23 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 49 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 172.2 MB.
-System memory in use after: 172.4 MB.
-
-Unloading 48 unused Assets to reduce memory usage. Loaded Objects now: 5407.
-Total: 5.473300 ms (FindLiveObjects: 0.328300 ms CreateObjectMapping: 0.132500 ms MarkObjects: 4.991600 ms  DeleteObjects: 0.020100 ms)
-
-========================================================================
-Received Import Request.
-  Time since last request: 1891.180589 seconds.
-  path: Assets/03_Prefabs/UI/Screens/BottomUI
-  artifactKey: Guid(75d29a2b80dbb2a498a8b44e33e7ef0d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/03_Prefabs/UI/Screens/BottomUI using Guid(75d29a2b80dbb2a498a8b44e33e7ef0d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9b1bc7962abbc8de59a5ebaf1dd82149') in 0.005130 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 107.109067 seconds.
-  path: Assets/03_Prefabs/UI/Screens/BottomUI/InteractableFaceArea.prefab
-  artifactKey: Guid(55a0935516603804c974128797b5c911) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/03_Prefabs/UI/Screens/BottomUI/InteractableFaceArea.prefab using Guid(55a0935516603804c974128797b5c911) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a9ed12f63970829de37d1cf1080b0805') in 0.049200 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 17.064578 seconds.
-  path: Assets/03_Prefabs/UI/Screens/BottomUI/Name.prefab
-  artifactKey: Guid(849175623ef8b174c98102e2c289323d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/03_Prefabs/UI/Screens/BottomUI/Name.prefab using Guid(849175623ef8b174c98102e2c289323d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6979f29aa89c945f0f99e9ebf39cd9ea') in 0.033366 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 119.253006 seconds.
-  path: Assets/03_Prefabs/UI/Screens/BottomUI/Exp.prefab
-  artifactKey: Guid(1e565387af9e237408aef3fcc3c9081f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/03_Prefabs/UI/Screens/BottomUI/Exp.prefab using Guid(1e565387af9e237408aef3fcc3c9081f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6f99c07e51398c71ac0ace5d19bd934f') in 0.015088 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 402.250925 seconds.
-  path: Assets/03_Prefabs/UI/Screens/BottomUI/LevelLabel.prefab
-  artifactKey: Guid(c17bf721bc946a34fb1fa3fdd50ae3a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/03_Prefabs/UI/Screens/BottomUI/LevelLabel.prefab using Guid(c17bf721bc946a34fb1fa3fdd50ae3a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4d9683ce92be75e675750f04ecdd3691') in 0.016644 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 581.443292 seconds.
-  path: Assets/03_Prefabs/UI/Screens/BottomUI/WeaponLabel.prefab
-  artifactKey: Guid(d6710ed28311984439bcdba805d02d07) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/03_Prefabs/UI/Screens/BottomUI/WeaponLabel.prefab using Guid(d6710ed28311984439bcdba805d02d07) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '28334c6b9e78a2629f58c5eac5f34d7a') in 0.015695 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 7.705347 seconds.
-  path: Assets/03_Prefabs/UI/Screens/BottomUI/Move (1).prefab
-  artifactKey: Guid(5b90d7b284926354ba9fb2fbc7f9176e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/03_Prefabs/UI/Screens/BottomUI/Move (1).prefab using Guid(5b90d7b284926354ba9fb2fbc7f9176e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3182352d7844d351a545caf8c3721911') in 0.014760 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 502.045132 seconds.
-  path: Assets/03_Prefabs/UI/Screens/BottomUI/BlessingSlot.prefab
-  artifactKey: Guid(af4893b68252de24589ad6d851dd2562) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/03_Prefabs/UI/Screens/BottomUI/BlessingSlot.prefab using Guid(af4893b68252de24589ad6d851dd2562) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '92a27168b32992721bdf57d0aafb8be4') in 0.015886 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 2.184867 seconds.
-  path: Assets/03_Prefabs/UI/Screens/BottomUI/CurseSlot.prefab
-  artifactKey: Guid(194811a1d01bea74fb016d2a811f3f82) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/03_Prefabs/UI/Screens/BottomUI/CurseSlot.prefab using Guid(194811a1d01bea74fb016d2a811f3f82) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '59152a9b0bf2802432429c73ffa9feb4') in 0.014429 seconds 
-========================================================================
-Received Prepare
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 103.91 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 49 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 173.2 MB.
-System memory in use after: 173.4 MB.
-
-Unloading 48 unused Assets to reduce memory usage. Loaded Objects now: 5407.
-Total: 6.180400 ms (FindLiveObjects: 0.369100 ms CreateObjectMapping: 0.232400 ms MarkObjects: 5.560400 ms  DeleteObjects: 0.017700 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.003412 seconds.
-OnLevelWasLoaded was found on LeanTween
-This message has been deprecated and will be removed in a later version of Unity.
-Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
-
-Begin MonoManager ReloadAssembly
-OnLevelWasLoaded was found on LeanTween
-This message has been deprecated and will be removed in a later version of Unity.
-Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
-
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.14 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.876 seconds
-Platform modules already initialized, skipping
-Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 1.14 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4774 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 266.3 MB.
-System memory in use after: 266.8 MB.
-
-Unloading 62 unused Assets to reduce memory usage. Loaded Objects now: 5409.
-Total: 5.838500 ms (FindLiveObjects: 0.351000 ms CreateObjectMapping: 0.136300 ms MarkObjects: 5.309700 ms  DeleteObjects: 0.040800 ms)
+Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5578.
+Total: 4.827100 ms (FindLiveObjects: 0.359800 ms CreateObjectMapping: 0.126200 ms MarkObjects: 4.320300 ms  DeleteObjects: 0.020200 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
 ========================================================================
 Received Import Request.
-  Time since last request: 8563.380835 seconds.
-  path: Assets/03_Prefabs/UI/Screens/BottomUI/Move.prefab
-  artifactKey: Guid(5b90d7b284926354ba9fb2fbc7f9176e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/03_Prefabs/UI/Screens/BottomUI/Move.prefab using Guid(5b90d7b284926354ba9fb2fbc7f9176e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7d8e557078aeb136621b66757907faa3') in 0.087188 seconds 
+  Time since last request: 23.595705 seconds.
+  path: Assets/04_Textures/TileMaps/stone2_Big.png
+  artifactKey: Guid(a2086b241be8ca84c8d6e96cfb6738ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/04_Textures/TileMaps/stone2_Big.png using Guid(a2086b241be8ca84c8d6e96cfb6738ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1c5aa95bc0994d1ba59a037afdd9b6f0') in 0.039019 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 11.254945 seconds.
-  path: Assets/03_Prefabs/UI/Screens/BottomUI/HPLabel.prefab
-  artifactKey: Guid(5f0a37cdff53b3c4fbef5f502156e60f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/03_Prefabs/UI/Screens/BottomUI/HPLabel.prefab using Guid(5f0a37cdff53b3c4fbef5f502156e60f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ab0ed8a95f5f812727d76d5ebb56fa73') in 0.014745 seconds 
+  Time since last request: 23.699242 seconds.
+  path: Assets/04_Textures/TileMaps/stone1 1.png
+  artifactKey: Guid(a4c9f1d0b7e820b4da97487ee59c6703) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/04_Textures/TileMaps/stone1 1.png using Guid(a4c9f1d0b7e820b4da97487ee59c6703) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e42cc4edfa1b0f6c016c10b8a8b6d0f1') in 0.011353 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 2.273211 seconds.
-  path: Assets/03_Prefabs/UI/Screens/BottomUI/BattleStats.prefab
-  artifactKey: Guid(6ea57fef825c9504db00ee5fc07166ca) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/03_Prefabs/UI/Screens/BottomUI/BattleStats.prefab using Guid(6ea57fef825c9504db00ee5fc07166ca) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7c8a8147aaad0eec5db276e210226554') in 0.017129 seconds 
+  Time since last request: 3.398586 seconds.
+  path: Assets/04_Textures/TileMaps/stone1_big.png
+  artifactKey: Guid(a4c9f1d0b7e820b4da97487ee59c6703) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/04_Textures/TileMaps/stone1_big.png using Guid(a4c9f1d0b7e820b4da97487ee59c6703) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c46de732728207c9fbd1b4337ba7ab0d') in 0.022607 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 3.892944 seconds.
-  path: Assets/03_Prefabs/UI/Screens/BottomUI/Skills.prefab
-  artifactKey: Guid(d006641954f9ad74abc57fb0b46fa4a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/03_Prefabs/UI/Screens/BottomUI/Skills.prefab using Guid(d006641954f9ad74abc57fb0b46fa4a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3615809be353ad00719c6f278a751106') in 0.035657 seconds 
+  Time since last request: 84.289861 seconds.
+  path: Assets/04_Textures/TileMaps/stone1_big.png
+  artifactKey: Guid(a4c9f1d0b7e820b4da97487ee59c6703) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/04_Textures/TileMaps/stone1_big.png using Guid(a4c9f1d0b7e820b4da97487ee59c6703) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5de186edd77803cc5ce5def0dd40153e') in 0.017683 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 23.086168 seconds.
-  path: Assets/03_Prefabs/UI/Screens/BottomUI/SkillPrefab.prefab
-  artifactKey: Guid(26ac5e66fd68ac14f990e8233eed5588) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/03_Prefabs/UI/Screens/BottomUI/SkillPrefab.prefab using Guid(26ac5e66fd68ac14f990e8233eed5588) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd5ea2efbb1c01dfb1ce77eb053143bdf') in 0.005706 seconds 
+  Time since last request: 149.828898 seconds.
+  path: Assets/04_Textures/TileMaps/stone1_big.png
+  artifactKey: Guid(a4c9f1d0b7e820b4da97487ee59c6703) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/04_Textures/TileMaps/stone1_big.png using Guid(a4c9f1d0b7e820b4da97487ee59c6703) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2d8f37c5ab78f30bb500dfaf99ed351c') in 0.014115 seconds 
 ========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002668 seconds.
-OnLevelWasLoaded was found on LeanTween
-This message has been deprecated and will be removed in a later version of Unity.
-Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
-
-Begin MonoManager ReloadAssembly
-OnLevelWasLoaded was found on LeanTween
-This message has been deprecated and will be removed in a later version of Unity.
-Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
-
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.14 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.765 seconds
-Platform modules already initialized, skipping
-Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 1.17 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4774 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 266.3 MB.
-System memory in use after: 266.8 MB.
-
-Unloading 62 unused Assets to reduce memory usage. Loaded Objects now: 5411.
-Total: 5.639300 ms (FindLiveObjects: 0.342400 ms CreateObjectMapping: 0.131800 ms MarkObjects: 5.140400 ms  DeleteObjects: 0.024000 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
+Received Import Request.
+  Time since last request: 55.950487 seconds.
+  path: Assets/04_Textures/TileMaps/stone2_Big.png
+  artifactKey: Guid(a2086b241be8ca84c8d6e96cfb6738ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/04_Textures/TileMaps/stone2_Big.png using Guid(a2086b241be8ca84c8d6e96cfb6738ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8a37ebe478276642a05def110f899265') in 0.011529 seconds 
 ========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.003044 seconds.
-OnLevelWasLoaded was found on LeanTween
-This message has been deprecated and will be removed in a later version of Unity.
-Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
-
-Begin MonoManager ReloadAssembly
-OnLevelWasLoaded was found on LeanTween
-This message has been deprecated and will be removed in a later version of Unity.
-Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
-
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.27 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.792 seconds
-Platform modules already initialized, skipping
-Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 2.09 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4774 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 266.1 MB.
-System memory in use after: 266.6 MB.
-
-Unloading 62 unused Assets to reduce memory usage. Loaded Objects now: 5413.
-Total: 5.793000 ms (FindLiveObjects: 0.340900 ms CreateObjectMapping: 0.116700 ms MarkObjects: 5.311100 ms  DeleteObjects: 0.023400 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
+Received Import Request.
+  Time since last request: 55.886324 seconds.
+  path: Assets/04_Textures/TileMaps/stone2_Big.png
+  artifactKey: Guid(a2086b241be8ca84c8d6e96cfb6738ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/04_Textures/TileMaps/stone2_Big.png using Guid(a2086b241be8ca84c8d6e96cfb6738ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '49cb05a48e12598147e814a7928de31c') in 0.019570 seconds 
 ========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.004790 seconds.
-OnLevelWasLoaded was found on LeanTween
-This message has been deprecated and will be removed in a later version of Unity.
-Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
-
-Begin MonoManager ReloadAssembly
-OnLevelWasLoaded was found on LeanTween
-This message has been deprecated and will be removed in a later version of Unity.
-Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
-
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.17 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.774 seconds
-Platform modules already initialized, skipping
-Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 1.20 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4774 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 266.4 MB.
-System memory in use after: 266.8 MB.
-
-Unloading 62 unused Assets to reduce memory usage. Loaded Objects now: 5415.
-Total: 4.902800 ms (FindLiveObjects: 0.280900 ms CreateObjectMapping: 0.129800 ms MarkObjects: 4.469600 ms  DeleteObjects: 0.021800 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
+Received Import Request.
+  Time since last request: 585.457692 seconds.
+  path: Assets/04_Textures/TileMaps
+  artifactKey: Guid(9c25bedefc6e660479442cdba43d664d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/04_Textures/TileMaps using Guid(9c25bedefc6e660479442cdba43d664d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '667644738fbb5160ed1b2be1378117fe') in 0.004207 seconds 
 ========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.003867 seconds.
-OnLevelWasLoaded was found on LeanTween
-This message has been deprecated and will be removed in a later version of Unity.
-Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
-
-Begin MonoManager ReloadAssembly
-OnLevelWasLoaded was found on LeanTween
-This message has been deprecated and will be removed in a later version of Unity.
-Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
-
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.15 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.787 seconds
-Platform modules already initialized, skipping
-Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 1.12 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4774 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 266.4 MB.
-System memory in use after: 266.8 MB.
-
-Unloading 62 unused Assets to reduce memory usage. Loaded Objects now: 5417.
-Total: 5.181500 ms (FindLiveObjects: 0.287500 ms CreateObjectMapping: 0.130600 ms MarkObjects: 4.741100 ms  DeleteObjects: 0.021500 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
+Received Import Request.
+  Time since last request: 23.754429 seconds.
+  path: Assets/04_Textures/TileMaps/stones.psd
+  artifactKey: Guid(484975ac77e61b84888911c885b55aca) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/04_Textures/TileMaps/stones.psd using Guid(484975ac77e61b84888911c885b55aca) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'af531cc25a122643013709567311d031') in 0.018850 seconds 
 ========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.003091 seconds.
-OnLevelWasLoaded was found on LeanTween
-This message has been deprecated and will be removed in a later version of Unity.
-Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
-
-Begin MonoManager ReloadAssembly
-OnLevelWasLoaded was found on LeanTween
-This message has been deprecated and will be removed in a later version of Unity.
-Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
-
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.15 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.768 seconds
-Platform modules already initialized, skipping
-Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 1.25 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4774 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 266.4 MB.
-System memory in use after: 266.8 MB.
-
-Unloading 62 unused Assets to reduce memory usage. Loaded Objects now: 5419.
-Total: 5.304300 ms (FindLiveObjects: 0.327800 ms CreateObjectMapping: 0.216800 ms MarkObjects: 4.738100 ms  DeleteObjects: 0.020700 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
+Received Import Request.
+  Time since last request: 3.374511 seconds.
+  path: Assets/04_Textures/TileMaps/stones.psd
+  artifactKey: Guid(484975ac77e61b84888911c885b55aca) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/04_Textures/TileMaps/stones.psd using Guid(484975ac77e61b84888911c885b55aca) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '700acd2916efaae523635c8846d99398') in 0.021508 seconds 
 ========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002781 seconds.
-OnLevelWasLoaded was found on LeanTween
-This message has been deprecated and will be removed in a later version of Unity.
-Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
+Received Import Request.
+  Time since last request: 6.680561 seconds.
+  path: Assets/04_Textures/TileMaps/stones.psd
+  artifactKey: Guid(484975ac77e61b84888911c885b55aca) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/04_Textures/TileMaps/stones.psd using Guid(484975ac77e61b84888911c885b55aca) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '444ed1c94620a41528c25221d7464b1c') in 0.015962 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 13.727926 seconds.
+  path: Assets/04_Textures/TileMaps/stones.psd
+  artifactKey: Guid(484975ac77e61b84888911c885b55aca) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/04_Textures/TileMaps/stones.psd using Guid(484975ac77e61b84888911c885b55aca) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3da6ea13613e1f20c011c257c925946d') in 0.014609 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 72.773125 seconds.
+  path: Assets/04_Textures/TileMaps/stone1_big.png
+  artifactKey: Guid(a4c9f1d0b7e820b4da97487ee59c6703) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/04_Textures/TileMaps/stone1_big.png using Guid(a4c9f1d0b7e820b4da97487ee59c6703) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '336399299188cddc67404db49f6c0992') in 0.011933 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 30.457961 seconds.
+  path: Assets/04_Textures/TileMaps/stone1_big.png
+  artifactKey: Guid(a4c9f1d0b7e820b4da97487ee59c6703) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/04_Textures/TileMaps/stone1_big.png using Guid(a4c9f1d0b7e820b4da97487ee59c6703) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7c1ab91a08e7b2b329ff6df86c986fe3') in 0.014118 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 35.170235 seconds.
+  path: Assets/04_Textures/TileMaps/stone2_Big.png
+  artifactKey: Guid(a2086b241be8ca84c8d6e96cfb6738ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/04_Textures/TileMaps/stone2_Big.png using Guid(a2086b241be8ca84c8d6e96cfb6738ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '52a29e73262e7a22dbc15e555d9472e6') in 0.010877 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 237.291444 seconds.
+  path: Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_4.prefab
+  artifactKey: Guid(fc2bd94ef89a06b42981118b27c26e50) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_4.prefab using Guid(fc2bd94ef89a06b42981118b27c26e50) Importer(815301076,1909f56bfc062723c751e8b465ee728b) Recursive Serialization is not supported. You can't dereference a PPtr while loading. (Constructors of C# classes may not load objects either. See stacktrace.)
 
-Begin MonoManager ReloadAssembly
-OnLevelWasLoaded was found on LeanTween
-This message has been deprecated and will be removed in a later version of Unity.
-Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
+Serialization depth limit 10 exceeded at 'SkillTree.skillEntries'. There may be an object composition cycle in one or more of your serialized classes.
 
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.16 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.762 seconds
-Platform modules already initialized, skipping
-Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 1.16 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4774 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 266.4 MB.
-System memory in use after: 266.8 MB.
+Serialization hierarchy:
+11: SkillTree.skillEntries
+10: SkillTreeEntry.tree
+9: SkillTree.skillEntries
+8: SkillTreeEntry.tree
+7: SkillTree.skillEntries
+6: SkillTreeEntry.tree
+5: SkillTree.skillEntries
+4: SkillTreeEntry.tree
+3: SkillTree.skillEntries
+2: Game.GameActors.Units.Humans::SkillManager.SkillBuildTrees
+1: Game.GameActors.Units::Unit.SkillManager
+0: Utility::StartPosition.<Actor>k__BackingField
 
-Unloading 62 unused Assets to reduce memory usage. Loaded Objects now: 5421.
-Total: 4.823400 ms (FindLiveObjects: 0.374600 ms CreateObjectMapping: 0.128400 ms MarkObjects: 4.296600 ms  DeleteObjects: 0.022800 ms)
+Recursive Serialization is not supported. You can't dereference a PPtr while loading. (Constructors of C# classes may not load objects either. See stacktrace.)
 
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
+Serialization depth limit 10 exceeded at 'SkillTreeEntry.skillBp'. There may be an object composition cycle in one or more of your serialized classes.
+
+Serialization hierarchy:
+11: SkillTreeEntry.skillBp
+10: SkillTree.skillEntries
+9: SkillTreeEntry.tree
+8: SkillTree.skillEntries
+7: SkillTreeEntry.tree
+6: SkillTree.skillEntries
+5: SkillTreeEntry.tree
+4: SkillTree.skillEntries
+3: SkillTreeEntry.tree
+2: SkillTree.skillEntries
+1: Game.GameActors.Units.Humans::SkillManager.SkillBuildTrees
+0: Game.GameActors.Units::UnitBP.SkillManager
+
+Serialization depth limit 10 exceeded at 'SkillTreeEntry.skillBp'. There may be an object composition cycle in one or more of your serialized classes.
+
+Serialization hierarchy:
+11: SkillTreeEntry.skillBp
+10: SkillTree.skillEntries
+9: SkillTreeEntry.tree
+8: SkillTree.skillEntries
+7: SkillTreeEntry.tree
+6: SkillTree.skillEntries
+5: SkillTreeEntry.tree
+4: SkillTree.skillEntries
+3: SkillTreeEntry.tree
+2: SkillTree.skillEntries
+1: SkillTreeEntry.tree
+0: SkillTree.skillEntries
+
+Serialization depth limit 10 exceeded at 'SkillTree.skillEntries'. There may be an object composition cycle in one or more of your serialized classes.
+
+Serialization hierarchy:
+11: SkillTree.skillEntries
+10: SkillTreeEntry.tree
+9: SkillTree.skillEntries
+8: SkillTreeEntry.tree
+7: SkillTree.skillEntries
+6: SkillTreeEntry.tree
+5: SkillTree.skillEntries
+4: Game.GameActors.Units.Humans::SkillManager.SkillBuildTrees
+3: Game.GameActors.Units::Unit.SkillManager
+2: Game.WorldMapStuff.Model::Party.members
+1: Game.GameActors.Players::Faction.party
+0: Game.GameActors.Players::Destroyable.<Faction>k__BackingField
+
+Serialization depth limit 10 exceeded at 'SkillTree.skillEntries'. There may be an object composition cycle in one or more of your serialized classes.
+
+Serialization hierarchy:
+11: SkillTree.skillEntries
+10: SkillTreeEntry.tree
+9: SkillTree.skillEntries
+8: SkillTreeEntry.tree
+7: SkillTree.skillEntries
+6: SkillTreeEntry.tree
+5: SkillTree.skillEntries
+4: SkillTreeEntry.tree
+3: SkillTree.skillEntries
+2: Game.GameActors.Units.Humans::SkillManager.SkillBuildTrees
+1: Game.GameActors.Units::Unit.SkillManager
+0: Game.GameActors.Units.OnGameObject::UnitAnimator.unit
+
+ -> (artifact id: '7a1acb68a2a37fa8fd3e202e0181b3c4') in 1.124851 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.653321 seconds.
+  path: Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_4 1.prefab
+  artifactKey: Guid(c61c7caaadd65e44085823549fc18e2f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_4 1.prefab using Guid(c61c7caaadd65e44085823549fc18e2f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4cce314758371285db3bf82a5971e101') in 0.103202 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.682009 seconds.
+  path: Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_5.prefab
+  artifactKey: Guid(c61c7caaadd65e44085823549fc18e2f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/03_Prefabs/BattleMaps/Level1_DeadForest_Encounter_Small1_5.prefab using Guid(c61c7caaadd65e44085823549fc18e2f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2ba0202247c473c10fd6a857a59ea3f8') in 0.093619 seconds 
