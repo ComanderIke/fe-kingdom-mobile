@@ -8,7 +8,7 @@ namespace GameCamera
     {
         private int currentZoom = -1;
         [SerializeField]
-        private float maxZoom=3.5f;
+        private float maxZoom=5.5f;
         [SerializeField]
         private float minZoom=1.5f;
         [SerializeField]
