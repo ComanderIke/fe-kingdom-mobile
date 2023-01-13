@@ -6,6 +6,7 @@ using __2___Scripts.Game.Areas;
 using Audio;
 using Effects;
 using Game.GameActors.Players;
+using Game.GameResources;
 using Game.GUI;
 using Game.Manager;
 using Game.Mechanics;
@@ -106,8 +107,14 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
             FindObjectOfType<AudioSystem>(),
             new BattleSystem(),
             new UnitProgressSystem(Player.Instance.Party),
+            new SkillSystem(GameBPData.Instance.SkillGenerationConfig,FindObjectsOfType<MonoBehaviour>().OfType<ISkillUIRenderer>().First()),
         };
         InjectDependencies();
+        foreach (var system in Systems)
+        {
+            system.Init();
+            system.Activate();
+        }
     }
 
     private void InjectDependencies()
@@ -156,7 +163,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         partyGameObjects.Add( go.GetComponent<EncounterPlayerUnitController>());
         foreach (var member in Player.Instance.Party.members)
         {
-            Debug.Log("Party Member: "+member);
+         
             if (member == activeUnit)
                 continue;
             
@@ -242,6 +249,8 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
 
             
         }
+
+        EncounterTree.Instance.SetAllNodesMoveable(false);
         foreach (var child in Player.Instance.Party.EncounterComponent.EncounterNode.children)
         {
             child.SetMoveable(false);
@@ -318,7 +327,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         }
         if (encounterNode.moveable)
         {
-
+            Debug.Log("Movable Encounter");
             ToolTipSystem.ShowEncounter(encounterNode, encounterNode.gameObject.transform.position+new Vector3(2,0,0), true, MoveClicked);
             foreach (var road in Player.Instance.Party.EncounterComponent.EncounterNode.roads)
             {
@@ -332,6 +341,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         }
         else
         {
+            Debug.Log("Unmovable Encounter");
             ToolTipSystem.ShowEncounter(encounterNode, encounterNode.gameObject.transform.position+new Vector3(2,0,0), false, null);
         }
     }
@@ -382,7 +392,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     }
     private void ShowMovedRoads()
     {
-        Debug.Log("============================ShowMovedRoads!");
+    
         for( int i= Player.Instance.Party.EncounterComponent.MovedEncounters.Count-2; i >=0; i--)
         {
             Road road = Player.Instance.Party.EncounterComponent.MovedEncounters[i].GetRoad(Player.Instance.Party.EncounterComponent.MovedEncounters[i + 1]);

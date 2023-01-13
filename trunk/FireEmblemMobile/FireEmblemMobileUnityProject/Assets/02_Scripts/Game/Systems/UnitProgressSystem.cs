@@ -72,6 +72,7 @@ namespace Game.Mechanics
         
         public void Init()
         {
+            
             skillSystem = ServiceProvider.Instance.GetSystem<SkillSystem>();
             Unit.OnExpGained += Expgained;
             Unit.OnLevelUp += OnLevelUp;

@@ -11,6 +11,6 @@ public class Reward
     [FormerlySerializedAs("skill")] public SkillBP skillBp;
     public BlessingBP blessingBp;
     public int gold;
-    public int smithingStones;
     public int experience;
+    public int grace;
 }

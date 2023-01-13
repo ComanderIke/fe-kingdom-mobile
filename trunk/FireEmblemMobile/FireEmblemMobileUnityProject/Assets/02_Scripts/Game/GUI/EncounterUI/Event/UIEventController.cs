@@ -90,7 +90,7 @@ public class UIEventController : MonoBehaviour
     public void OptionClicked(TextOptionController textOptionController)
     {
         current = textOptionController.Option;
-        if (current.reward != null)
+        if (current.reward.gold != 0||current.reward.experience!=0||current.reward.grace!=0)
         {
             Player.Instance.Party.AddGold(current.reward.gold);
             //Player.Instance.Party.AddSmithingStones(current.reward.smithingStones);

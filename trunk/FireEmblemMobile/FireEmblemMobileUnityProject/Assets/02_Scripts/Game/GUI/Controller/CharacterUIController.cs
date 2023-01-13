@@ -17,6 +17,7 @@ namespace Game.GUI
     {
         // [SerializeField]
         // private UIStatPanel statPanel;
+        [SerializeField] private Animator animator;
         [SerializeField]
         private Image faceSprite;
         [SerializeField]
@@ -43,6 +44,7 @@ namespace Game.GUI
         [SerializeField] private ExpBarController expBar = default;
         // [SerializeField] private TextMeshProUGUI expLabel = default;
         [FormerlySerializedAs("unitBp")] public Unit unit;
+        private static readonly int Alive = Animator.StringToHash("Alive");
 
 
         private void Start()
@@ -53,13 +55,16 @@ namespace Game.GUI
         public void ShowActive(Unit unit)
         {
             this.unit = unit;
-          
+            unit.HpValueChanged -= UpdateValues;
+            unit.HpValueChanged += UpdateValues;
+            unit.ExperienceManager.ExpGained -= UpdateExp;
+            unit.ExperienceManager.ExpGained += UpdateExp;
             UpdateValues();
             gameObject.SetActive(true);
             GetComponent<RectTransform>().sizeDelta = selectedSize;
             expBar.GetComponent<RectTransform>().sizeDelta = selectedSizeBars;
             hpBar.GetComponent<RectTransform>().sizeDelta = selectedSizeBars;
-            
+            animator.SetBool(Alive, unit.IsAlive());
             //GameplayInput.SelectUnit(unit);
            
             
@@ -77,8 +82,10 @@ namespace Game.GUI
             GetComponent<RectTransform>().sizeDelta = normalSize;
             expBar.GetComponent<RectTransform>().sizeDelta = normalSizeBars;
             hpBar.GetComponent<RectTransform>().sizeDelta = normalSizeBars;
-           
             
+            animator.SetBool(Alive, unit.IsAlive());
+
+
         }
 
         private void UpdateExp(int expbefore, int expgained)
@@ -141,6 +148,7 @@ namespace Game.GUI
             // Debug.Log("FS: "+unit.visuals.CharacterSpriteSet.FaceSprite);
             if(unit.visuals.CharacterSpriteSet!=null)
                 faceSprite.sprite = unit.visuals.CharacterSpriteSet.FaceSprite;
+            animator.SetBool(Alive, unit.IsAlive());
         }
 
         public RectTransform GetUnitParticleAttractorTransform()

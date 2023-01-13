@@ -26,6 +26,7 @@ public class EncounterToolTip:MonoBehaviour
 
     public void MoveClicked()
     {
+        Debug.Log("MOVE CLICKED");
         gameObject.SetActive(false);
         moveClicked?.Invoke(encounterNode);
     }

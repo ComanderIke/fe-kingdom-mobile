@@ -28,7 +28,7 @@ namespace LostGrace
         public override List<EffectDescription> GetEffectDescription()
         {
             var list = new List<EffectDescription>();
-            list.Add(new EffectDescription("Activation rate: ", procChance.ToString()));
+            list.Add(new EffectDescription("Activation rate: ", (procChance*100f)+"%"));
             return list;
         }
         public override void BindSkill(Unit unit)

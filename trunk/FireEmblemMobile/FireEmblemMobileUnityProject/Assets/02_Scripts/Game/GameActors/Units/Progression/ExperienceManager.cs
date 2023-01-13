@@ -54,6 +54,8 @@ namespace Game.GameActors.Units
 
         public bool AddExp(int exp)
         {
+            if (exp == 0)
+                return false;
             if (exp > MAX_EXP)
                 exp = MAX_EXP;
             ExpGained?.Invoke(Exp, exp);

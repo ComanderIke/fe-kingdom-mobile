@@ -15,7 +15,7 @@ MonoBehaviour:
   equippedWeaponBp: {fileID: 11400000, guid: 83e1761a127b1a54ca3c98ca2850f24a, type: 2}
   EquippedRelic1: {fileID: 0}
   EquippedRelic2: {fileID: 0}
-  Name: Ranger
+  Name: Selena
   stats:
     AttackRanges: 02000000
     BaseAttributes:
@@ -27,6 +27,15 @@ MonoBehaviour:
       lck: 3
       def: 3
       faith: 3
+    BonusStats:
+      <Hit>k__BackingField: 0
+      <Avoid>k__BackingField: 0
+      <CritAvoid>k__BackingField: 0
+      <Crit>k__BackingField: 0
+      <AttackSpeed>k__BackingField: 0
+      <Armor>k__BackingField: 0
+      <MagicResistance>k__BackingField: 0
+      <Attack>k__BackingField: 0
     Mov: 3
   growths:
     str: 0
@@ -52,7 +61,7 @@ MonoBehaviour:
       currentDepth: 0
       skillEntries: []
   rpgClass: 0
-  bluePrintID: 
+  bluePrintID: Ranger
   visuals:
     CharacterSpriteSet: {fileID: 11400000, guid: 15c6559b2ce48d548a45dc0c7b7ffba6,
       type: 2}
@@ -69,4 +78,5 @@ MonoBehaviour:
   experienceManager:
     level: 1
     exp: 0
-    MaxExp: 100
+    drainableExp: 100
+    expLeftToDrain: 100

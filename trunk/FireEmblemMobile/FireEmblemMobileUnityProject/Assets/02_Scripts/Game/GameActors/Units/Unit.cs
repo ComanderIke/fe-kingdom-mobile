@@ -334,6 +334,7 @@ namespace Game.GameActors.Units
             return EquippedRelic1 == item || (EquippedRelic2 == item || equippedWeapon == item);
         }
 
+       
         public void UnEquip(EquipableItem item)
         {
             if (equippedWeapon == item)
@@ -349,6 +350,7 @@ namespace Game.GameActors.Units
             {
                 EquippedRelic2 = null;
             }
+            OnUnitDataChanged?.Invoke(this);
         }
         public bool CanUseWeapon(Weapon w)
         {
@@ -368,6 +370,7 @@ namespace Game.GameActors.Units
                     Equip((Relic)e);
                     break;
             }
+            OnUnitDataChanged?.Invoke(this);
         }
 
         public void Equip(Relic r)
@@ -549,6 +552,18 @@ namespace Game.GameActors.Units
         public void RemoveDebuffs()
         {
             Debug.Log("TODO Remove Debuffs");
+        }
+
+        public void RemoveCurseBless(CurseBlessBase curseBlessBase)
+        {
+            if (curseBlessBase is Curse curse)
+            {
+                RemoveCurse(curse);
+            }
+            else  if (curseBlessBase is Blessing blessing)
+            {
+                RemoveBlessing(blessing);
+            }
         }
     }
 }

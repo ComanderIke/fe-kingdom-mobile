@@ -25,14 +25,12 @@ public class ItemToolTip : MonoBehaviour
     public TextMeshProUGUI useButtonText;
     public Button dropButton;
     private Item item;
+    [SerializeField]
     private RectTransform rectTransform;
     private Unit itemOwner;
     public LayoutElement frame;
     // Start is called before the first frame update
-    private void Start()
-    {
-        rectTransform = GetComponent<RectTransform>();
-    }
+  
 
     // Update is called once per frame
     private void Update()
@@ -174,7 +172,7 @@ public class ItemToolTip : MonoBehaviour
 
         descriptionText.text = description;
         itemIcon.sprite = icon;
-        transform.position = position+ new Vector3(0,200,0);
+        rectTransform.anchoredPosition = position+ new Vector3(0,200,0);
         UpdateTextWrap(position);
 
     }

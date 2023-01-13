@@ -10,9 +10,8 @@ using UnityEngine.Serialization;
 
 public class EncounterUIController : MonoBehaviour
 {
-    [FormerlySerializedAs("Gold")] public UIRessourceAmount ressourceAmount;
-    public TextMeshProUGUI SmithingStones;
-
+    [FormerlySerializedAs("Gold")] public UIRessourceAmount goldAmount;
+    public UIRessourceAmount graceAmount;
     public UIInnController UIInnController;
     public UISmithyController UISmithyController;
     public UIChurchController UIChurchController;
@@ -25,7 +24,9 @@ public class EncounterUIController : MonoBehaviour
     {
         this.party = party;
         party.onGoldChanged += GoldChanged;
+        party.onGraceChanged += GraceChanged;
         GoldChanged(party.Money);
+        GraceChanged(party.CollectedGrace);
 
     }
 
@@ -34,12 +35,17 @@ public class EncounterUIController : MonoBehaviour
         if (party != null)
         {
             party.onGoldChanged -= GoldChanged;
+            party.onGraceChanged -= GraceChanged;
         }
     }
 
     void GoldChanged(int gold)
     {
-        ressourceAmount.Amount = gold;
+        goldAmount.Amount = gold;
+    }
+    void GraceChanged(int grace)
+    {
+        graceAmount.Amount = grace;
     }
 
     public void UpdateUIScreens()

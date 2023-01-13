@@ -45,7 +45,6 @@ namespace __2___Scripts.Game.Areas
                 line.gameObject.transform.DeleteChildren();
                 if (moveable)
                 {
-                    Debug.Log(transform.parent.name);
                     var go = Instantiate(ConnectionArrowPrefab, line.gameObject.transform);
                     var startPos = start.gameObject.transform.position;
                     var endPos = end.gameObject.transform.position;

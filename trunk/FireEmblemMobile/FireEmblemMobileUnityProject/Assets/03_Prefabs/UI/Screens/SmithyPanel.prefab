@@ -4149,6 +4149,7 @@ GameObject:
   - component: {fileID: 9210875335470263176}
   - component: {fileID: 6806144491482634905}
   - component: {fileID: 2571513377078863580}
+  - component: {fileID: 1284938303}
   m_Layer: 5
   m_Name: StoneCost
   m_TagString: Untagged
@@ -4168,14 +4169,14 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3472884433903905954}
-  m_Father: {fileID: 4636016866387280410}
-  m_RootOrder: 7
+  m_Father: {fileID: 4636016865446034742}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -146, y: -171}
-  m_SizeDelta: {x: 328.3, y: 78.9}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: -62.7, y: 0.000015258789}
+  m_SizeDelta: {x: 19.86, y: 65.48}
+  m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &6806144491482634905
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4269,12 +4270,30 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 1
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 71.60913, y: 0, z: 148.10059, w: 0}
+  m_margin: {x: 0.39273837, y: 0, z: -0.570153, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1284938303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3373516912260687539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92ac42cfcf97ffe40a8ea600ece450ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Text: {fileID: 2571513377078863580}
+  ResizeTextObject: 1
+  Padding: {x: 0, y: 0}
+  MaxSize: {x: 1000, y: Infinity}
+  MinSize: {x: 0, y: 0}
+  ControlAxes: 1
 --- !u!1 &4084018307474088027
 GameObject:
   m_ObjectHideFlags: 0
@@ -4518,9 +4537,9 @@ RectTransform:
   m_Father: {fileID: 4636016865446034742}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 27.2, y: -2.7}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 12.700001, y: -2.7}
   m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &4636016864819584813
@@ -5186,6 +5205,7 @@ GameObject:
   - component: {fileID: 4636016865446034742}
   - component: {fileID: 4636016865446034737}
   - component: {fileID: 4636016865446034736}
+  - component: {fileID: 1527910033}
   m_Layer: 5
   m_Name: CostText
   m_TagString: Untagged
@@ -5205,14 +5225,15 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4636016864819584815}
+  - {fileID: 9210875335470263176}
   m_Father: {fileID: 4636016866387280410}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -17.500061, y: -171}
-  m_SizeDelta: {x: 328.3, y: 78.9}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 4, y: -171}
+  m_SizeDelta: {x: 60.69, y: 65.48}
+  m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &4636016865446034737
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5306,12 +5327,30 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 1
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 71.60913, y: 0, z: 148.10059, w: 0}
+  m_margin: {x: 1.1986009, y: 0, z: -2.0395298, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1527910033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4636016865446034739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92ac42cfcf97ffe40a8ea600ece450ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Text: {fileID: 4636016865446034736}
+  ResizeTextObject: 1
+  Padding: {x: 0, y: 0}
+  MaxSize: {x: 1000, y: Infinity}
+  MinSize: {x: 0, y: 0}
+  ControlAxes: 1
 --- !u!1 &4636016865538200846
 GameObject:
   m_ObjectHideFlags: 0
@@ -5785,9 +5824,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.54901963, g: 1, b: 0.4, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.54901963, g: 1, b: 0.4, a: 1}
+    m_PressedColor: {r: 0.39933127, g: 0.7264151, b: 0.29125133, a: 1}
+    m_SelectedColor: {r: 0.54901963, g: 1, b: 0.4, a: 1}
     m_DisabledColor: {r: 1, g: 0.1023622, b: 0, a: 0.68235296}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -6473,7 +6512,6 @@ RectTransform:
   - {fileID: 4636016866142856012}
   - {fileID: 3704174051814437047}
   - {fileID: 6358061292411962689}
-  - {fileID: 9210875335470263176}
   m_Father: {fileID: 8691972407292437015}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6547,16 +6585,19 @@ MonoBehaviour:
   relicSection: {fileID: 7165507060215144258}
   relicEffectCurrent: {fileID: 0}
   buttonText: {fileID: 4636016865357494184}
-  sellColor: {r: 0, g: 0, b: 0, a: 0}
-  sellColorPressed: {r: 0, g: 0, b: 0, a: 0}
-  buyColor: {r: 0, g: 0, b: 0, a: 0}
-  buyColorPressed: {r: 0, g: 0, b: 0, a: 0}
+  sellColor: {r: 0.8962264, g: 0.2325116, b: 0.2325116, a: 1}
+  sellColorPressed: {r: 0.745283, g: 0.20741367, b: 0.20741367, a: 1}
+  buyColor: {r: 0.5479108, g: 1, b: 0.4009434, a: 1}
+  buyColorPressed: {r: 0.39933127, g: 0.7264151, b: 0.29125133, a: 1}
   weightAfter: {fileID: 795091496256972010}
   hitAfter: {fileID: 1942048235546805582}
   dmgAfter: {fileID: 1886220184430513529}
   critAfter: {fileID: 2604091521736719129}
   effectAfter: {fileID: 4636016866040556135}
   stoneCost: {fileID: 2571513377078863580}
+  cost2Icon: {fileID: 2571857676363942982}
+  stoneIcon: {fileID: 21300000, guid: 73c3bce8a89576341b8021555ea29eae, type: 3}
+  dragonScaleIcon: {fileID: 21300000, guid: e0ee06a893427234ebc5fdf8f20b5c95, type: 3}
   relicEffectAfter: {fileID: 2180197513218935522}
 --- !u!1 &4844149031364910092
 GameObject:
@@ -6590,9 +6631,9 @@ RectTransform:
   m_Father: {fileID: 9210875335470263176}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 27.2, y: -2.7}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 9.9, y: -2.699997}
   m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &1844354919397439108
@@ -6623,8 +6664,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 6645095052196953757, guid: 4bf42519960baf64f81608dc121553db,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: 73c3bce8a89576341b8021555ea29eae, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -8920,7 +8960,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8691972407292437000}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 2
   m_Camera: {fileID: 0}
@@ -8971,7 +9011,6 @@ MonoBehaviour:
     Convoy:
       startItems: []
       items: []
-    smithingStones: 2
   combineGemUI: {fileID: 1688887028}
   insertGemUI: {fileID: 5115583286181994290}
   smithingArea: {fileID: 8225214904420386892}
@@ -9424,6 +9463,12 @@ PrefabInstance:
       objectReference: {fileID: 8691972407292437012}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71968faf9bb72064198d22c6c97c8fa9, type: 3}
+--- !u!224 &505862873 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4143466966685918685, guid: 71968faf9bb72064198d22c6c97c8fa9,
+    type: 3}
+  m_PrefabInstance: {fileID: 4143466966717824772}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8665374793354268679 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4738091606560124675, guid: 71968faf9bb72064198d22c6c97c8fa9,
@@ -9436,12 +9481,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e889d4ba65974abea3cadf2aa8dee18c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &505862873 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4143466966685918685, guid: 71968faf9bb72064198d22c6c97c8fa9,
-    type: 3}
-  m_PrefabInstance: {fileID: 4143466966717824772}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6207068252102947465
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10247,15 +10286,15 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 7626247200117925601, guid: 2a1f3bb4b3401254cbb63b3e6bb11502, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2a1f3bb4b3401254cbb63b3e6bb11502, type: 3}
---- !u!224 &6313787751284221658 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3404442420802445366, guid: 2a1f3bb4b3401254cbb63b3e6bb11502,
-    type: 3}
-  m_PrefabInstance: {fileID: 8691972406798010092}
-  m_PrefabAsset: {fileID: 0}
 --- !u!225 &384648517940313464 stripped
 CanvasGroup:
   m_CorrespondingSourceObject: {fileID: 9076614791518698388, guid: 2a1f3bb4b3401254cbb63b3e6bb11502,
+    type: 3}
+  m_PrefabInstance: {fileID: 8691972406798010092}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &6313787751284221658 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3404442420802445366, guid: 2a1f3bb4b3401254cbb63b3e6bb11502,
     type: 3}
   m_PrefabInstance: {fileID: 8691972406798010092}
   m_PrefabAsset: {fileID: 0}
@@ -10561,20 +10600,20 @@ PrefabInstance:
     - target: {fileID: 9076614791518698388, guid: 2a1f3bb4b3401254cbb63b3e6bb11502,
         type: 3}
       propertyPath: m_Alpha
-      value: 0.6
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7626247200117925601, guid: 2a1f3bb4b3401254cbb63b3e6bb11502, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2a1f3bb4b3401254cbb63b3e6bb11502, type: 3}
---- !u!225 &384648518842838221 stripped
-CanvasGroup:
-  m_CorrespondingSourceObject: {fileID: 9076614791518698388, guid: 2a1f3bb4b3401254cbb63b3e6bb11502,
-    type: 3}
-  m_PrefabInstance: {fileID: 8691972406963001177}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &6313787752193570671 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3404442420802445366, guid: 2a1f3bb4b3401254cbb63b3e6bb11502,
+    type: 3}
+  m_PrefabInstance: {fileID: 8691972406963001177}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &384648518842838221 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 9076614791518698388, guid: 2a1f3bb4b3401254cbb63b3e6bb11502,
     type: 3}
   m_PrefabInstance: {fileID: 8691972406963001177}
   m_PrefabAsset: {fileID: 0}
@@ -11032,18 +11071,23 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9076614791518698388, guid: 2a1f3bb4b3401254cbb63b3e6bb11502,
+        type: 3}
+      propertyPath: m_Alpha
+      value: 0.6
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7626247200117925601, guid: 2a1f3bb4b3401254cbb63b3e6bb11502, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2a1f3bb4b3401254cbb63b3e6bb11502, type: 3}
---- !u!225 &384648519014417110 stripped
-CanvasGroup:
-  m_CorrespondingSourceObject: {fileID: 9076614791518698388, guid: 2a1f3bb4b3401254cbb63b3e6bb11502,
-    type: 3}
-  m_PrefabInstance: {fileID: 8691972407872403778}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &6313787752358369652 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3404442420802445366, guid: 2a1f3bb4b3401254cbb63b3e6bb11502,
+    type: 3}
+  m_PrefabInstance: {fileID: 8691972407872403778}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &384648519014417110 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 9076614791518698388, guid: 2a1f3bb4b3401254cbb63b3e6bb11502,
     type: 3}
   m_PrefabInstance: {fileID: 8691972407872403778}
   m_PrefabAsset: {fileID: 0}

@@ -11,6 +11,6 @@ public class AttributeToolTip : MonoBehaviour
         this.header.text = header;
         this.description.text = description;
         this.value.text = ""+value;
-        transform.position = position+ new Vector3(0,100,0);
+        GetComponent<RectTransform>().anchoredPosition= position+ new Vector3(0,100,0);
     }
 }

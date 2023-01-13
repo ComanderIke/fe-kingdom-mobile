@@ -15,11 +15,13 @@ namespace Game.WorldMapStuff.Model
     {
 
         public event Action<int> onGoldChanged;
+        public event Action<int> onGraceChanged;
         [SerializeField] public List<Unit> members;
       
         public static Action<Party> PartyDied;
         [SerializeField] int maxSize = 4;
         [SerializeField] private int money = default;
+        [SerializeField] private int collectedGrace = default;
 
         
         public int MaxSize
@@ -62,8 +64,25 @@ namespace Game.WorldMapStuff.Model
             }
             set
             {
+                if (value == money)
+                    return;
                 money = value;
                 onGoldChanged?.Invoke(money);
+            }
+        }
+        public int CollectedGrace
+        {
+            get
+            {
+                return collectedGrace;
+            }
+            set
+            {
+                if (value == collectedGrace)
+                    return;
+                collectedGrace = value;
+                
+                onGraceChanged?.Invoke(collectedGrace);
             }
         }
 
@@ -86,6 +105,7 @@ namespace Game.WorldMapStuff.Model
         }
 
         public List<Unit> DeadCharacters { get; set; }
+        
 
         private void OnEnable()
         {
@@ -148,7 +168,12 @@ namespace Game.WorldMapStuff.Model
 
         public void AddGold(int gold)
         {
+            
             Money += gold;
+        }
+        public void AddGrace(int grace)
+        {
+            CollectedGrace += grace;
         }
         
         public void RemoveMember(Unit unit)
@@ -201,5 +226,7 @@ namespace Game.WorldMapStuff.Model
         {
             throw new NotImplementedException();
         }
+
+       
     }
 }

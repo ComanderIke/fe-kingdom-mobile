@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.Manager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -15,13 +16,19 @@ public class EncounterNodeClickController : MonoBehaviour
         EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
         return results.Count > 0;
     }
+   
     private void OnMouseDown()
     {
         if (!IsPointerOverUIObject())
         {
-           
-            FindObjectOfType<AreaGameManager>().NodeClicked(encounterNode);
+           ServiceProvider.Instance.StartChildCoroutine(DelayBy1Frame(()=>  FindObjectOfType<AreaGameManager>().NodeClicked(encounterNode)));
+          
         }
-        Debug.Log("Hello");
+    }
+
+    IEnumerator DelayBy1Frame(Action action)
+    {
+        yield return null;
+        action?.Invoke();
     }
 }

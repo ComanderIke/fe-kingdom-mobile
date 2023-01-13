@@ -9,12 +9,11 @@ namespace LostGrace
     public class SkillsUI : MonoBehaviour
     {
         [SerializeField] private GameObject skillButtonPrefab;
-        [SerializeField] private GameObject addSkillButtonPrefab;
-       
+
 
         private List<GameObject> instantiatedButtons;
 
-        public void Show(List<Skill> skills, int skillPoints)
+        public void Show(List<Skill> skills)
         {
             transform.DeleteAllChildren();
             foreach (var skill in skills)

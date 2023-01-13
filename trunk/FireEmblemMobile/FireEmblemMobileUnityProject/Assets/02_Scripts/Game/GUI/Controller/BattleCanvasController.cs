@@ -32,7 +32,7 @@ public class BattleCanvasController : MonoBehaviour
        
         width =canvas.pixelRect.width/canvas.scaleFactor;
         height = fixedheight; //canvas.pixelRect.height/canvas.scaleFactor;
-        Debug.Log("width: "+width+" height: "+height);
+      
         rawImageRect.sizeDelta = new Vector2(width, height);
         rawCharImageRect.sizeDelta = new Vector2(width, height);
         //RenderTexture.width =(int) width;

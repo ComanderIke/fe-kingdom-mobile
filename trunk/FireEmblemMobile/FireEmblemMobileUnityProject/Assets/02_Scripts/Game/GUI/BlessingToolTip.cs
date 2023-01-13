@@ -16,16 +16,11 @@ namespace LostGrace
            public GameObject extraEffectPrefab;
            public Transform extraEffectParent;
            public Image skillIcon;
-           
-           private Blessing blessing;
+           [SerializeField]
            private RectTransform rectTransform;
            public LayoutElement frame;
            public int characterWrapLimit;
            public LayoutElement layoutElement;
-           private void Start()
-           {
-               rectTransform = GetComponent<RectTransform>();
-           }
 
            // Update is called once per frame
            private void Update()
@@ -58,9 +53,8 @@ namespace LostGrace
            {
                gameObject.SetActive(false);
            }
-           public void SetValues(Blessing blessing, string header, string description,Sprite icon, Vector3 position)
+           public void SetValues(CurseBlessBase blessing, string header, string description,Sprite icon, Vector3 position)
            {
-               this.blessing = blessing;
                if (string.IsNullOrEmpty(header))
                {
                    headerText.gameObject.SetActive(false);
@@ -93,7 +87,7 @@ namespace LostGrace
                    extraEffectParent.gameObject.SetActive(false);
                    extraEffectParent.DeleteAllChildren();
                }
-               
+               rectTransform.anchoredPosition = position+ new Vector3(0,200,0);
                UpdateTextWrap(position);
        
            }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.WorldMapStuff.Model;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
@@ -16,6 +17,7 @@ namespace LostGrace
         [SerializeField] private Canvas sortingCanvas;
         [SerializeField] private Canvas charViewCanvas;
         [SerializeField] private CanvasGroup speechBubbleCanvasGroup;
+        [SerializeField] private TextMeshProUGUI speechBubbleText;
         [SerializeField] private CanvasGroup charCirclesCanvasGroup;
       
         [SerializeField] private CanvasGroup charViewCanvasGroup;
@@ -40,6 +42,15 @@ namespace LostGrace
             StartCoroutine(ShowCoroutine());
           
           
+        }
+
+        private void Update()
+        {
+            int remaining = Player.Instance.startPartyMemberCount - Player.Instance.Party.members.Count;
+            if(remaining>0)
+                speechBubbleText.text = "Select " + remaining + " more...";
+            else
+                speechBubbleText.text = "You are ready to go!";
         }
 
         IEnumerator ShowCoroutine()

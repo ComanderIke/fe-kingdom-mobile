@@ -11,8 +11,8 @@ namespace LostGrace
     public class UIRessourceAmount : MonoBehaviour
     {
         [SerializeField] private UIAnimatedCountingText countingText;
-        [FormerlySerializedAs("goldEarnedEffect")] [SerializeField] private ParticleSystem earnedEffect;
-        [FormerlySerializedAs("goldLostEffect")] [SerializeField] private ParticleSystem lostEffect;
+        [SerializeField] private ParticleSystem earnedEffect;
+        [SerializeField] private ParticleSystem lostEffect;
         
         private int amount;
         private bool init = true;

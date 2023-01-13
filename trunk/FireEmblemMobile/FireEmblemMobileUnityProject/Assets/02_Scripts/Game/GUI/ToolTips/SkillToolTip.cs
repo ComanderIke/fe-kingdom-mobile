@@ -11,13 +11,11 @@ public class SkillToolTip : MonoBehaviour
 
 
     private Skill skill;
+    [SerializeField]
     private RectTransform rectTransform;
 
     // Start is called before the first frame update
-    private void Start()
-    {
-        rectTransform = GetComponent<RectTransform>();
-    }
+    
 
     // Update is called once per frame
     private void Update()
@@ -30,7 +28,7 @@ public class SkillToolTip : MonoBehaviour
     void UpdateTextWrap(Vector3 position)
     {
 
-        transform.position = position+ new Vector3(0,100,0);
+       // transform.position = position+ new Vector3(0,100,0);
     }
 
     public void ExitClicked()
@@ -52,7 +50,7 @@ public class SkillToolTip : MonoBehaviour
 
         descriptionText.text = description;
         skillIcon.sprite = icon;
-        
+        rectTransform.anchoredPosition=position+ new Vector3(0,150,0);
         UpdateTextWrap(position);
 
     }

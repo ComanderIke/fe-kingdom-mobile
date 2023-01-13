@@ -336,4 +336,15 @@ public class EncounterTree
 
         return null;
     }
+
+    public void SetAllNodesMoveable(bool movable)
+    {
+        foreach (var c in columns)
+        {
+            foreach (var node in c.children)
+            {
+                node.SetMoveable(movable);
+            }
+        }
+    }
 }

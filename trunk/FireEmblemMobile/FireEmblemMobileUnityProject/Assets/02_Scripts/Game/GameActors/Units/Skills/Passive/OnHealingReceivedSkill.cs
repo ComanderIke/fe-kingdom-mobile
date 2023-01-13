@@ -41,7 +41,7 @@ namespace LostGrace
         public override List<EffectDescription> GetEffectDescription()
         {
             var list = new List<EffectDescription>();
-            list.Add(new EffectDescription("Heal Multiplier: ", healMult.ToString()));
+            list.Add(new EffectDescription("Heal Multiplier: ", ""+healMult));
             return list;
         }
         public override void BindSkill(Unit unit)

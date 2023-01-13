@@ -82,6 +82,14 @@ namespace __2___Scripts.External.Editor
                 {
                     Player.Instance.Party.AddGold(-50);
                 }
+                if (GUILayout.Button("+50 Grace"))
+                {
+                    Player.Instance.Party.AddGrace(50);
+                }
+                if (GUILayout.Button("-50 Grace"))
+                {
+                    Player.Instance.Party.AddGrace(-50);
+                }
                 if (GUILayout.Button("+30 EXP"))
                 {
                     activeUnit.ExperienceManager.AddExp(30);

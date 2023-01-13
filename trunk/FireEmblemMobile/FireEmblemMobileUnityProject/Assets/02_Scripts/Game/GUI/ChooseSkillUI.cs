@@ -22,6 +22,7 @@ public class ChooseSkillUI : MonoBehaviour, ISkillUIRenderer
     public event Action onSkill2Chosen;
     public event Action onSkill3Chosen;
     public Action OnFinished { get; set; }
+    [SerializeField] private SkillsUI skillsUI;
     
     [SerializeField] private Animator uIIdleAnimation;
     [SerializeField] private ChooseSkillButtonUI chooseSkill1;
@@ -39,6 +40,7 @@ public class ChooseSkillUI : MonoBehaviour, ISkillUIRenderer
         chooseSkill3.SetSkill(skill3, unit);
         TweenUtility.FadeIn(canvasGroup);
 
+        skillsUI.Show(unit.SkillManager.Skills);
     }
 
     public void Hide()

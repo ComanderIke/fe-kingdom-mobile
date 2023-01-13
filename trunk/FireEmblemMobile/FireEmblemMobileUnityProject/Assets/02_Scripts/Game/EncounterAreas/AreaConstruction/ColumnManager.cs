@@ -166,16 +166,14 @@ public class ColumnManager : MonoBehaviour
                      int randomMin = Math.Max(0,  o - 1);
                      int randomMax = Math.Min(o+1, prevColumn.children.Count-1);
                      int randomParentIndex = Random.Range(randomMin, randomMax+1);
-                     Debug.Log(randomParentIndex);
-                    currColumn.children[o].AddParent(prevColumn.children[o]);
+                     currColumn.children[o].AddParent(prevColumn.children[o]);
                     currColumn.children[o].AddParent(prevColumn.children[randomParentIndex]);
                      randomMin = Math.Min( prevColumn.children.Count-1, childCount - 1 - o - 1);
                      randomMin = Math.Max(randomMin, 0);
                      randomMax = Math.Max(childCount - 1 - o+1,0);
                      randomMax = Math.Min(prevChildCount - 1, randomMax);
                      randomParentIndex = Random.Range(randomMin, randomMax+1);
-                     Debug.Log(randomParentIndex);
-                    currColumn.children[childCount - 1 - o].AddParent(prevColumn.children[prevChildCount - 1 - o]);
+                     currColumn.children[childCount - 1 - o].AddParent(prevColumn.children[prevChildCount - 1 - o]);
                     currColumn.children[childCount - 1 - o].AddParent(prevColumn.children[randomParentIndex]);
                 }
             }

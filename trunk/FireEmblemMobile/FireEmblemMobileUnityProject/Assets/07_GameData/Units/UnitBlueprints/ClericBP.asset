@@ -15,7 +15,7 @@ MonoBehaviour:
   equippedWeaponBp: {fileID: 11400000, guid: 14ec2b8d55058c24d8818cdbb2e963d9, type: 2}
   EquippedRelic1: {fileID: 0}
   EquippedRelic2: {fileID: 11400000, guid: 0bf06659b8cd6ea4ab7aa36c4fb7f348, type: 2}
-  Name: Cleric
+  Name: Crystal
   stats:
     AttackRanges: 01000000
     BaseAttributes:
@@ -27,6 +27,15 @@ MonoBehaviour:
       lck: 3
       def: 3
       faith: 3
+    BonusStats:
+      <Hit>k__BackingField: 0
+      <Avoid>k__BackingField: 0
+      <CritAvoid>k__BackingField: 0
+      <Crit>k__BackingField: 0
+      <AttackSpeed>k__BackingField: 0
+      <Armor>k__BackingField: 0
+      <MagicResistance>k__BackingField: 0
+      <Attack>k__BackingField: 0
     Mov: 2
   growths:
     str: 0
@@ -42,8 +51,8 @@ MonoBehaviour:
     startSkills: []
     skillPoints: 1
     SkillBuildTrees: []
-  rpgClass: 0
-  bluePrintID: 
+  rpgClass: 5
+  bluePrintID: Cleric
   visuals:
     CharacterSpriteSet: {fileID: 11400000, guid: 360a4df67a83ed9479500506440226cb,
       type: 2}
@@ -60,4 +69,5 @@ MonoBehaviour:
   experienceManager:
     level: 1
     exp: 0
-    MaxExp: 100
+    drainableExp: 100
+    expLeftToDrain: 100

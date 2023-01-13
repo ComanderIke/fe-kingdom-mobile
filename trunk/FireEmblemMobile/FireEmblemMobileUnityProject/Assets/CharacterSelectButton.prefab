@@ -197,13 +197,88 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d00759d4f884d00a28802a0a25bac8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unit: {fileID: 0}
+  unit:
+    unitBP: {fileID: 0}
+    bluePrintID: 
+    equippedWeapon:
+      Name: 
+      Description: 
+      cost: 0
+      rarity: 0
+      maxStack: 0
+      Sprite: {fileID: 0}
+      EquipmentSlotType: 0
+      AttackRanges: 
+      WeaponAttributes: []
+      weaponLevel: 0
+      maxLevel: 0
+      WeaponType: {fileID: 0}
+      DamageType: 0
+    EquippedRelic1:
+      id: 0
+    EquippedRelic2:
+      id: 0
+    name: 
+    stats:
+      AttackRanges: 
+      BaseAttributes:
+        str: 0
+        intel: 0
+        dex: 0
+        agi: 0
+        con: 0
+        lck: 0
+        def: 0
+        faith: 0
+      BonusStats:
+        <Hit>k__BackingField: 0
+        <Avoid>k__BackingField: 0
+        <CritAvoid>k__BackingField: 0
+        <Crit>k__BackingField: 0
+        <AttackSpeed>k__BackingField: 0
+        <Armor>k__BackingField: 0
+        <MagicResistance>k__BackingField: 0
+        <Attack>k__BackingField: 0
+      Mov: 0
+    growths:
+      str: 0
+      intel: 0
+      dex: 0
+      agi: 0
+      con: 0
+      lck: 0
+      def: 0
+      faith: 0
+    moveType: {fileID: 0}
+    SkillManager:
+      startSkills: []
+      skillPoints: 0
+      SkillBuildTrees: []
+    rpgClass: 0
+    visuals:
+      CharacterSpriteSet: {fileID: 0}
+      UnitEffectVisual: {fileID: 0}
+      Prefabs:
+        MapAnimatedSprite: {fileID: 0}
+        EncounterAnimatedSprite: {fileID: 0}
+        UIAnimatorController: {fileID: 0}
+      UnitCharacterCircleUI: {fileID: 0}
+      unitRenderer: {fileID: 0}
+    experienceManager:
+      level: 1
+      exp: 0
+      drainableExp: 100
+      expLeftToDrain: 100
   unitUIIdleAnimation: {fileID: 6497944381550985664}
   normalColor: {r: 0.4, g: 0.44313726, b: 0.34509805, a: 1}
   selectedColor: {r: 0, g: 0.5686275, b: 1, a: 1}
   checkMark: {fileID: 3209756177197535854}
   frame: {fileID: 7257165310622530522}
   button: {fileID: 7257165309195903626}
+  references:
+    version: 1
+    00000000:
+      type: {class: , ns: , asm: }
 --- !u!1001 &4453022722924174281
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -225,6 +300,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6447731849347342354, guid: 1a430f38b2d9eec4b869bc9a04b7b03b,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6447731849347342355, guid: 1a430f38b2d9eec4b869bc9a04b7b03b,
         type: 3}
@@ -385,6 +465,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.r
       value: 0.248576
+      objectReference: {fileID: 0}
+    - target: {fileID: 6895020012860698878, guid: 1a430f38b2d9eec4b869bc9a04b7b03b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3873501615171846219, guid: 1a430f38b2d9eec4b869bc9a04b7b03b, type: 3}

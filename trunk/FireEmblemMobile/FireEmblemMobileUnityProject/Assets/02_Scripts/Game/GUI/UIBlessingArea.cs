@@ -19,7 +19,9 @@ namespace LostGrace
         [SerializeField] private TextMeshProUGUI buttonText;
         [SerializeField] private Button AcceptButton;
         [SerializeField] UIChurchController churchController;
-        [SerializeField]GameObject extraEffectPrefab;
+        [SerializeField]GameObject extraEffectDescriptionPrefab;
+        [SerializeField]GameObject extraEffectValuePrefab;
+        [SerializeField]GameObject extraEffectContainerPrefab;
         [SerializeField] Transform extraEffectParent;
 
         public void Show(Unit unit, Blessing blessing, bool alreadyAccepted)
@@ -46,10 +48,11 @@ namespace LostGrace
                 extraEffectParent.DeleteAllChildren();
                 foreach (var effect in effects)
                 {
-                    var go = Instantiate(extraEffectPrefab, extraEffectParent);
-                    go.GetComponent<TextMeshProUGUI>().text = effect.label;
-                    go = Instantiate(extraEffectPrefab, extraEffectParent);
-                    go.GetComponent<TextMeshProUGUI>().text = effect.value;
+                    var container = Instantiate(extraEffectContainerPrefab, extraEffectParent);
+                    var label = Instantiate(extraEffectDescriptionPrefab, container.transform);
+                    var value = Instantiate(extraEffectValuePrefab, container.transform);
+                    label.GetComponent<TextMeshProUGUI>().text = effect.label;
+                    value.GetComponent<TextMeshProUGUI>().text = effect.value;
                        
                 }
             }
