@@ -4,6 +4,7 @@ using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameInput;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public enum EventSceneType
 {
@@ -12,6 +13,14 @@ public enum EventSceneType
     Fight,
     Merchant
 }
+[System.Serializable]
+public class EventFightData
+{
+    public EnemyArmyData EnemyArmyData;
+    public UnitBP EnemyToFight;
+    public bool lethalfight;
+}
+
 [Serializable]
 public class ResponseOption
 {
@@ -19,11 +28,10 @@ public class ResponseOption
     public int StatRequirement;
     public int StatIndex;
     public Reward reward;
-
-    public bool fight = false;
-    public EnemyArmyData EnemyArmyData;
+    
+    public EventFightData fightData;
     public EventSceneType type;
-    public UnitBP EnemyToFight;
+   
     public bool statcheck;
     public List<EventOutcome> outcomes;
 

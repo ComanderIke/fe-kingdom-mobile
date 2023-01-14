@@ -19,16 +19,17 @@ MonoBehaviour:
       StatRequirement: 0
       StatIndex: 0
       reward:
-        item: {fileID: 0}
-        skill: {fileID: 0}
-        Blessing: {fileID: 0}
+        itemBp: {fileID: 0}
+        skillBp: {fileID: 0}
+        blessingBp: {fileID: 0}
         gold: 0
-        smithingStones: 0
         experience: 0
-      fight: 0
-      EnemyArmyData: {fileID: 0}
+        grace: 0
+      fightData:
+        EnemyArmyData: {fileID: 0}
+        EnemyToFight: {fileID: 0}
+        lethalfight: 0
       type: 0
-      EnemyToFight: {fileID: 0}
       statcheck: 0
       outcomes:
       - nextSceneIndex: 1
@@ -36,16 +37,17 @@ MonoBehaviour:
       StatRequirement: 0
       StatIndex: 0
       reward:
-        item: {fileID: 0}
-        skill: {fileID: 0}
-        Blessing: {fileID: 0}
+        itemBp: {fileID: 0}
+        skillBp: {fileID: 0}
+        blessingBp: {fileID: 0}
         gold: 0
-        smithingStones: 0
         experience: 0
-      fight: 0
-      EnemyArmyData: {fileID: 0}
+        grace: 0
+      fightData:
+        EnemyArmyData: {fileID: 0}
+        EnemyToFight: {fileID: 0}
+        lethalfight: 0
       type: 0
-      EnemyToFight: {fileID: 0}
       statcheck: 0
       outcomes:
       - nextSceneIndex: -1
@@ -57,16 +59,17 @@ MonoBehaviour:
       StatRequirement: 0
       StatIndex: 0
       reward:
-        item: {fileID: 0}
-        skill: {fileID: 0}
-        Blessing: {fileID: 0}
+        itemBp: {fileID: 0}
+        skillBp: {fileID: 0}
+        blessingBp: {fileID: 0}
         gold: 0
-        smithingStones: 0
         experience: 0
-      fight: 0
-      EnemyArmyData: {fileID: 0}
+        grace: 0
+      fightData:
+        EnemyArmyData: {fileID: 0}
+        EnemyToFight: {fileID: 0}
+        lethalfight: 0
       type: 0
-      EnemyToFight: {fileID: 0}
       statcheck: 0
       outcomes:
       - nextSceneIndex: 2
@@ -74,16 +77,17 @@ MonoBehaviour:
       StatRequirement: 0
       StatIndex: 0
       reward:
-        item: {fileID: 0}
-        skill: {fileID: 0}
-        Blessing: {fileID: 0}
+        itemBp: {fileID: 0}
+        skillBp: {fileID: 0}
+        blessingBp: {fileID: 0}
         gold: 0
-        smithingStones: 0
         experience: 0
-      fight: 0
-      EnemyArmyData: {fileID: 0}
+        grace: 0
+      fightData:
+        EnemyArmyData: {fileID: 0}
+        EnemyToFight: {fileID: 0}
+        lethalfight: 0
       type: 0
-      EnemyToFight: {fileID: 0}
       statcheck: 0
       outcomes:
       - nextSceneIndex: -1
@@ -94,36 +98,39 @@ MonoBehaviour:
       StatRequirement: 0
       StatIndex: 0
       reward:
-        item: {fileID: 0}
-        skill: {fileID: 0}
-        Blessing: {fileID: 0}
+        itemBp: {fileID: 0}
+        skillBp: {fileID: 0}
+        blessingBp: {fileID: 0}
         gold: 0
-        smithingStones: 0
         experience: 0
-      fight: 1
-      EnemyArmyData: {fileID: 0}
+        grace: 0
+      fightData:
+        EnemyArmyData: {fileID: 0}
+        EnemyToFight: {fileID: 0}
+        lethalfight: 0
       type: 2
-      EnemyToFight: {fileID: 11400000, guid: 8d0171e7cfb2f134bbfabaf8e9b89193, type: 2}
       statcheck: 0
       outcomes:
       - nextSceneIndex: 3
       - nextSceneIndex: 4
+      - nextSceneIndex: 5
     MainText: "His hand moves to the hilt of his sword - \u201CTry and make me!\u201D"
   - textOptions:
     - Text: Reward
       StatRequirement: 0
       StatIndex: 0
       reward:
-        item: {fileID: 11400000, guid: b4861a55f2e99854ab9f7b9b973eb143, type: 2}
-        skill: {fileID: 0}
-        Blessing: {fileID: 0}
+        itemBp: {fileID: 11400000, guid: b4861a55f2e99854ab9f7b9b973eb143, type: 2}
+        skillBp: {fileID: 0}
+        blessingBp: {fileID: 0}
         gold: 50
-        smithingStones: 0
         experience: 50
-      fight: 0
-      EnemyArmyData: {fileID: 0}
+        grace: 0
+      fightData:
+        EnemyArmyData: {fileID: 0}
+        EnemyToFight: {fileID: 0}
+        lethalfight: 0
       type: 0
-      EnemyToFight: {fileID: 0}
       statcheck: 0
       outcomes:
       - nextSceneIndex: -1
@@ -135,18 +142,40 @@ MonoBehaviour:
       StatRequirement: 0
       StatIndex: 0
       reward:
-        item: {fileID: 0}
-        skill: {fileID: 0}
-        Blessing: {fileID: 0}
+        itemBp: {fileID: 0}
+        skillBp: {fileID: 0}
+        blessingBp: {fileID: 0}
         gold: 0
-        smithingStones: 0
         experience: 0
-      fight: 0
-      EnemyArmyData: {fileID: 0}
+        grace: 0
+      fightData:
+        EnemyArmyData: {fileID: 0}
+        EnemyToFight: {fileID: 0}
+        lethalfight: 0
       type: 0
-      EnemyToFight: {fileID: 0}
       statcheck: 0
       outcomes:
       - nextSceneIndex: -1
     MainText: Having defeated his opponent the knight takes his leave after taking
       most of the valuables of the defeated challenger.
+  - textOptions:
+    - Text: Leave.
+      StatRequirement: 0
+      StatIndex: 0
+      reward:
+        itemBp: {fileID: 0}
+        skillBp: {fileID: 0}
+        blessingBp: {fileID: 0}
+        gold: 0
+        experience: 0
+        grace: 0
+      fightData:
+        EnemyArmyData: {fileID: 0}
+        EnemyToFight: {fileID: 0}
+        lethalfight: 0
+      type: 0
+      statcheck: 0
+      outcomes:
+      - nextSceneIndex: -1
+    MainText: After witnessing his last strike cut the throat of the opponent, the
+      knight slightly shocked about going overboard takes his leave.

@@ -69,7 +69,7 @@ public class UIEventController : MonoBehaviour
         foreach (var textOption in textOptions)
         {
             GameObject prefab = textOptionPrefab;
-            if (textOption.fight)
+            if (textOption.fightData!=null)
                 prefab = fightOptionPrefab;
     
             var go = Instantiate(prefab, layout);
@@ -175,7 +175,7 @@ public class UIEventController : MonoBehaviour
     void StartFight()
     {
         var battleSystem = AreaGameManager.Instance.GetSystem<BattleSystem>();
-        var enemy = current.EnemyToFight.Create();
+        var enemy = current.fightData.EnemyToFight.Create();
             
         battleSystem.StartBattle(party.ActiveUnit, enemy, false, true);
         BattleSystem.OnBattleFinishedBeforeAfterBattleStuff += BattleEnded;
