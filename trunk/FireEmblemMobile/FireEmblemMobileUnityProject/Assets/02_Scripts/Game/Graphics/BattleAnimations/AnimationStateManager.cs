@@ -33,7 +33,7 @@ public class AnimationStateManager
         this.TimeLineController = timeLineController;
         this.characterAnimations = characterAnimations;
        
-        TimeLineController.zoomInFinished += ContinueBattle;
+     
         playerControlled = (Player.Instance.Party.members.Contains((Unit)battleSimulation.Attacker));
         leftCharacterAttacker = playerControlled;
       
@@ -47,6 +47,8 @@ public class AnimationStateManager
     }
     public void Start()
     {
+        TimeLineController.zoomInFinished -= ContinueBattle;
+        TimeLineController.zoomInFinished += ContinueBattle;
         currentRound = battleSimulation.combatRounds[0];
         if (playerControlled)
         {
@@ -68,6 +70,7 @@ public class AnimationStateManager
     private void ContinueBattle()
     {
      
+        
         if (attackSequenzIndex >= currentRound.AttacksData.Count)
         {
             AllAttacksFinished();
@@ -100,7 +103,7 @@ public class AnimationStateManager
          }
          else
          {
-             MonoUtility.DelayFunction(TimeLineController.PlayZoomIn, timeBetweenAttacks);
+             MonoUtility.DelayFunction(this,TimeLineController.PlayZoomIn, timeBetweenAttacks);
          }
     }
     
@@ -110,23 +113,29 @@ public class AnimationStateManager
         if (currentRound.RoundIndex >= battleSimulation.combatRounds.Count-1)
         {
            
-            MonoUtility.DelayFunction(BattleFinished, EndBattleWaitDuration);
+            MonoUtility.DelayFunction(this,BattleFinished, EndBattleWaitDuration);
         }
         else
         {
             
             currentRound = battleSimulation.combatRounds[currentRound.RoundIndex + 1];
             attackSequenzIndex = 0;
-            MonoUtility.DelayFunction(TimeLineController.PlayZoomIn, timeBetweenAttacks);
+            MonoUtility.DelayFunction(this, TimeLineController.PlayZoomIn, timeBetweenAttacks);
         }
     }
     public void BattleFinished()
     {
+        
         OnFinished?.Invoke();
     }
 
     public void CleanUp()
     {
+        
+        TimeLineController.zoomInFinished -= ContinueBattle;
+        TimeLineController.zoomOutFinished -= AllAttacksFinished;
+        characterAnimations.OnAttackFinished -= AttackFinished;
+        MonoUtility.StopCoroutines(this);
         characterAnimations.Cleanup();
     }
 

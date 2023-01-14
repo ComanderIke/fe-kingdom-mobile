@@ -74,7 +74,7 @@ namespace Game.GameActors.Units.OnGameObject
         {
             if (GameObject == null)
             {
-                Debug.Log("GameObject is null: ");
+                
                 return;
             }
             GameObject.SetActive(false);

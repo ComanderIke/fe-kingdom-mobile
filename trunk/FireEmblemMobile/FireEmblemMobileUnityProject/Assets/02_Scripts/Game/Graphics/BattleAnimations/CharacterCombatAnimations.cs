@@ -167,14 +167,14 @@ public class CharacterCombatAnimations : MonoBehaviour
         character.Death(playSpeed);
         if (character == characterLeft)
         {
-            Debug.Log("Left Character Died");
+            
 
             leftCharacterDied = true;
             rightCharacterDied = false;
         }
         else
         {
-            Debug.Log("Right Character Died");
+            
             rightCharacterDied = true;
             leftCharacterDied = false;
         }

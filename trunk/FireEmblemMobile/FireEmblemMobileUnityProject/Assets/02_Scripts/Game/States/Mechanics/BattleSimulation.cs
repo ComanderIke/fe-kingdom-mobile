@@ -242,13 +242,11 @@ namespace Game.Mechanics
                         AttacksData = new List<AttackData>()
                     };
                     combatRounds.Add(combatRound);
-                    Debug.Log("Round: "+cnt);
+                   
                     StartRound(combatRound, certainHit, grid);
                     cnt++;
                 }
-                Debug.Log("No longer Alive");
-                Debug.Log(Attacker.IsAlive());
-                Debug.Log(Defender.IsAlive());
+        
             }
             else
             {

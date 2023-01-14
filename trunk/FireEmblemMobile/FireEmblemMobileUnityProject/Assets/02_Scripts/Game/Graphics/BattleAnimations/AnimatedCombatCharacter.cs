@@ -44,7 +44,7 @@ public class AnimatedCombatCharacter
 
     public void Hide()
     {
-        Debug.Log("Hide Character: "+left+" "+GameObject.name);
+    
         GameObject.SetActive(false);
     }
 

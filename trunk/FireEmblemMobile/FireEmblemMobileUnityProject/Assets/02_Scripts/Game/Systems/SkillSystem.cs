@@ -67,7 +67,7 @@ public class SkillSystem : IEngineSystem
     {
         float rng = Random.value;
         float epicChance = config.EpicChance;
-        Debug.Log("rng: "+rng);
+        
         if (rng <= config.MythicChance)
         {
             skill.Tier = 0;

@@ -127,14 +127,14 @@ namespace Game.Mechanics
 
         public void LevelUp(Unit unit)
         {
-            Debug.Log("LevelUp System Called!");
+        
             int[] statIncreases = CalculateStatIncreases(unit.Growths.AsArray());
 
             if (levelUpRenderer != null)
             {
                 levelUpRenderer.UpdateValues(unit.name, unit.visuals.CharacterSpriteSet.FaceSprite,unit.ExperienceManager.Level - 1, unit.ExperienceManager.Level,
                     unit.Stats.BaseAttributes.AsArray(), statIncreases);
-                Debug.Log("Add LevelUpAnimation!");
+                
                 levelUpRenderer.Play();
                 levelUpRenderer.OnFinished -= LevelUpFinished;
                 levelUpRenderer.OnFinished += LevelUpFinished;
@@ -171,21 +171,7 @@ namespace Game.Mechanics
                 {
                     //var expRenderer = ((Unit)defender).visuals.UnitCharacterCircleUI.GetExpRenderer();
                     ServiceProvider.Instance.GetSystem<UiSystem>()?.SelectedCharacter((Unit)expReceiver);
-                    Vector3 pos = new Vector3();
-                    if (expReceiver.BattleGO != null)//In BattleAnimation use this
-                    {
-                        pos = expReceiver.BattleGO.GameObject.transform.position;
-                      
-                        // ExpBarController.Show(expReceiver.ExperienceManager.Exp);
-                        // ExpBarController.UpdateWithAnimatedTextOnly(exp);
-                        // ExpBarController.onFinished -= FinishedOnce;
-                        // ExpBarController.onFinished += FinishedOnce;
-                        //ExpBarController.UpdateWithAnimatedParticles(exp);
-                    }
-                    else if (expReceiver.GameTransformManager != null)//Map Animations use this
-                    {
-                        pos = expReceiver.GameTransformManager.Transform.position + new Vector3(0.5f, 0.5f, 0);
-                    }
+                   
                     Debug.Log("Calculated Exp: "+exp);
                    // expRenderer.Play((Unit)expReceiver, pos, exp);
 
@@ -219,18 +205,18 @@ namespace Game.Mechanics
   
             float chipExpPercent = 0.2f;
             float killExpPercent = 1.0f;
-            Debug.Log("EXP : " +maxEXPDrain);
+           
             int exp =(int)( killEXP ? killExpPercent * maxEXPDrain : chipExpPercent * maxEXPDrain);
-            Debug.Log("EXP : " +exp);
+    
             if(exp > expLeft)
             {
                 exp = expLeft;
             }
-            Debug.Log("EXP : " +exp);
+            
             enemyFought.ExperienceManager.expLeftToDrain-= exp;
             if (enemyFought.ExperienceManager.expLeftToDrain < 0)
                 enemyFought.ExperienceManager.expLeftToDrain = 0;
-            Debug.Log("EXP : " +exp);
+      
             if (levelDifference < 0)
             {
                 exp = (int)(exp * (1f + ((levelDifference * -1) / 10f)));

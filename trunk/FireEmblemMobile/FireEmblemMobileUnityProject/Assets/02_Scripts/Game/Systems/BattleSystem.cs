@@ -24,6 +24,7 @@ namespace Game.Mechanics
 
         public static OnStartAttackEvent OnStartAttack;
         public  static event Action<AttackResult> OnBattleFinished;
+        public static event Action<AttackResult> OnBattleFinishedBeforeAfterBattleStuff;
 
         private const float FIGHT_TIME = 3.8f;
         private const float ATTACK_DELAY = 0.0f;
@@ -67,7 +68,7 @@ namespace Game.Mechanics
             // attackerAttackCount = attacker.BattleComponent.BattleStats.GetAttackCountAgainst(defender);
             // defenderAttackCount = defender.BattleComponent.BattleStats.GetAttackCountAgainst(attacker);
             battleSimulation = GetBattleSimulation(attacker, (IBattleActor)defender, grid, continuos);
-            Debug.Log(BattleAnimation+" "+battleSimulation);
+            
             BattleAnimation.Show(battleSimulation, attacker, (IBattleActor)defender);
             BattleAnimation.OnFinished -= EndBattle;
             BattleAnimation.OnFinished += EndBattle;
@@ -86,6 +87,7 @@ namespace Game.Mechanics
             CheckExp();
             attacker = null;
             defender = null;
+            OnBattleFinishedBeforeAfterBattleStuff?.Invoke(battleSimulation.AttackResult);
            
             //After Exp Animation and possibly level up animation finished hide battleAnimation and invoke battle finished
 
@@ -93,7 +95,7 @@ namespace Game.Mechanics
 
         void CheckExp()
         {
-            Debug.Log("Calculate Exp and do Animation then invoke battle finished");
+         
             
             var system = ServiceProvider.Instance.GetSystem<UnitProgressSystem>();
             var task = new AfterBattleTasks(system, (Unit)attacker, defender);
@@ -228,5 +230,7 @@ namespace Game.Mechanics
             battleSim.StartBattle(false, true);
             return battleSim;
         }
+
+       
     }
 }

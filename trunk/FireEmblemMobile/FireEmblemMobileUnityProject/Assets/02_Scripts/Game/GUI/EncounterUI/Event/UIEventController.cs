@@ -13,44 +13,33 @@ using Object = UnityEngine.Object;
 
 public class UIEventController : MonoBehaviour
 {
-    public Canvas canvas;
-    public EventEncounterNode node;
+    [SerializeField] public Canvas canvas;
+    [SerializeField] EventEncounterNode node;
     [HideInInspector]
-    public Party party;
-    private RandomEvent randomEvent;
-    public TextMeshProUGUI headline;
-    public TextMeshProUGUI description;
-    public Transform layout;
+    [SerializeField] Party party;
+  
+    [SerializeField] TextMeshProUGUI headline;
+    [SerializeField] TextMeshProUGUI description;
+    [SerializeField] Transform layout;
     [SerializeField] private UICharacterFace characterFace;
     [SerializeField] private UIUnitIdleAnimation unitIdleAnimation;
-    public GameObject textOptionPrefab;
-    // public GameObject itemOptionPrefab;
-    // public GameObject blessingOptionPrefab;
-    // public GameObject skillOptionPrefab;
-     public GameObject fightOptionPrefab;
-    // public GameObject goldStoneOptionPrefab;
-
+    [SerializeField] GameObject textOptionPrefab;
+    [SerializeField] GameObject fightOptionPrefab;
+    private RandomEvent randomEvent;
     private EventScene currentScene;
-
-    // Start is called before the first frame update
+    private ResponseOption current;
+    
     public void Show(EventEncounterNode node, Party party)
     {
         this.node = node;
         canvas.enabled = true;
         this.party = party;
-        this.randomEvent = node.randomEvent;
+        randomEvent = node.randomEvent;
         currentScene = randomEvent.scenes[0];
         party.onActiveUnitChanged -= ActiveUnitChanged;
         party.onActiveUnitChanged += ActiveUnitChanged;
-        // if(instantiatedObjects==null)
-        //     instantiatedObjects = new List<GameObject>();
         UpdateUI();
-        //FindObjectOfType<UICharacterViewController>().Show(party.members[party.ActiveUnitIndex]);
-        // for (int i=0; i<church.shopItems.Count; i++)
-        // {
-        //     var item = church.shopItems[i];
-        //     shopItems[i].SetValues(new ShopItem(item.cost, item.Sprite, item.Description));
-        // }
+    
     }
     public void NextClicked()
     {
@@ -63,11 +52,81 @@ public class UIEventController : MonoBehaviour
         party.ActiveUnitIndex--;
         UpdateUI();
     }
+    
+    public void UpdateUI()
+    {
+        unitIdleAnimation.Show(party.ActiveUnit);
+        characterFace.Show(party.ActiveUnit);
+        headline.SetText(randomEvent.headline);
+        layout.DeleteAllChildren();
+        description.text = currentScene.MainText;
+        ShowTextOptions(currentScene.textOptions);
+    }
 
+    void ShowTextOptions(List<ResponseOption> textOptions)
+    {
+        int index = 0;
+        foreach (var textOption in textOptions)
+        {
+            GameObject prefab = textOptionPrefab;
+            if (textOption.fight)
+                prefab = fightOptionPrefab;
+    
+            var go = Instantiate(prefab, layout);
+            go.GetComponent<TextOptionController>().SetIndex(index);
+
+            var textOptionController = go.GetComponent<TextOptionController>();
+            ConfigureTextOption(textOption, textOptionController);
+            
+            index++;
+        }
+    }
+
+    void ConfigureTextOption(ResponseOption textOption, TextOptionController textOptionController)
+    {
+        if (textOption.statcheck)
+        {
+            int stat = party.ActiveUnit.Stats.BaseAttributes.GetFromIndex(textOption.StatIndex);
+            string statText = stat + " " + Attributes.GetAsText(textOption.StatIndex);
+            TextOptionState state = TextOptionState.Normal;
+            if (stat < textOption.StatRequirement)
+                state = TextOptionState.Impossible;
+            else if (stat >= (textOption.StatRequirement + 10))
+                state = TextOptionState.High;
+            textOptionController.Setup(textOption, textOption.Text,statText,state, this);
+        }
+        else
+        {
+            textOptionController.Setup(textOption, textOption.Text, this);
+        }
+    }
+    
+    void ActiveUnitChanged()
+    {
+        UpdateUI();
+    }
+    void Hide()
+    {
+        canvas.enabled = false;
+        party.onActiveUnitChanged -= ActiveUnitChanged;
+    }
+    
+    
+    
     void BattleEnded(AttackResult result)
     {
+        Debug.Log("BATTLE ENDED");
         BattleSystem.OnBattleFinished -= BattleEnded;
-        var battleOutcome =current.outcomes[0];
+        var battleOutcome = GetBattleOutcome(result);
+
+       
+        currentScene = randomEvent.scenes[battleOutcome.nextSceneIndex];
+        UpdateUI();
+    }
+
+    EventOutcome GetBattleOutcome(AttackResult result)
+    {
+        var battleOutcome = current.outcomes[0];
         switch (result)
         {
             case AttackResult.Draw: 
@@ -80,34 +139,19 @@ public class UIEventController : MonoBehaviour
                     battleOutcome = current.outcomes[1];
                 break;
         }
-
-       
-        currentScene = randomEvent.scenes[battleOutcome.nextSceneIndex];
-        UpdateUI();
+        return battleOutcome;
     }
 
-    private ResponseOption current;
+   
     public void OptionClicked(TextOptionController textOptionController)
     {
         current = textOptionController.Option;
-        if (current.reward.gold != 0||current.reward.experience!=0||current.reward.grace!=0)
-        {
-            Player.Instance.Party.AddGold(current.reward.gold);
-            //Player.Instance.Party.AddSmithingStones(current.reward.smithingStones);
-            Debug.Log("Node Position: "+node.gameObject.transform.position);
-            Player.Instance.Party.ActiveUnit.ExperienceManager.AddExp(current.reward.experience);
-        }
+        CheckPossibleRewards();
         if (current.outcomes[0].nextSceneIndex != -1)
         {
             if (current.type == EventSceneType.Fight)
             {
-               
-                var battleSystem = AreaGameManager.Instance.GetSystem<BattleSystem>();
-                var enemy = current.EnemyToFight.Create();
-                Debug.Log("Enemy Weapon: "+enemy.equippedWeapon.Name);
-                battleSystem.StartBattle(party.ActiveUnit, enemy, false, true);
-                BattleSystem.OnBattleFinished += BattleEnded;
-                Debug.Log("Fight!");
+                StartFight();
             }
             else
             {
@@ -118,75 +162,35 @@ public class UIEventController : MonoBehaviour
         }
         else
         {
-            Debug.Log("END EVENT Clicked!");
-            Hide();
-            node.Continue();
+           EndEvent();
         }
-        
     }
-    void ActiveUnitChanged()
-    {
-        UpdateUI();
-    }
-    void Hide()
-    {
-        canvas.enabled = false;
-        party.onActiveUnitChanged -= ActiveUnitChanged;
-    }
-    public void UpdateUI()
-    {
-        unitIdleAnimation.Show(party.ActiveUnit);
-        characterFace.Show(party.ActiveUnit);
-        headline.SetText(randomEvent.headline);
-        layout.DeleteAllChildren();
-        this.description.text = currentScene.MainText;
-        int index = 0;
-        foreach (var textoption in currentScene.textOptions)
-        {
-            GameObject prefab = textOptionPrefab;
-            if (textoption.fight)
-                prefab = fightOptionPrefab;
-            // if (textoption.reward != null)
-            // {
-            //     if (textoption.reward.item != null)
-            //     {
-            //         prefab = itemOptionPrefab;
-            //     }
-            //     else if (textoption.reward.skill != null)
-            //     {
-            //         prefab = skillOptionPrefab;
-            //     }
-            //     else if (textoption.reward.Blessing != null)
-            //     {
-            //         prefab = blessingOptionPrefab;
-            //     }
-            //     else if (textoption.reward.gold != 0 || textoption.reward.smithingStones != 0 ||
-            //              textoption.reward.experience != 0)
-            //     {
-            //         prefab = goldStoneOptionPrefab;
-            //     }
-            // }
 
-            var go = Instantiate(prefab, layout);
-            go.GetComponent<TextOptionController>().SetIndex(index);
-            if (textoption.statcheck)
-            {
-                int stat = party.ActiveUnit.Stats.BaseAttributes.GetFromIndex(textoption.StatIndex);
-                string statText = stat + " " + Attributes.GetAsText(textoption.StatIndex);
-                TextOptionState state = TextOptionState.Normal;
-                if (stat < textoption.StatRequirement)
-                    state = TextOptionState.Impossible;
-                else if (stat >= (textoption.StatRequirement + 10))
-                    state = TextOptionState.High;
-                go.GetComponent<TextOptionController>().Setup(textoption, textoption.Text,statText,state, this);
-            }
-            else
-            {
-                go.GetComponent<TextOptionController>().Setup(textoption, textoption.Text, this);
-            }
+    void EndEvent()
+    {
+        Hide();
+        node.Continue();
+    }
+
+    void StartFight()
+    {
+        var battleSystem = AreaGameManager.Instance.GetSystem<BattleSystem>();
+        var enemy = current.EnemyToFight.Create();
             
-            
-            index++;
+        battleSystem.StartBattle(party.ActiveUnit, enemy, false, true);
+        BattleSystem.OnBattleFinishedBeforeAfterBattleStuff += BattleEnded;
+    }
+    void CheckPossibleRewards()
+    {
+        if (current.reward.gold != 0||current.reward.experience!=0||current.reward.grace!=0)
+        {
+            Player.Instance.Party.AddGold(current.reward.gold);
+            //Player.Instance.Party.AddSmithingStones(current.reward.smithingStones);
+            Debug.Log("Node Position: "+node.gameObject.transform.position);
+            Player.Instance.Party.ActiveUnit.ExperienceManager.AddExp(current.reward.experience);
         }
     }
+   
+   
+   
 }

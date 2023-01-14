@@ -37,7 +37,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
 
     void Finished()
     {
-       
+        Cleanup();
         OnFinished?.Invoke();
     }
 
@@ -48,7 +48,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
             CancelInvoke();//TODO DO THIS ON COROUTINE MONOBEHAVIOUR 
             Debug.Log("TODO Reset Cameras and Volumes!");
             animationStateManager.BattleFinished();
-            Hide();
+            //Hide(); Hide should be called from battle finished event
         }
     }
     public void Cleanup()

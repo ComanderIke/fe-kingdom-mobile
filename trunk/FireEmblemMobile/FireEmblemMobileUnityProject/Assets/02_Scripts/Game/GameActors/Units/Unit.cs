@@ -224,12 +224,12 @@ namespace Game.GameActors.Units
         
         void SkillPointsUpdated(int skillPoints)
         {
-            Debug.Log("SkillPoints changed");
+          
             OnUnitDataChanged?.Invoke(this);
         }
         private void LevelUp()
         {
-            Debug.Log("On LevelUp Called!");
+        
             OnLevelUp?.Invoke(this);
         }
 

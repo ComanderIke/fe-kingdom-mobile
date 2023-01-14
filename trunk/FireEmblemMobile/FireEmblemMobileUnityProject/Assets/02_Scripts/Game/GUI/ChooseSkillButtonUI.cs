@@ -59,7 +59,6 @@ namespace LostGrace
 
         void UpdateUI()
         {
-            Debug.Log("UpdateSkillButton");
             if (skill == null)
             {
                 gameObject.SetActive(false);
@@ -87,7 +86,6 @@ namespace LostGrace
 
             levelTextGo.gameObject.SetActive(true);
             upgradeTextGo.gameObject.SetActive(true);
-            Debug.Log("SkillTier: "+skill.Tier+" "+skill.Name);
             switch (skill.Tier)
             {
                 case 0: //Mythic 
@@ -116,7 +114,6 @@ namespace LostGrace
                     name.colorGradientPreset = rareColorGradient;
                     break;
                 case 4: //Common 
-                    Debug.Log("Common");
                     iconFrame.color = commonColorFrame;
                     rarityText.SetText("Common");
                     rarityText.colorGradientPreset = commonColorGradient;

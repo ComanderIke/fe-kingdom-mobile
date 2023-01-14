@@ -58,7 +58,7 @@ namespace Game.GUI
         // Start is called before the first frame update
         public void Play()
         {
-            Debug.Log("PLAY LEVEL UP!");
+       
             canvas.enabled = true;
            // LeanTween.alphaCanvas(levelUpText.GetComponent<CanvasGroup>(), 1, 0.15f).setEaseOutQuad();
            // LeanTween.scale(levelUpText.gameObject, Vector3.one, 0.15f).setEaseOutQuad();
@@ -110,11 +110,6 @@ namespace Game.GUI
             actions.Add(()=> LeanTween.alphaCanvas(alphaCanvas, 0, 0.65f).setEaseInQuad().setDelay(endDelay)
                 .setOnComplete(()=>
                 {
-                    Debug.Log("=============================================");
-                    Debug.Log("=============================================");
-                    Debug.Log("LEVEL UP Complete");
-                    Debug.Log("=============================================");
-                    Debug.Log("=============================================");
                     levelText.transform.localScale = Vector3.one;
                     OnFinished?.Invoke();
                     canvas.enabled = false;
@@ -133,7 +128,7 @@ namespace Game.GUI
         }
         public void UpdateValues(string name, Sprite sprite,int levelBefore, int levelAfter, int[] stats, int[] statsIncreases)
         {
-            Debug.Log("Show Level Up!");
+          
             faceImage.sprite = sprite;
             this.statsIncreases = statsIncreases;
             this.stats = stats;//str, int ,dex,agi,con,fth
