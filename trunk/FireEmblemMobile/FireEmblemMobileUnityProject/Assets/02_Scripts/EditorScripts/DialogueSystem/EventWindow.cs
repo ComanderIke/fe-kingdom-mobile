@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using __2___Scripts.External.Editor.Utility;
 using Game.GameActors.Units;
 using Game.Manager;
 using Game.Mechanics;
@@ -34,15 +35,14 @@ namespace __2___Scripts.External.Editor
 
         void AddGraphView()
         {
-            LGGraphView graphView = new LGGraphView();
+            LGGraphView graphView = new LGGraphView(this);
             graphView.StretchToParentSize();
             rootVisualElement.Add(graphView);
         }
 
         void AddStyles()
         {
-            StyleSheet styleSheet = (StyleSheet)EditorGUIUtility.Load("DialogueSystem/GraphViewVariables.uss");
-            rootVisualElement.styleSheets.Add(styleSheet);
+            rootVisualElement.AddStyleSheets("DialogueSystem/GraphViewVariables.uss");
         }
     }
 }

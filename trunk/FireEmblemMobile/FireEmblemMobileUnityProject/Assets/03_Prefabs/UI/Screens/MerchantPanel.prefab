@@ -487,8 +487,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 133725c540aa855408dc47097aef8037, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 7f5650944b201eb4aae6178b12338d03, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -620,8 +620,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c6dbf650bf6dbf943bb56fbb55e4958d, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 7f5650944b201eb4aae6178b12338d03, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -799,7 +799,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 36.05, y: 132.7}
+  m_AnchoredPosition: {x: 36.049988, y: 132.70001}
   m_SizeDelta: {x: -47.1, y: 203.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5181128837341555728
@@ -1035,10 +1035,10 @@ MonoBehaviour:
     members: []
     maxSize: 4
     money: 0
+    collectedGrace: 0
     Convoy:
       startItems: []
       items: []
-    smithingStones: 2
   characterFace: {fileID: 353140664842575547}
   unitIdleAnimation: {fileID: 135131946688490972}
   itemParent: {fileID: 5181128837341555734}
@@ -1047,7 +1047,6 @@ MonoBehaviour:
   buyItemUI: {fileID: 1093795933381894270}
   switchBuyButton: {fileID: 851959326}
   switchSellButton: {fileID: 887771034}
-  InStoreLabel: {fileID: 0}
   buying: 1
   references:
     version: 1
@@ -1638,13 +1637,13 @@ PrefabInstance:
     - target: {fileID: 7944821550155223418, guid: 2b47ff200d6e2064392d1957e930ebfe,
         type: 3}
       propertyPath: m_Type
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7944821550155223418, guid: 2b47ff200d6e2064392d1957e930ebfe,
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: c6dbf650bf6dbf943bb56fbb55e4958d,
+      objectReference: {fileID: 21300000, guid: 7f5650944b201eb4aae6178b12338d03,
         type: 3}
     - target: {fileID: 7944821550155223418, guid: 2b47ff200d6e2064392d1957e930ebfe,
         type: 3}
@@ -1669,8 +1668,14 @@ PrefabInstance:
     - target: {fileID: 7944821550436788193, guid: 2b47ff200d6e2064392d1957e930ebfe,
         type: 3}
       propertyPath: m_Type
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7944821550436788193, guid: 2b47ff200d6e2064392d1957e930ebfe,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 7f5650944b201eb4aae6178b12338d03,
+        type: 3}
     - target: {fileID: 7944821550436788193, guid: 2b47ff200d6e2064392d1957e930ebfe,
         type: 3}
       propertyPath: m_PixelsPerUnitMultiplier
@@ -2067,5 +2072,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPCFace
       objectReference: {fileID: 0}
+    - target: {fileID: 2427804529703335184, guid: 2120f8354dc7e7b4b93e8079f92ad1c6,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: db3c75cf71e06784d8ad3e15741b2737,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2120f8354dc7e7b4b93e8079f92ad1c6, type: 3}
