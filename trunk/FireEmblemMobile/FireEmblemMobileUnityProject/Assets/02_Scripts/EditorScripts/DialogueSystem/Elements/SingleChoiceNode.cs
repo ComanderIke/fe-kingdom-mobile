@@ -1,4 +1,5 @@
 ﻿using __2___Scripts.External.Editor;
+using __2___Scripts.External.Editor.Data.Save;
 using __2___Scripts.External.Editor.Elements;
 using __2___Scripts.External.Editor.Utility;
 using UnityEditor.Experimental.GraphView;
@@ -12,16 +13,20 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
         {
             base.Initialize(graphView,position);
             DialogType = DialogType.SingleChoice;
-            Choices.Add("Next Dialogue");
+            LGChoiceSaveData choiceData = new LGChoiceSaveData()
+            {
+                Text = "Next Dialogue"
+            };
+            Choices.Add(choiceData);
         }
 
         public override void Draw()
         {
             base.Draw();
-            foreach (string choice in Choices)
+            foreach (LGChoiceSaveData choice in Choices)
             {
-                Port choicePort = this.CreatePort(choice);
-                choicePort.portName = choice;
+                Port choicePort = this.CreatePort(choice.Text);
+                choicePort.userData = choice;
                 outputContainer.Add(choicePort);
             }
             RefreshExpandedState();

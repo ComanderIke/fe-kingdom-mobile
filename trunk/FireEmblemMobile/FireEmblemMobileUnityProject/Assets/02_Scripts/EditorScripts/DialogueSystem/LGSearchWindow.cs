@@ -57,8 +57,7 @@ namespace __2___Scripts.External.Editor
                     graphView.AddElement(multiNode);
                     return true;
                 case Group unusedGroup:
-                    Group group = graphView.CreateGroup("DialogueGroup", localMousePos);
-                    graphView.AddElement(group);
+                    graphView.CreateGroup("DialogueGroup", localMousePos);
                     return true;
                 default: return false;
             }

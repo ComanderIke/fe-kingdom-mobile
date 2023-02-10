@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace __2___Scripts.External.Editor.Utility
+namespace _02_Scripts.Game.GUI.Utility
 {
    public class SerializableDictionary
 {

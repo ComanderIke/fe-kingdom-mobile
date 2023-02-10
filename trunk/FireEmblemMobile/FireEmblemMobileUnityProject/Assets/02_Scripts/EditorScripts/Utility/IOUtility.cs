@@ -1,0 +1,329 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using __2___Scripts.External.Editor;
+using __2___Scripts.External.Editor.Data.Save;
+using _02_Scripts.EditorScripts.DialogueSystem.Elements;
+using _02_Scripts.Game.GUI.Utility;
+using UnityEditor;
+using UnityEditor.Experimental.GraphView;
+using UnityEngine;
+
+namespace _02_Scripts.Game.Dialog.DialogSystem
+{
+    public class IOUtility
+    {
+        private static string graphFileName;
+        private static string containerFolderPath;
+        private static LGGraphView graphView;
+        private static List<DialogGroup> groups;
+        private static List<DialogNode> nodes;
+
+        private static Dictionary<string, LGDialogGroupSO> createdDialogGroups;
+        private static Dictionary<string, LGDialogSO> createdDialogs;
+        public IOUtility()
+        {
+        }
+
+        public static void Initialize(LGGraphView graph, string graphName)
+        {
+            graphView = graph;
+            graphFileName = graphName;
+            containerFolderPath = $"Assets/07_GameData/DialogueSystem/Dialogues/{graphFileName}";
+
+            nodes = new List<DialogNode>();
+            groups = new List<DialogGroup>();
+            createdDialogGroups = new Dictionary<string, LGDialogGroupSO>();
+            createdDialogs = new Dictionary<string, LGDialogSO>();
+        }
+        public static void Save()
+        {
+            CreateStaticFolders();
+            GetElementsFromGraphView();
+            LgGraphSaveData graphSaveData = CreateAsset<LgGraphSaveData>("Assets//02_Scripts/EditorScripts/DialogueSystem/Graphs", $"{graphFileName}Graph");
+            graphSaveData.Initialize(graphFileName);
+            LGDialogContainerSO dialogContainer = CreateAsset<LGDialogContainerSO>(containerFolderPath, graphFileName);
+            dialogContainer.Initialize(graphFileName);
+            
+
+            SaveGroups(graphSaveData, dialogContainer);
+            SaveNodes(graphSaveData, dialogContainer);
+            
+            SaveAsset(graphSaveData);
+            SaveAsset(dialogContainer);
+
+        }
+
+        private static void SaveNodes(LgGraphSaveData graphSaveData, LGDialogContainerSO dialogContainer)
+        {
+            SerializableDictionary<string, List<string>> groupNodeNames =
+                new SerializableDictionary<string, List<string>>();
+            List<string> ungroupedNodeNames = new List<string>();
+            foreach (DialogNode node in nodes)
+            {
+                SaveNodeToGraph(node, graphSaveData);
+                SaveNodeToScriptableObject(node, dialogContainer);
+                if (node.Group != null)
+                {
+                    groupNodeNames.AddItem(node.Group.title, node.DialogueName);
+                    continue;
+                }
+                
+                ungroupedNodeNames.Add(node.DialogueName);
+            }
+
+            UpdateDialoguesChoicesConnections();
+
+            UpdateOldGroupedNodes(groupNodeNames, graphSaveData);
+            UpdateOldUngroupedNodes(ungroupedNodeNames, graphSaveData);
+        }
+
+        private static void UpdateOldGroupedNodes(SerializableDictionary<string, List<string>> currentGroupNodeNames, LgGraphSaveData graphSaveData)
+        {
+            if (graphSaveData.OldGroupedNodeNames != null && graphSaveData.OldGroupedNodeNames.Count != 0)
+            {
+                foreach (KeyValuePair<string, List<string>> oldGroupedNode in graphSaveData.OldGroupedNodeNames)
+                {
+                    List<string> nodesToRemove = new List<string>();
+
+                    if (currentGroupNodeNames.ContainsKey(oldGroupedNode.Key))
+                    {
+                        nodesToRemove = oldGroupedNode.Value.Except(currentGroupNodeNames[oldGroupedNode.Key]).ToList();
+                    }
+
+                    foreach (string nodeToRemove in nodesToRemove)
+                    {
+                        RemoveAsset($"{containerFolderPath}/Groups/{oldGroupedNode.Key}/Dialogues", nodeToRemove);
+                    }
+                }
+            }
+
+            graphSaveData.OldGroupedNodeNames = new SerializableDictionary<string, List<string>>(currentGroupNodeNames);
+        }
+
+        private static void UpdateOldUngroupedNodes(List<string> currentUngroupedNodeNames, LgGraphSaveData graphSaveData)
+        {
+            if (graphSaveData.OldUngroupedNodeNames != null && graphSaveData.OldUngroupedNodeNames.Count != 0)
+            {
+                List<string> nodesToRemove =
+                    graphSaveData.OldUngroupedNodeNames.Except(currentUngroupedNodeNames).ToList();
+
+                foreach (string nodeToRemove in nodesToRemove)
+                {
+                    RemoveAsset($"{containerFolderPath}/Global/Dialogues", nodeToRemove);
+                }
+            }
+
+            graphSaveData.OldUngroupedNodeNames = new List<string>(currentUngroupedNodeNames);
+        }
+
+        private static void RemoveAsset(string path, string assetName)
+        {
+            AssetDatabase.DeleteAsset($"{path}/{assetName}.asset");
+        }
+
+        private static void UpdateDialoguesChoicesConnections()
+        {
+            foreach (DialogNode node in nodes)
+            {
+                LGDialogSO dialog = createdDialogs[node.ID];
+
+                for (int choiceIndex = 0; choiceIndex < node.Choices.Count; ++choiceIndex)
+                {
+                    LGChoiceSaveData nodeChoice = node.Choices[choiceIndex];
+                    if(string.IsNullOrEmpty(nodeChoice.NodeID))
+                        continue;
+                    dialog.Choices[choiceIndex].NextDialogue = createdDialogs[nodeChoice.NodeID];
+                    SaveAsset(dialog);
+                    
+                }
+            }
+        }
+
+        private static void SaveNodeToScriptableObject(DialogNode node, LGDialogContainerSO dialogContainer)
+        {
+            LGDialogSO dialog;
+            if (node.Group != null)
+            {
+                dialog = CreateAsset<LGDialogSO>($"{containerFolderPath}/Groups/{node.Group.title}/Dialogues", node.DialogueName);
+                dialogContainer.DialogueGroupes.AddItem(createdDialogGroups[node.Group.ID], dialog);
+            }
+            else
+            {
+                dialog = CreateAsset<LGDialogSO>($"{containerFolderPath}/Global/Dialogues", node.DialogueName);
+                dialogContainer.UngroupedDialogs.Add(dialog);
+            }
+            dialog.Initialize(
+                node.DialogueName,
+                node.Text,
+                ConvertNodeChoicesToDialogueChoices(node.Choices),
+                node.DialogType, 
+                node.IsStartingNode()
+                );
+            createdDialogs.Add(node.ID, dialog);
+            SaveAsset(dialog);
+        }
+
+        private static List<LGDialogChoiceData> ConvertNodeChoicesToDialogueChoices(List<LGChoiceSaveData> nodeChoices)
+        {
+            List<LGDialogChoiceData> dialogChoices = new List<LGDialogChoiceData>();
+            foreach (var nodeChoice in nodeChoices)
+            {
+                LGDialogChoiceData choiceData = new LGDialogChoiceData()
+                {
+                    Text = nodeChoice.Text
+                };
+                dialogChoices.Add(choiceData);
+            }
+
+            return dialogChoices;
+        }
+
+        private static void SaveNodeToGraph(DialogNode node, LgGraphSaveData graphSaveData)
+        {
+            List<LGChoiceSaveData> choices = new List<LGChoiceSaveData>();
+            foreach (LGChoiceSaveData choice in node.Choices)
+            {
+                LGChoiceSaveData choiceSaveData = new LGChoiceSaveData()
+                {
+                    Text = choice.Text,
+                    NodeID = choice.NodeID
+                };
+                choices.Add(choiceSaveData);
+            }
+            LGNodeSaveData nodeData = new LGNodeSaveData()
+            {
+                ID = node.ID,
+                Name = node.DialogueName,
+                Choices = node.Choices,
+                Text = node.Text,
+                GroupID = node.Group?.ID,
+                DialgueType = node.DialogType,
+                Position = node.GetPosition().position
+            };
+            graphSaveData.Nodes.Add(nodeData);
+        }
+
+        private static void SaveGroups(LgGraphSaveData graphSaveData, LGDialogContainerSO dialogContainer)
+        {
+            List<string> groupNames = new List<string>();
+            foreach (DialogGroup group in groups)
+            {
+                SaveGroupToGraph(group, graphSaveData);
+                SaveGroupToScriptableObject(group, dialogContainer);
+                groupNames.Add(group.title);
+            }
+
+            UpdateOldGroups(groupNames,graphSaveData);
+        }
+
+        private static void UpdateOldGroups(List<string> currentGroupNames,LgGraphSaveData graphSaveData)
+        {
+            if (graphSaveData.OldGroupNames != null && graphSaveData.OldGroupNames.Count != 0)
+            {
+                List<string> groupsToRemove = graphSaveData.OldGroupNames.Except(currentGroupNames).ToList();
+
+                foreach (string groupToRemove in groupsToRemove)
+                {
+                    RemoveFolder($"{containerFolderPath}/Groups/{groupToRemove}");
+                }
+            }
+
+            graphSaveData.OldGroupNames = new List<string>(currentGroupNames);
+        }
+
+        private static void RemoveFolder(string fullPath)
+        {
+            FileUtil.DeleteFileOrDirectory($"{fullPath}.meta");
+            FileUtil.DeleteFileOrDirectory($"{fullPath}/");
+           
+        }
+
+        private static void SaveGroupToScriptableObject(DialogGroup group, LGDialogContainerSO dialogContainer)
+        {
+            string groupName = group.title;
+            CreateFolder($"{containerFolderPath}/Groups", groupName);
+            CreateFolder($"{containerFolderPath}/Groups/{groupName}", "Dialogues");
+
+            LGDialogGroupSO dialogGroup =
+                CreateAsset<LGDialogGroupSO>($"{containerFolderPath}/Groups/{groupName}", groupName);
+            dialogGroup.Initialize(groupName);
+            createdDialogGroups.Add(group.ID, dialogGroup);
+            dialogContainer.DialogueGroupes.Add(dialogGroup, new List<LGDialogSO>());
+
+            SaveAsset(dialogGroup);
+        }
+
+        private static void SaveAsset(UnityEngine.Object asset)
+        {
+            EditorUtility.SetDirty(asset);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+        }
+
+        private static void SaveGroupToGraph(DialogGroup group, LgGraphSaveData graphSaveData)
+        {
+            LGGroupSaveData groupdata = new LGGroupSaveData()
+            {
+                ID = group.ID,
+                Name = group.title,
+                Position = group.GetPosition().position
+            };
+            graphSaveData.Groups.Add(groupdata);
+        }
+
+        private static T CreateAsset<T>(string path, string assetName) where T:ScriptableObject
+        {
+            string fullPath = $"{path}/{assetName}.asset";
+            T asset = AssetDatabase.LoadAssetAtPath<T>(fullPath);
+            if (asset == null)
+            {
+                asset = ScriptableObject.CreateInstance<T>();
+                AssetDatabase.CreateAsset(asset, fullPath);
+            }
+
+            return asset;
+        }
+
+        private static void GetElementsFromGraphView()
+        {
+            Type groupType = typeof(DialogGroup);
+            graphView.graphElements.ForEach(graphElement =>
+            {
+                if (graphElement is DialogNode node)
+                {
+                    nodes.Add(node);
+                    return;
+                }
+
+                if (graphElement.GetType() == groupType)
+                {
+                    DialogGroup group = (DialogGroup)graphElement;
+                    groups.Add(group);
+                    return;
+                }
+            });
+        }
+
+        private static void CreateStaticFolders()
+        {
+            CreateFolder("Assets/02_Scripts/EditorScripts/DialogueSystem","Graphs");
+            CreateFolder("Assets/07_GameData","DialogueSystem");
+            CreateFolder("Assets/07_GameData/DialogueSystem","Dialogues");
+            CreateFolder("Assets/07_GameData/DialogueSystem/Dialogues", graphFileName);
+            CreateFolder(containerFolderPath, "Global");
+            CreateFolder(containerFolderPath, "Groups");
+            CreateFolder($"{containerFolderPath}/Global", "Dialogues");
+        }
+
+        private static void CreateFolder(string path, string folderName)
+        {
+            if (AssetDatabase.IsValidFolder($"{path}/{folderName}"))
+            {
+                return;
+            }
+
+            AssetDatabase.CreateFolder(path,folderName);
+        }
+    }
+}

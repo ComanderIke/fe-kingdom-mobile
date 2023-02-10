@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using __2___Scripts.External.Editor;
+using __2___Scripts.External.Editor.Data.Save;
 using __2___Scripts.External.Editor.Elements;
 using __2___Scripts.External.Editor.Utility;
 using UnityEditor.Experimental.GraphView;
@@ -10,18 +13,20 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
 {
     public class DialogNode:Node
     {
+        public string ID { get; set; }
         public string DialogueName { get; set; }
-        public List<string> Choices { get; set; }
+        public List<LGChoiceSaveData> Choices { get; set; }
         public string Text { get; set; }
-        public Group Group { get; set; }
+        public DialogGroup Group { get; set; }
         public DialogType DialogType { get; set; }
         private Color defaultBackgroundColor;
-        private LGGraphView graphView;
+        protected LGGraphView graphView;
 
         public virtual void Initialize(LGGraphView graphView,Vector2 position)
         {
+            ID = Guid.NewGuid().ToString();
             DialogueName = "DialogueName";
-            Choices = new List<string>();
+            Choices = new List<LGChoiceSaveData>();
             Text = "DialogueText";
             this.graphView = graphView;
             defaultBackgroundColor = new Color(29f/255f, 29/255f, 30/255f);
@@ -32,20 +37,37 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
 
         public virtual void Draw()
         {
-            TextField dialogueNameTextField = ElementUtility.CreateTextField(DialogueName, callback =>
+            TextField dialogueNameTextField = ElementUtility.CreateTextField(DialogueName,null, callback =>
             {
+                TextField target = (TextField)callback.target;
+                target.value = callback.newValue.RemoveWhitespaces().RemoveSpecialCharacters();
+
+                if (string.IsNullOrEmpty((target.value)))
+                {
+                    if (!string.IsNullOrEmpty(DialogueName))
+                    {
+                        ++graphView.NameErrorsAmount;
+                    }
+                }
+                else
+                {
+                    if (string.IsNullOrEmpty(DialogueName))
+                    {
+                        --graphView.NameErrorsAmount;
+                    }
+                }
                 if (Group == null)
                 {
                     graphView.RemoveUngroupedNode(this);
-                    DialogueName = callback.newValue;
+                    DialogueName = target.value;
                     graphView.AddUngroupedNode(this);
                     
                 }
                 else
                 {
-                    Group currentGroup = Group;
+                    DialogGroup currentGroup = Group;
                     graphView.RemoveGroupedNode(this, Group);
-                    DialogueName = callback.newValue;
+                    DialogueName =  target.value;
                     graphView.AddGroupedNode(this, currentGroup);
                 }
             });
@@ -60,7 +82,10 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
             VisualElement customDataContainer = new VisualElement();
             customDataContainer.AddToClassList("node_custom-data-container");
             Foldout textFouldout = ElementUtility.CreateFoldout("DialogueText");
-            TextField textField =  ElementUtility.CreateTextField(Text);
+            TextField textField =  ElementUtility.CreateTextArea(Text, null, callback =>
+            {
+                Text = callback.newValue;
+            });
             textField.AddClasses("node_textfield", "node_quote-textfield");
             textFouldout.Add(textField);
             customDataContainer.Add(textFouldout);
@@ -68,6 +93,43 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
             RefreshExpandedState();
         }
 
+        public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
+        {
+            evt.menu.AppendAction("Disconnect Input Ports", actionEvent=> DisconnectInputPorts());
+            evt.menu.AppendAction("Disconnect Output Ports", actionEvent=> DisconnectOutputPorts());
+            base.BuildContextualMenu(evt);
+        }
+
+        public void DisconnectAllPorts()
+        {
+            DisconnectInputPorts();
+            DisconnectOutputPorts();
+        }
+        private void DisconnectOutputPorts()
+        {
+            DisconnectPorts(outputContainer);
+        }
+        private void DisconnectInputPorts()
+        {
+            DisconnectPorts(inputContainer);
+        }
+        private void DisconnectPorts(VisualElement container)
+        {
+            foreach (Port port in container.Children())
+            {
+                if (!port.connected)
+                {
+                    continue;
+                }
+                graphView.DeleteElements(port.connections);
+            }
+        }
+
+        public bool IsStartingNode()
+        {
+            Port inputPort = (Port)inputContainer.Children().First();
+            return !inputPort.connected;
+        }
         public void SetErrorStyle(Color color)
         {
             mainContainer.style.backgroundColor = color;

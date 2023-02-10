@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using __2___Scripts.External.Editor.Data.Save;
 using __2___Scripts.External.Editor.Elements;
 using __2___Scripts.External.Editor.Utility;
 using _02_Scripts.EditorScripts.DialogueSystem.Data.Error;
 using _02_Scripts.EditorScripts.DialogueSystem.Elements;
+using _02_Scripts.Game.GUI.Utility;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.Graphs;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
+using Edge = UnityEditor.Experimental.GraphView.Edge;
 
 namespace __2___Scripts.External.Editor
 {
@@ -18,19 +21,46 @@ namespace __2___Scripts.External.Editor
         private EventWindow editorWindow;
         private LGSearchWindow lgSearchWindow;
         private SerializableDictionary<string, LGNodeErrorData> ungroupedNodes;
-        private SerializableDictionary<Group, SerializableDictionary<string, LGNodeErrorData>> groupNodes;
+        private SerializableDictionary<string, LGGroupErrorData> groups;
+        private SerializableDictionary<Group, SerializableDictionary<string, LGNodeErrorData>> groupedNodes;
+
+        private int nameErrorsAmount;
+
+        public int NameErrorsAmount
+        {
+            get
+            {
+                return nameErrorsAmount;
+            }
+            set
+            {
+                nameErrorsAmount = value;
+                if (nameErrorsAmount == 0)
+                {
+                    editorWindow.EnableSaving();
+                }
+
+                if (nameErrorsAmount == 1)
+                {
+                    editorWindow.DisableSaving();
+                }
+            }
+        }
         
         public LGGraphView(EventWindow editorWindow)
         {
             this.editorWindow = editorWindow;
             ungroupedNodes = new SerializableDictionary<string, LGNodeErrorData>();
-            groupNodes = new SerializableDictionary<Group, SerializableDictionary<string, LGNodeErrorData>>();
+            groups =new SerializableDictionary<string, LGGroupErrorData>();
+            groupedNodes = new SerializableDictionary<Group, SerializableDictionary<string, LGNodeErrorData>>();
             AddManipulators();
             AddSearchWindow();
             AddGridBackground();
             OnElementsDeleted();
+            OnGroupRenamed();
             OnGroupElementsAdded();
             OnGroupElementsRemoved();
+            OnGraphViewChanged();
             AddStyles();
             
         }
@@ -61,17 +91,25 @@ namespace __2___Scripts.External.Editor
         private IManipulator CreateGroupContextualMenu()
         {
             ContextualMenuManipulator man = new ContextualMenuManipulator(menuEvent =>
-                menuEvent.menu.AppendAction("Add Group", actionEvent => AddElement(CreateGroup("DialogueGroup",GetLocalMousePosition(actionEvent.eventInfo.localMousePosition)))));
+                menuEvent.menu.AppendAction("Add Group", actionEvent => CreateGroup("DialogueGroup",GetLocalMousePosition(actionEvent.eventInfo.localMousePosition))));
             return man;
         }
 
-        public Group CreateGroup(string title, Vector2 localMousePos)
+        public DialogGroup CreateGroup(string title, Vector2 localMousePos)
         {
-            Group group = new Group()
+            DialogGroup group = new DialogGroup(title, localMousePos);
+            AddGroup(group);
+            AddElement(group);
+            foreach (GraphElement selectedElement in selection)
             {
-                title=title
-            };
-            group.SetPosition(new Rect(localMousePos, Vector2.zero));
+                if (!(selectedElement is DialogNode))
+                {
+                    continue;
+                }
+
+                DialogNode node = (DialogNode)selectedElement;
+                group.AddElement(node);
+            }
             return group;
         }
         private IManipulator CreateNodeContextualMenu(string actionTitle, DialogType type)
@@ -114,35 +152,58 @@ namespace __2___Scripts.External.Editor
             return node;
         }
 
-        public void AddGroupedNode(DialogNode node, Group group)
+        private void AddGroup(DialogGroup group)
         {
-            string nodeName = node.DialogueName;
-            node.Group = group;
-            if (!groupNodes.ContainsKey(group))
+            string groupName = group.title.ToLower();
+            if (!groups.ContainsKey(groupName))
             {
-                groupNodes.Add(group, new SerializableDictionary<string, LGNodeErrorData>());
-            }
-
-            if (!groupNodes[group].ContainsKey(nodeName))
-            {
-                LGNodeErrorData nodeErrorData = new LGNodeErrorData();
-                nodeErrorData.Nodes.Add(node);
-                groupNodes[group].Add(nodeName, nodeErrorData);
+                LGGroupErrorData groupErrorData = new LGGroupErrorData();
+                groupErrorData.Groups.Add(group);
+                groups.Add(groupName, groupErrorData);
                 return;
             }
 
-            List<DialogNode> groupNodesList = groupNodes[group][nodeName].Nodes;
+            List<DialogGroup> groupsList = groups[groupName].Groups;
+            groups[groupName].Groups.Add(group);
+            Color errorColor = groups[groupName].ErrorData.Color;
+            group.SetErrorStyle(errorColor);
+            if (groupsList.Count == 2)
+            {
+                ++NameErrorsAmount;
+                groupsList[0].SetErrorStyle(errorColor);
+            }
+        }
+        
+        public void AddGroupedNode(DialogNode node, DialogGroup group)
+        {
+            string nodeName = node.DialogueName.ToLower();
+            node.Group = group;
+            if (!groupedNodes.ContainsKey(group))
+            {
+                groupedNodes.Add(group, new SerializableDictionary<string, LGNodeErrorData>());
+            }
+
+            if (!groupedNodes[group].ContainsKey(nodeName))
+            {
+                LGNodeErrorData nodeErrorData = new LGNodeErrorData();
+                nodeErrorData.Nodes.Add(node);
+                groupedNodes[group].Add(nodeName, nodeErrorData);
+                return;
+            }
+
+            List<DialogNode> groupNodesList = groupedNodes[group][nodeName].Nodes;
             groupNodesList.Add(node);
-            Color errorColor = groupNodes[group][nodeName].ErrorData.Color;
+            Color errorColor = groupedNodes[group][nodeName].ErrorData.Color;
             node.SetErrorStyle(errorColor);
             if (groupNodesList.Count == 2)
             {
+                ++NameErrorsAmount;
                 groupNodesList[0].SetErrorStyle(errorColor);
             }
         }
         public void AddUngroupedNode(DialogNode node)
         {
-            string nodeName = node.DialogueName;
+            string nodeName = node.DialogueName.ToLower();
             if (!ungroupedNodes.ContainsKey(nodeName))
             {
                 LGNodeErrorData nodeErrorData = new LGNodeErrorData();
@@ -157,19 +218,21 @@ namespace __2___Scripts.External.Editor
             node.SetErrorStyle(errorColor);
             if (ungroupedNodesList.Count == 2)
             {
+                ++NameErrorsAmount;
                 ungroupedNodesList[0].SetErrorStyle(errorColor);
             }
         }
 
         public void RemoveUngroupedNode(DialogNode node)
         {
-            string nodeName = node.DialogueName;
+            string nodeName = node.DialogueName.ToLower();
             node.Group = null;
             List<DialogNode> ungroupedNodesList = ungroupedNodes[nodeName].Nodes;
             ungroupedNodesList.Remove(node);
             node.ResetStyle();
             if (ungroupedNodesList.Count == 1)
             {
+                --NameErrorsAmount;
                 ungroupedNodesList[0].ResetStyle();
             }
             else if (ungroupedNodesList.Count == 0)
@@ -200,7 +263,12 @@ namespace __2___Scripts.External.Editor
         {
             deleteSelection = (operationName, askUser) =>
             {
+                Type groupType = typeof(DialogGroup);
+                Type edgeType = typeof(Edge);
+                List<DialogGroup> groupsToDelete = new List<DialogGroup>();
+                List<Edge> edgesToDelete = new List<Edge>();
                 List<DialogNode> nodesToDelete = new List<DialogNode>();
+               
                 foreach (GraphElement element in selection)
                 {
                     if (element is DialogNode node)
@@ -208,8 +276,40 @@ namespace __2___Scripts.External.Editor
                       nodesToDelete.Add(node);   
                       continue;
                     }
+                    if (element.GetType() == edgeType)
+                    {
+                        Edge edge = (Edge)element;
+                        edgesToDelete.Add(edge);
+                        continue;
+                    }
+                    if (element.GetType() != groupType)
+                    {
+                        continue;
+                    }
+
+                    DialogGroup group = (DialogGroup)element;
+                    groupsToDelete.Add(group);
                 }
 
+                foreach (DialogGroup group in groupsToDelete)
+                {
+                    List<DialogNode> groupNodes = new List<DialogNode>();
+                    foreach(GraphElement groupElement in group.containedElements)
+                    {
+                        if (!(groupElement is DialogNode))
+                        {
+                            continue;
+                        }
+
+                        DialogNode groupNode = (DialogNode)groupElement;
+                        groupNodes.Add(groupNode);
+                    }
+                    group.RemoveElements(groupNodes);
+                    RemoveGroup(group);
+
+                    RemoveElement(group);
+                }
+                DeleteElements(edgesToDelete);
                 foreach (DialogNode node in nodesToDelete)
                 {
                     if (node.Group != null)
@@ -217,11 +317,90 @@ namespace __2___Scripts.External.Editor
                         node.Group.RemoveElement(node);
                     }
                     RemoveUngroupedNode(node);
+                    node.DisconnectAllPorts();
                     RemoveElement(node);
                 }
             };
         }
 
+        private void RemoveGroup(DialogGroup group)
+        {
+            string oldGroupName = group.oldTitle.ToLower();
+            List<DialogGroup> groupsList = groups[oldGroupName].Groups;
+            groupsList.Remove(group);
+            group.ResetStyle();
+            if (groupsList.Count == 1)
+            {
+                --NameErrorsAmount;
+                groupsList[0].ResetStyle();
+                return;
+            }
+
+            if (groupsList.Count == 0)
+            {
+                groups.Remove(oldGroupName);
+            }
+        }
+
+        private void OnGraphViewChanged()
+        {
+            graphViewChanged = (changes) =>
+            {
+                if (changes.edgesToCreate != null)
+                {
+                    foreach (Edge edge in changes.edgesToCreate)
+                    {
+                        DialogNode nextNode = (DialogNode)edge.input.node;
+                        LGChoiceSaveData choiceData = (LGChoiceSaveData)edge.output.userData;
+
+                        choiceData.NodeID = nextNode.ID;
+                    }
+                }
+
+                if (changes.elementsToRemove != null)
+                {
+                    Type edgeType = typeof(Edge);
+                    foreach (GraphElement element in changes.elementsToRemove)
+                    {
+                        if (element.GetType() != edgeType)
+                        {
+                            continue;
+                        }
+
+                        Edge edge = (Edge)element;
+                        LGChoiceSaveData choiceData= (LGChoiceSaveData)edge.output.userData;
+                        choiceData.NodeID = "";
+                    }
+                }
+                return changes;
+            };
+        }
+
+        private void OnGroupRenamed()
+        {
+            groupTitleChanged = (group, newTitle) =>
+            {
+                DialogGroup dialogGroup = (DialogGroup)group;
+                dialogGroup.title = newTitle.RemoveWhitespaces().RemoveSpecialCharacters();
+                if (string.IsNullOrEmpty(dialogGroup.title))
+                {
+                    if (!string.IsNullOrEmpty(dialogGroup.oldTitle))
+                    {
+                        ++NameErrorsAmount;
+                    }
+                }
+                else
+                {
+                    if (string.IsNullOrEmpty(dialogGroup.oldTitle))
+                    {
+                        --NameErrorsAmount;
+                    }
+                }
+                RemoveGroup(dialogGroup);
+                dialogGroup.oldTitle =  dialogGroup.title ;
+                AddGroup(dialogGroup);
+            };
+        }
         private void OnGroupElementsAdded()
         {
             elementsAddedToGroup = (group, elements) =>
@@ -230,9 +409,10 @@ namespace __2___Scripts.External.Editor
                 {
                     if(!(element is DialogNode))
                         continue;
+                    DialogGroup nodeGroup = (DialogGroup)group;
                     DialogNode node = (DialogNode)element;
                     RemoveUngroupedNode(node);
-                    AddGroupedNode(node, group);
+                    AddGroupedNode(node, nodeGroup);
                 }
             };
         }
@@ -254,20 +434,21 @@ namespace __2___Scripts.External.Editor
 
         public void RemoveGroupedNode(DialogNode node, Group group)
         {
-            string nodeName = node.DialogueName;
-            List<DialogNode> groupNodesList = groupNodes[group][nodeName].Nodes;
+            string nodeName = node.DialogueName.ToLower();
+            List<DialogNode> groupNodesList = groupedNodes[group][nodeName].Nodes;
             groupNodesList.Remove(node);
             node.ResetStyle();
             if (groupNodesList.Count == 1)
             {
+                --NameErrorsAmount;
                 groupNodesList[0].ResetStyle();
             }
             else if (groupNodesList.Count == 0)
             {
-                groupNodes[group].Remove(nodeName);
-                if (groupNodes[group].Count == 0)
+                groupedNodes[group].Remove(nodeName);
+                if (groupedNodes[group].Count == 0)
                 {
-                    groupNodes.Remove(group);
+                    groupedNodes.Remove(group);
                 }
             }
         }

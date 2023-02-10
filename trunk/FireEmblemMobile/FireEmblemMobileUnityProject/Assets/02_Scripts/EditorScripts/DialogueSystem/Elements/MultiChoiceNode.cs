@@ -1,4 +1,5 @@
 ﻿using __2___Scripts.External.Editor;
+using __2___Scripts.External.Editor.Data.Save;
 using __2___Scripts.External.Editor.Elements;
 using __2___Scripts.External.Editor.Utility;
 using UnityEditor.Experimental.GraphView;
@@ -13,8 +14,12 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
         {
             base.Initialize(graphView,position);
             DialogType = DialogType.MultiChoice;
-            
-            Choices.Add("Next Dialogue");
+
+            LGChoiceSaveData choiceData = new LGChoiceSaveData()
+            {
+                Text = "Next Dialogue"
+            };
+            Choices.Add(choiceData);
             
         }
 
@@ -23,13 +28,18 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
             base.Draw();
             Button addChoiceButton = ElementUtility.CreateButton("Add Choice", () =>
             {
-                Port choicePort = CreateChoicePort("New Choice");
-                Choices.Add("new Choice");
+               
+                LGChoiceSaveData choiceData = new LGChoiceSaveData()
+                {
+                    Text = "Next Dialogue"
+                };
+                Choices.Add(choiceData);
+                Port choicePort = CreateChoicePort(choiceData);
                 outputContainer.Add(choicePort);
             });
             addChoiceButton.AddToClassList("node_button");
             mainContainer.Insert(1, addChoiceButton);
-            foreach (string choice in Choices)
+            foreach (LGChoiceSaveData choice in Choices)
             {
                 Port choicePort = CreateChoicePort(choice);
                 outputContainer.Add(choicePort);
@@ -37,13 +47,31 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
             RefreshExpandedState();
         }
 
-        Port CreateChoicePort(string choice)
+        Port CreateChoicePort(object userData )
         {
             Port choicePort =this.CreatePort();
-            choicePort.portName = "";
-            Button deleteChoiceButton = ElementUtility.CreateButton("X");
+            choicePort.userData = userData;
+            LGChoiceSaveData choiceSaveData = (LGChoiceSaveData)userData;
+            Button deleteChoiceButton = ElementUtility.CreateButton("X", () =>
+            {
+                if (Choices.Count == 1)
+                {
+                    return;
+                }
+
+                if (choicePort.connected)
+                {
+                    graphView.DeleteElements(choicePort.connections);
+                }
+
+                Choices.Remove(choiceSaveData);
+                graphView.RemoveElement(choicePort);
+            });
             deleteChoiceButton.AddToClassList("node_button");
-            TextField choiceTextField =  ElementUtility.CreateTextField(choice);
+            TextField choiceTextField =  ElementUtility.CreateTextField(choiceSaveData.Text, null, callback =>
+            {
+                choiceSaveData.Text = callback.newValue;
+            });
             choiceTextField.AddClasses("node_textfield", "node_choice-textfield", "node_textfield_hidden");
            
             choicePort.Add(choiceTextField);
