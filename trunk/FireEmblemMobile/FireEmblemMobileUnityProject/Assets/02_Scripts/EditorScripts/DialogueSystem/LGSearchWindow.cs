@@ -49,11 +49,11 @@ namespace __2___Scripts.External.Editor
             switch (SearchTreeEntry.userData)
             {
                 case DialogType.SingleChoice:
-                    SingleChoiceNode node = (SingleChoiceNode)graphView.CreateNode(DialogType.SingleChoice, localMousePos);
+                    SingleChoiceNode node = (SingleChoiceNode)graphView.CreateNode("DialogueName",DialogType.SingleChoice, localMousePos);
                     graphView.AddElement(node);
                     return true; 
                 case DialogType.MultiChoice: 
-                    MultiChoiceNode multiNode = (MultiChoiceNode)graphView.CreateNode(DialogType.MultiChoice, localMousePos);
+                    MultiChoiceNode multiNode = (MultiChoiceNode)graphView.CreateNode("DialogueName",DialogType.MultiChoice, localMousePos);
                     graphView.AddElement(multiNode);
                     return true;
                 case Group unusedGroup:

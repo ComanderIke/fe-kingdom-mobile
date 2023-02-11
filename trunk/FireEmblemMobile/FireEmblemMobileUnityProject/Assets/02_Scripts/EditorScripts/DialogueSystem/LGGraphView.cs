@@ -20,6 +20,7 @@ namespace __2___Scripts.External.Editor
     {
         private EventWindow editorWindow;
         private LGSearchWindow lgSearchWindow;
+        private MiniMap miniMap;
         private SerializableDictionary<string, LGNodeErrorData> ungroupedNodes;
         private SerializableDictionary<string, LGGroupErrorData> groups;
         private SerializableDictionary<Group, SerializableDictionary<string, LGNodeErrorData>> groupedNodes;
@@ -55,6 +56,7 @@ namespace __2___Scripts.External.Editor
             groupedNodes = new SerializableDictionary<Group, SerializableDictionary<string, LGNodeErrorData>>();
             AddManipulators();
             AddSearchWindow();
+            AddMinimap();
             AddGridBackground();
             OnElementsDeleted();
             OnGroupRenamed();
@@ -62,7 +64,37 @@ namespace __2___Scripts.External.Editor
             OnGroupElementsRemoved();
             OnGraphViewChanged();
             AddStyles();
-            
+            AddMinimapStyles();
+
+        }
+
+        private void AddMinimapStyles()
+        {
+            StyleColor backgroundColor = new StyleColor(new Color(0.12f, 0.12f, 0.13f, 255));
+            StyleColor borderColor = new StyleColor(new Color(0.22f, 0.22f, 0.22f, 255));
+            miniMap.style.backgroundColor = backgroundColor;
+            miniMap.style.borderTopColor = borderColor;
+            miniMap.style.borderBottomColor = borderColor;
+            miniMap.style.borderLeftColor = borderColor;
+            miniMap.style.borderRightColor = borderColor;
+
+
+        }
+
+        public void ToggleMiniMap()
+        {
+            miniMap.visible = !miniMap.visible;
+        }
+
+        private void AddMinimap()
+        {
+            miniMap = new MiniMap()
+            {
+                anchored = true
+            };
+            miniMap.SetPosition(new Rect(15,50,200,180));
+            Add(miniMap);
+            miniMap.visible = false;
         }
 
         private void AddSearchWindow()
@@ -115,7 +147,7 @@ namespace __2___Scripts.External.Editor
         private IManipulator CreateNodeContextualMenu(string actionTitle, DialogType type)
         {
             ContextualMenuManipulator man = new ContextualMenuManipulator(menuEvent =>
-                menuEvent.menu.AppendAction(actionTitle, actionEvent => AddElement(CreateNode(type,GetLocalMousePosition(actionEvent.eventInfo.localMousePosition)))));
+                menuEvent.menu.AppendAction(actionTitle, actionEvent => AddElement(CreateNode("DialogueName",type,GetLocalMousePosition(actionEvent.eventInfo.localMousePosition)))));
             return man;
         }
         void AddGridBackground()
@@ -142,12 +174,13 @@ namespace __2___Scripts.External.Editor
             return compatiblePorts;
         }
 
-        public DialogNode CreateNode(DialogType type, Vector2 position)
+        public DialogNode CreateNode(string nodeName, DialogType type, Vector2 position, bool shouldDraw =true)
         {
             Type nodeType = Type.GetType($"_02_Scripts.EditorScripts.DialogueSystem.Elements.{type}Node");
             DialogNode node = (DialogNode)Activator.CreateInstance(nodeType);
-            node.Initialize(this,position);
-            node.Draw();
+            node.Initialize(nodeName,this,position);
+            if(shouldDraw)
+                node.Draw();
             AddUngroupedNode(node);
             return node;
         }
@@ -432,6 +465,15 @@ namespace __2___Scripts.External.Editor
             };
         }
 
+        public void ClearGraph()
+        {
+            graphElements.ForEach(graphElement => RemoveElement(graphElement));
+            
+            groups.Clear();
+            groupedNodes.Clear();
+            ungroupedNodes.Clear();
+            NameErrorsAmount = 0;
+        }
         public void RemoveGroupedNode(DialogNode node, Group group)
         {
             string nodeName = node.DialogueName.ToLower();

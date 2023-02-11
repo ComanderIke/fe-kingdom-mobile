@@ -10,9 +10,9 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
 {
     public class MultiChoiceNode : DialogNode
     {
-        public override void Initialize(LGGraphView graphView,Vector2 position)
+        public override void Initialize(string nodeName, LGGraphView graphView,Vector2 position)
         {
-            base.Initialize(graphView,position);
+            base.Initialize(nodeName, graphView,position);
             DialogType = DialogType.MultiChoice;
 
             LGChoiceSaveData choiceData = new LGChoiceSaveData()

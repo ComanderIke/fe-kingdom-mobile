@@ -16,5 +16,44 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
             DialogueGroupes = new SerializableDictionary<LGDialogGroupSO, List<LGDialogSO>>();
             UngroupedDialogs = new List<LGDialogSO>();
         }
+
+        public List<string> GetDialogGroupNames()
+        {
+            List<string> dialogGroupNames = new List<string>();
+            foreach (LGDialogGroupSO group in DialogueGroupes.Keys)
+            {
+                dialogGroupNames.Add(group.GroupName);
+            }
+
+            return dialogGroupNames;
+        }
+
+        public List<string> GetGroupedDialogNames(LGDialogGroupSO group, bool startingDialogsOnly)
+        {
+            List<LGDialogSO> groupedDialogs = DialogueGroupes[group];
+            List<string> groupedDialogsNames = new List<string>();
+
+            foreach (LGDialogSO groupedDialog in groupedDialogs)
+            {
+                if(startingDialogsOnly && !groupedDialog.IsStartingDialogue)
+                    continue;
+                groupedDialogsNames.Add(groupedDialog.DialogName);
+            }
+
+            return groupedDialogsNames;
+        }
+        public List<string> GetUngroupedDialogNames(bool startingDialogsOnly)
+        {
+            List<string> unGoupedDialogsNames = new List<string>();
+
+            foreach (LGDialogSO dialog in UngroupedDialogs)
+            {
+                if(startingDialogsOnly && !dialog.IsStartingDialogue)
+                    continue;
+                unGoupedDialogsNames.Add(dialog.DialogName);
+            }
+
+            return unGoupedDialogsNames;
+        }
     }
 }

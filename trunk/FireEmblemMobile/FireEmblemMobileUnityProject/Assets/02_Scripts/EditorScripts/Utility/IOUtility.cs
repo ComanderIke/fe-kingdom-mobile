@@ -21,6 +21,9 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
 
         private static Dictionary<string, LGDialogGroupSO> createdDialogGroups;
         private static Dictionary<string, LGDialogSO> createdDialogs;
+        
+        private static Dictionary<string, DialogGroup> loadedGroups;
+        private static Dictionary<string, DialogNode> loadedNodes;
         public IOUtility()
         {
         }
@@ -35,7 +38,85 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
             groups = new List<DialogGroup>();
             createdDialogGroups = new Dictionary<string, LGDialogGroupSO>();
             createdDialogs = new Dictionary<string, LGDialogSO>();
+            loadedGroups = new Dictionary<string, DialogGroup>();
+            loadedNodes = new Dictionary<string, DialogNode>();
         }
+
+        public static void Load()
+        {
+            LgGraphSaveData graphData =
+                LoadAsset<LgGraphSaveData>("Assets/02_Scripts/EditorScripts/DialogueSystem/Graphs", graphFileName);
+            if (graphData == null)
+            {
+                EditorUtility.DisplayDialog("Couldn't load file!",
+                    "The file at the following path could not be found:\n\n" +
+                    $"Assets/02_Scripts/EditorScripts/DialogueSystem/Graphs/{graphFileName}\n\n", "OK");
+                return;
+            }
+            EventWindow.UpdateFileName(graphData.FileName);
+
+            LoadGroups(graphData.Groups);
+            LoadNodes(graphData.Nodes);
+            LoadNodesConnections();
+        }
+
+        private static void LoadNodesConnections()
+        {
+            foreach (KeyValuePair<string, DialogNode> loadedNode in loadedNodes)
+            {
+                foreach (Port choicePort in loadedNode.Value.outputContainer.Children())
+                {
+                    LGChoiceSaveData choiceData = (LGChoiceSaveData)choicePort.userData;
+                    if (string.IsNullOrEmpty(choiceData.NodeID))
+                    {
+                        continue;
+                    }
+
+                    DialogNode nextNode = loadedNodes[choiceData.NodeID];
+                    Port nextNodeInputPort = (Port)nextNode.inputContainer.Children().First();
+                    Edge edge=choicePort.ConnectTo(nextNodeInputPort);
+                    graphView.AddElement(edge);
+
+                    loadedNode.Value.RefreshPorts();
+                }
+            }
+        }
+
+        private static void LoadNodes(List<LGNodeSaveData> nodes)
+        {
+            foreach (LGNodeSaveData nodeData in nodes)
+            {
+                List<LGChoiceSaveData> choices = CloneNodeChoices(nodeData.Choices);
+                DialogNode node = graphView.CreateNode(nodeData.Name,nodeData.DialgueType, nodeData.Position, false);
+                node.ID = nodeData.ID;
+                node.Choices = choices;
+                node.Text = nodeData.Text;
+                node.Draw();
+                
+                graphView.AddElement(node);
+                loadedNodes.Add(node.ID, node);
+                if (string.IsNullOrEmpty(nodeData.GroupID))
+                {
+                    continue;
+                }
+
+                DialogGroup group = loadedGroups[nodeData.GroupID];
+                node.Group = group;
+                group.AddElement(node);
+            }
+        }
+
+        private static void LoadGroups(List<LGGroupSaveData> groups)
+        {
+            foreach (LGGroupSaveData groupData in groups)
+            {
+                DialogGroup group = graphView.CreateGroup(groupData.Name, groupData.Position);
+
+                group.ID = groupData.ID;
+                loadedGroups.Add(group.ID,group);
+            }
+        }
+
         public static void Save()
         {
             CreateStaticFolders();
@@ -179,10 +260,10 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
             return dialogChoices;
         }
 
-        private static void SaveNodeToGraph(DialogNode node, LgGraphSaveData graphSaveData)
+        private static List<LGChoiceSaveData> CloneNodeChoices(List<LGChoiceSaveData> nodeChoices)
         {
-            List<LGChoiceSaveData> choices = new List<LGChoiceSaveData>();
-            foreach (LGChoiceSaveData choice in node.Choices)
+            List<LGChoiceSaveData> choices =new List<LGChoiceSaveData>();
+            foreach (LGChoiceSaveData choice in nodeChoices)
             {
                 LGChoiceSaveData choiceSaveData = new LGChoiceSaveData()
                 {
@@ -191,6 +272,12 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                 };
                 choices.Add(choiceSaveData);
             }
+
+            return choices;
+        }
+        private static void SaveNodeToGraph(DialogNode node, LgGraphSaveData graphSaveData)
+        {
+            List<LGChoiceSaveData> choices = CloneNodeChoices(node.Choices);
             LGNodeSaveData nodeData = new LGNodeSaveData()
             {
                 ID = node.ID,
@@ -254,7 +341,7 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
             SaveAsset(dialogGroup);
         }
 
-        private static void SaveAsset(UnityEngine.Object asset)
+        public static void SaveAsset(UnityEngine.Object asset)
         {
             EditorUtility.SetDirty(asset);
             AssetDatabase.SaveAssets();
@@ -272,10 +359,10 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
             graphSaveData.Groups.Add(groupdata);
         }
 
-        private static T CreateAsset<T>(string path, string assetName) where T:ScriptableObject
+        public static T CreateAsset<T>(string path, string assetName) where T:ScriptableObject
         {
             string fullPath = $"{path}/{assetName}.asset";
-            T asset = AssetDatabase.LoadAssetAtPath<T>(fullPath);
+            T asset = LoadAsset<T>(path, assetName);
             if (asset == null)
             {
                 asset = ScriptableObject.CreateInstance<T>();
@@ -283,6 +370,12 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
             }
 
             return asset;
+        }
+
+        public static T LoadAsset<T>(string path, string assetName) where T:ScriptableObject
+        {
+            string fullPath = $"{path}/{assetName}.asset";
+            return AssetDatabase.LoadAssetAtPath<T>(fullPath);
         }
 
         private static void GetElementsFromGraphView()

@@ -22,10 +22,10 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
         private Color defaultBackgroundColor;
         protected LGGraphView graphView;
 
-        public virtual void Initialize(LGGraphView graphView,Vector2 position)
+        public virtual void Initialize(string nodeName, LGGraphView graphView,Vector2 position)
         {
             ID = Guid.NewGuid().ToString();
-            DialogueName = "DialogueName";
+            DialogueName = nodeName;
             Choices = new List<LGChoiceSaveData>();
             Text = "DialogueText";
             this.graphView = graphView;
