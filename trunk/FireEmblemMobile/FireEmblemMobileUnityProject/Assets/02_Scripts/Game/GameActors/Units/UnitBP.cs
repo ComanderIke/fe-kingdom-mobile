@@ -43,7 +43,7 @@ namespace Game.GameActors.Units
         [SerializeField]
         public RpgClass rpgClass;
         public string bluePrintID;
-        
+        [SerializeField] private DialogActor dialogActor;
         [SerializeField] public UnitVisual visuals;
 
         [SerializeField] public ExperienceManager experienceManager;

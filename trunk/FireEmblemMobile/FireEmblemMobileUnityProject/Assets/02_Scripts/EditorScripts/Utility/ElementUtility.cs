@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Reflection;
 using _02_Scripts.EditorScripts.DialogueSystem.Elements;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 
 namespace __2___Scripts.External.Editor.Utility
@@ -52,6 +54,34 @@ namespace __2___Scripts.External.Editor.Utility
             textArea.multiline = true;
 
             return textArea;
+        }
+
+        public static Toggle CreateToggle(string l, bool defaultState = false)
+        {
+            Toggle toggle = new Toggle()
+            {
+                label = l,
+                value = defaultState
+            };
+            return toggle;
+        }
+
+        public static TextField CreateTextIntFieldAndLabel(string value = null, string label=null, EventCallback<ChangeEvent<string>> onValueChanged=null)
+        {
+            TextField textField = new TextField()
+            {
+                value = value,
+                label=label,
+            };
+            if (onValueChanged != null)
+            {
+                textField.RegisterValueChangedCallback(onValueChanged);
+                
+            }
+           
+           
+
+            return textField;
         }
     }
 }

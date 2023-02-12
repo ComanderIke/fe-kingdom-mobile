@@ -5,7 +5,9 @@ using __2___Scripts.External.Editor;
 using __2___Scripts.External.Editor.Data.Save;
 using __2___Scripts.External.Editor.Elements;
 using __2___Scripts.External.Editor.Utility;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -17,17 +19,21 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
         public string DialogueName { get; set; }
         public List<LGChoiceSaveData> Choices { get; set; }
         public string Text { get; set; }
+        public bool PortraitLeft { get; set; }
         public DialogGroup Group { get; set; }
         public DialogType DialogType { get; set; }
         private Color defaultBackgroundColor;
         protected LGGraphView graphView;
+        protected VisualElement customDataContainer;
 
         public virtual void Initialize(string nodeName, LGGraphView graphView,Vector2 position)
         {
             ID = Guid.NewGuid().ToString();
+           
             DialogueName = nodeName;
             Choices = new List<LGChoiceSaveData>();
             Text = "DialogueText";
+            PortraitLeft = true;
             this.graphView = graphView;
             defaultBackgroundColor = new Color(29f/255f, 29/255f, 30/255f);
             SetPosition(new Rect(position, Vector2.zero));
@@ -79,20 +85,29 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
             inputPort.portName = "Dialogue Connection";
             inputContainer.Add(inputPort);
 
-            VisualElement customDataContainer = new VisualElement();
+            customDataContainer = new VisualElement();
             customDataContainer.AddToClassList("node_custom-data-container");
-            Foldout textFouldout = ElementUtility.CreateFoldout("DialogueText");
+            Foldout textFouldout = ElementUtility.CreateFoldout("DialogueText", true);
+            Toggle toggle = ElementUtility.CreateToggle("PortraitIsLeft", true);
             TextField textField =  ElementUtility.CreateTextArea(Text, null, callback =>
             {
                 Text = callback.newValue;
             });
             textField.AddClasses("node_textfield", "node_quote-textfield");
+            
             textFouldout.Add(textField);
+            ObjectField prop = new ObjectField("Actor");
+            prop.objectType = typeof(DialogActor);
+            customDataContainer.Add(prop);
+            customDataContainer.Add(toggle);
             customDataContainer.Add(textFouldout);
+            
+            //extensionContainer.Add(prop);
             extensionContainer.Add(customDataContainer);
             RefreshExpandedState();
         }
 
+       
         public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
         {
             evt.menu.AppendAction("Disconnect Input Ports", actionEvent=> DisconnectInputPorts());

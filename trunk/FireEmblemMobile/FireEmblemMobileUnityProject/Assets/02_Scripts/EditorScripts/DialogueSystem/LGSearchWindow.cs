@@ -33,6 +33,16 @@ namespace __2___Scripts.External.Editor
                     level = 2,
                     userData = DialogType.MultiChoice
                 },
+                new SearchTreeEntry(new GUIContent("Fight", indentationIcon))
+                {
+                    level = 2,
+                    userData = DialogType.Fight
+                },
+                new SearchTreeEntry(new GUIContent("Multi Choice Event", indentationIcon))
+                {
+                    level = 2,
+                    userData = DialogType.MultiChoiceEvent
+                },
                 new SearchTreeGroupEntry(new GUIContent("Dialogue Group"), 1),
                 new SearchTreeEntry(new GUIContent("Single Group", indentationIcon))
                 {
@@ -55,6 +65,14 @@ namespace __2___Scripts.External.Editor
                 case DialogType.MultiChoice: 
                     MultiChoiceNode multiNode = (MultiChoiceNode)graphView.CreateNode("DialogueName",DialogType.MultiChoice, localMousePos);
                     graphView.AddElement(multiNode);
+                    return true;
+                case DialogType.Fight: 
+                    FightNode fightNode = (FightNode)graphView.CreateNode("DialogueName",DialogType.Fight, localMousePos);
+                    graphView.AddElement(fightNode);
+                    return true;
+                case DialogType.MultiChoiceEvent: 
+                    MultiChoiceEventNode eventNode = (MultiChoiceEventNode)graphView.CreateNode("DialogueName",DialogType.MultiChoiceEvent, localMousePos);
+                    graphView.AddElement(eventNode);
                     return true;
                 case Group unusedGroup:
                     graphView.CreateGroup("DialogueGroup", localMousePos);

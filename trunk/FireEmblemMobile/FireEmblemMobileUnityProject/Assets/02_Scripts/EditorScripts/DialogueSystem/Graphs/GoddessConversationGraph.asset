@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6c9df788b0a4f069d5f3700d9e4f275, type: 3}
+  m_Name: GoddessConversationGraph
+  m_EditorClassIdentifier: 
+  <FileName>k__BackingField: GoddessConversation
+  <Groups>k__BackingField:
+  - <ID>k__BackingField: 54eb1a59-8e4e-4d1f-b17f-26b6a0fcf12c
+    <Name>k__BackingField: GoddessWelcome
+    <Position>k__BackingField: {x: 109, y: -250}
+  <Nodes>k__BackingField:
+  - <ID>k__BackingField: 13ac4a7a-0688-4918-914b-9d3a3d0dd78f
+    <Name>k__BackingField: Welcome2
+    <Text>k__BackingField: As you don't seem aware, I sadly have to tell you that
+      you have passed away.
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: 6de819c0-fa85-4c98-80de-12d1aa0a5586
+    <GroupID>k__BackingField: 54eb1a59-8e4e-4d1f-b17f-26b6a0fcf12c
+    <DialgueType>k__BackingField: 0
+    <Position>k__BackingField: {x: 413, y: -191}
+  - <ID>k__BackingField: 00aa777f-a59d-440d-9626-3c9965f03f89
+    <Name>k__BackingField: Welcome1
+    <Text>k__BackingField: Welcome oh courageous one, I am [GODDESS NAME] and I was
+      witness to your last brave moments.
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: 13ac4a7a-0688-4918-914b-9d3a3d0dd78f
+    <GroupID>k__BackingField: 54eb1a59-8e4e-4d1f-b17f-26b6a0fcf12c
+    <DialgueType>k__BackingField: 0
+    <Position>k__BackingField: {x: 134, y: -191}
+  - <ID>k__BackingField: 6de819c0-fa85-4c98-80de-12d1aa0a5586
+    <Name>k__BackingField: Welcome3
+    <Text>k__BackingField: It was quite brave of you to protect those villagers to
+      the very end, but sadly the enemies power was to strong.
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: 54eb1a59-8e4e-4d1f-b17f-26b6a0fcf12c
+    <DialgueType>k__BackingField: 0
+    <Position>k__BackingField: {x: 696, y: -191}
+  - <ID>k__BackingField: d665b299-5fef-4b48-a17f-d993dacb9dd6
+    <Name>k__BackingField: TestEvent
+    <Text>k__BackingField: DialogueText
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: 47a4eedb-6398-48a9-b408-4acc64c46f36
+    <GroupID>k__BackingField: 
+    <DialgueType>k__BackingField: 0
+    <Position>k__BackingField: {x: -36, y: 75}
+  - <ID>k__BackingField: 2d538321-0f90-4bf0-bc15-73c12183e15d
+    <Name>k__BackingField: Lost
+    <Text>k__BackingField: DialogueText
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: 
+    <DialgueType>k__BackingField: 0
+    <Position>k__BackingField: {x: 821, y: 299}
+  - <ID>k__BackingField: 47a4eedb-6398-48a9-b408-4acc64c46f36
+    <Name>k__BackingField: Fight
+    <Text>k__BackingField: DialogueText
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Won
+      <NodeID>k__BackingField: f0e898cd-0a33-4d6f-939d-3ad6d5e2ee44
+    - <Text>k__BackingField: Lost
+      <NodeID>k__BackingField: 2d538321-0f90-4bf0-bc15-73c12183e15d
+    <GroupID>k__BackingField: 
+    <DialgueType>k__BackingField: 2
+    <Position>k__BackingField: {x: 355, y: 75}
+  - <ID>k__BackingField: f0e898cd-0a33-4d6f-939d-3ad6d5e2ee44
+    <Name>k__BackingField: Win
+    <Text>k__BackingField: DialogueText
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: 
+    <DialgueType>k__BackingField: 0
+    <Position>k__BackingField: {x: 821, y: 46}
+  - <ID>k__BackingField: 20492f1f-87b5-4234-98ad-adfb48a49d31
+    <Name>k__BackingField: DialogueName
+    <Text>k__BackingField: DialogueText
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: 
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: 
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 438, y: 421}
+  <OldGroupNames>k__BackingField:
+  - GoddessWelcome
+  <OldUngroupedNodeNames>k__BackingField:
+  - TestEvent
+  - Lost
+  - Fight
+  - Win
+  - DialogueName
+  <OldGroupedNodeNames>k__BackingField:
+    list:
+    - Key: GoddessWelcome
+      Value:
+      - Welcome2
+      - Welcome1
+      - Welcome3

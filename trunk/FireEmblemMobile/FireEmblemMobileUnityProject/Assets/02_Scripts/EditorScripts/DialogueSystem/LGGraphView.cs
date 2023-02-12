@@ -118,6 +118,9 @@ namespace __2___Scripts.External.Editor
             
             this.AddManipulator(CreateNodeContextualMenu("Add Single Choice Node",DialogType.SingleChoice));
             this.AddManipulator(CreateNodeContextualMenu("Add Multiple Choice Node",DialogType.MultiChoice));
+            this.AddManipulator(CreateNodeContextualMenu("Add Fight Node",DialogType.Fight));
+            this.AddManipulator(CreateNodeContextualMenu("Add Multiple Choice Event Node",DialogType.MultiChoiceEvent));
+        
             this.AddManipulator(CreateGroupContextualMenu());
         }
         private IManipulator CreateGroupContextualMenu()

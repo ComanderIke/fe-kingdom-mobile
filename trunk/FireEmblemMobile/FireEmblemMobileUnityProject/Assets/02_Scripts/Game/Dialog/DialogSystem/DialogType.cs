@@ -3,6 +3,8 @@
     public enum DialogType
     {
         SingleChoice,
-        MultiChoice
+        MultiChoice,
+        Fight,
+        MultiChoiceEvent
     }
 }

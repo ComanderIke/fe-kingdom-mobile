@@ -32,10 +32,10 @@ namespace Game.WorldMapStuff.Model
             dataLoaded = true;
            
     
-            // for (int i=0; i < locations.Count; i++)
-            // {
+             for (int i=0; i < 3; i++)
+             {
             //     locations[i].LoadData(campaignData.locationData[i]);
-            // }
+             }
         }
 
         public void LoadConfig(CampaignConfig instanceCampaign)

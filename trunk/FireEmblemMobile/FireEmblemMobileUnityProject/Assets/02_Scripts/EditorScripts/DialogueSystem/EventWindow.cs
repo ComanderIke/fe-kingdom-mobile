@@ -25,6 +25,7 @@ namespace __2___Scripts.External.Editor
         private Button saveButton;
         private LGGraphView graphView;
         private Button miniMapButton;
+        private string lastGraphName;
         public EventWindow()
         {
             
@@ -40,6 +41,8 @@ namespace __2___Scripts.External.Editor
             AddGraphView();
             AddToolbar();
             AddStyles();
+            if(lastGraphName!=null)
+                Load($"Assets/02_Scripts/EditorScripts/DialogueSystem/Graphs/{lastGraphName}.asset");
         }
 
         void AddToolbar()
@@ -71,9 +74,9 @@ namespace __2___Scripts.External.Editor
             miniMapButton.ToggleInClassList("lg-toolbar__button__selected");
         }
 
-        private void Load()
+
+        private void Load(string filePath)
         {
-            string filePath=EditorUtility.OpenFilePanel("Dialogue Graphs", "Assets/02_Scripts/EditorScripts/DialogueSystem/Graphs", "asset");
             if (string.IsNullOrEmpty(filePath))
             {
                 return;
@@ -81,6 +84,12 @@ namespace __2___Scripts.External.Editor
             Clear();
             IOUtility.Initialize(graphView, Path.GetFileNameWithoutExtension(filePath));
             IOUtility.Load();
+            lastGraphName = Path.GetFileNameWithoutExtension(filePath);
+        }
+        private void Load()
+        {
+            string filePath=EditorUtility.OpenFilePanel("Dialogue Graphs", "Assets/02_Scripts/EditorScripts/DialogueSystem/Graphs", "asset");
+           Load(filePath);
         }
         private void Clear()
         {
