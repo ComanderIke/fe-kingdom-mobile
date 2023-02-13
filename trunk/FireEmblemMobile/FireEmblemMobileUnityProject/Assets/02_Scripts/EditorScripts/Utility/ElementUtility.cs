@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using _02_Scripts.EditorScripts.DialogueSystem.Elements;
+using Game.GameActors.Items;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
@@ -80,6 +82,28 @@ namespace __2___Scripts.External.Editor.Utility
             }
            
            
+
+            return textField;
+        }
+
+        public static VisualElement CreatePopup<T>(List<T> choices, T defaultValue)
+        {
+            PopupField<T> field = new PopupField<T>(choices, defaultValue);
+            
+            return field;
+        }
+
+        public static TextField CreateTextIntField(string value, EventCallback<ChangeEvent<string>> onValueChanged=null)
+        {
+            TextField textField = new TextField()
+            {
+                value = value
+            };
+            if (onValueChanged != null)
+            {
+                textField.RegisterValueChangedCallback(onValueChanged);
+                
+            }
 
             return textField;
         }

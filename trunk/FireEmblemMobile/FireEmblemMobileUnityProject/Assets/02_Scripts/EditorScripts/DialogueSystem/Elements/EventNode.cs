@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using __2___Scripts.External.Editor;
 using __2___Scripts.External.Editor.Utility;
+using _02_Scripts.Game.GUI.Utility;
 using Game.GameActors.Items;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -9,12 +12,24 @@ using UnityEngine.UIElements;
 
 namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
 {
+    [Serializable]
+    public class ResourceEntry
+    {
+        public int Amount;
+        public ResourceType ResourceType;
+
+        public ResourceEntry(int i, ResourceType gold)
+        {
+            this.Amount = i;
+            this.ResourceType = gold;
+        }
+    }
     public class EventNode : DialogNode
     {
-        private TextField goldTextField;
-        private TextField expTextField;
-        private TextField graceTextField;
+        
         private List<ItemBP> itemRewards;
+        private List<ResourceEntry> resourceRewards;
+        private Dictionary<ResourceEntry, TextField> resourceTextFields;
         private List<DialogEvent> events;
         
         public override void Initialize(string nodeName, LGGraphView graphView,Vector2 position)
@@ -25,18 +40,49 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
             events = new List<DialogEvent>();
             events.Add(ScriptableObject.CreateInstance<NullDialogEvent>());
             itemRewards.Add(ScriptableObject.CreateInstance<ItemBP>());
+            resourceRewards = new List<ResourceEntry>();
+            resourceTextFields = new Dictionary<ResourceEntry, TextField>();
+            
         }
 
         public override void Draw()
         {
             base.Draw();
             Foldout rewardFouldout = ElementUtility.CreateFoldout("Rewards", true);
-            goldTextField=ElementUtility.CreateTextIntFieldAndLabel("0","Gold", GoldValueChangedCallback);
-            rewardFouldout.Add(goldTextField);
-            expTextField=ElementUtility.CreateTextIntFieldAndLabel("0","Exp", ExpValueChangedCallback);
-            rewardFouldout.Add(expTextField);
-            graceTextField=ElementUtility.CreateTextIntFieldAndLabel("0","Grace", GraceValueChangedCallback);
-            rewardFouldout.Add(graceTextField);
+            var popUp2=ElementUtility.CreatePopup<ResourceType>(Enum.GetValues(typeof(ResourceType)).Cast<ResourceType>().ToList(),ResourceType.Gold);
+            rewardFouldout.Add(popUp2);
+            foreach (ResourceEntry reward in resourceRewards)
+            {
+
+                resourceTextFields[reward]=ElementUtility.CreateTextIntFieldAndLabel(reward.Amount.ToString(),reward.ResourceType.ToString(),callback=>
+                {
+                    resourceTextFields[reward].value = AllowOnlyNumbers(callback.newValue);
+                });
+                var popUp=ElementUtility.CreatePopup<ResourceType>(Enum.GetValues(typeof(ResourceType)).Cast<ResourceType>().ToList(),ResourceType.Gold);
+                rewardFouldout.Add(resourceTextFields[reward]);
+                rewardFouldout.Add(popUp);
+            }
+            Button addResourceButton = ElementUtility.CreateButton("Add Resource", () =>
+            {
+                var entry=new ResourceEntry(0, ResourceType.Gold);
+                VisualElement resourceContainer = new VisualElement();
+                resourceContainer.AddToClassList("lg-horizontal");
+                resourceTextFields.Add(entry,new TextField());
+
+                resourceTextFields[entry]=ElementUtility.CreateTextIntField(entry.Amount.ToString(),callback=>
+                {
+                    resourceTextFields[entry].value = AllowOnlyNumbers(callback.newValue);
+                });
+                var popUp=ElementUtility.CreatePopup<ResourceType>(Enum.GetValues(typeof(ResourceType)).Cast<ResourceType>().ToList(),ResourceType.Gold);
+                resourceContainer.Add(resourceTextFields[entry]);
+                resourceContainer.Add(popUp);
+                rewardFouldout.Add(resourceContainer);
+
+                resourceRewards.Add(entry);
+              
+            });
+            addResourceButton.AddToClassList("node_button");
+            rewardFouldout.Add(addResourceButton);
             Button addChoiceButton = ElementUtility.CreateButton("Add Item", () =>
             {
                 ObjectField itemReward = new ObjectField("Item");
@@ -89,23 +135,12 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
             customDataContainer.Add(rewardFouldout);
             customDataContainer.Add(eventFouldout);
         }
-        void GoldValueChangedCallback(ChangeEvent<string> callback)
+        string AllowOnlyNumbers( string newValue)
         {
-            string text = Regex.Replace(callback.newValue, @"[^0-9]", "");
-            Text = text;
-            goldTextField.value = text;
+            return Regex.Replace(newValue, @"[^0-9]", "");
+            
+           
         }
-        void ExpValueChangedCallback(ChangeEvent<string> callback)
-        {
-            string text = Regex.Replace(callback.newValue, @"[^0-9]", "");
-            Text = text;
-            expTextField.value = text;
-        }
-        void GraceValueChangedCallback(ChangeEvent<string> callback)
-        {
-            string text = Regex.Replace(callback.newValue, @"[^0-9]", "");
-            Text = text;
-            graceTextField.value = text;
-        }
+       
     }
 }
