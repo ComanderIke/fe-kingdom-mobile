@@ -15,7 +15,7 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
         [field:SerializeField]public bool IsPortraitLeft { get; set; }
         [field:SerializeField]public DialogActor DialogActor { get; set; }
 
-        public void Initialize(string dialogName, DialogActor dialogActor, string text, List<LGDialogChoiceData> choices, DialogType dialogType,
+        public virtual void Initialize(string dialogName, DialogActor dialogActor, string text, List<LGDialogChoiceData> choices, DialogType dialogType,
             bool portraitLeft, bool isStartingDialog)
         {
             DialogName = dialogName;

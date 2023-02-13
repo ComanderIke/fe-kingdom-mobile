@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using __2___Scripts.External.Editor;
 using __2___Scripts.External.Editor.Utility;
+using _02_Scripts.Game.Dialog.DialogSystem;
 using _02_Scripts.Game.GUI.Utility;
 using Game.GameActors.Items;
 using UnityEditor.UIElements;
@@ -12,25 +13,14 @@ using UnityEngine.UIElements;
 
 namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
 {
-    [Serializable]
-    public class ResourceEntry
-    {
-        public int Amount;
-        public ResourceType ResourceType;
-
-        public ResourceEntry(int i, ResourceType gold)
-        {
-            this.Amount = i;
-            this.ResourceType = gold;
-        }
-    }
+   
     public class EventNode : DialogNode
     {
         
-        private List<ItemBP> itemRewards;
-        private List<ResourceEntry> resourceRewards;
+        public List<ItemBP> ItemRewards;
+        public List<ResourceEntry> ResourceRewards;
         private Dictionary<ResourceEntry, TextField> resourceTextFields;
-        private List<DialogEvent> events;
+        public List<DialogEvent> Events;
         private VisualElement resourceContainer;
         private VisualElement resourcesContainer;
         
@@ -38,11 +28,11 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
         {
             
             base.Initialize(nodeName, graphView, position);
-            itemRewards = new List<ItemBP>();
-            events = new List<DialogEvent>();
-            events.Add(ScriptableObject.CreateInstance<NullDialogEvent>());
-            itemRewards.Add(ScriptableObject.CreateInstance<ItemBP>());
-            resourceRewards = new List<ResourceEntry>();
+            ItemRewards = new List<ItemBP>();
+            Events = new List<DialogEvent>();
+            Events.Add(ScriptableObject.CreateInstance<NullDialogEvent>());
+            ItemRewards.Add(ScriptableObject.CreateInstance<ItemBP>());
+            ResourceRewards = new List<ResourceEntry>();
             resourceTextFields = new Dictionary<ResourceEntry, TextField>();
             
         }
@@ -52,7 +42,7 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
             base.Draw();
             Foldout rewardFouldout = ElementUtility.CreateFoldout("Rewards", true);
             resourcesContainer = new VisualElement();
-            foreach (ResourceEntry reward in resourceRewards)
+            foreach (ResourceEntry reward in ResourceRewards)
             {
 
                 resourceTextFields[reward]=ElementUtility.CreateTextIntFieldAndLabel(reward.Amount.ToString(),reward.ResourceType.ToString(),callback=>
@@ -84,7 +74,7 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
                 resourceContainer.Add(popUp);
                 resourcesContainer.Add(resourceContainer);
 
-                resourceRewards.Add(entry);
+                ResourceRewards.Add(entry);
               
             });
             addResourceButton.AddToClassList("node_button");
@@ -92,7 +82,7 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
             Button removeResourceButton = ElementUtility.CreateButton("Remove Resource", () =>
             {
                 resourcesContainer.RemoveAt(resourcesContainer.childCount-1);
-                resourceRewards.RemoveAt(resourceRewards.Count-1);
+                ResourceRewards.RemoveAt(ResourceRewards.Count-1);
               
             });
             removeResourceButton.AddToClassList("node_button");
@@ -105,20 +95,20 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
                 ObjectField itemReward = new ObjectField("Item");
                 
                 itemReward.objectType = typeof(ItemBP);
-                itemRewards.Add(ScriptableObject.CreateInstance<ItemBP>());
+                ItemRewards.Add(ScriptableObject.CreateInstance<ItemBP>());
                 rewardFouldout.Add(itemReward);
             });
             addChoiceButton.AddToClassList("node_button");
             itemButtonContainer.Add(addChoiceButton);
             Button removeItemButton = ElementUtility.CreateButton("Remove Item", () =>
             {
-                itemRewards.RemoveAt(itemRewards.Count-1);
+                ItemRewards.RemoveAt(ItemRewards.Count-1);
                 rewardFouldout.RemoveAt(rewardFouldout.childCount-1);
             });
             removeItemButton.AddToClassList("node_button");
             itemButtonContainer.Add(removeItemButton);
             rewardFouldout.Add(itemButtonContainer);
-            foreach (var itemReward in itemRewards)
+            foreach (var itemReward in ItemRewards)
             {
                 ObjectField itemRewardField = new ObjectField("Item");
                 itemRewardField.objectType = typeof(ItemBP);
@@ -134,19 +124,19 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
                 ObjectField eventField = new ObjectField("Event");
                 eventField.objectType = typeof(DialogEvent);
                 eventFouldout.Add(eventField);
-                events.Add(ScriptableObject.CreateInstance<NullDialogEvent>());
+                Events.Add(ScriptableObject.CreateInstance<NullDialogEvent>());
             });
             addEventButton.AddToClassList("node_button");
             eventContainer.Add( addEventButton);
             Button removeEventButton = ElementUtility.CreateButton("Remove Event", () =>
             {
-                events.RemoveAt(events.Count-1);
+                Events.RemoveAt(Events.Count-1);
                 eventFouldout.RemoveAt(eventFouldout.childCount-1);
             });
             removeEventButton.AddToClassList("node_button");
             eventContainer.Add(removeEventButton);
             eventFouldout.Add(eventContainer);
-            foreach (var dialogEvent in events)
+            foreach (var dialogEvent in Events)
             {
                 ObjectField eventField = new ObjectField("Event");
                 eventField.objectType = typeof(DialogEvent);

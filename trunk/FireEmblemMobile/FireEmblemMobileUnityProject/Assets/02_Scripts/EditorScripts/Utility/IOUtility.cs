@@ -5,6 +5,7 @@ using __2___Scripts.External.Editor;
 using __2___Scripts.External.Editor.Data.Save;
 using _02_Scripts.EditorScripts.DialogueSystem.Elements;
 using _02_Scripts.Game.GUI.Utility;
+using Game.GameActors.Items;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -57,6 +58,7 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
 
             LoadGroups(graphData.Groups);
             LoadNodes(graphData.Nodes);
+            LoadEventNodes(graphData.EventNodes);
             LoadNodesConnections();
         }
 
@@ -86,13 +88,57 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
         {
             foreach (LGNodeSaveData nodeData in nodes)
             {
-                List<LGChoiceSaveData> choices = CloneNodeChoices(nodeData.Choices);
                 DialogNode node = graphView.CreateNode(nodeData.Name,nodeData.DialgueType, nodeData.Position, false);
+
+                
+                List<LGChoiceSaveData> choices = CloneNodeChoices(nodeData.Choices);
+               
                 node.ID = nodeData.ID;
                 node.Choices = choices;
                 node.Text = nodeData.Text;
                 node.DialogActor = nodeData.DialogActor;
-                node.PortraitLeft = nodeData.IsPortraitLeft;
+
+                node.Draw();
+                
+                graphView.AddElement(node);
+                loadedNodes.Add(node.ID, node);
+                if (string.IsNullOrEmpty(nodeData.GroupID))
+                {
+                    continue;
+                }
+
+                DialogGroup group = loadedGroups[nodeData.GroupID];
+                node.Group = group;
+                group.AddElement(node);
+            }
+        }
+
+        private static void LoadEventNodes(List<LGEventNodeSaveData> nodes)
+        {
+            Debug.Log("Load Event Node!" + nodes.Count);
+            foreach (LGEventNodeSaveData nodeData in nodes)
+            {
+                DialogNode node = graphView.CreateNode(nodeData.Name,nodeData.DialgueType, nodeData.Position, false);
+
+                
+                List<LGChoiceSaveData> choices = CloneNodeChoices(nodeData.Choices);
+               
+                node.ID = nodeData.ID;
+                node.Choices = choices;
+                node.Text = nodeData.Text;
+                node.DialogActor = nodeData.DialogActor;
+              
+                if (node is EventNode eventNode)
+                {
+                    Debug.Log("Load Event Node2!");
+                    List<ResourceEntry> resources = CloneNodeResources(nodeData.RewardResources);
+                    List<ItemBP> items = new List<ItemBP>(nodeData.RewardItems);
+                    List<DialogEvent> events = new List<DialogEvent>(nodeData.Events);
+                    eventNode.ResourceRewards = resources;
+                    eventNode.ItemRewards = items;
+                    eventNode.Events = events;
+                }
+                
                 node.Draw();
                 
                 graphView.AddElement(node);
@@ -145,7 +191,12 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
             foreach (DialogNode node in nodes)
             {
                 SaveNodeToGraph(node, graphSaveData);
-                SaveNodeToScriptableObject(node, dialogContainer);
+                if (node is EventNode eventNode)
+                {
+                    SaveNodeToScriptableObject(eventNode, dialogContainer);
+                }
+                else
+                    SaveNodeToScriptableObject(node, dialogContainer);
                 if (node.Group != null)
                 {
                     groupNodeNames.AddItem(node.Group.title, node.DialogueName);
@@ -248,6 +299,34 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
             createdDialogs.Add(node.ID, dialog);
             SaveAsset(dialog);
         }
+        private static void SaveNodeToScriptableObject(EventNode node, LGDialogContainerSO dialogContainer)
+        {
+            LGEventDialogSO dialog;
+            if (node.Group != null)
+            {
+                dialog = CreateAsset<LGEventDialogSO>($"{containerFolderPath}/Groups/{node.Group.title}/Dialogues", node.DialogueName);
+                dialogContainer.DialogueGroupes.AddItem(createdDialogGroups[node.Group.ID], dialog);
+            }
+            else
+            {
+                dialog = CreateAsset<LGEventDialogSO>($"{containerFolderPath}/Global/Dialogues", node.DialogueName);
+                dialogContainer.UngroupedDialogs.Add(dialog);
+            }
+            dialog.Initialize(
+                node.DialogueName, 
+                node.DialogActor,
+                node.Text,
+                ConvertNodeChoicesToDialogueChoices(node.Choices),
+                node.DialogType, 
+                node.PortraitLeft,
+                node.IsStartingNode(),
+                node.ResourceRewards, 
+                node.ItemRewards, 
+                node.Events
+            );
+            createdDialogs.Add(node.ID, dialog);
+            SaveAsset(dialog);
+        }
 
         private static List<LGDialogChoiceData> ConvertNodeChoicesToDialogueChoices(List<LGChoiceSaveData> nodeChoices)
         {
@@ -264,6 +343,17 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
             return dialogChoices;
         }
 
+        private static List<ResourceEntry> CloneNodeResources(List<ResourceEntry> entries)
+        {
+            List<ResourceEntry> choices =new List<ResourceEntry>();
+            foreach (ResourceEntry choice in entries)
+            {
+                ResourceEntry choiceSaveData = new ResourceEntry(choice.Amount, choice.ResourceType);
+                choices.Add(choiceSaveData);
+            }
+
+            return choices;
+        }
         private static List<LGChoiceSaveData> CloneNodeChoices(List<LGChoiceSaveData> nodeChoices)
         {
             List<LGChoiceSaveData> choices =new List<LGChoiceSaveData>();
@@ -296,6 +386,27 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
             };
             graphSaveData.Nodes.Add(nodeData);
         }
+        private static void SaveNodeToGraph(EventNode node, LgGraphSaveData graphSaveData)
+        {
+            List<LGChoiceSaveData> choices = CloneNodeChoices(node.Choices);
+            LGEventNodeSaveData nodeData = new LGEventNodeSaveData()
+            {
+                ID = node.ID,
+                Name = node.DialogueName,
+                Choices = choices,
+                Text = node.Text,
+                IsPortraitLeft = node.PortraitLeft,
+                DialogActor = node.DialogActor,
+                GroupID = node.Group?.ID,
+                DialgueType = node.DialogType,
+                Position = node.GetPosition().position,
+                RewardResources = node.ResourceRewards,
+                RewardItems = node.ItemRewards,
+                Events = node.Events,
+            };
+            graphSaveData.EventNodes.Add(nodeData);
+        }
+
 
         private static void SaveGroups(LgGraphSaveData graphSaveData, LGDialogContainerSO dialogContainer)
         {

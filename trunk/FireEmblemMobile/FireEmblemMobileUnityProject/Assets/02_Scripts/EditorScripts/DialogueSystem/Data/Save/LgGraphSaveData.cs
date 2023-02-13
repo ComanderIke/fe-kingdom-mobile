@@ -11,6 +11,7 @@ namespace __2___Scripts.External.Editor.Data.Save
         [field:SerializeField] public string FileName { get; set; }
         [field:SerializeField] public List<LGGroupSaveData> Groups { get; set; }
         [field:SerializeField] public List<LGNodeSaveData> Nodes { get; set; }
+        [field:SerializeField] public List<LGEventNodeSaveData> EventNodes { get; set; }
         [field:SerializeField] public List<string> OldGroupNames { get; set; }
         [field:SerializeField] public List<string> OldUngroupedNodeNames { get; set; }
         [field:SerializeField] public SerializableDictionary<string, List<string>> OldGroupedNodeNames { get; set; }
@@ -19,7 +20,8 @@ namespace __2___Scripts.External.Editor.Data.Save
         {
             FileName = fileName;
             Groups = new List<LGGroupSaveData>();
-            Nodes = new List<LGNodeSaveData>(); 
+            Nodes = new List<LGNodeSaveData>();
+            EventNodes = new List<LGEventNodeSaveData>();
         }
     }
 }
