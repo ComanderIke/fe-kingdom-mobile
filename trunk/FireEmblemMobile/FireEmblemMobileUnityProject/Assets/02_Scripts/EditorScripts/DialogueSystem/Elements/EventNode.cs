@@ -31,6 +31,8 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
         private List<ResourceEntry> resourceRewards;
         private Dictionary<ResourceEntry, TextField> resourceTextFields;
         private List<DialogEvent> events;
+        private VisualElement resourceContainer;
+        private VisualElement resourcesContainer;
         
         public override void Initialize(string nodeName, LGGraphView graphView,Vector2 position)
         {
@@ -49,8 +51,7 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
         {
             base.Draw();
             Foldout rewardFouldout = ElementUtility.CreateFoldout("Rewards", true);
-            var popUp2=ElementUtility.CreatePopup<ResourceType>(Enum.GetValues(typeof(ResourceType)).Cast<ResourceType>().ToList(),ResourceType.Gold);
-            rewardFouldout.Add(popUp2);
+            resourcesContainer = new VisualElement();
             foreach (ResourceEntry reward in resourceRewards)
             {
 
@@ -59,13 +60,18 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
                     resourceTextFields[reward].value = AllowOnlyNumbers(callback.newValue);
                 });
                 var popUp=ElementUtility.CreatePopup<ResourceType>(Enum.GetValues(typeof(ResourceType)).Cast<ResourceType>().ToList(),ResourceType.Gold);
-                rewardFouldout.Add(resourceTextFields[reward]);
-                rewardFouldout.Add(popUp);
+                resourcesContainer.Add(resourceTextFields[reward]);
+                resourcesContainer.Add(popUp);
             }
+            
+
+            VisualElement buttonContainer = new VisualElement();
+            buttonContainer.AddToClassList("lg-horizontal");
+            rewardFouldout.Add(buttonContainer);
             Button addResourceButton = ElementUtility.CreateButton("Add Resource", () =>
             {
                 var entry=new ResourceEntry(0, ResourceType.Gold);
-                VisualElement resourceContainer = new VisualElement();
+                resourceContainer = new VisualElement();
                 resourceContainer.AddToClassList("lg-horizontal");
                 resourceTextFields.Add(entry,new TextField());
 
@@ -76,13 +82,24 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
                 var popUp=ElementUtility.CreatePopup<ResourceType>(Enum.GetValues(typeof(ResourceType)).Cast<ResourceType>().ToList(),ResourceType.Gold);
                 resourceContainer.Add(resourceTextFields[entry]);
                 resourceContainer.Add(popUp);
-                rewardFouldout.Add(resourceContainer);
+                resourcesContainer.Add(resourceContainer);
 
                 resourceRewards.Add(entry);
               
             });
             addResourceButton.AddToClassList("node_button");
-            rewardFouldout.Add(addResourceButton);
+            buttonContainer.Add(addResourceButton);
+            Button removeResourceButton = ElementUtility.CreateButton("Remove Resource", () =>
+            {
+                resourcesContainer.RemoveAt(resourcesContainer.childCount-1);
+                resourceRewards.RemoveAt(resourceRewards.Count-1);
+              
+            });
+            removeResourceButton.AddToClassList("node_button");
+            buttonContainer.Add(removeResourceButton);
+            rewardFouldout.Add(resourcesContainer);
+            VisualElement itemButtonContainer = new VisualElement();
+            itemButtonContainer.AddToClassList("lg-horizontal");
             Button addChoiceButton = ElementUtility.CreateButton("Add Item", () =>
             {
                 ObjectField itemReward = new ObjectField("Item");
@@ -92,14 +109,15 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
                 rewardFouldout.Add(itemReward);
             });
             addChoiceButton.AddToClassList("node_button");
-            rewardFouldout.Add(addChoiceButton);
+            itemButtonContainer.Add(addChoiceButton);
             Button removeItemButton = ElementUtility.CreateButton("Remove Item", () =>
             {
                 itemRewards.RemoveAt(itemRewards.Count-1);
                 rewardFouldout.RemoveAt(rewardFouldout.childCount-1);
             });
             removeItemButton.AddToClassList("node_button");
-            rewardFouldout.Add(removeItemButton);
+            itemButtonContainer.Add(removeItemButton);
+            rewardFouldout.Add(itemButtonContainer);
             foreach (var itemReward in itemRewards)
             {
                 ObjectField itemRewardField = new ObjectField("Item");
@@ -109,6 +127,8 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
             
            
             Foldout eventFouldout = ElementUtility.CreateFoldout("Events", true);
+            VisualElement eventContainer = new VisualElement();
+            eventContainer.AddToClassList("lg-horizontal");
             Button addEventButton = ElementUtility.CreateButton("Add Event", () =>
             {
                 ObjectField eventField = new ObjectField("Event");
@@ -117,14 +137,15 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
                 events.Add(ScriptableObject.CreateInstance<NullDialogEvent>());
             });
             addEventButton.AddToClassList("node_button");
-            eventFouldout.Add( addEventButton);
+            eventContainer.Add( addEventButton);
             Button removeEventButton = ElementUtility.CreateButton("Remove Event", () =>
             {
                 events.RemoveAt(events.Count-1);
                 eventFouldout.RemoveAt(eventFouldout.childCount-1);
             });
             removeEventButton.AddToClassList("node_button");
-            eventFouldout.Add(removeEventButton);
+            eventContainer.Add(removeEventButton);
+            eventFouldout.Add(eventContainer);
             foreach (var dialogEvent in events)
             {
                 ObjectField eventField = new ObjectField("Event");
