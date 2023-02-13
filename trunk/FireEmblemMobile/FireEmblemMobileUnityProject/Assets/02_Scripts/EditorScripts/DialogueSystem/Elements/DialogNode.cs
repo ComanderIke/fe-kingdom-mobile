@@ -20,6 +20,7 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
         public List<LGChoiceSaveData> Choices { get; set; }
         public string Text { get; set; }
         public bool PortraitLeft { get; set; }
+        public DialogActor DialogActor { get; set; }
         public DialogGroup Group { get; set; }
         public DialogType DialogType { get; set; }
         private Color defaultBackgroundColor;
@@ -89,6 +90,11 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
             customDataContainer.AddToClassList("node_custom-data-container");
             Foldout textFouldout = ElementUtility.CreateFoldout("DialogueText", true);
             Toggle toggle = ElementUtility.CreateToggle("PortraitIsLeft", true);
+            toggle.value = PortraitLeft;
+            toggle.RegisterValueChangedCallback(callback =>
+            {
+                PortraitLeft = callback.newValue;
+            });
             TextField textField =  ElementUtility.CreateTextArea(Text, null, callback =>
             {
                 Text = callback.newValue;
@@ -98,6 +104,11 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
             textFouldout.Add(textField);
             ObjectField prop = new ObjectField("Actor");
             prop.objectType = typeof(DialogActor);
+            prop.value = DialogActor;
+            prop.RegisterValueChangedCallback(callback =>
+            {
+                DialogActor = (DialogActor)callback.newValue;
+            });
             customDataContainer.Add(prop);
             customDataContainer.Add(toggle);
             customDataContainer.Add(textFouldout);

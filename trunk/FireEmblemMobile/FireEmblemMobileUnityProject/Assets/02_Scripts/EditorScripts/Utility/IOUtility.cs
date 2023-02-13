@@ -91,6 +91,8 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                 node.ID = nodeData.ID;
                 node.Choices = choices;
                 node.Text = nodeData.Text;
+                node.DialogActor = nodeData.DialogActor;
+                node.PortraitLeft = nodeData.IsPortraitLeft;
                 node.Draw();
                 
                 graphView.AddElement(node);
@@ -235,10 +237,12 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                 dialogContainer.UngroupedDialogs.Add(dialog);
             }
             dialog.Initialize(
-                node.DialogueName,
+                node.DialogueName, 
+                node.DialogActor,
                 node.Text,
                 ConvertNodeChoicesToDialogueChoices(node.Choices),
                 node.DialogType, 
+                node.PortraitLeft,
                 node.IsStartingNode()
                 );
             createdDialogs.Add(node.ID, dialog);
@@ -282,8 +286,10 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
             {
                 ID = node.ID,
                 Name = node.DialogueName,
-                Choices = node.Choices,
+                Choices = choices,
                 Text = node.Text,
+                IsPortraitLeft = node.PortraitLeft,
+                DialogActor = node.DialogActor,
                 GroupID = node.Group?.ID,
                 DialgueType = node.DialogType,
                 Position = node.GetPosition().position
