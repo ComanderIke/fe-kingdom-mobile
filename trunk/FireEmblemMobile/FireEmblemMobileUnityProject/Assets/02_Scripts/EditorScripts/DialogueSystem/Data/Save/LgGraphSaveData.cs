@@ -15,13 +15,14 @@ namespace __2___Scripts.External.Editor.Data.Save
         [field:SerializeField] public List<string> OldGroupNames { get; set; }
         [field:SerializeField] public List<string> OldUngroupedNodeNames { get; set; }
         [field:SerializeField] public SerializableDictionary<string, List<string>> OldGroupedNodeNames { get; set; }
-
+        [field:SerializeField] public List<LGFightNodeSaveData> FightNodes { get; set; }
         public void Initialize(string fileName)
         {
             FileName = fileName;
             Groups = new List<LGGroupSaveData>();
             Nodes = new List<LGNodeSaveData>();
             EventNodes = new List<LGEventNodeSaveData>();
+            FightNodes = new List<LGFightNodeSaveData>();
         }
     }
 }

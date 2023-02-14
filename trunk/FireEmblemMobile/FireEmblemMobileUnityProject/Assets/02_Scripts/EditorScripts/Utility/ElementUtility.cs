@@ -86,10 +86,10 @@ namespace __2___Scripts.External.Editor.Utility
             return textField;
         }
 
-        public static VisualElement CreatePopup<T>(List<T> choices, T defaultValue)
+        public static VisualElement CreatePopup<T>(List<T> choices, T defaultValue, EventCallback<ChangeEvent<T>> onValueChanged=null)
         {
             PopupField<T> field = new PopupField<T>(choices, defaultValue);
-            
+            field.RegisterValueChangedCallback(onValueChanged);
             return field;
         }
 

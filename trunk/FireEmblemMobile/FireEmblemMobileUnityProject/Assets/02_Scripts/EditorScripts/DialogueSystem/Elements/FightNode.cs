@@ -2,6 +2,7 @@
 using __2___Scripts.External.Editor.Data.Save;
 using __2___Scripts.External.Editor.Elements;
 using __2___Scripts.External.Editor.Utility;
+using Game.GameActors.Units;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
 {
     public class FightNode : EventNode
     {
+        public UnitBP Enemy { get; set; }
         public override void Initialize(string nodeName, LGGraphView graphView,Vector2 position)
         {
             base.Initialize(nodeName, graphView,position);
@@ -33,7 +35,12 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
         {
             base.Draw();
             ObjectField prop = new ObjectField("Enemy");
-            prop.objectType = typeof(DialogActor);
+            prop.objectType = typeof(UnitBP);
+            prop.value = Enemy;
+            prop.RegisterValueChangedCallback(callback =>
+            {
+                Enemy = (UnitBP)callback.newValue;
+            });
             customDataContainer.Insert(1, prop);
             foreach (LGChoiceSaveData choice in Choices)
             {

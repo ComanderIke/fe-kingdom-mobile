@@ -76,19 +76,6 @@ MonoBehaviour:
     <GroupID>k__BackingField: 
     <DialgueType>k__BackingField: 0
     <Position>k__BackingField: {x: 821, y: 299}
-  - <ID>k__BackingField: 47a4eedb-6398-48a9-b408-4acc64c46f36
-    <Name>k__BackingField: Fight
-    <Text>k__BackingField: DialogueText
-    <IsPortraitLeft>k__BackingField: 1
-    <DialogActor>k__BackingField: {fileID: 0}
-    <Choices>k__BackingField:
-    - <Text>k__BackingField: Won
-      <NodeID>k__BackingField: f0e898cd-0a33-4d6f-939d-3ad6d5e2ee44
-    - <Text>k__BackingField: Lost
-      <NodeID>k__BackingField: 2d538321-0f90-4bf0-bc15-73c12183e15d
-    <GroupID>k__BackingField: 
-    <DialgueType>k__BackingField: 2
-    <Position>k__BackingField: {x: 355, y: 75}
   - <ID>k__BackingField: f0e898cd-0a33-4d6f-939d-3ad6d5e2ee44
     <Name>k__BackingField: Win
     <Text>k__BackingField: DialogueText
@@ -100,6 +87,7 @@ MonoBehaviour:
     <GroupID>k__BackingField: 
     <DialgueType>k__BackingField: 0
     <Position>k__BackingField: {x: 821, y: 46}
+  <EventNodes>k__BackingField:
   - <ID>k__BackingField: 20492f1f-87b5-4234-98ad-adfb48a49d31
     <Name>k__BackingField: Testerino
     <Text>k__BackingField: 3
@@ -114,6 +102,9 @@ MonoBehaviour:
     <GroupID>k__BackingField: 
     <DialgueType>k__BackingField: 3
     <Position>k__BackingField: {x: 451, y: 340}
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
   - <ID>k__BackingField: 8e38a96a-0793-41d7-9179-26fb7be3db39
     <Name>k__BackingField: WHUT
     <Text>k__BackingField: DialogueText
@@ -124,17 +115,23 @@ MonoBehaviour:
       <NodeID>k__BackingField: 
     <GroupID>k__BackingField: 
     <DialgueType>k__BackingField: 3
-    <Position>k__BackingField: {x: 111, y: 340}
-  <EventNodes>k__BackingField: []
+    <Position>k__BackingField: {x: -14, y: 340}
+    <RewardResources>k__BackingField:
+    - Amount: 60
+      ResourceType: 2
+    <RewardItems>k__BackingField:
+    - {fileID: 11400000, guid: 38f3ce0806a4315449874b8ef5dcbb05, type: 2}
+    - {fileID: 11400000, guid: 9492c4b8add5ab14eaeccd294e49062c, type: 2}
+    <Events>k__BackingField: []
   <OldGroupNames>k__BackingField:
   - GoddessWelcome
   <OldUngroupedNodeNames>k__BackingField:
   - TestEvent
   - Lost
-  - Fight
   - Win
   - Testerino
   - WHUT
+  - Fight
   <OldGroupedNodeNames>k__BackingField:
     list:
     - Key: GoddessWelcome
@@ -142,3 +139,23 @@ MonoBehaviour:
       - Welcome2
       - Welcome1
       - Welcome3
+  <FightNodes>k__BackingField:
+  - <ID>k__BackingField: 47a4eedb-6398-48a9-b408-4acc64c46f36
+    <Name>k__BackingField: Fight
+    <Text>k__BackingField: DialogueText
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 11400000, guid: 7cb98beffda890d41a26e220f1d4aca8,
+      type: 2}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Won
+      <NodeID>k__BackingField: f0e898cd-0a33-4d6f-939d-3ad6d5e2ee44
+    - <Text>k__BackingField: Lost
+      <NodeID>k__BackingField: 2d538321-0f90-4bf0-bc15-73c12183e15d
+    <GroupID>k__BackingField: 
+    <DialgueType>k__BackingField: 2
+    <Position>k__BackingField: {x: 356, y: 75}
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+    <Enemy>k__BackingField: {fileID: 11400000, guid: 8d0171e7cfb2f134bbfabaf8e9b89193,
+      type: 2}

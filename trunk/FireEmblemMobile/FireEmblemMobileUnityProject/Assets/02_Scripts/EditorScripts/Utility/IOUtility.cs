@@ -59,7 +59,55 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
             LoadGroups(graphData.Groups);
             LoadNodes(graphData.Nodes);
             LoadEventNodes(graphData.EventNodes);
+            LoadFightNodes(graphData.FightNodes);
             LoadNodesConnections();
+        }
+
+        private static void LoadFightNodes(List<LGFightNodeSaveData> nodes)
+        {
+          
+            foreach (LGFightNodeSaveData nodeData in nodes)
+            {
+                DialogNode node = graphView.CreateNode(nodeData.Name,nodeData.DialgueType, nodeData.Position, false);
+
+                
+                List<LGChoiceSaveData> choices = CloneNodeChoices(nodeData.Choices);
+               
+                node.ID = nodeData.ID;
+                node.Choices = choices;
+                node.Text = nodeData.Text;
+                node.DialogActor = nodeData.DialogActor;
+              
+                if (node is EventNode eventNode)
+                {
+               
+                    List<ResourceEntry> resources = CloneNodeResources(nodeData.RewardResources);
+                    List<ItemBP> items = new List<ItemBP>(nodeData.RewardItems);
+                    List<DialogEvent> events = new List<DialogEvent>(nodeData.Events);
+                    Debug.Log("HÄH?");
+                    eventNode.ResourceRewards = resources;
+                    eventNode.ItemRewards = items;
+                    eventNode.Events = events;
+                    if (node is FightNode fightNode)
+                    {
+                        fightNode.Enemy = nodeData.Enemy;
+                    }
+                   
+                }
+                
+                node.Draw();
+                
+                graphView.AddElement(node);
+                loadedNodes.Add(node.ID, node);
+                if (string.IsNullOrEmpty(nodeData.GroupID))
+                {
+                    continue;
+                }
+
+                DialogGroup group = loadedGroups[nodeData.GroupID];
+                node.Group = group;
+                group.AddElement(node);
+            }
         }
 
         private static void LoadNodesConnections()
@@ -115,7 +163,7 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
 
         private static void LoadEventNodes(List<LGEventNodeSaveData> nodes)
         {
-            Debug.Log("Load Event Node!" + nodes.Count);
+          
             foreach (LGEventNodeSaveData nodeData in nodes)
             {
                 DialogNode node = graphView.CreateNode(nodeData.Name,nodeData.DialgueType, nodeData.Position, false);
@@ -130,13 +178,15 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
               
                 if (node is EventNode eventNode)
                 {
-                    Debug.Log("Load Event Node2!");
+               
                     List<ResourceEntry> resources = CloneNodeResources(nodeData.RewardResources);
                     List<ItemBP> items = new List<ItemBP>(nodeData.RewardItems);
                     List<DialogEvent> events = new List<DialogEvent>(nodeData.Events);
+                    Debug.Log("HÄH?");
                     eventNode.ResourceRewards = resources;
                     eventNode.ItemRewards = items;
                     eventNode.Events = events;
+                   
                 }
                 
                 node.Draw();
@@ -190,13 +240,24 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
             List<string> ungroupedNodeNames = new List<string>();
             foreach (DialogNode node in nodes)
             {
-                SaveNodeToGraph(node, graphSaveData);
-                if (node is EventNode eventNode)
+               
+                
+                if (node is FightNode fightNode)
                 {
+                    SaveNodeToGraph(fightNode, graphSaveData);
+                    SaveNodeToScriptableObject(fightNode, dialogContainer);
+                }
+                else if (node is EventNode eventNode)
+                {
+                    SaveNodeToGraph(eventNode, graphSaveData);
                     SaveNodeToScriptableObject(eventNode, dialogContainer);
                 }
                 else
+                {
+                    SaveNodeToGraph(node, graphSaveData);
                     SaveNodeToScriptableObject(node, dialogContainer);
+                }
+                
                 if (node.Group != null)
                 {
                     groupNodeNames.AddItem(node.Group.title, node.DialogueName);
@@ -312,6 +373,10 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                 dialog = CreateAsset<LGEventDialogSO>($"{containerFolderPath}/Global/Dialogues", node.DialogueName);
                 dialogContainer.UngroupedDialogs.Add(dialog);
             }
+
+            Debug.Log("Save To SO " + node.ItemRewards.Count);
+            if(node.ItemRewards.Count>=1)
+                Debug.Log("Item: " + node.ItemRewards[0].name);
             dialog.Initialize(
                 node.DialogueName, 
                 node.DialogActor,
@@ -320,12 +385,55 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                 node.DialogType, 
                 node.PortraitLeft,
                 node.IsStartingNode(),
-                node.ResourceRewards, 
-                node.ItemRewards, 
-                node.Events
+                CopyResourceRewards(node.ResourceRewards), 
+                new List<ItemBP>(node.ItemRewards), 
+                new List<DialogEvent>(node.Events)
             );
             createdDialogs.Add(node.ID, dialog);
             SaveAsset(dialog);
+        }
+        private static void SaveNodeToScriptableObject(FightNode node, LGDialogContainerSO dialogContainer)
+        {
+            LGFightEventDialogSO dialog;
+            if (node.Group != null)
+            {
+                dialog = CreateAsset<LGFightEventDialogSO>($"{containerFolderPath}/Groups/{node.Group.title}/Dialogues", node.DialogueName);
+                dialogContainer.DialogueGroupes.AddItem(createdDialogGroups[node.Group.ID], dialog);
+            }
+            else
+            {
+                dialog = CreateAsset<LGFightEventDialogSO>($"{containerFolderPath}/Global/Dialogues", node.DialogueName);
+                dialogContainer.UngroupedDialogs.Add(dialog);
+            }
+
+            Debug.Log("Save To SO " + node.ItemRewards.Count);
+            if(node.ItemRewards.Count>=1)
+                Debug.Log("Item: " + node.ItemRewards[0].name);
+            dialog.Initialize(
+                node.DialogueName, 
+                node.DialogActor,
+                node.Text,
+                ConvertNodeChoicesToDialogueChoices(node.Choices),
+                node.DialogType, 
+                node.PortraitLeft,
+                node.IsStartingNode(),
+                CopyResourceRewards(node.ResourceRewards), 
+                new List<ItemBP>(node.ItemRewards), 
+                new List<DialogEvent>(node.Events),
+                node.Enemy
+            );
+            createdDialogs.Add(node.ID, dialog);
+            SaveAsset(dialog);
+        }
+
+        private static List<ResourceEntry> CopyResourceRewards(List<ResourceEntry> nodeResourceRewards)
+        {
+            List<ResourceEntry> ret = new List<ResourceEntry>();
+            foreach (var res in nodeResourceRewards)
+            {
+                ret.Add(new ResourceEntry(res.Amount, res.ResourceType));
+            }
+            return ret;
         }
 
         private static List<LGDialogChoiceData> ConvertNodeChoicesToDialogueChoices(List<LGChoiceSaveData> nodeChoices)
@@ -405,6 +513,27 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                 Events = node.Events,
             };
             graphSaveData.EventNodes.Add(nodeData);
+        }
+        private static void SaveNodeToGraph(FightNode node, LgGraphSaveData graphSaveData)
+        {
+            List<LGChoiceSaveData> choices = CloneNodeChoices(node.Choices);
+            LGFightNodeSaveData nodeData = new LGFightNodeSaveData()
+            {
+                ID = node.ID,
+                Name = node.DialogueName,
+                Choices = choices,
+                Text = node.Text,
+                IsPortraitLeft = node.PortraitLeft,
+                DialogActor = node.DialogActor,
+                GroupID = node.Group?.ID,
+                DialgueType = node.DialogType,
+                Position = node.GetPosition().position,
+                RewardResources = node.ResourceRewards,
+                RewardItems = node.ItemRewards,
+                Events = node.Events,
+                Enemy = node.Enemy
+            };
+            graphSaveData.FightNodes.Add(nodeData);
         }
 
 
