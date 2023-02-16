@@ -16,7 +16,7 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
    
     public class EventNode : DialogNode
     {
-        
+        public string Headline;
         public List<ItemBP> ItemRewards;
         public List<ResourceEntry> ResourceRewards;
         private Dictionary<ResourceEntry, TextField> resourceTextFields;
@@ -39,6 +39,11 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
         public override void Draw()
         {
             base.Draw();
+            var headlineTextField=ElementUtility.CreateTextField(Headline, "Headline", callback =>
+            {
+                Headline = callback.newValue;
+            });
+            customDataContainer.Insert(0,headlineTextField);
             Foldout rewardFouldout = ElementUtility.CreateFoldout("Rewards", true);
             DrawResources(rewardFouldout);
             DrawItems(rewardFouldout);

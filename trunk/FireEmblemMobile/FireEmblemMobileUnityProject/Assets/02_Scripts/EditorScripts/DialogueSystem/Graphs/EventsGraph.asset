@@ -1,0 +1,483 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6c9df788b0a4f069d5f3700d9e4f275, type: 3}
+  m_Name: EventsGraph
+  m_EditorClassIdentifier: 
+  <FileName>k__BackingField: Events
+  <Groups>k__BackingField:
+  - <ID>k__BackingField: d96fbdee-cad3-4ec3-be32-53a519f68161
+    <Name>k__BackingField: TheKnightAndHisHarem
+    <Position>k__BackingField: {x: 211, y: 120}
+  - <ID>k__BackingField: 3903b474-f6d9-4717-b77b-59ad6b1efc75
+    <Name>k__BackingField: ChasedBySkeletons
+    <Position>k__BackingField: {x: 261, y: 1090}
+  - <ID>k__BackingField: d88683db-1151-44f3-b059-93ec05b6f27a
+    <Name>k__BackingField: LumberjackParty
+    <Position>k__BackingField: {x: 1822, y: 1103}
+  - <ID>k__BackingField: 836c2ea7-3376-488e-bb77-3cf691cda79c
+    <Name>k__BackingField: MemoryGame
+    <Position>k__BackingField: {x: 306.00003, y: 2035}
+  - <ID>k__BackingField: 4ae820d4-0d6f-4635-b009-1613142b0d57
+    <Name>k__BackingField: SecretMerchant
+    <Position>k__BackingField: {x: 733, y: 2530}
+  - <ID>k__BackingField: 15e1ea3e-fe26-4c1f-8e6b-baa8cfbb6e24
+    <Name>k__BackingField: WingedCreature
+    <Position>k__BackingField: {x: 746, y: 3044}
+  <Nodes>k__BackingField: []
+  <EventNodes>k__BackingField:
+  - <ID>k__BackingField: f0365265-1533-4609-86dd-57480bfe2d00
+    <Name>k__BackingField: KnightHarem2
+    <Text>k__BackingField: "The knight\u2019s facial expression turns cold. \u201CIt
+      is my wife, what are you on about?\u201D. The woman avoids eye contact in silence."
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: 'Tell him to let her go. '
+      <NodeID>k__BackingField: 37837253-e1ef-439b-a6e7-c64d4f330c61
+    - <Text>k__BackingField: 'Leave them be. '
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: d96fbdee-cad3-4ec3-be32-53a519f68161
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 941, y: 179}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: 60271e98-9f9b-4d48-b317-47a409f695e1
+    <Name>k__BackingField: KnightHaremWon
+    <Text>k__BackingField: "The woman approaches you. \u201CThank you kindly, I was
+      hoping to get away from this cruel man. Take this, it belonged to my mother
+      before she passed\u201D. "
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: d96fbdee-cad3-4ec3-be32-53a519f68161
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 2516, y: 179}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField:
+    - Amount: 50
+      ResourceType: 0
+    - Amount: 50
+      ResourceType: 2
+    <RewardItems>k__BackingField:
+    - {fileID: 11400000, guid: b4861a55f2e99854ab9f7b9b973eb143, type: 2}
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: 84bd9d23-78e8-437b-aaff-748d5384a29b
+    <Name>k__BackingField: KnightHaremLost
+    <Text>k__BackingField: Having defeated his opponent the knight takes his leave
+      after taking most of the valuables of the defeated challenger.
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Leave.
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: d96fbdee-cad3-4ec3-be32-53a519f68161
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 2516, y: 669}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: 37837253-e1ef-439b-a6e7-c64d4f330c61
+    <Name>k__BackingField: KnightHarem3
+    <Text>k__BackingField: "His hand moves to the hilt of his sword - \u201CTry and
+      make me!\u201D"
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Duel!
+      <NodeID>k__BackingField: 36c0ee15-7245-41c5-a77c-30ff36dd6224
+    <GroupID>k__BackingField: d96fbdee-cad3-4ec3-be32-53a519f68161
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 1648, y: 203}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: f3a57cb1-55a9-4348-a4b7-42ffcfb6861c
+    <Name>k__BackingField: ChasedBySkeletons1
+    <Text>k__BackingField: 'Looking down the hill you spot two children, seemingly
+      brother and sister, running from a group of skeletons. You can hear their screams
+      amongst the clanking of armor and bones behind them.  '
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: 'Run up to them and fight off the monsters. '
+      <NodeID>k__BackingField: c46191e2-a01a-41b5-87e4-d8521b8fb22b
+    - <Text>k__BackingField: 'Too dangerous, go the other way. '
+      <NodeID>k__BackingField: 3e51d75f-5105-4a7b-ae45-75a18bd2f8e7
+    <GroupID>k__BackingField: 3903b474-f6d9-4717-b77b-59ad6b1efc75
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 286, y: 1149}
+    <Headline>k__BackingField: Chased by Skeletons
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: c9617444-9b70-4950-a8e2-8ca713212a78
+    <Name>k__BackingField: KnightHarem1
+    <Text>k__BackingField: You come across a brown steed carrying a knight in worn
+      down armor. Sitting behind him, a young frail woman, seemingly in a lot of
+      discomfort. The knight glares at you shortly, before directing his horse in
+      another direction.
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: 'Confront the knight and ask about the woman. '
+      <NodeID>k__BackingField: f0365265-1533-4609-86dd-57480bfe2d00
+    - <Text>k__BackingField: 'Leave them be. '
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: d96fbdee-cad3-4ec3-be32-53a519f68161
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 236, y: 179}
+    <Headline>k__BackingField: The knight and his harem
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: 3e51d75f-5105-4a7b-ae45-75a18bd2f8e7
+    <Name>k__BackingField: ChasedBySkeletons4
+    <Text>k__BackingField: 'As you move on, you try not to think about what happened
+      to those children. '
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: End
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: 3903b474-f6d9-4717-b77b-59ad6b1efc75
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 881, y: 1479}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: 628ae275-470e-470f-ab38-79fe8a5639b0
+    <Name>k__BackingField: ChaseBySkeletons3
+    <Text>k__BackingField: "After the fight is over, you can\u2019t find the children
+      anywhere. It seems they ran away, only *goddess\u2019 name* knows where to. "
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: End
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: 3903b474-f6d9-4717-b77b-59ad6b1efc75
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 1348, y: 1193}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: c46191e2-a01a-41b5-87e4-d8521b8fb22b
+    <Name>k__BackingField: DialogueName
+    <Text>k__BackingField: DialogueText
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Won
+      <NodeID>k__BackingField: 628ae275-470e-470f-ab38-79fe8a5639b0
+    - <Text>k__BackingField: Lost
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: 3903b474-f6d9-4717-b77b-59ad6b1efc75
+    <DialgueType>k__BackingField: 2
+    <Position>k__BackingField: {x: 827, y: 1174}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: 4198e551-7d0e-4b54-880a-d1ebc22c08fb
+    <Name>k__BackingField: LumberjackParty1
+    <Text>k__BackingField: "A handful of men, each skinnier than the next, approach
+      you from the side of the road in filthy, worn out clothes. \u201CGreetings
+      travelers, does any one of you have an axe to spare for some poor woodworkers?\u201D  "
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Give them an axe
+      <NodeID>k__BackingField: 818151e3-8fda-4d6c-af94-a503f1549d0a
+    - <Text>k__BackingField: 'These are dire times. Take what little gold they have
+        left. '
+      <NodeID>k__BackingField: 6021b8a1-7127-4efc-9f06-b794b9e0dc68
+    <GroupID>k__BackingField: d88683db-1151-44f3-b059-93ec05b6f27a
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 1847, y: 1173}
+    <Headline>k__BackingField: Lumberjack Party
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: 818151e3-8fda-4d6c-af94-a503f1549d0a
+    <Name>k__BackingField: LumberjackParty2
+    <Text>k__BackingField: "\u201CThis will do, thousand blessings upon you. Here,
+      we found this on the remains of a battlefield. We don\u2019t have much use
+      for it anyway.\u201D "
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: End
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: d88683db-1151-44f3-b059-93ec05b6f27a
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 2591, y: 1162}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField:
+    - {fileID: 11400000, guid: 38f3ce0806a4315449874b8ef5dcbb05, type: 2}
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: 6021b8a1-7127-4efc-9f06-b794b9e0dc68
+    <Name>k__BackingField: LumberjackParty3
+    <Text>k__BackingField: "\u201CWe are doomed out here without some coins. You\u2019ll
+      have to strip them from our dead bodies!\u201D. "
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: End
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: d88683db-1151-44f3-b059-93ec05b6f27a
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 2591, y: 1580}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField:
+    - Amount: 20
+      ResourceType: 0
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: 315025d5-d740-4240-a9ce-a380e249c1e4
+    <Name>k__BackingField: MemoryGame1
+    <Text>k__BackingField: "You stumble upon an old caravan. The rider\u2019s face,
+      almost completely covered by a black hood, is ominously illuminated by the
+      lantern hanging in front. You can barely make out that it is an old woman.
+      \u201CCare for a little game\u201D? She speaks. "
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: 'Take her up on the intriguing offer.  '
+      <NodeID>k__BackingField: a5317b08-4662-4e0a-bc68-6d9ade214723
+    - <Text>k__BackingField: "You don\u2019t have time for games, leave her be.  "
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: 836c2ea7-3376-488e-bb77-3cf691cda79c
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 331, y: 2094}
+    <Headline>k__BackingField: A game of memory and courage
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: a5317b08-4662-4e0a-bc68-6d9ade214723
+    <Name>k__BackingField: MemoryGame2
+    <Text>k__BackingField: "The woman lays out mysterious looking cards on the ground
+      in front of you. \u201CA test of memory\u2026 such as courage\u201D. The lantern\u2019s
+      light reveals a soft grin on her face. "
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Start Game
+      <NodeID>k__BackingField: d70a19b4-0501-46a5-b96e-06bd0480d2cc
+    <GroupID>k__BackingField: 836c2ea7-3376-488e-bb77-3cf691cda79c
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 1042, y: 2094}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: d70a19b4-0501-46a5-b96e-06bd0480d2cc
+    <Name>k__BackingField: MemoryGame3
+    <Text>k__BackingField: DialogueText
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: 836c2ea7-3376-488e-bb77-3cf691cda79c
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 1841, y: 2114}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField:
+    - {fileID: 11400000, guid: f051197c20982a54294d7a782bdfaa1e, type: 2}
+  - <ID>k__BackingField: fff48fd6-2a54-499e-99a5-cea61f6c6a8a
+    <Name>k__BackingField: SecretMerchant1
+    <Text>k__BackingField: "As the path you are traveling on keeps revealing the
+      same grey and muddy scenery, you can\u2019t help but spot a colorful caravan,
+      parked by the road. You are hailed by a man whose clothes match the look of
+      his caravan. He wants to sell you some of his wares. "
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Take a look
+      <NodeID>k__BackingField: c604ae21-0480-49ce-a503-a787f410382f
+    - <Text>k__BackingField: Dont bother
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: 4ae820d4-0d6f-4635-b009-1613142b0d57
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 758, y: 2589}
+    <Headline>k__BackingField: Merchant
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: c604ae21-0480-49ce-a503-a787f410382f
+    <Name>k__BackingField: SecretMerchant3
+    <Text>k__BackingField: DialogueText
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: 4ae820d4-0d6f-4635-b009-1613142b0d57
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 1511, y: 2627}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField:
+    - {fileID: 11400000, guid: 06e4735d7e4fe5b47b406e1e92f3496c, type: 2}
+  - <ID>k__BackingField: 5f2b73ea-3ea8-4ee6-a45d-c87f27eb8abf
+    <Name>k__BackingField: WingedCreature1
+    <Text>k__BackingField: 'Flying above you, is a creature of the night, its dark,
+      leathery skin covered in human blood. As its crimson red eyes stare down on
+      you, you can tell it has spotted your party. '
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Let the ranger take the shot.[TODO] Character Requirement
+      <NodeID>k__BackingField: 024c6435-ee82-4561-89db-d78b1bddde9a
+    - <Text>k__BackingField: 'Make a stance and await the creature with your sword
+        in hand. '
+      <NodeID>k__BackingField: b67d4dee-6c86-4190-a29a-505aab18708e
+    - <Text>k__BackingField: 'Hide below the trees behind you. '
+      <NodeID>k__BackingField: 9a3d6d7b-c2a2-4702-908a-433359ffc776
+    <GroupID>k__BackingField: 15e1ea3e-fe26-4c1f-8e6b-baa8cfbb6e24
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 771, y: 3208}
+    <Headline>k__BackingField: Winged creature of the night
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: b67d4dee-6c86-4190-a29a-505aab18708e
+    <Name>k__BackingField: WingedCreature3
+    <Text>k__BackingField: 'The creature flies straight towards you at an alarming
+      speed. You barely redirect its claws, targeting your heart, to your shoulder
+      as the creature flies off into the distance. '
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: End
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: 15e1ea3e-fe26-4c1f-8e6b-baa8cfbb6e24
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 1521, y: 3484}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField:
+    - Amount: 20
+      ResourceType: 2
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: 024c6435-ee82-4561-89db-d78b1bddde9a
+    <Name>k__BackingField: WingedCreature2
+    <Text>k__BackingField: "Your ranger takes a calm breath, as the arrow starts
+      soaring through the air, finding its way into the creature\u2019s chest. A
+      loud screech is let out, as it falls to the ground."
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: End
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: 15e1ea3e-fe26-4c1f-8e6b-baa8cfbb6e24
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 1505, y: 3103}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField:
+    - Amount: 50
+      ResourceType: 2
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: 9a3d6d7b-c2a2-4702-908a-433359ffc776
+    <Name>k__BackingField: WingedCreature4
+    <Text>k__BackingField: "You hide below the trees, taking a glimpse through the
+      branches up into the sky. Something else has caught the creature\u2019s attention,
+      it flies off into the distance."
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: End
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: 15e1ea3e-fe26-4c1f-8e6b-baa8cfbb6e24
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 1496, y: 3915}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  <OldGroupNames>k__BackingField:
+  - TheKnightAndHisHarem
+  - ChasedBySkeletons
+  - LumberjackParty
+  - MemoryGame
+  - SecretMerchant
+  - WingedCreature
+  <OldUngroupedNodeNames>k__BackingField: []
+  <OldGroupedNodeNames>k__BackingField:
+    list:
+    - Key: TheKnightAndHisHarem
+      Value:
+      - KnightHarem2
+      - KnightHaremWon
+      - KnightHaremLost
+      - KnightHarem3
+      - KnightHarem1
+      - KnightHarem4
+    - Key: ChasedBySkeletons
+      Value:
+      - ChasedBySkeletons1
+      - ChasedBySkeletons4
+      - ChaseBySkeletons3
+      - DialogueName
+    - Key: LumberjackParty
+      Value:
+      - LumberjackParty1
+      - LumberjackParty2
+      - LumberjackParty3
+    - Key: MemoryGame
+      Value:
+      - MemoryGame1
+      - MemoryGame2
+      - MemoryGame3
+    - Key: SecretMerchant
+      Value:
+      - SecretMerchant1
+      - SecretMerchant3
+    - Key: WingedCreature
+      Value:
+      - WingedCreature1
+      - WingedCreature3
+      - WingedCreature2
+      - WingedCreature4
+  <FightNodes>k__BackingField:
+  - <ID>k__BackingField: 36c0ee15-7245-41c5-a77c-30ff36dd6224
+    <Name>k__BackingField: KnightHarem4
+    <Text>k__BackingField: 
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Won
+      <NodeID>k__BackingField: 60271e98-9f9b-4d48-b317-47a409f695e1
+    - <Text>k__BackingField: Lost
+      <NodeID>k__BackingField: 84bd9d23-78e8-437b-aaff-748d5384a29b
+    <GroupID>k__BackingField: d96fbdee-cad3-4ec3-be32-53a519f68161
+    <DialgueType>k__BackingField: 2
+    <Position>k__BackingField: {x: 2122, y: 184}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+    <Enemy>k__BackingField: {fileID: 11400000, guid: 8d0171e7cfb2f134bbfabaf8e9b89193,
+      type: 2}
+  <BattleNodes>k__BackingField: []

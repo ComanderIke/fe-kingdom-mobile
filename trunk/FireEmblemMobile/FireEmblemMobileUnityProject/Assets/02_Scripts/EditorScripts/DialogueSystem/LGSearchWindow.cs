@@ -70,6 +70,10 @@ namespace __2___Scripts.External.Editor
                     FightNode fightNode = (FightNode)graphView.CreateNode("DialogueName",DialogType.Fight, localMousePos);
                     graphView.AddElement(fightNode);
                     return true;
+                case DialogType.Battle: 
+                    BattleNode battleNode = (BattleNode)graphView.CreateNode("DialogueName",DialogType.Battle, localMousePos);
+                    graphView.AddElement(battleNode);
+                    return true;
                 case DialogType.MultiChoiceEvent: 
                     MultiChoiceEventNode eventNode = (MultiChoiceEventNode)graphView.CreateNode("DialogueName",DialogType.MultiChoiceEvent, localMousePos);
                     graphView.AddElement(eventNode);

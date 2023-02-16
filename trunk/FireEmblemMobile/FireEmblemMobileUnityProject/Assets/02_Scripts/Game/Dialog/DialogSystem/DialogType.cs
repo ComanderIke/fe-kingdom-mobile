@@ -5,6 +5,7 @@
         SingleChoice,
         MultiChoice,
         Fight,
-        MultiChoiceEvent
+        MultiChoiceEvent,
+        Battle
     }
 }
