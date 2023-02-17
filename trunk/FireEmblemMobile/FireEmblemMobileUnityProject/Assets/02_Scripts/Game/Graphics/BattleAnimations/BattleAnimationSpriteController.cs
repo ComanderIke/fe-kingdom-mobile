@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Game.GUI;
+using LostGrace;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -32,6 +33,8 @@ public class BattleAnimationSpriteController : MonoBehaviour
     RectTransform attractorTransform;
     [SerializeField]
     ExpBarController expBar;
+
+   
     
     public TimelineAsset walkIn;
     public TimelineAsset attack;

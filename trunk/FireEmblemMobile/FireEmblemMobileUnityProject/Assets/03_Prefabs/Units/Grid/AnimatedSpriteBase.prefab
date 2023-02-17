@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1436444745586099328}
   - component: {fileID: 7919897366982482158}
   - component: {fileID: 3164541116706881109}
+  - component: {fileID: 594525785317116268}
   m_Layer: 0
   m_Name: AnimatedSpriteBase
   m_TagString: Untagged
@@ -106,6 +107,7 @@ MonoBehaviour:
       Description: 
       cost: 0
       rarity: 0
+      maxStack: 0
       Sprite: {fileID: 0}
       EquipmentSlotType: 0
       AttackRanges: 
@@ -130,6 +132,15 @@ MonoBehaviour:
         lck: 0
         def: 0
         faith: 0
+      BonusStats:
+        <Hit>k__BackingField: 0
+        <Avoid>k__BackingField: 0
+        <CritAvoid>k__BackingField: 0
+        <Crit>k__BackingField: 0
+        <AttackSpeed>k__BackingField: 0
+        <Armor>k__BackingField: 0
+        <MagicResistance>k__BackingField: 0
+        <Attack>k__BackingField: 0
       Mov: 0
     growths:
       str: 0
@@ -158,7 +169,8 @@ MonoBehaviour:
     experienceManager:
       level: 0
       exp: 0
-      MaxExp: 0
+      drainableExp: 100
+      expLeftToDrain: 100
   references:
     version: 1
     00000000:
@@ -182,3 +194,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &594525785317116268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1232750816025733220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a55341c55f2efd74c83fd11321747984, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteSet: {fileID: 11400000, guid: 15c6559b2ce48d548a45dc0c7b7ffba6, type: 2}
+  spriteRenderer: {fileID: 1436444745586099328}

@@ -105,6 +105,11 @@ namespace Game.GameActors.Units
         public RpgClass rpgClass;
         [SerializeField] public UnitVisual visuals;
 
+        public UnitVisual Visuals
+        {
+            get { return visuals; }
+        }
+
         public Unit(string name,RpgClass rpgClass,Stats stats, Attributes growths, MoveType moveType, Weapon equippedWeapon, Relic equippedRelic1,
             Relic equippedRelic2, UnitVisual visuals, SkillManager skillManager, ExperienceManager experienceManager)
         {
@@ -167,6 +172,7 @@ namespace Game.GameActors.Units
         }
         public GameTransformManager GameTransformManager { get; set; }
         public AnimatedCombatCharacter BattleGO { get; set; }
+        
 
 
         [SerializeField] private ExperienceManager experienceManager;

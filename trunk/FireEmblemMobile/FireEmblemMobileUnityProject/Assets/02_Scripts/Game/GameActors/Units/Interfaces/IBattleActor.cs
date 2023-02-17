@@ -23,6 +23,7 @@ namespace Game.GameInput
         TurnStateManager TurnStateManager { get; set; }
         GameTransformManager GameTransformManager { get; set; }
         AnimatedCombatCharacter BattleGO { get; set; }
+        UnitVisual Visuals { get; }
         Weapon GetEquippedWeapon();
         bool IsAlive();
         void Die();

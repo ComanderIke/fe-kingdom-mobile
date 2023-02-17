@@ -2,11 +2,13 @@
 using Game.GameActors.Players;
 using Game.GameInput;
 using Game.GUI;
+using LostGrace;
 using UnityEngine;
 
 public class AnimatedCombatCharacter
 {
     private BattleAnimationSpriteController spriteController;
+    private AnimationSpriteSwapper spriteSwapper;
     private ImpactPosition impactPosition;
     public GameObject GameObject { get; set; }
     private bool left;
@@ -18,6 +20,14 @@ public class AnimatedCombatCharacter
         this.GameObject = gameObject;
         this.impactPosition = gameObject.GetComponentInChildren<ImpactPosition>();
         this.spriteController = gameObject.GetComponentInChildren<BattleAnimationSpriteController>();
+        
+        this.spriteSwapper = gameObject.GetComponentInChildren<AnimationSpriteSwapper>();
+        if (spriteSwapper != null)
+        {
+            Debug.Log("INIT SPRITE SWAPPER");
+            spriteSwapper.Init(actor.Visuals.CharacterSpriteSet);
+        }
+
         this.left = left;
         if (!left)
         {
