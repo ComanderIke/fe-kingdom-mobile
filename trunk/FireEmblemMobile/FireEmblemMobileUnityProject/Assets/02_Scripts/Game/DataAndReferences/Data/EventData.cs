@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _02_Scripts.Game.Dialog.DialogSystem;
 using UnityEngine;
 using Random = System.Random;
 
@@ -9,12 +10,12 @@ namespace Game.GameResources
     [Serializable]
     public class EventData:IEventData
     {
-        [SerializeField] List<RandomEvent> tier0Events;
-        [SerializeField] List<RandomEvent> tier1Events;
-        [SerializeField] List<RandomEvent> tier2Events;
-        [SerializeField] List<RandomEvent> specialEvents;
+        [SerializeField] List<LGEventDialogSO> tier0Events;
+        [SerializeField] List<LGEventDialogSO> tier1Events;
+        [SerializeField] List<LGEventDialogSO> tier2Events;
+        [SerializeField] List<LGEventDialogSO> specialEvents;
 
-        public RandomEvent GetRandomEvent(int tier)
+        public LGEventDialogSO GetRandomEvent(int tier)
         {
             var rng = new Random();
             
@@ -26,7 +27,7 @@ namespace Game.GameResources
                 default: return null;
             }
         }
-        public RandomEvent GetSpecialEvent(int index)
+        public LGEventDialogSO GetSpecialEvent(int index)
         {
             if (index < 0 || index > specialEvents.Count - 1)
                 return null;

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Serialization;
 using __2___Scripts.External.Editor;
 using __2___Scripts.External.Editor.Data.Save;
 using _02_Scripts.EditorScripts.DialogueSystem.Elements;
 using _02_Scripts.Game.GUI.Utility;
 using Game.GameActors.Items;
+using Game.GameActors.Units;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -162,7 +164,7 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
         {
             foreach (KeyValuePair<string, DialogNode> loadedNode in loadedNodes)
             {
-                foreach (Port choicePort in loadedNode.Value.outputContainer.Children())
+                foreach (Port choicePort in loadedNode.Value.outputContainer.Children().Where(n=> n is Port))
                 {
                     LGChoiceSaveData choiceData = (LGChoiceSaveData)choicePort.userData;
                     if (string.IsNullOrEmpty(choiceData.NodeID))
@@ -235,6 +237,7 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                     eventNode.ItemRewards = items;
                     eventNode.Events = events;
                     eventNode.Headline = nodeData.Headline;
+                    
 
                 }
                 
@@ -528,7 +531,10 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
             {
                 LGDialogChoiceData choiceData = new LGDialogChoiceData()
                 {
-                    Text = nodeChoice.Text
+                    Text = nodeChoice.Text,
+                    ItemRequirements = new List<ItemBP>(nodeChoice.ItemRequirements),
+                    CharacterRequirements = new List<UnitBP>(nodeChoice.CharacterRequirements),
+                    AttributeRequirements = new List<ResponseStatRequirement>(nodeChoice.AttributeRequirements)
                 };
                 dialogChoices.Add(choiceData);
             }
@@ -555,7 +561,11 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                 LGChoiceSaveData choiceSaveData = new LGChoiceSaveData()
                 {
                     Text = choice.Text,
-                    NodeID = choice.NodeID
+                    NodeID = choice.NodeID,
+                    ItemRequirements = new List<ItemBP>(choice.ItemRequirements),
+                    CharacterRequirements = new List<UnitBP>(choice.CharacterRequirements),
+                    AttributeRequirements = new List<ResponseStatRequirement>(choice.AttributeRequirements)
+                    
                 };
                 choices.Add(choiceSaveData);
             }

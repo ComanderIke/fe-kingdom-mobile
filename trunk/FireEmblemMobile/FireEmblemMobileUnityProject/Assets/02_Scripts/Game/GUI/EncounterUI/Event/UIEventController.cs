@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using __2___Scripts.Game.Utility;
+using _02_Scripts.Game.Dialog.DialogSystem;
 using Game.AI;
+using Game.GameActors.Items;
 using Game.GameActors.Players;
 using Game.GameActors.Units.Numbers;
 using Game.Mechanics;
@@ -25,9 +27,9 @@ public class UIEventController : MonoBehaviour
     [SerializeField] private UIUnitIdleAnimation unitIdleAnimation;
     [SerializeField] GameObject textOptionPrefab;
     [SerializeField] GameObject fightOptionPrefab;
-    private RandomEvent randomEvent;
-    private EventScene currentScene;
-    private ResponseOption current;
+    private LGEventDialogSO randomEvent;
+    private LGEventDialogSO currentNode;
+    private LGDialogChoiceData current;
     
     public void Show(EventEncounterNode node, Party party)
     {
@@ -35,7 +37,7 @@ public class UIEventController : MonoBehaviour
         canvas.enabled = true;
         this.party = party;
         randomEvent = node.randomEvent;
-        currentScene = randomEvent.scenes[0];
+        currentNode = randomEvent;
         party.onActiveUnitChanged -= ActiveUnitChanged;
         party.onActiveUnitChanged += ActiveUnitChanged;
         UpdateUI();
@@ -57,19 +59,19 @@ public class UIEventController : MonoBehaviour
     {
         unitIdleAnimation.Show(party.ActiveUnit);
         characterFace.Show(party.ActiveUnit);
-        headline.SetText(randomEvent.headline);
+        headline.SetText(randomEvent.HeadLine);
         layout.DeleteAllChildren();
-        description.text = currentScene.MainText;
-        ShowTextOptions(currentScene.textOptions);
+        description.text = currentNode.Text;
+        ShowTextOptions(currentNode.Choices);
     }
 
-    void ShowTextOptions(List<ResponseOption> textOptions)
+    void ShowTextOptions(List<LGDialogChoiceData> textOptions)
     {
         int index = 0;
         foreach (var textOption in textOptions)
         {
             GameObject prefab = textOptionPrefab;
-            if (textOption.fightData!=null)
+            if (textOption.NextDialogue is LGFightEventDialogSO)
                 prefab = fightOptionPrefab;
     
             var go = Instantiate(prefab, layout);
@@ -82,23 +84,23 @@ public class UIEventController : MonoBehaviour
         }
     }
 
-    void ConfigureTextOption(ResponseOption textOption, TextOptionController textOptionController)
+    void ConfigureTextOption(LGDialogChoiceData textOption, TextOptionController textOptionController)
     {
-        if (textOption.statcheck)
-        {
-            int stat = party.ActiveUnit.Stats.BaseAttributes.GetFromIndex(textOption.StatIndex);
-            string statText = stat + " " + Attributes.GetAsText(textOption.StatIndex);
-            TextOptionState state = TextOptionState.Normal;
-            if (stat < textOption.StatRequirement)
-                state = TextOptionState.Impossible;
-            else if (stat >= (textOption.StatRequirement + 10))
-                state = TextOptionState.High;
-            textOptionController.Setup(textOption, textOption.Text,statText,state, this);
-        }
-        else
-        {
+        // if (textOption.statcheck)
+        // {
+        //     int stat = party.ActiveUnit.Stats.BaseAttributes.GetFromIndex(textOption.StatIndex);
+        //     string statText = stat + " " + Attributes.GetAsText(textOption.StatIndex);
+        //     TextOptionState state = TextOptionState.Normal;
+        //     if (stat < textOption.StatRequirement)
+        //         state = TextOptionState.Impossible;
+        //     else if (stat >= (textOption.StatRequirement + 10))
+        //         state = TextOptionState.High;
+        //     textOptionController.Setup(textOption, textOption.Text,statText,state, this);
+        // }
+        // else
+        // {
             textOptionController.Setup(textOption, textOption.Text, this);
-        }
+        // }
     }
     
     void ActiveUnitChanged()
@@ -117,46 +119,49 @@ public class UIEventController : MonoBehaviour
     {
         Debug.Log("BATTLE ENDED");
         BattleSystem.OnBattleFinished -= BattleEnded;
-        var battleOutcome = GetBattleOutcome(result);
-
-       
-        currentScene = randomEvent.scenes[battleOutcome.nextSceneIndex];
+        //var battleOutcome = GetBattleOutcome(result);
+        if(result == AttackResult.Win)
+            currentNode =(LGEventDialogSO)currentNode.Choices[0].NextDialogue;
+        else
+        {
+            currentNode =(LGEventDialogSO)currentNode.Choices[1].NextDialogue;
+        }
         UpdateUI();
     }
 
-    EventOutcome GetBattleOutcome(AttackResult result)
-    {
-        var battleOutcome = current.outcomes[0];
-        switch (result)
-        {
-            case AttackResult.Draw: 
-                if(current.outcomes.Count>=3)
-                    battleOutcome = current.outcomes[2];
-                break;
-            case AttackResult.Win: battleOutcome = current.outcomes[0];
-                break;
-            case AttackResult.Loss: if(current.outcomes.Count>=2)
-                    battleOutcome = current.outcomes[1];
-                break;
-        }
-        return battleOutcome;
-    }
+    // EventOutcome GetBattleOutcome(AttackResult result)
+    // {
+    //     var battleOutcome = current.outcomes[0];
+    //     switch (result)
+    //     {
+    //         case AttackResult.Draw: 
+    //             if(current.outcomes.Count>=3)
+    //                 battleOutcome = current.outcomes[2];
+    //             break;
+    //         case AttackResult.Win: battleOutcome = current.outcomes[0];
+    //             break;
+    //         case AttackResult.Loss: if(current.outcomes.Count>=2)
+    //                 battleOutcome = current.outcomes[1];
+    //             break;
+    //     }
+    //     return battleOutcome;
+    // }
 
    
     public void OptionClicked(TextOptionController textOptionController)
     {
         current = textOptionController.Option;
-        CheckPossibleRewards();
-        if (current.outcomes[0].nextSceneIndex != -1)
+        currentNode = (LGEventDialogSO)current.NextDialogue;
+        
+        if (currentNode!=null)
         {
-            if (current.type == EventSceneType.Fight)
+            CheckPossibleRewards();
+            if (currentNode is LGFightEventDialogSO)
             {
                 StartFight();
             }
             else
             {
-                currentScene = randomEvent.scenes[current.outcomes[0].nextSceneIndex];
-                
                 UpdateUI();
             }
         }
@@ -175,20 +180,30 @@ public class UIEventController : MonoBehaviour
     void StartFight()
     {
         var battleSystem = AreaGameManager.Instance.GetSystem<BattleSystem>();
-        var enemy = current.fightData.EnemyToFight.Create();
+        var enemy = ((LGFightEventDialogSO)current.NextDialogue).Enemy.Create();
             
         battleSystem.StartBattle(party.ActiveUnit, enemy, false, true);
         BattleSystem.OnBattleFinishedBeforeAfterBattleStuff += BattleEnded;
     }
     void CheckPossibleRewards()
     {
-        if (current.reward.gold != 0||current.reward.experience!=0||current.reward.grace!=0)
-        {
-            Player.Instance.Party.AddGold(current.reward.gold);
-            //Player.Instance.Party.AddSmithingStones(current.reward.smithingStones);
-            Debug.Log("Node Position: "+node.gameObject.transform.position);
-            Player.Instance.Party.ActiveUnit.ExperienceManager.AddExp(current.reward.experience);
-        }
+        if(currentNode.RewardResources!=null)
+            foreach (var resource in currentNode.RewardResources)
+            {
+                switch (resource.ResourceType)
+                {
+                    case ResourceType.Gold:  Player.Instance.Party.AddGold(resource.Amount); break;
+                    case ResourceType.Exp:  Player.Instance.Party.ActiveUnit.ExperienceManager.AddExp(resource.Amount); break;
+                    case ResourceType.Grace:  Player.Instance.Party.AddGrace(resource.Amount); break;
+                }
+               
+            }
+        if(currentNode.RewardItems!=null)
+            foreach (var item in currentNode.RewardItems)
+            {
+                 Player.Instance.Party.Convoy.AddItem(item.Create()); break;
+            }
+        
     }
    
    

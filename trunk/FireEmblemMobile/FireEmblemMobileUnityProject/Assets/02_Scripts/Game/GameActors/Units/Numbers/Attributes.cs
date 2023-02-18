@@ -181,6 +181,7 @@ namespace Game.GameActors.Units.Numbers
         CON,
         LCK,
         DEF,
-        FTH
+        FTH,
+        LVL
     }
 }

@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using __2___Scripts.External.Editor.Data.Save;
+using Game.GameActors.Items;
+using Game.GameActors.Units;
 using UnityEngine;
 
 namespace _02_Scripts.Game.Dialog.DialogSystem
@@ -8,6 +12,8 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
     {
         [field:SerializeField]public string Text { get; set; }
         [field:SerializeField]public LGDialogSO NextDialogue { get; set; }
-        
+        [field: SerializeField] public List<ResponseStatRequirement> AttributeRequirements { get; set; }
+        [field: SerializeField] public List<UnitBP> CharacterRequirements { get; set; }
+        [field: SerializeField] public List<ItemBP> ItemRequirements { get; set; }
     }
 }

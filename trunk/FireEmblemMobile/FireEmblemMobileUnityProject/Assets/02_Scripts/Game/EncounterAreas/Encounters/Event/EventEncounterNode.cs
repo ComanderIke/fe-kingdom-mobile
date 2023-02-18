@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using _02_Scripts.Game.Dialog.DialogSystem;
 using Game.GameResources;
 using Game.WorldMapStuff.Model;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine;
 
 public class EventEncounterNode : EncounterNode
 {
-    public RandomEvent randomEvent;
+    public LGEventDialogSO randomEvent;
    
     public EventEncounterNode(List<EncounterNode> parents,int depth, int childIndex, string label, string description, Sprite sprite) : base(parents, depth, childIndex, label, description, sprite)
     {

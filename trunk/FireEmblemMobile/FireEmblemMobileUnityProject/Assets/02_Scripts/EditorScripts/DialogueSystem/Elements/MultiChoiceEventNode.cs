@@ -1,10 +1,19 @@
-﻿using __2___Scripts.External.Editor;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using __2___Scripts.External.Editor;
 using __2___Scripts.External.Editor.Data.Save;
 using __2___Scripts.External.Editor.Elements;
 using __2___Scripts.External.Editor.Utility;
+using Game.GameActors.Items;
+using Game.GameActors.Units;
+using Game.GameActors.Units.Numbers;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Object = System.Object;
+using ObjectField = UnityEditor.UIElements.ObjectField;
 
 namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
 {
@@ -23,28 +32,128 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
             
         }
 
+        
         public override void Draw()
         {
             base.Draw();
             Button addChoiceButton = ElementUtility.CreateButton("Add Choice", () =>
             {
-               
                 LGChoiceSaveData choiceData = new LGChoiceSaveData()
                 {
                     Text = "Next Dialogue"
                 };
                 Choices.Add(choiceData);
-                Port choicePort = CreateChoicePort(choiceData);
-                outputContainer.Add(choicePort);
+                AddResponse(choiceData);
+              
             });
             addChoiceButton.AddToClassList("node_button");
             mainContainer.Insert(1, addChoiceButton);
             foreach (LGChoiceSaveData choice in Choices)
             {
-                Port choicePort = CreateChoicePort(choice);
-                outputContainer.Add(choicePort);
+                AddResponse(choice);
             }
             RefreshExpandedState();
+        }
+
+        void RemoveCharacterRequirement(UnitBP removeChar,LGChoiceSaveData choiceData)
+        {
+            if( choiceData.CharacterRequirements.Contains(removeChar))
+                choiceData.CharacterRequirements.Remove(removeChar);
+        }
+        void RemoveItemRequirement(ItemBP removeItem,LGChoiceSaveData choiceData)
+        {
+            if( choiceData.ItemRequirements.Contains(removeItem))
+                choiceData.ItemRequirements.Remove(removeItem);
+        }
+        void AddResponse(LGChoiceSaveData choiceData)
+        {
+            
+            var responseContainer = new VisualElement();
+            responseContainer.AddToClassList("lg-horizontal");
+            Button addCharAndItemRequirement = ElementUtility.CreateButton("[C/I]", () =>
+            {
+                ObjectField charItemField = new ObjectField();
+                charItemField.objectType = typeof(UnitBP);
+                responseContainer.Insert(2,charItemField);
+                UnitBP newUnit = ScriptableObject.CreateInstance<UnitBP>();
+                ItemBP newItem = ScriptableObject.CreateInstance<ItemBP>();
+                choiceData.CharacterRequirements.Add(newUnit);
+                charItemField.RegisterValueChangedCallback(callback =>
+                {
+                    RemoveCharacterRequirement(newUnit,choiceData);
+                    RemoveItemRequirement(newItem,choiceData);
+                    if (charItemField.objectType == typeof(UnitBP))
+                    {
+                        newUnit = (UnitBP)callback.newValue;
+                        choiceData.CharacterRequirements.Add(newUnit);
+                    }
+                    else if (charItemField.objectType == typeof(ItemBP))
+                    {
+                        newItem = (ItemBP)callback.newValue;
+                        choiceData.ItemRequirements.Add(newItem);
+                    }
+                });
+                var charItemPopup = ElementUtility.CreatePopup(new List<string> {"Character", "Item"}, "Character", callback =>
+                {
+                    switch (callback.newValue)
+                    {
+                        case "Character": charItemField.objectType = typeof(UnitBP);
+                            RemoveCharacterRequirement(newUnit, choiceData);
+                            RemoveItemRequirement(newItem, choiceData);
+                            choiceData.CharacterRequirements.Add(newUnit);
+                            charItemField.value = null; break;
+                        case "Item": charItemField.objectType = typeof(ItemBP);
+                            RemoveCharacterRequirement(newUnit, choiceData);
+                            RemoveItemRequirement(newItem, choiceData);
+                            choiceData.ItemRequirements.Add(newItem);
+                            charItemField.value = null; break;
+                    }
+                });
+                responseContainer.Insert(3,charItemPopup);
+            });
+            responseContainer.Add(addCharAndItemRequirement);
+          
+            responseContainer.Add(addCharAndItemRequirement);
+            Button addStatRequirement = ElementUtility.CreateButton("[ATR]", () =>
+            {
+                var atrAmountTextField=ElementUtility.CreateTextIntField("0");
+                responseContainer.Insert(2,atrAmountTextField);
+                var atrPopup = ElementUtility.CreatePopup(Enum.GetValues(typeof(AttributeType)).Cast<AttributeType>().ToList(), AttributeType.LVL, callback =>
+                {
+
+                });
+                responseContainer.Insert(3,atrPopup);
+            });
+            responseContainer.Add(addStatRequirement);
+            foreach (var charAndItemReq in choiceData.CharacterRequirements)
+            {
+                ObjectField charItemField = new ObjectField();
+                charItemField.objectType = typeof(UnitBP);
+                charItemField.value = charAndItemReq;
+                responseContainer.Insert(2,charItemField);
+
+            }
+            foreach (var itemReq in choiceData.ItemRequirements)
+            {
+                ObjectField charItemField = new ObjectField();
+                charItemField.objectType = typeof(ItemBP);
+                charItemField.value =itemReq;
+                responseContainer.Insert(2,charItemField);
+            }
+
+            foreach (var atrReq in choiceData.AttributeRequirements)
+            {
+                var atrAmountTextField=ElementUtility.CreateTextIntField(atrReq.Amount.ToString());
+                responseContainer.Insert(2,atrAmountTextField);
+                var atrPopup = ElementUtility.CreatePopup(Enum.GetValues(typeof(AttributeType)).Cast<AttributeType>().ToList(), atrReq.AttributeType, callback =>
+                {
+
+                });
+                responseContainer.Insert(3,atrPopup);
+            }
+            Port choicePort = CreateChoicePort(choiceData);
+            responseContainer.Add(choicePort);
+            outputContainer.Add(responseContainer);
         }
 
         Port CreateChoicePort(object userData )

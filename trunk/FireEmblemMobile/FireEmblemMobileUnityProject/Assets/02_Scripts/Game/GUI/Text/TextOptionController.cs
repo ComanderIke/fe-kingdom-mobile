@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using _02_Scripts.Game.Dialog.DialogSystem;
 using TMPro;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ public class TextOptionController : MonoBehaviour
     public Color textSecretColor;
     public Color textNotPossibleColor;
     public Color textHighColor;
-    public ResponseOption Option;
+    public LGDialogChoiceData Option;
     [SerializeField] private float delay = 0.25f;
     [SerializeField] private Animator animator;
     
@@ -30,7 +31,7 @@ public class TextOptionController : MonoBehaviour
         MonoUtility.DelayFunction(()=>animator.enabled=true,delay*index);
     }
 
-    public void Setup(ResponseOption option,string text,string statText,TextOptionState textState, UIEventController controller)
+    public void Setup(LGDialogChoiceData option,string text,string statText,TextOptionState textState, UIEventController controller)
     {
         Option = option;
         this.controller = controller;
@@ -47,7 +48,7 @@ public class TextOptionController : MonoBehaviour
        
 
     }
-    public void Setup(ResponseOption option,string text, UIEventController controller)
+    public void Setup(LGDialogChoiceData option,string text, UIEventController controller)
     {
         Option = option;
         this.controller = controller;

@@ -55,6 +55,12 @@ namespace Game.GameActors.Units
 
         private void OnEnable()
         {
+            if (visuals == null)
+            {
+                Debug.LogWarning("No Visuals on Blueprint: "+name);
+                return;
+            }
+              
             if(visuals.CharacterSpriteSet==null)
                 Debug.LogWarning("No Character Sprite Set on Blueprint: "+name);
             if(moveType==null)

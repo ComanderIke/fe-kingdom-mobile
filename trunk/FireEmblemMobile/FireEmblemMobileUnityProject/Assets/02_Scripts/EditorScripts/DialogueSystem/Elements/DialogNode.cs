@@ -141,7 +141,7 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
         }
         private void DisconnectPorts(VisualElement container)
         {
-            foreach (Port port in container.Children())
+            foreach (Port port in container.Children().Where(p=> p is Port))
             {
                 if (!port.connected)
                 {
