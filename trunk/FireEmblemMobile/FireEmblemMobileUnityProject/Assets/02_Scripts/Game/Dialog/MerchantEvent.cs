@@ -1,0 +1,18 @@
+﻿using System.Data;
+using Game.GameActors.Items;
+using Game.GameActors.Players;
+using UnityEngine;
+
+[CreateAssetMenu(menuName = "GameData/MerchantEvent", fileName = "MerchantEvent")]
+public class MerchantEvent : DialogEvent
+{
+    [SerializeField] private Sprite merchantFace;
+    [SerializeField] private string merchantName;
+    [SerializeField] public MerchantBP merchant;
+
+    public override void Action()
+    {
+        FindObjectOfType<UIMerchantController>().Show(merchant.Create(), Player.Instance.Party);
+
+    }
+}

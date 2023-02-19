@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using UnityEngine.UI;
 
 public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
 {
-    private MerchantEncounterNode node;
+    
     public Canvas canvas;
     [HideInInspector]
     public Party party;
@@ -26,15 +27,16 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
     private List<GameObject> instantiatedItems= new List<GameObject>();
     public Button switchBuyButton;
     public Button switchSellButton;
+
+    public static event Action OnFinished;
  
    
 
-    public void Show(MerchantEncounterNode node, Party party)
+    public void Show(Merchant merchant, Party party)
     {
         canvas.enabled = true;
-        this.node = node;
         this.party = party;
-        this.merchant = node.merchant;
+        this.merchant = merchant;
         shopItems = new List<UIShopItemController>();
         selectedItem = merchant.shopItems[0];
         buying = true;
@@ -197,7 +199,7 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
     public void ContinueClicked()
     {
         canvas.enabled=false;
-        node.Continue();
+        OnFinished?.Invoke();
         FindObjectOfType<UICharacterViewController>().Hide();
     }
 

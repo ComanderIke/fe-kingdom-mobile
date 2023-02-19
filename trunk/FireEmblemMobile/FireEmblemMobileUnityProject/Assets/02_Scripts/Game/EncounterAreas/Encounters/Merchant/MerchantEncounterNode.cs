@@ -3,6 +3,7 @@ using Game.GameActors.Items.Weapons;
 using Game.GameActors.Players;
 using Game.GameResources;
 using Game.WorldMapStuff.Model;
+using UnityEditor.Graphs.AnimationBlendTree;
 using UnityEngine;
 
 
@@ -33,10 +34,17 @@ public class MerchantEncounterNode : EncounterNode
 
     public override void Activate(Party party)
     {
-        GameObject.FindObjectOfType<UIMerchantController>().Show(this,party);
-        
+        GameObject.FindObjectOfType<UIMerchantController>().Show(merchant,party);
+        UIMerchantController.OnFinished += MerchantFinished;
         Continue();
         //GameObject.FindObjectOfType<UIInnController>().Show(Player.Instance.Party);
         Debug.Log("Activate MerchantEncounterNode");
+    }
+
+    void MerchantFinished()
+    {
+        UIMerchantController.OnFinished -= MerchantFinished;
+        this.Continue();
+       
     }
 }

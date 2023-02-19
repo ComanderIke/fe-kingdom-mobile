@@ -279,6 +279,7 @@ public class UIEventController : MonoBehaviour
         if (currentNode!=null)
         {
             CheckPossibleRewards();
+            CheckEvents();
             if (currentNode is LGFightEventDialogSO)
             {
                 StartFight();
@@ -294,6 +295,8 @@ public class UIEventController : MonoBehaviour
         }
     }
 
+  
+
     void EndEvent()
     {
         Hide();
@@ -307,6 +310,16 @@ public class UIEventController : MonoBehaviour
             
         battleSystem.StartBattle(party.ActiveUnit, enemy, false, true);
         BattleSystem.OnBattleFinishedBeforeAfterBattleStuff += BattleEnded;
+    }
+    private void CheckEvents()
+    {
+        if (currentNode.Events != null&& currentNode.Events.Count>0)
+        {
+            foreach (var dialogEvent in currentNode.Events)
+            {
+                dialogEvent.Action();
+            }
+        }
     }
     void CheckPossibleRewards()
     {
