@@ -116,11 +116,23 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
             responseContainer.Add(addCharAndItemRequirement);
             Button addStatRequirement = ElementUtility.CreateButton("[ATR]", () =>
             {
-                var atrAmountTextField=ElementUtility.CreateTextIntField("0");
+                TextField atrAmountTextField=null;
+                ResponseStatRequirement statRequirement = new ResponseStatRequirement()
+                {
+                    AttributeType = AttributeType.LVL,
+                    Amount = 0
+                };
+                choiceData.AttributeRequirements.Add(statRequirement);
+                atrAmountTextField=ElementUtility.CreateTextIntField("0", callback =>
+                {
+                    atrAmountTextField.value = ElementUtility.AllowOnlyNumbers(callback.newValue);
+                    statRequirement.Amount =  Int32.Parse(atrAmountTextField.value);
+                    
+                });
                 responseContainer.Insert(2,atrAmountTextField);
                 var atrPopup = ElementUtility.CreatePopup(Enum.GetValues(typeof(AttributeType)).Cast<AttributeType>().ToList(), AttributeType.LVL, callback =>
                 {
-
+                    statRequirement.AttributeType = callback.newValue;
                 });
                 responseContainer.Insert(3,atrPopup);
             });
@@ -143,19 +155,48 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
 
             foreach (var atrReq in choiceData.AttributeRequirements)
             {
-                var atrAmountTextField=ElementUtility.CreateTextIntField(atrReq.Amount.ToString());
+                TextField atrAmountTextField = null;
+                atrAmountTextField=ElementUtility.CreateTextIntField(atrReq.Amount.ToString(), callback =>
+                {
+                    atrAmountTextField.value = ElementUtility.AllowOnlyNumbers(callback.newValue);
+                    atrReq.Amount =Int32.Parse(atrAmountTextField.value);
+                });
                 responseContainer.Insert(2,atrAmountTextField);
                 var atrPopup = ElementUtility.CreatePopup(Enum.GetValues(typeof(AttributeType)).Cast<AttributeType>().ToList(), atrReq.AttributeType, callback =>
                 {
-
+                    atrReq.AttributeType = callback.newValue;
                 });
                 responseContainer.Insert(3,atrPopup);
             }
+
+            
             Port choicePort = CreateChoicePort(choiceData);
             responseContainer.Add(choicePort);
+            if ((choiceData.AttributeRequirements != null && choiceData.AttributeRequirements.Count > 0) ||
+                (choiceData.CharacterRequirements != null && choiceData.CharacterRequirements.Count > 0) ||
+                choiceData.ItemRequirements != null && choiceData.ItemRequirements.Count > 0)
+            {
+                Port failChoicePort = CreateUnDeletableChoicePort(choiceData, "Fail");
+                responseContainer.Add(failChoicePort);
+            }
+
             outputContainer.Add(responseContainer);
         }
-
+        Port CreateUnDeletableChoicePort(object userData, string portName)
+        {
+            Port choicePort =this.CreatePort();
+            choicePort.userData = userData;
+            choicePort.portName = portName;
+            //LGChoiceSaveData choiceSaveData = (LGChoiceSaveData)userData;
+            choicePort.AddClasses("node_textfield", "node_choice-textfield", "node_textfield_hidden");
+            // TextField choiceTextField =  ElementUtility.CreateTextField(label, null, callback =>
+            // {
+            //     choiceSaveData.Text = callback.newValue;
+            // });
+            // choiceTextField.AddClasses("node_textfield", "node_choice-textfield", "node_textfield_hidden");
+            // choicePort.Add(choiceTextField);
+            return choicePort;
+        }
         Port CreateChoicePort(object userData )
         {
             Port choicePort =this.CreatePort();

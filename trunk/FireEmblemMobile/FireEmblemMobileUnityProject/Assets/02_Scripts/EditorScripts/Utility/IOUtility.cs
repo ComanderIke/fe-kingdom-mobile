@@ -11,6 +11,7 @@ using Game.GameActors.Units;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace _02_Scripts.Game.Dialog.DialogSystem
 {
@@ -133,7 +134,6 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                     List<ResourceEntry> resources = CloneNodeResources(nodeData.RewardResources);
                     List<ItemBP> items = new List<ItemBP>(nodeData.RewardItems);
                     List<DialogEvent> events = new List<DialogEvent>(nodeData.Events);
-                    Debug.Log("HÄH?");
                     eventNode.ResourceRewards = resources;
                     eventNode.ItemRewards = items;
                     eventNode.Events = events;
@@ -164,6 +164,7 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
         {
             foreach (KeyValuePair<string, DialogNode> loadedNode in loadedNodes)
             {
+               
                 foreach (Port choicePort in loadedNode.Value.outputContainer.Children().Where(n=> n is Port))
                 {
                     LGChoiceSaveData choiceData = (LGChoiceSaveData)choicePort.userData;
@@ -178,6 +179,31 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                     graphView.AddElement(edge);
 
                     loadedNode.Value.RefreshPorts();
+                }
+
+                List<LGChoiceSaveData> loadedChoiceData = new List<LGChoiceSaveData>();
+                foreach (VisualElement container in loadedNode.Value.outputContainer.Children())
+                {
+                    foreach (Port choicePort in container.Children().Where(n=> n is Port))
+                    {
+                        LGChoiceSaveData choiceData = (LGChoiceSaveData)choicePort.userData;
+                        if (string.IsNullOrEmpty(choiceData.NodeID))
+                        {
+                            continue;
+                        }
+                        DialogNode nextNode = loadedNodes[choiceData.NodeID];
+                        if (loadedChoiceData.Contains(choiceData)&&!string.IsNullOrEmpty(choiceData.NodeFailID))
+                        {
+                            nextNode= loadedNodes[choiceData.NodeFailID];
+                        }
+                        loadedChoiceData.Add(choiceData);
+                       
+                        Port nextNodeInputPort = (Port)nextNode.inputContainer.Children().First();
+                        Edge edge = choicePort.ConnectTo(nextNodeInputPort);
+                        graphView.AddElement(edge);
+
+                        loadedNode.Value.RefreshPorts();
+                    }
                 }
             }
         }
@@ -232,7 +258,6 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                     List<ResourceEntry> resources = CloneNodeResources(nodeData.RewardResources);
                     List<ItemBP> items = new List<ItemBP>(nodeData.RewardItems);
                     List<DialogEvent> events = new List<DialogEvent>(nodeData.Events);
-                    Debug.Log("HÄH?");
                     eventNode.ResourceRewards = resources;
                     eventNode.ItemRewards = items;
                     eventNode.Events = events;
@@ -381,6 +406,11 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                     if(string.IsNullOrEmpty(nodeChoice.NodeID))
                         continue;
                     dialog.Choices[choiceIndex].NextDialogue = createdDialogs[nodeChoice.NodeID];
+                    if (!string.IsNullOrEmpty(nodeChoice.NodeFailID))
+                    {
+                        Debug.Log("SAVE NEXT DIALOG FAIL");
+                        dialog.Choices[choiceIndex].NextDialogueFail = createdDialogs[nodeChoice.NodeFailID];
+                    }
                     SaveAsset(dialog);
                     
                 }
@@ -426,9 +456,8 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                 dialogContainer.UngroupedDialogs.Add(dialog);
             }
 
-            Debug.Log("Save To SO " + node.ItemRewards.Count);
-            if(node.ItemRewards.Count>=1)
-                Debug.Log("Item: " + node.ItemRewards[0].name);
+           
+       
             dialog.Initialize(
                 node.DialogueName, 
                 node.DialogActor,
@@ -459,9 +488,8 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                 dialogContainer.UngroupedDialogs.Add(dialog);
             }
 
-            Debug.Log("Save To SO " + node.ItemRewards.Count);
-            if(node.ItemRewards.Count>=1)
-                Debug.Log("Item: " + node.ItemRewards[0].name);
+         
+   
             dialog.Initialize(
                 node.DialogueName, 
                 node.DialogActor,
@@ -535,6 +563,7 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                     ItemRequirements = new List<ItemBP>(nodeChoice.ItemRequirements),
                     CharacterRequirements = new List<UnitBP>(nodeChoice.CharacterRequirements),
                     AttributeRequirements = new List<ResponseStatRequirement>(nodeChoice.AttributeRequirements)
+                  
                 };
                 dialogChoices.Add(choiceData);
             }
@@ -558,10 +587,12 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
             List<LGChoiceSaveData> choices =new List<LGChoiceSaveData>();
             foreach (LGChoiceSaveData choice in nodeChoices)
             {
+                Debug.Log("NodeFailID: "+ choice.NodeFailID);
                 LGChoiceSaveData choiceSaveData = new LGChoiceSaveData()
                 {
                     Text = choice.Text,
                     NodeID = choice.NodeID,
+                    NodeFailID = choice.NodeFailID,
                     ItemRequirements = new List<ItemBP>(choice.ItemRequirements),
                     CharacterRequirements = new List<UnitBP>(choice.CharacterRequirements),
                     AttributeRequirements = new List<ResponseStatRequirement>(choice.AttributeRequirements)

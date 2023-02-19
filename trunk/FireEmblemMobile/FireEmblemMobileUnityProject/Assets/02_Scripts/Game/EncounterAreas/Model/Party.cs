@@ -227,6 +227,19 @@ namespace Game.WorldMapStuff.Model
             throw new NotImplementedException();
         }
 
-       
+
+        public bool MembersContainsByBluePrintID(string reqBluePrintID)
+        {
+            foreach (var member in members)
+            {
+                Debug.Log(member.bluePrintID+" "+reqBluePrintID);
+                if (member.bluePrintID == reqBluePrintID)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

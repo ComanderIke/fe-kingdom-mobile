@@ -389,8 +389,14 @@ namespace __2___Scripts.External.Editor
                     {
                         DialogNode nextNode = (DialogNode)edge.input.node;
                         LGChoiceSaveData choiceData = (LGChoiceSaveData)edge.output.userData;
-
-                        choiceData.NodeID = nextNode.ID;
+                        if(edge.output.portName!="Fail")
+                            choiceData.NodeID = nextNode.ID;
+                        else
+                        {
+                            Debug.Log("NEVER CALLED?!");
+                            choiceData.NodeFailID = nextNode.ID;
+                        }
+                       
                     }
                 }
 
@@ -404,9 +410,13 @@ namespace __2___Scripts.External.Editor
                             continue;
                         }
 
+                        Debug.Log("Edge Removed");
                         Edge edge = (Edge)element;
                         LGChoiceSaveData choiceData= (LGChoiceSaveData)edge.output.userData;
-                        choiceData.NodeID = "";
+                        if(edge.output.portName!="Fail")
+                            choiceData.NodeID = "";
+                        else
+                            choiceData.NodeFailID = "";
                     }
                 }
                 return changes;

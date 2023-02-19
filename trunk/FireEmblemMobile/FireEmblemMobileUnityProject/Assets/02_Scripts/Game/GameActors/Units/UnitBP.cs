@@ -87,7 +87,7 @@ namespace Game.GameActors.Units
             Relic relic2 = null;
             if(EquippedRelic2!=null)
                 relic2 = (Relic)EquippedRelic2.Create();
-            return new Unit(Name, rpgClass, (Stats)stats.Clone(), growths, moveType, weapon, relic1,relic2, new UnitVisual(visuals), new SkillManager(SkillManager),
+            return new Unit(bluePrintID, Name, rpgClass, (Stats)stats.Clone(), growths, moveType, weapon, relic1,relic2, new UnitVisual(visuals), new SkillManager(SkillManager),
                 new ExperienceManager(experienceManager));
         }
     }

@@ -12,6 +12,7 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
     {
         [field:SerializeField]public string Text { get; set; }
         [field:SerializeField]public LGDialogSO NextDialogue { get; set; }
+        [field:SerializeField]public LGDialogSO NextDialogueFail { get; set; }
         [field: SerializeField] public List<ResponseStatRequirement> AttributeRequirements { get; set; }
         [field: SerializeField] public List<UnitBP> CharacterRequirements { get; set; }
         [field: SerializeField] public List<ItemBP> ItemRequirements { get; set; }

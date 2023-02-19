@@ -28,7 +28,11 @@ public class TextOptionController : MonoBehaviour
     {
         gameObject.SetActive(true);
         animator.enabled = false;
-        MonoUtility.DelayFunction(()=>animator.enabled=true,delay*index);
+        MonoUtility.DelayFunction(() =>
+        {
+            if (animator != null)
+                animator.enabled = true;
+        },delay*index);
     }
 
     public void Setup(LGDialogChoiceData option,string text,string statText,TextOptionState textState, UIEventController controller)

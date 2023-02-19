@@ -10,16 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8adcf8ab5ec4f11bcd0989248836a45, type: 3}
-  m_Name: MemoryGame2
+  m_Name: WingedCreature1Success
   m_EditorClassIdentifier: 
-  <DialogName>k__BackingField: MemoryGame2
-  <Text>k__BackingField: "The woman lays out mysterious looking cards on the ground
-    in front of you. \u201CA test of memory\u2026 such as courage\u201D. The lantern\u2019s
-    light reveals a soft grin on her face. "
+  <DialogName>k__BackingField: WingedCreature1Success
+  <Text>k__BackingField: "Your ranger takes a calm breath, as the arrow starts soaring
+    through the air, finding its way into the creature\u2019s chest. A loud screech
+    is let out, as it falls to the ground."
   <Choices>k__BackingField:
-  - <Text>k__BackingField: Start Game
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 6a9eb5d80805ea84982dfb2a7b1124a2,
-      type: 2}
+  - <Text>k__BackingField: End
+    <NextDialogue>k__BackingField: {fileID: 0}
     <NextDialogueFail>k__BackingField: {fileID: 0}
     <AttributeRequirements>k__BackingField: []
     <CharacterRequirements>k__BackingField: []
@@ -29,6 +28,8 @@ MonoBehaviour:
   <IsPortraitLeft>k__BackingField: 1
   <DialogActor>k__BackingField: {fileID: 0}
   <HeadLine>k__BackingField: 
-  <RewardResources>k__BackingField: []
+  <RewardResources>k__BackingField:
+  - Amount: 50
+    ResourceType: 2
   <RewardItems>k__BackingField: []
   <Events>k__BackingField: []

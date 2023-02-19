@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using _02_Scripts.EditorScripts.DialogueSystem.Elements;
 using Game.GameActors.Items;
 using UnityEditor;
@@ -92,7 +93,12 @@ namespace __2___Scripts.External.Editor.Utility
             field.RegisterValueChangedCallback(onValueChanged);
             return field;
         }
-
+        public static string AllowOnlyNumbers( string newValue)
+        {
+            return Regex.Replace(newValue, @"[^0-9]", "");
+            
+           
+        }
         public static TextField CreateTextIntField(string value, EventCallback<ChangeEvent<string>> onValueChanged=null)
         {
             TextField textField = new TextField()

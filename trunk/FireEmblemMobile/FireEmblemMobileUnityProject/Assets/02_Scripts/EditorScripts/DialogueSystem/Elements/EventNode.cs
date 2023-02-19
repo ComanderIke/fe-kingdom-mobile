@@ -63,7 +63,7 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
                 resourceContainer.AddToClassList("lg-horizontal");
                 resourceTextFields[reward] = ElementUtility.CreateTextIntField(reward.Amount.ToString(), callback =>
                 {
-                    resourceTextFields[reward].value = AllowOnlyNumbers(callback.newValue);
+                    resourceTextFields[reward].value = ElementUtility.AllowOnlyNumbers(callback.newValue);
                     reward.Amount = Convert.ToInt32(resourceTextFields[reward].value);
                 });
                 var popUp = ElementUtility.CreatePopup<ResourceType>(
@@ -87,7 +87,7 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
 
                 resourceTextFields[entry] = ElementUtility.CreateTextIntField(entry.Amount.ToString(), callback =>
                 {
-                    resourceTextFields[entry].value = AllowOnlyNumbers(callback.newValue);
+                    resourceTextFields[entry].value = ElementUtility.AllowOnlyNumbers(callback.newValue);
                     entry.Amount = Convert.ToInt32(resourceTextFields[entry].value);
                 });
                 var popUp = ElementUtility.CreatePopup<ResourceType>(
@@ -196,12 +196,7 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
             }
         }
 
-        string AllowOnlyNumbers( string newValue)
-        {
-            return Regex.Replace(newValue, @"[^0-9]", "");
-            
-           
-        }
+        
        
     }
 }

@@ -110,9 +110,10 @@ namespace Game.GameActors.Units
             get { return visuals; }
         }
 
-        public Unit(string name,RpgClass rpgClass,Stats stats, Attributes growths, MoveType moveType, Weapon equippedWeapon, Relic equippedRelic1,
+        public Unit(string bluePrintID, string name,RpgClass rpgClass,Stats stats, Attributes growths, MoveType moveType, Weapon equippedWeapon, Relic equippedRelic1,
             Relic equippedRelic2, UnitVisual visuals, SkillManager skillManager, ExperienceManager experienceManager)
         {
+            this.bluePrintID = bluePrintID;
             Fielded = false;
             encounterBuffs = new List<EncounterBasedBuff>();
             this.rpgClass = rpgClass;

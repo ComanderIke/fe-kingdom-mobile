@@ -71,5 +71,10 @@ namespace Game.GameActors.Units.Numbers
             Debug.Log("LoadStatsData");
             BaseAttributes = new Attributes(statsData.Attributes);
         }
+
+        public Attributes CombinedAttributes()
+        {
+            return BaseAttributes + BonusAttributes;
+        }
     }
 }

@@ -65,11 +65,82 @@ public class UIEventController : MonoBehaviour
         ShowTextOptions(currentNode.Choices);
     }
 
+    float GetSuccessChanceOffAttRequirement(int goal, int current)
+    {
+        Debug.Log("Goal: "+goal+" Current: "+current);
+        if (goal <= current)
+            return 1.0f;
+        else
+        {
+            int diff= goal - current;
+            if (diff >= 10)
+                return 0.0f;
+            Debug.Log(diff/10f);
+            return 1.0f - diff/10f;
+        }
+    }
     void ShowTextOptions(List<LGDialogChoiceData> textOptions)
     {
         int index = 0;
+        
         foreach (var textOption in textOptions)
         {
+            string statText = "";
+            TextOptionState textOptionType = TextOptionState.Normal;
+            if (textOption.CharacterRequirements != null&&textOption.CharacterRequirements.Count>0)
+            {
+                Debug.Log("Char requirement: "+textOption.CharacterRequirements[0].bluePrintID);
+                bool contains = false;
+                foreach (var req in textOption.CharacterRequirements)
+                {
+                    if (party.MembersContainsByBluePrintID(req.bluePrintID))
+                    {
+                        Debug.Log("CONTAINS");
+                        contains = true;
+                        textOptionType = TextOptionState.Secret;
+                    }
+                }
+                if(!contains)
+                    continue;
+                
+            }
+
+            
+            if (textOption.AttributeRequirements != null && textOption.AttributeRequirements.Count > 0)
+            {
+                float combinedChance = 1;
+                foreach (var req in textOption.AttributeRequirements)
+                {
+                    float chance = 0f;
+                    switch (req.AttributeType)
+                    {
+                        case AttributeType.LVL:
+                           chance= GetSuccessChanceOffAttRequirement(req.Amount, party.ActiveUnit.ExperienceManager.Level);break;
+                        case AttributeType.STR:
+                            chance= GetSuccessChanceOffAttRequirement(req.Amount, party.ActiveUnit.Stats.CombinedAttributes().STR);break;
+                        case AttributeType.DEX:
+                            chance= GetSuccessChanceOffAttRequirement(req.Amount, party.ActiveUnit.Stats.CombinedAttributes().DEX);break;
+                        case AttributeType.DEF:
+                            chance= GetSuccessChanceOffAttRequirement(req.Amount, party.ActiveUnit.Stats.CombinedAttributes().DEF);break;
+                        case AttributeType.AGI:
+                            chance= GetSuccessChanceOffAttRequirement(req.Amount, party.ActiveUnit.Stats.CombinedAttributes().AGI);break;
+                        case AttributeType.CON:
+                            chance= GetSuccessChanceOffAttRequirement(req.Amount, party.ActiveUnit.Stats.CombinedAttributes().CON);break;
+                        case AttributeType.LCK:
+                            chance= GetSuccessChanceOffAttRequirement(req.Amount, party.ActiveUnit.Stats.CombinedAttributes().LCK);break;
+                        case AttributeType.INT:
+                            chance= GetSuccessChanceOffAttRequirement(req.Amount, party.ActiveUnit.Stats.CombinedAttributes().INT);break;
+                        case AttributeType.FTH:
+                            chance= GetSuccessChanceOffAttRequirement(req.Amount, party.ActiveUnit.Stats.CombinedAttributes().FAITH);break;
+                    }
+
+                    combinedChance *= chance;
+                }
+
+                statText = combinedChance * 100f + " %";
+
+            }
+           
             GameObject prefab = textOptionPrefab;
             if (textOption.NextDialogue is LGFightEventDialogSO)
                 prefab = fightOptionPrefab;
@@ -78,30 +149,15 @@ public class UIEventController : MonoBehaviour
             go.GetComponent<TextOptionController>().SetIndex(index);
 
             var textOptionController = go.GetComponent<TextOptionController>();
-            ConfigureTextOption(textOption, textOptionController);
+            
+            textOptionController.Setup(textOption, textOption.Text,statText,textOptionType, this);
+            
             
             index++;
         }
     }
 
-    void ConfigureTextOption(LGDialogChoiceData textOption, TextOptionController textOptionController)
-    {
-        // if (textOption.statcheck)
-        // {
-        //     int stat = party.ActiveUnit.Stats.BaseAttributes.GetFromIndex(textOption.StatIndex);
-        //     string statText = stat + " " + Attributes.GetAsText(textOption.StatIndex);
-        //     TextOptionState state = TextOptionState.Normal;
-        //     if (stat < textOption.StatRequirement)
-        //         state = TextOptionState.Impossible;
-        //     else if (stat >= (textOption.StatRequirement + 10))
-        //         state = TextOptionState.High;
-        //     textOptionController.Setup(textOption, textOption.Text,statText,state, this);
-        // }
-        // else
-        // {
-            textOptionController.Setup(textOption, textOption.Text, this);
-        // }
-    }
+    
     
     void ActiveUnitChanged()
     {

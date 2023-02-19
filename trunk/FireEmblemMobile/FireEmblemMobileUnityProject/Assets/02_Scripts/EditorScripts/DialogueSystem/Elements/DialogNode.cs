@@ -83,7 +83,7 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
             titleContainer.Insert(0, dialogueNameTextField);
             Port inputPort = this.CreatePort("Dialogue Connection", Orientation.Horizontal, Direction.Input,
                 Port.Capacity.Multi);
-            inputPort.portName = "Dialogue Connection";
+            //inputPort.portName = "Dialogue Connection";
             inputContainer.Add(inputPort);
 
             customDataContainer = new VisualElement();
