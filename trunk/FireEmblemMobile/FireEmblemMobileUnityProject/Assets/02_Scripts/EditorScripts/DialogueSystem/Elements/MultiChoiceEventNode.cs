@@ -57,8 +57,7 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
 
         void RemoveCharacterRequirement(UnitBP removeChar,LGChoiceSaveData choiceData)
         {
-            if( choiceData.CharacterRequirements.Contains(removeChar))
-                choiceData.CharacterRequirements.Remove(removeChar);
+            choiceData.CharacterRequirement=null;
         }
         void RemoveItemRequirement(ItemBP removeItem,LGChoiceSaveData choiceData)
         {
@@ -77,7 +76,7 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
                 responseContainer.Insert(2,charItemField);
                 UnitBP newUnit = ScriptableObject.CreateInstance<UnitBP>();
                 ItemBP newItem = ScriptableObject.CreateInstance<ItemBP>();
-                choiceData.CharacterRequirements.Add(newUnit);
+                choiceData.CharacterRequirement=newUnit;
                 charItemField.RegisterValueChangedCallback(callback =>
                 {
                     RemoveCharacterRequirement(newUnit,choiceData);
@@ -85,7 +84,7 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
                     if (charItemField.objectType == typeof(UnitBP))
                     {
                         newUnit = (UnitBP)callback.newValue;
-                        choiceData.CharacterRequirements.Add(newUnit);
+                        choiceData.CharacterRequirement=newUnit;
                     }
                     else if (charItemField.objectType == typeof(ItemBP))
                     {
@@ -100,7 +99,7 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
                         case "Character": charItemField.objectType = typeof(UnitBP);
                             RemoveCharacterRequirement(newUnit, choiceData);
                             RemoveItemRequirement(newItem, choiceData);
-                            choiceData.CharacterRequirements.Add(newUnit);
+                            choiceData.CharacterRequirement=newUnit;
                             charItemField.value = null; break;
                         case "Item": charItemField.objectType = typeof(ItemBP);
                             RemoveCharacterRequirement(newUnit, choiceData);
@@ -137,11 +136,11 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
                 responseContainer.Insert(3,atrPopup);
             });
             responseContainer.Add(addStatRequirement);
-            foreach (var charAndItemReq in choiceData.CharacterRequirements)
+            if (choiceData.CharacterRequirement!=null)
             {
                 ObjectField charItemField = new ObjectField();
                 charItemField.objectType = typeof(UnitBP);
-                charItemField.value = charAndItemReq;
+                charItemField.value = choiceData.CharacterRequirement;
                 responseContainer.Insert(2,charItemField);
 
             }
@@ -173,7 +172,7 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
             Port choicePort = CreateChoicePort(choiceData);
             responseContainer.Add(choicePort);
             if ((choiceData.AttributeRequirements != null && choiceData.AttributeRequirements.Count > 0) ||
-                (choiceData.CharacterRequirements != null && choiceData.CharacterRequirements.Count > 0) ||
+                (choiceData.CharacterRequirement != null) ||
                 choiceData.ItemRequirements != null && choiceData.ItemRequirements.Count > 0)
             {
                 Port failChoicePort = CreateUnDeletableChoicePort(choiceData, "Fail");

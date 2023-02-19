@@ -95,7 +95,7 @@ namespace __2___Scripts.External.Editor.Utility
         }
         public static string AllowOnlyNumbers( string newValue)
         {
-            return Regex.Replace(newValue, @"[^0-9]", "");
+            return Regex.Replace(newValue, @"[^0-9]-", "");
             
            
         }

@@ -4,6 +4,7 @@
     {
         Gold,
         Grace,
-        Exp
+        Exp,
+        HP_Percent
     }
 }

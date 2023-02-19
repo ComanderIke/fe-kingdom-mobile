@@ -408,7 +408,6 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                     dialog.Choices[choiceIndex].NextDialogue = createdDialogs[nodeChoice.NodeID];
                     if (!string.IsNullOrEmpty(nodeChoice.NodeFailID))
                     {
-                        Debug.Log("SAVE NEXT DIALOG FAIL");
                         dialog.Choices[choiceIndex].NextDialogueFail = createdDialogs[nodeChoice.NodeFailID];
                     }
                     SaveAsset(dialog);
@@ -561,7 +560,7 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                 {
                     Text = nodeChoice.Text,
                     ItemRequirements = new List<ItemBP>(nodeChoice.ItemRequirements),
-                    CharacterRequirements = new List<UnitBP>(nodeChoice.CharacterRequirements),
+                    CharacterRequirement = nodeChoice.CharacterRequirement,
                     AttributeRequirements = new List<ResponseStatRequirement>(nodeChoice.AttributeRequirements)
                   
                 };
@@ -587,14 +586,13 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
             List<LGChoiceSaveData> choices =new List<LGChoiceSaveData>();
             foreach (LGChoiceSaveData choice in nodeChoices)
             {
-                Debug.Log("NodeFailID: "+ choice.NodeFailID);
                 LGChoiceSaveData choiceSaveData = new LGChoiceSaveData()
                 {
                     Text = choice.Text,
                     NodeID = choice.NodeID,
                     NodeFailID = choice.NodeFailID,
                     ItemRequirements = new List<ItemBP>(choice.ItemRequirements),
-                    CharacterRequirements = new List<UnitBP>(choice.CharacterRequirements),
+                    CharacterRequirement= choice.CharacterRequirement,
                     AttributeRequirements = new List<ResponseStatRequirement>(choice.AttributeRequirements)
                     
                 };

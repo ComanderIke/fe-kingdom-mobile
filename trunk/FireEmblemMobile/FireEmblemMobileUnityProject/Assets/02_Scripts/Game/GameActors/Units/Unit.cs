@@ -302,6 +302,14 @@ namespace Game.GameActors.Units
             OnUnitDamaged?.Invoke(this,dmg, DamageType.Magic,false, false);
            
         }
+        public void InflictNonLethalTrueDamage(int damage)
+        {
+            //Debug.Log("Inflict True Damage: "+damage);
+            if (damage >= Hp)
+                damage = Hp - 1;
+            Hp -= damage;
+            OnUnitDamaged?.Invoke(this,damage, DamageType.True,false, false);
+        }
 
         public string Name => name;
 
@@ -572,5 +580,7 @@ namespace Game.GameActors.Units
                 RemoveBlessing(blessing);
             }
         }
+
+        
     }
 }

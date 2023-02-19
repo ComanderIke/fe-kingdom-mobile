@@ -17,13 +17,13 @@ namespace Game.WorldMapStuff.Model
         public event Action<int> onGoldChanged;
         public event Action<int> onGraceChanged;
         [SerializeField] public List<Unit> members;
-      
+
         public static Action<Party> PartyDied;
         [SerializeField] int maxSize = 4;
         [SerializeField] private int money = default;
         [SerializeField] private int collectedGrace = default;
 
-        
+
         public int MaxSize
         {
             get => maxSize;
@@ -31,13 +31,11 @@ namespace Game.WorldMapStuff.Model
         }
 
         public Convoy Convoy;
-        int activeUnitIndex=0;
+        int activeUnitIndex = 0;
+
         public int ActiveUnitIndex
         {
-            get
-            {
-                return activeUnitIndex;
-            }
+            get { return activeUnitIndex; }
             set
             {
                 if (value >= members.Count)
@@ -52,16 +50,14 @@ namespace Game.WorldMapStuff.Model
                 onActiveUnitChanged?.Invoke();
             }
         }
+
         public event Action onActiveUnitChanged;
         public event Action<Unit> onMemberRemoved;
         public event Action<Unit> onMemberAdded;
-        
+
         public int Money
         {
-            get
-            {
-                return money;
-            }
+            get { return money; }
             set
             {
                 if (value == money)
@@ -70,18 +66,16 @@ namespace Game.WorldMapStuff.Model
                 onGoldChanged?.Invoke(money);
             }
         }
+
         public int CollectedGrace
         {
-            get
-            {
-                return collectedGrace;
-            }
+            get { return collectedGrace; }
             set
             {
                 if (value == collectedGrace)
                     return;
                 collectedGrace = value;
-                
+
                 onGraceChanged?.Invoke(collectedGrace);
             }
         }
@@ -94,10 +88,10 @@ namespace Game.WorldMapStuff.Model
             DeadCharacters = new List<Unit>();
         }
 
-        public EncounterPosition EncounterComponent{ get; set; }
-     
+        public EncounterPosition EncounterComponent { get; set; }
+
         public GameObject GameObject { get; set; }
-   
+
 
         public Unit ActiveUnit
         {
@@ -105,11 +99,15 @@ namespace Game.WorldMapStuff.Model
         }
 
         public List<Unit> DeadCharacters { get; set; }
-        
 
+
+        public void SetActiveUnit(Unit unit)
+        {
+            ActiveUnitIndex = members.IndexOf(unit);
+        }
         private void OnEnable()
         {
-            for(int i=members.Count-1; i >=0; i--)
+            for (int i = members.Count - 1; i >= 0; i--)
             {
                 if (members[i] == null)
                     members.RemoveAt(i);
@@ -135,21 +133,23 @@ namespace Game.WorldMapStuff.Model
         public override string ToString()
         {
             string party = "";
-            
+
             party += "PartySize: " + members.Count;
             foreach (var member in members)
             {
-                party+= member.ToString()+",\n";
+                party += member.ToString() + ",\n";
             }
-            party += "Gold: " + money+"\n";
-            party += Convoy.ToString()+"\n";
-            party += "EncounterNode: "+EncounterComponent.EncounterNodeId+"\n";
-            party += "ActiveUnit: "+ActiveUnitIndex+"\n";
+
+            party += "Gold: " + money + "\n";
+            party += Convoy.ToString() + "\n";
+            party += "EncounterNode: " + EncounterComponent.EncounterNodeId + "\n";
+            party += "ActiveUnit: " + ActiveUnitIndex + "\n";
             party += "Moved Encounters: ";
             foreach (var node in EncounterComponent.MovedEncounterIds)
             {
-                party+= node.ToString()+", ";
+                party += node.ToString() + ", ";
             }
+
             return party;
         }
 
@@ -168,14 +168,15 @@ namespace Game.WorldMapStuff.Model
 
         public void AddGold(int gold)
         {
-            
+
             Money += gold;
         }
+
         public void AddGrace(int grace)
         {
             CollectedGrace += grace;
         }
-        
+
         public void RemoveMember(Unit unit)
         {
             unit.Party = null;
@@ -195,11 +196,11 @@ namespace Game.WorldMapStuff.Model
 
             foreach (var data in playerDataPartyData.humanData)
             {
-                Unit unit=data.Load();
-                Debug.Log("Load UnitData!"+unit.name);
+                Unit unit = data.Load();
+                Debug.Log("Load UnitData!" + unit.name);
                 members.Add(unit);
             }
-            
+
             Convoy = playerDataPartyData.convoy;
             ActiveUnitIndex = activeUnitIndex;
             EncounterComponent = new EncounterPosition
@@ -232,7 +233,6 @@ namespace Game.WorldMapStuff.Model
         {
             foreach (var member in members)
             {
-                Debug.Log(member.bluePrintID+" "+reqBluePrintID);
                 if (member.bluePrintID == reqBluePrintID)
                 {
                     return true;
@@ -240,6 +240,20 @@ namespace Game.WorldMapStuff.Model
             }
 
             return false;
+        }
+
+        public Unit GetMembersContainsBluePrintID(string reqBluePrintID)
+        {
+            foreach (var member in members)
+            {
+                if (member.bluePrintID == reqBluePrintID)
+                {
+                    return member;
+                }
+
+            }
+
+            return null;
         }
     }
 }

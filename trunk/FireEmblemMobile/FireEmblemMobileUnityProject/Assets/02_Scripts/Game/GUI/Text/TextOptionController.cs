@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using _02_Scripts.Game.Dialog.DialogSystem;
@@ -9,7 +10,9 @@ public enum TextOptionState
     Normal,
     High,
     Secret,
-    Impossible
+    Impossible,
+    Lowish,
+    Low
 }
 public class TextOptionController : MonoBehaviour
 {
@@ -19,6 +22,8 @@ public class TextOptionController : MonoBehaviour
     public Color textNormalColor;
     public Color textSecretColor;
     public Color textNotPossibleColor;
+    public Color textLowColor;
+    public Color textLowishColor;
     public Color textHighColor;
     public LGDialogChoiceData Option;
     [SerializeField] private float delay = 0.25f;
@@ -41,13 +46,15 @@ public class TextOptionController : MonoBehaviour
         this.controller = controller;
         this.text.text = text;
         this.text.color = textNormalColor;
-        this.StatPreview.text = "("+statText+")";
+        this.StatPreview.text =String.IsNullOrEmpty(statText)?"": "("+statText+")";
         switch (textState)
         {
             case TextOptionState.Impossible:  this.StatPreview.color = textNotPossibleColor;break;
             case TextOptionState.Secret:  this.StatPreview.color = textSecretColor;break;
             case TextOptionState.Normal:  this.StatPreview.color = textNormalColor;break;
             case TextOptionState.High:  this.StatPreview.color = textHighColor;break;
+            case TextOptionState.Low:  this.StatPreview.color = textLowColor;break;
+            case TextOptionState.Lowish:  this.StatPreview.color = textLowishColor;break;
         }
        
 

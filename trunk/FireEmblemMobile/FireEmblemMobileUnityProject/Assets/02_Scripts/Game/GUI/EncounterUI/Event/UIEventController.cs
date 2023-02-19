@@ -1,17 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using __2___Scripts.External.Editor.Data.Save;
 using __2___Scripts.Game.Utility;
 using _02_Scripts.Game.Dialog.DialogSystem;
 using Game.AI;
 using Game.GameActors.Items;
 using Game.GameActors.Players;
+using Game.GameActors.Units;
 using Game.GameActors.Units.Numbers;
 using Game.Mechanics;
 using Game.WorldMapStuff.Model;
 using TMPro;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using Random = System.Random;
 
 public class UIEventController : MonoBehaviour
 {
@@ -67,7 +70,6 @@ public class UIEventController : MonoBehaviour
 
     float GetSuccessChanceOffAttRequirement(int goal, int current)
     {
-        Debug.Log("Goal: "+goal+" Current: "+current);
         if (goal <= current)
             return 1.0f;
         else
@@ -75,7 +77,6 @@ public class UIEventController : MonoBehaviour
             int diff= goal - current;
             if (diff >= 10)
                 return 0.0f;
-            Debug.Log(diff/10f);
             return 1.0f - diff/10f;
         }
     }
@@ -87,15 +88,28 @@ public class UIEventController : MonoBehaviour
         {
             string statText = "";
             TextOptionState textOptionType = TextOptionState.Normal;
-            if (textOption.CharacterRequirements != null&&textOption.CharacterRequirements.Count>0)
+            if (textOption.CharacterRequirement != null)
             {
-                Debug.Log("Char requirement: "+textOption.CharacterRequirements[0].bluePrintID);
                 bool contains = false;
-                foreach (var req in textOption.CharacterRequirements)
-                {
-                    if (party.MembersContainsByBluePrintID(req.bluePrintID))
+               
+                    if (party.MembersContainsByBluePrintID(textOption.CharacterRequirement.bluePrintID))
                     {
-                        Debug.Log("CONTAINS");
+                        contains = true;
+                        textOptionType = TextOptionState.Secret;
+                    }
+                
+                if(!contains)
+                    continue;
+                
+            }
+            if (textOption.ItemRequirements != null&&textOption.ItemRequirements.Count>0)
+            {
+               
+                bool contains = false;
+                foreach (var req in textOption.ItemRequirements)
+                {
+                    if (party.Convoy.ContainsItem(req.Create()))
+                    {
                         contains = true;
                         textOptionType = TextOptionState.Secret;
                     }
@@ -109,32 +123,26 @@ public class UIEventController : MonoBehaviour
             if (textOption.AttributeRequirements != null && textOption.AttributeRequirements.Count > 0)
             {
                 float combinedChance = 1;
+                Unit compareUnit = party.ActiveUnit;
+                if(textOption.CharacterRequirement!=null&&party.MembersContainsByBluePrintID(textOption.CharacterRequirement.bluePrintID))
+                 compareUnit = party.GetMembersContainsBluePrintID(textOption.CharacterRequirement.bluePrintID);
                 foreach (var req in textOption.AttributeRequirements)
                 {
-                    float chance = 0f;
-                    switch (req.AttributeType)
-                    {
-                        case AttributeType.LVL:
-                           chance= GetSuccessChanceOffAttRequirement(req.Amount, party.ActiveUnit.ExperienceManager.Level);break;
-                        case AttributeType.STR:
-                            chance= GetSuccessChanceOffAttRequirement(req.Amount, party.ActiveUnit.Stats.CombinedAttributes().STR);break;
-                        case AttributeType.DEX:
-                            chance= GetSuccessChanceOffAttRequirement(req.Amount, party.ActiveUnit.Stats.CombinedAttributes().DEX);break;
-                        case AttributeType.DEF:
-                            chance= GetSuccessChanceOffAttRequirement(req.Amount, party.ActiveUnit.Stats.CombinedAttributes().DEF);break;
-                        case AttributeType.AGI:
-                            chance= GetSuccessChanceOffAttRequirement(req.Amount, party.ActiveUnit.Stats.CombinedAttributes().AGI);break;
-                        case AttributeType.CON:
-                            chance= GetSuccessChanceOffAttRequirement(req.Amount, party.ActiveUnit.Stats.CombinedAttributes().CON);break;
-                        case AttributeType.LCK:
-                            chance= GetSuccessChanceOffAttRequirement(req.Amount, party.ActiveUnit.Stats.CombinedAttributes().LCK);break;
-                        case AttributeType.INT:
-                            chance= GetSuccessChanceOffAttRequirement(req.Amount, party.ActiveUnit.Stats.CombinedAttributes().INT);break;
-                        case AttributeType.FTH:
-                            chance= GetSuccessChanceOffAttRequirement(req.Amount, party.ActiveUnit.Stats.CombinedAttributes().FAITH);break;
-                    }
+                    float chance = GetSuccessChance(req, compareUnit);
 
                     combinedChance *= chance;
+                   
+                }
+
+                if (combinedChance >= 0.8f)
+                    textOptionType = TextOptionState.High;
+                else if (combinedChance <= 0.2f)
+                    textOptionType = TextOptionState.Low;
+                else if (combinedChance <= 0.5f)
+                    textOptionType = TextOptionState.Lowish;
+                else
+                {
+                    textOptionType = TextOptionState.Normal;
                 }
 
                 statText = combinedChance * 100f + " %";
@@ -157,8 +165,44 @@ public class UIEventController : MonoBehaviour
         }
     }
 
-    
-    
+    private float GetSuccessChance(ResponseStatRequirement req, Unit compareUnit)
+    {
+        float chance = 0;
+        switch (req.AttributeType)
+        {
+            case AttributeType.LVL:
+                chance = GetSuccessChanceOffAttRequirement(req.Amount, compareUnit.ExperienceManager.Level);
+                break;
+            case AttributeType.STR:
+                chance = GetSuccessChanceOffAttRequirement(req.Amount, compareUnit.Stats.CombinedAttributes().STR);
+                break;
+            case AttributeType.DEX:
+                chance = GetSuccessChanceOffAttRequirement(req.Amount, compareUnit.Stats.CombinedAttributes().DEX);
+                break;
+            case AttributeType.DEF:
+                chance = GetSuccessChanceOffAttRequirement(req.Amount, compareUnit.Stats.CombinedAttributes().DEF);
+                break;
+            case AttributeType.AGI:
+                chance = GetSuccessChanceOffAttRequirement(req.Amount, compareUnit.Stats.CombinedAttributes().AGI);
+                break;
+            case AttributeType.CON:
+                chance = GetSuccessChanceOffAttRequirement(req.Amount, compareUnit.Stats.CombinedAttributes().CON);
+                break;
+            case AttributeType.LCK:
+                chance = GetSuccessChanceOffAttRequirement(req.Amount, compareUnit.Stats.CombinedAttributes().LCK);
+                break;
+            case AttributeType.INT:
+                chance = GetSuccessChanceOffAttRequirement(req.Amount, compareUnit.Stats.CombinedAttributes().INT);
+                break;
+            case AttributeType.FTH:
+                chance = GetSuccessChanceOffAttRequirement(req.Amount, compareUnit.Stats.CombinedAttributes().FAITH);
+                break;
+        }
+
+        return chance;
+    }
+
+
     void ActiveUnitChanged()
     {
         UpdateUI();
@@ -185,30 +229,53 @@ public class UIEventController : MonoBehaviour
         UpdateUI();
     }
 
-    // EventOutcome GetBattleOutcome(AttackResult result)
-    // {
-    //     var battleOutcome = current.outcomes[0];
-    //     switch (result)
-    //     {
-    //         case AttackResult.Draw: 
-    //             if(current.outcomes.Count>=3)
-    //                 battleOutcome = current.outcomes[2];
-    //             break;
-    //         case AttackResult.Win: battleOutcome = current.outcomes[0];
-    //             break;
-    //         case AttackResult.Loss: if(current.outcomes.Count>=2)
-    //                 battleOutcome = current.outcomes[1];
-    //             break;
-    //     }
-    //     return battleOutcome;
-    // }
+    bool HasRequirement(LGDialogChoiceData choiceData)
+    {
+        return choiceData.CharacterRequirement != null|| (choiceData.ItemRequirements!=null&&choiceData.ItemRequirements.Count>0)||(choiceData.AttributeRequirements!=null&&choiceData.AttributeRequirements.Count>0);
+    }
 
+    bool RequirementSuccess(LGDialogChoiceData choiceData)
+    {
+        if (!HasRequirement(choiceData))
+            return true;
+        foreach (var item in choiceData.ItemRequirements)
+        {
+            if (!party.Convoy.ContainsItem(item.Create()))
+            {
+                return false;
+            }
+        }
+
+        Unit compareUnit = party.ActiveUnit;
+        if(choiceData.CharacterRequirement!=null)
+          compareUnit = party.GetMembersContainsBluePrintID(choiceData.CharacterRequirement.bluePrintID);
+        float combinedChance = 1.0f;
+        foreach (var statReq in choiceData.AttributeRequirements)
+        {
+            float chance=GetSuccessChance(statReq, compareUnit);
+            combinedChance *= chance;
+        }
+
+        party.SetActiveUnit(compareUnit);
+        return UnityEngine.Random.value <= combinedChance;
+
+    }
    
     public void OptionClicked(TextOptionController textOptionController)
     {
-        current = textOptionController.Option;
-        currentNode = (LGEventDialogSO)current.NextDialogue;
-        
+        if (RequirementSuccess(textOptionController.Option))
+        {
+            Debug.Log("SUCCESS");
+            current = textOptionController.Option;
+            currentNode = (LGEventDialogSO)current.NextDialogue;
+        }
+        else
+        {
+            Debug.Log("FAILED");
+            current = textOptionController.Option;
+            currentNode = (LGEventDialogSO)current.NextDialogueFail;
+        }
+
         if (currentNode!=null)
         {
             CheckPossibleRewards();
@@ -243,6 +310,7 @@ public class UIEventController : MonoBehaviour
     }
     void CheckPossibleRewards()
     {
+        Debug.Log("CheckRewards");
         if(currentNode.RewardResources!=null)
             foreach (var resource in currentNode.RewardResources)
             {
@@ -251,6 +319,20 @@ public class UIEventController : MonoBehaviour
                     case ResourceType.Gold:  Player.Instance.Party.AddGold(resource.Amount); break;
                     case ResourceType.Exp:  Player.Instance.Party.ActiveUnit.ExperienceManager.AddExp(resource.Amount); break;
                     case ResourceType.Grace:  Player.Instance.Party.AddGrace(resource.Amount); break;
+                    case ResourceType.HP_Percent:
+                        if (resource.Amount < 0)
+                        {
+                           // Debug.Log(resource.Amount / 100f+" "+resource.Amount / 100f * Player.Instance.Party.ActiveUnit.MaxHp+" "+Math.Ceiling(resource.Amount / 100f * Player.Instance.Party.ActiveUnit.MaxHp));
+                           
+                            Player.Instance.Party.ActiveUnit.InflictNonLethalTrueDamage(
+                                (int)Math.Ceiling(-1*resource.Amount / 100f * Player.Instance.Party.ActiveUnit.MaxHp));
+                        }
+                        else
+                        {
+                            Player.Instance.Party.ActiveUnit.Heal((int)Math.Ceiling((resource.Amount / 100f * Player.Instance.Party.ActiveUnit.MaxHp)));
+                        }
+
+                        break;
                 }
                
             }
