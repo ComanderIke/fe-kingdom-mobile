@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Game.Mechanics;
+using LostGrace;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -13,6 +14,7 @@ namespace Game.GameActors.Units.OnGameObject
         public event Action OnAttackAnimationConnected;
 
         [SerializeField] private Animator animator;
+        [SerializeField] private AnimationSpriteSwapper spriteSwapper;
         private static readonly int Selected = Animator.StringToHash("Selected");
         private static readonly int Moving = Animator.StringToHash("Moving");
         private static readonly int AnimationUp = Animator.StringToHash("BattleAnimationUp");
@@ -113,7 +115,8 @@ namespace Game.GameActors.Units.OnGameObject
         public void SetUnit(Unit unit1)
         {
             this.unit = unit1;
-      
+            Debug.Log("INIT SPRITE SWAPPER");
+            spriteSwapper.Init(unit.Visuals.CharacterSpriteSet);
             // if (unit1.visuals.CharacterSpriteSet.idleAnimation != null)
             //     return;
             // AnimatorOverrideController aoc = new AnimatorOverrideController(animator.runtimeAnimatorController);

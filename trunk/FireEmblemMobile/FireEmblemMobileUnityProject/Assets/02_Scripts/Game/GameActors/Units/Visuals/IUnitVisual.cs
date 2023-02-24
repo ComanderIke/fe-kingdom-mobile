@@ -26,11 +26,13 @@ namespace Game.GameActors.Units
 
         public UnitVisual(UnitVisual other)
         {
-            CharacterSpriteSet = ScriptableObject.CreateInstance<CharacterSpriteSet>();
-            CharacterSpriteSet.animatedSprite = other.CharacterSpriteSet.animatedSprite;
-            CharacterSpriteSet.battleAnimatedSprite = other.CharacterSpriteSet.battleAnimatedSprite;
-            CharacterSpriteSet.FaceSprite = other.CharacterSpriteSet.FaceSprite;
-            CharacterSpriteSet.MapSprite = other.CharacterSpriteSet.MapSprite;
+            // CharacterSpriteSet = ScriptableObject.CreateInstance<CharacterSpriteSet>();
+            // CharacterSpriteSet.animatedSprite = other.CharacterSpriteSet.animatedSprite;
+            // CharacterSpriteSet.battleAnimatedSprite = other.CharacterSpriteSet.battleAnimatedSprite;
+            // CharacterSpriteSet.FaceSprite = other.CharacterSpriteSet.FaceSprite;
+            // CharacterSpriteSet.MapSprite = other.CharacterSpriteSet.MapSprite;
+            Debug.Log("Is it ok to copy spriteSet?");
+            CharacterSpriteSet = other.CharacterSpriteSet;
             
             UnitEffectVisual = other.UnitEffectVisual;
             Prefabs = other.Prefabs;
