@@ -80,6 +80,8 @@ namespace Game.GameResources
         
         [field:SerializeField]public BattleRewardConfig BattleRewardConfig { get; set; }
         [field:SerializeField] public SkillGenerationConfiguration SkillGenerationConfig { get; set; }
+        [field:SerializeField] public Sprite DefaultMerchantSprite { get; set; }
+        [field:SerializeField] public string DefaultMerchantName { get; set; }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void FirstInitialize()

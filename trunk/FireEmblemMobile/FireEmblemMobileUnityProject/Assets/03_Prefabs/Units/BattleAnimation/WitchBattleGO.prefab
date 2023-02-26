@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 7398306520116262879}
   - component: {fileID: 4214050721747340073}
   - component: {fileID: 3337478153766565190}
+  - component: {fileID: 4691901561313966892}
   m_Layer: 18
   m_Name: WitchBattleAnimationSprite
   m_TagString: Untagged
@@ -296,12 +297,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayableDirector: {fileID: 7398306520116262879}
+  attractorTransform: {fileID: 0}
+  expBar: {fileID: 0}
   walkIn: {fileID: 11400000, guid: 8c74b39443eb8454ca0a61831f29c5b2, type: 2}
   attack: {fileID: 11400000, guid: b7f3d3e5f9b0e6441886341d44784186, type: 2}
   idle: {fileID: 11400000, guid: 3b81f68b02788834d9d7ee02fe09fcf7, type: 2}
   dodge: {fileID: 11400000, guid: a3ec29c516758e445a8b1b05135699ea, type: 2}
   damaged: {fileID: 11400000, guid: c5941980997934046a399ccafa5fd290, type: 2}
   death: {fileID: 11400000, guid: e2ec745cfba517d42bdebd7681c10666, type: 2}
+  hasPrepare: 0
+  prepareAttack: {fileID: 0}
 --- !u!114 &3337478153766565190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,6 +324,20 @@ MonoBehaviour:
   shadowDirection: {x: 60, y: 0, z: 30}
   shadowScale: {x: 1, y: 1, z: 1}
   shadowMat: {fileID: 0}
+--- !u!114 &4691901561313966892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4707009463004641532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a55341c55f2efd74c83fd11321747984, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteSet: {fileID: 0}
+  spriteRenderer: {fileID: 6336105809329641799}
 --- !u!1 &5418128943419866559
 GameObject:
   m_ObjectHideFlags: 0
@@ -414,7 +433,6 @@ GameObject:
   - component: {fileID: 5565116107653713506}
   - component: {fileID: 8834315866836090958}
   - component: {fileID: 6396728573585956521}
-  - component: {fileID: 8904799545063276712}
   m_Layer: 18
   m_Name: impact (4)
   m_TagString: Untagged
@@ -5282,18 +5300,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mirrorGO: {fileID: 153817705046855153}
   flipRotation: 0
---- !u!114 &8904799545063276712
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6399664310892835907}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe48e85d148c21a4083b27c3156acc30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6430277884580762204
 GameObject:
   m_ObjectHideFlags: 0
@@ -10491,7 +10497,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1932239018779597303, guid: 217cc166e0a7b9340967e0f248fbdc17, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 217cc166e0a7b9340967e0f248fbdc17, type: 3}
 --- !u!1 &5926949315503826306 stripped
 GameObject:

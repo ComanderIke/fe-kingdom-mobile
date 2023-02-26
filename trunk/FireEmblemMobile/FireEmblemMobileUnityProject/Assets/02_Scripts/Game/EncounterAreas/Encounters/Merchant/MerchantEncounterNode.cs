@@ -14,7 +14,7 @@ public class MerchantEncounterNode : EncounterNode
    
     public MerchantEncounterNode(List<EncounterNode> parents,int depth, int childIndex,string label, string description, Sprite sprite) : base(parents, depth, childIndex, label,description, sprite)
     {
-        merchant = new Merchant();
+        merchant = new Merchant(GameBPData.Instance.DefaultMerchantSprite, GameBPData.Instance.DefaultMerchantName);
         merchant.AddItem(new ShopItem(GameBPData.Instance.GetRandomItem()));
         merchant.AddItem(new ShopItem(GameBPData.Instance.GetRandomItem()));
         merchant.AddItem(new ShopItem(GameBPData.Instance.GetRandomItem()));

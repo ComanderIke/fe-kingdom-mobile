@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 6859037594731768447}
   - component: {fileID: 322166700516665009}
   - component: {fileID: 873624671376952003}
+  - component: {fileID: 7084212502372696390}
   m_Layer: 0
   m_Name: ScorpionAnimatedSpritevalierAnimatedSprite
   m_TagString: Untagged
@@ -133,7 +134,83 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 9219012315200835979}
-  unit: {fileID: 0}
+  spriteSwapper: {fileID: 7084212502372696390}
+  unit:
+    unitBP: {fileID: 0}
+    bluePrintID: 
+    equippedWeapon:
+      Name: 
+      Description: 
+      cost: 0
+      rarity: 0
+      maxStack: 0
+      Sprite: {fileID: 0}
+      EquipmentSlotType: 0
+      AttackRanges: 
+      WeaponAttributes: []
+      weaponLevel: 0
+      maxLevel: 0
+      WeaponType: {fileID: 0}
+      DamageType: 0
+    EquippedRelic1:
+      id: 0
+    EquippedRelic2:
+      id: 0
+    name: 
+    stats:
+      AttackRanges: 
+      BaseAttributes:
+        str: 0
+        intel: 0
+        dex: 0
+        agi: 0
+        con: 0
+        lck: 0
+        def: 0
+        faith: 0
+      BonusStats:
+        <Hit>k__BackingField: 0
+        <Avoid>k__BackingField: 0
+        <CritAvoid>k__BackingField: 0
+        <Crit>k__BackingField: 0
+        <AttackSpeed>k__BackingField: 0
+        <Armor>k__BackingField: 0
+        <MagicResistance>k__BackingField: 0
+        <Attack>k__BackingField: 0
+      Mov: 0
+    growths:
+      str: 0
+      intel: 0
+      dex: 0
+      agi: 0
+      con: 0
+      lck: 0
+      def: 0
+      faith: 0
+    moveType: {fileID: 0}
+    SkillManager:
+      startSkills: []
+      skillPoints: 0
+      SkillBuildTrees: []
+    rpgClass: 0
+    visuals:
+      CharacterSpriteSet: {fileID: 0}
+      UnitEffectVisual: {fileID: 0}
+      Prefabs:
+        MapAnimatedSprite: {fileID: 0}
+        EncounterAnimatedSprite: {fileID: 0}
+        UIAnimatorController: {fileID: 0}
+      UnitCharacterCircleUI: {fileID: 0}
+      unitRenderer: {fileID: 0}
+    experienceManager:
+      level: 1
+      exp: 0
+      drainableExp: 100
+      expLeftToDrain: 100
+  references:
+    version: 1
+    00000000:
+      type: {class: , ns: , asm: }
 --- !u!95 &9219012315200835979
 Animator:
   serializedVersion: 3
@@ -199,6 +276,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   encounterPlayerUnitController: {fileID: 6411127344836920754}
+--- !u!114 &7084212502372696390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4972444510150215610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a55341c55f2efd74c83fd11321747984, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteSet: {fileID: 0}
+  spriteRenderer: {fileID: 5185175171194153822}
 --- !u!1 &5749054212524228461
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,11 +417,87 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d41cd1117a02c6b43a35495c6c205a25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Unit: {fileID: 0}
+  unit:
+    unitBP: {fileID: 0}
+    bluePrintID: 
+    equippedWeapon:
+      Name: 
+      Description: 
+      cost: 0
+      rarity: 0
+      maxStack: 0
+      Sprite: {fileID: 0}
+      EquipmentSlotType: 0
+      AttackRanges: 
+      WeaponAttributes: []
+      weaponLevel: 0
+      maxLevel: 0
+      WeaponType: {fileID: 0}
+      DamageType: 0
+    EquippedRelic1:
+      id: 0
+    EquippedRelic2:
+      id: 0
+    name: 
+    stats:
+      AttackRanges: 
+      BaseAttributes:
+        str: 0
+        intel: 0
+        dex: 0
+        agi: 0
+        con: 0
+        lck: 0
+        def: 0
+        faith: 0
+      BonusStats:
+        <Hit>k__BackingField: 0
+        <Avoid>k__BackingField: 0
+        <CritAvoid>k__BackingField: 0
+        <Crit>k__BackingField: 0
+        <AttackSpeed>k__BackingField: 0
+        <Armor>k__BackingField: 0
+        <MagicResistance>k__BackingField: 0
+        <Attack>k__BackingField: 0
+      Mov: 0
+    growths:
+      str: 0
+      intel: 0
+      dex: 0
+      agi: 0
+      con: 0
+      lck: 0
+      def: 0
+      faith: 0
+    moveType: {fileID: 0}
+    SkillManager:
+      startSkills: []
+      skillPoints: 0
+      SkillBuildTrees: []
+    rpgClass: 0
+    visuals:
+      CharacterSpriteSet: {fileID: 0}
+      UnitEffectVisual: {fileID: 0}
+      Prefabs:
+        MapAnimatedSprite: {fileID: 0}
+        EncounterAnimatedSprite: {fileID: 0}
+        UIAnimatorController: {fileID: 0}
+      UnitCharacterCircleUI: {fileID: 0}
+      unitRenderer: {fileID: 0}
+    experienceManager:
+      level: 1
+      exp: 0
+      drainableExp: 100
+      expLeftToDrain: 100
   spriteRenderer: {fileID: 5185175171194153822}
+  unitAnimator: {fileID: 4175706617689143088}
   baseSortOrder: 10
   speed: 3
   baseOffset: 0.35
+  references:
+    version: 1
+    00000000:
+      type: {class: , ns: , asm: }
 --- !u!1 &7614998096159936754
 GameObject:
   m_ObjectHideFlags: 0

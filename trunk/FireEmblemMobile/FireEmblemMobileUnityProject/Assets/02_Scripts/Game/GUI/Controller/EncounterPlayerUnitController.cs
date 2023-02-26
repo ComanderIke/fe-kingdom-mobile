@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using __2___Scripts.Game.Utility;
 using Game.GameActors.Units;
+using Game.GameActors.Units.OnGameObject;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -11,6 +12,7 @@ public class EncounterPlayerUnitController : MonoBehaviour
 
     [FormerlySerializedAs("unitBp")] [FormerlySerializedAs("Unit")] public Unit unit;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private UnitAnimator unitAnimator;
 
     public int baseSortOrder = 10;
 
@@ -61,6 +63,7 @@ public class EncounterPlayerUnitController : MonoBehaviour
     public void SetUnit(Unit unit)
     {
         this.unit = unit;
+        unitAnimator.SetUnit(unit);
     }
     public void SetSortOrder(int order)
     {

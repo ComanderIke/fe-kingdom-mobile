@@ -8,7 +8,14 @@ using UnityEngine;
 public class Merchant
 {
     public List<ShopItem> shopItems = new List<ShopItem>();
+    public Sprite merchantFace;
+    public string merchantName;
 
+    public Merchant(Sprite merchantFace, string merchantName)
+    {
+        this.merchantFace = merchantFace;
+        this.merchantName = merchantName;
+    }
     public float priceMultiplier = 1.0f;
     public void AddItem(ShopItem item)
     {

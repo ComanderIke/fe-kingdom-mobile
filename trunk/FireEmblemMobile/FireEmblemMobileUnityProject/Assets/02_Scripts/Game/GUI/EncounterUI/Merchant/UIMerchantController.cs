@@ -27,6 +27,8 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
     private List<GameObject> instantiatedItems= new List<GameObject>();
     public Button switchBuyButton;
     public Button switchSellButton;
+    [SerializeField] private TextMeshProUGUI merchantNameText;
+    [SerializeField] private Image merchantFaceImage;
 
     public static event Action OnFinished;
  
@@ -71,6 +73,8 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
         instantiatedItems.Clear();
         unitIdleAnimation.Show(party.ActiveUnit);
         characterFace.Show(party.ActiveUnit);
+        merchantFaceImage.sprite = merchant.merchantFace;
+        merchantNameText.SetText(merchant.merchantName);
       
         if (buying)
         {
