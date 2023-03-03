@@ -9,19 +9,12 @@ public class MemoryButton : MonoBehaviour
     public Image image;
 
     public Sprite itemSprite;
+    public Object userData;
 
     public MemoryMiniGame MemoryController;
 
     public Button button;
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
+    
 
     private bool revealed = false;
     

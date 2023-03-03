@@ -15,6 +15,7 @@ namespace Game.GameActors.Units
         
         
         public CharacterSpriteSet CharacterSpriteSet;
+        public CharacterSpriteSet CharacterClassUpgradeSpriteSet;
         
         public IUnitEffectVisual UnitEffectVisual;
 
@@ -33,7 +34,7 @@ namespace Game.GameActors.Units
             // CharacterSpriteSet.MapSprite = other.CharacterSpriteSet.MapSprite;
             Debug.Log("Is it ok to copy spriteSet?");
             CharacterSpriteSet = other.CharacterSpriteSet;
-            
+            CharacterClassUpgradeSpriteSet = other.CharacterClassUpgradeSpriteSet;
             UnitEffectVisual = other.UnitEffectVisual;
             Prefabs = other.Prefabs;
             UnitCharacterCircleUI = other.UnitCharacterCircleUI;
