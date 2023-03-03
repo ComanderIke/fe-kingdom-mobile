@@ -3,8 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Game.GameActors.Items;
+using Game.GameActors.Units;
+using Game.WorldMapStuff.Model;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MemoryMiniGame : MonoBehaviour
 {
@@ -15,18 +18,26 @@ public class MemoryMiniGame : MonoBehaviour
     private List<MemoryButton> allCards;
    // private List<MemoryButton>startCards;
     public TextMeshProUGUI triesleft;
-    
+    [SerializeField] private UICharacterFace characterFace;
+    [SerializeField] private UIUnitIdleAnimation unitIdleAnimation;
     public MemoryGameData memoryData;
     [SerializeField] private GameObject memoryButtonPrefab;
     [SerializeField] private FlexibleGridLayout gridLayout;
     private List<ItemBP> shuffledItems;
     [SerializeField] private Canvas canvas;
     public int currentTries = 0;
+    private Party party;
     
 
     // Start is called before the first frame update
-    public void Show(MemoryGameData memoryGameData)
+    public void Show(MemoryGameData memoryGameData, Party party)
     {
+        party.onActiveUnitChanged += UpdateUI;
+        foreach (var member in party.members)
+        {
+            member.HpValueChanged += UpdateUI;
+        }
+        this.party = party;
         this.canvas.enabled = true;
         this.memoryData = memoryGameData;
         gridLayout.columns = memoryGameData.columns;
@@ -43,12 +54,49 @@ public class MemoryMiniGame : MonoBehaviour
             memoryButton.MemoryController = this;
             memoryButton.userData = item;
             memoryButton.itemSprite = item.sprite;
+            if(CanTurnField())
+                memoryButton.SetActive();
+            else
+            {
+                memoryButton.SetInActive();
+
+            }
+        }
+            
+        triesleft.gameObject.SetActive(memoryData.hpCost == 0);
+        triesleft.text = "Tries left: " + currentTries + "/" + memoryData.MaxTries;
+        UpdateUI();
+    }
+
+    void UpdateUI()
+    {
+        unitIdleAnimation.Show(party.ActiveUnit);
+        characterFace.Show(party.ActiveUnit);  
+        if(!CanTurnField())
+        {
+            foreach (var card in allCards)
+            {
+                if(!card.revealed)
+                    card.SetInActive();
+            }
+        }
+        else
+        {
+            foreach (var card in allCards)
+            {
+                card.SetActive();
+            }
         }
         triesleft.text = "Tries left: " + currentTries + "/" + memoryData.MaxTries;
     }
-
+    
     public void Hide()
     {
+        party.onActiveUnitChanged -= UpdateUI;
+        foreach (var member in party.members)
+        {
+            member.HpValueChanged -= UpdateUI;
+        }
         canvas.enabled = false;
     }
     
@@ -65,15 +113,7 @@ public class MemoryMiniGame : MonoBehaviour
     private void IncreaseTries()
     {
         currentTries++;
-        if (currentTries >= memoryData.MaxTries)
-        {
-            foreach (var card in allCards)
-            {
-                card.SetInActive();
-            }
-        }
-
-        triesleft.text = "Tries left: " + currentTries + "/" + memoryData.MaxTries;
+        UpdateUI();
     }
     public bool TurnBack(MemoryButton revealed)
     {
@@ -89,15 +129,16 @@ public class MemoryMiniGame : MonoBehaviour
             foreach (var card in allCards)
             {
                 card.SetInActive();
-                if( currentTries<memoryData.MaxTries)
-                    MonoUtility.DelayFunction(() => card.SetActive(), 1.0f);
+               
             }
+            MonoUtility.DelayFunction(() => UpdateUI(), 1.0f);
             
            
             if (currentRevealedCard.itemSprite == revealed.itemSprite&& currentRevealedCard.userData==revealed.userData)
             {
                 revealedCards.Add(revealed);
                 revealedCards.Add(currentRevealedCard);
+                party.Convoy.AddItem(((ItemBP)currentRevealedCard.userData).Create());
                 currentRevealedCard = null;
                
                 return false;
@@ -116,5 +157,22 @@ public class MemoryMiniGame : MonoBehaviour
         
 
         return true;
+    }
+
+    public void RevealField(MemoryButton memoryButton)
+    {
+        party.ActiveUnit.Hp -= memoryData.hpCost;
+    }
+
+    public bool CanTurnField()
+    {
+        if (memoryData.hpCost != 0)
+        {
+            if (party.ActiveUnit.Hp > memoryData.hpCost)
+                return true;
+            return false;
+        }
+
+        return currentTries < memoryData.MaxTries;
     }
 }

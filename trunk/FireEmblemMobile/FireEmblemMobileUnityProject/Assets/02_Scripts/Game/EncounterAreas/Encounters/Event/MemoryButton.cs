@@ -14,9 +14,9 @@ public class MemoryButton : MonoBehaviour
     public MemoryMiniGame MemoryController;
 
     public Button button;
-    
 
-    private bool revealed = false;
+
+    public bool revealed = false;
     
 
     void TurnAnimation()
@@ -24,6 +24,7 @@ public class MemoryButton : MonoBehaviour
         if (!revealed)
         {
             revealed = true;
+            MemoryController.RevealField(this);
             LeanTween.rotateY(gameObject, 90f, .4f).setEaseInQuad().setOnComplete(() =>
             {
                 image.sprite = itemSprite;
@@ -43,7 +44,8 @@ public class MemoryButton : MonoBehaviour
 
     public void OnCllick()
     {
-        TurnAnimation();
+        if(MemoryController.CanTurnField())
+            TurnAnimation();
     }
 
     public void TurnBack()

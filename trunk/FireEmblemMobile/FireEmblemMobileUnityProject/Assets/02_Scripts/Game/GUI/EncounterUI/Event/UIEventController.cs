@@ -323,7 +323,6 @@ public class UIEventController : MonoBehaviour
     }
     void CheckPossibleRewards()
     {
-        Debug.Log("CheckRewards");
         if(currentNode.RewardResources!=null)
             foreach (var resource in currentNode.RewardResources)
             {
