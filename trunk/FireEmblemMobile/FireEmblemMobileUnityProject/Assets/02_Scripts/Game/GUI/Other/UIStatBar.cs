@@ -9,10 +9,13 @@ namespace Game.GUI
         private UIFilledBarController barController;
         [SerializeField]
         private TextMeshProUGUI valueText;
+
+        public int currentValue;
         public override void SetValue(int value, int maxValue)
         {
-            barController.SetFillAmount(value*1.0f/maxValue);
-            valueText.SetText(value+"/"+maxValue);
+            this.currentValue = value;
+            barController.SetFillAmount(currentValue*1.0f/maxValue);
+            valueText.SetText(currentValue+"/"+maxValue);
         }
     }
 }
