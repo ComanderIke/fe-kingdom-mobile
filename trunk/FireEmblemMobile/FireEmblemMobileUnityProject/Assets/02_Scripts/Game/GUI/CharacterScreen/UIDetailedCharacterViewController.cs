@@ -37,7 +37,7 @@ public class UIDetailedCharacterViewController : UICharacterViewController
     {
         base.UpdateUI(unit);
         Lv.SetText("Lv. "+unit.ExperienceManager.Level);
-        ExpBar.SetValue(unit.ExperienceManager.Exp, ExperienceManager.MAX_EXP);
+        ExpBar.SetValue(unit.ExperienceManager.Exp, ExperienceManager.MAX_EXP, false);
         skillsUI.Show(unit.SkillManager.Skills);
         blessingParent.DeleteAllChildren();
         curseParent.DeleteAllChildren();

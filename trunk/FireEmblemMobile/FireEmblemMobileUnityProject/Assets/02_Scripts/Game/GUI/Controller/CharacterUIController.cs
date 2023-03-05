@@ -141,7 +141,7 @@ namespace Game.GUI
             characterName.SetText(unit.name);
             
             expBar.UpdateInstant(unit.ExperienceManager.Exp);
-            hpBar.SetValue(unit.Hp, unit.MaxHp);
+            hpBar.SetValue(unit.Hp, unit.MaxHp, true);
             //  spBars.SetValue(unit.SpBars, unit.MaxSpBars);
             // Debug.Log(faceSprite.sprite+" "+unit.visuals);
             // Debug.Log("CSS: "+unit.visuals.CharacterSpriteSet);

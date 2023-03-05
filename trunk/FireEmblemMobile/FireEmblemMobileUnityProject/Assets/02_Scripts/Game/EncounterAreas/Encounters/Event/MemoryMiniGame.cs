@@ -35,7 +35,7 @@ public class MemoryMiniGame : MonoBehaviour
         party.onActiveUnitChanged += UpdateUI;
         foreach (var member in party.members)
         {
-            member.HpValueChanged += UpdateUI;
+            member.HpValueChanged += UpdateHealthRelatedUI;
         }
         this.party = party;
         this.canvas.enabled = true;
@@ -62,16 +62,22 @@ public class MemoryMiniGame : MonoBehaviour
 
             }
         }
-            
+        UpdateUI();
         triesleft.gameObject.SetActive(memoryData.hpCost == 0);
         triesleft.text = "Tries left: " + currentTries + "/" + memoryData.MaxTries;
-        UpdateUI();
+
     }
 
     void UpdateUI()
     {
         unitIdleAnimation.Show(party.ActiveUnit);
         characterFace.Show(party.ActiveUnit);  
+        UpdateHealthRelatedUI();
+        triesleft.text = "Tries left: " + currentTries + "/" + memoryData.MaxTries;
+    }
+
+    void UpdateHealthRelatedUI()
+    {
         if(!CanTurnField())
         {
             foreach (var card in allCards)
@@ -87,7 +93,6 @@ public class MemoryMiniGame : MonoBehaviour
                 card.SetActive();
             }
         }
-        triesleft.text = "Tries left: " + currentTries + "/" + memoryData.MaxTries;
     }
     
     public void Hide()
@@ -95,7 +100,7 @@ public class MemoryMiniGame : MonoBehaviour
         party.onActiveUnitChanged -= UpdateUI;
         foreach (var member in party.members)
         {
-            member.HpValueChanged -= UpdateUI;
+            member.HpValueChanged -= UpdateHealthRelatedUI;
         }
         canvas.enabled = false;
     }
@@ -113,7 +118,7 @@ public class MemoryMiniGame : MonoBehaviour
     private void IncreaseTries()
     {
         currentTries++;
-        UpdateUI();
+        UpdateHealthRelatedUI();
     }
     public bool TurnBack(MemoryButton revealed)
     {
@@ -131,7 +136,7 @@ public class MemoryMiniGame : MonoBehaviour
                 card.SetInActive();
                
             }
-            MonoUtility.DelayFunction(() => UpdateUI(), 1.0f);
+            MonoUtility.DelayFunction(() => UpdateHealthRelatedUI(), 1.0f);
             
            
             if (currentRevealedCard.itemSprite == revealed.itemSprite&& currentRevealedCard.userData==revealed.userData)

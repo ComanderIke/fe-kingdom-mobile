@@ -20,16 +20,25 @@ public class UICharacterFace : MonoBehaviour
             unit.HpValueChanged -= UpdateHpBar;
         this.unit = unit;
         unit.HpValueChanged += UpdateHpBar;
-        UpdateHpBar();
+        InitHpBar();
         faceImage.sprite = unit.visuals.CharacterSpriteSet.FaceSprite;
         name.SetText(unit.name);
     }
 
     private void OnDisable()
     {
-        Debug.Log("DISABLE)");
+       
         if(unit!=null)
             unit.HpValueChanged -= UpdateHpBar;
+    }
+    void InitHpBar()
+    {
+        if (hpBar.currentValue > unit.Hp)
+        {
+            feedbacks.PlayFeedbacks();
+        }
+        Debug.Log("INIT HP");
+        hpBar.SetValue(unit.Hp, unit.MaxHp, false);
     }
 
     void UpdateHpBar()
@@ -38,7 +47,8 @@ public class UICharacterFace : MonoBehaviour
         {
             feedbacks.PlayFeedbacks();
         }
-        hpBar.SetValue(unit.Hp, unit.MaxHp);
+        Debug.Log("UPDATE HP");
+        hpBar.SetValue(unit.Hp, unit.MaxHp, true);
     }
 
 

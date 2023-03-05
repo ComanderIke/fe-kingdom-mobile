@@ -51,7 +51,7 @@ namespace Game.GUI
             delayedHpValue = MathUtility.MapValues(currentHealth, 0f, maxHealth, 0f, 1f);
         }
 
-        public override void SetValue(int value, int maxValue)
+        public override void SetValue(int value, int maxValue, bool animated)
         {
             maxHealth = maxValue;
             currentHealth = value;

@@ -48,7 +48,7 @@ public class DestroyableController : MonoBehaviour
     private void HpValueChanged()
     {
         if (hpBar != null && Destroyable != null){
-            hpBar.SetValue(Destroyable.Hp, Destroyable.MaxHp);
+            hpBar.SetValue(Destroyable.Hp, Destroyable.MaxHp, false);
             hpText.SetText(""+Destroyable.Hp);
         }
     }

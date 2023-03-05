@@ -136,7 +136,7 @@ public class UICharacterViewController : MonoBehaviour
         FTH.SetText(""+(unit.Stats.BaseAttributes.FAITH+unit.Stats.BonusAttributes.FAITH));
         LCK.SetText(""+(unit.Stats.BaseAttributes.LCK+unit.Stats.BonusAttributes.LCK));
         DEF.SetText(""+(unit.Stats.BaseAttributes.DEF+unit.Stats.BonusAttributes.DEF));
-        HPBar.SetValue(unit.Hp, unit.MaxHp);
+        HPBar.SetValue(unit.Hp, unit.MaxHp, false);
     }
 
     public void CombatStatsButtonClicked()
