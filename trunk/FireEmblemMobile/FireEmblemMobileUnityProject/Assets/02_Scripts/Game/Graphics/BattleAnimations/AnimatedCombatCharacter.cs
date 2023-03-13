@@ -87,9 +87,9 @@ public class AnimatedCombatCharacter
         OnAttackFinished?.Invoke();
     }
 
-    public void Damaged(float playSpeed)
+    public void Damaged(float playSpeed, DamagedState damagedState)
     {
-        spriteController.Damaged(playSpeed);
+        spriteController.Damaged(playSpeed, damagedState);
     }
 
     public void Death(float playSpeed)

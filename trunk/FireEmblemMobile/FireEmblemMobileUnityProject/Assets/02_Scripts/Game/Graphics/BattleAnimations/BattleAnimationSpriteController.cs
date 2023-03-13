@@ -34,6 +34,8 @@ public class BattleAnimationSpriteController : MonoBehaviour
     [SerializeField]
     ExpBarController expBar;
 
+    [SerializeField] private HitFeedbackController hitFeedbackController;
+
    
     
     public TimelineAsset walkIn;
@@ -67,8 +69,11 @@ public class BattleAnimationSpriteController : MonoBehaviour
     {
         PlayAtSpeed(dodge, playSpeed);
     }
-    public void Damaged(float playSpeed)
+
+    
+    public void Damaged(float playSpeed,DamagedState damagedState)
     {
+        hitFeedbackController.SetState(damagedState);
         PlayAtSpeed(damaged, playSpeed);
     }
     public double GetCurrentAnimationDuration()
@@ -102,4 +107,10 @@ public class BattleAnimationSpriteController : MonoBehaviour
     {
         return expBar;
     }
+}
+public enum DamagedState
+{
+    NoDamage,
+    Damage,
+    HighDmg
 }

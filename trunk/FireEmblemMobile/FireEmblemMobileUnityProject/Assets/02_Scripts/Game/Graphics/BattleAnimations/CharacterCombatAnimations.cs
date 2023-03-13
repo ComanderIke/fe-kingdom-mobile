@@ -158,7 +158,13 @@ public class CharacterCombatAnimations : MonoBehaviour
 
     void Damaged(AnimatedCombatCharacter character, int dmg, bool critical)
     {
-        character.Damaged(playSpeed);
+        DamagedState state = DamagedState.Damage;
+        if (critical)
+            state = DamagedState.HighDmg;
+        if (dmg == 0)
+            state = DamagedState.NoDamage;
+        
+        character.Damaged(playSpeed, state);
         OnDamaged?.Invoke(character, dmg, critical);
     }
 

@@ -2,6 +2,7 @@
 using System.Collections;
 using Game.GameActors.Units;
 using Game.States;
+using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.UI;
 using Utility;
@@ -16,6 +17,9 @@ namespace Game.GUI
         [SerializeField] int tmpExp;
         [SerializeField] CanvasGroup canvasGroup;
         [SerializeField] UIAnimatedCountingText countingText;
+        [SerializeField] private MMF_Player showFeedbacks;
+        [SerializeField] private MMF_Player fullFeedbacks;
+        [SerializeField] private MMF_Player hideFeedbacks;
         private int addedExp;
         private int tmpAddedExp;
         private bool animation;
@@ -29,7 +33,11 @@ namespace Game.GUI
             addedExp--;
             currentExp++;
             if (currentExp > 100)
+            {
                 currentExp -= 100;
+               
+            }
+
             fill.fillAmount = currentExp / 100f;
             countingText?.SetText(currentExp.ToString());
             if (addedExp <=0)
@@ -56,7 +64,15 @@ namespace Game.GUI
                 addedExp--;
                 currentExp++;
                 if (currentExp > 100)
+                {
                     currentExp -= 100;
+                    
+                }
+                else if (currentExp == 100)
+                {
+                    fullFeedbacks.PlayFeedbacks();
+                }
+
                 fill.fillAmount = currentExp / 100f;
                 countingText?.SetText(currentExp.ToString());
                 yield return new WaitForSeconds(fillSecondsPerUnit);
@@ -115,12 +131,15 @@ namespace Game.GUI
 
         public void Show(int CurrentExp)
         {
+            showFeedbacks.PlayFeedbacks();
             UpdateInstant(currentExp);
-            TweenUtility.FadeIn(canvasGroup);
+            //TweenUtility.FadeIn(canvasGroup);
         }
         public void Hide()
         {
-            TweenUtility.FadeOut(canvasGroup);
+            showFeedbacks.StopFeedbacks();
+            hideFeedbacks.PlayFeedbacks();
+            //TweenUtility.FadeOut(canvasGroup);
         }
 
       

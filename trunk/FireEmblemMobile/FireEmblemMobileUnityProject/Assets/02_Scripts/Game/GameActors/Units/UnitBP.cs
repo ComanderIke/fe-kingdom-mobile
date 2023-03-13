@@ -45,7 +45,8 @@ namespace Game.GameActors.Units
         public string bluePrintID;
         [SerializeField] private DialogActor dialogActor;
         [SerializeField] public UnitVisual visuals;
-
+        [SerializeField]
+        public CharacterAudioSet audio;
         [SerializeField] public ExperienceManager experienceManager;
 
         public override string ToString()
