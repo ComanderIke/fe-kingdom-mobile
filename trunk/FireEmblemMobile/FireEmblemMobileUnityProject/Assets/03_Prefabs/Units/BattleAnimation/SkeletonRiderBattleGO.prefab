@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 7398306520116262879}
   - component: {fileID: 4214050721747340073}
   - component: {fileID: 5545725568445660331}
+  - component: {fileID: 1759880455087790109}
   m_Layer: 18
   m_Name: SkeletonBattleAnimationSprite
   m_TagString: Untagged
@@ -135,7 +136,7 @@ Animator:
   m_GameObject: {fileID: 4707009463004641532}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5d846221518e067449393bf10fb90dbd, type: 2}
+  m_Controller: {fileID: 9100000, guid: 3a59c1764bf44a34cb0b597ce6e2edd4, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -300,6 +301,7 @@ MonoBehaviour:
   PlayableDirector: {fileID: 7398306520116262879}
   attractorTransform: {fileID: 0}
   expBar: {fileID: 0}
+  hitFeedbackController: {fileID: 0}
   walkIn: {fileID: 11400000, guid: a6ca872d6099e6a44951ebe5113c3c2c, type: 2}
   attack: {fileID: 11400000, guid: 2f6dfa4651e0245488bd9cbc607a8528, type: 2}
   idle: {fileID: 11400000, guid: 8a4dc1498a3917d4d9481bf75ddd3d2c, type: 2}
@@ -325,6 +327,20 @@ MonoBehaviour:
   shadowDirection: {x: 60, y: 0, z: 30}
   shadowScale: {x: 1, y: 1, z: 1}
   shadowMat: {fileID: 0}
+--- !u!114 &1759880455087790109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4707009463004641532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a55341c55f2efd74c83fd11321747984, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteSet: {fileID: 0}
+  spriteRenderer: {fileID: 6336105809329641799}
 --- !u!1 &6399664310892835907
 GameObject:
   m_ObjectHideFlags: 0
@@ -10179,7 +10195,7 @@ SpriteRenderer:
   m_SortingLayerID: -796215603
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 074f8148d338b5f44a2e7117ac7f494f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8252f1aa8243efe41bfe908a3433f57d, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0.38431373}
   m_FlipX: 0
   m_FlipY: 0
@@ -10391,15 +10407,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 56ef2ac3c349df046a87f936797c214f, type: 3}
---- !u!4 &1158965408842644838 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3758568880435698191, guid: 56ef2ac3c349df046a87f936797c214f,
-    type: 3}
-  m_PrefabInstance: {fileID: 2611074711604619113}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &860451276788237795 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3444278985537381002, guid: 56ef2ac3c349df046a87f936797c214f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2611074711604619113}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1158965408842644838 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3758568880435698191, guid: 56ef2ac3c349df046a87f936797c214f,
     type: 3}
   m_PrefabInstance: {fileID: 2611074711604619113}
   m_PrefabAsset: {fileID: 0}

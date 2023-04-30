@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 7398306520116262879}
   - component: {fileID: 4214050721747340073}
   - component: {fileID: 5451306500930050061}
+  - component: {fileID: 6229470733332810693}
   m_Layer: 18
   m_Name: SkeletBattleAnimationSprite
   m_TagString: Untagged
@@ -135,7 +136,7 @@ Animator:
   m_GameObject: {fileID: 4707009463004641532}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 62d9562c1ae83ea44805ae4f7e7a3ed1, type: 2}
+  m_Controller: {fileID: 9100000, guid: 3a59c1764bf44a34cb0b597ce6e2edd4, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -302,12 +303,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayableDirector: {fileID: 7398306520116262879}
+  attractorTransform: {fileID: 0}
+  expBar: {fileID: 0}
+  hitFeedbackController: {fileID: 0}
   walkIn: {fileID: 11400000, guid: 25493a10e073e124baa8721928b52082, type: 2}
   attack: {fileID: 11400000, guid: 7788adc3ab7d9f048978735506369f41, type: 2}
   idle: {fileID: 11400000, guid: 186f35c437d6ea04ea5849974d0105d6, type: 2}
   dodge: {fileID: 11400000, guid: 49b970d5317061e4ab10a431c365edd4, type: 2}
   damaged: {fileID: 11400000, guid: 06e8834ceaa83e14bb417e6b65f72b57, type: 2}
   death: {fileID: 11400000, guid: 342fff970e3bc22498d1014afd924198, type: 2}
+  hasPrepare: 0
+  prepareAttack: {fileID: 0}
 --- !u!114 &5451306500930050061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,6 +331,20 @@ MonoBehaviour:
   shadowDirection: {x: 60, y: 0, z: 30}
   shadowScale: {x: 1, y: 1, z: 1}
   shadowMat: {fileID: 0}
+--- !u!114 &6229470733332810693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4707009463004641532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a55341c55f2efd74c83fd11321747984, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteSet: {fileID: 0}
+  spriteRenderer: {fileID: 6336105809329641799}
 --- !u!1 &5207626076197324031
 GameObject:
   m_ObjectHideFlags: 0
@@ -420,7 +440,6 @@ GameObject:
   - component: {fileID: 5565116107653713506}
   - component: {fileID: 8834315866836090958}
   - component: {fileID: 6396728573585956521}
-  - component: {fileID: 8904799545063276712}
   m_Layer: 18
   m_Name: DustCloud
   m_TagString: Untagged
@@ -5288,18 +5307,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mirrorGO: {fileID: 153817705046855153}
   flipRotation: 0
---- !u!114 &8904799545063276712
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6399664310892835907}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe48e85d148c21a4083b27c3156acc30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6430277884580762204
 GameObject:
   m_ObjectHideFlags: 0
@@ -10497,7 +10504,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1932239018779597303, guid: 217cc166e0a7b9340967e0f248fbdc17, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 217cc166e0a7b9340967e0f248fbdc17, type: 3}
 --- !u!1 &5926949315503826306 stripped
 GameObject:

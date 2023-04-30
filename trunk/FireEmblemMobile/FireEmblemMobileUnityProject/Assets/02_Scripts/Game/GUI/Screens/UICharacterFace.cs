@@ -37,7 +37,7 @@ public class UICharacterFace : MonoBehaviour
         {
             feedbacks.PlayFeedbacks();
         }
-        Debug.Log("INIT HP");
+       
         hpBar.SetValue(unit.Hp, unit.MaxHp, false);
     }
 
@@ -47,7 +47,7 @@ public class UICharacterFace : MonoBehaviour
         {
             feedbacks.PlayFeedbacks();
         }
-        Debug.Log("UPDATE HP");
+        
         hpBar.SetValue(unit.Hp, unit.MaxHp, true);
     }
 

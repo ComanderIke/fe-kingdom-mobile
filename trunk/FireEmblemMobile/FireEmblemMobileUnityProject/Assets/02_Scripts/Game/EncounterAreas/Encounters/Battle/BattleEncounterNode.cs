@@ -8,7 +8,7 @@ using UnityEngine;
 public class BattleEncounterNode : EncounterNode
 {
     private Scenes levelindex;
-    private EnemyArmyData enemyArmyData;
+    public EnemyArmyData enemyArmyData;
     
     public BattleEncounterNode(Scenes levelIndex, EnemyArmyData enemyArmyData, List<EncounterNode> parents,int depth, int childIndex,string label, string description, Sprite sprite) : base(parents,depth, childIndex, label, description, sprite)
     {

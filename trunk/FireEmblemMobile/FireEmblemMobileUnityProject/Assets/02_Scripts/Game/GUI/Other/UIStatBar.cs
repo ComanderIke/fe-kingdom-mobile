@@ -16,16 +16,20 @@ namespace Game.GUI
         public int currentValue;
         public override void SetValue(int value, int maxValue, bool animated)
         {
+            if (maxValue == 0)
+                return;
+      
             this.currentValue = value;
+            
            // barController.SetFillAmount(currentValue*1.0f/maxValue);
             valueText.SetText(currentValue+"/"+maxValue);
             if (progressBar != null)
             {
                 if (animated)
-                    progressBar.UpdateBar01(currentValue * 1.0f / maxValue);
+                    progressBar.UpdateBar01((currentValue * 1.0f) / maxValue);
                 else
                 {
-                    progressBar.SetBar01(currentValue * 1.0f / maxValue);
+                    progressBar.SetBar01((currentValue * 1.0f )/ maxValue);
                 }
             }
         }

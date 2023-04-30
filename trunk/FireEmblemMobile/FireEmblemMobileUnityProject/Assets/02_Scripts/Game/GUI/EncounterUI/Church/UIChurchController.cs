@@ -198,14 +198,14 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
     }
     void UpdateSelectionColors()
     {
-        Debug.Log("Update Selection Colors");
+
         foreach (var shopItem in shopItems)
         {
             shopItem.Deselect();
-            Debug.Log("Deselect Item: "+shopItem.item.name);
+            
             if (shopItem.item.Equals(selectedItem))
             {
-                Debug.Log("Select Item: "+shopItem.item.name);
+              
                 shopItem.Select();
             }
         }

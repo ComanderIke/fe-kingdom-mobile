@@ -5,6 +5,7 @@ using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.OnGameObject;
 using Game.GameInput;
+using MoreMountains.Feedbacks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -35,6 +36,8 @@ namespace Game.GUI
         [SerializeField]
         private RectTransform attractor;
         public IClickedReceiver parentController;
+        [SerializeField] private MMF_Player lowHealthFeedback;
+        [SerializeField] private MMF_Player normalHealthFeedback;
 
        // [SerializeField]
       //  private IStatBar spBar;
@@ -45,6 +48,8 @@ namespace Game.GUI
         // [SerializeField] private TextMeshProUGUI expLabel = default;
         [FormerlySerializedAs("unitBp")] public Unit unit;
         private static readonly int Alive = Animator.StringToHash("Alive");
+        private static readonly int Active = Animator.StringToHash("Active");
+        [SerializeField]private float lowHealthThreshold=0.25f;
 
 
         private void Start()
@@ -60,11 +65,13 @@ namespace Game.GUI
             unit.ExperienceManager.ExpGained -= UpdateExp;
             unit.ExperienceManager.ExpGained += UpdateExp;
             UpdateValues();
+            Debug.Log(unit.Hp+" "+unit.MaxHp);
             gameObject.SetActive(true);
             GetComponent<RectTransform>().sizeDelta = selectedSize;
             expBar.GetComponent<RectTransform>().sizeDelta = selectedSizeBars;
             hpBar.GetComponent<RectTransform>().sizeDelta = selectedSizeBars;
             animator.SetBool(Alive, unit.IsAlive());
+            animator.SetBool(Active, true);
             //GameplayInput.SelectUnit(unit);
            
             
@@ -84,6 +91,7 @@ namespace Game.GUI
             hpBar.GetComponent<RectTransform>().sizeDelta = normalSizeBars;
             
             animator.SetBool(Alive, unit.IsAlive());
+            animator.SetBool(Active, false);
 
 
         }
@@ -142,10 +150,19 @@ namespace Game.GUI
             
             expBar.UpdateInstant(unit.ExperienceManager.Exp);
             hpBar.SetValue(unit.Hp, unit.MaxHp, true);
-            //  spBars.SetValue(unit.SpBars, unit.MaxSpBars);
-            // Debug.Log(faceSprite.sprite+" "+unit.visuals);
-            // Debug.Log("CSS: "+unit.visuals.CharacterSpriteSet);
-            // Debug.Log("FS: "+unit.visuals.CharacterSpriteSet.FaceSprite);
+           
+            if ((unit.Hp*1.0f) / unit.MaxHp <= lowHealthThreshold)
+            {
+                normalHealthFeedback.StopFeedbacks();
+                lowHealthFeedback.PlayFeedbacks();
+                
+            }
+            else
+            {
+                lowHealthFeedback.StopFeedbacks();
+                normalHealthFeedback.PlayFeedbacks();
+            }
+            
             if(unit.visuals.CharacterSpriteSet!=null)
                 faceSprite.sprite = unit.visuals.CharacterSpriteSet.FaceSprite;
             animator.SetBool(Alive, unit.IsAlive());

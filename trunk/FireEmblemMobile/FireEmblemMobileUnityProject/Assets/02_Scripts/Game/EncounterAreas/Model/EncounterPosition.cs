@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Game.WorldMapStuff.Model
 {
@@ -38,6 +39,7 @@ namespace Game.WorldMapStuff.Model
 
         public void AddMovedEncounter(EncounterNode node)
         {
+            Debug.Log("Add Moved Encounter: "+node.label+" "+node);
             movedEncounters.Add(node);
             MovedEncounterIds.Add(node.GetId());
         }

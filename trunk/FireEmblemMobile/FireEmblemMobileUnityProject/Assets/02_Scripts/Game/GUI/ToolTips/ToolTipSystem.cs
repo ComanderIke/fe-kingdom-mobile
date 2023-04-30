@@ -17,8 +17,8 @@ public class ToolTipSystem : MonoBehaviour
     [FormerlySerializedAs("SkillToolTip")] public SkillTreeToolTip skillTreeToolTip;
     public SkillToolTip skillToolTip;
     public AttributeToolTip AttributeToolTip;
-    public EncounterToolTip EncounterToolTip;
-    public EncounterToolTip EncounterAttackToolTip;
+    //public EncounterToolTip EncounterToolTip;
+    //public EncounterToolTip EncounterAttackToolTip;
     public BlessingToolTip blessingToolTip;
     public RelicToolTip relicToolTip;
     public void Awake()
@@ -29,10 +29,10 @@ public class ToolTipSystem : MonoBehaviour
     static void CloseAllToolTips()
     {
         instance.blessingToolTip.gameObject.SetActive(false);
-        instance.EncounterAttackToolTip.gameObject.SetActive(false);
+        //instance.EncounterAttackToolTip.gameObject.SetActive(false);
         instance.relicToolTip.gameObject.SetActive(false);
         instance.WeaponToolTip.gameObject.SetActive(false);
-        instance.EncounterToolTip.gameObject.SetActive(false);
+       // instance.EncounterToolTip.gameObject.SetActive(false);
        // instance.skillToolTip.gameObject.SetActive(false);
         instance.AttributeToolTip.gameObject.SetActive(false);
         instance.skillTreeToolTip.gameObject.SetActive(false);
@@ -52,24 +52,24 @@ public class ToolTipSystem : MonoBehaviour
     }
     static void CloseAllEncounterTooltips()
     {
-        instance.EncounterAttackToolTip.gameObject.SetActive(false);
-        instance.EncounterToolTip.gameObject.SetActive(false);
+        // instance.EncounterAttackToolTip.gameObject.SetActive(false);
+        // instance.EncounterToolTip.gameObject.SetActive(false);
     }
     public static void ShowEncounter(EncounterNode node, Vector3 worldPosition, bool moveable, Action<EncounterNode> moveClicked)
     {
-        CloseAllToolTips();
-        if (!(node is BattleEncounterNode))
-        {
-            instance.EncounterToolTip.Updatevalues(node, node.label, worldPosition, moveable, moveClicked);
-            instance.EncounterToolTip.gameObject.SetActive(true);
-            instance.EncounterAttackToolTip.gameObject.SetActive(false);
-        }
-        else
-        {
-            instance.EncounterAttackToolTip.Updatevalues(node, node.label, worldPosition, moveable, moveClicked);
-            instance.EncounterAttackToolTip.gameObject.SetActive(true);
-            instance.EncounterToolTip.gameObject.SetActive(false);
-        }
+        // CloseAllToolTips();
+        // if (!(node is BattleEncounterNode))
+        // {
+        //     instance.EncounterToolTip.Updatevalues(node, node.label, worldPosition, moveable, moveClicked);
+        //     instance.EncounterToolTip.gameObject.SetActive(true);
+        //     instance.EncounterAttackToolTip.gameObject.SetActive(false);
+        // }
+        // else
+        // {
+        //     instance.EncounterAttackToolTip.Updatevalues(node, node.label, worldPosition, moveable, moveClicked);
+        //     instance.EncounterAttackToolTip.gameObject.SetActive(true);
+        //     instance.EncounterToolTip.gameObject.SetActive(false);
+        // }
     }
     public static void Show(Relic relic, Vector3 position, string header, string description, Sprite icon)
     {

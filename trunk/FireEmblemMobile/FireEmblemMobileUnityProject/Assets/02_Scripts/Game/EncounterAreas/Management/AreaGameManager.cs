@@ -34,9 +34,12 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     public Transform spawnParent;
     private List<GameObject> moveOptions=new List<GameObject>();
     public float offsetBetweenCharacters = 0.25f;
+    private const float moveToNodeHoldTime = 1.8f;
     public int hour = 6;
     public TimeCircleUI circleUI;
     public DynamicAmbientLight lightController;
+    
+    private List<EncounterNodeClickController> nodeClickControllers;
     void Start()
     {
         Instance = this;
@@ -44,6 +47,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         cursor = FindObjectOfType<EncounterCursorController>();
         //Debug.Log("WHY IS START NOT CALLED?");
         actionSystem = new Area_ActionSystem();
+        nodeClickControllers = new List<EncounterNodeClickController>();
         if(PlayerPrefs.HasKey("CameraX")&&PlayerPrefs.HasKey("CameraY"))
         {
             EncounterAreaCameraController camera = FindObjectOfType<EncounterAreaCameraController>();
@@ -258,24 +262,27 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         }
     }
 
-    public GameObject activeUnitEffectPrefab;
+   // public GameObject activeUnitEffectPrefab;
     private GameObject activeUnitEffect;
     public void ShowActiveUnit(Vector3 position)
     {
-        if (activeUnitEffect == null)
-        {
-            activeUnitEffect = Instantiate(activeUnitEffectPrefab, spawnParent, false);
-            
-        }
-        activeUnitEffect.transform.position = position;
+        // if (activeUnitEffect == null)
+        // {
+        //     activeUnitEffect = Instantiate(activeUnitEffectPrefab, spawnParent, false);
+        //     
+        // }
+        // activeUnitEffect.transform.position = position;
     }
     public void ShowMoveOptions()
     {
         
         foreach (var child in Player.Instance.Party.EncounterComponent.EncounterNode.children)
         {
-            child.SetMoveable(true);
-
+            if(child!=Player.Instance.Party.EncounterComponent.EncounterNode)
+                child.SetMoveable(true);
+            
+//            Debug.Log("Move Option: "+child+" "+child.gameObject.transform.position);
+        
         }
         foreach (var road in Player.Instance.Party.EncounterComponent.EncounterNode.roads)
         {
@@ -286,10 +293,25 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     }
 
   
-    // Update is called once per frame
+    
     void Update()
     {
-        
+        if (Input.GetMouseButtonUp(0))
+        {
+           
+           
+            foreach (var clickController in nodeClickControllers)
+            {
+          
+                clickController.encounterNode.renderer.IncreaseScale(0);
+                clickController.encounterNode.renderer.AmplifyRotationSpeedMultiplier(0);
+            }
+        }
+
+        if (!Input.GetMouseButton(0)&&!Input.GetMouseButtonDown(0))
+        {
+            cursor.DecreaseFill();
+        }
     }
 
     private EncounterCursorController cursor;
@@ -313,11 +335,31 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
             road.end.Grow();
         }
     }
+
+    public enum NodeType
+    {
+        Battle,
+        Heal,
+        Random,
+        Standard,
+        Boss,
+        Elite
+    }
     public void NodeClicked(EncounterNode encounterNode)
     {
         Debug.Log("Node Clicked: "+encounterNode);
       
+        cursor.Show();
         cursor.SetPosition(encounterNode.gameObject.transform.position);
+        cursor.SetSprite(encounterNode.renderer.moveOptionSprite);
+        cursor.SetColor(encounterNode.renderer.typeColor);
+        cursor.SetScale(1.0f);
+        if (encounterNode is BattleEncounterNode battleEncounterNode)
+        {
+            if(battleEncounterNode.enemyArmyData.isBoss)
+                cursor.SetScale(2.0f);
+        }
+       
         if (encounterNode== Player.Instance.Party.EncounterComponent.EncounterNode)
         {
             MovementHint();
@@ -359,6 +401,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         SetAllEncountersNotMovable();
         StartCoroutine(MovementAnimation(node));
         circleUI.Rotate();
+        cursor.Hide();
         hour += 6;
         if (hour >= 24)
             hour = 0;
@@ -380,12 +423,28 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         }
         actionSystem.Move(target);
         ShowMovedRoads();
+        ShowInactiveNode();
         Debug.Log("Before DelayAction!");
         this.CallWithDelay(()=>target.Activate(Player.Instance.Party), 1.0f);
        
         
     }
 
+    void ShowInactiveNode()
+    {
+        if (Player.Instance.Party.EncounterComponent.MovedEncounters.Count < 2)
+            return;
+        var currentNode = Player.Instance.Party.EncounterComponent.EncounterNode;
+        
+        var lastNode =
+            Player.Instance.Party.EncounterComponent.MovedEncounters[
+                Player.Instance.Party.EncounterComponent.MovedEncounters.Count - 2];
+        foreach (var child in lastNode.children)
+        {
+            if(child!=currentNode&& !(child is StartEncounterNode))
+                child.renderer.SetInactive();
+        }
+    }
     EncounterNode GetEncounterNodeById(string id)
     {
         return EncounterTree.Instance.GetEncounterNodeById(id);
@@ -393,6 +452,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     private void ShowMovedRoads()
     {
     
+        Debug.Log("Moved Encounters: "+Player.Instance.Party.EncounterComponent.MovedEncounters.Count);
         for( int i= Player.Instance.Party.EncounterComponent.MovedEncounters.Count-2; i >=0; i--)
         {
             Road road = Player.Instance.Party.EncounterComponent.MovedEncounters[i].GetRoad(Player.Instance.Party.EncounterComponent.MovedEncounters[i + 1]);
@@ -406,6 +466,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
             }
 
         }
+        Debug.Log("Moved Encounters After: "+Player.Instance.Party.EncounterComponent.MovedEncounters.Count);
     }
 
     public void Continue()
@@ -427,8 +488,35 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         return default;
     }
 
-    public void StartChildCoroutine(IEnumerator coroutine)
+    public Coroutine StartChildCoroutine(IEnumerator coroutine)
     {
-        StartCoroutine(coroutine);
+        return StartCoroutine(coroutine);
+    }
+
+    public void StopChildCoroutine(Coroutine coroutine)
+    {
+        StopCoroutine(coroutine);
+    }
+
+
+    public void NodeHolding(EncounterNode encounterNode, float holdTime)
+    {
+        if (!encounterNode.moveable)
+            return;
+        
+        //cursor.SetScale(1.0f+holdTime);
+        cursor.SetFill(1-holdTime/moveToNodeHoldTime);
+    
+        encounterNode.renderer.IncreaseScale(holdTime/2.5f);
+        encounterNode.renderer.AmplifyRotationSpeedMultiplier(holdTime*200);
+        if (holdTime >= moveToNodeHoldTime)
+        {
+            MoveClicked(encounterNode);
+        }
+    }
+
+    public void SubscribeNodeClickController(EncounterNodeClickController encounterNodeClickController)
+    {
+        nodeClickControllers.Add(encounterNodeClickController);
     }
 }

@@ -1,10 +1,12 @@
 ﻿using System.Collections;
+using UnityEngine;
 
 namespace Game.Manager
 {
     public interface IServiceProvider
     {
         T GetSystem<T>();
-        void StartChildCoroutine(IEnumerator coroutine);
+        Coroutine StartChildCoroutine(IEnumerator coroutine);
+        void StopChildCoroutine(Coroutine coroutine);
     }
 }

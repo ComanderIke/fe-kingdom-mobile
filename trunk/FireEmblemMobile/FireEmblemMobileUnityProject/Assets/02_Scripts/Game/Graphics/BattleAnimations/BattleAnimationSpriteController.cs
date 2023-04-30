@@ -73,7 +73,8 @@ public class BattleAnimationSpriteController : MonoBehaviour
     
     public void Damaged(float playSpeed,DamagedState damagedState)
     {
-        hitFeedbackController.SetState(damagedState);
+        Debug.Log("TODO HIT FEEDBACK CONTROLLER");
+        //hitFeedbackController.SetState(damagedState);
         PlayAtSpeed(damaged, playSpeed);
     }
     public double GetCurrentAnimationDuration()

@@ -174,9 +174,14 @@ namespace Game.Manager
             return default;
         }
 
-        public void StartChildCoroutine(IEnumerator coroutine)
+        public Coroutine StartChildCoroutine(IEnumerator coroutine)
         {
-            StartCoroutine(coroutine);
+            return StartCoroutine(coroutine);
+        }
+
+        public void StopChildCoroutine(Coroutine coroutine)
+        {
+            throw new NotImplementedException();
         }
 
         private bool active = true;
