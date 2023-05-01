@@ -13,10 +13,7 @@ namespace LostGrace
         public void Init(CharacterSpriteSet spriteSet)
         {
             this.spriteSet = spriteSet;
-            Debug.Log("SpriteSet: "+spriteSet.name);
-            Debug.Log(""+gameObject.name+" "+spriteSet.name+" "+spriteRenderer.name+" ");
-            Debug.Log("Sprite Walk 0: "+
-                spriteSet.WalkSprites[0]+" ");
+      
         }
         
         public void OnWalkAnimation(int frame)

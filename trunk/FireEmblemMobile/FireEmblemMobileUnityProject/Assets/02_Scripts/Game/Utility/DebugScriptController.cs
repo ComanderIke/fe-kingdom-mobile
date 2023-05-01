@@ -13,6 +13,7 @@ public class DebugScriptController : MonoBehaviour
 
     void Start()
     {
+        DontDestroyOnLoad(this.gameObject);
         if (FindObjectsOfType<AudioListener>().Length >= 2)
         {
             if(audioListener!=null)

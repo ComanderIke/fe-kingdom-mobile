@@ -65,7 +65,6 @@ namespace Game.GUI
             unit.ExperienceManager.ExpGained -= UpdateExp;
             unit.ExperienceManager.ExpGained += UpdateExp;
             UpdateValues();
-            Debug.Log(unit.Hp+" "+unit.MaxHp);
             gameObject.SetActive(true);
             GetComponent<RectTransform>().sizeDelta = selectedSize;
             expBar.GetComponent<RectTransform>().sizeDelta = selectedSizeBars;

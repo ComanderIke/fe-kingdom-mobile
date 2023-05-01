@@ -32,7 +32,7 @@ namespace Game.GameActors.Units
             // CharacterSpriteSet.battleAnimatedSprite = other.CharacterSpriteSet.battleAnimatedSprite;
             // CharacterSpriteSet.FaceSprite = other.CharacterSpriteSet.FaceSprite;
             // CharacterSpriteSet.MapSprite = other.CharacterSpriteSet.MapSprite;
-            Debug.Log("Is it ok to copy spriteSet?");
+           
             CharacterSpriteSet = other.CharacterSpriteSet;
             CharacterClassUpgradeSpriteSet = other.CharacterClassUpgradeSpriteSet;
             UnitEffectVisual = other.UnitEffectVisual;

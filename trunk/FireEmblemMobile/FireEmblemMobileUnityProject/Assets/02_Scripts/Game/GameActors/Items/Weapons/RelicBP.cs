@@ -23,7 +23,7 @@ namespace Game.GameActors.Items.Weapons
 
         public override Item Create()
         {
-            Debug.Log("TODO Do random generation");
+            //Debug.Log("TODO Do random generation");
             var attributes = new Attributes();
             Array values = Enum.GetValues(typeof(RelicPassiveEffectType));
             RelicPassiveEffectType passiveEffect = RelicPassiveEffectType.None;

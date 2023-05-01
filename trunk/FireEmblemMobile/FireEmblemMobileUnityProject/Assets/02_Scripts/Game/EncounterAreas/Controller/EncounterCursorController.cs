@@ -44,7 +44,9 @@ public class EncounterCursorController : MonoBehaviour
         if (!visible)
             return;
         fillImage.fillAmount = fill;
-        uiFillBar.fillAmount = (1 - fill) / 2;
+        var specialFillAmount =0.5f-( (1 + (fill - 1)) / 2);
+     
+        uiFillBar.fillAmount = specialFillAmount;
     }
     public void SetScale(float scale)
     {
@@ -80,7 +82,7 @@ public class EncounterCursorController : MonoBehaviour
     public void Hide()
     { 
         
-        SetFill(0);
+        SetFill(1);
         visible = false;
         if(fadeTween!=null)
             LeanTween.cancel(fadeTween.uniqueId);

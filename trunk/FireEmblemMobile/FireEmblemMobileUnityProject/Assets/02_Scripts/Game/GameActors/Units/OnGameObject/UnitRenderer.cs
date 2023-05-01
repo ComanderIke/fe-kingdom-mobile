@@ -128,6 +128,24 @@ namespace Game.GameActors.Units.OnGameObject
         }
         private void OnEquippedWeapon()
         {
+            if (unit.equippedWeapon == null)
+            {
+                Debug.Log("EquippedWeapon null");
+                return;
+            }
+
+            if (weaponTypeIcon == null)
+            {
+                Debug.Log("WeaponTypeIcon is null");
+            }
+            if (unit.equippedWeapon.WeaponType == null)
+            {
+                Debug.Log("WeaponType is null" +unit.name+" "+unit.equippedWeapon.Name);
+            }
+            if (unit.equippedWeapon.WeaponType.Icon == null)
+            {
+                Debug.Log("Icon is null");
+            }
             weaponTypeIcon.sprite = unit.equippedWeapon.WeaponType.Icon;
             // EquippedItemBackground.color = ColorManager.Instance.GetFactionColor(unit.Faction.Id);
             // if (unit is Human human) {

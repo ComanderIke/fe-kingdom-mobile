@@ -40,10 +40,21 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     public DynamicAmbientLight lightController;
     
     private List<EncounterNodeClickController> nodeClickControllers;
-    void Start()
+    void Awake()
     {
         Instance = this;
+        if (SaveGameManager.currentSaveData == null)//Just for Testing when starting from encounterArea
+        {
+            Debug.Log("Save Data not existing creating New Game");
+            SaveGameManager.NewGame(0, "DebugEditorSave");
+        }
+
+
        
+    }
+
+    private void Start()
+    {
         cursor = FindObjectOfType<EncounterCursorController>();
         //Debug.Log("WHY IS START NOT CALLED?");
         actionSystem = new Area_ActionSystem();
@@ -54,7 +65,6 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
             camera.transform.position = new Vector3(PlayerPrefs.GetFloat("CameraX"), PlayerPrefs.GetFloat("CameraY"),
                 camera.transform.position.z);
         }
-
         if (Player.Instance.Party!=null)
         {
             Debug.Log("Use party saveData");
@@ -80,9 +90,9 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
 
        
         
-            //Debug.Log("Player Node Null");
+        //Debug.Log("Player Node Null");
            
-            AddSystems();
+        AddSystems();
       
         SpawnPartyMembers();
         uiCOntroller.Init(Player.Instance.Party);
@@ -96,6 +106,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
        
         ShowMoveOptions();
     }
+
     public void LoadEncounterAreaData(Party party, EncounterTree tree){
       
         party.EncounterComponent.EncounterNode = tree.GetEncounterNodeById(party.EncounterComponent.EncounterNodeId);
@@ -131,14 +142,14 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     }
     private bool LoadedSaveData()
     {
-        return SaveData.currentSaveData != null && SaveData.currentSaveData.playerData != null;
+        return SaveGameManager.currentSaveData != null && SaveGameManager.currentSaveData.playerData != null;
     }
 
     private GameObject partyGo;
     private List<EncounterPlayerUnitController> partyGameObjects;
     void SpawnPartyMembers()
     {
-        Debug.Log("Party Count: "+Player.Instance.Party.members.Count);
+       //Debug.Log("Party Count: "+Player.Instance.Party.members.Count);
         int cnt = 1;
         if (Player.Instance.Party.EncounterComponent.EncounterNode == null)
         {
@@ -414,6 +425,8 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         float distance = Vector3.Distance(targetPos, startPos);
         float time = 0;
         float speed = 3;
+        actionSystem.Move(target);
+        ShowMovedRoads();
         while ( partyGo.transform.position!=targetPos)
         {
             time += Time.deltaTime *speed/distance;
@@ -421,8 +434,8 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
             yield return null;
 
         }
-        actionSystem.Move(target);
-        ShowMovedRoads();
+       
+        
         ShowInactiveNode();
         Debug.Log("Before DelayAction!");
         this.CallWithDelay(()=>target.Activate(Player.Instance.Party), 1.0f);
@@ -451,8 +464,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     }
     private void ShowMovedRoads()
     {
-    
-        Debug.Log("Moved Encounters: "+Player.Instance.Party.EncounterComponent.MovedEncounters.Count);
+        
         for( int i= Player.Instance.Party.EncounterComponent.MovedEncounters.Count-2; i >=0; i--)
         {
             Road road = Player.Instance.Party.EncounterComponent.MovedEncounters[i].GetRoad(Player.Instance.Party.EncounterComponent.MovedEncounters[i + 1]);
@@ -466,7 +478,6 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
             }
 
         }
-        Debug.Log("Moved Encounters After: "+Player.Instance.Party.EncounterComponent.MovedEncounters.Count);
     }
 
     public void Continue()

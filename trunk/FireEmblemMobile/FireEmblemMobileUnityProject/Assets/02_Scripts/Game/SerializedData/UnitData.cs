@@ -40,7 +40,7 @@ namespace Game.GameActors.Players
 
         public virtual Unit Load()
         {
-            Debug.Log("TODO MAKE CLEAN AND CONSISTENT");
+           // Debug.Log("TODO MAKE CLEAN AND CONSISTENT");
             Unit unit = GameBPData.Instance.GetHumanFromBlueprint(unitBlueprintID);
             unit.name = name;
             unit.Stats = new Stats();//ScriptableObject.CreateInstance<Stats>();

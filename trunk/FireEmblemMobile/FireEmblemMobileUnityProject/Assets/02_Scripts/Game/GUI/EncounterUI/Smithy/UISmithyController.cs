@@ -49,7 +49,10 @@ public class UISmithyController : MonoBehaviour
         canvas.enabled = false;
         party.onActiveUnitChanged-= ActiveUnitChanged;
     }
-
+    private void OnDestroy()
+    {
+        party.onActiveUnitChanged -= ActiveUnitChanged;
+    }
     public void UpdateUI()
     {
         unitIdleAnimation.Show(party.ActiveUnit);

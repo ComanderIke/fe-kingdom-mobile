@@ -30,7 +30,10 @@ public class UIInnController : MonoBehaviour
     public List<UIShopItemController> shopItems;
     public UIQuestItemController questOption;
     private InnEncounterNode node;
-
+    private void OnDestroy()
+    {
+        party.onActiveUnitChanged -= ActiveUnitChanged;
+    }
     public void Show(InnEncounterNode node, Party party)
     {
         canvas.enabled = true;

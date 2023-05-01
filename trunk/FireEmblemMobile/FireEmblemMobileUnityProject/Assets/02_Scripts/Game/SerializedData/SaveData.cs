@@ -10,7 +10,7 @@ namespace Game.Systems
     {
         public int saveSlot;
         public string fileLabel;
-        public static SaveData currentSaveData;
+        //public static SaveData currentSaveData;
         public PlayerData playerData;
         public EncounterTreeData encounterTreeData;
         public CampaignData campaignData;
@@ -22,6 +22,7 @@ namespace Game.Systems
         }
         public SaveData(int saveSlot,string label, Player player, Campaign campaign, EncounterTree encounterTree):this(saveSlot, label)
         {
+            Debug.Log("Create Advanced Save Data");
             playerData = player.GetSaveData();
             campaignData = campaign.GetSaveData();
             encounterTreeData = encounterTree.GetSaveData();

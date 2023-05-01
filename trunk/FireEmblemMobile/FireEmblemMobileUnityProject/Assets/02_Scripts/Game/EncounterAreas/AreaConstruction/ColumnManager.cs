@@ -17,7 +17,7 @@ public struct FixedColumnNode
     public int columnIndex;
     public EncounterNodeData nodeData;
 }
-public class ColumnManager : MonoBehaviour
+public class ColumnManager : MonoBehaviour, IDataPersistance
 {
     [SerializeField]
     public EncounterSpawnData spawnData;
@@ -43,25 +43,32 @@ public class ColumnManager : MonoBehaviour
     
     // Start is called before the first frame update
 
-    
-  
+    private void OnDestroy()
+    {
+        SaveGameManager.UnregisterDataPersistanceObject(this);
+    }
+
+
     void Start()
     {
         //OnDisable();
+        SaveGameManager.RegisterDataPersistanceObject(this);
         EncounterTree.Instance.spawnData = spawnData;
         EncounterTree.Instance.columns.Clear();
         if (LoadedSaveData())
         {
             Debug.Log("Load EncounterTreeData");
-           
-            EncounterTree.Instance.LoadData(SaveData.currentSaveData.encounterTreeData);
+           Debug.Log(SaveGameManager.currentSaveData.encounterTreeData);
+            EncounterTree.Instance.LoadData(SaveGameManager.currentSaveData.encounterTreeData);
             
         }
         else
         {
+            Debug.Log(SaveGameManager.currentSaveData.encounterTreeData.columns.Count);
             Debug.Log("Create New EncounterTree!");
             EncounterTree.Instance.spawnData.InitNodeAppearanceChances();
             EncounterTree.Instance.Create(fixedEncounters, fixedColumns);
+            
 
         }
        
@@ -77,7 +84,7 @@ public class ColumnManager : MonoBehaviour
 
     private bool LoadedSaveData()
     {
-        return SaveData.currentSaveData != null && SaveData.currentSaveData.encounterTreeData != null;
+        return SaveGameManager.currentSaveData != null && SaveGameManager.currentSaveData.encounterTreeData != null&&SaveGameManager.currentSaveData.encounterTreeData.columns.Count!=0;
     }
 
     private void CreateMiddleNodesGameObject(List<Column> columns)
@@ -241,9 +248,15 @@ public class ColumnManager : MonoBehaviour
        // Debug.Log("Create Node: " + node + " Index: " + index);
         go.GetComponentInChildren<EncounterNodeClickController>().encounterNode = node;
     }
-    
 
-    
 
-   
+    public void LoadData(SaveData data)
+    {
+       // throw new NotImplementedException();
+    }
+
+    public void SaveData(ref SaveData data)
+    {
+        data.encounterTreeData = EncounterTree.Instance.GetSaveData();
+    }
 }

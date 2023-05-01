@@ -26,7 +26,13 @@ namespace LostGrace
         private static List<IDataPersistance> dataPersistanceObjects= new List<IDataPersistance>();
 
 
-
+        public static void UnregisterDataPersistanceObject(IDataPersistance obj)
+        {
+            if (dataPersistanceObjects.Contains(obj))
+            {
+                dataPersistanceObjects.Remove(obj);
+            }
+        }
 
         public static void RegisterDataPersistanceObject(IDataPersistance obj)
         {
@@ -39,6 +45,7 @@ namespace LostGrace
         public static void NewGame(int slot, string label)
         {
             currentSaveData = new SaveData(slot, label);
+            Debug.Log("New Game: "+slot+" "+label);
             Save(slot);
         }
         public static void Save()
@@ -54,6 +61,7 @@ namespace LostGrace
         {
             try
             {
+                Debug.Log("Try Save!");
                 foreach (IDataPersistance dataPersistance in dataPersistanceObjects)
                 {
                     dataPersistance.SaveData(ref currentSaveData);
@@ -65,11 +73,14 @@ namespace LostGrace
                 {
                     Directory.CreateDirectory(pathFolder);
                 }
-
+                Debug.Log("Try Save2!");
                 currentSaveData.saveSlot = slotNumber;
                 string path = Path.Combine(pathFolder, SaveFileName + slotNumber + ".fe");
                 string backupPath = path + backupExtension;
+                //Debug.Log(currentSaveData.encounterTreeData);
+               // Debug.Log();
                 var jsonData = JsonUtility.ToJson(currentSaveData, true);
+                Debug.Log("Save JsonFile: "+jsonData);
                 Debug.Log("Save Game: " + path);
                 if (WriteToFile(path, jsonData))
                 {
@@ -77,8 +88,10 @@ namespace LostGrace
                 }
 
                 Load(slotNumber);
+                Debug.Log("Until Here Save Successfull!");
                 if (currentSaveData != null)
                 {
+                    Debug.Log("Copy File!");
                     File.Copy(path, backupPath, true);
                 }
                 else
@@ -172,6 +185,7 @@ namespace LostGrace
                     }
 
                     currentSaveData = new SaveData(0, "tmp");
+                    Debug.Log("JsonFile: "+json);
                     JsonUtility.FromJsonOverwrite(json, currentSaveData);
                     Debug.Log("FileSlotNameBer: " + currentSaveData.fileLabel);
                     if (currentSaveData == null)
@@ -234,7 +248,6 @@ namespace LostGrace
 
         private void OnApplicationPause(bool pauseStatus)//Android no guarantue to call OnApplicationQuit
         {
-            Debug.Log("ApplicationPause"+pauseStatus);
             if (pauseStatus)
             {
                 if(currentSaveData!=null)

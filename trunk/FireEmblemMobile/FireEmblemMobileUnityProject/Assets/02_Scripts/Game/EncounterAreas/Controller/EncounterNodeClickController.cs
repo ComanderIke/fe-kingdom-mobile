@@ -24,11 +24,15 @@ public class EncounterNodeClickController : MonoBehaviour
 
     }
 
+  
+
     private void OnMouseDown()
     {
         dragTime = 0;
+        //Debug.Log("NodeOnMouseDown");
         if (!IsPointerOverUIObject())
         {
+           // Debug.Log("NoUI");
             ServiceProvider.Instance.StartChildCoroutine(DelayBy1Frame(()=>  areaGameManager.NodeClicked(encounterNode)));
           
         }

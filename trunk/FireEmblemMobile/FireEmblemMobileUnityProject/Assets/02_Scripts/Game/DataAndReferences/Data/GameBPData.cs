@@ -50,7 +50,7 @@ namespace Game.GameResources
         [SerializeField] private List<WeaponBP> swords = default;
         [SerializeField] private List<WeaponBP> magic = default;
         [SerializeField] private List<MetaUpgradeBP> metaUpgradeBps = default;
-        [FormerlySerializedAs("humans")] [SerializeField] private List<UnitBP> humanBlueprints = default;
+        [FormerlySerializedAs("humans")] [SerializeField] UnitBP []allUnits = default;
         [SerializeField] private List<Party> playerStartingParties = default;
         [SerializeField] public List<CampaignConfig> campaigns;
         [SerializeField] private ItemBP smithingStone;
@@ -106,6 +106,7 @@ namespace Game.GameResources
         #if UNITY_EDITOR
         private void OnValidate()
         {
+            allUnits = GetAllInstances<UnitBP>();
             allBlessings = GetAllInstances<BlessingBP>();
             tier0Blessings = Array.FindAll(allBlessings,a => a.tier == 0);
             tier1Blessings = Array.FindAll(allBlessings,a => a.tier == 1);
@@ -147,21 +148,28 @@ namespace Game.GameResources
         public Weapon GetWeapon(string name)
         {
             WeaponBP weaponBp = null;
-            weaponBp = swords.Find(a => ((Object)a).name == name);
-            if(weaponBp==null)
-                weaponBp = bows.Find(a => ((Object)a).name == name);
-            if(weaponBp==null)
-                weaponBp = magic.Find(a => ((Object)a).name == name);
-            if(weaponBp==null)
-                weaponBp = spears.Find(a => ((Object)a).name == name);
-            if (weaponBp == null)
-                return null;
+            Debug.Log("Get Weapon: "+name);
+            weaponBp = allWeapons.First(a => a.name == name);
+            if(weaponBp!=null)
+                Debug.Log("Found Weapon: "+weaponBp);
+            else
+            {
+                Debug.Log("Not Found!");
+            }
+            // if(weaponBp==null)
+            //     weaponBp = bows.Find(a => ((Object)a).name == name);
+            // if(weaponBp==null)
+            //     weaponBp = magic.Find(a => ((Object)a).name == name);
+            // if(weaponBp==null)
+            //     weaponBp = spears.Find(a => ((Object)a).name == name);
+            // if (weaponBp == null)
+            //     return null;
             return (Weapon)weaponBp.Create();
         }
         public Unit GetHumanFromBlueprint(string name)
         {
             Debug.Log("name: " + name);
-            return humanBlueprints.Find(a => a.bluePrintID == name).Create();
+            return allUnits.First(a => a.bluePrintID == name).Create();
         }
         public MetaUpgradeBP GetMetaUpgradeBlueprints(string name)
         {

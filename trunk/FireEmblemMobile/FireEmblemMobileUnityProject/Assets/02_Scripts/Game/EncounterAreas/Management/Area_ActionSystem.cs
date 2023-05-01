@@ -6,6 +6,7 @@ using Game.WorldMapStuff.Controller;
 using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.Serialization;
 using GameEngine;
+using LostGrace;
 using UnityEngine;
 
 namespace Game.WorldMapStuff.Systems
@@ -17,7 +18,7 @@ namespace Game.WorldMapStuff.Systems
            // Debug.Log("Move Party");
             var action = new MoveAction(location);
                 action.PerformAction();
-                action.Save(SaveData.currentSaveData);
+                action.Save(SaveGameManager.currentSaveData);
         }
     }
 }

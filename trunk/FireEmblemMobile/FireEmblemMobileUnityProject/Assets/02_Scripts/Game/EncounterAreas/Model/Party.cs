@@ -22,7 +22,7 @@ namespace Game.WorldMapStuff.Model
         [SerializeField] int maxSize = 4;
         [SerializeField] private int money = default;
         [SerializeField] private int collectedGrace = default;
-
+        private bool initialized = false;
 
         public int MaxSize
         {
@@ -119,8 +119,12 @@ namespace Game.WorldMapStuff.Model
             return members.Count(a => a.IsAlive()) != 0;
         }
 
+        
         public void Initialize()
         {
+            if (initialized)
+                return;
+            
             Debug.Log("Init Party");
             Convoy.Init();
             foreach (var member in members)
@@ -128,6 +132,7 @@ namespace Game.WorldMapStuff.Model
                 Debug.Log(member.name + " initialized");
                 member.Party = this;
             }
+            initialized = true;
         }
 
         public override string ToString()

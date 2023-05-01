@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Game.Systems;
 using GameEngine;
+using LostGrace;
 using UnityEngine;
 
 namespace Game.WorldMapStuff
@@ -28,7 +29,7 @@ namespace Game.WorldMapStuff
         public void Add(SerializedAction action)
         {
            
-            action.Save(SaveData.currentSaveData);
+            action.Save(SaveGameManager.currentSaveData);
         }
 
         public void Deactivate()

@@ -3,7 +3,7 @@
     public enum Scenes
     {
         MainMenu=0,
-        Battle1=1,
-        EncounterArea=2
+        EncounterArea=1,
+        Battle1=2,
     }
 }

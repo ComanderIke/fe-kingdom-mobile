@@ -7,6 +7,7 @@ using Game.GUI;
 using Game.Manager;
 using Game.Systems;
 using Game.WorldMapStuff.Model;
+using LostGrace;
 using Menu;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -51,6 +52,7 @@ namespace Game.WorldMapStuff.Controller
             //SceneTransferData.Instance.NodeData =new NodeData(node.UniqueId);
             
             //SceneController.UnLoadSceneAsync(Scenes.EncounterArea);
+            SaveGameManager.Save();
             SceneController.LoadSceneAsync(buildIndex, false);
         }
         public void LoadWorldMapFromInside()
@@ -63,21 +65,33 @@ namespace Game.WorldMapStuff.Controller
 
         public void LoadWorldMapBeforeBattle()
         {
+            SaveGameManager.Save();
+            SceneController.LoadSceneAsync(Scenes.EncounterArea, false);
+            
+           // SceneController.OnSceneCompletelyFinished += UnloadBattleScene;
+
             // SceneTransferData.Instance.Reset();
             //
             // SceneController.UnLoadSceneAsync(Scenes.Battle1);
             // SceneController.LoadSceneAsync(Scenes.Campaign1, true);
             // SceneController.LoadSceneAsync(Scenes.WM_Gameplay, true);
-     
+
         }
 
+        // void UnloadBattleScene()
+        // {
+        //     SceneController.OnSceneCompletelyFinished -= UnloadBattleScene;
+        //     SceneController.UnLoadSceneAsync(Scenes.Battle1);
+        // }
     
         public void LoadWorldMapAfterBattle(bool victory)
         {
             // SceneTransferData.Instance.BattleOutCome = victory?BattleOutcome.Victory:  BattleOutcome.Defeat;
             //
-             SceneController.UnLoadSceneAsync(Scenes.Battle1);
-             SceneController.LoadSceneAsync(Scenes.EncounterArea, true);
+            SaveGameManager.Save();
+             SceneController.LoadSceneAsync(Scenes.EncounterArea, false);
+             //SceneController.OnSceneCompletelyFinished += UnloadBattleScene;
+            
             // SceneController.LoadSceneAsync(Scenes.WM_Gameplay, true);
 
         }

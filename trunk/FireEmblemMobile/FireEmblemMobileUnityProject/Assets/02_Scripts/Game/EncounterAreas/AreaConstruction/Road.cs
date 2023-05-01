@@ -73,8 +73,18 @@ namespace __2___Scripts.Game.Areas
 
             if (transform.parent != null)
             {
+                var newRoad=GameObject.Instantiate(this.gameObject, transform);
                 Debug.Log(transform.parent.name);
-                line.material = moved;
+                var lineRenderer=newRoad.GetComponent<LineRenderer>();
+                lineRenderer.sortingOrder++;
+              
+                LeanTween.value(gameObject, lineRenderer.GetPosition(0), lineRenderer.GetPosition(1), 1.0f)
+                    .setEaseOutQuad().setOnUpdateVector3((value) =>
+                    {
+                        lineRenderer.SetPosition(1, new Vector3(value.x, value.y,value.z));
+                    });
+                newRoad.GetComponent<Road>().line.material = moved;
+                //line.material = moved;
             }
             else
             {

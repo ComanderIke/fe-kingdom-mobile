@@ -47,7 +47,11 @@ namespace Game.GameActors.Players
                 Party.Initialize();
             SaveGameManager.RegisterDataPersistanceObject(this);
         }
-    
+
+        private void OnDestroy()
+        {
+            SaveGameManager.UnregisterDataPersistanceObject(this);
+        }
 
         [field: SerializeField]
         public Party Party { get; set; }
@@ -97,9 +101,9 @@ namespace Game.GameActors.Players
 
         public void LoadData(SaveData data)
         {
-            Debug.Log("LoadPlayerData" + Party);
-            Debug.Log("Data" + data.playerData);
-            Debug.Log("Data" + data.playerData.partyData);
+          //  Debug.Log("LoadPlayerData" + Party);
+            //Debug.Log("Data" + data.playerData);
+            //Debug.Log("Data" + data.playerData.partyData);
             Name = data.playerData.Name;
             Party.Load(data.playerData.partyData);
             MetaUpgradeManager.Load(data.playerData.metaUpgradeManagerData);
@@ -107,7 +111,7 @@ namespace Game.GameActors.Players
 
         public void SaveData(ref SaveData data)
         {
-            Debug.Log("Save Player Data");
+          //  Debug.Log("Save Player Data");
             data.playerData = new PlayerData(this);
         }
     }

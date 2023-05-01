@@ -28,6 +28,8 @@ namespace Game.GameActors.Units.OnGameObject
         [FormerlySerializedAs("unitBp")] public Unit unit;
         private Vector3 lastPosition;
         private bool moving;
+        private int FrameCountMovingCheck= 10;
+        private int frameCount = 0;
         void Start()
         {
             // if(unit!=null)
@@ -35,12 +37,13 @@ namespace Game.GameActors.Units.OnGameObject
             lastPosition = transform.position;
         }
 
+        
         private void Update()
         {
             // Debug.Log(name+" "+Vector3.Distance(lastPosition,transform.position));
             if (Vector3.Distance(lastPosition,transform.position)>0.01f)
             {
-               
+                frameCount=0;
                 if (!moving)
                 {
                     //Debug.Log("Move!");
@@ -51,9 +54,13 @@ namespace Game.GameActors.Units.OnGameObject
             }
             else if(moving)
             {
-                moving = false;
-               // Debug.Log("Stop Move!");
-                animator.SetBool(Moving, moving);
+                frameCount++;
+                if (frameCount >= FrameCountMovingCheck)
+                {
+                    moving = false;
+                    // Debug.Log("Stop Move!");
+                    animator.SetBool(Moving, moving);
+                }
             }
             lastPosition = transform.position;
         }
@@ -115,7 +122,7 @@ namespace Game.GameActors.Units.OnGameObject
         public void SetUnit(Unit unit1)
         {
             this.unit = unit1;
-            Debug.Log("INIT SPRITE SWAPPER");
+        
             spriteSwapper.Init(unit.Visuals.CharacterSpriteSet);
             // if (unit1.visuals.CharacterSpriteSet.idleAnimation != null)
             //     return;

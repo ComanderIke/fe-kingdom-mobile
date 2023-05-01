@@ -39,8 +39,10 @@ namespace Game.WorldMapStuff.Model
 
         public void AddMovedEncounter(EncounterNode node)
         {
-            Debug.Log("Add Moved Encounter: "+node.label+" "+node);
+           
             movedEncounters.Add(node);
+            Debug.Log(node);
+            Debug.Log(node.GetId());
             MovedEncounterIds.Add(node.GetId());
         }
         public EncounterPosition()

@@ -46,6 +46,12 @@ public class UIEventController : MonoBehaviour
         UpdateUI();
     
     }
+
+    private void OnDestroy()
+    {
+        party.onActiveUnitChanged -= ActiveUnitChanged;
+    }
+
     public void NextClicked()
     {
         party.ActiveUnitIndex++;

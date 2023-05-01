@@ -32,7 +32,10 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
 
     public static event Action OnFinished;
  
-   
+    private void OnDestroy()
+    {
+        party.onActiveUnitChanged -= ActiveUnitChanged;
+    }
 
     public void Show(Merchant merchant, Party party)
     {

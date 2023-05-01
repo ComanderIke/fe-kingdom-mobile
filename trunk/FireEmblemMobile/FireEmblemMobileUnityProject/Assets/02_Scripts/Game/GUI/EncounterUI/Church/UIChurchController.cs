@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Game.GameActors.Players;
@@ -156,6 +157,12 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
         party.onActiveUnitChanged -= ActiveUnitChanged;
       
     }
+
+    private void OnDestroy()
+    {
+        party.onActiveUnitChanged -= ActiveUnitChanged;
+    }
+
     void ActiveUnitChanged()
     {
         blessing = null;
