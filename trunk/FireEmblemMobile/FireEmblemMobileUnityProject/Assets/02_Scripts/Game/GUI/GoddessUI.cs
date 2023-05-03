@@ -17,22 +17,7 @@ namespace LostGrace
         // {
         //     Show();
         // }
-
-        private bool show = true;
-        private void Update()
-        {
-            // if (Input.GetMouseButtonDown(0))
-            // {
-            //     show = !show;
-            //     if(show)
-            //         Show();
-            //     else
-            //     {
-            //         Hide();
-            //     }
-            // }
-           
-        }
+        
 
      
 

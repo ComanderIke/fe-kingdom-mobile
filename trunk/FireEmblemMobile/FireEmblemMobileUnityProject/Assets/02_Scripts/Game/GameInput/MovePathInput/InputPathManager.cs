@@ -71,7 +71,6 @@ namespace Game.GameInput
             }
             
             int max = 99;
-            int currentMax = 0;
             Tile nearestTile = null;// find nearest tile with suitable AttackPosition and findPath to it
             for (int i =0; i < tilesInAttackRange.Count; i++)//sort tile by distance to target
             {

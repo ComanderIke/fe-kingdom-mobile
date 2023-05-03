@@ -37,11 +37,7 @@ namespace Game.GameActors.Units
         {
             return owner.GetEquippedWeapon().GetEffectiveCoefficient(effect);
         }
-
-        public event Action<Unit> OnEndCombat;
-        public event Action<Unit> OnInitiateCombat;
-        public event Action<Unit> OnCombat;
-        public event Action<Unit> OnAttack;
+        
 
         public bool HasAdvantage(EffectType type)
         {

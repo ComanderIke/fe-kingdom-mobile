@@ -208,13 +208,12 @@ namespace Game.Mechanics.Battle
         {
        
          
-                //Debug.Log("TODO ATTACK SPEED CALC");
-               // Debug.Log(human.EquippedWeapon.Hit);
-                //Debug.Log(human.Stats.Attributes.DEX);
+            //Debug.Log("TODO ATTACK SPEED CALC");
+            // Debug.Log(human.EquippedWeapon.Hit);
+            //Debug.Log(human.Stats.Attributes.DEX);
+            
             return (owner.Stats.BaseAttributes.DEX- owner.GetEquippedWeapon().GetWeight()) * 2 + owner.GetEquippedWeapon().GetHit();
             
-
-            return owner.Stats.BaseAttributes.DEX * 2;
         }
         public int GetAvoid()
         {
@@ -280,13 +279,10 @@ namespace Game.Mechanics.Battle
            
                 if (damageType == DamageType.Magic)
                     return owner.Stats.BaseAttributes.INT;
-                else if (damageType == DamageType.Faith)
+                if (damageType == DamageType.Faith)
                     return owner.Stats.BaseAttributes.FAITH;
-                else
-                    return owner.Stats.BaseAttributes.STR;
-            
-
                 return owner.Stats.BaseAttributes.STR;
+                
         }
 
         public int GetCritAgainstTarget(IBattleActor defender)

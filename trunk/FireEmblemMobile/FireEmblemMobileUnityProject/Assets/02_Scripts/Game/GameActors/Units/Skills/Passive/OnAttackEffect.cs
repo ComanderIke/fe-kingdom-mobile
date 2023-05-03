@@ -28,12 +28,12 @@ namespace Game.GameActors.Units.Skills.Passive
         }
         public override void BindSkill(Unit unit)
         {
-            unit.BattleComponent.OnAttack += ReactToAttack;
+            // unit.BattleComponent.OnAttack += ReactToAttack;
       
         }
         public override void UnbindSkill(Unit unit)
         {
-            unit.BattleComponent.OnAttack -= ReactToAttack;
+            // unit.BattleComponent.OnAttack -= ReactToAttack;
            
         }
         private void ReactToAttack(Unit unit)

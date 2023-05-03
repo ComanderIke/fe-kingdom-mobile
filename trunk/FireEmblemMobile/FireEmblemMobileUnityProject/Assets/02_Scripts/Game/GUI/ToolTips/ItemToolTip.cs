@@ -167,7 +167,7 @@ public class ItemToolTip : MonoBehaviour
         {
             // useButton.interactable = 
             dropButton.gameObject.SetActive(true);
-            useButtonText.text = item is EquipableItemBP ? "Equip" : "Use";
+            useButtonText.text = item is EquipableItem ? "Equip" : "Use";
         }
 
         descriptionText.text = description;

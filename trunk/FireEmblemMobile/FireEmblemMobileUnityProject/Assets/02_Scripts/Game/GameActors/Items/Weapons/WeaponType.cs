@@ -11,10 +11,10 @@ namespace Game.GameActors.Items.Weapons
     [CreateAssetMenu(menuName = "GameData/Weapons/WeaponType", fileName = "weaponType1")]
     public class WeaponType: EffectType
     {
-        [SerializeField] private String name;
+        [SerializeField] private String weaponName;
         [SerializeField] private Sprite icon;
 
-        public string Name => name;
+        public string WeaponName => weaponName;
         [SerializeField] private List<EffectType> effectiveAgainst;
   
         [SerializeField] private List<float> effectiveAgainstCoefficients;

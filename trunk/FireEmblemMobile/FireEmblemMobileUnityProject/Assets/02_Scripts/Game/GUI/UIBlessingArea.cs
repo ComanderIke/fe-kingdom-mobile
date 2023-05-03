@@ -12,7 +12,7 @@ namespace LostGrace
     public class UIBlessingArea : MonoBehaviour
     {
         [SerializeField] private Image icon;
-        [SerializeField] private TextMeshProUGUI name;
+        [SerializeField] private TextMeshProUGUI nameText;
         [SerializeField] private TextMeshProUGUI Description;
         [SerializeField] private TextMeshProUGUI effect;
         [SerializeField] private TextMeshProUGUI Faith;
@@ -28,7 +28,7 @@ namespace LostGrace
         {
             gameObject.SetActive(true);
             Faith.SetText("" + unit.Stats.BaseAttributes.FAITH);
-            name.SetText(blessing.Name);
+            nameText.SetText(blessing.Name);
             Description.SetText(blessing.GetDurationDescription(unit.Stats.BaseAttributes.FAITH));
             effect.SetText(blessing.Skill.Description);
             AcceptButton.interactable = !alreadyAccepted;

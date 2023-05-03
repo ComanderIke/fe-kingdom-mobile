@@ -7,8 +7,7 @@ using Game.GUI;
 using UnityEngine;
 
 public class ParticleAttractor : MonoBehaviour {
-     
-    public static event Action onParticleArrived;
+    
     
     [SerializeField] private RectTransform _attractorTransform;
     [SerializeField] private bool CalculateVersion2 = false;

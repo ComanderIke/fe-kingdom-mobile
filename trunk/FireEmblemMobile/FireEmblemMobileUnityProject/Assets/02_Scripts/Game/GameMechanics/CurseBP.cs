@@ -8,14 +8,14 @@ namespace LostGrace
     public class CurseBP : ScriptableObject
     {
         [FormerlySerializedAs("skill")] public SkillBP skillBp;
-        public string name;
+        public string curseName;
         public string Description;
         public int tier=3;
         //faith / 2 minimum 3
 
         public Curse Create()
         {
-            return new Curse(skillBp.Create(), name, Description, tier);
+            return new Curse(skillBp.Create(), curseName, Description, tier);
         }
 
     }

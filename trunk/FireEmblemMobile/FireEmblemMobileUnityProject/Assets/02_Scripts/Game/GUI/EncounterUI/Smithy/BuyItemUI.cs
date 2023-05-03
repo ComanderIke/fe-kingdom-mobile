@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class BuyItemUI : MonoBehaviour
 {
     [SerializeField] Image Icon;
-    [SerializeField] TextMeshProUGUI name;
+    [SerializeField] TextMeshProUGUI nameText;
     [SerializeField] TextMeshProUGUI description;
     [SerializeField] TextMeshProUGUI hitCurrent;
     [SerializeField] TextMeshProUGUI dmgCurrent;
@@ -36,7 +36,7 @@ public class BuyItemUI : MonoBehaviour
         Icon.sprite = item.Sprite;
         cost.text = "" + item.cost;
         description.text = "" + item.Description;
-        name.text = "" + item.Name;
+        nameText.text = "" + item.Name;
         buttonText.text = "BUY";
         effectCurrent.text = "";
         weaponSection.gameObject.SetActive(false);

@@ -159,9 +159,6 @@ public class MemoryMiniGame : MonoBehaviour
                 return true;
             }
         }
-        
-
-        return true;
     }
 
     public void RevealField(MemoryButton memoryButton)

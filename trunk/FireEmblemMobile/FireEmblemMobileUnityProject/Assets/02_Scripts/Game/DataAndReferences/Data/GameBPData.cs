@@ -51,7 +51,6 @@ namespace Game.GameResources
         [SerializeField] private List<WeaponBP> magic = default;
         [SerializeField] private List<MetaUpgradeBP> metaUpgradeBps = default;
         [FormerlySerializedAs("humans")] [SerializeField] UnitBP []allUnits = default;
-        [SerializeField] private List<Party> playerStartingParties = default;
         [SerializeField] public List<CampaignConfig> campaigns;
         [SerializeField] private ItemBP smithingStone;
         [SerializeField] private ItemBP dragonScale;

@@ -29,7 +29,7 @@ namespace Game.GameActors.Units.Skills.Passive
             //if not check if unit was in the list if yes remove bonus stats.
             this.owner = unit;
             inRangeAllies = new List<Unit>();
-            Unit.OnAnyUnitsCombat += OnAnyUnitsCombat;
+            // Unit.OnAnyUnitsCombat += OnAnyUnitsCombat;
             //check all adjacent allies and populate list
             
             
@@ -40,7 +40,7 @@ namespace Game.GameActors.Units.Skills.Passive
         }
         public override void UnbindSkill(Unit unit)
         {
-            Unit.OnAnyUnitsCombat -= OnAnyUnitsCombat;
+            // Unit.OnAnyUnitsCombat -= OnAnyUnitsCombat;
            
             this.owner = null;
             inRangeAllies.Clear();

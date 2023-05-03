@@ -14,16 +14,6 @@ public class AttributeEncounterBuff : EncounterBasedBuff, ITemporaryEffect{
         this.value = value;
     }
 
-    public void DecreaseDuration()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public int GetDuration(int faith)
-    {
-        throw new System.NotImplementedException();
-    }
-
     public override void Apply(Unit unit)
     {
         unit.Stats.BonusAttributes.IncreaseAttribute(value, attributeType);

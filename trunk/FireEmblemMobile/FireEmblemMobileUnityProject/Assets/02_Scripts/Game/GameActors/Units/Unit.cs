@@ -54,29 +54,29 @@ namespace Game.GameActors.Units
         public delegate void LevelupEvent(Unit unit);
         public static LevelupEvent OnLevelUp;
         #endregion
-        public UnitBP unitBP;
+        [NonSerialized]public UnitBP unitBP;
         public string bluePrintID;
-        [FormerlySerializedAs("equippedWeaponBp")] [FormerlySerializedAs("EquippedWeapon")] public Weapon equippedWeapon;
-        [SerializeReference]
+        [NonSerialized]public Weapon equippedWeapon;
+        [NonSerialized]
         public Relic EquippedRelic1;
-        [SerializeReference]
+        [NonSerialized]
         public Relic EquippedRelic2;
         public string name;
         [HideInInspector] private int hp=-1;
-        [SerializeField]
+        [NonSerialized]
         private List<Blessing> blessings;
-        [SerializeField]
+        [NonSerialized]
         private List<Curse> curses;
 
         private int maxBlessings = 3;
         private int maxCurses = 3;
-        [SerializeField]
+        [NonSerialized]
         private Stats stats;
         [SerializeField]
         private Attributes growths;
         [SerializeField]
         private MoveType moveType;
-        [SerializeField]
+        [NonSerialized]
         public SkillManager SkillManager;
         private List<EncounterBasedBuff> encounterBuffs;
         public MoveType MoveType
@@ -85,7 +85,7 @@ namespace Game.GameActors.Units
             set => moveType = value;
         }
 
-        public Party Party { get; set; }
+        [field:NonSerialized]public Party Party { get; set; }
         [HideInInspector][SerializeField]
         public int MaxHp { get; set; }
         public Stats Stats
@@ -103,7 +103,7 @@ namespace Game.GameActors.Units
             set => growths = value;
         }
         public RpgClass rpgClass;
-        [SerializeField] public UnitVisual visuals;
+        [NonSerialized] public UnitVisual visuals;
 
         public UnitVisual Visuals
         {
@@ -177,7 +177,6 @@ namespace Game.GameActors.Units
 
 
         [SerializeField] private ExperienceManager experienceManager;
-        public static event Action<Unit> OnAnyUnitMoved;
 
 
         public ExperienceManager ExperienceManager
@@ -197,15 +196,16 @@ namespace Game.GameActors.Units
         
 
   
-        public TurnStateManager TurnStateManager { get; set; }
+        
+        [field:NonSerialized] public TurnStateManager TurnStateManager { get; set; }
 
-        public StatusEffectManager StatusEffectManager { get; set; }
-
-
-        public AIComponent AIComponent { get; private set; }
+        [field:NonSerialized]  public StatusEffectManager StatusEffectManager { get; set; }
 
 
-        public Faction Faction { get; set; }
+        [field:NonSerialized]  public AIComponent AIComponent { get; private set; }
+
+
+        [field:NonSerialized] public Faction Faction { get; set; }
         public List<int> AttackRanges => stats.AttackRanges;
         public int MovementRange => stats.Mov;
         public int Hp
@@ -528,12 +528,8 @@ namespace Game.GameActors.Units
                 }
             }
 
-        public event Action<Unit, Debuff> OnDebuff;
-        public event Action<int> BeforeHealingReceived;
-        public event Action<EncounterNode> OnNodeTravel;
-        public event Action OnLethalDamage;
+        
         public static event Action<Unit, int> OnExpGained;
-        public static event Action<Unit> OnAnyUnitsCombat;
 
         public void RemoveBlessing(Blessing blessing)
         {

@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Units;
+﻿using System;
+using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
 
 using UnityEngine;
@@ -14,7 +15,7 @@ public class SkillTreeEntry
     //public Skill[] skillRequirements;
     [SerializeField] private SkillBP skillBp;
     public SkillState SkillState = SkillState.NotLearnable;
-    public SkillTree tree;
+    [NonSerialized]public SkillTree tree;
 
     private Skill skill;
     public Skill Skill

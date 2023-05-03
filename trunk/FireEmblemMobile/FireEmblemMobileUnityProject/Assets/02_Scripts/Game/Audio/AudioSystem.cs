@@ -30,8 +30,7 @@ namespace Audio
                 Destroy(gameObject);
                 return;
             }
-
-            DontDestroyOnLoad(gameObject);
+            
 
            
         }

@@ -16,13 +16,13 @@ namespace Game.GameActors.Units.Skills.Passive
         }
         public override void BindSkill(Unit unit)
         {
-            unit.BattleComponent.OnEndCombat += ReactToEndCombat;
-            unit.BattleComponent.OnCombat += ReactToCombat;
+            // unit.BattleComponent.OnEndCombat += ReactToEndCombat;
+            // unit.BattleComponent.OnCombat += ReactToCombat;
         }
         public override void UnbindSkill(Unit unit)
         {
-            unit.BattleComponent.OnEndCombat -= ReactToEndCombat;
-            unit.BattleComponent.OnCombat -= ReactToCombat;
+            // unit.BattleComponent.OnEndCombat -= ReactToEndCombat;
+            // unit.BattleComponent.OnCombat -= ReactToCombat;
         }
         private void ReactToEndCombat(Unit unit)
         {

@@ -35,11 +35,11 @@ namespace LostGrace
         public override void BindSkill(Unit unit)
         {
             this.owner = unit;
-            unit.OnLethalDamage += ReactToBeforeDeath;
+           // unit.OnLethalDamage += ReactToBeforeDeath;
         }
         public override void UnbindSkill(Unit unit)
         {
-            unit.OnLethalDamage -= ReactToBeforeDeath;
+           // unit.OnLethalDamage -= ReactToBeforeDeath;
             this.owner = null;
         }
         private void ReactToBeforeDeath()

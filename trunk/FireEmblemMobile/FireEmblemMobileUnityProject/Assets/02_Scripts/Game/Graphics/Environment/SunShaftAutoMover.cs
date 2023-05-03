@@ -13,7 +13,7 @@ public class SunShaftAutoMover : MonoBehaviour
 
   
 
-    public Light2D light;
+    public new Light2D light;
     public GameObject leftGO;
     public GameObject rightGO;
     public Vector3 startPos;

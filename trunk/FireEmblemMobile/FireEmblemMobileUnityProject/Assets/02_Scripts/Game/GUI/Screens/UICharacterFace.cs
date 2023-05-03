@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class UICharacterFace : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI name;
+    [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private UIStatBar hpBar;
     [SerializeField] private Image faceImage;
     [SerializeField] private MMF_Player feedbacks;
@@ -22,7 +22,7 @@ public class UICharacterFace : MonoBehaviour
         unit.HpValueChanged += UpdateHpBar;
         InitHpBar();
         faceImage.sprite = unit.visuals.CharacterSpriteSet.FaceSprite;
-        name.SetText(unit.name);
+        nameText.SetText(unit.name);
     }
 
     private void OnDisable()

@@ -22,7 +22,7 @@ namespace Game.GUI
         [SerializeField] private MMF_Player hideFeedbacks;
         private int addedExp;
         private int tmpAddedExp;
-        private bool animation;
+        private bool animate;
         [SerializeField] private float tmpFillSecondsPerUnit= 0.1f;
         [SerializeField] private float fillSecondsPerUnit= 0.5f;
 
@@ -43,7 +43,7 @@ namespace Game.GUI
             if (addedExp <=0)
             {
                 Debug.Log("AllParticlesArrived!");
-                animation = false;
+                animate = false;
                 onFinished?.Invoke();
 
             }
@@ -52,7 +52,7 @@ namespace Game.GUI
         public void UpdateWithAnimatedParticles(int addedExp)
         {
             Debug.Log("CurrentExp: "+currentExp+" Gained: "+addedExp);
-            animation = true;
+            animate = true;
             this.addedExp +=  addedExp;
             //countingText?.SetTextCounting(currentExp, currentExp+this.addedExp);
         }
@@ -108,7 +108,7 @@ namespace Game.GUI
         public void UpdateInstant(int expVal)
         {
            // Debug.Log("UpdateInstant: "+expVal);
-            if (animation)
+            if (animate)
             {
                 return;
             }

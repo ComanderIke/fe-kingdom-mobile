@@ -25,8 +25,6 @@ namespace Game.GameInput
         AnimatedCombatCharacter BattleGO { get; set; }
         UnitVisual Visuals { get; }
         Weapon GetEquippedWeapon();
-        bool IsAlive();
-        void Die();
         Tile GetTile();
 
         bool IsPlayerControlled();

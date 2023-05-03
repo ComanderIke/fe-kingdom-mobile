@@ -14,7 +14,7 @@ public class MetaUpgradeDetailPanelController : MonoBehaviour
 
     public TextMeshProUGUI description;
     public TextMeshProUGUI cost;
-    public TextMeshProUGUI name;
+    public TextMeshProUGUI nameText;
     public TextMeshProUGUI level;
     public GameObject currentTextGo;
     public GameObject upgradeTextGo;
@@ -51,7 +51,7 @@ public class MetaUpgradeDetailPanelController : MonoBehaviour
     {
         if (metaUpgrade == null|| metaUpgrade.blueprint==null)
             return;
-        name.text = metaUpgrade.blueprint.name;
+        nameText.text = metaUpgrade.blueprint.name;
         description.text = metaUpgrade.blueprint.Description;
         cost.text = "" + metaUpgrade.blueprint.costToLevel[0];
         level.text = "" + metaUpgrade.level + "/" + metaUpgrade.blueprint.maxLevel;
@@ -60,7 +60,7 @@ public class MetaUpgradeDetailPanelController : MonoBehaviour
         cost.transform.gameObject.SetActive(true);
      
         description.transform.gameObject.SetActive(true);
-        name.transform.gameObject.SetActive(true);
+        nameText.transform.gameObject.SetActive(true);
         learnButton.gameObject.SetActive(true);
         learnButton.interactable = true;
         learnButtonText.text = "Learn";
@@ -77,7 +77,7 @@ public class MetaUpgradeDetailPanelController : MonoBehaviour
             level.transform.gameObject.SetActive(false);
             cost.transform.gameObject.SetActive(false);
             description.transform.gameObject.SetActive(false);
-            name.transform.gameObject.SetActive(false);
+            nameText.transform.gameObject.SetActive(false);
             costTextGo.gameObject.SetActive(false);
         }
         else if (metaUpgrade.IsMaxed())

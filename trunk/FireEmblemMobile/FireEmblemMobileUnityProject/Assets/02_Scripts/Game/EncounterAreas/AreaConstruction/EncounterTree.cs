@@ -192,7 +192,6 @@ public class EncounterTree
         {
             Column column = new Column();
             Column previous = columns.Last();
-            EncounterNode parent = null;
             column.index = i;
             Debug.Log("Create Column!"+i+" Column NodeData Count: "+encounterTreeData.columns[i].nodeDatas.Count);
             //Debug.Log(columns.Last().children.Count);

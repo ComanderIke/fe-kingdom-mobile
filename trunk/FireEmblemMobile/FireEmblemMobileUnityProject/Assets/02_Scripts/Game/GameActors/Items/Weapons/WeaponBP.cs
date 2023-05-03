@@ -15,7 +15,8 @@ namespace Game.GameActors.Items.Weapons
         [Range(1, 4)] public int[] AttackRanges;
 
 
-        [Header("WeaponAttributes")] public WeaponAttributes[] WeaponAttributes;
+        [Header("WeaponAttributes")] 
+        public WeaponAttributes[] WeaponAttributes;
         public int weaponLevel = 1;
         public int maxLevel = 3;
         

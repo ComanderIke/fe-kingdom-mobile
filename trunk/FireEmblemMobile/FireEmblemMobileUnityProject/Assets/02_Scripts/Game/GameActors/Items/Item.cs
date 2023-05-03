@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace Game.GameActors.Items
 {
-    [Serializable]
     public class Item : ICloneable, ITargetableObject
     {
         public string Name;

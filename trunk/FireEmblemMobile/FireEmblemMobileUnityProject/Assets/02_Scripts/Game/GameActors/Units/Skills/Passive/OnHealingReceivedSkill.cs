@@ -47,12 +47,12 @@ namespace LostGrace
         public override void BindSkill(Unit unit)
         {
             this.owner = unit;
-            unit.BeforeHealingReceived += ReactToBeforeHealReceived;
+            //unit.BeforeHealingReceived += ReactToBeforeHealReceived;
         }
         public override void UnbindSkill(Unit unit)
         {
             owner.HealingMultiplier = 1;
-            unit.BeforeHealingReceived -= ReactToBeforeHealReceived;
+            //unit.BeforeHealingReceived -= ReactToBeforeHealReceived;
             this.owner = null;
         }
         private void ReactToBeforeHealReceived(int healingReceived)

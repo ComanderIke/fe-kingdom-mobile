@@ -13,7 +13,7 @@ public class BattleUIHPBar : MonoBehaviour
 
     private int maxHP;
 
-    private float elapsedTime = 0;
+   
 
     private const float UpdateSpeedSeconds = 0.2f;
     private const float UpdateSpeedLosingBarSeconds = 0.9f;
@@ -22,7 +22,7 @@ public class BattleUIHPBar : MonoBehaviour
     {
         this.currentHp = currentHp;
         this.maxHP = maxHp;
-        elapsedTime = 0;
+
         StartCoroutine(AnimateBar(0f,currentHp / (maxHp*1.0f)));
         StartCoroutine(AnimateBar2(0.35f, currentHp / (maxHp*1.0f)));
     }

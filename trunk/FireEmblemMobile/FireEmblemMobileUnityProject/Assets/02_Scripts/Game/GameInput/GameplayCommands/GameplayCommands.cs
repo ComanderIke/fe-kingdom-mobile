@@ -29,9 +29,7 @@ namespace Game.GameInput
         public static event AttackUnitEvent OnAttackUnit;
         public delegate void CheckAttackPreviewEvent(IBattleActor u, IAttackableTarget attackTarget, GridPosition attackPosition);
         public static event CheckAttackPreviewEvent OnCheckAttackPreview;
-        
-        public static event Event OnDeselectSkill;
-        public static event Event OnDeselectItem;
+
         public static event Action<Skill> OnSelectSkill;
         public static event Action<Item> OnSelectItem;
 
@@ -74,10 +72,20 @@ namespace Game.GameInput
             Debug.Log("SelectItem");
             OnSelectItem(item);
         }
+        public void DeselectItem()
+        {
+            Debug.Log("DeSelectItem");
+            OnDeselectItem();
+        }
         public void SelectSkill(Skill s)
         {
             Debug.Log("SelectSkill");
             OnSelectSkill(s);
+        }
+        public void DeselectSkill()
+        {
+            Debug.Log("DeSelectSkill");
+            OnDeselectSkill();
         }
         public void UseItem(ItemBP i)
         {
@@ -99,6 +107,8 @@ namespace Game.GameInput
             OnUndoUnit?.Invoke();
         }
 
-      
+
+        public static event Action OnDeselectItem;
+        public static event Action OnDeselectSkill;
     }
 }

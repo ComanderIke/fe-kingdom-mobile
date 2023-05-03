@@ -30,7 +30,7 @@ namespace LostGrace
         {
             if (dataPersistanceObjects.Contains(obj))
             {
-                Debug.LogError("Unregister Persitance Object: "+obj.ToString());
+                Debug.Log("Unregister Persitance Object: "+obj.ToString());
                 dataPersistanceObjects.Remove(obj);
             }
         }
@@ -39,7 +39,7 @@ namespace LostGrace
         {
             if (!dataPersistanceObjects.Contains(obj))
             {
-                Debug.LogError("Register Persitance Object: "+obj.ToString());
+                Debug.Log("Register Persitance Object: "+obj.ToString());
                 dataPersistanceObjects.Add(obj);
             }
         }
@@ -204,7 +204,7 @@ namespace LostGrace
 
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Debug.LogWarning("Failed to load data file. Attempting to roll back");
                 if (allowRollback)

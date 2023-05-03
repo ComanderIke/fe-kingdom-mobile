@@ -17,12 +17,12 @@ namespace Game.GameActors.Units.Skills.Passive
         }
         public override void BindSkill(Unit unit)
         {
-            unit.OnDebuff += ReactToDebuff;
+            // unit.OnDebuff += ReactToDebuff;
       
         }
         public override void UnbindSkill(Unit unit)
         {
-            unit.OnDebuff -= ReactToDebuff;
+            // unit.OnDebuff -= ReactToDebuff;
            
         }
         public override List<EffectDescription> GetEffectDescription()

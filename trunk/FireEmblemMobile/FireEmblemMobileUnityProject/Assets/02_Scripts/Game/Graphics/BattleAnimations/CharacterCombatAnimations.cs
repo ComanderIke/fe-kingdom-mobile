@@ -15,7 +15,7 @@ public class CharacterCombatAnimations : MonoBehaviour
     private bool leftCharacterDied;
     private bool rightCharacterDied;
 
-    private float attackDuration = 0.0f;
+
     private bool leftCharacterAttacker;
 
     public void Reset()

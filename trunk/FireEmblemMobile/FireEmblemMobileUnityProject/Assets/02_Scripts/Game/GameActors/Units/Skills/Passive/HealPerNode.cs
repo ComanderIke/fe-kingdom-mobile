@@ -33,12 +33,12 @@ namespace LostGrace
         public override void BindSkill(Unit unit)
         {
             this.owner = unit;
-            unit.OnNodeTravel += ReactToNodeTravel;
+            //unit.OnNodeTravel += ReactToNodeTravel;
         }
         public override void UnbindSkill(Unit unit)
         {
             owner = null;
-            unit.OnNodeTravel -= ReactToNodeTravel;
+            //unit.OnNodeTravel -= ReactToNodeTravel;
 
         }
 

@@ -31,7 +31,7 @@ namespace LostGrace
 
         public AttackBonusSkill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier,string[] upgradeDescr, int attackBonus) : base(Name, description, icon, animationObject, cooldown, tier,upgradeDescr)
         {
-            this.attackBonus = this.attackBonus;
+            this.attackBonus = attackBonus;
         }
     }
 }

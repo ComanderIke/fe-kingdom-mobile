@@ -35,7 +35,6 @@ namespace Menu
         public static event Action OnSceneReady;
         public static event Action OnSceneCompletelyFinished;
         public static event Action OnBeforeSceneReady;
-        public static event Action FinishedUnloading;
 
         private List<SceneLoadData> scenesToLoad = new List<SceneLoadData>();
 

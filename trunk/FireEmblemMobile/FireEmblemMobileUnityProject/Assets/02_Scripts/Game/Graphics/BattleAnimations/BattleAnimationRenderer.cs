@@ -17,7 +17,6 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     public Volume volume;
     public event Action OnFinished;
     
-    private bool playing;
 
     public void Show(BattleSimulation battleSimulation, IBattleActor attackingActor, IAttackableTarget defendingActor)
     {
@@ -30,7 +29,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         animationStateManager.Start();
         animationStateManager.OnFinished -= Finished;
         animationStateManager.OnFinished += Finished;
-        playing = true;
+        
         LeanTween.value(volume.weight, 1, 1.2f).setEaseOutQuad().setOnUpdate((value) => { volume.weight = value; });
         
     }

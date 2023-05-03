@@ -10,8 +10,8 @@ namespace Game.WorldMapStuff.Model
     [Serializable]
     public class Convoy
     {
-        [SerializeField] private List<ItemBP> startItems;
-        [SerializeField] private List<StockedItem> items;
+        [NonSerialized] private List<StockedItem> items;
+        [SerializeField]private List<string> itemIds;
         [SerializeField] public event Action convoyUpdated;
 
         public List<StockedItem> Items
@@ -24,20 +24,7 @@ namespace Game.WorldMapStuff.Model
             }
         }
 
-        private bool init = false;
-        public void Init()
-        {
-            if (init)
-                return;
-            init = true;
-            if (startItems != null)
-            {
-                foreach (var itemBp in startItems)
-                {
-                    AddItem(itemBp.Create());
-                }
-            }
-        }
+       
 
         public override string ToString()
         {

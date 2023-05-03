@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Game.GameActors.Items.Weapons
 {
-    [Serializable]
+    
     public class Weapon : EquipableItem
     {
         [Range(1, 4)] public int[] AttackRanges;

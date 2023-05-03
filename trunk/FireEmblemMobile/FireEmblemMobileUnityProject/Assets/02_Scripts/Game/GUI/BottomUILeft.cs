@@ -47,7 +47,7 @@ namespace LostGrace
             nameText.text = unit.Name + ", " + unit.rpgClass;
             lvl.text = "" + unit.ExperienceManager.Level;
             exp.text = unit.ExperienceManager.Exp + "/" + ExperienceManager.MAX_EXP;
-            weaponType.text = unit.equippedWeapon.WeaponType.Name;
+            weaponType.text = unit.equippedWeapon.WeaponType.WeaponName;
             weaponTypeIcon.sprite = unit.equippedWeapon.WeaponType.Icon;
             move.text = "Mov " + unit.MovementRange;
             moveIcon.sprite = unit.MoveType.icon;

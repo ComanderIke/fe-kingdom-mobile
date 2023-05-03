@@ -27,7 +27,6 @@ namespace Game.Mechanics
         public ILevelUpRenderer levelUpRenderer;//injected
         private List<Unit> units;
         private List<Faction> factions;
-        public event Action onFinished;
         public IExpRenderer expRenderer;
         public ExpBarController ExpBarController;
         private bool finished = false;

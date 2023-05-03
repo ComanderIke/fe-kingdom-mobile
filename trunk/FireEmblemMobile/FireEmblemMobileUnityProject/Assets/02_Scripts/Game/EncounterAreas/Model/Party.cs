@@ -16,7 +16,7 @@ namespace Game.WorldMapStuff.Model
 
         public event Action<int> onGoldChanged;
         public event Action<int> onGraceChanged;
-        [SerializeField] public List<Unit> members;
+        [field:NonSerialized] public List<Unit> members;
 
         public static Action<Party> PartyDied;
         [SerializeField] int maxSize = 4;
@@ -126,7 +126,6 @@ namespace Game.WorldMapStuff.Model
                 return;
             
             Debug.Log("Init Party");
-            Convoy.Init();
             foreach (var member in members)
             {
                 Debug.Log(member.name + " initialized");

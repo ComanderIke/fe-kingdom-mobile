@@ -21,16 +21,10 @@ namespace LostGrace
         [SerializeField] private UIMenu characterSelectMenu;
         [SerializeField] private UIMenu upgradeMenu;
         [Header("SaveLoadStuff: ")]
-        public GameObject ContinueButton;
-        [SerializeField] private TMP_InputField saveNameField = default;
-        [SerializeField] private GameObject saveDialog = default;
-        [SerializeField] private GameObject loadDialog = default;
-        [SerializeField] private GameObject loadArea = default;
-        [SerializeField] private GameObject loadFilePrefab = default;
+
         private string[] saveFiles;
         private string lastestSaveFile;
-        public GameObject LoadButton;
-        public GameObject SaveButton;
+   
        [Header("Canvas Groups: ")]
         [SerializeField] private CanvasGroup titleCanvasGroup;
         [SerializeField] private CanvasGroup newGameButtonCanvasGroup;

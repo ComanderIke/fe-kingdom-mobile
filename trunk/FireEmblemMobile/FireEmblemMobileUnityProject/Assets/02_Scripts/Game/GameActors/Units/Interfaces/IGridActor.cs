@@ -11,12 +11,10 @@ namespace Game.GameActors.Units
         GridActorComponent GetActorGridComponent();
         List<int> AttackRanges { get; }
         int MovementRange { get; }
-        Faction Faction { get; }
         MoveType MoveType { get; set; }
         GameTransformManager GameTransformManager { get; set; }
         TurnStateManager TurnStateManager { get; set; }
-        bool IsEnemy(IGridActor unit);
-        
+
 
         bool IsAlive();
     }

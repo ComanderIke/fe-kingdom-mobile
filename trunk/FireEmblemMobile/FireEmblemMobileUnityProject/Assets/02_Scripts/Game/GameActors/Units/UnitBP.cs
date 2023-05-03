@@ -68,13 +68,10 @@ namespace Game.GameActors.Units
                 Debug.LogWarning("No moveType on Blueprint: "+name);
             if(visuals.UnitEffectVisual==null)
                 Debug.LogWarning("No UnitEffectVisual on Blueprint: "+name);
-            if(visuals.Prefabs.EncounterAnimatedSprite==null)
-                Debug.LogWarning("No EncounterAnimatedSprite on Blueprint: "+name);
+
             if(visuals.Prefabs.UIAnimatorController==null)
                 Debug.LogWarning("No UIAnimatorController on Blueprint: "+name);
-            if(visuals.Prefabs.MapAnimatedSprite==null)
-                Debug.LogWarning("No MapAnimatedSprite on Blueprint: "+name);
-            
+
         }
 
         public Unit Create()

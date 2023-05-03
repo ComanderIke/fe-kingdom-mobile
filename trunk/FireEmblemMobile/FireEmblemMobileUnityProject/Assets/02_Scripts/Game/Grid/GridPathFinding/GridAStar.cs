@@ -92,7 +92,6 @@ namespace Game.Grid.GridPathFinding
             Nodes[tx, ty].Parent = null;
             int maxDepth = 0;
             int maxSearchDistance = 100;
-            bool finished = false;
             while ((maxDepth < maxSearchDistance) && (open.Count != 0))
             {
                 var current = GetFirstInOpen();

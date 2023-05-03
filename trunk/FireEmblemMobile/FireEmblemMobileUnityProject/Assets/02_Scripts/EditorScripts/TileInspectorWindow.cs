@@ -13,7 +13,6 @@ namespace __2___Scripts.External.Editor
     {
         private GridSystem gridSystem;
         private Tile selectedTile;
-        private int selectedTileIndex = 0;
 
         public TileInspectorWindow()
         {

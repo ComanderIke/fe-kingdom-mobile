@@ -18,7 +18,7 @@ namespace LostGrace
         private Unit user;
 
         public TextMeshProUGUI description;
-        public TextMeshProUGUI name;
+        public TextMeshProUGUI nameText;
         public TextMeshProUGUI level;
         public TextMeshProUGUI currentText;
         public TextMeshProUGUI upgText;
@@ -60,7 +60,7 @@ namespace LostGrace
         }
         if(!gameObject.activeSelf)
             gameObject.SetActive(true);
-        name.text = SkillEntry.Skill.Name;
+        nameText.text = SkillEntry.Skill.Name;
         description.text =  SkillEntry.Skill.Description;
       
         level.text = "" +  SkillEntry.Skill.Level;
@@ -68,14 +68,13 @@ namespace LostGrace
         level.transform.gameObject.SetActive(true);
    
         description.transform.gameObject.SetActive(true);
-        name.transform.gameObject.SetActive(true);
+        nameText.transform.gameObject.SetActive(true);
         learnButton.gameObject.SetActive(true);
         learnButton.interactable = true;
         learnButtonText.text = "Learn";
         currentTextGo.gameObject.SetActive(false);
         upgradeTextGo.gameObject.SetActive(false);
         levelTextGo.gameObject.SetActive(false);
-        user.SkillManager.UpdateSkillState(SkillEntry);
         currentText.SetText(SkillEntry.Skill.CurrentUpgradeText());
         upgText.SetText(SkillEntry.Skill.NextUpgradeText());
    
@@ -106,7 +105,7 @@ namespace LostGrace
                 learnButton.gameObject.SetActive(false);
                 level.transform.gameObject.SetActive(false);
                 description.transform.gameObject.SetActive(false);
-                name.transform.gameObject.SetActive(false);
+                nameText.transform.gameObject.SetActive(false);
                
                 break;
         }

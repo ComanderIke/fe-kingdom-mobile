@@ -32,12 +32,10 @@ namespace Game.Mechanics
         private IBattleActor defender;
         private IAttackableTarget attackableTarget;
         private int attackCount;
-        private bool battleStarted;
         private BattleSimulation battleSimulation;
-        private int attackerAttackCount;
+  
         private int defenderAttackCount;
-        private int currentAttackIndex;
-        public bool IsFinished;
+    
         public IBattleAnimation BattleAnimation { get; set; }
  
 
@@ -48,10 +46,7 @@ namespace Game.Mechanics
             this.attackableTarget = attackableTarget;
             battleSimulation = new BattleSimulation(attacker,attackableTarget);
             battleSimulation.StartBattle(false, true);
-            battleStarted = true;
-            IsFinished = false;
-            currentAttackIndex = 0;
-            attackerAttackCount = 1;
+      
             //defenderAttackCount = defender.BattleComponent.BattleStats.GetAttackCountAgainst(attacker);
             //BattleRenderer.Show(attacker, defender, GetAttackSequence());
             

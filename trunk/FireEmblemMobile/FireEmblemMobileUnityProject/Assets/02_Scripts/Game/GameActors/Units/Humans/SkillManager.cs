@@ -53,9 +53,9 @@ namespace Game.GameActors.Units.Humans
             get { return skills.FindAll(s => !(s is PassiveSkill)); }
         }
 
-        [SerializeField]
+       // [SerializeField]
      // [HideInInspector]
-        public SkillTree[] SkillBuildTrees;
+      //  public SkillTree[] SkillBuildTrees;
 
          
 
@@ -97,18 +97,7 @@ namespace Game.GameActors.Units.Humans
                     Skills.Add((clickedSkill.Skill));
                     
                     clickedSkill.Skill.Level++;
-                    foreach (var skilltree in SkillBuildTrees)
-                    {
-                
-                        var entry = skilltree.skillEntries.Find(se => se.Skill.Name == clickedSkill.Skill.Name);
-                        if (entry != null)
-                        {
-                            if(clickedSkill.row+1 > skilltree.currentDepth)
-                                skilltree.currentDepth = clickedSkill.row+1;
-                            break;
-                    
-                        }
-                    }
+
                 }
 
                 SkillPoints--;
@@ -118,49 +107,14 @@ namespace Game.GameActors.Units.Humans
                 Debug.LogError("Not enough SkillPoints to learn new skill!");
             }
         }
-        public void UpdateSkillState(SkillTreeEntry skillEntry)
-        {
-            SkillTreeEntry entry = null;
-            SkillTree tree = null;
-            foreach (var skilltree in SkillBuildTrees)
-            {
-                
-                entry = skilltree.skillEntries.Find(se => se.Skill.Name == skillEntry.Skill.Name
-                                                          &&se.tree==skillEntry.tree
-                                                          && se.row==skillEntry.row);
-                if (entry != null)
-                {
-                    tree = skilltree;
-                    break;
-                    
-                }
-            }
-
-            Debug.Log(skillEntry.Skill.Name+" "+tree.currentDepth+" "+skillEntry.row);
-            if(tree.currentDepth<skillEntry.row)
-                entry.SkillState = SkillState.NotLearnable;
-            else
-            {
-                entry.SkillState = SkillState.Learnable;
-            }
-        
-            if (Skills.Contains(entry.Skill))
-            {
-                entry.SkillState = SkillState.Learned;
-                // if ( entry.Skill.Level ==  entry.Skill.MaxLevel)
-                //     entry.SkillState = SkillState.Maxed;
-            }
-
-           
-            Debug.Log(entry.SkillState);
-        }
+      
         public void Init()
         {
-            if(SkillBuildTrees!=null)
-                foreach(var skillTree in SkillBuildTrees)
-                {
-                    skillTree.Init();
-                }
+            // if(SkillBuildTrees!=null)
+            //     foreach(var skillTree in SkillBuildTrees)
+            //     {
+            //         skillTree.Init();
+            //     }
 
         }
     }

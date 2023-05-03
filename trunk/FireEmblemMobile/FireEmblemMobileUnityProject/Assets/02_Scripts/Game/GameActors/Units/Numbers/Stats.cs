@@ -21,7 +21,6 @@ namespace Game.GameActors.Units.Numbers
         // public int MaxSp;
         [SerializeField]
         public int Mov;
-        public event Action OnStatsChanged;
 
         public Stats()
         {

@@ -53,7 +53,6 @@ public class SkillTreeRenderer : MonoBehaviour
 
     void SetupSkill(SkillTreeEntry skillEntry, Unit u, int cnt, int depth=0)
     {
-        u.SkillManager.UpdateSkillState(skillEntry);
         var skillUI = skills[cnt];
         
         if (depth == 0)

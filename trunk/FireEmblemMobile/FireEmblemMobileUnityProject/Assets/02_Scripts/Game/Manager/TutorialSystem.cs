@@ -28,7 +28,7 @@ namespace Game.Manager
         private EndTurnState endTurnState;
         private AttackTutorial2State attackTutorial2State;
         private UseItemState useItemState;
-        private bool enabled = false;
+        private bool tutorialEnabled = false;
         public void Init()
         {
             selectTutorialState=new SelectTutorialState(goddess, dialogManager, tutorialDialogs[0]);
@@ -42,19 +42,19 @@ namespace Game.Manager
 
         public void Update()
         {
-            if (!enabled)
+            if (!tutorialEnabled)
                 return;
             stateMachine.Update();
         }
 
         public void Deactivate()
         {
-            enabled = false;
+            tutorialEnabled = false;
         }
 
         public void Activate()
         {
-            enabled = true;
+            tutorialEnabled = true;
         }
     }
 
