@@ -9,9 +9,13 @@ using Game.Grid;
 using Game.GUI;
 using Game.Manager;
 using Game.WorldMapStuff.Controller;
+using Game.WorldMapStuff.Model;
 using GameCamera;
+using LostGrace;
+using Menu;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 [ExecuteInEditMode]
@@ -134,6 +138,9 @@ public class UIUnitPlacement : IUnitPlacementUI
     }
     public void ExitButtonClicked()
     {
+        // SaveGameManager.Save();
+        // SceneController.LoadSceneAsync(Scenes.TestScene, false);
+
         GameSceneController.Instance.LoadWorldMapBeforeBattle();
     }
     public void UnitButtonClicked()

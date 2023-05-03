@@ -43,7 +43,7 @@ namespace Game.WorldMapStuff.Model
             movedEncounters.Add(node);
             Debug.Log(node);
             Debug.Log(node.GetId());
-            MovedEncounterIds.Add(node.GetId());
+            // MovedEncounterIds.Add(node.GetId());DONT DO THIS ENDLESS LOOP
         }
         public EncounterPosition()
         {

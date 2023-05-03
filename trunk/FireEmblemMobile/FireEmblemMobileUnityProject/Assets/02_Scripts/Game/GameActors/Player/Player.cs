@@ -31,7 +31,7 @@ namespace Game.GameActors.Players
             if (instance != null)
             {
                 Debug.LogWarning("Destroy player instance (duplicate)");
-                Destroy(this);
+                Destroy(gameObject);
                 
             }
             else

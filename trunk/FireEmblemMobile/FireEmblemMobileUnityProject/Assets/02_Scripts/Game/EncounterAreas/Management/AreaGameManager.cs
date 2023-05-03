@@ -110,16 +110,17 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     public void LoadEncounterAreaData(Party party, EncounterTree tree){
       
         party.EncounterComponent.EncounterNode = tree.GetEncounterNodeById(party.EncounterComponent.EncounterNodeId);
+        Debug.Log( party.EncounterComponent.MovedEncounterIds.Count);
         for (int i = 0; i < party.EncounterComponent.MovedEncounterIds.Count; i++)
         {
-            party.EncounterComponent.AddMovedEncounter(tree.GetEncounterNodeById(party.EncounterComponent.MovedEncounterIds[i]));
+            Debug.Log("LOOP");
+             party.EncounterComponent.AddMovedEncounter(tree.GetEncounterNodeById(party.EncounterComponent.MovedEncounterIds[i]));
         }
     }
     private void AddSystems()
     {
         Systems = new List<IEngineSystem>
         {
-            FindObjectOfType<AudioSystem>(),
             new BattleSystem(),
             new UnitProgressSystem(Player.Instance.Party),
             new SkillSystem(GameBPData.Instance.SkillGenerationConfig,FindObjectsOfType<MonoBehaviour>().OfType<ISkillUIRenderer>().First()),
@@ -266,11 +267,11 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         }
 
         EncounterTree.Instance.SetAllNodesMoveable(false);
-        foreach (var child in Player.Instance.Party.EncounterComponent.EncounterNode.children)
-        {
-            child.SetMoveable(false);
-
-        }
+        // foreach (var child in Player.Instance.Party.EncounterComponent.EncounterNode.children)
+        // {
+        //     child.SetMoveable(false);
+        //
+        // }
     }
 
    // public GameObject activeUnitEffectPrefab;

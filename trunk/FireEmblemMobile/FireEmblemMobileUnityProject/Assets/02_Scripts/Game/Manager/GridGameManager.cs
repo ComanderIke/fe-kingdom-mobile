@@ -62,7 +62,6 @@ namespace Game.Manager
             AddSystems();
             
             GameStateManager = new GridGameStateManager();
-            Application.targetFrameRate = 60;
         }
 
         private void AddSystems()
@@ -147,8 +146,6 @@ namespace Game.Manager
             GetSystem<UnitProgressSystem>().levelUpRenderer = FindObjectsOfType<MonoBehaviour>().OfType<ILevelUpRenderer>().First();
             GetSystem<UnitProgressSystem>().expRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IExpRenderer>().First();
             GetSystem<UnitProgressSystem>().ExpBarController = FindObjectsOfType<MonoBehaviour>().OfType<ExpBarController>().First();
-          
-            
         }
 
         private void Update()

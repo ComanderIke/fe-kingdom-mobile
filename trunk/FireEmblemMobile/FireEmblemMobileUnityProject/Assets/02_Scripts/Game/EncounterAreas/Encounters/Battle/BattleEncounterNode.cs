@@ -20,6 +20,6 @@ public class BattleEncounterNode : EncounterNode
     {
         Continue();
         base.gameObject.GetComponent<BattleEncounterController>().Activate();
-        GameSceneController.Instance.LoadBattleLevel(levelindex, enemyArmyData, this);
+        GameSceneController.Instance.LoadBattleLevel(levelindex, enemyArmyData); //, this);
     }
 }

@@ -287,7 +287,7 @@ public class EncounterTree
         startNode = startNodeData.CreateNode(null,0,0);
         startColumn.children.Add( startNode);
         startColumn.index = 0;
-        columns.Add(startColumn);
+        columns.Add(startColumn);//ADDING STUFF TO COLUMN CAUSES FREEZE
         
     }
 
@@ -307,16 +307,22 @@ public class EncounterTree
 
     private bool fixedEncounters;
 
+    void ResetStaticStuff()
+    {
+        columns = new List<Column>();
+    }
     public void Create(bool fixedEncounters, List<FixedColumnNode> fixedColumns)
     {
         this.fixedEncounters = fixedEncounters;
         this.fixedColumns = fixedColumns;
+        ResetStaticStuff();
         CreateStartColumn(spawnData.startNodeData);
         CreateMiddleColumns();
         CreateEndColumn(spawnData.endNodeData);
     }
     public void CreateFromData(EncounterTreeData encounterTreeData)
     {
+        ResetStaticStuff();
         CreateStartColumn(spawnData.startNodeData);
         CreateMiddleColumns(encounterTreeData);
         CreateEndColumn(spawnData.endNodeData);
@@ -330,7 +336,7 @@ public class EncounterTree
 
     public void LoadData(EncounterTreeData encounterTreeData)
     {
-        spawnData = spawnData;
+       
         columns.Clear();
         CreateFromData(encounterTreeData);
     }
@@ -342,10 +348,13 @@ public class EncounterTree
 
     public EncounterNode GetEncounterNodeById(string id)
     {
+        Debug.Log("Get Encounte Node by Id: "+id);
         foreach (var column in columns)
         {
+            Debug.Log("Column: "+column.index+" "+column.children.Count);
             foreach (var child in column.children)
             {
+                Debug.Log("Child: "+child.label+" "+child.GetId());
                 if (child.GetId() == id)
                 {
                     return child;

@@ -5,5 +5,6 @@
         MainMenu=0,
         EncounterArea=1,
         Battle1=2,
+        TestScene=3,
     }
 }

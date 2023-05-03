@@ -37,7 +37,7 @@ namespace Game.WorldMapStuff.Controller
         //     SceneController.UnLoadSceneAsync(Scenes.Campaign1);
         //     SceneController.LoadSceneAsync(Scenes.InsideLocation,true);
         }
-        public void LoadBattleLevel(Scenes buildIndex, EnemyArmyData enemyParty, EncounterNode node)
+        public void LoadBattleLevel(Scenes buildIndex, EnemyArmyData enemyParty)//, EncounterNode node)
         {
             Vector3 cameraPos = GameObject.FindObjectOfType<EncounterAreaCameraController>().transform.position;
             PlayerPrefs.SetFloat("CameraX", cameraPos.x);
@@ -66,7 +66,8 @@ namespace Game.WorldMapStuff.Controller
         public void LoadWorldMapBeforeBattle()
         {
             SaveGameManager.Save();
-            SceneController.LoadSceneAsync(Scenes.EncounterArea, false);
+            SceneManager.LoadScene((int)Scenes.EncounterArea );
+            //SceneController.LoadSceneAsync(Scenes.EncounterArea, false);
             
            // SceneController.OnSceneCompletelyFinished += UnloadBattleScene;
 

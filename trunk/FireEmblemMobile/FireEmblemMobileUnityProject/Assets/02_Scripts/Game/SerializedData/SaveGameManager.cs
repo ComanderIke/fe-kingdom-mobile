@@ -30,6 +30,7 @@ namespace LostGrace
         {
             if (dataPersistanceObjects.Contains(obj))
             {
+                Debug.LogError("Unregister Persitance Object: "+obj.ToString());
                 dataPersistanceObjects.Remove(obj);
             }
         }
@@ -38,6 +39,7 @@ namespace LostGrace
         {
             if (!dataPersistanceObjects.Contains(obj))
             {
+                Debug.LogError("Register Persitance Object: "+obj.ToString());
                 dataPersistanceObjects.Add(obj);
             }
         }
@@ -50,6 +52,7 @@ namespace LostGrace
         }
         public static void Save()
         {
+           // Debug.LogError("SAVING IS DISABLED");
             if(currentSaveData!=null)
                 Save(currentSaveData.saveSlot);
             else
@@ -165,6 +168,8 @@ namespace LostGrace
         }
         public static void Load(int slot, bool allowRollback=true)
         {
+            // Debug.LogError("LOADING IS DISABLED");
+            // return;
             string path = Path.Combine(Application.persistentDataPath+"/saves", SaveFileName+slot+".fe");
             try
             {
