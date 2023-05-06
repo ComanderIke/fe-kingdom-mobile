@@ -135,7 +135,6 @@ namespace Game.States
             {
                 foreach (var unit in faction.FieldedUnits)
                 {
-                    Debug.Log(unit.name+" Fielded: "+unit.Fielded);
                     unit.TurnStateManager.HasAttacked = false;
                     unit.TurnStateManager.HasMoved = false;
                     unit.TurnStateManager.IsSelected = false;

@@ -171,6 +171,7 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
     }
     public void Show(ChurchEncounterNode node, Party party)
     {
+        Debug.Log("Showing church ui screen");
         blessing = null;
         this.node = node;
         canvas.enabled = true;

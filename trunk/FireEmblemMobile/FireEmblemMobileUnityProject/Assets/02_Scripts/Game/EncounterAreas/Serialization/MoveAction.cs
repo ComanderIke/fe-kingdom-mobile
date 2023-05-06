@@ -16,7 +16,7 @@ namespace Game.WorldMapStuff.Serialization
 
         public override void PerformAction()
         {
-            Debug.Log("Perform Movement Action");
+            Debug.Log("Moving to Node: " + location);
             Player.Instance.Party.EncounterComponent.AddMovedEncounter(location);
             Player.Instance.Party.EncounterComponent.EncounterNode = location;
            // Player.Instance.Party.EncounterComponent.MovedEncounterIds.Add(location.GetId());

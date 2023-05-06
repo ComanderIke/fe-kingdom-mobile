@@ -67,7 +67,6 @@ namespace Game.GameActors.Units.Numbers
             //MaxSp = statsData.MaxSp;
             Mov = statsData.Mov;
             AttackRanges = statsData.AttackRanges;
-            Debug.Log("LoadStatsData");
             BaseAttributes = new Attributes(statsData.Attributes);
         }
 

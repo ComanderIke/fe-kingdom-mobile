@@ -13,6 +13,10 @@ namespace Game.WorldMapStuff.Model
         {
             get
             {
+                if (encounterNode == null)
+                {
+                    encounterNode = EncounterTree.Instance.GetEncounterNodeById(EncounterNodeId);
+                }
                 return encounterNode;
             }
             set
@@ -27,33 +31,24 @@ namespace Game.WorldMapStuff.Model
             }
         }
 
-        private List<EncounterNode> movedEncounters;
-
-        public IReadOnlyList<EncounterNode> MovedEncounters
-        {
-            get
-            {
-                return movedEncounters.AsReadOnly();
-            }
-        }
+        
+      
 
         public void AddMovedEncounter(EncounterNode node)
         {
-           
-            movedEncounters.Add(node);
-            Debug.Log(node);
-            Debug.Log(node.GetId());
+           Debug.Log("Add Moved Encounter: "+node.GetId());
+           MovedEncounterIds.Add(node.GetId());
             // MovedEncounterIds.Add(node.GetId());DONT DO THIS ENDLESS LOOP
         }
         public EncounterPosition()
         {
-            movedEncounters = new List<EncounterNode>();
+            
             MovedEncounterIds = new List<string>();
         }
 
         public void RemoveMovedEncounterAt(int i)
         {
-            movedEncounters.RemoveAt(i);
+           
             MovedEncounterIds.RemoveAt(i);
         }
     }

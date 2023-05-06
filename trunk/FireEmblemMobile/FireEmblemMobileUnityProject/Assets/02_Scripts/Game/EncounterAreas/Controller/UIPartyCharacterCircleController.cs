@@ -88,7 +88,6 @@ public class UIPartyCharacterCircleController : MonoBehaviour, IClickedReceiver,
 
     public void PlusClicked(Unit unit)
     {
-        Debug.Log(("PlusClicked!"));
         characterView.Show(unit);
     }
 

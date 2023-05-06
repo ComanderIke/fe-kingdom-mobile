@@ -85,7 +85,7 @@ namespace Game.GameResources
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void FirstInitialize()
         {
-            Debug.Log("Before Awake!");
+            Debug.Log("First initialization before scene loads!");
         }
 
         // public List<Weapon> Weapons
@@ -147,32 +147,16 @@ namespace Game.GameResources
         public Weapon GetWeapon(string name)
         {
             WeaponBP weaponBp = null;
-            Debug.Log("Get Weapon: "+name);
             weaponBp = allWeapons.First(a => a.name == name);
-            if(weaponBp!=null)
-                Debug.Log("Found Weapon: "+weaponBp);
-            else
-            {
-                Debug.Log("Not Found!");
-            }
-            // if(weaponBp==null)
-            //     weaponBp = bows.Find(a => ((Object)a).name == name);
-            // if(weaponBp==null)
-            //     weaponBp = magic.Find(a => ((Object)a).name == name);
-            // if(weaponBp==null)
-            //     weaponBp = spears.Find(a => ((Object)a).name == name);
-            // if (weaponBp == null)
-            //     return null;
+
             return (Weapon)weaponBp.Create();
         }
         public Unit GetHumanFromBlueprint(string name)
         {
-            Debug.Log("name: " + name);
             return allUnits.First(a => a.bluePrintID == name).Create();
         }
         public MetaUpgradeBP GetMetaUpgradeBlueprints(string name)
         {
-            Debug.Log("name: " + name);
             var find = metaUpgradeBps.Find(a => a.name == name);
             if (find == null)
             {

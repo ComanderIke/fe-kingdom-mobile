@@ -36,6 +36,7 @@ public class UIEventController : MonoBehaviour
     
     public void Show(EventEncounterNode node, Party party)
     {
+        Debug.Log("Showing event ui screen");
         this.node = node;
         canvas.enabled = true;
         this.party = party;
@@ -271,13 +272,13 @@ public class UIEventController : MonoBehaviour
     {
         if (RequirementSuccess(textOptionController.Option))
         {
-            Debug.Log("SUCCESS");
+            
             current = textOptionController.Option;
             currentNode = (LGEventDialogSO)current.NextDialogue;
         }
         else
         {
-            Debug.Log("FAILED");
+    
             current = textOptionController.Option;
             currentNode = (LGEventDialogSO)current.NextDialogueFail;
         }

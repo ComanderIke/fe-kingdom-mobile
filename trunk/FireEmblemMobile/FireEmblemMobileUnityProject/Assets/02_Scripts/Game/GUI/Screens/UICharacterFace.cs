@@ -16,6 +16,7 @@ public class UICharacterFace : MonoBehaviour
     private Unit unit;
     public void Show(Unit unit)
     {
+  
         if(unit!=null)
             unit.HpValueChanged -= UpdateHpBar;
         this.unit = unit;

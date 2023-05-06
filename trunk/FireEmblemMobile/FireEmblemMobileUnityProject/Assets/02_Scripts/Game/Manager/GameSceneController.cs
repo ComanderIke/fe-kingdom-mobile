@@ -65,8 +65,10 @@ namespace Game.WorldMapStuff.Controller
 
         public void LoadWorldMapBeforeBattle()
         {
+            Debug.Log("Save Before LoadScene:");
+            Debug.Log(SaveGameManager.currentSaveData.playerData.partyData.movedEncounterIds.Count);
             SaveGameManager.Save();
-            SceneManager.LoadScene((int)Scenes.EncounterArea );
+            SceneController.LoadSceneAsync(Scenes.EncounterArea , false);
             //SceneController.LoadSceneAsync(Scenes.EncounterArea, false);
             
            // SceneController.OnSceneCompletelyFinished += UnloadBattleScene;

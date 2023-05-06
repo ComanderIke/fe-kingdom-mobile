@@ -125,10 +125,8 @@ namespace Game.WorldMapStuff.Model
             if (initialized)
                 return;
             
-            Debug.Log("Init Party");
             foreach (var member in members)
             {
-                Debug.Log(member.name + " initialized");
                 member.Party = this;
             }
             initialized = true;
@@ -195,13 +193,13 @@ namespace Game.WorldMapStuff.Model
 
         public void Load(PartyData playerDataPartyData)
         {
+            Debug.Log("Load Party Data");
             money = playerDataPartyData.money;
             members = new List<Unit>();
 
             foreach (var data in playerDataPartyData.humanData)
             {
                 Unit unit = data.Load();
-                Debug.Log("Load UnitData!" + unit.name);
                 members.Add(unit);
             }
 
@@ -209,6 +207,7 @@ namespace Game.WorldMapStuff.Model
             ActiveUnitIndex = activeUnitIndex;
             EncounterComponent = new EncounterPosition
             {
+                
                 EncounterNodeId = playerDataPartyData.currentEncounterNodeId,
                 MovedEncounterIds = playerDataPartyData.movedEncounterIds
             };

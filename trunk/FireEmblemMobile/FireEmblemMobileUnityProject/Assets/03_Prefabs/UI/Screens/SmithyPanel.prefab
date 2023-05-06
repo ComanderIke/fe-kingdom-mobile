@@ -6571,7 +6571,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Icon: {fileID: 4636016866272060124}
-  name: {fileID: 4636016866142856013}
+  nameText: {fileID: 4636016866142856013}
   description: {fileID: 7423587871436485739}
   hitCurrent: {fileID: 4636016865556346738}
   dmgCurrent: {fileID: 4636016865778183162}
@@ -9005,13 +9005,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvas: {fileID: 8691972407292437011}
   party:
-    members: []
     maxSize: 4
     money: 0
     collectedGrace: 0
     Convoy:
-      startItems: []
-      items: []
+      itemIds: []
   combineGemUI: {fileID: 1688887028}
   insertGemUI: {fileID: 5115583286181994290}
   smithingArea: {fileID: 8225214904420386892}
@@ -9024,8 +9022,6 @@ MonoBehaviour:
   insertGemsButtonAlpha: {fileID: 384648519014417110}
   combineGemsButtonAlpha: {fileID: 384648517940313464}
   state: 2
-  references:
-    version: 1
 --- !u!1 &8691972408175803803
 GameObject:
   m_ObjectHideFlags: 0

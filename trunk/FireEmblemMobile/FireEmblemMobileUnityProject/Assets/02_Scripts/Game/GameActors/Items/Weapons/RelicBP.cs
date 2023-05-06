@@ -30,13 +30,13 @@ namespace Game.GameActors.Items.Weapons
             Skill activeSkill = null;
             if (rarity == 3)
             {
-                Debug.Log("Choose Random Skill from Pool");
+               // Debug.Log("Choose Random Skill from Pool");
                 activeSkill = GameBPData.Instance.GetRandomRelicSkill();
             }
 
             if (rarity >= 2)
             {
-                Debug.Log("Generate Passive Effect");
+               // Debug.Log("Generate Passive Effect");
                 passiveEffect = (RelicPassiveEffectType)values.GetValue(Random.Range(0, values.Length));
             }
 

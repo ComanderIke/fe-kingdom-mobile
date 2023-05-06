@@ -9,5 +9,12 @@ namespace Game.GameActors.Units
         public GameObject MapAnimatedSprite;
         public GameObject EncounterAnimatedSprite;
         public AnimatorOverrideController UIAnimatorController;
+
+        public UnitPrefabs(UnitPrefabs other)
+        {
+            MapAnimatedSprite = other.MapAnimatedSprite;
+            EncounterAnimatedSprite = other.EncounterAnimatedSprite;
+            UIAnimatorController = other.UIAnimatorController;
+        }
     }
 }

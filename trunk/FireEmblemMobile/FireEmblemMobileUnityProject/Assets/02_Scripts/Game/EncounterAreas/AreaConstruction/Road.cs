@@ -74,7 +74,6 @@ namespace __2___Scripts.Game.Areas
             if (transform.parent != null)
             {
                 var newRoad=GameObject.Instantiate(this.gameObject, transform);
-                Debug.Log(transform.parent.name);
                 var lineRenderer=newRoad.GetComponent<LineRenderer>();
                 lineRenderer.sortingOrder++;
               

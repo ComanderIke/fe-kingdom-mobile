@@ -36,12 +36,12 @@ public class UIInnController : MonoBehaviour
     }
     public void Show(InnEncounterNode node, Party party)
     {
+        Debug.Log("Showing inn ui screen");
         canvas.enabled = true;
         this.node = node;
         this.party = party;
         this.inn = node.inn;
-    Debug.Log(party);
-    foreach (var shopItem in shopItems)
+        foreach (var shopItem in shopItems)
     {
         shopItem.Select();
     }

@@ -18,7 +18,7 @@ namespace Game.WorldMapStuff.Systems
            // Debug.Log("Move Party");
             var action = new MoveAction(location);
                 action.PerformAction();
-                action.Save(SaveGameManager.currentSaveData);
+                SaveGameManager.Save();
         }
     }
 }

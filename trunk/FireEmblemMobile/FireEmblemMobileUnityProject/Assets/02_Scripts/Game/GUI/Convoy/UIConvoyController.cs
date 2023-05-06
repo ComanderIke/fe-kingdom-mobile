@@ -35,6 +35,7 @@ public class UIConvoyController:MonoBehaviour
 
     public void Show()
     {
+        Debug.Log("Showing convoy! itemcount: " + convoy.Items.Count);
         canvas.enabled = true;
         state = ConvoeyState.Normal;
         UpdateValues();
@@ -68,7 +69,7 @@ public class UIConvoyController:MonoBehaviour
 
         if (state == ConvoeyState.Normal)
         {
-            Debug.Log("StateNormal" + convoy.Items.Count+" "+DropAreas.Count);
+          
             for (int i = 0; i < convoy.Items.Count; i++)
             {
              

@@ -23,6 +23,6 @@ public class ChurchEncounterNode : EncounterNode
     public override void Activate(Party party)
     {
         GameObject.FindObjectOfType<UIChurchController>().Show(this,party);
-        Debug.Log("Activate ChurchEncounterNode");
+        
     }
 }

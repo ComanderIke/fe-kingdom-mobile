@@ -30,7 +30,7 @@ namespace LostGrace
         {
             if (dataPersistanceObjects.Contains(obj))
             {
-                Debug.Log("Unregister Persitance Object: "+obj.ToString());
+                Debug.Log("Unregister data-persistant object: "+obj.ToString());
                 dataPersistanceObjects.Remove(obj);
             }
         }
@@ -39,7 +39,7 @@ namespace LostGrace
         {
             if (!dataPersistanceObjects.Contains(obj))
             {
-                Debug.Log("Register Persitance Object: "+obj.ToString());
+                Debug.Log("Register data-persistant object: "+obj.ToString());
                 dataPersistanceObjects.Add(obj);
             }
         }
@@ -47,7 +47,7 @@ namespace LostGrace
         public static void NewGame(int slot, string label)
         {
             currentSaveData = new SaveData(slot, label);
-            Debug.Log("New Game: "+slot+" "+label);
+            Debug.Log("New Game: "+label+" Slot: "+slot);
             Save(slot);
         }
         public static void Save()
@@ -64,7 +64,6 @@ namespace LostGrace
         {
             try
             {
-                Debug.Log("Try Save!");
                 foreach (IDataPersistance dataPersistance in dataPersistanceObjects)
                 {
                     dataPersistance.SaveData(ref currentSaveData);
@@ -76,14 +75,13 @@ namespace LostGrace
                 {
                     Directory.CreateDirectory(pathFolder);
                 }
-                Debug.Log("Try Save2!");
                 currentSaveData.saveSlot = slotNumber;
                 string path = Path.Combine(pathFolder, SaveFileName + slotNumber + ".fe");
                 string backupPath = path + backupExtension;
                 //Debug.Log(currentSaveData.encounterTreeData);
                // Debug.Log();
                 var jsonData = JsonUtility.ToJson(currentSaveData, true);
-                Debug.Log("Save JsonFile: "+jsonData);
+                //Debug.Log("Save JsonFile: "+jsonData);
                 Debug.Log("Save Game: " + path);
                 if (WriteToFile(path, jsonData))
                 {
@@ -91,10 +89,8 @@ namespace LostGrace
                 }
 
                 Load(slotNumber);
-                Debug.Log("Until Here Save Successfull!");
                 if (currentSaveData != null)
                 {
-                    Debug.Log("Copy File!");
                     File.Copy(path, backupPath, true);
                 }
                 else
@@ -190,9 +186,9 @@ namespace LostGrace
                     }
 
                     currentSaveData = new SaveData(0, "tmp");
-                    Debug.Log("JsonFile: "+json);
+                   // Debug.Log("JsonFile: "+json);
                     JsonUtility.FromJsonOverwrite(json, currentSaveData);
-                    Debug.Log("FileSlotNameBer: " + currentSaveData.fileLabel);
+                    //Debug.Log("FileSlotNameBer: " + currentSaveData.fileLabel);
                     if (currentSaveData == null)
                     {
                         throw new Exception("Data is null!");
@@ -243,10 +239,8 @@ namespace LostGrace
         }
         private void OnApplicationQuit()
         {
-            Debug.Log("ApplicationQuit");
             if (currentSaveData != null)
             {
-                Debug.Log("Saving...");
                 Save(currentSaveData.saveSlot);
             }
         }
@@ -263,8 +257,7 @@ namespace LostGrace
         public static bool FileSlotExists(int slot)
         {
             string folder = Application.persistentDataPath + "/saves/";
-            Debug.Log("Check Exists: " + Path.Combine(folder, SaveFileName + slot + ".fe"));
-            Debug.Log("Check Exists: "+File.Exists(Path.Combine(folder, SaveFileName + slot + ".fe")));
+ 
             return File.Exists(Path.Combine(folder, SaveFileName + slot + ".fe"));
         }
 

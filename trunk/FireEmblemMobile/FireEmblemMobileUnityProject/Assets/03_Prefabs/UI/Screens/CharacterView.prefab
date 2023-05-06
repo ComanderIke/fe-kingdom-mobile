@@ -8717,6 +8717,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   barController: {fileID: 6417489431393840004}
   valueText: {fileID: 6417489430071998901}
+  progressBar: {fileID: 0}
+  currentValue: 0
 --- !u!1 &6417489431471715860
 GameObject:
   m_ObjectHideFlags: 0
@@ -11137,20 +11139,6 @@ MonoBehaviour:
   RelicSlotUpper: {fileID: 9097415314075851274}
   RelicSlotLower: {fileID: 1936002008678143265}
   inActiveColor: {r: 0, g: 0, b: 0, a: 0.6156863}
-  weapon:
-    Name: 
-    Description: 
-    cost: 0
-    rarity: 0
-    maxStack: 0
-    Sprite: {fileID: 0}
-    EquipmentSlotType: 0
-    AttackRanges: 
-    WeaponAttributes: []
-    weaponLevel: 0
-    maxLevel: 0
-    WeaponType: {fileID: 0}
-    DamageType: 0
   relic:
     Name: 
     Description: 
@@ -11578,48 +11566,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvas: {fileID: 8018867157265329799}
   unit:
-    unitBP: {fileID: 0}
     bluePrintID: 
-    equippedWeapon:
-      Name: 
-      Description: 
-      cost: 0
-      rarity: 0
-      maxStack: 0
-      Sprite: {fileID: 0}
-      EquipmentSlotType: 0
-      AttackRanges: 
-      WeaponAttributes: []
-      weaponLevel: 0
-      maxLevel: 0
-      WeaponType: {fileID: 0}
-      DamageType: 0
-    EquippedRelic1:
-      id: 0
-    EquippedRelic2:
-      id: 0
     name: 
-    stats:
-      AttackRanges: 
-      BaseAttributes:
-        str: 0
-        intel: 0
-        dex: 0
-        agi: 0
-        con: 0
-        lck: 0
-        def: 0
-        faith: 0
-      BonusStats:
-        <Hit>k__BackingField: 0
-        <Avoid>k__BackingField: 0
-        <CritAvoid>k__BackingField: 0
-        <Crit>k__BackingField: 0
-        <AttackSpeed>k__BackingField: 0
-        <Armor>k__BackingField: 0
-        <MagicResistance>k__BackingField: 0
-        <Attack>k__BackingField: 0
-      Mov: 0
     growths:
       str: 0
       intel: 0
@@ -11630,20 +11578,7 @@ MonoBehaviour:
       def: 0
       faith: 0
     moveType: {fileID: 0}
-    SkillManager:
-      startSkills: []
-      skillPoints: 0
-      SkillBuildTrees: []
     rpgClass: 0
-    visuals:
-      CharacterSpriteSet: {fileID: 0}
-      UnitEffectVisual: {fileID: 0}
-      Prefabs:
-        MapAnimatedSprite: {fileID: 0}
-        EncounterAnimatedSprite: {fileID: 0}
-        UIAnimatorController: {fileID: 0}
-      UnitCharacterCircleUI: {fileID: 0}
-      unitRenderer: {fileID: 0}
     experienceManager:
       level: 0
       exp: 0
@@ -11687,10 +11622,6 @@ MonoBehaviour:
     type: 3}
   blessingPrefab: {fileID: 853470572501490374, guid: 6696371a56591764baebaaba73a95ae0,
     type: 3}
-  references:
-    version: 1
-    00000000:
-      type: {class: , ns: , asm: }
 --- !u!114 &8018867157265329792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12700,6 +12631,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   barController: {fileID: 8018867158379756102}
   valueText: {fileID: 8018867156970437363}
+  progressBar: {fileID: 0}
+  currentValue: 0
 --- !u!114 &8018867158379756102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17039,7 +16972,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 8018867157265329799}
+      objectReference: {fileID: 5635582332005810984}
+    - target: {fileID: 4274981052698718941, guid: 46e67aab7f63f514eb4cc4c8361c2061,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UICharacterViewController, Game
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 46e67aab7f63f514eb4cc4c8361c2061, type: 3}
 --- !u!1001 &6701344352811497785

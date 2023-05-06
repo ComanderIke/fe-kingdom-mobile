@@ -7,7 +7,6 @@ using UnityEngine;
 
 public abstract class EncounterNode
 {
-    public string UniqueId { get; set; }
     public List<EncounterNode> parents;
     public List<EncounterNode> children;
 

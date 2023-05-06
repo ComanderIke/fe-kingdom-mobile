@@ -36,12 +36,12 @@ namespace LostGrace
             particles.gameObject.SetActive(true);
             particles.Play();
             yield return new WaitForSeconds(1.8f);
-            Debug.Log("Before");
+         
             int tweenId = TweenUtility.SlowFadeIn(canvasGroup).id;
             rectT.anchoredPosition = new Vector3(rectT.anchoredPosition.x, -70);
             LeanTween.moveY(rectT, 0, .5f).setEaseOutQuad().setDelay(.1f);
             yield return new WaitWhile(()=>LeanTween.isTweening(tweenId));
-            Debug.Log("After");
+         
             glow.gameObject.SetActive(true);
             glow.Play();
             animator.enabled = true;

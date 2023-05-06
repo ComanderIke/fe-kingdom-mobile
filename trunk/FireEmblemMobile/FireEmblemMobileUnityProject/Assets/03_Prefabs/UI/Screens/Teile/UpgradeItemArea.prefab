@@ -1095,22 +1095,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Icon: {fileID: 7569258442224557482}
-  name: {fileID: 7569258442059963451}
+  nameText: {fileID: 7569258442059963451}
   description: {fileID: 7569258442027128081}
   hitCurrent: {fileID: 7569258442645489668}
-  hitAfter: {fileID: 7569258442541469632}
   dmgCurrent: {fileID: 7569258442835874956}
-  dmgAfter: {fileID: 7569258442045545011}
   critCurrent: {fileID: 7569258443147990641}
-  critAfter: {fileID: 7569258442944753208}
+  weightCurrent: {fileID: 0}
   effectCurrent: {fileID: 7569258442027128081}
-  effectAfter: {fileID: 7569258442462187844}
   cost: {fileID: 7569258442504208966}
-  stoneCost: {fileID: 7569258442146183461}
-  upgradeButton: {fileID: 7569258442656123690}
+  button: {fileID: 0}
+  buttonBg: {fileID: 0}
   weaponSection: {fileID: 9158429883086572903}
   relicSection: {fileID: 5345181224939495476}
   relicEffectCurrent: {fileID: 3971197008901617044}
+  buttonText: {fileID: 0}
+  sellColor: {r: 0, g: 0, b: 0, a: 0}
+  sellColorPressed: {r: 0, g: 0, b: 0, a: 0}
+  buyColor: {r: 0, g: 0, b: 0, a: 0}
+  buyColorPressed: {r: 0, g: 0, b: 0, a: 0}
+  weightAfter: {fileID: 0}
+  hitAfter: {fileID: 7569258442541469632}
+  dmgAfter: {fileID: 7569258442045545011}
+  critAfter: {fileID: 7569258442944753208}
+  effectAfter: {fileID: 7569258442462187844}
+  stoneCost: {fileID: 7569258442146183461}
+  cost2Icon: {fileID: 0}
+  stoneIcon: {fileID: 0}
+  dragonScaleIcon: {fileID: 0}
   relicEffectAfter: {fileID: 1412819014541308684}
 --- !u!1 &7569258442451060956
 GameObject:
@@ -1612,11 +1623,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 7569258442224557482}
-  cost: {fileID: 7569258442504208966}
   description: {fileID: 7569258443034137308}
+  canvasGroup: {fileID: 0}
+  button: {fileID: 0}
+  normalBgColor: {r: 0, g: 0, b: 0, a: 0}
+  selectedBgColor: {r: 0, g: 0, b: 0, a: 0}
+  backGround: {fileID: 0}
   tooExpensiveColor: {r: 0.7264151, g: 0.11381844, b: 0.065103225, a: 1}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
+  cost: {fileID: 7569258442504208966}
   stockCount: {fileID: 0}
+  tooExpensiveAlpha: 0.6
 --- !u!1 &7569258442534060987
 GameObject:
   m_ObjectHideFlags: 0

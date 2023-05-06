@@ -43,7 +43,7 @@ namespace Game.GUI
         {
             // animator.SetBool(Show1, true);
             // animator.SetBool(Side, false);
-        Debug.Log("SHoW MAIN");
+        
             TweenUtility.FadeIn(titleCanvasGroup);
             TweenUtility.FadeIn(playButtonCanvasGroup);
             TweenUtility.FadeIn(optionsButtonCanvasGroup);

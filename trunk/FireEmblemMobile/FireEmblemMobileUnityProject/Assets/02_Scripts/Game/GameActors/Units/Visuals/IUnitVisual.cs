@@ -36,7 +36,7 @@ namespace Game.GameActors.Units
             CharacterSpriteSet = other.CharacterSpriteSet;
             CharacterClassUpgradeSpriteSet = other.CharacterClassUpgradeSpriteSet;
             UnitEffectVisual = other.UnitEffectVisual;
-            Prefabs = other.Prefabs;
+            Prefabs = new UnitPrefabs(other.Prefabs);
             UnitCharacterCircleUI = other.UnitCharacterCircleUI;
             unitRenderer = other.unitRenderer;
         }

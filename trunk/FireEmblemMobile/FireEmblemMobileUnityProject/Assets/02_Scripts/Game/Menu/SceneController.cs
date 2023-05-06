@@ -52,7 +52,7 @@ namespace Menu
         {
             string pathToScene = SceneUtility.GetScenePathByBuildIndex((int)buildIndex);
             string sceneName = System.IO.Path.GetFileNameWithoutExtension(pathToScene);
-            Debug.Log(sceneName);
+            
             if (_instance != null)
             {
                
@@ -103,7 +103,7 @@ namespace Menu
             }
             else
             {
-                Debug.Log("==========================DESTROY SCENE CONTROLLer");
+            
                 Destroy(gameObject);
                 return;
             }
@@ -132,7 +132,7 @@ namespace Menu
         //attach the new scene controller to start cascade of loading
         private void UpdateSceneReset()
         {
-            Debug.Log("Reset");
+        
             GC.Collect();
            
             sceneState = SceneState.PreLoading;
@@ -141,7 +141,7 @@ namespace Menu
         // handle anything that needs to happen before loading
         private void UpdateScenePreload()
         {
-            Debug.Log("Preload");
+     
             foreach (var scene in scenesToLoad)
             {
                 //Debug.Log("Scene in scenesToLoad: " +scene);
@@ -249,7 +249,7 @@ namespace Menu
         // clean up unused resources by unloading them
         private void UpdateSceneUnload()
         {
-            Debug.Log("UpdateSceneUnLoad");
+       
             if (resourceUnloadTask == null)
             {
                 resourceUnloadTask = Resources.UnloadUnusedAssets();
@@ -267,7 +267,7 @@ namespace Menu
         // handle anything that needs to happen immediately after loading
         private void UpdateScenePostload()
         {
-            Debug.Log("UpdateScenePostLoad");
+            
             for (int i=scenesToLoad.Count-1; i >=0; i--)
             {
                 if (scenesToLoad[i].task != null)
@@ -284,7 +284,7 @@ namespace Menu
         // handle anything that needs to happen immediatly before running
         private void UpdateSceneReady()
         {
-            Debug.Log("Ready");
+          
             // run a GC Pass
             // if some assets loaded in the scene are currently unused
             // but may be used later DON'T do this here
@@ -312,7 +312,6 @@ namespace Menu
                     for (var i = 0; i < (int) SceneState.Count; i++) updateDelegates[i] = null;
                     updateDelegates = null;
                 }
-                Debug.Log("NULL SCENE CONTROLLER");
                 _instance = null;
             }
         }

@@ -106,7 +106,7 @@ namespace Game.GUI
 
         public void PlusClicked()
         {
-            Debug.Log("UnitCirclePlusClicked: "+unit);
+            
             parentController.PlusClicked(unit);
         }
 
@@ -127,11 +127,7 @@ namespace Game.GUI
             return expBar;
         }
 
-        void OnEnable()
-        {
-           UpdateValues();
-            
-        }
+       
 
         private void OnDisable()
         {
@@ -161,7 +157,6 @@ namespace Game.GUI
                 lowHealthFeedback.StopFeedbacks();
                 normalHealthFeedback.PlayFeedbacks();
             }
-            
             if(unit.visuals.CharacterSpriteSet!=null)
                 faceSprite.sprite = unit.visuals.CharacterSpriteSet.FaceSprite;
             animator.SetBool(Alive, unit.IsAlive());

@@ -28,16 +28,23 @@ namespace Game.GameActors.Players
 
         private void Awake()
         {
+            Debug.Log(instance);
+            if (instance == null)
+            {
+                Debug.Log("Player instance is null!");
+            }
             if (instance != null)
             {
                 Debug.LogWarning("Destroy player instance (duplicate)");
                 Destroy(gameObject);
-                
+                return;
+
             }
             else
             {
-
+                Debug.Log("No Player Instance found! Making this new instance");
                 instance = this;
+                DontDestroyOnLoad(gameObject);
             }
         }
 

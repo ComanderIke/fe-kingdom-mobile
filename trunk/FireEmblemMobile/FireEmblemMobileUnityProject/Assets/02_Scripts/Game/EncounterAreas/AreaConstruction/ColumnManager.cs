@@ -56,18 +56,17 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
         EncounterTree.Instance.spawnData = spawnData;
         EncounterTree.Instance.columns.Clear();
         if (LoadedSaveData())
-        {
-            Debug.Log("Load EncounterTreeData");
-           Debug.Log(SaveGameManager.currentSaveData.encounterTreeData);
-           EncounterTree.Instance.LoadData(SaveGameManager.currentSaveData.encounterTreeData);
+        { 
+            Debug.Log("Load existing EncounterTree data");
+            EncounterTree.Instance.LoadData(SaveGameManager.currentSaveData.encounterTreeData);
             
         }
         else
         {
             //Debug.Log(SaveGameManager.currentSaveData.encounterTreeData.columns.Count);
             Debug.Log("Create New EncounterTree!");
-         EncounterTree.Instance.spawnData.InitNodeAppearanceChances();
-         EncounterTree.Instance.Create(fixedEncounters, fixedColumns);
+            EncounterTree.Instance.spawnData.InitNodeAppearanceChances();
+            EncounterTree.Instance.Create(fixedEncounters, fixedColumns);
             
         
         }
@@ -192,7 +191,6 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
                     int randomMin = Math.Max(0, j - 1);
                     int randomMax = Math.Min(j+1,columns[i-1].children.Count-1);
                     int randomParentIndex = Random.Range(randomMin, randomMax+1);
-                    Debug.Log(randomParentIndex);
                     columns[i].children[j].AddParent(columns[i-1].children[randomParentIndex]);
                 }
             }

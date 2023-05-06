@@ -61,7 +61,7 @@ public class UICharacterViewController : MonoBehaviour
     public void Show(Unit unit)
     {
         canvas.enabled = true;
-
+        Debug.Log("Showing Character UI for: "+unit.name);
         UpdateUI(unit);
 
     }
@@ -70,7 +70,7 @@ public class UICharacterViewController : MonoBehaviour
   
     protected virtual void UpdateUI(Unit unit)
     {
-        Debug.Log("UpdateCharViewScreen");
+      
         this.unit = unit;
         charName.SetText(unit.name);//+", "+unit.jobClass);
         image.sprite = unit.visuals.CharacterSpriteSet.FaceSprite;

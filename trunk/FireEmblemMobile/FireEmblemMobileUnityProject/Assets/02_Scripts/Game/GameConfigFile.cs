@@ -17,7 +17,7 @@ namespace LostGrace
             foreach (var unitbp in selectableCharacters)
             {
                 var unit = unitbp.Create();
-                Debug.Log("Name: "+unit.Name+" "+"Skills: "+unit.SkillManager.Skills);
+                //Debug.Log("Name: "+unit.Name+" "+"Skills: "+unit.SkillManager.Skills);
                 list.Add(unit);
             }
             return list;

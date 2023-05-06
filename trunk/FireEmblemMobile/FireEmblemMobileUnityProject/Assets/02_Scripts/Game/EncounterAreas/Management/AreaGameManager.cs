@@ -45,7 +45,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         Instance = this;
         if (SaveGameManager.currentSaveData == null)//Just for Testing when starting from encounterArea
         {
-            Debug.Log("Save Data not existing creating New Game");
+            Debug.Log("Started game from EncounterArea => creating new game savedata");
             SaveGameManager.NewGame(0, "DebugEditorSave");
         }
 
@@ -67,7 +67,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         }
         if (Player.Instance.Party!=null)
         {
-            Debug.Log("Use party saveData");
+            Debug.Log("Using existing party data");
             Player.Instance.Party.Initialize();
             LoadEncounterAreaData(Player.Instance.Party, EncounterTree.Instance);
             
@@ -77,7 +77,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     
 
         if (Player.Instance.Party == null || Player.Instance.Party.members.Count == 0){
-            Debug.LogWarning("No party Members! Creating DemoUnits");
+            Debug.Log("No existing party! Creating new party with default units");
            
             if(Player.Instance.Party==null)
                 Player.Instance.Party = new Party();
@@ -110,12 +110,10 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     public void LoadEncounterAreaData(Party party, EncounterTree tree){
       
         party.EncounterComponent.EncounterNode = tree.GetEncounterNodeById(party.EncounterComponent.EncounterNodeId);
-        Debug.Log( party.EncounterComponent.MovedEncounterIds.Count);
-        for (int i = 0; i < party.EncounterComponent.MovedEncounterIds.Count; i++)
-        {
-            Debug.Log("LOOP");
-             party.EncounterComponent.AddMovedEncounter(tree.GetEncounterNodeById(party.EncounterComponent.MovedEncounterIds[i]));
-        }
+        // for (int i = 0; i < party.EncounterComponent.MovedEncounterIds.Count; i++)
+        // {
+        //     party.EncounterComponent.AddMovedEncounter(tree.GetEncounterNodeById(party.EncounterComponent.MovedEncounterIds[i]));
+        // }
     }
     private void AddSystems()
     {
@@ -177,12 +175,14 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         activeMemberGo = go;
 
         partyGameObjects.Add( go.GetComponent<EncounterPlayerUnitController>());
+        Debug.Log(Player.Instance.Party.members.Count);
         foreach (var member in Player.Instance.Party.members)
         {
          
             if (member == activeUnit)
                 continue;
-            
+            Debug.Log(member.name);
+         
             go = Instantiate(member.visuals.Prefabs.EncounterAnimatedSprite, partyGo.transform, false);
             go.transform.localPosition = new Vector3(0,0,0);
             uc =  go.GetComponent<EncounterPlayerUnitController>();
@@ -341,7 +341,6 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
 
     void MovementHint()
     {
-        Debug.Log("Show Movement Hint");
         foreach (var road in Player.Instance.Party.EncounterComponent.EncounterNode.roads)
         {
             road.end.Grow();
@@ -381,7 +380,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         }
         if (encounterNode.moveable)
         {
-            Debug.Log("Movable Encounter");
+ 
             ToolTipSystem.ShowEncounter(encounterNode, encounterNode.gameObject.transform.position+new Vector3(2,0,0), true, MoveClicked);
             foreach (var road in Player.Instance.Party.EncounterComponent.EncounterNode.roads)
             {
@@ -395,7 +394,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         }
         else
         {
-            Debug.Log("Unmovable Encounter");
+         
             ToolTipSystem.ShowEncounter(encounterNode, encounterNode.gameObject.transform.position+new Vector3(2,0,0), false, null);
         }
     }
@@ -438,7 +437,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
        
         
         ShowInactiveNode();
-        Debug.Log("Before DelayAction!");
+ 
         this.CallWithDelay(()=>target.Activate(Player.Instance.Party), 1.0f);
        
         
@@ -446,16 +445,21 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
 
     void ShowInactiveNode()
     {
-        if (Player.Instance.Party.EncounterComponent.MovedEncounters.Count < 2)
-            return;
-        var currentNode = Player.Instance.Party.EncounterComponent.EncounterNode;
+
+         var currentNode = Player.Instance.Party.EncounterComponent.EncounterNode;
         
-        var lastNode =
-            Player.Instance.Party.EncounterComponent.MovedEncounters[
-                Player.Instance.Party.EncounterComponent.MovedEncounters.Count - 2];
-        foreach (var child in lastNode.children)
+        // var lastNode =
+        //     Player.Instance.Party.EncounterComponent.MovedEncounters[
+        //         Player.Instance.Party.EncounterComponent.MovedEncounters.Count - 2];
+        // foreach (var child in lastNode.children)
+        // {
+        //     if(child!=currentNode&& !(child is StartEncounterNode))
+        //         child.renderer.SetInactive();
+        // }
+Debug.Log("Show Inactive Nodes of: "+currentNode);
+        foreach (var child in EncounterTree.Instance.columns[currentNode.depth].children)
         {
-            if(child!=currentNode&& !(child is StartEncounterNode))
+            if(!Player.Instance.Party.EncounterComponent.MovedEncounterIds.Contains(child.GetId()))
                 child.renderer.SetInactive();
         }
     }
@@ -466,12 +470,16 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     private void ShowMovedRoads()
     {
         
-        for( int i= Player.Instance.Party.EncounterComponent.MovedEncounters.Count-2; i >=0; i--)
+        for( int i= Player.Instance.Party.EncounterComponent.MovedEncounterIds.Count-2; i >=0; i--)
         {
-            Road road = Player.Instance.Party.EncounterComponent.MovedEncounters[i].GetRoad(Player.Instance.Party.EncounterComponent.MovedEncounters[i + 1]);
+            var node = EncounterTree.Instance.GetEncounterNodeById(Player.Instance.Party.EncounterComponent
+                .MovedEncounterIds[i]);
+            var nextNode=EncounterTree.Instance.GetEncounterNodeById(Player.Instance.Party.EncounterComponent
+                .MovedEncounterIds[i+1]);
+            Road road = node.GetRoad(nextNode);
             if (road==null||road.gameObject == null)
             {
-                Player.Instance.Party.EncounterComponent.RemoveMovedEncounterAt(i);
+              //  Player.Instance.Party.EncounterComponent.RemoveMovedEncounterAt(i);
             }
             else
             {

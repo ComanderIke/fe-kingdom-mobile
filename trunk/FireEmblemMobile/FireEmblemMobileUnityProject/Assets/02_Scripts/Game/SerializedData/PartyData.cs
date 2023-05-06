@@ -25,26 +25,7 @@ namespace Game.GameActors.Players
         {
             SaveData(party);
         }
-
-        // public Party Load()
-        // {
-        //     // Party party = ScriptableObject.CreateInstance<Party>();
-        //     // party.members = new List<Unit>();
-        //     //
-        //     // foreach (var data in humanData)
-        //     // {
-        //     //     Unit unit=data.Load();
-        //     //     Debug.Log("Load UnitData!"+unit.name);
-        //     //     unit.Initialize();
-        //     //     party.members.Add(unit);
-        //     // }
-        //     //
-        //     // party.money = money;
-        //     // party.Convoy = convoy;
-        //     // party.ActiveUnitIndex = activeUnitIndex;
-        //     // return party;
-        //
-        // }
+        
 
         // public void LoadEncounterAreaData(Party party, List<Column> columns){
         //     int columnIndex = currentEncounterNodeId.x;
@@ -63,6 +44,7 @@ namespace Game.GameActors.Players
                 return;
             currentEncounterNodeId =party.EncounterComponent.EncounterNodeId;
             movedEncounterIds = new List<string>();
+            Debug.Log("Save PartyData: "+ party.EncounterComponent.MovedEncounterIds.Count);
             foreach (var encounter in party.EncounterComponent.MovedEncounterIds)
             {
                 movedEncounterIds.Add(encounter);

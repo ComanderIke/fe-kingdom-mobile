@@ -19,11 +19,11 @@ namespace LostGrace
         private static readonly int Show1 = Animator.StringToHash("Show");
         public override void Show()
         {
-            Debug.Log("CheckLoadFiles");
+            
             animator.SetBool(Show1, true);
             if (SaveGameManager.FileSlotExists(1))
             {
-                Debug.Log("Slot 1 Exists"); 
+              
                 slot1Button.SetLoaded(true);
                 slot1Button.UpdateText(SaveGameManager.GetFileSlotName(1));
             }

@@ -187,43 +187,39 @@ public class EncounterTree
     public void CreateMiddleColumns(EncounterTreeData encounterTreeData)
     {
         
-        Debug.Log(encounterTreeData.columns.Count);
+   
         for (int i = 1; i < encounterTreeData.columns.Count-1; i++)
         {
             Column column = new Column();
             Column previous = columns.Last();
             column.index = i;
-            Debug.Log("Create Column!"+i+" Column NodeData Count: "+encounterTreeData.columns[i].nodeDatas.Count);
+            
             //Debug.Log(columns.Last().children.Count);
             
             for (int j=0; j< encounterTreeData.columns[i].nodeDatas.Count; j++)
             {
-                Debug.Log("NodeData number: "+j +" from column: "+i+" "+encounterTreeData.columns.Count+" "+encounterTreeData.columns[i].nodeDatas.Count);
-                Debug.Log("NodeTypeIndex: "+encounterTreeData.columns[i].nodeDatas[j].nodeTypeIndex+" NodeDataCount: "+spawnData.nodeDatas.Count);
+                
                 var nodeSpawnData = GetNodeDataIndex(encounterTreeData.columns[i].nodeDatas[j].nodeTypeIndex);
-                Debug.Log("HUH2");
+              
                 EncounterNode node = nodeSpawnData.CreateNode(null, i,j);
-                Debug.Log("HUH3");
+               
                 node.prefabIdx = encounterTreeData.columns[i].nodeDatas[j].nodeTypeIndex;
-                Debug.Log("HUH4");
+               
                 column.children.Add(node);
-                Debug.Log("HUH5");
+                
                 foreach (var parentIndex in encounterTreeData.columns[i].nodeDatas[j].parentIndexes)
                 {
-                    Debug.Log("ParentIndex: "+parentIndex+" "+previous.children.Count);
+                    
                     if (parentIndex < previous.children.Count)
                     {
                         node.parents.Add(previous.children[parentIndex]); //Adding parent to child
                         previous.children[parentIndex].children.Add(node); //Adding child to parent
                     }
-                    else
-                    {
-                        Debug.Log("Parent Index but no node found for it");
-                    }
+                   
                 }
                 
             }
-            Debug.Log("after inner loop of column: "+i);
+            
             columns.Add(column);
         }
     }
@@ -347,13 +343,10 @@ public class EncounterTree
 
     public EncounterNode GetEncounterNodeById(string id)
     {
-        Debug.Log("Get Encounte Node by Id: "+id);
         foreach (var column in columns)
         {
-            Debug.Log("Column: "+column.index+" "+column.children.Count);
             foreach (var child in column.children)
             {
-                Debug.Log("Child: "+child.label+" "+child.GetId());
                 if (child.GetId() == id)
                 {
                     return child;
