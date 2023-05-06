@@ -175,14 +175,12 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         activeMemberGo = go;
 
         partyGameObjects.Add( go.GetComponent<EncounterPlayerUnitController>());
-        Debug.Log(Player.Instance.Party.members.Count);
         foreach (var member in Player.Instance.Party.members)
         {
          
             if (member == activeUnit)
                 continue;
-            Debug.Log(member.name);
-         
+
             go = Instantiate(member.visuals.Prefabs.EncounterAnimatedSprite, partyGo.transform, false);
             go.transform.localPosition = new Vector3(0,0,0);
             uc =  go.GetComponent<EncounterPlayerUnitController>();

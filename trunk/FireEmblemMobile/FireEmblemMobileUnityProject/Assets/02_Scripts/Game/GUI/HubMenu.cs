@@ -20,6 +20,7 @@ namespace LostGrace
     {
         [SerializeField] private UIMenu characterSelectMenu;
         [SerializeField] private UIMenu upgradeMenu;
+      
         [Header("SaveLoadStuff: ")]
 
         private string[] saveFiles;
@@ -37,7 +38,9 @@ namespace LostGrace
         [SerializeField] private Button tutorialButton;
         [SerializeField] private Button upgradesButton;
         [SerializeField] private Button backButton;
-        [Header("Experimental: ")]
+
+        [Header("Experimental: ")] [SerializeField]
+        private TextMeshProUGUI newGameButtonText;
         [SerializeField] private GoddessUI goddessUI;
         [SerializeField] private DialogueManager dialogueManager;
         [SerializeField] private Conversation introConversation;
@@ -47,6 +50,7 @@ namespace LostGrace
             //ContinueButton.SetActive(SaveData.currentSaveData!=null);
             //SaveButton.SetActive(SaveData.currentSaveData!=null);
             //LoadButton.SetActive(GetLoadFiles()!=0);
+            newGameButtonText.text=SaveGameManager.HasOngoingCampaignSaveData()?"Continue Campaign":"New Campaign";
             StartCoroutine(ShowCoroutine());
             newCampaignButton.interactable = false;
             upgradesButton.interactable = false;
@@ -55,6 +59,7 @@ namespace LostGrace
 
         }
 
+       
         IEnumerator ShowCoroutine()
         {
             base.Show();
@@ -129,8 +134,15 @@ namespace LostGrace
         }
         public void NewGameClicked()
         {
-            StartCoroutine(HideCoroutine(characterSelectMenu));
-           
+            if (SaveGameManager.HasOngoingCampaignSaveData())
+            {
+                MenuActionController.StartGame();
+            }
+            else
+            {
+                StartCoroutine(HideCoroutine(characterSelectMenu));
+            }
+
         }
         public void TutorialClicked()
         {

@@ -43,6 +43,12 @@ namespace LostGrace
                 dataPersistanceObjects.Add(obj);
             }
         }
+        //TODO use something from campaigndata not playerdata
+       public static bool HasOngoingCampaignSaveData()
+        {
+            Debug.Log(currentSaveData.playerData.partyData.humanData.Count);
+            return currentSaveData.playerData.partyData.humanData.Count != 0;
+        }
     
         public static void NewGame(int slot, string label)
         {

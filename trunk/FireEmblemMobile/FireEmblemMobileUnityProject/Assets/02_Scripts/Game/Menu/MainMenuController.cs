@@ -69,12 +69,7 @@ namespace Game.GUI
 
         }
 
-        public void StartGame()
-        {
-            SceneTransferData.Instance.Reset();
-            //SceneTransferData.Instance.TutorialBattle1 = true;
-            SceneController.LoadSceneAsync(Scenes.EncounterArea, false);
-        }
+        
         public void StartHub()
         {
             StartCoroutine(TransitionAnimation());

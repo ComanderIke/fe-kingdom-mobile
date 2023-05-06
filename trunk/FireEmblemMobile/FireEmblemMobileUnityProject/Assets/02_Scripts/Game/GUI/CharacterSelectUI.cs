@@ -43,7 +43,10 @@ namespace LostGrace
           
           
         }
-
+        public void StartClicked()
+        {
+            MenuActionController.StartGame();
+        }
         private void Update()
         {
             int remaining = Player.Instance.startPartyMemberCount - Player.Instance.Party.members.Count;
