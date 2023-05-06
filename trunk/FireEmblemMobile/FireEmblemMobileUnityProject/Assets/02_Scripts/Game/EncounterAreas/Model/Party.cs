@@ -207,7 +207,7 @@ namespace Game.WorldMapStuff.Model
             ActiveUnitIndex = activeUnitIndex;
             EncounterComponent = new EncounterPosition
             {
-                
+                activatedEncounter = playerDataPartyData.activatedEncounter,
                 EncounterNodeId = playerDataPartyData.currentEncounterNodeId,
                 MovedEncounterIds = playerDataPartyData.movedEncounterIds
             };

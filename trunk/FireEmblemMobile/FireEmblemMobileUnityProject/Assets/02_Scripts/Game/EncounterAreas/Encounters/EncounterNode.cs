@@ -72,6 +72,7 @@ public abstract class EncounterNode
     }
     public void Continue()
     {
+        Player.Instance.Party.EncounterComponent.activatedEncounter = true;
         Player.Instance.Party.EncounterComponent.EncounterNode = this;
      
         GameObject.FindObjectOfType<AreaGameManager>().Continue();

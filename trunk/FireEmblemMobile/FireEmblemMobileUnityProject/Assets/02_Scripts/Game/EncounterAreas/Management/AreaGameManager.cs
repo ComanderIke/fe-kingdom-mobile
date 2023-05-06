@@ -112,8 +112,16 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         lightController.UpdateHour(hour);
         this.CallWithDelay(ShowMovedRoads,0.1f);//Some other scripts not started yet thtas why
 
-        ShowMoveOptions();
+ 
         ShowAllInactiveNodes();
+        if (!Player.Instance.Party.EncounterComponent.activatedEncounter)
+        {
+            Player.Instance.Party.EncounterComponent.EncounterNode.Activate(Player.Instance.Party);
+        }
+        else
+        {       
+            ShowMoveOptions();
+        }
     }
 
     

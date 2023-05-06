@@ -20,6 +20,7 @@ namespace Game.GameActors.Players
 
         [SerializeField] public string currentEncounterNodeId;
         [SerializeField] public List<string> movedEncounterIds;
+        public bool activatedEncounter;
 
         public PartyData(Party party)
         {
@@ -44,6 +45,7 @@ namespace Game.GameActors.Players
                 return;
             currentEncounterNodeId =party.EncounterComponent.EncounterNodeId;
             movedEncounterIds = new List<string>();
+            activatedEncounter = party.EncounterComponent.activatedEncounter;
             Debug.Log("Save PartyData: "+ party.EncounterComponent.MovedEncounterIds.Count);
             foreach (var encounter in party.EncounterComponent.MovedEncounterIds)
             {
@@ -54,6 +56,7 @@ namespace Game.GameActors.Players
             convoy = party.Convoy;
             money = party.Money;
             humanData = new List<UnitData>();
+            
             foreach (var member in party.members)
             {
                 humanData.Add(new UnitData(member));

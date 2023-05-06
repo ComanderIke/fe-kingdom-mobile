@@ -35,7 +35,7 @@ public class MerchantEncounterNode : EncounterNode
     {
         GameObject.FindObjectOfType<UIMerchantController>().Show(merchant,party);
         UIMerchantController.OnFinished += MerchantFinished;
-        Continue();
+        
         //GameObject.FindObjectOfType<UIInnController>().Show(Player.Instance.Party);
         Debug.Log("Activate MerchantEncounterNode");
     }

@@ -31,7 +31,7 @@ namespace Game.WorldMapStuff.Model
             }
         }
 
-        
+        public bool activatedEncounter = false;
       
 
         public void AddMovedEncounter(EncounterNode node)
