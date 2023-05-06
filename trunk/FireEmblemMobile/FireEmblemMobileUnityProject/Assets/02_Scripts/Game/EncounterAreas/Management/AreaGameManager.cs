@@ -111,7 +111,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         uiPartyController.Show(Player.Instance.Party);
         lightController.UpdateHour(hour);
         this.CallWithDelay(ShowMovedRoads,0.1f);//Some other scripts not started yet thtas why
-       
+
         ShowMoveOptions();
         ShowAllInactiveNodes();
     }
@@ -453,7 +453,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
 
     private void ShowAllInactiveNodes()
     {
-        for (int i = 0; i < EncounterTree.Instance.columns.Count; i++)
+        for (int i = 0; i <= Player.Instance.Party.EncounterComponent.EncounterNode.depth; i++)
         {
 
 

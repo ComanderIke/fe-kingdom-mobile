@@ -57,7 +57,17 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
     {
         //OnDisable();
        
-     
+        if(!SaveGameManager.HasEncounterSaveData())
+        { 
+            EncounterTree.Instance.spawnData = spawnData;
+            EncounterTree.Instance.columns.Clear();
+            //Debug.Log(SaveGameManager.currentSaveData.encounterTreeData.columns.Count);
+            Debug.Log("Create New EncounterTree!");
+            EncounterTree.Instance.spawnData.InitNodeAppearanceChances();
+            EncounterTree.Instance.Create(fixedEncounters, fixedColumns);
+            
+        
+        }
      
         //
         EncounterTree.Instance.startNode.SetGameObject(CreateStartNodeGameObject(EncounterTree.Instance.startNode));
@@ -240,15 +250,7 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
         EncounterTree.Instance.columns.Clear();
         if(SaveGameManager.HasEncounterSaveData())
             EncounterTree.Instance.LoadData(data.encounterTreeData);
-        else
-        { 
-            //Debug.Log(SaveGameManager.currentSaveData.encounterTreeData.columns.Count);
-            Debug.Log("Create New EncounterTree!");
-            EncounterTree.Instance.spawnData.InitNodeAppearanceChances();
-            EncounterTree.Instance.Create(fixedEncounters, fixedColumns);
-            
         
-        }
     }
 
     public void SaveData(ref SaveData data)

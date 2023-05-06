@@ -11,7 +11,9 @@ public class NodeRenderer : MonoBehaviour
     [SerializeField] private SpriteRenderer iconRenderer;
     [SerializeField] private SpriteRenderer nodeCircleRenderer;
 
+
     
+
     private const float defaultRotationSpeed = 25;
     const float defaultScale = 1.5f;
     readonly  Vector3 nodeStartScale = new Vector3(0.12f,0.12f,0.12f);
@@ -21,15 +23,25 @@ public class NodeRenderer : MonoBehaviour
     {
         
         moveEffect = Instantiate(moveOptionPrefab, transform, false);
-        
+        foreach (var ps in moveEffect.GetComponentsInChildren<ParticleSystem>())
+        {
+            ps.transform.localScale = new Vector3(defaultScale, defaultScale, defaultScale);
+        }
+        Debug.Log("Scale to "+(nodeStartScale.x*1.07f)+" from "+gameObject.transform.localScale.x);
         LeanTween.scale(gameObject, nodeStartScale*1.07f,0.8f).setLoopType(LeanTweenType.pingPong);
     }
 
+    public void Awake()
+    {
+        Debug.Log("SetStartScale");
+        gameObject.transform.localScale = nodeStartScale;
+    }
     public void Reset()
     {
       
         LeanTween.cancel(gameObject);
         LeanTween.scale(gameObject, nodeStartScale,0.2f).setEaseInQuad();
+       // Debug.Log("Reset to "+gameObject.transform.localScale.x);
         Destroy(moveEffect);
     }
 
