@@ -11,7 +11,7 @@ namespace Game.WorldMapStuff.Model
     public class Convoy
     {
         [NonSerialized] private List<StockedItem> items;
-        [SerializeField]private List<string> itemIds;
+        
         [SerializeField] public event Action convoyUpdated;
 
         public List<StockedItem> Items
@@ -24,8 +24,12 @@ namespace Game.WorldMapStuff.Model
             }
         }
 
-       
 
+
+        public Convoy()
+        {
+            items = new List<StockedItem>();
+        }
         public override string ToString()
         {
             string convoy = "";

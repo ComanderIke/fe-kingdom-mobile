@@ -15,7 +15,7 @@ MonoBehaviour:
   equippedWeaponBp: {fileID: 11400000, guid: f1c1c884af0a0a14cb2d196a524fcbb8, type: 2}
   EquippedRelic1: {fileID: 0}
   EquippedRelic2: {fileID: 0}
-  Name: 
+  Name: Skelet Rider
   stats:
     AttackRanges: 
     BaseAttributes:
@@ -27,6 +27,15 @@ MonoBehaviour:
       lck: 3
       def: 3
       faith: 3
+    BonusStats:
+      <Hit>k__BackingField: 0
+      <Avoid>k__BackingField: 0
+      <CritAvoid>k__BackingField: 0
+      <Crit>k__BackingField: 0
+      <AttackSpeed>k__BackingField: 0
+      <Armor>k__BackingField: 0
+      <MagicResistance>k__BackingField: 0
+      <Attack>k__BackingField: 0
     Mov: 3
   growths:
     str: 0
@@ -41,12 +50,13 @@ MonoBehaviour:
   SkillManager:
     startSkills: []
     skillPoints: 0
-    SkillBuildTrees: []
   rpgClass: 0
   bluePrintID: 
+  dialogActor: {fileID: 0}
   visuals:
     CharacterSpriteSet: {fileID: 11400000, guid: 6794c0f4d719e6942a4d49d293b72285,
       type: 2}
+    CharacterClassUpgradeSpriteSet: {fileID: 0}
     UnitEffectVisual: {fileID: 11400000, guid: af10e6087dc82f34ebed15c0092e0174, type: 2}
     Prefabs:
       MapAnimatedSprite: {fileID: 2861010742256422526, guid: f782b017bae238340ba6faff38e743c9,
@@ -57,7 +67,9 @@ MonoBehaviour:
         type: 2}
     UnitCharacterCircleUI: {fileID: 0}
     unitRenderer: {fileID: 0}
+  audio: {fileID: 0}
   experienceManager:
     level: 0
     exp: 0
-    MaxExp: 0
+    drainableExp: 100
+    expLeftToDrain: 100

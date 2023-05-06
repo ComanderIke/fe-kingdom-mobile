@@ -29,6 +29,7 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
     public Button switchSellButton;
     [SerializeField] private TextMeshProUGUI merchantNameText;
     [SerializeField] private Image merchantFaceImage;
+    [SerializeField] private CanvasGroup SoldOutArea;
 
     public static event Action OnFinished;
  
@@ -86,26 +87,41 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
            
             switchBuyButton.interactable = false;
             switchSellButton.interactable = true;
-            for (int i=0; i<merchant.shopItems.Count; i++)
+            if (merchant.shopItems.Count == 0)
             {
-                var go=Instantiate(shopItemPrefab, itemParent);
-                var item = merchant.shopItems[i];
-                instantiatedItems.Add(go);
-                shopItems.Add(go.GetComponent<UIShopItemController>());
-                bool affordable = party.CanAfford(merchant.GetCost( merchant.shopItems[0]));
-    
-                shopItems[i].SetValues(item, affordable, this);
-            }
-            if(selectedItem!=null)
-                buyItemUI.Show(selectedItem.Item,  party.CanAfford(merchant.GetCost( merchant.shopItems[0])), buying);
-            else
-            {
+                SoldOutArea.alpha = 1;
+
                 buyItemUI.Hide();
             }
-            
+            else
+            {
+
+                SoldOutArea.alpha = 0;
+
+                for (int i = 0; i < merchant.shopItems.Count; i++)
+                {
+                    var go = Instantiate(shopItemPrefab, itemParent);
+                    var item = merchant.shopItems[i];
+                    instantiatedItems.Add(go);
+                    shopItems.Add(go.GetComponent<UIShopItemController>());
+                    bool affordable = party.CanAfford(merchant.GetCost(merchant.shopItems[0]));
+
+                    shopItems[i].SetValues(item, affordable, this);
+                }
+
+                if (selectedItem != null)
+                    buyItemUI.Show(selectedItem.Item, party.CanAfford(merchant.GetCost(merchant.shopItems[0])), buying);
+                else
+                {
+                    buyItemUI.Hide();
+                }
+            }
+
         }
         else
         {
+            SoldOutArea.alpha = 0;
+
             for (int i=0; i<party.Convoy.Items.Count; i++)
             {
                 var go=Instantiate(shopItemPrefab, itemParent);

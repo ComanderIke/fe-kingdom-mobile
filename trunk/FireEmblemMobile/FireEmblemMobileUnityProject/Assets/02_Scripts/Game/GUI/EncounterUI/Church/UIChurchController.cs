@@ -34,7 +34,7 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
     private List<GameObject> instantiatedItems= new List<GameObject>();
     private ChurchUIState state = ChurchUIState.Store;
     private Blessing blessing;
- 
+    [SerializeField] private CanvasGroup SoldOutArea;
     public void UpdateUI()
     {
         if (state == ChurchUIState.Pray && !church.CanDonate(party.ActiveUnit))
@@ -56,6 +56,7 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
         characterFace.Show(party.ActiveUnit);
         if (state == ChurchUIState.Store)
         {
+          
             for (int i = 0; i < church.shopItems.Count; i++)
             {
                 var go = Instantiate(shopItemPrefab, itemParent);
@@ -68,9 +69,14 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
             }
 
             if (church.shopItems.Count >= 1)
+            {
                 buyItemUI.Show(church.shopItems[0].Item, party.CanAfford(church.shopItems[0].cost), true);
+                SoldOutArea.alpha = 0;
+            }
             else
             {
+                SoldOutArea.alpha = 1;
+              
                 buyItemUI.Hide();
             }
             saleButton.gameObject.SetActive(false);
@@ -79,6 +85,8 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
         }
         else if (state == ChurchUIState.Pray)
         {
+            SoldOutArea.alpha = 0;
+
             saleButton.gameObject.SetActive(true);
             prayButton.gameObject.SetActive(false);
             inStoreText.gameObject.SetActive(false);
@@ -86,6 +94,8 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
         }
         else if (state == ChurchUIState.Blessing)
         {
+            SoldOutArea.alpha = 0;
+
             saleButton.gameObject.SetActive(true);
             prayButton.gameObject.SetActive(false);
             inStoreText.gameObject.SetActive(false);

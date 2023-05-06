@@ -67,7 +67,7 @@ namespace Game.GameActors.Players
             if (unit.EquippedRelic1 != null)
             {
                 relic1Id = unit.EquippedRelic1.Name;
-                Debug.Log("CREATING UNIT DATA");
+               
                 foreach (var slot in unit.EquippedRelic1.slots)
                 {
                     if (slot != null&&slot.gem!=null)
@@ -85,7 +85,7 @@ namespace Game.GameActors.Players
                 }
             }
 
-            Debug.Log("After Slots");
+      
             skillIds = new List<string>();
             skillLevels = new List<int>();
             foreach (var skill in unit.SkillManager.Skills)
@@ -93,8 +93,7 @@ namespace Game.GameActors.Players
                 skillIds.Add(skill.Name);
                 skillLevels.Add(skill.Level);
             }
-            Debug.Log("END OF UNIT DATA");
-
+           
         }
 
         public virtual Unit Load()

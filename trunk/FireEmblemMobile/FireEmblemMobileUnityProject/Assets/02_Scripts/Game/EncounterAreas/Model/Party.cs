@@ -203,7 +203,8 @@ namespace Game.WorldMapStuff.Model
                 members.Add(unit);
             }
 
-            Convoy = playerDataPartyData.convoy;
+            Convoy = new Convoy();
+            Convoy = playerDataPartyData.convoy.LoadData();
             ActiveUnitIndex = activeUnitIndex;
             EncounterComponent = new EncounterPosition
             {

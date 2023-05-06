@@ -15,7 +15,7 @@ namespace Game.GameActors.Players
     {
         [SerializeField] public List<UnitData> humanData;
         [SerializeField] public int money;
-        [SerializeField] public Convoy convoy;
+        [SerializeField] public ConvoyData convoy;
         [SerializeField] public int activeUnitIndex;
 
         [SerializeField] public string currentEncounterNodeId;
@@ -53,7 +53,7 @@ namespace Game.GameActors.Players
             }
 
             activeUnitIndex = party.ActiveUnitIndex;
-            convoy = party.Convoy;
+            convoy = new ConvoyData(party.Convoy);
             money = party.Money;
             humanData = new List<UnitData>();
             
