@@ -22,8 +22,7 @@ namespace Game.WorldMapStuff.Model
         [SerializeField] int maxSize = 4;
         [SerializeField] private int money = default;
         [SerializeField] private int collectedGrace = default;
-        private bool initialized = false;
-
+   
         public int MaxSize
         {
             get => maxSize;
@@ -122,14 +121,10 @@ namespace Game.WorldMapStuff.Model
         
         public void Initialize()
         {
-            if (initialized)
-                return;
-            
             foreach (var member in members)
             {
                 member.Party = this;
             }
-            initialized = true;
         }
 
         public override string ToString()

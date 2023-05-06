@@ -239,7 +239,7 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
         var go = GameObject.Instantiate(prefab, this.transform);
         go.name = "EncounterNode Column:" + index;
         node.SetGameObject(go);
-        Debug.Log("Create Node: " + node + " Index: " + index);
+        //Debug.Log("Create Node: " + node + " Index: " + index);
         go.GetComponentInChildren<EncounterNodeClickController>().encounterNode = node;
     }
 

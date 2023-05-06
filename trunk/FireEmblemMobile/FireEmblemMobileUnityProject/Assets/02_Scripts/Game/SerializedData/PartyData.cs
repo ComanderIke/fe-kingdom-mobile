@@ -46,7 +46,7 @@ namespace Game.GameActors.Players
             currentEncounterNodeId =party.EncounterComponent.EncounterNodeId;
             movedEncounterIds = new List<string>();
             activatedEncounter = party.EncounterComponent.activatedEncounter;
-            Debug.Log("Save PartyData: "+ party.EncounterComponent.MovedEncounterIds.Count);
+           
             foreach (var encounter in party.EncounterComponent.MovedEncounterIds)
             {
                 movedEncounterIds.Add(encounter);

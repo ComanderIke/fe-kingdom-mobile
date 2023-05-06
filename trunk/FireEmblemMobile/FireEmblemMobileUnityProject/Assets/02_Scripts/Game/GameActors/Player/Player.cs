@@ -41,8 +41,6 @@ namespace Game.GameActors.Players
                 Debug.Log("No Player Instance found! Making this new instance");
                 instance = this;
                 DontDestroyOnLoad(gameObject);
-                if(Party!=null)
-                    Party.Initialize();
                 SaveGameManager.RegisterDataPersistanceObject(this);
             }
         }

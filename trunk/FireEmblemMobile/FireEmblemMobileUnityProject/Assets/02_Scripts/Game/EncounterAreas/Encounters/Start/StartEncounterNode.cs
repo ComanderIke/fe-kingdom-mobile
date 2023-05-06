@@ -11,6 +11,6 @@ public class StartEncounterNode : EncounterNode
     public override void Activate(Party party)
     {
         GameObject.FindObjectOfType<AreaGameManager>().Continue();
-        Debug.Log("Activate StartEncounterNode");
+       
     }
 }

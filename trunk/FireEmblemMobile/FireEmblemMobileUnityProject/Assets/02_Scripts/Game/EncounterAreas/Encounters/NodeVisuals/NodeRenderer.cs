@@ -27,13 +27,13 @@ public class NodeRenderer : MonoBehaviour
         {
             ps.transform.localScale = new Vector3(defaultScale, defaultScale, defaultScale);
         }
-        Debug.Log("Scale to "+(nodeStartScale.x*1.07f)+" from "+gameObject.transform.localScale.x);
+ 
         LeanTween.scale(gameObject, nodeStartScale*1.07f,0.8f).setLoopType(LeanTweenType.pingPong);
     }
 
     public void Awake()
     {
-        Debug.Log("SetStartScale");
+      
         gameObject.transform.localScale = nodeStartScale;
     }
     public void Reset()

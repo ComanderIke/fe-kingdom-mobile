@@ -36,7 +36,7 @@ namespace Game.WorldMapStuff.Model
 
         public void AddMovedEncounter(EncounterNode node)
         {
-           Debug.Log("Add Moved Encounter: "+node.GetId());
+           
            MovedEncounterIds.Add(node.GetId());
             // MovedEncounterIds.Add(node.GetId());DONT DO THIS ENDLESS LOOP
         }

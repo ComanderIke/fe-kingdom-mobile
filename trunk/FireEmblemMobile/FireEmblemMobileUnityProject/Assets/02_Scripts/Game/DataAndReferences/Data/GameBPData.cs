@@ -180,7 +180,7 @@ namespace Game.GameResources
         {
             Debug.Log(name);
             BlessingBP weaponBp = null;
-            weaponBp = allBlessings.First(a => a.name == name);
+            weaponBp = allBlessings.First(a => a.blessingName == name);
 
             return (Blessing)weaponBp.Create();
         }
