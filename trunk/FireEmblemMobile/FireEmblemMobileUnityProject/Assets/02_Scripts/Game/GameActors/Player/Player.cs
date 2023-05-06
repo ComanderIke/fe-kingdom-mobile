@@ -28,11 +28,7 @@ namespace Game.GameActors.Players
 
         private void Awake()
         {
-            Debug.Log(instance);
-            if (instance == null)
-            {
-                Debug.Log("Player instance is null!");
-            }
+           
             if (instance != null)
             {
                 Debug.LogWarning("Destroy player instance (duplicate)");
@@ -45,15 +41,12 @@ namespace Game.GameActors.Players
                 Debug.Log("No Player Instance found! Making this new instance");
                 instance = this;
                 DontDestroyOnLoad(gameObject);
+                if(Party!=null)
+                    Party.Initialize();
+                SaveGameManager.RegisterDataPersistanceObject(this);
             }
         }
-
-        void Start()
-        {
-            if(Party!=null)
-                Party.Initialize();
-            SaveGameManager.RegisterDataPersistanceObject(this);
-        }
+        
 
         private void OnDestroy()
         {

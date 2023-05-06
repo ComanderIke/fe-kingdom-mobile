@@ -38,23 +38,31 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     public int hour = 6;
     public TimeCircleUI circleUI;
     public DynamicAmbientLight lightController;
-    
+    [SerializeField] private bool startFreshSave = false;
     private List<EncounterNodeClickController> nodeClickControllers;
     void Awake()
     {
         Instance = this;
-        if (SaveGameManager.currentSaveData == null)//Just for Testing when starting from encounterArea
+       
+       
+        if (startFreshSave)//Just for Testing when starting from encounterArea
         {
             Debug.Log("Started game from EncounterArea => creating new game savedata");
             SaveGameManager.NewGame(0, "DebugEditorSave");
         }
-
+        else
+        {
+            SaveGameManager.Load(0); //Trigger load at start of scenes to trigger all persistance objects observers
+        }
 
        
     }
 
     private void Start()
     {
+       
+    
+
         cursor = FindObjectOfType<EncounterCursorController>();
         //Debug.Log("WHY IS START NOT CALLED?");
         actionSystem = new Area_ActionSystem();
@@ -105,8 +113,10 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         this.CallWithDelay(ShowMovedRoads,0.1f);//Some other scripts not started yet thtas why
        
         ShowMoveOptions();
+        ShowAllInactiveNodes();
     }
 
+    
     public void LoadEncounterAreaData(Party party, EncounterTree tree){
       
         party.EncounterComponent.EncounterNode = tree.GetEncounterNodeById(party.EncounterComponent.EncounterNodeId);
@@ -434,14 +444,28 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         }
        
         
-        ShowInactiveNode();
+        ShowInactiveNodes();
  
         this.CallWithDelay(()=>target.Activate(Player.Instance.Party), 1.0f);
        
         
     }
 
-    void ShowInactiveNode()
+    private void ShowAllInactiveNodes()
+    {
+        for (int i = 0; i < EncounterTree.Instance.columns.Count; i++)
+        {
+
+
+            foreach (var child in EncounterTree.Instance.columns[i].children)
+            {
+                if (!Player.Instance.Party.EncounterComponent.MovedEncounterIds.Contains(child.GetId()))
+                    child.renderer.SetInactive();
+            }
+        }
+    }
+
+    void ShowInactiveNodes()
     {
 
          var currentNode = Player.Instance.Party.EncounterComponent.EncounterNode;

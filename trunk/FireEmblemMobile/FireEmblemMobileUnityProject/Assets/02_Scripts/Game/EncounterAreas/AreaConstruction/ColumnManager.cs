@@ -48,28 +48,17 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
         SaveGameManager.UnregisterDataPersistanceObject(this);
     }
 
+    private void Awake()
+    {
+        SaveGameManager.RegisterDataPersistanceObject(this);
+    }
 
     void Start()
     {
         //OnDisable();
-        SaveGameManager.RegisterDataPersistanceObject(this);
-        EncounterTree.Instance.spawnData = spawnData;
-        EncounterTree.Instance.columns.Clear();
-        if (LoadedSaveData())
-        { 
-            Debug.Log("Load existing EncounterTree data");
-            EncounterTree.Instance.LoadData(SaveGameManager.currentSaveData.encounterTreeData);
-            
-        }
-        else
-        {
-            //Debug.Log(SaveGameManager.currentSaveData.encounterTreeData.columns.Count);
-            Debug.Log("Create New EncounterTree!");
-            EncounterTree.Instance.spawnData.InitNodeAppearanceChances();
-            EncounterTree.Instance.Create(fixedEncounters, fixedColumns);
-            
-        
-        }
+       
+     
+     
         //
         EncounterTree.Instance.startNode.SetGameObject(CreateStartNodeGameObject(EncounterTree.Instance.startNode));
         CreateMiddleNodesGameObject(EncounterTree.Instance.columns);
@@ -81,10 +70,7 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
 
     }
 
-    private bool LoadedSaveData()
-    {
-        return SaveGameManager.currentSaveData != null && SaveGameManager.currentSaveData.encounterTreeData != null&&SaveGameManager.currentSaveData.encounterTreeData.columns.Count!=0;
-    }
+    
 
     private void CreateMiddleNodesGameObject(List<Column> columns)
     {
@@ -243,14 +229,26 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
         var go = GameObject.Instantiate(prefab, this.transform);
         go.name = "EncounterNode Column:" + index;
         node.SetGameObject(go);
-       // Debug.Log("Create Node: " + node + " Index: " + index);
+        Debug.Log("Create Node: " + node + " Index: " + index);
         go.GetComponentInChildren<EncounterNodeClickController>().encounterNode = node;
     }
 
 
     public void LoadData(SaveData data)
     {
-       // throw new NotImplementedException();
+        EncounterTree.Instance.spawnData = spawnData;
+        EncounterTree.Instance.columns.Clear();
+        if(SaveGameManager.HasEncounterSaveData())
+            EncounterTree.Instance.LoadData(data.encounterTreeData);
+        else
+        { 
+            //Debug.Log(SaveGameManager.currentSaveData.encounterTreeData.columns.Count);
+            Debug.Log("Create New EncounterTree!");
+            EncounterTree.Instance.spawnData.InitNodeAppearanceChances();
+            EncounterTree.Instance.Create(fixedEncounters, fixedColumns);
+            
+        
+        }
     }
 
     public void SaveData(ref SaveData data)

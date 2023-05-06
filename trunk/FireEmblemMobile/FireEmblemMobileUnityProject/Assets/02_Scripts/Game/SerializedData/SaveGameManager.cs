@@ -66,6 +66,16 @@ namespace LostGrace
                 Debug.LogError("No Save Data found!");
             }
         }
+
+        public static void Load()
+        {
+            if(currentSaveData!=null)
+                Load(currentSaveData.saveSlot);
+            else
+            {
+                Debug.LogError("No Load Data found!");
+            }
+        }
         public static void Save(int slotNumber)
         {
             try
@@ -94,15 +104,15 @@ namespace LostGrace
                     Debug.Log("Save Successfull!");
                 }
 
-                Load(slotNumber);
-                if (currentSaveData != null)
-                {
-                    File.Copy(path, backupPath, true);
-                }
-                else
-                {
-                    Debug.LogError("Save File could not be verified and backup could not be created");
-                }
+                // Load(slotNumber);
+                // if (currentSaveData != null)
+                // {
+                //     File.Copy(path, backupPath, true);
+                // }
+                // else
+                // {
+                //     Debug.LogError("Save File could not be verified and backup could not be created");
+                // }
             }
             catch (Exception e)
             {
@@ -272,6 +282,11 @@ namespace LostGrace
             Load(slot);
             Debug.Log("FileSlotName: "+currentSaveData.fileLabel);
             return currentSaveData.fileLabel;
+        }
+
+        public static bool HasEncounterSaveData()
+        {
+            return currentSaveData != null && currentSaveData.encounterTreeData != null&&currentSaveData.encounterTreeData.columns.Count!=0;
         }
     }
 }
