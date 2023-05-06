@@ -15,7 +15,7 @@ namespace Game.GameActors.Items.Weapons
 
         public override void Use(Unit character, Convoy convoy)
         {
-            character.RemoveRandomCurse();
+            character.RemoveCurse();
             base.Use(character, convoy);
         }
     }

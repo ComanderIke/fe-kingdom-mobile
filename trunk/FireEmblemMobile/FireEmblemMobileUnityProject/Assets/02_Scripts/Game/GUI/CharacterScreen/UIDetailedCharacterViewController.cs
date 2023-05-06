@@ -41,25 +41,21 @@ public class UIDetailedCharacterViewController : UICharacterViewController
         skillsUI.Show(unit.SkillManager.Skills);
         blessingParent.DeleteAllChildren();
         curseParent.DeleteAllChildren();
-        if (unit.Blessings != null)
+        if (unit.Blessing != null)
         {
-            foreach (var blessing in unit.Blessings)
-            {
+            
                 var go = Instantiate(blessingPrefab, blessingParent);
-                go.GetComponent<Image>().sprite = blessing.Skill.Icon;
+                go.GetComponent<Image>().sprite = unit.Blessing .Skill.Icon;
                 go.GetComponent<GeneralButtonController>().OnClicked += BlessingClicked;
-            }
+            
           
         }
-        if (unit.Curses != null)
+        if (unit.Curse != null)
         {
-            foreach (var curse in unit.Curses)
-            {
-                var go = Instantiate(cursePrefab, curseParent);
-                go.GetComponent<Image>().sprite = curse.Skill.Icon;
+            var go = Instantiate(cursePrefab, curseParent);
+                go.GetComponent<Image>().sprite = unit.Curse .Skill.Icon;
                 go.GetComponent<GeneralButtonController>().OnClicked += CurseClicked;
-            }
-          
+            
         }
        
 
@@ -69,11 +65,11 @@ public class UIDetailedCharacterViewController : UICharacterViewController
 
     void BlessingClicked(RectTransform clickedTransform)
     {
-        ToolTipSystem.Show(unit.Blessings[0], clickedTransform.position);
+        ToolTipSystem.Show(unit.Blessing, clickedTransform.position);
     }
     void CurseClicked(RectTransform clickedTransform)
     {
-        ToolTipSystem.Show(unit.Curses[0], clickedTransform.position);
+        ToolTipSystem.Show(unit.Curse, clickedTransform.position);
     }
 
 }

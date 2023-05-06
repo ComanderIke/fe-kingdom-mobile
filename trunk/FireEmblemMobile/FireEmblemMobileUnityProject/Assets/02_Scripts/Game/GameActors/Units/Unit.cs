@@ -64,9 +64,9 @@ namespace Game.GameActors.Units
         public string name;
         [HideInInspector] private int hp=-1;
         [NonSerialized]
-        private List<Blessing> blessings;
+        private Blessing blessing;
         [NonSerialized]
-        private List<Curse> curses;
+        private Curse curse;
 
         private int maxBlessings = 3;
         private int maxCurses = 3;
@@ -94,8 +94,8 @@ namespace Game.GameActors.Units
             set => stats = value;
         }
 
-        public List<Blessing> Blessings => blessings;
-        public List<Curse> Curses => curses;
+        public Blessing Blessing => blessing;
+        public Curse Curse => curse;
 
         public Attributes Growths
         {
@@ -163,8 +163,6 @@ namespace Game.GameActors.Units
                     Stats.AttackRanges.Add(r);
             }
 
-            blessings = new List<Blessing>();
-            curses = new List<Curse>();
         }
 
         void ExpGained(int expBefore, int expGained)
@@ -317,6 +315,7 @@ namespace Game.GameActors.Units
         public bool Fielded { get; set; }
         public float HealingMultiplier { get; set; }
         public float BonusSkillProcChance { get; set; }
+        public bool ClassUpgraded { get; set; }
 
 
         public void Equip(Weapon w)
@@ -512,20 +511,18 @@ namespace Game.GameActors.Units
 
         public void ReceiveBlessing(Blessing blessing)
         {
-            if (blessings.Count < maxBlessings)
-            {
-                this.blessings.Add(blessing);
+       
+                this.blessing=blessing;
                 blessing.BlessUnit(this);
-            }
+            
         }
 
         public void ReceiveCurse(Curse curse)
             {
-                if (curses.Count < maxCurses)
-                {
-                    this.curses.Add(curse);
-                    curse.BlessUnit(this);
-                }
+               
+                this.curse = curse;
+                curse.BlessUnit(this);
+                
             }
 
         
@@ -533,11 +530,11 @@ namespace Game.GameActors.Units
 
         public void RemoveBlessing(Blessing blessing)
         {
-            blessings.Remove(blessing);
+            this.blessing = null;
         }
-        public void RemoveCurse(Curse curse)
+        public void RemoveCurse()
         {
-            curses.Remove(curse);
+            this.curse = null;
         }
 
         public void EncounterTick()
@@ -554,11 +551,7 @@ namespace Game.GameActors.Units
             
         }
 
-
-        public void RemoveRandomCurse()
-        {
-            RemoveCurse(curses[Random.Range(0,curses.Count)]);
-        }
+        
 
         public void RemoveDebuffs()
         {
@@ -569,7 +562,7 @@ namespace Game.GameActors.Units
         {
             if (curseBlessBase is Curse curse)
             {
-                RemoveCurse(curse);
+                RemoveCurse();
             }
             else  if (curseBlessBase is Blessing blessing)
             {

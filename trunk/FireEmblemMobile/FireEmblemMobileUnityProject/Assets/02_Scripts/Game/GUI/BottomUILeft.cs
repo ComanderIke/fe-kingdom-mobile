@@ -54,20 +54,20 @@ namespace LostGrace
             weaponSlot.Show(unit.equippedWeapon);
             RelicSlot1.Show(unit.EquippedRelic1);
             RelicSlot2.Show(unit.EquippedRelic2);
-            if (unit.Blessings.Count != 0)
+            if (unit.Blessing != null)
             {
                 blessingSprite.enabled=true;
-                blessingSprite.sprite = unit.Blessings[0].Skill.Icon;
+                blessingSprite.sprite = unit.Blessing.Skill.Icon;
             }
             else
             {
                 blessingSprite.enabled=false;
             }
 
-            if (unit.Curses.Count != 0)
+            if (unit.Curse!=null)
             {
                 curseSprite.enabled = true;
-                curseSprite.sprite = unit.Curses[0].Skill.Icon;
+                curseSprite.sprite = unit.Curse.Skill.Icon;
             }
             else
             {

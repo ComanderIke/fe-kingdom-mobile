@@ -30,11 +30,12 @@ namespace Game.GameResources
         
 
         // [SerializeField] private List<EquipableItem> armor = default;
-        [SerializeField] private RelicBP[] relics = default;
+        [SerializeField] private RelicBP[] allRelics = default;
         [SerializeField] private RelicBP[] rareRelics = default;
         [SerializeField] private RelicBP[] uncommonRelics = default;
         [SerializeField] private RelicBP[]superRareRelics = default;
         [SerializeField] private WeaponBP[] allWeapons;
+        [SerializeField] private SkillBP[] allSkills;
         [SerializeField] private GemBP[] allGems;
         [SerializeField] private GemBP[] allSmallGems;
         [SerializeField] private GemBP[] allMediumGems;
@@ -58,6 +59,7 @@ namespace Game.GameResources
         [SerializeField] private List<SkillBP> relicSkillPool;
         [SerializeField] private EventData eventData;
         [SerializeField] BlessingBP[] allBlessings;
+        [SerializeField] CurseBP[] allCurses;
         [SerializeField] BlessingBP[]  tier0Blessings;
         [SerializeField] BlessingBP[]  tier1Blessings;
         [SerializeField] BlessingBP[]  tier2Blessings;
@@ -115,16 +117,18 @@ namespace Game.GameResources
             allSmallGems = Array.FindAll(allGems,a => a.GetRarity() == 1);
             allMediumGems = Array.FindAll(allGems,a => a.GetRarity() == 2);
             allLargeGems = Array.FindAll(allGems,a => a.GetRarity() == 3);
+            allSkills = GetAllInstances<SkillBP>();
             allWeapons = GetAllInstances<WeaponBP>();
+            allCurses = GetAllInstances<CurseBP>();
             allBombs = GetAllInstances<BombBP>();
             allBuffPotions = GetAllInstances<BuffPotionBP>();
             allAttributePotions = GetAllInstances<AttributePotionBP>();
             allConsumables = GetAllInstances<ConsumableItemBp>();
             allItems = Array.FindAll(GetAllInstances<ItemBP>(), a => !(a is WeaponBP));
-            relics = GetAllInstances<RelicBP>();
-            uncommonRelics = Array.FindAll(relics, a => a.rarity == 1);
-            rareRelics = Array.FindAll(relics, a => a.rarity == 2);
-            superRareRelics = Array.FindAll(relics, a => a.rarity == 3);
+            allRelics = GetAllInstances<RelicBP>();
+            uncommonRelics = Array.FindAll(allRelics, a => a.rarity == 1);
+            rareRelics = Array.FindAll(allRelics, a => a.rarity == 2);
+            superRareRelics = Array.FindAll(allRelics, a => a.rarity == 3);
 
         }
 
@@ -150,6 +154,42 @@ namespace Game.GameResources
             weaponBp = allWeapons.First(a => a.name == name);
 
             return (Weapon)weaponBp.Create();
+        }
+        public Relic GetRelic(string name)
+        {
+            RelicBP weaponBp = null;
+            weaponBp = allRelics.First(a => a.name == name);
+
+            return (Relic)weaponBp.Create();
+        }
+        public Skill GetSkill(string name)
+        {
+            SkillBP weaponBp = null;
+            weaponBp = allSkills.First(a => a.Name == name);
+
+            return (Skill)weaponBp.Create();
+        }
+        public Gem GetGem(string name)
+        {
+            GemBP weaponBp = null;
+            weaponBp = allGems.First(a => a.name == name);
+
+            return (Gem)weaponBp.Create();
+        }
+        public Blessing GetBlessing(string name)
+        {
+            Debug.Log(name);
+            BlessingBP weaponBp = null;
+            weaponBp = allBlessings.First(a => a.name == name);
+
+            return (Blessing)weaponBp.Create();
+        }
+        public Curse GetCurse(string name)
+        {
+            CurseBP weaponBp = null;
+            weaponBp = allCurses.First(a => a.name == name);
+
+            return (Curse)weaponBp.Create();
         }
         public Unit GetHumanFromBlueprint(string name)
         {
