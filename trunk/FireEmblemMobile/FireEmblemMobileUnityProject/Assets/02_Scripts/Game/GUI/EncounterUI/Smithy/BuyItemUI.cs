@@ -18,7 +18,7 @@ public class BuyItemUI : MonoBehaviour
     // public TextMeshProUGUI weightAfter;
     [SerializeField] TextMeshProUGUI effectCurrent;
     [SerializeField] protected TextMeshProUGUI cost;
-    [SerializeField] Button button;
+    [SerializeField] protected Button button;
     [SerializeField] Image buttonBg;
     [SerializeField] private GameObject weaponSection;
     [SerializeField] private GameObject relicSection;
@@ -28,7 +28,11 @@ public class BuyItemUI : MonoBehaviour
     [SerializeField] private Color sellColorPressed;
     [SerializeField] private Color buyColor;
     [SerializeField] private Color buyColorPressed;
+    [SerializeField] protected Color textNormalColor;
+    [SerializeField] protected Color tooExpensiveTextColor;
 
+    [SerializeField] protected CanvasGroup sellButtonCanvasGroup;
+    [SerializeField] protected float tooExpensiveAlpha;
     // Start is called before the first frame update
     public void Show(Item item, bool affordable, bool buying)
     {
@@ -51,6 +55,8 @@ public class BuyItemUI : MonoBehaviour
             colors.pressedColor = buyColorPressed;
             colors.selectedColor = buyColor;
             button.colors = colors;
+            cost.color = textNormalColor;
+            sellButtonCanvasGroup.alpha = 1;
         }
         else
         {
@@ -59,6 +65,8 @@ public class BuyItemUI : MonoBehaviour
             colors.pressedColor = sellColorPressed;
             colors.selectedColor = sellColor;
             button.colors = colors;
+            cost.color = tooExpensiveTextColor;
+            sellButtonCanvasGroup.alpha = tooExpensiveAlpha;
         }
         if (!buying)
         {
@@ -69,6 +77,8 @@ public class BuyItemUI : MonoBehaviour
             colors.pressedColor = sellColorPressed;
             colors.selectedColor = sellColor;
             button.colors = colors;
+            cost.color = textNormalColor;
+            sellButtonCanvasGroup.alpha = 1;
         }
         if (item is Weapon weapon)
         {

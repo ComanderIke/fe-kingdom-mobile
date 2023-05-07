@@ -64,9 +64,9 @@ public class UISmithyController : MonoBehaviour
             weaponSlot.Show(party.ActiveUnit.equippedWeapon, selectedWeapon == party.ActiveUnit.equippedWeapon);
             insertGemUI.Hide();
             combineGemUI.Hide();
-            smithingArea.Show(selectedWeapon,smithy.GetGoldUpgradeCost(selectedWeapon), smithy.GetStoneUpgradeCost(selectedWeapon), smithy.GetDragonScaleUpgradeCost(selectedWeapon),
-                party.CanAfford(smithy.GetGoldUpgradeCost(selectedWeapon)) && party.Convoy.GetItemCount(GameBPData.Instance.GetSmithingStone())>= smithy.GetStoneUpgradeCost(selectedWeapon)&&
-                party.Convoy.GetItemCount(GameBPData.Instance.GetDragonScale())>=smithy.GetDragonScaleUpgradeCost(selectedWeapon));
+            smithingArea.Show(selectedWeapon, smithy.GetGoldUpgradeCost(selectedWeapon),
+                smithy.GetStoneUpgradeCost(selectedWeapon), smithy.GetDragonScaleUpgradeCost(selectedWeapon),
+                party.CanAfford(smithy.GetGoldUpgradeCost(selectedWeapon)));
             smithingButtonAlpha.alpha = 1.0f;
             combineGemsButtonAlpha.alpha = 0.6f;
             insertGemsButtonAlpha.alpha = 0.6f;

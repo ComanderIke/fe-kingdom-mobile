@@ -175,7 +175,12 @@ namespace Game.WorldMapStuff.Model
 
         public int GetItemCount(Item item)
         {
-            var stones=items.FindAll(i => i.item.Name == item.Name);
+            return GetItemCount(item.Name);
+        }
+
+        public int GetItemCount(String itemName)
+        {
+            var stones=items.FindAll(i => i.item.Name == itemName);
             int sum = 0;
             for (int i = 0; i < stones.Count; i++)
             {
@@ -184,5 +189,6 @@ namespace Game.WorldMapStuff.Model
 
             return sum;
         }
+       
     }
 }

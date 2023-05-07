@@ -2601,6 +2601,7 @@ GameObject:
   - component: {fileID: 7944821550436787742}
   - component: {fileID: 7944821550436788193}
   - component: {fileID: 7944821550436788192}
+  - component: {fileID: 741785469419063405}
   m_Layer: 5
   m_Name: UpgradeButton
   m_TagString: Untagged
@@ -2722,6 +2723,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!225 &741785469419063405
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7944821550436788194}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &7944821550437977478
 GameObject:
   m_ObjectHideFlags: 0
@@ -3589,6 +3602,10 @@ MonoBehaviour:
   sellColorPressed: {r: 0.6037736, g: 0.11981896, b: 0.08259169, a: 1}
   buyColor: {r: 0.5479108, g: 1, b: 0.4009434, a: 1}
   buyColorPressed: {r: 0.4622654, g: 0.8301887, b: 0.34069067, a: 1}
+  textNormalColor: {r: 1, g: 1, b: 1, a: 1}
+  tooExpensiveTextColor: {r: 0.8396226, g: 0.13069598, b: 0.13069598, a: 1}
+  sellButtonCanvasGroup: {fileID: 741785469419063405}
+  tooExpensiveAlpha: 0.6
 --- !u!1 &8175115421756422222
 GameObject:
   m_ObjectHideFlags: 0
