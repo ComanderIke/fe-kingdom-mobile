@@ -16,6 +16,7 @@ namespace LostGrace
         [SerializeField] private TextFieldPopUp textFieldPopUp;
         [SerializeField] private Animator animator;
         [SerializeField] private MainMenuController mainMenu;
+        [SerializeField] private OKCancelDialogController okCancelDialogController;
         private static readonly int Show1 = Animator.StringToHash("Show");
         public override void Show()
         {
@@ -99,8 +100,12 @@ namespace LostGrace
 
         public void DeleteFileClicked(int slot)
         {
-            SaveGameManager.DeleteSaveFile(slot);
-            Show();
+            okCancelDialogController.Show("Do you want to delete the file?", () =>
+            {
+                SaveGameManager.DeleteSaveFile(slot);
+                Show();
+            });
+            
         }
 
         IEnumerator StartSaveFileCoroutine(int slot)
