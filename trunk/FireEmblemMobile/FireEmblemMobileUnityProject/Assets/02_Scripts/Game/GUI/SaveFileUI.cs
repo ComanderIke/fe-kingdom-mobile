@@ -11,6 +11,7 @@ namespace LostGrace
         [SerializeField] private Image image;
         [SerializeField] private Color startColor;
         [SerializeField] private Color loadedColor;
+        [SerializeField] private GameObject deleteButton;
         public void UpdateText(string name)
         {
             nameText.SetText(name);
@@ -26,6 +27,14 @@ namespace LostGrace
             button.interactable = b;
         }
 
-       
+
+        public void ShowDeleteButton()
+        {
+            deleteButton.SetActive(true);
+        }
+        public void HideDeleteButton()
+        {
+            deleteButton.SetActive(false);
+        }
     }
 }

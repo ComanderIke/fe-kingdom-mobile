@@ -26,33 +26,39 @@ namespace LostGrace
               
                 slot1Button.SetLoaded(true);
                 slot1Button.UpdateText(SaveGameManager.GetFileSlotName(1));
+                slot1Button.ShowDeleteButton();
             }
             else
             {
                 slot1Button.SetLoaded(false);
                 slot1Button.UpdateText("New Game");
+                slot1Button.HideDeleteButton();
             }
             if (SaveGameManager.FileSlotExists(2))
             {
                 Debug.Log("Slot 2 Exists");
                 slot2Button.SetLoaded(true);
                 slot2Button.UpdateText(SaveGameManager.GetFileSlotName(2));
+                slot2Button.ShowDeleteButton();
             }
             else
             {
                 slot2Button.SetLoaded(false);
                 slot2Button.UpdateText("New Game");
+                slot2Button.HideDeleteButton();
             }
             if (SaveGameManager.FileSlotExists(3))
             {
                 Debug.Log("Slot 3 Exists");
                 slot3Button.SetLoaded(true);
                 slot3Button.UpdateText(SaveGameManager.GetFileSlotName(3));
+                slot3Button.ShowDeleteButton();
             }
             else
             {
                 slot3Button.SetLoaded(false);
                 slot3Button.UpdateText("New Game");
+                slot3Button.HideDeleteButton();
             }
             slot1Button.SetInteractable(true);
             slot2Button.SetInteractable(true);
@@ -89,6 +95,12 @@ namespace LostGrace
 
            
             
+        }
+
+        public void DeleteFileClicked(int slot)
+        {
+            SaveGameManager.DeleteSaveFile(slot);
+            Show();
         }
 
         IEnumerator StartSaveFileCoroutine(int slot)
@@ -133,6 +145,7 @@ namespace LostGrace
             slot1Button.SetInteractable(true);
             slot2Button.SetInteractable(true);
             slot3Button.SetInteractable(true);
+            Show();
         }
 
         IEnumerator HideCoroutine()

@@ -288,5 +288,16 @@ namespace LostGrace
         {
             return currentSaveData != null && currentSaveData.encounterTreeData != null&&currentSaveData.encounterTreeData.columns.Count!=0;
         }
+
+        public static void DeleteSaveFile(int slot)
+        {
+            if (!FileSlotExists(slot))
+                return;
+            string folder = Application.persistentDataPath + "/saves/";
+            string filePath = Path.Combine(folder, SaveFileName + slot + ".fe");
+           
+            File.Delete(filePath);
+            Debug.Log("Deleted Save Slot: "+slot+" "+filePath);
+        }
     }
 }

@@ -110,15 +110,15 @@ namespace Game.GameActors.Players
             unit.ExperienceManager.Level = ExperienceManager.Level;
             unit.TurnStateManager = TurnStateManager;
             unit.Hp = hp;
-            if(blessingId!="")
+            if(blessingId!=""&&blessingId!=null)
                 unit.ReceiveBlessing(GameBPData.Instance.GetBlessing(blessingId));
-            if(curseId!="")
+            if(curseId!=""&&curseId!=null)
                 unit.ReceiveCurse(GameBPData.Instance.GetCurse(curseId));
        
             unit.equippedWeapon = GameBPData.Instance.GetWeapon(weaponId);
-            if(relic1Id!="")
+            if(relic1Id!=""&&relic1Id!=null)
                 unit.EquippedRelic1 = GameBPData.Instance.GetRelic(relic1Id);
-            if(relic2Id!="")
+            if(relic2Id!=""&&relic2Id!=null)
                 unit.EquippedRelic2 = GameBPData.Instance.GetRelic(relic2Id);
             unit.ClassUpgraded = classUpgraded;
             if (unit.EquippedRelic1 != null)
