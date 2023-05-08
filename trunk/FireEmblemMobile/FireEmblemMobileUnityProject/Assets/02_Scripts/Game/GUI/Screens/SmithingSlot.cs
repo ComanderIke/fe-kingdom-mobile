@@ -13,7 +13,17 @@ public class SmithingSlot : MonoBehaviour
     [SerializeField] Color bGSelectedColor;
     [SerializeField] private Image gem;
     [SerializeField] private GameObject slot;
+    private bool selected = false;
+    private EquipableItem equipable;
     public void Show(EquipableItem equipable, bool selected=false)
+    {
+        this.selected = selected;
+        this.equipable = equipable;
+       UpdateUI();
+      
+    }
+
+    void UpdateUI()
     {
         if (equipable == null)
         {
@@ -59,11 +69,26 @@ public class SmithingSlot : MonoBehaviour
         {
             backGround.color = bGNormalColor;
         }
-       
     }
-
     public void Hide()
     {
         throw new System.NotImplementedException();
+    }
+
+    public void Select()
+    {
+        selected = true;
+        UpdateUI();
+    }
+
+    public void Deselect()
+    {
+        selected = false;
+        UpdateUI();
+    }
+
+    public void Highlight()
+    {
+        Debug.Log("Highlight Slot somehow");
     }
 }

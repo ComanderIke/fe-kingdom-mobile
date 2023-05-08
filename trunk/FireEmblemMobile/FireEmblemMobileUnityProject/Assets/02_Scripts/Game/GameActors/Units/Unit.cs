@@ -68,8 +68,8 @@ namespace Game.GameActors.Units
         [NonSerialized]
         private Curse curse;
 
-        private int maxBlessings = 3;
-        private int maxCurses = 3;
+        // private int maxBlessings = 3;
+        // private int maxCurses = 3;
         [NonSerialized]
         private Stats stats;
         [SerializeField]
@@ -395,6 +395,22 @@ namespace Game.GameActors.Units
                 OnEquippedRelic1?.Invoke(r);
             }
             else if (EquippedRelic2 == null)
+            {
+                EquippedRelic2 = r;
+                OnEquippedRelic2?.Invoke(r);
+               
+            }
+            else return;
+           
+        }
+        public void Equip(Relic r, int slot)
+        {
+            if (slot==1)
+            {
+                EquippedRelic1 = r;
+                OnEquippedRelic1?.Invoke(r);
+            }
+            else if (slot==2)
             {
                 EquippedRelic2 = r;
                 OnEquippedRelic2?.Invoke(r);

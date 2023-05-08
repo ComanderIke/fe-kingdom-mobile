@@ -16,7 +16,7 @@ public class ItemToolTip : MonoBehaviour
     public TextMeshProUGUI headerText;
     public TextMeshProUGUI descriptionText;
 
-   
+    [SerializeField] private UIEquipmentController equipmentController;
     public LayoutElement layoutElement;
     public int characterWrapLimit;
     public Image itemIcon;
@@ -29,6 +29,8 @@ public class ItemToolTip : MonoBehaviour
     private RectTransform rectTransform;
     private Unit itemOwner;
     public LayoutElement frame;
+
+    [SerializeField] UICharacterViewController charView;
     // Start is called before the first frame update
   
 
@@ -41,23 +43,62 @@ public class ItemToolTip : MonoBehaviour
         }
     }
 
-    public void UseClicked()
+    void RelicEquipClicked(Relic relic)
     {
-        Debug.Log("Use Item Clicked TODO dont Remove here also just in ItembaseClass!");
-        if (item is EquipableItem eitem)
+      
+        Unit human =Player.Instance.Party.ActiveUnit;
+        if (equipmentController.selectedSlot == null)
         {
-            Unit human =Player.Instance.Party.ActiveUnit;
+            charView.Show(human);
+            equipmentController.HighlightRelicSlots();
+        }
+        else
+        {
+            EquipRelicOnSelectedSlot(human, relic);
+        }
+        
+    }
 
-            if (human.HasEquipped(eitem))
+    void EquipRelicOnSelectedSlot(Unit human, Relic relic)
+    {
+        if (equipmentController.selectedSlotNumber == 1)
+        {
+            if (human.HasEquipped(relic))
             {
-                human.UnEquip((eitem));
+                human.UnEquip((relic));
                 Player.Instance.Party.Convoy.AddItem(item);
             }
             else
             {
-                human.Equip((eitem));
+                if(human.EquippedRelic1!=null)
+                    Player.Instance.Party.Convoy.AddItem(human.EquippedRelic1);
+                human.Equip((relic), equipmentController.selectedSlotNumber);
                 Player.Instance.Party.Convoy.RemoveItem(item);
             }
+        }
+        else if (equipmentController.selectedSlotNumber == 2)
+        {
+            if (human.HasEquipped(relic))
+            {
+                human.UnEquip((relic));
+                Player.Instance.Party.Convoy.AddItem(item);
+            }
+            else
+            {
+                if(human.EquippedRelic2!=null)
+                    Player.Instance.Party.Convoy.AddItem(human.EquippedRelic2);
+                human.Equip((relic), equipmentController.selectedSlotNumber);
+                Player.Instance.Party.Convoy.RemoveItem(item);
+            }
+        }
+    }
+    public void UseClicked()
+    {
+        Debug.Log("Use Item Clicked TODO dont Remove here also just in ItembaseClass!");
+        
+        if (item is Relic eitem)
+        {
+           RelicEquipClicked(eitem);
         }
         else 
         {

@@ -29,16 +29,39 @@ public class UIConvoyController:MonoBehaviour
     {
         canvas.enabled =! canvas.enabled;
         state = ConvoeyState.Normal;
+      
         if(canvas.enabled)
             UpdateValues();
     }
-
     public void Show()
     {
-        Debug.Log("Showing convoy! itemcount: " + convoy.Items.Count);
+        Show(typeof(Item));
+    }
+    public void Show(Type filter)
+    {
+        typeFilter = filter;
+       
         canvas.enabled = true;
-        state = ConvoeyState.Normal;
+ 
+        state = typeFilter==typeof(Item)?ConvoeyState.Normal:ConvoeyState.ChooseItem;
         UpdateValues();
+        //Debug.Log("Showing convoy! itemcount: " + convoy.Items.Count);
+    }
+
+    public UIConvoyItemController CreateItemGameObject(StockedItem stockedItem, int index)
+    {
+        if(typeFilter==null)
+           typeFilter = typeof(Item);
+        var go = Instantiate(convoyItemPrefab, DropAreas[index].transform);
+        var itemController = go.GetComponent<UIConvoyItemController>();
+       // Debug.Log("Item type: "+stockedItem.item.GetType()+" "+typeFilter.IsAssignableFrom(stockedItem.item.GetType()));
+        itemController.SetValues(stockedItem, !typeFilter.IsAssignableFrom(stockedItem.item.GetType()));
+        itemController.onClicked += ItemClicked;
+        var dragController = go.GetComponent<UIDragable>();
+        dragController.SetItem(stockedItem.item);
+        dragController.SetCanvas(GetComponent<Canvas>());
+        instantiatedItems.Add(go);
+        return itemController;
     }
     public void UpdateValues()
     {
@@ -72,12 +95,15 @@ public class UIConvoyController:MonoBehaviour
           
             for (int i = 0; i < convoy.Items.Count; i++)
             {
-             
-                var go = Instantiate(convoyItemPrefab, DropAreas[i].transform);
-                go.GetComponent<UIConvoyItemController>().SetValues(convoy.Items[i]);
-                go.GetComponent<UIDragable>().SetItem(convoy.Items[i].item);
-                go.GetComponent<UIDragable>().SetCanvas(GetComponent<Canvas>());
-                instantiatedItems.Add(go);
+                var itemController = CreateItemGameObject(convoy.Items[i], i);
+                if (convoy.GetSelectedItem() == convoy.Items[i])
+                {
+                    itemController.Select();
+                }
+                else
+                {
+                    itemController.Deselect();
+                }
             }
         }
 
@@ -114,11 +140,7 @@ public class UIConvoyController:MonoBehaviour
             for (int i = 0; i < sortedList.Count; i++)
             {
                 Debug.Log(sortedList[i].item.Name);
-                var go = Instantiate(convoyItemPrefab, DropAreas[i].transform);
-                go.GetComponent<UIConvoyItemController>().SetValues(sortedList[i], sortedList[i].item.GetType()!=typeFilter);
-                go.GetComponent<UIDragable>().SetItem(sortedList[i].item);
-                go.GetComponent<UIDragable>().SetCanvas(GetComponent<Canvas>());
-                instantiatedItems.Add(go);
+                CreateItemGameObject(sortedList[i], i);
             }
         }
 
@@ -146,6 +168,7 @@ public class UIConvoyController:MonoBehaviour
     }
     public void Hide()
     {
+        convoy.Deselect();
         enabled = false;
         GetComponent<Canvas>().enabled = enabled;
     }
@@ -159,9 +182,12 @@ public class UIConvoyController:MonoBehaviour
         UpdateValues();
     }
 
-    public void ItemClicked(Item i)
+    public void ItemClicked(StockedItem clickedItem)
     {
-        
+        Debug.Log("Item Clicked: "+clickedItem);
+        convoy.Select(clickedItem);
+        ToolTipSystem.Show(clickedItem.item, transform.position, clickedItem.item.Name, clickedItem.item.Description, clickedItem.item.Sprite);
+        UpdateValues();
     }
 
     public void NoneClicked()

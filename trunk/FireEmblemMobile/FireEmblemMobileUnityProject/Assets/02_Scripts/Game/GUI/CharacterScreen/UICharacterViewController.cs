@@ -186,7 +186,7 @@ public class UICharacterViewController : MonoBehaviour
         ToolTipSystem.ShowAttribute("Faith", "Increases ones holy and occult damage and increases magical damage resistance!",unit.Stats.BaseAttributes.FAITH,FTH.transform.position);
     }
     
-    public void Hide()
+    public virtual void Hide()
     {
         canvas.enabled = false;
     }

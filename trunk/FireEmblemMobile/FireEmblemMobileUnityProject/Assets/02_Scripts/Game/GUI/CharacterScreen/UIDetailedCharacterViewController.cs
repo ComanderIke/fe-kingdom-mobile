@@ -72,5 +72,10 @@ public class UIDetailedCharacterViewController : UICharacterViewController
         ToolTipSystem.Show(unit.Curse, clickedTransform.position);
     }
 
+    public override void Hide()
+    {
+        equipmentController.Hide();
+        base.Hide();
+    }
 }
 

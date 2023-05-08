@@ -89,12 +89,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rectTransform: {fileID: 4922835969358996510}
   StartPosition: {x: 0, y: 0, z: 0}
-  item:
-    Name: 
-    Description: 
-    cost: 0
-    rarity: 0
-    Sprite: {fileID: 0}
 --- !u!114 &2142891884500082677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,9 +105,9 @@ MonoBehaviour:
   description: {fileID: 971792272275641341}
   canvasGroup: {fileID: 1628317842583388092}
   button: {fileID: 6305959473201205820}
-  normalBgColor: {r: 0, g: 0, b: 0, a: 0}
-  selectedBgColor: {r: 0, g: 0, b: 0, a: 0}
-  backGround: {fileID: 0}
+  normalBgColor: {r: 1, g: 1, b: 1, a: 1}
+  selectedBgColor: {r: 0.118948035, g: 0.46932998, b: 0.9339623, a: 1}
+  backGround: {fileID: 8723362929861133590}
   stockCount: {fileID: 1102941030006200818}
   gemImage: {fileID: 2972501282947297158}
   slot: {fileID: 7902805748578435099}
@@ -222,6 +216,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1324607215422980412, guid: 2a1f3bb4b3401254cbb63b3e6bb11502,
+        type: 3}
+      propertyPath: m_Name
+      value: Background
+      objectReference: {fileID: 0}
     - target: {fileID: 1324607215422980414, guid: 2a1f3bb4b3401254cbb63b3e6bb11502,
         type: 3}
       propertyPath: m_Color.b
@@ -508,6 +507,18 @@ CanvasGroup:
     type: 3}
   m_PrefabInstance: {fileID: 7741247281681908776}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8723362929861133590 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1324607215422980414, guid: 2a1f3bb4b3401254cbb63b3e6bb11502,
+    type: 3}
+  m_PrefabInstance: {fileID: 7741247281681908776}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6305959473201205820 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4390213419663431188, guid: 2a1f3bb4b3401254cbb63b3e6bb11502,

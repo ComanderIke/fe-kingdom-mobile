@@ -14,6 +14,32 @@ namespace Game.WorldMapStuff.Model
         
         [SerializeField] public event Action convoyUpdated;
 
+        private int selectedItemIndex = -1;
+
+        public StockedItem GetSelectedItem()
+        {
+            if (selectedItemIndex == -1)
+            {
+                Debug.Log("No Item Selected");
+                return null;
+            }
+
+            return Items[selectedItemIndex];
+        }
+
+        public void Select(StockedItem item)
+        {
+            selectedItemIndex= Items.IndexOf(item);
+            if (selectedItemIndex == -1)
+            {
+                Debug.Log("Could not find Item: "+item);
+            }
+        }
+
+        public void Deselect()
+        {
+            selectedItemIndex = -1;
+        }
         public List<StockedItem> Items
         {
             get

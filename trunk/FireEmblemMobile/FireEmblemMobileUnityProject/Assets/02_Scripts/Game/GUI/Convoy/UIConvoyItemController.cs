@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Game.GameActors.Items.Weapons;
@@ -11,6 +12,7 @@ public class UIConvoyItemController : UIButtonController
     public TextMeshProUGUI stockCount;
     [SerializeField] private Image gemImage;
     [SerializeField] private GameObject slot;
+    public event Action<StockedItem> onClicked;
     public void SetValues(StockedItem stockeditem, bool grayedOut=false)
     {
         if (stockeditem.item is Relic relic)
@@ -49,8 +51,9 @@ public class UIConvoyItemController : UIButtonController
 
     public void Clicked()
     {
-        Debug.Log("ItemClicked!" + item.item.Name);
-        ToolTipSystem.Show(item.item, transform.position, item.item.Name, item.item.Description, item.item.Sprite);
+        onClicked?.Invoke(item);
+      
+       
         //FindObjectOfType<UIMerchantController>().ItemClicked(item.item);
         // ToolTipSystem.Show(transform.position, item.name, item.description, item.sprite);
     }
