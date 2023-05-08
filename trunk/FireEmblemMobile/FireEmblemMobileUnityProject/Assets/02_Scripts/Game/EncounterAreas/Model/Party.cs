@@ -62,6 +62,8 @@ namespace Game.WorldMapStuff.Model
                 if (value == money)
                     return;
                 money = value;
+                if (money <= 0)
+                    money = 0;
                 onGoldChanged?.Invoke(money);
             }
         }
@@ -74,7 +76,8 @@ namespace Game.WorldMapStuff.Model
                 if (value == collectedGrace)
                     return;
                 collectedGrace = value;
-
+                if (collectedGrace <= 0)
+                    collectedGrace = 0;
                 onGraceChanged?.Invoke(collectedGrace);
             }
         }
