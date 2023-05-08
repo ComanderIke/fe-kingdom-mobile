@@ -15,6 +15,8 @@ namespace Game.GameActors.Players
         [SerializeField]
         public string weaponId;
         [SerializeField]
+        public int weaponLvl;
+        [SerializeField]
         public string relic1Id;
         [SerializeField]
         public List<string> relic1slotIds;
@@ -54,6 +56,7 @@ namespace Game.GameActors.Players
             this.unitBlueprintID = unit.bluePrintID;
             this.hp = unit.Hp;
             weaponId = unit.equippedWeapon.Name;
+            weaponLvl = unit.equippedWeapon.weaponLevel;
           
            
             if(unit.Blessing!=null)
@@ -116,6 +119,7 @@ namespace Game.GameActors.Players
                 unit.ReceiveCurse(GameBPData.Instance.GetCurse(curseId));
        
             unit.equippedWeapon = GameBPData.Instance.GetWeapon(weaponId);
+            unit.equippedWeapon.weaponLevel = weaponLvl;
             if(relic1Id!=""&&relic1Id!=null)
                 unit.EquippedRelic1 = GameBPData.Instance.GetRelic(relic1Id);
             if(relic2Id!=""&&relic2Id!=null)

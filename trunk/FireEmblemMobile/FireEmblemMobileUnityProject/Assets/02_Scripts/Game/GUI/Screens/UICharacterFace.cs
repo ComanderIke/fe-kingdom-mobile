@@ -34,11 +34,11 @@ public class UICharacterFace : MonoBehaviour
     }
     void InitHpBar()
     {
-        if (hpBar.currentValue > unit.Hp)
-        {
-            feedbacks.PlayFeedbacks();
-        }
-       
+        // if (hpBar.currentValue > unit.Hp)
+        // {
+        //     feedbacks.PlayFeedbacks();
+        // }
+        //
         hpBar.SetValue(unit.Hp, unit.MaxHp, false);
     }
 
