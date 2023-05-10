@@ -9,6 +9,7 @@ using Game.GameActors.Units;
 using Game.GameInput;
 using Game.GUI;
 using Game.WorldMapStuff.Model;
+using LostGrace;
 using UnityEngine;
 
 public class UIConvoyController:MonoBehaviour
@@ -28,6 +29,8 @@ public class UIConvoyController:MonoBehaviour
     [SerializeField] private GameObject noneButton;
     [SerializeField] private UIEquipmentController equipmentController;
     [SerializeField] private UICharacterViewController charView;
+    [SerializeField] private ClickAndHoldButton contextButton;
+    [SerializeField] private ClickAndHoldButton dropButton;
     private Type typeFilter;
     public void Toogle()
     {
@@ -43,6 +46,7 @@ public class UIConvoyController:MonoBehaviour
     }
     public void Show(Type filter)
     {
+        this.convoy = Player.Instance.Party.Convoy;
         typeFilter = filter;
        
         canvas.enabled = true;
@@ -73,17 +77,49 @@ public class UIConvoyController:MonoBehaviour
         convoy.RemoveStockedItem(item);
     }
 
-    public void UpdateValues()
+    [SerializeField] private Color EquipColor;
+    [SerializeField] private Color UseColor;
+    [SerializeField] private Color DropColor;
+
+    void UpdateContextButtons()
     {
-        if (characterCanvas.enabled)
+        var selectedItem =  convoy.GetSelectedItem();
+        if (selectedItem != null)
         {
-            GetComponent<RectTransform>().anchoredPosition = rightPosition;
+            dropButton.gameObject.SetActive(true);
+            if (selectedItem.item is Relic)
+            {
+                contextButton.gameObject.SetActive(true);
+                contextButton.SetBackgroundColor(EquipColor);
+                contextButton.SetText("Equip");
+            }
+            else if (selectedItem.item is ConsumableItem)
+            {
+                contextButton.gameObject.SetActive(true);
+                contextButton.SetBackgroundColor(UseColor);
+                contextButton.SetText("Use");
+            }
         }
         else
         {
-            GetComponent<RectTransform>().anchoredPosition = leftPosition;
+            contextButton.gameObject.SetActive(false);
+            dropButton.gameObject.SetActive(false);
         }
-        this.convoy = Player.Instance.Party.Convoy;
+    }
+    public void UpdateValues()
+    {
+       
+        UpdateContextButtons();
+     
+        // if (characterCanvas.enabled)
+        // {
+        //     GetComponent<RectTransform>().anchoredPosition = rightPosition;
+        // }
+        // else
+        // {
+        //     GetComponent<RectTransform>().anchoredPosition = leftPosition;
+        // }
+        
         if (!init)
         {
             init = true;
