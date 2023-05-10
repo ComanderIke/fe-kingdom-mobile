@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using __2___Scripts.Game.Utility;
 using Game.GameActors.Items;
 using Game.GameActors.Items.Gems;
+using Game.GameActors.Items.Weapons;
 using Game.GameActors.Players;
+using Game.GameActors.Units;
 using Game.GameInput;
 using Game.GUI;
 using Game.WorldMapStuff.Model;
@@ -24,6 +26,8 @@ public class UIConvoyController:MonoBehaviour
     public Vector3 leftPosition;
     public Vector3 rightPosition;
     [SerializeField] private GameObject noneButton;
+    [SerializeField] private UIEquipmentController equipmentController;
+    [SerializeField] private UICharacterViewController charView;
     private Type typeFilter;
     public void Toogle()
     {
@@ -63,6 +67,12 @@ public class UIConvoyController:MonoBehaviour
         instantiatedItems.Add(go);
         return itemController;
     }
+
+    public void DropClicked(StockedItem item)
+    {
+        convoy.RemoveStockedItem(item);
+    }
+
     public void UpdateValues()
     {
         if (characterCanvas.enabled)
@@ -182,12 +192,68 @@ public class UIConvoyController:MonoBehaviour
         UpdateValues();
     }
 
-    public void ItemClicked(StockedItem clickedItem)
+    public void ItemClicked(UIConvoyItemController clickedItem)
     {
         Debug.Log("Item Clicked: "+clickedItem);
-        convoy.Select(clickedItem);
-        ToolTipSystem.Show(clickedItem.item, transform.position, clickedItem.item.Name, clickedItem.item.Description, clickedItem.item.Sprite);
+        convoy.Select(clickedItem.stockedItem);
+        ToolTipSystem.Show(clickedItem.stockedItem.item, clickedItem.transform.position, clickedItem.stockedItem.item.Name, clickedItem.stockedItem.item.Description, clickedItem.stockedItem.item.Sprite);
         UpdateValues();
+    }
+    public void UseClicked()
+    {
+ 
+        var selectedItem = convoy.GetSelectedItem();
+        if (selectedItem == null)
+            return;
+
+      
+        if (selectedItem.item is Relic eitem)
+        {
+            RelicEquipClicked(eitem);
+        }
+        else 
+        {
+            if (selectedItem.item is ConsumableItem cItem)
+            {
+                cItem.Use(Player.Instance.Party.ActiveUnit, Player.Instance.Party.Convoy);
+            }
+        }
+    }
+    void RelicEquipClicked(Relic relic)
+    {
+      
+        Unit human =Player.Instance.Party.ActiveUnit;
+        if (equipmentController.selectedSlot == null)
+        {
+            charView.Show(human);
+            equipmentController.HighlightRelicSlots();
+        }
+        else
+        {
+            EquipRelicOnSelectedSlot(human, relic);
+        }
+        
+    }
+
+  
+    void EquipRelicOnSelectedSlot(Unit human, Relic relic)
+    {
+        var equippedRelic = equipmentController.selectedSlotNumber == 1 ? human.EquippedRelic1 : null;
+        if (equippedRelic == null)
+            equippedRelic = equipmentController.selectedSlotNumber == 2 ? human.EquippedRelic2 : null;
+        
+        if (human.HasEquipped(relic))
+        {
+            human.UnEquip((relic));
+            Player.Instance.Party.Convoy.AddItem(relic);
+        }
+        else
+        {
+            if(equippedRelic!=null)
+                Player.Instance.Party.Convoy.AddItem(equippedRelic);
+            human.Equip((relic), equipmentController.selectedSlotNumber);
+            Player.Instance.Party.Convoy.RemoveItem(relic);
+        }
     }
 
     public void NoneClicked()

@@ -215,6 +215,13 @@ namespace Game.WorldMapStuff.Model
 
             return sum;
         }
-       
+
+        public void RemoveStockedItem(StockedItem item)
+        {
+            if(items.Contains(item))
+                items.Remove(item);
+        }
+
+        
     }
 }

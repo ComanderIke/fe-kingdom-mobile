@@ -8,11 +8,11 @@ using UnityEngine.UI;
 
 public class UIConvoyItemController : UIButtonController
 {
-    private StockedItem item;
+    public StockedItem stockedItem;
     public TextMeshProUGUI stockCount;
     [SerializeField] private Image gemImage;
     [SerializeField] private GameObject slot;
-    public event Action<StockedItem> onClicked;
+    public event Action<UIConvoyItemController> onClicked;
     public void SetValues(StockedItem stockeditem, bool grayedOut=false)
     {
         if (stockeditem.item is Relic relic)
@@ -33,7 +33,7 @@ public class UIConvoyItemController : UIButtonController
         {
             slot.gameObject.SetActive(false);
         }
-        this.item = stockeditem;
+        this.stockedItem = stockeditem;
         SetValues(stockeditem.item.Sprite, stockeditem.item.Description, grayedOut);
         stockCount.text = "" + stockeditem.stock+"x";
         stockCount.gameObject.SetActive(stockeditem.stock > 1);
@@ -51,7 +51,7 @@ public class UIConvoyItemController : UIButtonController
 
     public void Clicked()
     {
-        onClicked?.Invoke(item);
+        onClicked?.Invoke(this);
       
        
         //FindObjectOfType<UIMerchantController>().ItemClicked(item.item);
