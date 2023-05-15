@@ -25,8 +25,7 @@ namespace Game.GameActors.Units
     {
         public static event Action OnEquippedWeapon;
         public static event Action<Unit> OnUnitDataChanged;
-        public static event Action<Relic> OnEquippedRelic1;
-        public static event Action<Relic> OnEquippedRelic2;
+        public static event Action<Relic> OnEquippedRelic;
         public static event Action<Relic> OnUnequippedRelic;
 
         #region Events
@@ -352,6 +351,8 @@ namespace Game.GameActors.Units
        
         public void UnEquip(EquipableItem item)
         {
+            if (item == null)
+                return;
             if (equippedWeapon == item)
             {
                 Stats.AttackRanges.Clear();
@@ -399,12 +400,12 @@ namespace Game.GameActors.Units
             if (EquippedRelic1 == null)
             {
                 EquippedRelic1 = r;
-                OnEquippedRelic1?.Invoke(r);
+                OnEquippedRelic?.Invoke(r);
             }
             else if (EquippedRelic2 == null)
             {
                 EquippedRelic2 = r;
-                OnEquippedRelic2?.Invoke(r);
+                OnEquippedRelic?.Invoke(r);
                
             }
             else return;
@@ -415,12 +416,12 @@ namespace Game.GameActors.Units
             if (slot==1)
             {
                 EquippedRelic1 = r;
-                OnEquippedRelic1?.Invoke(r);
+                OnEquippedRelic?.Invoke(r);
             }
             else if (slot==2)
             {
                 EquippedRelic2 = r;
-                OnEquippedRelic2?.Invoke(r);
+                OnEquippedRelic?.Invoke(r);
                
             }
             else return;

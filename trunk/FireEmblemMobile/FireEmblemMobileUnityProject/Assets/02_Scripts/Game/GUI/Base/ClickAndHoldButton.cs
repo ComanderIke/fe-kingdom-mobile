@@ -18,9 +18,22 @@ namespace LostGrace
         [SerializeField] private Image backGround;
         public event Action OnClick;
         private bool pointerdown = false;
-        void Start()
+        private bool pointerUpLastFrame = false;
+
+        public bool IsPressing
         {
-        
+            get
+            {
+                return pointerdown;
+            }
+        }
+
+        public bool WasPressingUntilLastFrame
+        {
+            get
+            {
+                return pointerUpLastFrame;
+            }
         }
 
         public void SetBackgroundColor(Color color)
@@ -68,6 +81,14 @@ namespace LostGrace
         public void OnPointerUp()
         {
             Reset();
+            pointerUpLastFrame = true;
+            StartCoroutine(ResetPointerUp());
+        }
+
+        IEnumerator ResetPointerUp()
+        {
+            yield return null;
+            pointerUpLastFrame = false;
         }
     }
 }

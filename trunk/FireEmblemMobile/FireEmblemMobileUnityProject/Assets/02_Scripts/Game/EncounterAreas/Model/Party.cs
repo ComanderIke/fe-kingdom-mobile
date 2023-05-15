@@ -130,6 +130,8 @@ namespace Game.WorldMapStuff.Model
             }
             Unit.OnUnequippedRelic -= Convoy.AddItem;
             Unit.OnUnequippedRelic += Convoy.AddItem;
+            Unit.OnEquippedRelic -=  Convoy.RemoveItem;
+            Unit.OnEquippedRelic += Convoy.RemoveItem;
 
         }
 

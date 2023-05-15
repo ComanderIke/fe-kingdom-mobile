@@ -16,16 +16,7 @@ namespace Game.WorldMapStuff.Model
 
         private int selectedItemIndex = -1;
 
-        public StockedItem GetSelectedItem()
-        {
-            if (selectedItemIndex == -1)
-            {
-                Debug.Log("No Item Selected");
-                return null;
-            }
-
-            return Items[selectedItemIndex];
-        }
+      
 
         public void Select(StockedItem item)
         {
@@ -50,6 +41,19 @@ namespace Game.WorldMapStuff.Model
             }
         }
 
+        public StockedItem SelectedItem
+        {
+            get
+            {
+                if (selectedItemIndex == -1)
+                {
+                    Debug.Log("No Item Selected");
+                    return null;
+                }
+
+                return Items[selectedItemIndex];
+            }
+        }
 
 
         public Convoy()

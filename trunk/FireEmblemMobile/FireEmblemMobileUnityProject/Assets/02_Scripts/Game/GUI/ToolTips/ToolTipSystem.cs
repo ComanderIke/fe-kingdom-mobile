@@ -73,6 +73,7 @@ public class ToolTipSystem : MonoBehaviour
     }
     public static void Show(Relic relic, Vector3 position, string header, string description, Sprite icon)
     {
+        instance.tooltipShownThisFrame = true;
         CloseAllToolTips();
         Debug.Log("Show Relic Tooltip");
         instance.relicToolTip.SetValues(relic, header,description,icon, Camera.main.WorldToScreenPoint(position));
@@ -81,6 +82,7 @@ public class ToolTipSystem : MonoBehaviour
     }
     public static void Show(Item item, Vector3 position, string header, string description, Sprite icon)
     {
+        instance.tooltipShownThisFrame = true;
         CloseAllToolTips();
         if (item is Relic relic)
         {
@@ -94,6 +96,7 @@ public class ToolTipSystem : MonoBehaviour
     }
     public static void Show(Weapon weapon, Vector3 position, string header, string description, Sprite icon)
     {
+        instance.tooltipShownThisFrame = true;
         CloseAllToolTips();
         instance.WeaponToolTip.SetValues(weapon, header,description,icon, Camera.main.WorldToScreenPoint(position));
         
@@ -101,6 +104,7 @@ public class ToolTipSystem : MonoBehaviour
     }
     public static void Show(CurseBlessBase blessing, Vector3 position)
     {
+        instance.tooltipShownThisFrame = true;
         CloseAllToolTips();
     
         instance.blessingToolTip.SetValues(blessing, blessing.Name,blessing.Skill.Description,blessing.Skill.Icon, Camera.main.WorldToScreenPoint(position));
@@ -108,24 +112,19 @@ public class ToolTipSystem : MonoBehaviour
         instance.blessingToolTip.gameObject.SetActive(true);
     }
 
+    private bool tooltipShownThisFrame = false;
     private void Update()
     {
-        // if (!UIHelper.IsPointerOverUIObject())
-        // {
-            if (Input.touchCount > 0)
-            {
-                var touch = Input.GetTouch(0);
-                if (touch.phase == TouchPhase.Began)
-                {
-                    CloseAllToolTips();
-                }
-            }
-        // }
-
+     
+        if(InputUtility.TouchEnd()&&!tooltipShownThisFrame)
+            CloseAllToolTips();
+        
+        instance.tooltipShownThisFrame = false;
     }
 
     public static void ShowSkill(Skill skill, Vector3 position)
     {
+        instance.tooltipShownThisFrame = true;
         CloseAllToolTips();
         Debug.Log(skill.Name);
         instance.skillToolTip.SetValues(skill, skill.Name,skill.Description,skill.Icon, Camera.main.WorldToScreenPoint(position));
@@ -134,6 +133,7 @@ public class ToolTipSystem : MonoBehaviour
     }
     public static void ShowSkill(SkillTreeEntryUI skillTreeEntry, Vector3 position, string header, string description, Sprite icon)
     {
+        instance.tooltipShownThisFrame = true;
         CloseAllToolTips();
         instance.skillTreeToolTip.SetValues(skillTreeEntry, header,description,icon, position);
         
@@ -151,6 +151,7 @@ public class ToolTipSystem : MonoBehaviour
 
     public static void ShowAttribute(string header, string description, int value, Vector3 position)
     {
+        instance.tooltipShownThisFrame = true;
         CloseAllToolTips();
         Debug.Log("transformPos: "+position+" ScreenPos"+Camera.main.WorldToScreenPoint(position));
         instance.AttributeToolTip.gameObject.SetActive(true);

@@ -37,6 +37,14 @@ public class UIConvoyController:MonoBehaviour
     [SerializeField] private TextMeshProUGUI contextText;
     private Type typeFilter;
     private ConvoyContext context;
+    
+   
+
+    [SerializeField] private Color EquipColor;
+    [SerializeField] private Color UseColor;
+    [SerializeField] private Color DropColor;
+
+
     public void Toogle()
     {
         if(canvas.enabled)
@@ -47,10 +55,35 @@ public class UIConvoyController:MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        contextButton.OnClick -= ContextButtonClicked;
+        dropButton.OnClick -= DropButtonClicked;
+        contextButton.OnClick += ContextButtonClicked;
+        dropButton.OnClick += DropButtonClicked;
+    }
+    void DropButtonClicked()
+    {
+        convoy.RemoveStockedItem(convoy.SelectedItem);
+    }
+    void ContextButtonClicked()
+    {
+        switch (context)
+        {
+            case ConvoyContext.SelectRelic:
+                if (convoy.SelectedItem != null && convoy.SelectedItem.item is Relic relic)
+                {
+                    Player.Instance.Party.ActiveUnit.Equip(relic);
+                }
+                
+                break;
+        }
+    }
     public enum ConvoyContext
     {
         Default,
-        SelectRelic
+        SelectRelic,
+        ChooseGem
     }
     public void Show()
     {
@@ -63,8 +96,11 @@ public class UIConvoyController:MonoBehaviour
         typeFilter = filter;
        
         canvas.enabled = true;
- 
-        state = typeFilter==typeof(Item)?ConvoeyState.Normal:ConvoeyState.ChooseItem;
+
+        if (typeFilter == typeof(Gem))
+        {
+            context = ConvoyContext.ChooseGem;
+        }
         UpdateValues();
         //Debug.Log("Showing convoy! itemcount: " + convoy.Items.Count);
     }
@@ -85,16 +121,6 @@ public class UIConvoyController:MonoBehaviour
         return itemController;
     }
 
-    public void DropClicked(StockedItem item)
-    {
-        convoy.RemoveStockedItem(item);
-    }
-
-    [SerializeField] private Color EquipColor;
-    [SerializeField] private Color UseColor;
-    [SerializeField] private Color DropColor;
-
-   
     void UpdateContext()
     {
         switch(context){
@@ -103,9 +129,10 @@ public class UIConvoyController:MonoBehaviour
             case ConvoyContext.SelectRelic: contextText.text = "Select a relic to equip";
                 break;
         }
-        var selectedItem =  convoy.GetSelectedItem();
+        var selectedItem =  convoy.SelectedItem;
         if (selectedItem != null)
         {
+            Debug.Log("Selected  Item : "+selectedItem);
             dropButton.gameObject.SetActive(true);
             if (selectedItem.item is Relic)
             {
@@ -156,13 +183,13 @@ public class UIConvoyController:MonoBehaviour
             instantiatedItems.Clear();
         }
 
-        if (state == ConvoeyState.Normal)
+        if (context==ConvoyContext.Default)
         {
           
             for (int i = 0; i < convoy.Items.Count; i++)
             {
                 var itemController = CreateItemGameObject(convoy.Items[i], i);
-                if (convoy.GetSelectedItem() == convoy.Items[i])
+                if (convoy.SelectedItem == convoy.Items[i])
                 {
                     itemController.Select();
                 }
@@ -173,7 +200,7 @@ public class UIConvoyController:MonoBehaviour
             }
         }
 
-        if (state == ConvoeyState.ChooseItem)
+        if (context == ConvoyContext.ChooseGem)
         {
             Debug.Log("StateChooseItem");
             var sortedList = new List<StockedItem>(convoy.Items);
@@ -210,7 +237,7 @@ public class UIConvoyController:MonoBehaviour
             }
         }
 
-        if (state == ConvoeyState.ChooseItem)
+        if (context != ConvoyContext.Default)
         {
             noneButton.gameObject.SetActive(true);
         }
@@ -236,21 +263,44 @@ public class UIConvoyController:MonoBehaviour
     {
         convoy.Deselect();
         context = ConvoyContext.Default;
-        enabled = false;
-        GetComponent<Canvas>().enabled = enabled;
+        canvas.enabled = false;
     }
 
-    public ConvoeyState state;
    
     public void ShowGemOptions(Party party)
     {
         typeFilter = typeof(Gem);
-        state = ConvoeyState.ChooseItem;
+        context = ConvoyContext.ChooseGem;
         UpdateValues();
+    }
+
+    private bool itemClicked = false;
+    private void Update()
+    {
+      
+        
+        if (InputUtility.TouchEnd()&&convoy != null)
+        {
+            if (!itemClicked&& !contextButton.WasPressingUntilLastFrame&&!dropButton.WasPressingUntilLastFrame)
+            {
+                Debug.Log("Deselect");
+                convoy.Deselect();
+          
+                 UpdateValues();
+            }
+            else
+            {
+                Debug.Log("Dont Deselect");
+            }
+            //
+        }
+
+        itemClicked = false;
     }
 
     public void ItemClicked(UIConvoyItemController clickedItem)
     {
+        itemClicked = true;
         Debug.Log("Item Clicked: "+clickedItem);
         convoy.Select(clickedItem.stockedItem);
         ToolTipSystem.Show(clickedItem.stockedItem.item, clickedItem.transform.position, clickedItem.stockedItem.item.Name, clickedItem.stockedItem.item.Description, clickedItem.stockedItem.item.Sprite);
@@ -259,7 +309,7 @@ public class UIConvoyController:MonoBehaviour
     public void UseClicked()
     {
  
-        var selectedItem = convoy.GetSelectedItem();
+        var selectedItem = convoy.SelectedItem;
         if (selectedItem == null)
             return;
 
@@ -321,10 +371,4 @@ public class UIConvoyController:MonoBehaviour
         }
         Hide();
     }
-}
-
-public enum ConvoeyState
-{
-    Normal,
-    ChooseItem
 }
