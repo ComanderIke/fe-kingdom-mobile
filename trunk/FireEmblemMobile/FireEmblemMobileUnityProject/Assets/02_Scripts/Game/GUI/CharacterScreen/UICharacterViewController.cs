@@ -61,6 +61,7 @@ public class UICharacterViewController : MonoBehaviour
     public void Show(Unit unit)
     {
         canvas.enabled = true;
+        Player.Instance.Party.SetActiveUnit(unit);
         Debug.Log("Showing Character UI for: "+unit.name);
         UpdateUI(unit);
 

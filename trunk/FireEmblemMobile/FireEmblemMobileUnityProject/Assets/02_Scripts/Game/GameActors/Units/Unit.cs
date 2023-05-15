@@ -27,7 +27,8 @@ namespace Game.GameActors.Units
         public static event Action<Unit> OnUnitDataChanged;
         public static event Action<Relic> OnEquippedRelic1;
         public static event Action<Relic> OnEquippedRelic2;
-        
+        public static event Action<Relic> OnUnequippedRelic;
+
         #region Events
 
         public event Action HpValueChanged;
@@ -358,11 +359,17 @@ namespace Game.GameActors.Units
             }
             else if (EquippedRelic1 == item)
             {
+                
+                Debug.Log("Unequip: "+item);
                 EquippedRelic1 = null;
+                OnUnequippedRelic?.Invoke((Relic)item);
+                
             }
             else if (EquippedRelic2 == item)
             {
+                Debug.Log("Unequip: "+item);
                 EquippedRelic2 = null;
+                OnUnequippedRelic?.Invoke((Relic)item);
             }
             OnUnitDataChanged?.Invoke(this);
         }
@@ -586,6 +593,22 @@ namespace Game.GameActors.Units
             }
         }
 
-        
+
+        public Relic GetRelicSlot(int equipmentControllerSelectedSlotNumber)
+        {
+            if (equipmentControllerSelectedSlotNumber == 1)
+                return EquippedRelic1;
+            else if (equipmentControllerSelectedSlotNumber == 2)
+                return EquippedRelic2;
+            return null;
+        }
+
+        public void UnEquipRelic(int equipmentControllerSelectedSlotNumber)
+        {
+            if (equipmentControllerSelectedSlotNumber == 1)
+                UnEquip(EquippedRelic1);
+            else if (equipmentControllerSelectedSlotNumber == 2)
+                UnEquip(EquippedRelic2);
+        }
     }
 }

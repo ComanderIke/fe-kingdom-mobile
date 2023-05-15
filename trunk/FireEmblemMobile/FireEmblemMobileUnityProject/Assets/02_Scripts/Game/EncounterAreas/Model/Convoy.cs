@@ -68,6 +68,7 @@ namespace Game.WorldMapStuff.Model
         }
         public void AddItem(Item item)
         {
+            Debug.Log("Add Item to Convoy: "+item);
             bool instock = false;
             foreach (var stockedItem in Items)
             {

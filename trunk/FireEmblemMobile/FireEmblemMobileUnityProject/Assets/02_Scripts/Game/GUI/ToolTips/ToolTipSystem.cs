@@ -110,8 +110,8 @@ public class ToolTipSystem : MonoBehaviour
 
     private void Update()
     {
-        if (!UIHelper.IsPointerOverUIObject())
-        {
+        // if (!UIHelper.IsPointerOverUIObject())
+        // {
             if (Input.touchCount > 0)
             {
                 var touch = Input.GetTouch(0);
@@ -120,7 +120,7 @@ public class ToolTipSystem : MonoBehaviour
                     CloseAllToolTips();
                 }
             }
-        }
+        // }
 
     }
 

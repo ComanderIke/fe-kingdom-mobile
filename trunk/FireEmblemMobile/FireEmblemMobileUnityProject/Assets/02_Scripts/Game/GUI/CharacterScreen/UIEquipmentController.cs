@@ -31,16 +31,17 @@ public class UIEquipmentController:MonoBehaviour
             
             ToolTipSystem.Show(relic, RelicSlotUpper.transform.position, relic.Name, relic.Description,
                 relic.GetIcon());
+          
         }
-        else
-        {
+        // else
+        // {
             if (selectedSlot != null)
                 selectedSlot.Deselect();
             selectedSlot = RelicSlotUpper;
             selectedSlotNumber = 1;
             RelicSlotUpper.Select();
-            convoy.Show(typeof(Relic));
-        }
+            convoy.Show(typeof(Relic), UIConvoyController.ConvoyContext.SelectRelic);
+        // }
     }
     public void RelicSlotLowerClicked()
     {
@@ -49,16 +50,16 @@ public class UIEquipmentController:MonoBehaviour
 
             ToolTipSystem.Show(relic2, RelicSlotLower.transform.position, relic2.Name, relic2.Description,
                 relic2.GetIcon());
-        }
-        else
-        {
+         }
+        // else
+        // {
             if (selectedSlot != null)
                 selectedSlot.Deselect();
             selectedSlot = RelicSlotLower;
             selectedSlotNumber = 2;
             RelicSlotLower.Select();
-            convoy.Show(typeof(Relic));
-        }
+            convoy.Show(typeof(Relic), UIConvoyController.ConvoyContext.SelectRelic);
+        // }
     }
     public void WeaponSlotClicked()
     {

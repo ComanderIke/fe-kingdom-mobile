@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using __2___Scripts.Game.Utility;
 using Game.GameActors.Items;
 using Game.GameActors.Items.Gems;
@@ -10,7 +11,9 @@ using Game.GameInput;
 using Game.GUI;
 using Game.WorldMapStuff.Model;
 using LostGrace;
+using TMPro;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 public class UIConvoyController:MonoBehaviour
 {
@@ -31,22 +34,32 @@ public class UIConvoyController:MonoBehaviour
     [SerializeField] private UICharacterViewController charView;
     [SerializeField] private ClickAndHoldButton contextButton;
     [SerializeField] private ClickAndHoldButton dropButton;
+    [SerializeField] private TextMeshProUGUI contextText;
     private Type typeFilter;
+    private ConvoyContext context;
     public void Toogle()
     {
-        canvas.enabled =! canvas.enabled;
-        state = ConvoeyState.Normal;
-      
         if(canvas.enabled)
-            UpdateValues();
+            Hide();
+        else
+        {
+            Show();
+        }
+    }
+
+    public enum ConvoyContext
+    {
+        Default,
+        SelectRelic
     }
     public void Show()
     {
-        Show(typeof(Item));
+        Show(typeof(Item), ConvoyContext.Default);
     }
-    public void Show(Type filter)
+    public void Show(Type filter, ConvoyContext context)
     {
         this.convoy = Player.Instance.Party.Convoy;
+        this.context = context;
         typeFilter = filter;
        
         canvas.enabled = true;
@@ -81,8 +94,15 @@ public class UIConvoyController:MonoBehaviour
     [SerializeField] private Color UseColor;
     [SerializeField] private Color DropColor;
 
-    void UpdateContextButtons()
+   
+    void UpdateContext()
     {
+        switch(context){
+            case ConvoyContext.Default: contextText.text = "Convoy";
+                break;
+            case ConvoyContext.SelectRelic: contextText.text = "Select a relic to equip";
+                break;
+        }
         var selectedItem =  convoy.GetSelectedItem();
         if (selectedItem != null)
         {
@@ -109,7 +129,7 @@ public class UIConvoyController:MonoBehaviour
     public void UpdateValues()
     {
        
-        UpdateContextButtons();
+        UpdateContext();
      
         // if (characterCanvas.enabled)
         // {
@@ -215,6 +235,7 @@ public class UIConvoyController:MonoBehaviour
     public void Hide()
     {
         convoy.Deselect();
+        context = ConvoyContext.Default;
         enabled = false;
         GetComponent<Canvas>().enabled = enabled;
     }
@@ -294,7 +315,11 @@ public class UIConvoyController:MonoBehaviour
 
     public void NoneClicked()
     {
-        
+        if (context == ConvoyContext.SelectRelic)
+        {
+            Player.Instance.Party.ActiveUnit.UnEquipRelic(equipmentController.selectedSlotNumber);
+        }
+        Hide();
     }
 }
 

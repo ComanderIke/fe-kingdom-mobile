@@ -126,8 +126,11 @@ namespace Game.WorldMapStuff.Model
         {
             foreach (var member in members)
             {
-                member.Party = this;
+                InitMember(member);
             }
+            Unit.OnUnequippedRelic -= Convoy.AddItem;
+            Unit.OnUnequippedRelic += Convoy.AddItem;
+
         }
 
         public override string ToString()
@@ -160,10 +163,15 @@ namespace Game.WorldMapStuff.Model
                 Debug.LogError("Party Size To Big");
                 return;
             }
-
-            unit.Party = this;
+            InitMember(unit);
             members.Add(unit);
             onMemberAdded?.Invoke(unit);
+        }
+
+        void InitMember(Unit unit)
+        {
+            unit.Party = this;
+
         }
 
         public void AddGold(int gold)
