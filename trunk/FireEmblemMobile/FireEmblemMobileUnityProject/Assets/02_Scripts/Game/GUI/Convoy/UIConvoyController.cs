@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection;
 using __2___Scripts.Game.Utility;
 using Game.GameActors.Items;
 using Game.GameActors.Items.Gems;
@@ -182,60 +183,49 @@ public class UIConvoyController:MonoBehaviour
             }
             instantiatedItems.Clear();
         }
-
-        if (context==ConvoyContext.Default)
+        
+        var sortedList = new List<StockedItem>(convoy.Items);
+        sortedList.Sort(delegate(StockedItem x, StockedItem y)
         {
-          
-            for (int i = 0; i < convoy.Items.Count; i++)
+            Debug.Log("Compare: "+x.item.Name+" "+y.item.Name);
+            if (x.item == null && y.item == null) return 0;
+            if (x.item == null) return -1;
+            if (y.item == null) return 1;
+            if (x.item.GetType()== typeFilter)
             {
-                var itemController = CreateItemGameObject(convoy.Items[i], i);
-                if (convoy.SelectedItem == convoy.Items[i])
+                Debug.Log("X is Relic");
+                
+                if (y.item.GetType() == typeFilter)
                 {
-                    itemController.Select();
+                    Debug.Log("Both Relics");
+                    return 0;
                 }
-                else
-                {
-                    itemController.Deselect();
-                }
+
+                return -1;
+            }
+
+            if (y.item.GetType() == typeFilter)
+            {
+                Debug.Log("Y is Relic");
+                return 1;
+            }
+            Debug.Log("No Gem");  
+            return 0;
+        });
+
+        for (int i = 0; i < sortedList.Count; i++)
+        {
+            var itemController = CreateItemGameObject(sortedList[i], i);
+            if (convoy.SelectedItem == sortedList[i])
+            {
+                itemController.Select();
+            }
+            else
+            {
+                itemController.Deselect();
             }
         }
-
-        if (context == ConvoyContext.ChooseGem)
-        {
-            Debug.Log("StateChooseItem");
-            var sortedList = new List<StockedItem>(convoy.Items);
-            sortedList.Sort(delegate(StockedItem x, StockedItem y)
-            {
-                Debug.Log("Compare: "+x.item.Name+" "+y.item.Name);
-                if (x.item == null && y.item == null) return 0;
-                if (x.item == null) return -1;
-                if (y.item == null) return 1;
-                if (x.item is Gem)
-                {
-                    Debug.Log("X is Relic");
-                    if (y.item is Gem)
-                    {
-                        Debug.Log("Both Relics");
-                        return 0;
-                    }
-
-                    return -1;
-                }
-
-                if (y.item is Gem)
-                {
-                    Debug.Log("Y is Relic");
-                    return 1;
-                }
-                Debug.Log("No Gem");  
-                return 0;
-            });
-            for (int i = 0; i < sortedList.Count; i++)
-            {
-                Debug.Log(sortedList[i].item.Name);
-                CreateItemGameObject(sortedList[i], i);
-            }
-        }
+        
 
         if (context != ConvoyContext.Default)
         {
