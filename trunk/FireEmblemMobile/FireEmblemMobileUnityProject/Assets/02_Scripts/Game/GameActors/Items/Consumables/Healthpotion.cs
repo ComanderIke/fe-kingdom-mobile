@@ -18,7 +18,9 @@ namespace Game.GameActors.Items.Weapons
         {
             Debug.Log("Use Healthpotion!");
             character.Heal(strength);
-            GameObject.Instantiate(healEffect, character.GameTransformManager.GetCenterPosition(), Quaternion.identity,null);
+            //Different Animation in GridBattle
+            if(character.GameTransformManager.GameObject!=null)
+                GameObject.Instantiate(healEffect, character.GameTransformManager.GetCenterPosition(), Quaternion.identity,null);
             
             base.Use(character, convoy);
         }

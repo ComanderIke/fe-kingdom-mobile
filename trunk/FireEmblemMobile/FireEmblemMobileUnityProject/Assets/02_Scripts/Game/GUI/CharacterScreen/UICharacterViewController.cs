@@ -48,6 +48,8 @@ public class UICharacterViewController : MonoBehaviour
     public TextMeshProUGUI hpText;
     public Image image;
 
+    public bool IsVisible => canvas.enabled;
+
     void OnEnable()
     {
      

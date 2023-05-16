@@ -87,8 +87,16 @@ public class UIConvoyController:MonoBehaviour
                     Hide();
                     
                 }
-                
+
                 break;
+                
+                case ConvoyContext.Default:
+                    if (contextItem.item is ConsumableItem consumableItem)
+                    {
+                        convoy.Deselect();
+                        consumableItem.Use(Player.Instance.Party.ActiveUnit, convoy);
+                    }
+                    break;
         }
     }
     public enum ConvoyContext
@@ -108,6 +116,8 @@ public class UIConvoyController:MonoBehaviour
         typeFilter = filter;
        
         canvas.enabled = true;
+        if(!charView.IsVisible)
+            charView.Show(Player.Instance.Party.ActiveUnit);
 
         if (typeFilter == typeof(Gem))
         {
@@ -266,6 +276,7 @@ public class UIConvoyController:MonoBehaviour
         convoy.Deselect();
         context = ConvoyContext.Default;
         canvas.enabled = false;
+        charView.Hide();
     }
 
    
@@ -334,7 +345,8 @@ public class UIConvoyController:MonoBehaviour
         Unit human =Player.Instance.Party.ActiveUnit;
         if (equipmentController.selectedSlot == null)
         {
-            charView.Show(human);
+            if(!charView.IsVisible)
+                charView.Show(human);
             equipmentController.HighlightRelicSlots();
         }
         else
