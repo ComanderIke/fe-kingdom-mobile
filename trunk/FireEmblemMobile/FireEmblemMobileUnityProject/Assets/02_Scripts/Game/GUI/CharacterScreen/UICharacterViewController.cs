@@ -50,6 +50,7 @@ public class UICharacterViewController : MonoBehaviour
 
     void OnEnable()
     {
+     
         Unit.OnUnitDataChanged += UpdateUI;
     }
 

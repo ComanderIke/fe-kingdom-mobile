@@ -83,7 +83,7 @@ public class UIEquipmentController:MonoBehaviour
         relic = unit.EquippedRelic1;
         RelicSlotLower.Show(unit.EquippedRelic2);
         relic2 = unit.EquippedRelic2;
-        
+       
 
      
     }

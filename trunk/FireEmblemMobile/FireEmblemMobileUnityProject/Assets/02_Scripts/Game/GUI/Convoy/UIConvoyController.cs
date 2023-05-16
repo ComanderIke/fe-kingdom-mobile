@@ -76,12 +76,16 @@ public class UIConvoyController:MonoBehaviour
     void ContextButtonClicked()
     {
         Debug.Log("ContextClicked");
+        var contextItem = convoy.SelectedItem;
         switch (context)
         {
             case ConvoyContext.SelectRelic:
-                if (convoy.SelectedItem != null && convoy.SelectedItem.item is Relic relic)
+                if (contextItem != null && contextItem.item is Relic relic)
                 {
+                    convoy.Deselect();
                     Player.Instance.Party.ActiveUnit.Equip(relic);
+                    Hide();
+                    
                 }
                 
                 break;

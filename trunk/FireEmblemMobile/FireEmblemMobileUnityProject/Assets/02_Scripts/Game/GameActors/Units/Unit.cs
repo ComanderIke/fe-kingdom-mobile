@@ -392,7 +392,7 @@ namespace Game.GameActors.Units
                     Equip((Relic)e);
                     break;
             }
-            OnUnitDataChanged?.Invoke(this);
+           
         }
 
         public void Equip(Relic r)
@@ -408,7 +408,7 @@ namespace Game.GameActors.Units
                 OnEquippedRelic?.Invoke(r);
                
             }
-            else return;
+            OnUnitDataChanged?.Invoke(this);
            
         }
         public void Equip(Relic r, int slot)
@@ -424,7 +424,7 @@ namespace Game.GameActors.Units
                 OnEquippedRelic?.Invoke(r);
                
             }
-            else return;
+            OnUnitDataChanged?.Invoke(this);
            
         }
         protected virtual void HandleCloned(Unit clone)
