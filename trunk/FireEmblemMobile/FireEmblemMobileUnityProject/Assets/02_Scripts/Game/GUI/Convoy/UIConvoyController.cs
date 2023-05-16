@@ -58,6 +58,7 @@ public class UIConvoyController:MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("ConvoyStart");
         contextButton.OnClick -= ContextButtonClicked;
         dropButton.OnClick -= DropButtonClicked;
         contextButton.OnClick += ContextButtonClicked;
@@ -65,10 +66,16 @@ public class UIConvoyController:MonoBehaviour
     }
     void DropButtonClicked()
     {
-        convoy.RemoveStockedItem(convoy.SelectedItem);
+        Debug.Log("DropClicked");
+        var dropItem = convoy.SelectedItem;
+        convoy.Deselect();
+        convoy.RemoveStockedItem(dropItem);
+        
+        
     }
     void ContextButtonClicked()
     {
+        Debug.Log("ContextClicked");
         switch (context)
         {
             case ConvoyContext.SelectRelic:
@@ -247,6 +254,7 @@ public class UIConvoyController:MonoBehaviour
 
     private void UpdateConvoy()
     {
+        Debug.Log("Update Convoy!");
         UpdateValues();
     }
     public void Hide()

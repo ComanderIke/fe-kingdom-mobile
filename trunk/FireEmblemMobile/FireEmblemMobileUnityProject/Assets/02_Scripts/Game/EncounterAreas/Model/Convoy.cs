@@ -147,12 +147,14 @@ namespace Game.WorldMapStuff.Model
             //Search for stocked items that exists multiple times
             // check if more than 1 of those has not maxed out stock Count
             //if yes move from lower stock count to higher stock count.
+            convoyUpdated?.Invoke();
             //repeat
         }
 
         public void AddStockedItem(StockedItem stockedItem)
         {
             items.Add(stockedItem);
+            convoyUpdated?.Invoke();
         }
 
         public bool ContainsItem(Item item)
@@ -194,6 +196,7 @@ namespace Game.WorldMapStuff.Model
             {
                 RemoveItem(items.Find(i => i.item.Name== GameBPData.Instance.GetSmithingStone().Name).item);
             }
+            convoyUpdated?.Invoke();
         }
 
         public void RemoveDragonScales(int getDragonScaleUpgradeCost)
@@ -202,6 +205,7 @@ namespace Game.WorldMapStuff.Model
             {
                 RemoveItem(items.Find(i => i.item.Name == GameBPData.Instance.GetDragonScale().Name).item);
             }
+            convoyUpdated?.Invoke();
         }
 
         public int GetItemCount(Item item)
@@ -225,6 +229,7 @@ namespace Game.WorldMapStuff.Model
         {
             if(items.Contains(item))
                 items.Remove(item);
+            convoyUpdated?.Invoke();
         }
 
         
