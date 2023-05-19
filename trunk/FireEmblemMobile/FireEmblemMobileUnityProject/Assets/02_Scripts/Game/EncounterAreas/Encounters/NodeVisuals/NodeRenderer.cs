@@ -21,7 +21,6 @@ public class NodeRenderer : MonoBehaviour
     
     public void MovableAnimation()
     {
-        
         moveEffect = Instantiate(moveOptionPrefab, transform, false);
         foreach (var ps in moveEffect.GetComponentsInChildren<ParticleSystem>())
         {
@@ -41,8 +40,9 @@ public class NodeRenderer : MonoBehaviour
       
         LeanTween.cancel(gameObject);
         LeanTween.scale(gameObject, nodeStartScale,0.2f).setEaseInQuad();
+        
        // Debug.Log("Reset to "+gameObject.transform.localScale.x);
-        Destroy(moveEffect);
+       Destroy(moveEffect);
     }
 
     public void SetInactive()

@@ -32,7 +32,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     public ColumnManager ColumnManager;
     // Start is called before the first frame update
     public Transform spawnParent;
-    private List<GameObject> moveOptions=new List<GameObject>();
+
     public float offsetBetweenCharacters = 0.25f;
     private const float moveToNodeHoldTime = 1.8f;
     public int hour = 6;
@@ -275,12 +275,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
 
     private void ResetMoveOptions()
     {
-        for (int i = moveOptions.Count - 1; i >= 0; i--)
-        {
-            Destroy(moveOptions[i]);
-
-            
-        }
+       
 
         EncounterTree.Instance.SetAllNodesMoveable(false);
         // foreach (var child in Player.Instance.Party.EncounterComponent.EncounterNode.children)
@@ -426,6 +421,11 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     {
         HideMoveOptions();
         SetAllEncountersNotMovable();
+        // foreach (var road in Player.Instance.Party.EncounterComponent.EncounterNode.roads)
+        // {
+        //         road.NodeDeselected();
+        // }
+        // SetAllEncountersNotMovable();
         StartCoroutine(MovementAnimation(node));
         circleUI.Rotate();
         cursor.Hide();
@@ -433,6 +433,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         if (hour >= 24)
             hour = 0;
         lightController.UpdateHour(hour);
+     
     }
     IEnumerator MovementAnimation(EncounterNode target)
     {
@@ -442,7 +443,10 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         float time = 0;
         float speed = 3;
         actionSystem.Move(target);
+        Debug.Log("Reset Moveoptions!");
+        ResetMoveOptions();
         ShowMovedRoads();
+       
         while ( partyGo.transform.position!=targetPos)
         {
             time += Time.deltaTime *speed/distance;
@@ -524,9 +528,9 @@ Debug.Log("Show Inactive Nodes of: "+currentNode);
         // Debug.Log("AutoSaving!");
         // SaveGameManager.Save();// new SaveData(Player.Instance, Campaign.Instance, EncounterTree.Instance));
         Player.Instance.Party.EncounterTick();
-        SetAllEncountersNotMovable();
-        ResetMoveOptions();
-        ShowMoveOptions();
+         SetAllEncountersNotMovable();
+        
+         ShowMoveOptions();
         
     }
 

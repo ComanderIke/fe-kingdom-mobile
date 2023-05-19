@@ -44,9 +44,7 @@ public class UICharacterViewController : MonoBehaviour
     public TextMeshProUGUI DEF;
     public Color AttributeTextColor;
     public Color BuffedAttributeTextColor;
-    public IStatBar HPBar;
-    public TextMeshProUGUI hpText;
-    public Image image;
+    public UICharacterFace CharacterFace;
 
     public bool IsVisible => canvas.enabled;
 
@@ -76,8 +74,9 @@ public class UICharacterViewController : MonoBehaviour
     {
       
         this.unit = unit;
+        CharacterFace.Show(unit);
         charName.SetText(unit.name);//+", "+unit.jobClass);
-        image.sprite = unit.visuals.CharacterSpriteSet.FaceSprite;
+      
         
         Hitrate.SetText(""+unit.BattleComponent.BattleStats.GetHitrate()+"%");
         DodgeRate.SetText(""+unit.BattleComponent.BattleStats.GetAvoid()+"%");
@@ -140,7 +139,6 @@ public class UICharacterViewController : MonoBehaviour
         FTH.SetText(""+(unit.Stats.BaseAttributes.FAITH+unit.Stats.BonusAttributes.FAITH));
         LCK.SetText(""+(unit.Stats.BaseAttributes.LCK+unit.Stats.BonusAttributes.LCK));
         DEF.SetText(""+(unit.Stats.BaseAttributes.DEF+unit.Stats.BonusAttributes.DEF));
-        HPBar.SetValue(unit.Hp, unit.MaxHp, false);
     }
 
     public void CombatStatsButtonClicked()

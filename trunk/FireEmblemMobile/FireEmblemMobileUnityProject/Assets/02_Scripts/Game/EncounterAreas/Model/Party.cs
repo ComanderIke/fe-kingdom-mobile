@@ -88,6 +88,8 @@ namespace Game.WorldMapStuff.Model
             Convoy = new Convoy();
             EncounterComponent = new EncounterPosition();
             DeadCharacters = new List<Unit>();
+            money = 1000;
+            
         }
 
         public EncounterPosition EncounterComponent { get; set; }

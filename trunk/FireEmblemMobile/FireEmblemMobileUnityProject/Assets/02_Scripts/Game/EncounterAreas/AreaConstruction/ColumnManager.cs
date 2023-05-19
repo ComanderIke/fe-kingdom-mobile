@@ -149,11 +149,11 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
     void ConnectEncounters(List<Column> columns, EncounterNode startNode, EncounterNode endNode)
     {
         
-        for (int i = 0; i < columns[0].children.Count; i++)
-        {
-            columns[0].children[i].parents.Add(startNode);
-            startNode.children.Add(columns[0].children[i]);
-        }
+        // for (int i = 0; i < columns[0].children.Count; i++)
+        // {
+        //     columns[0].children[i].parents.Add(startNode);
+        //     startNode.children.Add(columns[0].children[i]);
+        // }
         
         for (int i = 1; i < spawnData.columnCount; i++)
         {

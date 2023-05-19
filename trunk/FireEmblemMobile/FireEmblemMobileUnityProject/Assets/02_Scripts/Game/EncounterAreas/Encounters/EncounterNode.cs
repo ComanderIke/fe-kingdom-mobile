@@ -93,6 +93,7 @@ public abstract class EncounterNode
 
     public void SetMoveable(bool b)
     {
+        Debug.Log(gameObject.name+" Set Movable: "+b);
         moveable = b;
         if (moveable)
         {
@@ -100,6 +101,8 @@ public abstract class EncounterNode
         }
         else
         {
+            for (int i = 0; i < roads.Count; i++)
+                roads[i].SetMoveable(b);
             renderer.Reset();
         }
     }
