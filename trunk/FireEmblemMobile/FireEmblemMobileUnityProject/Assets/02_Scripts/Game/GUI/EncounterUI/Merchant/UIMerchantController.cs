@@ -104,7 +104,7 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
                     var item = merchant.shopItems[i];
                     instantiatedItems.Add(go);
                     shopItems.Add(go.GetComponent<UIShopItemController>());
-                    bool affordable = party.CanAfford(merchant.GetCost(merchant.shopItems[0]));
+                    bool affordable = party.CanAfford(merchant.GetCost(merchant.shopItems[i]));
 
                     shopItems[i].SetValues(item, affordable, this);
                 }
