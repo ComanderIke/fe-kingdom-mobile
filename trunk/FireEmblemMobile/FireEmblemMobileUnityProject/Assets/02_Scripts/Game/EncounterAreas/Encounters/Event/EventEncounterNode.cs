@@ -11,7 +11,7 @@ public class EventEncounterNode : EncounterNode
    
     public EventEncounterNode(List<EncounterNode> parents,int depth, int childIndex, string label, string description, Sprite sprite) : base(parents, depth, childIndex, label, description, sprite)
     {
-        randomEvent = GameBPData.Instance.GetEventData().GetRandomEvent(1);
+        randomEvent = GameBPData.Instance.GetEventData().GetRandomEvent(0);
     }
 
     public override void Activate(Party party)

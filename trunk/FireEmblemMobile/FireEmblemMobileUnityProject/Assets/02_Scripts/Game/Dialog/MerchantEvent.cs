@@ -14,4 +14,9 @@ public class MerchantEvent : DialogEvent
         FindObjectOfType<UIMerchantController>().Show(merchant.Create(), Player.Instance.Party);
 
     }
+
+    public override Reward GetReward()
+    {
+        return null;
+    }
 }

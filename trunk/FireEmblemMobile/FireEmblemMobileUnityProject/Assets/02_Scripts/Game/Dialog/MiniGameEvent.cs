@@ -10,5 +10,17 @@ public class MiniGameEvent : DialogEvent
     public override void Action()
     {
         miniGame.StartGame();
+        miniGame.OnComplete -= Complete;
+        miniGame.OnComplete += Complete;
+    }
+
+    void Complete()
+    {
+        OnComplete?.Invoke();
+    }
+
+    public override Reward GetReward()
+    {
+        return miniGame.GetRewards();
     }
 }

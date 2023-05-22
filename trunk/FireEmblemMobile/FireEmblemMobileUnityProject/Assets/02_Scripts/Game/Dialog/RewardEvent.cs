@@ -23,4 +23,9 @@ public class RewardEvent : DialogEvent
         }
        
     }
+
+    public override Reward GetReward()
+    {
+        return null;
+    }
 }

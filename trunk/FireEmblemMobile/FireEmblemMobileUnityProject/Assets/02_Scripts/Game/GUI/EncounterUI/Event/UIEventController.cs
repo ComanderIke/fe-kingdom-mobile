@@ -64,15 +64,19 @@ public class UIEventController : MonoBehaviour
         party.ActiveUnitIndex--;
         UpdateUI();
     }
-    
-    public void UpdateUI()
+
+    public void UpdateUIValues()
     {
-        unitIdleAnimation.Show(party.ActiveUnit);
-        characterFace.Show(party.ActiveUnit);
         headline.SetText(randomEvent.HeadLine);
         layout.DeleteAllChildren();
         description.text = currentNode.Text;
         ShowTextOptions(currentNode.Choices);
+    }
+    public void UpdateUI()
+    {
+        unitIdleAnimation.Show(party.ActiveUnit);
+        characterFace.Show(party.ActiveUnit);
+        UpdateUIValues();
     }
 
     float GetSuccessChanceOffAttRequirement(int goal, int current)
@@ -293,7 +297,7 @@ public class UIEventController : MonoBehaviour
             }
             else
             {
-                UpdateUI();
+                UpdateUIValues();
             }
         }
         else
@@ -322,10 +326,35 @@ public class UIEventController : MonoBehaviour
     {
         if (currentNode.Events != null&& currentNode.Events.Count>0)
         {
+            
             foreach (var dialogEvent in currentNode.Events)
             {
                 dialogEvent.Action();
+                dialogEvent.OnComplete += () =>
+                {
+                    HandleDialogEventRewards(dialogEvent);
+                };
             }
+        }
+    }
+
+    void HandleDialogEventRewards(DialogEvent dialogEvent)
+    {
+        var reward = dialogEvent.GetReward();
+        if (reward != null)
+        {
+            if(reward.gold!=0)
+                Player.Instance.Party.AddGold(reward.gold); 
+            if(reward.experience!=0)
+                Player.Instance.Party.ActiveUnit.ExperienceManager.AddExp(reward.experience);
+            if(reward.grace!=0)
+                Player.Instance.Party.AddGrace(reward.grace); 
+            
+            if(reward.itemBp!=null)
+                foreach (var item in reward.itemBp)
+                {
+                    Player.Instance.Party.Convoy.AddItem(item.Create()); 
+                }
         }
     }
     void CheckPossibleRewards()

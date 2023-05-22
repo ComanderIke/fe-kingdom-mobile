@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Game.GameActors.Items;
 using Game.GameActors.Players;
 using UnityEngine;
@@ -10,9 +11,25 @@ public class MemoryGameData: MiniGame
     public List<ItemBP> items;
     public int columns=5;
     public int hpCost = 0;
+    private MemoryMiniGame miniGame;
 
     public override void StartGame()
     {
-        GameObject.FindObjectOfType<MemoryMiniGame>().Show(this, Player.Instance.Party);
+        miniGame=GameObject.FindObjectOfType<MemoryMiniGame>();
+        miniGame.OnComplete -= Complete;
+        miniGame.OnComplete += Complete;
+            miniGame.Show(this, Player.Instance.Party);
+        
     }
+
+    void Complete()
+    {
+        OnComplete?.Invoke();
+    }
+    public override Reward GetRewards()
+    {
+        return GameObject.FindObjectOfType<MemoryMiniGame>().GetRewards();
+    }
+
+    public override event Action OnComplete;
 }

@@ -14,11 +14,12 @@ namespace Game.GameResources
         [SerializeField] List<LGEventDialogSO> tier1Events;
         [SerializeField] List<LGEventDialogSO> tier2Events;
         [SerializeField] List<LGEventDialogSO> specialEvents;
-
+        private Random rng = new Random();
         public LGEventDialogSO GetRandomEvent(int tier)
         {
-            var rng = new Random();
-            
+            if(rng==null)
+                rng = new Random();
+            Debug.Log("Getting Random Event: "+tier0Events.Count+ " "+rng.Next(0, tier0Events.Count));
             switch (tier)
             {
                 case 0: return tier0Events[rng.Next(0, tier0Events.Count)];

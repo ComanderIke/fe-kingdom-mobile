@@ -27,6 +27,7 @@ public class MemoryMiniGame : MonoBehaviour
     [SerializeField] private Canvas canvas;
     public int currentTries = 0;
     private Party party;
+    private List<ItemBP> revealedItems;
     
 
     // Start is called before the first frame update
@@ -46,6 +47,7 @@ public class MemoryMiniGame : MonoBehaviour
         shuffledItems = new List<ItemBP>(memoryGameData.items);
         shuffledItems.AddRange(memoryGameData.items);
         Randomize(shuffledItems);
+        revealedItems = new List<ItemBP>();
         foreach (var item in shuffledItems)
         {
             var go=Instantiate(memoryButtonPrefab, gridLayout.transform);
@@ -103,6 +105,7 @@ public class MemoryMiniGame : MonoBehaviour
             member.HpValueChanged -= UpdateHealthRelatedUI;
         }
         canvas.enabled = false;
+        OnComplete?.Invoke();
     }
     
     public void Randomize<T>(List<T> items)
@@ -143,7 +146,7 @@ public class MemoryMiniGame : MonoBehaviour
             {
                 revealedCards.Add(revealed);
                 revealedCards.Add(currentRevealedCard);
-                party.Convoy.AddItem(((ItemBP)currentRevealedCard.userData).Create());
+                revealedItems.Add((ItemBP)currentRevealedCard.userData);
                 currentRevealedCard = null;
                
                 return false;
@@ -177,4 +180,22 @@ public class MemoryMiniGame : MonoBehaviour
 
         return currentTries < memoryData.MaxTries;
     }
+
+    public Reward GetRewards()
+    {
+        Reward reward = new Reward();
+        List<ItemBP> ret = new List<ItemBP>();
+        foreach(var item in revealedItems)
+        {
+            Debug.Log("Revealed Item: "+item);
+            ret.Add(item);
+        }
+
+        reward.itemBp = ret;
+        revealedCards.Clear();
+        revealedItems.Clear();
+        return reward;
+    }
+
+    public event Action OnComplete;
 }
