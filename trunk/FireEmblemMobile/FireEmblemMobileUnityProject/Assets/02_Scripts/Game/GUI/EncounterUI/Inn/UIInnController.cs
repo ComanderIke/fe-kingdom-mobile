@@ -82,22 +82,22 @@ public class UIInnController : MonoBehaviour
     public void SpecialClicked()
     {
         inn.Special(Player.Instance.Party.ActiveUnit);
-        UpdateUI();
+        UpdateUIValues();
     }
     public void DrinkClicked()
     {
         inn.Drink( Player.Instance.Party.ActiveUnit);
-        UpdateUI();
+        UpdateUIValues();
     }
     public void FoodCLicked()
     {
         inn.Eat(Player.Instance.Party.ActiveUnit);
-        UpdateUI();
+        UpdateUIValues();
     }
     public void RestClicked()
     {
         inn.Rest(Player.Instance.Party.ActiveUnit);
-        UpdateUI();
+        UpdateUIValues();
     }
     public void ContinueClicked()
     {
@@ -115,14 +115,14 @@ public class UIInnController : MonoBehaviour
         
     }
 
-    public void UpdateUI()
+    void UpdateUIValues()
     {
-        unitIdleAnimation.Show(party.ActiveUnit);
-        characterFace.Show(party.ActiveUnit);
-
         shopItems[0].SetAffordable(Player.Instance.Party.CanAfford(inn.GetRestPrice()));
         shopItems[1].SetAffordable(Player.Instance.Party.CanAfford(inn.GetDrinkPrice()));
         shopItems[2].SetAffordable(Player.Instance.Party.CanAfford(inn.GetEatPrice()));
+        shopItems[0].SetInteractable(true);
+        shopItems[1].SetInteractable(true);
+        shopItems[2].SetInteractable(true);
         restDescription.text = GetDescriptionText(inn.GetRestHeal());
 
         drinkDescription.text = GetDescriptionText(inn.GetDrinkHeal());
@@ -130,22 +130,33 @@ public class UIInnController : MonoBehaviour
         if (!inn.CanUnitRest(party.ActiveUnit))
         {
             shopItems[0].SetAffordable(false);
+            shopItems[0].SetInteractable(false);
             restDescription.text = "Already rested.";
         }
         if (!inn.CanUnitDrink(party.ActiveUnit))
         {
             shopItems[1].SetAffordable(false);
+            shopItems[1].SetInteractable(false);
             drinkDescription.text = "Already drank.";
         }
         if (!inn.CanUnitEat(party.ActiveUnit))
         {
+           
             shopItems[2].SetAffordable(false);
+            shopItems[2].SetInteractable(false);
             eatDescription.text = "Already ate.";
         }
 
         restPriceText.text = GetCostText(inn.GetRestPrice(), restCoinIcon);
         drinkPriceText.text = GetCostText(inn.GetDrinkPrice(), drinkCoinIcon);
         eatPriceText.text = GetCostText(inn.GetEatPrice(), eatCoinIcon);
+    }
+    public void UpdateUI()
+    {
+        unitIdleAnimation.Show(party.ActiveUnit);
+        characterFace.Show(party.ActiveUnit);
+
+       UpdateUIValues();
 
        
     }

@@ -468,6 +468,7 @@ namespace Game.GameActors.Units
         }
         public void Heal(int heal)
         {
+            Debug.Log("Unit HEALED: "+ heal);
             Hp += heal;
             OnUnitHealed?.Invoke(this, heal);
             

@@ -36,4 +36,9 @@ public class UIButtonController : MonoBehaviour
     {
         backGround.color = selected ? selectedBgColor : normalBgColor;
     }
+
+    public void SetInteractable(bool interactable)
+    {
+        button.interactable = interactable;
+    }
 }
