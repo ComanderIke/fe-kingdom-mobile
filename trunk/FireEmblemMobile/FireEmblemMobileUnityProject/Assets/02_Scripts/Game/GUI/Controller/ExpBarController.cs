@@ -70,14 +70,19 @@ namespace Game.GUI
                 }
                 else if (currentExp == 100)
                 {
-                    fullFeedbacks.PlayFeedbacks();
+                   
+                    if(fullFeedbacks!=null)
+                        fullFeedbacks.PlayFeedbacks();
+                    currentExp = 0;
+
                 }
 
                 fill.fillAmount = currentExp / 100f;
+                
                 countingText?.SetText(currentExp.ToString());
                 yield return new WaitForSeconds(fillSecondsPerUnit);
             }
-
+           
             yield return new WaitForSeconds(1.1f);
             onFinished?.Invoke();
             
@@ -131,14 +136,17 @@ namespace Game.GUI
 
         public void Show(int CurrentExp)
         {
-            showFeedbacks.PlayFeedbacks();
+            if(showFeedbacks!=null)
+                showFeedbacks.PlayFeedbacks();
             UpdateInstant(currentExp);
             //TweenUtility.FadeIn(canvasGroup);
         }
         public void Hide()
         {
-            showFeedbacks.StopFeedbacks();
-            hideFeedbacks.PlayFeedbacks();
+            if(showFeedbacks!=null)
+                showFeedbacks.StopFeedbacks();
+            if(hideFeedbacks!=null)
+                hideFeedbacks.PlayFeedbacks();
             //TweenUtility.FadeOut(canvasGroup);
         }
 
