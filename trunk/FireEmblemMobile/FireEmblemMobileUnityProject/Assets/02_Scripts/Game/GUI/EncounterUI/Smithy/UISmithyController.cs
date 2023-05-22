@@ -29,6 +29,8 @@ public class UISmithyController : MonoBehaviour
     [SerializeField] private CanvasGroup smithingButtonAlpha;
     [SerializeField] private CanvasGroup insertGemsButtonAlpha;
     [SerializeField] private CanvasGroup combineGemsButtonAlpha;
+    [SerializeField] private CanvasGroup noRelicArea;
+    [SerializeField] private CanvasGroup noGemArea;
     private Weapon selectedWeapon;
     private Relic selectedRelic;
     public SmithyUIState state = SmithyUIState.Smithing;
@@ -70,11 +72,15 @@ public class UISmithyController : MonoBehaviour
             smithingButtonAlpha.alpha = 1.0f;
             combineGemsButtonAlpha.alpha = 0.6f;
             insertGemsButtonAlpha.alpha = 0.6f;
+            noGemArea.alpha = 0;
+            noRelicArea.alpha = 0;
         }
 
         if (state == SmithyUIState.InsertGems)
         {
             smithingArea.Hide();
+            noGemArea.alpha = 0;
+            noRelicArea.alpha = 0;
             combineGemUI.Hide();
             if (selectedRelic == null)
             {
@@ -90,6 +96,8 @@ public class UISmithyController : MonoBehaviour
             else
             {
                 insertGemUI.Hide();
+           
+                noRelicArea.alpha = 1;
             }
 
             relicSlot.Show(party.ActiveUnit.EquippedRelic1, selectedRelic == party.ActiveUnit.EquippedRelic1);
@@ -103,10 +111,20 @@ public class UISmithyController : MonoBehaviour
         {
             insertGemUI.Hide();
             smithingArea.Hide();
+            noGemArea.alpha = 0;
+            noRelicArea.alpha = 0;
             smithingButtonAlpha.alpha = 0.6f;
             combineGemsButtonAlpha.alpha = 1.0f;
             insertGemsButtonAlpha.alpha = 0.6f;
-            combineGemUI.Show();
+            if (Player.Instance.Party.Convoy.HasGems())
+            {
+                combineGemUI.Show();
+            }
+            else
+            {
+                combineGemUI.Hide();
+                noGemArea.alpha = 1;
+            }
         }
     }
 

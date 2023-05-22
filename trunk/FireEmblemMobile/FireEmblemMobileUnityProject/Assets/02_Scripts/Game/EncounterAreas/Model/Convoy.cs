@@ -232,6 +232,11 @@ namespace Game.WorldMapStuff.Model
             convoyUpdated?.Invoke();
         }
 
-        
+
+        public bool HasGems()
+        {
+            var gems = items.FindAll(i => i.item is Gem);
+            return gems.Count > 0;
+        }
     }
 }
