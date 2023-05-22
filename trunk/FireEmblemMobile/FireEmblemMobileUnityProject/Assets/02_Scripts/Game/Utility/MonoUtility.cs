@@ -47,6 +47,12 @@ public class MonoUtility : MonoBehaviour
         action?.Invoke();
         
     }
+    IEnumerator InvokeNextFrameCoroutine(Action action)
+    {
+        yield return null;
+        action?.Invoke();
+        
+    }
 
     public static void StopCoroutines(Object source)
     {
@@ -60,5 +66,10 @@ public class MonoUtility : MonoBehaviour
                 }
             }
         }
+    }
+
+    public static void InvokeNextFrame(Action action)
+    {
+        Instance.StartCoroutine(Instance.InvokeNextFrameCoroutine(action));
     }
 }

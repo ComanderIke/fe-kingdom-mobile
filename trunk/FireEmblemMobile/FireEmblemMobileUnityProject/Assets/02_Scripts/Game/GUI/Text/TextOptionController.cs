@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using _02_Scripts.Game.Dialog.DialogSystem;
+using Game.GUI.Text;
 using TMPro;
 using UnityEngine;
 
@@ -18,6 +19,7 @@ public class TextOptionController : MonoBehaviour
 {
     public TextMeshProUGUI text;
     public TextMeshProUGUI StatPreview;
+    [SerializeField] private TextSizer textSizer;
     private UIEventController controller;
     public Color textNormalColor;
     public Color textSecretColor;
@@ -44,9 +46,9 @@ public class TextOptionController : MonoBehaviour
     {
         Option = option;
         this.controller = controller;
-        this.text.text = text;
+        this.text.SetText(text);
         this.text.color = textNormalColor;
-        this.StatPreview.text =String.IsNullOrEmpty(statText)?"": "("+statText+")";
+        this.StatPreview.SetText(String.IsNullOrEmpty(statText)?"": "("+statText+")");
         switch (textState)
         {
             case TextOptionState.Impossible:  this.StatPreview.color = textNotPossibleColor;break;
@@ -56,17 +58,17 @@ public class TextOptionController : MonoBehaviour
             case TextOptionState.Low:  this.StatPreview.color = textLowColor;break;
             case TextOptionState.Lowish:  this.StatPreview.color = textLowishColor;break;
         }
-       
+
+        this.text.enabled = false;
+        textSizer.Refresh();
+        MonoUtility.InvokeNextFrame(() =>//Because Textsize updates on the next update loop.
+        {
+            if(this.text!=null)
+                this.text.enabled = true;
+        });
 
     }
-    public void Setup(LGDialogChoiceData option,string text, UIEventController controller)
-    {
-        Option = option;
-        this.controller = controller;
-        this.text.text = text;
-        this.text.color = textNormalColor;
-        this.StatPreview.text = "";
-    }
+   
 
     public void Clicked()
     {
