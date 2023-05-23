@@ -53,8 +53,13 @@ namespace Game.GameActors.Players
 
         [field: SerializeField]
         public Party Party { get; set; }
-        [HideInInspector]
 
+        private Dictionary<string, bool> quests;
+        [HideInInspector]
+        public Dictionary<string, bool> Quests
+        {
+            get { return quests ??= new Dictionary<string, bool>(); }
+        }
         public string Name;
 
         public int startPartyMemberCount = 2;
@@ -105,12 +110,32 @@ namespace Game.GameActors.Players
             Name = data.playerData.Name;
             Party.Load(data.playerData.partyData);
             MetaUpgradeManager.Load(data.playerData.metaUpgradeManagerData);
+            foreach (var quest in data.playerData.acceptedQuests)
+            {
+                Quests.Add(quest.Key, quest.Value);
+            }
         }
 
         public void SaveData(ref SaveData data)
         {
           //  Debug.Log("Save Player Data");
             data.playerData = new PlayerData(this);
+        }
+
+
+        public void AddQuest(string questName)
+        {
+            
+            if(!Quests.ContainsKey(questName))
+                Quests.Add(questName, false);
+        }
+
+        public void CompleteQuest(string questName)
+        {
+            if(!Quests.ContainsKey(questName))
+                Quests.Add(questName, true);
+            else
+                Quests[questName] = true;
         }
     }
 }

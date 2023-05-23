@@ -10,7 +10,10 @@ using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Numbers;
 using Game.Mechanics;
+using Game.Systems;
+using Game.WorldMapStuff.Controller;
 using Game.WorldMapStuff.Model;
+using LostGrace;
 using TMPro;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -321,6 +324,9 @@ public class UIEventController : MonoBehaviour
     void StartBattle()
     {
         Debug.Log("TODO Start Battle from EVENT");
+        var enemyData = ((LGBattleEventDialogSO)current.NextDialogue).EnemyArmy;
+        Player.Instance.AddQuest(enemyData.name);
+        GameSceneController.Instance.LoadBattleLevel(Scenes.Battle1, enemyData);
         //Get Enemy Army Data/Layout and Map Prefab from Node
         //better: use BattleEncounterNodeData create one specifically for this event and add save and load to node Editor (same way as unitbp for enemytoFight)
         // Then start the battle scene and put data into saveGame so that on return UIEventNode is shown again at the right node...
