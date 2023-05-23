@@ -13,6 +13,10 @@ public class EventEncounterNode : EncounterNode
     {
         randomEvent = GameBPData.Instance.GetEventData().GetRandomEvent(0);
     }
+    public EventEncounterNode(string prefabName, List<EncounterNode> parents,int depth, int childIndex, string label, string description, Sprite sprite) : base(parents, depth, childIndex, label, description, sprite)
+    {
+        randomEvent = GameBPData.Instance.GetEventData().GetEventById(prefabName);
+    }
 
     public override void Activate(Party party)
     {

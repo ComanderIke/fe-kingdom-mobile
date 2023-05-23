@@ -11,5 +11,6 @@ public abstract class EncounterNodeData: ScriptableObject
     public Sprite sprite;
 
     public abstract EncounterNode CreateNode(List<EncounterNode> parents,int depth, int childIndex);
+   
     
 }

@@ -200,8 +200,16 @@ public class EncounterTree
             {
                 
                 var nodeSpawnData = GetNodeDataIndex(encounterTreeData.columns[i].nodeDatas[j].nodeTypeIndex);
-              
-                EncounterNode node = nodeSpawnData.CreateNode(null, i,j);
+                EncounterNode node;
+                if (encounterTreeData.columns[i].nodeDatas[j].userDataId != String.Empty&&nodeSpawnData is EventEncounterNodeData eventData)
+                {
+                    node=eventData.CreateNode(encounterTreeData.columns[i].nodeDatas[j].userDataId,null, i,j);
+                }
+                else
+                {
+                    node = nodeSpawnData.CreateNode(null, i,j);
+                }
+               
                
                 node.prefabIdx = encounterTreeData.columns[i].nodeDatas[j].nodeTypeIndex;
                

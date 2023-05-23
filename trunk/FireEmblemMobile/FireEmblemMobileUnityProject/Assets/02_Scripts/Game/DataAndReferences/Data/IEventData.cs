@@ -6,5 +6,6 @@ namespace Game.GameResources
     {
         LGEventDialogSO GetRandomEvent(int tier);
         LGEventDialogSO GetSpecialEvent(int index);
+        LGEventDialogSO GetEventById(string prefabId);
     }
 }

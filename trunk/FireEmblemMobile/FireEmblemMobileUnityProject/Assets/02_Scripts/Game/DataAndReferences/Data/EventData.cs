@@ -14,6 +14,7 @@ namespace Game.GameResources
         [SerializeField] List<LGEventDialogSO> tier1Events;
         [SerializeField] List<LGEventDialogSO> tier2Events;
         [SerializeField] List<LGEventDialogSO> specialEvents;
+        [SerializeField] private LGEventDialogSO[] allEvents;
         private Random rng = new Random();
         public LGEventDialogSO GetRandomEvent(int tier)
         {
@@ -34,6 +35,16 @@ namespace Game.GameResources
                 return null;
 
             return specialEvents[index];
+        }
+
+        private void OnValidate()
+        {
+            allEvents = GameBPData.GetAllInstances<LGEventDialogSO>();
+        }
+
+        public LGEventDialogSO GetEventById(string prefabName)
+        {
+            return allEvents.First(a => a.name == prefabName);
         }
     }
 }

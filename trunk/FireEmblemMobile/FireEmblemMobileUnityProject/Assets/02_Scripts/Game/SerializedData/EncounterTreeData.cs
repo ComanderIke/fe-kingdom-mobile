@@ -25,6 +25,8 @@ namespace Game.Systems
         [SerializeField]
         public List<int> parentIndexes;
 
+        [SerializeField] public string userDataId;
+
         public NodeData(EncounterNode node)
         {
             nodeTypeIndex=node.prefabIdx;
@@ -40,6 +42,12 @@ namespace Game.Systems
                     Debug.Log("Parent is null!?"+node);
                 }
             }
+
+            if (node is EventEncounterNode eventNode)
+            {
+                userDataId = eventNode.randomEvent.name;
+            }
+            
         }
     }
 
