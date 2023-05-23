@@ -324,6 +324,11 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                     SaveNodeToGraph(fightNode, graphSaveData);
                     SaveNodeToScriptableObject(fightNode, dialogContainer);
                 }
+                else if (node is BattleNode battleNode)
+                {
+                    SaveNodeToGraph(battleNode, graphSaveData);
+                    SaveNodeToScriptableObject(battleNode, dialogContainer);
+                }
                 else if (node is EventNode eventNode)
                 {
                     SaveNodeToGraph(eventNode, graphSaveData);

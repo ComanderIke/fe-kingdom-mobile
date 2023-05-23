@@ -135,7 +135,7 @@ MonoBehaviour:
     <DialogActor>k__BackingField: {fileID: 0}
     <Choices>k__BackingField:
     - <Text>k__BackingField: 'Run up to them and fight off the monsters. '
-      <NodeID>k__BackingField: c46191e2-a01a-41b5-87e4-d8521b8fb22b
+      <NodeID>k__BackingField: cb7f778e-e291-4bbc-b207-6b1779cafe26
       <NodeFailID>k__BackingField: 
       <AttributeRequirements>k__BackingField: []
       <CharacterRequirement>k__BackingField: {fileID: 0}
@@ -197,26 +197,6 @@ MonoBehaviour:
     <GroupID>k__BackingField: 3903b474-f6d9-4717-b77b-59ad6b1efc75
     <DialgueType>k__BackingField: 3
     <Position>k__BackingField: {x: 881, y: 1479}
-    <Headline>k__BackingField: 
-    <RewardResources>k__BackingField: []
-    <RewardItems>k__BackingField: []
-    <Events>k__BackingField: []
-  - <ID>k__BackingField: 628ae275-470e-470f-ab38-79fe8a5639b0
-    <Name>k__BackingField: ChaseBySkeletons3
-    <Text>k__BackingField: "After the fight is over, you can\u2019t find the children
-      anywhere. It seems they ran away, only *goddess\u2019 name* knows where to. "
-    <IsPortraitLeft>k__BackingField: 1
-    <DialogActor>k__BackingField: {fileID: 0}
-    <Choices>k__BackingField:
-    - <Text>k__BackingField: End
-      <NodeID>k__BackingField: 
-      <NodeFailID>k__BackingField: 
-      <AttributeRequirements>k__BackingField: []
-      <CharacterRequirement>k__BackingField: {fileID: 0}
-      <ItemRequirements>k__BackingField: []
-    <GroupID>k__BackingField: 3903b474-f6d9-4717-b77b-59ad6b1efc75
-    <DialgueType>k__BackingField: 3
-    <Position>k__BackingField: {x: 1348, y: 1193}
     <Headline>k__BackingField: 
     <RewardResources>k__BackingField: []
     <RewardItems>k__BackingField: []
@@ -542,6 +522,26 @@ MonoBehaviour:
     <RewardItems>k__BackingField: []
     <Events>k__BackingField:
     - {fileID: 11400000, guid: 0bc70c19398a0654991d0dcb17cd110d, type: 2}
+  - <ID>k__BackingField: 628ae275-470e-470f-ab38-79fe8a5639b0
+    <Name>k__BackingField: ChaseBySkeletons3
+    <Text>k__BackingField: "After the fight is over, you can\u2019t find the children
+      anywhere. It seems they ran away, only *goddess\u2019 name* knows where to. "
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: End
+      <NodeID>k__BackingField: 
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirement>k__BackingField: {fileID: 0}
+      <ItemRequirements>k__BackingField: []
+    <GroupID>k__BackingField: 3903b474-f6d9-4717-b77b-59ad6b1efc75
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 1349, y: 1186}
+    <Headline>k__BackingField: Chased by Skeletons
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
   <OldGroupNames>k__BackingField:
   - TheKnightAndHisHarem
   - ChasedBySkeletons
@@ -565,7 +565,7 @@ MonoBehaviour:
       - ChasedBySkeletons1
       - ChasedBySkeletons4
       - ChaseBySkeletons3
-      - DialogueName
+      - ChasedBySkeletons2
     - Key: LumberjackParty
       Value:
       - LumberjackParty1
@@ -615,8 +615,9 @@ MonoBehaviour:
     <Events>k__BackingField: []
     <Enemy>k__BackingField: {fileID: 11400000, guid: 8d0171e7cfb2f134bbfabaf8e9b89193,
       type: 2}
-  - <ID>k__BackingField: c46191e2-a01a-41b5-87e4-d8521b8fb22b
-    <Name>k__BackingField: DialogueName
+  <BattleNodes>k__BackingField:
+  - <ID>k__BackingField: cb7f778e-e291-4bbc-b207-6b1779cafe26
+    <Name>k__BackingField: ChasedBySkeletons2
     <Text>k__BackingField: DialogueText
     <IsPortraitLeft>k__BackingField: 1
     <DialogActor>k__BackingField: {fileID: 0}
@@ -634,11 +635,11 @@ MonoBehaviour:
       <CharacterRequirement>k__BackingField: {fileID: 0}
       <ItemRequirements>k__BackingField: []
     <GroupID>k__BackingField: 3903b474-f6d9-4717-b77b-59ad6b1efc75
-    <DialgueType>k__BackingField: 2
-    <Position>k__BackingField: {x: 903, y: 1162}
+    <DialgueType>k__BackingField: 4
+    <Position>k__BackingField: {x: 870, y: 1168}
     <Headline>k__BackingField: 
     <RewardResources>k__BackingField: []
     <RewardItems>k__BackingField: []
     <Events>k__BackingField: []
-    <Enemy>k__BackingField: {fileID: 0}
-  <BattleNodes>k__BackingField: []
+    <EnemyArmy>k__BackingField: {fileID: 11400000, guid: f99b0f1f08d60804ca7debfade419e11,
+      type: 2}

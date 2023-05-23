@@ -16,7 +16,7 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
         public override void Initialize(string nodeName, LGGraphView graphView,Vector2 position)
         {
             base.Initialize(nodeName, graphView,position);
-            DialogType = DialogType.Fight;
+            DialogType = DialogType.Battle;
 
             LGChoiceSaveData winData = new LGChoiceSaveData()
             {

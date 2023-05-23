@@ -295,6 +295,10 @@ public class UIEventController : MonoBehaviour
             {
                 StartFight();
             }
+            else if (currentNode is LGBattleEventDialogSO)
+            {
+                StartBattle();
+            }
             else
             {
                 UpdateUIValues();
@@ -314,6 +318,13 @@ public class UIEventController : MonoBehaviour
         node.Continue();
     }
 
+    void StartBattle()
+    {
+        Debug.Log("TODO Start Battle from EVENT");
+        //Get Enemy Army Data/Layout and Map Prefab from Node
+        //better: use BattleEncounterNodeData create one specifically for this event and add save and load to node Editor (same way as unitbp for enemytoFight)
+        // Then start the battle scene and put data into saveGame so that on return UIEventNode is shown again at the right node...
+    }
     void StartFight()
     {
         var battleSystem = AreaGameManager.Instance.GetSystem<BattleSystem>();
