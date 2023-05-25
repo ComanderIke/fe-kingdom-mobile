@@ -58,12 +58,31 @@ namespace Game.GameActors.Players
         [HideInInspector]
         public Dictionary<string, bool> Quests
         {
-            get { return quests ??= new Dictionary<string, bool>(); }
+            get
+            {
+                return quests ??= new Dictionary<string, bool>(); 
+                
+            }
+          
         }
+        private List<string> completedQuests;
+        [HideInInspector]
+        public List <string> CompletedQuests
+        {
+            get
+            {
+                return completedQuests ??= new List<string>(); 
+                
+            }
+          
+        }
+        
         public string Name;
 
         public int startPartyMemberCount = 2;
         [field: SerializeField] public MetaUpgradeManager MetaUpgradeManager { get; set; }
+        public string CurrentEventDialogID { get; set; }
+        public BattleOutcome LastBattleOutcome { get; set; }
 
         public override string ToString()
         {
@@ -110,10 +129,15 @@ namespace Game.GameActors.Players
             Name = data.playerData.Name;
             Party.Load(data.playerData.partyData);
             MetaUpgradeManager.Load(data.playerData.metaUpgradeManagerData);
+            quests = new Dictionary<string, bool>();
+            CurrentEventDialogID = data.playerData.currentEventDialogID;
+            completedQuests = new List<string>();
             foreach (var quest in data.playerData.acceptedQuests)
             {
                 Quests.Add(quest.Key, quest.Value);
             }
+
+            LastBattleOutcome = data.playerData.lastBattleOutcome;
         }
 
         public void SaveData(ref SaveData data)

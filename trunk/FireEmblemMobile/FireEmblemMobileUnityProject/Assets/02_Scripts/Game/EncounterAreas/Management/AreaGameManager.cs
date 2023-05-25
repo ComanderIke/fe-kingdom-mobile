@@ -39,14 +39,17 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     public TimeCircleUI circleUI;
     public DynamicAmbientLight lightController;
     [SerializeField] private bool startFreshSave = false;
+    private static bool startFreshSaveFirstTime;
     private List<EncounterNodeClickController> nodeClickControllers;
     void Awake()
     {
         Instance = this;
        
        
-        if (startFreshSave)//Just for Testing when starting from encounterArea
+        if (startFreshSave&&startFreshSaveFirstTime==false)//Just for Testing when starting from encounterArea
         {
+            startFreshSaveFirstTime = true;
+            startFreshSave = false;
             Debug.Log("Started game from EncounterArea => creating new game savedata");
             SaveGameManager.NewGame(0, "DebugEditorSave");
         }

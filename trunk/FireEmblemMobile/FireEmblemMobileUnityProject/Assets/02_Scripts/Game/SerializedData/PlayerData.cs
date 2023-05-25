@@ -21,16 +21,23 @@ namespace Game.GameActors.Players
         [SerializeField]
         public SerializableDictionary<string, bool> acceptedQuests;
 
+        public string currentEventDialogID;
+
+        public BattleOutcome lastBattleOutcome;
+        //currentEventNodeUserData
         public PlayerData (Player player)
         {
             Name = player.Name;
             partyData = new PartyData(player.Party);
             metaUpgradeManagerData = new MetaUpgradeManagerSaveData(player.MetaUpgradeManager);
             acceptedQuests = new SerializableDictionary<string, bool>();
+            currentEventDialogID = player.CurrentEventDialogID;
             foreach (var quest in player.Quests)
             {
                 acceptedQuests.Add(quest.Key, quest.Value);
             }
+
+            lastBattleOutcome = player.LastBattleOutcome;
             //factionData = new FactionData((WM_Faction)player.faction);
 
         }

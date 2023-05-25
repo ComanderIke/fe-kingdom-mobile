@@ -73,7 +73,7 @@ public abstract class EncounterNode
     public void Continue()
     {
         Player.Instance.Party.EncounterComponent.activatedEncounter = true;
-        
+        Player.Instance.CurrentEventDialogID = "";
      
         GameObject.FindObjectOfType<AreaGameManager>().Continue();
     }

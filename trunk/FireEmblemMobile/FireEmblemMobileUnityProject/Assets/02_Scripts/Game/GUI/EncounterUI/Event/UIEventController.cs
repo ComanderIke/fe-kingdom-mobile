@@ -9,6 +9,7 @@ using Game.GameActors.Items;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Numbers;
+using Game.GameResources;
 using Game.Mechanics;
 using Game.Systems;
 using Game.WorldMapStuff.Controller;
@@ -44,7 +45,21 @@ public class UIEventController : MonoBehaviour
         canvas.enabled = true;
         this.party = party;
         randomEvent = node.randomEvent;
-        currentNode = randomEvent;
+        if (!String.IsNullOrEmpty(Player.Instance.CurrentEventDialogID))
+        {
+            currentNode = GameBPData.Instance.GetEventData().GetEventById(Player.Instance.CurrentEventDialogID);
+            if (currentNode is LGBattleEventDialogSO)
+            {
+                MapBattleEnded(Player.Instance.LastBattleOutcome == BattleOutcome.Victory);
+            }
+
+            
+        }
+        else
+        {
+            currentNode = randomEvent;
+        }
+        
         party.onActiveUnitChanged -= ActiveUnitChanged;
         party.onActiveUnitChanged += ActiveUnitChanged;
         UpdateUI();
@@ -225,10 +240,21 @@ public class UIEventController : MonoBehaviour
     {
         canvas.enabled = false;
         party.onActiveUnitChanged -= ActiveUnitChanged;
+      
     }
-    
-    
-    
+
+
+    void MapBattleEnded(bool won)
+    {
+        Debug.Log("MapBattleEnded: "+won);
+        if(won)
+            currentNode =(LGEventDialogSO)currentNode.Choices[0].NextDialogue;
+        else
+        {
+            currentNode =(LGEventDialogSO)currentNode.Choices[1].NextDialogue;
+        }
+        UpdateUI();
+    }
     void BattleEnded(AttackResult result)
     {
         Debug.Log("BATTLE ENDED");
@@ -324,8 +350,9 @@ public class UIEventController : MonoBehaviour
     void StartBattle()
     {
         Debug.Log("TODO Start Battle from EVENT");
-        var enemyData = ((LGBattleEventDialogSO)current.NextDialogue).EnemyArmy;
-        Player.Instance.AddQuest(enemyData.name);
+        var battleDialogSO = ((LGBattleEventDialogSO)current.NextDialogue);
+        var enemyData = battleDialogSO.EnemyArmy;
+        Player.Instance.CurrentEventDialogID=(battleDialogSO.name);
         GameSceneController.Instance.LoadBattleLevel(Scenes.Battle1, enemyData);
         //Get Enemy Army Data/Layout and Map Prefab from Node
         //better: use BattleEncounterNodeData create one specifically for this event and add save and load to node Editor (same way as unitbp for enemytoFight)
