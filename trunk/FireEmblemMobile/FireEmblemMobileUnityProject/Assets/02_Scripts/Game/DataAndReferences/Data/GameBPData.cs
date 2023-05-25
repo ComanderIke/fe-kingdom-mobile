@@ -107,6 +107,7 @@ namespace Game.GameResources
         #if UNITY_EDITOR
         private void OnValidate()
         {
+            eventData.OnValidate();
             allUnits = GetAllInstances<UnitBP>();
             allBlessings = GetAllInstances<BlessingBP>();
             tier0Blessings = Array.FindAll(allBlessings,a => a.tier == 0);

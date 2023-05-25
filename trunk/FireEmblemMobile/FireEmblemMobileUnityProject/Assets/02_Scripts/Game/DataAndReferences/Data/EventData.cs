@@ -37,13 +37,14 @@ namespace Game.GameResources
             return specialEvents[index];
         }
 
-        private void OnValidate()
+        public void OnValidate()
         {
             allEvents = GameBPData.GetAllInstances<LGEventDialogSO>();
         }
 
         public LGEventDialogSO GetEventById(string prefabName)
         {
+            Debug.Log("Get Event by ID: "+prefabName);
             return allEvents.First(a => a.name == prefabName);
         }
     }

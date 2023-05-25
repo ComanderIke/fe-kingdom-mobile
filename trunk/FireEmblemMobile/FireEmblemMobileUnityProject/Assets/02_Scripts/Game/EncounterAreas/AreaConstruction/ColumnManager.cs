@@ -237,7 +237,9 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
     private void CreateNodeGameObject(GameObject prefab, EncounterNode node, int index)
     {
         var go = GameObject.Instantiate(prefab, this.transform);
-        go.name = "EncounterNode Column:" + index;
+        go.name = node.label+" Column:" + index;
+        if (node is EventEncounterNode eventNode)
+            go.name = eventNode.randomEvent.name + " Event Column: " + index;
         node.SetGameObject(go);
         //Debug.Log("Create Node: " + node + " Index: " + index);
         go.GetComponentInChildren<EncounterNodeClickController>().encounterNode = node;
