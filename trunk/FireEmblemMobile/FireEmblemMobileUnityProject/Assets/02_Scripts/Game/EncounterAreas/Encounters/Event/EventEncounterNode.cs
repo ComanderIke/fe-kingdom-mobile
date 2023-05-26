@@ -16,7 +16,7 @@ public class EventEncounterNode : EncounterNode
 
     LGEventDialogSO  GenerateEvent()
     {
-        return GameBPData.Instance.GetEventData().GetRandomEvent(1);
+        return GameBPData.Instance.GetEventData().GetRandomEvent(0);
     }
     public EventEncounterNode(string prefabName, List<EncounterNode> parents,int depth, int childIndex, string label, string description, Sprite sprite) : base(parents, depth, childIndex, label, description, sprite)
     {

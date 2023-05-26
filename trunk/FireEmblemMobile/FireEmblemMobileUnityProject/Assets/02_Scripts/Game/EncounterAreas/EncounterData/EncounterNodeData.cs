@@ -6,6 +6,7 @@ public abstract class EncounterNodeData: ScriptableObject
     public string label;
     public GameObject prefab;
     public float appearanceChance;
+    public int minAppearanceCountPerArea = 0;
     public int maxAppearanceCountPerArea = 99;
     public string description;
     public Sprite sprite;

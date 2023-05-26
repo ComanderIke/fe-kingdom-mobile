@@ -12,11 +12,7 @@ using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 [Serializable]
-public struct FixedColumnNode
-{
-    public int columnIndex;
-    public EncounterNodeData nodeData;
-}
+
 public class ColumnManager : MonoBehaviour, IDataPersistance
 {
     [SerializeField]
@@ -33,8 +29,7 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
     public float yRandomMin = -0.4f;
     public float yRandomMax = 0.4f;
     [SerializeField] float columspacing = 1.5f;
-    public bool fixedEncounters = true;
-    public List< FixedColumnNode> fixedColumns;
+    
 
 
 
@@ -64,7 +59,7 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
             //Debug.Log(SaveGameManager.currentSaveData.encounterTreeData.columns.Count);
             Debug.Log("Create New EncounterTree!");
             EncounterTree.Instance.spawnData.InitNodeAppearanceChances();
-            EncounterTree.Instance.Create(fixedEncounters, fixedColumns);
+            EncounterTree.Instance.Create();
             
         
         }
@@ -72,9 +67,8 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
         //
         EncounterTree.Instance.startNode.SetGameObject(CreateStartNodeGameObject(EncounterTree.Instance.startNode));
         CreateMiddleNodesGameObject(EncounterTree.Instance.columns);
-        EncounterTree.Instance.endNode.SetGameObject(CreateEndNodeGameObject(EncounterTree.Instance.endNode));
-        ConnectEncounters(EncounterTree.Instance.columns,EncounterTree.Instance.startNode, EncounterTree.Instance.endNode);
-        PositionEncounters(EncounterTree.Instance.columns, EncounterTree.Instance.endNode);
+        ConnectEncounters(EncounterTree.Instance.columns,EncounterTree.Instance.startNode);
+        PositionEncounters(EncounterTree.Instance.columns);
         CreateConnections(EncounterTree.Instance.columns);
       
 
@@ -85,7 +79,7 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
     private void CreateMiddleNodesGameObject(List<Column> columns)
     {
         
-        for (int i=1; i < columns.Count-1; i++)
+        for (int i=1; i < columns.Count; i++)
         {
             foreach (var node in columns[i].children)
             {
@@ -106,14 +100,6 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
         return go;
     }
     
-    private GameObject CreateEndNodeGameObject(EncounterNode node)
-    {
-        var go = GameObject.Instantiate(spawnData.endNodeData.prefab, this.transform);
-        go.transform.localPosition = Vector3.zero;
-        go.name = "End Node";
-        go.GetComponentInChildren<EncounterNodeClickController>().encounterNode = node;
-        return go;
-    }
     
     private void CreateConnections(List<Column> columns)
     {
@@ -146,7 +132,7 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
         lineRenderer.SetPositions(pos);
     }
 
-    void ConnectEncounters(List<Column> columns, EncounterNode startNode, EncounterNode endNode)
+    void ConnectEncounters(List<Column> columns, EncounterNode startNode)
     {
         
         // for (int i = 0; i < columns[0].children.Count; i++)
@@ -155,7 +141,7 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
         //     startNode.children.Add(columns[0].children[i]);
         // }
         
-        for (int i = 1; i < spawnData.columnCount; i++)
+        for (int i = 1; i < spawnData.GetColumnCount() ; i++)
         {
             int prevChildCount = columns[i - 1].children.Count;
             int childCount = columns[i].children.Count;
@@ -193,9 +179,9 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
         }
     }
 
-    void PositionEncounters(List<Column> columns, EncounterNode endNode)
+    void PositionEncounters(List<Column> columns)
     {
-        for (int i = 1; i < spawnData.columnCount; i++)
+        for (int i = 1; i < spawnData.GetColumnCount(); i++)
         {
             for (int j = 0; j < columns[i].children.Count; j++)
             {
@@ -221,13 +207,7 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
                 }
             }
         }
-        for (int j = 0; j < columns[spawnData.columnCount - 1].children.Count; j++)
-        {
         
-            columns[spawnData.columnCount - 1].children[j].children.Add(endNode);     
-            endNode.gameObject.transform.localPosition = new Vector3(
-                spawnData.columnCount * (columnWidth*1.0f),  0);
-        }
     }
     
 

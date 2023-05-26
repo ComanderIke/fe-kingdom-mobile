@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-
+[Serializable]
+public class ColumnSpawn
+{
+    public List<EncounterNodeData> fixedNodes;
+}
 [Serializable]
 public class EncounterSpawnData
 {
-    public int columnCount;
-    public float encounter2ChildPercentage=0.5f;
-    public float encounter3ChildPercentage=0.3f;
-    
-    public float chanceToShareChild = 0.3f;
-    
-    public int columnMaxEncounter = 4;
+    public float encounter2ChildPercentage=0.4f;
+    public float encounter3ChildPercentage=0.45f;
+    public float chanceToConnectToOtherNode = 0.5f;
+    public int columnMaxEncounter = 3;
+    public List<ColumnSpawn> ColumnSpawns;
     public EncounterNodeData startNodeData;
     public EncounterNodeData FirstEncounter;
     public List<EncounterNodeData> allNodeDatas;
     public List<EncounterNodeData> nodeDatas;
     public List<EncounterNodeData> battleNodeDatas;
-    public EncounterNodeData endNodeData;
     public EncounterNodeData normalBattleNodeData;
     public float ChanceDistributionAfterOccurence = 0.05f;
 
@@ -58,4 +59,8 @@ public class EncounterSpawnData
         
     }
 
+    public int GetColumnCount()
+    {
+        return ColumnSpawns.Count + 1;
+    }
 }
