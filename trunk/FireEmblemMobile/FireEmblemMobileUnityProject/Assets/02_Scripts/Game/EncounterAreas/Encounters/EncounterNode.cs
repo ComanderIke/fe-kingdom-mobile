@@ -2,6 +2,7 @@
 using __2___Scripts.Game.Areas;
 using Game.GameActors.Players;
 using Game.WorldMapStuff.Model;
+using LostGrace;
 using UnityEngine;
 
 
@@ -66,6 +67,14 @@ public abstract class EncounterNode
             parent.children.Add(this);
         }
     }
+    public void AddChild(EncounterNode min)
+    {
+        if (!children.Contains(min))
+        {
+            children.Add(min);
+            min.parents.Add(this);
+        }
+    }
     public override string ToString()
     {
         return ""+this.GetType();
@@ -116,4 +125,6 @@ public abstract class EncounterNode
     {
         return depth + "_" + childIndex;
     }
+
+    
 }

@@ -67,8 +67,8 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
         //
         EncounterTree.Instance.startNode.SetGameObject(CreateStartNodeGameObject(EncounterTree.Instance.startNode));
         CreateMiddleNodesGameObject(EncounterTree.Instance.columns);
-        ConnectEncounters(EncounterTree.Instance.columns,EncounterTree.Instance.startNode);
         PositionEncounters(EncounterTree.Instance.columns);
+        ConnectEncounters(EncounterTree.Instance.columns);
         CreateConnections(EncounterTree.Instance.columns);
       
 
@@ -78,7 +78,6 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
 
     private void CreateMiddleNodesGameObject(List<Column> columns)
     {
-        
         for (int i=1; i < columns.Count; i++)
         {
             foreach (var node in columns[i].children)
@@ -86,7 +85,6 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
                 CreateNodeGameObject(spawnData.allNodeDatas[node.prefabIdx].prefab, node, i);
             }
         }
-        
     }
 
    
@@ -103,15 +101,12 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
     
     private void CreateConnections(List<Column> columns)
     {
-        
         for (int i = 0; i < columns.Count; i++)
         {
             for (int j = 0; j < columns[i].children.Count; j++)
             {
-
                 for (int k = 0; k < columns[i].children[j].children.Count; k++)
                 {
-                    
                     var go = Instantiate(LineRendererPrefab, columns[i].children[j].gameObject.transform);
                     Road road = go.GetComponent<Road>();
                     road.SetStartNode(columns[i].children[j]);
@@ -131,52 +126,146 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
         pos[1] = endPos;
         lineRenderer.SetPositions(pos);
     }
-
-    void ConnectEncounters(List<Column> columns, EncounterNode startNode)
+  
+    void ConnectEncounters(List<Column> columns)
     {
-        
-        // for (int i = 0; i < columns[0].children.Count; i++)
-        // {
-        //     columns[0].children[i].parents.Add(startNode);
-        //     startNode.children.Add(columns[0].children[i]);
-        // }
-        
-        for (int i = 1; i < spawnData.GetColumnCount() ; i++)
+        for (int i = 0; i < spawnData.GetColumnCount()-1; i++)
         {
-            int prevChildCount = columns[i - 1].children.Count;
-            int childCount = columns[i].children.Count;
-            var prevColumn = columns[i - 1];
-            var currColumn = columns[i];
-            for (int o = 0; o < (childCount>prevChildCount?childCount/2f:prevChildCount/2f); o++)
+
+            foreach (int j in Enumerable.Range(0, columns[i].children.Count)
+                         .OrderBy(x => Random.value)) //Iterate through nodes randomly
             {
-                if (o < prevChildCount&& o < childCount)
+                var currentNode = columns[i].children[j];
+                var yPos = currentNode.gameObject.transform.position.y;
+              
+
+                var min = columns[i + 1].children.Aggregate((curMin, x) =>
+                    (Math.Abs(Math.Abs(x.gameObject.transform.position.y - yPos) -
+                              Math.Abs(curMin.gameObject.transform.position.y - yPos)) < 0.1f
+                        ?
+                        (Random.value >= .5f ? x : curMin)//if distance is equal choose randomly
+                        : Math.Abs(x.gameObject.transform.position.y - yPos) <
+                          Math.Abs(curMin.gameObject.transform.position.y - yPos)
+                            ? x
+                            : curMin));
+                    
+
+                currentNode.AddChild(min);
+            }
+
+            foreach (var child in columns[i + 1].children)
+            {
+                if (child.parents.Count == 0)
                 {
-                     int randomMin = Math.Max(0,  o - 1);
-                     int randomMax = Math.Min(o+1, prevColumn.children.Count-1);
-                     int randomParentIndex = Random.Range(randomMin, randomMax+1);
-                     currColumn.children[o].AddParent(prevColumn.children[o]);
-                    currColumn.children[o].AddParent(prevColumn.children[randomParentIndex]);
-                     randomMin = Math.Min( prevColumn.children.Count-1, childCount - 1 - o - 1);
-                     randomMin = Math.Max(randomMin, 0);
-                     randomMax = Math.Max(childCount - 1 - o+1,0);
-                     randomMax = Math.Min(prevChildCount - 1, randomMax);
-                     randomParentIndex = Random.Range(randomMin, randomMax+1);
-                     currColumn.children[childCount - 1 - o].AddParent(prevColumn.children[prevChildCount - 1 - o]);
-                    currColumn.children[childCount - 1 - o].AddParent(prevColumn.children[randomParentIndex]);
+                    var yPos = child.gameObject.transform.position.y;
+                    
+                    var min = columns[i].children.Aggregate((curMin, x) =>
+                        (Math.Abs(Math.Abs(x.gameObject.transform.position.y - yPos) -
+                                  Math.Abs(curMin.gameObject.transform.position.y - yPos)) < 0.1f
+                            ?
+                            (Random.value >= .5f ? x : curMin)//if distance is equal choose randomly
+                            : Math.Abs(x.gameObject.transform.position.y - yPos) <
+                              Math.Abs(curMin.gameObject.transform.position.y - yPos)
+                                ? x
+                                : curMin));
+                    child.AddParent(min);
                 }
             }
 
-            for (int j = 0; j < columns[i].children.Count; j++)
+            foreach (int j in Enumerable.Range(0, columns[i].children.Count)
+                         .OrderBy(x => Random.value))
             {
-                if (columns[i].children[j].parents.Count == 0)
+                var currentNode = columns[i].children[j];
+                var yPos = currentNode.gameObject.transform.position.y;
+                foreach (var child in columns[i + 1].children)
                 {
-                    int randomMin = Math.Max(0, j - 1);
-                    int randomMax = Math.Min(j+1,columns[i-1].children.Count-1);
-                    int randomParentIndex = Random.Range(randomMin, randomMax+1);
-                    columns[i].children[j].AddParent(columns[i-1].children[randomParentIndex]);
+                    if (Random.value > 0.6f)
+                    {
+                        var childYPos = child.gameObject.transform.position.y;
+                        if (child.parents.Contains(currentNode))
+                            continue;
+                        bool hasChildThatCrosses= false;
+                        foreach (var parent in columns[i].children)
+                        {
+                            if(parent==currentNode)
+                                continue;
+                            if (parent.gameObject.transform.position.y > yPos)//above sibling
+                            {
+                                //check if above parents have a child beneath this child
+                               
+                                foreach (var parentChild in parent.children)
+                                {
+                                    if (parentChild.gameObject.transform.position.y < childYPos)
+                                    {
+                                        hasChildThatCrosses = true;
+                                        break;
+                                    }
+                                }
+
+                                if (hasChildThatCrosses)
+                                    break;
+
+                            }
+                            else // underneith sibling
+                            {
+                                foreach (var parentChild in parent.children)
+                                {
+                                    if (parentChild.gameObject.transform.position.y > childYPos)
+                                    {
+                                        hasChildThatCrosses = true;
+                                        break;
+                                    }
+                                }
+
+                                if (hasChildThatCrosses)
+                                    break;
+                            }
+                        }
+                        if(!hasChildThatCrosses)
+                            currentNode.AddChild(child);
+                    }
+                    
                 }
+                
             }
         }
+
+
+        //     int prevChildCount = columns[i - 1].children.Count;
+        //     int childCount = columns[i].children.Count;
+        //     var prevColumn = columns[i - 1];
+        //     var currColumn = columns[i];
+        //     
+        //     for (int o = 0; o < (childCount>prevChildCount?childCount/2f:prevChildCount/2f); o++)
+        //     {
+        //         if (o < prevChildCount&& o < childCount)
+        //         {
+        //              int randomMin = Math.Max(0,  o - 1);
+        //              int randomMax = Math.Min(o+1, prevColumn.children.Count-1);
+        //              int randomParentIndex = Random.Range(randomMin, randomMax+1);
+        //              currColumn.children[o].AddParent(prevColumn.children[o]);
+        //             currColumn.children[o].AddParent(prevColumn.children[randomParentIndex]);
+        //              randomMin = Math.Min( prevColumn.children.Count-1, childCount - 1 - o - 1);
+        //              randomMin = Math.Max(randomMin, 0);
+        //              randomMax = Math.Max(childCount - 1 - o+1,0);
+        //              randomMax = Math.Min(prevChildCount - 1, randomMax);
+        //              randomParentIndex = Random.Range(randomMin, randomMax+1);
+        //              currColumn.children[childCount - 1 - o].AddParent(prevColumn.children[prevChildCount - 1 - o]);
+        //             currColumn.children[childCount - 1 - o].AddParent(prevColumn.children[randomParentIndex]);
+        //         }
+        //     }
+        //
+        //     for (int j = 0; j < columns[i].children.Count; j++)
+        //     {
+        //         if (columns[i].children[j].parents.Count == 0)
+        //         {
+        //             int randomMin = Math.Max(0, j - 1);
+        //             int randomMax = Math.Min(j+1,columns[i-1].children.Count-1);
+        //             int randomParentIndex = Random.Range(randomMin, randomMax+1);
+        //             columns[i].children[j].AddParent(columns[i-1].children[randomParentIndex]);
+        //         }
+        //     }
+        // }
     }
 
     void PositionEncounters(List<Column> columns)
@@ -204,6 +293,7 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
                             columns[i].index * columnWidth,maxDistance+
                             (j * columspacing));
                     }
+                    columns[i].children[j].gameObject.transform.Translate(new Vector3(Random.Range(xRandomMin, xRandomMax), Random.Range(yRandomMin, yRandomMax),0));
                 }
             }
         }
