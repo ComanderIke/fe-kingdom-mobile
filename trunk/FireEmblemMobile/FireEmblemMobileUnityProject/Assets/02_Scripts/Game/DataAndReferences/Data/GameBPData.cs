@@ -58,6 +58,7 @@ namespace Game.GameResources
         [SerializeField] private ItemBP memberCard;
         [SerializeField] private List<SkillBP> relicSkillPool;
         [SerializeField] private EventData eventData;
+        [SerializeField] private StatusEffectData statusEffectData;
         [SerializeField] BlessingBP[] allBlessings;
         [SerializeField] CurseBP[] allCurses;
         [SerializeField] BlessingBP[]  tier0Blessings;
@@ -108,6 +109,7 @@ namespace Game.GameResources
         private void OnValidate()
         {
             eventData.OnValidate();
+            statusEffectData.OnValidate();
             allUnits = GetAllInstances<UnitBP>();
             allBlessings = GetAllInstances<BlessingBP>();
             tier0Blessings = Array.FindAll(allBlessings,a => a.tier == 0);

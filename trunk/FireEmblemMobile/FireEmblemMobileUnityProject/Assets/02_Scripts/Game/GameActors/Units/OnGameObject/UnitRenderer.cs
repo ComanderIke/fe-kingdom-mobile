@@ -16,15 +16,12 @@ namespace Game.GameActors.Units.OnGameObject
     {
 
         [SerializeField] private StatsBarOnMap hpBar;
-        [SerializeField] private StatsBarOnMap spBar;
-        [SerializeField] private ISPBarRenderer spBars;
         [SerializeField] private TextMeshProUGUI hpText;
         [SerializeField] private GameObject pointLight;
         [SerializeField] private Image weaponTypeIcon;
         [SerializeField] private Image moveTypeIcon;
         [SerializeField] private Animator weaponTypeAnimator;
         [SerializeField] private Animator moveTypeAnimator;
-        [SerializeField] private Image EquippedItemIcon;
         //[SerializeField] private Image EquippedItemBackground;
         [SerializeField] private GameObject spriteMask;
         [SerializeField] private CanvasGroup alphaCanvas;
@@ -57,16 +54,13 @@ namespace Game.GameActors.Units.OnGameObject
         private void Start()
         {
             unit.HpValueChanged += HpValueChanged;
-            // Unit.SpValueChanged += SpValueChanged;
-            // Unit.SpBarsValueChanged += SpBarsValueChanged;
+    
             if(unit!=null)
                 unit.TurnStateManager.UnitWaiting += SetWaitingSprite;
             Unit.OnEquippedWeapon += OnEquippedWeapon;
             
            // hoverCanvas.alpha = 0;
             HpValueChanged();
-            // SpValueChanged();
-            // SpBarsValueChanged();
         }
         public void HideHover()
         {
@@ -85,10 +79,9 @@ namespace Game.GameActors.Units.OnGameObject
             if(moveTypeIcon.sprite==null)
                 moveTypeIcon.gameObject.SetActive(false);
             sprite.material.SetColor("_OutLineColor", ColorManager.Instance.GetFactionColor(unit.Faction.Id)*intensity);
-            //spBar.GetComponent<Image>().color = ColorManager.Instance.GetFactionColor(Unit.Faction.Id);
+  
             HpValueChanged();
-            // SpBarsValueChanged();
-            // SpValueChanged();
+   
             OnEquippedWeapon();
             if(!GridGameManager.Instance.FactionManager.IsActiveFaction(unit.Faction))
             {
@@ -147,23 +140,7 @@ namespace Game.GameActors.Units.OnGameObject
                 Debug.Log("Icon is null");
             }
             weaponTypeIcon.sprite = unit.equippedWeapon.WeaponType.Icon;
-            // EquippedItemBackground.color = ColorManager.Instance.GetFactionColor(unit.Faction.Id);
-            // if (unit is Human human) {
-            //     if (human.EquippedWeapon != null)
-            //     {
-            //         EquippedItemIcon.sprite = human.EquippedWeapon.Sprite;
-            //         
-            //     }
-            //     else
-            //     {
-            //         EquippedItemIcon.sprite = null;
-            //     }
-            //         
-            // }
-            // else if(unit is Monster monster)
-            // {
-            //     EquippedItemIcon.sprite = monster.Weapon.Sprite; //FindObjectOfType<ResourceScript>().sprites.WolfClaw;
-            // }
+           
         }
         private void HpValueChanged()
         {
@@ -172,19 +149,6 @@ namespace Game.GameActors.Units.OnGameObject
                 hpText.SetText(""+unit.Hp);
             }
         }
-       
-        // private void SpValueChanged()
-        // {
-        //     if (spBar != null && unit != null)
-        //         spBar.SetValue(unit.Sp, unit.Stats.MaxSp);
-        // }
-        // private void SpBarsValueChanged()
-        // {
-        //     if (spBars != null && unit != null)
-        //         spBars.SetValue(unit.SpBars, unit.MaxSpBars);
-        // }
-      
-
         private void SetWaitingSprite(bool waiting)
         {
 
