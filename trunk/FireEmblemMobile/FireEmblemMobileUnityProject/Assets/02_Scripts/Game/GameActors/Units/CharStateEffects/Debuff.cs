@@ -1,7 +1,10 @@
 ﻿namespace Game.GameActors.Units.CharStateEffects
 {
-    public abstract class Debuff : CharacterState
+    public abstract class Debuff
     {
-
+        public bool TakeEffect(Unit unit)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
