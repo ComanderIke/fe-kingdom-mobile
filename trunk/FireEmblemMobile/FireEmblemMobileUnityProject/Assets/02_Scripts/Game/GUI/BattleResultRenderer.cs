@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Game.AI;
@@ -6,6 +7,7 @@ using UnityEngine;
 
 namespace LostGrace
 {
+    [ExecuteInEditMode]
     public class BattleResultRenderer : MonoBehaviour
     {
         [SerializeField] private Transform rewardLineParent;
@@ -15,7 +17,23 @@ namespace LostGrace
         [SerializeField] private Animator rewardChestAnimator;
         [SerializeField] private Animator mvp;
         [SerializeField] private ResultMVPPanelUI resultmvpPanel;
+        [SerializeField] private float normalHeight;
+        [SerializeField] private float extendedHeight;
+        [SerializeField] private bool extended = false;
+        [SerializeField] private RectTransform panel;
         private static readonly int Open = Animator.StringToHash("Open");
+
+        private void OnEnable()
+        {
+            if (extended)
+            {
+                panel.offsetMin = new Vector2(panel.offsetMin.x, extendedHeight);
+            }
+            else
+            {
+                panel.offsetMin = new Vector2(panel.offsetMin.x, normalHeight);
+            }
+        }
 
         public void Show(BattleResult result)
         {
