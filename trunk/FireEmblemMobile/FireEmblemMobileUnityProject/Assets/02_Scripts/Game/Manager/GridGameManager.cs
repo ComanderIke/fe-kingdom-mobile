@@ -136,7 +136,7 @@ namespace Game.Manager
             GetSystem<TurnSystem>().gameStateManager = GameStateManager;
            // GameStateManager.WinState.successRenderer =  FindObjectsOfType<MonoBehaviour>().OfType<IBattleSuccessRenderer>().First();
             GameStateManager.GameOverState.renderer =  FindObjectsOfType<MonoBehaviour>().OfType<IBattleLostRenderer>().First();
-            GetSystem<BattleSystem>().BattleAnimation = FindObjectsOfType<MonoBehaviour>().OfType<IBattleAnimation>().First();
+            GetSystem<BattleSystem>().BattleAnimation = ((IBattleAnimation)FindObjectOfType<BattleAnimationRenderer>()); //TODO .First can be different result inBuild
             GameStateManager.BattleState.battleSystem = GetSystem<BattleSystem>();
             GetSystem<BattleSystem>().BattleAnimation.Hide();
             GameStateManager.UnitPlacementState.UnitPlacementUI =  FindObjectsOfType<MonoBehaviour>().OfType<IUnitPlacementUI>().First();
