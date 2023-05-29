@@ -36,11 +36,13 @@ namespace Game.GameResources
 
             return specialEvents[index];
         }
-
+#if UNITY_EDITOR
         public void OnValidate()
         {
             allEvents = GameBPData.GetAllInstances<LGEventDialogSO>();
         }
+        #endif
+       
 
         public LGEventDialogSO GetEventById(string prefabName)
         {

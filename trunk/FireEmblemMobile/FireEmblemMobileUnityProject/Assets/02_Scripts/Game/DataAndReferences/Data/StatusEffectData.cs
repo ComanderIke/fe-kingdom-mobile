@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Game.GameActors.Units;
 using Game.Mechanics;
+using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 
@@ -17,10 +18,12 @@ namespace Game.GameResources
         public Color buffColor;
         private StatusEffectBP[] allStatusEffectBps;
 
+#if UNITY_EDITOR
         public void OnValidate()
         {
             allStatusEffectBps = GameBPData.GetAllInstances<StatusEffectBP>();
         }
+        #endif
     }
 
     public enum DurationType
