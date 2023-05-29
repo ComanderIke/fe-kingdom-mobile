@@ -48,7 +48,7 @@ namespace Game.GameActors.Units
         public delegate void OnUnitHealedEvent(Unit unit, int damage);
 
         public delegate void OnUnitStatsChanged(Unit unit);
-
+        public static event Action<Unit, int> OnDealingDamage;
         public static OnUnitDamagedEvent OnUnitDamaged;
         public static OnUnitHealedEvent OnUnitHealed;
         public delegate void LevelupEvent(Unit unit);
@@ -265,47 +265,51 @@ namespace Game.GameActors.Units
             GameTransformManager?.Die();
             
         }
-        
-        public void InflictFaithDamage(Unit attacker)
+
+        public void InflictDirectDamage(Unit attacker, int dmg, DamageType damageType, bool callDamagedEvent=true)
+        {
+            Hp -= dmg;
+            OnDealingDamage?.Invoke(attacker, dmg);
+            if(callDamagedEvent)
+                OnUnitDamaged?.Invoke(this,dmg, damageType,false, false);
+        }
+        public void InflictDamage(Unit attacker, DamageType damageType)
         {
             int dmg=attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(this);
             
             Hp -= dmg;
             Debug.Log("TODO Crits and EFF Dmg!");
-            OnUnitDamaged?.Invoke(this,dmg, DamageType.Faith,false, false);
+            OnDealingDamage?.Invoke(attacker, dmg);
+            OnUnitDamaged?.Invoke(this,dmg, damageType,false, false);
 
         }
-        public void InflictFixedFaithDamage(int damage)
+        public void InflictFixedDamage(Unit attacker,int damage, DamageType damageType)
         {
-            int dmg=damage-BattleComponent.BattleStats.GetFaithResistance();
-            
+            int defense = 0;
+            switch (damageType)
+            {
+                case DamageType.Faith:defense=BattleComponent.BattleStats.GetFaithResistance();
+                    break;
+                case DamageType.Magic:defense=BattleComponent.BattleStats.GetFaithResistance();
+                    break;
+                case DamageType.Physical:defense=BattleComponent.BattleStats.GetPhysicalResistance();
+                    break;
+            }
+            int dmg = damage - defense;
             Hp -= dmg;
             Debug.Log("TODO Crits and EFF Dmg!");
-            OnUnitDamaged?.Invoke(this,dmg, DamageType.Faith,false, false);
+            OnDealingDamage?.Invoke(attacker, dmg);
+            OnUnitDamaged?.Invoke(this,dmg, damageType,false, false);
 
         }
-        public void InflictMagicDamage(Unit attacker)
-        {
-            int dmg=attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(this);
-            Debug.Log("TODO Crits and EFF Dmg!");
-            Hp -= dmg;
-            OnUnitDamaged?.Invoke(this,dmg, DamageType.Magic,false, false);
-           
-        }
-        public void InflictFixedMagicDamage(int damage)
-        {
-            int dmg=damage-BattleComponent.BattleStats.GetFaithResistance();
-            Debug.Log("TODO Crits and EFF Dmg!");
-            Hp -= dmg;
-            OnUnitDamaged?.Invoke(this,dmg, DamageType.Magic,false, false);
-           
-        }
-        public void InflictNonLethalTrueDamage(int damage)
+       
+        public void InflictNonLethalTrueDamage(Unit attacker,int damage)
         {
             //Debug.Log("Inflict True Damage: "+damage);
             if (damage >= Hp)
                 damage = Hp - 1;
             Hp -= damage;
+            OnDealingDamage?.Invoke(attacker, damage);
             OnUnitDamaged?.Invoke(this,damage, DamageType.True,false, false);
         }
 
@@ -612,5 +616,8 @@ namespace Game.GameActors.Units
             else if (equipmentControllerSelectedSlotNumber == 2)
                 UnEquip(EquippedRelic2);
         }
+
+
+
     }
 }

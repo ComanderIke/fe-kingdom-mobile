@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Game.GameActors.Units;
 using Game.GameResources;
 
@@ -10,16 +11,19 @@ namespace LostGrace
         private int defeatedEliteEnemyCount;
         private int turnCount;
         public BattleRewardConfig config;
-        private Unit enemy;
-        private Unit eliteEnemy;
+        private List<Unit> enemy;
+        private List<Unit> eliteEnemy;
         private Unit mvp;
 
-        public BattleResult(int defeatedEnemyCount, int defeatedEliteEnemyCount, int turnCount, Unit mvp, Unit enemy, Unit eliteEnemy)
+        public BattleResult(int defeatedEnemyCount, int defeatedEliteEnemyCount, int turnCount, Unit mvp, List<Unit> enemy, List<Unit> eliteEnemy)
         {
             this.defeatedEnemyCount = defeatedEnemyCount;
             this.defeatedEliteEnemyCount = defeatedEliteEnemyCount;
             this.turnCount = turnCount;
             config = GameBPData.Instance.BattleRewardConfig;
+            this.mvp = mvp;
+            this.enemy = enemy;
+            this.eliteEnemy = eliteEnemy;
         }
         public int GetExpFromEnemies()
         {
@@ -46,7 +50,9 @@ namespace LostGrace
 
         public Unit GetFirstEnemy()
         {
-            return enemy;
+            if(enemy!=null && enemy.Count>=1)
+                return enemy[0];
+            return null;
         }
 
         public int GetGoldFromEliteEnemies()
@@ -61,7 +67,9 @@ namespace LostGrace
 
         public Unit GetFirstEliteEnemy()
         {
-            return eliteEnemy;
+            if(eliteEnemy!=null && eliteEnemy.Count>=1)
+                return eliteEnemy[0];
+            return null;
         }
         public Unit GetMVP()
         {
@@ -88,9 +96,6 @@ namespace LostGrace
             return GetGoldFromEnemies() + GetGoldFromEliteEnemies() + GetGoldFromTurnCount();
         }
 
-        public GachaReward GetGachaReward()
-        {
-            return new GachaReward();
-        }
+      
     }
 }

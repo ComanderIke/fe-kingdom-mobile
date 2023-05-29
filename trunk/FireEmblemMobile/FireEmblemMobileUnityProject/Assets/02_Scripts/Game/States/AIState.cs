@@ -1,5 +1,6 @@
 ﻿using Game.Manager;
 using Game.Mechanics;
+using Game.States;
 using GameEngine;
 using GameEngine.GameStates;
 using UnityEngine;
@@ -41,7 +42,7 @@ namespace Game.AI
             }
             else if (ConditionManager.CheckWin())
             {
-                return  GridGameManager.Instance.GameStateManager.WinState;
+                return WinState.Create();
             }
             
             pauseTime += Time.deltaTime;

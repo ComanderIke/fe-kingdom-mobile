@@ -134,7 +134,7 @@ namespace Game.Manager
             GetSystem<MoveSystem>().pathFinder = pathFinder;
             GetSystem<TurnSystem>().factionManager = FactionManager;
             GetSystem<TurnSystem>().gameStateManager = GameStateManager;
-            GameStateManager.WinState.renderer =  FindObjectsOfType<MonoBehaviour>().OfType<IBattleSuccessRenderer>().First();
+           // GameStateManager.WinState.successRenderer =  FindObjectsOfType<MonoBehaviour>().OfType<IBattleSuccessRenderer>().First();
             GameStateManager.GameOverState.renderer =  FindObjectsOfType<MonoBehaviour>().OfType<IBattleLostRenderer>().First();
             GetSystem<BattleSystem>().BattleAnimation = FindObjectsOfType<MonoBehaviour>().OfType<IBattleAnimation>().First();
             GameStateManager.BattleState.battleSystem = GetSystem<BattleSystem>();

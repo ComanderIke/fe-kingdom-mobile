@@ -3,11 +3,13 @@ using Game.GameActors.Units;
 using Game.GameInput;
 using Game.Manager;
 using Game.Map;
+using Game.States;
 using GameCamera;
 using GameEngine;
 using GameEngine.GameStates;
 using GameEngine.Input;
 using GameEngine.Tools;
+using LostGrace;
 using UnityEngine;
 
 namespace Game.Mechanics
@@ -105,7 +107,7 @@ namespace Game.Mechanics
             }
             else if (conditionManager.CheckWin())
             {
-                return  GridGameManager.Instance.GameStateManager.WinState;
+                return WinState.Create();
             }
             return NextState;
         }

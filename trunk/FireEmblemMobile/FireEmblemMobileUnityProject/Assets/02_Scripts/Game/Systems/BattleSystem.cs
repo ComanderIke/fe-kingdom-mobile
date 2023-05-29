@@ -72,12 +72,23 @@ namespace Game.Mechanics
         }
         private void EndBattle()
         {
-  
-            attacker.Hp = battleSimulation.Attacker.Hp;
+
+            int hpDelta = attacker.Hp - battleSimulation.Attacker.Hp;
+            ((Unit) attacker).InflictDirectDamage((Unit)defender, hpDelta,defender.GetEquippedWeapon().DamageType, false);
+           // attacker.Hp = battleSimulation.Attacker.Hp;
             if (battleSimulation.AttackableTarget == null)
-                defender.Hp = battleSimulation.Defender.Hp;
+            {
+                hpDelta = defender.Hp - battleSimulation.Defender.Hp;
+                ((Unit) defender).InflictDirectDamage((Unit)attacker, hpDelta,attacker.GetEquippedWeapon().DamageType, false);
+                //defender.Hp = battleSimulation.Defender.Hp;
+            }
             else
-                defender.Hp = battleSimulation.AttackableTarget.Hp;
+            {
+                hpDelta = defender.Hp - battleSimulation.AttackableTarget.Hp;
+                ((Unit) defender).InflictDirectDamage((Unit)attacker, hpDelta,attacker.GetEquippedWeapon().DamageType, false);
+                //defender.Hp = battleSimulation.AttackableTarget.Hp;
+            }
+
             BattleAnimation.Hide();
             CheckExp();
             attacker = null;

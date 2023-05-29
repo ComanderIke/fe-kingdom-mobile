@@ -26,6 +26,7 @@ namespace LostGrace
         }
         public void OnAttackAnimation()
         {
+         
             spriteRenderer.sprite=spriteSet.AttackSprite;
         }
         public void OnDodgeAnimation()

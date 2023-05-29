@@ -20,6 +20,7 @@ namespace LostGrace
         [SerializeField] private RectTransform panel;
         [SerializeField] private Canvas canvas;
         [SerializeField] private CanvasGroup canvasGroup;
+        public event Action OnFinished;
 
         private void OnEnable()
         {
@@ -64,7 +65,11 @@ namespace LostGrace
 
         public void Hide()
         {
-            TweenUtility.FadeOut(canvasGroup).setOnComplete(() => canvas.enabled = false);
+            TweenUtility.FadeOut(canvasGroup).setOnComplete(() =>
+            {
+                canvas.enabled = false;
+                OnFinished?.Invoke();
+            });
         }
     
     }

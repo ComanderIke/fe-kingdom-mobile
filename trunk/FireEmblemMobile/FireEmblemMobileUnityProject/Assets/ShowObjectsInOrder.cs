@@ -38,7 +38,6 @@ namespace LostGrace
 
             List<Transform> children = GetComponentsInChildren<Transform>(true).ToList();
             children.Remove(transform);
-            Debug.Log(transform.childCount+ " "+children.Count);
             if (transform.childCount >= 1)
             {
                 if (index >= transform.childCount)

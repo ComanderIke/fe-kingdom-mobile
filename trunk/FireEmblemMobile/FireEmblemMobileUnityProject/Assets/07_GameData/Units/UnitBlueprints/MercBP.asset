@@ -20,13 +20,13 @@ MonoBehaviour:
     AttackRanges: 01000000
     BaseAttributes:
       str: 15
-      intel: 3
+      intel: 6
       dex: 15
-      agi: 3
-      con: 3
-      lck: 3
-      def: 3
-      faith: 3
+      agi: 6
+      con: 6
+      lck: 6
+      def: 6
+      faith: 6
     BonusStats:
       <Hit>k__BackingField: 0
       <Avoid>k__BackingField: 0
@@ -36,7 +36,7 @@ MonoBehaviour:
       <Armor>k__BackingField: 0
       <MagicResistance>k__BackingField: 0
       <Attack>k__BackingField: 0
-    Mov: 2
+    Mov: 5
   growths:
     str: 0
     intel: 0
@@ -50,7 +50,6 @@ MonoBehaviour:
   SkillManager:
     startSkills: []
     skillPoints: 0
-    SkillBuildTrees: []
   rpgClass: 1
   bluePrintID: Merc
   dialogActor: {fileID: 0}
@@ -69,6 +68,7 @@ MonoBehaviour:
         type: 2}
     UnitCharacterCircleUI: {fileID: 0}
     unitRenderer: {fileID: 0}
+  audio: {fileID: 0}
   experienceManager:
     level: 1
     exp: 0

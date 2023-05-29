@@ -416,7 +416,7 @@ public class UIEventController : MonoBehaviour
                         {
                            // Debug.Log(resource.Amount / 100f+" "+resource.Amount / 100f * Player.Instance.Party.ActiveUnit.MaxHp+" "+Math.Ceiling(resource.Amount / 100f * Player.Instance.Party.ActiveUnit.MaxHp));
                            
-                            Player.Instance.Party.ActiveUnit.InflictNonLethalTrueDamage(
+                            Player.Instance.Party.ActiveUnit.InflictNonLethalTrueDamage(null,
                                 (int)Math.Ceiling(-1*resource.Amount / 100f * Player.Instance.Party.ActiveUnit.MaxHp));
                         }
                         else

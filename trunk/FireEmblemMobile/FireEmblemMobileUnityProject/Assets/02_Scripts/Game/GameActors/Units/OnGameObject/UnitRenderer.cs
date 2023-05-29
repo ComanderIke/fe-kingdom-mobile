@@ -27,8 +27,8 @@ namespace Game.GameActors.Units.OnGameObject
         [SerializeField] private CanvasGroup alphaCanvas;
         [SerializeField] private CanvasGroup hoverCanvas;
         [SerializeField] public SpriteRenderer sprite;
-        [SerializeField] public GameObject attackDamageObject;
-        [SerializeField] private TextMeshProUGUI attackDamageText;
+        //[SerializeField] public GameObject attackDamageObject;
+        //[SerializeField] private TextMeshProUGUI attackDamageText;
         [SerializeField] private TextMeshProUGUI xText;
         [SerializeField] private TextMeshProUGUI x2Text;
         
@@ -38,7 +38,7 @@ namespace Game.GameActors.Units.OnGameObject
 
         public void HideAttackDamage()
         {
-            attackDamageObject.SetActive(false);
+            //attackDamageObject.SetActive(false);
         }
         public void ShowAttackDamage(Unit compareUnit)
         {
@@ -46,8 +46,8 @@ namespace Game.GameActors.Units.OnGameObject
             int dmg= unit.BattleComponent.BattleStats.GetDamageAgainstTarget(compareUnit);
             bool doubleAttack = unit.BattleComponent.BattleStats.CanDoubleAttack(compareUnit);
          
-            attackDamageObject.SetActive(true);
-            attackDamageText.SetText("" + dmg);
+            //attackDamageObject.SetActive(true);
+            //attackDamageText.SetText("" + dmg);
             xText.gameObject.SetActive(doubleAttack);
             x2Text.gameObject.SetActive(doubleAttack);
         }

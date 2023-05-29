@@ -13,7 +13,6 @@ namespace Game.Manager
         public PlayerPhaseState PlayerPhaseState { get; set; }
         public AIState EnemyPhaseState { get; set; }
         public GameOverState GameOverState { get; set; }
-        public WinState WinState { get; set; }
         public BattleState BattleState { get; set; }
         public MovementState MovementState { get; set; }
         public PhaseTransitionState PhaseTransitionState { get; set; }
@@ -28,7 +27,7 @@ namespace Game.Manager
             PlayerPhaseState = new PlayerPhaseState(conditionManager);
             EnemyPhaseState = new AIState(conditionManager);
             GameOverState = new GameOverState();
-            WinState = new WinState();
+         
             BattleState = new BattleState();
             MovementState = new MovementState();
             PhaseTransitionState = new PhaseTransitionState(GridGameManager.Instance.FactionManager, this);
@@ -54,7 +53,7 @@ namespace Game.Manager
             
             PlayerPhaseState.AddTransition(GameOverState, NextStateTrigger.GameOver);
          
-            PlayerPhaseState.AddTransition(WinState, NextStateTrigger.PlayerWon);
+            //PlayerPhaseState.AddTransition(WinState, NextStateTrigger.PlayerWon);
         
             PlayerPhaseState.AddTransition(BattleState, NextStateTrigger.BattleStarted);
             PlayerPhaseState.AddTransition(MovementState, NextStateTrigger.MoveUnit);

@@ -75,6 +75,7 @@ public class CharacterCombatAnimations : MonoBehaviour
         }
         else
         {
+            Debug.Log("ATTACK FINISHED IDLE");
             characterLeft.Idle(playSpeed);
         }
         
@@ -84,6 +85,7 @@ public class CharacterCombatAnimations : MonoBehaviour
         }
         else
         {
+            Debug.Log("ATTACK FINISHED IDLE RIGHT");
             characterRight.Idle(playSpeed);
         }
 
