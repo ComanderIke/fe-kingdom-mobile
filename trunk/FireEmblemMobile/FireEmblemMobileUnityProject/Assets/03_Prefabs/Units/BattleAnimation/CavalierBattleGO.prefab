@@ -139,7 +139,7 @@ Animator:
   m_GameObject: {fileID: 4707009463004641532}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 369be35bc1de01d4fb13c830d8c2f82a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 3a59c1764bf44a34cb0b597ce6e2edd4, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -157,7 +157,7 @@ PlayableDirector:
   m_GameObject: {fileID: 4707009463004641532}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 98eb8b2e26895164e8ea0bdf17604ed5, type: 2}
+  m_PlayableAsset: {fileID: 11400000, guid: 18e27b6c1e176904092f877766266fd7, type: 2}
   m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
@@ -237,6 +237,10 @@ PlayableDirector:
     value: {fileID: 7556025217629955533}
   - key: {fileID: 2000397180861669209, guid: 98eb8b2e26895164e8ea0bdf17604ed5, type: 2}
     value: {fileID: 2069920302156311209}
+  - key: {fileID: -2994871000955474353, guid: 18e27b6c1e176904092f877766266fd7, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 4031943476492411853, guid: 18e27b6c1e176904092f877766266fd7, type: 2}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References: []
 --- !u!114 &4214050721747340073
@@ -476,7 +480,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6399664310892835907}
   serializedVersion: 8
-  lengthInSec: 0.85
+  lengthInSec: 2
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -551,7 +555,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 2
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -2513,7 +2517,7 @@ ParticleSystem:
     speedModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 2
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -10258,7 +10262,7 @@ PrefabInstance:
     - target: {fileID: 621044198818372484, guid: db29fe1d06d73c145b6216b195c25564,
         type: 3}
       propertyPath: time
-      value: 1.0029569
+      value: 1.0071379
       objectReference: {fileID: 0}
     - target: {fileID: 795437318843078829, guid: db29fe1d06d73c145b6216b195c25564,
         type: 3}
@@ -10718,6 +10722,11 @@ PrefabInstance:
       propertyPath: FeedbacksList.Array.data[1].BoundRenderer
       value: 
       objectReference: {fileID: 6336105809329641799}
+    - target: {fileID: 5726746414644449731, guid: a3cb1d42bcc8e5c4a843b7f2335a3af8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6240014756506817112, guid: a3cb1d42bcc8e5c4a843b7f2335a3af8,
         type: 3}
       propertyPath: m_Events.m_Signals.Array.data[0]
