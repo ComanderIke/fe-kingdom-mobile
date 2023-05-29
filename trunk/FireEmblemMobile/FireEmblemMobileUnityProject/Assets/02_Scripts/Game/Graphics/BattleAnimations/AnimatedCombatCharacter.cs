@@ -44,7 +44,6 @@ public class AnimatedCombatCharacter
 
     public void Idle(float playSpeed)
     {
-        Debug.Log("IDLE PLAYING");
         spriteController.Idle(playSpeed);
     }
 

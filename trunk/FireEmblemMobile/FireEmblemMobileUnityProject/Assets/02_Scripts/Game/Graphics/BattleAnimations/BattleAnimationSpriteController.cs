@@ -55,7 +55,7 @@ public class BattleAnimationSpriteController : MonoBehaviour
     }
     public void Idle(float playSpeed)
     {
-        Debug.Log("Play IDle");
+      
         PlayAtSpeed(idle, playSpeed);
     }
     public void Attack(float playSpeed)

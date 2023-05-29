@@ -341,6 +341,18 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     }
 
     private EncounterCursorController cursor;
+    public void Deactivate()
+    {
+        foreach (var system in Systems)
+        {
+            system.Deactivate();
+        }
+        
+    }
+    private void OnDestroy()
+    {
+        Deactivate();
+    }
 
     private void SetAllEncountersNotMovable()
     {

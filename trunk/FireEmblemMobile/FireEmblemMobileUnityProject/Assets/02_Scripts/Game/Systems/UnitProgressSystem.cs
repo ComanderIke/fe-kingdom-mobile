@@ -73,8 +73,7 @@ namespace Game.Mechanics
         {
             
             skillSystem = ServiceProvider.Instance.GetSystem<SkillSystem>();
-            Unit.OnExpGained += Expgained;
-            Unit.OnLevelUp += OnLevelUp;
+         
         }
 
         void OnLevelUp(Unit u)
@@ -92,6 +91,7 @@ namespace Game.Mechanics
 
         void Expgained(Unit unit, int exp)
         {
+            Debug.Log(ExpBarController);
             AnimationQueue.Add(() =>
             {
                 ExpBarController.Show(unit.ExperienceManager.Exp);
@@ -112,10 +112,14 @@ namespace Game.Mechanics
             // {
             //     unit.OnLevelUp -= LevelUp;
             // }
+            Unit.OnExpGained -= Expgained;
+            Unit.OnLevelUp -= OnLevelUp;
         }
 
         public void Activate()
         {
+            Unit.OnExpGained += Expgained;
+            Unit.OnLevelUp += OnLevelUp;
             // foreach (var unit in units)
             // {
             //     unit.OnLevelUp -= LevelUp;

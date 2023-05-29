@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace LostGrace
 {
+    [ExecuteInEditMode]
     public class AnimationSpriteSwapper : MonoBehaviour
     {
         [SerializeField] CharacterSpriteSet spriteSet;

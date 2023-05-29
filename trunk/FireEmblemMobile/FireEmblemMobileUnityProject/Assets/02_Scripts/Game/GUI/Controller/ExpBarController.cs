@@ -126,7 +126,11 @@ namespace Game.GUI
             currentExp = expVal;
             tmpExp = currentExp;
             //Debug.Log("Currentexp: "+currentExp);
-            fill.fillAmount = currentExp / 100f;
+            if (fill == null)
+            {
+                Debug.Log("Currentexp: "+gameObject.name);
+            }
+                fill.fillAmount = currentExp / 100f;
           
             if (Math.Abs(fill.fillAmount - 1) < 0.1f)
                 fill.fillAmount = 0;
