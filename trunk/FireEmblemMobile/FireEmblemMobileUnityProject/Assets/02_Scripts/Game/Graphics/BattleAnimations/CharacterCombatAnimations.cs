@@ -110,22 +110,25 @@ public class CharacterCombatAnimations : MonoBehaviour
             attackingCharacter.OnPrepareFinished = null;
             attackingCharacter.OnPrepareFinished += () =>
                 {
-                    Attack(attackingCharacter);
+                    Attack(attackingCharacter, attackData.crit);
                     Defend(attackData, defendingCharacter);
                 };
         }
         else
         {
-            Attack(attackingCharacter);
+            Attack(attackingCharacter, attackData.crit);
             Defend(attackData, defendingCharacter);
         }
     }
 
    
 
-    private void Attack(AnimatedCombatCharacter attacker)
+    private void Attack(AnimatedCombatCharacter attacker, bool critical)
         {
-            attacker.Attack(playSpeed);
+            if(critical)
+                attacker.Critical(playSpeed);
+            else
+                    attacker.Attack(playSpeed);
             attacker.OnAttackFinished -= AttackFinished;
             attacker.OnAttackFinished += AttackFinished;
         }

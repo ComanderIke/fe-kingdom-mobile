@@ -43,6 +43,7 @@ public class BattleAnimationSpriteController : MonoBehaviour
     public TimelineAsset idle;
     public TimelineAsset dodge;
     public TimelineAsset damaged;
+    public TimelineAsset critical;
     public TimelineAsset death;
     [HideInInspector]
     public bool hasPrepare = false;
@@ -61,6 +62,10 @@ public class BattleAnimationSpriteController : MonoBehaviour
     public void Attack(float playSpeed)
     {
         PlayAtSpeed(attack, playSpeed);
+    }
+    public void Critical(float playSpeed)
+    {
+        PlayAtSpeed(critical, playSpeed);
     }
     public void Death(float playSpeed)
     {

@@ -47,6 +47,12 @@ public class AnimatedCombatCharacter
         spriteController.Idle(playSpeed);
     }
 
+    public void Critical(float playSpeed)
+    {
+        spriteController.Critical(playSpeed);
+        MonoUtility.DelayFunction(AttackFinished, (float)spriteController.GetCurrentAnimationDuration());
+    }
+
     public void WalkIn(float playSpeed)
     {
         spriteController.WalkIn(playSpeed);
