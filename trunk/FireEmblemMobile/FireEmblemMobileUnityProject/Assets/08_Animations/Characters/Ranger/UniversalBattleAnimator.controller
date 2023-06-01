@@ -59,7 +59,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ranger_BattleView_attack
+  m_Name: BattleView_attack
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -314,7 +314,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ranger_Battle_idle
+  m_Name: Battle_idle
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -391,7 +391,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ranger_BattleView_critical
+  m_Name: BattleView_critical
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -417,7 +417,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ranger_BattleView_walk
+  m_Name: BattleView_walk
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -451,12 +451,6 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: Damaged
-    m_Type: 4
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 0}
   - m_Name: Critical
     m_Type: 4
     m_DefaultFloat: 0
@@ -482,6 +476,12 @@ AnimatorController:
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
   - m_Name: DodgeBlock
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: Damaged
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -533,7 +533,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ranger_BattleView_Dodge
+  m_Name: BattleView_Dodge
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -760,7 +760,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ranger_BattleView_damaged
+  m_Name: BattleView_damaged
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
