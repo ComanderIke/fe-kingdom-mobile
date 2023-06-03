@@ -18,6 +18,7 @@ public class CombatTextRenderer
     void CreateDamageNumbers(AnimatedCombatCharacter character, int dmg, bool critical)
     {
         TextStyle style = TextStyle.Damage;
+        Debug.Log("create Damage Number: "+character.GameObject+" "+character.GetImpactPosition());
         var pos = character.GetImpactPosition();
         if (dmg == 0)
             style = TextStyle.NoDamage;

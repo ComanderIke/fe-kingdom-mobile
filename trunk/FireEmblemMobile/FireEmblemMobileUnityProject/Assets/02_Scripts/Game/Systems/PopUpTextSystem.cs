@@ -69,6 +69,7 @@ namespace Game.Mechanics
             if (dmg < 0)
                 color = ColorManager.Instance.MainGreenColor;
 
+            Debug.Log("Unit Damaged: "+unit+" "+unit.GameTransformManager.GetCenterPosition());
             DamagePopUp.Create(unit.GameTransformManager.GetCenterPosition(), dmg, TextStyle.Damage,scale);
             
         }
@@ -80,7 +81,7 @@ namespace Game.Mechanics
            
             float scale = 1.0f;
             Color color = ColorManager.Instance.MainGreenColor;
-            
+            Debug.Log("Unit healed: "+unit);
             DamagePopUp.Create(unit.GameTransformManager.GetCenterPosition(), healAmount, TextStyle.Heal,scale);
         }
         public void Deactivate()

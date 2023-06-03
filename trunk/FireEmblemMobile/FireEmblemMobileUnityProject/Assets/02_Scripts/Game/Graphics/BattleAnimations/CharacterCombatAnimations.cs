@@ -19,6 +19,7 @@ public class CharacterCombatAnimations : MonoBehaviour
     public static event Action<AnimatedCombatCharacter> OnDodge;
     public static event Action<AnimatedCombatCharacter, int, bool> OnDamaged;
 
+    private float damageTextDelay = 0.3f;
     private bool leftCharacterAttacker;
 
     public void Reset()
@@ -157,7 +158,8 @@ public class CharacterCombatAnimations : MonoBehaviour
     void Dodge(AnimatedCombatCharacter character)
     {
         character.Dodge(playSpeed);
-        OnDodge?.Invoke(character);
+        MonoUtility.DelayFunction(()=> OnDodge?.Invoke(character), damageTextDelay);
+    
     }
 
     void Damaged(AnimatedCombatCharacter character, int dmg, bool critical)
@@ -169,7 +171,8 @@ public class CharacterCombatAnimations : MonoBehaviour
             state = DamagedState.NoDamage;
         
         character.Damaged(playSpeed, state);
-        OnDamaged?.Invoke(character, dmg, critical);
+        MonoUtility.DelayFunction(()=> OnDamaged?.Invoke(character, dmg, critical), damageTextDelay);
+       
     }
 
     void Death(AnimatedCombatCharacter character, int dmg, bool critical)
@@ -189,8 +192,7 @@ public class CharacterCombatAnimations : MonoBehaviour
             leftCharacterDied = false;
         }
         
-
-        OnDamaged?.Invoke(character, dmg, critical);
+        MonoUtility.DelayFunction(()=> OnDamaged?.Invoke(character, dmg, critical), damageTextDelay);
     }
 
     public void Cleanup()

@@ -118,9 +118,9 @@ namespace Game.Mechanics
             var hitRng = UnityEngine.Random.Range(0, 101);
             var critRng = UnityEngine.Random.Range(0, 101);
      
-            attackData.hit =  hitRng<= attacker.BattleComponent.BattleStats.GetHitAgainstTarget(defender);
+            attackData.hit =  hitRng< attacker.BattleComponent.BattleStats.GetHitAgainstTarget(defender);
         
-            attackData.crit =  critRng<= attacker.BattleComponent.BattleStats.GetCritAgainstTarget(defender)&&attackData.hit;
+            attackData.crit =  critRng< attacker.BattleComponent.BattleStats.GetCritAgainstTarget(defender)&&attackData.hit;
             if (attackData.crit)
                 damage *= 2;
             if (attacker == Attacker)

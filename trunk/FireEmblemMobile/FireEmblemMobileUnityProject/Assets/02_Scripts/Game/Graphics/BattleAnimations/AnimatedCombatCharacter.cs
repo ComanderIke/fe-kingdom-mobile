@@ -20,6 +20,7 @@ public class AnimatedCombatCharacter
     {
         Actor = actor;
         this.GameObject = gameObject;
+        gameObject.name = left ? "Combat Actor: Left" : "Combat Actor: Right";
         this.impactPosition = gameObject.GetComponentInChildren<ImpactPosition>();
         this.spriteController = gameObject.GetComponentInChildren<BattleAnimationSpriteController>();
         
