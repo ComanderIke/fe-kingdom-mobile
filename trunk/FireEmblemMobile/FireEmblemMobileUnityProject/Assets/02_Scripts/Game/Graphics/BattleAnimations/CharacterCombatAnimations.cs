@@ -14,7 +14,10 @@ public class CharacterCombatAnimations : MonoBehaviour
     public Action OnAttackFinished;
     private bool leftCharacterDied;
     private bool rightCharacterDied;
-
+      
+    public static event Action<AttackData> OnDamageDealt;
+    public static event Action<AnimatedCombatCharacter> OnDodge;
+    public static event Action<AnimatedCombatCharacter, int, bool> OnDamaged;
 
     private bool leftCharacterAttacker;
 
@@ -149,11 +152,7 @@ public class CharacterCombatAnimations : MonoBehaviour
             }
         }
 
-      
 
-    public static event Action<AttackData> OnDamageDealt;
-    public static event Action<AnimatedCombatCharacter> OnDodge;
-    public static event Action<AnimatedCombatCharacter, int, bool> OnDamaged;
 
     void Dodge(AnimatedCombatCharacter character)
     {
@@ -200,10 +199,5 @@ public class CharacterCombatAnimations : MonoBehaviour
         characterRight.Actor.BattleGO = null;
     }
       
-    public void Init(Camera camera1)
-    {
-        characterLeft.InitCamera(camera1);
-        characterRight.InitCamera(camera1);
-        
-    }
+ 
 }

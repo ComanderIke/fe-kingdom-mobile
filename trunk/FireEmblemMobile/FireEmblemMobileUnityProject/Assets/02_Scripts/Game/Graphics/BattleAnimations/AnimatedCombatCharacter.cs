@@ -10,6 +10,8 @@ public class AnimatedCombatCharacter
     private BattleAnimationSpriteController spriteController;
     private AnimationSpriteSwapper spriteSwapper;
     private ImpactPosition impactPosition;
+    public Action OnPrepareFinished;
+    public Action OnAttackFinished;
     public GameObject GameObject { get; set; }
     private bool left;
     public IBattleActor Actor { get; set; }
@@ -50,7 +52,7 @@ public class AnimatedCombatCharacter
     public void Critical(float playSpeed)
     {
         spriteController.Critical(playSpeed);
-        MonoUtility.DelayFunction(AttackFinished, (float)spriteController.GetCurrentAnimationDuration());
+        MonoUtility.DelayFunction(AttackFinished, (float)spriteController.GetCriticalAttackAnimationDuration());
     }
 
     public void WalkIn(float playSpeed)
@@ -72,20 +74,19 @@ public class AnimatedCombatCharacter
     public void Prepare(float playSpeed)
     {
         spriteController.Prepare(playSpeed);
-        MonoUtility.DelayFunction(PrepareFinished, (float)spriteController.GetCurrentAnimationDuration());
+        MonoUtility.DelayFunction(PrepareFinished, (float)spriteController.GetPrepareAnimationDuration());
     }
     void PrepareFinished()
     {
         OnPrepareFinished?.Invoke();
     }
-    public Action OnPrepareFinished;
-    public Action OnAttackFinished;
+
 
     public void Attack(float playSpeed)
     {
         spriteController.Attack(playSpeed);
     
-        MonoUtility.DelayFunction(AttackFinished, (float)spriteController.GetCurrentAnimationDuration());
+        MonoUtility.DelayFunction(AttackFinished, spriteController.GetAttackAnimationDuration());
     }
 
     void AttackFinished()
@@ -119,11 +120,6 @@ public class AnimatedCombatCharacter
     }
 
     
-    private  Camera camera;
-    public void InitCamera(Camera camera)
-    {
-        this.camera = camera;
-    }
 
     public RectTransform GetAttractorTransform()
     {

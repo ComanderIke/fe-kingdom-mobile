@@ -60,7 +60,6 @@ public class AnimationStateManager
             characterAnimations.SpawnLeftCharacter((Unit)realDefender);
             characterAnimations.SpawnRightCharacter((Unit)realAttacker);
         }
-        characterAnimations.Init(TimeLineController.camera);
         TimeLineController.Init(playerControlled);
         
         characterAnimations.SetPlaySpeed(TimeLineController.introWalkInPlaySpeed);

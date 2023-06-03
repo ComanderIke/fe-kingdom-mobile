@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Game.GUI;
 using LostGrace;
+using MoreMountains.Feedbacks;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -45,6 +47,11 @@ public class BattleAnimationSpriteController : MonoBehaviour
     public TimelineAsset damaged;
     public TimelineAsset critical;
     public TimelineAsset death;
+    [SerializeField] private MMF_Player criticalFeedbacks;
+    [SerializeField] private MMF_Player attackFeedbacks;
+    [SerializeField] private MMF_Player deathFeedbacks;
+    [SerializeField] private MMF_Player dodgeFeedbacks;
+    [SerializeField] private MMF_Player prepareFeedbacks;
     [HideInInspector]
     public bool hasPrepare = false;
     [HideInInspector]
@@ -61,32 +68,52 @@ public class BattleAnimationSpriteController : MonoBehaviour
     }
     public void Attack(float playSpeed)
     {
-        PlayAtSpeed(attack, playSpeed);
+       // PlayAtSpeed(attack, playSpeed);
+       attackFeedbacks.PlayFeedbacks();
+      
     }
     public void Critical(float playSpeed)
     {
-        PlayAtSpeed(critical, playSpeed);
+        //PlayAtSpeed(critical, playSpeed);
+        criticalFeedbacks.PlayFeedbacks();
     }
     public void Death(float playSpeed)
     {
-        PlayAtSpeed(death, playSpeed);
+       // PlayAtSpeed(death, playSpeed);
+       deathFeedbacks.PlayFeedbacks();
     }
     public void Dodge(float playSpeed)
     {
-        PlayAtSpeed(dodge, playSpeed);
+        //PlayAtSpeed(dodge, playSpeed);
+        dodgeFeedbacks.PlayFeedbacks();
     }
 
     
     public void Damaged(float playSpeed,DamagedState damagedState)
     {
         Debug.Log("TODO HIT FEEDBACK CONTROLLER");
-        //hitFeedbackController.SetState(damagedState);
-        PlayAtSpeed(damaged, playSpeed);
+        hitFeedbackController.SetState(damagedState);
+        hitFeedbackController.PlayHitFeedback();
+       // PlayAtSpeed(damaged, playSpeed);
     }
-    public double GetCurrentAnimationDuration()
+
+   
+    public float GetAttackAnimationDuration()
     {
-        return PlayableDirector.duration;
+        return attackFeedbacks.TotalDuration;
     }
+    public float GetPrepareAnimationDuration()
+    {
+        return prepareFeedbacks.TotalDuration;
+    }
+    public float GetCriticalAttackAnimationDuration()
+    {
+        return criticalFeedbacks.TotalDuration;
+    }
+    // public double GetCurrentAnimationDuration()
+    // {
+    //     return PlayableDirector.duration;
+    // }
 
     void PlayAtSpeed(TimelineAsset clip, float speed)
     {
@@ -94,6 +121,17 @@ public class BattleAnimationSpriteController : MonoBehaviour
         PlayableDirector.RebuildGraph(); // the graph must be created before getting the playable graph
         PlayableDirector.playableGraph.GetRootPlayable(0).SetSpeed(speed);
         PlayableDirector.Play();
+    }
+    void PlayFeedback(MMF_Player clip)
+    {
+        clip.PlayFeedbacks();
+        StartCoroutine(DelayAction(()=>Debug.Log("TEST"),clip.TotalDuration));
+    }
+
+    IEnumerator DelayAction(Action action, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        action?.Invoke();
     }
     public bool HasPrepareAnimation()
     {
