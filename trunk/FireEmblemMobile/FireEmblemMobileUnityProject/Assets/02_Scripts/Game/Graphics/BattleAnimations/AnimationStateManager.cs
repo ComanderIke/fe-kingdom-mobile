@@ -62,9 +62,13 @@ public class AnimationStateManager
         }
         TimeLineController.Init(playerControlled);
         
-        characterAnimations.SetPlaySpeed(TimeLineController.introWalkInPlaySpeed);
-        characterAnimations.WalkIn(playerControlled);
-        characterAnimations.SetPlaySpeed(1.0f);
+       // characterAnimations.SetPlaySpeed(TimeLineController.introWalkInPlaySpeed);
+       MonoUtility.InvokeNextFrame(() =>
+       {
+           characterAnimations.WalkIn(playerControlled);
+       });
+
+       //characterAnimations.SetPlaySpeed(1.0f);
     }
     private void ContinueBattle()
     {

@@ -46,6 +46,7 @@ public class AnimatedCombatCharacter
 
     public void Idle(float playSpeed)
     {
+        Debug.Log("IDLE" +GameObject.name);
         spriteController.Idle(playSpeed);
     }
 
@@ -57,6 +58,7 @@ public class AnimatedCombatCharacter
 
     public void WalkIn(float playSpeed)
     {
+        Debug.Log("WALKIN" +GameObject.name);
         spriteController.WalkIn(playSpeed);
     }
 

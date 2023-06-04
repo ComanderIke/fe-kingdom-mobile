@@ -40,13 +40,14 @@ public class BattleAnimationSpriteController : MonoBehaviour
 
     [SerializeField] private Transform impactPosition;
     
-    public TimelineAsset walkIn;
+   // public TimelineAsset walkIn;
     // public TimelineAsset attack;
     // public TimelineAsset idle;
     // public TimelineAsset dodge;
     // public TimelineAsset damaged;
     // public TimelineAsset critical;
     // public TimelineAsset death;
+    [SerializeField] private MMF_Player walkInFeedbacks;
     [SerializeField] private MMF_Player idleFeedbacks;
     [SerializeField] private MMF_Player criticalFeedbacks;
     [SerializeField] private MMF_Player attackFeedbacks;
@@ -60,7 +61,8 @@ public class BattleAnimationSpriteController : MonoBehaviour
 
     public void WalkIn(float playSpeed)
     {
-        PlayAtSpeed(walkIn, playSpeed);
+        walkInFeedbacks.PlayFeedbacks();
+        //PlayAtSpeed(walkIn, playSpeed);
     }
     public void Idle(float playSpeed)
     {
@@ -68,11 +70,7 @@ public class BattleAnimationSpriteController : MonoBehaviour
        // PlayAtSpeed(idle, playSpeed);
     }
 
-    private void Update()
-    {
-        Debug.Log("From Controller: "+impactPosition.position+" Instance ID: "+GetInstanceID());
-    }
-
+   
     public void Attack(float playSpeed)
     {
        // PlayAtSpeed(attack, playSpeed);
