@@ -3,13 +3,17 @@ using UnityEngine;
 
 public class CombatTextRenderer
 {
-    public float BattleTextMovementScale = 8f;
-    public float DamageNumberHorizontalMinValue=0.8f;
-    public float DamageNumberHorizontalMaxValue=1.6f;
+    public float MissTextScale = 3f;
+    public float TextScale = 5f;
+    public float BattleTextMovementScale = 7f;
+    public float DamageNumberHorizontalMinValue=0.5f;
+    public float DamageNumberHorizontalMaxValue=0.8f;
     public float DamageNumberVerticalMinValue=0.4f;
-    public float DamageNumberVerticalMaxValue=0.7f;
+    public float DamageNumberVerticalMaxValue=0.6f;
     public CombatTextRenderer()
     {
+        CharacterCombatAnimations.OnDodge -= CreateMiss;
+        CharacterCombatAnimations.OnDamaged -= CreateDamageNumbers;
         CharacterCombatAnimations.OnDodge += CreateMiss;
         CharacterCombatAnimations.OnDamaged += CreateDamageNumbers;
     }
@@ -18,7 +22,12 @@ public class CombatTextRenderer
     void CreateDamageNumbers(AnimatedCombatCharacter character, int dmg, bool critical)
     {
         TextStyle style = TextStyle.Damage;
-        Debug.Log("create Damage Number: "+character.GameObject+" "+character.GetImpactPosition());
+        // Debug.Log("Impact Pos from Somewhere else");
+        // foreach (var impactPos in GameObject.FindObjectsOfType<ImpactPosition>())
+        // {
+        //     Debug.Log(impactPos.transform.position);
+        // }
+        Debug.Log("create Damage Number: "+character.GameObject+" "+character.GetImpactPosition()+" InstanceId:"+character.GetSpriteController().GetInstanceID());
         var pos = character.GetImpactPosition();
         if (dmg == 0)
             style = TextStyle.NoDamage;
@@ -32,7 +41,7 @@ public class CombatTextRenderer
     {
         MonoUtility.DelayFunction(() =>
             DamagePopUp.CreateForBattleView(position,
-                dmg, style, 5.0f,
+                dmg, style, TextScale,
                 new Vector3(
                     floatDirection * Random.Range(DamageNumberHorizontalMinValue, DamageNumberHorizontalMaxValue),
                     Random.Range(DamageNumberVerticalMinValue, DamageNumberVerticalMaxValue)) * BattleTextMovementScale),
@@ -41,12 +50,13 @@ public class CombatTextRenderer
     }
     void CreateMiss(AnimatedCombatCharacter character)
     {
+        Debug.Log("create Miss: "+character.GameObject+" "+character.GetImpactPosition()+" InstanceId:"+character.GetSpriteController().GetInstanceID());
         var pos = character.GetImpactPosition();
         CreateMiss(pos, character.IsLeft()?-1:1);
     }
     void CreateMiss(Vector3 position, float floatDirection=1)
     {
-        MonoUtility.DelayFunction(() => DamagePopUp.CreateMiss(position, TextStyle.Missed, 4.0f, 
+        MonoUtility.DelayFunction(() => DamagePopUp.CreateMiss(position, TextStyle.Missed, MissTextScale, 
             new Vector2(floatDirection*Random.Range(DamageNumberHorizontalMinValue,DamageNumberHorizontalMaxValue), Random.Range(DamageNumberVerticalMinValue,DamageNumberVerticalMaxValue))
             * BattleTextMovementScale),0.05f);
     }

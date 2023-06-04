@@ -49,7 +49,7 @@ namespace AssetUsageFinder {
 
 			if (p.IsRootOfAnyPrefab) {
 				if (p.IsStageRoot) {
-					p.Path = editorPrefabStage.prefabAssetPath;
+					p.Path = editorPrefabStage.assetPath;
 				}
 				else if (p.IsInstanceRoot) {
 					p.Path = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(gameObject);
@@ -60,7 +60,7 @@ namespace AssetUsageFinder {
 			}
 			else {
 				if (p.IsPartOfStage) {
-					p.Path = editorPrefabStage.prefabAssetPath;
+					p.Path = editorPrefabStage.assetPath;
 				}
 				else if (p.IsPartOfInstance) {
 					p.Path = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(p.NearestInstanceRoot);

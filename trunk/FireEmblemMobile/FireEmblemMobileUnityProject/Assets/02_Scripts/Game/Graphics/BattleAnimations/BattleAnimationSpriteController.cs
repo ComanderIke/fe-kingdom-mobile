@@ -38,15 +38,16 @@ public class BattleAnimationSpriteController : MonoBehaviour
 
     [SerializeField] private HitFeedbackController hitFeedbackController;
 
-   
+    [SerializeField] private Transform impactPosition;
     
     public TimelineAsset walkIn;
-    public TimelineAsset attack;
-    public TimelineAsset idle;
-    public TimelineAsset dodge;
-    public TimelineAsset damaged;
-    public TimelineAsset critical;
-    public TimelineAsset death;
+    // public TimelineAsset attack;
+    // public TimelineAsset idle;
+    // public TimelineAsset dodge;
+    // public TimelineAsset damaged;
+    // public TimelineAsset critical;
+    // public TimelineAsset death;
+    [SerializeField] private MMF_Player idleFeedbacks;
     [SerializeField] private MMF_Player criticalFeedbacks;
     [SerializeField] private MMF_Player attackFeedbacks;
     [SerializeField] private MMF_Player deathFeedbacks;
@@ -63,9 +64,15 @@ public class BattleAnimationSpriteController : MonoBehaviour
     }
     public void Idle(float playSpeed)
     {
-      
-        PlayAtSpeed(idle, playSpeed);
+        idleFeedbacks.PlayFeedbacks();
+       // PlayAtSpeed(idle, playSpeed);
     }
+
+    private void Update()
+    {
+        Debug.Log("From Controller: "+impactPosition.position+" Instance ID: "+GetInstanceID());
+    }
+
     public void Attack(float playSpeed)
     {
        // PlayAtSpeed(attack, playSpeed);
@@ -96,7 +103,10 @@ public class BattleAnimationSpriteController : MonoBehaviour
         hitFeedbackController.PlayHitFeedback();
        // PlayAtSpeed(damaged, playSpeed);
     }
-
+    public float GetIdleAnimationDuration()
+    {
+        return idleFeedbacks.TotalDuration;
+    }
    
     public float GetAttackAnimationDuration()
     {
@@ -151,6 +161,11 @@ public class BattleAnimationSpriteController : MonoBehaviour
     public ExpBarController GetExpRenderer()
     {
         return expBar;
+    }
+
+    public Vector3 GetImpactPosition()
+    {
+        return impactPosition.position;
     }
 }
 public enum DamagedState

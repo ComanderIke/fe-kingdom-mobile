@@ -32,7 +32,7 @@ namespace Game.GUI.PopUpText
         private TextMeshPro textMesh;
         private float disappearTimer;
         private Color textColor;
-        private const float DISAPPEAR_TIMER_MAX = 0.6f;
+        private const float DISAPPEAR_TIMER_MAX = 0.5f;
         private Vector3 moveVector;
         private Vector3 baseScale;
 
@@ -86,9 +86,9 @@ namespace Game.GUI.PopUpText
             disappearTimer -= Time.deltaTime;
             if (disappearTimer < 0)
             {
-                float disapperSpeed = 2f;
+                float disappearSpeed = 2f;
                 //Debug.Log("TextColor: "+textColor);
-                textColor.a -= disapperSpeed * Time.deltaTime;
+                textColor.a -= disappearSpeed * Time.deltaTime;
                 textMesh.color = textColor;
                 //  Debug.Log("TextColorAfter: "+textColor);
                 if (textColor.a < 0)

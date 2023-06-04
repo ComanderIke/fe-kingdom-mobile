@@ -13,6 +13,6 @@ public class ImpactPosition : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Debug.Log("Impact Position: "+transform.position);
     }
 }

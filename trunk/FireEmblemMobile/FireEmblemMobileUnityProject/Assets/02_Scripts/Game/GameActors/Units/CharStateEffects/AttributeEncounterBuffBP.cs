@@ -2,7 +2,7 @@
 using Game.GameActors.Units.Numbers;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "GameData/EncounterBuffs/AttributeBuff")]
+
 public class AttributeEncounterBuffBP : EncounterBasedBuffBP
 {
     [SerializeField] private int value;

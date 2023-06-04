@@ -9,7 +9,7 @@ public class AnimatedCombatCharacter
 {
     private BattleAnimationSpriteController spriteController;
     private AnimationSpriteSwapper spriteSwapper;
-    private ImpactPosition impactPosition;
+   
     public Action OnPrepareFinished;
     public Action OnAttackFinished;
     public GameObject GameObject { get; set; }
@@ -21,7 +21,6 @@ public class AnimatedCombatCharacter
         Actor = actor;
         this.GameObject = gameObject;
         gameObject.name = left ? "Combat Actor: Left" : "Combat Actor: Right";
-        this.impactPosition = gameObject.GetComponentInChildren<ImpactPosition>();
         this.spriteController = gameObject.GetComponentInChildren<BattleAnimationSpriteController>();
         
         this.spriteSwapper = gameObject.GetComponentInChildren<AnimationSpriteSwapper>();
@@ -110,9 +109,13 @@ public class AnimatedCombatCharacter
         spriteController.Dodge(playSpeed);
     }
 
+    public BattleAnimationSpriteController GetSpriteController()
+    {
+        return spriteController;
+    }
     public Vector3 GetImpactPosition()
     {
-        return impactPosition.transform.position;
+        return spriteController.GetImpactPosition();
     }
 
     public bool IsLeft()
