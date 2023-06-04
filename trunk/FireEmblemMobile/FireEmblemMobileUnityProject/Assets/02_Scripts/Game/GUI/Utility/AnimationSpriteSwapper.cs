@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Game.GameActors.Units;
@@ -11,6 +12,7 @@ namespace LostGrace
         [SerializeField] CharacterSpriteSet spriteSet;
         [SerializeField]private SpriteRenderer spriteRenderer;
 
+     
         public void Init(CharacterSpriteSet spriteSet)
         {
             this.spriteSet = spriteSet;
