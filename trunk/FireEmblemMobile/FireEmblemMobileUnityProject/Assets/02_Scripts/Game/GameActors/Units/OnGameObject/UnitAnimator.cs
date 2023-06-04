@@ -41,7 +41,7 @@ namespace Game.GameActors.Units.OnGameObject
         private void Update()
         {
             // Debug.Log(name+" "+Vector3.Distance(lastPosition,transform.position));
-            if (Vector3.Distance(lastPosition,transform.position)>0.01f)
+            if (Vector3.Distance(lastPosition,transform.position)>0.001f)
             {
                 frameCount=0;
                 if (!moving)
