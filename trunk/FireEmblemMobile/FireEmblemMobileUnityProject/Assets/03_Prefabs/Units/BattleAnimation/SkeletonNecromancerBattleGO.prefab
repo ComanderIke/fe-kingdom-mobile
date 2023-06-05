@@ -488,12 +488,17 @@ MonoBehaviour:
   attractorTransform: {fileID: 0}
   expBar: {fileID: 0}
   hitFeedbackController: {fileID: 0}
-  walkIn: {fileID: 11400000, guid: 7f9efe6d5e69e544fb8c168b3ec47236, type: 2}
-  attack: {fileID: 11400000, guid: 331d64dc694cba54f949716ecf8ebfb3, type: 2}
-  idle: {fileID: 11400000, guid: 1f57e0ac1692c6049a270c3a619f49c6, type: 2}
-  dodge: {fileID: 11400000, guid: 88429df52fcbfa245b062b5ac7b7d41c, type: 2}
-  damaged: {fileID: 11400000, guid: a407f8c38d4a38b468abe9ef7ce9a3c0, type: 2}
-  death: {fileID: 11400000, guid: 56f7f8a00f77c2f46ac928f2bcf55efb, type: 2}
+  impactPosition: {fileID: 0}
+  walkInFeedbacks: {fileID: 0}
+  idleFeedbacks: {fileID: 0}
+  criticalFeedbacks: {fileID: 0}
+  attackFeedbacks: {fileID: 0}
+  deathFeedbacks: {fileID: 0}
+  dodgeFeedbacks: {fileID: 0}
+  prepareFeedbacks: {fileID: 0}
+  sortOrderNormal: 1
+  sortOrderAttack: 2
+  spriteRenderer: {fileID: 0}
   hasPrepare: 0
   prepareAttack: {fileID: 0}
 --- !u!114 &5076119964091048283
@@ -15284,8 +15289,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad47164ae116433458332f939be0795b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 6833403705098903314}
   material: {fileID: 2100000, guid: 81b97733ad028e4479d1637c49717ec4, type: 2}
-  time: 1.0131421
+  time: -0.15846437
   duration: 0.5
   transInSpeed: 5
   transOutSpeed: 1

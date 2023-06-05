@@ -19,14 +19,14 @@ MonoBehaviour:
   stats:
     AttackRanges: 
     BaseAttributes:
-      str: 0
-      intel: 0
-      dex: 0
-      agi: 0
-      con: 0
-      lck: 0
-      def: 0
-      faith: 0
+      str: 8
+      intel: 8
+      dex: 8
+      agi: 4
+      con: 4
+      lck: 8
+      def: 1
+      faith: 8
     BonusStats:
       <Hit>k__BackingField: 0
       <Avoid>k__BackingField: 0
@@ -36,7 +36,7 @@ MonoBehaviour:
       <Armor>k__BackingField: 0
       <MagicResistance>k__BackingField: 0
       <Attack>k__BackingField: 0
-    Mov: 0
+    Mov: 2
   growths:
     str: 0
     intel: 0
@@ -51,7 +51,7 @@ MonoBehaviour:
     startSkills: []
     skillPoints: 0
   rpgClass: 0
-  bluePrintID: 
+  bluePrintID: SkeletDragon
   dialogActor: {fileID: 0}
   visuals:
     CharacterSpriteSet: {fileID: 11400000, guid: d51b970715cf8f7439b546242042764e,
@@ -59,8 +59,10 @@ MonoBehaviour:
     CharacterClassUpgradeSpriteSet: {fileID: 0}
     UnitEffectVisual: {fileID: 11400000, guid: af10e6087dc82f34ebed15c0092e0174, type: 2}
     Prefabs:
-      MapAnimatedSprite: {fileID: 0}
-      EncounterAnimatedSprite: {fileID: 0}
+      MapAnimatedSprite: {fileID: 2861010742256422526, guid: 671f6660e81711848ad0d3a82688811e,
+        type: 3}
+      EncounterAnimatedSprite: {fileID: 2861010742256422526, guid: 671f6660e81711848ad0d3a82688811e,
+        type: 3}
       UIAnimatorController: {fileID: 22100000, guid: 5df3596376471394a89e0525236f8d5f,
         type: 2}
     UnitCharacterCircleUI: {fileID: 0}

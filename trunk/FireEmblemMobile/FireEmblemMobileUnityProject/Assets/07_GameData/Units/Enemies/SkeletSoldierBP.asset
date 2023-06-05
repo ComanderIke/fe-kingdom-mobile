@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb843360a1e2024e9821031d19ee784, type: 3}
-  m_Name: SkeletRiderBP
+  m_Name: SkeletSoldierBP
   m_EditorClassIdentifier: 
-  equippedWeaponBp: {fileID: 11400000, guid: f1c1c884af0a0a14cb2d196a524fcbb8, type: 2}
+  equippedWeaponBp: {fileID: 11400000, guid: c585b61dded3c7c46b63fe7aaa651ab0, type: 2}
   EquippedRelic1: {fileID: 0}
   EquippedRelic2: {fileID: 0}
-  Name: Skelet Rider
+  Name: Skelet Soldier
   stats:
     AttackRanges: 
     BaseAttributes:
@@ -36,7 +36,7 @@ MonoBehaviour:
       <Armor>k__BackingField: 0
       <MagicResistance>k__BackingField: 0
       <Attack>k__BackingField: 0
-    Mov: 3
+    Mov: 2
   growths:
     str: 0
     intel: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
     lck: 0
     def: 0
     faith: 0
-  moveType: {fileID: 11400000, guid: 580bbea6e1e3e824a81881f8e2a825ba, type: 2}
+  moveType: {fileID: 11400000, guid: d13592b1fa0af024a841b121149b8014, type: 2}
   SkillManager:
     startSkills: []
     skillPoints: 0
@@ -54,22 +54,22 @@ MonoBehaviour:
   bluePrintID: 
   dialogActor: {fileID: 0}
   visuals:
-    CharacterSpriteSet: {fileID: 11400000, guid: 6794c0f4d719e6942a4d49d293b72285,
+    CharacterSpriteSet: {fileID: 11400000, guid: 264e060a14a28f74f97790eaa5e1b8aa,
       type: 2}
     CharacterClassUpgradeSpriteSet: {fileID: 0}
     UnitEffectVisual: {fileID: 11400000, guid: af10e6087dc82f34ebed15c0092e0174, type: 2}
     Prefabs:
-      MapAnimatedSprite: {fileID: 2861010742256422526, guid: f782b017bae238340ba6faff38e743c9,
+      MapAnimatedSprite: {fileID: 2861010742256422526, guid: 84d07bf8bd645534fb93a338f78522a6,
         type: 3}
-      EncounterAnimatedSprite: {fileID: 2861010742256422526, guid: f782b017bae238340ba6faff38e743c9,
+      EncounterAnimatedSprite: {fileID: 2861010742256422526, guid: 84d07bf8bd645534fb93a338f78522a6,
         type: 3}
-      UIAnimatorController: {fileID: 22100000, guid: 935d962dbfa06f247a8c933d24007ffd,
+      UIAnimatorController: {fileID: 22100000, guid: b070cd6bdfa65354aa420567562e32cf,
         type: 2}
     UnitCharacterCircleUI: {fileID: 0}
     unitRenderer: {fileID: 0}
   audio: {fileID: 0}
   experienceManager:
-    level: 0
+    level: 1
     exp: 0
-    drainableExp: 100
+    drainableExp: 200
     expLeftToDrain: 100
