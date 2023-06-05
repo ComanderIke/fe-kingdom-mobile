@@ -55,6 +55,12 @@ public class AnimatedCombatCharacter
         spriteController.Critical(playSpeed);
         MonoUtility.DelayFunction(AttackFinished, (float)spriteController.GetCriticalAttackAnimationDuration());
     }
+    public void Critical(float playSpeed, float duration)
+    {
+        spriteController.Critical(playSpeed);
+    
+        MonoUtility.DelayFunction(AttackFinished, duration);
+    }
 
     public void WalkIn(float playSpeed)
     {
@@ -82,13 +88,18 @@ public class AnimatedCombatCharacter
     {
         OnPrepareFinished?.Invoke();
     }
-
-
     public void Attack(float playSpeed)
     {
         spriteController.Attack(playSpeed);
     
         MonoUtility.DelayFunction(AttackFinished, spriteController.GetAttackAnimationDuration());
+    }
+
+    public void Attack(float playSpeed, float duration)
+    {
+        spriteController.Attack(playSpeed);
+    
+        MonoUtility.DelayFunction(AttackFinished, duration);
     }
 
     void AttackFinished()
@@ -135,5 +146,10 @@ public class AnimatedCombatCharacter
     public ExpBarController GetExpRenderer()
     {
         return spriteController.GetExpRenderer();
+    }
+
+    public float GetDeathDuration()
+    {
+        return spriteController.GetDeathFeedbackDuration();
     }
 }

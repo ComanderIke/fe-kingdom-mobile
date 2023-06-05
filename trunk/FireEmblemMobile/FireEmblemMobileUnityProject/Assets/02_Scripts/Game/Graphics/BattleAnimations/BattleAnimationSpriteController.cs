@@ -54,6 +54,9 @@ public class BattleAnimationSpriteController : MonoBehaviour
     [SerializeField] private MMF_Player deathFeedbacks;
     [SerializeField] private MMF_Player dodgeFeedbacks;
     [SerializeField] private MMF_Player prepareFeedbacks;
+    [SerializeField] private int sortOrderNormal = 1;
+    [SerializeField] private int sortOrderAttack = 2;
+    [SerializeField] private SpriteRenderer spriteRenderer;
     [HideInInspector]
     public bool hasPrepare = false;
     [HideInInspector]
@@ -62,12 +65,14 @@ public class BattleAnimationSpriteController : MonoBehaviour
     public void WalkIn(float playSpeed)
     {
         walkInFeedbacks.PlayFeedbacks();
+        spriteRenderer.sortingOrder = sortOrderNormal;
         //PlayAtSpeed(walkIn, playSpeed);
     }
     public void Idle(float playSpeed)
     {
         idleFeedbacks.PlayFeedbacks();
-       // PlayAtSpeed(idle, playSpeed);
+        spriteRenderer.sortingOrder = sortOrderNormal;
+        // PlayAtSpeed(idle, playSpeed);
     }
 
    
@@ -75,22 +80,27 @@ public class BattleAnimationSpriteController : MonoBehaviour
     {
        // PlayAtSpeed(attack, playSpeed);
        attackFeedbacks.PlayFeedbacks();
+       spriteRenderer.sortingOrder = sortOrderAttack;
       
     }
     public void Critical(float playSpeed)
     {
         //PlayAtSpeed(critical, playSpeed);
         criticalFeedbacks.PlayFeedbacks();
+        spriteRenderer.sortingOrder = sortOrderAttack;
     }
     public void Death(float playSpeed)
     {
        // PlayAtSpeed(death, playSpeed);
+       
        deathFeedbacks.PlayFeedbacks();
+       spriteRenderer.sortingOrder = sortOrderNormal;
     }
     public void Dodge(float playSpeed)
     {
         //PlayAtSpeed(dodge, playSpeed);
         dodgeFeedbacks.PlayFeedbacks();
+        spriteRenderer.sortingOrder = sortOrderNormal;
     }
 
     
@@ -99,6 +109,7 @@ public class BattleAnimationSpriteController : MonoBehaviour
         Debug.Log("TODO HIT FEEDBACK CONTROLLER");
         hitFeedbackController.SetState(damagedState);
         hitFeedbackController.PlayHitFeedback();
+        spriteRenderer.sortingOrder = sortOrderNormal;
        // PlayAtSpeed(damaged, playSpeed);
     }
     public float GetIdleAnimationDuration()
@@ -148,7 +159,9 @@ public class BattleAnimationSpriteController : MonoBehaviour
 
     public void Prepare(float playSpeed)
     {
-        PlayAtSpeed(prepareAttack, playSpeed);
+        prepareFeedbacks.PlayFeedbacks();
+        //PlayAtSpeed(prepareAttack, playSpeed);
+        spriteRenderer.sortingOrder = sortOrderNormal;
     }
 
     public RectTransform GetAttractorTransform()
@@ -164,6 +177,11 @@ public class BattleAnimationSpriteController : MonoBehaviour
     public Vector3 GetImpactPosition()
     {
         return impactPosition.position;
+    }
+
+    public float GetDeathFeedbackDuration()
+    {
+        return deathFeedbacks.TotalDuration;
     }
 }
 public enum DamagedState

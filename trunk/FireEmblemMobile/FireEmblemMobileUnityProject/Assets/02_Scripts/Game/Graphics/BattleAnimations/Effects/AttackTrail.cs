@@ -7,7 +7,9 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class AttackTrail : MonoBehaviour
 {
-    public Material material;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+
+public Material material;
     [Range(0,1)]
     public float time = 0;
 
@@ -22,7 +24,7 @@ public class AttackTrail : MonoBehaviour
     private void OnEnable()
     {
         elapsed = 0;
-        
+        spriteRenderer.material = material;
         StartCoroutine(TransIn());
     }
 

@@ -299,12 +299,18 @@ MonoBehaviour:
   PlayableDirector: {fileID: 7398306520116262879}
   attractorTransform: {fileID: 0}
   expBar: {fileID: 0}
-  walkIn: {fileID: 11400000, guid: 8c74b39443eb8454ca0a61831f29c5b2, type: 2}
-  attack: {fileID: 11400000, guid: b7f3d3e5f9b0e6441886341d44784186, type: 2}
-  idle: {fileID: 11400000, guid: 3b81f68b02788834d9d7ee02fe09fcf7, type: 2}
-  dodge: {fileID: 11400000, guid: a3ec29c516758e445a8b1b05135699ea, type: 2}
-  damaged: {fileID: 11400000, guid: c5941980997934046a399ccafa5fd290, type: 2}
-  death: {fileID: 11400000, guid: e2ec745cfba517d42bdebd7681c10666, type: 2}
+  hitFeedbackController: {fileID: 0}
+  impactPosition: {fileID: 0}
+  walkInFeedbacks: {fileID: 0}
+  idleFeedbacks: {fileID: 0}
+  criticalFeedbacks: {fileID: 0}
+  attackFeedbacks: {fileID: 0}
+  deathFeedbacks: {fileID: 0}
+  dodgeFeedbacks: {fileID: 0}
+  prepareFeedbacks: {fileID: 0}
+  sortOrderNormal: 1
+  sortOrderAttack: 2
+  spriteRenderer: {fileID: 0}
   hasPrepare: 0
   prepareAttack: {fileID: 0}
 --- !u!114 &3337478153766565190
@@ -10220,7 +10226,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4784977235303099544
 Transform:
   m_ObjectHideFlags: 0
@@ -10299,8 +10305,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad47164ae116433458332f939be0795b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 6833403705098903314}
   material: {fileID: 2100000, guid: 498b9892905e0624eb0b37deb47b1aa7, type: 2}
-  time: 1.0155458
+  time: -0.014205158
   duration: 0.5
   transInSpeed: 5
   transOutSpeed: 1

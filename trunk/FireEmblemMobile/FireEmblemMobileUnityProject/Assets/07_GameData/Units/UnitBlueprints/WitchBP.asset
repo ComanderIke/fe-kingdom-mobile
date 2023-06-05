@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb843360a1e2024e9821031d19ee784, type: 3}
+  m_Name: WitchBP
+  m_EditorClassIdentifier: 
+  equippedWeaponBp: {fileID: 11400000, guid: 122bb3087c2603442808446010728a78, type: 2}
+  EquippedRelic1: {fileID: 0}
+  EquippedRelic2: {fileID: 0}
+  Name: Sonia
+  stats:
+    AttackRanges: 0100000002000000
+    BaseAttributes:
+      str: 6
+      intel: 6
+      dex: 6
+      agi: 6
+      con: 6
+      lck: 6
+      def: 6
+      faith: 6
+    BonusStats:
+      <Hit>k__BackingField: 0
+      <Avoid>k__BackingField: 0
+      <CritAvoid>k__BackingField: 0
+      <Crit>k__BackingField: 0
+      <AttackSpeed>k__BackingField: 0
+      <Armor>k__BackingField: 0
+      <MagicResistance>k__BackingField: 0
+      <Attack>k__BackingField: 0
+    Mov: 5
+  growths:
+    str: 0
+    intel: 0
+    dex: 0
+    agi: 0
+    con: 0
+    lck: 0
+    def: 0
+    faith: 0
+  moveType: {fileID: 11400000, guid: bff40a3de87900a4496abf2b9dfca7a2, type: 2}
+  SkillManager:
+    startSkills: []
+    skillPoints: 1
+  rpgClass: 2
+  bluePrintID: Mage
+  dialogActor: {fileID: 0}
+  visuals:
+    CharacterSpriteSet: {fileID: 11400000, guid: eab4068f017df624f847ba1d9fa411c5,
+      type: 2}
+    CharacterClassUpgradeSpriteSet: {fileID: 11400000, guid: 0be1c9936382dc644a3eb03d93b94947,
+      type: 2}
+    UnitEffectVisual: {fileID: 11400000, guid: af10e6087dc82f34ebed15c0092e0174, type: 2}
+    Prefabs:
+      MapAnimatedSprite: {fileID: 2861010742256422526, guid: 171415ab38e1bf24dbd1923f554bb171,
+        type: 3}
+      EncounterAnimatedSprite: {fileID: 6168332596698552260, guid: d004730b778feb548a0afe509ccacd4a,
+        type: 3}
+      UIAnimatorController: {fileID: 22100000, guid: 35efb6ad9b4ba3940b8a080ea742e825,
+        type: 2}
+    UnitCharacterCircleUI: {fileID: 0}
+    unitRenderer: {fileID: 0}
+  audio: {fileID: 0}
+  experienceManager:
+    level: 1
+    exp: 0
+    drainableExp: 100
+    expLeftToDrain: 100

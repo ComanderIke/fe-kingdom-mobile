@@ -16,10 +16,10 @@ MonoBehaviour:
   <Groups>k__BackingField:
   - <ID>k__BackingField: d96fbdee-cad3-4ec3-be32-53a519f68161
     <Name>k__BackingField: TheKnightAndHisHarem
-    <Position>k__BackingField: {x: 211, y: 120}
+    <Position>k__BackingField: {x: 211, y: 120.000015}
   - <ID>k__BackingField: 3903b474-f6d9-4717-b77b-59ad6b1efc75
     <Name>k__BackingField: ChasedBySkeletons
-    <Position>k__BackingField: {x: 261.00003, y: 1090.0001}
+    <Position>k__BackingField: {x: 261, y: 1090}
   - <ID>k__BackingField: d88683db-1151-44f3-b059-93ec05b6f27a
     <Name>k__BackingField: LumberjackParty
     <Position>k__BackingField: {x: 1822, y: 1103}
@@ -59,32 +59,6 @@ MonoBehaviour:
     <Headline>k__BackingField: 
     <RewardResources>k__BackingField: []
     <RewardItems>k__BackingField: []
-    <Events>k__BackingField: []
-  - <ID>k__BackingField: 60271e98-9f9b-4d48-b317-47a409f695e1
-    <Name>k__BackingField: KnightHaremWon
-    <Text>k__BackingField: "The woman approaches you. \u201CThank you kindly, I was
-      hoping to get away from this cruel man. Take this, it belonged to my mother
-      before she passed\u201D. "
-    <IsPortraitLeft>k__BackingField: 1
-    <DialogActor>k__BackingField: {fileID: 0}
-    <Choices>k__BackingField:
-    - <Text>k__BackingField: Next Dialogue
-      <NodeID>k__BackingField: 
-      <NodeFailID>k__BackingField: 
-      <AttributeRequirements>k__BackingField: []
-      <CharacterRequirement>k__BackingField: {fileID: 0}
-      <ItemRequirements>k__BackingField: []
-    <GroupID>k__BackingField: d96fbdee-cad3-4ec3-be32-53a519f68161
-    <DialgueType>k__BackingField: 3
-    <Position>k__BackingField: {x: 2516, y: 179}
-    <Headline>k__BackingField: 
-    <RewardResources>k__BackingField:
-    - Amount: 50
-      ResourceType: 0
-    - Amount: 50
-      ResourceType: 2
-    <RewardItems>k__BackingField:
-    - {fileID: 11400000, guid: b4861a55f2e99854ab9f7b9b973eb143, type: 2}
     <Events>k__BackingField: []
   - <ID>k__BackingField: 84bd9d23-78e8-437b-aaff-748d5384a29b
     <Name>k__BackingField: KnightHaremLost
@@ -542,6 +516,32 @@ MonoBehaviour:
     <RewardResources>k__BackingField: []
     <RewardItems>k__BackingField: []
     <Events>k__BackingField: []
+  - <ID>k__BackingField: 60271e98-9f9b-4d48-b317-47a409f695e1
+    <Name>k__BackingField: KnightHaremWon
+    <Text>k__BackingField: "The woman approaches you. \u201CThank you kindly, I was
+      hoping to get away from this cruel man. Take this, it belonged to my mother
+      before she passed\u201D. "
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: End
+      <NodeID>k__BackingField: 
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirement>k__BackingField: {fileID: 0}
+      <ItemRequirements>k__BackingField: []
+    <GroupID>k__BackingField: d96fbdee-cad3-4ec3-be32-53a519f68161
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 2516, y: 179}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField:
+    - Amount: 50
+      ResourceType: 0
+    - Amount: 50
+      ResourceType: 2
+    <RewardItems>k__BackingField:
+    - {fileID: 11400000, guid: b4861a55f2e99854ab9f7b9b973eb143, type: 2}
+    <Events>k__BackingField: []
   <OldGroupNames>k__BackingField:
   - TheKnightAndHisHarem
   - ChasedBySkeletons
@@ -555,17 +555,17 @@ MonoBehaviour:
     - Key: TheKnightAndHisHarem
       Value:
       - KnightHarem2
-      - KnightHaremWon
       - KnightHaremLost
       - KnightHarem3
       - KnightHarem1
       - KnightHarem4
+      - KnightHaremWon
     - Key: ChasedBySkeletons
       Value:
       - ChasedBySkeletons1
       - ChasedBySkeletons4
-      - ChasedBySkeletons2
       - ChaseBySkeletons3
+      - ChasedBySkeletons2
     - Key: LumberjackParty
       Value:
       - LumberjackParty1
