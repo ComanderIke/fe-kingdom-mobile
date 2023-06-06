@@ -40,13 +40,13 @@ namespace Game.GameActors.Units.OnGameObject
         
         private void Update()
         {
-            // Debug.Log(name+" "+Vector3.Distance(lastPosition,transform.position));
+           // Debug.Log(name+" "+Vector3.Distance(lastPosition,transform.position));
             if (Vector3.Distance(lastPosition,transform.position)>0.001f)
             {
                 frameCount=0;
                 if (!moving)
                 {
-                    //Debug.Log("Move!");
+                   // Debug.Log("Move!"+name);
                     
                     moving = true;
                     animator.SetBool(Moving, moving);
@@ -57,8 +57,8 @@ namespace Game.GameActors.Units.OnGameObject
                 frameCount++;
                 if (frameCount >= FrameCountMovingCheck)
                 {
-                    moving = false;
-                    // Debug.Log("Stop Move!");
+                   moving = false;
+                    //Debug.Log("Stop Move!");
                     animator.SetBool(Moving, moving);
                 }
             }
