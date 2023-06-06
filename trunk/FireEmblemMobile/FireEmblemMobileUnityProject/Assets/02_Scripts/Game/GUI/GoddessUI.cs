@@ -10,7 +10,7 @@ namespace LostGrace
         [SerializeField] private RectTransform rectT;
         [SerializeField] private CanvasGroup canvasGroup;
         [SerializeField] private ParticleSystem particles;
-        [SerializeField] private ParticleSystem glow;
+     //   [SerializeField] private ParticleSystem glow;
         [SerializeField] private ParticleSystem clouds;
         [SerializeField] private Animator animator;
         // private void OnEnable()
@@ -29,7 +29,7 @@ namespace LostGrace
             StopCoroutine(nameof(HideGoddessAnimation));
             animator.enabled = false;
             canvasGroup.alpha = 0;
-            glow.gameObject.SetActive(false);
+       //     glow.gameObject.SetActive(false);
             clouds.gameObject.SetActive(true);
             clouds.Play();
             yield return new WaitForSeconds(.6f);
@@ -42,8 +42,8 @@ namespace LostGrace
             LeanTween.moveY(rectT, 0, .5f).setEaseOutQuad().setDelay(.1f);
             yield return new WaitWhile(()=>LeanTween.isTweening(tweenId));
          
-            glow.gameObject.SetActive(true);
-            glow.Play();
+          //  glow.gameObject.SetActive(true);
+         //   glow.Play();
             animator.enabled = true;
 
         }
@@ -55,7 +55,7 @@ namespace LostGrace
             StopCoroutine(nameof(ShowGoddessAnimation));
             StopCoroutine(nameof(HideGoddessAnimation));
            
-            glow.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        //    glow.Stop(true, ParticleSystemStopBehavior.StopEmitting);
             LeanTween.moveY(rectT, -70, .5f).setEaseInQuad().setDelay(1.45f);
             yield return TweenUtility.FadeOut(canvasGroup).setDelay(1.5f);
             yield return new WaitForSeconds(0.5f);

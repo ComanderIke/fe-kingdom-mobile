@@ -40,7 +40,7 @@ public class EncounterPlayerUnitController : MonoBehaviour
             //     FindObjectOfType<UICharacterViewController>().Show(Unit);
         }
     }
-
+    private static readonly int Moving = Animator.StringToHash("Moving");
     // Update is called once per frame
     void Update()
     {
@@ -49,9 +49,11 @@ public class EncounterPlayerUnitController : MonoBehaviour
             offset = baseOffset;
         if (follow != null && Vector2.Distance(transform.position, follow.position) > offset)
         {
-            //Debug.Log("Distance: "+Vector2.Distance(transform.position, follow.position)+" "+transform.position+" "+follow.position);
+            Debug.Log("Distance: "+Vector2.Distance(transform.position, follow.position)+" "+transform.position+" "+follow.position);
             transform.position = Vector2.MoveTowards(transform.position, follow.position, speed * Time.deltaTime);
         }
+        
+          
     }
 
     public void SetTarget(Transform target)

@@ -102,7 +102,6 @@ public abstract class EncounterNode
 
     public void SetMoveable(bool b)
     {
-        Debug.Log(gameObject.name+" Set Movable: "+b);
         moveable = b;
         if (moveable)
         {
