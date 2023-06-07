@@ -167,8 +167,15 @@ namespace Game.WorldMapStuff.Model
                 Debug.LogError("Party Size To Big");
                 return;
             }
+            Debug.Log("Before Inner Init");
             InitMember(unit);
+            Debug.Log("Before Inner Add");
             members.Add(unit);
+            if (ActiveUnitIndex <0)
+                ActiveUnitIndex = 0;
+            Debug.Log("Before Inner Event");
+            Debug.Log(members.Count+" "+activeUnitIndex);
+            Debug.Log(ActiveUnit);
             onMemberAdded?.Invoke(unit);
         }
 
@@ -191,7 +198,13 @@ namespace Game.WorldMapStuff.Model
 
         public void RemoveMember(Unit unit)
         {
+            int rmvIndex = members.IndexOf(unit);
+            Debug.Log("Remove Member: "+unit+" "+rmvIndex+" ActiveIndex: "+ActiveUnitIndex);
+            if (rmvIndex <= ActiveUnitIndex&&ActiveUnitIndex>=1)
+                ActiveUnitIndex--;
+            Debug.Log(" ActiveIndexAfterRemoving: "+ActiveUnitIndex);
             unit.Party = null;
+           
             members.Remove(unit);
             onMemberRemoved?.Invoke(unit);
         }

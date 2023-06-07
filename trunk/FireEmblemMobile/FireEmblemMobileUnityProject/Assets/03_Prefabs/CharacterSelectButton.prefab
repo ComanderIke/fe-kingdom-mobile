@@ -198,48 +198,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unit:
-    unitBP: {fileID: 0}
     bluePrintID: 
-    equippedWeapon:
-      Name: 
-      Description: 
-      cost: 0
-      rarity: 0
-      maxStack: 0
-      Sprite: {fileID: 0}
-      EquipmentSlotType: 0
-      AttackRanges: 
-      WeaponAttributes: []
-      weaponLevel: 0
-      maxLevel: 0
-      WeaponType: {fileID: 0}
-      DamageType: 0
-    EquippedRelic1:
-      id: 0
-    EquippedRelic2:
-      id: 0
     name: 
-    stats:
-      AttackRanges: 
-      BaseAttributes:
-        str: 0
-        intel: 0
-        dex: 0
-        agi: 0
-        con: 0
-        lck: 0
-        def: 0
-        faith: 0
-      BonusStats:
-        <Hit>k__BackingField: 0
-        <Avoid>k__BackingField: 0
-        <CritAvoid>k__BackingField: 0
-        <Crit>k__BackingField: 0
-        <AttackSpeed>k__BackingField: 0
-        <Armor>k__BackingField: 0
-        <MagicResistance>k__BackingField: 0
-        <Attack>k__BackingField: 0
-      Mov: 0
     growths:
       str: 0
       intel: 0
@@ -250,20 +210,7 @@ MonoBehaviour:
       def: 0
       faith: 0
     moveType: {fileID: 0}
-    SkillManager:
-      startSkills: []
-      skillPoints: 0
-      SkillBuildTrees: []
     rpgClass: 0
-    visuals:
-      CharacterSpriteSet: {fileID: 0}
-      UnitEffectVisual: {fileID: 0}
-      Prefabs:
-        MapAnimatedSprite: {fileID: 0}
-        EncounterAnimatedSprite: {fileID: 0}
-        UIAnimatorController: {fileID: 0}
-      UnitCharacterCircleUI: {fileID: 0}
-      unitRenderer: {fileID: 0}
     experienceManager:
       level: 1
       exp: 0
@@ -275,10 +222,25 @@ MonoBehaviour:
   checkMark: {fileID: 3209756177197535854}
   frame: {fileID: 7257165310622530522}
   button: {fileID: 7257165309195903626}
-  references:
-    version: 1
-    00000000:
-      type: {class: , ns: , asm: }
+--- !u!95 &1366514770652450376
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7257165309195903625}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5a6c12c650545ba40a48d59d3ac041d5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &4453022722924174281
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -430,6 +392,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6447731850068343107, guid: 1a430f38b2d9eec4b869bc9a04b7b03b,
+        type: 3}
+      propertyPath: m_Transition
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6447731850068343107, guid: 1a430f38b2d9eec4b869bc9a04b7b03b,
         type: 3}

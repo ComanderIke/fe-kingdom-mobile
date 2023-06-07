@@ -8,6 +8,7 @@ using Game.WorldMapStuff.Model;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 namespace LostGrace
 {
@@ -32,28 +33,52 @@ namespace LostGrace
                 var last = go.GetComponent<SelectableCharacterUI>();
                 last.SetCharacter(unit);
                 last.onClicked += UnitClicked;
-                if(cnt==0)
+                if (cnt == 0)
+                {
+                    Debug.Log("Select Last: "+last.unit);
                     Select(last);
+                    characterView.Show(last.unit);
+                }
+
                 cnt++;
                 selectableCharacterUis.Add(last);
 
             }
 
             UpdatePartySizeText();
-
+           
         }
 
+        [SerializeField] private float scrollNormalizedOffset;
+        [SerializeField] private ScrollRect scrollRect;
+        
+        public void LeftClicked()
+        {
+           // characterContainer.Translate(-arrowXDistance,0,0);
+           scrollRect.horizontalNormalizedPosition = Mathf.Clamp01(scrollRect.horizontalNormalizedPosition-scrollNormalizedOffset);
+        }
+
+       
+
+        public void RightClicked()
+        {
+            scrollRect.horizontalNormalizedPosition = Mathf.Clamp01(scrollRect.horizontalNormalizedPosition+scrollNormalizedOffset);
+        }
         void UpdatePartySizeText()
         {
             selectedUnitCount.text = "Party Size "+ Player.Instance.Party.members.Count+"/"+Player.Instance.startPartyMemberCount;
         }
         public void Select(SelectableCharacterUI unit)
         {
+            Debug.Log(Player.Instance.Party.IsFull()+" "+Player.Instance.Party.members.Count+" "+Player.Instance.startPartyMemberCount);
             if (Player.Instance.Party.IsFull()||Player.Instance.Party.members.Count>= Player.Instance.startPartyMemberCount)
                 return;
+            Debug.Log("Before Add");
             Player.Instance.Party.AddMember(unit.unit);
+            Debug.Log("Before Select");
             unit.Select();
-            characterView.Show(unit.unit);
+            Debug.Log("Actually Selected: "+unit.unit);
+            
             UpdatePartySizeText();
             if (Player.Instance.Party.IsFull()||Player.Instance.Party.members.Count>= Player.Instance.startPartyMemberCount)
             {
@@ -76,6 +101,7 @@ namespace LostGrace
             unit.Deselect();
             UpdatePartySizeText();
             SetAllInteractable();
+            Debug.Log("Actually Deselect: "+unit.unit);
 
         }
 
@@ -89,12 +115,15 @@ namespace LostGrace
 
         public void UnitClicked(SelectableCharacterUI unit)
         {
+            characterView.Show(unit.unit);
             if (Player.Instance.Party.members.Contains(unit.unit))
             {
+                Debug.Log("Deselect: "+unit.unit);
                 Deselect(unit);
             }
             else
             {
+                Debug.Log("Select: "+unit.unit);
                 Select(unit);
             }
         }
