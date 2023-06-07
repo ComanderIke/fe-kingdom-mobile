@@ -65,6 +65,16 @@ namespace Game.GameActors.Players
             }
           
         }
+        [field:SerializeField]
+        public List<string> UnlockedCharacterIds
+        {
+            get
+            {
+                return unlockedCharacterIds ??= new List<string>(); 
+                
+            }
+          
+        }
         private List<string> completedQuests;
         [HideInInspector]
         public List <string> CompletedQuests
@@ -80,6 +90,8 @@ namespace Game.GameActors.Players
         public string Name;
 
         public int startPartyMemberCount = 2;
+        [SerializeField]
+        private List<string> unlockedCharacterIds;
         [field: SerializeField] public MetaUpgradeManager MetaUpgradeManager { get; set; }
         public string CurrentEventDialogID { get; set; }
         public BattleOutcome LastBattleOutcome { get; set; }
@@ -123,7 +135,7 @@ namespace Game.GameActors.Players
 
         public void LoadData(SaveData data)
         {
-          //  Debug.Log("LoadPlayerData" + Party);
+            Debug.Log("LoadPlayerData");
             //Debug.Log("Data" + data.playerData);
             //Debug.Log("Data" + data.playerData.partyData);
             Name = data.playerData.Name;
@@ -135,6 +147,13 @@ namespace Game.GameActors.Players
             foreach (var quest in data.playerData.acceptedQuests)
             {
                 Quests.Add(quest.Key, quest.Value);
+            }
+
+            unlockedCharacterIds = new List<string>();
+            Debug.Log("unlockedCharacterCount: "+data.playerData.unlockedCharacterIds.Count);
+            foreach (var id in data.playerData.unlockedCharacterIds)
+            {
+                unlockedCharacterIds.Add(id);
             }
 
             LastBattleOutcome = data.playerData.lastBattleOutcome;

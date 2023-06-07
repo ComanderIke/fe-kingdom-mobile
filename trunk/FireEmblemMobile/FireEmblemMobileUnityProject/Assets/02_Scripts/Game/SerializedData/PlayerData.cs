@@ -21,17 +21,25 @@ namespace Game.GameActors.Players
         [SerializeField]
         public SerializableDictionary<string, bool> acceptedQuests;
 
+        [SerializeField] public List<string> unlockedCharacterIds;
         public string currentEventDialogID;
 
         public BattleOutcome lastBattleOutcome;
         //currentEventNodeUserData
         public PlayerData (Player player)
         {
+            Debug.Log("Create PlayerData");
             Name = player.Name;
             partyData = new PartyData(player.Party);
             metaUpgradeManagerData = new MetaUpgradeManagerSaveData(player.MetaUpgradeManager);
             acceptedQuests = new SerializableDictionary<string, bool>();
             currentEventDialogID = player.CurrentEventDialogID;
+            unlockedCharacterIds = new List<string>(); 
+            Debug.Log("unlockedCharacterCount: "+player.UnlockedCharacterIds.Count);
+            foreach (var id in player.UnlockedCharacterIds)
+            {
+                unlockedCharacterIds.Add(id);
+            }
             foreach (var quest in player.Quests)
             {
                 acceptedQuests.Add(quest.Key, quest.Value);

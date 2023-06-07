@@ -1,5 +1,6 @@
 ﻿using System;
 using Game.GameActors.Units;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -16,11 +17,21 @@ namespace LostGrace
         [SerializeField] private Image checkMark;
         [SerializeField] private Image frame;
         [SerializeField] private Button button;
-
+        [SerializeField] private Color notUnlockedColor;
+        [SerializeField] private GameObject notUnlockedGo;
+        [SerializeField] private Image unitImage;
+        [SerializeField] private TextMeshProUGUI text;
         private bool selected = false;
-        public void SetCharacter(Unit unit)
+        public void SetCharacter(Unit unit, bool locked)
         {
             this.unit = unit;
+            if (locked)
+            {
+                notUnlockedGo.SetActive(true);
+                unitImage.color = notUnlockedColor;
+                SetInteractable(false);
+            }
+            text.gameObject.SetActive(false);
             unitUIIdleAnimation.Show(unit);
         }
 

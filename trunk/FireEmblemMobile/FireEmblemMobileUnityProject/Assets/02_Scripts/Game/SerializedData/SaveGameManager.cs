@@ -67,6 +67,7 @@ namespace LostGrace
             }
         }
 
+      
         public static void Load()
         {
             if(currentSaveData!=null)
@@ -178,6 +179,44 @@ namespace LostGrace
 
             return false;
         }
+
+        private static SaveData tmpData;
+        public static string LoadMetaDataOnly(int slot)
+        {
+            string path = Path.Combine(Application.persistentDataPath+"/saves", SaveFileName+slot+".fe");
+            try
+            {
+
+
+                if (File.Exists(path))
+                {
+                    var json = "";
+                    if (LoadFromFile(path, out json))
+                    {
+                        Debug.Log("Loading Successfull!");
+                    }
+
+                    tmpData = new SaveData(0, "tmp");
+                    // Debug.Log("JsonFile: "+json);
+                    JsonUtility.FromJsonOverwrite(json, tmpData);
+                    return tmpData.fileLabel;
+                    tmpData = null;
+                }
+                else
+                {
+                    Debug.LogError("Save File not found in " + path);
+
+                }
+
+
+            }
+            catch (Exception)
+            {
+                Debug.LogWarning("Failed to load data file. Attempting to roll back");
+            }
+
+            return "LOAD ERROR";
+        }
         public static void Load(int slot, bool allowRollback=true)
         {
             // Debug.LogError("LOADING IS DISABLED");
@@ -279,9 +318,9 @@ namespace LostGrace
 
         public static string GetFileSlotName(int slot)
         {
-            Load(slot);
-            Debug.Log("FileSlotName: "+currentSaveData.fileLabel);
-            return currentSaveData.fileLabel;
+            var metaData = LoadMetaDataOnly(slot);
+          //  Debug.Log("FileSlotName: "+currentSaveData.fileLabel);
+            return metaData;
         }
 
         public static bool HasEncounterSaveData()

@@ -31,7 +31,9 @@ namespace LostGrace
             {
                 var go = Instantiate(selectableCharacterPrefab, characterContainer);
                 var last = go.GetComponent<SelectableCharacterUI>();
-                last.SetCharacter(unit);
+                Debug.Log(unit.bluePrintID);
+                Debug.Log(Player.Instance.UnlockedCharacterIds.Count);
+                last.SetCharacter(unit,!Player.Instance.UnlockedCharacterIds.Contains(unit.bluePrintID));
                 last.onClicked += UnitClicked;
                 if (cnt == 0)
                 {
@@ -84,6 +86,8 @@ namespace LostGrace
             {
                 foreach (var selectableCharacter in selectableCharacterUis)
                 {
+                    if(!Player.Instance.UnlockedCharacterIds.Contains(selectableCharacter.unit.bluePrintID))
+                        continue;
                     if(!selectableCharacter.IsSelected())
                         selectableCharacter.SetInteractable(false);
                     else
@@ -109,6 +113,8 @@ namespace LostGrace
         {
             foreach (var selectableCharacter in selectableCharacterUis)
             {
+                if(!Player.Instance.UnlockedCharacterIds.Contains(selectableCharacter.unit.bluePrintID))
+                    continue;
                 selectableCharacter.SetInteractable(true);
             }
         }
