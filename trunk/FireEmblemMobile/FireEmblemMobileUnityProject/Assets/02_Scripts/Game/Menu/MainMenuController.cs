@@ -63,6 +63,7 @@ namespace Game.GUI
 
         public void StartClicked()
         {
+            HideOtherMenus(selectFileUI);
             selectFileUI.Show();
             playButtonAnimator.SetBool(Selected, true);
            // StartCoroutine(TransitionAnimation());
@@ -72,6 +73,7 @@ namespace Game.GUI
         
         public void StartHub()
         {
+            HideOtherMenus(hubMenu);
             StartCoroutine(TransitionAnimation());
         }
 
@@ -91,8 +93,18 @@ namespace Game.GUI
 
         }
 
+        void HideOtherMenus(UIMenu menu)
+        {
+            if(optionsMenu!=menu)
+                optionsMenu.Hide();
+            //if(hubMenu!=menu)
+            //    hubMenu.Hide();
+            if(selectFileUI!=menu)
+                selectFileUI.Hide();
+        }
         public void OptionsClicked()
         {
+            HideOtherMenus(optionsMenu);
             optionsMenu.Show();
             optionsButtonAnimator.SetBool(Selected, true);
         }
