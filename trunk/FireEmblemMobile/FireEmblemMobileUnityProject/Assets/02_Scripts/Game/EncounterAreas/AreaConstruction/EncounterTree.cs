@@ -157,7 +157,7 @@ public class EncounterTree
     {
         
    
-        for (int i = 1; i < encounterTreeData.columns.Count-1; i++)
+        for (int i = 1; i < encounterTreeData.columns.Count; i++)
         {
             Column column = new Column();
             Column previous = columns.Last();
