@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.AI;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameInput;
@@ -23,10 +24,17 @@ namespace Game.Mechanics.Commands
         {
             
             GridGameManager.Instance.GameStateManager.BattleState.Start(attacker, target);
-            
-            
+            BattleSystem.OnBattleFinished -= BattleFinished;
+            BattleSystem.OnBattleFinished += BattleFinished;
+
         }
 
+        void BattleFinished(AttackResult result)
+        {
+            BattleSystem.OnBattleFinished -= BattleFinished;
+            Debug.Log("BattleFinished through Event");
+            IsFinished = true;
+        }
         public override void Undo()
         {
             Debug.LogWarning("Undo Attack should not be undoable!");
@@ -36,6 +44,7 @@ namespace Game.Mechanics.Commands
         {
             if ( GridGameManager.Instance.GameStateManager.BattleState.IsFinished)
             {
+                Debug.Log("BattleFinished");
                 IsFinished = true;
             }
         }

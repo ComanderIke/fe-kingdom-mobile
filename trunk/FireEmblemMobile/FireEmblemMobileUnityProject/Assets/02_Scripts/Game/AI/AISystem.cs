@@ -67,7 +67,7 @@ namespace Game.AI
                 
                 if (StopAIActions)
                 {
-                    
+                    Debug.Log("Stop AIActions");
                     return;
                     
                 }
@@ -81,7 +81,7 @@ namespace Game.AI
                 var action = decisionMaker.ChooseBestAction(player.GetActiveUnits());
                 decisionMaker.RemoveUnitFromListPool(action.Performer);
                 ExecuteAction(action);
-                
+                Debug.Log("Execute Action: "+ action);
             }
 
         }
@@ -105,9 +105,17 @@ namespace Game.AI
 
             unitActionSystem.AddCommand(new WaitCommand(action.Performer));
             //will also execute all previous commands like Movement
+            UnitActionSystem.OnAllCommandsFinished += UnitActionsFinished;
             unitActionSystem.ExecuteActions();
+            
+            
         }
 
+        void UnitActionsFinished()
+        {
+            UnitActionSystem.OnAllCommandsFinished -= UnitActionsFinished;
+            GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.EnemyPhaseState);
+        }
         private bool IsStartOfTurn()
         {
             return player.Units.All(u => !u.TurnStateManager.IsWaiting);

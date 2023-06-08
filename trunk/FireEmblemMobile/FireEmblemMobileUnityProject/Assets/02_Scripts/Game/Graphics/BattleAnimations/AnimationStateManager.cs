@@ -140,6 +140,7 @@ public class AnimationStateManager
         characterAnimations.OnAttackFinished -= AttackFinished;
         MonoUtility.StopCoroutines(this);
         characterAnimations.Cleanup();
+        CombatTextRenderer.Cleanup();
     }
 
    

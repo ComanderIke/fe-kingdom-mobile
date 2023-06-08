@@ -53,7 +53,7 @@ namespace Game.AI
 
                 if (!aiSystem.IsFinished())
                 {
-                   // Debug.Log("THINK");
+                    Debug.Log("THINK");
                     aiSystem.Think();
                 }
                 else

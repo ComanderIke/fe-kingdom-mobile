@@ -60,4 +60,10 @@ public class CombatTextRenderer
             new Vector2(floatDirection*Random.Range(DamageNumberHorizontalMinValue,DamageNumberHorizontalMaxValue), Random.Range(DamageNumberVerticalMinValue,DamageNumberVerticalMaxValue))
             * BattleTextMovementScale),0.05f);
     }
+
+    public void Cleanup()
+    {
+        CharacterCombatAnimations.OnDodge -= CreateMiss;
+        CharacterCombatAnimations.OnDamaged -= CreateDamageNumbers;
+    }
 }

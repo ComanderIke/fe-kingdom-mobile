@@ -73,7 +73,8 @@ namespace Game.States
                 if (defender is Unit unitDefender)
                 {
 
-                    yield return ExpForAttacker(unitDefender);
+                    if(attacker.IsAlive()&& attacker.IsPlayerControlled())
+                        yield return ExpForAttacker(unitDefender);
                     
                     if (defender.IsAlive() && unitDefender.IsPlayerControlled())
                     {

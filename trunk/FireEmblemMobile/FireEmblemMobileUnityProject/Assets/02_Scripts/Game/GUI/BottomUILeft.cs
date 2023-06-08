@@ -51,6 +51,12 @@ namespace LostGrace
             weaponTypeIcon.sprite = unit.equippedWeapon.WeaponType.Icon;
             move.text = "Mov " + unit.MovementRange;
             moveIcon.sprite = unit.MoveType.icon;
+            if(moveIcon.sprite==null)
+                moveIcon.gameObject.SetActive(false);
+            else
+            {
+                moveIcon.gameObject.SetActive(true);
+            }
             weaponSlot.Show(unit.equippedWeapon);
             RelicSlot1.Show(unit.EquippedRelic1);
             RelicSlot2.Show(unit.EquippedRelic2);

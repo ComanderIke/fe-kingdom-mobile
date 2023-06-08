@@ -69,11 +69,12 @@ namespace Game.Mechanics
 
         private void EndBattle(AttackResult result)
         {
+            Debug.Log("Battle Ended");
             BattleSystem.OnBattleFinished -= EndBattle;
             if(GridGameManager.Instance.FactionManager.ActiveFaction.IsPlayerControlled)
                 GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.PlayerPhaseState);
-            else
-                GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.EnemyPhaseState);
+            // else
+            //     GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.EnemyPhaseState);
             
 
         }
