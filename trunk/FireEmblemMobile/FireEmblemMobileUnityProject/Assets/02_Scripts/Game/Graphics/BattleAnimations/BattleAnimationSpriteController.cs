@@ -106,7 +106,7 @@ public class BattleAnimationSpriteController : MonoBehaviour
     
     public void Damaged(float playSpeed,DamagedState damagedState)
     {
-        Debug.Log("TODO HIT FEEDBACK CONTROLLER");
+       
         hitFeedbackController.SetState(damagedState);
         hitFeedbackController.PlayHitFeedback();
         spriteRenderer.sortingOrder = sortOrderNormal;

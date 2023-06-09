@@ -87,14 +87,12 @@ namespace Game.States
                     defender.Die();
                 }
             }
-            Debug.Log("WaitTimeStartsNow");
             yield return new WaitForSeconds(WaitTimeWhenFinished);
             Finished();
             
         }
         void Finished()
         {
-            Debug.Log("AfterBattletask ENDED");
             OnFinished?.Invoke();
             
         }

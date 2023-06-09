@@ -54,10 +54,8 @@ namespace Game.GameInput
             Debug.Log("CharacterGotSelected"+actor);
             if (!actor.Faction.IsPlayerControlled)
                 return;
-            Debug.Log("no return"+actor);
             if (actor is Unit unit)
             {
-                Debug.Log("Actor is unit"+actor);
                 CharacterSelectedState(unit);
                
             }

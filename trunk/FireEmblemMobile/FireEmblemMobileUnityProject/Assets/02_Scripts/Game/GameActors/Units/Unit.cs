@@ -215,7 +215,7 @@ namespace Game.GameActors.Units
                 hp = value > MaxHp ? MaxHp : value;
               
                 if (hp <= 0) hp = 0;
-                
+                Debug.Log("HP VALUE CHANGED ON UNIT: "+name);
                 HpValueChanged?.Invoke();
             }
         }

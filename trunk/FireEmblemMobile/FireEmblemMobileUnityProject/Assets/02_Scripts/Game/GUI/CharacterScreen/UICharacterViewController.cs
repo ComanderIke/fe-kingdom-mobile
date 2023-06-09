@@ -74,6 +74,8 @@ public class UICharacterViewController : MonoBehaviour
     {
       
         this.unit = unit;
+        Debug.Log("CharFace: "+CharacterFace);
+        Debug.Log("ShowUnitCharView: "+unit);
         CharacterFace.Show(unit);
         charName.SetText(unit.name);//+", "+unit.jobClass);
       

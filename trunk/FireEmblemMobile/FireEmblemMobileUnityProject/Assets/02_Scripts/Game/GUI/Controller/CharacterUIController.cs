@@ -60,6 +60,7 @@ namespace Game.GUI
         public void ShowActive(Unit unit)
         {
             this.unit = unit;
+            Debug.Log("Show UnitCharacterUI ACTIVE: "+unit.name);
             unit.HpValueChanged -= UpdateValues;
             unit.HpValueChanged += UpdateValues;
             unit.ExperienceManager.ExpGained -= UpdateExp;
@@ -79,6 +80,7 @@ namespace Game.GUI
         public override void Show(Unit unit)
         {
             this.unit = unit;
+            Debug.Log("Show UnitCharacterUI: "+unit.name);
             unit.HpValueChanged -= UpdateValues;
             unit.HpValueChanged += UpdateValues;
             unit.ExperienceManager.ExpGained -= UpdateExp;
@@ -142,7 +144,7 @@ namespace Game.GUI
             if (unit == null)
                 return;
             characterName.SetText(unit.name);
-            
+            Debug.Log("Update Unit Values: "+unit.name);
             expBar.UpdateInstant(unit.ExperienceManager.Exp);
             hpBar.SetValue(unit.Hp, unit.MaxHp, true);
            

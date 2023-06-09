@@ -112,7 +112,7 @@ namespace Game.GUI
 
         public void UpdateInstant(int expVal)
         {
-           // Debug.Log("UpdateInstant: "+expVal);
+            Debug.Log("UpdateInstant: "+expVal);
             if (animate)
             {
                 return;
@@ -136,9 +136,11 @@ namespace Game.GUI
                 fill.fillAmount = 0;
             tmpFill.fillAmount = fill.fillAmount;
             countingText?.SetText(currentExp.ToString());
+            addedExp = 0;
+            tmpAddedExp = 0;
         }
 
-        public void Show(int CurrentExp)
+        public void Show(int currentExp)
         {
             if(showFeedbacks!=null)
                 showFeedbacks.PlayFeedbacks();

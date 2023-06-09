@@ -26,7 +26,6 @@ public class AnimatedCombatCharacter
         this.spriteSwapper = gameObject.GetComponentInChildren<AnimationSpriteSwapper>();
         if (spriteSwapper != null)
         {
-            Debug.Log("INIT SPRITE SWAPPER");
             spriteSwapper.Init(actor.Visuals.CharacterSpriteSet);
         }
 
@@ -46,7 +45,7 @@ public class AnimatedCombatCharacter
 
     public void Idle(float playSpeed)
     {
-        Debug.Log("IDLE" +GameObject.name);
+        
         spriteController.Idle(playSpeed);
     }
 
@@ -64,7 +63,6 @@ public class AnimatedCombatCharacter
 
     public void WalkIn(float playSpeed)
     {
-        Debug.Log("WALKIN" +GameObject.name);
         spriteController.WalkIn(playSpeed);
     }
 

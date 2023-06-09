@@ -91,9 +91,10 @@ namespace Game.Mechanics
 
         void Expgained(Unit unit, int exp)
         {
-            Debug.Log(ExpBarController);
+      
             AnimationQueue.Add(() =>
             {
+                Debug.Log("Show from AnimationQueue"+unit.name);
                 ExpBarController.Show(unit.ExperienceManager.Exp);
                 ExpBarController.UpdateWithAnimatedTextOnly(exp);
                 ExpBarController.onFinished -= FinishedExpAnimation;

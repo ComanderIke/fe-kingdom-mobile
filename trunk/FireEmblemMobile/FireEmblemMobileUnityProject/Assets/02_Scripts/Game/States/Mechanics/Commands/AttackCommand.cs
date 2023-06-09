@@ -32,7 +32,6 @@ namespace Game.Mechanics.Commands
         void BattleFinished(AttackResult result)
         {
             BattleSystem.OnBattleFinished -= BattleFinished;
-            Debug.Log("BattleFinished through Event");
             IsFinished = true;
         }
         public override void Undo()

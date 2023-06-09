@@ -58,6 +58,7 @@ namespace Game.GameActors.Units
                 return false;
             if (exp > MAX_EXP)
                 exp = MAX_EXP;
+            Debug.Log("SOME UNIT EXP GAINED!");
             ExpGained?.Invoke(Exp, exp);
            return DoExp(exp);
             
