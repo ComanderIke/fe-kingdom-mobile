@@ -95,6 +95,7 @@ namespace Game.Mechanics
             AnimationQueue.Add(() =>
             {
                 Debug.Log("Show from AnimationQueue"+unit.name);
+                unit.visuals.UnitCharacterCircleUI.GetExpRenderer().UpdateWithAnimatedTextOnly(exp);
                 ExpBarController.Show(unit.ExperienceManager.Exp);
                 ExpBarController.UpdateWithAnimatedTextOnly(exp);
                 ExpBarController.onFinished -= FinishedExpAnimation;
