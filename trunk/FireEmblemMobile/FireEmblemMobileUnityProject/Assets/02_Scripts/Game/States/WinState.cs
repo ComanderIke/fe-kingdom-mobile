@@ -33,7 +33,6 @@ namespace Game.States
         }
         void ShowBattleResult()
         {
-            successRenderer.Hide();
             battleResultRenderer.Show(result);
             battleResultRenderer.OnFinished -= Finish;
             battleResultRenderer.OnFinished += Finish;
@@ -65,7 +64,8 @@ namespace Game.States
                 defeatedEnemies, eliteEnemies);
             var winState = new WinState(battleResult)
             {
-                successRenderer = GameObject.FindObjectsOfType<MonoBehaviour>().OfType<IBattleSuccessRenderer>().First()
+                successRenderer = GameObject.FindObjectsOfType<MonoBehaviour>().OfType<IBattleSuccessRenderer>().First(),
+                battleResultRenderer=GameObject.FindObjectsOfType<BattleResultRenderer>().First()
             };
             return winState;
         }

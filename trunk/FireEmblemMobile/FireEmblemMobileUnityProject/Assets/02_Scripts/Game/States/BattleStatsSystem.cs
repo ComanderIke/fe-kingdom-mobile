@@ -19,7 +19,8 @@ namespace Game.Mechanics
         public void Init()
         {
             unitBattleStats = new Dictionary<Unit, UnitBattleStats>();
-       
+            defeatedEnemies = new List<Unit>();
+            defeatedEliteEnemies = new List<Unit>();
         }
 
         void UnitDealingDamage(Unit unit, int damage)
@@ -76,7 +77,7 @@ namespace Game.Mechanics
 
         public Unit GetMvp()
         {
-            throw new System.NotImplementedException();
+            return GridGameManager.Instance.FactionManager.GetPlayerControlledFaction().Units[0];
         }
     }
 }

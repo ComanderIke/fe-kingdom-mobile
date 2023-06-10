@@ -74,6 +74,7 @@ namespace Game.Manager
              new TurnSystem(),
                 FindObjectOfType<UiSystem>(),
                 new BattleSystem(),
+                new BattleStatsSystem(),
                 new MoveSystem(),
                 new UnitProgressSystem(FactionManager),
                 new PopUpTextSystem(),

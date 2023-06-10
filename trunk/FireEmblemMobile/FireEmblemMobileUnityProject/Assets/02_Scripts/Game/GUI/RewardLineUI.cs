@@ -13,10 +13,10 @@ namespace LostGrace
         [SerializeField] private TextMeshProUGUI rewardCount;
         [SerializeField] private Animator uiIdleAnimation;
 
-        public void SetValues(string label, int goldAmount, int expAmount, int rewardCount,
+        public void SetValues(string labelText, int goldAmount, int expAmount, int rewardCount,
             AnimatorOverrideController overrideController)
         {
-            this.label.text = label;
+            this.label.text = labelText;
             
             if (goldAmount == 0)
             {

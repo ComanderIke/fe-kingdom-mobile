@@ -112,7 +112,7 @@ namespace Game.GUI
 
         public void UpdateInstant(int expVal)
         {
-            Debug.Log("UpdateInstant: "+expVal);
+          //  Debug.Log("UpdateInstant: "+expVal);
             if (animate)
             {
                 return;
