@@ -2,6 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Game.AI;
+using Game.GameActors.Players;
+using Game.WorldMapStuff.Controller;
+using Game.WorldMapStuff.Model;
 using TMPro;
 using UnityEngine;
 
@@ -63,10 +66,14 @@ namespace LostGrace
 
         }
 
+      
+        
         public void Hide()
         {
+            Debug.Log("HIDE RESULT PANNEL");
             TweenUtility.FadeOut(canvasGroup).setOnComplete(() =>
             {
+                Debug.Log("FADEOUT FINISHED");
                 canvas.enabled = false;
                 OnFinished?.Invoke();
             });

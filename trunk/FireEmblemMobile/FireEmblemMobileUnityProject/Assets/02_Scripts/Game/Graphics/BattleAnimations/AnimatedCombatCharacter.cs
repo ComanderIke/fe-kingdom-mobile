@@ -68,7 +68,7 @@ public class AnimatedCombatCharacter
 
     public void Hide()
     {
-    
+    Debug.Log("AnimatedCombatCharacter hide!");
         GameObject.SetActive(false);
     }
 

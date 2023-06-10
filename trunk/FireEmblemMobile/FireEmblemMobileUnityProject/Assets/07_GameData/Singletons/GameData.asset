@@ -28,8 +28,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: ca134ece578a7684db4f492a3756fdd2, type: 2}
     - {fileID: 11400000, guid: d13592b1fa0af024a841b121149b8014, type: 2}
     - {fileID: 11400000, guid: bff40a3de87900a4496abf2b9dfca7a2, type: 2}
-  CharacterStateData:
-    CantAttack: {fileID: 0}
   allRelics:
   - {fileID: 11400000, guid: 647852495d9c59d4ea6316a815ed33ec, type: 2}
   - {fileID: 11400000, guid: ce9cc6fa493c35e48853cefc641dbd25, type: 2}
@@ -62,7 +60,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8e3e843ce5618b9429f4a4f0e60b142c, type: 2}
   - {fileID: 11400000, guid: 14ec2b8d55058c24d8818cdbb2e963d9, type: 2}
   - {fileID: 11400000, guid: 6579f023e03a59d429ac56b3c81b46e2, type: 2}
-  - {fileID: 11400000, guid: 122bb3087c2603442808446010728a78, type: 2}
   - {fileID: 11400000, guid: 83e1761a127b1a54ca3c98ca2850f24a, type: 2}
   - {fileID: 11400000, guid: 7f44d82801c2b3147ab601f150b30e01, type: 2}
   - {fileID: 11400000, guid: 136dc8b2823646443a535054778970a5, type: 2}
@@ -72,6 +69,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8ad056d1b5dc32e4c81db3de45a027ca, type: 2}
   - {fileID: 11400000, guid: c585b61dded3c7c46b63fe7aaa651ab0, type: 2}
   - {fileID: 11400000, guid: ebdaf6870399c7a42bee1f871e481fe0, type: 2}
+  - {fileID: 11400000, guid: 122bb3087c2603442808446010728a78, type: 2}
   allSkills:
   - {fileID: 11400000, guid: 732b455fb44854740bedbcd2f441540a, type: 2}
   - {fileID: 11400000, guid: cdf9527407303cd49a7b884e1b4642a9, type: 2}
@@ -408,18 +406,18 @@ MonoBehaviour:
   allUnits:
   - {fileID: 11400000, guid: ce6c3beddd8fecc4fbca58f4b37111ab, type: 2}
   - {fileID: 11400000, guid: ba98f3391b5efed4dabd6009fa4dca80, type: 2}
-  - {fileID: 11400000, guid: 76316d688859b914fb9f519986a20edb, type: 2}
+  - {fileID: 11400000, guid: 0b31fe61804f878448e5df34836faecd, type: 2}
   - {fileID: 11400000, guid: aad3c14c3c690c845b9b05e89989a6a5, type: 2}
   - {fileID: 11400000, guid: ab9a02ba382e604409eccb1986b7f70f, type: 2}
   - {fileID: 11400000, guid: 570bb9d6530da2e48aa1e62c8a5d7e10, type: 2}
-  - {fileID: 11400000, guid: 0b31fe61804f878448e5df34836faecd, type: 2}
   - {fileID: 11400000, guid: dfa6e4f77bccfa4428aff047a5c07283, type: 2}
+  - {fileID: 11400000, guid: 76316d688859b914fb9f519986a20edb, type: 2}
   - {fileID: 11400000, guid: 08614606a99f97c448e43f01ab20b263, type: 2}
   - {fileID: 11400000, guid: 2bffb6f8e03530e4ca68d2eb796ee08b, type: 2}
   - {fileID: 11400000, guid: b847a6c80cf906a419eaf993031bc5fa, type: 2}
-  - {fileID: 11400000, guid: c588c2ed97e90fd429ef106f96656dc0, type: 2}
   - {fileID: 11400000, guid: 8d0171e7cfb2f134bbfabaf8e9b89193, type: 2}
   - {fileID: 11400000, guid: ffa48ebee04c2ac4cba630382026f3f0, type: 2}
+  - {fileID: 11400000, guid: c588c2ed97e90fd429ef106f96656dc0, type: 2}
   campaigns:
   - {fileID: 11400000, guid: 83608bfd040d0b84280e266d11b3ace8, type: 2}
   smithingStone: {fileID: 11400000, guid: c68d0b2db0c7c6d4a9992ceb656dc1fe, type: 2}
@@ -440,7 +438,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 39fe277b9abc91d4b83952dbfb004f0b, type: 2}
     - {fileID: 11400000, guid: 9822be62211c78f48b9a0bf18cdb30de, type: 2}
     tier1Events:
-    - {fileID: 11400000, guid: cddbb9480d0c43e4aa6bce4a3aa08091, type: 2}
+    - {fileID: 11400000, guid: 0af8a83f5be981949b4adc7c7abc18bb, type: 2}
     tier2Events:
     - {fileID: 11400000, guid: 0af8a83f5be981949b4adc7c7abc18bb, type: 2}
     specialEvents:
@@ -472,6 +470,12 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 9682d34bb3be61e4abac2f65246bed88, type: 2}
     - {fileID: 11400000, guid: d7b79fdd78ce94144bc5cecae85331c1, type: 2}
     - {fileID: 11400000, guid: b6af162954f71ed4e971bc988183f133, type: 2}
+  statusEffectData:
+    statBuffIcon: {fileID: 0}
+    statDebuffIcon: {fileID: 0}
+    statBuffAndDebuffIcon: {fileID: 0}
+    debuffColor: {r: 0, g: 0, b: 0, a: 0}
+    buffColor: {r: 0, g: 0, b: 0, a: 0}
   allBlessings:
   - {fileID: 11400000, guid: 022291b4d58ef0341b2ef32851964acd, type: 2}
   - {fileID: 11400000, guid: 44e0fbe09ddd3f342b38d30e08619b29, type: 2}

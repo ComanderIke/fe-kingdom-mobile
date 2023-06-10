@@ -50,6 +50,8 @@ namespace Game.States
 
         public void Finish()
         {
+            Debug.Log("FINISH");
+            Player.Instance.LastBattleOutcome = BattleOutcome.Victory;
             GameSceneController.Instance.LoadWorldMapAfterBattle(true);
         }
 

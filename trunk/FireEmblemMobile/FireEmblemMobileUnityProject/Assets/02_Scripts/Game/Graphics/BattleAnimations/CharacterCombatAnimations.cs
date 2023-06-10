@@ -27,6 +27,8 @@ public class CharacterCombatAnimations : MonoBehaviour
             characterLeft.Destroy();
         if (characterRight != null)
             characterRight.Destroy();
+        leftCharacterDied = false;
+        rightCharacterDied = false;
     }
 
     public void SetLeftCharacterAttacker(bool b)
@@ -84,6 +86,7 @@ public class CharacterCombatAnimations : MonoBehaviour
         
         if (rightCharacterDied)
         {
+            Debug.Log("RightCharacterDied");
             characterRight.Hide();
         }
         else
