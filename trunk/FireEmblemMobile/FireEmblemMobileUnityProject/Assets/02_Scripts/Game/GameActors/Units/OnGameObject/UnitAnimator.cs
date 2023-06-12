@@ -28,7 +28,7 @@ namespace Game.GameActors.Units.OnGameObject
         [FormerlySerializedAs("unitBp")] public Unit unit;
         private Vector3 lastPosition;
         private bool moving;
-        private int FrameCountMovingCheck= 10;
+        private int FrameCountMovingCheck= 0;
         private int frameCount = 0;
         void Start()
         {
