@@ -46,6 +46,7 @@ public class BattleUI : MonoBehaviour
 
     private void OnDisable()
     {
+        CharacterCombatAnimations.OnDamageDealt -= UpdateHpBars;
         BattleAnimationRenderer.OnShow -= Show;
     }
 

@@ -41,6 +41,17 @@ namespace Game.Mechanics
             //BattleState.OnExit += DeselectActiveCharacter;
         }
 
+        private void OnDisable()
+        {
+            GameplayCommands.OnSelectSkill -= SelectSkill;
+            GameplayCommands.OnDeselectSkill -= DeselectSkill;
+            GameplayCommands.OnSelectItem -= SelectItem;
+            GameplayCommands.OnDeselectItem -= DeselectItem;
+            GameplayCommands.OnSelectUnit -= SelectUnit;
+            GameplayCommands.OnDeselectUnit -= DeselectActiveCharacter;
+            gridGameManager.GetSystem<TurnSystem>().OnEndTurn -= EndTurnDeselectUnit;
+        }
+
         public void Deactivate()
         {
             GameplayCommands.OnSelectSkill -= SelectSkill;
@@ -120,7 +131,7 @@ namespace Game.Mechanics
             Debug.Log("Select Character!"+c);
             if (SelectedCharacter != null)
             {
-                Debug.Log("DeSelect Character!");
+                Debug.Log("DeSelect Character!" +SelectedCharacter);
                 DeselectActiveCharacter(SelectedCharacter);
             }
             SelectedCharacter = c;

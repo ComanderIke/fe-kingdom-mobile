@@ -50,6 +50,11 @@ namespace Game.Map
           
         }
 
+        private void OnDisable()
+        {
+            Deactivate();
+        }
+
         public void Deactivate()
         {
             UnitSelectionSystem.OnDeselectCharacter -=  InvokeHideMoveRange;

@@ -53,6 +53,7 @@ namespace GameEngine
 
         public void Exit()
         {
+            Debug.Log("Exit current State: "+currentState);
             currentState.Exit();
         }
     }

@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Players;
+﻿using System;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameInput;
 using Game.GameResources;
@@ -53,8 +54,14 @@ namespace Game.GUI
             //     attackPreview.Hide();
         }
 
+        private void OnDisable()
+        {
+           // Deactivate();
+        }
+
         public void Deactivate()
         {
+            Debug.Log("DEACTIVATE UI SYSTEM================================");
             UnitSelectionSystem.OnSelectedCharacter -= SelectedCharacter;
             UnitSelectionSystem.OnSelectedInActiveCharacter -= SelectedCharacter;
             UnitSelectionSystem.OnEnemySelected -= SelectedEnemyCharacter;

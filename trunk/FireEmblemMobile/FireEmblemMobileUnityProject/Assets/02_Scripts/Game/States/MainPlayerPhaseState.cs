@@ -43,6 +43,12 @@ namespace Game.Mechanics
             playerPhaseUI.SubscribeOnBackClicked(Undo);
             playerPhaseUI.SubscribeOnCharacterCircleClicked(OnCharacterCircleClicked);
             SetUpInputForUnits();
+            UnitSelectionSystem.OnSelectedInActiveCharacter -=OnSelectedCharacter;
+            UnitSelectionSystem.OnDeselectCharacter -= OnDeselectedCharacter;
+            UnitSelectionSystem.OnSelectedCharacter -= OnSelectedCharacter;
+            UnitSelectionSystem.OnSkillSelected -= SkillSelected;
+            UnitSelectionSystem.OnItemSelected -= ItemSelected;
+            GameplayCommands.OnViewUnit -= ViewUnit;
             UnitSelectionSystem.OnSelectedInActiveCharacter += OnSelectedCharacter;
             UnitSelectionSystem.OnSelectedCharacter += OnSelectedCharacter;
             UnitSelectionSystem.OnDeselectCharacter +=OnDeselectedCharacter;
@@ -69,7 +75,7 @@ namespace Game.Mechanics
             {
                 unit.visuals.unitRenderer.HideTemporaryVisuals();
             }
-            //   Debug.Log("Exit");
+               Debug.Log("Exit MAIN PLAYER PHASE STATE");
             playerPhaseUI.Hide();
             playerPhaseUI.HideTileInfo();
         }
@@ -130,6 +136,7 @@ namespace Game.Mechanics
             // }
             foreach (var unit in factionManager.Factions[1].Units)
             {
+                Debug.Log(factionManager.Factions[1].Units.Count);
                 unit.visuals.unitRenderer.ShowEffectiveness((Unit)character);
             }
         }

@@ -60,7 +60,7 @@ namespace Game.Manager
             FactionManager.AddFaction(playerFaction);
             FactionManager.AddFaction(enemyFaction);
             AddSystems();
-            
+            Debug.Log(FactionManager.Factions[1].Units.Count);
             GameStateManager = new GridGameStateManager();
         }
 
@@ -184,19 +184,32 @@ namespace Game.Manager
         }
 
         private bool active = true;
-        public void Deactivate()
+
+        private void Deactivate()
         {
+            Debug.Log("DEACTIVATE SYSTEMS: "+Systems.Count);
             foreach (var system in Systems)
             {
                 system.Deactivate();
             }
 
             active = false;
+            
         }
-
-        private void OnDestroy()
+        private void OnDisable()
         {
+            Debug.Log("ON DISABLE GRID GAME MANAGER");
             Deactivate();
+            
+            Debug.Log("Before Disable GameStateManager");
+            GameStateManager.OnDisable();
+           
         }
+        // private void OnDestroy()
+        // {
+        //     GameStateManager.OnDestroy();
+        //     Deactivate();
+        //    
+        // }
     }
 }

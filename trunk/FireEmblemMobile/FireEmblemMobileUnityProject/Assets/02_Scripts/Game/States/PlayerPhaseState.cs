@@ -73,6 +73,7 @@ namespace Game.Mechanics
         public override void Enter()
         {
 
+            Debug.Log("PlayerPhaseEnter");
             stateMachine = new StateMachine<PPStateTrigger>(mainState);
            stateMachine.Init();
 
@@ -115,6 +116,7 @@ namespace Game.Mechanics
        
         public override void Exit()
         {
+            Debug.Log("PlayerphaseExit");
             if (stateMachine.GetCurrentState() != mainState)
                 stateMachine.SwitchState(mainState);
             stateMachine.Exit();

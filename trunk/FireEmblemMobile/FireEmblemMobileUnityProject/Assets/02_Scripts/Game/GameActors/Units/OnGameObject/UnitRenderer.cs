@@ -158,6 +158,9 @@ namespace Game.GameActors.Units.OnGameObject
 
         public void ShowEffectiveness(Unit character)
         {
+            Debug.Log("Show Effectivness: "+unit.name+" ");
+            Debug.Log(unit.GridComponent.GridPosition);
+            Debug.Log(this.GetInstanceID());
             if (character.BattleComponent.IsEffective(unit.MoveType))
             {
                 float eff = character.BattleComponent.GetEffectiveCoefficient(unit.MoveType);
@@ -204,10 +207,18 @@ namespace Game.GameActors.Units.OnGameObject
         public void HideTemporaryVisuals()
         {
             HideAttackDamage();
-            moveTypeAnimator.SetBool(Effective, false);
-            moveTypeAnimator.SetBool(Ineffective, false);
-            weaponTypeAnimator.SetBool(Effective, false);
-            weaponTypeAnimator.SetBool(Ineffective, false);
+            if (moveTypeAnimator != null)
+            {
+                moveTypeAnimator.SetBool(Effective, false);
+                moveTypeAnimator.SetBool(Ineffective, false);
+            }
+
+            if (weaponTypeAnimator != null)
+            {
+
+                weaponTypeAnimator.SetBool(Effective, false);
+                weaponTypeAnimator.SetBool(Ineffective, false);
+            }
         }
     }
 }

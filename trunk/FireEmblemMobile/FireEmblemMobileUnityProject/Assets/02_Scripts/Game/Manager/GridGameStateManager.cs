@@ -72,6 +72,11 @@ namespace Game.Manager
         {
             return stateMachine.GetCurrentState();
         }
+        
+        public void OnDisable()
+        {
+            stateMachine.Exit();
+        }
     }
 
   

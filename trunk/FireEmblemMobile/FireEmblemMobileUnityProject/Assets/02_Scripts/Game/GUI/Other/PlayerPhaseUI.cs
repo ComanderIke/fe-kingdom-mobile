@@ -79,11 +79,20 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
     //     BackButton.SetActive(false);
     // }
 
+    private void OnDestroy()
+    {
+        Debug.Log("PLAYERPHASE UI GETS DESTROYED HERE =======================");
+    }
+
     public void Hide()
     {
         //Debug.Log("Hide");
-        GetComponent<Canvas>().enabled = false;
-        selectionUI.HideUndo();
+        if (gameObject != null)
+        {
+            GetComponent<Canvas>().enabled = false;
+            if(selectionUI.gameObject!=null)
+                selectionUI.HideUndo();
+        }
 
     }
 
