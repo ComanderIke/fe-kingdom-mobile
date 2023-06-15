@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Game.Map;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [ExecuteInEditMode]
 public class PropOnGrid : MonoBehaviour
@@ -23,6 +25,16 @@ public class PropOnGrid : MonoBehaviour
       }
       return false;
    }
+
+   private void OnEnable()
+   {
+      if (terrainData.sprites != null && terrainData.sprites.Count >= 1)
+      {
+         GetComponent<SpriteRenderer>().sprite = terrainData.sprites[Random.Range(0,terrainData.sprites.Count)];
+      }
+         
+   }
+
    void Update()
         {
             transform.localPosition = new Vector3((int) transform.localPosition.x, (int) transform.localPosition.y,

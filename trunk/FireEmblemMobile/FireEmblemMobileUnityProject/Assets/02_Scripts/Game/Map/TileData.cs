@@ -16,6 +16,8 @@ namespace Game.Map
             public int cost;
 
         }
+
+        public List<Sprite> sprites;
         public new string name;
         public bool walkable = true;
         public int defenseBonus;
