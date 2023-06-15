@@ -88,7 +88,7 @@ namespace Game.Mechanics
             attacker = null;
             attackedTarget = null;
 
-            GridGameManager.Instance.GetSystem<AudioSystem>().ChangeMusic(startMusic, "BattleTheme", true);
+            AudioSystem.Instance.ChangeMusic(startMusic, "BattleTheme", true);
             OnExit?.Invoke();
         }
 
@@ -96,8 +96,8 @@ namespace Game.Mechanics
 
         private void SetUpMusic()
         {
-            startMusic = GridGameManager.Instance.GetSystem<AudioSystem>().GetCurrentlyPlayedMusicTracks()[0];
-            GridGameManager.Instance.GetSystem<AudioSystem>().ChangeMusic("BattleTheme", startMusic);
+            startMusic = AudioSystem.Instance.GetCurrentlyPlayedMusicTracks()[0];
+            AudioSystem.Instance.ChangeMusic("BattleTheme", startMusic);
         }
 
         public void Start(IBattleActor battleActor, IAttackableTarget target)

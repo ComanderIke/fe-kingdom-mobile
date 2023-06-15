@@ -7,5 +7,7 @@ namespace Game.Graphics
     {
         void DrawMovementPath(List<Vector2Int> mousePath, int startX, int startY);
         void HideMovementPath();
+
+        void Reset();
     }
 }

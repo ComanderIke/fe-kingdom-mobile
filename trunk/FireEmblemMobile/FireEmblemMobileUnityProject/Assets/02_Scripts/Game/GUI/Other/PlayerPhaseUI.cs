@@ -87,7 +87,7 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
     public void Hide()
     {
         //Debug.Log("Hide");
-        if (gameObject != null)
+        if (this!=null &&gameObject != null)
         {
             GetComponent<Canvas>().enabled = false;
             if(selectionUI.gameObject!=null)

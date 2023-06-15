@@ -33,10 +33,7 @@ namespace Game.Manager
         }
         private void AddSystems()
         {
-            Systems = new List<IEngineSystem>
-            {
-                FindObjectOfType<AudioSystem>()
-            };
+            Systems = new List<IEngineSystem>();
         }
         public T GetSystem<T>()
         {

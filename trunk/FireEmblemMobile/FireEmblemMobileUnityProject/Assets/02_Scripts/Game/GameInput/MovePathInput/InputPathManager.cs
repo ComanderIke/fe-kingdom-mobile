@@ -30,6 +30,7 @@ namespace Game.GameInput
             dragPath = new List<Vector2Int>();
             this.pathProvider = pathProvider;
             this.movePathVisual = movePathVisual;
+            this.movePathVisual.Reset();
         }
 
 

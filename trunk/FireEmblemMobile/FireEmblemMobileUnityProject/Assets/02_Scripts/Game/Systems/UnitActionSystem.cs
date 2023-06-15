@@ -171,8 +171,9 @@ namespace Game.Mechanics
         }
         #endregion
 
-        private void OnDestroy()
+        private void OnDisable()
         {
+            Deactivate();
             OnCommandFinished = null;
             OnAllCommandsFinished = null;
             OnUndo = null;

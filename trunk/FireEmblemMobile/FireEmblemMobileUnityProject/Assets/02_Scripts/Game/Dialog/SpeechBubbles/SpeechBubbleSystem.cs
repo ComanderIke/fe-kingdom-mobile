@@ -39,6 +39,10 @@ namespace Unused.Dialogs
                     timer = 0;
             }
         }
+        private void OnDisable()
+        {
+            //TODO if turned into a system Deactivate all events and stuff
+        }
 
         public void ShowSpeechBubble(ISpeakableObject speakableObject, string text)
         {

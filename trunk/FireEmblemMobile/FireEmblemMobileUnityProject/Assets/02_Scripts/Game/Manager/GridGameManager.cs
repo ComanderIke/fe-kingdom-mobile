@@ -59,29 +59,37 @@ namespace Game.Manager
             enemyFaction.Id = FactionId.ENEMY;
             FactionManager.AddFaction(playerFaction);
             FactionManager.AddFaction(enemyFaction);
-            AddSystems();
+            AddNoMonoBehaviourSystems();
             Debug.Log(FactionManager.Factions[1].Units.Count);
             GameStateManager = new GridGameStateManager();
         }
 
-        private void AddSystems()
+        
+
+        private void AddNoMonoBehaviourSystems()
         {
             Systems = new List<IEngineSystem>
             {
-                FindObjectOfType<GridSystem>(),
-                FindObjectOfType<AudioSystem>(),
-                FindObjectOfType<UnitActionSystem>(),
-             new TurnSystem(),
-                FindObjectOfType<UiSystem>(),
+                new TurnSystem(),
                 new BattleSystem(),
                 new BattleStatsSystem(),
                 new MoveSystem(),
                 new UnitProgressSystem(FactionManager),
                 new PopUpTextSystem(),
                 new SkillSystem(GameBPData.Instance.SkillGenerationConfig,FindObjectsOfType<MonoBehaviour>().OfType<ISkillUIRenderer>().First()),
-                
-                FindObjectOfType<UnitSelectionSystem>()
             };
+
+
+        }
+
+       
+        private void AddMonoBehaviourSystems()
+        {
+        
+            Systems.Add(FindObjectOfType<GridSystem>());
+            Systems.Add(FindObjectOfType<UnitActionSystem>());
+            Systems.Add(FindObjectOfType<UiSystem>());
+            Systems.Add(FindObjectOfType<UnitSelectionSystem>());
             if (tutorial)
             {
                 Systems.Add(FindObjectOfType<TutorialSystem>());
@@ -94,6 +102,7 @@ namespace Game.Manager
 
         private void Initialize()
         {
+            AddMonoBehaviourSystems();
             active = true;
             InjectDependencies();
             SetUpEvents();
@@ -195,6 +204,13 @@ namespace Game.Manager
 
             active = false;
             
+        }
+
+        public void CleanUp()
+        {
+            Debug.Log("Do Stuff before loading new scene");
+            Deactivate();
+            GameStateManager.OnDisable();
         }
         private void OnDisable()
         {

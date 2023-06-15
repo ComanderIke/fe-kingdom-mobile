@@ -8,5 +8,7 @@ namespace Game.Manager
         T GetSystem<T>();
         Coroutine StartChildCoroutine(IEnumerator coroutine);
         void StopChildCoroutine(Coroutine coroutine);
+
+        void CleanUp();
     }
 }

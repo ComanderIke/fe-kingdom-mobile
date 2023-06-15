@@ -46,7 +46,11 @@ namespace Game.Manager
                 return;
             stateMachine.Update();
         }
-
+        private void OnDisable()
+        {
+            Deactivate();
+            //TODO if turned into a system Deactivate all events and stuff
+        }
         public void Deactivate()
         {
             tutorialEnabled = false;

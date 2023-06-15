@@ -23,10 +23,13 @@ namespace Audio
         {
             if (Instance == null)
             {
+                Debug.Log("AUDIO SYSTEM AWAKE INSTANCE");
                 Instance = this;
+                Init();
             }
             else
             {
+                Debug.Log("AUDIO SYSTEM AWAKE DESTORY");
                 Destroy(gameObject);
                 return;
             }
@@ -63,7 +66,10 @@ namespace Audio
             currentlyPlayedMusic = new List<MusicData>();
             PlayMusic("PlayerTheme", 0, 1);
         }
-
+        private void OnDisable()
+        {
+            Deactivate();
+        }
         public void Deactivate()
         {
             

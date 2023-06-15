@@ -588,4 +588,10 @@ Debug.Log("Show Inactive Nodes of: "+currentNode);
     {
         nodeClickControllers.Add(encounterNodeClickController);
     }
+
+    public void CleanUp()
+    {
+        Debug.Log("TODO here and in gridgamemanager cleanup happens multiple times from ondestroy/ondisable and cleanup");
+        Deactivate();
+    }
 }

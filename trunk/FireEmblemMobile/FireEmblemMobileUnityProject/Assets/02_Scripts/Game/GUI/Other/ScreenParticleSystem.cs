@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Utility;
 
 namespace Game.GUI
@@ -11,6 +12,12 @@ namespace Game.GUI
         [SerializeField] private Transform parent = default;
 
         private RectTransform screenParticles;
+
+        private void OnDisable()
+        {
+            //TODO if turned into a system Deactivate all events and stuff
+        }
+
         private void Update()
         {
             if (Input.GetMouseButtonDown(0))

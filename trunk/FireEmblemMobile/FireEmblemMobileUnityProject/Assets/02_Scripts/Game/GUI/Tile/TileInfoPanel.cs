@@ -63,6 +63,9 @@ public class TileInfoPanel : MonoBehaviour
 
     public void Hide()
     {
-        gameObject.SetActive(false);
+        if (this != null)
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

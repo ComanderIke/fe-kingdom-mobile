@@ -43,13 +43,7 @@ namespace Game.Mechanics
 
         private void OnDisable()
         {
-            GameplayCommands.OnSelectSkill -= SelectSkill;
-            GameplayCommands.OnDeselectSkill -= DeselectSkill;
-            GameplayCommands.OnSelectItem -= SelectItem;
-            GameplayCommands.OnDeselectItem -= DeselectItem;
-            GameplayCommands.OnSelectUnit -= SelectUnit;
-            GameplayCommands.OnDeselectUnit -= DeselectActiveCharacter;
-            gridGameManager.GetSystem<TurnSystem>().OnEndTurn -= EndTurnDeselectUnit;
+            Deactivate();
         }
 
         public void Deactivate()

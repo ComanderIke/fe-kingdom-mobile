@@ -4,6 +4,7 @@ using Game.GameInput;
 using Game.Manager;
 using Game.Mechanics;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using Object = UnityEngine.Object;
 
 namespace Game.Graphics
@@ -25,13 +26,19 @@ namespace Game.Graphics
         private MoveArrowSprites moveArrowSprites;
         private Transform parent;
 
-        public void OnEnable()
+        public void Reset()
         {
             instantiatedMovePath = new List<GameObject>();
             // InputPathManager.OnMovementPathUpdated += DrawMovementPath;
             var vfxGo = GameObject.FindWithTag(TagManager.VfxTag);
             if(vfxGo!=null)
                 parent = vfxGo.transform;
+        }
+
+        public void OnEnable()
+        {
+            Reset();
+           
         }
 
         private GameObject CreateArrowPart()
