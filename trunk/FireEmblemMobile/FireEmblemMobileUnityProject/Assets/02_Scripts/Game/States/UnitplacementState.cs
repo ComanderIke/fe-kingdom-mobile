@@ -180,9 +180,12 @@ namespace Game.States
         }
         private void DeInitializeCamera()
         {
-            cameraSystem.RemoveMixin<DragCameraMixin>();
-            cameraSystem.RemoveMixin<ClampCameraMixin>();
-            cameraSystem.RemoveMixin<ViewOnGridMixin>();
+            if (cameraSystem != null && cameraSystem.gameObject != null)
+            {
+                cameraSystem.RemoveMixin<DragCameraMixin>();
+                cameraSystem.RemoveMixin<ClampCameraMixin>();
+                cameraSystem.RemoveMixin<ViewOnGridMixin>();
+            }
         }
 
      

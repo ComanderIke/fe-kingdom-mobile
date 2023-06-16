@@ -14,6 +14,7 @@ using Game.States;
 using Game.Systems;
 using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.Systems;
+using GameCamera;
 using GameEngine;
 using LostGrace;
 using Menu;
@@ -57,7 +58,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         {
             SaveGameManager.Load(0); //Trigger load at start of scenes to trigger all persistance objects observers
         }
-
+        
        
     }
 
@@ -70,12 +71,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         //Debug.Log("WHY IS START NOT CALLED?");
         actionSystem = new Area_ActionSystem();
         nodeClickControllers = new List<EncounterNodeClickController>();
-        if(PlayerPrefs.HasKey("CameraX")&&PlayerPrefs.HasKey("CameraY"))
-        {
-            EncounterAreaCameraController camera = FindObjectOfType<EncounterAreaCameraController>();
-            camera.transform.position = new Vector3(PlayerPrefs.GetFloat("CameraX"), PlayerPrefs.GetFloat("CameraY"),
-                camera.transform.position.z);
-        }
+       
         if (Player.Instance.Party!=null)
         {
             Debug.Log("Using existing party data");
@@ -125,6 +121,8 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         {       
             ShowMoveOptions();
         }
+
+        FindObjectOfType<CameraSystem>().GetMixin<FocusCameraMixin>().SetTargets(Player.Instance.Party.EncounterComponent.EncounterNode.gameObject);
     }
 
     
@@ -322,6 +320,10 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     
     void Update()
     {
+        if (Input.GetMouseButtonDown(1))
+        {
+            FindObjectOfType<CameraSystem>().GetMixin<FocusCameraMixin>().SetTargets(Player.Instance.Party.EncounterComponent.EncounterNode.gameObject);
+        }
         if (Input.GetMouseButtonUp(0))
         {
            
