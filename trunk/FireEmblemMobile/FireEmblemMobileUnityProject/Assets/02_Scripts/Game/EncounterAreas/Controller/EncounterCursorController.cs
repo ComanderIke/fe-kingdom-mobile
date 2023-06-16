@@ -53,6 +53,7 @@ public class EncounterCursorController : MonoBehaviour
         if (!visible)
             return;
         image.transform.localScale = new Vector3(scale, scale, scale);
+        fillImage.transform.localScale = new Vector3(scale, scale, scale);
     }
     public void SetSprite(Sprite sprite)
     {

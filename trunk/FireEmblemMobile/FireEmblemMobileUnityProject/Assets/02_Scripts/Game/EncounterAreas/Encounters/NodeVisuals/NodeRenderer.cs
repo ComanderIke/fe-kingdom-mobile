@@ -12,34 +12,38 @@ public class NodeRenderer : MonoBehaviour
     [SerializeField] private SpriteRenderer nodeCircleRenderer;
 
 
-    
+    [SerializeField] private bool big;
 
     private const float defaultRotationSpeed = 25;
     const float defaultScale = 1.5f;
+    const float bigScale = 2.0f;
     readonly  Vector3 nodeStartScale = new Vector3(0.12f,0.12f,0.12f);
+    readonly  Vector3 nodeBigStartScale = new Vector3(0.2f,0.2f,0.2f);
 
     
     public void MovableAnimation()
     {
         moveEffect = Instantiate(moveOptionPrefab, transform, false);
+        Vector3 particleScale= big?new Vector3(bigScale, bigScale, bigScale):new Vector3(defaultScale, defaultScale, defaultScale);
         foreach (var ps in moveEffect.GetComponentsInChildren<ParticleSystem>())
         {
-            ps.transform.localScale = new Vector3(defaultScale, defaultScale, defaultScale);
+            if (big)
+                ps.transform.localScale = particleScale;
         }
  
-        LeanTween.scale(gameObject, nodeStartScale*1.07f,0.8f).setLoopType(LeanTweenType.pingPong);
+        LeanTween.scale(gameObject, (big?nodeBigStartScale:nodeStartScale)*1.07f,0.8f).setLoopType(LeanTweenType.pingPong);
     }
 
     public void Awake()
     {
       
-        gameObject.transform.localScale = nodeStartScale;
+        gameObject.transform.localScale =big?nodeBigStartScale: nodeStartScale;
     }
     public void Reset()
     {
       
         LeanTween.cancel(gameObject);
-        LeanTween.scale(gameObject, nodeStartScale,0.2f).setEaseInQuad();
+        LeanTween.scale(gameObject, big?nodeBigStartScale:nodeStartScale,0.2f).setEaseInQuad();
         
        // Debug.Log("Reset to "+gameObject.transform.localScale.x);
        Destroy(moveEffect);
@@ -56,13 +60,14 @@ public class NodeRenderer : MonoBehaviour
         if (moveEffect != null)
         {
 
+            var particleScale = big ? bigScale : defaultScale;
             foreach (var ps in moveEffect.GetComponentsInChildren<ParticleSystem>())
             {
                 
                
                 LeanTween.value(0, 1, .7f).setEasePunch().setOnUpdate((value) =>
                 {
-                    var newScale = defaultScale + value * 0.2f;
+                    var newScale = particleScale + value * 0.2f;
                     ps.transform.localScale = new Vector3(newScale, newScale, newScale);
                 });
             }
@@ -75,10 +80,10 @@ public class NodeRenderer : MonoBehaviour
         if (moveEffect != null)
         {
         
-          
+            Vector3 particleScale= big?new Vector3(bigScale+scale, bigScale+scale, bigScale+scale):new Vector3(defaultScale+scale, defaultScale+scale, defaultScale+scale);
             foreach (var ps in moveEffect.GetComponentsInChildren<ParticleSystem>())
             {
-                ps.transform.localScale = new Vector3(defaultScale+scale,defaultScale+scale,defaultScale+scale);
+                ps.transform.localScale = particleScale;
             }
         }
     }
