@@ -78,6 +78,7 @@ namespace Game.Mechanics
 
         void OnLevelUp(Unit u)
         {
+            Debug.Log("On level Up in UnitProgressSystem");
             //check if Exp Animation Finished
             //check if Couroutine is active or flag finished or whatever
             AnimationQueue.Add(()=>LevelUp(u));
@@ -110,6 +111,7 @@ namespace Game.Mechanics
         }
         public void Deactivate()
         {
+            Debug.Log("UnitProgressSystem Deactivate");
             // foreach (var unit in units)
             // {
             //     unit.OnLevelUp -= LevelUp;
@@ -120,6 +122,7 @@ namespace Game.Mechanics
 
         public void Activate()
         {
+            Debug.Log("UnitProgressSystem activate");
             Unit.OnExpGained += Expgained;
             Unit.OnLevelUp += OnLevelUp;
             // foreach (var unit in units)

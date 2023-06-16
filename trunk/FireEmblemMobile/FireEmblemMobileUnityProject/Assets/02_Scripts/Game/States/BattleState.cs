@@ -80,7 +80,7 @@ namespace Game.Mechanics
         }
         public override void Exit()
         {
-            
+            Debug.Log("BattleStateExit");
             // HideFightVisuals();
             attacker.TurnStateManager.HasAttacked = true;
 

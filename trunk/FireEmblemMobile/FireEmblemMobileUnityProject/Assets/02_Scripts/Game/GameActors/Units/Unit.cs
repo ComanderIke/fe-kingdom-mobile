@@ -144,10 +144,7 @@ namespace Game.GameActors.Units
             SkillManager.SkillPointsUpdated += SkillPointsUpdated;
             SkillManager.Init();
             ExperienceManager = experienceManager;
-            ExperienceManager.LevelUp = null;
-            ExperienceManager.LevelUp += LevelUp;
-            ExperienceManager.ExpGained = null;
-            ExperienceManager.ExpGained += ExpGained;
+            InitExperienceManager();
             TurnStateManager = new TurnStateManager();
             GridComponent = new GridActorComponent(this);
             BattleComponent = new BattleComponent(this);
@@ -163,6 +160,14 @@ namespace Game.GameActors.Units
                     Stats.AttackRanges.Add(r);
             }
 
+        }
+
+        public void InitExperienceManager()
+        {
+            ExperienceManager.LevelUp = null;
+            ExperienceManager.LevelUp += LevelUp;
+            ExperienceManager.ExpGained = null;
+            ExperienceManager.ExpGained += ExpGained;
         }
 
         void ExpGained(int expBefore, int expGained)
@@ -222,10 +227,6 @@ namespace Game.GameActors.Units
         
 
         
-        void OnDestroy()
-        {
-            ExperienceManager.LevelUp -= LevelUp;
-        }
         
         void SkillPointsUpdated(int skillPoints)
         {

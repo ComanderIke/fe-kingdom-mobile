@@ -120,10 +120,13 @@ namespace Game.Mechanics
             if (stateMachine.GetCurrentState() != mainState)
                 stateMachine.SwitchState(mainState);
             stateMachine.Exit();
-            
-            cameraSystem.RemoveMixin<DragCameraMixin>();
-            cameraSystem.RemoveMixin<ClampCameraMixin>();
-            cameraSystem.RemoveMixin<ViewOnGridMixin>();
+
+            if (cameraSystem != null && cameraSystem.gameObject != null)
+            {
+                cameraSystem.RemoveMixin<DragCameraMixin>();
+                cameraSystem.RemoveMixin<ClampCameraMixin>();
+                cameraSystem.RemoveMixin<ViewOnGridMixin>();
+            }
         }
       
     

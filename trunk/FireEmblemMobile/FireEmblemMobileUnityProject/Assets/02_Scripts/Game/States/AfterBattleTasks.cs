@@ -87,6 +87,7 @@ namespace Game.States
                     defender.Die();
                 }
             }
+            Debug.Log("ALMOST FINISHED EXP COROUTINE");
             yield return new WaitForSeconds(WaitTimeWhenFinished);
             Finished();
             

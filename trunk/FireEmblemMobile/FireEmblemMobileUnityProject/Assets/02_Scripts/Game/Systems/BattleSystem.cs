@@ -104,11 +104,12 @@ namespace Game.Mechanics
          
             
             var system = ServiceProvider.Instance.GetSystem<UnitProgressSystem>();
+            Debug.Log("GET SYSTEM: "+system +" from serviceProvider: "+ServiceProvider.Instance);
             var task = new AfterBattleTasks(system, (Unit)attacker, defender);
             task.StartTask();
             task.OnFinished += () =>
             {
-                
+                Debug.Log("AfterBattleTaskFinished");
                 OnBattleFinished?.Invoke(battleSimulation.AttackResult);
             };
         }

@@ -111,6 +111,7 @@ namespace Game.GameActors.Players
             unit.ExperienceManager = new ExperienceManager(ExperienceManager);
             unit.ExperienceManager.Exp = ExperienceManager.Exp;
             unit.ExperienceManager.Level = ExperienceManager.Level;
+            unit.InitExperienceManager();
             unit.TurnStateManager = TurnStateManager;
             unit.Hp = hp;
             if(blessingId!=""&&blessingId!=null)
