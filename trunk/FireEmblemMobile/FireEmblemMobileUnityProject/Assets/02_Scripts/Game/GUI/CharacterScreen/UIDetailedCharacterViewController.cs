@@ -41,22 +41,22 @@ public class UIDetailedCharacterViewController : UICharacterViewController
         skillsUI.Show(unit.SkillManager.Skills);
         blessingParent.DeleteAllChildren();
         curseParent.DeleteAllChildren();
-        if (unit.Blessing != null)
-        {
-            
-                var go = Instantiate(blessingPrefab, blessingParent);
-                go.GetComponent<Image>().sprite = unit.Blessing .Skill.Icon;
-                go.GetComponent<GeneralButtonController>().OnClicked += BlessingClicked;
-            
-          
-        }
-        if (unit.Curse != null)
-        {
-            var go = Instantiate(cursePrefab, curseParent);
-                go.GetComponent<Image>().sprite = unit.Curse .Skill.Icon;
-                go.GetComponent<GeneralButtonController>().OnClicked += CurseClicked;
-            
-        }
+        // if (unit.Blessing != null)
+        // {
+        //     
+        //         var go = Instantiate(blessingPrefab, blessingParent);
+        //         go.GetComponent<Image>().sprite = unit.Blessing .Skill.Icon;
+        //         go.GetComponent<GeneralButtonController>().OnClicked += BlessingClicked;
+        //     
+        //   
+        // }
+        // if (unit.Curse != null)
+        // {
+        //     var go = Instantiate(cursePrefab, curseParent);
+        //         go.GetComponent<Image>().sprite = unit.Curse .Skill.Icon;
+        //         go.GetComponent<GeneralButtonController>().OnClicked += CurseClicked;
+        //     
+        // }
        
 
         equipmentController.Show(unit);
