@@ -151,7 +151,7 @@ namespace Game.GameActors.Units
             GameTransformManager = new GameTransformManager();
             StatusEffectManager = new StatusEffectManager(this);
             AIComponent = new AIComponent();
-            MaxHp = stats.BaseAttributes.CON*Attributes.CON_HP_Mult;
+            MaxHp = Attributes.BASE_HP+stats.BaseAttributes.CON*Attributes.CON_HP_Mult;
             hp = MaxHp;
             Stats.AttackRanges.Clear();
             if (equippedWeapon != null)

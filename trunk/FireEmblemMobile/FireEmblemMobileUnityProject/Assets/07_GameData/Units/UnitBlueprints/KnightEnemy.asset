@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb843360a1e2024e9821031d19ee784, type: 3}
+  m_Name: KnightEnemy
+  m_EditorClassIdentifier: 
+  equippedWeaponBp: {fileID: 11400000, guid: ebdaf6870399c7a42bee1f871e481fe0, type: 2}
+  EquippedRelic1: {fileID: 0}
+  EquippedRelic2: {fileID: 0}
+  Name: John
+  stats:
+    AttackRanges: 01000000
+    BaseAttributes:
+      str: 15
+      intel: 6
+      dex: 15
+      agi: 6
+      con: 6
+      lck: 6
+      def: 6
+      faith: 6
+    BonusStats:
+      <Hit>k__BackingField: 0
+      <Avoid>k__BackingField: 0
+      <CritAvoid>k__BackingField: 0
+      <Crit>k__BackingField: 0
+      <AttackSpeed>k__BackingField: 0
+      <Armor>k__BackingField: 0
+      <MagicResistance>k__BackingField: 0
+      <Attack>k__BackingField: 0
+    Mov: 5
+  growths:
+    str: 0
+    intel: 0
+    dex: 0
+    agi: 0
+    con: 0
+    lck: 0
+    def: 0
+    faith: 0
+  moveType: {fileID: 11400000, guid: d13592b1fa0af024a841b121149b8014, type: 2}
+  SkillManager:
+    startSkills: []
+    skillPoints: 0
+  rpgClass: 1
+  bluePrintID: KnightEnemy
+  dialogActor: {fileID: 0}
+  visuals:
+    CharacterSpriteSet: {fileID: 11400000, guid: c185c26f8316f0e4085cfdb9f4d4d5d2,
+      type: 2}
+    CharacterClassUpgradeSpriteSet: {fileID: 11400000, guid: c7f8f2d61f15b6547966c55268f61f67,
+      type: 2}
+    UnitEffectVisual: {fileID: 11400000, guid: af10e6087dc82f34ebed15c0092e0174, type: 2}
+    Prefabs:
+      MapAnimatedSprite: {fileID: 2861010742256422526, guid: 6d4bc504bf009cc4f93767a3c51ddf59,
+        type: 3}
+      EncounterAnimatedSprite: {fileID: 6168332596698552260, guid: 6e08e38ea6d6377438b38025eeb916b3,
+        type: 3}
+      UIAnimatorController: {fileID: 22100000, guid: 7887a9658147f5241aa26194c80b9193,
+        type: 2}
+    UnitCharacterCircleUI: {fileID: 0}
+    unitRenderer: {fileID: 0}
+  audio: {fileID: 0}
+  experienceManager:
+    level: 1
+    exp: 0
+    drainableExp: 100
+    expLeftToDrain: 100
