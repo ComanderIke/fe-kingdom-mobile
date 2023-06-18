@@ -37,6 +37,7 @@ namespace LostGrace
         [SerializeField] private TextMeshProUGUI critavo;
         [SerializeField] private Transform skillContainer;
         [SerializeField] private GameObject skillprefab;
+        [SerializeField] private GameObject activeSkillprefab;
 
         
 

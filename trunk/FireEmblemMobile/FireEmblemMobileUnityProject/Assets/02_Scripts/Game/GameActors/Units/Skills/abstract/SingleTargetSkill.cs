@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Game.GameActors.Units.Skills
 {
     [Serializable]
-    public abstract class SingleTargetSkill : Skill
+    public abstract class SingleTargetSkill : ActivatedSkill
     {
         public virtual void Activate(Unit user, Unit target)
         {

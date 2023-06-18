@@ -2,7 +2,7 @@
 
 namespace Game.GameActors.Units.Skills
 {
-    public abstract class SelfTargetSkill : Skill
+    public abstract class SelfTargetSkill : ActivatedSkill
     {
         public override bool CanTargetCharacters()
         {
