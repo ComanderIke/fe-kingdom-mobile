@@ -127,7 +127,8 @@ public class ToolTipSystem : MonoBehaviour
         instance.tooltipShownThisFrame = true;
         CloseAllToolTips();
         Debug.Log(skill.Name);
-        instance.skillToolTip.SetValues(skill, skill.Name,skill.Description,skill.Icon, Camera.main.WorldToScreenPoint(position));
+        Debug.Log("TooltipPosition: "+GameObject.FindWithTag("UICamera").GetComponent<Camera>().WorldToScreenPoint(position));
+        instance.skillToolTip.SetValues(skill, skill.Name,skill.Description,skill.Icon, position);
         
         instance.skillToolTip.gameObject.SetActive(true);
     }

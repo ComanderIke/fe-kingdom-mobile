@@ -19,7 +19,7 @@ namespace Game.GameActors.Units.Skills.Special
             return 0;
         }
 
-        public DarkClone(string Name, string description, Sprite icon, GameObject animationObject, int cooldown,int tier, string[] upgradeDescr) : base(Name, description, icon, animationObject, cooldown, tier,upgradeDescr)
+        public DarkClone(string Name, string description, Sprite icon, GameObject animationObject, int cooldown,int tier, string[] upgradeDescr,int hpCost, int maxUses) : base(Name, description, icon, animationObject, cooldown, tier,upgradeDescr, hpCost,  maxUses)
         {
         }
     }

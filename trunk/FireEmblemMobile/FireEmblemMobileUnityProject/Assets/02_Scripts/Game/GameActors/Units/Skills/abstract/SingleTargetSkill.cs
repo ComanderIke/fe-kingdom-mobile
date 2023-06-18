@@ -24,7 +24,7 @@ namespace Game.GameActors.Units.Skills
             return true;
         }
 
-        protected SingleTargetSkill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier,string[] upgradeDescr) : base(Name, description, icon, animationObject, cooldown, tier,upgradeDescr)
+        protected SingleTargetSkill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier,string[] upgradeDescr,int hpCost, int maxUses) : base(Name, description, icon, animationObject, cooldown, tier,upgradeDescr,hpCost,maxUses)
         {
         }
     }

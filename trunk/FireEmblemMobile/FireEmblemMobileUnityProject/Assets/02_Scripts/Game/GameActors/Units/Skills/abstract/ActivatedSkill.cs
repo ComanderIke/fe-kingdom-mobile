@@ -8,8 +8,11 @@ namespace Game.GameActors.Units.Skills
         public int maxUses;
         public int hpCost;
 
-        protected ActivatedSkill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier, string[] upgradeDescr) : base(Name, description, icon, animationObject, cooldown, tier, upgradeDescr)
+        protected ActivatedSkill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier, string[] upgradeDescr, int hpCost, int maxUses) : base(Name, description, icon, animationObject, cooldown, tier, upgradeDescr)
         {
+            this.hpCost = hpCost;
+            this.maxUses = maxUses;
+            this.currentUses = maxUses;
         }
     }
 }

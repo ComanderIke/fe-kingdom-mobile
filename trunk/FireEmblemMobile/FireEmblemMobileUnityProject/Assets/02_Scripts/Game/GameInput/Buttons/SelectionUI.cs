@@ -140,16 +140,16 @@ namespace Game.GameInput
       
 
     
-        public void Skill1Clicked()
-        {
-            new GameplayCommands().SelectSkill(selectedCharacter.SkillManager.ActiveSkills[0]);
-            new GameplayCommands().ExecuteInputActions(null);
-        }
-        public void Skill2Clicked()
-        {
-            new GameplayCommands().SelectSkill(selectedCharacter.SkillManager.ActiveSkills[1]);
-            new GameplayCommands().ExecuteInputActions(null);
-        }
+        // public void Skill1Clicked()
+        // {
+        //     new GameplayCommands().SelectSkill(selectedCharacter.SkillManager.ActiveSkills[0]);
+        //     new GameplayCommands().ExecuteInputActions(null);
+        // }
+        // public void Skill2Clicked()
+        // {
+        //     new GameplayCommands().SelectSkill(selectedCharacter.SkillManager.ActiveSkills[1]);
+        //     new GameplayCommands().ExecuteInputActions(null);
+        // }
         public void WaitClicked()
         {
             new GameplayCommands().Wait(selectedCharacter);

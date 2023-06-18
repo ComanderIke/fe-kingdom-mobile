@@ -10,7 +10,7 @@ namespace Game.GameActors.Units.Skills.Special
 
         public override Skill Create()
         {
-            return new DarkClone(Name, Description, Icon, AnimationObject,Cooldown,Tier,UpgradeDescriptions);
+            return new DarkClone(Name, Description, Icon, AnimationObject,Cooldown,Tier,UpgradeDescriptions, hpCost, Uses);
         }
     }
 }

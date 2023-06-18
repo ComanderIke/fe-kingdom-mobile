@@ -1,4 +1,8 @@
-﻿using Game.GameActors.Units.Skills;
+﻿using Game.GameActors.Units;
+using Game.GameActors.Units.Skills;
+using Game.GameInput;
+using Game.Manager;
+using Game.Mechanics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,7 +31,18 @@ namespace LostGrace
 
         public void Clicked()
         {
-            ToolTipSystem.ShowSkill(skill, transform.position);
+            
+            if (skill is ActivatedSkill)
+            {
+                var selectedCharacter = (Unit)ServiceProvider.Instance.GetSystem<UnitSelectionSystem>().SelectedCharacter;
+                new GameplayCommands().SelectSkill(skill); //TODO Show Skill Description when using or before with a dialogbox
+                new GameplayCommands().ExecuteInputActions(null);
+            }
+            else
+            {
+                Debug.Log("Show Skill Tooltip!"+transform.position);
+                ToolTipSystem.ShowSkill(skill, transform.position);
+            }
         }
     }
 }

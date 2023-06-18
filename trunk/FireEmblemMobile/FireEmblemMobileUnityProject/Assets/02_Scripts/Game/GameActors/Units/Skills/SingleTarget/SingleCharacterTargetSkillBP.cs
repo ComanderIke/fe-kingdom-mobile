@@ -9,7 +9,7 @@ namespace Game.GameActors.Units.Skills
     {
         public override Skill Create()
         {
-            return new SingleCharacterTargetSkill(Name, Description, Icon, AnimationObject,Cooldown,Tier,UpgradeDescriptions);
+            return new SingleCharacterTargetSkill(Name, Description, Icon, AnimationObject,Cooldown,Tier,UpgradeDescriptions, hpCost, Uses);
         }
     }
 }

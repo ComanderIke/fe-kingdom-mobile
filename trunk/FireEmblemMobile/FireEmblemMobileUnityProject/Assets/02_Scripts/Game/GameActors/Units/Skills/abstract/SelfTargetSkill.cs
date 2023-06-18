@@ -19,7 +19,7 @@ namespace Game.GameActors.Units.Skills
 
         }
 
-        protected SelfTargetSkill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier,string[] upgradeDescr) : base(Name, description, icon, animationObject, cooldown, tier,upgradeDescr)
+        protected SelfTargetSkill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier,string[] upgradeDescr,int hpCost, int maxUses) : base(Name, description, icon, animationObject, cooldown, tier,upgradeDescr, hpCost, maxUses)
         {
         }
     }
