@@ -3,7 +3,7 @@
 namespace Game.GameActors.Units.Skills
 {
     [Serializable]
-    public abstract class SingleTargetSkillBp : SkillBP
+    public abstract class SingleTargetSkillBp : ActivatedSkillBp
     {
         
     }

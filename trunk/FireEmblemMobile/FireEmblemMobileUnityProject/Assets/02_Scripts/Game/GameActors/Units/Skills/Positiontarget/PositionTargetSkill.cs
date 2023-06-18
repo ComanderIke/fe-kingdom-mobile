@@ -10,7 +10,7 @@ using UnityEngine;
 namespace Game.GameActors.Units.Skills
 {
     [System.Serializable]
-        public class PositionTargetSkill : Skill
+        public class PositionTargetSkill : ActivatedSkill
     {
         public int power;
         public int range;

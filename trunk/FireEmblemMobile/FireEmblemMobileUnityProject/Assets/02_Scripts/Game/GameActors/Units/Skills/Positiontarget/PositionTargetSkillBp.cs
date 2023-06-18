@@ -9,7 +9,7 @@ namespace Game.GameActors.Units.Skills
 {
     [Serializable]
     [CreateAssetMenu(menuName="GameData/Skills/PositionTarget", fileName = "PositionTargetSkill")]
-    public class PositionTargetSkillBp : SkillBP
+    public class PositionTargetSkillBp : ActivatedSkillBp
     {
         public int power;
         public int range;
