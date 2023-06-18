@@ -14,8 +14,8 @@ namespace Game.GameInput
     {
        
         [SerializeField] private GameObject itemButton;
-        [SerializeField] private GameObject skill1Button;
-        [SerializeField] private GameObject skill2Button;
+        // [SerializeField] private GameObject skill1Button;
+        // [SerializeField] private GameObject skill2Button;
         [SerializeField] private GameObject waitButton;
         [SerializeField] private GameObject undoButton;
 
@@ -27,8 +27,8 @@ namespace Game.GameInput
         {
             undoButton.gameObject.SetActive(false);
             waitButton.gameObject.SetActive(false);
-            skill1Button.gameObject.SetActive(false);
-            skill2Button.gameObject.SetActive(false);
+            // skill1Button.gameObject.SetActive(false);
+            // skill2Button.gameObject.SetActive(false);
             itemButton.gameObject.SetActive(false);
             UnitSelectionSystem.OnSelectedCharacter += CharacterGotSelected;
             UnitSelectionSystem.OnDeselectCharacter += NoCharacterSelectedState;
@@ -78,25 +78,25 @@ namespace Game.GameInput
             selectedCharacter = unit;
 
             int skillCount = selectedCharacter.SkillManager.ActiveSkills.Count;
-            skill1Button.gameObject.SetActive(skillCount>=1);
-            skill2Button.gameObject.SetActive(skillCount>=2);
-            if (skillCount >= 1)
-            {
-                skill1Button.GetComponentsInChildren<Image>()[1].sprite =
-                    selectedCharacter.SkillManager.ActiveSkills[0].Icon;
-                skill1Button.GetComponentInChildren<TextMeshProUGUI>().text =
-                    selectedCharacter.SkillManager.ActiveSkills[0].CurrentCooldown + "/" +
-                    selectedCharacter.SkillManager.ActiveSkills[0].Cooldown;
-            }
-
-            if (skillCount >= 2)
-            {
-                skill2Button.GetComponentsInChildren<Image>()[1].sprite =
-                    selectedCharacter.SkillManager.ActiveSkills[1].Icon;
-                skill2Button.GetComponentInChildren<TextMeshProUGUI>().text =
-                    selectedCharacter.SkillManager.ActiveSkills[1].CurrentCooldown + "/" +
-                    selectedCharacter.SkillManager.ActiveSkills[1].Cooldown;
-            }
+            // skill1Button.gameObject.SetActive(skillCount>=1);
+            // skill2Button.gameObject.SetActive(skillCount>=2);
+            // if (skillCount >= 1)
+            // {
+            //     skill1Button.GetComponentsInChildren<Image>()[1].sprite =
+            //         selectedCharacter.SkillManager.ActiveSkills[0].Icon;
+            //     skill1Button.GetComponentInChildren<TextMeshProUGUI>().text =
+            //         selectedCharacter.SkillManager.ActiveSkills[0].CurrentCooldown + "/" +
+            //         selectedCharacter.SkillManager.ActiveSkills[0].Cooldown;
+            // }
+            //
+            // if (skillCount >= 2)
+            // {
+            //     skill2Button.GetComponentsInChildren<Image>()[1].sprite =
+            //         selectedCharacter.SkillManager.ActiveSkills[1].Icon;
+            //     skill2Button.GetComponentInChildren<TextMeshProUGUI>().text =
+            //         selectedCharacter.SkillManager.ActiveSkills[1].CurrentCooldown + "/" +
+            //         selectedCharacter.SkillManager.ActiveSkills[1].Cooldown;
+            // }
 
             if(Player.Instance.Party.Convoy.Items.Count > 0)
                 itemButton.SetActive(true);
@@ -113,8 +113,8 @@ namespace Game.GameInput
         {
             selectedCharacter = null;
             waitButton.gameObject.SetActive(false);
-            skill1Button.gameObject.SetActive(false);
-            skill2Button.gameObject.SetActive(false);
+            // skill1Button.gameObject.SetActive(false);
+            // skill2Button.gameObject.SetActive(false);
             itemButton.gameObject.SetActive(false);
 
         }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using __2___Scripts.Game.Utility;
 using Game.GameActors.Units;
+using Game.GameActors.Units.Skills;
 using Game.GUI;
 using TMPro;
 using UnityEngine;
@@ -93,7 +94,7 @@ namespace LostGrace
             skillContainer.DeleteAllChildren();
             foreach (var skill in unit.SkillManager.Skills)
             {
-                var go =Instantiate(skillprefab, skillContainer);
+                var go =Instantiate(skill is ActivatedSkill?activeSkillprefab:skillprefab, skillContainer);
                 go.GetComponent<SkillUI>().SetSkill(skill);
             }
         }
