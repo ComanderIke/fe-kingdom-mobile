@@ -13,5 +13,6 @@
         void SetVisualStyle(FactionId id);
         void SwapVisual();
         void BlockedVisual();
+        void CastCursorVisual();
     }
 }

@@ -26,6 +26,13 @@ namespace Game.Grid
            
 
         }
+        public void SetTileCastCursorMaterial(Vector2 pos, FactionId playerId)
+        {
+            if(pos.x>=0&& pos.y>=0&& pos.x < Tiles.GetLength(0)&& pos.y <Tiles.GetLength(1))
+                Tiles[(int) pos.x, (int) pos.y].SetCastCursorMaterial(playerId);
+           
+
+        }
         public void SetFieldMaterial(Vector2 pos, FactionId playerId, bool activeUnit, bool activePlayer)
         {
             Tiles[(int) pos.x, (int) pos.y].SetMaterial(playerId, activeUnit,activePlayer);

@@ -19,25 +19,27 @@ namespace Game.Mechanics
         private FactionManager factionManager;
         private readonly GridInputSystem gridInputSystem;
         private readonly UnitInputSystem unitInputSystem;
-        private readonly GridSystem gridSystem;
+        private  GridSystem gridSystem;
         private IGameInputReceiver previousGridInputReceiver;
         private IUnitInputReceiver previousUnitInputReceiver;
+        private UnitSelectionSystem selectionSystem;
         private Skill selectedSkill;
         private Unit selectedUnit;
         private PlayerPhaseState playerPhaseState;
-        public ChooseTargetState(GridGameManager gridGameManager, GridInputSystem gridInputSystem, UnitInputSystem unitInputSystem, PlayerPhaseState playerPhaseState)
+        public ChooseTargetState( GridInputSystem gridInputSystem, UnitInputSystem unitInputSystem, PlayerPhaseState playerPhaseState)
         {
-            this.gridGameManager = gridGameManager;
-            factionManager = this.gridGameManager.FactionManager;
+            gridGameManager=GridGameManager.Instance;
+            factionManager =GridGameManager.Instance.FactionManager;
             this.gridInputSystem = gridInputSystem;
             this.unitInputSystem = unitInputSystem;
-            gridSystem = gridGameManager.GetSystem<GridSystem>();
+            
             this.playerPhaseState = playerPhaseState;
         }
         public override void Enter()
         {
+            gridSystem = GridGameManager.Instance.GetSystem<GridSystem>();
             gridGameManager.GetSystem<UiSystem>().HideMainCanvas();
-            UnitSelectionSystem selectionSystem = gridGameManager.GetSystem<UnitSelectionSystem>();
+            selectionSystem = gridGameManager.GetSystem<UnitSelectionSystem>();
             gridInputSystem.SetActive(true);
             unitInputSystem.SetActive(true);
             previousGridInputReceiver = gridInputSystem.inputReceiver;
@@ -50,25 +52,14 @@ namespace Game.Mechanics
             {
                 selectedSkill = selectionSystem.SelectedSkill;
                 Debug.Log("Remove Magic NUmber!");
-                if (selectionSystem.SelectedSkill is PositionTargetSkill pts)
-                {
-                    if (pts.rooted)
-                    {
-                        gridGameManager.GetSystem<GridSystem>().ShowRootedCastRange(selectionSystem.SelectedCharacter, pts);
-                    }
-                    else
-                    {
-                        gridGameManager.GetSystem<GridSystem>().ShowCastRange(selectionSystem.SelectedCharacter,
-                            pts.range + pts.GetCastRangeIncrease(((Unit)selectionSystem.SelectedCharacter).Stats
-                                .BaseAttributes));
-                    }
-                }
 
+                ShowSkillCastRange();
                 UI.Show((Unit)selectionSystem.SelectedCharacter, selectionSystem.SelectedSkill);
             }
             else if (selectionSystem.SelectedItem != null)
             {
-                gridGameManager.GetSystem<GridSystem>().ShowCastRange(selectionSystem.SelectedCharacter,1);
+                ShowItemCastRange();
+              
                 UI.Show((Unit)selectionSystem.SelectedCharacter, selectionSystem.SelectedItem);
             }
             else
@@ -77,12 +68,37 @@ namespace Game.Mechanics
             }
         }
 
+        void ShowItemCastRange()
+        {
+            gridGameManager.GetSystem<GridSystem>().ShowCastRange(selectionSystem.SelectedCharacter,1);
+        }
+        void ShowSkillCastRange()
+        {
+            if (selectionSystem.SelectedSkill is PositionTargetSkill pts)
+            {
+                if (pts.rooted)
+                {
+                    gridGameManager.GetSystem<GridSystem>().ShowRootedCastRange(selectionSystem.SelectedCharacter, pts);
+                }
+                else
+                {
+                    gridGameManager.GetSystem<GridSystem>().ShowCastRange(selectionSystem.SelectedCharacter,
+                        pts.range + pts.GetCastRangeIncrease(((Unit)selectionSystem.SelectedCharacter).Stats
+                            .BaseAttributes));
+                }
+            }
+        }
+
         public override void Exit()
         {
-            UI.Hide();
-            UI.OnBackClicked += BackClicked;
+            if (UI != null)
+            {
+                UI.Hide();
+                UI.OnBackClicked += BackClicked;
+            }
+
             gridSystem.HideMoveRange();
-            gridSystem.cursor.HideCast();
+            gridSystem.HideCast();
             gridInputSystem.ResetInput();
             gridInputSystem.SetActive(false);
             unitInputSystem.SetActive(false);
@@ -137,7 +153,9 @@ namespace Game.Mechanics
                         else
                         {
                             gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
-                            gridSystem.cursor.ShowCast(pts.size, pts.targetArea);
+                            gridSystem.HideCast();
+                           ShowSkillCastRange();
+                            gridSystem.ShowCast(pts.size, pts.targetArea);
                         }
 
 
@@ -161,7 +179,9 @@ namespace Game.Mechanics
                         else
                         {
                             gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
-                            gridSystem.cursor.ShowRootedCast(selectedUnit.GridComponent.GridPosition.AsVector(),
+                            gridSystem.HideCast();
+                            ShowSkillCastRange();
+                            gridSystem.ShowRootedCast(selectedUnit.GridComponent.GridPosition.AsVector(),
                                 pts.size, pts.targetArea);
                         }
                     }

@@ -67,7 +67,11 @@ namespace Game.Grid
             TileRenderer.Reset();
             tileVfx.Hide(this);
         }
-
+        public void SetCastCursorMaterial(FactionId playerId)
+        {
+            TileRenderer.SetVisualStyle(playerId);
+            TileRenderer.CastCursorVisual();
+        }
         public void SetCastMaterial(FactionId playerId)
         {
             TileRenderer.SetVisualStyle(playerId);
@@ -157,8 +161,8 @@ namespace Game.Grid
         {
             return GridObject == null&&GridObject==null;
         }
-        
 
 
+      
     }
 }

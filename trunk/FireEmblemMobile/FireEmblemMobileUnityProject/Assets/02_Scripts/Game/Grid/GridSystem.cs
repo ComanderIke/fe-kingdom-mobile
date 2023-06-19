@@ -453,5 +453,79 @@ namespace Game.Map
                 Debug.LogError("Out of Bounds: "+x+" "+y +" "+dest);
             }
         }
+
+        public void HideCast()
+        {
+            Debug.Log("HideCast");
+            HideMoveRange();
+        }
+
+        public void ShowCast(int radius, SkillTargetArea skillTargetArea)
+        {
+            Debug.Log("Show Cast: "+radius+ " "+skillTargetArea+" "+cursor.GetPosition());
+            if (radius > 0)
+            {
+                if (skillTargetArea==SkillTargetArea.Block)
+                {
+                    for (int i = 0; i < radius + 1; i++)
+                    {
+                        for (int j = 0; j< radius + 1; j++)
+                        {
+                            GridRenderer.SetTileCastCursorMaterial(new Vector2(i,-j)+cursor.GetPosition(),0);
+                            GridRenderer.SetTileCastCursorMaterial(new Vector2(i,j)+cursor.GetPosition(),0);
+                            GridRenderer.SetTileCastCursorMaterial(new Vector2(-i,-j)+cursor.GetPosition(),0);
+                            GridRenderer.SetTileCastCursorMaterial(new Vector2(-i,j)+cursor.GetPosition(),0);
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 1; i < radius + 1; i++)
+                    {
+                        if (skillTargetArea==SkillTargetArea.Line||skillTargetArea==SkillTargetArea.Cross||skillTargetArea==SkillTargetArea.Star)
+                        {
+                            GridRenderer.SetTileCastCursorMaterial(new Vector2(i,0)+cursor.GetPosition(),0);
+                            GridRenderer.SetTileCastCursorMaterial(new Vector2(-i,0)+cursor.GetPosition(),0);
+                 
+                        }
+
+                        if (skillTargetArea==SkillTargetArea.NormalLine||skillTargetArea==SkillTargetArea.Cross||skillTargetArea==SkillTargetArea.Star)
+                        {
+                            GridRenderer.SetTileCastCursorMaterial(new Vector2(0,-i)+cursor.GetPosition(),0);
+                            GridRenderer.SetTileCastCursorMaterial(new Vector2(0,i)+cursor.GetPosition(),0);
+                         
+                        }
+
+                        
+                    }
+
+                    if (skillTargetArea==SkillTargetArea.Star)
+                    {
+                        for (int i = 0; i < radius; i++)
+                        {
+                            for (int j = 0; j < radius; j++)
+                            {
+                                if (i !=0 && j!=0&&(i+j)<=radius)
+                                {
+                                    GridRenderer.SetTileCastCursorMaterial(new Vector2(i,-j)+cursor.GetPosition(),0);
+                                    GridRenderer.SetTileCastCursorMaterial(new Vector2(i,j)+cursor.GetPosition(),0);
+                                    GridRenderer.SetTileCastCursorMaterial(new Vector2(-i,-j)+cursor.GetPosition(),0);
+                                    GridRenderer.SetTileCastCursorMaterial(new Vector2(-i,j)+cursor.GetPosition(),0);
+                                }
+                               
+                            }
+                        }
+                    }
+
+                    
+                }
+            }
+           
+        }
+
+        public void ShowRootedCast(Vector2 asVector, int ptsSize, SkillTargetArea ptsTargetArea)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

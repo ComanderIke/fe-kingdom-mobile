@@ -42,6 +42,8 @@ namespace Game.Grid
             spriteRenderer.sprite = activeSpriteSet.BlockedSprite;
         }
 
+     
+
         public void Reset()
         {
             spriteRenderer.sprite = activeSpriteSet.GridSprite;
@@ -55,7 +57,10 @@ namespace Game.Grid
         {
             spriteRenderer.sprite = activeSpriteSet.CastSprite;
         }
-
+        public void CastCursorVisual()
+        {
+            spriteRenderer.sprite = activeSpriteSet.CastCursorSprite;
+        }
         public void AllyVisual()
         {
             spriteRenderer.sprite = activeSpriteSet.GridSpriteAlly;

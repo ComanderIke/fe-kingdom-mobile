@@ -61,5 +61,10 @@ namespace Game.Map
         {
             renderer.HideTargetRange();
         }
+
+        public Vector2 GetPosition()
+        {
+            return gridPosition.AsVector();
+        }
     }
 }

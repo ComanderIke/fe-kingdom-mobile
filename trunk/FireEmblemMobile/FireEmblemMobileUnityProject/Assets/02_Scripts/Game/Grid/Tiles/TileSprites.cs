@@ -15,5 +15,6 @@ namespace Game.Grid
         public Sprite GridSwapSprite;
         public Sprite BlockedSprite;
         public Sprite CastSprite;
+        public Sprite CastCursorSprite;
     }
 }
