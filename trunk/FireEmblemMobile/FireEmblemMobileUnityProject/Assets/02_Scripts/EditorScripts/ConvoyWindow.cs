@@ -67,6 +67,10 @@ namespace __2___Scripts.External.Editor
                 {
                     Player.Instance.Party.Convoy.AddStockedItem(new StockedItem(GameBPData.Instance.GetItemByName("Health Potion"), 1));
                 }
+                if (GUILayout.Button("Add Bomb",GUILayout.Width(100)))
+                {
+                    Player.Instance.Party.Convoy.AddStockedItem(new StockedItem(GameBPData.Instance.GetItemByName("Gunpowder Bomb"), 1));
+                }
 
                 
             }

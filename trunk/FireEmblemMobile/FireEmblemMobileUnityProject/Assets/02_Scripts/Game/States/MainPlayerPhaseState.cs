@@ -112,7 +112,7 @@ namespace Game.Mechanics
         {
             if (item is ConsumableItem consumableItem)
             {
-                //Debug.Log("Item Selected2"+item.target);
+                Debug.Log("ConsumeableItemSelected!");
                 if (consumableItem.target == ItemTarget.Self)
                 {
                     var selectedCharacter = gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter;

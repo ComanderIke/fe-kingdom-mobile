@@ -9,7 +9,6 @@ namespace __2___Scripts.Game.Utility
         
         public static bool CheckUIObjectsInPosition()
         {
-          
             PointerEventData pointer = new PointerEventData(EventSystem.current);
             pointer.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);;
             List<RaycastResult> raycastResults = new List<RaycastResult>();
@@ -23,19 +22,23 @@ namespace __2___Scripts.Game.Utility
                 {
                     if (!go.gameObject.CompareTag("Grid"))
                     {
-                        //Debug.Log("RAYCAST NOT GRID: "+go.gameObject.name);
+                        Debug.Log("RAYCAST NOT GRID: "+go.gameObject.name);
                        
                     }
                     else
                     {
-                        //Debug.Log("RAYCAST GRID: "+go.gameObject.name);
+                        Debug.Log("RAYCAST GRID: "+go.gameObject.name);
                     }
                 }
             }
 
             if (raycastResults.Count > 0)
+            {  
+                Debug.Log("UICLICKCHECKER RETURN TRUE");
                 return true;
+            }
 
+            Debug.Log("UICLICKCHECKER RETURN FALSE");
             return false;
         }
     }

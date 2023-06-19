@@ -90,7 +90,7 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
         if (this!=null &&gameObject != null)
         {
             GetComponent<Canvas>().enabled = false;
-            if(selectionUI.gameObject!=null)
+            if(selectionUI!=null&&selectionUI.gameObject!=null)
                 selectionUI.HideUndo();
         }
 

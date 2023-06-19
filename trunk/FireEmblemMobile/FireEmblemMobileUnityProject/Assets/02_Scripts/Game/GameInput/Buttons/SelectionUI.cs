@@ -158,7 +158,7 @@ namespace Game.GameInput
         }
         public void ItemsClicked()
         {
-            convoyController.Show();
+            convoyController.Show(UIConvoyController.ConvoyContext.Battle);
             //this.CallWithDelay(ItemsSelectedState, 0.005f);
            
         }

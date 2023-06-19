@@ -43,7 +43,7 @@ public class RelicToolTip : ItemToolTip
 
     public void SlotClicked()
     {
-        convoeyUI.ShowGemOptions(Player.Instance.Party);
+        convoeyUI.ShowGemOptions();
         Debug.Log("Open ItemPanel with all gemstones and a none option!");
         
     }
