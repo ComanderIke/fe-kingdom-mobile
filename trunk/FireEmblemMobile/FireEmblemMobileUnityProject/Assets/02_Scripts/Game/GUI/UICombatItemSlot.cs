@@ -15,5 +15,10 @@ namespace LostGrace
         {
         
         }
+
+        public void Show(StockedItem unitCombatItem1)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

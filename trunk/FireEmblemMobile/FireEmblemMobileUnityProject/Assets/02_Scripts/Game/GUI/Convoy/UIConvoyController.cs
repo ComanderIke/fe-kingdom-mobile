@@ -347,10 +347,8 @@ public class UIConvoyController:MonoBehaviour
   
     void EquipRelicOnSelectedSlot(Unit human, Relic relic)
     {
-        var equippedRelic = equipmentController.selectedSlotNumber == 1 ? human.EquippedRelic1 : null;
-        if (equippedRelic == null)
-            equippedRelic = equipmentController.selectedSlotNumber == 2 ? human.EquippedRelic2 : null;
-        
+        var equippedRelic = equipmentController.selectedSlotNumber == 1 ? human.EquippedRelic : null;
+
         if (human.HasEquipped(relic))
         {
             human.UnEquip((relic));

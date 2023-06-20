@@ -23,7 +23,7 @@ public class InsertGemUI : MonoBehaviour
     [SerializeField] private Color insertColor;
     [SerializeField] private Color removeColor;
     [SerializeField] private SmithingSlot relic1;
-    [SerializeField] private SmithingSlot relic2;
+   
     
     private List<SelectableItemController> instantiatedItems;
     private StockedItem selected;
@@ -46,8 +46,8 @@ public class InsertGemUI : MonoBehaviour
         nameText.text = currentRelic.Name;
         description.text = currentRelic.Description;
         slotGameObject.SetActive(currentRelic.slotCount > 0);
-        relic1.Show(Player.Instance.Party.ActiveUnit.EquippedRelic1, currentRelic == Player.Instance.Party.ActiveUnit.EquippedRelic1);
-        relic2.Show(Player.Instance.Party.ActiveUnit.EquippedRelic2, currentRelic == Player.Instance.Party.ActiveUnit.EquippedRelic2);
+        relic1.Show(Player.Instance.Party.ActiveUnit.EquippedRelic, currentRelic == Player.Instance.Party.ActiveUnit.EquippedRelic);
+      
         gemParent.DeleteAllChildren();
         var equippedGem = currentRelic.GetGem(0);
         if (selected != null)

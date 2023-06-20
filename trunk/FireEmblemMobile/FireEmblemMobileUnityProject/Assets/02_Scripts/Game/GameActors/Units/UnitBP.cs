@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.AI;
-using Game.GameActors.Items;
 using Game.GameActors.Items.Weapons;
 using Game.GameActors.Players;
 using Game.GameActors.Units.CharStateEffects;
@@ -29,9 +28,11 @@ namespace Game.GameActors.Units
 
         [FormerlySerializedAs("EquippedWeapon")] public WeaponBP equippedWeaponBp;
         public RelicBP EquippedRelic1;
-        public RelicBP EquippedRelic2;
         public string Name;
 
+        [SerializeField] public StockedItemBP combatItem1;
+        [SerializeField] public StockedItemBP combatItem2;
+        
         [SerializeField]
         public Stats stats;
         [SerializeField]
@@ -82,10 +83,13 @@ namespace Game.GameActors.Units
             Relic relic1 = null;
             if(EquippedRelic1!=null)
                 relic1 = (Relic)EquippedRelic1.Create();
-            Relic relic2 = null;
-            if(EquippedRelic2!=null)
-                relic2 = (Relic)EquippedRelic2.Create();
-            return new Unit(bluePrintID, Name, rpgClass, (Stats)stats.Clone(), growths, moveType, weapon, relic1,relic2, new UnitVisual(visuals), new SkillManager(SkillManager),
+            StockedItem cItem1= null;
+            if(this.combatItem1!=null)
+                cItem1 = (StockedItem)combatItem1.Create();
+            StockedItem cItem2= null;
+            if(this.combatItem2!=null)
+                cItem2 = (StockedItem)combatItem2.Create();
+            return new Unit(bluePrintID, Name, rpgClass, (Stats)stats.Clone(), growths, moveType, weapon, relic1,cItem1, cItem2, new UnitVisual(visuals), new SkillManager(SkillManager),
                 new ExperienceManager(experienceManager));
         }
     }

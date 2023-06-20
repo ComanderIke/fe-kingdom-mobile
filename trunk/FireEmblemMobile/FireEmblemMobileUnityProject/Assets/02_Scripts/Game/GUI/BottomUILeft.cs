@@ -24,7 +24,8 @@ namespace LostGrace
         [SerializeField] private Image moveIcon;
         [SerializeField] private SmithingSlot weaponSlot;
         [SerializeField] private SmithingSlot RelicSlot1;
-        [SerializeField] private SmithingSlot RelicSlot2;
+        [SerializeField] private UICombatItemSlot combatItem1;
+        [SerializeField] private UICombatItemSlot combatItem2;
         [SerializeField] private Image blessingSprite;
         [SerializeField] private Image curseSprite;
         [SerializeField] private TextMeshProUGUI hp;
@@ -60,8 +61,9 @@ namespace LostGrace
             //     moveIcon.gameObject.SetActive(true);
             // }
             weaponSlot.Show(unit.equippedWeapon);
-            RelicSlot1.Show(unit.EquippedRelic1);
-            RelicSlot2.Show(unit.EquippedRelic2);
+            RelicSlot1.Show(unit.EquippedRelic);
+            combatItem1.Show(unit.CombatItem1);
+            combatItem2.Show(unit.CombatItem2);
             // if (unit.Blessing != null)
             // {
             //     blessingSprite.enabled=true;

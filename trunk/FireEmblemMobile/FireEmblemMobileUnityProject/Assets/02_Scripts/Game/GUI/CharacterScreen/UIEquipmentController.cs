@@ -79,13 +79,10 @@ public class UIEquipmentController:MonoBehaviour
             weapon = null;
         }
  
-        RelicSlotUpper.Show(unit.EquippedRelic1);
-        relic = unit.EquippedRelic1;
-        RelicSlotLower.Show(unit.EquippedRelic2);
-        relic2 = unit.EquippedRelic2;
-       
+        RelicSlotUpper.Show(unit.EquippedRelic);
+        relic = unit.EquippedRelic;
 
-     
+
     }
 
     public void Hide()

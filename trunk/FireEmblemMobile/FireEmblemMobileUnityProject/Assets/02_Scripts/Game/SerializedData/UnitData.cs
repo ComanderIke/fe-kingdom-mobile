@@ -21,9 +21,17 @@ namespace Game.GameActors.Players
         [SerializeField]
         public List<string> relic1slotIds;
         [SerializeField]
-        public string relic2Id;
+        public string combatItem1Id;
         [SerializeField]
-        public List<string> relic2slotIds;
+        public int combatItem1Stock;
+
+        [SerializeField]
+        public string combatItem2Id;
+        [SerializeField]
+        public int combatItem2Stock;
+
+
+       
         [SerializeField]
         public int hp;
         [SerializeField]
@@ -66,26 +74,26 @@ namespace Game.GameActors.Players
             classUpgraded = unit.ClassUpgraded;
            
             relic1slotIds = new List<string>();
-            relic2slotIds = new List<string>();
-            if (unit.EquippedRelic1 != null)
+            if (unit.EquippedRelic != null)
             {
-                relic1Id = unit.EquippedRelic1.Name;
+                relic1Id = unit.EquippedRelic.Name;
                
-                foreach (var slot in unit.EquippedRelic1.slots)
+                foreach (var slot in unit.EquippedRelic.slots)
                 {
                     if (slot != null&&slot.gem!=null)
                         relic1slotIds.Add(slot.gem.Name);
                 }
             }
 
-            if (unit.EquippedRelic1 != null)
-            { 
-                relic2Id = unit.EquippedRelic2.Name;
-                foreach (var slot in unit.EquippedRelic2.slots)
-                {
-                    if (slot != null&&slot.gem!=null)
-                        relic2slotIds.Add(slot.gem.Name);
-                }
+            if (unit.CombatItem1 != null)
+            {
+                combatItem1Id = unit.CombatItem1.item.Name;
+                combatItem1Stock = unit.CombatItem1.stock;
+            }
+            if (unit.CombatItem2 != null)
+            {
+                combatItem2Id = unit.CombatItem2.item.Name;
+                combatItem2Stock = unit.CombatItem2.stock;
             }
 
       
@@ -121,30 +129,27 @@ namespace Game.GameActors.Players
        
             unit.equippedWeapon = GameBPData.Instance.GetWeapon(weaponId);
             unit.equippedWeapon.weaponLevel = weaponLvl;
-            if(relic1Id!=""&&relic1Id!=null)
-                unit.EquippedRelic1 = GameBPData.Instance.GetRelic(relic1Id);
-            if(relic2Id!=""&&relic2Id!=null)
-                unit.EquippedRelic2 = GameBPData.Instance.GetRelic(relic2Id);
+            if(!string.IsNullOrEmpty(relic1Id))
+                unit.EquippedRelic = GameBPData.Instance.GetRelic(relic1Id);
+            if (!string.IsNullOrEmpty(combatItem1Id))
+            {
+                unit.CombatItem1 = new StockedItem(GameBPData.Instance.GetItemByName(combatItem1Id), combatItem1Stock);
+            }
+            if (!string.IsNullOrEmpty(combatItem2Id))
+            {
+                unit.CombatItem2 = new StockedItem(GameBPData.Instance.GetItemByName(combatItem2Id), combatItem2Stock);
+            }
             unit.ClassUpgraded = classUpgraded;
-            if (unit.EquippedRelic1 != null)
+            if (unit.EquippedRelic != null)
             {
                 int index = 0;
                 foreach (var gemId in relic1slotIds)
                 {
-                    unit.EquippedRelic1.InsertGem(GameBPData.Instance.GetGem(gemId),index);
+                    unit.EquippedRelic.InsertGem(GameBPData.Instance.GetGem(gemId),index);
                     index++;
                 }
             }
-            if (unit.EquippedRelic2 != null)
-            {
-                
-                int index = 0;
-                foreach (var gemId in relic2slotIds)
-                {
-                    unit.EquippedRelic2.InsertGem(GameBPData.Instance.GetGem(gemId),index);
-                    index++;
-                }
-            }
+           
 
             int skillIndex = 0;
             foreach (var skillId in skillIds)

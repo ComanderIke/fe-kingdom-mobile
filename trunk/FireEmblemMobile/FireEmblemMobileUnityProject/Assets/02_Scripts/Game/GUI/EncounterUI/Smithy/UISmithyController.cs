@@ -25,7 +25,7 @@ public class UISmithyController : MonoBehaviour
     [SerializeField] private UIUnitIdleAnimation unitIdleAnimation;
     [SerializeField] private SmithingSlot weaponSlot;
     [SerializeField] private SmithingSlot relicSlot;
-    [SerializeField] private SmithingSlot relicSlot2;
+
     [SerializeField] private CanvasGroup smithingButtonAlpha;
     [SerializeField] private CanvasGroup insertGemsButtonAlpha;
     [SerializeField] private CanvasGroup combineGemsButtonAlpha;
@@ -84,9 +84,7 @@ public class UISmithyController : MonoBehaviour
             combineGemUI.Hide();
             if (selectedRelic == null)
             {
-                selectedRelic = party.ActiveUnit.EquippedRelic1;
-                if(selectedRelic==null)
-                    selectedRelic = party.ActiveUnit.EquippedRelic2;
+                selectedRelic = party.ActiveUnit.EquippedRelic;
             }
 
             if (selectedRelic != null)
@@ -100,8 +98,7 @@ public class UISmithyController : MonoBehaviour
                 noRelicArea.alpha = 1;
             }
 
-            relicSlot.Show(party.ActiveUnit.EquippedRelic1, selectedRelic == party.ActiveUnit.EquippedRelic1);
-            relicSlot2.Show(party.ActiveUnit.EquippedRelic2, selectedRelic == party.ActiveUnit.EquippedRelic2);
+            relicSlot.Show(party.ActiveUnit.EquippedRelic, selectedRelic == party.ActiveUnit.EquippedRelic);
             smithingButtonAlpha.alpha = 0.6f;
             combineGemsButtonAlpha.alpha = 0.6f;
             insertGemsButtonAlpha.alpha = 1.0f;
@@ -195,15 +192,10 @@ public class UISmithyController : MonoBehaviour
     }
     public void Relic1Clicked()
     {
-        this.selectedRelic = party.ActiveUnit.EquippedRelic1;
+        this.selectedRelic = party.ActiveUnit.EquippedRelic;
         UpdateUI();
     }
-    public void Relic2Clicked()
-    { 
-
-        this.selectedRelic = party.ActiveUnit.EquippedRelic2;
-        UpdateUI();
-    }
+ 
 
     public enum SmithyUIState
     {
