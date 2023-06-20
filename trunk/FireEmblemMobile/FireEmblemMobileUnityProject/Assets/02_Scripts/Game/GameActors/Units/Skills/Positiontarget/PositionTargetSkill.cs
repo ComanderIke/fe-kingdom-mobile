@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _02_Scripts.Game.GameActors.Items.Consumables;
 using Game.GameActors.Players;
 using Game.GameActors.Units.Numbers;
 using Game.GameInput;
@@ -10,21 +11,22 @@ using UnityEngine;
 namespace Game.GameActors.Units.Skills
 {
     [System.Serializable]
-        public class PositionTargetSkill : ActivatedSkill
+        public class PositionTargetSkill : ActivatedSkill, IPosTargeted
     {
         public int power;
-        public int range;
-        public int size;
-        
-        public SkillTargetArea targetArea;
-        public bool rooted;
+        public int Range { get; set; }
+        public int Size { get; set; }
+       
+
+        public SkillTargetArea TargetArea { get; set; }
+        public bool Rooted { get; set; }
 
         public PositionTargetSkill(string name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier,string[] upgradeDescriptions,int hpCost, int maxUses, int power, int range, int size, SkillTargetArea targetArea, bool rooted) : base(name,description, icon, animationObject, cooldown,tier, upgradeDescriptions, hpCost,maxUses)
         {
-            this.rooted = rooted;
-            this.targetArea = targetArea;
-            this.size = size;
-            this.range = range;
+            this.Rooted = rooted;
+            this.TargetArea = targetArea;
+            this.Size = size;
+            this.Range = range;
             this.power = power;
         }
 
@@ -48,13 +50,13 @@ namespace Game.GameActors.Units.Skills
         protected List<Vector2Int> GetTargetPositions()
         {
             List<Vector2Int> targetPositions = new List<Vector2Int>();
-            if (size > 0)
+            if (Size > 0)
             {
-                if (targetArea == SkillTargetArea.Block)
+                if (TargetArea == SkillTargetArea.Block)
                 {
-                    for (int i = 0; i < size + 1; i++)
+                    for (int i = 0; i < Size + 1; i++)
                     {
-                        for (int j = 0; j < size + 1; j++)
+                        for (int j = 0; j < Size + 1; j++)
                         {
                             if(!targetPositions.Contains(new Vector2Int(i, -j)))
                                 targetPositions.Add(new Vector2Int(i, -j));
@@ -70,10 +72,10 @@ namespace Game.GameActors.Units.Skills
                 else
                 {
                     targetPositions.Add(new Vector2Int(0, 0));
-                    for (int i = 1; i < size + 1; i++)
+                    for (int i = 1; i < Size + 1; i++)
                     {
-                        if (targetArea == SkillTargetArea.Line || targetArea == SkillTargetArea.Cross ||
-                            targetArea == SkillTargetArea.Star)
+                        if (TargetArea == SkillTargetArea.Line || TargetArea == SkillTargetArea.Cross ||
+                            TargetArea == SkillTargetArea.Star)
                         {
                             if(!targetPositions.Contains(new Vector2Int(-i, 0)))
                              targetPositions.Add(new Vector2Int(-i, 0));
@@ -81,8 +83,8 @@ namespace Game.GameActors.Units.Skills
                                 targetPositions.Add(new Vector2Int(i, 0));
                         }
 
-                        if (targetArea == SkillTargetArea.NormalLine || targetArea == SkillTargetArea.Cross ||
-                            targetArea == SkillTargetArea.Star)
+                        if (TargetArea == SkillTargetArea.NormalLine ||TargetArea == SkillTargetArea.Cross ||
+                            TargetArea == SkillTargetArea.Star)
                         {
                             if(!targetPositions.Contains(new Vector2Int(0, -i)))
                                 targetPositions.Add(new Vector2Int(0, -i));
@@ -91,13 +93,13 @@ namespace Game.GameActors.Units.Skills
                         }
                     }
 
-                    if (targetArea == SkillTargetArea.Star)
+                    if (TargetArea == SkillTargetArea.Star)
                     {
-                        for (int i = 0; i < size; i++)
+                        for (int i = 0; i < Size; i++)
                         {
-                            for (int j = 0; j < size; j++)
+                            for (int j = 0; j < Size; j++)
                             {
-                                if (i != 0 && j != 0 && (i + j) <= size)
+                                if (i != 0 && j != 0 && (i + j) <= Size)
                                 {
                                     if(!targetPositions.Contains(new Vector2Int(i, -j)))
                                         targetPositions.Add(new Vector2Int(i, -j));

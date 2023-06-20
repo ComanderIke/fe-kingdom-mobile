@@ -1,4 +1,6 @@
 ﻿using System;
+using _02_Scripts.Game.GameActors.Items.Consumables;
+using Game.GameActors.Items;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
@@ -24,6 +26,7 @@ namespace Game.Mechanics
         private IUnitInputReceiver previousUnitInputReceiver;
         private UnitSelectionSystem selectionSystem;
         private Skill selectedSkill;
+        private Item selectedItem;
         private Unit selectedUnit;
         private PlayerPhaseState playerPhaseState;
         public ChooseTargetState( GridInputSystem gridInputSystem, UnitInputSystem unitInputSystem, PlayerPhaseState playerPhaseState)
@@ -58,6 +61,7 @@ namespace Game.Mechanics
             }
             else if (selectionSystem.SelectedItem != null)
             {
+                selectedItem = selectionSystem.SelectedItem;
                 ShowItemCastRange();
               
                 UI.Show((Unit)selectionSystem.SelectedCharacter, selectionSystem.SelectedItem);
@@ -70,20 +74,24 @@ namespace Game.Mechanics
 
         void ShowItemCastRange()
         {
-            gridGameManager.GetSystem<GridSystem>().ShowCastRange(selectionSystem.SelectedCharacter,1);
+            if (selectionSystem.SelectedItem is IThrowableItem throwableItem)
+            {
+                gridGameManager.GetSystem<GridSystem>()
+                    .ShowCastRange(selectionSystem.SelectedCharacter, throwableItem.Range);
+            }
         }
         void ShowSkillCastRange()
         {
             if (selectionSystem.SelectedSkill is PositionTargetSkill pts)
             {
-                if (pts.rooted)
+                if (pts.Rooted)
                 {
                     gridGameManager.GetSystem<GridSystem>().ShowRootedCastRange(selectionSystem.SelectedCharacter, pts);
                 }
                 else
                 {
                     gridGameManager.GetSystem<GridSystem>().ShowCastRange(selectionSystem.SelectedCharacter,
-                        pts.range + pts.GetCastRangeIncrease(((Unit)selectionSystem.SelectedCharacter).Stats
+                        pts.Range + pts.GetCastRangeIncrease(((Unit)selectionSystem.SelectedCharacter).Stats
                             .BaseAttributes));
                 }
             }
@@ -122,18 +130,28 @@ namespace Game.Mechanics
 
         public void ClickedOnGrid(int x, int y)
         {
-            if (selectedSkill is PositionTargetSkill pts)
+            if (selectedSkill is IPosTargeted pts)
             {
-                
-                if (!pts.rooted)
+                PositionTargetClicked(pts , x, y);
+               
+            }
+            else if (selectedItem is IPosTargeted throwableItem)
+            {
+                PositionTargetClicked(throwableItem, x,y);
+            }
+        }
+
+        private void PositionTargetClicked(IPosTargeted skill, int x, int y )
+        {
+             if (!skill.Rooted)
                 {
                     if (gridSystem.IsTargetAble(x, y))
                     {
 
                         if (gridSystem.cursor.GetCurrentTile() == gridSystem.Tiles[x, y])
                         {
-                            var targets = pts.GetAllTargets(selectedUnit, gridSystem.Tiles, x,y);
-                            pts.Activate(selectedUnit, gridSystem.Tiles, x,y);
+                            var targets = skill.GetAllTargets(selectedUnit, gridSystem.Tiles, x,y);
+                            skill.Activate(selectedUnit, gridSystem.Tiles, x,y);
                             new GameplayCommands().Wait(selectedUnit);
                             new GameplayCommands().ExecuteInputActions(()=>
                             {
@@ -155,7 +173,7 @@ namespace Game.Mechanics
                             gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
                             gridSystem.HideCast();
                            ShowSkillCastRange();
-                            gridSystem.ShowCast(pts.size, pts.targetArea);
+                            gridSystem.ShowCast(skill.Size, skill.TargetArea);
                         }
 
 
@@ -168,7 +186,7 @@ namespace Game.Mechanics
                     {
                         if (gridSystem.cursor.GetCurrentTile() == gridSystem.Tiles[x, y])
                         {
-                            pts.Activate(selectedUnit, gridSystem.Tiles, x,y);
+                            skill.Activate(selectedUnit, gridSystem.Tiles, x,y);
                             new GameplayCommands().Wait(selectedUnit);
                             new GameplayCommands().ExecuteInputActions(()=>
                             {
@@ -182,12 +200,11 @@ namespace Game.Mechanics
                             gridSystem.HideCast();
                             ShowSkillCastRange();
                             gridSystem.ShowRootedCast(selectedUnit.GridComponent.GridPosition.AsVector(),
-                                pts.size, pts.targetArea);
+                                skill.Size, skill.TargetArea);
                         }
                     }
                     
                 }
-            }
         }
 
         private bool IsInCastRange(int x, int y)
@@ -196,7 +213,7 @@ namespace Game.Mechanics
             {
                 int diff = Math.Abs(selectedUnit.GridComponent.GridPosition.X - x) +
                            Math.Abs(selectedUnit.GridComponent.GridPosition.Y - y);
-                return diff <= pts.range + pts.GetCastRangeIncrease(selectedUnit.Stats.BaseAttributes);
+                return diff <= pts.Range + pts.GetCastRangeIncrease(selectedUnit.Stats.BaseAttributes);
 
             }
             else

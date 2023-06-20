@@ -354,13 +354,13 @@ namespace Game.Map
         {
             HideMoveRange();
             Vector2 characterPos = character.GridComponent.GridPosition.AsVector();
-            if (pts.size > 0)
+            if (pts.Size > 0)
             {
-                if (pts.targetArea == SkillTargetArea.Block)
+                if (pts.TargetArea == SkillTargetArea.Block)
                 {
-                    for (int i = 0; i < pts.size + 1; i++)
+                    for (int i = 0; i < pts.Size + 1; i++)
                     {
-                        for (int j = 0; j< pts.size + 1; j++)
+                        for (int j = 0; j< pts.Size + 1; j++)
                         {
                             var pos = characterPos + new Vector2(i, j);
                             ShowCastRange(pos,character.Faction.Id);
@@ -375,9 +375,9 @@ namespace Game.Map
                 }
                 else
                 {
-                    for (int i = 1; i < pts.size + 1; i++)
+                    for (int i = 1; i < pts.Size + 1; i++)
                     {
-                        if (pts.targetArea == SkillTargetArea.Line||pts.targetArea == SkillTargetArea.Star||pts.targetArea == SkillTargetArea.Cross)
+                        if (pts.TargetArea == SkillTargetArea.Line||pts.TargetArea == SkillTargetArea.Star||pts.TargetArea == SkillTargetArea.Cross)
                         {
                             var pos = characterPos + new Vector2(-i, 0);
                             ShowCastRange(pos,character.Faction.Id);
@@ -386,7 +386,7 @@ namespace Game.Map
                           
                         }
 
-                        if (pts.targetArea == SkillTargetArea.NormalLine||pts.targetArea == SkillTargetArea.Star||pts.targetArea == SkillTargetArea.Cross)
+                        if (pts.TargetArea == SkillTargetArea.NormalLine||pts.TargetArea == SkillTargetArea.Star||pts.TargetArea == SkillTargetArea.Cross)
                         {
                             var pos = characterPos + new Vector2(0, -i);
                             ShowCastRange(pos,character.Faction.Id);
@@ -397,13 +397,13 @@ namespace Game.Map
                         
                     }
 
-                    if (pts.targetArea == SkillTargetArea.Star)
+                    if (pts.TargetArea == SkillTargetArea.Star)
                     {
-                        for (int i = 0; i < pts.size; i++)
+                        for (int i = 0; i < pts.Size; i++)
                         {
-                            for (int j = 0; j < pts.size; j++)
+                            for (int j = 0; j < pts.Size; j++)
                             {
-                                if (i !=0 && j!=0&&(i+j)<=pts.size)
+                                if (i !=0 && j!=0&&(i+j)<=pts.Size)
                                 {
                                     var pos = characterPos + new Vector2(i, j);
                                     ShowCastRange(pos,character.Faction.Id);
