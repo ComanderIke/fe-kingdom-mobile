@@ -54,8 +54,6 @@ namespace Game.Mechanics
             if (selectionSystem.SelectedSkill != null)
             {
                 selectedSkill = selectionSystem.SelectedSkill;
-                Debug.Log("Remove Magic NUmber!");
-
                 ShowSkillCastRange();
                 UI.Show((Unit)selectionSystem.SelectedCharacter, selectionSystem.SelectedSkill);
             }
@@ -144,67 +142,70 @@ namespace Game.Mechanics
         private void PositionTargetClicked(IPosTargeted skill, int x, int y )
         {
              if (!skill.Rooted)
-                {
-                    if (gridSystem.IsTargetAble(x, y))
-                    {
+             {
+                 if (gridSystem.IsTargetAble(x, y))
+                 {
 
-                        if (gridSystem.cursor.GetCurrentTile() == gridSystem.Tiles[x, y])
-                        {
-                            var targets = skill.GetAllTargets(selectedUnit, gridSystem.Tiles, x,y);
-                            skill.Activate(selectedUnit, gridSystem.Tiles, x,y);
-                            new GameplayCommands().Wait(selectedUnit);
-                            new GameplayCommands().ExecuteInputActions(()=>
-                            {
-                                playerPhaseState.Feed(PPStateTrigger.Cancel);
-                                var task = new AfterBattleTasks(ServiceProvider.Instance.GetSystem<UnitProgressSystem>(),(Unit)selectedUnit, targets);
-                                task.StartTask();
-                                task.OnFinished += () =>
-                                {
-                                    if(GridGameManager.Instance.FactionManager.ActiveFaction.IsPlayerControlled)
-                                        GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.PlayerPhaseState);
-                                    else
-                                        GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.EnemyPhaseState);
-                                };
-                            });
-                            //Selected same Tile again
-                        }
-                        else
-                        {
-                            gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
-                            gridSystem.HideCast();
-                           ShowSkillCastRange();
-                            gridSystem.ShowCast(skill.Size, skill.TargetArea);
-                        }
-
-
-
-                    }
-                }
-                else
-                {
-                    if (gridSystem.IsTargetAble(x, y))
-                    {
-                        if (gridSystem.cursor.GetCurrentTile() == gridSystem.Tiles[x, y])
-                        {
-                            skill.Activate(selectedUnit, gridSystem.Tiles, x,y);
-                            new GameplayCommands().Wait(selectedUnit);
-                            new GameplayCommands().ExecuteInputActions(()=>
-                            {
-                                playerPhaseState.Feed(PPStateTrigger.Cancel);
-                            });
-                            //Selected same Tile again
-                        }
-                        else
-                        {
-                            gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
-                            gridSystem.HideCast();
+                     if (gridSystem.cursor.GetCurrentTile() == gridSystem.Tiles[x, y])
+                     {
+                         var targets = skill.GetAllTargets(selectedUnit, gridSystem.Tiles, x,y);
+                         skill.Activate(selectedUnit, gridSystem.Tiles, x,y);
+                         new GameplayCommands().Wait(selectedUnit);
+                         new GameplayCommands().ExecuteInputActions(()=>
+                         {
+                             playerPhaseState.Feed(PPStateTrigger.Cancel);
+                             var task = new AfterBattleTasks(ServiceProvider.Instance.GetSystem<UnitProgressSystem>(),(Unit)selectedUnit, targets);
+                             task.StartTask();
+                             task.OnFinished += () =>
+                             {
+                                 if(GridGameManager.Instance.FactionManager.ActiveFaction.IsPlayerControlled)
+                                     GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.PlayerPhaseState);
+                                 else
+                                     GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.EnemyPhaseState);
+                             };
+                         });
+                         //Selected same Tile again
+                     }
+                     else
+                     {
+                         gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
+                         gridSystem.HideCast();
+                         if(skill is Skill)
                             ShowSkillCastRange();
-                            gridSystem.ShowRootedCast(selectedUnit.GridComponent.GridPosition.AsVector(),
-                                skill.Size, skill.TargetArea);
-                        }
-                    }
+                         else if(skill is Item)
+                             ShowItemCastRange();
+                         gridSystem.ShowCast(skill.Size, skill.TargetArea, skill.EffectType);
+                     }
+
+
+
+                 }
+             }
+             else
+             {
+                 if (gridSystem.IsTargetAble(x, y))
+                 {
+                     if (gridSystem.cursor.GetCurrentTile() == gridSystem.Tiles[x, y])
+                     {
+                         skill.Activate(selectedUnit, gridSystem.Tiles, x,y);
+                         new GameplayCommands().Wait(selectedUnit);
+                         new GameplayCommands().ExecuteInputActions(()=>
+                         {
+                             playerPhaseState.Feed(PPStateTrigger.Cancel);
+                         });
+                         //Selected same Tile again
+                     }
+                     else
+                     {
+                         gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
+                         gridSystem.HideCast();
+                         ShowSkillCastRange();
+                         gridSystem.ShowRootedCast(selectedUnit.GridComponent.GridPosition.AsVector(),
+                             skill.Size, skill.TargetArea);
+                     }
+                 }
                     
-                }
+             }
         }
 
         private bool IsInCastRange(int x, int y)

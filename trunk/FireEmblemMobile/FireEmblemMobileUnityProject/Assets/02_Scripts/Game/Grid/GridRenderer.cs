@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Units;
+﻿using _02_Scripts.Game.GameActors.Items.Consumables;
+using Game.GameActors.Units;
 using Game.Map;
 using UnityEngine;
 
@@ -26,10 +27,10 @@ namespace Game.Grid
            
 
         }
-        public void SetTileCastCursorMaterial(Vector2 pos, FactionId playerId)
+        public void SetTileCastCursorMaterial(Vector2 pos,EffectType effectiveAgainstType, FactionId playerId)
         {
             if(pos.x>=0&& pos.y>=0&& pos.x < Tiles.GetLength(0)&& pos.y <Tiles.GetLength(1))
-                Tiles[(int) pos.x, (int) pos.y].SetCastCursorMaterial(playerId);
+                Tiles[(int) pos.x, (int) pos.y].SetCastCursorMaterial(effectiveAgainstType, playerId);
            
 
         }

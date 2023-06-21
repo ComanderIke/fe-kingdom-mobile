@@ -13,6 +13,9 @@
         void SetVisualStyle(FactionId id);
         void SwapVisual();
         void BlockedVisual();
-        void CastCursorVisual();
+       
+        void CastBadVisual();
+        void CastGoodVisual();
+        void CastHealVisual();
     }
 }

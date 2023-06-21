@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using __2___Scripts.Game.Utility;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
+using Game.GameInput;
 using Game.GUI;
 using TMPro;
 using UnityEngine;
@@ -13,7 +14,7 @@ namespace LostGrace
 {
     public class BottomUILeft : BottomUIBase
     {
-
+        [SerializeField] UseItemDialogController useItemDialogController;
         [SerializeField] private Image faceSprite;
         [SerializeField] private TextMeshProUGUI nameText;
         [SerializeField] private TextMeshProUGUI lvl;
@@ -26,8 +27,6 @@ namespace LostGrace
         [SerializeField] private SmithingSlot RelicSlot1;
         [SerializeField] private UICombatItemSlot combatItem1;
         [SerializeField] private UICombatItemSlot combatItem2;
-        [SerializeField] private Image blessingSprite;
-        [SerializeField] private Image curseSprite;
         [SerializeField] private TextMeshProUGUI hp;
         [SerializeField] private TextMeshProUGUI atk;
         [SerializeField] private TextMeshProUGUI spd;
@@ -63,7 +62,9 @@ namespace LostGrace
             weaponSlot.Show(unit.equippedWeapon);
             RelicSlot1.Show(unit.EquippedRelic);
             combatItem1.Show(unit.CombatItem1);
+            combatItem1.OnClicked += CombatItemClicked;
             combatItem2.Show(unit.CombatItem2);
+            combatItem2.OnClicked += CombatItemClicked;
             // if (unit.Blessing != null)
             // {
             //     blessingSprite.enabled=true;
@@ -97,10 +98,17 @@ namespace LostGrace
             foreach (var skill in unit.SkillManager.Skills)
             {
                 var go =Instantiate(skill is ActivatedSkill?activeSkillprefab:skillprefab, skillContainer);
-                go.GetComponent<SkillUI>().SetSkill(skill);
+                go.GetComponent<SkillUI>().SetSkill(skill, true);
             }
         }
 
-       
+        public void CombatItemClicked(UICombatItemSlot  clickedCombatItemUI)
+        {
+         
+            var combatItem = clickedCombatItemUI.GetCombatItem();
+            Debug.Log("CLICKED COMBAT ITEM: " +combatItem.item.Name);
+            ToolTipSystem.Show(combatItem.item, clickedCombatItemUI.transform.position);
+            useItemDialogController.Show(combatItem.item,()=>new GameplayCommands().SelectItem(combatItem.item));
+        }
     }
 }

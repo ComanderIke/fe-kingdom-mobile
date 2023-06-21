@@ -29,17 +29,17 @@ namespace Game.GameActors.Units
         //     return dmg;
         // }
 
-        public bool IsEffective(EffectType effect)
+        public bool IsEffective(EffectiveAgainstType effectiveAgainst)
         {
-            return owner.GetEquippedWeapon().IsEffective(effect);
+            return owner.GetEquippedWeapon().IsEffective(effectiveAgainst);
         }
-        public float GetEffectiveCoefficient(EffectType effect)
+        public float GetEffectiveCoefficient(EffectiveAgainstType effectiveAgainst)
         {
-            return owner.GetEquippedWeapon().GetEffectiveCoefficient(effect);
+            return owner.GetEquippedWeapon().GetEffectiveCoefficient(effectiveAgainst);
         }
         
 
-        public bool HasAdvantage(EffectType type)
+        public bool HasAdvantage(EffectiveAgainstType type)
         {
             return owner.GetEquippedWeapon().HasAdvantage(type);
         }

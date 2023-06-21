@@ -19,10 +19,10 @@ namespace Game.GameActors.Items.Weapons
         
         public WeaponType WeaponType;
         public DamageType DamageType;
-        [SerializeField] private Dictionary<EffectType, float> effectiveAgainst;
+        [SerializeField] private Dictionary<EffectiveAgainstType, float> effectiveAgainst;
         
 
-        public Weapon(string name, string description, int cost,int rarity, int maxStack,Sprite sprite, EquipmentSlotType slotType, int weaponLevel, int maxLevel,int[] attackRanges, WeaponAttributes[] weaponAttributes, WeaponType weaponType, DamageType damageType, Dictionary<EffectType, float> effectiveAgainst=null) : base(name, description, cost, rarity,maxStack,sprite, slotType)
+        public Weapon(string name, string description, int cost,int rarity, int maxStack,Sprite sprite, EquipmentSlotType slotType, int weaponLevel, int maxLevel,int[] attackRanges, WeaponAttributes[] weaponAttributes, WeaponType weaponType, DamageType damageType, Dictionary<EffectiveAgainstType, float> effectiveAgainst=null) : base(name, description, cost, rarity,maxStack,sprite, slotType)
         {
             this.weaponLevel = weaponLevel;
             this.maxLevel = maxLevel;
@@ -96,20 +96,20 @@ namespace Game.GameActors.Items.Weapons
                 return 0;
         }
 
-        public bool IsEffective(EffectType effectType)
+        public bool IsEffective(EffectiveAgainstType effectiveAgainstType)
         {
-            return effectiveAgainst.ContainsKey(effectType)||WeaponType.IsEffective(effectType);
+            return effectiveAgainst.ContainsKey(effectiveAgainstType)||WeaponType.IsEffective(effectiveAgainstType);
         }
-        public float GetEffectiveCoefficient(EffectType effectType)
+        public float GetEffectiveCoefficient(EffectiveAgainstType effectiveAgainstType)
         {
-            if (effectiveAgainst.ContainsKey(effectType))
+            if (effectiveAgainst.ContainsKey(effectiveAgainstType))
             {
-                return effectiveAgainst[effectType];
+                return effectiveAgainst[effectiveAgainstType];
             }
-            return WeaponType.GetEffectiveCoefficient(effectType);
+            return WeaponType.GetEffectiveCoefficient(effectiveAgainstType);
         }
 
-        public bool HasAdvantage(EffectType type)
+        public bool HasAdvantage(EffectiveAgainstType type)
         {
             return WeaponType.HasAdvantage(type);
         }

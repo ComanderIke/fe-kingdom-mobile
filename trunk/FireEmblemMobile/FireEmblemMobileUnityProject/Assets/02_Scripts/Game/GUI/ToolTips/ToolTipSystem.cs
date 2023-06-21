@@ -80,17 +80,17 @@ public class ToolTipSystem : MonoBehaviour
         
         instance.relicToolTip.gameObject.SetActive(true);
     }
-    public static void Show(Item item, Vector3 position, string header, string description, Sprite icon)
+    public static void Show(Item item, Vector3 position)
     {
         instance.tooltipShownThisFrame = true;
         CloseAllToolTips();
         if (item is Relic relic)
         {
-            Show(relic, position, header, description, icon);
+            Show(relic, position, item.Name, item.Description, item.Sprite);
             return;
         }
 
-        instance.ItemToolTip.SetValues(item, header,description,icon, Camera.main.WorldToScreenPoint(position));
+        instance.ItemToolTip.SetValues(item, item.Name, item.Description, item.Sprite, Camera.main.WorldToScreenPoint(position));
         
         instance.ItemToolTip.gameObject.SetActive(true);
     }

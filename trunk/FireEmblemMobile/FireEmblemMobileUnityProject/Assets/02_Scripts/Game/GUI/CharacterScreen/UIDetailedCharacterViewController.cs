@@ -22,6 +22,7 @@ public class UIDetailedCharacterViewController : UICharacterViewController
     [SerializeField] private GameObject blessingPrefab;
     
     
+    
     public void SkillTreeClicked()
     {
         skillTreeUI.Show(unit);

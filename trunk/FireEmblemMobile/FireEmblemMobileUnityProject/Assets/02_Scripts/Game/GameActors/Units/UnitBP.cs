@@ -84,10 +84,10 @@ namespace Game.GameActors.Units
             if(EquippedRelic1!=null)
                 relic1 = (Relic)EquippedRelic1.Create();
             StockedItem cItem1= null;
-            if(this.combatItem1!=null)
+            if(this.combatItem1!=null&&this.combatItem1.item!=null&&combatItem1.stock>0)
                 cItem1 = (StockedItem)combatItem1.Create();
             StockedItem cItem2= null;
-            if(this.combatItem2!=null)
+            if(this.combatItem2!=null&&this.combatItem2.item!=null&&combatItem2.stock>0)
                 cItem2 = (StockedItem)combatItem2.Create();
             return new Unit(bluePrintID, Name, rpgClass, (Stats)stats.Clone(), growths, moveType, weapon, relic1,cItem1, cItem2, new UnitVisual(visuals), new SkillManager(SkillManager),
                 new ExperienceManager(experienceManager));

@@ -9,6 +9,7 @@ namespace LostGrace
     public class SkillsUI : MonoBehaviour
     {
         [SerializeField] private GameObject skillButtonPrefab;
+        [SerializeField] private GameObject activeSkillButtonPrefab;
 
 
         private List<GameObject> instantiatedButtons;
@@ -18,8 +19,8 @@ namespace LostGrace
             transform.DeleteAllChildren();
             foreach (var skill in skills)
             {
-                var go = Instantiate(skillButtonPrefab, transform);
-                go.GetComponent<SkillUI>().SetSkill(skill);
+                var go = Instantiate(skill is ActivatedSkill?activeSkillButtonPrefab:skillButtonPrefab, transform);
+                go.GetComponent<SkillUI>().SetSkill(skill, false);
             }
             // var addButtonGo = Instantiate(addSkillButtonPrefab, transform);
             // addButtonGo.GetComponent<AddSkillButton>().Show(skillPoints);

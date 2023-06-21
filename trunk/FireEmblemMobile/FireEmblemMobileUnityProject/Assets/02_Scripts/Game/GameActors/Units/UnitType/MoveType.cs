@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Game.GameActors.Units
 {
     [CreateAssetMenu(menuName = "GameData/Unit/MoveType", fileName = "MoveType")]
-    public class MoveType: EffectType
+    public class MoveType: EffectiveAgainstType
     {
         public int moveTypeId;
         public Sprite icon;
@@ -14,7 +14,7 @@ namespace Game.GameActors.Units
         
     }
 
-    public abstract class EffectType :ScriptableObject
+    public abstract class EffectiveAgainstType :ScriptableObject
     {
         
     }

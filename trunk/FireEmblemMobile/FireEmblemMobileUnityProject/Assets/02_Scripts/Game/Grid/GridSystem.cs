@@ -11,6 +11,7 @@ using Game.Manager;
 using Game.Mechanics;
 using GameEngine;
 using UnityEngine;
+using EffectType = _02_Scripts.Game.GameActors.Items.Consumables.EffectType;
 
 namespace Game.Map
 {
@@ -460,7 +461,7 @@ namespace Game.Map
             HideMoveRange();
         }
 
-        public void ShowCast(int radius, SkillTargetArea skillTargetArea)
+        public void ShowCast(int radius, SkillTargetArea skillTargetArea, EffectType effectType)
         {
             Debug.Log("Show Cast: "+radius+ " "+skillTargetArea+" "+cursor.GetPosition());
             if (radius > 0)
@@ -471,10 +472,10 @@ namespace Game.Map
                     {
                         for (int j = 0; j< radius + 1; j++)
                         {
-                            GridRenderer.SetTileCastCursorMaterial(new Vector2(i,-j)+cursor.GetPosition(),0);
-                            GridRenderer.SetTileCastCursorMaterial(new Vector2(i,j)+cursor.GetPosition(),0);
-                            GridRenderer.SetTileCastCursorMaterial(new Vector2(-i,-j)+cursor.GetPosition(),0);
-                            GridRenderer.SetTileCastCursorMaterial(new Vector2(-i,j)+cursor.GetPosition(),0);
+                            GridRenderer.SetTileCastCursorMaterial(new Vector2(i,-j)+cursor.GetPosition(),effectType,0);
+                            GridRenderer.SetTileCastCursorMaterial(new Vector2(i,j)+cursor.GetPosition(),effectType,0);
+                            GridRenderer.SetTileCastCursorMaterial(new Vector2(-i,-j)+cursor.GetPosition(),effectType,0);
+                            GridRenderer.SetTileCastCursorMaterial(new Vector2(-i,j)+cursor.GetPosition(),effectType,0);
                         }
                     }
                 }
@@ -484,15 +485,15 @@ namespace Game.Map
                     {
                         if (skillTargetArea==SkillTargetArea.Line||skillTargetArea==SkillTargetArea.Cross||skillTargetArea==SkillTargetArea.Star)
                         {
-                            GridRenderer.SetTileCastCursorMaterial(new Vector2(i,0)+cursor.GetPosition(),0);
-                            GridRenderer.SetTileCastCursorMaterial(new Vector2(-i,0)+cursor.GetPosition(),0);
+                            GridRenderer.SetTileCastCursorMaterial(new Vector2(i,0)+cursor.GetPosition(),effectType,0);
+                            GridRenderer.SetTileCastCursorMaterial(new Vector2(-i,0)+cursor.GetPosition(),effectType,0);
                  
                         }
 
                         if (skillTargetArea==SkillTargetArea.NormalLine||skillTargetArea==SkillTargetArea.Cross||skillTargetArea==SkillTargetArea.Star)
                         {
-                            GridRenderer.SetTileCastCursorMaterial(new Vector2(0,-i)+cursor.GetPosition(),0);
-                            GridRenderer.SetTileCastCursorMaterial(new Vector2(0,i)+cursor.GetPosition(),0);
+                            GridRenderer.SetTileCastCursorMaterial(new Vector2(0,-i)+cursor.GetPosition(),effectType,0);
+                            GridRenderer.SetTileCastCursorMaterial(new Vector2(0,i)+cursor.GetPosition(),effectType,0);
                          
                         }
 
@@ -507,10 +508,10 @@ namespace Game.Map
                             {
                                 if (i !=0 && j!=0&&(i+j)<=radius)
                                 {
-                                    GridRenderer.SetTileCastCursorMaterial(new Vector2(i,-j)+cursor.GetPosition(),0);
-                                    GridRenderer.SetTileCastCursorMaterial(new Vector2(i,j)+cursor.GetPosition(),0);
-                                    GridRenderer.SetTileCastCursorMaterial(new Vector2(-i,-j)+cursor.GetPosition(),0);
-                                    GridRenderer.SetTileCastCursorMaterial(new Vector2(-i,j)+cursor.GetPosition(),0);
+                                    GridRenderer.SetTileCastCursorMaterial(new Vector2(i,-j)+cursor.GetPosition(),effectType,0);
+                                    GridRenderer.SetTileCastCursorMaterial(new Vector2(i,j)+cursor.GetPosition(),effectType,0);
+                                    GridRenderer.SetTileCastCursorMaterial(new Vector2(-i,-j)+cursor.GetPosition(),effectType,0);
+                                    GridRenderer.SetTileCastCursorMaterial(new Vector2(-i,j)+cursor.GetPosition(),effectType,0);
                                 }
                                
                             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using _02_Scripts.Game.GameActors.Items.Consumables;
 using Game.Grid;
 using Game.Mechanics;
 using UnityEngine;
@@ -38,7 +39,7 @@ namespace Game.GameActors.Units.Skills
             base.Activate(user,tiles, x, y);
         }
 
-        public AOEMagicSkill(string name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier,string[] upgradeDescriptions,int hpCost, int maxUses, int power, int range, int size, SkillTargetArea targetArea, bool rooted) : base(name, description, icon, animationObject, cooldown, tier,upgradeDescriptions,hpCost,maxUses ,power, range, size, targetArea, rooted)
+        public AOEMagicSkill(string name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier,string[] upgradeDescriptions,int hpCost, int maxUses, int power, int range, int size, SkillTargetArea targetArea, bool rooted) : base(name, description, icon, animationObject, cooldown, tier,upgradeDescriptions,hpCost,maxUses ,power, range, size, targetArea, EffectType.Bad,rooted)
         {
         }
     }

@@ -11,6 +11,7 @@ using Game.Manager;
 using Game.Map;
 using Game.WorldMapStuff.Model;
 using GameEngine.GameStates;
+using LostGrace;
 using UnityEngine;
 
 namespace Game.Mechanics
@@ -66,6 +67,7 @@ namespace Game.Mechanics
             UnitSelectionSystem.OnSelectedCharacter -= OnSelectedCharacter;
             UnitSelectionSystem.OnSkillSelected -= SkillSelected;
             UnitSelectionSystem.OnItemSelected -= ItemSelected;
+            
             GameplayCommands.OnViewUnit -= ViewUnit;
             gridGameManager.GetSystem<GridSystem>().cursor.OnCursorPositionChanged -= CursorPosChanged;
             gridInputSystem.ResetInput();

@@ -2,6 +2,7 @@
 using Game.GameActors.Items.Weapons;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
+using LostGrace;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -14,13 +15,13 @@ public class UIEquipmentController:MonoBehaviour
 
     public SmithingSlot WeaponSlot;
     public SmithingSlot RelicSlotUpper;
-    public SmithingSlot RelicSlotLower;
+    [SerializeField] UICombatItemSlot combatItemSlot1;
+    [SerializeField] UICombatItemSlot combatItemSlot2;
     [SerializeField] private UIConvoyController convoy;
 
     public Color inActiveColor;
     [FormerlySerializedAs("weaponBp")] public Weapon weapon;
     [NonSerialized] public Relic relic;
-    [NonSerialized]public Relic relic2;
     public SmithingSlot selectedSlot = null;
     public int selectedSlotNumber=-1;
 
@@ -43,24 +44,7 @@ public class UIEquipmentController:MonoBehaviour
             convoy.Show(typeof(Relic), UIConvoyController.ConvoyContext.SelectRelic);
         // }
     }
-    public void RelicSlotLowerClicked()
-    {
-        if (relic2 != null)
-        {
-
-            ToolTipSystem.Show(relic2, RelicSlotLower.transform.position, relic2.Name, relic2.Description,
-                relic2.GetIcon());
-         }
-        // else
-        // {
-            if (selectedSlot != null)
-                selectedSlot.Deselect();
-            selectedSlot = RelicSlotLower;
-            selectedSlotNumber = 2;
-            RelicSlotLower.Select();
-            convoy.Show(typeof(Relic), UIConvoyController.ConvoyContext.SelectRelic);
-        // }
-    }
+    
     public void WeaponSlotClicked()
     {
         Debug.Log("ClickedWeapobn");
@@ -81,6 +65,8 @@ public class UIEquipmentController:MonoBehaviour
  
         RelicSlotUpper.Show(unit.EquippedRelic);
         relic = unit.EquippedRelic;
+        combatItemSlot1.Show(unit.CombatItem1);
+        combatItemSlot2.Show(unit.CombatItem2);
 
 
     }
@@ -98,6 +84,5 @@ public class UIEquipmentController:MonoBehaviour
     public void HighlightRelicSlots()
     {
         RelicSlotUpper.Highlight();
-        RelicSlotLower.Highlight();
     }
 }

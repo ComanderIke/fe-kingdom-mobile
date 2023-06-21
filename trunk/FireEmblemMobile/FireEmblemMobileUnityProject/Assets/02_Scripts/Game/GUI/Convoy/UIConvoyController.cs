@@ -287,7 +287,7 @@ public class UIConvoyController:MonoBehaviour
         itemClicked = true;
         Debug.Log("Item Clicked: "+clickedItem);
         convoy.Select(clickedItem.stockedItem);
-        ToolTipSystem.Show(clickedItem.stockedItem.item, clickedItem.transform.position, clickedItem.stockedItem.item.Name, clickedItem.stockedItem.item.Description, clickedItem.stockedItem.item.Sprite);
+        ToolTipSystem.Show(clickedItem.stockedItem.item, clickedItem.transform.position);
         UpdateValues();
     }
     public void Hide()

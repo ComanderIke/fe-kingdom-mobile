@@ -16,16 +16,26 @@ namespace _02_Scripts.Game.GameActors.Items.Consumables
         List<IAttackableTarget> GetAllTargets(Unit selectedUnit, Tile[,] gridSystemTiles, int i, int i1);
         int Size { get; set; }
         SkillTargetArea TargetArea { get; set; }
+        EffectType EffectType { get; set; }
     }
     interface IThrowableItem:IPosTargeted
     {
         public int Range { get; set; }
-    } 
+        public EffectType EffectType { get; set; } 
+    }
+
+    public enum EffectType
+    {
+        Heal,
+        Good,
+        Bad
+    }
     public class Bomb : ConsumableItem, IThrowableItem
     {
         public Debuff appliedDebuff;
         public int power;
         public int Range { get; set; }
+        public EffectType EffectType { get; set; }
         public bool Rooted { get; set; }
         public void Activate(Unit selectedUnit, Tile[,] gridSystemTiles, int p2, int p3)
         {
@@ -40,12 +50,13 @@ namespace _02_Scripts.Game.GameActors.Items.Consumables
         public int Size { get; set; }
         
         public SkillTargetArea TargetArea{ get; set; }
-        public Bomb(int power, int range, int size, SkillTargetArea targetArea, Debuff appliedDebuff, string name, string description, int cost, int rarity,int maxStack,Sprite sprite) : base(name, description, cost,rarity, maxStack,sprite, ItemTarget.Position)
+        public Bomb(int power, int range, int size, SkillTargetArea targetArea, EffectType effectType,Debuff appliedDebuff, string name, string description, int cost, int rarity,int maxStack,Sprite sprite) : base(name, description, cost,rarity, maxStack,sprite, ItemTarget.Position)
         {
             this.power = power;
             this.Range = range;
             this.Size = size;
             this.TargetArea = targetArea;
+            this.EffectType = effectType;
             this.appliedDebuff = appliedDebuff;
         }
     }

@@ -92,6 +92,8 @@ namespace Game.Mechanics
 
         public void Activate()
         {
+            Unit.OnUnitDamaged -= UnitDamaged;
+            Unit.OnUnitHealed -= UnitHealed;
             Unit.OnUnitDamaged += UnitDamaged;
             Unit.OnUnitHealed += UnitHealed;
         }

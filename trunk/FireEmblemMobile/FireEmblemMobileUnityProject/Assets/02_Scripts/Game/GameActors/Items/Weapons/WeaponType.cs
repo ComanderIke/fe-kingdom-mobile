@@ -9,24 +9,24 @@ namespace Game.GameActors.Items.Weapons
 {
     [Serializable]
     [CreateAssetMenu(menuName = "GameData/Weapons/WeaponType", fileName = "weaponType1")]
-    public class WeaponType: EffectType
+    public class WeaponType: EffectiveAgainstType
     {
         [SerializeField] private String weaponName;
         [SerializeField] private Sprite icon;
 
         public string WeaponName => weaponName;
-        [SerializeField] private List<EffectType> effectiveAgainst;
+        [SerializeField] private List<EffectiveAgainstType> effectiveAgainst;
   
         [SerializeField] private List<float> effectiveAgainstCoefficients;
-        [SerializeField] private List<EffectType> advantageAgainst;
-        private Dictionary<EffectType, float> effectiveAgainstDict;
+        [SerializeField] private List<EffectiveAgainstType> advantageAgainst;
+        private Dictionary<EffectiveAgainstType, float> effectiveAgainstDict;
         public Sprite Icon => icon;
-        private Dictionary<EffectType, float> EffectiveAgainst{
+        private Dictionary<EffectiveAgainstType, float> EffectiveAgainst{
             get
             {
                 if (effectiveAgainstDict == null)
                 { 
-                    effectiveAgainstDict = new Dictionary<EffectType, float>();
+                    effectiveAgainstDict = new Dictionary<EffectiveAgainstType, float>();
                     if (effectiveAgainst != null)
                     {
                         for (int i = 0; i < effectiveAgainst.Count; i++)
@@ -40,17 +40,17 @@ namespace Game.GameActors.Items.Weapons
             }
         }
 
-        public bool HasAdvantage(EffectType effectType)
+        public bool HasAdvantage(EffectiveAgainstType effectiveAgainstType)
         {
-            return advantageAgainst.Contains(effectType);
+            return advantageAgainst.Contains(effectiveAgainstType);
         }
-        public bool IsEffective(EffectType effectType)
+        public bool IsEffective(EffectiveAgainstType effectiveAgainstType)
         {
-            return EffectiveAgainst.ContainsKey(effectType);
+            return EffectiveAgainst.ContainsKey(effectiveAgainstType);
         }
-        public float GetEffectiveCoefficient(EffectType effectType)
+        public float GetEffectiveCoefficient(EffectiveAgainstType effectiveAgainstType)
         {
-            return EffectiveAgainst[effectType];
+            return EffectiveAgainst[effectiveAgainstType];
         }
         
     }

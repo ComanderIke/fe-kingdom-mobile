@@ -14,12 +14,13 @@ namespace _02_Scripts.Game.GameActors.Items.Consumables
         public int power;
         public int range;
         public int size;
+        public EffectType effectType;
         
         public SkillTargetArea targetArea;
 
         public override Item Create()
         {
-            return new Bomb(power, range, size, targetArea, appliedDebuff, name, description, cost, rarity,maxStack,sprite);
+            return new Bomb(power, range, size, targetArea,effectType, appliedDebuff, name, description, cost, rarity,maxStack,sprite);
         }
     }
 }

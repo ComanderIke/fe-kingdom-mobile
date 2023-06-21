@@ -19,15 +19,17 @@ namespace Game.GameActors.Units.Skills
        
 
         public SkillTargetArea TargetArea { get; set; }
+        public EffectType EffectType { get; set; }
         public bool Rooted { get; set; }
 
-        public PositionTargetSkill(string name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier,string[] upgradeDescriptions,int hpCost, int maxUses, int power, int range, int size, SkillTargetArea targetArea, bool rooted) : base(name,description, icon, animationObject, cooldown,tier, upgradeDescriptions, hpCost,maxUses)
+        public PositionTargetSkill(string name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier,string[] upgradeDescriptions,int hpCost, int maxUses, int power, int range, int size, SkillTargetArea targetArea,EffectType effectType, bool rooted) : base(name,description, icon, animationObject, cooldown,tier, upgradeDescriptions, hpCost,maxUses)
         {
             this.Rooted = rooted;
             this.TargetArea = targetArea;
             this.Size = size;
             this.Range = range;
             this.power = power;
+            this.EffectType = effectType;
         }
 
         public virtual void Activate(Unit user, Tile[,] tiles, int x, int y)

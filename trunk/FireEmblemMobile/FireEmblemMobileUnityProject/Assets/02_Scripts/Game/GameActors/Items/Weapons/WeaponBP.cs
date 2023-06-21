@@ -22,12 +22,12 @@ namespace Game.GameActors.Items.Weapons
         
         public WeaponType WeaponType;
         public DamageType DamageType;
-        public List<EffectType> effectiveAgainst;
+        public List<EffectiveAgainstType> effectiveAgainst;
         public List<float> effectiveAgainstCoefficients;
 
         public override Item Create()
         {
-            Dictionary<EffectType, float> effectiveness = new Dictionary<EffectType, float>();
+            Dictionary<EffectiveAgainstType, float> effectiveness = new Dictionary<EffectiveAgainstType, float>();
             for (int i = 0; i < effectiveAgainst.Count; i++)
             {
                 effectiveness.Add(effectiveAgainst[i], effectiveAgainstCoefficients[i]);

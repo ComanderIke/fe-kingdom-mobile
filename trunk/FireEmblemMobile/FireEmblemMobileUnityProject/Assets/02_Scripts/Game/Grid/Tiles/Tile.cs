@@ -1,4 +1,5 @@
 ﻿using System.Xml.Schema;
+using _02_Scripts.Game.GameActors.Items.Consumables;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.Graphics;
@@ -67,10 +68,19 @@ namespace Game.Grid
             TileRenderer.Reset();
             tileVfx.Hide(this);
         }
-        public void SetCastCursorMaterial(FactionId playerId)
+        public void SetCastCursorMaterial(EffectType effectType,FactionId playerId)
         {
             TileRenderer.SetVisualStyle(playerId);
-            TileRenderer.CastCursorVisual();
+            switch (effectType)
+            {
+                case EffectType.Heal: TileRenderer.CastHealVisual();
+                    break;
+                case EffectType.Good: TileRenderer.CastGoodVisual();
+                    break;
+                case EffectType.Bad: TileRenderer.CastBadVisual();
+                    break;
+            }
+            
         }
         public void SetCastMaterial(FactionId playerId)
         {

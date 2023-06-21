@@ -15,7 +15,11 @@ namespace LostGrace
         private Skill skill;
         [SerializeField] private TextMeshProUGUI hpCost;
         [SerializeField] private TextMeshProUGUI uses;
-        public void SetSkill(Skill skill)
+        [SerializeField] private float scaleSmall = 0.7f;
+        [SerializeField] private float scaleBig = 0.9f;
+        [SerializeField] private GameObject hpTextGo;
+        [SerializeField] private GameObject usesTextGo;
+        public void SetSkill(Skill skill, bool big)
         {
             icon.sprite = skill.Icon;
             this.skill = skill;
@@ -24,8 +28,20 @@ namespace LostGrace
                 uses.text = activatedSkill.currentUses + "/" +
                             activatedSkill.maxUses;
                 hpCost.text = ""+activatedSkill.hpCost;
+                Debug.Log(GetComponent<RectTransform>().sizeDelta);
+                if (!big)
+                {
+                    hpTextGo.transform.localScale = new Vector3(scaleSmall, scaleSmall, scaleSmall);
+                    usesTextGo.transform.localScale = new Vector3(scaleSmall, scaleSmall, scaleSmall);
+                }
+                else
+                {
+                    hpTextGo.transform.localScale = new Vector3(scaleBig, scaleBig, scaleBig);
+                    usesTextGo.transform.localScale = new Vector3(scaleBig, scaleBig ,scaleBig);
+                }
             }
-        
+
+            
          
         }
 
