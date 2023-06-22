@@ -457,7 +457,7 @@ namespace Game.Map
 
         public void HideCast()
         {
-            Debug.Log("HideCast");
+          
             HideMoveRange();
         }
 

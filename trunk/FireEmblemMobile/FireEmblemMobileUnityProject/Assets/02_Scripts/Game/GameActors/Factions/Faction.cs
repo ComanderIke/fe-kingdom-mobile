@@ -99,5 +99,10 @@ namespace Game.GameActors.Players
         {
             if (Destroyables.Contains(dest)) Destroyables.Remove(dest);
         }
+
+        public bool IsOpponentFaction(Faction targetUnitFaction)
+        {
+            return GetOpponentFactions().Contains(targetUnitFaction);
+        }
     }
 }

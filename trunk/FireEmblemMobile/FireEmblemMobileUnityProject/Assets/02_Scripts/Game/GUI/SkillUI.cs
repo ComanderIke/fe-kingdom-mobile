@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Units;
+﻿using System;
+using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
 using Game.GameInput;
 using Game.Manager;
@@ -12,17 +13,19 @@ namespace LostGrace
     public class SkillUI : MonoBehaviour
     {
         [SerializeField] private Image icon;
-        private Skill skill;
+        public Skill Skill;
         [SerializeField] private TextMeshProUGUI hpCost;
         [SerializeField] private TextMeshProUGUI uses;
         [SerializeField] private float scaleSmall = 0.7f;
         [SerializeField] private float scaleBig = 0.9f;
         [SerializeField] private GameObject hpTextGo;
         [SerializeField] private GameObject usesTextGo;
+        
+
         public void SetSkill(Skill skill, bool big)
         {
             icon.sprite = skill.Icon;
-            this.skill = skill;
+            this.Skill = skill;
             if (skill is ActivatedSkill activatedSkill)
             {
                 uses.text = activatedSkill.currentUses + "/" +
@@ -48,17 +51,17 @@ namespace LostGrace
         public void Clicked()
         {
             
-            if (skill is ActivatedSkill)
+            if (Skill is ActivatedSkill)
             {
-                var selectedCharacter = (Unit)ServiceProvider.Instance.GetSystem<UnitSelectionSystem>().SelectedCharacter;
-                new GameplayCommands().SelectSkill(skill); //TODO Show Skill Description when using or before with a dialogbox
-                new GameplayCommands().ExecuteInputActions(null);
+                OnClicked?.Invoke(this);
             }
             else
             {
                 Debug.Log("Show Skill Tooltip!"+transform.position);
-                ToolTipSystem.ShowSkill(skill, transform.position);
+                ToolTipSystem.Show(Skill, transform.position);
             }
         }
+
+        public event Action<SkillUI> OnClicked;
     }
 }

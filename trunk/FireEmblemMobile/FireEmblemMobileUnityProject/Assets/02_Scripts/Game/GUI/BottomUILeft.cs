@@ -15,6 +15,7 @@ namespace LostGrace
     public class BottomUILeft : BottomUIBase
     {
         [SerializeField] UseItemDialogController useItemDialogController;
+        [SerializeField] UseSkillDialogController useSkillDialogController;
         [SerializeField] private Image faceSprite;
         [SerializeField] private TextMeshProUGUI nameText;
         [SerializeField] private TextMeshProUGUI lvl;
@@ -65,25 +66,6 @@ namespace LostGrace
             combatItem1.OnClicked += CombatItemClicked;
             combatItem2.Show(unit.CombatItem2);
             combatItem2.OnClicked += CombatItemClicked;
-            // if (unit.Blessing != null)
-            // {
-            //     blessingSprite.enabled=true;
-            //     blessingSprite.sprite = unit.Blessing.Skill.Icon;
-            // }
-            // else
-            // {
-            //     blessingSprite.enabled=false;
-            // }
-
-            // if (unit.Curse!=null)
-            // {
-            //     curseSprite.enabled = true;
-            //     curseSprite.sprite = unit.Curse.Skill.Icon;
-            // }
-            // else
-            // {
-            //     curseSprite.enabled=false;
-            // }
 
             hp.text = unit.Hp + "/" + unit.MaxHp;
             atk.text = ""+unit.BattleComponent.BattleStats.GetAttackDamage();
@@ -98,7 +80,10 @@ namespace LostGrace
             foreach (var skill in unit.SkillManager.Skills)
             {
                 var go =Instantiate(skill is ActivatedSkill?activeSkillprefab:skillprefab, skillContainer);
-                go.GetComponent<SkillUI>().SetSkill(skill, true);
+                var skillUI =  go.GetComponent<SkillUI>();
+               skillUI.SetSkill(skill, true);
+               skillUI.OnClicked += ActiveSkillClicked;
+
             }
         }
 
@@ -109,6 +94,16 @@ namespace LostGrace
             Debug.Log("CLICKED COMBAT ITEM: " +combatItem.item.Name);
             ToolTipSystem.Show(combatItem.item, clickedCombatItemUI.transform.position);
             useItemDialogController.Show(combatItem.item,()=>new GameplayCommands().SelectItem(combatItem.item));
+        }
+        public void ActiveSkillClicked(SkillUI skillUI)
+        {
+         
+           
+            Debug.Log("CLICKED Skill: " +skillUI.Skill);
+            ToolTipSystem.Show(skillUI.Skill, skillUI.transform.position);
+            if(skillUI.Skill is ActivatedSkill activatedSkill)
+                useSkillDialogController.Show(activatedSkill,()=>new GameplayCommands().SelectSkill(activatedSkill));
+
         }
     }
 }

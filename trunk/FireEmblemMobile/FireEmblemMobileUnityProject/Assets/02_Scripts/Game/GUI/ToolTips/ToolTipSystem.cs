@@ -122,7 +122,7 @@ public class ToolTipSystem : MonoBehaviour
         instance.tooltipShownThisFrame = false;
     }
 
-    public static void ShowSkill(Skill skill, Vector3 position)
+    public static void Show(Skill skill, Vector3 position)
     {
         instance.tooltipShownThisFrame = true;
         CloseAllToolTips();
