@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Game.GameActors.Items.Weapons
 {
-    public class ResurrectScroll : ConsumableItem
+    public class ResurrectScroll : ConsumableItem, IEquipableCombatItem
     {
         public ResurrectScroll(string name, string description, int cost,int rarity, int maxStack,Sprite sprite, ItemTarget target) : base(name, description, cost, rarity,maxStack,sprite, target)
         {

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using __2___Scripts.Game.Utility;
+using Game.GameActors.Items;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
 using Game.GameInput;
@@ -91,9 +92,9 @@ namespace LostGrace
         {
          
             var combatItem = clickedCombatItemUI.GetCombatItem();
-            Debug.Log("CLICKED COMBAT ITEM: " +combatItem.item.Name);
-            ToolTipSystem.Show(combatItem.item, clickedCombatItemUI.transform.position);
-            useItemDialogController.Show(combatItem.item,()=>new GameplayCommands().SelectItem(combatItem.item));
+            Debug.Log("CLICKED COMBAT ITEM: " +combatItem.item.GetName());
+            ToolTipSystem.Show((Item)combatItem.item, clickedCombatItemUI.transform.position);
+            useItemDialogController.Show((Item)combatItem.item,()=>new GameplayCommands().SelectItem((Item)combatItem.item));
         }
         public void ActiveSkillClicked(SkillUI skillUI)
         {

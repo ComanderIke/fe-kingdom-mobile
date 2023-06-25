@@ -11,6 +11,7 @@ using Game.GameActors.Units;
 using Game.GameInput;
 using Game.GUI;
 using Game.Manager;
+using Game.Utility;
 using Game.WorldMapStuff.Model;
 using LostGrace;
 using TMPro;
@@ -24,7 +25,8 @@ public class UIConvoyController:MonoBehaviour
         Default,
         SelectRelic,
         ChooseGem,
-        Battle
+        Battle,
+        SelectCombatItem
     }
     
     [SerializeField] private Canvas canvas;
@@ -66,6 +68,8 @@ public class UIConvoyController:MonoBehaviour
                 convoy.Deselect();
           
                 UpdateValues();
+                if(!UIHelper.IsPointerOverUIObject())
+                    Hide();
             }
             else
             {
@@ -109,6 +113,18 @@ public class UIConvoyController:MonoBehaviour
 
                 break;
                 
+            case ConvoyContext.SelectCombatItem:
+                if (contextItem != null && contextItem.item is IEquipableCombatItem equipableItem)
+                {
+                    var selectedCombatItem = new StockedCombatItem(equipableItem, contextItem.stock);
+                    convoy.Deselect();
+                    
+                    Player.Instance.Party.ActiveUnit.Equip(selectedCombatItem,equipmentController.selectedSlotCombatItemSlot.slotNumber);
+                    Hide();
+                    
+                }
+
+                break;
             case ConvoyContext.Default:
                     if (contextItem.item is ConsumableItem consumableItem)
                     {
@@ -171,6 +187,8 @@ public class UIConvoyController:MonoBehaviour
                 break;
             case ConvoyContext.SelectRelic: contextText.text = "Select a relic to equip";
                 break;
+            case ConvoyContext.SelectCombatItem: contextText.text = "Select a combat item to equip";
+                break;
         }
         var selectedItem =  convoy.SelectedItem;
         if (selectedItem != null)
@@ -182,6 +200,16 @@ public class UIConvoyController:MonoBehaviour
                 contextButton.gameObject.SetActive(true);
                 contextButton.SetBackgroundColor(EquipColor);
                 contextButton.SetText("Equip");
+            }
+
+            if (context==ConvoyContext.SelectCombatItem)
+            {
+                if (selectedItem.item is IEquipableCombatItem)
+                {
+                    contextButton.gameObject.SetActive(true);
+                    contextButton.SetBackgroundColor(EquipColor);
+                    contextButton.SetText("Equip");
+                }
             }
             else if (selectedItem.item is ConsumableItem)
             {
@@ -219,7 +247,7 @@ public class UIConvoyController:MonoBehaviour
         var sortedList = new List<StockedItem>(convoy.Items);
         sortedList.Sort(delegate(StockedItem x, StockedItem y)
         {
-            Debug.Log("Compare: "+x.item.Name+" "+y.item.Name);
+           // Debug.Log("Compare: "+x.item.Name+" "+y.item.Name);
             if (x.item == null && y.item == null) return 0;
             if (x.item == null) return -1;
             if (y.item == null) return 1;
@@ -284,11 +312,46 @@ public class UIConvoyController:MonoBehaviour
     }
     private void ItemClicked(UIConvoyItemController clickedItem)
     {
-        itemClicked = true;
-        Debug.Log("Item Clicked: "+clickedItem);
-        convoy.Select(clickedItem.stockedItem);
-        ToolTipSystem.Show(clickedItem.stockedItem.item, clickedItem.transform.position);
-        UpdateValues();
+        Debug.Log("ItemClicked "+clickedItem.stockedItem.item);
+        if (context == ConvoyContext.SelectRelic)
+        {
+            Debug.Log("ItemClicked in Relic Context");
+            var contextItem = clickedItem.stockedItem;
+            if (contextItem != null && contextItem.item is Relic relic)
+            {
+                convoy.Deselect();
+                Player.Instance.Party.ActiveUnit.Equip(relic);
+                UpdateValues();
+                //Hide();
+            }
+
+
+        }
+        else  if (context == ConvoyContext.SelectCombatItem)
+        { 
+            Debug.Log("ItemClicked in Combat Context");
+            var contextItem = clickedItem.stockedItem;
+            if (contextItem != null && contextItem.item is IEquipableCombatItem equipableItem)
+            {
+                Debug.Log("ClickedItem is combatItem");
+                var selectedCombatItem = new StockedCombatItem(equipableItem, contextItem.stock);
+                convoy.Deselect();
+                    
+                Player.Instance.Party.ActiveUnit.Equip(selectedCombatItem,equipmentController.selectedSlotCombatItemSlot.slotNumber);
+                UpdateValues();
+                //Hide();
+                    
+            }
+        }
+        else
+        {
+            itemClicked = true;
+            Debug.Log("Item Clicked: "+clickedItem);
+            convoy.Select(clickedItem.stockedItem);
+            ToolTipSystem.Show(clickedItem.stockedItem.item, clickedItem.transform.position);
+            UpdateValues();
+        }
+        
     }
     public void Hide()
     {
@@ -305,9 +368,14 @@ public class UIConvoyController:MonoBehaviour
     {
         if (context == ConvoyContext.SelectRelic)
         {
-            Player.Instance.Party.ActiveUnit.UnEquipRelic(equipmentController.selectedSlotNumber);
+            Player.Instance.Party.ActiveUnit.UnEquipRelic();
         }
-        Hide();
+        else if (context == ConvoyContext.SelectCombatItem)
+        {
+            Player.Instance.Party.ActiveUnit.UnEquipCombatItem(equipmentController.selectedSlotCombatItemSlot
+                .GetCombatItem());
+        }
+        //Hide();
     }
 
    
@@ -327,41 +395,10 @@ public class UIConvoyController:MonoBehaviour
         }
 
     }
-    void RelicEquipClicked(Relic relic)
-    {
-      
-        Unit human =Player.Instance.Party.ActiveUnit;
-        if (equipmentController.selectedSlot == null)
-        {
-            if(!charView.IsVisible)
-                charView.Show(human);
-            equipmentController.HighlightRelicSlots();
-        }
-        else
-        {
-            EquipRelicOnSelectedSlot(human, relic);
-        }
-        
-    }
+    
 
   
-    void EquipRelicOnSelectedSlot(Unit human, Relic relic)
-    {
-        var equippedRelic = equipmentController.selectedSlotNumber == 1 ? human.EquippedRelic : null;
 
-        if (human.HasEquipped(relic))
-        {
-            human.UnEquip((relic));
-            Player.Instance.Party.Convoy.AddItem(relic);
-        }
-        else
-        {
-            if(equippedRelic!=null)
-                Player.Instance.Party.Convoy.AddItem(equippedRelic);
-            human.Equip((relic), equipmentController.selectedSlotNumber);
-            Player.Instance.Party.Convoy.RemoveItem(relic);
-        }
-    }
 
    
 }

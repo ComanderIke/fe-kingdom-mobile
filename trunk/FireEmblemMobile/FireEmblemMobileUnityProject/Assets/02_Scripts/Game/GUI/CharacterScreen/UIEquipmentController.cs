@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.GameActors.Items;
 using Game.GameActors.Items.Weapons;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
@@ -21,9 +22,12 @@ public class UIEquipmentController:MonoBehaviour
 
     public Color inActiveColor;
     [FormerlySerializedAs("weaponBp")] public Weapon weapon;
-    [NonSerialized] public Relic relic;
+    [NonSerialized] private Relic relic;
+    [NonSerialized] private IEquipableCombatItem combatItem1;
+    [NonSerialized] private IEquipableCombatItem combatItem2;
     public SmithingSlot selectedSlot = null;
-    public int selectedSlotNumber=-1;
+
+    public UICombatItemSlot selectedSlotCombatItemSlot = null;
 
     public void RelicSlotUpperClicked()
     {
@@ -39,9 +43,45 @@ public class UIEquipmentController:MonoBehaviour
             if (selectedSlot != null)
                 selectedSlot.Deselect();
             selectedSlot = RelicSlotUpper;
-            selectedSlotNumber = 1;
+     
             RelicSlotUpper.Select();
             convoy.Show(typeof(Relic), UIConvoyController.ConvoyContext.SelectRelic);
+        // }
+    }
+    public void CombatItem1Clicked()
+    {
+        if (combatItem1 != null)
+        {
+            var item = (Item)combatItem1;
+            ToolTipSystem.Show(item, combatItemSlot1.transform.position);
+          
+        }
+        // else
+        // {
+        if (selectedSlotCombatItemSlot != null)
+            selectedSlotCombatItemSlot.Deselect();
+        selectedSlotCombatItemSlot = combatItemSlot1;
+       // selectedSlotNumber = 1;
+       combatItemSlot1.Select();
+        convoy.Show(typeof(IEquipableCombatItem), UIConvoyController.ConvoyContext.SelectCombatItem);
+        // }
+    }
+    public void CombatItem2Clicked()
+    {
+        if (combatItem2 != null)
+        {
+            var item = (Item)combatItem2;
+            ToolTipSystem.Show(item, combatItemSlot2.transform.position);
+          
+        }
+        // else
+        // {
+        if (selectedSlotCombatItemSlot != null)
+            selectedSlotCombatItemSlot.Deselect();
+        selectedSlotCombatItemSlot = combatItemSlot2;
+        // selectedSlotNumber = 1;
+        combatItemSlot2.Select();
+        convoy.Show(typeof(IEquipableCombatItem), UIConvoyController.ConvoyContext.SelectCombatItem);
         // }
     }
     
@@ -66,18 +106,38 @@ public class UIEquipmentController:MonoBehaviour
         RelicSlotUpper.Show(unit.EquippedRelic);
         relic = unit.EquippedRelic;
         combatItemSlot1.Show(unit.CombatItem1);
+        if(unit.CombatItem1!=null)
+            combatItem1 = (IEquipableCombatItem)unit.CombatItem1.item;
+        else
+        {
+            combatItem1 = null;
+        }
         combatItemSlot2.Show(unit.CombatItem2);
+        if (unit.CombatItem2 != null)
+        {
+            combatItem2 =(IEquipableCombatItem) unit.CombatItem2.item;
+        }
+        else
+        {
+            combatItem2 = null;
+        }
+      
+       
 
 
     }
 
     public void Hide()
     {
-        selectedSlotNumber = -1;
         if (selectedSlot != null)
         {
             selectedSlot.Deselect();
             selectedSlot = null;
+        }
+        if (selectedSlotCombatItemSlot != null)
+        {
+            selectedSlotCombatItemSlot.Deselect();
+            selectedSlotCombatItemSlot = null;
         }
     }
 
@@ -86,3 +146,4 @@ public class UIEquipmentController:MonoBehaviour
         RelicSlotUpper.Highlight();
     }
 }
+

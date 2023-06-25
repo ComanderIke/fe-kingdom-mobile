@@ -71,6 +71,10 @@ namespace __2___Scripts.External.Editor
                 {
                     Player.Instance.Party.Convoy.AddStockedItem(new StockedItem(GameBPData.Instance.GetItemByName("Gunpowder Bomb"), 1));
                 }
+                if (GUILayout.Button("Add Relic",GUILayout.Width(100)))
+                {
+                    Player.Instance.Party.Convoy.AddStockedItem(new StockedItem(GameBPData.Instance.GetRandomRelic(1), 1));
+                }
 
                 
             }

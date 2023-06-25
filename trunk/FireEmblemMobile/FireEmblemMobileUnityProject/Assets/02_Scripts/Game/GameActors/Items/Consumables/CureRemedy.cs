@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Game.GameActors.Items.Weapons
 {
-    public class CureRemedy : ConsumableItem
+    public class CureRemedy : ConsumableItem, IEquipableCombatItem
     {
         public CureRemedy(string name, string description, int cost,int rarity, int maxStack,Sprite sprite, ItemTarget target) : base(name, description, cost, rarity,maxStack,sprite, target)
         {

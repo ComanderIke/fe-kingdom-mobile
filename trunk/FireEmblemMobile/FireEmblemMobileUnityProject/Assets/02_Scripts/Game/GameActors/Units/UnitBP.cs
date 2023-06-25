@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.AI;
+using Game.GameActors.Items;
 using Game.GameActors.Items.Weapons;
 using Game.GameActors.Players;
 using Game.GameActors.Units.CharStateEffects;
@@ -83,12 +84,20 @@ namespace Game.GameActors.Units
             Relic relic1 = null;
             if(EquippedRelic1!=null)
                 relic1 = (Relic)EquippedRelic1.Create();
-            StockedItem cItem1= null;
-            if(this.combatItem1!=null&&this.combatItem1.item!=null&&combatItem1.stock>0)
-                cItem1 = (StockedItem)combatItem1.Create();
-            StockedItem cItem2= null;
-            if(this.combatItem2!=null&&this.combatItem2.item!=null&&combatItem2.stock>0)
-                cItem2 = (StockedItem)combatItem2.Create();
+            StockedCombatItem cItem1= null;
+            if (this.combatItem1 != null && this.combatItem1.item != null && combatItem1.stock > 0)
+            {
+                var tmp = combatItem1.Create();
+                cItem1 = new StockedCombatItem((IEquipableCombatItem)tmp.item, tmp.stock);
+            }
+               
+            StockedCombatItem cItem2= null;
+            if (this.combatItem2 != null && this.combatItem2.item != null && combatItem2.stock > 0)
+            {
+                var tmp = combatItem2.Create();
+                cItem2 = new StockedCombatItem((IEquipableCombatItem)tmp.item, tmp.stock);
+            }
+             
             return new Unit(bluePrintID, Name, rpgClass, (Stats)stats.Clone(), growths, moveType, weapon, relic1,cItem1, cItem2, new UnitVisual(visuals), new SkillManager(SkillManager),
                 new ExperienceManager(experienceManager));
         }

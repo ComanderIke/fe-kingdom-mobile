@@ -31,7 +31,7 @@ namespace _02_Scripts.Game.GameActors.Items.Consumables
         Good,
         Bad
     }
-    public class Bomb : ConsumableItem, IThrowableItem
+    public class Bomb : ConsumableItem, IThrowableItem, IEquipableCombatItem
     {
         public Debuff appliedDebuff;
         public int power;

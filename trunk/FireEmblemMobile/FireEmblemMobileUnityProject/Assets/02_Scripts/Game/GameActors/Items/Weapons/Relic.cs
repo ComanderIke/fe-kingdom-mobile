@@ -47,20 +47,9 @@ namespace Game.GameActors.Items.Weapons
             }
         }
 
-        public void Equip(Unit unit)
-        {
-           
-            user = unit;
-            unit.Equip(this);
-            UpdateUser();
-        }
+       
 
-        public void Unequip(Unit unit)
-        {
-            unit.UnEquip(this);
-            user = null;
-            UpdateUser();
-        }
+        
 
         void UpdateUser()
         {

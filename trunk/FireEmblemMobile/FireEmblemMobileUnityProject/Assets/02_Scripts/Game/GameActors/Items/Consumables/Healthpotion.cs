@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.GameActors.Items.Weapons
 {
-    public class HealthPotion:ConsumableItem
+    public class HealthPotion:ConsumableItem, IEquipableCombatItem
     {
         public int strength;
         public GameObject healEffect;

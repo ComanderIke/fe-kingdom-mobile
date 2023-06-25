@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Game.GameActors.Items;
 using Game.GameActors.Items.Gems;
+using Game.GameActors.Units;
 using Game.GameResources;
 using UnityEngine;
 
@@ -85,7 +86,23 @@ namespace Game.WorldMapStuff.Model
             }
             if(!instock)
                 Items.Add(new StockedItem(item, 1));
-            convoyUpdated?.Invoke();
+         //   convoyUpdated?.Invoke();
+            UpdateStockCounts();
+        }
+        public void AddItem(StockedItem item)
+        {
+            Debug.Log("Add Item to Convoy: "+item);
+            
+            Items.Add(item);
+            //convoyUpdated?.Invoke();
+            UpdateStockCounts();
+        }
+        public void AddItem(StockedCombatItem item)
+        {
+            Debug.Log("Add Item to Convoy: "+item);
+            
+            Items.Add(new StockedItem((Item)item.item, item.stock));
+            //convoyUpdated?.Invoke();
             UpdateStockCounts();
         }
         public void RemoveItem(Item item)
@@ -107,7 +124,57 @@ namespace Game.WorldMapStuff.Model
             if (removeItem != null)
                 Items.Remove(removeItem);
             UpdateStockCounts();
-            convoyUpdated?.Invoke();
+          //  convoyUpdated?.Invoke();
+           
+        }
+        public void RemoveItem(StockedItem item)
+        {
+            
+            StockedItem removeItem=null;
+            // foreach (var stockedItem in Items)
+            // {
+            //     if (stockedItem.item.Equals(item))
+            //     {
+            //         stockedItem.stock--;
+            //         if (stockedItem.stock <= 0)
+            //             removeItem = stockedItem;
+            //         break;
+            //
+            //     }
+            // }
+
+            // if (removeItem != null)
+                Items.Remove(item);
+            UpdateStockCounts();
+            //  convoyUpdated?.Invoke();
+           
+        }
+        public void RemoveItem(StockedCombatItem item)
+        {
+            
+            StockedItem removeItem=new StockedItem((Item)item.item, item.stock);
+            // foreach (var stockedItem in Items)
+            // {
+            //     if (stockedItem.item.Equals(item))
+            //     {
+            //         stockedItem.stock--;
+            //         if (stockedItem.stock <= 0)
+            //             removeItem = stockedItem;
+            //         break;
+            //
+            //     }
+            // }
+            // foreach (var stockedItem in Items)
+            // {
+            //     if (stockedItem.Equals(removeItem))
+            //         removeItem = stockedItem;
+            // }
+
+            // if (removeItem != null)
+            Debug.Log("Try Remove Item: ");
+            Items.Remove(removeItem);
+            UpdateStockCounts();
+            //  convoyUpdated?.Invoke();
            
         }
 

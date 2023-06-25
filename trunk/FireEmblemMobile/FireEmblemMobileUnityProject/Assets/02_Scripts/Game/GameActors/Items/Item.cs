@@ -29,6 +29,7 @@ namespace Game.GameActors.Items
             return Name;
         }
 
+       
         public override bool Equals(object obj)
         {
            // Debug.Log("Compare");

@@ -27,6 +27,8 @@ namespace Game.GameActors.Units
         public static event Action<Unit> OnUnitDataChanged;
         public static event Action<Relic> OnEquippedRelic;
         public static event Action<Relic> OnUnequippedRelic;
+        public static event Action<StockedCombatItem> OnUnequippedCombatItem;
+        public static event Action<StockedCombatItem> OnEquippedCombatItem;
 
         #region Events
 
@@ -60,9 +62,9 @@ namespace Game.GameActors.Units
         [NonSerialized]
         public Relic EquippedRelic;
         [NonSerialized]
-        public StockedItem CombatItem1;
+        public StockedCombatItem CombatItem1;
         [NonSerialized]
-        public StockedItem CombatItem2;
+        public StockedCombatItem CombatItem2;
      
         public string name;
         [HideInInspector] private int hp=-1;
@@ -114,7 +116,7 @@ namespace Game.GameActors.Units
         }
 
         public Unit(string bluePrintID, string name,RpgClass rpgClass,Stats stats, Attributes growths, MoveType moveType, Weapon equippedWeapon, Relic equippedRelic,
-            StockedItem combatItem1, StockedItem combatItem2, UnitVisual visuals, SkillManager skillManager, ExperienceManager experienceManager)
+            StockedCombatItem combatItem1, StockedCombatItem combatItem2, UnitVisual visuals, SkillManager skillManager, ExperienceManager experienceManager)
         {
             this.bluePrintID = bluePrintID;
             Fielded = false;
@@ -366,67 +368,81 @@ namespace Game.GameActors.Units
             return EquippedRelic == item || equippedWeapon == item;
         }
 
-       
-        public void UnEquip(EquipableItem item)
+        public void UnEquip(StockedCombatItem item)
         {
             if (item == null)
                 return;
-            if (equippedWeapon == item)
+            if (CombatItem1 == item)
             {
-                Stats.AttackRanges.Clear();
-                equippedWeapon = null;
+                CombatItem1 = null;
+                OnUnequippedCombatItem?.Invoke(item);
             }
-            else if (EquippedRelic == item)
+            else if (CombatItem2 == item)
             {
-                
-                Debug.Log("Unequip: "+item);
-                EquippedRelic = null;
-                OnUnequippedRelic?.Invoke((Relic)item);
+                CombatItem2 = null;
+              
+                OnUnequippedCombatItem?.Invoke(item);
                 
             }
             OnUnitDataChanged?.Invoke(this);
         }
+        
         public bool CanUseWeapon(Weapon w)
         {
             return true;
         }
 
-        public void Equip(EquipableItem e)
+        public void Equip(StockedCombatItem combatItem, int slot)
         {
-
-            switch (e.EquipmentSlotType)
+            Debug.Log("Equip Combat Item on Slot: "+slot);
+            if (slot==1)
             {
-                //case EquipmentSlotType.Armor: Debug.LogError("TODO Equip Armor!"); break;
-                case EquipmentSlotType.Weapon:
-                    Equip((Weapon)e);
-                    break;
-                case EquipmentSlotType.Relic:
-                    Equip((Relic)e);
-                    break;
+                if (CombatItem1 == null)
+                {
+                    CombatItem1=combatItem;
+                }
+                else
+                {
+                    UnEquip(CombatItem1);
+                    CombatItem1 = combatItem;
+                }
+                OnEquippedCombatItem?.Invoke(CombatItem1);
             }
+            else if (slot==2)
+            {
+                if (CombatItem2 == null)
+                {
+                    CombatItem2=combatItem;
+                }
+                else
+                {
+                    UnEquip(CombatItem2);
+                    CombatItem2=combatItem;
+                }
+               
+                OnEquippedCombatItem?.Invoke(CombatItem2);
+            }
+            OnUnitDataChanged?.Invoke(this);
            
         }
-
+      
         public void Equip(Relic r)
         {
             if (EquippedRelic == null)
             {
                 EquippedRelic = r;
-                OnEquippedRelic?.Invoke(r);
+               
             }
-            OnUnitDataChanged?.Invoke(this);
-           
-        }
-        public void Equip(Relic r, int slot)
-        {
-            if (slot==1)
+            else
             {
+                UnEquipRelic();
                 EquippedRelic = r;
-                OnEquippedRelic?.Invoke(r);
             }
+            OnEquippedRelic?.Invoke(r);
             OnUnitDataChanged?.Invoke(this);
            
         }
+      
         protected virtual void HandleCloned(Unit clone)
         {
             clone.experienceManager = new ExperienceManager(experienceManager);
@@ -457,9 +473,9 @@ namespace Game.GameActors.Units
             clone.equippedWeapon = (Weapon)equippedWeapon?.Clone();
             clone.EquippedRelic= (Relic)EquippedRelic?.Clone();
             if(CombatItem1!=null)
-                clone.CombatItem1 = new StockedItem((Item)CombatItem1.item.Clone(),CombatItem1.stock);
+                clone.CombatItem1 = new StockedCombatItem((IEquipableCombatItem)CombatItem1.item.Clone(),CombatItem1.stock);
             if(CombatItem2!=null)
-                clone.CombatItem2 = new StockedItem((Item)CombatItem2.item.Clone(),CombatItem2.stock);
+                clone.CombatItem2 = new StockedCombatItem((IEquipableCombatItem)CombatItem2.item.Clone(),CombatItem2.stock);
             //human.Inventory = (Inventory)Inventory.Clone();
             //Only for
         }
@@ -606,13 +622,22 @@ namespace Game.GameActors.Units
             return null;
         }
 
-        public void UnEquipRelic(int equipmentControllerSelectedSlotNumber)
+        public void UnEquipRelic()
         {
-            if (equipmentControllerSelectedSlotNumber == 1)
-                UnEquip(EquippedRelic);
+            var relic = EquippedRelic;
+            EquippedRelic = null;
+            OnUnequippedRelic?.Invoke(relic);
         }
 
 
+        public void UnEquipCombatItem(StockedCombatItem getCombatItem)
+        {
+            if(CombatItem1==getCombatItem)
+                UnEquip(CombatItem1);
+            else if(CombatItem2==getCombatItem)
+                UnEquip(CombatItem2);
+        }
 
+        
     }
 }

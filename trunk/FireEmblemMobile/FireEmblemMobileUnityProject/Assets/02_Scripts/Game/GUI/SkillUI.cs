@@ -31,7 +31,6 @@ namespace LostGrace
                 uses.text = activatedSkill.currentUses + "/" +
                             activatedSkill.maxUses;
                 hpCost.text = ""+activatedSkill.hpCost;
-                Debug.Log(GetComponent<RectTransform>().sizeDelta);
                 if (!big)
                 {
                     hpTextGo.transform.localScale = new Vector3(scaleSmall, scaleSmall, scaleSmall);
