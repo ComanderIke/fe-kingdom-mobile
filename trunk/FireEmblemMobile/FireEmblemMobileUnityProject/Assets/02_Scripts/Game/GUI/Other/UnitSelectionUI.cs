@@ -65,35 +65,41 @@ public class UnitSelectionUI : IUnitSelectionUI
         GetComponent<Canvas>().enabled = false;
     }
 
+   
+    [SerializeField] private UICharacterViewController charView;
+    [SerializeField] private UIConvoyController convoyController;
     public void UnitClicked(UIUnitDragObject unitUI)
     {
-        if (!selectedUnitUIs.Contains(unitUI))
-        {
-            if (selectedUnitUIs.Count < Player.Instance.Party.MaxSize)
-            {
-                selectedUnitUIs.Add(unitUI);
-                unitSelectionChanged?.Invoke(selectedUnitUIs.Select(s=>s.unit).ToList());
-                unitUI.ShowSelected();
-            }
-            else
-            {
-                Debug.Log("Player Error Sound to many Units selected");
-            }
-        }
-        else
-        {
-            if (selectedUnitUIs.Count == 1)
-            {
-                Debug.Log("Cant remove last Unit!");
-            }
-            else
-            {
-                selectedUnitUIs.Remove(unitUI);
-                unitSelectionChanged?.Invoke(selectedUnitUIs.Select(s => s.unit).ToList());
-                unitUI.HideSelected();
-            }
-        }
-        unitText.SetText("Units: "+selectedUnitUIs.Count+"/"+Player.Instance.Party.MaxSize);
-        
+        //UICharacterViewController.Show(unitUI);
+        Player.Instance.Party.SetActiveUnit(unitUI.unit);
+        convoyController.Show();
+        // if (!selectedUnitUIs.Contains(unitUI))
+        // {
+        //     if (selectedUnitUIs.Count < Player.Instance.Party.MaxSize)
+        //     {
+        //         selectedUnitUIs.Add(unitUI);
+        //         unitSelectionChanged?.Invoke(selectedUnitUIs.Select(s=>s.unit).ToList());
+        //         unitUI.ShowSelected();
+        //     }
+        //     else
+        //     {
+        //         Debug.Log("Player Error Sound to many Units selected");
+        //     }
+        // }
+        // else
+        // {
+        //     if (selectedUnitUIs.Count == 1)
+        //     {
+        //         Debug.Log("Cant remove last Unit!");
+        //     }
+        //     else
+        //     {
+        //         selectedUnitUIs.Remove(unitUI);
+        //         unitSelectionChanged?.Invoke(selectedUnitUIs.Select(s => s.unit).ToList());
+        //         unitUI.HideSelected();
+        //     }
+        // }
+        // unitText.SetText("Units: "+selectedUnitUIs.Count+"/"+Player.Instance.Party.MaxSize);
+
     }
 }

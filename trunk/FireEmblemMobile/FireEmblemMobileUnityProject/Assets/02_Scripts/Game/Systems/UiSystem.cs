@@ -23,7 +23,8 @@ namespace Game.GUI
         public IUnitPlacementUI unitPlacementUI;
         public Canvas MainUICanvas;
         
-        public UIFactionCharacterCircleController characterCircleController;
+        //public UIFactionCharacterCircleController characterCircleController;
+        public UIPartyCharacterCircleController characterCircleController;
         public void Init()
         {
            
@@ -112,8 +113,9 @@ namespace Game.GUI
         
         public void SelectedCharacter(IGridActor actor)
         {
-            if(actor is Unit u)
-                characterCircleController.SelectUnit(u);
+            Debug.Log("DO STUFF HERE");
+            // if(actor is Unit u)
+            //     characterCircleController.Clicked(u);//characterCircleController.Select(u);
         }
         public void SelectedEnemyCharacter(IGridActor actor)
         {

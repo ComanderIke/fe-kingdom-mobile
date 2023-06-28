@@ -36,7 +36,7 @@ namespace GameCamera
                 throw new Exception("Parameter was not of type CameraMixin");
             var mixin = (CameraMixin)gameObject.AddComponent(typeof(T));
             mixin.CameraSystem = this;
-            Debug.Log("Adding Mixin and setting camera" + typeof(T));
+            //Debug.Log("Adding Mixin and setting camera" + typeof(T));
             mixins.Add(mixin);
             return (T)Convert.ChangeType(mixin, typeof(T));
         }

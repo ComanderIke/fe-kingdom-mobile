@@ -138,7 +138,7 @@ namespace Game.Mechanics
             // }
             foreach (var unit in factionManager.Factions[1].Units)
             {
-                Debug.Log(factionManager.Factions[1].Units.Count);
+         
                 unit.visuals.unitRenderer.ShowEffectiveness((Unit)character);
             }
         }

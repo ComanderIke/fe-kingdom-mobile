@@ -336,6 +336,7 @@ namespace Game.GameActors.Units
         public float HealingMultiplier { get; set; }
         public float BonusSkillProcChance { get; set; }
         public bool ClassUpgraded { get; set; }
+        public bool IsBoss { get; set; }
 
 
         public void Equip(Weapon w)

@@ -48,6 +48,7 @@ public class UIConvoyController:MonoBehaviour
     private Type typeFilter;
     private bool itemClicked = false;
     private ConvoyContext context;
+    private float timeShown = 0;
     private void Start()
     {
         Debug.Log("ConvoyStart");
@@ -58,9 +59,10 @@ public class UIConvoyController:MonoBehaviour
     }
     private void Update()
     {
-      
-        
-        if (InputUtility.TouchEnd()&&convoy != null)
+        if(!canvas.enabled)
+          return;
+        timeShown += Time.deltaTime;
+        if (InputUtility.TouchEnd()&&convoy != null&& timeShown>=.3f)
         {
             if (!itemClicked&& !contextButton.WasPressingUntilLastFrame&&!dropButton.WasPressingUntilLastFrame)
             {
@@ -140,6 +142,7 @@ public class UIConvoyController:MonoBehaviour
   
     public void Show()
     {
+        Debug.Log("ShowConvoy");
         Show(typeof(Item), ConvoyContext.Default);
     }
     public void Show(ConvoyContext context)
@@ -148,6 +151,7 @@ public class UIConvoyController:MonoBehaviour
     }
     public void Show(Type filter, ConvoyContext context)
     {
+        timeShown = 0;
         this.convoy = Player.Instance.Party.Convoy;
         this.context = context;
         typeFilter = filter;
@@ -355,10 +359,12 @@ public class UIConvoyController:MonoBehaviour
     }
     public void Hide()
     {
+        Debug.Log("Hide Convoy");
         convoy.Deselect();
         context = ConvoyContext.Default;
         canvas.enabled = false;
         charView.Hide();
+        OnHide?.Invoke();
     }
     private void OnDestroy()
     {
@@ -395,10 +401,7 @@ public class UIConvoyController:MonoBehaviour
         }
 
     }
-    
-
-  
 
 
-   
+    public event Action OnHide;
 }

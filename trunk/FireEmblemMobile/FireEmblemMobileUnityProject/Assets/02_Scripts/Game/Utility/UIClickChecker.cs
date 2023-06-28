@@ -17,17 +17,17 @@ namespace __2___Scripts.Game.Utility
  
             if (raycastResults.Count > 0)
             {
-                //Debug.Log("Results: " + raycastResults.Count);
+                Debug.Log("Results: " + raycastResults.Count);
                 foreach (var go in raycastResults)
                 {
                     if (!go.gameObject.CompareTag("Grid"))
                     {
-                      //  Debug.Log("RAYCAST NOT GRID: "+go.gameObject.name);
+                        Debug.Log("RAYCAST NOT GRID: "+go.gameObject.name);
                        
                     }
                     else
                     {
-                    //    Debug.Log("RAYCAST GRID: "+go.gameObject.name);
+                        Debug.Log("RAYCAST GRID: "+go.gameObject.name);
                     }
                 }
             }
@@ -38,7 +38,7 @@ namespace __2___Scripts.Game.Utility
                 return true;
             }
 
-         //   Debug.Log("UICLICKCHECKER RETURN FALSE");
+            Debug.Log("UICLICKCHECKER RETURN FALSE");
             return false;
         }
     }

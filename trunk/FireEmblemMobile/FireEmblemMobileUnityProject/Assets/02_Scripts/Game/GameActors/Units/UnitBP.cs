@@ -76,7 +76,7 @@ namespace Game.GameActors.Units
 
         }
 
-        public Unit Create()
+        public virtual Unit Create()
         {
             Weapon weapon = null;
             if(equippedWeaponBp!=null)

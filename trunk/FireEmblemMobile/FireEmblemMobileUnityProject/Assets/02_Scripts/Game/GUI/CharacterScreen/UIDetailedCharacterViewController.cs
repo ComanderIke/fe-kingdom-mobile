@@ -1,4 +1,5 @@
 ﻿using __2___Scripts.Game.Utility;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GUI;
 using LostGrace;
@@ -34,6 +35,16 @@ public class UIDetailedCharacterViewController : UICharacterViewController
     //         return;
     //     ToolTipSystem.Show(unit.Blessing, blessingImage.transform.position);
     // }
+    public void NextClicked()
+    {
+        Player.Instance.Party.ActiveUnitIndex++;
+        UpdateUI(Player.Instance.Party.ActiveUnit);
+    }
+    public void PrevClicked()
+    {
+        Player.Instance.Party.ActiveUnitIndex--;
+        UpdateUI(Player.Instance.Party.ActiveUnit);
+    }
     protected override void UpdateUI(Unit unit)
     {
         base.UpdateUI(unit);

@@ -158,9 +158,9 @@ namespace Game.GameActors.Units.OnGameObject
 
         public void ShowEffectiveness(Unit character)
         {
-            Debug.Log("Show Effectivness: "+unit.name+" ");
-            Debug.Log(unit.GridComponent.GridPosition);
-            Debug.Log(this.GetInstanceID());
+            //Debug.Log("Show Effectivness: "+unit.name+" ");
+            //Debug.Log(unit.GridComponent.GridPosition);
+           // Debug.Log(this.GetInstanceID());
             if (character.BattleComponent.IsEffective(unit.MoveType))
             {
                 float eff = character.BattleComponent.GetEffectiveCoefficient(unit.MoveType);

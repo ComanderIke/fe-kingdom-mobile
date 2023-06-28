@@ -74,7 +74,7 @@ namespace Game.States
             UnitPlacementUI.Show(wholePartyUnits, GridGameManager.Instance.BattleMap);
             UnitPlacementUI.OnFinished += () =>
             {
-                GameObject.FindObjectOfType<UIFactionCharacterCircleController>().Show(factionManager.Factions[0].Units);
+                //GameObject.FindObjectOfType<UIFactionCharacterCircleController>().Show(factionManager.Factions[0].Units);
                 finished = true;
                 
             };

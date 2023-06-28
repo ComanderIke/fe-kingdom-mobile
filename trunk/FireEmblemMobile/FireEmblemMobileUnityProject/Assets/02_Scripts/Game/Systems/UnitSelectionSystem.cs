@@ -130,7 +130,6 @@ namespace Game.Mechanics
             }
             SelectedCharacter = c;
             c.TurnStateManager.IsSelected = true;
-            Debug.Log("Invoke this shit!"+c);
             OnSelectedCharacter?.Invoke(SelectedCharacter);
         }
 

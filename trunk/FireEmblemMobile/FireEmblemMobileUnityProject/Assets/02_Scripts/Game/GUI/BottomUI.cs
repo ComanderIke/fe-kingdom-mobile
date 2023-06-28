@@ -22,11 +22,18 @@ namespace LostGrace
             GameplayCommands.OnSelectUnit += UnitSelected;
             GameplayCommands.OnDeselectUnit += UnitDeselected;
             UnitSelectionSystem.OnEnemyDeselected+= UnitDeselected;
-           // UnitSelectionSystem.OnEnemyDeselected+= UnitDeselected;
+
+            // UnitSelectionSystem.OnEnemyDeselected+= UnitDeselected;
         }
 
         void UnitSelected(IGridActor unit)
         {
+            if (!wholeBottomUI.activeSelf)
+            {
+                
+                wholeBottomUI.SetActive(true);
+            }
+
             if (unit.Faction.IsPlayerControlled)
             {
                 bottomUILeft.Show((Unit)unit);

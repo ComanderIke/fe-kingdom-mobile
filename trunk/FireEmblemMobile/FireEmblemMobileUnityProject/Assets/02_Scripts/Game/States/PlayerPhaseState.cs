@@ -108,6 +108,7 @@ namespace Game.Mechanics
             }
             else if (conditionManager.CheckWin())
             {
+                Debug.Log("WON");
                 return WinState.Create();
             }
             return NextState;

@@ -4,6 +4,7 @@ using __2___Scripts.Game.Utility;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GUI;
+using Game.Manager;
 using Game.WorldMapStuff.Model;
 using UnityEngine;
 
@@ -75,13 +76,13 @@ public class UIPartyCharacterCircleController : MonoBehaviour, IClickedReceiver,
             if (party.members[i] == unit)
             {
                 party.ActiveUnitIndex = i;
-                Show(party);
+                MonoUtility.InvokeNextFrame(()=>Show(party));//Otherwise mouse click will go through UI
                 characterView.UpdateUnit(unit);
-                FindObjectOfType<AreaGameManager>().UpdatePartyGameObjects();
+                FindObjectOfType<AreaGameManager>()?.UpdatePartyGameObjects();
                 break;
             }
         }
-        FindObjectOfType<EncounterUIController>().UpdateUIScreens();
+        FindObjectOfType<EncounterUIController>()?.UpdateUIScreens();
         layout.SetActive(false);
         layout.SetActive(true);
     }

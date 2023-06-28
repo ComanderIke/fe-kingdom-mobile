@@ -38,7 +38,7 @@ namespace Game.GameInput
 
                     if (!UIClickChecker.CheckUIObjectsInPosition())
                     {
-                        //Debug.Log("NoUIClicked!");
+                        Debug.Log("NoUIClicked!");
                         if (!CameraSystem.IsDragging)
                         {
 
@@ -63,7 +63,7 @@ namespace Game.GameInput
 
                     if (!UIClickChecker.CheckUIObjectsInPosition())
                     {
-                        //Debug.Log("NoUIClicked!");
+                        Debug.Log("NoUIClicked!");
                         if (!CameraSystem.IsDragging)
                         {
 

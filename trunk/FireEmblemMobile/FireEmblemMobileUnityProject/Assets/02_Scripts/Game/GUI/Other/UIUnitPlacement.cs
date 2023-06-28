@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.OnGameObject;
 using Game.GameInput;
@@ -39,7 +40,7 @@ public class UIUnitPlacement : IUnitPlacementUI
 
     [SerializeField] private IUnitSelectionUI unitSelectionUI;
     [SerializeField] private UIObjectiveController conditionUI;
-
+    [SerializeField] private UIPartyCharacterCircleController charCircleController;
     [SerializeField] private Image darkenBackground;
     private List<Unit> selectedUnits;
     // Update is called once per frame
@@ -49,6 +50,7 @@ public class UIUnitPlacement : IUnitPlacementUI
     void Start()
     {
         canvas = GetComponent<Canvas>();
+      
     }
 
     private void OnEnable()
@@ -100,6 +102,8 @@ public class UIUnitPlacement : IUnitPlacementUI
             selectedUnits = units;
         //UpdateValues();
         GetComponent<Canvas>().enabled = true;
+        Debug.Log("party size: "+Player.Instance.Party.members.Count);
+        charCircleController.Show(Player.Instance.Party);
         
     }
     
@@ -117,13 +121,14 @@ public class UIUnitPlacement : IUnitPlacementUI
     }
     public void ShowGrid()
     {
-        darkenBackground.enabled = true;
+        //darkenBackground.enabled = true;
         PrepUI.SetActive(true);
         ShowPrepUIButton.gameObject.SetActive(false);
     }
     public void MapButtonCLicked()
     {
-        darkenBackground.enabled = false;
+        Debug.Log("Map Button Clicked!");
+        //darkenBackground.enabled = false;
         HideGrid();
     }
     public void ConditionButtonClicked()
@@ -147,6 +152,21 @@ public class UIUnitPlacement : IUnitPlacementUI
     {
         unitSelectionUI.Show(units,selectedUnits);
         Hide();
+    }
+
+    [SerializeField] private UIConvoyController convoyController;
+    public void ConvoyButtonClicked()
+    {
+        Debug.Log("ConvoyButtonClicked");
+        convoyController.Show();
+        convoyController.OnHide += OnConvoyHide;
+        Hide();
+    }
+
+    void OnConvoyHide()
+    {
+        convoyController.OnHide -= OnConvoyHide;
+        Show();
     }
     public void PlaceholderButtonCLicked()
     {
@@ -174,5 +194,9 @@ public class UIUnitPlacement : IUnitPlacementUI
     //     }
     // }
 
-  
+    private void OnDestroy()
+    {
+        if(convoyController!=null)
+            convoyController.OnHide -= OnConvoyHide;
+    }
 }

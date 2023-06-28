@@ -12,21 +12,49 @@ namespace Game.Grid
 
         public bool CheckCondition(FactionManager factionManager)
         {
+     
             if (victory)
             {
                 switch (type)
                 {
-                    case ConditionType.Route: foreach (var p in factionManager.Factions)
+                    case ConditionType.Route: 
+                        foreach (var p in factionManager.Factions)
                         {
-
-                            if (!p.IsPlayerControlled && !p.IsAlive())
+                            
+                            
+                            if (!p.IsPlayerControlled )
                             {
-                                return true;
+                                if (!p.IsAlive())
+                                {
+                                    return true;
+                                }
                             }
                         }
 
                         return false;
-                    case ConditionType.KillBoss: break;
+                    case ConditionType.KillBoss:
+                    {
+                        bool allBossesDead = true;
+                        foreach (var p in factionManager.Factions)
+                        {
+                            if (!p.IsPlayerControlled )
+                            {
+                                foreach (var unit in p.Units)
+                                {
+                                    if (unit.IsAlive()&& unit.IsBoss)
+                                    {
+                                   
+                                        allBossesDead=false;
+                                    }
+                                }
+                              
+                               
+                            }
+                        }
+
+                        return allBossesDead;
+                        break;
+                    }
                     case ConditionType.Seize: break;
                 }
                 
