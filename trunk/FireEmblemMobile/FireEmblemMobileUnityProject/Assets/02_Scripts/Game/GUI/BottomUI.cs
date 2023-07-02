@@ -5,6 +5,7 @@ using Game.GameActors.Units;
 using Game.GameInput;
 using Game.Manager;
 using Game.Mechanics;
+using Game.States;
 using UnityEngine;
 
 namespace LostGrace
@@ -22,10 +23,18 @@ namespace LostGrace
             GameplayCommands.OnSelectUnit += UnitSelected;
             GameplayCommands.OnDeselectUnit += UnitDeselected;
             UnitSelectionSystem.OnEnemyDeselected+= UnitDeselected;
+            WinState.OnEnter += HideAll;
 
             // UnitSelectionSystem.OnEnemyDeselected+= UnitDeselected;
         }
 
+        void HideAll()
+        {
+            bottomUILeft.Hide();
+            bottomUILeftEmpty.Hide();
+            bottomUIRight.Hide();
+            bottomUIRightEmpty.Hide();
+        }
         void UnitSelected(IGridActor unit)
         {
             if (!wholeBottomUI.activeSelf)
@@ -74,6 +83,7 @@ namespace LostGrace
             GameplayCommands.OnSelectUnit -= UnitSelected;
             GameplayCommands.OnDeselectUnit -= UnitDeselected;
             UnitSelectionSystem.OnEnemyDeselected-= UnitDeselected;
+            WinState.OnEnter -= HideAll;
         }
     }
 }

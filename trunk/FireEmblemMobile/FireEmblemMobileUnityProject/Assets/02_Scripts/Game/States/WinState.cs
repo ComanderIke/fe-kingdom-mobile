@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Game.GameActors.Players;
 using Game.Manager;
 using Game.Mechanics;
@@ -25,6 +26,7 @@ namespace Game.States
             successRenderer.Show();
             successRenderer.OnFinished -= ShowBattleResult;
             successRenderer.OnFinished += ShowBattleResult;
+            OnEnter?.Invoke();
         }
 
         public WinState(BattleResult result)
@@ -71,5 +73,7 @@ namespace Game.States
             };
             return winState;
         }
+
+        public static event Action OnEnter;
     }
 }

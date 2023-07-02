@@ -15,10 +15,14 @@ namespace GameCamera
         [SerializeField] private bool lockZAxis = true;
         [SerializeField] private float focusTime = 0.35f;
         private float time = 0;
+        private bool follow = false;
+        private Vector3 camStartPos;
        
 
-        public void SetTargets(GameObject target)
+        public void SetTargets(GameObject target, float focusTime=.35f, bool follow=false)
         {
+            this.focusTime = focusTime;
+            this.follow = follow;
             SetTargets(new GameObject[]{target});
            
         }
@@ -37,6 +41,7 @@ namespace GameCamera
             
             if (targets.TryGetBounds(out var bounds))
             {
+                camStartPos = CameraSystem.camera.transform.position;
                 time = 0;
                 Debug.Log("DOING FOCUS");
                 _targetPosition = bounds.center;
@@ -57,11 +62,25 @@ namespace GameCamera
            if (targets!=null&&targets.Length != 0)
            {
 
+               if (follow)
+               {
+                   if (targets.TryGetBounds(out var bounds))
+                   {
+                       _targetPosition = bounds.center;
+                       if (lockYAxis)
+                           _targetPosition.y = CameraSystem.camera.transform.position.y;
+                       if (lockZAxis)
+                           _targetPosition.z = CameraSystem.camera.transform.position.z;
+                   }
+               }
                 time += Time.deltaTime/focusTime;
-                CameraSystem.camera.transform.position = Vector3.Slerp(CameraSystem.camera.transform.position, _targetPosition, time);
+                CameraSystem.camera.transform.position = Vector3.Slerp(camStartPos, _targetPosition, time);
+                Debug.Log("Time: "+time);
                 if (time>=1)
                 {
                     targets = null;
+                 
+                    OnArrived?.Invoke();
                 }
                 //CameraSystem.camera.orthographicSize = Mathf.Lerp(CameraSystem.camera.orthographicSize, _targetSize, 5 * Time.deltaTime);
             }
@@ -95,11 +114,16 @@ namespace GameCamera
             return Mathf.Max(orthographicSize, _minimumOrthographicSize);
         }
 
-        public void Construct()
+        public void Construct(float focusTime = 0.35f, bool lockY =true, bool follow=false)
         {
             _targetPosition = CameraSystem.camera.transform.position;
             _targetSize = CameraSystem.camera.orthographicSize;
             Debug.Log("Camera Target Pos: "+_targetPosition);
+            lockYAxis = lockY;
+            this.focusTime = focusTime;
+            this.follow = follow;
         }
+
+        public static event Action OnArrived;
     }
 }

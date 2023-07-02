@@ -7,6 +7,7 @@ using Game.Manager;
 using Game.Map;
 using Game.Mechanics;
 using Game.Mechanics.Commands;
+using GameCamera;
 using GameEngine;
 using UnityEngine;
 using Vector3 = System.Numerics.Vector3;
@@ -36,11 +37,13 @@ namespace Game.AI
             goalManager = new GoalManager(player);
             decisionMaker = new DecisionMaker(gridInfo, combatInfo, pathFinder);
             this.unitActionSystem = unitActionSystem;
+            cameraSystem = GameObject.FindObjectOfType<CameraSystem>();
         }
 
         private bool ObstacleRemoved = false;
 
         public bool StopAIActions = false;
+        private CameraSystem cameraSystem;
         public void Think()
         {
             if (IsStartOfTurn())
@@ -94,7 +97,10 @@ namespace Game.AI
                 Debug.Log("action Performer should not be null!!!");
                 return;
             }
-
+            //TODO move Camera to action Performer
+            //Debug.Log("Focus Camera on: "+action.Performer.GameTransformManager.GameObject.transform.position);
+           // cameraSystem.GetMixin<FocusCameraMixin>().SetTargets(action.Performer.GameTransformManager.GameObject);
+            //TODO wait for camera to arrive.
             unitActionSystem.AddCommand(new MoveCharacterCommand(action.Performer, action.Location));
             switch (action.UnitActionType)
             {
@@ -106,8 +112,23 @@ namespace Game.AI
             unitActionSystem.AddCommand(new WaitCommand(action.Performer));
             //will also execute all previous commands like Movement
             UnitActionSystem.OnAllCommandsFinished += UnitActionsFinished;
-            unitActionSystem.ExecuteActions();
+            Debug.Log("Focus Camera on: "+action.Performer.GameTransformManager.GameObject.transform.position);
+            cameraFocusedGO = action.Performer.GameTransformManager.GameObject;
+            cameraSystem.GetMixin<FocusCameraMixin>().SetTargets(cameraFocusedGO, 0.34f);
+            FocusCameraMixin.OnArrived += CameraOnUnit;
             
+            
+            
+        }
+
+        GameObject cameraFocusedGO;
+
+        void CameraOnUnit()
+        {
+            
+            FocusCameraMixin.OnArrived -= CameraOnUnit;
+            cameraSystem.GetMixin<FocusCameraMixin>().SetTargets(cameraFocusedGO, 0.5f, true);
+            unitActionSystem.ExecuteActions();
             
         }
 

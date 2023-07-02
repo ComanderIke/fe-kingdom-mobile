@@ -77,11 +77,15 @@ namespace Game.Mechanics
             stateMachine = new StateMachine<PPStateTrigger>(mainState);
            stateMachine.Init();
 
+           if(!cameraSystem.HasMixin<DragCameraMixin>())
            cameraSystem.AddMixin<DragCameraMixin>().Construct(new WorldPosDragPerformer(1f, cameraSystem.camera),
                 new ScreenPointToRayProvider(cameraSystem.camera), new HitChecker(),new MouseCameraInputProvider());
+           if(!cameraSystem.HasMixin<FocusCameraMixin>())
+           cameraSystem.AddMixin<FocusCameraMixin>().Construct(.5f,false, true);
             int height = gridGameManager.BattleMap.height;
             int width = gridGameManager.BattleMap.width;
            // cameraSystem.AddMixin<ClampCameraMixin>().Construct(width, height);
+           if(!cameraSystem.HasMixin<ViewOnGridMixin>())
             cameraSystem.AddMixin<ViewOnGridMixin>().Construct(width, height);
         }
         private void FindBetterName(Unit unit)
@@ -124,9 +128,10 @@ namespace Game.Mechanics
 
             if (cameraSystem != null && cameraSystem.gameObject != null)
             {
-                cameraSystem.RemoveMixin<DragCameraMixin>();
-                cameraSystem.RemoveMixin<ClampCameraMixin>();
-                cameraSystem.RemoveMixin<ViewOnGridMixin>();
+                // cameraSystem.RemoveMixin<DragCameraMixin>();
+                // cameraSystem.RemoveMixin<ClampCameraMixin>();
+                // cameraSystem.RemoveMixin<ViewOnGridMixin>();
+                // cameraSystem.RemoveMixin<FocusCameraMixin>();
             }
         }
       

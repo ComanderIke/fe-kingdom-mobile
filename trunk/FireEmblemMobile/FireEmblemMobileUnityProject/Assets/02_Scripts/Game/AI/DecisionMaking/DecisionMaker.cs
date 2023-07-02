@@ -144,15 +144,15 @@ namespace Game.AI
                      where unit.IsAlive()
                      select unit)
             {
-                Debug.Log("Opponent Unit: " + unit);
+               // Debug.Log("Opponent Unit: " + unit);
                 int dmg = unit.BattleComponent.BattleStats.GetTotalDamageAgainstTarget(unit);
                 //Take Terrain into Account instead of using path.getLength)
                 int turnRange = int.MaxValue;
                 if(agent.MovementRange!=0)
                     turnRange = agent.AIComponent.GetTarget(unit).Distance / agent.MovementRange;
-                Debug.Log("TurnRange: " + turnRange);
+                //Debug.Log("TurnRange: " + turnRange);
                 var prioValue = dmg - 2 * turnRange;
-                Debug.Log("PrioValue: " + prioValue);
+                //Debug.Log("PrioValue: " + prioValue);
                 if (prioValue > MaxPrioValue)
                 {
                     MaxPrioValue = prioValue;

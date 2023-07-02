@@ -32,8 +32,8 @@ namespace LostGrace
         [SerializeField] private GameObject itemRewardGO;
 
         [SerializeField] private Transform itemRewardParent;
-        // [SerializeField] private Canvas canvas;
-        // [SerializeField] private CanvasGroup canvasGroup;
+        [SerializeField] private Canvas canvas;
+        [SerializeField] private CanvasGroup canvasGroup;
         [SerializeField]private BattleResult result;
         struct Bonuses
         {
@@ -52,17 +52,17 @@ namespace LostGrace
         private List<Bonuses> goldBonusesList;
         private List<Bonuses> graceBonusesList;
         private List<StockedItem> itemBonusesList;
-        private void OnEnable()
-        {
-            Show(result);
-        }
+        // private void OnEnable()
+        // {
+        //     Show(result);
+        // }
 
         public void Show(BattleResult result)
         {
 
             this.result = result;
-            // canvas.enabled = true;
-           // TweenUtility.FadeIn(canvasGroup);
+            canvas.enabled = true;
+            TweenUtility.FadeIn(canvasGroup);
            goldBonusesList = new List<Bonuses>();
            goldBonusesList.Add(new Bonuses(result.GetVictoryGold(),"Victory", 1));
            goldBonusesList.Add(new Bonuses(result.GetGoldFromTurnCount(),"Turn Bonus", 1));
@@ -145,12 +145,12 @@ namespace LostGrace
         public void Hide()
         {
             Debug.Log("HIDE RESULT PANNEL");
-            // TweenUtility.FadeOut(canvasGroup).setOnComplete(() =>
-            // {
-            //     Debug.Log("FADEOUT FINISHED");
-            //     canvas.enabled = false;
-            //     OnFinished?.Invoke();
-            // });
+             TweenUtility.FadeOut(canvasGroup).setOnComplete(() =>
+            {
+                Debug.Log("FADEOUT FINISHED");
+                canvas.enabled = false;
+                OnFinished?.Invoke();
+            });
         }
     
     }

@@ -85,5 +85,12 @@ namespace GameCamera
                 return (T) Convert.ChangeType(s, typeof(T));
             return default;
         }
+
+        public bool HasMixin<T>()
+        {
+            return mixins.OfType<T>().Count() != 0;
+        }
+
+        public event Action OnArrived;
     }
 }
