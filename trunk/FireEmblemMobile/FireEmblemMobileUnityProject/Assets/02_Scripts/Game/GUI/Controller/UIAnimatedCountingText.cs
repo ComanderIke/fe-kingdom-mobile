@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -9,20 +10,38 @@ namespace Game.GUI
         [SerializeField]TextMeshProUGUI text;
         [SerializeField] private int countFPS= 30;
         [SerializeField] private float duration = 1.0f;
-        
+        [SerializeField] private string prefix = "";
         private Coroutine countingCoroutine;
+        private int startValue=0;
+        private int newValue=30;
         public void SetText(string text)
         {
-            this.text.text = "" + (text);
+            this.text.text = prefix+"" + (text);
         }
 
-        public void SetTextCounting(int startValue,int newValue)
+        public int GetCurrentAmount()
+        {
+           // Debug.Log(text.text);
+            return Int32.Parse(text.text.Remove(0,prefix.Length));
+        }
+        public void StartCounting()
+        {
+            countingCoroutine = StartCoroutine(CountText(startValue, newValue));
+        }
+
+        public void SetTextCounting(int startValue, int newValue, bool startCounting = true)
         {
             if (countingCoroutine != null)
             {
                 StopCoroutine(countingCoroutine);
             }
-            countingCoroutine = StartCoroutine(CountText(startValue, newValue));
+            if(startCounting)
+                countingCoroutine = StartCoroutine(CountText(startValue, newValue));
+            else
+            {
+                this.startValue = startValue;
+                this.newValue = newValue;
+            }
         }
         private IEnumerator CountText(int startValue, int newValue)
         {
@@ -47,7 +66,7 @@ namespace Game.GUI
                     {
                         previousValue = newValue;
                     }
-                    text.SetText(previousValue.ToString());
+                    SetText(previousValue.ToString());
                     yield return Wait;
                 }
             }
@@ -60,7 +79,7 @@ namespace Game.GUI
                     {
                         previousValue = newValue;
                     }
-                    text.SetText(previousValue.ToString());
+                    SetText(previousValue.ToString());
                     yield return Wait;
                 }
             }

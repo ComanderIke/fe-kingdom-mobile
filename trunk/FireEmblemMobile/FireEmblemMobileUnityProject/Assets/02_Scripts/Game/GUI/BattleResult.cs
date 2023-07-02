@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using Game.GameActors.Units;
 using Game.GameResources;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace LostGrace
 {
+    [Serializable]
     public class BattleResult
     {
         private int defeatedEnemyCount;
         private int defeatedEliteEnemyCount;
-        private int turnCount;
+        [SerializeField]private int turnCount;
         public BattleRewardConfig config;
         private List<Unit> enemy;
         private List<Unit> eliteEnemy;
@@ -81,14 +84,10 @@ namespace LostGrace
             return config.GoldPerTurnLeft * Math.Max(0,config.DefaultTurnCount-turnCount);
         }
 
-        public int GetExpFromTurnCount()
+      
+        public int GetTotalGrace()
         {
-            return config.BexpPerTurnLeft * Math.Max(0,config.DefaultTurnCount-turnCount);
-        }
-
-        public int GetTotalBexp()
-        {
-            return GetExpFromEnemies() + GetExpFromEliteEnemies() + GetExpFromTurnCount();
+            return GetVictoryGrace()+ GetGraceFromTurnCount();
         }
 
         public int GetTotalGold()
@@ -96,6 +95,29 @@ namespace LostGrace
             return GetGoldFromEnemies() + GetGoldFromEliteEnemies() + GetGoldFromTurnCount();
         }
 
-      
+
+        public int GetVictoryGold()
+        {
+            return 100;
+        }
+
+        public int GetVictoryGrace()
+        {
+            return 50;
+        }
+
+        public int GetGraceFromTurnCount()
+        {
+            return config.BexpPerTurnLeft * Math.Max(0,config.DefaultTurnCount-turnCount);
+        }
+
+        public IEnumerable<StockedItem> GetItemBonuses()
+        {
+            var list = new List<StockedItem>();
+            int rng = Random.Range(3, 5);
+            for(int i=0; i <rng; i++)
+                list.Add(new StockedItem(GameBPData.Instance.GetRandomItem(), 1));
+            return list;
+        }
     }
 }
