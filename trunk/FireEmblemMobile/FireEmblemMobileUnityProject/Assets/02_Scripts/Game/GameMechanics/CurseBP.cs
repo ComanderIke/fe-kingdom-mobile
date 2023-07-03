@@ -15,7 +15,7 @@ namespace LostGrace
 
         public Curse Create()
         {
-            return new Curse(skillBp.Create(), curseName, Description, tier);
+            return new Curse(curseName, Description, skillBp.Icon, skillBp.AnimationObject, tier, skillBp.UpgradeDescriptions);
         }
 
     }

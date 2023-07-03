@@ -9,7 +9,7 @@ namespace LostGrace
         [SerializeField] private int hpRestored;
         public override Skill Create()
         {
-            return new HealPerNode(Name, Description, Icon, AnimationObject,Cooldown,Tier, UpgradeDescriptions, hpRestored);
+            return new HealPerNode(Name, Description, Icon, AnimationObject,Tier, UpgradeDescriptions, hpRestored);
         }
     }
 }

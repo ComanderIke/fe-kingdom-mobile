@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Units;
+﻿using System.Collections.Generic;
+using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
 using UnityEngine;
 
@@ -19,19 +20,14 @@ namespace LostGrace
             return damage + attackBonus;
         }
 
-        public override bool CanTargetCharacters()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override int GetDamage(Unit user, bool justToShow)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public AttackBonusSkill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier,string[] upgradeDescr, int attackBonus) : base(Name, description, icon, animationObject, cooldown, tier,upgradeDescr)
+        public AttackBonusSkill(string Name, string description, Sprite icon, GameObject animationObject, int tier,string[] upgradeDescr, int attackBonus) : base(Name, description, icon, animationObject, tier,upgradeDescr)
         {
             this.attackBonus = attackBonus;
+        }
+
+        public override List<EffectDescription> GetEffectDescription()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

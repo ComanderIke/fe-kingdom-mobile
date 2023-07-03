@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.GameActors.Units.Skills;
-
+using LostGrace;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = System.Random;
 
 namespace Game.GameActors.Units.Humans
 {
@@ -14,8 +15,8 @@ namespace Game.GameActors.Units.Humans
         public Action<int> SkillPointsUpdated;
         [SerializeField] private List<SkillBP> startSkills;
         private List<Skill> skills;
-      
 
+        public int maxSkillCount = 5;
 
         public List<Skill> Skills
         {
@@ -83,8 +84,11 @@ namespace Game.GameActors.Units.Humans
 
             return clone;
         }
-
-        public void LearnSkill(SkillTreeEntry clickedSkill)
+        public void LearnSkill(Skill skill)
+        {
+            Skills.Add(skill);
+        }
+        public void LearnSkillEntry(SkillTreeEntry clickedSkill)
         {
             if (SkillPoints >= 1)
             {
@@ -116,6 +120,21 @@ namespace Game.GameActors.Units.Humans
             //         skillTree.Init();
             //     }
 
+        }
+
+        public void RemoveSkill(Skill skill)
+        {
+            skills.Remove(skill);
+        }
+
+        public bool IsFull()
+        {
+            return skills.Count >= maxSkillCount;
+        }
+
+        public void RemoveRandomSkill()
+        {
+            skills.RemoveAt(UnityEngine.Random.Range(0, skills.Count));
         }
     }
 }

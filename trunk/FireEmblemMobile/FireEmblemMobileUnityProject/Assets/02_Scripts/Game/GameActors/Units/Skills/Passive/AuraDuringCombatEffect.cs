@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Game.GameActors.Units.Numbers;
 using Game.Mechanics.Battle;
+using LostGrace;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Skills.Passive
@@ -15,11 +16,17 @@ namespace Game.GameActors.Units.Skills.Passive
         private List<Unit> inRangeAllies;
         private Unit owner;
         private int range;
-        public AuraDuringCombatEffect(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier,string[] upgradeDescr, BonusStats bonusStats, int range) : base(Name, description, icon, animationObject, cooldown, tier,upgradeDescr)
+        public AuraDuringCombatEffect(string Name, string description, Sprite icon, GameObject animationObject, int tier,string[] upgradeDescr, BonusStats bonusStats, int range) : base(Name, description, icon, animationObject, tier,upgradeDescr)
         {
             this.BonusStats = bonusStats;
             this.range = range;
         }
+
+        public override List<EffectDescription> GetEffectDescription()
+        {
+            throw new NotImplementedException();
+        }
+
         public override void BindSkill(Unit unit)
         {
             //#Option 1 check every time an ally unit moves and apply a virtual "Skill" on adjacent allies.

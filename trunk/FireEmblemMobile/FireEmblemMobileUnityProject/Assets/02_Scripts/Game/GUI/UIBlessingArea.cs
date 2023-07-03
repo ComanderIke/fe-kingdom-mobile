@@ -29,10 +29,10 @@ namespace LostGrace
             gameObject.SetActive(true);
             Faith.SetText("" + unit.Stats.BaseAttributes.FAITH);
             nameText.SetText(blessing.Name);
-            Description.SetText(blessing.GetDurationDescription(unit.Stats.BaseAttributes.FAITH));
-            effect.SetText(blessing.Skill.Description);
+            Description.SetText(blessing.Description);
+            effect.SetText(blessing.Description);
             AcceptButton.interactable = !alreadyAccepted;
-            icon.sprite = blessing.Skill.Icon;
+            icon.sprite = blessing.Icon;
             if (alreadyAccepted)
             {
                 buttonText.text = "Received";
@@ -41,7 +41,7 @@ namespace LostGrace
             {
                 buttonText.text = "Accept";
             }
-            var effects = blessing.Skill.GetEffectDescription();
+            var effects = blessing.GetEffectDescription();
             if (effects != null)
             {
                 extraEffectParent.gameObject.SetActive(true);

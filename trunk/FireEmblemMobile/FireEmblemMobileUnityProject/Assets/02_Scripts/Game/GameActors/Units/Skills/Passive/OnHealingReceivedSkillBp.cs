@@ -9,7 +9,7 @@ namespace LostGrace
         [SerializeField] private float healMult = 1.2f;
         public override Skill Create()
         {
-            return new OnHealingReceivedSkill(Name, Description, Icon, AnimationObject,Cooldown,Tier,UpgradeDescriptions, healMult);
+            return new OnHealingReceivedSkill(Name, Description, Icon, AnimationObject,Tier,UpgradeDescriptions, healMult);
         }
     }
 }

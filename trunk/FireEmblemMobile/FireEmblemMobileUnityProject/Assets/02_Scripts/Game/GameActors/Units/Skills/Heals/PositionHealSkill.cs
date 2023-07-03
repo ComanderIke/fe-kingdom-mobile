@@ -28,7 +28,7 @@ namespace Game.GameActors.Units.Skills
             base.Activate(user,tiles, x, y);
         }
 
-        public PositionHealSkill(string name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier,string[] upgradeDescriptions, int hpCost, int maxUses,int power, int range, int size, SkillTargetArea targetArea, bool rooted) : base(name, description, icon, animationObject, cooldown, tier, upgradeDescriptions, hpCost,maxUses,power, range, size, targetArea,EffectType.Heal, rooted)
+        public PositionHealSkill(string name, string description, Sprite icon, GameObject animationObject, int tier,string[] upgradeDescriptions, int hpCost, int maxUses,int power, int range, int size, SkillTargetArea targetArea, bool rooted) : base(name, description, icon, animationObject, tier, upgradeDescriptions, hpCost,maxUses,power, range, size, targetArea,EffectType.Heal, rooted)
         {
         }
     }

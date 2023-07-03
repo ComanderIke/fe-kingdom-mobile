@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Game.AI;
 using Game.GameActors.Items;
 using Game.GameActors.Items.Weapons;
@@ -54,6 +55,7 @@ namespace Game.GameActors.Units
         public static OnUnitDamagedEvent OnUnitDamaged;
         public static OnUnitHealedEvent OnUnitHealed;
         public delegate void LevelupEvent(Unit unit);
+        public static event Action<Unit, int> OnExpGained;
         public static LevelupEvent OnLevelUp;
         #endregion
         [NonSerialized]public UnitBP unitBP;
@@ -68,10 +70,6 @@ namespace Game.GameActors.Units
      
         public string name;
         [HideInInspector] private int hp=-1;
-        [NonSerialized]
-        private Blessing blessing;
-        [NonSerialized]
-        private Curse curse;
 
         // private int maxBlessings = 3;
         // private int maxCurses = 3;
@@ -99,8 +97,8 @@ namespace Game.GameActors.Units
             set => stats = value;
         }
 
-        public Blessing Blessing => blessing;
-        public Curse Curse => curse;
+        public Blessing Blessing => SkillManager.Skills.OfType<Blessing>()?.First();
+        public Curse Curse => SkillManager.Skills.OfType<Curse>()?.First();
 
         public Attributes Growths
         {
@@ -556,32 +554,21 @@ namespace Game.GameActors.Units
 
         public void ReceiveBlessing(Blessing blessing)
         {
-       
-                this.blessing=blessing;
-                blessing.BlessUnit(this);
-            
+            SkillManager.LearnSkill(blessing);
+            Debug.Log("TODO Receive Blessing");
         }
 
         public void ReceiveCurse(Curse curse)
-            {
-               
-                this.curse = curse;
-                curse.BlessUnit(this);
-                
-            }
+        {
+            if(SkillManager.IsFull())
+                SkillManager.RemoveRandomSkill();
+            SkillManager.LearnSkill(curse);
+            Debug.Log("TODO Receive Curse");
+        }
 
         
-        public static event Action<Unit, int> OnExpGained;
 
-        public void RemoveBlessing(Blessing blessing)
-        {
-            this.blessing = null;
-        }
-        public void RemoveCurse()
-        {
-            this.curse = null;
-        }
-
+        
         public void EncounterTick()
         {
             // if(blessing!=null)
@@ -602,18 +589,7 @@ namespace Game.GameActors.Units
         {
             Debug.Log("TODO Remove Debuffs");
         }
-
-        public void RemoveCurseBless(CurseBlessBase curseBlessBase)
-        {
-            if (curseBlessBase is Curse curse)
-            {
-                RemoveCurse();
-            }
-            else  if (curseBlessBase is Blessing blessing)
-            {
-                RemoveBlessing(blessing);
-            }
-        }
+        
 
 
         public Relic GetRelicSlot(int equipmentControllerSelectedSlotNumber)
@@ -639,6 +615,11 @@ namespace Game.GameActors.Units
                 UnEquip(CombatItem2);
         }
 
-        
+
+        public void RemoveCurse()
+        {
+            if(Curse!=null)
+                SkillManager.RemoveSkill(Curse);
+        }
     }
 }

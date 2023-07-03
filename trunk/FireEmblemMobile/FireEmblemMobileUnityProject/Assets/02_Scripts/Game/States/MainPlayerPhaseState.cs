@@ -37,7 +37,7 @@ namespace Game.Mechanics
         public override void Enter()
         {
             gridGameManager.GetSystem<GridSystem>().cursor.OnCursorPositionChanged += CursorPosChanged;
-            
+            gridGameManager.GetSystem<GridSystem>().cursor.Hide();
             gridInputSystem.SetActive(true);
             unitInputSystem.SetActive(true);
             playerPhaseUI.Show(gridGameManager.GetSystem<TurnSystem>().TurnCount);

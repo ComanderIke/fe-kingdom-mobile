@@ -10,18 +10,7 @@ namespace LostGrace
         [SerializeField] private float expMul = 1.2f;
         private Unit owner;
       
-
-        public override bool CanTargetCharacters()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override int GetDamage(Unit user, bool justToShow)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public ExpSkill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown,int tier,string[] upgradeDescr, float expMul) : base(Name, description, icon, animationObject, cooldown,tier, upgradeDescr)
+        public ExpSkill(string Name, string description, Sprite icon, GameObject animationObject,int tier,string[] upgradeDescr, float expMul) : base(Name, description, icon, animationObject,tier, upgradeDescr)
         {
             this.expMul = expMul;
         }

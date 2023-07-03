@@ -75,7 +75,6 @@ namespace GameCamera
                }
                 time += Time.deltaTime/focusTime;
                 CameraSystem.camera.transform.position = Vector3.Slerp(camStartPos, _targetPosition, time);
-                Debug.Log("Time: "+time);
                 if (time>=1)
                 {
                     targets = null;

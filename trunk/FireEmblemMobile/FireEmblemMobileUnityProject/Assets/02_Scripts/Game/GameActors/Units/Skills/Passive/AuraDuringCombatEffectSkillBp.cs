@@ -12,7 +12,7 @@ namespace Game.GameActors.Units.Skills.Passive
         public int range = 1;
         public override Skill Create()
         {
-            return new AuraDuringCombatEffect(Name, Description, Icon, AnimationObject,Cooldown,Tier,UpgradeDescriptions, BonusStats, range);
+            return new AuraDuringCombatEffect(Name, Description, Icon, AnimationObject,Tier,UpgradeDescriptions, BonusStats, range);
         }
     }
 }

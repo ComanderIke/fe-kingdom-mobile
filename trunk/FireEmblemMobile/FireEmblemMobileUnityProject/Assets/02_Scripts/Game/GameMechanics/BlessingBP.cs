@@ -15,7 +15,7 @@ namespace LostGrace
 
         public Blessing Create()
         {
-            return new Blessing(skillBp.Create(), blessingName, Description, tier);
+            return new Blessing(blessingName, Description, skillBp.Icon, skillBp.AnimationObject, tier, skillBp.UpgradeDescriptions);
         }
 
     }

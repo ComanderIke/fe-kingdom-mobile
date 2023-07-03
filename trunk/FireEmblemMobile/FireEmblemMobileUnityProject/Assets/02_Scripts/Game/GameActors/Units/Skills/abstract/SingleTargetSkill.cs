@@ -19,12 +19,8 @@ namespace Game.GameActors.Units.Skills
      
         
 
-        public override bool CanTargetCharacters()
-        {
-            return true;
-        }
 
-        protected SingleTargetSkill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier,string[] upgradeDescr,int hpCost, int maxUses) : base(Name, description, icon, animationObject, cooldown, tier,upgradeDescr,hpCost,maxUses)
+        protected SingleTargetSkill(string Name, string description, Sprite icon, GameObject animationObject, int tier,string[] upgradeDescr,int hpCost, int maxUses) : base(Name, description, icon, animationObject, tier,upgradeDescr,hpCost,maxUses)
         {
         }
     }

@@ -11,7 +11,7 @@ namespace Game.GameActors.Units.Skills.Passive
         
         public override Skill Create()
         {
-            return new OnDebuff(Name, Description, Icon, AnimationObject, Cooldown, Tier,UpgradeDescriptions, procChance);
+            return new OnDebuff(Name, Description, Icon, AnimationObject, Tier,UpgradeDescriptions, procChance);
         }
     }
 }

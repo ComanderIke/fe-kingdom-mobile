@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using LostGrace;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Skills.Passive
@@ -16,21 +18,16 @@ namespace Game.GameActors.Units.Skills.Passive
     {
         private ImmunityType type;
 
-
-        public override bool CanTargetCharacters()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override int GetDamage(Unit user, bool justToShow)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Immunity(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier, string[] upgradeDescr, ImmunityType type) : base(Name, description, icon, animationObject, cooldown, tier,upgradeDescr)
+        public Immunity(string Name, string description, Sprite icon, GameObject animationObject, int tier, string[] upgradeDescr, ImmunityType type) : base(Name, description, icon, animationObject, tier,upgradeDescr)
         {
             this.type = type;
         }
+
+        public override List<EffectDescription> GetEffectDescription()
+        {
+            throw new NotImplementedException();
+        }
+
         public override void BindSkill(Unit unit)
         {
    

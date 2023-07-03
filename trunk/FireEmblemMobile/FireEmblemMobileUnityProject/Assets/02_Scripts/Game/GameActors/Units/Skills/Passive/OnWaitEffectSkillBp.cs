@@ -9,7 +9,7 @@ namespace Game.GameActors.Units.Skills.Passive
     {
         public override Skill Create()
         {
-            return new OnWaitEffectSkill(Name, Description, Icon, AnimationObject,Cooldown,Tier,UpgradeDescriptions);
+            return new OnWaitEffectSkill(Name, Description, Icon, AnimationObject,Tier,UpgradeDescriptions);
         }
     }
 }

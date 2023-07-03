@@ -9,18 +9,15 @@ namespace Game.GameActors.Units.Skills.Special
 
     public class DarkClone : SelfTargetSkill
     {
+      
+
+        public DarkClone(string Name, string description, Sprite icon, GameObject animationObject,int tier, string[] upgradeDescr,int hpCost, int maxUses) : base(Name, description, icon, animationObject, tier,upgradeDescr, hpCost,  maxUses)
+        {
+        }
+
         public override List<EffectDescription> GetEffectDescription()
         {
-            return null;
-        }
-
-        public override int GetDamage(Unit user, bool justToShow)
-        {
-            return 0;
-        }
-
-        public DarkClone(string Name, string description, Sprite icon, GameObject animationObject, int cooldown,int tier, string[] upgradeDescr,int hpCost, int maxUses) : base(Name, description, icon, animationObject, cooldown, tier,upgradeDescr, hpCost,  maxUses)
-        {
+            throw new NotImplementedException();
         }
     }
 }

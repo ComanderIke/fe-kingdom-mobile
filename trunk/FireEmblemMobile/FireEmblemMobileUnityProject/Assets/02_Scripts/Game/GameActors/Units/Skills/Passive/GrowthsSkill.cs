@@ -11,23 +11,18 @@ namespace LostGrace
     {
         [SerializeField] private Attributes growths;
 
-        public override bool CanTargetCharacters()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override int GetDamage(Unit user, bool justToShow)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public GrowthsSkill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier, string[] upgradeDescr, Attributes growths) : base(Name, description, icon, animationObject, cooldown, tier,upgradeDescr)
+      public GrowthsSkill(string Name, string description, Sprite icon, GameObject animationObject, int tier, string[] upgradeDescr, Attributes growths) : base(Name, description, icon, animationObject, tier,upgradeDescr)
         {
             this.growths = growths;
         }
 
-      
-        public override void BindSkill(Unit unit)
+
+      public override List<EffectDescription> GetEffectDescription()
+      {
+          throw new System.NotImplementedException();
+      }
+
+      public override void BindSkill(Unit unit)
         {
      
             unit.Stats.BonusGrowths = growths;

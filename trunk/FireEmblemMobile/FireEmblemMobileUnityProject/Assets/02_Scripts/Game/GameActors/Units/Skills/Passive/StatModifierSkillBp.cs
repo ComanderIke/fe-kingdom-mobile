@@ -15,7 +15,7 @@ namespace Game.GameActors.Units.Skills.Passive
         public BonusStats BonusStatsPerTier;
         public override Skill Create()
         {
-            return new StatModifier(Name, Description, Icon, AnimationObject,Cooldown,Tier,UpgradeDescriptions, BonusAttributes, BonusStats, BonusAttributesPerTier, BonusStatsPerTier);
+            return new StatModifier(Name, Description, Icon, AnimationObject,Tier,UpgradeDescriptions, BonusAttributes, BonusStats, BonusAttributesPerTier, BonusStatsPerTier);
         }
     }
 }

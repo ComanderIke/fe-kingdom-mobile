@@ -21,6 +21,7 @@ namespace Game.AI
         private GoalManager goalManager;
         private DecisionMaker decisionMaker;
         private UnitActionSystem unitActionSystem;
+        private GridSystem gridSystem;
         public AIRenderer AiRenderer;
      
 
@@ -38,6 +39,7 @@ namespace Game.AI
             decisionMaker = new DecisionMaker(gridInfo, combatInfo, pathFinder);
             this.unitActionSystem = unitActionSystem;
             cameraSystem = GameObject.FindObjectOfType<CameraSystem>();
+            gridSystem = ServiceProvider.Instance.GetSystem<GridSystem>();
         }
 
         private bool ObstacleRemoved = false;
@@ -113,21 +115,23 @@ namespace Game.AI
             //will also execute all previous commands like Movement
             UnitActionSystem.OnAllCommandsFinished += UnitActionsFinished;
             Debug.Log("Focus Camera on: "+action.Performer.GameTransformManager.GameObject.transform.position);
-            cameraFocusedGO = action.Performer.GameTransformManager.GameObject;
-            cameraSystem.GetMixin<FocusCameraMixin>().SetTargets(cameraFocusedGO, 0.34f);
+            unitAction = action;
+            cameraSystem.GetMixin<FocusCameraMixin>().SetTargets(unitAction.Performer.GameTransformManager.GameObject, 0.5f);
+            gridSystem.cursor.SetCurrentTile(action.Performer.GridComponent.Tile);
             FocusCameraMixin.OnArrived += CameraOnUnit;
             
             
             
         }
 
-        GameObject cameraFocusedGO;
+        AIUnitAction unitAction;
 
         void CameraOnUnit()
         {
             
             FocusCameraMixin.OnArrived -= CameraOnUnit;
-            cameraSystem.GetMixin<FocusCameraMixin>().SetTargets(cameraFocusedGO, 0.5f, true);
+            cameraSystem.GetMixin<FocusCameraMixin>().SetTargets(unitAction.Performer.GameTransformManager.GameObject, 0.5f, true);
+            gridSystem.cursor.SetCurrentTile(gridSystem.GetTileFromVector2(unitAction.Location));
             unitActionSystem.ExecuteActions();
             
         }

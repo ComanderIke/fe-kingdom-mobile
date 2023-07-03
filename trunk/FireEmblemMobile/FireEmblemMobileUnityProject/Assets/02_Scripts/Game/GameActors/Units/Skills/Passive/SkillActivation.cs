@@ -10,27 +10,18 @@ namespace LostGrace
 
         private Unit owner;
         [SerializeField] float procChance;
+        
 
-        public override bool CanTargetCharacters()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override int GetDamage(Unit user, bool justToShow)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public SkillActivation(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier, string[] upgradeDescr, float procChance) : base(Name, description, icon, animationObject, cooldown, tier,upgradeDescr)
+        public SkillActivation(string Name, string description, Sprite icon, GameObject animationObject, int tier, string[] upgradeDescr, float procChance) : base(Name, description, icon, animationObject, tier,upgradeDescr)
         {
             this.procChance = procChance;
         }
+
         public override List<EffectDescription> GetEffectDescription()
         {
-            var list = new List<EffectDescription>();
-            list.Add(new EffectDescription("Activation rate: ", (procChance*100f)+"%"));
-            return list;
+            throw new System.NotImplementedException();
         }
+
         public override void BindSkill(Unit unit)
         {
             this.owner = unit;

@@ -87,6 +87,7 @@ namespace Game.Mechanics
            // cameraSystem.AddMixin<ClampCameraMixin>().Construct(width, height);
            if(!cameraSystem.HasMixin<ViewOnGridMixin>())
             cameraSystem.AddMixin<ViewOnGridMixin>().Construct(width, height);
+           
         }
         private void FindBetterName(Unit unit)
         {

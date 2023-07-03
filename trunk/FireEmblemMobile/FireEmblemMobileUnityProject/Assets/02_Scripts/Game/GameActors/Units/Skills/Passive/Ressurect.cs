@@ -11,17 +11,9 @@ namespace LostGrace
         private Unit owner;
         [SerializeField] float hpRegPercentage;
 
-        public override bool CanTargetCharacters()
-        {
-            throw new System.NotImplementedException();
-        }
+      
 
-        public override int GetDamage(Unit user, bool justToShow)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Ressurect(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier,string[] upgradeDescr, float hpRegPercentage) : base(Name, description, icon, animationObject, cooldown, tier,upgradeDescr)
+        public Ressurect(string Name, string description, Sprite icon, GameObject animationObject, int tier,string[] upgradeDescr, float hpRegPercentage) : base(Name, description, icon, animationObject, tier,upgradeDescr)
         {
             this.hpRegPercentage = hpRegPercentage;
         }

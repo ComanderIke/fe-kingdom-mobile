@@ -79,9 +79,6 @@ namespace LostGrace
             currentTextGo.gameObject.SetActive(false);
             upgradeTextGo.gameObject.SetActive(false);
             levelTextGo.gameObject.SetActive(false);
-            //user.SkillManager.UpdateSkillState(skill);
-            currentText.SetText(skill.CurrentUpgradeText());
-            upgText.SetText(skill.NextUpgradeText());
 
 
             levelTextGo.gameObject.SetActive(true);
@@ -144,6 +141,8 @@ namespace LostGrace
     {
         Common,
         Class,
-        Weapon
+        Weapon,
+        Blessing,
+        Curse
     }
 }

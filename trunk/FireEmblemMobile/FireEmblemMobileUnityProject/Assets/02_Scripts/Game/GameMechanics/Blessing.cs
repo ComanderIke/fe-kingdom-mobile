@@ -1,25 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
+using UnityEngine;
 
 namespace LostGrace
 {
-    public interface ITemporaryEffect
+
+    public class Blessing : PassiveSkill
     {
-        void DecreaseDuration();
-        int GetDuration(int faith);
-    }
-
-    public class Blessing : CurseBlessBase
-    {
-
- 
-
-        public Blessing(Skill skill, string name, string description, int tier):base(skill,name, description, tier)
+        public Blessing(string Name, string description, Sprite icon, GameObject animationObject, int tier,string[] upgradeDescr):base(Name, description,icon, animationObject, tier, upgradeDescr)
         {
-           
+            SkillType = SkillType.Blessing;
         }
 
- 
+
+        public override List<EffectDescription> GetEffectDescription()
+        {
+            return new List<EffectDescription>();
+        }
     }
 }

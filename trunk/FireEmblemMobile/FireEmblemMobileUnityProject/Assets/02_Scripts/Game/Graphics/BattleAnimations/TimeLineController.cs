@@ -67,9 +67,12 @@ public class TimeLineController : MonoBehaviour
         camera.transform.localPosition = new Vector3(reverse ? -80 : 80, camera.transform.localPosition.y, camera.transform.localPosition.z);
     }
 
+    private GameObject background;
     void SetupBackground()
     {
-        var background = GameObject.Instantiate(battleBackground, transform);
+        if(background!=null)
+            Destroy(background);
+        background = GameObject.Instantiate(battleBackground, transform);
         background.transform.position = new Vector3(camera.transform.position.x, background.transform.position.y,
             background.transform.position.z);
     }

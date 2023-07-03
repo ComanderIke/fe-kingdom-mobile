@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using Game.GameActors.Units.Numbers;
 using Game.Mechanics.Battle;
+using LostGrace;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Skills
@@ -12,13 +14,19 @@ namespace Game.GameActors.Units.Skills
         public BonusStats BonusStats;
         public Attributes BonusAttributesPerTier;
         public BonusStats BonusStatsPerTier;
-        public StatModifier(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier, string[] upgradeDescr, Attributes bonus, BonusStats bonusStats, Attributes bonusPerTier,BonusStats bonusStatsPerTier ) : base(Name, description, icon, animationObject, cooldown, tier, upgradeDescr)
+        public StatModifier(string Name, string description, Sprite icon, GameObject animationObject, int tier, string[] upgradeDescr, Attributes bonus, BonusStats bonusStats, Attributes bonusPerTier,BonusStats bonusStatsPerTier ) : base(Name, description, icon, animationObject, tier, upgradeDescr)
         {
             this.BonusAttributes = bonus;
             this.BonusAttributesPerTier = bonusPerTier;
             this.BonusStats = bonusStats;
             this.BonusStatsPerTier = bonusStatsPerTier;
         }
+
+        public override List<EffectDescription> GetEffectDescription()
+        {
+            throw new NotImplementedException();
+        }
+
         public override void BindSkill(Unit unit)
         {
             unit.Stats.BonusAttributes.Add(BonusAttributes);

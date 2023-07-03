@@ -12,7 +12,7 @@ namespace Game.GameActors.Units.Skills.Buffs
         public Buff appliedBuff;
         public override Skill Create()
         {
-            return new AllyTargetBuffSkill(Name, Description, Icon, AnimationObject,Cooldown,Tier,UpgradeDescriptions, hpCost,Uses,appliedBuff);
+            return new AllyTargetBuffSkill(Name, Description, Icon, AnimationObject,Tier,UpgradeDescriptions, hpCost,Uses,appliedBuff);
         
         }
     

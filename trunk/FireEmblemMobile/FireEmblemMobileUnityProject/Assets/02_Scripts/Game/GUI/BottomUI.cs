@@ -34,6 +34,7 @@ namespace LostGrace
             bottomUILeftEmpty.Hide();
             bottomUIRight.Hide();
             bottomUIRightEmpty.Hide();
+            wholeBottomUI.SetActive(false);
         }
         void UnitSelected(IGridActor unit)
         {

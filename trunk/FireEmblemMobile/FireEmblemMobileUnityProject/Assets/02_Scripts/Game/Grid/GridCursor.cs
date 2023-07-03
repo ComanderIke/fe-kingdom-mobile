@@ -26,10 +26,10 @@ namespace Game.Map
         {
             renderer.ShowTargetRange(radius, skillTargetArea);
         }
+   
         public void SetCurrentTile(Tile tile)
         {
             currentTile = tile;
- 
             gridPosition = new GridPosition(currentTile.X, currentTile.Y);
             OnCursorPositionChanged?.Invoke(new Vector2Int(gridPosition.X,gridPosition.Y));
             renderer.Show(new Vector2(gridPosition.X,gridPosition.Y));
@@ -65,6 +65,11 @@ namespace Game.Map
         public Vector2 GetPosition()
         {
             return gridPosition.AsVector();
+        }
+
+        public void Hide()
+        {
+            renderer.Hide();
         }
     }
 }

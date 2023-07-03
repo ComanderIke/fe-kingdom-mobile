@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using Game.GameActors.Units.Numbers;
 using Game.Mechanics.Battle;
+using LostGrace;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Skills.Passive
@@ -11,8 +13,13 @@ namespace Game.GameActors.Units.Skills.Passive
     {
         public Attributes BonusAttributes;
         public BonusStats BonusStats;
-        public OnInitiateCombatSkill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier,string[] upgradeDescr) : base(Name, description, icon, animationObject, cooldown, tier,upgradeDescr)
+        public OnInitiateCombatSkill(string Name, string description, Sprite icon, GameObject animationObject, int tier,string[] upgradeDescr) : base(Name, description, icon, animationObject, tier,upgradeDescr)
         {
+        }
+
+        public override List<EffectDescription> GetEffectDescription()
+        {
+            throw new NotImplementedException();
         }
 
         public override void BindSkill(Unit unit)

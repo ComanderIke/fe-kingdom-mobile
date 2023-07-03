@@ -19,7 +19,6 @@ public class ToolTipSystem : MonoBehaviour
     public AttributeToolTip AttributeToolTip;
     //public EncounterToolTip EncounterToolTip;
     //public EncounterToolTip EncounterAttackToolTip;
-    public BlessingToolTip blessingToolTip;
     public RelicToolTip relicToolTip;
     public void Awake()
     {
@@ -28,7 +27,6 @@ public class ToolTipSystem : MonoBehaviour
 
     static void CloseAllToolTips()
     {
-        instance.blessingToolTip.gameObject.SetActive(false);
         //instance.EncounterAttackToolTip.gameObject.SetActive(false);
         instance.relicToolTip.gameObject.SetActive(false);
         instance.WeaponToolTip.gameObject.SetActive(false);
@@ -40,8 +38,7 @@ public class ToolTipSystem : MonoBehaviour
     }
     static void CloseAllToolTipsExceptEncounter()
     {
-        instance.blessingToolTip.gameObject.SetActive(false);
-       
+
         instance.relicToolTip.gameObject.SetActive(false);
         instance.WeaponToolTip.gameObject.SetActive(false);
        
@@ -102,16 +99,7 @@ public class ToolTipSystem : MonoBehaviour
         
         instance.WeaponToolTip.gameObject.SetActive(true);
     }
-    public static void Show(CurseBlessBase blessing, Vector3 position)
-    {
-        instance.tooltipShownThisFrame = true;
-        CloseAllToolTips();
-    
-        instance.blessingToolTip.SetValues(blessing, blessing.Name,blessing.Skill.Description,blessing.Skill.Icon, Camera.main.WorldToScreenPoint(position));
-        
-        instance.blessingToolTip.gameObject.SetActive(true);
-    }
-
+   
     private bool tooltipShownThisFrame = false;
     private void Update()
     {

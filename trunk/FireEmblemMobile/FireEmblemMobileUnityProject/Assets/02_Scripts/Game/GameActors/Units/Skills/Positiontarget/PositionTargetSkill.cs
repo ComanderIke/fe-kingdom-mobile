@@ -22,7 +22,7 @@ namespace Game.GameActors.Units.Skills
         public EffectType EffectType { get; set; }
         public bool Rooted { get; set; }
 
-        public PositionTargetSkill(string name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier,string[] upgradeDescriptions,int hpCost, int maxUses, int power, int range, int size, SkillTargetArea targetArea,EffectType effectType, bool rooted) : base(name,description, icon, animationObject, cooldown,tier, upgradeDescriptions, hpCost,maxUses)
+        public PositionTargetSkill(string name, string description, Sprite icon, GameObject animationObject, int tier,string[] upgradeDescriptions,int hpCost, int maxUses, int power, int range, int size, SkillTargetArea targetArea,EffectType effectType, bool rooted) : base(name,description, icon, animationObject,tier, upgradeDescriptions, hpCost,maxUses)
         {
             this.Rooted = rooted;
             this.TargetArea = targetArea;
@@ -133,21 +133,7 @@ namespace Game.GameActors.Units.Skills
         public void Effect(Unit user, Vector3 target)
         {
         }
-
-        public override List<EffectDescription> GetEffectDescription()
-        {
-            return null;
-        }
-
-        public override bool CanTargetCharacters()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override int GetDamage(Unit user, bool justToShow)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         public int GetCastRangeIncrease(Attributes statsAttributes)
         {
@@ -173,6 +159,11 @@ namespace Game.GameActors.Units.Skills
             }
 
             return targets;
+        }
+
+        public override List<EffectDescription> GetEffectDescription()
+        {
+            throw new NotImplementedException();
         }
     }
 }

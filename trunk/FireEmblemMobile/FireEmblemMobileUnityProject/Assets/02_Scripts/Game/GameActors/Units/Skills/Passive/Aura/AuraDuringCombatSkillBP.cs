@@ -10,6 +10,6 @@ public class AuraDuringCombatSkillBP : PassiveSkillBp
 {
     public override Skill Create()
     {
-        return new AuraDuringCombatSkill(Name, Description, Icon, AnimationObject,Cooldown,Tier,UpgradeDescriptions);
+        return new AuraDuringCombatSkill(Name, Description, Icon, AnimationObject,Tier,UpgradeDescriptions);
     }
 }

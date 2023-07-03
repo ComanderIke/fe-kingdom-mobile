@@ -169,7 +169,7 @@ namespace Game.Mechanics
         }
         public void DistributeExperience(IBattleActor opponent, IBattleActor expReceiver)
         {
-            AnimationQueue.OnAllAnimationsEnded += DistributeBattleExperienceFinished;
+           
             finished = false;
             int exp=0;
             if (expReceiver.IsAlive() && expReceiver.IsPlayerControlled())
@@ -177,6 +177,8 @@ namespace Game.Mechanics
                 exp = CalculateExperiencePoints(expReceiver, opponent);
                 if (exp != 0)
                 {
+                    AnimationQueue.OnAllAnimationsEnded -= DistributeBattleExperienceFinished;
+                    AnimationQueue.OnAllAnimationsEnded += DistributeBattleExperienceFinished;
                     //var expRenderer = ((Unit)defender).visuals.UnitCharacterCircleUI.GetExpRenderer();
                     ServiceProvider.Instance.GetSystem<UiSystem>()?.SelectedCharacter((Unit)expReceiver);
                    
@@ -193,7 +195,8 @@ namespace Game.Mechanics
                 }
                 
             }
-            // FinishedOnce();
+
+            finished = true;
         }
         
         

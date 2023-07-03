@@ -16,17 +16,13 @@ namespace Game.GameActors.Units.Skills.Buffs
             return null;
         }
 
-        public override int GetDamage(Unit user, bool justToShow)
-        {
-            return 0;
-        }
 
         public override bool CanTarget(Unit user, Unit target)
         {
             return user == target;
         }
 
-        public SelfTargetBuffSkill(string Name, string description, Sprite icon, GameObject animationObject, int cooldown, int tier, string[] upgradeDescr, int hpCost, int maxUses,Buff appliedBuff) : base(Name, description, icon, animationObject, cooldown, tier, upgradeDescr,hpCost, maxUses)
+        public SelfTargetBuffSkill(string Name, string description, Sprite icon, GameObject animationObject, int tier, string[] upgradeDescr, int hpCost, int maxUses,Buff appliedBuff) : base(Name, description, icon, animationObject, tier, upgradeDescr,hpCost, maxUses)
         {
             this.appliedBuff = appliedBuff;
         }
