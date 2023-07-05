@@ -13,7 +13,7 @@ public class SkillTreeEntry
     public int row;
     // public int[] statRequirements;
     //public Skill[] skillRequirements;
-    [SerializeField] private SkillBP skillBp;
+    [SerializeField] private SkillBp skillBp;
     public SkillState SkillState = SkillState.NotLearnable;
     [NonSerialized]public SkillTree tree;
 

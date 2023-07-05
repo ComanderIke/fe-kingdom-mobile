@@ -32,11 +32,11 @@ namespace LostGrace
         {
             icon.sprite = skill.Icon;
             this.Skill = skill;
-            if (skill is ActivatedSkill activatedSkill)
+            if (skill.activeMixin is ActiveSkillMixin activatedSkillMixin)
             {
-                uses.text = activatedSkill.currentUses + "/" +
-                            activatedSkill.maxUses;
-                hpCost.text = ""+activatedSkill.hpCost;
+                uses.text = activatedSkillMixin.currentUses + "/" +
+                            activatedSkillMixin.maxUsesPerLevel[skill.Level];
+                hpCost.text = ""+activatedSkillMixin.hpCostPerLevel[skill.Level];
                 if (!big)
                 {
                     hpTextGo.transform.localScale = new Vector3(scaleSmall, scaleSmall, scaleSmall);
@@ -69,7 +69,7 @@ namespace LostGrace
         public void Clicked()
         {
             
-            if (Skill is ActivatedSkill)
+            if (Skill.activeMixin is ActiveSkillMixin)
             {
                 OnClicked?.Invoke(this);
             }

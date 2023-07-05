@@ -5,17 +5,11 @@ using UnityEngine.Serialization;
 namespace LostGrace
 {
     [CreateAssetMenu(menuName = "GameData/Curse", fileName = "Curse")]
-    public class CurseBP : ScriptableObject
+    public class CurseBP : SkillBp
     {
-        [FormerlySerializedAs("skill")] public SkillBP skillBp;
-        public string curseName;
-        public string Description;
-        public int tier=3;
-        //faith / 2 minimum 3
-
-        public Curse Create()
+        public override Skill Create()
         {
-            return new Curse(curseName, Description, skillBp.Icon, skillBp.AnimationObject, tier, skillBp.UpgradeDescriptions);
+            return new Curse(Name, Description, Icon, Tier);
         }
 
     }

@@ -25,7 +25,7 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
     public GameObject shopItemPrefab;
     private Church church;    
     [SerializeField] BuyItemUI buyItemUI;
-    [SerializeField] UIBlessingArea blessingUI;
+    [SerializeField] UIRemoveCurseArea removeCurseUI;
     [SerializeField] UIPrayArea prayUI;
     [SerializeField] private GameObject prayButton;
     [SerializeField] private GameObject saleButton;
@@ -45,7 +45,7 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
         saleButton.gameObject.SetActive(false);
         prayButton.gameObject.SetActive(false);
         prayUI.Hide();
-        blessingUI.Hide();
+        removeCurseUI.Hide();
         buyItemUI.Hide();
         for (int i = instantiatedItems.Count - 1; i >= 0; i--)
         {
@@ -90,7 +90,7 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
             saleButton.gameObject.SetActive(true);
             prayButton.gameObject.SetActive(false);
             inStoreText.gameObject.SetActive(false);
-            prayUI.Show(party.ActiveUnit);
+            prayUI.Show(party.ActiveUnit, church.AlreadyAcceptedBlessing(party.ActiveUnit));
         }
         else if (state == ChurchUIState.Blessing)
         {
@@ -99,26 +99,7 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
             saleButton.gameObject.SetActive(true);
             prayButton.gameObject.SetActive(false);
             inStoreText.gameObject.SetActive(false);
-            if (blessing != null)
-            {
-                blessingUI.Show(party.ActiveUnit, blessing, church.AlreadyAcceptedBlessing(party.ActiveUnit));
-            }
-            else if(church.AlreadyAcceptedBlessing(party.ActiveUnit))
-            {
-                blessingUI.Show(party.ActiveUnit, church.GetAlreadyAcceptedBlessing(party.ActiveUnit), church.AlreadyAcceptedBlessing(party.ActiveUnit));
-            }
-            else
-            {
-                if (church.AlreadyGeneratedBlessing(party.ActiveUnit))
-                {
-                    blessing = church.GetAlreadyGeneratedBlessing(party.ActiveUnit);
-                    blessingUI.Show(party.ActiveUnit, blessing, church.AlreadyAcceptedBlessing(party.ActiveUnit));
-                }
-                else
-                {
-                    blessingUI.Hide();
-                }
-            }
+            removeCurseUI.Show(party.ActiveUnit, church.AlreadyRemovedCurse(party.ActiveUnit));
         }
         UpdateSelectionColors();
     }
@@ -251,12 +232,11 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
         UpdateUI();
     }
 
-    public void AcceptBlessing()
+    public void RemoveCurse()
     {
-        church.BlessUnit(party.ActiveUnit, blessing);
-       
-        blessing = null;
+        //church.RemoveCurse(party.ActiveUnit, selectedCurse);
+        
         UpdateUI();
-        Debug.Log("Accept Blessing");
+        Debug.Log("Remove Curse");
     }
 }

@@ -15,8 +15,13 @@ namespace LostGrace
         [SerializeField] private Button mediumDonateButton;
         [SerializeField] private Button highDonateButton;
         [SerializeField] UIChurchController churchController;
-        public void Show(Unit user)
+        [SerializeField] private GameObject alreadyDonatedTextGO;
+        [SerializeField] private CanvasGroup alreadyDonatedCanvasGroup;
+        public void Show(Unit user, bool alreadyDonated)
         {
+            alreadyDonatedTextGO.SetActive(alreadyDonated);
+            alreadyDonatedCanvasGroup.enabled = alreadyDonated;
+            
             gameObject.SetActive(true);
             Faith.SetText(""+user.Stats.BaseAttributes.FAITH);
             smallDonateButton.interactable = true;

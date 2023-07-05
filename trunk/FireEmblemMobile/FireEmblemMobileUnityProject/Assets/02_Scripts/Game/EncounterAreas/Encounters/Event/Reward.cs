@@ -9,7 +9,7 @@ using UnityEngine.Serialization;
 public class Reward
 {
     [FormerlySerializedAs("item")] public List<ItemBP> itemBp;
-    [FormerlySerializedAs("skill")] public SkillBP skillBp;
+    [FormerlySerializedAs("skill")] public SkillBp skillBp;
     public BlessingBP blessingBp;
     public int gold;
     public int experience;

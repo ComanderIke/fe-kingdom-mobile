@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Units;
+﻿using _02_Scripts.Game.GameActors.Items.Consumables;
+using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
 using TMPro;
 using UnityEngine;
@@ -13,11 +14,9 @@ namespace LostGrace
         public TextMeshProUGUI description;
         public new TextMeshProUGUI name;
         public TextMeshProUGUI level;
-        public TextMeshProUGUI currentText;
-        public TextMeshProUGUI upgText;
-        public GameObject currentTextGo;
-        public GameObject upgradeTextGo;
-        public GameObject levelTextGo;
+        public GameObject linePrefab;
+      
+   
 
         public Image icon;
         [SerializeField] TMP_ColorGradient commonColorGradient;
@@ -42,6 +41,7 @@ namespace LostGrace
         [SerializeField] Color imageBackgroundColorClass;
         [SerializeField] private Color textureBackgroundColorWeapon;
         [SerializeField] Color imageBackgroundColorWeapon;
+        [SerializeField] private UIAreaTypePreview areaTypePreview;
 
     public void SetSkill(Skill skill, Unit user)
         {
@@ -69,20 +69,15 @@ namespace LostGrace
                 gameObject.SetActive(true);
             name.text = skill.Name;
             description.text = skill.Description;
-
+            if(skill.activeMixin!=null&&skill.activeMixin is PositionTargetSkillMixin ptsm)
+                areaTypePreview.Show(ptsm.TargetArea, ptsm.Size, EffectType.Heal, ptsm.Size);
             level.text = "" + skill.Level;
             icon.sprite = skill.GetIcon();
             level.transform.gameObject.SetActive(true);
 
             description.transform.gameObject.SetActive(true);
             name.transform.gameObject.SetActive(true);
-            currentTextGo.gameObject.SetActive(false);
-            upgradeTextGo.gameObject.SetActive(false);
-            levelTextGo.gameObject.SetActive(false);
 
-
-            levelTextGo.gameObject.SetActive(true);
-            upgradeTextGo.gameObject.SetActive(true);
             switch (skill.Tier)
             {
                 case 0: //Mythic 

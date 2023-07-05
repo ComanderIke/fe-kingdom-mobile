@@ -19,7 +19,7 @@ namespace LostGrace
             transform.DeleteAllChildren();
             foreach (var skill in skills)
             {
-                var go = Instantiate(skill is ActivatedSkill?activeSkillButtonPrefab:skillButtonPrefab, transform);
+                var go = Instantiate(skill.activeMixin is ActiveSkillMixin?activeSkillButtonPrefab:skillButtonPrefab, transform);
                 go.GetComponent<SkillUI>().SetSkill(skill, false);
             }
             // var addButtonGo = Instantiate(addSkillButtonPrefab, transform);

@@ -5,17 +5,11 @@ using UnityEngine.Serialization;
 namespace LostGrace
 {
     [CreateAssetMenu(menuName = "GameData/Blessing", fileName = "Blessing")]
-    public class BlessingBP : ScriptableObject
+    public class BlessingBP : SkillBp
     {
-        [FormerlySerializedAs("skill")] public SkillBP skillBp;
-        public string blessingName;
-        public string Description;
-        public int tier=3;
-       //faith / 2 minimum 3
-
-        public Blessing Create()
+        public override Skill Create()
         {
-            return new Blessing(blessingName, Description, skillBp.Icon, skillBp.AnimationObject, tier, skillBp.UpgradeDescriptions);
+            return new Blessing(Name, Description, Icon, Tier);
         }
 
     }

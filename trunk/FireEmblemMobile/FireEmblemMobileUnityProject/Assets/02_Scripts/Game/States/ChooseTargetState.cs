@@ -80,7 +80,7 @@ namespace Game.Mechanics
         }
         void ShowSkillCastRange()
         {
-            if (selectionSystem.SelectedSkill is PositionTargetSkill pts)
+            if (selectionSystem.SelectedSkill.activeMixin is PositionTargetSkillMixin pts)
             {
                 if (pts.Rooted)
                 {
@@ -210,7 +210,7 @@ namespace Game.Mechanics
 
         private bool IsInCastRange(int x, int y)
         {
-            if (selectedSkill is PositionTargetSkill pts)
+            if (selectedSkill.activeMixin is PositionTargetSkillMixin pts)
             {
                 int diff = Math.Abs(selectedUnit.GridComponent.GridPosition.X - x) +
                            Math.Abs(selectedUnit.GridComponent.GridPosition.Y - y);

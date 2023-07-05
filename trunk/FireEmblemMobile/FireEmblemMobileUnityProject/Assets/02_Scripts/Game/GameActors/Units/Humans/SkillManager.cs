@@ -13,7 +13,7 @@ namespace Game.GameActors.Units.Humans
     public class SkillManager : ICloneable
     {
         public Action<int> SkillPointsUpdated;
-        [SerializeField] private List<SkillBP> startSkills;
+        [SerializeField] private List<SkillBp> startSkills;
         private List<Skill> skills;
 
         public int maxSkillCount = 5;
@@ -51,7 +51,7 @@ namespace Game.GameActors.Units.Humans
 
         public List<Skill> ActiveSkills
         {
-            get { return skills.FindAll(s => !(s is PassiveSkill)); }
+            get { return skills.FindAll(s => s.activeMixin!=null); }
         }
 
        // [SerializeField]

@@ -5,17 +5,18 @@ using UnityEngine;
 namespace Game.GameActors.Units.Skills
 {
     [Serializable]
-    public abstract class SkillBP:  ScriptableObject
+    [CreateAssetMenu(fileName = "Skill", menuName = "GameData/Skills/Skill")]
+    public class SkillBp:  ScriptableObject
     {
         public Sprite Icon;
-        public GameObject AnimationObject;
-        public int Cooldown;
         public int MaxLevel = 1;
         public string Description;
-        public string[] UpgradeDescriptions;
         public string Name;
         public int Tier;
-        
-        public abstract Skill Create();
+
+        public virtual Skill Create()
+        {
+            return new Skill(Name, Description, Icon, Tier);
+        }
     }
 }

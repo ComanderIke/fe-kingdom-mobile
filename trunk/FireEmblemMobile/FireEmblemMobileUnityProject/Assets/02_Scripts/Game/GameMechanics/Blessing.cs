@@ -7,17 +7,16 @@ using UnityEngine;
 namespace LostGrace
 {
 
-    public class Blessing : PassiveSkill
+    public class Blessing : Skill
     {
-        public Blessing(string Name, string description, Sprite icon, GameObject animationObject, int tier,string[] upgradeDescr):base(Name, description,icon, animationObject, tier, upgradeDescr)
-        {
-            SkillType = SkillType.Blessing;
-        }
+        // public Blessing(string Name, string description, Sprite icon, GameObject animationObject, int tier,string[] upgradeDescr):base(Name, description,icon, animationObject, tier, upgradeDescr)
+        // {
+        //     SkillType = SkillType.Blessing;
+        // }
 
 
-        public override List<EffectDescription> GetEffectDescription()
+        public Blessing(string Name, string Description, Sprite icon, int tier) : base(Name, Description, icon, tier)
         {
-            return new List<EffectDescription>();
         }
     }
 }

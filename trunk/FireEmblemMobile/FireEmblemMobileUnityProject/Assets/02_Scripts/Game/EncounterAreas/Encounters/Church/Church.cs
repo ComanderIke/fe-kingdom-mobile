@@ -62,7 +62,7 @@ public class Church
         //100 points=upgrade in tier so 10 Faith +1 Tier guarantued
         //10 FAith = 50%
         //+donate High ~100%
-        ret = tier3BlessingPool[UnityEngine.Random.Range(0, tier3BlessingPool.Length)].Create();
+        ret =(Blessing) tier3BlessingPool[UnityEngine.Random.Range(0, tier3BlessingPool.Length)].Create();
         return ret;
     }
     public Blessing DonateSmall(Unit unit, int faith)
@@ -122,6 +122,11 @@ public class Church
     public Blessing GetAlreadyGeneratedBlessing(Unit unit)
     {
         return alreadyGeneratedBlessing[unit];
+    }
+
+    public bool AlreadyRemovedCurse(Unit partyActiveUnit)
+    {
+        throw new System.NotImplementedException();
     }
 }
 

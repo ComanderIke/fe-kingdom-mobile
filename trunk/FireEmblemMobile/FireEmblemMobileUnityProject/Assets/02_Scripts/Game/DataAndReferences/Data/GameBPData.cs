@@ -35,7 +35,7 @@ namespace Game.GameResources
         [SerializeField] private RelicBP[] uncommonRelics = default;
         [SerializeField] private RelicBP[]superRareRelics = default;
         [SerializeField] private WeaponBP[] allWeapons;
-        [SerializeField] private SkillBP[] allSkills;
+        [SerializeField] private SkillBp[] allSkills;
         [SerializeField] private GemBP[] allGems;
         [SerializeField] private GemBP[] allSmallGems;
         [SerializeField] private GemBP[] allMediumGems;
@@ -56,7 +56,7 @@ namespace Game.GameResources
         [SerializeField] private ItemBP smithingStone;
         [SerializeField] private ItemBP dragonScale;
         [SerializeField] private ItemBP memberCard;
-        [SerializeField] private List<SkillBP> relicSkillPool;
+        [SerializeField] private List<SkillBp> relicSkillPool;
         [SerializeField] private EventData eventData;
         [SerializeField] private StatusEffectData statusEffectData;
         [SerializeField] BlessingBP[] allBlessings;
@@ -112,15 +112,15 @@ namespace Game.GameResources
             statusEffectData.OnValidate();
             allUnits = GetAllInstances<UnitBP>();
             allBlessings = GetAllInstances<BlessingBP>();
-            tier0Blessings = Array.FindAll(allBlessings,a => a.tier == 0);
-            tier1Blessings = Array.FindAll(allBlessings,a => a.tier == 1);
-            tier2Blessings = Array.FindAll(allBlessings,a => a.tier == 2);
-            tier3Blessings = Array.FindAll(allBlessings,a => a.tier == 3);
+            tier0Blessings = Array.FindAll(allBlessings,a => a.Tier == 0);
+            tier1Blessings = Array.FindAll(allBlessings,a => a.Tier == 1);
+            tier2Blessings = Array.FindAll(allBlessings,a => a.Tier == 2);
+            tier3Blessings = Array.FindAll(allBlessings,a => a.Tier == 3);
             allGems = GetAllInstances<GemBP>();
             allSmallGems = Array.FindAll(allGems,a => a.GetRarity() == 1);
             allMediumGems = Array.FindAll(allGems,a => a.GetRarity() == 2);
             allLargeGems = Array.FindAll(allGems,a => a.GetRarity() == 3);
-            allSkills = GetAllInstances<SkillBP>();
+            allSkills = GetAllInstances<SkillBp>();
             allWeapons = GetAllInstances<WeaponBP>();
             allCurses = GetAllInstances<CurseBP>();
             allBombs = GetAllInstances<BombBP>();
@@ -167,7 +167,7 @@ namespace Game.GameResources
         }
         public Skill GetSkill(string name)
         {
-            SkillBP weaponBp = null;
+            SkillBp weaponBp = null;
             weaponBp = allSkills.First(a => a.Name == name);
 
             return (Skill)weaponBp.Create();
@@ -183,7 +183,7 @@ namespace Game.GameResources
         {
             Debug.Log(name);
             BlessingBP weaponBp = null;
-            weaponBp = allBlessings.First(a => a.blessingName == name);
+            weaponBp = allBlessings.First(a => a.Name == name);
 
             return (Blessing)weaponBp.Create();
         }

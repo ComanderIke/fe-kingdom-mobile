@@ -351,7 +351,7 @@ namespace Game.Map
                 GridLogic.gridSessionData.AddValidTargetPosition(pos);
             }
         }
-        public void ShowRootedCastRange(IGridActor character, PositionTargetSkill pts)
+        public void ShowRootedCastRange(IGridActor character, PositionTargetSkillMixin pts)
         {
             HideMoveRange();
             Vector2 characterPos = character.GridComponent.GridPosition.AsVector();

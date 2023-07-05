@@ -8,17 +8,10 @@ namespace LostGrace
 {
    
 
-    public class Curse : PassiveSkill
+    public class Curse : Skill
     {
-        public Curse(string Name, string description, Sprite icon, GameObject animationObject, int tier,string[] upgradeDescr):base(Name, description,icon, animationObject, tier, upgradeDescr)
+        public Curse(string Name, string Description, Sprite icon, int tier) : base(Name, Description, icon, tier)
         {
-            SkillType = SkillType.Curse;
-        }
-
-
-        public override List<EffectDescription> GetEffectDescription()
-        {
-            throw new NotImplementedException();
         }
     }
 }

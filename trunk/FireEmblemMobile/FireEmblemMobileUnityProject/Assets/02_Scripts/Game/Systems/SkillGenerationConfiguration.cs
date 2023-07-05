@@ -10,13 +10,13 @@ public class SkillGenerationConfiguration : ScriptableObject
     [SerializeField] private float epicChance;
     [SerializeField] private float legendaryChance;
     [SerializeField] private float mythicChance;
-    [SerializeField] private List<SkillBP> commonSkillPool;
-    [SerializeField] private List<SkillBP> rangerSkillPool;
-    [SerializeField] private List<SkillBP> cavalierSkillPool;
-    [SerializeField] private List<SkillBP> clericSkillPool;
-    [SerializeField] private List<SkillBP> scorpionRiderSkillPool;
-    [SerializeField] private List<SkillBP> mercSkillPool;
-    [SerializeField] private List<SkillBP> witchSkillPool;
+    [SerializeField] private List<SkillBp> commonSkillPool;
+    [SerializeField] private List<SkillBp> rangerSkillPool;
+    [SerializeField] private List<SkillBp> cavalierSkillPool;
+    [SerializeField] private List<SkillBp> clericSkillPool;
+    [SerializeField] private List<SkillBp> scorpionRiderSkillPool;
+    [SerializeField] private List<SkillBp> mercSkillPool;
+    [SerializeField] private List<SkillBp> witchSkillPool;
     
     public float RareChance => rareChance;
     public float EpicChance => epicChance;
@@ -25,24 +25,24 @@ public class SkillGenerationConfiguration : ScriptableObject
 
     public float MythicChance => mythicChance;
     
-    public List<SkillBP> CommonSkillPool => commonSkillPool;
+    public List<SkillBp> CommonSkillPool => commonSkillPool;
 
-    public List<SkillBP> RangerSkillPool => rangerSkillPool;
+    public List<SkillBp> RangerSkillPool => rangerSkillPool;
 
-    public List<SkillBP> CavalierSkillPool => cavalierSkillPool;
+    public List<SkillBp> CavalierSkillPool => cavalierSkillPool;
 
-    public List<SkillBP> ClericSkillPool => clericSkillPool;
+    public List<SkillBp> ClericSkillPool => clericSkillPool;
 
-    public List<SkillBP> ScorpionRiderSkillPool => scorpionRiderSkillPool;
+    public List<SkillBp> ScorpionRiderSkillPool => scorpionRiderSkillPool;
 
-    public List<SkillBP> MercSkillPool => mercSkillPool;
+    public List<SkillBp> MercSkillPool => mercSkillPool;
     
-    public List<SkillBP> WitchSkillPool => witchSkillPool;
-    private Dictionary<RpgClass, List<SkillBP>> classPools;
+    public List<SkillBp> WitchSkillPool => witchSkillPool;
+    private Dictionary<RpgClass, List<SkillBp>> classPools;
 
     private void SetUpClassPools()
     {
-        classPools = new Dictionary<RpgClass, List<SkillBP>>();
+        classPools = new Dictionary<RpgClass, List<SkillBp>>();
         classPools.Add(RpgClass.Cavalier, cavalierSkillPool);
         classPools.Add(RpgClass.Mercenary, mercSkillPool);
         classPools.Add(RpgClass.Ranger, rangerSkillPool);
@@ -52,7 +52,7 @@ public class SkillGenerationConfiguration : ScriptableObject
        
     }
 
-    public IEnumerable<SkillBP> GetClassSkillPool(RpgClass unitRpgClass)
+    public IEnumerable<SkillBp> GetClassSkillPool(RpgClass unitRpgClass)
     {
         if (classPools == null)
         {

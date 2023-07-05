@@ -56,7 +56,7 @@ public class SkillSystem : IEngineSystem
     }
     private Skill GenerateSkill(Unit unit)
     {
-        var skillPool = new List<SkillBP>(config.CommonSkillPool);
+        var skillPool = new List<SkillBp>(config.CommonSkillPool);
         skillPool.AddRange(config.GetClassSkillPool(unit.rpgClass));
         int rng = Random.Range(0, skillPool.Count);
         var skill = skillPool[rng].Create();

@@ -1,45 +1,64 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using LostGrace;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Skills
 {
-    // public abstract class SkillMixin
-    // {
-    //     
-    // }
-    // public abstract class PassiveSkillMixin
-    // {
-    //     
-    // }
-    // public abstract class ActiveSkillMixin
-    // {
-    //     
-    // }
     [System.Serializable]
-    public abstract class Skill : ITargetableObject
+    public class Skill:ITargetableObject
     {
         public Sprite Icon;
-        public GameObject AnimationObject;
         public SkillType SkillType { get; set; }
-        public string Description;
-        public int Level;
+        private int level;
         public string Name;
-        public string[] UpgradeDescr;
+        public string Description;
         public int Tier;
-        //public List<SkillMixin> mixins;
-        public abstract List<EffectDescription> GetEffectDescription();
+        public List<PassiveSkillMixin> passiveMixins;
+        public ActiveSkillMixin activeMixin;
+        private Dictionary<int, List<PassiveSkillMixin>> mixinsPerLevel;
 
-        public Skill(string Name, string description, Sprite icon, GameObject animationObject, int tier, string []upgradeDescr)
+        public Skill(string Name,string Description, Sprite icon, int tier)
         {
             this.Name = Name;
-            this.Description = description;
             this.Icon = icon;
-            this.AnimationObject = animationObject;
             this.Tier = tier;
-            this.UpgradeDescr = upgradeDescr;
+            this.Description = Description;
+            passiveMixins = new List<PassiveSkillMixin>();
+            mixinsPerLevel = new Dictionary<int, List<PassiveSkillMixin>>();
         }
-        
+
+        public int Level
+        {
+            get
+            {
+                return level;
+            }
+            set
+            {
+                if(value> level)
+                    for (int l= this.level + 1; l <= value; l++)
+                    {
+                        if(mixinsPerLevel.ContainsKey(l)&&mixinsPerLevel[l]!=null)
+                            passiveMixins.AddRange(mixinsPerLevel[l]);
+                    }
+                else if (value < level)
+                {
+                    for (int l= this.level; l > value; l--)
+                    {
+                        if(mixinsPerLevel.ContainsKey(l))
+                            foreach (var mixin in mixinsPerLevel[l])
+                            {
+                                if(mixin!=null)
+                                    passiveMixins.Remove(mixin);
+                            }
+                    }
+                }
+
+                this.level = value;
+            }
+        }
+       
         public string GetName()
         {
             return Name;
@@ -51,16 +70,6 @@ namespace Game.GameActors.Units.Skills
         public Sprite GetIcon()
         {
             return Icon;
-        }
-
-        public virtual void Update()
-        {
-        }
-        
-
-        public bool CanUseSkill(Unit user)
-        {
-            return true;
         }
         
         public virtual void BindSkill(Unit unit)
@@ -74,14 +83,12 @@ namespace Game.GameActors.Units.Skills
 
         public string CurrentUpgradeText()
         {
-            return UpgradeDescr[Level];
+            return "";
         }
 
         public string NextUpgradeText()
         {
-            if(Level+1< UpgradeDescr.Length)
-                return UpgradeDescr[Level+1];
-            return "Maxed";
+            return "";
         }
     }
 }

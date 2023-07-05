@@ -35,7 +35,14 @@ namespace Game.Mechanics.Battle
         public BonusStats BonusStats { get; set; }
         public List<ImmunityType> Immunities { get; set; }
         public BonusAttackStats BonusAttackStats { get; set; }
-
+        public enum ImmunityType
+        {
+            Critical,
+            Effective,
+            PhysDamage,
+            MagicDamage,
+            invulnerable
+        }
         public BattleStats(IBattleActor owner)
         {
             this.owner = owner;
