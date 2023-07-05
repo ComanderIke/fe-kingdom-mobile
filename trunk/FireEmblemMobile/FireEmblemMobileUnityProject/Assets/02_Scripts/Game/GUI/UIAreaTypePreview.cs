@@ -17,7 +17,7 @@ namespace LostGrace
 
         private void OnEnable()
         {
-            Show(SkillTargetArea.Star, 2, EffectType.Heal, 2);
+            //Show(SkillTargetArea.Star, 2, EffectType.Heal, 2);
         }
 
         private UITargetAreaTile[,] grid = new UITargetAreaTile[5, 5];
@@ -25,7 +25,7 @@ namespace LostGrace
         public void Show(SkillTargetArea targetArea, int size, EffectType effectType, int upgradedSize)
         {
 
-            
+            Debug.Log("SHOW TARGET AREA");
             transform.DeleteAllChildrenImmediate();
             for (int i = 0; i < grid.GetLength(0); i++)
             {

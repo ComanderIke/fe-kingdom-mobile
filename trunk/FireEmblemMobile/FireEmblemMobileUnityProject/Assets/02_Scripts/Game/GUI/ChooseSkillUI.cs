@@ -35,9 +35,9 @@ public class ChooseSkillUI : MonoBehaviour, ISkillUIRenderer
     {
         canvas.enabled = true;
         uIIdleAnimation.runtimeAnimatorController = unit.visuals.Prefabs.UIAnimatorController;
-        chooseSkill1.SetSkill(skill1, unit);
-        chooseSkill2.SetSkill(skill2, unit);
-        chooseSkill3.SetSkill(skill3, unit);
+        chooseSkill1.SetSkill(skill1);
+        chooseSkill2.SetSkill(skill2);
+        chooseSkill3.SetSkill(skill3);
         TweenUtility.FadeIn(canvasGroup);
 
         skillsUI.Show(unit.SkillManager.Skills);

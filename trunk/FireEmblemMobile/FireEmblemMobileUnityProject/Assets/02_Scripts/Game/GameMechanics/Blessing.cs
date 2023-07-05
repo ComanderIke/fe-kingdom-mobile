@@ -15,7 +15,7 @@ namespace LostGrace
         // }
 
 
-        public Blessing(string Name, string Description, Sprite icon, int tier) : base(Name, Description, icon, tier)
+        public Blessing(string Name, string Description, Sprite icon, int tier, List<PassiveSkillMixin> passiveMixins, ActiveSkillMixin activeMixin) : base(Name, Description, icon, tier, passiveMixins, activeMixin)
         {
         }
     }

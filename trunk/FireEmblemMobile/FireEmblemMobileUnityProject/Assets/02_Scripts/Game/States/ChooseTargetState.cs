@@ -84,12 +84,12 @@ namespace Game.Mechanics
             {
                 if (pts.Rooted)
                 {
-                    gridGameManager.GetSystem<GridSystem>().ShowRootedCastRange(selectionSystem.SelectedCharacter, pts);
+                    gridGameManager.GetSystem<GridSystem>().ShowRootedCastRange(selectionSystem.SelectedCharacter, selectionSystem.SelectedSkill.Level, pts);
                 }
                 else
                 {
                     gridGameManager.GetSystem<GridSystem>().ShowCastRange(selectionSystem.SelectedCharacter,
-                        pts.Range + pts.GetCastRangeIncrease(((Unit)selectionSystem.SelectedCharacter).Stats
+                        pts.GetRange(selectionSystem.SelectedSkill.Level) + pts.GetCastRangeIncrease(((Unit)selectionSystem.SelectedCharacter).Stats
                             .BaseAttributes));
                 }
             }
@@ -214,7 +214,7 @@ namespace Game.Mechanics
             {
                 int diff = Math.Abs(selectedUnit.GridComponent.GridPosition.X - x) +
                            Math.Abs(selectedUnit.GridComponent.GridPosition.Y - y);
-                return diff <= pts.Range + pts.GetCastRangeIncrease(selectedUnit.Stats.BaseAttributes);
+                return diff <= pts.GetRange(selectedSkill.Level) + pts.GetCastRangeIncrease(selectedUnit.Stats.BaseAttributes);
 
             }
             else

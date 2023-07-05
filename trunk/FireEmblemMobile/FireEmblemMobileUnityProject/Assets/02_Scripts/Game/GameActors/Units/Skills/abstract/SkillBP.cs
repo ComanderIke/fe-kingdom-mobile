@@ -9,14 +9,15 @@ namespace Game.GameActors.Units.Skills
     public class SkillBp:  ScriptableObject
     {
         public Sprite Icon;
-        public int MaxLevel = 1;
         public string Description;
         public string Name;
         public int Tier;
+        public List<PassiveSkillMixin> passiveMixins;
+        public ActiveSkillMixin activeMixin;
 
         public virtual Skill Create()
         {
-            return new Skill(Name, Description, Icon, Tier);
+            return new Skill(Name, Description, Icon, Tier, passiveMixins, activeMixin);
         }
     }
 }

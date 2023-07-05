@@ -1,4 +1,5 @@
-﻿using _02_Scripts.Game.GameActors.Items.Consumables;
+﻿using System;
+using _02_Scripts.Game.GameActors.Items.Consumables;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
 using TMPro;
@@ -7,14 +8,16 @@ using UnityEngine.UI;
 
 namespace LostGrace
 {
+    [ExecuteInEditMode]
     public class ChooseSkillButtonUI : MonoBehaviour
     {
+        public SkillBp testSkill;
         public Skill skill;
-        private Unit user;
         public TextMeshProUGUI description;
         public new TextMeshProUGUI name;
         public TextMeshProUGUI level;
         public GameObject linePrefab;
+        public Transform lineContainer;
       
    
 
@@ -43,11 +46,20 @@ namespace LostGrace
         [SerializeField] Color imageBackgroundColorWeapon;
         [SerializeField] private UIAreaTypePreview areaTypePreview;
 
-    public void SetSkill(Skill skill, Unit user)
+        public void OnEnable()
+        {
+            if (testSkill != null)
+            {
+                Debug.Log("ONENABLE");
+                SetSkill(testSkill.Create());
+            }
+        }
+
+        public void SetSkill(Skill skill)
         {
 
             this.skill = skill;
-            this.user = user;
+          
             UpdateUI();
 
         }
@@ -69,8 +81,20 @@ namespace LostGrace
                 gameObject.SetActive(true);
             name.text = skill.Name;
             description.text = skill.Description;
-            if(skill.activeMixin!=null&&skill.activeMixin is PositionTargetSkillMixin ptsm)
-                areaTypePreview.Show(ptsm.TargetArea, ptsm.Size, EffectType.Heal, ptsm.Size);
+            if (skill.activeMixin != null) 
+            {
+                if (skill.activeMixin is PositionTargetSkillMixin ptsm)
+                {
+                    areaTypePreview.Show(ptsm.TargetArea, ptsm.GetSize(skill.Level), EffectType.Heal, ptsm.GetSize(skill.Level));
+                    var line = GameObject.Instantiate(linePrefab, lineContainer);
+                    line.GetComponent<UISkillEffectLine>().SetValues("Castrange: ",ptsm.GetRange(skill.Level),ptsm.GetRange(skill.Level+1));
+                    line = GameObject.Instantiate(linePrefab, lineContainer);
+                    line.GetComponent<UISkillEffectLine>().SetValues("Damage: ",ptsm.GetPower(skill.Level),ptsm.GetRange(skill.Level+1));
+                }
+
+                
+            }
+
             level.text = "" + skill.Level;
             icon.sprite = skill.GetIcon();
             level.transform.gameObject.SetActive(true);

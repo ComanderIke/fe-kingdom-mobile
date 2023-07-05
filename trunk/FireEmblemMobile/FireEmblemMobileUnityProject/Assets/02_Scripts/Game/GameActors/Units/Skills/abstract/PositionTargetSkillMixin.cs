@@ -13,20 +13,47 @@ namespace Game.GameActors.Units.Skills
     [System.Serializable]
     [CreateAssetMenu(menuName = "GameData/Skills/Active/PositionTarget", fileName = "PositionTargetSkillMixin")]
         public class PositionTargetSkillMixin : ActiveSkillMixin
-    {
-        public int power;
-        public int Range { get; set; }
-        public int Size { get; set; }
-        public SkillTargetArea TargetArea { get; set; }
+        {
+            
+        [field:SerializeField] private int[] power;
+        [field: SerializeField] private int[] range;
+        [field: SerializeField] private int[] size;
+        [field:SerializeField]public SkillTargetArea TargetArea { get; set; }
         
-        public List<SkillEffectMixin> SkillEffects;
-        public bool Rooted { get; set; }
+        [field:SerializeField]public List<SkillEffectMixin> SkillEffects;
+        [field:SerializeField]public bool Rooted { get; set; }
 
+        public int GetPower(int level) => power[level];
+        public int GetRange(int level)  => range[level];
+        public int GetSize(int level)  => size[level];
+
+
+        private void OnEnable()
+        {
+            OnValidate();
+        }
+
+        void OnValidate()
+        {
+            if (power == null||power.Length != MAXLEVEL)
+            {
+                Array.Resize(ref power, MAXLEVEL);
+            }
+            if (size == null||size.Length != MAXLEVEL)
+            {
+                Array.Resize(ref size, MAXLEVEL);
+            }
+            if (range == null||range.Length != MAXLEVEL)
+            {
+                Array.Resize(ref range, MAXLEVEL);
+            }
+            base.OnValidate();
+        }
        
-        public virtual void Activate(Unit user, Tile[,] tiles, int x, int y)
+        public virtual void Activate(int level, Unit user, Tile[,] tiles, int x, int y)
         {
 
-            foreach (var pos in GetTargetPositions())
+            foreach (var pos in GetTargetPositions(level))
             {
                 int xPosition = x + pos.x;
                 int yPosition = y + pos.y;
@@ -40,16 +67,16 @@ namespace Game.GameActors.Units.Skills
             
         }
 
-        protected List<Vector2Int> GetTargetPositions()
+        protected List<Vector2Int> GetTargetPositions(int level)
         {
             List<Vector2Int> targetPositions = new List<Vector2Int>();
-            if (Size > 0)
+            if (GetSize(level) > 0)
             {
                 if (TargetArea == SkillTargetArea.Block)
                 {
-                    for (int i = 0; i < Size + 1; i++)
+                    for (int i = 0; i < GetSize(level) + 1; i++)
                     {
-                        for (int j = 0; j < Size + 1; j++)
+                        for (int j = 0; j < GetSize(level) + 1; j++)
                         {
                             if(!targetPositions.Contains(new Vector2Int(i, -j)))
                                 targetPositions.Add(new Vector2Int(i, -j));
@@ -65,7 +92,7 @@ namespace Game.GameActors.Units.Skills
                 else
                 {
                     targetPositions.Add(new Vector2Int(0, 0));
-                    for (int i = 1; i < Size + 1; i++)
+                    for (int i = 1; i < GetSize(level) + 1; i++)
                     {
                         if (TargetArea == SkillTargetArea.Line || TargetArea == SkillTargetArea.Cross ||
                             TargetArea == SkillTargetArea.Star)
@@ -88,11 +115,11 @@ namespace Game.GameActors.Units.Skills
 
                     if (TargetArea == SkillTargetArea.Star)
                     {
-                        for (int i = 0; i < Size; i++)
+                        for (int i = 0; i < GetSize(level); i++)
                         {
-                            for (int j = 0; j < Size; j++)
+                            for (int j = 0; j < GetSize(level); j++)
                             {
-                                if (i != 0 && j != 0 && (i + j) <= Size)
+                                if (i != 0 && j != 0 && (i + j) <= GetSize(level))
                                 {
                                     if(!targetPositions.Contains(new Vector2Int(i, -j)))
                                         targetPositions.Add(new Vector2Int(i, -j));
@@ -132,10 +159,10 @@ namespace Game.GameActors.Units.Skills
         }
 
 
-        public List<IAttackableTarget> GetAllTargets(Unit selectedUnit, Tile[,] tiles, int x, int y)
+        public List<IAttackableTarget> GetAllTargets(int level,Unit selectedUnit, Tile[,] tiles, int x, int y)
         {
             List<IAttackableTarget> targets = new List<IAttackableTarget>();
-            foreach (var pos in GetTargetPositions())
+            foreach (var pos in GetTargetPositions(level))
             {
                 int xPosition = x + pos.x;
                 int yPosition = y + pos.y;

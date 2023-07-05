@@ -351,17 +351,17 @@ namespace Game.Map
                 GridLogic.gridSessionData.AddValidTargetPosition(pos);
             }
         }
-        public void ShowRootedCastRange(IGridActor character, PositionTargetSkillMixin pts)
+        public void ShowRootedCastRange(IGridActor character, int level, PositionTargetSkillMixin pts)
         {
             HideMoveRange();
             Vector2 characterPos = character.GridComponent.GridPosition.AsVector();
-            if (pts.Size > 0)
+            if (pts.GetSize(level) > 0)
             {
                 if (pts.TargetArea == SkillTargetArea.Block)
                 {
-                    for (int i = 0; i < pts.Size + 1; i++)
+                    for (int i = 0; i < pts.GetSize(level) + 1; i++)
                     {
-                        for (int j = 0; j< pts.Size + 1; j++)
+                        for (int j = 0; j< pts.GetSize(level)+ 1; j++)
                         {
                             var pos = characterPos + new Vector2(i, j);
                             ShowCastRange(pos,character.Faction.Id);
@@ -376,7 +376,7 @@ namespace Game.Map
                 }
                 else
                 {
-                    for (int i = 1; i < pts.Size + 1; i++)
+                    for (int i = 1; i < pts.GetSize(level) + 1; i++)
                     {
                         if (pts.TargetArea == SkillTargetArea.Line||pts.TargetArea == SkillTargetArea.Star||pts.TargetArea == SkillTargetArea.Cross)
                         {
@@ -400,11 +400,11 @@ namespace Game.Map
 
                     if (pts.TargetArea == SkillTargetArea.Star)
                     {
-                        for (int i = 0; i < pts.Size; i++)
+                        for (int i = 0; i < pts.GetSize(level); i++)
                         {
-                            for (int j = 0; j < pts.Size; j++)
+                            for (int j = 0; j < pts.GetSize(level); j++)
                             {
-                                if (i !=0 && j!=0&&(i+j)<=pts.Size)
+                                if (i !=0 && j!=0&&(i+j)<=pts.GetSize(level))
                                 {
                                     var pos = characterPos + new Vector2(i, j);
                                     ShowCastRange(pos,character.Faction.Id);

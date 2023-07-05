@@ -9,7 +9,7 @@ namespace LostGrace
     {
         public override Skill Create()
         {
-            return new Curse(Name, Description, Icon, Tier);
+            return new Curse(Name, Description, Icon, Tier, passiveMixins, activeMixin);
         }
 
     }

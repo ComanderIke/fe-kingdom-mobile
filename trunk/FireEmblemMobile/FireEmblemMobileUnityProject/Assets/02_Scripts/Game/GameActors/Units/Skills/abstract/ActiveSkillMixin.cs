@@ -18,7 +18,28 @@ namespace Game.GameActors.Units.Skills
         //     this.currentUses = maxUsesPerLevel;
         //     this.hpCostPerLevel = hpCostPerLevel;
         // }
+        private void OnEnable()
+        {
+            OnValidate();
+        }
 
+        protected void OnValidate()
+        {
+            if (currentUses==null||currentUses.Length != MAXLEVEL)
+            {
+                Array.Resize(ref currentUses, MAXLEVEL);
+            }
+            if (maxUsesPerLevel == null||maxUsesPerLevel.Length != MAXLEVEL)
+            {
+                Array.Resize(ref maxUsesPerLevel, MAXLEVEL);
+            }
+            if (hpCostPerLevel == null||hpCostPerLevel.Length != MAXLEVEL)
+            {
+                Array.Resize(ref hpCostPerLevel, MAXLEVEL);
+            }
+            
+            
+        }
         public int GetCurrentUses(int level)
         {
             return currentUses[level];

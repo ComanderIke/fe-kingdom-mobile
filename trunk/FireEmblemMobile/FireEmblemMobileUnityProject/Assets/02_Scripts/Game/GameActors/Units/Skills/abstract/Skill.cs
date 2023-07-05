@@ -18,13 +18,14 @@ namespace Game.GameActors.Units.Skills
         public ActiveSkillMixin activeMixin;
         private Dictionary<int, List<PassiveSkillMixin>> mixinsPerLevel;
 
-        public Skill(string Name,string Description, Sprite icon, int tier)
+        public Skill(string Name, string Description, Sprite icon, int tier, List<PassiveSkillMixin> passiveMixins, ActiveSkillMixin activeMixin)
         {
             this.Name = Name;
             this.Icon = icon;
             this.Tier = tier;
             this.Description = Description;
-            passiveMixins = new List<PassiveSkillMixin>();
+            this.passiveMixins = passiveMixins;
+            this.activeMixin = activeMixin;
             mixinsPerLevel = new Dictionary<int, List<PassiveSkillMixin>>();
         }
 
