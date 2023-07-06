@@ -34,7 +34,7 @@ namespace LostGrace
             this.Skill = skill;
             if (skill.activeMixin is ActiveSkillMixin activatedSkillMixin)
             {
-                uses.text = activatedSkillMixin.currentUses + "/" +
+                uses.text = skill.ActiveMixinUses + "/" +
                             activatedSkillMixin.maxUsesPerLevel[skill.Level];
                 hpCost.text = ""+activatedSkillMixin.hpCostPerLevel[skill.Level];
                 if (!big)

@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace LostGrace
 {
-    [ExecuteInEditMode]
+
     public class UIAreaTypePreview : MonoBehaviour
     {
         [SerializeField] private GameObject gridTilePrefab;
@@ -22,10 +22,10 @@ namespace LostGrace
 
         private UITargetAreaTile[,] grid = new UITargetAreaTile[5, 5];
 
-        public void Show(SkillTargetArea targetArea, int size, EffectType effectType, int upgradedSize)
+        public void Show(SkillTargetArea targetArea, int currentSize, EffectType effectType, int upgradedSize, bool rooted)
         {
 
-            Debug.Log("SHOW TARGET AREA");
+           // Debug.Log("SHOW TARGET AREA" +targetArea+" "+size+" "+effectType);
             transform.DeleteAllChildrenImmediate();
             for (int i = 0; i < grid.GetLength(0); i++)
             {
@@ -37,8 +37,28 @@ namespace LostGrace
             }
 
             Vector2 characterPos = new Vector2(2, 2);
-            List<Vector2> positions = new List<Vector2>();
+            var positions = GetTargetAreaPositions(currentSize, targetArea, characterPos);
+            var positionsUpg = GetTargetAreaPositions(upgradedSize, targetArea, characterPos);
             positions.Add(characterPos);
+        
+            foreach (var pos in positionsUpg)
+            {
+                grid[(int)pos.x, (int)pos.y].Show(effectType);
+                grid[(int)pos.x, (int)pos.y].Blink();
+            }
+            foreach (var pos in positions)
+            {
+                grid[(int)pos.x, (int)pos.y].Show(effectType);
+                grid[(int)pos.x, (int)pos.y].StopBlink();
+            }
+            if(rooted)
+                grid[(int)characterPos.x,(int)characterPos.y].Show(EffectType.Neutral);
+            
+        }
+
+        public List<Vector2> GetTargetAreaPositions(int size, SkillTargetArea targetArea, Vector2 characterPos)
+        {
+            var positions = new List<Vector2>();
             if (size > 0)
             {
                 if (targetArea == SkillTargetArea.Block)
@@ -89,16 +109,11 @@ namespace LostGrace
                             }
                         }
                     }
-
-                    
-
-
                 }
-                foreach (var pos in positions)
-                {
-                    grid[(int)pos.x, (int)pos.y].Show(effectType);
-                }
+
+                
             }
+            return positions;
         }
     }
 }

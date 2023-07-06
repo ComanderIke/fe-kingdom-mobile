@@ -29,7 +29,8 @@ namespace _02_Scripts.Game.GameActors.Items.Consumables
     {
         Heal,
         Good,
-        Bad
+        Bad,
+        Neutral
     }
     public class Bomb : ConsumableItem, IThrowableItem, IEquipableCombatItem
     {

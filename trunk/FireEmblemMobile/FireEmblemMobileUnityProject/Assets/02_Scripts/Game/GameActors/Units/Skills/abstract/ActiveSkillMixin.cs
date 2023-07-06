@@ -7,7 +7,10 @@ namespace Game.GameActors.Units.Skills
     public class ActiveSkillMixin : SkillMixin
     {
         public GameObject AnimationObject;
-        public int[] currentUses;
+      //this cannot be in a ScriptableObject...
+        // Solution 1) create Instance of this SO before assigning it to a skill
+        // Solution 2) save currentUses in Skill class (weird because only active skills use it, but some passives might use it(so it triggers only once per combat etc..)
+        // Solution 3) 
         public int[] maxUsesPerLevel;
         public int[] hpCostPerLevel;
 
@@ -25,10 +28,6 @@ namespace Game.GameActors.Units.Skills
 
         protected void OnValidate()
         {
-            if (currentUses==null||currentUses.Length != MAXLEVEL)
-            {
-                Array.Resize(ref currentUses, MAXLEVEL);
-            }
             if (maxUsesPerLevel == null||maxUsesPerLevel.Length != MAXLEVEL)
             {
                 Array.Resize(ref maxUsesPerLevel, MAXLEVEL);
@@ -39,10 +38,6 @@ namespace Game.GameActors.Units.Skills
             }
             
             
-        }
-        public int GetCurrentUses(int level)
-        {
-            return currentUses[level];
         }
         public int GetMaxUses(int level)
         {

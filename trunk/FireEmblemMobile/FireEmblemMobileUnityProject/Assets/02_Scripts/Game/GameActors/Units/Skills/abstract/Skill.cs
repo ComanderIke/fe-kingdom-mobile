@@ -16,6 +16,7 @@ namespace Game.GameActors.Units.Skills
         public int Tier;
         public List<PassiveSkillMixin> passiveMixins;
         public ActiveSkillMixin activeMixin;
+        public int ActiveMixinUses; 
         private Dictionary<int, List<PassiveSkillMixin>> mixinsPerLevel;
 
         public Skill(string Name, string Description, Sprite icon, int tier, List<PassiveSkillMixin> passiveMixins, ActiveSkillMixin activeMixin)
@@ -26,6 +27,8 @@ namespace Game.GameActors.Units.Skills
             this.Description = Description;
             this.passiveMixins = passiveMixins;
             this.activeMixin = activeMixin;
+            if (activeMixin)
+                ActiveMixinUses = activeMixin.GetMaxUses(Level);
             mixinsPerLevel = new Dictionary<int, List<PassiveSkillMixin>>();
         }
 
@@ -57,6 +60,8 @@ namespace Game.GameActors.Units.Skills
                 }
 
                 this.level = value;
+                if(activeMixin)
+                    ActiveMixinUses = activeMixin.GetMaxUses(level);
             }
         }
        

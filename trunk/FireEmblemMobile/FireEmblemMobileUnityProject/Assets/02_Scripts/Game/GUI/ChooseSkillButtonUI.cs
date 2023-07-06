@@ -1,4 +1,5 @@
 ﻿using System;
+using __2___Scripts.Game.Utility;
 using _02_Scripts.Game.GameActors.Items.Consumables;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
@@ -8,7 +9,7 @@ using UnityEngine.UI;
 
 namespace LostGrace
 {
-    [ExecuteInEditMode]
+    
     public class ChooseSkillButtonUI : MonoBehaviour
     {
         public SkillBp testSkill;
@@ -45,7 +46,13 @@ namespace LostGrace
         [SerializeField] private Color textureBackgroundColorWeapon;
         [SerializeField] Color imageBackgroundColorWeapon;
         [SerializeField] private UIAreaTypePreview areaTypePreview;
-
+        [SerializeField] private TextMeshProUGUI hpCostText;
+        [SerializeField] private TextMeshProUGUI usesText;
+        [SerializeField] private Color upgTextColor;
+        [SerializeField] private Color hpCostTextColor;
+        [SerializeField] private Color usesTextColor;
+        [SerializeField] private GameObject hpCostGo;
+        [SerializeField] private GameObject usesGo;
         public void OnEnable()
         {
             if (testSkill != null)
@@ -59,6 +66,7 @@ namespace LostGrace
         {
 
             this.skill = skill;
+            this.skill.Level++;
           
             UpdateUI();
 
@@ -79,17 +87,47 @@ namespace LostGrace
 
             if (!gameObject.activeSelf)
                 gameObject.SetActive(true);
+            
+            lineContainer.DeleteAllChildrenImmediate();
             name.text = skill.Name;
             description.text = skill.Description;
-            if (skill.activeMixin != null) 
+            bool isActiveMixin = skill.activeMixin != null;
+            hpCostGo.SetActive(isActiveMixin);
+            usesGo.SetActive(isActiveMixin);
+            
+            if (isActiveMixin)
             {
+                hpCostText.text = "" + skill.activeMixin.hpCostPerLevel[skill.Level];
+                usesText.text = "" + skill.ActiveMixinUses + "/" +
+                                skill.activeMixin.maxUsesPerLevel[skill.Level];
+                if(skill.Level>=1&&skill.activeMixin.maxUsesPerLevel[skill.Level]>skill.activeMixin.maxUsesPerLevel[skill.Level-1])
+                    usesText.color = upgTextColor;
+                else
+                {
+                    usesText.color = usesTextColor;
+                }
+                if(skill.Level>=1&&skill.activeMixin.hpCostPerLevel[skill.Level]>skill.activeMixin.hpCostPerLevel[skill.Level-1])
+                    hpCostText.color = upgTextColor;
+                else
+                {
+                    hpCostText.color = hpCostTextColor;
+                }
                 if (skill.activeMixin is PositionTargetSkillMixin ptsm)
                 {
-                    areaTypePreview.Show(ptsm.TargetArea, ptsm.GetSize(skill.Level), EffectType.Heal, ptsm.GetSize(skill.Level));
+                    var castRange = skill.Level==0?ptsm.GetRange(skill.Level):ptsm.GetRange(skill.Level-1);
+                    var upgcastRange= ptsm.GetRange(skill.Level);
+                    var damage= skill.Level==0?ptsm.GetPower(skill.Level):ptsm.GetPower(skill.Level-1);
+                    var upgDamage= ptsm.GetPower(skill.Level);
+                    var size= skill.Level==0?ptsm.GetSize(skill.Level):ptsm.GetSize(skill.Level-1);
+                    var upgSize= ptsm.GetSize(skill.Level);
+
+                    areaTypePreview.Show(ptsm.TargetArea, size, EffectType.Heal,
+                            upgSize, ptsm.Rooted);
+                    
                     var line = GameObject.Instantiate(linePrefab, lineContainer);
-                    line.GetComponent<UISkillEffectLine>().SetValues("Castrange: ",ptsm.GetRange(skill.Level),ptsm.GetRange(skill.Level+1));
+                    line.GetComponent<UISkillEffectLine>().SetValues("Castrange: ",castRange,upgcastRange);
                     line = GameObject.Instantiate(linePrefab, lineContainer);
-                    line.GetComponent<UISkillEffectLine>().SetValues("Damage: ",ptsm.GetPower(skill.Level),ptsm.GetRange(skill.Level+1));
+                    line.GetComponent<UISkillEffectLine>().SetValues("Damage: ",damage,upgDamage);
                 }
 
                 
