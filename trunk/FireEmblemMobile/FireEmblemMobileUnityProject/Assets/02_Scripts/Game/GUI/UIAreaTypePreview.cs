@@ -13,11 +13,19 @@ namespace LostGrace
     public class UIAreaTypePreview : MonoBehaviour
     {
         [SerializeField] private GameObject gridTilePrefab;
-
+        [SerializeField] private RectTransform rectTransformCopyYAnchored;
+        private RectTransform rectTransform;
 
         private void OnEnable()
         {
+            rectTransform = GetComponent<RectTransform>();
             //Show(SkillTargetArea.Star, 2, EffectType.Heal, 2);
+        }
+
+        private void Update()
+        {
+            rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x,
+                rectTransformCopyYAnchored.anchoredPosition.y);
         }
 
         private UITargetAreaTile[,] grid = new UITargetAreaTile[5, 5];
@@ -114,6 +122,11 @@ namespace LostGrace
                 
             }
             return positions;
+        }
+
+        public void Hide()
+        {
+            transform.DeleteAllChildrenImmediate();
         }
     }
 }

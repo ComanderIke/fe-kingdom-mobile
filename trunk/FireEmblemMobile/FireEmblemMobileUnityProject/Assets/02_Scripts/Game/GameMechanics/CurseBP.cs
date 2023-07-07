@@ -4,7 +4,7 @@ using UnityEngine.Serialization;
 
 namespace LostGrace
 {
-    [CreateAssetMenu(menuName = "GameData/Curse", fileName = "Curse")]
+    [CreateAssetMenu(menuName = "GameData/Skills/Curse", fileName = "Curse")]
     public class CurseBP : SkillBp
     {
         public override Skill Create()

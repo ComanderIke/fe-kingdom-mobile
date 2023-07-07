@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Game.GUI;
 using UnityEngine;
 
@@ -59,6 +60,10 @@ namespace Game.GameActors.Units
             if (exp > MAX_EXP)
                 exp = MAX_EXP;
             Debug.Log("SOME UNIT EXP GAINED!");
+            foreach (var multiplier in ExpMultipliers)
+            {
+                exp = (int)(exp*multiplier);
+            }
             ExpGained?.Invoke(Exp, exp);
            return DoExp(exp);
             
@@ -94,6 +99,7 @@ namespace Game.GameActors.Units
         }
 
         public bool HasLevelUp { get; set; }
-        public float ExpMultiplier { get; set; }
+  
+        public List<float> ExpMultipliers { get; set; }
     }
 }

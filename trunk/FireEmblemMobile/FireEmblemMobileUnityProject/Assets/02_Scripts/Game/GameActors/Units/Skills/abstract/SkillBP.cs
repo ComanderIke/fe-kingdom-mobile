@@ -17,7 +17,15 @@ namespace Game.GameActors.Units.Skills
 
         public virtual Skill Create()
         {
-            return new Skill(Name, Description, Icon, Tier, passiveMixins, activeMixin);
+            var instantiatedPassiveMixins = new List<PassiveSkillMixin>();
+            if(passiveMixins!=null)
+                foreach (var passive in passiveMixins)
+                {
+                    instantiatedPassiveMixins.Add(Instantiate(passive));
+                }
+
+            var instantiatedActiveMixin = activeMixin == null ? null : Instantiate(activeMixin);
+            return new Skill(Name, Description, Icon, Tier, instantiatedPassiveMixins, instantiatedActiveMixin);
         }
     }
 }

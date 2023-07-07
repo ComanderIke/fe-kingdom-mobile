@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Game.GameInput;
 using LostGrace;
 using UnityEngine;
 
@@ -18,6 +19,7 @@ namespace Game.GameActors.Units.Skills
         public ActiveSkillMixin activeMixin;
         public int ActiveMixinUses; 
         private Dictionary<int, List<PassiveSkillMixin>> mixinsPerLevel;
+        private Unit owner;
 
         public Skill(string Name, string Description, Sprite icon, int tier, List<PassiveSkillMixin> passiveMixins, ActiveSkillMixin activeMixin)
         {
@@ -27,8 +29,15 @@ namespace Game.GameActors.Units.Skills
             this.Description = Description;
             this.passiveMixins = passiveMixins;
             this.activeMixin = activeMixin;
+            foreach (var passive in passiveMixins)
+                passive.skill = this;
+
             if (activeMixin)
+            {
+                activeMixin.skill = this;
                 ActiveMixinUses = activeMixin.GetMaxUses(Level);
+            }
+
             mixinsPerLevel = new Dictionary<int, List<PassiveSkillMixin>>();
         }
 
@@ -62,6 +71,14 @@ namespace Game.GameActors.Units.Skills
                 this.level = value;
                 if(activeMixin)
                     ActiveMixinUses = activeMixin.GetMaxUses(level);
+                //TODO Unbind and rebind all skills (So that multipliers etc will get updated)
+                if(owner!=null)
+                    foreach (var passive in passiveMixins)
+                    {
+                        passive.UnbindFromUnit(owner,this);
+                        passive.BindToUnit(owner, this);
+                    }
+                
             }
         }
        
@@ -80,11 +97,20 @@ namespace Game.GameActors.Units.Skills
         
         public virtual void BindSkill(Unit unit)
         {
-            Debug.Log("Bind Skill");
+            
+            owner = unit;
+            foreach (var passive in passiveMixins)
+            {
+                passive.BindToUnit(owner, this);
+            }
         }
         public virtual void UnbindSkill(Unit unit)
         {
-            Debug.Log("Unbind Skill");
+            foreach (var passive in passiveMixins)
+            {
+                passive.UnbindFromUnit(owner,this);
+            }
+            owner = null;
         }
 
         public string CurrentUpgradeText()
@@ -96,5 +122,7 @@ namespace Game.GameActors.Units.Skills
         {
             return "";
         }
+
+       
     }
 }

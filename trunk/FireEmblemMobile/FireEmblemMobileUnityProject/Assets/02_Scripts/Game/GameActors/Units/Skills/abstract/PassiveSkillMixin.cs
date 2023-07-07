@@ -1,20 +1,15 @@
-﻿using LostGrace;
+﻿using System.Collections.Generic;
+using LostGrace;
+using UnityEngine;
 
 namespace Game.GameActors.Units.Skills
 {
     public abstract class PassiveSkillMixin:SkillMixin
     {
         
-        private EffectDescription[] effectDescriptionsPerLevel;
-        
-        public PassiveSkillMixin(EffectDescription[] effectDescription):base()
-        {
-            this.effectDescriptionsPerLevel = effectDescription;
-        }
+        //[SerializeField]private EffectDescription[] effectDescriptionsPerLevel;
 
-        public EffectDescription GetEffectDescription(int level)
-        {
-            return effectDescriptionsPerLevel[level];
-        }
+        public abstract List<EffectDescription> GetEffectDescription(int level);
+
     }
 }

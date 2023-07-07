@@ -94,7 +94,11 @@ namespace LostGrace
             bool isActiveMixin = skill.activeMixin != null;
             hpCostGo.SetActive(isActiveMixin);
             usesGo.SetActive(isActiveMixin);
-            
+
+            if (!isActiveMixin)
+            {
+                areaTypePreview.Hide();
+            }
             if (isActiveMixin)
             {
                 hpCostText.text = "" + skill.activeMixin.hpCostPerLevel[skill.Level];
@@ -125,12 +129,22 @@ namespace LostGrace
                             upgSize, ptsm.Rooted);
                     
                     var line = GameObject.Instantiate(linePrefab, lineContainer);
-                    line.GetComponent<UISkillEffectLine>().SetValues("Castrange: ",castRange,upgcastRange);
+                    line.GetComponent<UISkillEffectLine>().SetValues("Castrange: ",""+castRange,""+upgcastRange);
                     line = GameObject.Instantiate(linePrefab, lineContainer);
-                    line.GetComponent<UISkillEffectLine>().SetValues("Damage: ",damage,upgDamage);
+                    line.GetComponent<UISkillEffectLine>().SetValues("Damage: ",""+damage,""+upgDamage);
                 }
 
                 
+            }
+
+            foreach (var passive in skill.passiveMixins)
+            {
+                var effectDescriptions = passive.GetEffectDescription(skill.Level-1);
+                foreach (var effectDescription in effectDescriptions)
+                {
+                    var line = GameObject.Instantiate(linePrefab, lineContainer);
+                    line.GetComponent<UISkillEffectLine>().SetValues(effectDescription.label, effectDescription.value, effectDescription.upgValue);
+                }
             }
 
             level.text = "" + skill.Level;

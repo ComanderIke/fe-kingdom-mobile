@@ -11,7 +11,7 @@ namespace LostGrace
         [SerializeField] private TextMeshProUGUI value;
         [SerializeField] private TextMeshProUGUI upgradedValue;
 
-        public void SetValues(string label, int value, int upg)
+        public void SetValues(string label, string value, string upg)
         {
             this.label.text = label;
             this.value.text = ""+value;

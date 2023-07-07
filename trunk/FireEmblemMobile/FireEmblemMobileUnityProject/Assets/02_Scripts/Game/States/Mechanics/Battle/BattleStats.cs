@@ -18,7 +18,7 @@ namespace Game.Mechanics.Battle
     public class BonusAttackStats
     {
         public bool BonusAttack { get; set; }
-        public AttackEffects AttackEffects { get; set; }
+        public Dictionary<AttackEffectEnum, object> AttackEffects { get; set; } //object userData like for Sol healhamount for luna def/res reduction
 
         public BonusAttackStats()
         {
