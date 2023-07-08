@@ -36,10 +36,10 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
     [SerializeField] private CanvasGroup SoldOutArea;
     public void UpdateUI()
     {
-        if (state == ChurchUIState.Pray && !church.CanDonate(party.ActiveUnit))
-            state = ChurchUIState.Blessing;
-        if (state == ChurchUIState.Blessing && church.CanDonate(party.ActiveUnit))
-            state = ChurchUIState.Pray;
+        // if (state == ChurchUIState.Pray && !church.CanDonate(party.ActiveUnit))
+        //     state = ChurchUIState.Blessing;
+        // if (state == ChurchUIState.Blessing && church.CanDonate(party.ActiveUnit))
+        //     state = ChurchUIState.Pray;
         shopItems.Clear();
         saleButton.gameObject.SetActive(false);
         prayButton.gameObject.SetActive(false);
@@ -89,7 +89,7 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
             saleButton.gameObject.SetActive(true);
             prayButton.gameObject.SetActive(false);
             inStoreText.gameObject.SetActive(false);
-            prayUI.Show(party.ActiveUnit, church.AlreadyAcceptedBlessing(party.ActiveUnit));
+            prayUI.Show(party.ActiveUnit, !church.CanDonate(party.ActiveUnit));
         }
         else if (state == ChurchUIState.Blessing)
         {
@@ -210,7 +210,7 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
     public void DonateSmall()
     {
         church.DonateSmall(party.ActiveUnit, party.ActiveUnit.Stats.CombinedAttributes().FAITH);
-        state = ChurchUIState.Blessing;
+        //state = ChurchUIState.Blessing;
         UpdateUI();
         
     }
@@ -218,14 +218,14 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
     public void DonateMedium()
     {
         church.DonateMedium(party.ActiveUnit, party.ActiveUnit.Stats.CombinedAttributes().FAITH);
-        state = ChurchUIState.Blessing;
+        //state = ChurchUIState.Blessing;
         UpdateUI();
     }
 
     public void DonateHigh()
     {
         church.DonateHigh(party.ActiveUnit, party.ActiveUnit.Stats.CombinedAttributes().FAITH);
-        state = ChurchUIState.Blessing;
+        //state = ChurchUIState.Blessing;
         UpdateUI();
     }
 

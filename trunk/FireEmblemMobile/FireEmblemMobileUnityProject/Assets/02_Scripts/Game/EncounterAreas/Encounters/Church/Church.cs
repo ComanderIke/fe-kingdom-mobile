@@ -111,17 +111,8 @@ public class Church
     {
         return !alreadyDonated.Contains(unit);
     }
-
-    public void BlessUnit(Unit unit, Blessing blessing)
-    {
-        unit.ReceiveBlessing(blessing);
-        alreadyAcceptedBlessing.Add(unit, blessing);
-    }
-
-    public bool AlreadyAcceptedBlessing(Unit unit)
-    {
-        return alreadyAcceptedBlessing.ContainsKey(unit);
-    }
+    
+    
 
     public Blessing GetAlreadyAcceptedBlessing(Unit unit)
     {
