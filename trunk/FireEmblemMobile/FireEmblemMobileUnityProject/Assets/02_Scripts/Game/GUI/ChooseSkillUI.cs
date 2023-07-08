@@ -5,6 +5,7 @@ using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
 using Game.States;
 using LostGrace;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Utility;
@@ -30,6 +31,7 @@ public class ChooseSkillUI : MonoBehaviour, ISkillUIRenderer
     [SerializeField] private ChooseSkillButtonUI chooseSkill3;
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private Canvas canvas;
+    [SerializeField] private TextMeshProUGUI headline;
 
     public void Show(Unit unit, Skill skill1, Skill skill2, Skill skill3)
     {
@@ -38,6 +40,14 @@ public class ChooseSkillUI : MonoBehaviour, ISkillUIRenderer
         chooseSkill1.SetSkill(skill1);
         chooseSkill2.SetSkill(skill2);
         chooseSkill3.SetSkill(skill3);
+        if (skill1 is Blessing && skill2 is Blessing && skill3 is Blessing)
+        {
+            headline.SetText("Choose Blessing");
+        }
+        else
+        {
+            headline.SetText("Choose Skill");
+        }
         TweenUtility.FadeIn(canvasGroup);
 
         skillsUI.Show(unit.SkillManager.Skills);

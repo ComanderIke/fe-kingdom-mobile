@@ -8,6 +8,7 @@ namespace Game.GameActors.Units.Skills.Passive
     public enum ExtraDataType
     {
         percentage,
-        number
+        number,
+        none
     }
 }

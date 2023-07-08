@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using Game.GameActors.Items;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameResources;
+using Game.Manager;
 using LostGrace;
 using UnityEngine;
 using Random = System.Random;
@@ -13,6 +15,12 @@ public class Church
     private Dictionary<Unit, Blessing> alreadyGeneratedBlessing;
     private Dictionary<Unit, Blessing> alreadyAcceptedBlessing;
     private IBlessingData blessingData;
+    private const int ChurchDonationSmallCost = 25;
+    private const int ChurchDonationMiddleCost = 50;
+    private const int ChurchDonationHighCost= 100;
+    private const int ChurchDonationSmallAmount = 25;
+    private const int ChurchDonationMiddleAmount = 100;
+    private const int ChurchDonationHighAmount = 200;
     public Church(IBlessingData blessingData)
     {
         this.blessingData = blessingData;
@@ -62,35 +70,40 @@ public class Church
         //100 points=upgrade in tier so 10 Faith +1 Tier guarantued
         //10 FAith = 50%
         //+donate High ~100%
+        //TODO calculate blessing tier
         ret =(Blessing) tier3BlessingPool[UnityEngine.Random.Range(0, tier3BlessingPool.Length)].Create();
+        
         return ret;
     }
-    public Blessing DonateSmall(Unit unit, int faith)
+
+    void ShowBlessings(int faith, int donation)
+    {
+        var blessing1 = GenerateBlessing(faith, donation);
+        var blessing2 = GenerateBlessing(faith, donation);
+        var blessing3 = GenerateBlessing(faith, donation);
+        ServiceProvider.Instance.GetSystem<SkillSystem>().LearnNewSkill(Player.Instance.Party.ActiveUnit, blessing1, blessing2, blessing3);
+    }
+    public void DonateSmall(Unit unit, int faith)
     {
         alreadyDonated.Add(unit);
-        unit.Party.Money -= 25;
-        var blessing=GenerateBlessing(faith,25);
-        alreadyGeneratedBlessing.Add(unit, blessing);
-        return blessing;
-        //lowtier 0-25%
+        unit.Party.Money -= ChurchDonationSmallCost;
+        ShowBlessings(faith, ChurchDonationSmallAmount);
     }
 
-    public Blessing DonateMedium(Unit unit, int faith)
+    public void DonateMedium(Unit unit, int faith)
     {
         alreadyDonated.Add(unit);
-        unit.Party.Money -= 50;
-        var blessing =GenerateBlessing(faith, 100);
-        alreadyGeneratedBlessing.Add(unit, blessing);
-        return blessing;
+        unit.Party.Money -= ChurchDonationMiddleCost;
+        ShowBlessings(faith, ChurchDonationMiddleAmount);
+        
     }
 
-    public Blessing DonateHigh(Unit unit, int faith)
+    public void DonateHigh(Unit unit, int faith)
     {
+        Debug.Log("DonateHigh");
         alreadyDonated.Add(unit);
-        unit.Party.Money -= 100;
-        var blessing = GenerateBlessing(faith, 200);
-        alreadyGeneratedBlessing.Add(unit, blessing);
-        return blessing;
+        unit.Party.Money -= ChurchDonationHighCost;
+        ShowBlessings(faith, ChurchDonationHighAmount);
     }
 
    

@@ -324,7 +324,8 @@ namespace Game.GameResources
 
         public Skill GetRandomRelicSkill()
         {
-            return relicSkillPool[Random.Range(0, relicSkillPool.Count)].Create();
+            return null;
+            //return relicSkillPool[Random.Range(0, relicSkillPool.Count)].Create();
         }
     }
 }

@@ -34,6 +34,11 @@ public class SkillSystem : IEngineSystem
         renderer.OnFinished += FinishedAnimation;
         AnimationQueue.Add(()=>renderer.Show(unit, skills[0], skills[1], skills[2]));
     }
+    public void LearnNewSkill(Unit unit, Skill skill1, Skill skill2, Skill skill3)
+    {
+        renderer.OnFinished += FinishedAnimation;
+        AnimationQueue.Add(()=>renderer.Show(unit, skill1, skill2, skill3));
+    }
 
     void FinishedAnimation()
     {

@@ -43,8 +43,15 @@ namespace LostGrace
         [SerializeField] Color imageBackgroundColorCommon;
         [SerializeField] private Color textureBackgroundColorClass;
         [SerializeField] Color imageBackgroundColorClass;
-        [SerializeField] private Color textureBackgroundColorWeapon;
-        [SerializeField] Color imageBackgroundColorWeapon;
+        [SerializeField] private Color textureBackgroundColorBlessing;
+        [SerializeField] Color imageBackgroundColorBlessing;
+        [SerializeField] Material blessingFrameMaterial;
+        [SerializeField] Material curseFrameMaterial;
+        [SerializeField] private Color defaultFrameColor;
+        [SerializeField] private Image frameIcon;
+        [SerializeField] private Image frameButton;
+        [SerializeField] private Color textureBackgroundColorCurse;
+        [SerializeField] private Color imageBackgroundColorCurse;
         [SerializeField] private UIAreaTypePreview areaTypePreview;
         [SerializeField] private TextMeshProUGUI hpCostText;
         [SerializeField] private TextMeshProUGUI usesText;
@@ -110,7 +117,7 @@ namespace LostGrace
                 {
                     usesText.color = usesTextColor;
                 }
-                if(skill.Level>=1&&skill.activeMixin.hpCostPerLevel[skill.Level]>skill.activeMixin.hpCostPerLevel[skill.Level-1])
+                if(skill.Level>=1&&skill.activeMixin.hpCostPerLevel[skill.Level]<skill.activeMixin.hpCostPerLevel[skill.Level-1])
                     hpCostText.color = upgTextColor;
                 else
                 {
@@ -194,7 +201,30 @@ namespace LostGrace
                 case SkillType.Common: //Mythic 
                     imageBackground.color = imageBackgroundColorCommon;
                     textureBackground.color = textureBackgroundColorCommon;
+                    frameIcon.material = null;
+                    frameIcon.color = defaultFrameColor;
+                    frameButton.color = defaultFrameColor;
+                    frameButton.material = null;
                     break;
+            }
+
+            if (skill is Blessing)
+            {
+                imageBackground.color = imageBackgroundColorBlessing;
+                textureBackground.color = textureBackgroundColorBlessing;
+                frameIcon.material = blessingFrameMaterial;
+                frameIcon.color = Color.white;
+                frameButton.color = Color.white;
+                frameButton.material = blessingFrameMaterial;
+            }
+            else if (skill is Curse)
+            {
+                imageBackground.color = imageBackgroundColorCurse;
+                textureBackground.color = textureBackgroundColorCurse;
+                frameIcon.material = curseFrameMaterial;
+                frameIcon.color = Color.white;
+                frameButton.color = Color.white;
+                frameButton.material = curseFrameMaterial;
             }
             
           

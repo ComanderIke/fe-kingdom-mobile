@@ -33,7 +33,6 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
     private ShopItem selectedItem;
     private List<GameObject> instantiatedItems= new List<GameObject>();
     private ChurchUIState state = ChurchUIState.Store;
-    private Blessing blessing;
     [SerializeField] private CanvasGroup SoldOutArea;
     public void UpdateUI()
     {
@@ -156,14 +155,12 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
 
     void ActiveUnitChanged()
     {
-        blessing = null;
         UpdateUI();
         
     }
     public void Show(ChurchEncounterNode node, Party party)
     {
         Debug.Log("Showing church ui screen");
-        blessing = null;
         this.node = node;
         canvas.enabled = true;
         this.party = party;
@@ -212,7 +209,7 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
     
     public void DonateSmall()
     {
-        blessing=church.DonateSmall(party.ActiveUnit, party.ActiveUnit.Stats.BaseAttributes.FAITH);
+        church.DonateSmall(party.ActiveUnit, party.ActiveUnit.Stats.CombinedAttributes().FAITH);
         state = ChurchUIState.Blessing;
         UpdateUI();
         
@@ -220,14 +217,14 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
 
     public void DonateMedium()
     {
-        blessing=church.DonateMedium(party.ActiveUnit,party.ActiveUnit.Stats.BaseAttributes.FAITH);
+        church.DonateMedium(party.ActiveUnit, party.ActiveUnit.Stats.CombinedAttributes().FAITH);
         state = ChurchUIState.Blessing;
         UpdateUI();
     }
 
     public void DonateHigh()
     {
-        blessing=church.DonateHigh(party.ActiveUnit,party.ActiveUnit.Stats.BaseAttributes.FAITH);
+        church.DonateHigh(party.ActiveUnit, party.ActiveUnit.Stats.CombinedAttributes().FAITH);
         state = ChurchUIState.Blessing;
         UpdateUI();
     }

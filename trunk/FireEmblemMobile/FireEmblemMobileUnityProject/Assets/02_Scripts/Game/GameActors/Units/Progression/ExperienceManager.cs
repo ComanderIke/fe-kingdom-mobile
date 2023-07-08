@@ -21,11 +21,13 @@ namespace Game.GameActors.Units
             this.level = otherExpManager.level;
             this.expLeftToDrain = otherExpManager.expLeftToDrain;
             this.drainableExp = otherExpManager.drainableExp;
+            ExpMultipliers = otherExpManager.ExpMultipliers;
         }
 
         public ExperienceManager()
         {
             expLeftToDrain = drainableExp;
+            ExpMultipliers = new List<float>();
         }
 
         [SerializeField]
