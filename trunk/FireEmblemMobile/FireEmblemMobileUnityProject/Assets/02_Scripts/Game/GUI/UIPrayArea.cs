@@ -21,6 +21,7 @@ namespace LostGrace
         {
             alreadyDonatedTextGO.SetActive(alreadyDonated);
             alreadyDonatedCanvasGroup.enabled = alreadyDonated;
+            alreadyDonatedCanvasGroup.blocksRaycasts = !alreadyDonated;
             
             gameObject.SetActive(true);
             Faith.SetText(""+user.Stats.BaseAttributes.FAITH);

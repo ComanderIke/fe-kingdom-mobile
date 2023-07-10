@@ -28,8 +28,10 @@ namespace LostGrace
         [SerializeField] private Color curseFrameColor;
         [SerializeField] private Color blessingBackgroundColor;
         [SerializeField] private Color curseBackgroundColor;
+        [SerializeField] private GameObject deleteButton;
         public void SetSkill(Skill skill, bool big)
         {
+            deleteButton.SetActive(false);
             icon.sprite = skill.Icon;
             this.Skill = skill;
             if (skill.activeMixin is ActiveSkillMixin activatedSkillMixin)
@@ -80,6 +82,17 @@ namespace LostGrace
             }
         }
 
+        public void ShowDelete()
+        {
+            deleteButton.SetActive(true);
+        }
+
+        public void DeleteClicked()
+        {
+            Debug.Log("Delete Clicked");
+            OnDeleteClicked?.Invoke(this);
+        }
+        public event Action<SkillUI> OnDeleteClicked;
         public event Action<SkillUI> OnClicked;
     }
 }

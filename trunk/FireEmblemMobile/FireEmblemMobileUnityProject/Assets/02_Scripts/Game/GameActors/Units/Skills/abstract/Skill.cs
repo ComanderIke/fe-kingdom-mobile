@@ -69,6 +69,8 @@ namespace Game.GameActors.Units.Skills
                 }
 
                 this.level = value;
+                Debug.Log("Skill: "+Name);
+                Debug.Log("Level: "+level);
                 if(activeMixin)
                     ActiveMixinUses = activeMixin.GetMaxUses(level);
                 //TODO Unbind and rebind all skills (So that multipliers etc will get updated)

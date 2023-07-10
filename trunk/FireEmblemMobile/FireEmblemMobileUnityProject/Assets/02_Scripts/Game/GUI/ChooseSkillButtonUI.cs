@@ -35,8 +35,8 @@ namespace LostGrace
         [SerializeField] Color mythicColorFrame;
         [SerializeField] private Image iconFrame;
         [SerializeField] private TextMeshProUGUI rarityText;
-        public Sprite lockedSprite;
         [SerializeField] private GameObject lockedOverlay;
+        [SerializeField] private TextMeshProUGUI lockedText;
         [SerializeField] private Image textureBackground;
         [SerializeField] private Image imageBackground;
         [SerializeField] private Color textureBackgroundColorCommon;
@@ -60,30 +60,49 @@ namespace LostGrace
         [SerializeField] private Color usesTextColor;
         [SerializeField] private GameObject hpCostGo;
         [SerializeField] private GameObject usesGo;
+        [SerializeField] private GameObject moveSkill;
+      
+        private Vector3 defaultSkillPosition;
+        private bool locked = false;
         public void OnEnable()
         {
-            if (testSkill != null)
-            {
-                Debug.Log("ONENABLE");
-                SetSkill(testSkill.Create());
-            }
+            defaultSkillPosition = moveSkill.GetComponent<RectTransform>().anchoredPosition;
+            // if (testSkill != null)
+            // {
+            //     Debug.Log("ONENABLE");
+            //     SetSkill(testSkill.Create());
+            // }
         }
 
-        public void SetSkill(Skill skill)
+        public void SetSkill(Skill skill, bool locked =false)
         {
 
             this.skill = skill;
-            this.skill.Level++;
-          
+           // this.skill.Level++;
+            this.locked = locked;
+            moveSkill.GetComponent<RectTransform>().anchoredPosition = defaultSkillPosition;
+            moveSkill.gameObject.SetActive(true);
             UpdateUI();
 
         }
 
+        
         public void Hide()
         {
             gameObject.SetActive(false);
+            moveSkill.GetComponent<RectTransform>().anchoredPosition = defaultSkillPosition;
+            moveSkill.gameObject.SetActive(true);
         }
 
+        public void MoveSkill(Vector3 position, Action after)
+        {
+       
+            LeanTween.move(moveSkill, position, .7f).setEaseOutQuad().setOnComplete(() =>
+            {
+                after?.Invoke();
+                moveSkill.gameObject.SetActive(false);
+            });
+        }
         void UpdateUI()
         {
             if (skill == null)
@@ -94,6 +113,10 @@ namespace LostGrace
 
             if (!gameObject.activeSelf)
                 gameObject.SetActive(true);
+            
+            lockedOverlay.gameObject.SetActive(locked);
+            lockedText.gameObject.SetActive(locked);
+            
             
             lineContainer.DeleteAllChildrenImmediate();
             name.text = skill.Name;
@@ -146,7 +169,7 @@ namespace LostGrace
 
             foreach (var passive in skill.passiveMixins)
             {
-                var effectDescriptions = passive.GetEffectDescription(skill.Level-1);
+                var effectDescriptions = passive.GetEffectDescription(skill.Level);
                 foreach (var effectDescription in effectDescriptions)
                 {
                     var line = GameObject.Instantiate(linePrefab, lineContainer);

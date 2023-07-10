@@ -4,10 +4,13 @@ using UnityEngine;
 
 namespace Game.GUI.Text
 {
+    [RequireComponent(typeof(CanvasGroup))]
     public class BlinkTextScript : MonoBehaviour
     {
         private TextMeshProUGUI text;
         private CanvasGroup alphaCanvas;
+        [SerializeField] private float blinkTime = .5f;
+        [SerializeField] private float pauseTime = .5f;
 
         // Use this for initialization
         private void Awake()
@@ -30,10 +33,10 @@ namespace Game.GUI.Text
         {
             while (true)
             {
-                LeanTween.alphaCanvas(alphaCanvas, 0, 0.5f);
-                yield return new WaitForSeconds(0.5f);
-                LeanTween.alphaCanvas(alphaCanvas, 1, 0.5f);
-                yield return new WaitForSeconds(0.5f);
+                LeanTween.alphaCanvas(alphaCanvas, 0, blinkTime);
+                yield return new WaitForSeconds(pauseTime);
+                LeanTween.alphaCanvas(alphaCanvas, 1, blinkTime);
+                yield return new WaitForSeconds(pauseTime);
       
             }
         }

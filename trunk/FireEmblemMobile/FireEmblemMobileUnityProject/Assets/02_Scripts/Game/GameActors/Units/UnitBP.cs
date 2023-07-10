@@ -97,8 +97,10 @@ namespace Game.GameActors.Units
                 var tmp = combatItem2.Create();
                 cItem2 = new StockedCombatItem((IEquipableCombatItem)tmp.item, tmp.stock);
             }
-             
-            return new Unit(bluePrintID, Name, rpgClass, (Stats)stats.Clone(), growths, moveType, weapon, relic1,cItem1, cItem2, new UnitVisual(visuals), new SkillManager(SkillManager),
+
+            var skillManager = new SkillManager(SkillManager);
+            skillManager.AddStartSkills();
+            return new Unit(bluePrintID, Name, rpgClass, (Stats)stats.Clone(), growths, moveType, weapon, relic1,cItem1, cItem2, new UnitVisual(visuals),skillManager,
                 new ExperienceManager(experienceManager));
         }
     }

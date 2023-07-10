@@ -32,17 +32,48 @@ public class SkillSystem : IEngineSystem
     {
         var skills = GenerateSkills(unit);
         renderer.OnFinished += FinishedAnimation;
+        skillClickedDelegate = ( skill) =>
+        {
+            Debug.Log("LEARN SKILL DELEGATE!");
+            renderer.Hide();
+            LearnSkill(unit, skill);
+           
+            renderer.onSkillChosen -= skillClickedDelegate;
+        };
+        renderer.onSkillChosen += skillClickedDelegate;
         AnimationQueue.Add(()=>renderer.Show(unit, skills[0], skills[1], skills[2]));
     }
+    Action<Skill> skillClickedDelegate = null;
     public void LearnNewSkill(Unit unit, Skill skill1, Skill skill2, Skill skill3)
     {
         renderer.OnFinished += FinishedAnimation;
+        Debug.Log("LEARN NEW SKILL");
+        skillClickedDelegate = ( skill) =>
+        {
+            Debug.Log("LEARN SKILL DELEGATE!");
+            renderer.Hide();
+            LearnSkill(unit, skill);
+            renderer.onSkillChosen -= skillClickedDelegate;
+        };
+        renderer.onSkillChosen += skillClickedDelegate;
         AnimationQueue.Add(()=>renderer.Show(unit, skill1, skill2, skill3));
+    }
+
+    void LearnSkill(Unit unit, Skill skill)
+    {
+        if(!unit.SkillManager.IsFull())
+            unit.SkillManager.LearnSkill(skill);
+        else
+        {
+            Debug.Log("Cant learn Skill! Skilllist is full!");
+           // renderer.ShowReplaceSkillUI(skill, unit);
+        }
     }
 
     void FinishedAnimation()
     {
         renderer.OnFinished -= FinishedAnimation;
+        renderer.onSkillChosen -= skillClickedDelegate;
         AnimationQueue.OnAnimationEnded?.Invoke();
     }
     private List<Skill> GenerateSkills(Unit unit)
@@ -76,27 +107,27 @@ public class SkillSystem : IEngineSystem
         if (rng <= config.MythicChance)
         {
             skill.Tier = 0;
-            skill.Level = 5;
+            skill.Level = 4;
         }
         else if (rng <= config.LegendaryChance)
         {
             skill.Tier = 1;
-            skill.Level = 4;
+            skill.Level = 3;
         }
         else if (rng <= config.EpicChance)
         {
             skill.Tier = 2;
-            skill.Level = 3;
+            skill.Level = 2;
         }
         else if (rng <= config.RareChance)
         {
             skill.Tier = 3;
-            skill.Level = 2;
+            skill.Level = 1;
         }
         else
         {
             skill.Tier = 4;
-            skill.Level = 1;
+            skill.Level = 0;
         }
     }
 
@@ -108,5 +139,10 @@ public class SkillSystem : IEngineSystem
     public void Activate()
     {
         
+    }
+
+    public void RemoveSkill(Unit u, Skill skill)
+    {
+        u.SkillManager.RemoveSkill(skill);
     }
 }
