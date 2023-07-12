@@ -229,9 +229,11 @@ namespace Game.GameActors.Units
             get => hp;
             set
             {
-              
+
+                int tmpHP = hp;
                 hp = value > MaxHp ? MaxHp : value;
-              
+                if(tmpHP>1&& hp <=0)
+                    OnAboutToDie?.Invoke(this);
                 if (hp <= 0) hp = 0;
                 Debug.Log("HP VALUE CHANGED ON UNIT: "+name);
                 HpValueChanged?.Invoke();
@@ -621,5 +623,7 @@ namespace Game.GameActors.Units
             if(Curse!=null)
                 SkillManager.RemoveSkill(Curse);
         }
+
+        public event Action<Unit> OnAboutToDie;
     }
 }

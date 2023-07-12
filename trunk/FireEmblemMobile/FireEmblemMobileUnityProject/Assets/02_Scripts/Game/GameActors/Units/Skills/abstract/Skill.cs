@@ -9,19 +9,19 @@ namespace Game.GameActors.Units.Skills
     [System.Serializable]
     public class Skill:ITargetableObject
     {
+        protected int maxLevel;
         public Sprite Icon;
         public SkillType SkillType { get; set; }
-        private int level;
+        protected int level;
         public string Name;
         public string Description;
         public int Tier;
         public List<PassiveSkillMixin> passiveMixins;
         public ActiveSkillMixin activeMixin;
-        public int ActiveMixinUses; 
-        private Dictionary<int, List<PassiveSkillMixin>> mixinsPerLevel;
+        public int ActiveMixinUses;
         private Unit owner;
 
-        public Skill(string Name, string Description, Sprite icon, int tier, List<PassiveSkillMixin> passiveMixins, ActiveSkillMixin activeMixin)
+        public Skill(string Name, string Description, Sprite icon, int tier,int maxLevel, List<PassiveSkillMixin> passiveMixins, ActiveSkillMixin activeMixin)
         {
             this.Name = Name;
             this.Icon = icon;
@@ -38,7 +38,18 @@ namespace Game.GameActors.Units.Skills
                 ActiveMixinUses = activeMixin.GetMaxUses(Level);
             }
 
-            mixinsPerLevel = new Dictionary<int, List<PassiveSkillMixin>>();
+            this.maxLevel = maxLevel;
+
+
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Skill skill)
+            {
+                return skill.Name == Name;
+            }
+            return base.Equals(obj);
         }
 
         public int Level
@@ -49,28 +60,8 @@ namespace Game.GameActors.Units.Skills
             }
             set
             {
-                if(value> level)
-                    for (int l= this.level + 1; l <= value; l++)
-                    {
-                        if(mixinsPerLevel.ContainsKey(l)&&mixinsPerLevel[l]!=null)
-                            passiveMixins.AddRange(mixinsPerLevel[l]);
-                    }
-                else if (value < level)
-                {
-                    for (int l= this.level; l > value; l--)
-                    {
-                        if(mixinsPerLevel.ContainsKey(l))
-                            foreach (var mixin in mixinsPerLevel[l])
-                            {
-                                if(mixin!=null)
-                                    passiveMixins.Remove(mixin);
-                            }
-                    }
-                }
-
+               
                 this.level = value;
-                Debug.Log("Skill: "+Name);
-                Debug.Log("Level: "+level);
                 if(activeMixin)
                     ActiveMixinUses = activeMixin.GetMaxUses(level);
                 //TODO Unbind and rebind all skills (So that multipliers etc will get updated)
@@ -125,6 +116,21 @@ namespace Game.GameActors.Units.Skills
             return "";
         }
 
-       
+
+        public virtual Skill Clone()
+        {
+            var newSkill = new Skill(Name, Description, Icon, Tier, maxLevel,passiveMixins, activeMixin);
+            newSkill.level = Level;
+            return newSkill;
+        }
+
+        public bool Upgradable()
+        {
+            if (this is Curse)
+                return false;
+            // if (this is Blessing)
+            //     return false;
+            return Level < maxLevel;
+        }
     }
 }

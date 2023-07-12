@@ -1,10 +1,26 @@
-﻿namespace Game.GameActors.Units.CharStateEffects
+﻿using System.Collections.Generic;
+using Game.GameActors.Units.Skills;
+using UnityEngine;
+
+namespace Game.GameActors.Units.CharStateEffects
 {
-    public abstract class Buff
+    public enum BuffType
     {
-        public bool TakeEffect(Unit unit)
-        {
-            throw new System.NotImplementedException();
-        }
+        Damage,
+        Defense,
+        Resistance,
+        Dodge,
+        Critical,
+        Accuracy,
+        Cleansing,
+        Regeneration
+    }
+    [CreateAssetMenu(fileName = "Buff", menuName = "GameData/Buff")]
+    public class Buff:BuffDebuffBase
+    {
+        //[SerializeField]private List<PassiveSkillMixin> buffMixins;
+        
+        [SerializeField] private BuffType buffType;
+       
     }
 }

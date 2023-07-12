@@ -21,7 +21,7 @@ namespace Game.GameActors.Units.Skills.Passive
        
         private void ReactToAttack(IBattleActor unit)
         {
-            if(DoesActivate(skill.Level))
+            if(DoesActivate((Unit)unit,skill.Level))
                 unit.BattleComponent.BattleStats.BonusAttackStats.AttackEffects.Add(attackEffect,attackEffectExtraData[skill.Level]);
         }
 
@@ -41,9 +41,9 @@ namespace Game.GameActors.Units.Skills.Passive
             unit.BattleComponent.onAttack -= ReactToAttack;
         }
 
-        public override List<EffectDescription> GetEffectDescription(int level)
+        public override List<EffectDescription> GetEffectDescription(Unit unit, int level)
         {
-            var list = base.GetEffectDescription(level);
+            var list = base.GetEffectDescription(unit, level);
             switch (extraDataType)
             {
                 case ExtraDataType.number:  list.Add(new EffectDescription(attackEffectExtraDataLabel, ""+attackEffectExtraData[level], ""+attackEffectExtraData[level+1]));

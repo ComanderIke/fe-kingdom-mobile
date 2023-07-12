@@ -9,7 +9,7 @@ namespace Game.GameActors.Units.Skills
         
         //[SerializeField]private EffectDescription[] effectDescriptionsPerLevel;
 
-        public abstract List<EffectDescription> GetEffectDescription(int level);
+        public abstract List<EffectDescription> GetEffectDescription(Unit unit, int level);
 
     }
 }

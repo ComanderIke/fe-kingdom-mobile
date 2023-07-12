@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _02_Scripts.Game.GUI.Utility;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Skills
@@ -14,6 +15,7 @@ namespace Game.GameActors.Units.Skills
         public int Tier;
         public List<PassiveSkillMixin> passiveMixins;
         public ActiveSkillMixin activeMixin;
+        public int maxLevel = 5;
 
         public virtual Skill Create()
         {
@@ -25,7 +27,8 @@ namespace Game.GameActors.Units.Skills
                 }
 
             var instantiatedActiveMixin = activeMixin == null ? null : Instantiate(activeMixin);
-            return new Skill(Name, Description, Icon, Tier, instantiatedPassiveMixins, instantiatedActiveMixin);
+           
+            return new Skill(Name, Description, Icon, Tier,maxLevel, instantiatedPassiveMixins, instantiatedActiveMixin);
         }
     }
 }

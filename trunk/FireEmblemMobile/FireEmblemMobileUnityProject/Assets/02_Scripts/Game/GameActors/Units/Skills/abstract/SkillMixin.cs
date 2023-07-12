@@ -8,6 +8,7 @@ namespace Game.GameActors.Units.Skills
     {
         public const int MAXLEVEL = 5;
         [NonSerialized]public Skill skill;
+     
 
         public virtual void BindToUnit(Unit unit, Skill skill)
         {

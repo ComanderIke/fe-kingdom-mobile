@@ -9,7 +9,7 @@ namespace LostGrace
     {
         public override Skill Create()
         {
-            return new Blessing(Name, Description, Icon, Tier, passiveMixins, activeMixin);
+            return new Blessing(Name, Description, Icon, Tier, maxLevel, passiveMixins, activeMixin);
         }
 
     }

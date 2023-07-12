@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
 using GameEngine;
+using LostGrace;
 using UnityEngine;
 using Utility;
 using Random = UnityEngine.Random;
@@ -30,6 +31,7 @@ public class SkillSystem : IEngineSystem
 
     public void LearnNewSkill(Unit unit)
     {
+        Debug.Log("Learn new SKill");
         var skills = GenerateSkills(unit);
         renderer.OnFinished += FinishedAnimation;
         skillClickedDelegate = ( skill) =>
@@ -76,14 +78,45 @@ public class SkillSystem : IEngineSystem
         renderer.onSkillChosen -= skillClickedDelegate;
         AnimationQueue.OnAnimationEnded?.Invoke();
     }
+
+    private float chanceIndividualSkillUpgrade = .1f;
+    private int maxUpgrades = 2;
     private List<Skill> GenerateSkills(Unit unit)
     {
+        Debug.Log("GENERATE SKILLS");
         List<Skill> skills = new List<Skill>();
-        while (skills.Count != 3)
+        int upgradeCount = 0;
+        int Rounds = 30;
+        while (skills.Count != 3&& Rounds>0)
         {
-            var skill = GenerateSkill(unit);
+            Skill skill = null;
+            Rounds--;
+            if (upgradeCount < maxUpgrades)
+            {
+                foreach (var upgSkill in unit.SkillManager.Skills)
+                {
+                    if(upgSkill is Blessing)//Dont allow Blessing Upgrades outside of church
+                        continue;
+                    if (upgSkill.Upgradable()&&Random.value >= chanceIndividualSkillUpgrade&&!skills.Contains(upgSkill))
+                    {
+                        skill = upgSkill.Clone();
+                        skill.Level++;
+                        upgradeCount++;
+                        Debug.Log("Upgrade: "+skill.Name);
+                        break;
+                    }
+                }
+            }
+
+            if (skill == null)
+            {
+                skill = GenerateSkill(unit);
+                Debug.Log("NewSkill: "+skill.Name);
+            }
+
             if (!skills.Contains(skill))
             {
+                Debug.Log("Adding Skill: "+skill.Name);
                 skills.Add(skill);
             }
         }

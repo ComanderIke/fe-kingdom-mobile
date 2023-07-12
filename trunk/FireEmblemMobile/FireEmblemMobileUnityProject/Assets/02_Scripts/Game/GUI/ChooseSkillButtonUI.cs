@@ -1,6 +1,7 @@
 ﻿using System;
 using __2___Scripts.Game.Utility;
 using _02_Scripts.Game.GameActors.Items.Consumables;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
 using TMPro;
@@ -169,7 +170,7 @@ namespace LostGrace
 
             foreach (var passive in skill.passiveMixins)
             {
-                var effectDescriptions = passive.GetEffectDescription(skill.Level);
+                var effectDescriptions = passive.GetEffectDescription(Player.Instance.Party.ActiveUnit,skill.Level);
                 foreach (var effectDescription in effectDescriptions)
                 {
                     var line = GameObject.Instantiate(linePrefab, lineContainer);

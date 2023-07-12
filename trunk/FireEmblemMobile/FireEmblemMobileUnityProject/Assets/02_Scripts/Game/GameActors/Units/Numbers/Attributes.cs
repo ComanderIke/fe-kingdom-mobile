@@ -134,6 +134,30 @@ namespace Game.GameActors.Units.Numbers
             faith = 0;
         }
 
+        public int GetAttributeStat(AttributeType type)
+        {
+            switch (type)
+            {
+                case AttributeType.STR:
+                    return str; 
+                case AttributeType.DEX:
+                    return dex; 
+                case AttributeType.INT:
+                    return intel; 
+                case AttributeType.AGI:
+                    return agi; 
+                case AttributeType.CON:
+                    return con; 
+                case AttributeType.LCK:
+                    return lck; 
+                case AttributeType.DEF:
+                    return def; 
+                case AttributeType.FTH:
+                    return faith; 
+            }
+
+            return 0;
+        }
         public void IncreaseAttribute(int value, AttributeType attributeType)
         {
             switch (attributeType)
@@ -188,6 +212,7 @@ namespace Game.GameActors.Units.Numbers
 
     public enum AttributeType
     {
+        NONE,
         STR,
         DEX,
         INT,

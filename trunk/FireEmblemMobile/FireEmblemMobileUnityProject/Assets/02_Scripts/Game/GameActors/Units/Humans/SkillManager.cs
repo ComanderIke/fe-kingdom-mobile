@@ -33,7 +33,6 @@ namespace Game.GameActors.Units.Humans
         {
             get
             {
-                Debug.Log("Skills: "+skills);
                 if (skills == null)
                 {
                     skills = new List<Skill>();
@@ -149,5 +148,13 @@ namespace Game.GameActors.Units.Humans
         }
 
         public event Action OnSkillsChanged;
+
+        public Blessing GetBlessing()
+        {
+            var first = Skills.First(s => s is Blessing);
+            if(first!=null)
+                return (Blessing)first;
+            return null;
+        }
     }
 }

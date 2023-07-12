@@ -20,7 +20,7 @@ namespace LostGrace
             unit.ExperienceManager.ExpMultipliers.Remove(expMul[skill.Level]);
         }
 
-        public override List<EffectDescription> GetEffectDescription(int level)
+        public override List<EffectDescription> GetEffectDescription(Unit unit, int level)
         {
             if(level<MAXLEVEL)
                 return new List<EffectDescription>()
