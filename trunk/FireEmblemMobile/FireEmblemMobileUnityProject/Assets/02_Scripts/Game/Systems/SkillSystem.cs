@@ -97,7 +97,7 @@ public class SkillSystem : IEngineSystem
                 {
                     if(upgSkill is Blessing)//Dont allow Blessing Upgrades outside of church
                         continue;
-                    if (upgSkill.Upgradable()&&Random.value >= chanceIndividualSkillUpgrade&&!skills.Contains(upgSkill))
+                    if (upgSkill.Upgradable()&&Random.value < chanceIndividualSkillUpgrade&&!skills.Contains(upgSkill))
                     {
                         skill = upgSkill.Clone();
                         skill.Level++;
@@ -127,7 +127,9 @@ public class SkillSystem : IEngineSystem
     {
         var skillPool = new List<SkillBp>(config.CommonSkillPool);
         skillPool.AddRange(config.GetClassSkillPool(unit.rpgClass));
+        Debug.Log("SKILLPOOL SIZE: "+skillPool.Count);
         int rng = Random.Range(0, skillPool.Count);
+        Debug.Log("RNG: "+rng);
         var skill = skillPool[rng].Create();
         GenerateSkillRarity(skill);
         return skill;

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Game.GameActors.Units.Skills.Passive;
 using UnityEngine;
 
 namespace Game.GameActors.Units
@@ -17,11 +19,12 @@ namespace Game.GameActors.Units
    
         public OnActorCanMove UnitCanMove;
         [SerializeField] private UnitTurnState UnitTurnState;
-   
+        private Dictionary<TurnStateManager.TurnStateEvent, List<ITurnStateListener>> turnStateEvents;
 
         public TurnStateManager()
         {
             UnitTurnState = new UnitTurnState();
+            turnStateEvents = new Dictionary<TurnStateEvent, List<ITurnStateListener>>();
         }
 
         public bool IsWaiting
@@ -107,6 +110,34 @@ namespace Game.GameActors.Units
             IsWaiting = true;
             IsSelected = false;
             HasMoved = true;
+        }
+
+        public enum TurnStateEvent
+        {
+            Wait,
+            Move,
+            Attacked,
+            Selected
+        }
+       
+        public void AddListener(TurnStateEvent turnStateEvent, ITurnStateListener listener)
+        {
+            if (!turnStateEvents.ContainsKey(turnStateEvent))
+            {
+                turnStateEvents.Add(turnStateEvent, new List<ITurnStateListener>(){listener});
+            }
+            else
+            {
+                turnStateEvents[turnStateEvent].Add(listener);
+            }
+        }
+
+        public void RemoveListener(TurnStateEvent turnStateEvent, OnWaitEffectSkillMixin listener)
+        {
+            if (turnStateEvents.ContainsKey(turnStateEvent))
+            {
+                turnStateEvents[turnStateEvent].Remove(listener);
+            }
         }
     }
 }

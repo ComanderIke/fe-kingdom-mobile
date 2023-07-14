@@ -76,6 +76,19 @@ namespace Game.GameActors.Units.Numbers
             sum.faith += b.def;
             return sum;
         }
+        public static Attributes operator -(Attributes a, Attributes b)
+        {
+            var sum = new Attributes(a);
+            sum.agi -= b.agi;
+            sum.str -= b.str;
+            sum.def -= b.def;
+            sum.lck -= b.lck;
+            sum.con -= b.con;
+            sum.dex -= b.dex;
+            sum.intel -= b.intel;
+            sum.faith -= b.def;
+            return sum;
+        }
         public Attributes Clone()
         {
             //Debug.Log("CloneAttriubtes");

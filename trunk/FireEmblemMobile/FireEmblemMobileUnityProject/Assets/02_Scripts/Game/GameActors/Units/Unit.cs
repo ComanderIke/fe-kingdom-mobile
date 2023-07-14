@@ -337,6 +337,7 @@ namespace Game.GameActors.Units
         public float BonusSkillProcChance { get; set; }
         public bool ClassUpgraded { get; set; }
         public bool IsBoss { get; set; }
+        public EncounterComponent EncounterComponent { get; set; }
 
 
         public void Equip(Weapon w)

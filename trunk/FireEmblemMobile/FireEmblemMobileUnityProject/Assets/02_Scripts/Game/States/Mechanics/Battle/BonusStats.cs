@@ -27,29 +27,51 @@ namespace Game.Mechanics.Battle
             Debug.Log("TODO Reset Stats");
         }
 
-        public void Add(BonusStats bonusStats)
+        public BonusStats()
         {
-            Hit += bonusStats.Hit;
-            Avoid += bonusStats.Avoid;
-            CritAvoid += bonusStats.CritAvoid;
-            Crit += bonusStats.Crit;
-            AttackSpeed += bonusStats.AttackSpeed;
-            Armor += bonusStats.Armor;
-            MagicResistance += bonusStats.MagicResistance;
-            Attack += bonusStats.Attack;
             
         }
-        public void Decrease(BonusStats bonusStats)
+        public BonusStats(BonusStats bonusStats)
         {
-            Hit -= bonusStats.Hit;
-            Avoid -= bonusStats.Avoid;
-            CritAvoid -= bonusStats.CritAvoid;
-            Crit -= bonusStats.Crit;
-            AttackSpeed -= bonusStats.AttackSpeed;
-            Armor -= bonusStats.Armor;
-            MagicResistance -= bonusStats.MagicResistance;
-            Attack -= bonusStats.Attack;
-            
+            Hit = bonusStats.Hit;
+            Avoid = bonusStats.Avoid;
+            CritAvoid = bonusStats.CritAvoid;
+            Crit = bonusStats.Crit;
+            AttackSpeed = bonusStats.AttackSpeed;
+            Armor = bonusStats.Armor;
+            MagicResistance = bonusStats.MagicResistance;
+            Attack = bonusStats.Attack;
+           
+        }
+       
+
+        public static BonusStats operator +(BonusStats a, BonusStats b)
+        {
+            var sum = new BonusStats(a);
+            sum.Hit += b.Hit;
+            sum.Avoid += b.Avoid;
+            sum.CritAvoid += b.CritAvoid;
+            sum. Crit += b.Crit;
+            sum.AttackSpeed += b.AttackSpeed;
+            sum.Armor += b.Armor;
+            sum.MagicResistance += b.MagicResistance;
+            sum.Attack += b.Attack;
+            return sum;
+
+        }
+        public static BonusStats operator -(BonusStats a, BonusStats b)
+        {
+            var sum = new BonusStats(a);
+            sum.Hit -= b.Hit;
+            sum.Avoid -= b.Avoid;
+            sum.CritAvoid -= b.CritAvoid;
+            sum. Crit -= b.Crit;
+            sum.AttackSpeed -= b.AttackSpeed;
+            sum.Armor -= b.Armor;
+            sum.MagicResistance -= b.MagicResistance;
+            sum.Attack -= b.Attack;
+            return sum;
+
         }
     }
 }

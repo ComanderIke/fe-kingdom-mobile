@@ -1,6 +1,6 @@
 Using pre-set license
 Built from '2021.1/staging' branch; Version is '2021.1.7f1 (d91830b65d9b) revision 14227504'; Using compiler version '192528614'; Build Type 'Release'
-OS: 'Windows 10 Home; OS build 22621.1848; Version 2009; 64bit' Language: 'de' Physical Memory: 32671 MB
+OS: 'Windows 10 Home; OS build 22621.1992; Version 2009; 64bit' Language: 'de' Physical Memory: 32671 MB
 BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
 
  COMMAND LINE ARGUMENTS:
@@ -15,11 +15,11 @@ D:/Projects/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProjec
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-51454
+52593
 Successfully changed project path to: D:/Projects/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject
 D:/Projects/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 111.82 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 96.50 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2021.1.7f1 (d91830b65d9b)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2021.1.7f1/Editor/Data/Resources/UnitySubsystems
@@ -37,151 +37,390 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2021.1.7f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2021.1.7f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2021.1.7f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56952
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56572
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.1.7f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.001098 seconds.
+Registered in 0.000968 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 102.57 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 93.38 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.992 seconds
+- Completed reload, in  2.075 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.003672 seconds.
+Registered in 0.002998 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 100.13 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 91.22 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.057 seconds
+- Completed reload, in  0.902 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
 Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
 Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.03 seconds
-Refreshing native plugins compatible for Editor in 1.57 ms, found 1 plugins.
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.06 seconds
+Refreshing native plugins compatible for Editor in 1.31 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 5284 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 304.2 MB.
-System memory in use after: 304.7 MB.
+Unloading 5288 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 304.4 MB.
+System memory in use after: 304.8 MB.
 
-Unloading 71 unused Assets to reduce memory usage. Loaded Objects now: 5723.
-Total: 5.586800 ms (FindLiveObjects: 0.372400 ms CreateObjectMapping: 0.141700 ms MarkObjects: 4.986400 ms  DeleteObjects: 0.085200 ms)
+Unloading 71 unused Assets to reduce memory usage. Loaded Objects now: 5727.
+Total: 5.457200 ms (FindLiveObjects: 0.379600 ms CreateObjectMapping: 0.230300 ms MarkObjects: 4.797500 ms  DeleteObjects: 0.049100 ms)
 
 ========================================================================
 Received Import Request.
-  path: Assets/07_GameData/Singletons/GameData.asset
-  artifactKey: Guid(bdbcf239f1bd3c148a54c303e94aeded) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Singletons/GameData.asset using Guid(bdbcf239f1bd3c148a54c303e94aeded) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c05da353285fa28b92321fed5ee7b5be') in 1.505172 seconds 
+  path: Assets/07_GameData/Skills/Common/NewSkills/StatsDuringCombat.asset
+  artifactKey: Guid(7aba1874997f83645a6688a7843fb035) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/StatsDuringCombat.asset using Guid(7aba1874997f83645a6688a7843fb035) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5fbb59705dbfa3fffb7b2cd7510ff916') in 0.058386 seconds 
 ========================================================================
-Received Prepare
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Refreshing native plugins compatible for Editor in 7.11 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 51 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 201.2 MB.
-System memory in use after: 201.7 MB.
-
-Unloading 50 unused Assets to reduce memory usage. Loaded Objects now: 5726.
-Total: 6.357300 ms (FindLiveObjects: 0.434200 ms CreateObjectMapping: 0.137700 ms MarkObjects: 5.722600 ms  DeleteObjects: 0.060300 ms)
-
+Received Import Request.
+  Time since last request: 49.897263 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/DuringCombatMixin.asset
+  artifactKey: Guid(b0fe4a1dfc6a0464394f6dd4203b57cf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/DuringCombatMixin.asset using Guid(b0fe4a1dfc6a0464394f6dd4203b57cf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f63147d77b9f2b031b64002d97264e31') in 0.007027 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 66.001520 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Fury.asset
+  artifactKey: Guid(7aba1874997f83645a6688a7843fb035) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Fury.asset using Guid(7aba1874997f83645a6688a7843fb035) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'edb6f6863b560d8e76337a4d926e2a11') in 0.006132 seconds 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.003878 seconds.
+Registered in 0.002801 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 1.35 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.816 seconds
+Platform modules already initialized, skipping
+Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Refreshing native plugins compatible for Editor in 1.30 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 5101 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 287.6 MB.
+System memory in use after: 288.0 MB.
+
+Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5729.
+Total: 5.351100 ms (FindLiveObjects: 0.383200 ms CreateObjectMapping: 0.226400 ms MarkObjects: 4.709000 ms  DeleteObjects: 0.031700 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002641 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
 Refreshing native plugins compatible for Editor in 1.29 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.931 seconds
+- Completed reload, in  0.813 seconds
 Platform modules already initialized, skipping
 Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
 Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
 Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Refreshing native plugins compatible for Editor in 1.53 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 1.28 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 5098 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 292.1 MB.
-System memory in use after: 292.6 MB.
+Unloading 5101 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 287.7 MB.
+System memory in use after: 288.1 MB.
 
-Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5728.
-Total: 5.623900 ms (FindLiveObjects: 0.390600 ms CreateObjectMapping: 0.138900 ms MarkObjects: 5.056000 ms  DeleteObjects: 0.037500 ms)
+Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5731.
+Total: 5.228400 ms (FindLiveObjects: 0.363500 ms CreateObjectMapping: 0.210200 ms MarkObjects: 4.624400 ms  DeleteObjects: 0.029500 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
 ========================================================================
 Received Import Request.
-  Time since last request: 7046.403665 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/ExtraGrowths.asset
-  artifactKey: Guid(c2b78c7c9cf710048a3f6ed012e60836) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/ExtraGrowths.asset using Guid(c2b78c7c9cf710048a3f6ed012e60836) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '48304afa6b8eeebbdc4b5a1bd2ad55d4') in 0.028571 seconds 
+  Time since last request: 583.787286 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/AfterCombatMixin.asset
+  artifactKey: Guid(8ba5fe8cdb33a43488040258c07907e8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/AfterCombatMixin.asset using Guid(8ba5fe8cdb33a43488040258c07907e8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '384e4d7a5a6b6780e816936d1f468b41') in 0.024774 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 16.836685 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/ExtraGrowths.asset
-  artifactKey: Guid(a85f888a6e1340b41b5ec16e61e8d919) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/ExtraGrowths.asset using Guid(a85f888a6e1340b41b5ec16e61e8d919) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '73961c966394cf42ca3a1e2e75ae949e') in 0.008088 seconds 
+  Time since last request: 4.132810 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/Templates
+  artifactKey: Guid(b829fc082bef48541aab2c5fdcf1a8c9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/Templates using Guid(b829fc082bef48541aab2c5fdcf1a8c9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e788fbe4ef922b3115d1931a1101ccbf') in 0.005062 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 4.928290 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/GrowthsMixin.asset
-  artifactKey: Guid(c2b78c7c9cf710048a3f6ed012e60836) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/GrowthsMixin.asset using Guid(c2b78c7c9cf710048a3f6ed012e60836) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '19998a0583161ce63b60d7578f72ae0e') in 0.005579 seconds 
+  Time since last request: 10.608056 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/Templates/AfterCombatMixin 1.asset
+  artifactKey: Guid(37698cf770621f6408820e5fda1e8938) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/Templates/AfterCombatMixin 1.asset using Guid(37698cf770621f6408820e5fda1e8938) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e458bd965c1340c988852bf9271b5688') in 0.005687 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 11.404930 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/AdeptMixin.asset
-  artifactKey: Guid(ec3027c8b40507847a17de13923d07ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/AdeptMixin.asset using Guid(ec3027c8b40507847a17de13923d07ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '467350543a8c074af308cd1d5ce8961e') in 0.009628 seconds 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002528 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.33 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.838 seconds
-Platform modules already initialized, skipping
-Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Refreshing native plugins compatible for Editor in 1.33 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 5098 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 292.2 MB.
-System memory in use after: 292.7 MB.
-
-Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5730.
-Total: 5.816200 ms (FindLiveObjects: 0.348400 ms CreateObjectMapping: 0.197500 ms MarkObjects: 5.231600 ms  DeleteObjects: 0.037800 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
+  Time since last request: 1.723562 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/AfterCombatMixin 1.asset
+  artifactKey: Guid(37698cf770621f6408820e5fda1e8938) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/AfterCombatMixin 1.asset using Guid(37698cf770621f6408820e5fda1e8938) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '992cce2d0bc504aed03ef5fd2d4c7232') in 0.001550 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 59.053278 seconds.
+  Time since last request: 5.571600 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/LoseHealthAfterCombat.asset
+  artifactKey: Guid(37698cf770621f6408820e5fda1e8938) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/LoseHealthAfterCombat.asset using Guid(37698cf770621f6408820e5fda1e8938) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ae700dde4134203036055c26a67e36d2') in 0.005771 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 22.275041 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/LunaMixin.asset
+  artifactKey: Guid(12d420d8c466e9949b492fd64544ae6c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/LunaMixin.asset using Guid(12d420d8c466e9949b492fd64544ae6c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9ba750043016702615e8bb200e6efe92') in 0.009502 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.965749 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Fury.asset
+  artifactKey: Guid(7aba1874997f83645a6688a7843fb035) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Fury.asset using Guid(7aba1874997f83645a6688a7843fb035) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4e51b064df99b8686ed801985c70a1a4') in 0.007481 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 23.070555 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Fury.asset
+  artifactKey: Guid(7aba1874997f83645a6688a7843fb035) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Fury.asset using Guid(7aba1874997f83645a6688a7843fb035) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e5f3a49fcdc4d3065fc3817ea9f76d49') in 0.002034 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 24.071562 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/SolMixin 1.asset
+  artifactKey: Guid(c7360173b8664614c9de4f5e329c409e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/SolMixin 1.asset using Guid(c7360173b8664614c9de4f5e329c409e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '10b2fd95a5f7c37124e90c19b3a7f645') in 0.005318 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.391368 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/Templates/SolMixin 1.asset
+  artifactKey: Guid(c7360173b8664614c9de4f5e329c409e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/Templates/SolMixin 1.asset using Guid(c7360173b8664614c9de4f5e329c409e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '74361f7fa86a51fe94e652c7d913d490') in 0.001570 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 6.018950 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/Templates/OnAttackEffectMixin.asset
+  artifactKey: Guid(c7360173b8664614c9de4f5e329c409e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/Templates/OnAttackEffectMixin.asset using Guid(c7360173b8664614c9de4f5e329c409e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ecf067a83b4b9803e5fda9bd69e314be') in 0.005720 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 11.377066 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/Templates/AttackEffectMixin.asset
+  artifactKey: Guid(c7360173b8664614c9de4f5e329c409e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/Templates/AttackEffectMixin.asset using Guid(c7360173b8664614c9de4f5e329c409e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6aad5ad08e970583bf72810a7dc8bc2a') in 0.005948 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.363116 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/LoseHealthAfterCombat.asset
+  artifactKey: Guid(37698cf770621f6408820e5fda1e8938) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/LoseHealthAfterCombat.asset using Guid(37698cf770621f6408820e5fda1e8938) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6c79e2dbc954cad62dd3479277201fe7') in 0.001639 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.151397 seconds.
   path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/GrowthMixin.asset
   artifactKey: Guid(02fe606ae6462834194f2b3516e046eb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/GrowthMixin.asset using Guid(02fe606ae6462834194f2b3516e046eb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '35ed63a16b74ead6679e4b17772d5f77') in 0.018189 seconds 
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/GrowthMixin.asset using Guid(02fe606ae6462834194f2b3516e046eb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0899db1bb73d6b9c9cb4f648f3d7350c') in 0.009565 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 240.996298 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/ExtraGrowths.asset
-  artifactKey: Guid(a85f888a6e1340b41b5ec16e61e8d919) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/ExtraGrowths.asset using Guid(a85f888a6e1340b41b5ec16e61e8d919) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8f59304558a22d0588852acf89f85277') in 0.007757 seconds 
+  Time since last request: 3.487443 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/DuringCombatMixin.asset
+  artifactKey: Guid(b0fe4a1dfc6a0464394f6dd4203b57cf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/DuringCombatMixin.asset using Guid(b0fe4a1dfc6a0464394f6dd4203b57cf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '33fadffb8c7eb503c2307958e71122cf') in 0.006029 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 4.767512 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/DuringCombatMixin 1.asset
+  artifactKey: Guid(cca7ca394b5f34f4b83bbc6b1bfdf4fa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/DuringCombatMixin 1.asset using Guid(cca7ca394b5f34f4b83bbc6b1bfdf4fa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9d7896df8199e79fb732e8ff9d73dbef') in 0.005440 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.961000 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/Templates/DuringCombatMixin 1.asset
+  artifactKey: Guid(cca7ca394b5f34f4b83bbc6b1bfdf4fa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/Templates/DuringCombatMixin 1.asset using Guid(cca7ca394b5f34f4b83bbc6b1bfdf4fa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'eed124be1739e3a6cb6dc6562d7dcab8') in 0.001667 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 13.167318 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/STRDEXAGI_DuringCombat.asset
+  artifactKey: Guid(b0fe4a1dfc6a0464394f6dd4203b57cf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/STRDEXAGI_DuringCombat.asset using Guid(b0fe4a1dfc6a0464394f6dd4203b57cf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'adf1991a615eea0442db311ffc6a93ae') in 0.006524 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 4.406437 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/Templates/DuringCombatMixin.asset
+  artifactKey: Guid(cca7ca394b5f34f4b83bbc6b1bfdf4fa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/Templates/DuringCombatMixin.asset using Guid(cca7ca394b5f34f4b83bbc6b1bfdf4fa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e93253db2a674e6d3bcfae8ca906d477') in 0.001649 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 31.857375 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/Templates
+  artifactKey: Guid(d04ed8e7972c75e479cad522518eb269) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/Templates using Guid(d04ed8e7972c75e479cad522518eb269) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2f8c9ebb1efd9ba2e87940a6bcf8a75a') in 0.001275 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.560112 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/PositionTargetSkillMixin 1.asset
+  artifactKey: Guid(176a3aa1227ba844ab3c30eced7842f0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/PositionTargetSkillMixin 1.asset using Guid(176a3aa1227ba844ab3c30eced7842f0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '19e32b2b7bcdc0a5542dd526505f2ae4') in 0.006097 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.008784 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/Templates/PositionTargetSkillMixin 1.asset
+  artifactKey: Guid(176a3aa1227ba844ab3c30eced7842f0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/Templates/PositionTargetSkillMixin 1.asset using Guid(176a3aa1227ba844ab3c30eced7842f0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6f9aba790bfdb9c409fec5386add62c1') in 0.001541 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 53.604953 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/StarShapedAOEDamage.asset
+  artifactKey: Guid(625777ec9d54ecd4da2639b780dec61e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/StarShapedAOEDamage.asset using Guid(625777ec9d54ecd4da2639b780dec61e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f369c2f804aa0077a34a286a676451a9') in 0.005585 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 6.141657 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/Templates/PositionTargetSkillMixin.asset
+  artifactKey: Guid(176a3aa1227ba844ab3c30eced7842f0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/Templates/PositionTargetSkillMixin.asset using Guid(176a3aa1227ba844ab3c30eced7842f0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ed9af252137675d2ef6a3f7860bb252a') in 0.005932 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 15.041786 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/DamageBuffMixin 1.asset
+  artifactKey: Guid(80ef90a26535b4f44907dca3e68394af) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/DamageBuffMixin 1.asset using Guid(80ef90a26535b4f44907dca3e68394af) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '380f46c382e962553679167bb29b1019') in 0.009644 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.051850 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/Templates/DamageBuffMixin 1.asset
+  artifactKey: Guid(80ef90a26535b4f44907dca3e68394af) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/Templates/DamageBuffMixin 1.asset using Guid(80ef90a26535b4f44907dca3e68394af) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dc87a49e7ab822697a9229f5090a297e') in 0.001641 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 7.062009 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/Templates/SingleTargetBuffSkillMixin.asset
+  artifactKey: Guid(80ef90a26535b4f44907dca3e68394af) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/Templates/SingleTargetBuffSkillMixin.asset using Guid(80ef90a26535b4f44907dca3e68394af) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3c0ffc4f5dac4585cf79bd6139115a4c') in 0.005703 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 19.123779 seconds.
+  path: Assets/01_Scenes/EncounterArea.unity
+  artifactKey: Guid(42c2386d9327d6c4197acd575ef9891a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/01_Scenes/EncounterArea.unity using Guid(42c2386d9327d6c4197acd575ef9891a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '101cdd93fcf4027ac59191a16d4efab3') in 0.005359 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 192.729001 seconds.
+  path: Assets/07_GameData/Skills/SkillGenerationConfiguration 1.asset
+  artifactKey: Guid(ae05033fed0039147ba6e3189819143c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/SkillGenerationConfiguration 1.asset using Guid(ae05033fed0039147ba6e3189819143c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '215fe3483d65925a7e30350c731a85c6') in 0.024913 seconds 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.002500 seconds.
+Registered in 0.002704 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 1.41 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.923 seconds
+Platform modules already initialized, skipping
+Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
 Refreshing native plugins compatible for Editor in 1.29 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 5101 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 287.9 MB.
+System memory in use after: 288.4 MB.
+
+Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5733.
+Total: 6.199100 ms (FindLiveObjects: 0.382300 ms CreateObjectMapping: 0.224500 ms MarkObjects: 5.553600 ms  DeleteObjects: 0.037900 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002664 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 1.27 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.804 seconds
+Platform modules already initialized, skipping
+Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Refreshing native plugins compatible for Editor in 1.35 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 5101 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 288.0 MB.
+System memory in use after: 288.4 MB.
+
+Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5735.
+Total: 5.435400 ms (FindLiveObjects: 0.372900 ms CreateObjectMapping: 0.219100 ms MarkObjects: 4.811400 ms  DeleteObjects: 0.031400 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002427 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file data-000001FE20E42020 doesn't match image D:\Projects\fe-kingdom-mobile\trunk\FireEmblemMobile\FireEmblemMobileUnityProject\Library\ScriptAssemblies\Game.dll
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 1.29 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.845 seconds
+Platform modules already initialized, skipping
+Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Refreshing native plugins compatible for Editor in 1.33 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 5101 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 288.0 MB.
+System memory in use after: 288.4 MB.
+
+Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5737.
+Total: 5.882500 ms (FindLiveObjects: 0.398300 ms CreateObjectMapping: 0.243800 ms MarkObjects: 5.207800 ms  DeleteObjects: 0.031900 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002606 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 1.30 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.833 seconds
+Platform modules already initialized, skipping
+Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Refreshing native plugins compatible for Editor in 1.29 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 5101 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 288.0 MB.
+System memory in use after: 288.4 MB.
+
+Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5739.
+Total: 5.528800 ms (FindLiveObjects: 0.365900 ms CreateObjectMapping: 0.213500 ms MarkObjects: 4.918200 ms  DeleteObjects: 0.030500 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002428 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 1.35 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
 - Completed reload, in  0.874 seconds
@@ -189,371 +428,124 @@ Platform modules already initialized, skipping
 Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
 Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
 Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Refreshing native plugins compatible for Editor in 1.38 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 1.29 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 5099 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 292.3 MB.
-System memory in use after: 292.7 MB.
+Unloading 5101 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 288.0 MB.
+System memory in use after: 288.5 MB.
 
-Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5733.
-Total: 4.666400 ms (FindLiveObjects: 0.292900 ms CreateObjectMapping: 0.137400 ms MarkObjects: 4.205900 ms  DeleteObjects: 0.029400 ms)
+Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5741.
+Total: 6.134400 ms (FindLiveObjects: 0.373000 ms CreateObjectMapping: 0.214600 ms MarkObjects: 5.511100 ms  DeleteObjects: 0.034900 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
 ========================================================================
-Received Import Request.
-  Time since last request: 697.422229 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/MiracleMixin.asset
-  artifactKey: Guid(bc01bf9263246dd4599f6dbd65872565) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/MiracleMixin.asset using Guid(bc01bf9263246dd4599f6dbd65872565) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c6f8fd54baf71b6f1d034040b3ba365d') in 0.019350 seconds 
-========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.002720 seconds.
+Registered in 0.002576 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.29 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 1.32 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.863 seconds
+- Completed reload, in  0.842 seconds
 Platform modules already initialized, skipping
 Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
 Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
 Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Refreshing native plugins compatible for Editor in 1.26 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 1.31 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 5099 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 292.3 MB.
-System memory in use after: 292.8 MB.
+Unloading 5101 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 288.2 MB.
+System memory in use after: 288.7 MB.
 
-Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5735.
-Total: 4.802400 ms (FindLiveObjects: 0.333400 ms CreateObjectMapping: 0.135200 ms MarkObjects: 4.303200 ms  DeleteObjects: 0.029800 ms)
+Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5743.
+Total: 5.537800 ms (FindLiveObjects: 0.369600 ms CreateObjectMapping: 0.215100 ms MarkObjects: 4.921100 ms  DeleteObjects: 0.031200 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
 ========================================================================
-Received Import Request.
-  Time since last request: 1476.051187 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Miracle.asset
-  artifactKey: Guid(c4ec069868cfe8841ae7703a9d34b549) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Miracle.asset using Guid(c4ec069868cfe8841ae7703a9d34b549) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b79983a4e9ab2f1e9ec6aea34d9153ec') in 0.019108 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 41.763170 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/Miracle.asset
-  artifactKey: Guid(c4ec069868cfe8841ae7703a9d34b549) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/Miracle.asset using Guid(c4ec069868cfe8841ae7703a9d34b549) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7a6bae95dfdf23d8264bec7749c46561') in 0.002367 seconds 
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002468 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 1.32 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.868 seconds
+Platform modules already initialized, skipping
+Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Refreshing native plugins compatible for Editor in 1.65 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 5101 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 288.2 MB.
+System memory in use after: 288.7 MB.
+
+Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5745.
+Total: 6.100800 ms (FindLiveObjects: 0.371800 ms CreateObjectMapping: 0.242700 ms MarkObjects: 5.452500 ms  DeleteObjects: 0.033200 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.002802 seconds.
+Registered in 0.002633 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.29 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 1.28 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.820 seconds
+- Completed reload, in  0.848 seconds
+Platform modules already initialized, skipping
+Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Refreshing native plugins compatible for Editor in 1.28 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 5101 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 288.2 MB.
+System memory in use after: 288.7 MB.
+
+Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5747.
+Total: 6.099200 ms (FindLiveObjects: 0.356200 ms CreateObjectMapping: 0.222600 ms MarkObjects: 5.481700 ms  DeleteObjects: 0.037900 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002963 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 1.27 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.842 seconds
 Platform modules already initialized, skipping
 Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
 Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
 Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
 Refreshing native plugins compatible for Editor in 1.27 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 5099 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 292.3 MB.
-System memory in use after: 292.8 MB.
-
-Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5737.
-Total: 4.826500 ms (FindLiveObjects: 0.319400 ms CreateObjectMapping: 0.133200 ms MarkObjects: 4.343300 ms  DeleteObjects: 0.029800 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.019773 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.30 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.836 seconds
-Platform modules already initialized, skipping
-Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Refreshing native plugins compatible for Editor in 1.28 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 5100 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 292.4 MB.
-System memory in use after: 292.8 MB.
-
-Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5740.
-Total: 4.942000 ms (FindLiveObjects: 0.336200 ms CreateObjectMapping: 0.132200 ms MarkObjects: 4.442100 ms  DeleteObjects: 0.030500 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
-========================================================================
-Received Import Request.
-  Time since last request: 70777.524206 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/CriticalImmunityMixin.asset
-  artifactKey: Guid(bfebbf0d2f3146e42843c26913082f8a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/CriticalImmunityMixin.asset using Guid(bfebbf0d2f3146e42843c26913082f8a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5ce8e48b1492f2d804245ec9463fac4d') in 0.020243 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 1.874729 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/MiracleMixin.asset
-  artifactKey: Guid(bc01bf9263246dd4599f6dbd65872565) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/MiracleMixin.asset using Guid(bc01bf9263246dd4599f6dbd65872565) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3634491eb22d8865b09a06b055042b30') in 0.009649 seconds 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002716 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.31 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.864 seconds
-Platform modules already initialized, skipping
-Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Refreshing native plugins compatible for Editor in 1.40 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 5100 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 292.4 MB.
-System memory in use after: 292.8 MB.
-
-Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5742.
-Total: 4.904000 ms (FindLiveObjects: 0.320700 ms CreateObjectMapping: 0.132800 ms MarkObjects: 4.420300 ms  DeleteObjects: 0.029600 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
-========================================================================
-Received Import Request.
-  Time since last request: 31.251548 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/CritImmunity.asset
-  artifactKey: Guid(f9765126c8936c244a964c3e701879d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/CritImmunity.asset using Guid(f9765126c8936c244a964c3e701879d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3f30d800231150728a6bb19542b3dde1') in 0.017602 seconds 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002820 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.35 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.858 seconds
-Platform modules already initialized, skipping
-Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Refreshing native plugins compatible for Editor in 1.33 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 5100 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 292.4 MB.
-System memory in use after: 292.9 MB.
-
-Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5744.
-Total: 4.859500 ms (FindLiveObjects: 0.359900 ms CreateObjectMapping: 0.134600 ms MarkObjects: 4.328300 ms  DeleteObjects: 0.035900 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
-========================================================================
-Received Import Request.
-  Time since last request: 725.088930 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/CritImmunity.asset
-  artifactKey: Guid(f9765126c8936c244a964c3e701879d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/CritImmunity.asset using Guid(f9765126c8936c244a964c3e701879d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '94eb80a37a35964dd9a1463d928eb517') in 0.018768 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 6.221182 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/CancelMixin.asset
-  artifactKey: Guid(c47f43865ba669946b384303fc3502e5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/CancelMixin.asset using Guid(c47f43865ba669946b384303fc3502e5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '87233b918e9cfddcb1d4a2b0b0b836b1') in 0.009487 seconds 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002935 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.28 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.859 seconds
-Platform modules already initialized, skipping
-Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Refreshing native plugins compatible for Editor in 1.26 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 5101 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 292.4 MB.
-System memory in use after: 292.9 MB.
-
-Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5747.
-Total: 5.854300 ms (FindLiveObjects: 0.361200 ms CreateObjectMapping: 0.214600 ms MarkObjects: 5.239100 ms  DeleteObjects: 0.038400 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
-========================================================================
-Received Import Request.
-  Time since last request: 1097.381698 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/SingleTargetBuffMixin.asset
-  artifactKey: Guid(be0abcd1e17d155418c089f292344304) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/SingleTargetBuffMixin.asset using Guid(be0abcd1e17d155418c089f292344304) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '68d31c3b9302cbdb2af7a6ccec2f1934') in 0.012717 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 80.880824 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/AllyBuffSkill.asset
-  artifactKey: Guid(5a6104403f241c54cbb085ca33fd4776) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/AllyBuffSkill.asset using Guid(5a6104403f241c54cbb085ca33fd4776) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '967b698d6cb8834852c356c44de4095f') in 0.011986 seconds 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002707 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.28 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.854 seconds
-Platform modules already initialized, skipping
-Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Refreshing native plugins compatible for Editor in 1.26 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 5101 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 292.5 MB.
-System memory in use after: 292.9 MB.
+System memory in use before: 288.2 MB.
+System memory in use after: 288.7 MB.
 
 Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5749.
-Total: 5.350500 ms (FindLiveObjects: 0.345600 ms CreateObjectMapping: 0.113500 ms MarkObjects: 4.860400 ms  DeleteObjects: 0.030200 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
-========================================================================
-Received Import Request.
-  Time since last request: 58.926316 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/SingleTargetBuffMixin.asset
-  artifactKey: Guid(be0abcd1e17d155418c089f292344304) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/SingleTargetBuffMixin.asset using Guid(be0abcd1e17d155418c089f292344304) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '606cb3c119198850e5951db209f61f19') in 0.013958 seconds 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002534 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.29 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.834 seconds
-Platform modules already initialized, skipping
-Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Refreshing native plugins compatible for Editor in 1.35 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 5101 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 292.5 MB.
-System memory in use after: 292.9 MB.
-
-Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5751.
-Total: 5.276400 ms (FindLiveObjects: 0.344700 ms CreateObjectMapping: 0.205300 ms MarkObjects: 4.694400 ms  DeleteObjects: 0.031300 ms)
+Total: 5.583900 ms (FindLiveObjects: 0.375600 ms CreateObjectMapping: 0.220500 ms MarkObjects: 4.954900 ms  DeleteObjects: 0.031900 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.002849 seconds.
+Registered in 0.002978 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.28 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.832 seconds
-Platform modules already initialized, skipping
-Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Refreshing native plugins compatible for Editor in 1.25 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 5101 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 292.5 MB.
-System memory in use after: 292.9 MB.
-
-Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5753.
-Total: 5.524800 ms (FindLiveObjects: 0.346500 ms CreateObjectMapping: 0.219200 ms MarkObjects: 4.926200 ms  DeleteObjects: 0.032200 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
-========================================================================
-Received Import Request.
-  Time since last request: 682.803129 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/Buff.asset
-  artifactKey: Guid(3d620a7ca52a032439a2783be52756af) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/Buff.asset using Guid(3d620a7ca52a032439a2783be52756af) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8e6cd6776340f71c05fd3b008eaedaf9') in 0.017294 seconds 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.004514 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.30 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.850 seconds
-Platform modules already initialized, skipping
-Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Refreshing native plugins compatible for Editor in 1.31 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 5101 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 292.7 MB.
-System memory in use after: 293.1 MB.
-
-Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5755.
-Total: 4.875700 ms (FindLiveObjects: 0.379200 ms CreateObjectMapping: 0.133900 ms MarkObjects: 4.331800 ms  DeleteObjects: 0.030000 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002580 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.28 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.864 seconds
-Platform modules already initialized, skipping
-Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Refreshing native plugins compatible for Editor in 1.39 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 5101 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 292.7 MB.
-System memory in use after: 293.1 MB.
-
-Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5757.
-Total: 4.876000 ms (FindLiveObjects: 0.337000 ms CreateObjectMapping: 0.129300 ms MarkObjects: 4.378100 ms  DeleteObjects: 0.030900 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002604 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.34 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 1.27 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
 - Completed reload, in  0.866 seconds
@@ -564,219 +556,285 @@ Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not fou
 Refreshing native plugins compatible for Editor in 1.37 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 5101 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 292.7 MB.
-System memory in use after: 293.1 MB.
+System memory in use before: 288.3 MB.
+System memory in use after: 288.7 MB.
 
-Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5759.
-Total: 5.027300 ms (FindLiveObjects: 0.392100 ms CreateObjectMapping: 0.142000 ms MarkObjects: 4.461300 ms  DeleteObjects: 0.031100 ms)
+Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5751.
+Total: 4.871100 ms (FindLiveObjects: 0.352500 ms CreateObjectMapping: 0.117500 ms MarkObjects: 4.369100 ms  DeleteObjects: 0.031200 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
 ========================================================================
-Received Import Request.
-  Time since last request: 105.490744 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/SolBuff.asset
-  artifactKey: Guid(3d620a7ca52a032439a2783be52756af) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/SolBuff.asset using Guid(3d620a7ca52a032439a2783be52756af) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2320f034c0301c1e1368d63a21499aca') in 0.025957 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 1284.748204 seconds.
-  path: Assets/03_Prefabs/Units/Grid/Unit.prefab
-  artifactKey: Guid(049275def17b37b46a75794713bc53ac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/03_Prefabs/Units/Grid/Unit.prefab using Guid(049275def17b37b46a75794713bc53ac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9a78d804a8f80b079e4c08f1bbf5eb16') in 0.066830 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 324.298450 seconds.
-  path: Assets/01_Scenes/GridBattle.unity
-  artifactKey: Guid(032b15885d0bd3841b298133dc6636ad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/01_Scenes/GridBattle.unity using Guid(032b15885d0bd3841b298133dc6636ad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '23b6c3c4158697a7bbb1a22053abd4a5') in 0.006053 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 90.606716 seconds.
-  path: Assets/03_Prefabs/Units/Grid/Unit.prefab
-  artifactKey: Guid(049275def17b37b46a75794713bc53ac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/03_Prefabs/Units/Grid/Unit.prefab using Guid(049275def17b37b46a75794713bc53ac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6945bd35f9a87590b4fb25ed8d1e560e') in 0.014822 seconds 
-========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.002782 seconds.
+Registered in 0.002445 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.26 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 1.56 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.859 seconds
+- Completed reload, in  0.915 seconds
 Platform modules already initialized, skipping
 Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
 Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
 Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Refreshing native plugins compatible for Editor in 1.32 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 1.36 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 5101 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 292.8 MB.
-System memory in use after: 293.2 MB.
+Unloading 5102 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 288.3 MB.
+System memory in use after: 288.7 MB.
 
-Unloading 66 unused Assets to reduce memory usage. Loaded Objects now: 5761.
-Total: 4.893400 ms (FindLiveObjects: 0.338700 ms CreateObjectMapping: 0.121400 ms MarkObjects: 4.373300 ms  DeleteObjects: 0.059400 ms)
+Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5754.
+Total: 8.185900 ms (FindLiveObjects: 0.456400 ms CreateObjectMapping: 0.275600 ms MarkObjects: 7.399600 ms  DeleteObjects: 0.053000 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
 ========================================================================
 Received Import Request.
-  Time since last request: 371.682245 seconds.
-  path: Assets/03_Prefabs/Units/Grid/Unit.prefab
-  artifactKey: Guid(049275def17b37b46a75794713bc53ac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/03_Prefabs/Units/Grid/Unit.prefab using Guid(049275def17b37b46a75794713bc53ac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '148e0d6546141f11cd28f5e13ca1c707') in 0.055404 seconds 
+  Time since last request: 2038.664190 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/EffectPerNodeMixin.asset
+  artifactKey: Guid(3667e95b0e0b01f48bd4a110b54259b1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/EffectPerNodeMixin.asset using Guid(3667e95b0e0b01f48bd4a110b54259b1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ad525e9169043a1180621b52cbe82913') in 0.031623 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 5.742326 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/Templates/EffectPerNodeMixin 1.asset
+  artifactKey: Guid(88acf893cf8c68a42b38aa77c2f847aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/Templates/EffectPerNodeMixin 1.asset using Guid(88acf893cf8c68a42b38aa77c2f847aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1f7c53fb08e791bf19d07ad7a73e8b3b') in 0.006118 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.788515 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/EffectPerNodeMixin 1.asset
+  artifactKey: Guid(88acf893cf8c68a42b38aa77c2f847aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/EffectPerNodeMixin 1.asset using Guid(88acf893cf8c68a42b38aa77c2f847aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7909ea64dbdd890b2f618bdfb5413f81') in 0.001507 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 11.495347 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/HealPerNode.asset
+  artifactKey: Guid(88acf893cf8c68a42b38aa77c2f847aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/HealPerNode.asset using Guid(88acf893cf8c68a42b38aa77c2f847aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8c3067f400de4dea37d474f9661a9bdf') in 0.006248 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 70.600987 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/HealPerNode.asset
+  artifactKey: Guid(2030b9e141872184097932a004cf76f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/HealPerNode.asset using Guid(2030b9e141872184097932a004cf76f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '22594f6e2f218fa243dc6ac3e7cd8b73') in 0.002190 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 60.196241 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/HealPerNode.asset
+  artifactKey: Guid(2030b9e141872184097932a004cf76f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/HealPerNode.asset using Guid(2030b9e141872184097932a004cf76f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ceb90d96e42e58ca01e93556baeeb26c') in 0.001873 seconds 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.002862 seconds.
+Registered in 0.002798 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.29 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 1.36 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.859 seconds
+- Completed reload, in  0.868 seconds
 Platform modules already initialized, skipping
 Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
 Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
 Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Refreshing native plugins compatible for Editor in 1.25 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 1.39 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 5101 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 292.8 MB.
-System memory in use after: 293.2 MB.
+Unloading 5103 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 288.3 MB.
+System memory in use after: 288.8 MB.
 
-Unloading 66 unused Assets to reduce memory usage. Loaded Objects now: 5763.
-Total: 5.318500 ms (FindLiveObjects: 0.381300 ms CreateObjectMapping: 0.140200 ms MarkObjects: 4.741100 ms  DeleteObjects: 0.055200 ms)
+Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5757.
+Total: 5.338500 ms (FindLiveObjects: 0.369400 ms CreateObjectMapping: 0.206900 ms MarkObjects: 4.730300 ms  DeleteObjects: 0.031300 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
+========================================================================
+Received Import Request.
+  Time since last request: 909.163726 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/ResurrectMixin.asset
+  artifactKey: Guid(a1ba9ded455684040ab75e9fb8985d06) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/ResurrectMixin.asset using Guid(a1ba9ded455684040ab75e9fb8985d06) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8f6a1da566bfcb80ee5a4cecd635e039') in 0.018264 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 30.521738 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/ResurrectSkill.asset
+  artifactKey: Guid(e18fa3555e4ae9c439fc715f44f0e36d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/ResurrectSkill.asset using Guid(e18fa3555e4ae9c439fc715f44f0e36d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1fc4c0071c55396e21ac1d945eb129b4') in 0.005866 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 76.530171 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/ResurrectSkill.asset
+  artifactKey: Guid(e18fa3555e4ae9c439fc715f44f0e36d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/ResurrectSkill.asset using Guid(e18fa3555e4ae9c439fc715f44f0e36d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd1a46d7a196947c255c6e4fb13381506') in 0.002288 seconds 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
 Registered in 0.002680 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.38 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 1.33 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.858 seconds
+- Completed reload, in  0.866 seconds
 Platform modules already initialized, skipping
 Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
 Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
 Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Refreshing native plugins compatible for Editor in 1.33 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 1.28 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 5101 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 292.8 MB.
-System memory in use after: 293.2 MB.
+Unloading 5103 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 288.3 MB.
+System memory in use after: 288.8 MB.
 
-Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5765.
-Total: 4.817100 ms (FindLiveObjects: 0.358200 ms CreateObjectMapping: 0.119700 ms MarkObjects: 4.306900 ms  DeleteObjects: 0.031300 ms)
+Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5759.
+Total: 5.760400 ms (FindLiveObjects: 0.370400 ms CreateObjectMapping: 0.223200 ms MarkObjects: 5.133200 ms  DeleteObjects: 0.032900 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
 ========================================================================
 Received Import Request.
-  Time since last request: 595.446738 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/DamageBuff.asset
-  artifactKey: Guid(3d620a7ca52a032439a2783be52756af) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/DamageBuff.asset using Guid(3d620a7ca52a032439a2783be52756af) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'afe473651d0780192a7d354373f32487') in 0.019077 seconds 
+  Time since last request: 299.463126 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/StarShapedAOEDamage 1.asset
+  artifactKey: Guid(de9a390dcec6a4843884852345ad64a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/StarShapedAOEDamage 1.asset using Guid(de9a390dcec6a4843884852345ad64a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9cf4acc466c2014d509949a8c03d13df') in 0.017687 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 26.155127 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/NewBuffs
-  artifactKey: Guid(dd8e052ae78c4934aa355bc594c319cd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/NewBuffs using Guid(dd8e052ae78c4934aa355bc594c319cd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '27e57245ffa2345b1782ab72cba57e05') in 0.005498 seconds 
+  Time since last request: 6.712538 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/StarShapedAOEHeal.asset
+  artifactKey: Guid(de9a390dcec6a4843884852345ad64a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/StarShapedAOEHeal.asset using Guid(de9a390dcec6a4843884852345ad64a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '330250730e2f540b6c6b394948505522') in 0.005864 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 22.888820 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/SingleTargetBuffMixin.asset
-  artifactKey: Guid(be0abcd1e17d155418c089f292344304) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/SingleTargetBuffMixin.asset using Guid(be0abcd1e17d155418c089f292344304) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e8d68df5944effa4a398535923786143') in 0.006040 seconds 
+  Time since last request: 106.247802 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/Physic.asset
+  artifactKey: Guid(de9a390dcec6a4843884852345ad64a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/Physic.asset using Guid(de9a390dcec6a4843884852345ad64a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4bbe0a5458e585747c8c5ff5ba1264f7') in 0.006800 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 22.989895 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/DamageBuffMixin.asset
-  artifactKey: Guid(be0abcd1e17d155418c089f292344304) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/DamageBuffMixin.asset using Guid(be0abcd1e17d155418c089f292344304) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2e48ad3ab9011bc138095ff394418227') in 0.006822 seconds 
+  Time since last request: 9.473169 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/PositionHeal.asset
+  artifactKey: Guid(de9a390dcec6a4843884852345ad64a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/PositionHeal.asset using Guid(de9a390dcec6a4843884852345ad64a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9806d6bcbdf6f4d17fd3533c8745c187') in 0.006062 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 97.408298 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/NewBuffs/DamageDebuff.asset
-  artifactKey: Guid(cf235371c8d48bd4ca6225c9fcbd68ab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/NewBuffs/DamageDebuff.asset using Guid(cf235371c8d48bd4ca6225c9fcbd68ab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a323bada26db3c5b59c180ef1b34be30') in 0.006041 seconds 
+  Time since last request: 8.718984 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/AreaHeal.asset
+  artifactKey: Guid(503b9d2312e81774fb329b81527f5c18) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/AreaHeal.asset using Guid(503b9d2312e81774fb329b81527f5c18) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '88091abdc43ea6554248019a2a6caa89') in 0.007598 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 11.753467 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/DamageBuffMixin 1.asset
-  artifactKey: Guid(2027f13a9af7efb499cbd1c1c02e608a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/DamageBuffMixin 1.asset using Guid(2027f13a9af7efb499cbd1c1c02e608a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3a0f3fd3839584a6be63064303915573') in 0.005421 seconds 
+  Time since last request: 11.910690 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/StarShapedAOEHeal.asset
+  artifactKey: Guid(625777ec9d54ecd4da2639b780dec61e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/StarShapedAOEHeal.asset using Guid(625777ec9d54ecd4da2639b780dec61e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b1407b80b8484bf2afbafbac3614f4b5') in 0.001579 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 7.674338 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/DamageDebuffMixin.asset
-  artifactKey: Guid(2027f13a9af7efb499cbd1c1c02e608a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/DamageDebuffMixin.asset using Guid(2027f13a9af7efb499cbd1c1c02e608a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3cb0b29773b30757c2f3037abd57436e') in 0.005373 seconds 
+  Time since last request: 6.725034 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/StarShapedAOEHeal 1.asset
+  artifactKey: Guid(5a2c1e4960a3e304a83c8c2f1d5f465f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/StarShapedAOEHeal 1.asset using Guid(5a2c1e4960a3e304a83c8c2f1d5f465f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dadeaac691bb437397b50ebb6c306eca') in 0.005775 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.094022 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/StarShapedAOEDamage.asset
+  artifactKey: Guid(5a2c1e4960a3e304a83c8c2f1d5f465f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/StarShapedAOEDamage.asset using Guid(5a2c1e4960a3e304a83c8c2f1d5f465f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c6c248f52ef783cbe74ff33678d564a0') in 0.005851 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 5.457666 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/StarShapedAOEMDamage.asset
+  artifactKey: Guid(5a2c1e4960a3e304a83c8c2f1d5f465f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/StarShapedAOEMDamage.asset using Guid(5a2c1e4960a3e304a83c8c2f1d5f465f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0d5609e0afbe52496d8d710310ee6b7e') in 0.005986 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.332380 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/AreaHeal 1.asset
+  artifactKey: Guid(9f872d9665b283c4786842d4c9065276) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/AreaHeal 1.asset using Guid(9f872d9665b283c4786842d4c9065276) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c2e3579e5a73b1357451b884989279ce') in 0.006101 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 4.080297 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/AreaMagic.asset
+  artifactKey: Guid(9f872d9665b283c4786842d4c9065276) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/AreaMagic.asset using Guid(9f872d9665b283c4786842d4c9065276) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6993bcef50641b5dd1324a287f34aacf') in 0.006399 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 60.261441 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/AreaHeal 1.asset
+  artifactKey: Guid(dc0e228fcf59f024e9b8778e4592ee02) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/AreaHeal 1.asset using Guid(dc0e228fcf59f024e9b8778e4592ee02) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '43c33361ab9e851cc66acca0854bd493') in 0.001799 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 7.811186 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Physic.asset
+  artifactKey: Guid(dc0e228fcf59f024e9b8778e4592ee02) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Physic.asset using Guid(dc0e228fcf59f024e9b8778e4592ee02) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '29fcd4df1e1a50743a303171eb70f724') in 0.002001 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 31.536027 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Physic.asset
+  artifactKey: Guid(dc0e228fcf59f024e9b8778e4592ee02) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Physic.asset using Guid(dc0e228fcf59f024e9b8778e4592ee02) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '31bd9642ad46f1e1ec9e1ebdef7a0f25') in 0.001811 seconds 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.002580 seconds.
+Registered in 0.003037 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.47 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 1.27 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.882 seconds
+- Completed reload, in  0.864 seconds
 Platform modules already initialized, skipping
 Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
 Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
 Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Refreshing native plugins compatible for Editor in 1.26 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 1.27 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 5102 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 292.8 MB.
-System memory in use after: 293.3 MB.
+Unloading 5105 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 288.4 MB.
+System memory in use after: 288.8 MB.
 
-Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5768.
-Total: 5.460800 ms (FindLiveObjects: 0.360400 ms CreateObjectMapping: 0.208200 ms MarkObjects: 4.856000 ms  DeleteObjects: 0.035400 ms)
+Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5763.
+Total: 5.631000 ms (FindLiveObjects: 0.362600 ms CreateObjectMapping: 0.210500 ms MarkObjects: 5.022100 ms  DeleteObjects: 0.035000 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
 ========================================================================
 Received Import Request.
-  Time since last request: 191.542918 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/NewBuffs/CantAttackDebuff.asset
-  artifactKey: Guid(b5e8abf70cc1dfd4eab54c58aa2daf9b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/NewBuffs/CantAttackDebuff.asset using Guid(b5e8abf70cc1dfd4eab54c58aa2daf9b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a7c77d76526178b6e168bb71a5cbbe65') in 0.018161 seconds 
+  Time since last request: 1558.272251 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/OnWaitMixin.asset
+  artifactKey: Guid(4a0450476af616b43b48bc9802501c6a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/OnWaitMixin.asset using Guid(4a0450476af616b43b48bc9802501c6a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c6750b9282608c41054b53dfef8fc771') in 0.017254 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 2.433945 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/AllyBuffSkill.asset
-  artifactKey: Guid(5a6104403f241c54cbb085ca33fd4776) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/AllyBuffSkill.asset using Guid(5a6104403f241c54cbb085ca33fd4776) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '72e200078fd1f786ed6a573bfd16d542') in 0.007008 seconds 
+  Time since last request: 72.291110 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/OnWaitMixin 1.asset
+  artifactKey: Guid(29b56f25483559f439d1e1cdfa821858) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/OnWaitMixin 1.asset using Guid(29b56f25483559f439d1e1cdfa821858) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7c60378960d368aa7e27f8ec877e5f41') in 0.006444 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 13.707203 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/AllyDamageBuffSkill.asset
-  artifactKey: Guid(5a6104403f241c54cbb085ca33fd4776) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/AllyDamageBuffSkill.asset using Guid(5a6104403f241c54cbb085ca33fd4776) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'de8ed8be15e3bb87bc5ff94347b9de80') in 0.006102 seconds 
+  Time since last request: 4.655279 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/Templates/OnWaitMixin.asset
+  artifactKey: Guid(4a0450476af616b43b48bc9802501c6a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/Templates/OnWaitMixin.asset using Guid(4a0450476af616b43b48bc9802501c6a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e1f30411ed5caa7ef90ee54bc8848804') in 0.001566 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 3.631250 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/AllyDamageBuffSkill 1.asset
-  artifactKey: Guid(d2c6a33faf9d441429ba7781437c6d99) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/AllyDamageBuffSkill 1.asset using Guid(d2c6a33faf9d441429ba7781437c6d99) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bdcb445072e6640df13b893f726375c3') in 0.006495 seconds 
+  Time since last request: 5.506014 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/HealOnWait.asset
+  artifactKey: Guid(29b56f25483559f439d1e1cdfa821858) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Passive/HealOnWait.asset using Guid(29b56f25483559f439d1e1cdfa821858) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c06ae4b8701c97e5034eaaad6824c73d') in 0.005962 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 10.814648 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/EnemyDamageDebuffSkill.asset
-  artifactKey: Guid(d2c6a33faf9d441429ba7781437c6d99) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/EnemyDamageDebuffSkill.asset using Guid(d2c6a33faf9d441429ba7781437c6d99) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '85931b5b98d8c386864b73238249f486') in 0.006093 seconds 
+  Time since last request: 13.186091 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/HealOnWait.asset
+  artifactKey: Guid(4f6351a872c96bb419c81cbf7e1486da) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/HealOnWait.asset using Guid(4f6351a872c96bb419c81cbf7e1486da) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'eda0c677ecadee4721bffb72b6c00e85') in 0.002040 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 14.550523 seconds.
-  path: Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/DamageDebuffMixin.asset
-  artifactKey: Guid(2027f13a9af7efb499cbd1c1c02e608a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/07_GameData/Skills/Common/NewSkills/Mixins/Active/DamageDebuffMixin.asset using Guid(2027f13a9af7efb499cbd1c1c02e608a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5f24293ba0210304893aec6985fbaa5f') in 0.001691 seconds 
+  Time since last request: 65.777144 seconds.
+  path: Assets/07_GameData/Skills/Common/NewSkills/HealOnWait.asset
+  artifactKey: Guid(4f6351a872c96bb419c81cbf7e1486da) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/07_GameData/Skills/Common/NewSkills/HealOnWait.asset using Guid(4f6351a872c96bb419c81cbf7e1486da) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b9607b1d05c441e14c560a44485667c5') in 0.001967 seconds 
