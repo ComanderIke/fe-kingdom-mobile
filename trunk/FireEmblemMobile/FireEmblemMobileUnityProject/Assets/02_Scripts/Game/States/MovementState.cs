@@ -148,5 +148,7 @@ namespace Game.Mechanics
             movementFinished = true;
             unit.TurnStateManager.HasMoved = true;
         }
+
+        public static event Action<Unit> OnAnyUnitMoved;
     }
 }

@@ -28,6 +28,8 @@ namespace Game.GameActors.Units.Skills.Passive
                     chance+= unit.Stats.CombinedAttributes().GetAttributeStat(scalingType)/100f;
                 break;
             }
+
+            chance += unit.BonusSkillProcChance;
             return chance;
         }
         public override List<EffectDescription> GetEffectDescription(Unit unit, int level)

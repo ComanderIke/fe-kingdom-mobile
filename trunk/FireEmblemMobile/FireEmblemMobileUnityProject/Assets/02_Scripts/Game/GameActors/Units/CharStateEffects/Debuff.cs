@@ -1,16 +1,17 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using LostGrace;
+using UnityEngine;
 
 namespace Game.GameActors.Units.CharStateEffects
 {
+    [Serializable]
     public enum DebuffType
     {
-        CrippleDamage,
-        CrippleDefense,
-        CrippleResistance,
-        Blinded,
         Stunned,
         Silenced,
-        Frozen,
+        Frozen, // also makes unit invulnerable for 1 turn(or just against physical?. can be removed differently (fire)
+        Disarmed,
         Burned,
         Poisened,
         Snarred,
@@ -20,10 +21,24 @@ namespace Game.GameActors.Units.CharStateEffects
     public class Debuff:BuffDebuffBase
     {
         //[SerializeField]private List<PassiveSkillMixin> buffMixins;
-        [SerializeField] private DebuffType debuffType;
-        public bool TakeEffect(Unit unit)
+        [SerializeField] public DebuffType debuffType;
+        [SerializeField] public List<DebuffType> negateTypes;
+        
+        
+        public EffectDescription GetEffectDescription(int level)
         {
-            throw new System.NotImplementedException();
+            return new EffectDescription();
+        }
+        public override bool TakeEffect(Unit unit)
+        {
+            switch (debuffType)
+            {
+                case DebuffType.Frozen: unit.TurnStateManager.UnitTurnFinished(); //unit set phys invulnerable
+                    break;
+            }
+
+            return false;
+
         }
     }
 

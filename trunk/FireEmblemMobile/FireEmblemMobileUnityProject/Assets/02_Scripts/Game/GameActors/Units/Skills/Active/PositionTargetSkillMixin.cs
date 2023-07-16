@@ -5,6 +5,8 @@ using Game.GameActors.Players;
 using Game.GameActors.Units.Numbers;
 using Game.GameInput;
 using Game.Grid;
+using Game.Manager;
+using Game.Map;
 using LostGrace;
 using UnityEngine;
 
@@ -14,17 +16,19 @@ namespace Game.GameActors.Units.Skills
     {
         PhysDamage,
         MagDamage,
-        Heal
+        Heal,
+        None
     }
     [System.Serializable]
     [CreateAssetMenu(menuName = "GameData/Skills/Active/PositionTarget", fileName = "PositionTargetSkillMixin")]
         public class PositionTargetSkillMixin : ActiveSkillMixin
         {
             
-        [field:SerializeField] private PositionTargetDamageType damageType;
+        [field:SerializeField] private PositionTargetDamageType type;
         [field:SerializeField] private int[] power;
         [field: SerializeField] private int[] range;
         [field: SerializeField] private int[] size;
+        [SerializeField] private bool jump;
         [field:SerializeField]public SkillTargetArea TargetArea { get; set; }
         
         [field:SerializeField]public List<SkillEffectMixin> SkillEffects;
@@ -56,7 +60,13 @@ namespace Game.GameActors.Units.Skills
             }
             base.OnValidate();
         }
-       
+
+        public bool CanTarget(Tile t)
+        {
+            if (jump)
+                return t.GridObject == null;
+            return true;
+        }
         public virtual void Activate(int level, Unit user, Tile[,] tiles, int x, int y)
         {
 
@@ -69,8 +79,16 @@ namespace Game.GameActors.Units.Skills
                 {
 
                     GameObject.Instantiate(AnimationObject, tiles[xPosition, yPosition].GetTransform().position, Quaternion.identity, null);
+                    foreach (SkillEffectMixin effect in SkillEffects)
+                    {
+                        effect.Activate(tiles[x,y], skill.Level);
+                    }
                 }
             }
+            
+            if(jump)
+                    ServiceProvider.Instance.GetSystem<GridSystem>().SetUnitPosition(user, x, y);
+            
             
         }
 

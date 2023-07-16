@@ -65,7 +65,7 @@ namespace Game.Mechanics.Battle
             sum.Hit -= b.Hit;
             sum.Avoid -= b.Avoid;
             sum.CritAvoid -= b.CritAvoid;
-            sum. Crit -= b.Crit;
+            sum.Crit -= b.Crit;
             sum.AttackSpeed -= b.AttackSpeed;
             sum.Armor -= b.Armor;
             sum.MagicResistance -= b.MagicResistance;
@@ -73,5 +73,10 @@ namespace Game.Mechanics.Battle
             return sum;
 
         }
+        public int[] AsArray()
+        {
+            return new []{Hit,Avoid,Crit,CritAvoid,AttackSpeed,Attack, MagicResistance,Armor};
+        }
+       
     }
 }

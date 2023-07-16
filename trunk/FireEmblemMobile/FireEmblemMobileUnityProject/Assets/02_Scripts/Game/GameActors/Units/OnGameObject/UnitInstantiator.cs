@@ -23,7 +23,7 @@ namespace Game.GameActors.Units.OnGameObject
             else
                 unitGameObject = Instantiate(UnitEnemy);
 
-            unitGameObject.GetComponentInChildren<CharacterStateUI>()?.Initialize(unit.StatusEffectManager);
+            unitGameObject.GetComponentInChildren<CharacterStateUI>()?.Initialize(unit, unit.StatusEffectManager);
             unitGameObject.name = unit.name;
             unitGameObject.transform.parent = gameObject.transform;
             unitGameObject.layer = LayerMask.NameToLayer("Characters");

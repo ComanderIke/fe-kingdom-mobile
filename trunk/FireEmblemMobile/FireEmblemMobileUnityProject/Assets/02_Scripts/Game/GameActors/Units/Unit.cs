@@ -117,6 +117,7 @@ namespace Game.GameActors.Units
             StockedCombatItem combatItem1, StockedCombatItem combatItem2, UnitVisual visuals, SkillManager skillManager, ExperienceManager experienceManager)
         {
             this.bluePrintID = bluePrintID;
+            HealingMultipliers = new List<float>();
             Fielded = false;
             encounterBuffs = new List<EncounterBasedBuff>();
             this.rpgClass = rpgClass;
@@ -333,11 +334,12 @@ namespace Game.GameActors.Units
 
         public Sprite FaceSprite => visuals.CharacterSpriteSet.FaceSprite;
         public bool Fielded { get; set; }
-        public float HealingMultiplier { get; set; }
+      
         public float BonusSkillProcChance { get; set; }
         public bool ClassUpgraded { get; set; }
         public bool IsBoss { get; set; }
         public EncounterComponent EncounterComponent { get; set; }
+        public List<float> HealingMultipliers { get; set; }
 
 
         public void Equip(Weapon w)
@@ -490,6 +492,13 @@ namespace Game.GameActors.Units
         public void Heal(int heal)
         {
             Debug.Log("Unit HEALED: "+ heal);
+            float tmpHeal = heal;
+            foreach (var mult in HealingMultipliers)
+            {
+                tmpHeal *= mult;
+            }
+
+            heal = (int) tmpHeal;
             Hp += heal;
             OnUnitHealed?.Invoke(this, heal);
             

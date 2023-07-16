@@ -14,14 +14,26 @@ namespace Game.GameActors.Units.Skills
         Enemy,
         Any
     }
+
+    
     [System.Serializable]
-    public abstract class SingleTargetMixin : ActiveSkillMixin
+    [CreateAssetMenu(menuName = "GameData/Skills/Active/SingleTarget", fileName = "SingleTargetMixin")]
+    public class SingleTargetMixin : ActiveSkillMixin
     {
         public SingleTargetType targetType;
         [field: SerializeField] private int[] range;
 
-        public abstract void Activate(Unit user, Unit target);
-        
+        public List<SkillEffectMixin> SkillEffectMixins;
+
+        public void Activate(Unit user, Unit target)
+        {
+            GameObject.Instantiate(AnimationObject, target.GameTransformManager.Transform.position, Quaternion.identity, null);
+            foreach (SkillEffectMixin effect in SkillEffectMixins)
+            {
+                effect.Activate(target, skill.Level);
+            }
+        }
+
 
         public List<Unit> GetTargets(Unit user)
         {
@@ -55,11 +67,5 @@ namespace Game.GameActors.Units.Skills
             return !user.Faction.IsOpponentFaction(target.Faction);
         }
      
-        
-
-        //
-        // protected SingleTargetMixin( int[] maxUses, int[] hpCost,GameObject animationObject) : base(maxUses,hpCost,animationObject)
-        // {
-        // }
     }
 }

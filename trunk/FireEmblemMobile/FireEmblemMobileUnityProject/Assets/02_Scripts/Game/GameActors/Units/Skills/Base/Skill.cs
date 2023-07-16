@@ -19,7 +19,7 @@ namespace Game.GameActors.Units.Skills
         public List<PassiveSkillMixin> passiveMixins;
         public ActiveSkillMixin activeMixin;
         public int ActiveMixinUses;
-        private Unit owner;
+        public Unit owner;
 
         public Skill(string Name, string Description, Sprite icon, int tier,int maxLevel, List<PassiveSkillMixin> passiveMixins, ActiveSkillMixin activeMixin)
         {

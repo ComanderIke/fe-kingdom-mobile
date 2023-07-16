@@ -6,6 +6,7 @@
         NormalLine,
         Cross,
         Star,
-        Block
+        Block,
+        SingleTile
     }
 }
