@@ -161,6 +161,7 @@ namespace Game.Map
         public void ShowCastRange(IGridActor character, int castRange)
         {
             HideMoveRange();
+            Debug.Log("AFter HideMoveRange");
             Vector2 characterPos = character.GridComponent.GridPosition.AsVector();
             for (int i = 0; i < castRange+1; i++)
             {

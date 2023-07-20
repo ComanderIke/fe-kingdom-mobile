@@ -38,7 +38,7 @@ namespace __2___Scripts.Game.Utility
                 return true;
             }
 
-            Debug.Log("UICLICKCHECKER RETURN FALSE");
+            //Debug.Log("UICLICKCHECKER RETURN FALSE");
             return false;
         }
     }

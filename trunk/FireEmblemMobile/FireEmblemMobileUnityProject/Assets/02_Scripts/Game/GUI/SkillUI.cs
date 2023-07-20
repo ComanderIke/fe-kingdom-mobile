@@ -34,11 +34,11 @@ namespace LostGrace
             deleteButton.SetActive(false);
             icon.sprite = skill.Icon;
             this.Skill = skill;
-            if (skill.activeMixin is ActiveSkillMixin activatedSkillMixin)
+            if (skill.IsActive())
             {
-                uses.text = skill.ActiveMixinUses + "/" +
-                            activatedSkillMixin.maxUsesPerLevel[skill.Level];
-                hpCost.text = ""+activatedSkillMixin.hpCostPerLevel[skill.Level];
+                uses.text = skill.FirstActiveMixin.Uses + "/" +
+                            skill.FirstActiveMixin.maxUsesPerLevel[skill.Level];
+                hpCost.text = ""+ skill.FirstActiveMixin.hpCostPerLevel[skill.Level];
                 if (!big)
                 {
                     hpTextGo.transform.localScale = new Vector3(scaleSmall, scaleSmall, scaleSmall);
@@ -71,7 +71,7 @@ namespace LostGrace
         public void Clicked()
         {
             
-            if (Skill.activeMixin is ActiveSkillMixin)
+            if (Skill.activeMixins.Count > 0)
             {
                 OnClicked?.Invoke(this);
             }

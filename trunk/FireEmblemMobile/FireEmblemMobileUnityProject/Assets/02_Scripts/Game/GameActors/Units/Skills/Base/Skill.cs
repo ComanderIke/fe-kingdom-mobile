@@ -12,31 +12,30 @@ namespace Game.GameActors.Units.Skills
         protected int maxLevel;
         public Sprite Icon;
         public SkillType SkillType { get; set; }
-        protected int level;
+        public int level;
         public string Name;
         public string Description;
         public int Tier;
         public List<PassiveSkillMixin> passiveMixins;
-        public ActiveSkillMixin activeMixin;
-        public int ActiveMixinUses;
+        public List<ActiveSkillMixin> activeMixins;
         public Unit owner;
+        public SkillTransferData skillTransferData;
 
-        public Skill(string Name, string Description, Sprite icon, int tier,int maxLevel, List<PassiveSkillMixin> passiveMixins, ActiveSkillMixin activeMixin)
+        public Skill(string Name, string Description, Sprite icon, int tier,int maxLevel, List<PassiveSkillMixin> passiveMixins, List<ActiveSkillMixin> activeMixins, SkillTransferData data)
         {
             this.Name = Name;
             this.Icon = icon;
             this.Tier = tier;
             this.Description = Description;
             this.passiveMixins = passiveMixins;
-            this.activeMixin = activeMixin;
+            this.activeMixins = activeMixins;
             foreach (var passive in passiveMixins)
                 passive.skill = this;
+            foreach (var active in activeMixins)
+                active.skill = this;
+            this.skillTransferData = data;
 
-            if (activeMixin)
-            {
-                activeMixin.skill = this;
-                ActiveMixinUses = activeMixin.GetMaxUses(Level);
-            }
+       
 
             this.maxLevel = maxLevel;
 
@@ -62,19 +61,32 @@ namespace Game.GameActors.Units.Skills
             {
                
                 this.level = value;
-                if(activeMixin)
-                    ActiveMixinUses = activeMixin.GetMaxUses(level);
+         
                 //TODO Unbind and rebind all skills (So that multipliers etc will get updated)
-                if(owner!=null)
+                if (owner != null)
+                {
                     foreach (var passive in passiveMixins)
                     {
-                        passive.UnbindFromUnit(owner,this);
+                        passive.UnbindFromUnit(owner, this);
                         passive.BindToUnit(owner, this);
                     }
-                
+                    foreach (var active in activeMixins)
+                    {
+                        active.UnbindFromUnit(owner,this);
+                        active.BindToUnit(owner, this);
+                    }
+                }
+
             }
         }
-       
+
+        public ActiveSkillMixin FirstActiveMixin {
+            get
+            {
+                return activeMixins.First();
+            }
+        }
+
         public string GetName()
         {
             return Name;
@@ -119,7 +131,7 @@ namespace Game.GameActors.Units.Skills
 
         public virtual Skill Clone()
         {
-            var newSkill = new Skill(Name, Description, Icon, Tier, maxLevel,passiveMixins, activeMixin);
+            var newSkill = new Skill(Name, Description, Icon, Tier, maxLevel,passiveMixins,activeMixins, skillTransferData);
             newSkill.level = Level;
             return newSkill;
         }
@@ -131,6 +143,11 @@ namespace Game.GameActors.Units.Skills
             // if (this is Blessing)
             //     return false;
             return Level < maxLevel;
+        }
+
+        public bool IsActive()
+        {
+            return activeMixins.Count > 0;
         }
     }
 }

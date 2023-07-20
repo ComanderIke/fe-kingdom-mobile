@@ -14,9 +14,10 @@ namespace Game.GameActors.Units.Skills
         public string Name;
         public int Tier;
         public List<PassiveSkillMixin> passiveMixins;
-        public ActiveSkillMixin activeMixin;
+        public List<ActiveSkillMixin> activeMixins;
         public int maxLevel = 5;
 
+        public SkillTransferData SkillTransferData;
         public virtual Skill Create()
         {
             var instantiatedPassiveMixins = new List<PassiveSkillMixin>();
@@ -25,10 +26,15 @@ namespace Game.GameActors.Units.Skills
                 {
                     instantiatedPassiveMixins.Add(Instantiate(passive));
                 }
-
-            var instantiatedActiveMixin = activeMixin == null ? null : Instantiate(activeMixin);
+            var instantiatedActiveMixins = new List<ActiveSkillMixin>();
+            if(activeMixins!=null)
+                foreach (var active in activeMixins)
+                {
+                    instantiatedActiveMixins.Add(Instantiate(active));
+                }
+          
            
-            return new Skill(Name, Description, Icon, Tier,maxLevel, instantiatedPassiveMixins, instantiatedActiveMixin);
+            return new Skill(Name, Description, Icon, Tier,maxLevel, instantiatedPassiveMixins, instantiatedActiveMixins,SkillTransferData);
         }
     }
 }

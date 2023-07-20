@@ -57,7 +57,7 @@ namespace Game.GameActors.Units.Humans
 
         public List<Skill> ActiveSkills
         {
-            get { return skills.FindAll(s => s.activeMixin!=null); }
+            get { return skills.FindAll(s => s.activeMixins.Count>0); }
         }
 
        // [SerializeField]

@@ -31,7 +31,7 @@ namespace LostGrace
 
         void InstantiateSkill(Skill skill, bool showDeleteIfFull)
         {
-            var go = Instantiate(skill.activeMixin is ActiveSkillMixin?activeSkillButtonPrefab:skillButtonPrefab, transform);
+            var go = Instantiate(skill.activeMixins.Count > 0?activeSkillButtonPrefab:skillButtonPrefab, transform);
             var skillUI = go.GetComponent<SkillUI>();
             instantiatedButtons.Add(skillUI);
             skillUI.SetSkill(skill, false);

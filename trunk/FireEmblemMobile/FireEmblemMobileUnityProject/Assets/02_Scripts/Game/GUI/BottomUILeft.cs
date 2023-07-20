@@ -80,7 +80,7 @@ namespace LostGrace
             skillContainer.DeleteAllChildren();
             foreach (var skill in unit.SkillManager.Skills)
             {
-                var go =Instantiate(skill.activeMixin!=null?activeSkillprefab:skillprefab, skillContainer);
+                var go =Instantiate(skill.activeMixins.Count>0?activeSkillprefab:skillprefab, skillContainer);
                 var skillUI =  go.GetComponent<SkillUI>();
                skillUI.SetSkill(skill, true);
                skillUI.OnClicked += ActiveSkillClicked;
@@ -102,7 +102,7 @@ namespace LostGrace
            
             Debug.Log("CLICKED Skill: " +skillUI.Skill);
             ToolTipSystem.Show(skillUI.Skill, skillUI.transform.position);
-            if(skillUI.Skill.activeMixin!=null)
+            if(skillUI.Skill.activeMixins.Count>0)
                 useSkillDialogController.Show(skillUI.Skill,()=>new GameplayCommands().SelectSkill(skillUI.Skill));
 
         }

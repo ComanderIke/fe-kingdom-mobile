@@ -122,7 +122,7 @@ namespace LostGrace
             lineContainer.DeleteAllChildrenImmediate();
             name.text = skill.Name;
             description.text = skill.Description;
-            bool isActiveMixin = skill.activeMixin != null;
+            bool isActiveMixin = skill.IsActive();
             hpCostGo.SetActive(isActiveMixin);
             usesGo.SetActive(isActiveMixin);
 
@@ -132,27 +132,27 @@ namespace LostGrace
             }
             if (isActiveMixin)
             {
-                hpCostText.text = "" + skill.activeMixin.hpCostPerLevel[skill.Level];
-                usesText.text = "" + skill.ActiveMixinUses + "/" +
-                                skill.activeMixin.maxUsesPerLevel[skill.Level];
-                if(skill.Level>=1&&skill.activeMixin.maxUsesPerLevel[skill.Level]>skill.activeMixin.maxUsesPerLevel[skill.Level-1])
+                hpCostText.text = "" + skill.FirstActiveMixin.hpCostPerLevel[skill.Level];
+                usesText.text = "" + skill.FirstActiveMixin.Uses + "/" +
+                                skill.FirstActiveMixin.maxUsesPerLevel[skill.Level];
+                if(skill.Level>=1&&skill.FirstActiveMixin.maxUsesPerLevel[skill.Level]>skill.FirstActiveMixin.maxUsesPerLevel[skill.Level-1])
                     usesText.color = upgTextColor;
                 else
                 {
                     usesText.color = usesTextColor;
                 }
-                if(skill.Level>=1&&skill.activeMixin.hpCostPerLevel[skill.Level]<skill.activeMixin.hpCostPerLevel[skill.Level-1])
+                if(skill.Level>=1&&skill.FirstActiveMixin.hpCostPerLevel[skill.Level]<skill.FirstActiveMixin.hpCostPerLevel[skill.Level-1])
                     hpCostText.color = upgTextColor;
                 else
                 {
                     hpCostText.color = hpCostTextColor;
                 }
-                if (skill.activeMixin is PositionTargetSkillMixin ptsm)
+                if (skill.FirstActiveMixin is PositionTargetSkillMixin ptsm)
                 {
                     var castRange = skill.Level==0?ptsm.GetRange(skill.Level):ptsm.GetRange(skill.Level-1);
                     var upgcastRange= ptsm.GetRange(skill.Level);
-                    var damage= skill.Level==0?ptsm.GetPower(skill.Level):ptsm.GetPower(skill.Level-1);
-                    var upgDamage= ptsm.GetPower(skill.Level);
+                    // var damage= skill.Level==0?ptsm.GetPower(skill.Level):ptsm.GetPower(skill.Level-1);
+                    // var upgDamage= ptsm.GetPower(skill.Level);
                     var size= skill.Level==0?ptsm.GetSize(skill.Level):ptsm.GetSize(skill.Level-1);
                     var upgSize= ptsm.GetSize(skill.Level);
 
@@ -161,8 +161,8 @@ namespace LostGrace
                     
                     var line = GameObject.Instantiate(linePrefab, lineContainer);
                     line.GetComponent<UISkillEffectLine>().SetValues("Castrange: ",""+castRange,""+upgcastRange);
-                    line = GameObject.Instantiate(linePrefab, lineContainer);
-                    line.GetComponent<UISkillEffectLine>().SetValues("Damage: ",""+damage,""+upgDamage);
+                    // line = GameObject.Instantiate(linePrefab, lineContainer);
+                    // line.GetComponent<UISkillEffectLine>().SetValues("Damage: ",""+damage,""+upgDamage);
                 }
 
                 

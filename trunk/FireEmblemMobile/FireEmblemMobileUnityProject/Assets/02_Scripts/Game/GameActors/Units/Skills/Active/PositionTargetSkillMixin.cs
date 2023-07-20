@@ -21,22 +21,22 @@ namespace Game.GameActors.Units.Skills
     }
     [System.Serializable]
     [CreateAssetMenu(menuName = "GameData/Skills/Active/PositionTarget", fileName = "PositionTargetSkillMixin")]
-        public class PositionTargetSkillMixin : ActiveSkillMixin
+        public class PositionTargetSkillMixin : ActiveSkillMixin, IPosTargeted
         {
             
-        [field:SerializeField] private PositionTargetDamageType type;
-        [field:SerializeField] private int[] power;
+    
         [field: SerializeField] private int[] range;
         [field: SerializeField] private int[] size;
         [SerializeField] private bool jump;
         [field:SerializeField]public SkillTargetArea TargetArea { get; set; }
-        
+        public EffectType EffectType { get; set; }
+
         [field:SerializeField]public List<SkillEffectMixin> SkillEffects;
         [field:SerializeField]public bool Rooted { get; set; }
-
-        public int GetPower(int level) => power[level];
+        
         public int GetRange(int level)  => range[level];
         public int GetSize(int level)  => size[level];
+        public int GetSize()  => size[skill.Level];
 
 
         private void OnEnable()
@@ -46,10 +46,7 @@ namespace Game.GameActors.Units.Skills
 
         void OnValidate()
         {
-            if (power == null||power.Length != MAXLEVEL)
-            {
-                Array.Resize(ref power, MAXLEVEL);
-            }
+        
             if (size == null||size.Length != MAXLEVEL)
             {
                 Array.Resize(ref size, MAXLEVEL);
@@ -67,18 +64,19 @@ namespace Game.GameActors.Units.Skills
                 return t.GridObject == null;
             return true;
         }
-        public virtual void Activate(int level, Unit user, Tile[,] tiles, int x, int y)
+        public virtual void Activate(Unit user, Tile[,] tiles, int x, int y)
         {
-
-            foreach (var pos in GetTargetPositions(level))
+Debug.Log("ACTIVATE POS TARGET SKILL MIXIN");
+            foreach (var pos in GetTargetPositions(skill.Level))
             {
                 int xPosition = x + pos.x;
                 int yPosition = y + pos.y;
                 if (xPosition >= 0 && xPosition < tiles.GetLength(0) && yPosition >= 0 &&
                     yPosition < tiles.GetLength(1))
                 {
-
-                    GameObject.Instantiate(AnimationObject, tiles[xPosition, yPosition].GetTransform().position, Quaternion.identity, null);
+                    Debug.Log("ACTIVATE On "+xPosition+" "+yPosition);
+                    if(AnimationObject!=null)
+                        GameObject.Instantiate(AnimationObject, tiles[xPosition, yPosition].GetTransform().position, Quaternion.identity, null);
                     foreach (SkillEffectMixin effect in SkillEffects)
                     {
                         effect.Activate(tiles[x,y], skill.Level);
@@ -184,10 +182,10 @@ namespace Game.GameActors.Units.Skills
         }
 
 
-        public List<IAttackableTarget> GetAllTargets(int level,Unit selectedUnit, Tile[,] tiles, int x, int y)
+        public List<IAttackableTarget> GetAllTargets(Unit selectedUnit, Tile[,] tiles, int x, int y)
         {
             List<IAttackableTarget> targets = new List<IAttackableTarget>();
-            foreach (var pos in GetTargetPositions(level))
+            foreach (var pos in GetTargetPositions(skill.Level))
             {
                 int xPosition = x + pos.x;
                 int yPosition = y + pos.y;

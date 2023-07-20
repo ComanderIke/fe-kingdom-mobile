@@ -226,6 +226,7 @@ namespace Game.GameActors.Units.Numbers
     public enum AttributeType
     {
         NONE,
+        ATK,
         STR,
         DEX,
         INT,

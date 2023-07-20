@@ -54,7 +54,8 @@ namespace Game.Mechanics
             if (selectionSystem.SelectedSkill != null)
             {
                 selectedSkill = selectionSystem.SelectedSkill;
-                ShowSkillCastRange();
+                activeSkillMixin = selectedSkill.FirstActiveMixin;
+                ShowSkillCastRange(selectionSystem.SelectedSkill.FirstActiveMixin);
                 UI.Show((Unit)selectionSystem.SelectedCharacter, selectionSystem.SelectedSkill);
             }
             else if (selectionSystem.SelectedItem != null)
@@ -78,9 +79,10 @@ namespace Game.Mechanics
                     .ShowCastRange(selectionSystem.SelectedCharacter, throwableItem.Range);
             }
         }
-        void ShowSkillCastRange()
+        void ShowSkillCastRange(ActiveSkillMixin activeSkillMixin)
         {
-            if (selectionSystem.SelectedSkill.activeMixin is PositionTargetSkillMixin pts)
+            Debug.Log("ShowCastRange");
+            if (activeSkillMixin is PositionTargetSkillMixin pts)
             {
                 if (pts.Rooted)
                 {
@@ -88,10 +90,17 @@ namespace Game.Mechanics
                 }
                 else
                 {
+                    Debug.Log("ShowGridCastRange:");
                     gridGameManager.GetSystem<GridSystem>().ShowCastRange(selectionSystem.SelectedCharacter,
-                        pts.GetRange(selectionSystem.SelectedSkill.Level) + pts.GetCastRangeIncrease(((Unit)selectionSystem.SelectedCharacter).Stats
-                            .BaseAttributes));
+                        pts.GetRange(selectionSystem.SelectedSkill.Level)); //+ pts.GetCastRangeIncrease(((Unit)selectionSystem.SelectedCharacter).Stats
+                          //  .BaseAttributes));
                 }
+            }
+            else if (activeSkillMixin is SingleTargetMixin stm)
+            {
+                stm.ShowTargets((Unit)selectionSystem.SelectedCharacter);
+               // + stm.GetCastRangeIncrease(((Unit)selectionSystem.SelectedCharacter).Stats
+                       // .BaseAttributes));
             }
         }
 
@@ -126,16 +135,40 @@ namespace Game.Mechanics
             return NextState;
         }
 
+        private ActiveSkillMixin activeSkillMixin;
         public void ClickedOnGrid(int x, int y)
         {
-            if (selectedSkill is IPosTargeted pts)
+            if (activeSkillMixin is IPosTargeted psm)
             {
-                PositionTargetClicked(pts , x, y);
+                PositionTargetClicked(psm , x, y);
                
             }
             else if (selectedItem is IPosTargeted throwableItem)
             {
                 PositionTargetClicked(throwableItem, x,y);
+            }
+            else if (activeSkillMixin is SingleTargetMixin stm)
+            {
+                if (gridSystem.Tiles[x, y].GridObject != null &&gridSystem.Tiles[x, y].GridObject is Unit target)
+
+                {
+                    if (stm.CanTarget(selectedUnit, target)&& stm.IsInRange(selectedUnit, target))
+                    {
+                        Debug.Log("Activate SingleTargetMixin");
+                        stm.Activate(selectedUnit,target);
+                        if (selectionSystem.SelectedSkill.activeMixins.Count>1)
+                        {
+                            activeSkillMixin = selectionSystem.SelectedSkill.activeMixins[1];
+                            ShowSkillCastRange(activeSkillMixin);
+                            //selectionSystem.SelectedSkill.activeMixins[1].ShowTargets((Unit)selectionSystem.SelectedCharacter);
+                            // + stm.GetCastRangeIncrease(((Unit)selectionSystem.SelectedCharacter).Stats
+                            // .BaseAttributes));
+                        }
+                    }
+                }
+                
+                
+               
             }
         }
 
@@ -170,11 +203,13 @@ namespace Game.Mechanics
                      {
                          gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
                          gridSystem.HideCast();
-                         if(skill is Skill)
-                            ShowSkillCastRange();
+                         Debug.Log("ShowSkillCastRange:");
+                         if(skill is ActiveSkillMixin s)
+                            ShowSkillCastRange(s);
                          else if(skill is Item)
                              ShowItemCastRange();
-                         gridSystem.ShowCast(skill.Size, skill.TargetArea, skill.EffectType);
+                         Debug.Log("ShowSkillCast");
+                         gridSystem.ShowCast(skill.GetSize(), skill.TargetArea, skill.EffectType);
                      }
 
 
@@ -199,9 +234,9 @@ namespace Game.Mechanics
                      {
                          gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
                          gridSystem.HideCast();
-                         ShowSkillCastRange();
+                         ShowSkillCastRange(((Skill)skill).FirstActiveMixin);
                          gridSystem.ShowRootedCast(selectedUnit.GridComponent.GridPosition.AsVector(),
-                             skill.Size, skill.TargetArea);
+                             skill.GetSize(), skill.TargetArea);
                      }
                  }
                     
@@ -210,7 +245,7 @@ namespace Game.Mechanics
 
         private bool IsInCastRange(int x, int y)
         {
-            if (selectedSkill.activeMixin is PositionTargetSkillMixin pts)
+            if (selectedSkill.FirstActiveMixin is PositionTargetSkillMixin pts)
             {
                 int diff = Math.Abs(selectedUnit.GridComponent.GridPosition.X - x) +
                            Math.Abs(selectedUnit.GridComponent.GridPosition.Y - y);

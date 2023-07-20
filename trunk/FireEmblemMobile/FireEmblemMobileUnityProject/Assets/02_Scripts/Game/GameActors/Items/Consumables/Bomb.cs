@@ -15,11 +15,11 @@ namespace _02_Scripts.Game.GameActors.Items.Consumables
         bool Rooted { get; set; }
         void Activate(Unit selectedUnit, Tile[,] gridSystemTiles, int p2, int p3);
         List<IAttackableTarget> GetAllTargets(Unit selectedUnit, Tile[,] gridSystemTiles, int i, int i1);
-        int Size { get; set; }
+        int GetSize();
         SkillTargetArea TargetArea { get; set; }
         EffectType EffectType { get; set; }
     }
-    interface IThrowableItem:IPosTargeted
+    interface IThrowableItem
     {
         public int Range { get; set; }
         public EffectType EffectType { get; set; } 

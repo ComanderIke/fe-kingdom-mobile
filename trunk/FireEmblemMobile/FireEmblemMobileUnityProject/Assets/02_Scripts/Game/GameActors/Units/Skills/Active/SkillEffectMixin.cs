@@ -10,7 +10,8 @@ namespace Game.GameActors.Units.Skills
         public abstract void Activate(Unit target, int level);
         public abstract void Activate(Tile target, int level);
         public abstract void Activate(List<Unit> targets, int level);
-        
-       
+
+
+
     }
 }

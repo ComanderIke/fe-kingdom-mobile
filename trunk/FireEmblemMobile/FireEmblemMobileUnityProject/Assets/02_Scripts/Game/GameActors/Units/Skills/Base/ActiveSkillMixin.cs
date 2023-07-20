@@ -13,7 +13,8 @@ namespace Game.GameActors.Units.Skills
         // Solution 3) 
         public int[] maxUsesPerLevel;
         public int[] hpCostPerLevel;
-
+        [HideInInspector]public int Uses { get; set; }
+       
         // public ActiveSkillMixin(int[] maxUsesPerLevel, int[] hpCostPerLevel, GameObject animationObject):base()
         // {
         //     this.AnimationObject = animationObject;
