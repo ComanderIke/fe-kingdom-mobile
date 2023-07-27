@@ -15,7 +15,8 @@ namespace Game.GameActors.Units.CharStateEffects
         Burned,
         Poisened,
         Snarred,
-        Slept
+        Slept,
+        Tempted
     }
     [CreateAssetMenu(fileName = "Debuff", menuName = "GameData/Debuff")]
     public class Debuff:BuffDebuffBase
@@ -23,11 +24,23 @@ namespace Game.GameActors.Units.CharStateEffects
         //[SerializeField]private List<PassiveSkillMixin> buffMixins;
         [SerializeField] public DebuffType debuffType;
         [SerializeField] public List<DebuffType> negateTypes;
-        
-        
+
+        public override void Apply(Unit caster, Unit target, int skilllevel)
+        {
+            base.Apply(caster, target, skilllevel);
+            switch (debuffType)
+            {
+                case DebuffType.Tempted:
+                    target.Faction.RemoveUnit(target);
+                    caster.Faction.AddUnit(target);
+                    break;
+                
+            }
+        }
+
         public EffectDescription GetEffectDescription(int level)
         {
-            return new EffectDescription();
+            return new EffectDescription("TODO", "TODO", "TODO");
         }
         public override bool TakeEffect(Unit unit)
         {
@@ -35,6 +48,7 @@ namespace Game.GameActors.Units.CharStateEffects
             {
                 case DebuffType.Frozen: unit.TurnStateManager.UnitTurnFinished(); //unit set phys invulnerable
                     break;
+                
             }
 
             return false;

@@ -22,7 +22,7 @@ namespace LostGrace
                 {
                     instantiatedActiveMixins.Add(Instantiate(active));
                 }
-            return new Blessing(Name, Description, Icon, Tier, maxLevel, instantiatedPassiveMixins, instantiatedActiveMixins, SkillTransferData);
+            return new Blessing(Name, Description, Icon, Tier, maxLevel, instantiatedPassiveMixins, combatSkillMixin==null?null:Instantiate(combatSkillMixin),instantiatedActiveMixins, SkillTransferData);
         }
 
     }

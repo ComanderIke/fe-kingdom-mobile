@@ -16,12 +16,13 @@ namespace Game.GameActors.Units.Skills
         public string Name;
         public string Description;
         public int Tier;
+        public CombatSkillMixin CombatSkillMixin;
         public List<PassiveSkillMixin> passiveMixins;
         public List<ActiveSkillMixin> activeMixins;
         public Unit owner;
         public SkillTransferData skillTransferData;
 
-        public Skill(string Name, string Description, Sprite icon, int tier,int maxLevel, List<PassiveSkillMixin> passiveMixins, List<ActiveSkillMixin> activeMixins, SkillTransferData data)
+        public Skill(string Name, string Description, Sprite icon, int tier,int maxLevel, List<PassiveSkillMixin> passiveMixins, CombatSkillMixin combatSkillMixin, List<ActiveSkillMixin> activeMixins, SkillTransferData data)
         {
             this.Name = Name;
             this.Icon = icon;
@@ -34,7 +35,7 @@ namespace Game.GameActors.Units.Skills
             foreach (var active in activeMixins)
                 active.skill = this;
             this.skillTransferData = data;
-
+            this.CombatSkillMixin = combatSkillMixin;
        
 
             this.maxLevel = maxLevel;
@@ -63,20 +64,25 @@ namespace Game.GameActors.Units.Skills
                 this.level = value;
          
                 //TODO Unbind and rebind all skills (So that multipliers etc will get updated)
-                if (owner != null)
-                {
-                    foreach (var passive in passiveMixins)
-                    {
-                        passive.UnbindFromUnit(owner, this);
-                        passive.BindToUnit(owner, this);
-                    }
-                    foreach (var active in activeMixins)
-                    {
-                        active.UnbindFromUnit(owner,this);
-                        active.BindToUnit(owner, this);
-                    }
-                }
+                Rebind();
 
+            }
+        }
+
+        public void Rebind()
+        {
+            if (owner != null)
+            {
+                foreach (var passive in passiveMixins)
+                {
+                    passive.UnbindFromUnit(owner, this);
+                    passive.BindToUnit(owner, this);
+                }
+                foreach (var active in activeMixins)
+                {
+                    active.UnbindFromUnit(owner,this);
+                    active.BindToUnit(owner, this);
+                }
             }
         }
 
@@ -100,20 +106,21 @@ namespace Game.GameActors.Units.Skills
             return Icon;
         }
         
-        public virtual void BindSkill(Unit unit)
+        public void BindSkill(Unit unit)
         {
-            
+            Debug.Log("BIND SKILL "+Name +" TO " +unit);
             owner = unit;
-            foreach (var passive in passiveMixins)
-            {
-                passive.BindToUnit(owner, this);
-            }
+            Rebind();
         }
-        public virtual void UnbindSkill(Unit unit)
+        public void UnbindSkill(Unit unit)
         {
             foreach (var passive in passiveMixins)
             {
                 passive.UnbindFromUnit(owner,this);
+            }
+            foreach (var active in activeMixins)
+            {
+                active.UnbindFromUnit(owner,this);
             }
             owner = null;
         }
@@ -131,7 +138,7 @@ namespace Game.GameActors.Units.Skills
 
         public virtual Skill Clone()
         {
-            var newSkill = new Skill(Name, Description, Icon, Tier, maxLevel,passiveMixins,activeMixins, skillTransferData);
+            var newSkill = new Skill(Name, Description, Icon, Tier, maxLevel,passiveMixins,CombatSkillMixin,activeMixins, skillTransferData);
             newSkill.level = Level;
             return newSkill;
         }

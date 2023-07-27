@@ -8,18 +8,15 @@ using UnityEngine;
 namespace Game.GameActors.Units.Skills
 {
     [CreateAssetMenu(menuName = "GameData/Skills/Effectmixin/ChainAttack", fileName = "ChainAttackSkillEffect")]
-    public class ChainAttackSkillMixin:SkillEffectMixin
+    public class ChainAttackSkillMixin:UnitTargetSkillEffectMixin
     {
         public int[] bounces;
         public int bounceRange;
         public GameObject animation;
 
-        public override void Activate(Unit target, Unit caster, int level)
-        {
-            throw new System.NotImplementedException();
-        }
+        
 
-        public override void Activate(Unit target, int level)
+        public override void Activate(Unit target,Unit caster, int level)
         {
             var gridSystem = ServiceProvider.Instance.GetSystem<GridSystem>();
             var startposition = target.GridComponent.GridPosition;
@@ -56,21 +53,25 @@ namespace Game.GameActors.Units.Skills
             }
         }
 
+        public override void Deactivate(Unit user, Unit caster, int skillLevel)
+        {
+            throw new System.NotImplementedException();
+        }
+
         private void ActivateChainAttack(List<Unit> targets)
         {
             Debug.Log("Do Chain Attack");
         }
-
-        public override void Activate(Tile target, int level)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void Activate(List<Unit> targets, int level)
-        {
-            throw new System.NotImplementedException();
-        }
-
         
+        public override List<EffectDescription> GetEffectDescription(int level)
+        {
+            return new List<EffectDescription>()
+            {
+                new EffectDescription("Bounces: ", "" + bounces[level],
+                    "" + bounces[level + 1]),
+                new EffectDescription("BounceRange: ", "" + bounceRange,
+                "" + bounceRange)
+            };
+        }
     }
 }

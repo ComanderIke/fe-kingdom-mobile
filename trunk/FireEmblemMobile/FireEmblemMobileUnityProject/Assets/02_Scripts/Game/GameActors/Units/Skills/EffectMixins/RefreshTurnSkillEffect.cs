@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using Game.Grid;
+using LostGrace;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Skills
 {
     [CreateAssetMenu(menuName = "GameData/Skills/Effectmixin/Refresh", fileName = "RefreshSkillEffect")]
-    public class RefreshTurnSkillEffect : SkillEffectMixin
+    public class RefreshTurnSkillEffect : UnitTargetSkillEffectMixin
     {
         public bool RefreshTarget = true;
         public bool RefreshCaster;
@@ -23,26 +24,18 @@ namespace Game.GameActors.Units.Skills
             }
         }
 
-        public override void Activate(Unit target, int level)
+        public override void Deactivate(Unit user, Unit caster, int skillLevel)
         {
-           
-        }
-        public override void Activate(List<Unit> targets, int level)
-        {
-            foreach (var target in targets)
-            {
-                Activate(target, level);
-            }
+            throw new System.NotImplementedException();
         }
 
-      
 
-        public override void Activate(Tile target, int level)
+        public override List<EffectDescription> GetEffectDescription(int level)
         {
-            if (target.GridObject == null)
-                return;
-            if(target.GridObject is Unit u )
-                Activate(u, level);
+            return null;
         }
+
+
+     
     }
 }

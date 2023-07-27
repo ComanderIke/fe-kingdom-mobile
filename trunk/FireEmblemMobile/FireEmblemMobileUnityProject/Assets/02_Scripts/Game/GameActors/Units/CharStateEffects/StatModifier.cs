@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Game.GameActors.Units.Numbers;
 using Game.Mechanics.Battle;
+using LostGrace;
 using UnityEngine;
 
 namespace Game.GameActors.Units.CharStateEffects
@@ -23,6 +24,11 @@ namespace Game.GameActors.Units.CharStateEffects
             bool negativeAttributes = BonusAttributes[level].AsArray().Any(i => i < 0);
             bool negativeStats = BonusStats[level].AsArray().Any(i => i < 0);
             return negativeAttributes||negativeStats;
+        }
+
+        public EffectDescription GetEffectDescription(int i)
+        {
+            return new EffectDescription("TODO", "TODO", "TODO");
         }
     }
 }

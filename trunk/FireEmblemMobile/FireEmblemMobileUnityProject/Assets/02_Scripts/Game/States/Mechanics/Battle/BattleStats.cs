@@ -31,7 +31,7 @@ namespace Game.Mechanics.Battle
         private const int AGILITY_TO_DOUBLE = 5;
 
         private readonly IBattleActor owner;
-
+        private bool preventDoubleAttacks = false;
         public BonusStats BonusStats { get; set; }
         public List<ImmunityType> Immunities { get; set; }
         public BonusAttackStats BonusAttackStats { get; set; }
@@ -83,6 +83,8 @@ namespace Game.Mechanics.Battle
 
         public bool CanDoubleAttack(IBattleActor c)
         {
+            if (preventDoubleAttacks)
+                return false;
             return owner.BattleComponent.BattleStats.GetAttackSpeed() >= c.BattleComponent.BattleStats.GetAttackSpeed() + AGILITY_TO_DOUBLE;
         }
 
@@ -300,6 +302,12 @@ namespace Game.Mechanics.Battle
         public void AddDamageInfluencer(IDamageInfluencer attackBonusBlessing)
         {
             throw new NotImplementedException();
+        }
+
+       
+        public void PreventDoubleAttacks()
+        {
+            preventDoubleAttacks = true;
         }
     }
 }

@@ -14,6 +14,7 @@ namespace Game.GameActors.Units.Skills
         public string Name;
         public int Tier;
         public List<PassiveSkillMixin> passiveMixins;
+        public CombatSkillMixin combatSkillMixin;
         public List<ActiveSkillMixin> activeMixins;
         public int maxLevel = 5;
 
@@ -32,9 +33,9 @@ namespace Game.GameActors.Units.Skills
                 {
                     instantiatedActiveMixins.Add(Instantiate(active));
                 }
-          
-           
-            return new Skill(Name, Description, Icon, Tier,maxLevel, instantiatedPassiveMixins, instantiatedActiveMixins,SkillTransferData);
+
+
+            return new Skill(Name, Description, Icon, Tier,maxLevel, instantiatedPassiveMixins,combatSkillMixin==null?null:Instantiate(combatSkillMixin), instantiatedActiveMixins,SkillTransferData);
         }
     }
 }

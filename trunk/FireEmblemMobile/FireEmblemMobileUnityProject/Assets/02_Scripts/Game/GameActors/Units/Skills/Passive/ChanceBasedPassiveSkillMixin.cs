@@ -41,12 +41,5 @@ namespace Game.GameActors.Units.Skills.Passive
                 list.Add(new EffectDescription("Scale:", ""+scalingType, ""+scalingType));
             return list;
         }
-        protected void OnValidate()
-        {
-            if (procChance == null||procChance.Length != MAXLEVEL)
-            {
-                Array.Resize(ref procChance, MAXLEVEL);
-            }
-        }
     }
 }

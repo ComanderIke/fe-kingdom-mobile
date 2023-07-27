@@ -10,7 +10,7 @@ namespace LostGrace
 
     public class Curse : Skill
     {
-        public Curse(string Name, string Description, Sprite icon, int tier,int maxLevel, List<PassiveSkillMixin> passiveMixins, List<ActiveSkillMixin> activeMixins, SkillTransferData data) : base(Name, Description, icon, tier,maxLevel, passiveMixins, activeMixins,data)
+        public Curse(string Name, string Description, Sprite icon, int tier,int maxLevel, List<PassiveSkillMixin> passiveMixins,CombatSkillMixin combatSkillMixin, List<ActiveSkillMixin> activeMixins, SkillTransferData data) : base(Name, Description, icon, tier,maxLevel, passiveMixins, combatSkillMixin, activeMixins,data)
         {
         }
     }

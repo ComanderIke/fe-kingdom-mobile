@@ -3,47 +3,52 @@ using Game.GameActors.Units.CharStateEffects;
 using Game.GameActors.Units.Numbers;
 using Game.Grid;
 using Game.Mechanics;
+using LostGrace;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Skills
 {
     [CreateAssetMenu(menuName = "GameData/Skills/Effectmixin/Damage", fileName = "DamageSkillEffect")]
-    public class DamageSkillEffectMixin : SkillEffectMixin
+    public class DamageSkillEffectMixin : UnitTargetSkillEffectMixin
     {
         public DamageType damageType;
         public int []dmg;
         public AttributeType scalingType;
         public float[] scalingcoeefficient;
 
+        public bool instantDamage = true;
         public override void Activate(Unit target, Unit caster, int level)
         {
             int baseDamageg = dmg[level];
 
             int scalingdmg = (int)(caster.Stats.CombinedAttributes().GetAttributeStat(scalingType) * scalingcoeefficient[level]);
-            
-            target.InflictFixedDamage(caster, baseDamageg+scalingdmg, damageType);
-        }
 
-        public override void Activate(Unit target, int level)
-        {
-           
-        }
-        public override void Activate(List<Unit> targets, int level)
-        {
-            foreach (var target in targets)
+            if (instantDamage)
             {
-                Activate(target, level);
+                target.InflictFixedDamage(caster, baseDamageg + scalingdmg, damageType);
             }
+            else
+            {
+                caster.Stats.BonusStats.Attack += baseDamageg + scalingdmg;
+            }
+
         }
 
-       
-
-        public override void Activate(Tile target, int level)
+        public override void Deactivate(Unit user, Unit caster, int skillLevel)
         {
-            if (target.GridObject == null)
-                return;
-            if(target.GridObject is Unit u )
-                Activate(u, level);
+            throw new System.NotImplementedException();
         }
+
+
+        public override List<EffectDescription> GetEffectDescription(int level)
+        {
+            return new List<EffectDescription>()
+            {
+                new EffectDescription("Damage: ", "" + dmg[level],
+                    "" + dmg[level + 1])
+            };
+        }
+
+      
     }
 }

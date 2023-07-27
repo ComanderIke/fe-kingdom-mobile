@@ -18,9 +18,9 @@ namespace Game.GameActors.Units.Skills.Passive
 
     public enum BattleEvent
     {
+        DuringCombat,
         AfterCombat,
         BeforeCombat,
-        DuringCombat,
         InitiateCombat,
         InitiatedOnCombat
     }
@@ -28,11 +28,12 @@ namespace Game.GameActors.Units.Skills.Passive
     
     public enum CombatEffect
     {
+        None,
         Heal,
         Galeforce,
         Buff,
         Lunge,
-        None
+       
     }
     [Serializable]
     [CreateAssetMenu(menuName = "GameData/Skills/Passive/Combat", fileName = "CombatMixin")]

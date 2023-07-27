@@ -1,23 +1,24 @@
 ﻿using System.Collections.Generic;
 using Game.GameActors.Units.CharStateEffects;
 using Game.Grid;
+using LostGrace;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Skills
 {
     [CreateAssetMenu(menuName = "GameData/Skills/Effectmixin/ApplyBuff", fileName = "ApplyBuffSkillEffect")]
-    public class ApplyBuffSkillEffectMixin : SkillEffectMixin
+    public class ApplyBuffSkillEffectMixin : UnitTargetSkillEffectMixin
     {
+        public float[] applyChance;
         public Buff appliedBuff;
         public StatModifier AppliedStatModifier;
         public Debuff appliedDebuff;
 
-        public override void Activate(Unit target, Unit caster, int level)
-        {
-            throw new System.NotImplementedException();
-        }
+       
 
-        public override void Activate(Unit target, int level)
+        
+
+        public override void Activate(Unit target,Unit caster, int level)
         {
             if (appliedBuff != null)
                 target.StatusEffectManager.AddBuff(Instantiate(appliedBuff));
@@ -26,22 +27,23 @@ namespace Game.GameActors.Units.Skills
             if (AppliedStatModifier!= null)
                 target.StatusEffectManager.AddStatModifier(Instantiate(AppliedStatModifier));
         }
-        public override void Activate(List<Unit> targets, int level)
+
+        public override void Deactivate(Unit user, Unit caster, int skillLevel)
         {
-            foreach (var target in targets)
+            throw new System.NotImplementedException();
+        }
+
+        public override List<EffectDescription> GetEffectDescription(int level)
+        {
+            var buff=appliedBuff.GetEffectDescription(level);
+            var debuff=appliedDebuff.GetEffectDescription(level);
+            var statModifier=AppliedStatModifier.GetEffectDescription(level);
+            return new List<EffectDescription>()
             {
-                Activate(target, level);
-            }
+                buff, debuff, statModifier
+            };
         }
 
-        
-
-        public override void Activate(Tile target, int level)
-        {
-            if (target.GridObject == null)
-                return;
-            if(target.GridObject is Unit u )
-                Activate(u, level);
-        }
+       
     }
 }

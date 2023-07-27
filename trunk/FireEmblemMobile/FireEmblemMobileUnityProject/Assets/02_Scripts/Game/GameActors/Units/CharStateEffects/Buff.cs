@@ -24,7 +24,7 @@ namespace Game.GameActors.Units.CharStateEffects
 
         public EffectDescription GetEffectDescription(int level)
         {
-            return new EffectDescription();
+            return new EffectDescription("TODO", "TODO", "TODO");
         }
 
        

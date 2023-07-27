@@ -156,7 +156,7 @@ namespace Game.GameActors.Units
             this.name = name;
             SkillManager = skillManager;
             SkillManager.SkillPointsUpdated += SkillPointsUpdated;
-            SkillManager.Init();
+           
             ExperienceManager = experienceManager;
             InitExperienceManager();
             TurnStateManager = new TurnStateManager();
@@ -173,6 +173,7 @@ namespace Game.GameActors.Units
                 foreach (int r in equippedWeapon.AttackRanges)
                     Stats.AttackRanges.Add(r);
             }
+            SkillManager.Init(this);
 
         }
 

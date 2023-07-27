@@ -15,7 +15,7 @@ namespace Game.GameActors.Units.Humans
         public Action<int> SkillPointsUpdated;
         [SerializeField] private List<SkillBp> startSkills;
         private List<Skill> skills;
-
+        private Unit unit;
         public int maxSkillCount = 5;
 
         public void AddStartSkills()
@@ -57,7 +57,7 @@ namespace Game.GameActors.Units.Humans
 
         public List<Skill> ActiveSkills
         {
-            get { return skills.FindAll(s => s.activeMixins.Count>0); }
+            get { return Skills.FindAll(s => s.activeMixins.Count>0); }
         }
 
        // [SerializeField]
@@ -94,41 +94,20 @@ namespace Game.GameActors.Units.Humans
         }
         public void LearnSkill(Skill skill)
         {
+            skill.BindSkill(unit);
             Skills.Add(skill);
             OnSkillsChanged?.Invoke();
         }
-        // public void LearnSkillEntry(SkillTreeEntry clickedSkill)
-        // {
-        //     if (SkillPoints >= 1)
-        //     {
-        //         if (Skills.Contains(clickedSkill.Skill))
-        //         {
-        //             Skills.Find(s => clickedSkill.Skill.Name == s.Name).Level++;
-        //         }
-        //         else
-        //         {
-        //             Skills.Add((clickedSkill.Skill));
-        //             
-        //             clickedSkill.Skill.Level++;
-        //
-        //         }
-        //
-        //         SkillPoints--;
-        //     }
-        //     else
-        //     {
-        //         Debug.LogError("Not enough SkillPoints to learn new skill!");
-        //     }
-        // }
-      
-        public void Init()
-        {
-            // if(SkillBuildTrees!=null)
-            //     foreach(var skillTree in SkillBuildTrees)
-            //     {
-            //         skillTree.Init();
-            //     }
 
+        
+     
+        public void Init(Unit u)
+        {
+            this.unit = u;
+            foreach (var skill in Skills)
+            {
+                skill.BindSkill(u);
+            }
         }
 
         public void RemoveSkill(Skill skill)

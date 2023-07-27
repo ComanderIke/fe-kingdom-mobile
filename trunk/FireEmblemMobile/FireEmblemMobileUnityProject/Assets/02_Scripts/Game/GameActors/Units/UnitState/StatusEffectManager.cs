@@ -62,6 +62,15 @@ namespace Game.GameActors.Units
             Debuffs.Remove(debuff);
             OnStatusEffectRemoved?.Invoke(unit, debuff);
         }
+        public void RemoveDebuff(DebuffType debuffType)
+        {
+            for (int i = Debuffs.Count - 1; i >= 0; i--)
+            {
+                if(Debuffs[i].debuffType == debuffType)
+                    RemoveDebuff(Debuffs[i]);
+            }
+        }
+
 
         public void Update()
         {

@@ -28,6 +28,7 @@ namespace Game.GameActors.Units.Skills
         [field: SerializeField] private int[] range;
         [field: SerializeField] private int[] size;
         [SerializeField] private bool jump;
+        [SerializeField] private int minRange = 0;
         [field:SerializeField]public SkillTargetArea TargetArea { get; set; }
         public EffectType EffectType { get; set; }
 
@@ -35,28 +36,14 @@ namespace Game.GameActors.Units.Skills
         [field:SerializeField]public bool Rooted { get; set; }
         
         public int GetRange(int level)  => range[level];
+        public int GetMinRange(int level)  => minRange;
         public int GetSize(int level)  => size[level];
         public int GetSize()  => size[skill.Level];
 
 
-        private void OnEnable()
-        {
-            OnValidate();
-        }
+       
 
-        void OnValidate()
-        {
         
-            if (size == null||size.Length != MAXLEVEL)
-            {
-                Array.Resize(ref size, MAXLEVEL);
-            }
-            if (range == null||range.Length != MAXLEVEL)
-            {
-                Array.Resize(ref range, MAXLEVEL);
-            }
-            base.OnValidate();
-        }
 
         public bool CanTarget(Tile t)
         {
@@ -79,7 +66,12 @@ Debug.Log("ACTIVATE POS TARGET SKILL MIXIN");
                         GameObject.Instantiate(AnimationObject, tiles[xPosition, yPosition].GetTransform().position, Quaternion.identity, null);
                     foreach (SkillEffectMixin effect in SkillEffects)
                     {
-                        effect.Activate(tiles[x,y], skill.Level);
+                        if(effect is TileTargetSkillEffectMixin tileTargetSkillEffectMixin)
+                            tileTargetSkillEffectMixin.Activate(tiles[x,y], skill.Level);
+                        else if (effect is UnitTargetSkillEffectMixin unitTargetSkillEffectMixin)
+                        {
+                            unitTargetSkillEffectMixin.Activate((Unit)tiles[x,y].GridObject, user,skill.Level);
+                        }
                     }
                 }
             }

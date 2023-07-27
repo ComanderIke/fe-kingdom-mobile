@@ -12,7 +12,11 @@ namespace Game.GameActors.Units.Skills
         {
             foreach (var effect in effectMixins)
             {
-                effect.Activate(user, skill.Level);
+                if (effect is SelfTargetSkillEffectMixin unitTargetSkillEffectMixin)
+                {
+                    unitTargetSkillEffectMixin.Activate(user, skill.Level);
+                }
+                
             }
         }
 

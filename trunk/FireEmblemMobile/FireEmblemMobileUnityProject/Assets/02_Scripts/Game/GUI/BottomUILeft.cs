@@ -41,7 +41,7 @@ namespace LostGrace
         [SerializeField] private Transform skillContainer;
         [SerializeField] private GameObject skillprefab;
         [SerializeField] private GameObject activeSkillprefab;
-
+        [SerializeField] private GameObject combatSkillprefab;
         
 
         public void Show(Unit unit)
@@ -80,7 +80,12 @@ namespace LostGrace
             skillContainer.DeleteAllChildren();
             foreach (var skill in unit.SkillManager.Skills)
             {
-                var go =Instantiate(skill.activeMixins.Count>0?activeSkillprefab:skillprefab, skillContainer);
+                var prefab = skillprefab;
+                if (skill.activeMixins.Count > 0)
+                    prefab = activeSkillprefab;
+                else if (skill.CombatSkillMixin != null)
+                    prefab = combatSkillprefab;
+                var go =Instantiate(prefab, skillContainer);
                 var skillUI =  go.GetComponent<SkillUI>();
                skillUI.SetSkill(skill, true);
                skillUI.OnClicked += ActiveSkillClicked;

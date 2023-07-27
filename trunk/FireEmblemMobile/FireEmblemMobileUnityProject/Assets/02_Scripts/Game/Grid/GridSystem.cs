@@ -158,7 +158,7 @@ namespace Game.Map
             NodeHelper.Reset();
         }
 
-        public void ShowCastRange(IGridActor character, int castRange)
+        public void ShowCastRange(IGridActor character, int castRange, int minRange)
         {
             HideMoveRange();
             Debug.Log("AFter HideMoveRange");
@@ -169,7 +169,7 @@ namespace Game.Map
                 {
                     if (i == 0 && j == 0)
                         continue;
-                    if (i + j <= castRange)
+                    if (i + j <= castRange&& i+j >=minRange)
                     {
                         var pos = characterPos + new Vector2(i, j);
                         ShowCastRange(pos,character.Faction.Id);

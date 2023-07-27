@@ -24,22 +24,10 @@ namespace Game.GameActors.Units.Skills
         // }
         private void OnEnable()
         {
-            OnValidate();
+           
         }
 
-        protected void OnValidate()
-        {
-            if (maxUsesPerLevel == null||maxUsesPerLevel.Length != MAXLEVEL)
-            {
-                Array.Resize(ref maxUsesPerLevel, MAXLEVEL);
-            }
-            if (hpCostPerLevel == null||hpCostPerLevel.Length != MAXLEVEL)
-            {
-                Array.Resize(ref hpCostPerLevel, MAXLEVEL);
-            }
-            
-            
-        }
+       
         public int GetMaxUses(int level)
         {
             return maxUsesPerLevel[level];

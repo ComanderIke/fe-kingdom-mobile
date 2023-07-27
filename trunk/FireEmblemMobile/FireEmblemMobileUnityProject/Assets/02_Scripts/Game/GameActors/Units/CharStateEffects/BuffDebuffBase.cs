@@ -9,7 +9,7 @@ namespace Game.GameActors.Units.CharStateEffects
 
         protected int level;
 
-        public void ApplyBuff( int skilllevel)
+        public virtual void Apply(Unit caster, Unit target, int skilllevel)
         {
             this.level = skilllevel;
         }

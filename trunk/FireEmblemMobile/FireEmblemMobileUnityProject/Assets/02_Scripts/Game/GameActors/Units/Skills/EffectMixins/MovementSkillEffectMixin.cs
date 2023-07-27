@@ -4,12 +4,13 @@ using Game.GameInput;
 using Game.Grid;
 using Game.Manager;
 using Game.Map;
+using LostGrace;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Skills
 {
     [CreateAssetMenu(menuName = "GameData/Skills/Effectmixin/Movement", fileName = "MovementSkillEffect")]
-    public class MovementSkillEffectMixin : SkillEffectMixin
+    public class MovementSkillEffectMixin : UnitTargetSkillEffectMixin
     {
         public int targetMove;
         public int selfMove;
@@ -87,6 +88,11 @@ namespace Game.GameActors.Units.Skills
             }
         }
 
+        public override void Deactivate(Unit user, Unit caster, int skillLevel)
+        {
+            throw new System.NotImplementedException();
+        }
+
         private void MoveUnit(Unit unit, Vector2 direction)
         {
             var gridSystem= ServiceProvider.Instance.GetSystem<GridSystem>();
@@ -95,27 +101,12 @@ namespace Game.GameActors.Units.Skills
             if(!gridSystem.IsOutOfBounds(newPosition)&&gridSystem.GridLogic.IsTileFree(newPosition.x, newPosition.y))
                 gridSystem.SetUnitPosition(unit, newPosition.x,newPosition.y);
         }
-        public override void Activate(Unit target, int level)
-        {
-            
-        }
-        public override void Activate(List<Unit> targets, int level)
-        {
-            foreach (var target in targets)
-            {
-                Activate(target, level);
-            }
-        }
-
       
-
-        public override void Activate(Tile target, int level)
+        public override List<EffectDescription> GetEffectDescription(int level)
         {
-            if (target.GridObject == null)
-                return;
-            if(target.GridObject is Unit u )
-                Activate(u, level);
+            return null;
         }
+        
     }
 
     public class Vector2int

@@ -12,6 +12,7 @@ namespace LostGrace
     {
         [SerializeField] private GameObject skillButtonPrefab;
         [SerializeField] private GameObject activeSkillButtonPrefab;
+        [SerializeField] private GameObject combatSkillButtonPrefab;
    
 
         private List<SkillUI> instantiatedButtons;
@@ -31,7 +32,12 @@ namespace LostGrace
 
         void InstantiateSkill(Skill skill, bool showDeleteIfFull)
         {
-            var go = Instantiate(skill.activeMixins.Count > 0?activeSkillButtonPrefab:skillButtonPrefab, transform);
+            var prefab = skillButtonPrefab;
+            if (skill.activeMixins.Count > 0)
+                prefab = activeSkillButtonPrefab;
+            else if (skill.CombatSkillMixin != null)
+                prefab = combatSkillButtonPrefab;
+            var go = Instantiate(prefab, transform);
             var skillUI = go.GetComponent<SkillUI>();
             instantiatedButtons.Add(skillUI);
             skillUI.SetSkill(skill, false);

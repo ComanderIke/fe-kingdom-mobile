@@ -76,7 +76,7 @@ namespace Game.Mechanics
             if (selectionSystem.SelectedItem is IThrowableItem throwableItem)
             {
                 gridGameManager.GetSystem<GridSystem>()
-                    .ShowCastRange(selectionSystem.SelectedCharacter, throwableItem.Range);
+                    .ShowCastRange(selectionSystem.SelectedCharacter, throwableItem.Range, 0);
             }
         }
         void ShowSkillCastRange(ActiveSkillMixin activeSkillMixin)
@@ -92,7 +92,7 @@ namespace Game.Mechanics
                 {
                     Debug.Log("ShowGridCastRange:");
                     gridGameManager.GetSystem<GridSystem>().ShowCastRange(selectionSystem.SelectedCharacter,
-                        pts.GetRange(selectionSystem.SelectedSkill.Level)); //+ pts.GetCastRangeIncrease(((Unit)selectionSystem.SelectedCharacter).Stats
+                        pts.GetRange(selectionSystem.SelectedSkill.Level),pts.GetMinRange(selectionSystem.SelectedSkill.Level)); //+ pts.GetCastRangeIncrease(((Unit)selectionSystem.SelectedCharacter).Stats
                           //  .BaseAttributes));
                 }
             }

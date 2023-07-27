@@ -75,11 +75,15 @@ namespace Game.States
                     // }
                     // else
                     // {
-                        var unit = spawn.GetUnit();
-                        faction.AddUnit(unit);
-                        unit.AIComponent.WeightSet = spawn.AIWeightSet;
+                    var unit = spawn.GetUnit();
+                    unit.AIComponent.WeightSet = spawn.AIWeightSet;
+                    faction.AddUnit(unit);
+                    SpawnUnit(faction, unit, spawn.X, spawn.Y);
+                     
+                    
+                       
 
-                        unitInstantiator.PlaceCharacter(unit, spawn.X, spawn.Y);
+                       // unitInstantiator.PlaceCharacter(unit, spawn.X, spawn.Y);
                     //}
                 }
             }

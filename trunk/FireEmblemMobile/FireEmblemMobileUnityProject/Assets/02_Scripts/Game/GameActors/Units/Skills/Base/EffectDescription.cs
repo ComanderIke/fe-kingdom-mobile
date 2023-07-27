@@ -3,7 +3,7 @@
 namespace LostGrace
 {
     [Serializable]
-    public struct EffectDescription
+    public class EffectDescription
     {
         public string label;
         public string value;
