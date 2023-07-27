@@ -140,7 +140,8 @@ namespace Game.GUI
             this.gameObject.SetActive(true);
             UpdateValues();
             turnCount.SetActive(false);
-           
+         
+
         }
         
         public void Show(float yPos)

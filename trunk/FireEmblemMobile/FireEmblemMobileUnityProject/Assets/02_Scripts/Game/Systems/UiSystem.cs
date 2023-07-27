@@ -22,7 +22,9 @@ namespace Game.GUI
         public IObjectiveUI objectiveUI;
         public IUnitPlacementUI unitPlacementUI;
         public Canvas MainUICanvas;
-        
+
+        public static event Action OnShowAttackPreview;
+        public static event Action OnHideAttackPreview;
         //public UIFactionCharacterCircleController characterCircleController;
         public UIPartyCharacterCircleController characterCircleController;
         public void Init()
@@ -91,7 +93,7 @@ namespace Game.GUI
         }
         private void ShowAttackPreviewUI(BattlePreview battlePreview)
         {
-         
+            OnShowAttackPreview?.Invoke();
             if (battlePreview.Attacker is Unit attacker)
             {
                 if (battlePreview.Defender is Unit defender)
@@ -108,6 +110,7 @@ namespace Game.GUI
 
         private void HideAttackPreviewUI()
         {
+            OnHideAttackPreview?.Invoke();
             attackPreviewUI.Hide();
         }
         

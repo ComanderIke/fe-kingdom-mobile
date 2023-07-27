@@ -29,6 +29,8 @@ namespace LostGrace
         [SerializeField] private Color blessingBackgroundColor;
         [SerializeField] private Color curseBackgroundColor;
         [SerializeField] private GameObject deleteButton;
+        [SerializeField] private GameObject selectedVfx;
+        [SerializeField] private GameObject selectableVfx;
         public void SetSkill(Skill skill, bool big)
         {
             deleteButton.SetActive(false);
@@ -68,6 +70,26 @@ namespace LostGrace
          
         }
 
+        public void Select()
+        {
+            selectableVfx.gameObject.SetActive(false);
+            selectedVfx.gameObject.SetActive(true);
+        }
+        public void Deselect()
+        {
+            selectableVfx.gameObject.SetActive(false);
+            selectedVfx.gameObject.SetActive(false);
+        }
+        public void ShowSelectable()
+        {
+            selectableVfx.gameObject.SetActive(true);
+            selectedVfx.gameObject.SetActive(false);
+        }
+        public void HideSelectable()
+        {
+            selectableVfx.gameObject.SetActive(false);
+            selectedVfx.gameObject.SetActive(false);
+        }
         public void Clicked()
         {
             
@@ -94,5 +116,7 @@ namespace LostGrace
         }
         public event Action<SkillUI> OnDeleteClicked;
         public event Action<SkillUI> OnClicked;
+
+        
     }
 }

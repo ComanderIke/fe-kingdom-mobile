@@ -42,8 +42,47 @@ namespace LostGrace
         [SerializeField] private GameObject skillprefab;
         [SerializeField] private GameObject activeSkillprefab;
         [SerializeField] private GameObject combatSkillprefab;
-        
 
+
+        private void Start()
+        {
+            UiSystem.OnShowAttackPreview += ShowSelectableCombatSkills;
+            UiSystem.OnHideAttackPreview += HideSelectableCombatSkills;
+        }
+
+        private void OnDestroy()
+        {
+            UiSystem.OnShowAttackPreview -= ShowSelectableCombatSkills;
+            UiSystem.OnHideAttackPreview -= HideSelectableCombatSkills;
+        }
+
+        private void HideSelectableCombatSkills()
+        {
+            foreach (var skillUI in instantiatedSkills)
+            {
+                if (skillUI.Skill.CombatSkillMixin != null)
+                {
+                    skillUI.HideSelectable();
+                }
+            }
+        }
+        private void ShowSelectableCombatSkills()
+        {
+            foreach (var skillUI in instantiatedSkills)
+            {
+                if (skillUI.Skill.CombatSkillMixin != null)
+                {
+                    skillUI.ShowSelectable();
+                }
+                else
+                {
+                    skillUI.HideSelectable();
+                }
+            }
+        }
+
+        
+        private List<SkillUI> instantiatedSkills;
         public void Show(Unit unit)
         {
             base.Show();
@@ -78,6 +117,7 @@ namespace LostGrace
             critavo.text = ""+unit.BattleComponent.BattleStats.GetCritAvoid();
             mdef.text = ""+unit.BattleComponent.BattleStats.GetFaithResistance();
             skillContainer.DeleteAllChildren();
+            instantiatedSkills = new List<SkillUI>();
             foreach (var skill in unit.SkillManager.Skills)
             {
                 var prefab = skillprefab;
@@ -89,8 +129,11 @@ namespace LostGrace
                 var skillUI =  go.GetComponent<SkillUI>();
                skillUI.SetSkill(skill, true);
                skillUI.OnClicked += ActiveSkillClicked;
+               instantiatedSkills.Add(skillUI);
 
             }
+
+           
         }
 
         public void CombatItemClicked(UICombatItemSlot  clickedCombatItemUI)
