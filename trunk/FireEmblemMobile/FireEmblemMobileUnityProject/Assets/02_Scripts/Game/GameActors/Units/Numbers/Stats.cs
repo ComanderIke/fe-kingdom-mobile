@@ -58,6 +58,7 @@ namespace Game.GameActors.Units.Numbers
             stats.BaseAttributes = new Attributes(BaseAttributes);
             stats.BonusAttributes = new Attributes(BonusAttributes);
             stats.Mov = Mov;
+            stats.BonusStats = new BonusStats(BonusStats);
            
             return stats;
         }

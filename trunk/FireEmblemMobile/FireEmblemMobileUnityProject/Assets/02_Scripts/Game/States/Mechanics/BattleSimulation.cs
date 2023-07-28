@@ -220,7 +220,7 @@ namespace Game.Mechanics
         {
             this.certainHit = certainHit;
 
-
+            Debug.Log("START BATTLE: ATTACKERHIT: " +Attacker.BattleComponent.BattleStats.GetHitAgainstTarget(Defender));
             if (continuos)
             {
                 int cnt = 0;
