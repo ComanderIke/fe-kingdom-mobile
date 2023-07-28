@@ -25,13 +25,15 @@ namespace Game.GameActors.Units.Skills
             if(passiveMixins!=null)
                 foreach (var passive in passiveMixins)
                 {
-                    instantiatedPassiveMixins.Add(Instantiate(passive));
+                    if(passive!=null)
+                        instantiatedPassiveMixins.Add(Instantiate(passive));
                 }
             var instantiatedActiveMixins = new List<ActiveSkillMixin>();
             if(activeMixins!=null)
                 foreach (var active in activeMixins)
                 {
-                    instantiatedActiveMixins.Add(Instantiate(active));
+                    if(active!=null)
+                        instantiatedActiveMixins.Add(Instantiate(active));
                 }
 
 

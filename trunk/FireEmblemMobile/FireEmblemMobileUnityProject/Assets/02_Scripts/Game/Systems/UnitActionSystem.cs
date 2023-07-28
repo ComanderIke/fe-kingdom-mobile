@@ -24,6 +24,7 @@ namespace Game.Mechanics
 
         public delegate void OnCheckAttackPreviewEvent(BattlePreview battlePreview);
         public static event OnCheckAttackPreviewEvent OnCheckAttackPreview;
+        public static event OnCheckAttackPreviewEvent OnUpdateAttackPreview;
 
         #endregion
 
@@ -154,8 +155,20 @@ namespace Game.Mechanics
             var mCc = new AttackCommand(attacker, target);
             currentActions.Enqueue(mCc);
         }
+        public void UpdateAttackpreview()
+        {
+            var preview = GridGameManager.Instance.GetSystem<BattleSystem>().GetBattlePreview(currentBattleActor, currentAttackedTarget, currentAttackPosition);
+            OnUpdateAttackPreview?.Invoke(preview);
+        }
+
+        private IBattleActor currentBattleActor;
+        private IAttackableTarget currentAttackedTarget;
+        private GridPosition currentAttackPosition;
         public void CheckAttackPreview(IBattleActor u, IAttackableTarget target, GridPosition attackPosition)
         {
+            this.currentAttackPosition = attackPosition;
+            this.currentBattleActor = u;
+            this.currentAttackedTarget = target;
             var preview = GridGameManager.Instance.GetSystem<BattleSystem>().GetBattlePreview(u, target, attackPosition);
           
             OnCheckAttackPreview?.Invoke(preview);
@@ -178,5 +191,7 @@ namespace Game.Mechanics
             OnAllCommandsFinished = null;
             OnUndo = null;
         }
+
+       
     }
 }

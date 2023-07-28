@@ -26,6 +26,7 @@ namespace Game.GameActors.Units.Numbers
         {
             BaseAttributes = new Attributes();
             BonusAttributes = new Attributes();
+            BonusStats = new BonusStats();
             AttackRanges = new List<int>();
         }
 

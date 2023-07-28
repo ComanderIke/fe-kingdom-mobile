@@ -7,6 +7,8 @@ using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
 using Game.GameInput;
 using Game.GUI;
+using Game.Manager;
+using Game.Mechanics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -56,8 +58,11 @@ namespace LostGrace
             UiSystem.OnHideAttackPreview -= HideSelectableCombatSkills;
         }
 
+        private bool canSelectCombatSkillsRightNow = false;
         private void HideSelectableCombatSkills()
         {
+            canSelectCombatSkillsRightNow = false;
+            selectedCombatSkill = null;
             foreach (var skillUI in instantiatedSkills)
             {
                 if (skillUI.Skill.CombatSkillMixin != null)
@@ -66,13 +71,20 @@ namespace LostGrace
                 }
             }
         }
+
+        
+
+        private SkillUI selectedCombatSkill;
         private void ShowSelectableCombatSkills()
         {
+            canSelectCombatSkillsRightNow = true;
+            selectedCombatSkill = null;
             foreach (var skillUI in instantiatedSkills)
             {
                 if (skillUI.Skill.CombatSkillMixin != null)
                 {
                     skillUI.ShowSelectable();
+                    
                 }
                 else
                 {
@@ -128,7 +140,7 @@ namespace LostGrace
                 var go =Instantiate(prefab, skillContainer);
                 var skillUI =  go.GetComponent<SkillUI>();
                skillUI.SetSkill(skill, true);
-               skillUI.OnClicked += ActiveSkillClicked;
+               skillUI.OnClicked += SkillClicked;
                instantiatedSkills.Add(skillUI);
 
             }
@@ -144,15 +156,55 @@ namespace LostGrace
             ToolTipSystem.Show((Item)combatItem.item, clickedCombatItemUI.transform.position);
             useItemDialogController.Show((Item)combatItem.item,()=>new GameplayCommands().SelectItem((Item)combatItem.item));
         }
-        public void ActiveSkillClicked(SkillUI skillUI)
+        public void SkillClicked(SkillUI skillUI)
         {
          
            
             Debug.Log("CLICKED Skill: " +skillUI.Skill);
             ToolTipSystem.Show(skillUI.Skill, skillUI.transform.position);
-            if(skillUI.Skill.activeMixins.Count>0)
-                useSkillDialogController.Show(skillUI.Skill,()=>new GameplayCommands().SelectSkill(skillUI.Skill));
+            if (skillUI.Skill.activeMixins.Count > 0)
+            {
+                useSkillDialogController.Show(skillUI.Skill, () => new GameplayCommands().SelectSkill(skillUI.Skill));
+            }
+            else if (skillUI.Skill.CombatSkillMixin != null)
+            {
+                Debug.Log("CombatSkill Clicked!");
+                if (canSelectCombatSkillsRightNow)
+                {
+                    Debug.Log("Can Select Right now");
+                    if (selectedCombatSkill == skillUI)
+                    {
+                        Debug.Log("Deselect SKILL "+ skillUI.Skill.Name);
+                        skillUI.Deselect();
+                        skillUI.ShowSelectable();
+                        selectedCombatSkill = null;
+                    }
+                    else
+                    {
+                        SelectSkill(skillUI);
+                    }
 
+                    
+                }
+            }
+
+        }
+
+        public void SelectSkill(SkillUI skillUI)
+        {
+            Debug.Log("SELECT SKILL "+ skillUI.Skill.Name);
+            if (selectedCombatSkill != null)
+            {
+                selectedCombatSkill.Deselect();
+                selectedCombatSkill.ShowSelectable();
+            }
+            skillUI.Select();
+            selectedCombatSkill = skillUI;
+           // skillUI.Skill.CombatSkillMixin.ActivateForNextCombat(skillUI.Skill.owner, null);
+            skillUI.Skill.owner.Stats.BonusStats.Crit += 50;
+            skillUI.Skill.owner.Stats.BonusStats.Attack += 50;
+            skillUI.Skill.owner.Stats.BonusStats.Hit += 50;
+            ServiceProvider.Instance.GetSystem<UnitActionSystem>().UpdateAttackpreview();
         }
     }
 }

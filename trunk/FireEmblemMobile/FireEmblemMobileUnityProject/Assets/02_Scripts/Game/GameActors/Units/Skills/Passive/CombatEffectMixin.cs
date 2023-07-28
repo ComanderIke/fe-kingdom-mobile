@@ -51,12 +51,12 @@ namespace Game.GameActors.Units.Skills.Passive
         private void Deactivate(Unit unit)
         {
             unit.Stats.BonusAttributes -= BonusAttributes[skill.Level];
-            unit.BattleComponent.BattleStats.BonusStats -= BonusStats[skill.Level];
+            unit.Stats.BonusStats -= BonusStats[skill.Level];
         }
         private void Activate(Unit unit)
         {
             unit.Stats.BonusAttributes += BonusAttributes[skill.Level];
-            unit.BattleComponent.BattleStats.BonusStats += BonusStats[skill.Level];
+            unit.Stats.BonusStats += BonusStats[skill.Level];
         }
         public override void BindToUnit(Unit unit, Skill skill)
         {

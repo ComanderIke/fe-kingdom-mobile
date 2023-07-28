@@ -32,7 +32,6 @@ namespace Game.Mechanics.Battle
 
         private readonly IBattleActor owner;
         private bool preventDoubleAttacks = false;
-        public BonusStats BonusStats { get; set; }
         public List<ImmunityType> Immunities { get; set; }
         public BonusAttackStats BonusAttackStats { get; set; }
         public enum ImmunityType
@@ -46,7 +45,6 @@ namespace Game.Mechanics.Battle
         public BattleStats(IBattleActor owner)
         {
             this.owner = owner;
-            BonusStats = new BonusStats();
         }
         public int GetDefense()
         {
@@ -101,10 +99,10 @@ namespace Game.Mechanics.Battle
             if (owner.GetEquippedWeapon() != null)
                 weaponDamage = owner.GetEquippedWeapon().GetDamage();
             
-            int unmodifiedAttack = owner.Stats.BaseAttributes.STR + weaponDamage;
+            int unmodifiedAttack = owner.Stats.CombinedAttributes().STR + weaponDamage;
             if (GetDamageType()==DamageType.Magic)
             {
-                unmodifiedAttack = owner.Stats.BaseAttributes.INT + weaponDamage;
+                unmodifiedAttack = owner.Stats.CombinedAttributes().INT + weaponDamage;
             }
             
            
@@ -113,6 +111,8 @@ namespace Game.Mechanics.Battle
             {
                 attack += attackModifier.Sum(modi => ((int) (unmodifiedAttack * modi)) - unmodifiedAttack);
             }
+
+            attack += owner.Stats.BonusStats.Attack;
 
             return (int) Mathf.Clamp(attack, 0, Mathf.Infinity);
         }
@@ -221,7 +221,7 @@ namespace Game.Mechanics.Battle
             // Debug.Log(human.EquippedWeapon.Hit);
             //Debug.Log(human.Stats.Attributes.DEX);
             
-            return (owner.Stats.BaseAttributes.DEX- owner.GetEquippedWeapon().GetWeight()) * 2 + owner.GetEquippedWeapon().GetHit();
+            return (owner.Stats.CombinedAttributes().DEX- owner.GetEquippedWeapon().GetWeight()) * 2 + owner.GetEquippedWeapon().GetHit()+ owner.Stats.BonusStats.Hit;
             
         }
         public int GetAvoid()
@@ -230,7 +230,7 @@ namespace Game.Mechanics.Battle
             if(owner.GetTile()!=null)
                 tileBonus=owner.GetTile().TileData.avoBonus;
          
-           return  tileBonus+ (owner.Stats.BaseAttributes.AGI  - owner.GetEquippedWeapon().GetWeight())* 2;
+           return  tileBonus+ (owner.Stats.CombinedAttributes().AGI  - owner.GetEquippedWeapon().GetWeight())* 2+ owner.Stats.BonusStats.Avoid;
             
             
         }
@@ -243,7 +243,7 @@ namespace Game.Mechanics.Battle
 
         public int GetAttackSpeed()
         {
-            int spd = owner.Stats.BaseAttributes.AGI - owner.GetEquippedWeapon().GetWeight();
+            int spd = owner.Stats.CombinedAttributes().AGI - owner.GetEquippedWeapon().GetWeight()+ owner.Stats.BonusStats.AttackSpeed;
             if (owner.GetTile() != null)
             {
                 spd += owner.GetTile().TileData.speedMalus;
@@ -254,12 +254,12 @@ namespace Game.Mechanics.Battle
 
         public int GetCrit()
         {
-            return owner.Stats.BaseAttributes.LCK+owner.Stats.BaseAttributes.DEX;
+            return owner.Stats.CombinedAttributes().LCK+owner.Stats.CombinedAttributes().DEX+ owner.Stats.BonusStats.Crit;
         }
 
         public int GetCritAvoid()
         {
-            return owner.Stats.BaseAttributes.LCK*2;
+            return owner.Stats.CombinedAttributes().LCK*2+ owner.Stats.BonusStats.CritAvoid;
         }
 
         public int GetPhysicalResistance()
@@ -269,7 +269,7 @@ namespace Game.Mechanics.Battle
             //     
             //     return human.EquippedArmor.armor;
             // }
-            int def = owner.Stats.BaseAttributes.DEF;
+            int def = owner.Stats.CombinedAttributes().DEF + owner.Stats.BonusStats.Armor;
             if (owner.GetTile() != null)
                 def += owner.GetTile().TileData.defenseBonus;
             return def;
@@ -277,22 +277,12 @@ namespace Game.Mechanics.Battle
 
         public int GetFaithResistance()
         {
-            int fth = owner.Stats.BaseAttributes.FAITH;
+            int fth = owner.Stats.CombinedAttributes().FAITH+owner.Stats.BonusStats.MagicResistance;
             if (owner.GetTile() != null)
                 fth += owner.GetTile().TileData.defenseBonus;
             return fth;
         }
 
-        public int GetAttackDamage(DamageType damageType)
-        {
-           
-                if (damageType == DamageType.Magic)
-                    return owner.Stats.BaseAttributes.INT;
-                if (damageType == DamageType.Faith)
-                    return owner.Stats.BaseAttributes.FAITH;
-                return owner.Stats.BaseAttributes.STR;
-                
-        }
 
         public int GetCritAgainstTarget(IBattleActor defender)
         {

@@ -19,7 +19,7 @@ namespace Game.GameActors.Units.Skills
         {
             base.BindToUnit(unit, skill);
             unit.Stats.BonusAttributes += BonusAttributes[skill.Level];
-            unit.BattleComponent.BattleStats.BonusStats += BonusStats[skill.Level];
+            unit.Stats.BonusStats += BonusStats[skill.Level];
             
         }
         
@@ -27,7 +27,7 @@ namespace Game.GameActors.Units.Skills
         {
             base.UnbindFromUnit(unit, skill);
             unit.Stats.BonusAttributes -= BonusAttributes[skill.Level];
-            unit.BattleComponent.BattleStats.BonusStats -= BonusStats[skill.Level];
+            unit.Stats.BonusStats -= BonusStats[skill.Level];
         }
           public override List<EffectDescription> GetEffectDescription(Unit unit, int level)
         {

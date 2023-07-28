@@ -97,6 +97,10 @@ namespace LostGrace
             {
                 OnClicked?.Invoke(this);
             }
+            else if (Skill.CombatSkillMixin!=null)
+            {
+                OnClicked?.Invoke(this);
+            }
             else
             {
                 Debug.Log("Show Skill Tooltip!"+transform.position);

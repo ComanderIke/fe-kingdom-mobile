@@ -70,6 +70,7 @@ namespace Game.GUI
             UnitSelectionSystem.OnEnemySelected -= SelectedEnemyCharacter;
             UnitSelectionSystem.OnDeselectCharacter -= DeselectedCharacter;
             UnitActionSystem.OnCheckAttackPreview -= ShowAttackPreviewUI;
+            UnitActionSystem.OnUpdateAttackPreview -= UpdateAttackPreviewUI;
             GridInputSystem.OnResetInput -= HideAttackPreviewUI;//TODO Remove somehow
             SelectionUI.OnBackClicked -= HideAttackPreviewUI;
             GridGameManager.Instance.GetSystem<GridSystem>().cursor.OnCursorPositionChanged -= (Vector2Int v)=>HideAttackPreviewUI();
@@ -83,6 +84,7 @@ namespace Game.GUI
             UnitSelectionSystem.OnEnemySelected += SelectedEnemyCharacter;
             UnitSelectionSystem.OnDeselectCharacter += DeselectedCharacter;
             UnitActionSystem.OnCheckAttackPreview += ShowAttackPreviewUI;
+            UnitActionSystem.OnUpdateAttackPreview += UpdateAttackPreviewUI;
             GridInputSystem.OnResetInput += HideAttackPreviewUI;//TODO Remove somehow
             GridGameManager.Instance.GetSystem<GridSystem>().cursor.OnCursorPositionChanged += (Vector2Int v)=>HideAttackPreviewUI();
         }
@@ -90,6 +92,21 @@ namespace Game.GUI
         public void ShowObjectiveCanvas(BattleMap chapter)
         {
             objectiveUI.Show(chapter);
+        }
+        private void UpdateAttackPreviewUI(BattlePreview battlePreview)
+        {
+            if (battlePreview.Attacker is Unit attacker)
+            {
+                if (battlePreview.Defender is Unit defender)
+                    attackPreviewUI.Show(battlePreview, attacker.visuals, defender.visuals);
+                else if (battlePreview.TargetObject != null &&
+                         battlePreview.TargetObject is Destroyable dest)
+                {
+         
+                    attackPreviewUI.Show(battlePreview, attacker.visuals, dest.Sprite);
+                }
+
+            }
         }
         private void ShowAttackPreviewUI(BattlePreview battlePreview)
         {
