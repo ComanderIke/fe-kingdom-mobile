@@ -149,6 +149,6 @@ namespace Game.GameActors.Units
     }
     public interface IOnAttackEffect
     {
-        void ReactToAttack(IBattleActor unit);
+        bool ReactToAttack(IBattleActor unit);
     }
 }

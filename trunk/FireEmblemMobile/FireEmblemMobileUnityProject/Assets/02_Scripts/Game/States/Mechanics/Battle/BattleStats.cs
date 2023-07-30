@@ -88,7 +88,7 @@ namespace Game.Mechanics.Battle
             // if (owner.SpBars == 0)
             //     return 0;
 
-            if ( owner.BattleComponent.BattleStats.GetAttackSpeed()- (c.BattleComponent.BattleStats.GetAttackSpeed() + AGILITY_TO_DOUBLE) >= 0)
+            if (CanDoubleAttack(c))
             {
                 attackCount++;
             }
@@ -312,9 +312,9 @@ namespace Game.Mechanics.Battle
         }
 
        
-        public void PreventDoubleAttacks()
+        public void SetPreventDoubleAttacks(bool prevent)
         {
-            preventDoubleAttacks = true;
+            preventDoubleAttacks = prevent;
         }
     }
 }

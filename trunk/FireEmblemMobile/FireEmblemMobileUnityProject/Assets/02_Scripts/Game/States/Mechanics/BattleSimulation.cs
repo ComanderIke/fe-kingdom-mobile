@@ -286,8 +286,8 @@ namespace Game.Mechanics
             Debug.Log("ACTIVATE ATTACK SKILLS " +attacker.BattleComponent.attackEffects.Count);
             foreach (var attackEffect in attacker.BattleComponent.attackEffects)
             {
-                attackEffect.attackEffect.ReactToAttack(attacker);
-                skills.Add(attackEffect.skill);
+                if(attackEffect.attackEffect.ReactToAttack(attacker))
+                    skills.Add(attackEffect.skill);
             }
 
             return skills;

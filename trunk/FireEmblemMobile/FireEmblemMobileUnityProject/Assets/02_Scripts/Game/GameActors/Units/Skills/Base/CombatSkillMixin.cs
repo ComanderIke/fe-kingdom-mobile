@@ -16,6 +16,7 @@ namespace Game.GameActors.Units.Skills
         private Unit target;
         private Unit unit;
         private int activatedLevel = -1;
+        public bool preventDouble = true;
         [HideInInspector]public int Uses { get; set; }
         
         public int GetMaxUses(int level)
@@ -49,6 +50,7 @@ namespace Game.GameActors.Units.Skills
             this.unit = user;
             this.target = enemy;
             this.activatedLevel = skill.Level;
+            user.BattleComponent.BattleStats.SetPreventDoubleAttacks(preventDouble);
             foreach (var skilleffect in skillEffectMixins)
             {
                 if (skilleffect is SelfTargetSkillEffectMixin selfTargetSkillEffectMixin)
@@ -68,6 +70,7 @@ namespace Game.GameActors.Units.Skills
 
         public void Deactivate()
         {
+            unit.BattleComponent.BattleStats.SetPreventDoubleAttacks(false);
             foreach (var skilleffect in skillEffectMixins)
             {
                 if (skilleffect is SelfTargetSkillEffectMixin selfTargetSkillEffectMixin)

@@ -21,7 +21,7 @@ namespace Game.GameActors.Units.Skills.Passive
         // public float[] attackEffectExtraData;
         
        
-        public void ReactToAttack(IBattleActor unit)
+        public bool ReactToAttack(IBattleActor unit)
         {
             Debug.Log("Check Activate: "+skill.Name);
             if (DoesActivate((Unit)unit, skill.Level))
@@ -39,7 +39,11 @@ namespace Game.GameActors.Units.Skills.Passive
                         selfTargetSkillEffectMixin.Activate(skill.owner, skill.Level);
                     }
                 }
+
+                return true;
             }
+
+            return false;
         }
 
         public override void BindToUnit(Unit unit, Skill skill)
