@@ -9,16 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5769720be7814eb0964c5147c4d27226, type: 3}
-  m_Name: DamageSkillEffect
+  m_Script: {fileID: 11500000, guid: 6fbd00e6f7b74c3490f8b9850c3c76de, type: 3}
+  m_Name: CancelMixin
   m_EditorClassIdentifier: 
-  damageType: 0
-  dmg: 00000000
-  scalingType: 1
-  scalingcoeefficient:
-  - 1.3
-  - 1.4
-  - 1.6
-  - 1.8
-  - 2
-  instantDamage: 0
+  skillEffectMixins:
+  - {fileID: 11400000, guid: ff0cf7fa2baa5274fbbce91c14119907, type: 2}
+  procChance:
+  - 1
+  - 0.3
+  - 0.3
+  - 0.4
+  - 0.5
+  scalingType: 0

@@ -421,6 +421,7 @@ namespace Game.GameInput
 
             private void AttackEnemy(IGridActor character, IGridObject enemy, List<Vector2Int> movePath)
             {
+                Debug.Log("ATTACK ENEMY: => RESET GRIDPOSITION => HIDE MOVE RANGE");
                 character.GridComponent.ResetPosition();
                 gridSystem.HideMoveRange();
                 selectionDataProvider.ClearData();

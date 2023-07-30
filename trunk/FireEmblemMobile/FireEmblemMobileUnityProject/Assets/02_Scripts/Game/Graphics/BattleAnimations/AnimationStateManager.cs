@@ -22,6 +22,7 @@ public class AnimationStateManager
     private bool playerControlled;
     private IBattleActor realAttacker;
     private IBattleActor realDefender;
+    
  
     
     public AnimationStateManager(IBattleActor realAttacker, IAttackableTarget realDefender, BattleSimulation battleSimulation, TimeLineController timeLineController, CharacterCombatAnimations characterAnimations)
@@ -70,6 +71,8 @@ public class AnimationStateManager
 
        //characterAnimations.SetPlaySpeed(1.0f);
     }
+
+    public event Action<AttackData> OnCharacterAttack;
     private void ContinueBattle()
     {
      
@@ -80,7 +83,7 @@ public class AnimationStateManager
            
             return;
         }
-        
+        OnCharacterAttack?.Invoke(currentRound.AttacksData[attackSequenzIndex]);
         characterAnimations.CharacterAttack(currentRound.AttacksData[attackSequenzIndex],currentRound.AttacksData[attackSequenzIndex].attacker, leftCharacterAttacker);
         characterAnimations.OnAttackFinished -= AttackFinished;
         characterAnimations.OnAttackFinished += AttackFinished;

@@ -451,7 +451,7 @@ namespace Game.GameActors.Units
         protected virtual void HandleCloned(Unit clone)
         {
             clone.experienceManager = new ExperienceManager(experienceManager);
-            clone.BattleComponent = new BattleComponent(clone);
+            clone.BattleComponent = new BattleComponent(BattleComponent);
             clone.TurnStateManager = new TurnStateManager();
             clone.GridComponent = new GridActorComponent(clone);
             if (GridComponent!=null&&GridComponent.GridPosition != null)

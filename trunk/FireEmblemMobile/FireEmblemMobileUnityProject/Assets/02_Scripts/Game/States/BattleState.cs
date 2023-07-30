@@ -11,6 +11,7 @@ using Game.Manager;
 using Game.States;
 using GameEngine;
 using GameEngine.GameStates;
+using UnityEditor;
 using UnityEngine;
 
 namespace Game.Mechanics
@@ -38,6 +39,7 @@ namespace Game.Mechanics
        
         public override void Enter()
         {
+            Debug.Log("ENTER BATTLE STATE");
            // battleSystem = new BattleSystem(attacker, defender);
           
            IsFinished = false;
@@ -100,9 +102,11 @@ namespace Game.Mechanics
             AudioSystem.Instance.ChangeMusic("BattleTheme", startMusic);
         }
 
+        public static event Action<IBattleActor, IAttackableTarget> OnStartBattle;
         public void Start(IBattleActor battleActor, IAttackableTarget target)
         {
             SetParticipants(battleActor, target);
+            OnStartBattle?.Invoke(battleActor, target);
             GridGameManager.Instance.GameStateManager.Feed(NextStateTrigger.BattleStarted);
         }
     }

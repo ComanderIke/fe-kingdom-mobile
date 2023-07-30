@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using __2___Scripts.Game.Utility;
 using Game.GameActors.Items;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
 using Game.GameInput;
@@ -50,6 +51,7 @@ namespace LostGrace
         {
             UiSystem.OnShowAttackPreview += ShowSelectableCombatSkills;
             UiSystem.OnHideAttackPreview += HideSelectableCombatSkills;
+            
         }
 
         private void OnDestroy()
@@ -62,7 +64,7 @@ namespace LostGrace
         private void HideSelectableCombatSkills()
         {
             canSelectCombatSkillsRightNow = false;
-            selectedCombatSkill = null;
+            DeselectCombatSkill();
             foreach (var skillUI in instantiatedSkills)
             {
                 if (skillUI.Skill.CombatSkillMixin != null)
@@ -79,6 +81,7 @@ namespace LostGrace
         {
             canSelectCombatSkillsRightNow = true;
             selectedCombatSkill = null;
+            attackStarted = false;
             foreach (var skillUI in instantiatedSkills)
             {
                 if (skillUI.Skill.CombatSkillMixin != null)
@@ -160,7 +163,7 @@ namespace LostGrace
         {
          
            
-            Debug.Log("CLICKED Skill: " +skillUI.Skill);
+            Debug.Log("CLICKED Skill: " +skillUI.Skill.Name);
             ToolTipSystem.Show(skillUI.Skill, skillUI.transform.position);
             if (skillUI.Skill.activeMixins.Count > 0)
             {
@@ -168,16 +171,16 @@ namespace LostGrace
             }
             else if (skillUI.Skill.CombatSkillMixin != null)
             {
-                Debug.Log("CombatSkill Clicked!");
+               // Debug.Log("CombatSkill Clicked!");
                 if (canSelectCombatSkillsRightNow)
                 {
-                    Debug.Log("Can Select Right now");
+                   // Debug.Log("Can Select Right now");
                     if (selectedCombatSkill == skillUI)
                     {
-                        Debug.Log("Deselect SKILL "+ skillUI.Skill.Name);
-                        skillUI.Deselect();
-                        skillUI.ShowSelectable();
-                        selectedCombatSkill = null;
+                       // Debug.Log("Deselect SKILL "+ skillUI.Skill.Name);
+                        
+                        DeselectCombatSkill();
+                        ServiceProvider.Instance.GetSystem<UnitActionSystem>().UpdateAttackpreview();
                     }
                     else
                     {
@@ -190,21 +193,37 @@ namespace LostGrace
 
         }
 
-        public void SelectSkill(SkillUI skillUI)
+        void DeselectCombatSkill()
         {
-            Debug.Log("SELECT SKILL "+ skillUI.Skill.Name);
             if (selectedCombatSkill != null)
             {
                 selectedCombatSkill.Deselect();
                 selectedCombatSkill.ShowSelectable();
+                selectedCombatSkill.Skill.CombatSkillMixin.Deactivate();
+                if(!attackStarted)
+                    selectedCombatSkill.Skill.CombatSkillMixin.DeactivateForNextCombat();
+                selectedCombatSkill = null;
+                BattleState.OnStartBattle -= OnStartAttack;
+               
             }
+        }
+        public void SelectSkill(SkillUI skillUI)
+        {
+            Debug.Log("SELECT SKILL "+ skillUI.Skill.Name);
+            DeselectCombatSkill();
             skillUI.Select();
             selectedCombatSkill = skillUI;
-           // skillUI.Skill.CombatSkillMixin.ActivateForNextCombat(skillUI.Skill.owner, null);
-            skillUI.Skill.owner.Stats.BonusStats.Crit += 50;
-            skillUI.Skill.owner.Stats.BonusStats.Attack += 50;
-            skillUI.Skill.owner.Stats.BonusStats.Hit += 50;
+            skillUI.Skill.CombatSkillMixin.Activate(skillUI.Skill.owner, null);
+            BattleState.OnStartBattle -= OnStartAttack;
+            BattleState.OnStartBattle += OnStartAttack;
             ServiceProvider.Instance.GetSystem<UnitActionSystem>().UpdateAttackpreview();
+        }
+
+        private bool attackStarted = false;
+        void OnStartAttack(IBattleActor attacker, IAttackableTarget target)
+        {
+            selectedCombatSkill.Skill.CombatSkillMixin.ActivateForNextCombat();
+            attackStarted = true;
         }
     }
 }

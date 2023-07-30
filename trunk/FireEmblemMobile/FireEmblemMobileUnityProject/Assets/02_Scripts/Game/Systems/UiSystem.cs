@@ -127,6 +127,7 @@ namespace Game.GUI
 
         private void HideAttackPreviewUI()
         {
+            Debug.Log("HIDE ATTACK PREVIEW");
             OnHideAttackPreview?.Invoke();
             attackPreviewUI.Hide();
         }

@@ -22,7 +22,7 @@ namespace Game.Mechanics.Commands
 
         public override void Execute()
         {
-            
+            Debug.Log("EXECUTE FIGHT ACTION");
             GridGameManager.Instance.GameStateManager.BattleState.Start(attacker, target);
             BattleSystem.OnBattleFinished -= BattleFinished;
             BattleSystem.OnBattleFinished += BattleFinished;

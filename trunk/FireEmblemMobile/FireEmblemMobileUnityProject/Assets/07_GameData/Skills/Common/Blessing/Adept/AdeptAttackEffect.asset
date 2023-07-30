@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c56b3e1b098645cc927f11edf7885e69, type: 3}
-  m_Name: AtrocityCombatMixin
+  m_Script: {fileID: 11500000, guid: 69094bb5e83d4499bddd196b6bfb53f0, type: 3}
+  m_Name: AdeptAttackEffect
   m_EditorClassIdentifier: 
-  skillEffectMixins:
-  - {fileID: 11400000, guid: 6e608248dfb2aa544baf468626069257, type: 2}
-  maxUsesPerLevel: 01000000
-  hpCostPerLevel: 01000000
+  attackEffect: 2
+  attackEffectExtraDataLabel: Adept
+  extraDataType: 0
+  attackEffectExtraData:
+  - 1

@@ -27,12 +27,13 @@ namespace Game.GameActors.Units.Skills.Passive
         public override void Activate(Unit target, int level)
         {
             Debug.Log("OnAttackEffect Activate!!!");
-            target.BattleComponent.BattleStats.BonusAttackStats.AttackEffects.Add(attackEffect,attackEffectExtraData[level]);
+           
+            target.BattleComponent.BattleStats.BonusAttackStats.AddAttackEffect(attackEffect,attackEffectExtraData[level]);
         }
 
-        public override void Deactivate(Unit user, int skillLevel)
+        public override void Deactivate(Unit target, int level)
         {
-            throw new System.NotImplementedException();
+            target.BattleComponent.BattleStats.BonusAttackStats.AttackEffects.Remove(attackEffect);
         }
     }
 }

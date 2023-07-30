@@ -148,6 +148,7 @@ namespace Game.Mechanics
         }
         public void Fight(IBattleActor attacker, IAttackableTarget target)
         {
+            Debug.Log("FIGHT ACTION");
             if((IGridActor)attacker!=lastCharacter)
                 ResetCharacterActions();
             //ResetCharacterActions();

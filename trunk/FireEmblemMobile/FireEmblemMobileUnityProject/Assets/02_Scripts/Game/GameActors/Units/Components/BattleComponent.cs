@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Game.GameActors.Items.Weapons;
+using Game.GameActors.Units.Skills;
 using Game.GameActors.Units.Skills.Passive;
 using Game.GameInput;
 using Game.Mechanics;
@@ -58,6 +59,14 @@ namespace Game.GameActors.Units
              BattleStats = new BattleStats(actor);
              owner = actor;
              battleEvents = new Dictionary<BattleEvent, List<IBattleEventListener>>();
+             attackEffects = new List<AttackEffectContainer>();
+        }
+        public BattleComponent(BattleComponent battleComponent)
+        {
+            BattleStats = battleComponent.BattleStats;
+            owner = battleComponent.owner;
+            battleEvents = battleComponent.battleEvents;
+            attackEffects = battleComponent.attackEffects;
         }
 
       
@@ -107,5 +116,39 @@ namespace Game.GameActors.Units
             }
             
         }
+
+        public struct AttackEffectContainer
+        {
+            public IOnAttackEffect attackEffect;
+            public Skill skill;
+
+            public AttackEffectContainer(Skill skill, IOnAttackEffect attackEffect)
+            {
+                this.skill = skill;
+                this.attackEffect = attackEffect;
+            }
+        }
+        public List<AttackEffectContainer> attackEffects;
+        public void AddToAttackSkillList(Skill skill, IOnAttackEffect attackEffectMixin)
+        {
+            attackEffects.Add(new AttackEffectContainer(skill, attackEffectMixin));
+        }
+        public void RemoveFromAttackSkillList(Skill skill, IOnAttackEffect attackEffectMixin)
+        {
+            Debug.Log("TRY REMOVE FROM ATTACK SKILL LIST: ");
+            Debug.Log(skill.Name);
+            Debug.Log(attackEffectMixin);
+            for (int i= attackEffects.Count-1; i>=0; i--)
+            {
+                if (attackEffects[i].skill == skill && attackEffects[i].attackEffect == attackEffectMixin)
+                {
+                    attackEffects.RemoveAt(i);
+                }
+            }
+        }
+    }
+    public interface IOnAttackEffect
+    {
+        void ReactToAttack(IBattleActor unit);
     }
 }

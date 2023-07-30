@@ -78,6 +78,13 @@ namespace Game.GameActors.Units.Skills
                     passive.UnbindFromUnit(owner, this);
                     passive.BindToUnit(owner, this);
                 }
+
+                if (CombatSkillMixin != null)
+                {
+                    CombatSkillMixin.UnbindFromUnit(owner, this);
+                    CombatSkillMixin.BindToUnit(owner, this);
+                }
+
                 foreach (var active in activeMixins)
                 {
                     active.UnbindFromUnit(owner,this);

@@ -7,6 +7,8 @@ using Game.AI;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
+using Game.GameActors.Units.Skills;
+using Game.GameActors.Units.Skills.Passive;
 using Game.GameInput;
 using Game.Grid;
 using Game.GUI;
@@ -15,6 +17,7 @@ using Game.Mechanics.Battle;
 using Game.States;
 using GameEngine;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 namespace Game.Mechanics
 {
@@ -37,38 +40,133 @@ namespace Game.Mechanics
         private int defenderAttackCount;
     
         public IBattleAnimation BattleAnimation { get; set; }
- 
+        private List<SkillMixin> attackerActivatedSkillMixins;
+        private List<SkillMixin> defenderActivatedSkillMixins;
 
 
+        public BattleSystem()
+        {
+            defenderActivatedSkillMixins = new List<SkillMixin>();
+            attackerActivatedSkillMixins = new List<SkillMixin>();
+        }
         public void StartBattle(IBattleActor attacker, IAttackableTargetThatCantFightBack attackableTarget)
         {
             this.attacker = attacker;
             this.attackableTarget = attackableTarget;
             battleSimulation = new BattleSimulation(attacker,attackableTarget);
             battleSimulation.StartBattle(false, true);
-      
+            
             //defenderAttackCount = defender.BattleComponent.BattleStats.GetAttackCountAgainst(attacker);
             //BattleRenderer.Show(attacker, defender, GetAttackSequence());
             
         }
         public void StartBattle(IBattleActor attacker, IBattleActor defender, bool grid, bool continuos =false)
         {
-             this.attacker = attacker;
+            Debug.Log("SSTTTTTTTTTAAAAAAART BAAAAAAATTTTTTTLLLLLLE");
+            this.attacker = attacker;
             this.defender = defender;
-            // battleSimulation = new BattleSimulation(attacker,defender);
-            // battleSimulation.StartBattle(false);
-            // battleStarted = true;
-            // IsFinished = false;
-            // currentAttackIndex = 0;
-            // attackerAttackCount = attacker.BattleComponent.BattleStats.GetAttackCountAgainst(defender);
-            // defenderAttackCount = defender.BattleComponent.BattleStats.GetAttackCountAgainst(attacker);
+            ActivateSkillsAtBattleStart();
+         
+         
             battleSimulation = GetBattleSimulation(attacker, (IBattleActor)defender, grid, continuos);
+            Debug.Log("ACTIVATED SKILLS: ");
+            foreach (var skill in attackerActivatedSkillMixins)
+            {
+                Debug.Log("ACTIVATED ATTACKER COMBAT SKILL "+skill.skill.Name);
+            }
+            foreach (var skill in defenderActivatedSkillMixins)
+            {
+                Debug.Log("ACTIVATED DEFENDER COMBAT SKILL "+skill.skill.Name);
+            }
+            foreach (var combatRound in battleSimulation.combatRounds)
+            {
+                foreach (var attackData in combatRound.AttacksData)
+                {
+                    foreach (var activatedSkill in attackData.activatedAttackSkills)
+                    {
+                        Debug.Log("ACTIVATED ATTACK SKILL: "+ activatedSkill.Name+" Attacker: "+attackData.attacker);
+                    }
+                }
+            }
+
+            battleSimulation.AttackerActivatedCombatSkills = SkillMixinToSkillList(attackerActivatedSkillMixins);
+            battleSimulation.DefenderActivatedCombatSkills = SkillMixinToSkillList(defenderActivatedSkillMixins);
+          
             
             BattleAnimation.Show(battleSimulation, attacker, (IBattleActor)defender);
             BattleAnimation.OnFinished -= EndBattle;
             BattleAnimation.OnFinished += EndBattle;
-            //BattleRenderer.Show(attacker, defender, GetAttackSequence());
             
+
+        }
+
+        private List<Skill> SkillMixinToSkillList(List<SkillMixin> mixins)
+        {
+            var returnList = new List<Skill>();
+            foreach (var skillMixin in mixins)
+            {
+                returnList.Add(skillMixin.skill);
+            }
+            return returnList;
+        }
+
+        void ActivateSkillsAtBattleStart()
+        {
+            foreach (var skillMixin in attackerActivatedSkillMixins)
+            {
+                if (skillMixin is CombatSkillMixin csm)
+                {
+                    csm.Activate((Unit)attacker, (Unit)defender);
+                }
+                else if (skillMixin is CombatPassiveMixin cpm)
+                {
+                    cpm.Activate((Unit)attacker, (Unit)defender);
+                }
+            }
+            foreach (var skillMixin in defenderActivatedSkillMixins)
+            {
+                if (skillMixin is CombatPassiveMixin cpm)
+                {
+                    cpm.Activate((Unit)defender, (Unit)attacker);
+                }
+            }
+        }
+
+        public void AddAttackerActivatedSkills(SkillMixin skill)
+        {
+            attackerActivatedSkillMixins.Add(skill);
+        }
+        public void AddDefenderActivatedSkills(SkillMixin skill)
+        {
+            defenderActivatedSkillMixins.Add(skill);
+        }
+        public void RemoveAttackerActivatedSkills(SkillMixin skillMixin)
+        {
+            if(attackerActivatedSkillMixins.Contains(skillMixin))
+                attackerActivatedSkillMixins.Remove(skillMixin);
+        }
+        public void RemoveDefenderActivatedSkills(SkillMixin skillMixin)
+        {
+            if(defenderActivatedSkillMixins.Contains(skillMixin))
+                defenderActivatedSkillMixins.Remove(skillMixin);
+        }
+
+        public void DeactivateCombatSkills()
+        {
+            for (int i = attackerActivatedSkillMixins.Count - 1; i >= 0; i--)
+            {
+                if( attackerActivatedSkillMixins[i]is CombatSkillMixin csm)
+                    csm.Deactivate();
+                if (attackerActivatedSkillMixins[i] is CombatPassiveMixin psm)
+                    psm.Deactivate();
+                attackerActivatedSkillMixins.RemoveAt(i);
+            }
+            for (int i = defenderActivatedSkillMixins.Count - 1; i >= 0; i--)
+            {
+                if (defenderActivatedSkillMixins[i] is CombatPassiveMixin psm)
+                    psm.Deactivate();
+                defenderActivatedSkillMixins.RemoveAt(i);
+            }
         }
         private void EndBattle()
         {
@@ -89,6 +187,7 @@ namespace Game.Mechanics
                 //defender.Hp = battleSimulation.AttackableTarget.Hp;
             }
 
+            DeactivateCombatSkills();
             BattleAnimation.Hide();
             CheckExp();
             attacker = null;
@@ -238,6 +337,7 @@ namespace Game.Mechanics
             return battleSim;
         }
 
-       
+
+        
     }
 }

@@ -5,8 +5,11 @@ using Game.AI;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
+using Game.GameActors.Units.Skills;
+using Game.GameActors.Units.Skills.Passive;
 using Game.GameInput;
 using Game.Grid;
+using MoreMountains.Feedbacks;
 using UnityEngine;
 
 namespace Game.Mechanics
@@ -18,6 +21,8 @@ namespace Game.Mechanics
         public bool hit;
         public bool kill;
         public bool crit;
+        public List<Skill> activatedAttackSkills;
+        
     }
 
     public class BattleSimulation: ICombatResult
@@ -30,6 +35,8 @@ namespace Game.Mechanics
         public List<CombatRound> combatRounds;
 
         public GridPosition attackPosition;
+        public List<Skill> AttackerActivatedCombatSkills;
+        public List<Skill> DefenderActivatedCombatSkills;
         public BattleSimulation(IBattleActor attacker, IAttackableTarget attackableTarget):this(attacker, attackableTarget, ((Unit)attacker).GridComponent.GridPosition)
         {
            
@@ -38,7 +45,8 @@ namespace Game.Mechanics
         public BattleSimulation(IBattleActor attacker, IAttackableTarget attackableTarget, GridPosition attackPosition)
         {
             Debug.Log("Constructor for IAttackableTarget");
-           
+            AttackerActivatedCombatSkills = new List<Skill>();
+            DefenderActivatedCombatSkills = new List<Skill>();
                 
             combatRounds = new List<CombatRound>();
             Attacker = attacker.Clone() as IBattleActor;
@@ -113,7 +121,21 @@ namespace Game.Mechanics
         }
         public bool DoAttack(IBattleActor attacker, IBattleActor defender, ref AttackData attackData)
         {
-            int damage = attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defender);
+            Debug.Log("TODO Do AttackEffects Mechanics here");
+          //  if(attacker.BattleComponent.BattleStats.BonusAttackStats.AttackEffects)
+          float sol = 0;
+          float luna = 0;
+          foreach (var attackEffect in attacker.BattleComponent.BattleStats.BonusAttackStats.AttackEffects)
+          {
+              switch (attackEffect.Key)
+              {
+                  case AttackEffectEnum.Luna:
+                      luna = (float)attackEffect.Value; break;
+                  case AttackEffectEnum.Sol:
+                      sol = (float)attackEffect.Value; break;
+              }
+          }
+          int damage = attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defender, luna);
             //int spDamage= attacker.BattleComponent.BattleStats.GetTotalSpDamageAgainstTarget(defender);
             var hitRng = UnityEngine.Random.Range(0, 101);
             var critRng = UnityEngine.Random.Range(0, 101);
@@ -133,6 +155,8 @@ namespace Game.Mechanics
             }
             if(attackData.hit||certainHit)
                 defender.Hp -= damage;
+            if(sol>0)
+                attacker.Hp += (int)(damage * sol);
             return defender.Hp > 0;
         }
 
@@ -167,36 +191,75 @@ namespace Game.Mechanics
             bool death = false;
             while ((attackerAttackCount > 0||defenderAttackCount>0)&&!death)
             {
-                AttackData attackData=new AttackData();
-                
+
                 if (attackerAttackCount > 0)
                 {
-                    attackData.attacker = true;
-                    if (DoAttack(Attacker, Defender, ref attackData))
+                    int consecutiveAttack = 1;
+                    bool adeptFlag = false;
+                    while (consecutiveAttack > 0)
                     {
-                        
-                        attackerAttackCount--;
-                        // if (Defender.SpBars <= 0)
-                        // {
-                        //     defenderAttackCount = 0;
-                        // }
-                        // if (Attacker.SpBars <= 0)
-                        // {
-                        //     attackerAttackCount = 0;
-                        // }
-                    }
-                    else
-                    {
-                        death = true;
-                        attackData.kill = true;
+                        AttackData attackData = new AttackData();
+                        attackData.activatedAttackSkills = new List<Skill>();
+
+                        attackData.attacker = true;
+                        if (!certainHit)
+                            attackData.activatedAttackSkills.AddRange(ActivateAttackSkills(Attacker));
+                        foreach (var attackEffect in Attacker.BattleComponent.BattleStats.BonusAttackStats
+                                     .AttackEffects)
+                        {
+                            switch (attackEffect.Key)
+                            {
+                                case AttackEffectEnum.Adept:
+                                    if (!adeptFlag)
+                                    {
+                                        adeptFlag = true;
+                                        consecutiveAttack++;
+                                    }
+
+                                    break;
+                                case AttackEffectEnum.Cancel:
+                                    defenderAttackCount = 0;
+                                    break;
+                            }
+                        }
+
+                        if (DoAttack(Attacker, Defender, ref attackData))
+                        {
+                            attackerAttackCount--;
+                            // if (Defender.SpBars <= 0)
+                            // {
+                            //     defenderAttackCount = 0;
+                            // }
+                            // if (Attacker.SpBars <= 0)
+                            // {
+                            //     attackerAttackCount = 0;
+                            // }
+                        }
+                        else
+                        {
+                            death = true;
+                            defenderAttackCount = 0;
+                            attackData.kill = true;
+                            combatRound.AttacksData.Add(attackData);
+                            break;
+                        }
+
                         combatRound.AttacksData.Add(attackData);
-                        break;
+                        consecutiveAttack--;
                     }
-                    combatRound.AttacksData.Add(attackData);
                 }
+               
                 if (defenderAttackCount > 0)
                 {
+                    AttackData attackData=new AttackData();
+                   
                     attackData.attacker = false;
+                    attackData.activatedAttackSkills = new List<Skill>();
+                    if (!certainHit)
+                    {
+                        attackData.activatedAttackSkills.AddRange(ActivateAttackSkills(Defender));
+                    }
+
                     if (DoAttack(Defender, Attacker, ref attackData))
                     {
                        
@@ -216,10 +279,24 @@ namespace Game.Mechanics
             combatRound.AttackerHP = Attacker.Hp;
             combatRound.DefenderHP = Defender.Hp;
         }
+
+        private IEnumerable<Skill> ActivateAttackSkills(IBattleActor attacker)
+        {
+            var skills = new List<Skill>();
+            Debug.Log("ACTIVATE ATTACK SKILLS " +attacker.BattleComponent.attackEffects.Count);
+            foreach (var attackEffect in attacker.BattleComponent.attackEffects)
+            {
+                attackEffect.attackEffect.ReactToAttack(attacker);
+                skills.Add(attackEffect.skill);
+            }
+
+            return skills;
+        }
+
         public void StartBattle(bool certainHit, bool grid)
         {
             this.certainHit = certainHit;
-
+            Debug.Log("TODO if certainHit also check for skills and only do 100% procChance skills");
             Debug.Log("START BATTLE: ATTACKERHIT: " +Attacker.BattleComponent.BattleStats.GetHitAgainstTarget(Defender));
             if (continuos)
             {
@@ -314,4 +391,6 @@ namespace Game.Mechanics
             return Attacker.GetTile().TileData.avoBonus;
         }
     }
+
+   
 }

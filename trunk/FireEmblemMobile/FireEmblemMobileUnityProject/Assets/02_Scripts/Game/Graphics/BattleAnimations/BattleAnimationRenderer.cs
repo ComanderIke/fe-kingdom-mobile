@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
+using Game.GameActors.Units.Skills;
 using Game.GameInput;
 using Game.Mechanics;
+using LostGrace;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -12,12 +14,22 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     public BattleCanvasController canvas;
     
     private AnimationStateManager animationStateManager;
+    [SerializeField] private SkillActivationRenderer skillActivationRenderer;
     public static event Action<BattleSimulation, IBattleActor, IAttackableTarget> OnShow;
     
     public Volume volume;
     public event Action OnFinished;
-    
 
+
+    void ShowActivatedAttackSkills(AttackData attackData)
+    {
+        skillActivationRenderer.Show(attackData.activatedAttackSkills, attackData.attacker);
+    }
+    void ShowActivatedCombatSkills(List<Skill> skills, bool attacker)
+    {
+        skillActivationRenderer.Show(skills, attacker);
+    }
+  
     public void Show(BattleSimulation battleSimulation, IBattleActor attackingActor, IAttackableTarget defendingActor)
     {
         gameObject.SetActive(true);
@@ -26,9 +38,14 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         OnShow?.Invoke(battleSimulation, attackingActor, defendingActor);
        
         animationStateManager = new AnimationStateManager(attackingActor, defendingActor, battleSimulation, GetComponent<TimeLineController>(),GetComponent<CharacterCombatAnimations>());
+        animationStateManager.OnCharacterAttack -= ShowActivatedAttackSkills;
+        animationStateManager.OnCharacterAttack += ShowActivatedAttackSkills;
+        ShowActivatedCombatSkills(battleSimulation.AttackerActivatedCombatSkills, true);
+        ShowActivatedCombatSkills(battleSimulation.DefenderActivatedCombatSkills, false);
         animationStateManager.Start();
         animationStateManager.OnFinished -= Finished;
         animationStateManager.OnFinished += Finished;
+       
         
         LeanTween.value(volume.weight, 1, 1.2f).setEaseOutQuad().setOnUpdate((value) => { volume.weight = value; });
         

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using Game.GameActors.Items.Weapons;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
@@ -23,6 +24,20 @@ namespace Game.Mechanics.Battle
         public BonusAttackStats()
         {
             BonusAttack = false;
+            AttackEffects = new Dictionary<AttackEffectEnum, object>();
+        }
+
+        public void AddAttackEffect(AttackEffectEnum attackEffect, float f)
+        {
+            if (!AttackEffects.ContainsKey(attackEffect))
+            {
+                AttackEffects.Add(attackEffect, f);
+            }
+            else
+            {
+                if ((float)AttackEffects[attackEffect] < f) //Replace with stronger effect
+                    AttackEffects[attackEffect] = f;
+            }
         }
     }
 
@@ -45,6 +60,8 @@ namespace Game.Mechanics.Battle
         public BattleStats(IBattleActor owner)
         {
             this.owner = owner;
+            BonusAttackStats = new BonusAttackStats();
+            Immunities = new List<ImmunityType>();
         }
         public int GetDefense()
         {
@@ -117,15 +134,15 @@ namespace Game.Mechanics.Battle
             return (int) Mathf.Clamp(attack, 0, Mathf.Infinity);
         }
 
-        public int GetDamageAgainstTarget(IAttackableTarget target, float atkMultiplier = 1.0f)
+        public int GetDamageAgainstTarget(IAttackableTarget target, float penetration = 0f,float atkMultiplier = 1.0f)
         {
             var atkMulti = new List<float> { atkMultiplier };
            
-            return GetDamageAgainstTarget(target, atkMulti);
+            return GetDamageAgainstTarget(target,atkMulti,  penetration);
 
         }
 
-        public int GetDamageAgainstTarget(IAttackableTarget target, List<float> atkMultiplier)
+        public int GetDamageAgainstTarget(IAttackableTarget target, List<float> atkMultiplier, float penetration =0f)
         {
             float dmgMult = 1;
             // if (target.SpBars <= 0)
@@ -147,7 +164,7 @@ namespace Game.Mechanics.Battle
                 else
                     defense = battleActor.BattleComponent.BattleStats.GetDefense();
 
-                return (int)(Mathf.Clamp((GetDamage(atkMultiplier) - defense) * dmgMult, 0, Mathf.Infinity));
+                return (int)(Mathf.Clamp((GetDamage(atkMultiplier) - (defense-(int)(defense*penetration))) * dmgMult, 0, Mathf.Infinity));
             }
 
             return 0;

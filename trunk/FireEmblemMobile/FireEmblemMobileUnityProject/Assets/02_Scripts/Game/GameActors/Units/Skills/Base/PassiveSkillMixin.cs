@@ -8,7 +8,7 @@ namespace Game.GameActors.Units.Skills
     public abstract class PassiveSkillMixin:SkillMixin
     {
         
-        [SerializeField]protected List<SkillEffectMixin> skillEffectMixins;
+        [SerializeField]public List<SkillEffectMixin> skillEffectMixins;
         //[SerializeField]private EffectDescription[] effectDescriptionsPerLevel;
 
         public virtual List<EffectDescription> GetEffectDescription(Unit unit, int level)

@@ -23,5 +23,16 @@ namespace Game.GameActors.Units.Skills
         // protected SelfTargetSkillMixin( int[] maxUses, int[] hpCost,GameObject animationObject) : base(maxUses,hpCost,animationObject)
         // {
         // }
+        public void Deactivate(Unit unit)
+        {
+            foreach (var effect in effectMixins)
+            {
+                if (effect is SelfTargetSkillEffectMixin unitTargetSkillEffectMixin)
+                {
+                    unitTargetSkillEffectMixin.Deactivate(unit, skill.Level);
+                }
+                
+            }
+        }
     }
 }
