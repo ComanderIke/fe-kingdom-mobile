@@ -32,7 +32,7 @@ namespace Game.GameActors.Items.Weapons
             {
                 effectiveness.Add(effectiveAgainst[i], effectiveAgainstCoefficients[i]);
             }
-            return new Weapon(name, description, cost, rarity,maxStack,sprite, equipmentSlotType, weaponLevel, maxLevel, AttackRanges,
+            return new Weapon(name, description, cost, rarity,maxStack,sprite, weaponLevel, maxLevel, AttackRanges,
                 WeaponAttributes, WeaponType, DamageType, effectiveness);
         }
     }

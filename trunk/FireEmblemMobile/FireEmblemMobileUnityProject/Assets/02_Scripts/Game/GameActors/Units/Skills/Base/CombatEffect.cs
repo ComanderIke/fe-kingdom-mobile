@@ -17,20 +17,20 @@ namespace Game.GameActors.Units.Skills
             if (BonusAttributes != null&& BonusAttributes.Length>0)
             {
                 if(level < BonusAttributes.Length)
-                    target.Stats.BonusAttributes += BonusAttributes[level];
+                    target.Stats.BonusAttributesFromEffects += BonusAttributes[level];
                 else
                 {
-                    target.Stats.BonusAttributes += BonusAttributes[BonusAttributes.Length-1];
+                    target.Stats.BonusAttributesFromEffects += BonusAttributes[BonusAttributes.Length-1];
                 }
             }
 
             if (BonusStats != null&& BonusStats.Length>0)
             {
                 if(level < BonusStats.Length)
-                    target.Stats.BonusStats += BonusStats[level];
+                    target.Stats.BonusStatsFromEffects += BonusStats[level];
                 else
                 {
-                    target.Stats.BonusStats += BonusStats[BonusStats.Length-1];
+                    target.Stats.BonusStatsFromEffects += BonusStats[BonusStats.Length-1];
                 }
             }
                
@@ -42,20 +42,20 @@ namespace Game.GameActors.Units.Skills
             if (BonusAttributes != null && BonusAttributes.Length > 0)
             {
                 if (level < BonusAttributes.Length)
-                    target.Stats.BonusAttributes -= BonusAttributes[level];
+                    target.Stats.BonusAttributesFromEffects -= BonusAttributes[level];
                 else
                 {
-                    target.Stats.BonusAttributes -= BonusAttributes[BonusAttributes.Length - 1];
+                    target.Stats.BonusAttributesFromEffects -= BonusAttributes[BonusAttributes.Length - 1];
                 }
             }
 
             if (BonusStats != null&& BonusStats.Length>0)
             {
                 if(level < BonusStats.Length)
-                    target.Stats.BonusStats -= BonusStats[level];
+                    target.Stats.BonusStatsFromEffects -= BonusStats[level];
                 else
                 {
-                    target.Stats.BonusStats -= BonusStats[BonusStats.Length-1];
+                    target.Stats.BonusStatsFromEffects -= BonusStats[BonusStats.Length-1];
                 }
             }
         }

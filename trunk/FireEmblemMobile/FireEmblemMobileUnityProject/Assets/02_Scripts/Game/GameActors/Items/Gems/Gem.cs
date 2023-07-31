@@ -1,4 +1,5 @@
 ﻿using Game.GameActors.Items.Weapons;
+using Game.GameActors.Units.Skills;
 using UnityEngine;
 
 namespace Game.GameActors.Items.Gems
@@ -9,19 +10,19 @@ namespace Game.GameActors.Items.Gems
         [SerializeField]
         private GemType gemType;
 
+        [SerializeField] private SkillEffectMixin gemEffect;
         private bool inserted = false;
         private Gem upgradeTo;
-        public Gem(string name, string description, int cost, int maxStack,Sprite sprite, int rarity, GemType gemType, Gem upgradeTo) : base(name, description, cost, rarity,maxStack,sprite)
+        public Gem(string name, string description, int cost, int maxStack,Sprite sprite, int rarity, SkillEffectMixin gemEffect, Gem upgradeTo) : base(name, description, cost, rarity,maxStack,sprite)
         {
-            
-            this.gemType = gemType;
+            this.gemEffect = gemEffect;
             this.upgradeTo = upgradeTo;
         }
 
-        public GemType GetGemType(GemType gemType)
-        {
-            return gemType;
-        }
+        // public GemType GetGemType(GemType gemType)
+        // {
+        //     return gemType;
+        // }
         public void Insert()
         {
             inserted = true;

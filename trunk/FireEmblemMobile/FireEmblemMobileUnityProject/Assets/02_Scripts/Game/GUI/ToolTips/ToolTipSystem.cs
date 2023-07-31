@@ -3,7 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Game.GameActors.Items;
 using Game.GameActors.Items.Weapons;
+using Game.GameActors.Units;
+using Game.GameActors.Units.Numbers;
 using Game.GameActors.Units.Skills;
+using Game.Mechanics.Battle;
 using Game.Utility;
 using LostGrace;
 using UnityEngine;
@@ -17,6 +20,9 @@ public class ToolTipSystem : MonoBehaviour
     [FormerlySerializedAs("SkillToolTip")] public SkillTreeToolTip skillTreeToolTip;
     public SkillToolTip skillToolTip;
     public AttributeToolTip AttributeToolTip;
+
+    public AttributeValueTooltipUI AttributeValueTooltipUI;
+    public CombatStatValueTooltipUI CombatStatalueTooltipUI;
     //public EncounterToolTip EncounterToolTip;
     //public EncounterToolTip EncounterAttackToolTip;
     public RelicToolTip relicToolTip;
@@ -35,6 +41,9 @@ public class ToolTipSystem : MonoBehaviour
         instance.AttributeToolTip.gameObject.SetActive(false);
         instance.skillTreeToolTip.gameObject.SetActive(false);
         instance.ItemToolTip.gameObject.SetActive(false);
+        instance.CombatStatalueTooltipUI.gameObject.SetActive(false);
+        instance.AttributeValueTooltipUI.gameObject.SetActive(false);
+        
     }
     static void CloseAllToolTipsExceptEncounter()
     {
@@ -46,6 +55,8 @@ public class ToolTipSystem : MonoBehaviour
         instance.AttributeToolTip.gameObject.SetActive(false);
         instance.skillTreeToolTip.gameObject.SetActive(false);
         instance.ItemToolTip.gameObject.SetActive(false);
+        instance.CombatStatalueTooltipUI.gameObject.SetActive(false);
+        instance.AttributeValueTooltipUI.gameObject.SetActive(false);
     }
     static void CloseAllEncounterTooltips()
     {
@@ -145,6 +156,22 @@ public class ToolTipSystem : MonoBehaviour
         Debug.Log("transformPos: "+position+" ScreenPos"+Camera.main.WorldToScreenPoint(position));
         instance.AttributeToolTip.gameObject.SetActive(true);
         instance.AttributeToolTip.SetValues(header,description, value, Camera.main.WorldToScreenPoint(position));
+    }
+    public static void ShowAttributeValue(Unit unit,AttributeType attributeType, Vector3 position)
+    {
+        instance.tooltipShownThisFrame = true;
+        CloseAllToolTips();
+        Debug.Log("transformPos: "+position+" ScreenPos"+Camera.main.WorldToScreenPoint(position));
+        instance.AttributeValueTooltipUI.gameObject.SetActive(true);
+        instance.AttributeValueTooltipUI.Show(unit,  attributeType, Camera.main.WorldToScreenPoint(position));
+    }
+    public static void ShowCombatStatValue(Unit unit,BonusStats.CombatStatType combatStatType, Vector3 position)
+    {
+        instance.tooltipShownThisFrame = true;
+        CloseAllToolTips();
+        Debug.Log("transformPos: "+position+" ScreenPos"+Camera.main.WorldToScreenPoint(position));
+        instance.CombatStatalueTooltipUI.gameObject.SetActive(true);
+        instance.CombatStatalueTooltipUI.Show(unit,  combatStatType, Camera.main.WorldToScreenPoint(position));
     }
     public static void HideAttribute()
     {

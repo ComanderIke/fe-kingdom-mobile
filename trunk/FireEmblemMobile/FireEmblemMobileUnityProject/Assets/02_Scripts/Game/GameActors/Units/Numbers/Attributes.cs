@@ -114,7 +114,7 @@ namespace Game.GameActors.Units.Numbers
             OnAttributesUpdated?.Invoke();
         }
 
-        public static object GetAsText(int textoptionStatIndex)
+        public static string GetAsText(int textoptionStatIndex)
         {
             switch (textoptionStatIndex)
             {
@@ -225,8 +225,6 @@ namespace Game.GameActors.Units.Numbers
 
     public enum AttributeType
     {
-        NONE,
-        ATK,
         STR,
         DEX,
         INT,
@@ -235,6 +233,7 @@ namespace Game.GameActors.Units.Numbers
         LCK,
         DEF,
         FTH,
-        LVL
+        LVL,
+        NONE
     }
 }

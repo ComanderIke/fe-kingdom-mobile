@@ -46,7 +46,7 @@ namespace Game.GameActors.Units.Skills
                 }
             }
            
-            caster.Stats.BonusStats.Attack += dmgPerAlly[level] * allyCount;
+            caster.Stats.BonusStatsFromEffects.Attack += dmgPerAlly[level] * allyCount;
             
         }
 

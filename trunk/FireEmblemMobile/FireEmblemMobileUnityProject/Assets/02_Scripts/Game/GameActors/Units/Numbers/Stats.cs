@@ -15,8 +15,11 @@ namespace Game.GameActors.Units.Numbers
         public List<int> AttackRanges;
         [SerializeField]
         public Attributes BaseAttributes;
-
-        public BonusStats BonusStats;
+        public Attributes BonusAttributesFromEquips { get; set; }
+        public Attributes BonusAttributesFromEffects { get; set; }
+        public BonusStats BonusStatsFromTerrain { get; set; }
+        public BonusStats BonusStatsFromEffects { get; set; }
+        public BonusStats BonusStatsFromEquips { get; set; }
         // [SerializeField]
         // public int MaxSp;
         [SerializeField]
@@ -25,12 +28,16 @@ namespace Game.GameActors.Units.Numbers
         public Stats()
         {
             BaseAttributes = new Attributes();
-            BonusAttributes = new Attributes();
-            BonusStats = new BonusStats();
+            BonusAttributesFromEffects = new Attributes();
+            BonusAttributesFromEquips = new Attributes();
+            BonusStatsFromEffects = new BonusStats();
+            BonusStatsFromEquips = new BonusStats();
+            BonusStatsFromTerrain = new BonusStats();
+            
             AttackRanges = new List<int>();
         }
 
-        public Attributes BonusAttributes { get; set; }
+    
         public Attributes BonusGrowths { get; set; }
 
 
@@ -56,9 +63,13 @@ namespace Game.GameActors.Units.Numbers
            // stats.MaxSp = MaxSp;
          //  Debug.Log("Clone2Attriubtes");
             stats.BaseAttributes = new Attributes(BaseAttributes);
-            stats.BonusAttributes = new Attributes(BonusAttributes);
+            stats.BonusAttributesFromEffects = new Attributes(BonusAttributesFromEffects);
+          
+            stats.BonusAttributesFromEquips = new Attributes(BonusAttributesFromEquips);
             stats.Mov = Mov;
-            stats.BonusStats = new BonusStats(BonusStats);
+            stats.BonusStatsFromEffects = new BonusStats(BonusStatsFromEffects);
+            stats.BonusStatsFromTerrain = new BonusStats(BonusStatsFromTerrain);
+            stats.BonusStatsFromEquips = new BonusStats(BonusStatsFromEquips);
            
             return stats;
         }
@@ -74,7 +85,12 @@ namespace Game.GameActors.Units.Numbers
 
         public Attributes CombinedAttributes()
         {
-            return BaseAttributes + BonusAttributes;
+            return BaseAttributes + BonusAttributesFromEffects+ BonusAttributesFromEquips;
+        }
+
+        public BonusStats CombinedBonusStats()
+        {
+            return BonusStatsFromEquips + BonusStatsFromEffects+ BonusStatsFromTerrain;
         }
     }
 }

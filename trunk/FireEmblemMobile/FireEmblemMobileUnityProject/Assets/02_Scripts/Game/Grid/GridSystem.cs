@@ -306,29 +306,29 @@ namespace Game.Map
 
                     Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y].GridObject = null;
                 }
-
+                
+                unit.SetGridPosition(Tiles[x,y]);
                 Tiles[x, y].GridObject = unit;
-                unit.GridComponent.SetPosition(x, y);
             }
             else
             {
                 Debug.LogError("Out of Bounds: "+x+" "+y +" "+unit);
             }
         }
-        public void SetUnitInternPosition(IGridActor unit, int x, int y)
-        {
-            if (x != -1 && y != -1)
-            {
-                if (unit.GridComponent.GridPosition.X != -1 && unit.GridComponent.GridPosition.Y != -1)
-                {
-
-                    Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y].GridObject = null;
-                }
-                Debug.Log("UNIT: "+unit);
-                Tiles[x, y].GridObject = unit;
-                unit.GridComponent.SetInternPosition(x, y);
-            }
-        }
+        // public void SetUnitInternPosition(IGridActor unit, int x, int y)
+        // {
+        //     if (x != -1 && y != -1)
+        //     {
+        //         if (unit.GridComponent.GridPosition.X != -1 && unit.GridComponent.GridPosition.Y != -1)
+        //         {
+        //
+        //             Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y].GridObject = null;
+        //         }
+        //         Debug.Log("UNIT: "+unit);
+        //         Tiles[x, y].GridObject = unit;
+        //         unit.GridComponent.SetInternPosition(x, y);
+        //     }
+        // }
 
         public List<Tile> GetActiveTiles()
         {

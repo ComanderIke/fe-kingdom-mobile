@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Game.GameActors.Units.Skills;
+using UnityEngine;
 
 namespace Game.GameActors.Items.Gems
 {
@@ -15,13 +16,13 @@ namespace Game.GameActors.Items.Gems
     [CreateAssetMenu(menuName = "GameData/Items/Gem", fileName = "Gem")]
     public class GemBP: ItemBP
     {
-        [SerializeField] private GemType gemType;
+        [SerializeField] private SkillEffectMixin gemEffect;
         [SerializeField] private GemBP upgradeTo;
         public override Item Create()
         {
             if(upgradeTo!=null)
-                return new Gem(name, description, cost, maxStack,sprite,rarity , gemType,(Gem) upgradeTo.Create());
-            return new Gem(name, description, cost, maxStack,sprite,rarity , gemType,null);
+                return new Gem(name, description, cost, maxStack,sprite,rarity , gemEffect,(Gem) upgradeTo.Create());
+            return new Gem(name, description, cost, maxStack,sprite,rarity , gemEffect,null);
         }
 
         

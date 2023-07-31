@@ -17,5 +17,6 @@ namespace Game.GameActors.Units
 
 
         bool IsAlive();
+        void SetGridPosition(Tile newTile);
     }
 }

@@ -100,7 +100,7 @@ namespace Game.Mechanics.Battle
         {
             if (preventDoubleAttacks)
                 return false;
-            return owner.BattleComponent.BattleStats.GetAttackSpeed() >= c.BattleComponent.BattleStats.GetAttackSpeed() + AGILITY_TO_DOUBLE;
+            return GetAttackSpeed() >= c.BattleComponent.BattleStats.GetAttackSpeed() + AGILITY_TO_DOUBLE;
         }
 
         public int GetDamage(float attackModifier)
@@ -129,7 +129,7 @@ namespace Game.Mechanics.Battle
                 attack += attackModifier.Sum(modi => ((int) (unmodifiedAttack * modi)) - unmodifiedAttack);
             }
 
-            attack += owner.Stats.BonusStats.Attack;
+            attack += owner.Stats.CombinedBonusStats().Attack;
 
             return (int) Mathf.Clamp(attack, 0, Mathf.Infinity);
         }
@@ -193,7 +193,7 @@ namespace Game.Mechanics.Battle
                     return owner.Stats.BaseAttributes.INT + owner.GetEquippedWeapon().GetDamage();
             }
 
-            return owner.Stats.BaseAttributes.STR;
+            return owner.Stats.BaseAttributes.STR+owner.Stats.CombinedBonusStats().Attack;
         }
 
         public int GetTotalDamageAgainstTarget(IAttackableTarget target)
@@ -229,6 +229,7 @@ namespace Game.Mechanics.Battle
             return 0;
         }
 
+        public const int HIT_DEX_MULT=2;
         
         public int GetHitrate()
         {
@@ -238,16 +239,15 @@ namespace Game.Mechanics.Battle
             // Debug.Log(human.EquippedWeapon.Hit);
             //Debug.Log(human.Stats.Attributes.DEX);
             
-            return (owner.Stats.CombinedAttributes().DEX- owner.GetEquippedWeapon().GetWeight()) * 2 + owner.GetEquippedWeapon().GetHit()+ owner.Stats.BonusStats.Hit;
+            return (owner.Stats.CombinedAttributes().DEX- owner.GetEquippedWeapon().GetWeight()) * HIT_DEX_MULT+ owner.GetEquippedWeapon().GetHit()+ owner.Stats.CombinedBonusStats().Hit;
             
         }
+        public const int AVO_AGI_MULT=2;
         public int GetAvoid()
         {
-            var tileBonus = 0;
-            if(owner.GetTile()!=null)
-                tileBonus=owner.GetTile().TileData.avoBonus;
+           
          
-           return  tileBonus+ (owner.Stats.CombinedAttributes().AGI  - owner.GetEquippedWeapon().GetWeight())* 2+ owner.Stats.BonusStats.Avoid;
+           return  (owner.Stats.CombinedAttributes().AGI  - owner.GetEquippedWeapon().GetWeight())* AVO_AGI_MULT+ owner.Stats.CombinedBonusStats().Avoid;
             
             
         }
@@ -260,23 +260,20 @@ namespace Game.Mechanics.Battle
 
         public int GetAttackSpeed()
         {
-            int spd = owner.Stats.CombinedAttributes().AGI - owner.GetEquippedWeapon().GetWeight()+ owner.Stats.BonusStats.AttackSpeed;
-            if (owner.GetTile() != null)
-            {
-                spd += owner.GetTile().TileData.speedMalus;
-            }
+            int spd = owner.Stats.CombinedAttributes().AGI - owner.GetEquippedWeapon().GetWeight()+ owner.Stats.CombinedBonusStats().AttackSpeed;
+          
             return spd;
            
         }
 
         public int GetCrit()
         {
-            return owner.Stats.CombinedAttributes().LCK+owner.Stats.CombinedAttributes().DEX+ owner.Stats.BonusStats.Crit;
+            return owner.Stats.CombinedAttributes().LCK+owner.Stats.CombinedAttributes().DEX+ owner.Stats.CombinedBonusStats().Crit;
         }
-
+        public const int CRIT_AVO_LCK_MULT=2;
         public int GetCritAvoid()
         {
-            return owner.Stats.CombinedAttributes().LCK*2+ owner.Stats.BonusStats.CritAvoid;
+            return owner.Stats.CombinedAttributes().LCK*CRIT_AVO_LCK_MULT+ owner.Stats.CombinedBonusStats().CritAvoid;
         }
 
         public int GetPhysicalResistance()
@@ -286,17 +283,15 @@ namespace Game.Mechanics.Battle
             //     
             //     return human.EquippedArmor.armor;
             // }
-            int def = owner.Stats.CombinedAttributes().DEF + owner.Stats.BonusStats.Armor;
-            if (owner.GetTile() != null)
-                def += owner.GetTile().TileData.defenseBonus;
+            int def = owner.Stats.CombinedAttributes().DEF + owner.Stats.CombinedBonusStats().Armor;
+   
             return def;
         }
 
         public int GetFaithResistance()
         {
-            int fth = owner.Stats.CombinedAttributes().FAITH+owner.Stats.BonusStats.MagicResistance;
-            if (owner.GetTile() != null)
-                fth += owner.GetTile().TileData.defenseBonus;
+            int fth = owner.Stats.CombinedAttributes().FAITH+owner.Stats.CombinedBonusStats().MagicResistance;
+            
             return fth;
         }
 
@@ -306,15 +301,44 @@ namespace Game.Mechanics.Battle
             return Math.Max(0,GetCrit() - defender.BattleComponent.BattleStats.GetCritAvoid());
         }
 
-        public void AddDamageInfluencer(IDamageInfluencer attackBonusBlessing)
-        {
-            throw new NotImplementedException();
-        }
-
-       
         public void SetPreventDoubleAttacks(bool prevent)
         {
             preventDoubleAttacks = prevent;
+        }
+
+        public int GetStatFromEnum(BonusStats.CombatStatType type)
+        {
+            switch (type)
+            {
+                case BonusStats.CombatStatType.Attack: return GetAttackDamage();
+                case BonusStats.CombatStatType.Avoid: return GetAvoid();
+                case BonusStats.CombatStatType.Crit: return GetCrit();
+                case BonusStats.CombatStatType.Critavoid: return GetCritAvoid();
+                case BonusStats.CombatStatType.Hit: return GetHitrate();
+                case BonusStats.CombatStatType.MagicResistance: return GetFaithResistance();
+                case BonusStats.CombatStatType.PhysicalResistance: return GetPhysicalResistance();
+                case BonusStats.CombatStatType.AttackSpeed: return GetAttackSpeed();
+            }
+
+            return -1;
+        }
+
+        public int GetStatWithoutBonusesFromEnum(BonusStats.CombatStatType type)
+        {
+            Debug.Log("TODO Make Functions that use just base Attributes and equipment but no effects/terrain");
+            switch (type)
+            {
+                case BonusStats.CombatStatType.Attack: return GetAttackDamage();
+                case BonusStats.CombatStatType.Avoid: return GetAvoid();
+                case BonusStats.CombatStatType.Crit: return GetCrit();
+                case BonusStats.CombatStatType.Critavoid: return GetCritAvoid();
+                case BonusStats.CombatStatType.Hit: return GetHitrate();
+                case BonusStats.CombatStatType.MagicResistance: return GetFaithResistance();
+                case BonusStats.CombatStatType.PhysicalResistance: return GetPhysicalResistance();
+                case BonusStats.CombatStatType.AttackSpeed: return GetAttackSpeed();
+            }
+
+            return -1;
         }
     }
 }

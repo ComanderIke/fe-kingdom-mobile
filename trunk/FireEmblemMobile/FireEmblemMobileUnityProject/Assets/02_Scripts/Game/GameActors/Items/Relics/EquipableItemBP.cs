@@ -11,13 +11,9 @@ namespace Game.GameActors.Items.Weapons
     [Serializable]
     public abstract class EquipableItemBP : ItemBP
     {
-        [FormerlySerializedAs("EquipmentSlotType")] public EquipmentSlotType equipmentSlotType;
+     
 
     }
     
-    public enum EquipmentSlotType
-    {
-        Relic,
-        Weapon
-    }
+  
 }

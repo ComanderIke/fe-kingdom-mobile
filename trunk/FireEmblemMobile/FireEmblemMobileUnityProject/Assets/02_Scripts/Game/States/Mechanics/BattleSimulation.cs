@@ -381,14 +381,14 @@ namespace Game.Mechanics
 
         public int GetTileDefenseBonuses()
         {
-            return Attacker.GetTile().TileData.defenseBonus;
+            return Attacker.Stats.BonusStatsFromTerrain.Armor;
         }
 
        
 
         public int GetTileAvoidBonuses()
         {
-            return Attacker.GetTile().TileData.avoBonus;
+            return Attacker.Stats.BonusStatsFromTerrain.Avoid;
         }
     }
 

@@ -33,6 +33,7 @@ namespace Game.GameActors.Units
                 {
                     previousTile = tile;
                 }
+                
                 tile = value;
             }
         }
@@ -43,13 +44,13 @@ namespace Game.GameActors.Units
         {
             GridPosition.SetPosition(x, y);
         }
-        public virtual void SetInternPosition( int x, int y)
-        {
-            //previousTile = Tile;
-            Debug.Log("SetInternPosition: "+ x +" "+y);
-            GridPosition.SetPosition(x, y);
-            //gridActor.GameTransformManager.SetPosition(x, y);
-        }
+        // public virtual void SetInternPosition( int x, int y)
+        // {
+        //     //previousTile = Tile;
+        //     Debug.Log("SetInternPosition: "+ x +" "+y);
+        //     GridPosition.SetPosition(x, y);
+        //     //gridActor.GameTransformManager.SetPosition(x, y);
+        // }
 
         public bool IsInRange(GridComponent gridComponent, int range)
         {

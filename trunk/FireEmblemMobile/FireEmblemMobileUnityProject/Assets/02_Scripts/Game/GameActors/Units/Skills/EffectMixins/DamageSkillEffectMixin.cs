@@ -29,7 +29,7 @@ namespace Game.GameActors.Units.Skills
             }
             else
             {
-                caster.Stats.BonusStats.Attack += baseDamageg + scalingdmg;
+                caster.Stats.BonusStatsFromEffects.Attack += baseDamageg + scalingdmg;
             }
 
         }

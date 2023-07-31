@@ -81,14 +81,24 @@ namespace Game.GameActors.Units
             Weapon weapon = null;
             if(equippedWeaponBp!=null)
                 weapon = (Weapon)equippedWeaponBp.Create();
+            var skillManager = new SkillManager(SkillManager);
+            skillManager.AddStartSkills();
+            var unit = new Unit(bluePrintID, Name, rpgClass, (Stats)stats.Clone(), growths, moveType, weapon, 
+                new UnitVisual(visuals), skillManager,
+                new ExperienceManager(experienceManager));
             Relic relic1 = null;
-            if(EquippedRelic1!=null)
+            if (EquippedRelic1 != null)
+            {
                 relic1 = (Relic)EquippedRelic1.Create();
+                unit.Equip(relic1);
+            }
+
             StockedCombatItem cItem1= null;
             if (this.combatItem1 != null && this.combatItem1.item != null && combatItem1.stock > 0)
             {
                 var tmp = combatItem1.Create();
                 cItem1 = new StockedCombatItem((IEquipableCombatItem)tmp.item, tmp.stock);
+                unit.Equip(cItem1, 1);
             }
                
             StockedCombatItem cItem2= null;
@@ -96,12 +106,16 @@ namespace Game.GameActors.Units
             {
                 var tmp = combatItem2.Create();
                 cItem2 = new StockedCombatItem((IEquipableCombatItem)tmp.item, tmp.stock);
+                unit.Equip(cItem2, 2);
             }
 
-            var skillManager = new SkillManager(SkillManager);
-            skillManager.AddStartSkills();
-            return new Unit(bluePrintID, Name, rpgClass, (Stats)stats.Clone(), growths, moveType, weapon, relic1,cItem1, cItem2, new UnitVisual(visuals),skillManager,
-                new ExperienceManager(experienceManager));
+           
+           
+           
+          
+           
+           
+            return unit;
         }
     }
 }

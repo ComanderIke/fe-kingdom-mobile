@@ -10,7 +10,8 @@ namespace Game.GUI
         protected override void Awake()
         {
             base.Awake();
-            DropArea.dropConditions.Add(new IsWeaponCondition(EquipmentSlotType.Relic));
+            Debug.Log("TODO? DropAreaOnlyRelicsCondition");
+         //   DropArea.dropConditions.Add(new IsWeaponCondition());
         }
 
        

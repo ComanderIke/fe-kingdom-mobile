@@ -16,6 +16,6 @@ public class AttributeEncounterBuff : EncounterBasedBuff, ITemporaryEffect{
 
     public override void Apply(Unit unit)
     {
-        unit.Stats.BonusAttributes.IncreaseAttribute(value, attributeType);
+        unit.Stats.BonusAttributesFromEffects.IncreaseAttribute(value, attributeType);
     }
 }

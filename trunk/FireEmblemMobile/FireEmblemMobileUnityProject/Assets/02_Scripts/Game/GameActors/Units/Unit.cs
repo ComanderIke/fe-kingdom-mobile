@@ -113,8 +113,8 @@ namespace Game.GameActors.Units
             get { return visuals; }
         }
 
-        public Unit(string bluePrintID, string name,RpgClass rpgClass,Stats stats, Attributes growths, MoveType moveType, Weapon equippedWeapon, Relic equippedRelic,
-            StockedCombatItem combatItem1, StockedCombatItem combatItem2, UnitVisual visuals, SkillManager skillManager, ExperienceManager experienceManager)
+        public Unit(string bluePrintID, string name,RpgClass rpgClass,Stats stats, Attributes growths, MoveType moveType, Weapon equippedWeapon,
+             UnitVisual visuals, SkillManager skillManager, ExperienceManager experienceManager)
         {
             this.bluePrintID = bluePrintID;
             HealingMultipliers = new List<float>();
@@ -125,31 +125,34 @@ namespace Game.GameActors.Units
             this.growths = growths;
             this.moveType = moveType;
             this.equippedWeapon = equippedWeapon;
-            if (equippedRelic == null)
-            {
-                EquippedRelic = null;
-            }
-            else
-            {
-                EquippedRelic = equippedRelic;
-            }
-
-            if (combatItem1 != null && combatItem1.item != null)
-            {
-                CombatItem1 = combatItem1;
-            }
-            else
-            {
-                CombatItem1 = null;
-            }
-            if (combatItem2 != null && combatItem2.item != null)
-            {
-                CombatItem2 = combatItem2;
-            }
-            else
-            {
-                CombatItem2 = null;
-            }
+            // if (equippedRelic == null)
+            // {
+            //     EquippedRelic = null;
+            // }
+            // else
+            // {
+            //     Equip(equippedRelic, false);
+            //     
+            // }
+            //
+            // if (combatItem1 != null && combatItem1.item != null)
+            // {
+            //     Equip(combatItem1,1, false);
+            //     //CombatItem1 = combatItem1;
+            // }
+            // else
+            // {
+            //     CombatItem1 = null;
+            // }
+            // if (combatItem2 != null && combatItem2.item != null)
+            // {
+            //     Equip(combatItem1,2, false);
+            //     //CombatItem2 = combatItem2;
+            // }
+            // else
+            // {
+            //     CombatItem2 = null;
+            // }
 
             
             this.visuals = visuals;
@@ -397,7 +400,7 @@ namespace Game.GameActors.Units
             return true;
         }
 
-        public void Equip(StockedCombatItem combatItem, int slot)
+        public void Equip(StockedCombatItem combatItem, int slot, bool triggerEvents = true)
         {
             Debug.Log("Equip Combat Item on Slot: "+slot);
             if (slot==1)
@@ -411,7 +414,11 @@ namespace Game.GameActors.Units
                     UnEquip(CombatItem1);
                     CombatItem1 = combatItem;
                 }
-                OnEquippedCombatItem?.Invoke(CombatItem1);
+
+                if (triggerEvents)
+                {
+                    OnEquippedCombatItem?.Invoke(CombatItem1);
+                }
             }
             else if (slot==2)
             {
@@ -424,28 +431,41 @@ namespace Game.GameActors.Units
                     UnEquip(CombatItem2);
                     CombatItem2=combatItem;
                 }
-               
-                OnEquippedCombatItem?.Invoke(CombatItem2);
+
+                if (triggerEvents)
+                {
+                    OnEquippedCombatItem?.Invoke(CombatItem2);
+                }
             }
-            OnUnitDataChanged?.Invoke(this);
-           
+
+            if (triggerEvents)
+            {
+                OnUnitDataChanged?.Invoke(this);
+            }
+
         }
       
-        public void Equip(Relic r)
+        public void Equip(Relic r, bool triggerEvents=true)
         {
             if (EquippedRelic == null)
             {
                 EquippedRelic = r;
+                EquippedRelic.Equip(this);
                
             }
             else
             {
                 UnEquipRelic();
                 EquippedRelic = r;
+                EquippedRelic.Equip(this);
             }
-            OnEquippedRelic?.Invoke(r);
-            OnUnitDataChanged?.Invoke(this);
-           
+
+            if (triggerEvents)
+            {
+                OnEquippedRelic?.Invoke(r);
+                OnUnitDataChanged?.Invoke(this);
+            }
+
         }
       
         protected virtual void HandleCloned(Unit clone)
@@ -508,6 +528,28 @@ namespace Game.GameActors.Units
         public bool IsAlive()
         {
             return Hp > 0;
+        }
+
+        private void UpdateTerrainBonuses(Tile oldTile, Tile newTile)
+        {
+            if (oldTile != null)
+            {
+                var oldTileData = oldTile.TileData;
+                Stats.BonusStatsFromTerrain.Avoid -= oldTileData.avoBonus;
+                Stats.BonusStatsFromTerrain.Armor -= oldTileData.defenseBonus;
+                Stats.BonusStatsFromTerrain.MagicResistance -= oldTileData.defenseBonus;
+                Stats.BonusStatsFromTerrain.AttackSpeed -= oldTileData.speedMalus;
+            }
+            var tileData = newTile.TileData;
+            Stats.BonusStatsFromTerrain.Avoid += tileData.avoBonus;
+            Stats.BonusStatsFromTerrain.Armor += tileData.defenseBonus;
+            Stats.BonusStatsFromTerrain.MagicResistance += tileData.defenseBonus;
+            Stats.BonusStatsFromTerrain.AttackSpeed += tileData.speedMalus;
+        }
+        public void SetGridPosition(Tile newTile)
+        {
+            UpdateTerrainBonuses(GridComponent.Tile, newTile);
+            GridComponent.SetPosition(newTile.X, newTile.Y);
         }
 
         public bool IsEnemy(IGridActor unit)
@@ -615,6 +657,7 @@ namespace Game.GameActors.Units
         public void UnEquipRelic()
         {
             var relic = EquippedRelic;
+            relic.Unequip(this);
             EquippedRelic = null;
             OnUnequippedRelic?.Invoke(relic);
         }

@@ -30,16 +30,13 @@ namespace Game.GameActors.Items.Weapons
         [Header("RelicAttributes")]
         public int slotCount = 0;
         public GemSlot[] slots;
-        public Attributes attributes;
-        public RelicPassiveEffectType passiveEffect;
-        public Skill activeSkill;
+        public Skill skill;
         private Unit user;
-        public Relic(string name, string description, int cost, int rarity, int maxStack,Sprite sprite, EquipmentSlotType slotType,Attributes attributes,RelicPassiveEffectType passiveEffect,Skill activeSkill,int slotCount) : base(name, description, cost,rarity, maxStack,sprite, slotType)
+        public Relic(string name, string description, int cost, int rarity, int maxStack,Sprite sprite,Skill skill,int slotCount) : base(name, description, cost,rarity, maxStack,sprite)
         {
             this.slotCount = slotCount;
-            this.activeSkill = activeSkill;
-            this.passiveEffect = passiveEffect;
-            this.attributes = attributes;
+            this.skill = skill;
+            
             slots = new GemSlot[slotCount];
             for (int i=0; i < slotCount; i++)
             {
@@ -104,6 +101,22 @@ namespace Game.GameActors.Items.Weapons
             if (slots.Length > index)
                 return slots[index].gem;
             return null;
+        }
+
+        public void Unequip(Unit unit)
+        {
+            if (skill != null)
+            {
+                skill.UnbindSkill(unit);
+            }
+        }
+
+        public void Equip(Unit unit)
+        {
+            if (skill != null)
+            {
+                skill.BindSkill(unit);
+            }
         }
     }
 }
