@@ -10,8 +10,12 @@ namespace Game.GameActors.Units
 
         public virtual void ResetPosition()
         {
-            if(previousTile!=null)
+            if (previousTile != null)
+            {
                 Tile = previousTile;
+                OnTileChanged?.Invoke(Tile);
+            }
+
         }
 
         public GridComponent()
@@ -35,6 +39,7 @@ namespace Game.GameActors.Units
                 }
                 
                 tile = value;
+                OnTileChanged?.Invoke(Tile);
             }
         }
 
@@ -43,14 +48,9 @@ namespace Game.GameActors.Units
         public virtual void SetPosition(int x, int y)
         {
             GridPosition.SetPosition(x, y);
+           
         }
-        // public virtual void SetInternPosition( int x, int y)
-        // {
-        //     //previousTile = Tile;
-        //     Debug.Log("SetInternPosition: "+ x +" "+y);
-        //     GridPosition.SetPosition(x, y);
-        //     //gridActor.GameTransformManager.SetPosition(x, y);
-        // }
+ 
 
         public bool IsInRange(GridComponent gridComponent, int range)
         {
@@ -59,6 +59,7 @@ namespace Game.GameActors.Units
 
         }
 
-       
+
+        public event Action<Tile> OnTileChanged;
     }
 }

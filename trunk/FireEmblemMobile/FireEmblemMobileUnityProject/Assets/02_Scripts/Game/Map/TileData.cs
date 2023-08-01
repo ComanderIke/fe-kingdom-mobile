@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Game.GameActors.Units;
+using Game.Grid;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -18,6 +19,7 @@ namespace Game.Map
         }
 
         public List<Sprite> sprites;
+        public TerrainType TerrainType;
         public new string name;
         public bool walkable = true;
         public int defenseBonus;

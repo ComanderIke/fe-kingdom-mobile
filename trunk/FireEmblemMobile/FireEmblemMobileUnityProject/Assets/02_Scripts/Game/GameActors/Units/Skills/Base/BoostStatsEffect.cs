@@ -6,14 +6,16 @@ using UnityEngine;
 
 namespace Game.GameActors.Units.Skills
 {
-    [CreateAssetMenu(menuName = "GameData/Skills/Effectmixin/Combat", fileName = "CombatEffect")]
-    public class CombatEffect : SelfTargetSkillEffectMixin
+ 
+    [CreateAssetMenu(menuName = "GameData/Skills/Effectmixin/Stats", fileName = "StatsEffect")]
+    public class BoostStatsEffect : SelfTargetSkillEffectMixin
     {
-        
+      
         public Attributes[] BonusAttributes;
         public BonusStats[] BonusStats;
         public override void Activate(Unit target, int level)
         {
+           
             if (BonusAttributes != null&& BonusAttributes.Length>0)
             {
                 if(level < BonusAttributes.Length)
@@ -102,4 +104,5 @@ namespace Game.GameActors.Units.Skills
             return list;
         }
     }
+
 }

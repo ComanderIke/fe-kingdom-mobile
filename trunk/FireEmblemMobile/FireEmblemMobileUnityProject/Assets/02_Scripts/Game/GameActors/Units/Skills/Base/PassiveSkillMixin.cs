@@ -5,9 +5,11 @@ using UnityEngine.WSA;
 
 namespace Game.GameActors.Units.Skills
 {
+   
+
     public abstract class PassiveSkillMixin:SkillMixin
     {
-        
+       
         [SerializeField]public List<SkillEffectMixin> skillEffectMixins;
         //[SerializeField]private EffectDescription[] effectDescriptionsPerLevel;
 

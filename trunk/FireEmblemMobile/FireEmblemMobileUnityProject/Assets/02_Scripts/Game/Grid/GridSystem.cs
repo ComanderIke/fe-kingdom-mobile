@@ -307,8 +307,10 @@ namespace Game.Map
                     Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y].GridObject = null;
                 }
                 
+                
                 unit.SetGridPosition(Tiles[x,y]);
                 Tiles[x, y].GridObject = unit;
+                
             }
             else
             {
