@@ -111,18 +111,14 @@ namespace Game.Mechanics.Battle
 
         public int GetDamage(List<float> attackModifier = null)
         {
-            int weaponDamage = 0;
             
-            if (owner.GetEquippedWeapon() != null)
-                weaponDamage = owner.GetEquippedWeapon().GetDamage();
             
-            int unmodifiedAttack = owner.Stats.CombinedAttributes().STR + weaponDamage;
+            int unmodifiedAttack = owner.Stats.CombinedAttributes().STR;
             if (GetDamageType()==DamageType.Magic)
             {
-                unmodifiedAttack = owner.Stats.CombinedAttributes().INT + weaponDamage;
+                unmodifiedAttack = owner.Stats.CombinedAttributes().INT;
             }
-            
-           
+
             int attack = unmodifiedAttack;
             if (attackModifier != null)
             {
@@ -181,20 +177,6 @@ namespace Game.Mechanics.Battle
 
             return DamageType.Physical;
         }
-        public int GetAttackDamage()
-        {
-            if (owner.GetEquippedWeapon() != null)
-            {
-                if (owner.GetEquippedWeapon().DamageType != DamageType.Magic&&owner.GetEquippedWeapon().DamageType != DamageType.Faith)
-                    return owner.Stats.BaseAttributes.STR + owner.GetEquippedWeapon().GetDamage();
-                else if (owner.GetEquippedWeapon().DamageType == DamageType.Faith)
-                    return owner.Stats.BaseAttributes.FAITH + owner.GetEquippedWeapon().GetDamage();
-                else
-                    return owner.Stats.BaseAttributes.INT + owner.GetEquippedWeapon().GetDamage();
-            }
-
-            return owner.Stats.BaseAttributes.STR+owner.Stats.CombinedBonusStats().Attack;
-        }
 
         public int GetTotalDamageAgainstTarget(IAttackableTarget target)
         {
@@ -233,13 +215,9 @@ namespace Game.Mechanics.Battle
         
         public int GetHitrate()
         {
-       
-         
-            //Debug.Log("TODO ATTACK SPEED CALC");
-            // Debug.Log(human.EquippedWeapon.Hit);
-            //Debug.Log(human.Stats.Attributes.DEX);
             
-            return (owner.Stats.CombinedAttributes().DEX- owner.GetEquippedWeapon().GetWeight()) * HIT_DEX_MULT+ owner.GetEquippedWeapon().GetHit()+ owner.Stats.CombinedBonusStats().Hit;
+            
+            return (owner.Stats.CombinedAttributes().DEX) * HIT_DEX_MULT+  owner.Stats.CombinedBonusStats().Hit;
             
         }
         public const int AVO_AGI_MULT=2;
@@ -247,7 +225,7 @@ namespace Game.Mechanics.Battle
         {
            
          
-           return  (owner.Stats.CombinedAttributes().AGI  - owner.GetEquippedWeapon().GetWeight())* AVO_AGI_MULT+ owner.Stats.CombinedBonusStats().Avoid;
+           return  (owner.Stats.CombinedAttributes().AGI)* AVO_AGI_MULT+ owner.Stats.CombinedBonusStats().Avoid;
             
             
         }
@@ -260,7 +238,7 @@ namespace Game.Mechanics.Battle
 
         public int GetAttackSpeed()
         {
-            int spd = owner.Stats.CombinedAttributes().AGI - owner.GetEquippedWeapon().GetWeight()+ owner.Stats.CombinedBonusStats().AttackSpeed;
+            int spd = owner.Stats.CombinedAttributes().AGI + owner.Stats.CombinedBonusStats().AttackSpeed;
           
             return spd;
            
@@ -310,7 +288,7 @@ namespace Game.Mechanics.Battle
         {
             switch (type)
             {
-                case BonusStats.CombatStatType.Attack: return GetAttackDamage();
+                case BonusStats.CombatStatType.Attack: return GetDamage();
                 case BonusStats.CombatStatType.Avoid: return GetAvoid();
                 case BonusStats.CombatStatType.Crit: return GetCrit();
                 case BonusStats.CombatStatType.Critavoid: return GetCritAvoid();
@@ -323,22 +301,24 @@ namespace Game.Mechanics.Battle
             return -1;
         }
 
-        public int GetStatWithoutBonusesFromEnum(BonusStats.CombatStatType type)
+        public int GetStatOnlyBonusesWithoutWeaponFromEnum(BonusStats.CombatStatType type)
         {
             Debug.Log("TODO Make Functions that use just base Attributes and equipment but no effects/terrain");
             switch (type)
             {
-                case BonusStats.CombatStatType.Attack: return GetAttackDamage();
-                case BonusStats.CombatStatType.Avoid: return GetAvoid();
-                case BonusStats.CombatStatType.Crit: return GetCrit();
-                case BonusStats.CombatStatType.Critavoid: return GetCritAvoid();
-                case BonusStats.CombatStatType.Hit: return GetHitrate();
-                case BonusStats.CombatStatType.MagicResistance: return GetFaithResistance();
-                case BonusStats.CombatStatType.PhysicalResistance: return GetPhysicalResistance();
-                case BonusStats.CombatStatType.AttackSpeed: return GetAttackSpeed();
+                case BonusStats.CombatStatType.Attack: return owner.Stats.GetBonusStatsWithoutWeapon().Attack;
+                case BonusStats.CombatStatType.Avoid: return owner.Stats.GetBonusStatsWithoutWeapon().Avoid;
+                case BonusStats.CombatStatType.Crit: return owner.Stats.GetBonusStatsWithoutWeapon().Crit;
+                case BonusStats.CombatStatType.Critavoid: return owner.Stats.GetBonusStatsWithoutWeapon().CritAvoid;
+                case BonusStats.CombatStatType.Hit: return owner.Stats.GetBonusStatsWithoutWeapon().Hit;
+                case BonusStats.CombatStatType.MagicResistance: return owner.Stats.GetBonusStatsWithoutWeapon().MagicResistance;
+                case BonusStats.CombatStatType.PhysicalResistance: return owner.Stats.GetBonusStatsWithoutWeapon().Armor;
+                case BonusStats.CombatStatType.AttackSpeed: return owner.Stats.GetBonusStatsWithoutWeapon().AttackSpeed;
             }
 
             return -1;
         }
+
+        
     }
 }

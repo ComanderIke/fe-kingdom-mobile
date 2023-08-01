@@ -24,7 +24,7 @@ namespace LostGrace
             this.label.text = label;
             if (additive)
             {
-                this.value.text = value >= 0 ? "+" + value : "-" + value;
+                this.value.text = value >= 0 ? "+" + value : ""+value;
                
             }
             else

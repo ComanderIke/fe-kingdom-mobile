@@ -123,7 +123,7 @@ namespace LostGrace
             combatItem2.OnClicked += CombatItemClicked;
 
             hp.text = unit.Hp + "/" + unit.MaxHp;
-            atk.text = ""+unit.BattleComponent.BattleStats.GetAttackDamage();
+            atk.text = ""+unit.BattleComponent.BattleStats.GetDamage();
             hit.text = ""+unit.BattleComponent.BattleStats.GetHitrate();
             crit.text = ""+unit.BattleComponent.BattleStats.GetCrit();
             def.text = ""+unit.BattleComponent.BattleStats.GetPhysicalResistance();

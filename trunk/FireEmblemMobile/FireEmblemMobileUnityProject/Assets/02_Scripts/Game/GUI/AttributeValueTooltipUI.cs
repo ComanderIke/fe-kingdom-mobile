@@ -15,7 +15,8 @@ namespace LostGrace
         [SerializeField] private Transform statContainerParent;
         [SerializeField] private string labelBaseStats;
         [SerializeField] private string labelSum;
-        [SerializeField] private string labelEquipment;
+        [SerializeField] private string labelWeapon;
+        [SerializeField] private string labelRelic;
         [SerializeField] private string labelEffects;
       
         [SerializeField] private LayoutGroup layoutGroup;
@@ -40,6 +41,16 @@ namespace LostGrace
             var statContainer = go.GetComponent<StatContainerUI>();
             statContainer.SetValue(labelBaseStats, unit.Stats.BaseAttributes.GetAttributeStat(attribute), false, StatContainerUI.ColorState.Same);
             instantiatedObjects.Add(go);
+            int bonusFromWeapon = unit.Stats.BonusAttributesFromWeapon.GetAttributeStat(attribute);
+          
+            if (bonusFromWeapon != 0)
+            {
+                
+                var weaponGo = Instantiate(statContainerPrefab, statContainerParent);
+                var statContainerWeapon= weaponGo.GetComponent<StatContainerUI>();
+                statContainerWeapon.SetValue(labelWeapon, bonusFromWeapon, true, StatContainerUI.ColorState.Same);
+                instantiatedObjects.Add(weaponGo);
+            }
             int bonusFromEquips = unit.Stats.BonusAttributesFromEquips.GetAttributeStat(attribute);
           
             if (bonusFromEquips != 0)
@@ -47,7 +58,7 @@ namespace LostGrace
                 
                 var equipGo = Instantiate(statContainerPrefab, statContainerParent);
                 var statContainerEquip= equipGo.GetComponent<StatContainerUI>();
-                statContainerEquip.SetValue(labelEquipment, bonusFromEquips, true, bonusFromEquips>0?StatContainerUI.ColorState.Increasing:bonusFromEquips<0?StatContainerUI.ColorState.Decreasing:StatContainerUI.ColorState.Same);
+                statContainerEquip.SetValue(labelRelic, bonusFromEquips, true, bonusFromEquips>0?StatContainerUI.ColorState.Increasing:bonusFromEquips<0?StatContainerUI.ColorState.Decreasing:StatContainerUI.ColorState.Same);
                 instantiatedObjects.Add(equipGo);
             }
             int bonusFromEffects = unit.Stats.BonusAttributesFromEffects.GetAttributeStat(attribute);
@@ -63,12 +74,14 @@ namespace LostGrace
             {
                 var sumGo = Instantiate(statContainerPrefab, statContainerParent);
                 var statContainerSum = sumGo.GetComponent<StatContainerUI>();
+                int baseAttributesAndWeapon = unit.Stats.BaseAttributes.GetAttributeStat(attribute) +
+                                              unit.Stats.BonusAttributesFromWeapon.GetAttributeStat(attribute);
                 statContainerSum.SetValue(labelSum, unit.Stats.CombinedAttributes().GetAttributeStat(attribute), false,
-                    unit.Stats.BaseAttributes.GetAttributeStat(attribute) >
+                    baseAttributesAndWeapon >
                     unit.Stats.CombinedAttributes().GetAttributeStat(attribute)
                         ?
                         StatContainerUI.ColorState.Increasing
-                        : unit.Stats.BaseAttributes.GetAttributeStat(attribute) <
+                        : baseAttributesAndWeapon <
                           unit.Stats.CombinedAttributes().GetAttributeStat(attribute)
                             ? StatContainerUI.ColorState.Decreasing
                             : StatContainerUI.ColorState.Same);

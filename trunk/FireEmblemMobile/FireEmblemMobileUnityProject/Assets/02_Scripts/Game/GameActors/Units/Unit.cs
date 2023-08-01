@@ -113,7 +113,7 @@ namespace Game.GameActors.Units
             get { return visuals; }
         }
 
-        public Unit(string bluePrintID, string name,RpgClass rpgClass,Stats stats, Attributes growths, MoveType moveType, Weapon equippedWeapon,
+        public Unit(string bluePrintID, string name,RpgClass rpgClass,Stats stats, Attributes growths, MoveType moveType,
              UnitVisual visuals, SkillManager skillManager, ExperienceManager experienceManager)
         {
             this.bluePrintID = bluePrintID;
@@ -124,37 +124,6 @@ namespace Game.GameActors.Units
             this.stats = stats;
             this.growths = growths;
             this.moveType = moveType;
-            this.equippedWeapon = equippedWeapon;
-            // if (equippedRelic == null)
-            // {
-            //     EquippedRelic = null;
-            // }
-            // else
-            // {
-            //     Equip(equippedRelic, false);
-            //     
-            // }
-            //
-            // if (combatItem1 != null && combatItem1.item != null)
-            // {
-            //     Equip(combatItem1,1, false);
-            //     //CombatItem1 = combatItem1;
-            // }
-            // else
-            // {
-            //     CombatItem1 = null;
-            // }
-            // if (combatItem2 != null && combatItem2.item != null)
-            // {
-            //     Equip(combatItem1,2, false);
-            //     //CombatItem2 = combatItem2;
-            // }
-            // else
-            // {
-            //     CombatItem2 = null;
-            // }
-
-            
             this.visuals = visuals;
             this.name = name;
             SkillManager = skillManager;
@@ -214,10 +183,7 @@ namespace Game.GameActors.Units
         {
             return (GridActorComponent)GridComponent;
         }
-        
 
-  
-        
         [field:NonSerialized] public TurnStateManager TurnStateManager { get; set; }
 
         [field:NonSerialized]  public StatusEffectManager StatusEffectManager { get; set; }
@@ -244,9 +210,6 @@ namespace Game.GameActors.Units
                 HpValueChanged?.Invoke();
             }
         }
-        
-
-        
         
         void SkillPointsUpdated(int skillPoints)
         {
@@ -348,11 +311,26 @@ namespace Game.GameActors.Units
 
         public void Equip(Weapon w)
         {
-            
+            if (w == equippedWeapon)
+                return;
+            if (equippedWeapon != null)
+            {
+                stats.BonusStatsFromWeapon.Attack -= equippedWeapon.GetDamage();
+                stats.BonusStatsFromWeapon.Hit -= equippedWeapon.GetHit();
+                stats.BonusStatsFromWeapon.Crit -= equippedWeapon.GetCrit();
+                stats.BonusAttributesFromWeapon.IncreaseAttribute(equippedWeapon.GetWeight(), AttributeType.AGI);
+                stats.BonusAttributesFromWeapon.IncreaseAttribute(equippedWeapon.GetWeight(), AttributeType.DEX);
+            }
             Stats.AttackRanges.Clear();
             equippedWeapon = w;
             foreach (int r in w.AttackRanges) Stats.AttackRanges.Add(r);
             Debug.Log("Equip " + w.Name + " on " + name + " " + w.AttackRanges.Length+" "+ Stats.AttackRanges.Count);
+            stats.BonusStatsFromWeapon.Attack += equippedWeapon.GetDamage();
+            stats.BonusStatsFromWeapon.Hit += equippedWeapon.GetHit();
+            stats.BonusStatsFromWeapon.Crit += equippedWeapon.GetCrit();
+            stats.BonusAttributesFromWeapon.IncreaseAttribute(-equippedWeapon.GetWeight(), AttributeType.AGI);
+            stats.BonusAttributesFromWeapon.IncreaseAttribute(-equippedWeapon.GetWeight(), AttributeType.DEX);
+            
             OnEquippedWeapon?.Invoke();
         }
         public void AutoEquip()

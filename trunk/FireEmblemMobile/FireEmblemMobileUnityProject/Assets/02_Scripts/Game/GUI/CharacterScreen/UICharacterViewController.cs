@@ -82,7 +82,7 @@ public class UICharacterViewController : MonoBehaviour
             CharacterFace.Show(unit);
         charName.SetText(unit.name);//+", "+unit.jobClass);
       
-        Atk.SetText(""+unit.BattleComponent.BattleStats.GetAttackDamage()+"");
+        Atk.SetText(""+unit.BattleComponent.BattleStats.GetDamage()+"");
         AtkSpeed.SetText(""+unit.BattleComponent.BattleStats.GetAttackSpeed()+"");
         PhysArmor.SetText(""+unit.BattleComponent.BattleStats.GetPhysicalResistance()+"");
         MagicArmor.SetText(""+unit.BattleComponent.BattleStats.GetFaithResistance()+"");

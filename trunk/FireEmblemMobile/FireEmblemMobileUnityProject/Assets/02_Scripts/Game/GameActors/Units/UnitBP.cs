@@ -78,14 +78,20 @@ namespace Game.GameActors.Units
 
         public virtual Unit Create()
         {
-            Weapon weapon = null;
-            if(equippedWeaponBp!=null)
-                weapon = (Weapon)equippedWeaponBp.Create();
+          
+           
             var skillManager = new SkillManager(SkillManager);
             skillManager.AddStartSkills();
-            var unit = new Unit(bluePrintID, Name, rpgClass, (Stats)stats.Clone(), growths, moveType, weapon, 
+            var unit = new Unit(bluePrintID, Name, rpgClass, (Stats)stats.Clone(), growths, moveType, 
                 new UnitVisual(visuals), skillManager,
                 new ExperienceManager(experienceManager));
+            Weapon weapon = null;
+            if (equippedWeaponBp != null)
+            {
+                weapon = (Weapon)equippedWeaponBp.Create();
+                unit.Equip(weapon);
+            }
+
             Relic relic1 = null;
             if (EquippedRelic1 != null)
             {
