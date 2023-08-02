@@ -33,14 +33,7 @@ namespace LostGrace
         [SerializeField] private UICombatItemSlot combatItem1;
         [SerializeField] private UICombatItemSlot combatItem2;
         [SerializeField] private TextMeshProUGUI hp;
-        [SerializeField] private TextMeshProUGUI atk;
-        [SerializeField] private TextMeshProUGUI spd;
-        [SerializeField] private TextMeshProUGUI hit;
-        [SerializeField] private TextMeshProUGUI avo;
-        [SerializeField] private TextMeshProUGUI def;
-        [SerializeField] private TextMeshProUGUI mdef;
-        [SerializeField] private TextMeshProUGUI crit;
-        [SerializeField] private TextMeshProUGUI critavo;
+        [SerializeField] private UIBattleStatsBottom battleStatsController;
         [SerializeField] private Transform skillContainer;
         [SerializeField] private GameObject skillprefab;
         [SerializeField] private GameObject activeSkillprefab;
@@ -123,14 +116,7 @@ namespace LostGrace
             combatItem2.OnClicked += CombatItemClicked;
 
             hp.text = unit.Hp + "/" + unit.MaxHp;
-            atk.text = ""+unit.BattleComponent.BattleStats.GetDamage();
-            hit.text = ""+unit.BattleComponent.BattleStats.GetHitrate();
-            crit.text = ""+unit.BattleComponent.BattleStats.GetCrit();
-            def.text = ""+unit.BattleComponent.BattleStats.GetPhysicalResistance();
-            spd.text = ""+unit.BattleComponent.BattleStats.GetAttackSpeed();
-            avo.text = ""+unit.BattleComponent.BattleStats.GetAvoid();
-            critavo.text = ""+unit.BattleComponent.BattleStats.GetCritAvoid();
-            mdef.text = ""+unit.BattleComponent.BattleStats.GetFaithResistance();
+            battleStatsController.Show(unit);
             skillContainer.DeleteAllChildren();
             instantiatedSkills = new List<SkillUI>();
             foreach (var skill in unit.SkillManager.Skills)

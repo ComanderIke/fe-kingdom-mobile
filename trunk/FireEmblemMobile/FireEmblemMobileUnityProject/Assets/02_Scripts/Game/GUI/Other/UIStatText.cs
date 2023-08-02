@@ -5,34 +5,19 @@ using UnityEngine;
 
 namespace LostGrace
 {
-    public enum AttributeBonusState
+    public class UIStatText : MonoBehaviour
     {
-        Increasing,
-        Decreasing,
-        Same
-    }
-    public class StatContainerUI : MonoBehaviour
-    {
-        [SerializeField] private TextMeshProUGUI label;
         [SerializeField] private TextMeshProUGUI value;
         [SerializeField] private TMP_ColorGradient neutralColorGradient;
         [SerializeField] private TMP_ColorGradient negativeColorGradient;
         [SerializeField] private TMP_ColorGradient positiveColorGradient;
 
-        
-        public void SetValue(string label, int value, bool additive, AttributeBonusState attributeBonusState)
+        public void SetValue(int value, AttributeBonusState attributeBonusState)
         {
-            this.label.text = label;
-            if (additive)
-            {
-                this.value.text = value >= 0 ? "+" + value : ""+value;
-               
-            }
-            else
-            {
-                this.value.text = "" + value;
+
+            this.value.text = "" + value;
               
-            }
+            
 
             switch (attributeBonusState)
             {

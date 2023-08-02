@@ -7,8 +7,10 @@ using Game.GameActors.Units.Humans;
 using Game.GameActors.Units.Numbers;
 using Game.GameActors.Units.OnGameObject;
 using Game.GUI;
+using Game.Mechanics;
 using Game.Mechanics.Battle;
 using Game.WorldMapStuff.Model;
+using LostGrace;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -27,25 +29,23 @@ public class UICharacterViewController : MonoBehaviour
     public GameObject baseAttributeButton;
     public GameObject combatStatsButton;
     
-    public TextMeshProUGUI Atk;
-    public TextMeshProUGUI AtkSpeed;
-    public TextMeshProUGUI PhysArmor;
-    public TextMeshProUGUI MagicArmor;
-    public TextMeshProUGUI Hitrate;
-    public TextMeshProUGUI DodgeRate;
-    public TextMeshProUGUI Crit;
-    public TextMeshProUGUI CritAvoid;
+    public UIStatText Atk;
+    public UIStatText AtkSpeed;
+    public UIStatText PhysArmor;
+    public UIStatText MagicArmor;
+    public UIStatText Hitrate;
+    public UIStatText DodgeRate;
+    public UIStatText Crit;
+    public UIStatText CritAvoid;
     
-    public TextMeshProUGUI STR;
-    public TextMeshProUGUI INT;
-    public TextMeshProUGUI DEX;
-    public TextMeshProUGUI AGI;
-    public TextMeshProUGUI CON;
-    public TextMeshProUGUI FTH;
-    public TextMeshProUGUI LCK;
-    public TextMeshProUGUI DEF;
-    public Color AttributeTextColor;
-    public Color BuffedAttributeTextColor;
+    public UIStatText STR;
+    public UIStatText INT;
+    public UIStatText DEX;
+    public UIStatText AGI;
+    public UIStatText CON;
+    public UIStatText FTH;
+    public UIStatText LCK;
+    public UIStatText DEF;
     public UICharacterFace CharacterFace;
 
     public bool IsVisible => canvas.enabled;
@@ -70,7 +70,7 @@ public class UICharacterViewController : MonoBehaviour
 
     }
 
-
+    
   
     protected virtual void UpdateUI(Unit unit)
     {
@@ -81,72 +81,33 @@ public class UICharacterViewController : MonoBehaviour
         if(CharacterFace!=null)
             CharacterFace.Show(unit);
         charName.SetText(unit.name);//+", "+unit.jobClass);
-      
-        Atk.SetText(""+unit.BattleComponent.BattleStats.GetDamage()+"");
-        AtkSpeed.SetText(""+unit.BattleComponent.BattleStats.GetAttackSpeed()+"");
-        PhysArmor.SetText(""+unit.BattleComponent.BattleStats.GetPhysicalResistance()+"");
-        MagicArmor.SetText(""+unit.BattleComponent.BattleStats.GetFaithResistance()+"");
-        Hitrate.SetText(""+unit.BattleComponent.BattleStats.GetHitrate()+"%");
-        DodgeRate.SetText(""+unit.BattleComponent.BattleStats.GetAvoid()+"%");
-        Crit.SetText(""+unit.BattleComponent.BattleStats.GetCrit()+"%");
-        CritAvoid.SetText(""+unit.BattleComponent.BattleStats.GetCritAvoid()+"%");
+        bool physical = unit.equippedWeapon.DamageType == DamageType.Physical;
+        int sumBonuses = unit.Stats.GetCombatStatBonuses(unit,BonusStats.CombatStatType.Attack,physical);
+        Atk.SetValue(unit.BattleComponent.BattleStats.GetDamage(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
+        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,BonusStats.CombatStatType.AttackSpeed,physical);
+        AtkSpeed.SetValue(unit.BattleComponent.BattleStats.GetAttackSpeed(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
+        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,BonusStats.CombatStatType.PhysicalResistance,physical);
+        PhysArmor.SetValue(unit.BattleComponent.BattleStats.GetPhysicalResistance(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
+        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,BonusStats.CombatStatType.MagicResistance,physical);
+        MagicArmor.SetValue(unit.BattleComponent.BattleStats.GetFaithResistance(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
+        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,BonusStats.CombatStatType.Hit,physical);
+        Hitrate.SetValue(unit.BattleComponent.BattleStats.GetHitrate(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
+        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,BonusStats.CombatStatType.Avoid,physical);
+        DodgeRate.SetValue(unit.BattleComponent.BattleStats.GetAvoid(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
+        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,BonusStats.CombatStatType.Crit,physical);
+        Crit.SetValue(unit.BattleComponent.BattleStats.GetCrit(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
+        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,BonusStats.CombatStatType.Critavoid,physical);
+        CritAvoid.SetValue(unit.BattleComponent.BattleStats.GetCritAvoid(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
 
-        if (unit.Stats.BonusAttributesFromEffects.STR > 0)
-            STR.color = BuffedAttributeTextColor;
-        else
-        {
-            STR.color = AttributeTextColor;
-        }
-        if (unit.Stats.BonusAttributesFromEffects.DEX > 0)
-            DEX.color = BuffedAttributeTextColor;
-        else
-        {
-            DEX.color = AttributeTextColor;
-        }
-        if (unit.Stats.BonusAttributesFromEffects.INT > 0)
-            INT.color = BuffedAttributeTextColor;
-        else
-        {
-            INT.color = AttributeTextColor;
-        }
-        if (unit.Stats.BonusAttributesFromEffects.AGI > 0)
-            AGI.color = BuffedAttributeTextColor;
-        else
-        {
-            AGI.color = AttributeTextColor;
-        }
-        if (unit.Stats.BonusAttributesFromEffects.CON > 0)
-            CON.color = BuffedAttributeTextColor;
-        else
-        {
-            CON.color = AttributeTextColor;
-        }
-        if (unit.Stats.BonusAttributesFromEffects.LCK > 0)
-            LCK.color = BuffedAttributeTextColor;
-        else
-        {
-            LCK.color = AttributeTextColor;
-        }
-        if (unit.Stats.BonusAttributesFromEffects.DEF > 0)
-            DEF.color = BuffedAttributeTextColor;
-        else
-        {
-            DEF.color = AttributeTextColor;
-        }
-        if (unit.Stats.BonusAttributesFromEffects.FAITH > 0)
-            FTH.color = BuffedAttributeTextColor;
-        else
-        {
-            FTH.color = AttributeTextColor;
-        }
-        STR.SetText(""+(unit.Stats.CombinedAttributes().STR));
-        INT.SetText(""+(unit.Stats.CombinedAttributes().INT));
-        DEX.SetText(""+(unit.Stats.CombinedAttributes().DEX));
-        AGI.SetText(""+(unit.Stats.CombinedAttributes().AGI));
-        CON.SetText(""+(unit.Stats.CombinedAttributes().CON));
-        FTH.SetText(""+(unit.Stats.CombinedAttributes().FAITH));
-        LCK.SetText(""+(unit.Stats.CombinedAttributes().LCK));
-        DEF.SetText(""+(unit.Stats.CombinedAttributes().DEF));
+        
+        STR.SetValue(unit.Stats.CombinedAttributes().STR,unit.Stats.GetAttributeBonusState(AttributeType.STR));
+        INT.SetValue(unit.Stats.CombinedAttributes().INT,unit.Stats.GetAttributeBonusState(AttributeType.INT));
+        DEX.SetValue(unit.Stats.CombinedAttributes().DEX,unit.Stats.GetAttributeBonusState(AttributeType.DEF));
+        AGI.SetValue(unit.Stats.CombinedAttributes().AGI,unit.Stats.GetAttributeBonusState(AttributeType.AGI));
+        CON.SetValue(unit.Stats.CombinedAttributes().CON,unit.Stats.GetAttributeBonusState(AttributeType.CON));
+        FTH.SetValue(unit.Stats.CombinedAttributes().FAITH,unit.Stats.GetAttributeBonusState(AttributeType.FTH));
+        LCK.SetValue(unit.Stats.CombinedAttributes().LCK,unit.Stats.GetAttributeBonusState(AttributeType.LCK));
+        DEF.SetValue(unit.Stats.CombinedAttributes().DEF,unit.Stats.GetAttributeBonusState(AttributeType.DEF));
     }
 
     public void CombatStatsButtonClicked()

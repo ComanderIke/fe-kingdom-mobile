@@ -39,7 +39,7 @@ namespace LostGrace
             this.label.text = Attributes.GetAsText((int)attribute);
             var go = Instantiate(statContainerPrefab, statContainerParent);
             var statContainer = go.GetComponent<StatContainerUI>();
-            statContainer.SetValue(labelBaseStats, unit.Stats.BaseAttributes.GetAttributeStat(attribute), false, StatContainerUI.ColorState.Same);
+            statContainer.SetValue(labelBaseStats, unit.Stats.BaseAttributes.GetAttributeStat(attribute), false, AttributeBonusState.Same);
             instantiatedObjects.Add(go);
             int bonusFromWeapon = unit.Stats.BonusAttributesFromWeapon.GetAttributeStat(attribute);
           
@@ -48,7 +48,7 @@ namespace LostGrace
                 
                 var weaponGo = Instantiate(statContainerPrefab, statContainerParent);
                 var statContainerWeapon= weaponGo.GetComponent<StatContainerUI>();
-                statContainerWeapon.SetValue(labelWeapon, bonusFromWeapon, true, StatContainerUI.ColorState.Same);
+                statContainerWeapon.SetValue(labelWeapon, bonusFromWeapon, true, AttributeBonusState.Same);
                 instantiatedObjects.Add(weaponGo);
             }
             int bonusFromEquips = unit.Stats.BonusAttributesFromEquips.GetAttributeStat(attribute);
@@ -58,7 +58,7 @@ namespace LostGrace
                 
                 var equipGo = Instantiate(statContainerPrefab, statContainerParent);
                 var statContainerEquip= equipGo.GetComponent<StatContainerUI>();
-                statContainerEquip.SetValue(labelRelic, bonusFromEquips, true, bonusFromEquips>0?StatContainerUI.ColorState.Increasing:bonusFromEquips<0?StatContainerUI.ColorState.Decreasing:StatContainerUI.ColorState.Same);
+                statContainerEquip.SetValue(labelRelic, bonusFromEquips, true, bonusFromEquips>0?AttributeBonusState.Increasing:bonusFromEquips<0?AttributeBonusState.Decreasing:AttributeBonusState.Same);
                 instantiatedObjects.Add(equipGo);
             }
             int bonusFromEffects = unit.Stats.BonusAttributesFromEffects.GetAttributeStat(attribute);
@@ -66,7 +66,7 @@ namespace LostGrace
             {
                 var effectGo = Instantiate(statContainerPrefab, statContainerParent);
                 var statContainerEffect = effectGo.GetComponent<StatContainerUI>();
-                statContainerEffect.SetValue(labelEffects, bonusFromEffects, true, bonusFromEffects>0?StatContainerUI.ColorState.Increasing:bonusFromEffects<0?StatContainerUI.ColorState.Decreasing:StatContainerUI.ColorState.Same);
+                statContainerEffect.SetValue(labelEffects, bonusFromEffects, true, bonusFromEffects>0?AttributeBonusState.Increasing:bonusFromEffects<0?AttributeBonusState.Decreasing:AttributeBonusState.Same);
                 instantiatedObjects.Add(effectGo);
             }
 
@@ -74,17 +74,9 @@ namespace LostGrace
             {
                 var sumGo = Instantiate(statContainerPrefab, statContainerParent);
                 var statContainerSum = sumGo.GetComponent<StatContainerUI>();
-                int baseAttributesAndWeapon = unit.Stats.BaseAttributes.GetAttributeStat(attribute) +
-                                              unit.Stats.BonusAttributesFromWeapon.GetAttributeStat(attribute);
-                statContainerSum.SetValue(labelSum, unit.Stats.CombinedAttributes().GetAttributeStat(attribute), false,
-                    baseAttributesAndWeapon >
-                    unit.Stats.CombinedAttributes().GetAttributeStat(attribute)
-                        ?
-                        StatContainerUI.ColorState.Increasing
-                        : baseAttributesAndWeapon <
-                          unit.Stats.CombinedAttributes().GetAttributeStat(attribute)
-                            ? StatContainerUI.ColorState.Decreasing
-                            : StatContainerUI.ColorState.Same);
+                var bonusState=unit.Stats.GetAttributeBonusState(attribute);
+                
+                statContainerSum.SetValue(labelSum, unit.Stats.CombinedAttributes().GetAttributeStat(attribute), false,bonusState);
                 instantiatedObjects.Add(sumGo);
             }
 
