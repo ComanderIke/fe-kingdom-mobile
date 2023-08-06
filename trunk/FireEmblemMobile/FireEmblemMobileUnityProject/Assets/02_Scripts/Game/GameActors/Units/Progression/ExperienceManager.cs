@@ -62,9 +62,10 @@ namespace Game.GameActors.Units
             if (exp > MAX_EXP)
                 exp = MAX_EXP;
             Debug.Log("SOME UNIT EXP GAINED!");
+            int sumExp = exp;
             foreach (var multiplier in ExpMultipliers)
             {
-                exp = (int)(exp*multiplier);
+                sumExp += (int)(exp*multiplier);
             }
             ExpGained?.Invoke(Exp, exp);
            return DoExp(exp);

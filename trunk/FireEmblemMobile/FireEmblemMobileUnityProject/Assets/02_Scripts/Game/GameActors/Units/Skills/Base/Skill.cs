@@ -163,5 +163,10 @@ namespace Game.GameActors.Units.Skills
         {
             return activeMixins.Count > 0;
         }
+
+        public void Upgrade()
+        {
+            Level++;
+        }
     }
 }

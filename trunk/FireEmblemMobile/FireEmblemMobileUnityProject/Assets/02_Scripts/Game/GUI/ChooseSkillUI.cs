@@ -32,7 +32,6 @@ public class ChooseSkillUI : MonoBehaviour, ISkillUIRenderer
     [SerializeField] private ChooseSkillButtonUI chooseSkill2;
     [SerializeField] private ChooseSkillButtonUI chooseSkill3;
     [SerializeField] private CanvasGroup canvasGroup;
-    [SerializeField] private Canvas canvas;
     [SerializeField] private TextMeshProUGUI headline;
 
     public event Action<Skill> onSkillChosen;
@@ -40,7 +39,7 @@ public class ChooseSkillUI : MonoBehaviour, ISkillUIRenderer
     private Skill skill1, skill2, skill3;
     public void Show(Unit unit, Skill skill1, Skill skill2, Skill skill3)
     {
-        canvas.enabled = true;
+        canvasGroup.gameObject.SetActive(true);
         TweenUtility.FadeIn(canvasGroup);
         this.unit = unit;
         this.skill1 = skill1;
@@ -77,9 +76,14 @@ public class ChooseSkillUI : MonoBehaviour, ISkillUIRenderer
             unit.SkillManager.OnSkillsChanged -= UpdateUI;
         TweenUtility.FadeOut(canvasGroup).setOnComplete(()=>
         {
-            canvas.enabled = false;
+           
             OnFinished?.Invoke();
+            chooseSkill1.Hide();
+            chooseSkill2.Hide();
+            chooseSkill3.Hide();
+            canvasGroup.gameObject.SetActive(false);
         });
+        
     }
 
 

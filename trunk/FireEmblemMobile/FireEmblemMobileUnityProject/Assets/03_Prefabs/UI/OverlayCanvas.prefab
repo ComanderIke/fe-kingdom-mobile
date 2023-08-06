@@ -539,7 +539,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillButtonPrefab: {fileID: 6429164046979079782, guid: 794cedee13ce15941ad10e5a260a9827,
     type: 3}
-  activeSkillButtonPrefab: {fileID: 0}
+  activeSkillButtonPrefab: {fileID: 1489243563513933802, guid: 6f82899694d9cf14ea682b73707ec427,
+    type: 3}
+  combatSkillButtonPrefab: {fileID: 1489243563513933802, guid: f10438304cace06409f5281b00212890,
+    type: 3}
 --- !u!1 &363574107
 GameObject:
   m_ObjectHideFlags: 0
@@ -1401,6 +1404,10 @@ MonoBehaviour:
   chooseSkill3: {fileID: 4231849461293987284}
   canvasGroup: {fileID: 437326044482160802}
   canvas: {fileID: 437326044482160803}
+  headline: {fileID: 49160314}
+  xOffsetFixed: 0.05
+  xOffsetPerSkill: 0.05
+  skillCount: 1
 --- !u!225 &437326044482160802
 CanvasGroup:
   m_ObjectHideFlags: 0

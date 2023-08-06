@@ -130,10 +130,31 @@ namespace Game.GameActors.Units.Humans
 
         public Blessing GetBlessing()
         {
-            var first = Skills.First(s => s is Blessing);
-            if(first!=null)
-                return (Blessing)first;
+            if (Skills != null&& Skills.Count!=0)
+            {
+                int cnt = Skills.Count(s => s is Blessing);
+                if (cnt >= 1)
+                {
+                    var first = Skills.First(s => s is Blessing);
+                    if (first != null)
+                        return (Blessing)first;
+                }
+            }
+
             return null;
+        }
+
+        public void UpgradeSkill(bool randomly)
+        {
+            if (randomly)
+            {
+                var upgradeableSkills = skills.Select(s => s.Upgradable());
+                int randomIndex = UnityEngine.Random.Range(0, upgradeableSkills.Count());
+                if (skills[randomIndex].Upgradable())
+                {
+                    skills[randomIndex].Upgrade();
+                }
+            }
         }
     }
 }
