@@ -30,6 +30,7 @@ namespace Game.GameActors.Units.Numbers
         public Stats()
         {
             BaseAttributes = new Attributes();
+            BonusGrowths = new Attributes();
             BonusAttributesFromEffects = new Attributes();
             BonusAttributesFromEquips = new Attributes();
             BonusAttributesFromWeapon = new Attributes();
@@ -66,6 +67,7 @@ namespace Game.GameActors.Units.Numbers
             // stats.MaxSp = MaxSp;
             //  Debug.Log("Clone2Attriubtes");
             stats.BaseAttributes = new Attributes(BaseAttributes);
+            stats.BonusGrowths = new Attributes(BonusGrowths);
             stats.BonusAttributesFromEffects = new Attributes(BonusAttributesFromEffects);
             stats.BonusAttributesFromWeapon = new Attributes(BonusAttributesFromWeapon);
             stats.BonusAttributesFromEquips = new Attributes(BonusAttributesFromEquips);
@@ -82,6 +84,7 @@ namespace Game.GameActors.Units.Numbers
         {
 
             //MaxSp = statsData.MaxSp;
+            Debug.Log("TODO Load Data which bonus stats to serialize?");
             Mov = statsData.Mov;
             AttackRanges = statsData.AttackRanges;
             BaseAttributes = new Attributes(statsData.Attributes);
@@ -174,5 +177,6 @@ namespace Game.GameActors.Units.Numbers
                     ? AttributeBonusState.Decreasing
                     : AttributeBonusState.Same;
         }
+     
     }
 }

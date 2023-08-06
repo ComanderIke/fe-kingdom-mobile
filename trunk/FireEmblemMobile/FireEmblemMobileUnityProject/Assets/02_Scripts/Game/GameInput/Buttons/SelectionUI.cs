@@ -46,7 +46,7 @@ namespace Game.GameInput
 
         private void CharacterGotSelected(IGridActor actor)
         {
-            Debug.Log("CharacterGotSelected"+actor);
+           // Debug.Log("CharacterGotSelected"+actor);
             if (!actor.Faction.IsPlayerControlled)
                 return;
             if (actor is Unit unit)
@@ -60,20 +60,20 @@ namespace Game.GameInput
         private void CharacterSelectedState(Unit unit)
         {
           
-            Debug.Log("CharacterSelectedState "+unit);
+          //  Debug.Log("CharacterSelectedState "+unit);
             selectedCharacter = null;
             
             if (unit.TurnStateManager.IsWaiting)
             {
-                Debug.Log("Waiting "+unit);
+               // Debug.Log("Waiting "+unit);
                 NoCharacterSelectedState(null);
                 return;
             }
-            Debug.Log("NotWaiting "+unit);
+           // Debug.Log("NotWaiting "+unit);
             selectedCharacter = unit;
 
             waitButton.SetActive(true);
-            Debug.Log("WaitButton true ");
+            //Debug.Log("WaitButton true ");
             //undoButton.SetActive(true);
         }
 

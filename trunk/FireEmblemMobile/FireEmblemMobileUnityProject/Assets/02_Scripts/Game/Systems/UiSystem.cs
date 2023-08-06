@@ -127,14 +127,14 @@ namespace Game.GUI
 
         private void HideAttackPreviewUI()
         {
-            Debug.Log("HIDE ATTACK PREVIEW");
+            //Debug.Log("HIDE ATTACK PREVIEW");
             OnHideAttackPreview?.Invoke();
             attackPreviewUI.Hide();
         }
         
         public void SelectedCharacter(IGridActor actor)
         {
-            Debug.Log("DO STUFF HERE");
+            //Debug.Log("DO STUFF HERE");
             // if(actor is Unit u)
             //     characterCircleController.Clicked(u);//characterCircleController.Select(u);
         }

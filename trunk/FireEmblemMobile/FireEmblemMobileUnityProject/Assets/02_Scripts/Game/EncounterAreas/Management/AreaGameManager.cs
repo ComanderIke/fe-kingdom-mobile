@@ -409,7 +409,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         if (encounterNode.moveable)
         {
  
-            ToolTipSystem.ShowEncounter(encounterNode, encounterNode.gameObject.transform.position+new Vector3(2,0,0), true, MoveClicked);
+            //ToolTipSystem.ShowEncounter(encounterNode, encounterNode.gameObject.transform.position+new Vector3(2,0,0), true, MoveClicked);
             foreach (var road in Player.Instance.Party.EncounterComponent.EncounterNode.roads)
             {
                 if(road.end==encounterNode)
@@ -423,7 +423,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         else
         {
          
-            ToolTipSystem.ShowEncounter(encounterNode, encounterNode.gameObject.transform.position+new Vector3(2,0,0), false, null);
+            //ToolTipSystem.ShowEncounter(encounterNode, encounterNode.gameObject.transform.position+new Vector3(2,0,0), false, null);
         }
     }
 

@@ -29,8 +29,13 @@ namespace Game.GameActors.Units.Skills
         [field: SerializeField] private int[] size;
         [SerializeField] private bool jump;
         [SerializeField] private int minRange = 0;
+        [SerializeField] private bool confirmPositionClick = true;
         [field:SerializeField]public SkillTargetArea TargetArea { get; set; }
         public EffectType EffectType { get; set; }
+        public bool ConfirmPosition()
+        {
+            return confirmPositionClick;
+        }
 
         [field:SerializeField]public List<SkillEffectMixin> SkillEffects;
         [field:SerializeField]public bool Rooted { get; set; }

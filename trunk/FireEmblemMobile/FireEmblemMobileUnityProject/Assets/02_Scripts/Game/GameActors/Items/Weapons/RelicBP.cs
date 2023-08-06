@@ -24,7 +24,10 @@ namespace Game.GameActors.Items.Weapons
 
         public override Item Create()
         {
-            return new Relic(name, description, cost, rarity,maxStack,sprite,  skillBp.Create(), slotCount);
+            Skill instSkill = null;
+            if (skillBp != null)
+                instSkill = skillBp.Create();
+            return new Relic(name, description, cost, rarity,maxStack,sprite,  instSkill, slotCount);
         }
     }
 

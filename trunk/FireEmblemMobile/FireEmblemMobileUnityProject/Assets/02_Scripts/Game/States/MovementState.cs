@@ -149,6 +149,6 @@ namespace Game.Mechanics
             unit.TurnStateManager.HasMoved = true;
         }
 
-        public static event Action<Unit> OnAnyUnitMoved;
+       
     }
 }

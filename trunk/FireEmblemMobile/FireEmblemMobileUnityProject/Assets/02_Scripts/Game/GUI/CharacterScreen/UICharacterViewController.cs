@@ -60,13 +60,24 @@ public class UICharacterViewController : MonoBehaviour
     {
         Unit.OnUnitDataChanged -= UpdateUI;
     }
-
-    public void Show(Unit unit)
+    protected bool useFixedUnitList;
+    protected List<Unit> availableUnits;
+    protected int currentFixedIndex;
+    public void Show(Unit unit, bool useFixedUnitList=false, List<Unit> availableUnits=null)
     {
+        this.availableUnits = availableUnits;
+        this.useFixedUnitList = useFixedUnitList;
+        currentFixedIndex = 0;
         canvas.enabled = true;
         Player.Instance.Party.SetActiveUnit(unit);
         Debug.Log("Showing Character UI for: "+unit.name);
-        UpdateUI(unit);
+        if (useFixedUnitList)
+        {
+            Debug.Log(availableUnits.Count + " " + currentFixedIndex);
+            UpdateUnit(availableUnits[currentFixedIndex]);
+        }
+        else
+            UpdateUI(unit);
 
     }
 

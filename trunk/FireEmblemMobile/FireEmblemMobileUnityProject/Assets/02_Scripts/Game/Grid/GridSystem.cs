@@ -292,23 +292,28 @@ namespace Game.Map
             Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y].GridObject = null;
             Tiles[unit2.GridComponent.GridPosition.X, unit2.GridComponent.GridPosition.Y].GridObject = null;
             Tiles[tmpPos2X, tmpPos2Y].GridObject = unit;
-            unit.GridComponent.SetPosition(tmpPos2X, tmpPos2Y);
+            unit.SetGridPosition( Tiles[tmpPos2X, tmpPos2Y]);
             Tiles[tmpPosX, tmpPosY].GridObject = unit2;
-            unit2.GridComponent.SetPosition(tmpPosX, tmpPosY);
+            unit2.SetGridPosition(Tiles[tmpPosX, tmpPosY]);
             
         }
-        public void SetUnitPosition(IGridActor unit, int x, int y)
+
+        public void SetUnitPosition(IGridActor unit, Tile tile, bool deleteOldGridObject=true, bool moveGameObject=true)
+        {
+            SetUnitPosition(unit, tile.X, tile.Y, deleteOldGridObject, moveGameObject);
+        }
+        public void SetUnitPosition(IGridActor unit, int x, int y, bool deleteOldGridObject=true, bool moveGameObject=true)
         {
             if (x != -1 && y != -1 && x < width && y < height)
             {
                 if (unit.GridComponent.GridPosition.X != -1 && unit.GridComponent.GridPosition.Y != -1)
                 {
-
-                    Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y].GridObject = null;
+                    if(deleteOldGridObject|| (Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y].GridObject!=null &&Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y].GridObject.Equals(unit)))
+                        Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y].GridObject = null;
                 }
                 
                 
-                unit.SetGridPosition(Tiles[x,y]);
+                unit.SetGridPosition(Tiles[x,y], moveGameObject);
                 Tiles[x, y].GridObject = unit;
                 
             }

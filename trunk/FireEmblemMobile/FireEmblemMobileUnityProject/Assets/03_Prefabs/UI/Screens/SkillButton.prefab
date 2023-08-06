@@ -4771,7 +4771,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7537965196753403374}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: ChooseSkillUI, Game
+        m_MethodName: Skill1Clicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7537965196766139113
 GameObject:
   m_ObjectHideFlags: 0
@@ -4814,7 +4826,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 426, y: 542}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7537965196766139109
 CanvasRenderer:
@@ -4839,12 +4851,33 @@ MonoBehaviour:
   testSkill: {fileID: 11400000, guid: a297039fe466fce49ab4dd7cb9fcfa7c, type: 2}
   skill:
     Icon: {fileID: 21300000, guid: 3259ad755cefd204c80d8aac17ef41c8, type: 3}
+    level: 0
     Name: Area Heal
     Description: Heals allies in an area.
     Tier: 1
+    CombatSkillMixin: {fileID: 0}
     passiveMixins: []
-    activeMixin: {fileID: 11400000, guid: 625777ec9d54ecd4da2639b780dec61e, type: 2}
-    ActiveMixinUses: 3
+    activeMixins: []
+    owner:
+      bluePrintID: 
+      name: 
+      growths:
+        str: 0
+        intel: 0
+        dex: 0
+        agi: 0
+        con: 0
+        lck: 0
+        def: 0
+        faith: 0
+      moveType: {fileID: 0}
+      rpgClass: 0
+      experienceManager:
+        level: 1
+        exp: 0
+        drainableExp: 100
+        expLeftToDrain: 100
+    skillTransferData: {fileID: 0}
   description: {fileID: 7537965197865038789}
   name: {fileID: 7537965197281068730}
   level: {fileID: 7537965197445834959}

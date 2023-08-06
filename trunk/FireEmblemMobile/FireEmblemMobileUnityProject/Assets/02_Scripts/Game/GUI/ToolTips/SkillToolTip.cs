@@ -1,14 +1,16 @@
 ﻿using Game.GameActors.Units.Skills;
+using LostGrace;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SkillToolTip : MonoBehaviour
 {
-    public TextMeshProUGUI headerText;
-    public TextMeshProUGUI descriptionText;
-    public Image skillIcon;
+    // public TextMeshProUGUI headerText;
+    // public TextMeshProUGUI descriptionText;
+    // public Image skillIcon;
 
+    [SerializeField] private ChooseSkillButtonUI chooseSkillButtonUI;
 
     private Skill skill;
     [SerializeField]
@@ -38,19 +40,20 @@ public class SkillToolTip : MonoBehaviour
     public void SetValues(Skill skill, string header, string description, Sprite icon, Vector3 position)
     {
         this.skill = skill;
-        if (string.IsNullOrEmpty(header))
-        {
-            headerText.gameObject.SetActive(false);
-        }
-        else
-        {
-            headerText.gameObject.SetActive(true);
-            headerText.text = header;
-        }
-
-        descriptionText.text = description;
-        skillIcon.sprite = icon;
-        rectTransform.anchoredPosition=position+ new Vector3(0,150,0);
+        // if (string.IsNullOrEmpty(header))
+        // {
+        //     headerText.gameObject.SetActive(false);
+        // }
+        // else
+        // {
+        //     headerText.gameObject.SetActive(true);
+        //     headerText.text = header;
+        // }
+        //
+        // descriptionText.text = description;
+        // skillIcon.sprite = icon;
+        chooseSkillButtonUI.SetSkill(skill);
+        rectTransform.anchoredPosition=position+ new Vector3(0,080+((chooseSkillButtonUI.transform as RectTransform).rect.height/2),0);
         UpdateTextWrap(position);
 
     }

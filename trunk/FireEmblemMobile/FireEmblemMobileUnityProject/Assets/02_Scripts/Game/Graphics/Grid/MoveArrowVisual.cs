@@ -47,6 +47,13 @@ namespace Game.Graphics
         }
         public void DrawMovementPath(List<Vector2Int> mousePath, int startX, int startY)
         {
+            // Debug.Log("================================================");
+            // Debug.Log("Draw movement path: "+startX+" "+startY);
+            // foreach (var v in mousePath)
+            // {
+            //     Debug.Log(v);
+            // }
+            // Debug.Log("================================================");
             HideMovementPath();
             if (startX == -1 || startY == -1)
                 return;

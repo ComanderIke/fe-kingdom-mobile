@@ -303,7 +303,6 @@ namespace Game.Mechanics.Battle
 
         public int GetStatOnlyBonusesWithoutWeaponFromEnum(BonusStats.CombatStatType type)
         {
-            Debug.Log("TODO Make Functions that use just base Attributes and equipment but no effects/terrain");
             switch (type)
             {
                 case BonusStats.CombatStatType.Attack: return owner.Stats.GetBonusStatsWithoutWeapon().Attack;

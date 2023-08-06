@@ -18,7 +18,7 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
     public TextMeshProUGUI turnText;
     public TileInfoPanel TileInfoPanel;
     [SerializeField] private UICharacterViewController characterView;
-    [SerializeField] private UICharacterViewController enemyView;
+   // [SerializeField] private UICharacterViewController enemyView;
 
     public static Action<Unit> OnUnitCircleClicked;
     public void ShowTileInfo(Tile selectedTile)
@@ -59,8 +59,8 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
     {
         if(unit.IsPlayerControlled())
             characterView.Show(unit);
-        else
-            enemyView.Show(unit);
+        // else
+        //     enemyView.Show(unit);
     }
 
     public void Show(int turnCount)

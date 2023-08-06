@@ -51,12 +51,14 @@ namespace Game.Mechanics
             unitInputSystem.InputReceiver = this;
             selectedUnit = (Unit)selectionSystem.SelectedCharacter;
             UI.OnBackClicked += BackClicked;
+            UnitSelectionSystem.OnSkillDeselected += SkillDeselected;
             if (selectionSystem.SelectedSkill != null)
             {
                 selectedSkill = selectionSystem.SelectedSkill;
                 activeSkillMixin = selectedSkill.FirstActiveMixin;
                 ShowSkillCastRange(selectionSystem.SelectedSkill.FirstActiveMixin);
                 UI.Show((Unit)selectionSystem.SelectedCharacter, selectionSystem.SelectedSkill);
+                
             }
             else if (selectionSystem.SelectedItem != null)
             {
@@ -104,13 +106,19 @@ namespace Game.Mechanics
             }
         }
 
+        void SkillDeselected(Skill skill)
+        {
+            BackClicked();
+        }
+
         public override void Exit()
         {
             if (UI != null)
             {
                 UI.Hide();
-                UI.OnBackClicked += BackClicked;
+                UI.OnBackClicked -= BackClicked;
             }
+            new GameplayCommands().DeselectSkill();
 
             gridSystem.HideMoveRange();
             gridSystem.HideCast();
@@ -120,6 +128,7 @@ namespace Game.Mechanics
             gridGameManager.GetSystem<UiSystem>().ShowMainCanvas();
             gridInputSystem.inputReceiver = previousGridInputReceiver;
             unitInputSystem.InputReceiver = previousUnitInputReceiver;
+            UnitSelectionSystem.OnSkillDeselected -= SkillDeselected;
         }
 
         private void BackClicked()
@@ -179,7 +188,7 @@ namespace Game.Mechanics
                  if (gridSystem.IsTargetAble(x, y))
                  {
 
-                     if (gridSystem.cursor.GetCurrentTile() == gridSystem.Tiles[x, y])
+                     if (gridSystem.cursor.GetCurrentTile() == gridSystem.Tiles[x, y]|| !skill.ConfirmPosition())
                      {
                          var targets = skill.GetAllTargets(selectedUnit, gridSystem.Tiles, x,y);
                          skill.Activate(selectedUnit, gridSystem.Tiles, x,y);

@@ -38,8 +38,11 @@ namespace Game.GameActors.Units.Skills
                     unitTargetSkillEffectMixin.Activate(target, user, skill.Level);
             }
             Debug.Log("ACTIVATE SINGLE TARGET MIXIN");
-            if(target!=null&& skill.skillTransferData!=null)
+            if (target != null && skill.skillTransferData != null)
+            {
+                Debug.Log("Set SkilltransferData");
                 skill.skillTransferData.data = (object)target;
+            }
         }
 
 

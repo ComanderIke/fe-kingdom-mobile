@@ -23,8 +23,6 @@ public class ToolTipSystem : MonoBehaviour
 
     public AttributeValueTooltipUI AttributeValueTooltipUI;
     public CombatStatValueTooltipUI CombatStatalueTooltipUI;
-    //public EncounterToolTip EncounterToolTip;
-    //public EncounterToolTip EncounterAttackToolTip;
     public RelicToolTip relicToolTip;
     public void Awake()
     {
@@ -33,52 +31,19 @@ public class ToolTipSystem : MonoBehaviour
 
     static void CloseAllToolTips()
     {
-        //instance.EncounterAttackToolTip.gameObject.SetActive(false);
+       
         instance.relicToolTip.gameObject.SetActive(false);
         instance.WeaponToolTip.gameObject.SetActive(false);
-       // instance.EncounterToolTip.gameObject.SetActive(false);
-       // instance.skillToolTip.gameObject.SetActive(false);
+
+        instance.skillToolTip.gameObject.SetActive(false);
         instance.AttributeToolTip.gameObject.SetActive(false);
-        instance.skillTreeToolTip.gameObject.SetActive(false);
+        //instance.skillTreeToolTip.gameObject.SetActive(false);
         instance.ItemToolTip.gameObject.SetActive(false);
         instance.CombatStatalueTooltipUI.gameObject.SetActive(false);
         instance.AttributeValueTooltipUI.gameObject.SetActive(false);
         
     }
-    static void CloseAllToolTipsExceptEncounter()
-    {
-
-        instance.relicToolTip.gameObject.SetActive(false);
-        instance.WeaponToolTip.gameObject.SetActive(false);
-       
-        // instance.skillToolTip.gameObject.SetActive(false);
-        instance.AttributeToolTip.gameObject.SetActive(false);
-        instance.skillTreeToolTip.gameObject.SetActive(false);
-        instance.ItemToolTip.gameObject.SetActive(false);
-        instance.CombatStatalueTooltipUI.gameObject.SetActive(false);
-        instance.AttributeValueTooltipUI.gameObject.SetActive(false);
-    }
-    static void CloseAllEncounterTooltips()
-    {
-        // instance.EncounterAttackToolTip.gameObject.SetActive(false);
-        // instance.EncounterToolTip.gameObject.SetActive(false);
-    }
-    public static void ShowEncounter(EncounterNode node, Vector3 worldPosition, bool moveable, Action<EncounterNode> moveClicked)
-    {
-        // CloseAllToolTips();
-        // if (!(node is BattleEncounterNode))
-        // {
-        //     instance.EncounterToolTip.Updatevalues(node, node.label, worldPosition, moveable, moveClicked);
-        //     instance.EncounterToolTip.gameObject.SetActive(true);
-        //     instance.EncounterAttackToolTip.gameObject.SetActive(false);
-        // }
-        // else
-        // {
-        //     instance.EncounterAttackToolTip.Updatevalues(node, node.label, worldPosition, moveable, moveClicked);
-        //     instance.EncounterAttackToolTip.gameObject.SetActive(true);
-        //     instance.EncounterToolTip.gameObject.SetActive(false);
-        // }
-    }
+    
     public static void Show(Relic relic, Vector3 position, string header, string description, Sprite icon)
     {
         instance.tooltipShownThisFrame = true;
@@ -126,8 +91,8 @@ public class ToolTipSystem : MonoBehaviour
         instance.tooltipShownThisFrame = true;
         CloseAllToolTips();
         //Debug.Log(skill.Name);
-        Debug.Log("TooltipPosition: "+GameObject.FindWithTag("UICamera").GetComponent<Camera>().WorldToScreenPoint(position));
-        instance.skillToolTip.SetValues(skill, skill.Name,skill.Description,skill.Icon, position);
+        //Debug.Log("TooltipPosition: "+GameObject.FindWithTag("UICamera").GetComponent<Camera>().WorldToScreenPoint(position));
+        instance.skillToolTip.SetValues(skill, skill.Name,skill.Description,skill.Icon, Camera.main.WorldToScreenPoint(position));
         
         instance.skillToolTip.gameObject.SetActive(true);
     }

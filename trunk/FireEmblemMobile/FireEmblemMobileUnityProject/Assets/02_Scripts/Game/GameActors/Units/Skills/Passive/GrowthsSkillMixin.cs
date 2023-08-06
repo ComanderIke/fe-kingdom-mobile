@@ -22,14 +22,18 @@ namespace LostGrace
         {
             base.BindToUnit(unit, skill);
             unit.Stats.BonusGrowths.Add(growths[skill.Level]);
+           
+           
         }
 
         
 
         public override void UnbindFromUnit(Unit unit, Skill skill)
         {
+            if(bound)
+                unit.Stats.BonusGrowths.Decrease(growths[skill.Level]);
             base.UnbindFromUnit(unit, skill);
-            unit.Stats.BonusGrowths.Decrease(growths[skill.Level]);
+        
         }
     }
 }

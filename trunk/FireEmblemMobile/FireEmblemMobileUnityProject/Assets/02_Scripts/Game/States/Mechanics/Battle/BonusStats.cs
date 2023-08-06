@@ -61,11 +61,11 @@ namespace Game.Mechanics.Battle
             {
                 case CombatStatType.Attack: return "Attack";
                 case CombatStatType.Avoid: return "Avoid";
-                case CombatStatType.Crit: return "Crit";
+                case CombatStatType.Crit: return "Critical";
                 case CombatStatType.Critavoid: return "Critavoid";
-                case CombatStatType.Hit: return "Hit";
-                case CombatStatType.MagicResistance: return "Mag. Resistance";
-                case CombatStatType.PhysicalResistance: return "Phys. Resistance";
+                case CombatStatType.Hit: return "Hitrate";
+                case CombatStatType.MagicResistance: return "M. Defense";
+                case CombatStatType.PhysicalResistance: return "Ph. Defense";
                 case CombatStatType.AttackSpeed: return "Attackspeed";
             }
 

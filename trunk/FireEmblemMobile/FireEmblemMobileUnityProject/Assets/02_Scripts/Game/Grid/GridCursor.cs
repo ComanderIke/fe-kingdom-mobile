@@ -31,7 +31,7 @@ namespace Game.Map
         {
             if (currentTile != tile)
             {
-                Debug.Log("CursorPositionChanged");
+               // Debug.Log("CursorPositionChanged");
                 currentTile = tile;
                 gridPosition = new GridPosition(currentTile.X, currentTile.Y);
                 OnCursorPositionChanged?.Invoke(new Vector2Int(gridPosition.X, gridPosition.Y));

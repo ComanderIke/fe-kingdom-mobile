@@ -10,9 +10,10 @@ namespace LostGrace
 {
     public class AttributeValueTooltipUI : MonoBehaviour
     {
+        [SerializeField] private LayoutGroup refreshLayout;
         [SerializeField] private TextMeshProUGUI label;
         [SerializeField] private GameObject statContainerPrefab;
-        [SerializeField] private Transform statContainerParent;
+        [SerializeField] private LayoutGroup statContainerParent;
         [SerializeField] private string labelBaseStats;
         [SerializeField] private string labelSum;
         [SerializeField] private string labelWeapon;
@@ -36,8 +37,8 @@ namespace LostGrace
             }
             Debug.Log("CONTAINER OBJECTS AFTER DESTROY: "+ instantiatedObjects.Count);
             GetComponent<RectTransform>().anchoredPosition= position+ new Vector3(0,100,0);
-            this.label.text = Attributes.GetAsText((int)attribute);
-            var go = Instantiate(statContainerPrefab, statContainerParent);
+            this.label.text = Attributes.GetAsLongText((int)attribute);
+            var go = Instantiate(statContainerPrefab, statContainerParent.transform);
             var statContainer = go.GetComponent<StatContainerUI>();
             statContainer.SetValue(labelBaseStats, unit.Stats.BaseAttributes.GetAttributeStat(attribute), false, AttributeBonusState.Same);
             instantiatedObjects.Add(go);
@@ -46,7 +47,7 @@ namespace LostGrace
             if (bonusFromWeapon != 0)
             {
                 
-                var weaponGo = Instantiate(statContainerPrefab, statContainerParent);
+                var weaponGo = Instantiate(statContainerPrefab, statContainerParent.transform);
                 var statContainerWeapon= weaponGo.GetComponent<StatContainerUI>();
                 statContainerWeapon.SetValue(labelWeapon, bonusFromWeapon, true, AttributeBonusState.Same);
                 instantiatedObjects.Add(weaponGo);
@@ -56,7 +57,7 @@ namespace LostGrace
             if (bonusFromEquips != 0)
             {
                 
-                var equipGo = Instantiate(statContainerPrefab, statContainerParent);
+                var equipGo = Instantiate(statContainerPrefab, statContainerParent.transform);
                 var statContainerEquip= equipGo.GetComponent<StatContainerUI>();
                 statContainerEquip.SetValue(labelRelic, bonusFromEquips, true, bonusFromEquips>0?AttributeBonusState.Increasing:bonusFromEquips<0?AttributeBonusState.Decreasing:AttributeBonusState.Same);
                 instantiatedObjects.Add(equipGo);
@@ -64,7 +65,7 @@ namespace LostGrace
             int bonusFromEffects = unit.Stats.BonusAttributesFromEffects.GetAttributeStat(attribute);
             if (bonusFromEffects != 0)
             {
-                var effectGo = Instantiate(statContainerPrefab, statContainerParent);
+                var effectGo = Instantiate(statContainerPrefab, statContainerParent.transform);
                 var statContainerEffect = effectGo.GetComponent<StatContainerUI>();
                 statContainerEffect.SetValue(labelEffects, bonusFromEffects, true, bonusFromEffects>0?AttributeBonusState.Increasing:bonusFromEffects<0?AttributeBonusState.Decreasing:AttributeBonusState.Same);
                 instantiatedObjects.Add(effectGo);
@@ -72,7 +73,7 @@ namespace LostGrace
 
             if (instantiatedObjects.Count > 1)
             {
-                var sumGo = Instantiate(statContainerPrefab, statContainerParent);
+                var sumGo = Instantiate(statContainerPrefab, statContainerParent.transform);
                 var statContainerSum = sumGo.GetComponent<StatContainerUI>();
                 var bonusState=unit.Stats.GetAttributeBonusState(attribute);
                 
@@ -80,9 +81,22 @@ namespace LostGrace
                 instantiatedObjects.Add(sumGo);
             }
 
-            LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
-            layoutGroup.enabled = false;
-            layoutGroup.enabled = true;
+            // LayoutRebuilder.ForceRebuildLayoutImmediate(refreshLayout.transform as RectTransform);
+            // refreshLayout.enabled = false;
+            // refreshLayout.enabled = true;
+            // LayoutRebuilder.ForceRebuildLayoutImmediate(statContainerParent.transform as RectTransform);
+            // statContainerParent.enabled = false;
+            // statContainerParent.enabled = true;
+            // LayoutRebuilder.ForceRebuildLayoutImmediate(transform as RectTransform);
+            // layoutGroup.enabled = false;
+            // layoutGroup.enabled = true;
+            // LayoutRebuilder.ForceRebuildLayoutImmediate(transform as RectTransform);
+            // gameObject.SetActive(!gameObject.activeSelf);
+            // gameObject.SetActive(!gameObject.activeSelf);
+            // layoutGroup.CalculateLayoutInputHorizontal();
+            // layoutGroup.CalculateLayoutInputVertical();
+            // layoutGroup.SetLayoutHorizontal();
+            // layoutGroup.SetLayoutVertical();
         }
     }
 }

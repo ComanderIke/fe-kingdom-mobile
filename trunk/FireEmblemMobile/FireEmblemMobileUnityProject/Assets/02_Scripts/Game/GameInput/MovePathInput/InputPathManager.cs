@@ -43,13 +43,13 @@ namespace Game.GameInput
         public void CalculateMousePathToPosition(IGridActor character, int x, int y)
         {
             Reset();
-            var p = pathProvider.FindPath(character.GridComponent.GridPosition.X,
-                character.GridComponent.GridPosition.Y, x, y, character);
+            var p = pathProvider.FindPath(character.GridComponent.OriginTile.X,
+                character.GridComponent.OriginTile.Y, x, y, character);
             if (p != null)
                 for (int i = p.GetLength() - 2; i >= 0; i--)
                     dragPath.Add(new Vector2Int(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
             MovementPath = new List<Vector2Int>(dragPath);
-            UpdatedMovementPath(character.GridComponent.GridPosition.X, character.GridComponent.GridPosition.Y);
+            UpdatedMovementPath(character.GridComponent.OriginTile.X, character.GridComponent.OriginTile.Y);
         }
 
         public void CalculateAttackPathToTarget(IGridActor character, IGridObject target)
@@ -60,8 +60,8 @@ namespace Game.GameInput
             var tilesInAttackRange = new List<Tile>();
             foreach (var tile in activeTiles)//sort tile by distance to target
             {
-                var delta = Mathf.Abs(tile.X - target.GridComponent.GridPosition.X) +
-                            Mathf.Abs(tile.Y - target.GridComponent.GridPosition.Y);
+                var delta = Mathf.Abs(tile.X - target.GridComponent.OriginTile.X) +
+                            Mathf.Abs(tile.Y - target.GridComponent.OriginTile.Y);
                 foreach (int range in character.AttackRanges)
                 {
                     if (delta == range&& gridSystem.GetTileChecker().IsTileFree(tile.X,tile.Y))
@@ -75,8 +75,8 @@ namespace Game.GameInput
             Tile nearestTile = null;// find nearest tile with suitable AttackPosition and findPath to it
             for (int i =0; i < tilesInAttackRange.Count; i++)//sort tile by distance to target
             {
-                var delta = Mathf.Abs(tilesInAttackRange[i].X - target.GridComponent.GridPosition.X) +
-                            Mathf.Abs(tilesInAttackRange[i].Y - target.GridComponent.GridPosition.Y);
+                var delta = Mathf.Abs(tilesInAttackRange[i].X - target.GridComponent.OriginTile.X) +
+                            Mathf.Abs(tilesInAttackRange[i].Y - target.GridComponent.OriginTile.Y);
                 if (delta < max)
                 {
                     max = delta;
@@ -84,8 +84,8 @@ namespace Game.GameInput
                 }
             }
              
-            var p = pathProvider.FindPath(character.GridComponent.GridPosition.X,
-                character.GridComponent.GridPosition.Y,  nearestTile.X,  nearestTile.Y, character);
+            var p = pathProvider.FindPath(character.GridComponent.OriginTile.X,
+                character.GridComponent.OriginTile.Y,  nearestTile.X,  nearestTile.Y, character);
             MovementPath = new List<Vector2Int>();
             p.Reverse();
             for (int i = 1; i < p.GetLength(); i++)
@@ -94,13 +94,13 @@ namespace Game.GameInput
                 MovementPath.Add(new Vector2Int(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
             }
             
-            UpdatedMovementPath(character.GridComponent.GridPosition.X, character.GridComponent.GridPosition.Y);
+            UpdatedMovementPath(character.GridComponent.OriginTile.X, character.GridComponent.OriginTile.Y);
         }
         public void CalculatePathToPosition(IGridActor character, Vector2 position)
         {
             Reset();
-            var p = pathProvider.FindPath(character.GridComponent.GridPosition.X,
-                character.GridComponent.GridPosition.Y, (int) position.x, (int) position.y, character);
+            var p = pathProvider.FindPath(character.GridComponent.OriginTile.X,
+                character.GridComponent.OriginTile.Y, (int) position.x, (int) position.y, character);
             MovementPath = new List<Vector2Int>();
             p.Reverse();
             for (int i = 1; i < p.GetLength(); i++)
@@ -109,7 +109,7 @@ namespace Game.GameInput
                 MovementPath.Add(new Vector2Int(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
             }
             
-            UpdatedMovementPath(character.GridComponent.GridPosition.X, character.GridComponent.GridPosition.Y);
+            UpdatedMovementPath(character.GridComponent.OriginTile.X, character.GridComponent.OriginTile.Y);
         }
 
         public void UpdatedMovementPath(int startX, int startY)
@@ -152,8 +152,8 @@ namespace Game.GameInput
             dragPath.Clear();
          //   Debug.Log(gridActor);
          //   Debug.Log(pathProvider);
-            var p = pathProvider.FindPath(gridActor.GridComponent.GridPosition.X,
-                gridActor.GridComponent.GridPosition.Y, x, y, gridActor);
+            var p = pathProvider.FindPath(gridActor.GridComponent.OriginTile.X,
+                gridActor.GridComponent.OriginTile.Y, x, y, gridActor);
             if (p != null)
                 for (int i = p.GetLength() - 2; i >= 0; i--)
                     dragPath.Add(new Vector2Int(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
@@ -165,14 +165,12 @@ namespace Game.GameInput
             {
                 return Math.Abs(dragPath[dragPath.Count - 1].x - x) + Math.Abs(dragPath[dragPath.Count - 1].y - y) == 1;
             }
-            return Math.Abs(gridActor.GridComponent.GridPosition.X - x) + Math.Abs(gridActor.GridComponent.GridPosition.Y - y) == 1;
+            return Math.Abs(gridActor.GridComponent.OriginTile.X - x) + Math.Abs(gridActor.GridComponent.OriginTile.Y - y) == 1;
 
         }
         public void AddToPath(int x, int y, IGridActor gridActor)
         {
             bool contains = dragPath.Contains(new Vector2Int(x, y));
-            
-            
            
            
             //if (dragPath.Count > gridActor.MovementRage || contains || IsLastActiveFieldAdjacent(x,y,gridActor))
@@ -186,35 +184,13 @@ namespace Game.GameInput
                 dragPath.Add(new Vector2Int(x, y));
             }
             MovementPath = new List<Vector2Int>(dragPath);
-            UpdatedMovementPath(gridActor.GridComponent.GridPosition.X, gridActor.GridComponent.GridPosition.Y);
+            UpdatedMovementPath(gridActor.GridComponent.OriginTile.X, gridActor.GridComponent.OriginTile.Y);
         }
 
         public bool HasValidMovementPath(int range)
         {
             return MovementPath != null && MovementPath.Count <= range;
         }
-        // private bool IsFieldAdjacent(float x, float y, float x2, float y2)
-        // {
-        //     return Mathf.Abs(x - x2) + Mathf.Abs(y - y2) > 1;
-        // }
-
-        // private bool FunctionWhut(int x, int y)
-        // {
-        //     return dragPath.Count >= 2 &&
-        //            IsFieldAdjacent(dragPath[dragPath.Count - 2].x, dragPath[dragPath.Count - 2].y, x, y);
-        // }
-        //
-        // private bool FunctionWhut2(int x, int y, IGridActor gridActor)
-        // {
-        //     return dragPath.Count == 1 && IsFieldAdjacent(gridActor.GridPosition.X, gridActor.GridPosition.Y, x, y);
-        // }
-        // private bool IsLastActiveFieldAdjacent(int x, int y, IGridActor gridActor)
-        // {
-        //     if(FunctionWhut(x,y))
-        //         return true;
-        //     if (FunctionWhut2(x,y, gridActor))
-        //         return true;
-        //     return IsFieldAdjacent(lastDragPosX, lastDragPosY, x, y);
-        // }
+     
     }
 }

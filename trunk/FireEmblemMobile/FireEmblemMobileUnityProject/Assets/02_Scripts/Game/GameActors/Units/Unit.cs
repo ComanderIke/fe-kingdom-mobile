@@ -307,6 +307,7 @@ namespace Game.GameActors.Units
         public bool IsBoss { get; set; }
         public EncounterComponent EncounterComponent { get; set; }
         public List<float> HealingMultipliers { get; set; }
+        
 
 
         public void Equip(Weapon w)
@@ -512,22 +513,40 @@ namespace Game.GameActors.Units
         {
             if (oldTile != null)
             {
+              
                 var oldTileData = oldTile.TileData;
                 Stats.BonusStatsFromTerrain.Avoid -= oldTileData.avoBonus;
                 Stats.BonusStatsFromTerrain.Armor -= oldTileData.defenseBonus;
                 Stats.BonusStatsFromTerrain.MagicResistance -= oldTileData.defenseBonus;
                 Stats.BonusStatsFromTerrain.AttackSpeed -= oldTileData.speedMalus;
+              //  Debug.Log("RemovedTerrainBonuses: "+ Stats.BonusStatsFromTerrain.Avoid+" "+oldTileData.avoBonus);
             }
             var tileData = newTile.TileData;
             Stats.BonusStatsFromTerrain.Avoid += tileData.avoBonus;
             Stats.BonusStatsFromTerrain.Armor += tileData.defenseBonus;
             Stats.BonusStatsFromTerrain.MagicResistance += tileData.defenseBonus;
             Stats.BonusStatsFromTerrain.AttackSpeed += tileData.speedMalus;
+        //    Debug.Log("AddedTerrainBonuses: "+ Stats.BonusStatsFromTerrain.Avoid+" "+tileData.avoBonus);
         }
-        public void SetGridPosition(Tile newTile)
+      
+        public void SetGridPosition(Tile newTile, bool moveGameobject=true)//Just use this from GridSystem to avoid not setting old gridobject to null
         {
+            
             UpdateTerrainBonuses(GridComponent.Tile, newTile);
-            GridComponent.SetPosition(newTile.X, newTile.Y);
+            GridComponent.SetPosition(newTile, moveGameobject);
+        }
+
+        public void SetToOriginPosition()
+        {
+            Debug.Log("SetUnitToOriginPosition: "+GridComponent.OriginTile.X+" "+GridComponent.OriginTile.Y);
+            UpdateTerrainBonuses(GridComponent.Tile, GridComponent.OriginTile);
+            GridComponent.SetToOriginPosition();
+        }
+        public void SetInternGridPosition(Tile newTile)
+        {
+            Debug.Log("Set Intern Position: "+newTile.X+" "+newTile.Y+" OldTile: "+GridComponent.Tile.X+" "+GridComponent.Tile.Y);
+            UpdateTerrainBonuses(GridComponent.Tile, newTile);
+            GridComponent.SetInternPosition(newTile);
         }
 
         public bool IsEnemy(IGridActor unit)

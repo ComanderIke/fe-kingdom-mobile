@@ -8,19 +8,24 @@ namespace Game.GameActors.Units.Skills
     {
         public const int MAXLEVEL = 5;
         [NonSerialized]public Skill skill;
-     
+
+        protected bool bound = false;
 
         public virtual void BindToUnit(Unit unit, Skill skill)
         {
             this.skill = skill;
-            skill.skillTransferData = null;
+            bound = true;
+            if(skill.skillTransferData!=null)
+                skill.skillTransferData.data = null;
         }
 
         public virtual void UnbindFromUnit(Unit unit, Skill skill)
         {
-            skill.skillTransferData = null;
+            if(skill.skillTransferData!=null)
+                skill.skillTransferData.data = null;
             this.skill = null;//TODO is this right?
-            
+            bound = false;
+
         }
        
     }

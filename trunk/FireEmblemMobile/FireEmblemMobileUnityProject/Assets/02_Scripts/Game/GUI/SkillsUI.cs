@@ -40,7 +40,7 @@ namespace LostGrace
             var go = Instantiate(prefab, transform);
             var skillUI = go.GetComponent<SkillUI>();
             instantiatedButtons.Add(skillUI);
-            skillUI.SetSkill(skill, false);
+            skillUI.SetSkill(skill, false, true);
             if(showDeleteIfFull)
                 skillUI.ShowDelete();
             skillUI.OnDeleteClicked += DeleteClicked;

@@ -22,11 +22,19 @@ namespace LostGrace
         [SerializeField] private UICharacterViewController characterView;
         private List<Unit> selectableUnits;
         private List<SelectableCharacterUI> selectableCharacterUis;
+        private List<Unit> unlockedUnits;
         public void Show(List<Unit> selectableUnits)
         {
             this.selectableUnits = selectableUnits;
             int cnt = 0;
             selectableCharacterUis = new List<SelectableCharacterUI>();
+            unlockedUnits = new List<Unit>();
+            foreach (var unit in selectableUnits)
+            {
+                if(Player.Instance.UnlockedCharacterIds.Contains(unit.bluePrintID))
+                    unlockedUnits.Add(unit);
+            }
+
             foreach (var unit in selectableUnits)
             {
                 var go = Instantiate(selectableCharacterPrefab, characterContainer);
@@ -39,7 +47,7 @@ namespace LostGrace
                 {
                     Debug.Log("Select Last: "+last.unit);
                     Select(last);
-                    characterView.Show(last.unit);
+                    characterView.Show(last.unit, true, unlockedUnits);
                 }
 
                 cnt++;
@@ -121,7 +129,7 @@ namespace LostGrace
 
         public void UnitClicked(SelectableCharacterUI unit)
         {
-            characterView.Show(unit.unit);
+            characterView.Show(unit.unit,true, unlockedUnits);
             if (Player.Instance.Party.members.Contains(unit.unit))
             {
                 Debug.Log("Deselect: "+unit.unit);

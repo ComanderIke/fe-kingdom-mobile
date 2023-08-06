@@ -20,6 +20,7 @@ namespace Game.Mechanics
         public static event Action<IGridActor> OnEnemyDeselected;
         public static event Action<IGridActor> OnEnemySelected;
         public static event Action<Skill> OnSkillSelected;
+        public static event Action<Skill> OnSkillDeselected;
         public static event Action<Item> OnItemSelected;
 
         private GridGameManager gridGameManager;
@@ -79,7 +80,9 @@ namespace Game.Mechanics
         }
         private void DeselectSkill()
         {
+            OnSkillDeselected?.Invoke(SelectedSkill);
             SelectedSkill = null;
+           
         }
         private void SelectItem(Item item)
         {
@@ -122,10 +125,10 @@ namespace Game.Mechanics
 
         private void SelectCharacter(IGridActor c)
         {
-            Debug.Log("Select Character!"+c);
+           // Debug.Log("Select Character!"+c);
             if (SelectedCharacter != null)
             {
-                Debug.Log("DeSelect Character!" +SelectedCharacter);
+              //  Debug.Log("DeSelect Character!" +SelectedCharacter);
                 DeselectActiveCharacter(SelectedCharacter);
             }
             SelectedCharacter = c;

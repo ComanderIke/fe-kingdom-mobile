@@ -10,18 +10,31 @@ namespace Game.GameActors.Units
     {
        
         public IGridActor gridActor;
-
+        public static event Action<IGridActor> AnyUnitChangedPosition;
+        public static event Action<IGridActor> AnyUnitChangedPositionAfter;
         public override void ResetPosition()
         {
             base.ResetPosition();
             if(gridActor.IsAlive())
                 gridActor.GameTransformManager.SetPosition(GridPosition.X, GridPosition.Y);
+            AnyUnitChangedPosition?.Invoke(gridActor);
+            AnyUnitChangedPositionAfter?.Invoke(gridActor);
         }
-        public override void SetPosition( int x, int y)
+        public override void SetPosition( Tile tile, bool moveTransform=true)
         {
             //previousTile = Tile;
-            base.SetPosition(x, y);
-            gridActor.GameTransformManager.SetPosition(x, y);
+            base.SetPosition(tile);
+            if(moveTransform)
+                gridActor.GameTransformManager.SetPosition(tile.X,tile.Y);
+            AnyUnitChangedPosition?.Invoke(gridActor);
+            AnyUnitChangedPositionAfter?.Invoke(gridActor);
+        }
+        public override void SetInternPosition(Tile tile)
+        {
+            base.SetInternPosition(tile);
+            
+            AnyUnitChangedPosition?.Invoke(gridActor);
+            AnyUnitChangedPositionAfter?.Invoke(gridActor);
         }
         
         public GridActorComponent(IGridActor actor):base()

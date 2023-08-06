@@ -65,6 +65,7 @@ namespace LostGrace
       
         private Vector3 defaultSkillPosition;
         private bool locked = false;
+        
         public void OnEnable()
         {
             defaultSkillPosition = moveSkill.GetComponent<RectTransform>().anchoredPosition;
@@ -77,6 +78,8 @@ namespace LostGrace
 
         public void SetSkill(Skill skill, bool locked =false)
         {
+            if(defaultSkillPosition==Vector3.zero)
+                defaultSkillPosition = moveSkill.GetComponent<RectTransform>().anchoredPosition;
 
             this.skill = skill;
            // this.skill.Level++;

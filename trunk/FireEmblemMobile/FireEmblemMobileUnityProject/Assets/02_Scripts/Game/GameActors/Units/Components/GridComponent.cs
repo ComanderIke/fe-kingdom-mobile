@@ -7,13 +7,14 @@ namespace Game.GameActors.Units
     public class GridComponent
     {
         public GridPosition GridPosition { get; set; }
-
+      
         public virtual void ResetPosition()
         {
             if (previousTile != null)
             {
                 Tile = previousTile;
                 OnTileChanged?.Invoke(Tile);
+              
             }
 
         }
@@ -43,14 +44,22 @@ namespace Game.GameActors.Units
             }
         }
 
+        public Tile OriginTile { get; set; }
+
         protected Tile previousTile;
 
-        public virtual void SetPosition(int x, int y)
+        public virtual void SetPosition(Tile tile, bool moveTransform=true)
         {
-            GridPosition.SetPosition(x, y);
-           
+            GridPosition.SetPosition(tile.X, tile.Y);
+            Tile = tile;
+            OriginTile = Tile;
         }
- 
+        public virtual void SetInternPosition(Tile tile)
+        {
+           
+            GridPosition.SetPosition(tile.X, tile.Y);
+            Tile = tile;
+        }
 
         public bool IsInRange(GridComponent gridComponent, int range)
         {
@@ -61,5 +70,11 @@ namespace Game.GameActors.Units
 
 
         public event Action<Tile> OnTileChanged;
+
+
+        public void SetToOriginPosition()
+        {
+           SetPosition(OriginTile, false);
+        }
     }
 }

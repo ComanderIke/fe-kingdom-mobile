@@ -1,4 +1,5 @@
-﻿using __2___Scripts.Game.Utility;
+﻿using System.Collections.Generic;
+using __2___Scripts.Game.Utility;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GUI;
@@ -17,13 +18,7 @@ public class UIDetailedCharacterViewController : UICharacterViewController
     public SkillTreeUI skillTreeUI;
     public Animator IdleAnimation;
     public SkillsUI skillsUI;
-    [SerializeField]  Transform blessingParent;
-    [SerializeField]  Transform curseParent;
-    [SerializeField] private GameObject cursePrefab;
-    [SerializeField] private GameObject blessingPrefab;
-    
-    
-    
+
     public void SkillTreeClicked()
     {
         skillTreeUI.Show(unit);
@@ -37,22 +32,44 @@ public class UIDetailedCharacterViewController : UICharacterViewController
     // }
     public void NextClicked()
     {
-        Player.Instance.Party.ActiveUnitIndex++;
-        UpdateUI(Player.Instance.Party.ActiveUnit);
+        if (useFixedUnitList)
+        {
+            currentFixedIndex++;
+            if (currentFixedIndex >= availableUnits.Count)
+                currentFixedIndex = availableUnits.Count - 1;
+            UpdateUI(availableUnits[currentFixedIndex]);
+        }
+        else
+        {
+            Player.Instance.Party.ActiveUnitIndex++;
+            UpdateUI(Player.Instance.Party.ActiveUnit);
+        }
     }
     public void PrevClicked()
     {
-        Player.Instance.Party.ActiveUnitIndex--;
-        UpdateUI(Player.Instance.Party.ActiveUnit);
+        if (useFixedUnitList)
+        {
+            currentFixedIndex--;
+            if (currentFixedIndex < 0)
+                currentFixedIndex = 0;
+            UpdateUI(availableUnits[currentFixedIndex]);
+        }
+        else
+        {
+            Player.Instance.Party.ActiveUnitIndex--;
+            UpdateUI(Player.Instance.Party.ActiveUnit);
+        }
+
+      
     }
+    
     protected override void UpdateUI(Unit unit)
     {
         base.UpdateUI(unit);
         Lv.SetText("Lv. "+unit.ExperienceManager.Level);
         ExpBar.SetValue(unit.ExperienceManager.Exp, ExperienceManager.MAX_EXP, false);
         skillsUI.Show(unit);
-        blessingParent.DeleteAllChildren();
-        curseParent.DeleteAllChildren();
+     
         // if (unit.Blessing != null)
         // {
         //     

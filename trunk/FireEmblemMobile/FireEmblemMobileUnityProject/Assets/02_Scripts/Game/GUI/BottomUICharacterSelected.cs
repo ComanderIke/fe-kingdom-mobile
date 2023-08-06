@@ -16,7 +16,7 @@ using UnityEngine.UI;
 
 namespace LostGrace
 {
-    public class BottomUILeft : BottomUIBase
+    public class BottomUICharacterSelected : BottomUIBase
     {
         [SerializeField] UseItemDialogController useItemDialogController;
         [SerializeField] UseSkillDialogController useSkillDialogController;
@@ -39,32 +39,38 @@ namespace LostGrace
         [SerializeField] private GameObject activeSkillprefab;
         [SerializeField] private GameObject combatSkillprefab;
 
-
+        private bool interactableForPlayer;
         private void Start()
         {
             UiSystem.OnShowAttackPreview += ShowSelectableCombatSkills;
             UiSystem.OnHideAttackPreview += HideSelectableCombatSkills;
-            
+            UnitSelectionSystem.OnSkillSelected += SkillSelected;
+            UnitSelectionSystem.OnSkillDeselected += SkillDeselected;
         }
 
         private void OnDestroy()
         {
             UiSystem.OnShowAttackPreview -= ShowSelectableCombatSkills;
             UiSystem.OnHideAttackPreview -= HideSelectableCombatSkills;
+            UnitSelectionSystem.OnSkillSelected -= SkillSelected;
+            UnitSelectionSystem.OnSkillDeselected -= SkillDeselected;
         }
 
         private bool canSelectCombatSkillsRightNow = false;
         private void HideSelectableCombatSkills()
         {
+            if (!interactableForPlayer)
+                return;
             canSelectCombatSkillsRightNow = false;
             DeselectCombatSkill();
-            foreach (var skillUI in instantiatedSkills)
-            {
-                if (skillUI.Skill.CombatSkillMixin != null)
+            if(instantiatedSkills!=null)
+                foreach (var skillUI in instantiatedSkills)
                 {
-                    skillUI.HideSelectable();
+                    if (skillUI.Skill.CombatSkillMixin != null)
+                    {
+                        skillUI.HideSelectable();
+                    }
                 }
-            }
         }
 
         
@@ -72,6 +78,8 @@ namespace LostGrace
         private SkillUI selectedCombatSkill;
         private void ShowSelectableCombatSkills()
         {
+            if (!interactableForPlayer)
+                return;
             canSelectCombatSkillsRightNow = true;
             selectedCombatSkill = null;
             attackStarted = false;
@@ -91,9 +99,10 @@ namespace LostGrace
 
         
         private List<SkillUI> instantiatedSkills;
-        public void Show(Unit unit)
+        public void UpdateUI()
         {
-            base.Show();
+            if (unit == null)
+                return;
             faceSprite.sprite = unit.visuals.CharacterSpriteSet.FaceSprite;
             nameText.text = unit.Name + ", " + unit.rpgClass;
             lvl.text = "" + unit.ExperienceManager.Level;
@@ -128,13 +137,22 @@ namespace LostGrace
                     prefab = combatSkillprefab;
                 var go =Instantiate(prefab, skillContainer);
                 var skillUI =  go.GetComponent<SkillUI>();
-               skillUI.SetSkill(skill, true);
-               skillUI.OnClicked += SkillClicked;
-               instantiatedSkills.Add(skillUI);
+                skillUI.SetSkill(skill, true);
+                skillUI.OnClicked += SkillClicked;
+                instantiatedSkills.Add(skillUI);
 
             }
 
+        }
+
+        private Unit unit;
+        public void Show(Unit unit, bool interactableForPlayer=true)
+        {
+            base.Show();
+            this.unit = unit;
+            this.interactableForPlayer = interactableForPlayer;
            
+           UpdateUI();
         }
 
         public void CombatItemClicked(UICombatItemSlot  clickedCombatItemUI)
@@ -143,6 +161,8 @@ namespace LostGrace
             var combatItem = clickedCombatItemUI.GetCombatItem();
             Debug.Log("CLICKED COMBAT ITEM: " +combatItem.item.GetName());
             ToolTipSystem.Show((Item)combatItem.item, clickedCombatItemUI.transform.position);
+            if (!interactableForPlayer)
+                return;
             useItemDialogController.Show((Item)combatItem.item,()=>new GameplayCommands().SelectItem((Item)combatItem.item));
         }
         public void SkillClicked(SkillUI skillUI)
@@ -151,9 +171,16 @@ namespace LostGrace
            
             Debug.Log("CLICKED Skill: " +skillUI.Skill.Name);
             ToolTipSystem.Show(skillUI.Skill, skillUI.transform.position);
+            if (!interactableForPlayer)
+                return;
             if (skillUI.Skill.activeMixins.Count > 0)
             {
-                useSkillDialogController.Show(skillUI.Skill, () => new GameplayCommands().SelectSkill(skillUI.Skill));
+                if(ServiceProvider.Instance.GetSystem<UnitSelectionSystem>().SelectedSkill==null)
+                    useSkillDialogController.Show(skillUI.Skill, () => new GameplayCommands().SelectSkill(skillUI.Skill));
+                else
+                {
+                    new GameplayCommands().DeselectSkill();
+                }
             }
             else if (skillUI.Skill.CombatSkillMixin != null)
             {
@@ -181,6 +208,8 @@ namespace LostGrace
 
         void DeselectCombatSkill()
         {
+            if (!interactableForPlayer)
+                return;
             if (selectedCombatSkill != null)
             {
                 selectedCombatSkill.Deselect();
@@ -193,8 +222,34 @@ namespace LostGrace
                
             }
         }
+        private void SkillDeselected(Skill skill)
+        {
+            if (!interactableForPlayer)
+                return;
+            foreach (var skillUI in instantiatedSkills)
+            {
+                if (skillUI.Skill.Equals(skill))
+                {
+                    skillUI.Deselect();
+                }
+            }
+        }
+        private void SkillSelected(Skill skill)
+        {
+            if (!interactableForPlayer)
+                return;
+            foreach (var skillUI in instantiatedSkills)
+            {
+                if (skillUI.Skill.Equals(skill))
+                {
+                    skillUI.ShowSelectable();
+                }
+            }
+        }
         public void SelectSkill(SkillUI skillUI)
         {
+            if (!interactableForPlayer)
+                return;
             Debug.Log("SELECT SKILL "+ skillUI.Skill.Name);
             DeselectCombatSkill();
             skillUI.Select();
@@ -208,8 +263,12 @@ namespace LostGrace
         private bool attackStarted = false;
         void OnStartAttack(IBattleActor attacker, IAttackableTarget target)
         {
+            if (!interactableForPlayer)
+                return;
             selectedCombatSkill.Skill.CombatSkillMixin.ActivateForNextCombat();
             attackStarted = true;
         }
+
+        
     }
 }

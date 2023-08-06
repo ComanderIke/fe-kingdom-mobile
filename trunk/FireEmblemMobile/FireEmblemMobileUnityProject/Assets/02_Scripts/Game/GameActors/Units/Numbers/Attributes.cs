@@ -125,7 +125,22 @@ namespace Game.GameActors.Units.Numbers
                 case 4: return "CON";
                 case 5: return "LCK";
                 case 6: return "DEF";
-                case 7: return "FAITH";
+                case 7: return "FTH";
+                default: return "?";
+            }
+        }
+        public static string GetAsLongText(int attribute)
+        {
+            switch (attribute)
+            {
+                case 0: return "Strength";
+                case 1: return "Dexterity";
+                case 2: return "Intelligence";
+                case 3: return "Agility";
+                case 4: return "Constitution";
+                case 5: return "Luck";
+                case 6: return "Defense";
+                case 7: return "Faith";
                 default: return "?";
             }
         }
@@ -221,6 +236,8 @@ namespace Game.GameActors.Units.Numbers
             faith -= bonusAttributes.FAITH;
             OnAttributesUpdated?.Invoke();
         }
+
+      
     }
 
     public enum AttributeType

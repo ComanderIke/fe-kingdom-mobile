@@ -23,8 +23,8 @@ namespace Game.Mechanics.Commands
         public MoveCharacterCommand(IGridActor unit, Vector2Int destination, bool skipAnimation = false)
         {
             this.unit = unit;
-            oldX = unit.GridComponent.GridPosition.X;
-            oldY = unit.GridComponent.GridPosition.Y;
+            oldX = unit.GridComponent.OriginTile.X;
+            oldY = unit.GridComponent.OriginTile.Y;
             x = destination.x;
             y = destination.y;
             this.skipAnimation = skipAnimation;

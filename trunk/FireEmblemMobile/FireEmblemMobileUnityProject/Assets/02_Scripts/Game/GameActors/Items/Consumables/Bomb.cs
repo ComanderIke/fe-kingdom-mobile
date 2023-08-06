@@ -18,6 +18,7 @@ namespace _02_Scripts.Game.GameActors.Items.Consumables
         int GetSize();
         SkillTargetArea TargetArea { get; set; }
         EffectType EffectType { get; set; }
+        bool ConfirmPosition();
     }
     interface IThrowableItem
     {

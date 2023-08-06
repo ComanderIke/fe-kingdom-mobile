@@ -17,6 +17,8 @@ namespace Game.GameActors.Units
 
 
         bool IsAlive();
-        void SetGridPosition(Tile newTile);
+        void SetGridPosition(Tile newTile, bool moveGameObject=true);
+        void SetInternGridPosition(Tile tile);
+        void SetToOriginPosition();
     }
 }

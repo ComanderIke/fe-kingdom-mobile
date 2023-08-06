@@ -9,6 +9,7 @@ namespace LostGrace
 
         public void Show()
         {
+            LeanTween.cancel(canvasGroup.gameObject);
             gameObject.SetActive(true);
             TweenUtility.FadeIn(canvasGroup);
             
@@ -16,6 +17,7 @@ namespace LostGrace
 
         public virtual void Hide()
         {
+            LeanTween.cancel(canvasGroup.gameObject);
             TweenUtility.FadeOut(canvasGroup).setOnComplete(()=>gameObject.SetActive(false));
         }
     }

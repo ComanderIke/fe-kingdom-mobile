@@ -35,5 +35,10 @@ namespace Game.GameInput
             var zDiff = (int) Mathf.Abs(v.y - v2.y);
             return xDiff + zDiff;
         }
+
+        public Vector2 GetLastValidPosition()
+        {
+            return lastPositions.Last();
+        }
     }
 }
