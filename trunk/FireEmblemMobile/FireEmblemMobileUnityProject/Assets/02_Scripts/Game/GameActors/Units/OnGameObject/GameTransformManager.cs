@@ -72,12 +72,15 @@ namespace Game.GameActors.Units.OnGameObject
 
         public void Die()
         {
+            Debug.Log("DIE");
             if (GameObject == null)
             {
                 
                 return;
             }
-            GameObject.SetActive(false);
+            UnitAnimator.DeathAnimation();
+            MonoUtility.DelayFunction(()=> GameObject.SetActive(false), 3.5f);
+           
             //Destroy();
         }
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Game.Mechanics;
 using LostGrace;
+using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -30,6 +31,7 @@ namespace Game.GameActors.Units.OnGameObject
         private bool moving;
         private int FrameCountMovingCheck= 0;
         private int frameCount = 0;
+        [SerializeField]private MMF_Player deathFeedbacks;
         void Start()
         {
             // if(unit!=null)
@@ -86,6 +88,10 @@ namespace Game.GameActors.Units.OnGameObject
         // {
         //     animator.SetBool(Selected, selected);
         // }
+        public void DeathAnimation()
+        {
+            deathFeedbacks.PlayFeedbacks();
+        }
         public void BattleAnimationUp()
         {
             animator.SetTrigger(AnimationUp);

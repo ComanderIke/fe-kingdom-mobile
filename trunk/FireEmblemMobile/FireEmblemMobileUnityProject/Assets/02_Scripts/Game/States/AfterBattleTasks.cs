@@ -69,6 +69,12 @@ namespace Game.States
                 if (!attacker.IsAlive())
                 {
                     attacker.Die();
+                    yield return new WaitForSeconds(1.5f);
+                }
+                if (!defender.IsAlive())
+                {
+                    defender.Die();
+                    yield return new WaitForSeconds(1.5f);
                 }
                 if (defender is Unit unitDefender)
                 {
@@ -82,10 +88,7 @@ namespace Game.States
                     }
 
                 }
-                if (!defender.IsAlive())
-                {
-                    defender.Die();
-                }
+                
             }
             Debug.Log("ALMOST FINISHED EXP COROUTINE");
             yield return new WaitForSeconds(WaitTimeWhenFinished);
