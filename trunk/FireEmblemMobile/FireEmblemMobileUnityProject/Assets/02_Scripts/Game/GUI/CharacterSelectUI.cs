@@ -30,7 +30,7 @@ namespace LostGrace
         [SerializeField] private GoddessUI goddessUI;
         [SerializeField] private CharacterSelector characterSelector;
         [SerializeField] private UIPartyCharacterCircleController characterCircles;
-       
+        [SerializeField] private UIDetailedCharacterViewController characterViewController;
         
         public override void Show()
         {
@@ -40,6 +40,7 @@ namespace LostGrace
             Player.Instance.Party.onMemberAdded += PartyChanged;
             UpdateButtonState();
             StartCoroutine(ShowCoroutine());
+            characterViewController.ShowBoonBaneSelection();
           
           
         }

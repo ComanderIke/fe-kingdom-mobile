@@ -75,8 +75,7 @@ namespace Game.GameActors.Units
         // private int maxCurses = 3;
         [NonSerialized]
         private Stats stats;
-        [SerializeField]
-        private Attributes growths;
+       
         [SerializeField]
         private MoveType moveType;
         [NonSerialized]
@@ -100,11 +99,7 @@ namespace Game.GameActors.Units
         public Blessing Blessing => SkillManager.Skills.OfType<Blessing>()?.First();
         public Curse Curse => SkillManager.Skills.OfType<Curse>()?.First();
 
-        public Attributes Growths
-        {
-            get => growths;
-            set => growths = value;
-        }
+       
         public RpgClass rpgClass;
         [NonSerialized] public UnitVisual visuals;
 
@@ -113,7 +108,7 @@ namespace Game.GameActors.Units
             get { return visuals; }
         }
 
-        public Unit(string bluePrintID, string name,RpgClass rpgClass,Stats stats, Attributes growths, MoveType moveType,
+        public Unit(string bluePrintID, string name,RpgClass rpgClass,Stats stats, MoveType moveType,
              UnitVisual visuals, SkillManager skillManager, ExperienceManager experienceManager)
         {
             this.bluePrintID = bluePrintID;
@@ -122,7 +117,6 @@ namespace Game.GameActors.Units
             encounterBuffs = new List<EncounterBasedBuff>();
             this.rpgClass = rpgClass;
             this.stats = stats;
-            this.growths = growths;
             this.moveType = moveType;
             this.visuals = visuals;
             this.name = name;
@@ -471,7 +465,6 @@ namespace Game.GameActors.Units
             //clone.sp = sp;
         
             clone.Stats = (Stats) Stats.Clone();
-            clone.Growths = (Attributes) Growths.Clone();
             clone.MoveType = MoveType;
             clone.Faction = Faction;
             clone.equippedWeapon = (Weapon)equippedWeapon?.Clone();

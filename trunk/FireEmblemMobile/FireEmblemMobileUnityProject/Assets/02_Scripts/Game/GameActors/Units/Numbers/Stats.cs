@@ -14,6 +14,7 @@ namespace Game.GameActors.Units.Numbers
     {
         [HideInInspector] [SerializeField] public List<int> AttackRanges;
         [SerializeField] public Attributes BaseAttributes;
+        [field:SerializeField] public Attributes BaseGrowths{ get; set; }
         public Attributes BonusAttributesFromEquips { get; set; }
         public Attributes BonusAttributesFromWeapon { get; set; }
         public Attributes BonusAttributesFromEffects { get; set; }
@@ -26,11 +27,14 @@ namespace Game.GameActors.Units.Numbers
         // [SerializeField]
         // public int MaxSp;
         [SerializeField] public int Mov;
-
+        public AttributeType Boon { get; private set; }
+        public AttributeType Bane{ get; private set; }
         public Stats()
         {
             BaseAttributes = new Attributes();
+            BaseGrowths = new Attributes();
             BonusGrowths = new Attributes();
+            
             BonusAttributesFromEffects = new Attributes();
             BonusAttributesFromEquips = new Attributes();
             BonusAttributesFromWeapon = new Attributes();
@@ -39,6 +43,8 @@ namespace Game.GameActors.Units.Numbers
             BonusStatsFromTerrain = new BonusStats();
             BonusStatsFromWeapon = new BonusStats();
             AttackRanges = new List<int>();
+            Bane = AttributeType.NONE;
+            Boon = AttributeType.NONE;
         }
 
 
@@ -89,7 +95,10 @@ namespace Game.GameActors.Units.Numbers
             AttackRanges = statsData.AttackRanges;
             BaseAttributes = new Attributes(statsData.Attributes);
         }
-
+        public Attributes CombinedGrowths()
+        {
+            return BaseGrowths + BonusGrowths;
+        }
         public Attributes CombinedAttributes()
         {
             return BaseAttributes + BonusAttributesFromWeapon + BonusAttributesFromEffects + BonusAttributesFromEquips;
@@ -177,6 +186,32 @@ namespace Game.GameActors.Units.Numbers
                     ? AttributeBonusState.Decreasing
                     : AttributeBonusState.Same;
         }
+
      
+        public void SetBane(AttributeType bane)
+        {
+            if (this.Bane != AttributeType.NONE)
+            {
+                BaseAttributes.IncreaseAttribute(1, this.Bane);
+                BaseGrowths.IncreaseAttribute(10, this.Bane);
+            }
+
+            this.Bane = bane;
+            BaseAttributes.IncreaseAttribute(-1, this.Bane);
+            BaseGrowths.IncreaseAttribute(-10, this.Bane);
+        }
+
+        public void SetBoon(AttributeType boon)
+        {
+            if (this.Boon != AttributeType.NONE)
+            {
+                BaseAttributes.IncreaseAttribute(-1, this.Boon);
+                BaseGrowths.IncreaseAttribute(-10, this.Boon);
+            }
+
+            this.Boon = boon;
+            BaseAttributes.IncreaseAttribute(1, this.Boon);
+            BaseGrowths.IncreaseAttribute(10, this.Boon);
+        }
     }
 }

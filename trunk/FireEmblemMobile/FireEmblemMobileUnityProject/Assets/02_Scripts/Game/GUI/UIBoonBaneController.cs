@@ -24,6 +24,9 @@ namespace LostGrace
         [SerializeField] private GameObject RESObject;
         private AttributeType currentBoon;
         private AttributeType currentBane;
+        public event Action<AttributeType> OnBoonSelected;
+        public event Action<AttributeType> OnBaneSelected;
+
         void Start()
         {
             currentBoon = AttributeType.NONE;
@@ -44,6 +47,7 @@ namespace LostGrace
             }
 
             currentBane =(AttributeType) rngIndex;
+            OnBaneSelected?.Invoke(currentBane);
         }
         void ApplyRandomBoonExcept()
         {
@@ -54,17 +58,26 @@ namespace LostGrace
             }
 
             currentBoon =(AttributeType) rngIndex;
+            OnBoonSelected?.Invoke(currentBoon);
         }
 
-        private void ResetBoonBane()
+        public void SoftResetBoonBane()
         {
             currentBoon = AttributeType.NONE;
             currentBane = AttributeType.NONE;
         }
+        private void ResetBoonBane()
+        {
+            currentBoon = AttributeType.NONE;
+            currentBane = AttributeType.NONE;
+            OnBaneSelected?.Invoke(currentBane);
+            OnBoonSelected?.Invoke(currentBoon);
+        }
 
         [SerializeField] private Vector3 baneOffset;
         [SerializeField] private Vector3 boonOffset;
-        void UpdateUI()
+
+        public void UpdateUI()
         {
             baneImage.gameObject.SetActive(true);
             boonImage.gameObject.SetActive(true);
@@ -120,6 +133,8 @@ namespace LostGrace
             {
                 
                 currentBane = type;
+                OnBaneSelected?.Invoke(currentBane);
+               
                 ApplyRandomBoonExcept();
             }
             else if (currentBane == type)
@@ -129,6 +144,7 @@ namespace LostGrace
             else
             {
                 currentBoon = type;
+                OnBoonSelected?.Invoke(currentBoon);
                 if(currentBane == AttributeType.NONE)
                     ApplyRandomBaneExcept();
             }
@@ -168,7 +184,11 @@ namespace LostGrace
         {
             AttributeClicked(AttributeType.FTH);
         }
-        
-        
+
+
+        public void Show()
+        {
+            gameObject.SetActive(true);
+        }
     }
 }

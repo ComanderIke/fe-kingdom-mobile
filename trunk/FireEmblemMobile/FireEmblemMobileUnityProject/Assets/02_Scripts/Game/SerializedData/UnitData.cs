@@ -60,7 +60,6 @@ namespace Game.GameActors.Players
             this.name = unit.name;
             ExperienceManager = unit.ExperienceManager;
             TurnStateManager = unit.TurnStateManager;
-            this.growthsData = unit.Growths;
             this.statsData = unit.Stats.GetSaveData();
             this.unitBlueprintID = unit.bluePrintID;
             this.hp = unit.Hp;
@@ -115,7 +114,6 @@ namespace Game.GameActors.Players
             unit.name = name;
             unit.Stats = new Stats();//ScriptableObject.CreateInstance<Stats>();
             unit.Stats.LoadData(statsData);
-            unit.Growths = new Attributes(growthsData);//ScriptableObject.CreateInstance<Growths>();
             // unit.Growths.LoadData(growthsData);
             unit.ExperienceManager = new ExperienceManager(ExperienceManager);
             unit.ExperienceManager.Exp = ExperienceManager.Exp;

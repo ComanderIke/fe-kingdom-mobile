@@ -138,7 +138,7 @@ namespace Game.Mechanics
         public void LevelUp(Unit unit)
         {
         
-            int[] statIncreases = CalculateStatIncreases(unit.Growths.AsArray());
+            int[] statIncreases = CalculateStatIncreases(unit.Stats.CombinedGrowths().AsArray());
 
             if (levelUpRenderer != null)
             {

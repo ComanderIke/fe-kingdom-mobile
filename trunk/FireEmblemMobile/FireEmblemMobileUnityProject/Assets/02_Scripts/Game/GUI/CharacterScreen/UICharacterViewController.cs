@@ -38,6 +38,14 @@ public class UICharacterViewController : MonoBehaviour
     public UIStatText Crit;
     public UIStatText CritAvoid;
     
+    public TextMeshProUGUI STR_Label;
+    public TextMeshProUGUI INT_Label;
+    public TextMeshProUGUI DEX_Label;
+    public TextMeshProUGUI AGI_Label;
+    public TextMeshProUGUI CON_Label;
+    public TextMeshProUGUI FTH_Label;
+    public TextMeshProUGUI LCK_Label;
+    public TextMeshProUGUI DEF_Label;
     public UIStatText STR;
     public UIStatText INT;
     public UIStatText DEX;
@@ -63,7 +71,7 @@ public class UICharacterViewController : MonoBehaviour
     protected bool useFixedUnitList;
     protected List<Unit> availableUnits;
     protected int currentFixedIndex;
-    public void Show(Unit unit, bool useFixedUnitList=false, List<Unit> availableUnits=null)
+    public virtual void Show(Unit unit, bool useFixedUnitList=false, List<Unit> availableUnits=null)
     {
         this.availableUnits = availableUnits;
         this.useFixedUnitList = useFixedUnitList;

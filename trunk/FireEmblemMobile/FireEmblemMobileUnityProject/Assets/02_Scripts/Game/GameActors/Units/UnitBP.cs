@@ -37,8 +37,6 @@ namespace Game.GameActors.Units
         [SerializeField]
         public Stats stats;
         [SerializeField]
-        public Attributes growths;
-        [SerializeField]
         public MoveType moveType;
         [SerializeField]
         public SkillManager SkillManager;
@@ -82,7 +80,7 @@ namespace Game.GameActors.Units
            
             var skillManager = new SkillManager(SkillManager);
             skillManager.AddStartSkills();
-            var unit = new Unit(bluePrintID, Name, rpgClass, (Stats)stats.Clone(), growths, moveType, 
+            var unit = new Unit(bluePrintID, Name, rpgClass, (Stats)stats.Clone(), moveType, 
                 new UnitVisual(visuals), skillManager,
                 new ExperienceManager(experienceManager));
             Weapon weapon = null;
