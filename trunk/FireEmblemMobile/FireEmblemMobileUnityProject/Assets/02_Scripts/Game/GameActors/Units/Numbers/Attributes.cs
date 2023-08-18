@@ -8,17 +8,17 @@ namespace Game.GameActors.Units.Numbers
     {
         public Action OnAttributesUpdated;
         [SerializeField]
-        private int str= 0;
+        private int str;
 
         [SerializeField]
-        private int intel = 0;
+        private int intel;
         [SerializeField]
-        private int dex= 0;
+        private int dex;
         [SerializeField]
-        private int agi= 0;
+        private int agi;
 
         [SerializeField] 
-        private int con = 0;
+        private int con;
 
         public Action AttributesUpdated => OnAttributesUpdated;
 
@@ -39,11 +39,11 @@ namespace Game.GameActors.Units.Numbers
         public int FAITH => faith;
 
         [SerializeField]
-        private int lck= 0;
+        private int lck;
         [SerializeField]
-        private int def= 0;
+        private int def;
         [SerializeField]
-        private int faith= 0;
+        private int faith;
 
         public const int CON_HP_Mult = 1;
         public const int BASE_HP = 15;
@@ -237,7 +237,40 @@ namespace Game.GameActors.Units.Numbers
             OnAttributesUpdated?.Invoke();
         }
 
-      
+
+        public string GetTooltipText()
+        {
+            string attributeslabel= "" + (STR != 0
+                          ? GetAsText(0) + "/"
+                          : "") //  either grant STR/SPD/SKL   5/4/3 -> 5/5/
+                      + (DEX != 0 ? GetAsText(1) + "/" : "")
+                      + (INT != 0 ? GetAsText(2) + "/" : "")
+                      + (AGI != 0 ? GetAsText(3) + "/" : "")
+                      + (CON != 0 ? GetAsText(4) + "/" : "")
+                      + (LCK != 0 ? GetAsText(5) + "/" : "")
+                      + (DEF != 0 ? GetAsText(6) + "/" : "")
+                      + (FAITH != 0 ? GetAsText(7) + "/" : "");
+            if (attributeslabel.Length > 0)
+                return attributeslabel.Remove(attributeslabel.Length - 1, 1);
+            return attributeslabel;
+        }
+
+        public string GetTooltipValue()
+        {
+           string valueLabel= "" + (STR != 0
+                   ? STR + "/"
+                   : "") //  either grant STR/SPD/SKL   5/4/3 -> 5/5/
+               + (DEX != 0 ? DEX + "/" : "")
+               + (INT != 0 ? INT + "/" : "")
+               + (AGI != 0 ? AGI + "/" : "")
+               + (CON != 0 ? CON + "/" : "")
+               + (LCK != 0 ? LCK + "/" : "")
+               + (DEF != 0 ? DEF + "/" : "")
+                + (FAITH != 0 ? FAITH + "/" : "");
+            if (valueLabel.Length > 0)
+                return valueLabel.Remove(valueLabel.Length - 1, 1);
+            return valueLabel;
+        }
     }
 
     public enum AttributeType

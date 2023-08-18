@@ -10,12 +10,12 @@ namespace Game.GameActors.Units.Skills.Passive
     [CreateAssetMenu(menuName = "GameData/Skills/Passive/OnTile", fileName = "OnTileMixin")]
     public class OnTileEffectSkillMixin:PassiveSkillMixin, ITurnStateListener
     {
-        public TerrainType TerrainType;
+        public List<TerrainType> TerrainTypes;
         private bool activated = false;
 
         void OnTileChanged(Tile tile)
         {
-            if (tile.TileData.TerrainType == TerrainType)
+            if (TerrainTypes.Contains(tile.TileData.TerrainType))
             {
                 activated = true;
                 foreach (var skillEffect in skillEffectMixins)

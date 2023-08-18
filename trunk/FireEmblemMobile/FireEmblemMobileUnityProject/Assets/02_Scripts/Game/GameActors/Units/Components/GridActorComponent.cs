@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Game.GameActors.Units.OnGameObject;
 using Game.Grid;
+using UnityEngine;
 
 namespace Game.GameActors.Units
 {
@@ -12,6 +13,13 @@ namespace Game.GameActors.Units
         public IGridActor gridActor;
         public static event Action<IGridActor> AnyUnitChangedPosition;
         public static event Action<IGridActor> AnyUnitChangedPositionAfter;
+      
+        public Dictionary<TerrainType, int> BonusMovementCosts;
+
+        public int GetMovementCosts(TerrainType m)
+        {
+            return gridActor.MoveType.GetMovementCost(m)+ (BonusMovementCosts.ContainsKey(m)?BonusMovementCosts[m]:0);
+        }
         public override void ResetPosition()
         {
             base.ResetPosition();
@@ -40,6 +48,7 @@ namespace Game.GameActors.Units
         public GridActorComponent(IGridActor actor):base()
         {
             gridActor = actor;
+            BonusMovementCosts = new Dictionary<TerrainType, int>();
         }
        
 
@@ -67,6 +76,29 @@ namespace Game.GameActors.Units
         private int DeltaPos(int x, int y, int x2, int y2)
         {
             return Math.Abs(x - x2) + Math.Abs(y - y2);
+        }
+
+        public void AddBonusMovementCosts(TerrainType key, int value)
+        {
+            if (BonusMovementCosts.ContainsKey(key))
+            {
+                BonusMovementCosts[key] += value;
+            }
+            else
+            {
+                BonusMovementCosts.Add(key,value);
+            }
+        }
+        public void RemoveBonusMovementCosts(TerrainType key, int value)
+        {
+            if (BonusMovementCosts.ContainsKey(key))
+            {
+                BonusMovementCosts[key] -= value;
+            }
+            else
+            {
+                BonusMovementCosts.Add(key,-value);
+            }
         }
     }
 }

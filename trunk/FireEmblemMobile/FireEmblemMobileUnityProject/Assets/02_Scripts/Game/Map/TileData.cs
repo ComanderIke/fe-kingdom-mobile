@@ -25,23 +25,23 @@ namespace Game.Map
         public int defenseBonus;
         public int avoBonus;
         public int speedMalus;
-        public MoveTypeCosts[] movementCostsArray;
-        private Dictionary<MoveType, int> movementCosts;
+       // public MoveTypeCosts[] movementCostsArray;
+       // private Dictionary<MoveType, int> movementCosts;
         
         private void OnEnable()
         {
-            movementCosts = new Dictionary<MoveType, int>();
-            foreach (var mtc in movementCostsArray)
-            {
-                movementCosts.Add(mtc.moveType, mtc.cost);
-            }
+            // movementCosts = new Dictionary<MoveType, int>();
+            // foreach (var mtc in movementCostsArray)
+            // {
+            //     movementCosts.Add(mtc.moveType, mtc.cost);
+            // }
         }
-        public int GetMovementCost(MoveType moveType)
-        {
-            if (movementCosts.ContainsKey(moveType))
-                return movementCosts[moveType];
-            return 1;
-        }
+        // public int GetMovementCost(MoveType moveType)
+        // {
+        //     if (movementCosts.ContainsKey(moveType))
+        //         return movementCosts[moveType];
+        //     return 1;
+        // }
 
         public bool CanMoveThrough(MoveType moveType)
         {

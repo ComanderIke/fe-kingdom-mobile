@@ -70,7 +70,8 @@ namespace Game.Grid
 
         public int GetMovementCost(int x, int y, IGridActor unit)
         {
-            return tiles[x, y].TileData.GetMovementCost(unit.MoveType);
+            return unit.GetActorGridComponent().GetMovementCosts(tiles[x, y].TileData.TerrainType);
+           // return tiles[x, y].TileData.GetMovementCost(unit.MoveType);
         }
 
         public bool IsValidLocation(IGridActor unit, int sx, int sy, int x, int y)

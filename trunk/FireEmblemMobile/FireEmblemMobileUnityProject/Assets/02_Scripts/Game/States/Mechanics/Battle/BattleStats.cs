@@ -20,7 +20,7 @@ namespace Game.Mechanics.Battle
     {
         public bool BonusAttack { get; set; }
         public Dictionary<AttackEffectEnum, object> AttackEffects { get; set; } //object userData like for Sol healhamount for luna def/res reduction
-
+      
         public BonusAttackStats()
         {
             BonusAttack = false;
@@ -44,7 +44,7 @@ namespace Game.Mechanics.Battle
     public class BattleStats
     {
         private const int AGILITY_TO_DOUBLE = 5;
-
+        public bool ExcessHitToCrit { get; set; }
         private readonly IBattleActor owner;
         private bool preventDoubleAttacks = false;
         public List<ImmunityType> Immunities { get; set; }
@@ -273,10 +273,29 @@ namespace Game.Mechanics.Battle
             return fth;
         }
 
+       
 
         public int GetCritAgainstTarget(IBattleActor defender)
         {
-            return Math.Max(0,GetCrit() - defender.BattleComponent.BattleStats.GetCritAvoid());
+            Debug.Log("GetCritAgainstTarget: "+defender);
+            if (ExcessHitToCrit)
+            {
+                
+                int hit = GetHitAgainstTarget(defender);
+                Debug.Log("hit: "+hit);
+                int excessHit = 0;
+                if (hit > 100)
+                {
+                    excessHit=hit - 100;
+                }
+                Debug.Log("excessHit: "+excessHit);
+                return Math.Max(0,excessHit + GetCrit() - defender.BattleComponent.BattleStats.GetCritAvoid());
+            }
+            else
+            {
+                return Math.Max(0,GetCrit() - defender.BattleComponent.BattleStats.GetCritAvoid());
+            }
+            
         }
 
         public void SetPreventDoubleAttacks(bool prevent)
@@ -284,35 +303,35 @@ namespace Game.Mechanics.Battle
             preventDoubleAttacks = prevent;
         }
 
-        public int GetStatFromEnum(BonusStats.CombatStatType type)
+        public int GetStatFromEnum(CombatStats.CombatStatType type)
         {
             switch (type)
             {
-                case BonusStats.CombatStatType.Attack: return GetDamage();
-                case BonusStats.CombatStatType.Avoid: return GetAvoid();
-                case BonusStats.CombatStatType.Crit: return GetCrit();
-                case BonusStats.CombatStatType.Critavoid: return GetCritAvoid();
-                case BonusStats.CombatStatType.Hit: return GetHitrate();
-                case BonusStats.CombatStatType.MagicResistance: return GetFaithResistance();
-                case BonusStats.CombatStatType.PhysicalResistance: return GetPhysicalResistance();
-                case BonusStats.CombatStatType.AttackSpeed: return GetAttackSpeed();
+                case CombatStats.CombatStatType.Attack: return GetDamage();
+                case CombatStats.CombatStatType.Avoid: return GetAvoid();
+                case CombatStats.CombatStatType.Crit: return GetCrit();
+                case CombatStats.CombatStatType.Critavoid: return GetCritAvoid();
+                case CombatStats.CombatStatType.Hit: return GetHitrate();
+                case CombatStats.CombatStatType.Resistance: return GetFaithResistance();
+                case CombatStats.CombatStatType.Protection: return GetPhysicalResistance();
+                case CombatStats.CombatStatType.AttackSpeed: return GetAttackSpeed();
             }
 
             return -1;
         }
 
-        public int GetStatOnlyBonusesWithoutWeaponFromEnum(BonusStats.CombatStatType type)
+        public int GetStatOnlyBonusesWithoutWeaponFromEnum(CombatStats.CombatStatType type)
         {
             switch (type)
             {
-                case BonusStats.CombatStatType.Attack: return owner.Stats.GetBonusStatsWithoutWeapon().Attack;
-                case BonusStats.CombatStatType.Avoid: return owner.Stats.GetBonusStatsWithoutWeapon().Avoid;
-                case BonusStats.CombatStatType.Crit: return owner.Stats.GetBonusStatsWithoutWeapon().Crit;
-                case BonusStats.CombatStatType.Critavoid: return owner.Stats.GetBonusStatsWithoutWeapon().CritAvoid;
-                case BonusStats.CombatStatType.Hit: return owner.Stats.GetBonusStatsWithoutWeapon().Hit;
-                case BonusStats.CombatStatType.MagicResistance: return owner.Stats.GetBonusStatsWithoutWeapon().MagicResistance;
-                case BonusStats.CombatStatType.PhysicalResistance: return owner.Stats.GetBonusStatsWithoutWeapon().Armor;
-                case BonusStats.CombatStatType.AttackSpeed: return owner.Stats.GetBonusStatsWithoutWeapon().AttackSpeed;
+                case CombatStats.CombatStatType.Attack: return owner.Stats.GetBonusStatsWithoutWeapon().Attack;
+                case CombatStats.CombatStatType.Avoid: return owner.Stats.GetBonusStatsWithoutWeapon().Avoid;
+                case CombatStats.CombatStatType.Crit: return owner.Stats.GetBonusStatsWithoutWeapon().Crit;
+                case CombatStats.CombatStatType.Critavoid: return owner.Stats.GetBonusStatsWithoutWeapon().CritAvoid;
+                case CombatStats.CombatStatType.Hit: return owner.Stats.GetBonusStatsWithoutWeapon().Hit;
+                case CombatStats.CombatStatType.Resistance: return owner.Stats.GetBonusStatsWithoutWeapon().MagicResistance;
+                case CombatStats.CombatStatType.Protection: return owner.Stats.GetBonusStatsWithoutWeapon().Armor;
+                case CombatStats.CombatStatType.AttackSpeed: return owner.Stats.GetBonusStatsWithoutWeapon().AttackSpeed;
             }
 
             return -1;

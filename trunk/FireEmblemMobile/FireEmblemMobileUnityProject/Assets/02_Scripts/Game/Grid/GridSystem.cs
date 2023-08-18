@@ -247,15 +247,15 @@ namespace Game.Map
             GridRenderer.SetFieldMaterial(new Vector2(x, y), unit.Faction.Id, !unit.TurnStateManager.HasMoved,GridGameManager.Instance.FactionManager.IsActiveFaction(unit.Faction));
             GridLogic.gridSessionData.AddValidPosition(x, y);
             NodeHelper.Nodes[x, y].C = c;
-            c+=Tiles[x,y].TileData.GetMovementCost(unit.MoveType);
+            c+=GetTileChecker().GetMovementCost(x, y, unit);
             if (GridLogic.CheckField(x - 1, y, unit, range) && NodeHelper.NodeFaster(x - 1, y, c))
-                ShowMovement(x - 1, y, range - Tiles[x-1,y].TileData.GetMovementCost(unit.MoveType), c, unit);
+                ShowMovement(x - 1, y, range - GetTileChecker().GetMovementCost(x-1, y, unit), c, unit);
             if (GridLogic.CheckField(x + 1, y, unit, range) && NodeHelper.NodeFaster(x + 1, y, c))
-                ShowMovement(x + 1, y, range - Tiles[x+1,y].TileData.GetMovementCost(unit.MoveType), c, unit);
+                ShowMovement(x + 1, y, range -GetTileChecker().GetMovementCost(x+1, y, unit), c, unit);
             if (GridLogic.CheckField(x, y - 1, unit, range) && NodeHelper.NodeFaster(x, y - 1, c))
-                ShowMovement(x, y - 1, range - Tiles[x,y-1].TileData.GetMovementCost(unit.MoveType), c, unit);
+                ShowMovement(x, y - 1, range - GetTileChecker().GetMovementCost(x, y - 1, unit), c, unit);
             if (GridLogic.CheckField(x, y + 1, unit, range) && NodeHelper.NodeFaster(x, y + 1, c))
-                ShowMovement(x, y + 1, range - Tiles[x,y+1].TileData.GetMovementCost(unit.MoveType), c, unit);
+                ShowMovement(x, y + 1, range - GetTileChecker().GetMovementCost(x, y+1, unit), c, unit);
         }
 
         public bool IsTileMoveableAndActive(int x, int y)

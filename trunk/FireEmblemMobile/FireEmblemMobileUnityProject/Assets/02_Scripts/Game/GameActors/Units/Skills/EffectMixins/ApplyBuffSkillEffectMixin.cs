@@ -35,13 +35,16 @@ namespace Game.GameActors.Units.Skills
 
         public override List<EffectDescription> GetEffectDescription(int level)
         {
-            var buff=appliedBuff.GetEffectDescription(level);
-            var debuff=appliedDebuff.GetEffectDescription(level);
-            var statModifier=AppliedStatModifier.GetEffectDescription(level);
-            return new List<EffectDescription>()
-            {
-                buff, debuff, statModifier
-            };
+            var list = new List<EffectDescription>();
+            var buff=appliedBuff==null?null:appliedBuff.GetEffectDescription(level);
+            var debuff=appliedDebuff==null?null:appliedDebuff.GetEffectDescription(level);
+            var statModifier=AppliedStatModifier==null?null:AppliedStatModifier.GetEffectDescription(level);
+         
+            list.Add(buff);
+            list.Add(debuff);
+            list.AddRange(statModifier);
+       
+            return list;
         }
 
        

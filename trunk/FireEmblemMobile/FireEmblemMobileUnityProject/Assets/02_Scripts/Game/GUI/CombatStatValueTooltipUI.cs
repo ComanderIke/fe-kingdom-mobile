@@ -26,7 +26,7 @@ namespace LostGrace
         private List<GameObject> instantiatedObjects;
      
 
-        public void Show(Unit unit, BonusStats.CombatStatType statType, Vector3 position)
+        public void Show(Unit unit, CombatStats.CombatStatType statType, Vector3 position)
         {
             instantiatedObjects ??= new List<GameObject>();
             Debug.Log("SHOW TOOLTIP FOR : "+statType);
@@ -37,7 +37,7 @@ namespace LostGrace
             }
             GetComponent<RectTransform>().anchoredPosition= position+ new Vector3(0,100,0);
            
-             this.label.text = BonusStats.GetAsText(statType);
+             this.label.text = CombatStats.GetAsText(statType);
         
              var go = Instantiate(statContainerPrefab, statContainerParent);
              var statContainer = go.GetComponent<StatContainerUI>();
@@ -47,17 +47,17 @@ namespace LostGrace
              AttributeBonusState bonusState = AttributeBonusState.Same;
              switch (statType)
              {
-                 case BonusStats.CombatStatType.Attack:
+                 case CombatStats.CombatStatType.Attack:
                      bonusState=unit.Stats.GetAttributeBonusState(AttributeType.STR);
                      statContainer.SetValue(physical? Attributes.GetAsText((int)AttributeType.STR):Attributes.GetAsText((int)AttributeType.INT), physical?unit.Stats.CombinedAttributes().STR: unit.Stats.CombinedAttributes().INT,false, bonusState);
                      instantiatedObjects.Add(go);
                      break;
-                 case BonusStats.CombatStatType.Avoid:  
+                 case CombatStats.CombatStatType.Avoid:  
                      bonusState=unit.Stats.GetAttributeBonusState(AttributeType.AGI);
                      statContainer.SetValue(Attributes.GetAsText((int)AttributeType.AGI)+" * "+BattleStats.AVO_AGI_MULT, unit.Stats.CombinedAttributes().AGI*BattleStats.AVO_AGI_MULT,false, bonusState);
                      instantiatedObjects.Add(go);
                      break;
-                 case BonusStats.CombatStatType.Crit: 
+                 case CombatStats.CombatStatType.Crit: 
                      bonusState=unit.Stats.GetAttributeBonusState(AttributeType.DEX);
                    
                     
@@ -69,30 +69,30 @@ namespace LostGrace
                      statContainer2.SetValue(Attributes.GetAsText((int)AttributeType.LCK), unit.Stats.CombinedAttributes().LCK,false, bonusState);
                      instantiatedObjects.Add(go2);
                      break;
-                 case BonusStats.CombatStatType.Critavoid: 
+                 case CombatStats.CombatStatType.Critavoid: 
                     
                      bonusState=unit.Stats.GetAttributeBonusState(AttributeType.LCK);
                      statContainer.SetValue(Attributes.GetAsText((int)AttributeType.LCK)+" * "+BattleStats.CRIT_AVO_LCK_MULT, unit.Stats.CombinedAttributes().LCK*BattleStats.CRIT_AVO_LCK_MULT,false, bonusState);
                      instantiatedObjects.Add(go);
                      break;
-                 case BonusStats.CombatStatType.Hit: 
+                 case CombatStats.CombatStatType.Hit: 
                     
                      bonusState=unit.Stats.GetAttributeBonusState(AttributeType.DEX);
                      statContainer.SetValue(Attributes.GetAsText((int)AttributeType.DEX)+" * "+BattleStats.HIT_DEX_MULT, unit.Stats.CombinedAttributes().DEX*BattleStats.HIT_DEX_MULT,false, bonusState);
                      instantiatedObjects.Add(go);
                      break;
-                 case BonusStats.CombatStatType.MagicResistance: 
+                 case CombatStats.CombatStatType.Resistance: 
                    
                      bonusState=unit.Stats.GetAttributeBonusState(AttributeType.FTH);
                      statContainer.SetValue(Attributes.GetAsText((int)AttributeType.FTH), unit.Stats.CombinedAttributes().FAITH,false, bonusState);
                      instantiatedObjects.Add(go);
                      break;
-                 case BonusStats.CombatStatType.PhysicalResistance: 
+                 case CombatStats.CombatStatType.Protection: 
                      bonusState=unit.Stats.GetAttributeBonusState(AttributeType.DEF);
                      statContainer.SetValue(Attributes.GetAsText((int)AttributeType.DEF), unit.Stats.CombinedAttributes().DEF,false, bonusState);
                      instantiatedObjects.Add(go);
                      break;
-                 case BonusStats.CombatStatType.AttackSpeed:
+                 case CombatStats.CombatStatType.AttackSpeed:
                     
                      bonusState=unit.Stats.GetAttributeBonusState(AttributeType.AGI);
                      statContainer.SetValue(Attributes.GetAsText((int)AttributeType.AGI), unit.Stats.CombinedAttributes().AGI,false,bonusState);

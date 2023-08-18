@@ -172,6 +172,7 @@ namespace Game.GameActors.Units
         public BattleComponent BattleComponent { get; set; }
 
         public GridComponent GridComponent { get; set; }
+      
 
         public GridActorComponent GetActorGridComponent()
         {

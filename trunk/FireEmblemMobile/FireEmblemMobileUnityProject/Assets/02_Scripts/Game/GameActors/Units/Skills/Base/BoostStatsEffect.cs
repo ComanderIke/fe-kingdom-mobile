@@ -2,6 +2,7 @@
 using Game.GameActors.Units.Numbers;
 using Game.Mechanics.Battle;
 using LostGrace;
+
 using UnityEngine;
 
 namespace Game.GameActors.Units.Skills
@@ -12,7 +13,7 @@ namespace Game.GameActors.Units.Skills
     {
       
         public Attributes[] BonusAttributes;
-        public BonusStats[] BonusStats;
+        public CombatStats[] BonusStats;
         public override void Activate(Unit target, int level)
         {
            
@@ -67,50 +68,30 @@ namespace Game.GameActors.Units.Skills
             var list = new List<EffectDescription>();
             if (level < BonusAttributes.Length)
             {
-                string attributeslabel =
-                        "" + (BonusAttributes[level].STR != 0
-                               ? Attributes.GetAsText(0) + "/"
-                               : "") //  either grant STR/SPD/SKL   5/4/3 -> 5/5/
-                           + (BonusAttributes[level].DEX != 0 ? Attributes.GetAsText(1) + "/" : "")
-                           + (BonusAttributes[level].INT != 0 ? Attributes.GetAsText(2) + "/" : "")
-                           + (BonusAttributes[level].AGI != 0 ? Attributes.GetAsText(3) + "/" : "")
-                           + (BonusAttributes[level].CON != 0 ? Attributes.GetAsText(4) + "/" : "")
-                           + (BonusAttributes[level].LCK != 0 ? Attributes.GetAsText(5) + "/" : "")
-                           + (BonusAttributes[level].DEF != 0 ? Attributes.GetAsText(6) + "/" : "")
-                           + (BonusAttributes[level].FAITH != 0 ? Attributes.GetAsText(7) + "/" : "")
-                    ;
-                string valueLabel =
-                    "" + (BonusAttributes[level].STR != 0
-                           ? BonusAttributes[level].STR + "/"
-                           : "") //  either grant STR/SPD/SKL   5/4/3 -> 5/5/
-                       + (BonusAttributes[level].DEX != 0 ? BonusAttributes[level].DEX + "/" : "")
-                       + (BonusAttributes[level].INT != 0 ? BonusAttributes[level].INT + "/" : "")
-                       + (BonusAttributes[level].AGI != 0 ? BonusAttributes[level].AGI + "/" : "")
-                       + (BonusAttributes[level].CON != 0 ? BonusAttributes[level].CON + "/" : "")
-                       + (BonusAttributes[level].LCK != 0 ? BonusAttributes[level].LCK + "/" : "")
-                       + (BonusAttributes[level].DEF != 0 ? BonusAttributes[level].DEF + "/" : "")
-                       + (BonusAttributes[level].FAITH != 0 ? BonusAttributes[level].FAITH + "/" : "");
-                if (valueLabel.Length > 0)
-                    valueLabel.Remove(valueLabel.Length - 2, 1);
-
-
+                string attributeslabel = BonusAttributes[level].GetTooltipText();
+                string valueLabel =BonusAttributes[level].GetTooltipValue();
                 // if(level<MAXLEVEL)
                 if (level < BonusAttributes.Length - 1)
                     level++;
-
-
-                string upgLabel = "" + (BonusAttributes[level].STR != 0 ? BonusAttributes[level].STR + "/" : "")
-                                     + (BonusAttributes[level].DEX != 0 ? BonusAttributes[level].DEX + "/" : "")
-                                     + (BonusAttributes[level].INT != 0 ? BonusAttributes[level].INT + "/" : "")
-                                     + (BonusAttributes[level].AGI != 0 ? BonusAttributes[level].AGI + "/" : "")
-                                     + (BonusAttributes[level].CON != 0 ? BonusAttributes[level].CON + "/" : "")
-                                     + (BonusAttributes[level].LCK != 0 ? BonusAttributes[level].LCK + "/" : "")
-                                     + (BonusAttributes[level].DEF != 0 ? BonusAttributes[level].DEF + "/" : "")
-                                     + (BonusAttributes[level].FAITH != 0 ? BonusAttributes[level].FAITH + "/" : "");
-                if (upgLabel.Length > 0)
-                    upgLabel.Remove(valueLabel.Length - 2, 1);
-
+                
+                string upgLabel = BonusAttributes[level].GetTooltipValue();
                 list.Add(new EffectDescription(attributeslabel, valueLabel, upgLabel));
+            }
+            if (level < BonusStats.Length)
+            {
+                List<string> bonusStatsLabels = BonusStats[level].GetToolTipLabels();
+                List<string> bonusStatsValues = BonusStats[level].GetToolTipValues();
+
+                // if(level<MAXLEVEL)
+                if (level < BonusStats.Length - 1)
+                    level++;
+
+                List<string> bonusStatsUpgrades = BonusStats[level].GetToolTipValues();
+
+                for (int i = 0; i < bonusStatsLabels.Count; i++)
+                {
+                    list.Add(new EffectDescription(bonusStatsLabels[i], bonusStatsValues[i], bonusStatsUpgrades[i]));
+                }
             }
 
             return list;

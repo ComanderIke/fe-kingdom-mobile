@@ -5,6 +5,7 @@ using _02_Scripts.Game.GameActors.Items.Consumables;
 using Game.Grid;
 using Game.Manager;
 using Game.Map;
+using LostGrace;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Skills
@@ -122,6 +123,15 @@ namespace Game.GameActors.Units.Skills
                 tiles[target.GridComponent.GridPosition.X, target.GridComponent.GridPosition.Y].SetCastCursorMaterial(EffectType.Bad, user.Faction.Id);
             }
 
+        }
+        public List<EffectDescription> GetEffectDescription(Unit unit, int level)
+        {
+            var list = new List<EffectDescription>();
+            foreach (var skillEffect in SkillEffectMixins)
+            {
+                list.AddRange(skillEffect.GetEffectDescription(level));
+            }
+            return list;
         }
     }
 }

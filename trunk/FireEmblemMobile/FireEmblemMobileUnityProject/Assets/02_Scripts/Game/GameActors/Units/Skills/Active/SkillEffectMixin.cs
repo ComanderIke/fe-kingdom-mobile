@@ -22,6 +22,7 @@ namespace Game.GameActors.Units.Skills
         public abstract void Activate(Unit target, Unit caster, int level);
 
         public abstract void Deactivate(Unit user,  Unit caster, int skillLevel);
+        [field:SerializeField]public bool TargetIsCaster { get; set; }
     }
 
     public abstract class TileTargetSkillEffectMixin:SkillEffectMixin

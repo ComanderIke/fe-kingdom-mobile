@@ -30,10 +30,16 @@ namespace Game.GameActors.Units.Skills
 
         public override List<EffectDescription> GetEffectDescription(int level)
         {
+            string valueLabel= ""+heal[level];
+            if (level < heal.Length-1)
+            {
+                level++;
+            }
+            string upgLabel=""+heal[level];
             return new List<EffectDescription>()
             {
-                new EffectDescription("Heal: ", "" + heal[level],
-                    "" + heal[level + 1])
+                new EffectDescription("Heal: ", valueLabel,
+                    upgLabel)
             };
         }
 

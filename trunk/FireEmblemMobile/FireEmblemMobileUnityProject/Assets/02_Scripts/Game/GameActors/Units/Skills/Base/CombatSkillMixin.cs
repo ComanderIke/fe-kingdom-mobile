@@ -62,7 +62,10 @@ namespace Game.GameActors.Units.Skills
                 }
                 if (skilleffect is UnitTargetSkillEffectMixin unitTargetSkillEffectMixin)
                 {
-                    unitTargetSkillEffectMixin.Activate(enemy,user, skill.Level);
+                    if(unitTargetSkillEffectMixin.TargetIsCaster)
+                        unitTargetSkillEffectMixin.Activate(user,user, skill.Level);
+                    else
+                        unitTargetSkillEffectMixin.Activate(enemy,user, skill.Level);
                 }
             }
            // Debug.Log("UpdateBattlePreview");

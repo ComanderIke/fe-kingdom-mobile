@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Game.GameActors.Units.Numbers;
 using Game.Mechanics.Battle;
 using LostGrace;
@@ -10,7 +11,7 @@ namespace Game.GameActors.Units.CharStateEffects
     public class StatModifier : BuffDebuffBase// Special Buff also shown as buffIcon(Arrow up/down) with duration but also shows blue numbers on UI
     {
         public Attributes[] BonusAttributes;
-        public BonusStats[] BonusStats;
+        public CombatStats[] BonusStats;
 
         public bool HasPositives()
         {
@@ -26,9 +27,39 @@ namespace Game.GameActors.Units.CharStateEffects
             return negativeAttributes||negativeStats;
         }
 
-        public EffectDescription GetEffectDescription(int i)
+        public List<EffectDescription> GetEffectDescription(int todoLevel)
         {
-            return new EffectDescription("TODO", "TODO", "TODO");
+            var list = new List<EffectDescription>();
+            if (level < BonusAttributes.Length)
+            {
+                string attributeslabel = BonusAttributes[level].GetTooltipText();
+                string valueLabel =BonusAttributes[level].GetTooltipValue();
+                // if(level<MAXLEVEL)
+                if (level < BonusAttributes.Length - 1)
+                    level++;
+                
+                string upgLabel = BonusAttributes[level].GetTooltipValue();
+                list.Add(new EffectDescription(attributeslabel, valueLabel, upgLabel));
+            }
+            if (level < BonusStats.Length)
+            {
+                List<string> bonusStatsLabels = BonusStats[level].GetToolTipLabels();
+                List<string> bonusStatsValues = BonusStats[level].GetToolTipValues();
+
+                // if(level<MAXLEVEL)
+                if (level < BonusStats.Length - 1)
+                    level++;
+
+                List<string> bonusStatsUpgrades = BonusStats[level].GetToolTipValues();
+
+                for (int i = 0; i < bonusStatsLabels.Count; i++)
+                {
+                    list.Add(new EffectDescription(bonusStatsLabels[i], bonusStatsValues[i], bonusStatsUpgrades[i]));
+                }
+            }
+
+            return list;
+           
         }
     }
 }

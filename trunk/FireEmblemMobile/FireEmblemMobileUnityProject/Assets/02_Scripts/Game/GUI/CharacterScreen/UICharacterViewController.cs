@@ -101,21 +101,21 @@ public class UICharacterViewController : MonoBehaviour
             CharacterFace.Show(unit);
         charName.SetText(unit.name);//+", "+unit.jobClass);
         bool physical = unit.equippedWeapon.DamageType == DamageType.Physical;
-        int sumBonuses = unit.Stats.GetCombatStatBonuses(unit,BonusStats.CombatStatType.Attack,physical);
+        int sumBonuses = unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Attack,physical);
         Atk.SetValue(unit.BattleComponent.BattleStats.GetDamage(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
-        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,BonusStats.CombatStatType.AttackSpeed,physical);
+        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.AttackSpeed,physical);
         AtkSpeed.SetValue(unit.BattleComponent.BattleStats.GetAttackSpeed(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
-        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,BonusStats.CombatStatType.PhysicalResistance,physical);
+        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Protection,physical);
         PhysArmor.SetValue(unit.BattleComponent.BattleStats.GetPhysicalResistance(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
-        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,BonusStats.CombatStatType.MagicResistance,physical);
+        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Resistance,physical);
         MagicArmor.SetValue(unit.BattleComponent.BattleStats.GetFaithResistance(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
-        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,BonusStats.CombatStatType.Hit,physical);
+        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Hit,physical);
         Hitrate.SetValue(unit.BattleComponent.BattleStats.GetHitrate(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
-        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,BonusStats.CombatStatType.Avoid,physical);
+        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Avoid,physical);
         DodgeRate.SetValue(unit.BattleComponent.BattleStats.GetAvoid(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
-        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,BonusStats.CombatStatType.Crit,physical);
+        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Crit,physical);
         Crit.SetValue(unit.BattleComponent.BattleStats.GetCrit(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
-        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,BonusStats.CombatStatType.Critavoid,physical);
+        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Critavoid,physical);
         CritAvoid.SetValue(unit.BattleComponent.BattleStats.GetCritAvoid(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
 
         
@@ -188,42 +188,42 @@ public class UICharacterViewController : MonoBehaviour
     }
     public void Attack_Clicked()
     {
-        ToolTipSystem.ShowCombatStatValue(unit, BonusStats.CombatStatType.Attack, Atk.transform.position);
+        ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Attack, Atk.transform.position);
         // ToolTipSystem.ShowAttribute("Faith", "Increases ones holy and occult damage and increases magical damage resistance!",unit.Stats.BaseAttributes.FAITH,FTH.transform.position);
     }
     public void Hit_Clicked()
     {
-        ToolTipSystem.ShowCombatStatValue(unit, BonusStats.CombatStatType.Hit, Hitrate.transform.position);
+        ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Hit, Hitrate.transform.position);
         // ToolTipSystem.ShowAttribute("Faith", "Increases ones holy and occult damage and increases magical damage resistance!",unit.Stats.BaseAttributes.FAITH,FTH.transform.position);
     }
     public void Avoid_Clicked()
     {
-        ToolTipSystem.ShowCombatStatValue(unit, BonusStats.CombatStatType.Avoid, DodgeRate.transform.position);
+        ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Avoid, DodgeRate.transform.position);
         // ToolTipSystem.ShowAttribute("Faith", "Increases ones holy and occult damage and increases magical damage resistance!",unit.Stats.BaseAttributes.FAITH,FTH.transform.position);
     }
     public void Crit_Clicked()
     {
-        ToolTipSystem.ShowCombatStatValue(unit, BonusStats.CombatStatType.Crit, Crit.transform.position);
+        ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Crit, Crit.transform.position);
         // ToolTipSystem.ShowAttribute("Faith", "Increases ones holy and occult damage and increases magical damage resistance!",unit.Stats.BaseAttributes.FAITH,FTH.transform.position);
     }
     public void CritAvoid_Clicked()
     {
-        ToolTipSystem.ShowCombatStatValue(unit, BonusStats.CombatStatType.Critavoid, CritAvoid.transform.position);
+        ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Critavoid, CritAvoid.transform.position);
         // ToolTipSystem.ShowAttribute("Faith", "Increases ones holy and occult damage and increases magical damage resistance!",unit.Stats.BaseAttributes.FAITH,FTH.transform.position);
     }
     public void PhysResistance_Clicked()
     {
-        ToolTipSystem.ShowCombatStatValue(unit, BonusStats.CombatStatType.PhysicalResistance, PhysArmor.transform.position);
+        ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Protection, PhysArmor.transform.position);
         // ToolTipSystem.ShowAttribute("Faith", "Increases ones holy and occult damage and increases magical damage resistance!",unit.Stats.BaseAttributes.FAITH,FTH.transform.position);
     }
     public void MagResistance_Clicked()
     {
-        ToolTipSystem.ShowCombatStatValue(unit, BonusStats.CombatStatType.MagicResistance, MagicArmor.transform.position);
+        ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Resistance, MagicArmor.transform.position);
         // ToolTipSystem.ShowAttribute("Faith", "Increases ones holy and occult damage and increases magical damage resistance!",unit.Stats.BaseAttributes.FAITH,FTH.transform.position);
     }
     public void AttackSpeed_Clicked()
     {
-        ToolTipSystem.ShowCombatStatValue(unit, BonusStats.CombatStatType.AttackSpeed, AtkSpeed.transform.position);
+        ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.AttackSpeed, AtkSpeed.transform.position);
         // ToolTipSystem.ShowAttribute("Faith", "Increases ones holy and occult damage and increases magical damage resistance!",unit.Stats.BaseAttributes.FAITH,FTH.transform.position);
     }
     

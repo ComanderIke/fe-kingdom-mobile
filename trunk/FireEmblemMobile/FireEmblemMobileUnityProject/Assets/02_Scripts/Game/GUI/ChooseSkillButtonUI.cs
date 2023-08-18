@@ -163,15 +163,49 @@ namespace LostGrace
                     areaTypePreview.Show(ptsm.TargetArea, size, EffectType.Heal,
                             upgSize, ptsm.Rooted);
                     
-                    var line = GameObject.Instantiate(linePrefab, lineContainer);
-                    line.GetComponent<UISkillEffectLine>().SetValues("Castrange: ",""+castRange,""+upgcastRange);
+                    var castline = GameObject.Instantiate(linePrefab, lineContainer);
+                    castline.GetComponent<UISkillEffectLine>().SetValues("Castrange: ",""+castRange,""+upgcastRange);
                     // line = GameObject.Instantiate(linePrefab, lineContainer);
                     // line.GetComponent<UISkillEffectLine>().SetValues("Damage: ",""+damage,""+upgDamage);
+                    var effectDescriptions = ptsm.GetEffectDescription(Player.Instance.Party.ActiveUnit,skill.Level);
+                    foreach (var effectDescription in effectDescriptions)
+                    {
+                        var line = GameObject.Instantiate(linePrefab, lineContainer);
+                        line.GetComponent<UISkillEffectLine>().SetValues(effectDescription.label, effectDescription.value, effectDescription.upgValue);
+                    }
+                }
+                else if (skill.FirstActiveMixin is SingleTargetMixin stsm)
+                {
+                    areaTypePreview.Hide();
+                    var castRange = skill.Level==0?stsm.GetRange(skill.Level):stsm.GetRange(skill.Level-1);
+                    var upgcastRange= stsm.GetRange(skill.Level);
+
+
+                    var castLine = GameObject.Instantiate(linePrefab, lineContainer);
+                    castLine.GetComponent<UISkillEffectLine>().SetValues("Castrange: ",""+castRange,""+upgcastRange);
+                    
+                    var effectDescriptions = stsm.GetEffectDescription(Player.Instance.Party.ActiveUnit,skill.Level);
+                    foreach (var effectDescription in effectDescriptions)
+                    {
+                        var line = GameObject.Instantiate(linePrefab, lineContainer);
+                        line.GetComponent<UISkillEffectLine>().SetValues(effectDescription.label, effectDescription.value, effectDescription.upgValue);
+                    }
                 }
 
                 
             }
 
+            if (skill.CombatSkillMixin != null)
+            {
+                var effectDescriptions = skill.CombatSkillMixin.GetEffectDescription(Player.Instance.Party.ActiveUnit,skill.Level);
+                foreach (var effectDescription in effectDescriptions)
+                {
+                    if(effectDescription==null)
+                        continue;
+                    var line = GameObject.Instantiate(linePrefab, lineContainer);
+                    line.GetComponent<UISkillEffectLine>().SetValues(effectDescription.label, effectDescription.value, effectDescription.upgValue);
+                }
+            }
             foreach (var passive in skill.passiveMixins)
             {
                 var effectDescriptions = passive.GetEffectDescription(Player.Instance.Party.ActiveUnit,skill.Level);

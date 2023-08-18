@@ -18,11 +18,11 @@ namespace Game.GameActors.Units.Numbers
         public Attributes BonusAttributesFromEquips { get; set; }
         public Attributes BonusAttributesFromWeapon { get; set; }
         public Attributes BonusAttributesFromEffects { get; set; }
-        public BonusStats BonusStatsFromTerrain { get; set; }
-        public BonusStats BonusStatsFromEffects { get; set; }
-        public BonusStats BonusStatsFromEquips { get; set; }
+        public CombatStats BonusStatsFromTerrain { get; set; }
+        public CombatStats BonusStatsFromEffects { get; set; }
+        public CombatStats BonusStatsFromEquips { get; set; }
 
-        public BonusStats BonusStatsFromWeapon { get; set; }
+        public CombatStats BonusStatsFromWeapon { get; set; }
 
         // [SerializeField]
         // public int MaxSp;
@@ -38,10 +38,10 @@ namespace Game.GameActors.Units.Numbers
             BonusAttributesFromEffects = new Attributes();
             BonusAttributesFromEquips = new Attributes();
             BonusAttributesFromWeapon = new Attributes();
-            BonusStatsFromEffects = new BonusStats();
-            BonusStatsFromEquips = new BonusStats();
-            BonusStatsFromTerrain = new BonusStats();
-            BonusStatsFromWeapon = new BonusStats();
+            BonusStatsFromEffects = new CombatStats();
+            BonusStatsFromEquips = new CombatStats();
+            BonusStatsFromTerrain = new CombatStats();
+            BonusStatsFromWeapon = new CombatStats();
             AttackRanges = new List<int>();
             Bane = AttributeType.NONE;
             Boon = AttributeType.NONE;
@@ -78,10 +78,10 @@ namespace Game.GameActors.Units.Numbers
             stats.BonusAttributesFromWeapon = new Attributes(BonusAttributesFromWeapon);
             stats.BonusAttributesFromEquips = new Attributes(BonusAttributesFromEquips);
             stats.Mov = Mov;
-            stats.BonusStatsFromEffects = new BonusStats(BonusStatsFromEffects);
-            stats.BonusStatsFromTerrain = new BonusStats(BonusStatsFromTerrain);
-            stats.BonusStatsFromEquips = new BonusStats(BonusStatsFromEquips);
-            stats.BonusStatsFromWeapon = new BonusStats(BonusStatsFromWeapon);
+            stats.BonusStatsFromEffects = new CombatStats(BonusStatsFromEffects);
+            stats.BonusStatsFromTerrain = new CombatStats(BonusStatsFromTerrain);
+            stats.BonusStatsFromEquips = new CombatStats(BonusStatsFromEquips);
+            stats.BonusStatsFromWeapon = new CombatStats(BonusStatsFromWeapon);
 
             return stats;
         }
@@ -104,7 +104,7 @@ namespace Game.GameActors.Units.Numbers
             return BaseAttributes + BonusAttributesFromWeapon + BonusAttributesFromEffects + BonusAttributesFromEquips;
         }
 
-        public BonusStats CombinedBonusStats()
+        public CombatStats CombinedBonusStats()
         {
             return BonusStatsFromEquips + BonusStatsFromWeapon + BonusStatsFromEffects + BonusStatsFromTerrain;
         }
@@ -114,49 +114,49 @@ namespace Game.GameActors.Units.Numbers
             return BaseAttributes + BonusAttributesFromWeapon;
         }
 
-        public BonusStats GetBonusStatsWithoutWeapon()
+        public CombatStats GetBonusStatsWithoutWeapon()
         {
             return BonusStatsFromEquips + BonusStatsFromTerrain + BonusStatsFromEffects;
         }
 
 
-        public Vector2Int GetAttributeValueOfCombatStat(BonusStats.CombatStatType statType, bool physical = true)
+        public Vector2Int GetAttributeValueOfCombatStat(CombatStats.CombatStatType statType, bool physical = true)
         {
             int baseAttributeValue = 0;
             int combinedAttributeValue = 0;
             switch (statType)
             {
-                case BonusStats.CombatStatType.Attack:
+                case CombatStats.CombatStatType.Attack:
                     baseAttributeValue =
                         physical ? BaseAttributesAndWeapons().STR : BaseAttributesAndWeapons().INT;
                     combinedAttributeValue = physical ? CombinedAttributes().STR : CombinedAttributes().INT;
                     break;
-                case BonusStats.CombatStatType.Avoid:
+                case CombatStats.CombatStatType.Avoid:
                     baseAttributeValue = BaseAttributesAndWeapons().AGI * BattleStats.AVO_AGI_MULT;
                     combinedAttributeValue = CombinedAttributes().AGI * BattleStats.AVO_AGI_MULT;
                     break;
-                case BonusStats.CombatStatType.Crit:
+                case CombatStats.CombatStatType.Crit:
                     baseAttributeValue = BaseAttributesAndWeapons().DEX + BaseAttributesAndWeapons().LCK;
                     combinedAttributeValue =
                         CombinedAttributes().DEX + CombinedAttributes().LCK;
                     break;
-                case BonusStats.CombatStatType.Critavoid:
+                case CombatStats.CombatStatType.Critavoid:
                     baseAttributeValue = BaseAttributesAndWeapons().LCK * BattleStats.CRIT_AVO_LCK_MULT;
                     combinedAttributeValue = CombinedAttributes().LCK * BattleStats.CRIT_AVO_LCK_MULT;
                     break;
-                case BonusStats.CombatStatType.Hit:
+                case CombatStats.CombatStatType.Hit:
                     baseAttributeValue = BaseAttributesAndWeapons().DEX * BattleStats.HIT_DEX_MULT;
                     combinedAttributeValue = CombinedAttributes().DEX * BattleStats.HIT_DEX_MULT;
                     break;
-                case BonusStats.CombatStatType.MagicResistance:
+                case CombatStats.CombatStatType.Resistance:
                     baseAttributeValue = BaseAttributesAndWeapons().FAITH;
                     combinedAttributeValue = CombinedAttributes().FAITH;
                     break;
-                case BonusStats.CombatStatType.PhysicalResistance:
+                case CombatStats.CombatStatType.Protection:
                     baseAttributeValue = BaseAttributesAndWeapons().DEF;
                     combinedAttributeValue = CombinedAttributes().DEF;
                     break;
-                case BonusStats.CombatStatType.AttackSpeed:
+                case CombatStats.CombatStatType.AttackSpeed:
                     baseAttributeValue = BaseAttributesAndWeapons().AGI;
                     combinedAttributeValue = CombinedAttributes().AGI;
                     break;
@@ -166,7 +166,7 @@ namespace Game.GameActors.Units.Numbers
 
         }
 
-        public int GetCombatStatBonuses(Unit unit, BonusStats.CombatStatType statType, bool physical = true)
+        public int GetCombatStatBonuses(Unit unit, CombatStats.CombatStatType statType, bool physical = true)
         {
             var baseAndCombinedAttributeStat = GetAttributeValueOfCombatStat(statType, physical);
             int onlyBonuses = unit.BattleComponent.BattleStats.GetStatOnlyBonusesWithoutWeaponFromEnum(statType);

@@ -14,11 +14,23 @@ namespace Game.GameActors.Units.Skills.Passive
         public override List<EffectDescription> GetEffectDescription(int level)
         {
             var list = new List<EffectDescription>();
+            string valueLabel = "";
+            string upgLabel="";
             switch (extraDataType)
             {
-                case ExtraDataType.number:  list.Add(new EffectDescription(attackEffectExtraDataLabel, ""+attackEffectExtraData[level], ""+attackEffectExtraData[level+1]));
+                case ExtraDataType.number:
+                    valueLabel = ""+attackEffectExtraData[level];
+                    if (level < attackEffectExtraData.Length - 1)
+                        level++;
+                    upgLabel =""+attackEffectExtraData[level];
+                    list.Add(new EffectDescription(attackEffectExtraDataLabel,valueLabel , upgLabel));
                     break;
-                case ExtraDataType.percentage:  list.Add(new EffectDescription(attackEffectExtraDataLabel, ""+attackEffectExtraData[level]*100+"%", ""+attackEffectExtraData[level+1]*100+"%"));
+                case ExtraDataType.percentage:  
+                    valueLabel = ""+attackEffectExtraData[level]*100+"%";
+                    if (level < attackEffectExtraData.Length - 1)
+                        level++;
+                    upgLabel =""+attackEffectExtraData[level]*100+"%";
+                    list.Add(new EffectDescription(attackEffectExtraDataLabel, valueLabel , upgLabel));
                     break;
             }
             return list;

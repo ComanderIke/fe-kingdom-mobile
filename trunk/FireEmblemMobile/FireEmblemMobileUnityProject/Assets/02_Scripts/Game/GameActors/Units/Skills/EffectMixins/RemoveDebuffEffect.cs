@@ -31,10 +31,18 @@ namespace Game.GameActors.Units.Skills
 
         public override List<EffectDescription> GetEffectDescription(int level)
         {
+            string valueLabel = "";
+            foreach (var debuff in removeDebuffTypes)
+            {
+                valueLabel += debuff.ToString() + "/";
+            }
+
+            valueLabel = valueLabel.Remove(valueLabel.Length - 1, 1);
+            string upgLabel = valueLabel;
             return new List<EffectDescription>()
             {
-                new EffectDescription("RemoveDebuff: ", "" + "TODO",
-                    "" + "TODO")
+                new EffectDescription("Remove: ", valueLabel,
+                    upgLabel)
             };
         }
 

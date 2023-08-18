@@ -130,7 +130,7 @@ public class ToolTipSystem : MonoBehaviour
         instance.AttributeValueTooltipUI.gameObject.SetActive(true);
         instance.AttributeValueTooltipUI.Show(unit,  attributeType, Camera.main.WorldToScreenPoint(position));
     }
-    public static void ShowCombatStatValue(Unit unit,BonusStats.CombatStatType combatStatType, Vector3 position)
+    public static void ShowCombatStatValue(Unit unit,CombatStats.CombatStatType combatStatType, Vector3 position)
     {
         instance.tooltipShownThisFrame = true;
         CloseAllToolTips();

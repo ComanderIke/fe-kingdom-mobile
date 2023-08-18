@@ -22,21 +22,21 @@ namespace LostGrace
         {
             this.unit = unit;
             bool physical = unit.equippedWeapon.DamageType == DamageType.Physical;
-        int sumBonuses = unit.Stats.GetCombatStatBonuses(unit,BonusStats.CombatStatType.Attack,physical);
+        int sumBonuses = unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Attack,physical);
         Atk.SetValue(unit.BattleComponent.BattleStats.GetDamage(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
-        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,BonusStats.CombatStatType.AttackSpeed,physical);
+        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.AttackSpeed,physical);
         AtkSpeed.SetValue(unit.BattleComponent.BattleStats.GetAttackSpeed(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
-        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,BonusStats.CombatStatType.PhysicalResistance,physical);
+        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Protection,physical);
         PhysArmor.SetValue(unit.BattleComponent.BattleStats.GetPhysicalResistance(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
-        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,BonusStats.CombatStatType.MagicResistance,physical);
+        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Resistance,physical);
         MagicArmor.SetValue(unit.BattleComponent.BattleStats.GetFaithResistance(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
-        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,BonusStats.CombatStatType.Hit,physical);
+        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Hit,physical);
         Hitrate.SetValue(unit.BattleComponent.BattleStats.GetHitrate(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
-        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,BonusStats.CombatStatType.Avoid,physical);
+        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Avoid,physical);
         DodgeRate.SetValue(unit.BattleComponent.BattleStats.GetAvoid(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
-        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,BonusStats.CombatStatType.Crit,physical);
+        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Crit,physical);
         Crit.SetValue(unit.BattleComponent.BattleStats.GetCrit(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
-        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,BonusStats.CombatStatType.Critavoid,physical);
+        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Critavoid,physical);
         CritAvoid.SetValue(unit.BattleComponent.BattleStats.GetCritAvoid(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
 
         }
@@ -44,19 +44,19 @@ namespace LostGrace
         public void StatClicked(int index)
         {
             Vector3 position = new Vector3();
-            switch ((BonusStats.CombatStatType)index)
+            switch ((CombatStats.CombatStatType)index)
             {
-                case BonusStats.CombatStatType.Attack: position = Atk.transform.position;
+                case CombatStats.CombatStatType.Attack: position = Atk.transform.position;
                     break;
-                case BonusStats.CombatStatType.AttackSpeed: position = Atk.transform.position; break;
-                case BonusStats.CombatStatType.Hit: position = Hitrate.transform.position; break;
-                case BonusStats.CombatStatType.Avoid: position = DodgeRate.transform.position; break;
-                case BonusStats.CombatStatType.Crit: position = Crit.transform.position; break;
-                case BonusStats.CombatStatType.Critavoid: position = CritAvoid.transform.position; break;
-                case BonusStats.CombatStatType.MagicResistance: position = MagicArmor.transform.position; break;
-                case BonusStats.CombatStatType.PhysicalResistance: position = PhysArmor.transform.position; break;
+                case CombatStats.CombatStatType.AttackSpeed: position = Atk.transform.position; break;
+                case CombatStats.CombatStatType.Hit: position = Hitrate.transform.position; break;
+                case CombatStats.CombatStatType.Avoid: position = DodgeRate.transform.position; break;
+                case CombatStats.CombatStatType.Crit: position = Crit.transform.position; break;
+                case CombatStats.CombatStatType.Critavoid: position = CritAvoid.transform.position; break;
+                case CombatStats.CombatStatType.Resistance: position = MagicArmor.transform.position; break;
+                case CombatStats.CombatStatType.Protection: position = PhysArmor.transform.position; break;
             }
-            ToolTipSystem.ShowCombatStatValue(unit, (BonusStats.CombatStatType)index, position);
+            ToolTipSystem.ShowCombatStatValue(unit, (CombatStats.CombatStatType)index, position);
         }
     }
 }

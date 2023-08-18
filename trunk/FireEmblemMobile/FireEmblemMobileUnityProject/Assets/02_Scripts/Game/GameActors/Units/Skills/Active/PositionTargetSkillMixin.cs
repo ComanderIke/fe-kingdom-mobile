@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using _02_Scripts.Game.GameActors.Items.Consumables;
 using Game.GameActors.Players;
@@ -30,6 +31,7 @@ namespace Game.GameActors.Units.Skills
         [SerializeField] private bool jump;
         [SerializeField] private int minRange = 0;
         [SerializeField] private bool confirmPositionClick = true;
+       
         [field:SerializeField]public SkillTargetArea TargetArea { get; set; }
         public EffectType EffectType { get; set; }
         public bool ConfirmPosition()
@@ -198,6 +200,15 @@ Debug.Log("ACTIVATE POS TARGET SKILL MIXIN");
 
             return targets;
         }
-        
-    }
+
+        public List<EffectDescription> GetEffectDescription(Unit unit, int level)
+        {
+            var list = new List<EffectDescription>();
+            foreach (var skillEffect in SkillEffects)
+            {
+                list.AddRange(skillEffect.GetEffectDescription(level));
+            }
+            return list;
+        }
+        }
 }
