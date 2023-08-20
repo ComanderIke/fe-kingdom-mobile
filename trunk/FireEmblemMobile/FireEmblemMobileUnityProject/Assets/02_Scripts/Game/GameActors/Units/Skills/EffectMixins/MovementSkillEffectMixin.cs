@@ -17,6 +17,8 @@ namespace Game.GameActors.Units.Skills
         public bool towardsTarget;
         public bool swapPositions;
         public bool rescueTarget;
+        public bool towardsSkillTargetDataPosition;
+        public SkillTransferData skillTransferData;
 
         private bool RescueToPosition( Vector2Int pos, Unit target )
         {
@@ -104,12 +106,8 @@ namespace Game.GameActors.Units.Skills
       
         public override List<EffectDescription> GetEffectDescription(int level)
         {
-            return null;
+            return new List<EffectDescription>();
         }
         
-    }
-
-    public class Vector2int
-    {
     }
 }

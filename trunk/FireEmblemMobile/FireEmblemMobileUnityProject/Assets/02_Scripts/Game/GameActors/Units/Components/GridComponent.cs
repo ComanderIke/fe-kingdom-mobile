@@ -45,6 +45,7 @@ namespace Game.GameActors.Units
         }
 
         public Tile OriginTile { get; set; }
+        public int Canto { get; set; }
 
         protected Tile previousTile;
 

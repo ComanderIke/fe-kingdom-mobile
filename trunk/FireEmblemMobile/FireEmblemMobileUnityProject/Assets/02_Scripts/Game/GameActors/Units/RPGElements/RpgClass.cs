@@ -10,6 +10,7 @@ namespace Game.GameActors.Units
         Witch,
         Cavalier,
         ScorpionRider,
-        Cleric
+        Cleric,
+        Valkyrie
     }
 }

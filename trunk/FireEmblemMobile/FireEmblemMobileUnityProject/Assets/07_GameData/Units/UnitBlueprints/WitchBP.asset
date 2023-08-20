@@ -32,28 +32,22 @@ MonoBehaviour:
       lck: 6
       def: 6
       faith: 6
-    BonusStats:
-      <Hit>k__BackingField: 0
-      <Avoid>k__BackingField: 0
-      <CritAvoid>k__BackingField: 0
-      <Crit>k__BackingField: 0
-      <AttackSpeed>k__BackingField: 0
-      <Armor>k__BackingField: 0
-      <MagicResistance>k__BackingField: 0
-      <Attack>k__BackingField: 0
+    <BaseGrowths>k__BackingField:
+      str: 0
+      intel: 0
+      dex: 0
+      agi: 0
+      con: 0
+      lck: 0
+      def: 0
+      faith: 0
     Mov: 5
-  growths:
-    str: 0
-    intel: 0
-    dex: 0
-    agi: 0
-    con: 0
-    lck: 0
-    def: 0
-    faith: 0
   moveType: {fileID: 11400000, guid: bff40a3de87900a4496abf2b9dfca7a2, type: 2}
   SkillManager:
-    startSkills: []
+    startSkills:
+    - {fileID: 11400000, guid: 027268bbda738de45a487cda1e18842c, type: 2}
+    - {fileID: 11400000, guid: 2f1409440cf95364f81239f0dec0cec0, type: 2}
+    maxSkillCount: 0
     skillPoints: 1
   rpgClass: 2
   bluePrintID: Mage

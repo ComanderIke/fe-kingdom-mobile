@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Game.Mechanics.Battle;
 
 namespace Game.Mechanics
 {
@@ -17,6 +18,9 @@ namespace Game.Mechanics
         public bool DttackerAlive{ get; set; }
         public int AttackerCrit { get; set; }
         public int DefenderCrit { get; set; }
+        public DuringBattleCharacterStats AttackerStats { get; set; }
+        public DuringBattleCharacterStats DefenderStats { get; set; }
+
         public List<AttackData> AttacksData;
     }
 }

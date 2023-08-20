@@ -42,7 +42,6 @@ namespace LostGrace
             {
                 if (index >= transform.childCount)
                     index = 0;
-                Debug.Log(index);
                 current = children[index].gameObject;
             }
 

@@ -9,12 +9,10 @@ namespace Game.GameActors.Units.Skills.Passive
 {
     public interface IBattleEventListener
     {
-        
+        public void Activate(Unit attacker, Unit defender);
+        public void Deactivate(Unit attacker, Unit defender);
     }
-    public interface IAfterCombatListener : IBattleEventListener
-    {
-        
-    }
+   
 
     public enum BattleEvent
     {
@@ -25,20 +23,42 @@ namespace Game.GameActors.Units.Skills.Passive
         InitiatedOnCombat
     }
 
-    
-   
+
+    public enum ConditionCompareType
+    {
+        AND,
+        OR,
+        XOR
+    }
+    [Serializable]
+    public class ConditionPackage
+    {
+        public ConditionCompareType CompareType;
+        public List<SingleTargetCondition> Conditions;
+    }
+    [Serializable]
+    public class ConditionBigPackage
+    {
+        public ConditionCompareType CompareType;
+        public List<ConditionPackage> Conditions;
+    }
     [Serializable]
     [CreateAssetMenu(menuName = "GameData/Skills/Passive/Combat", fileName = "CombatMixin")]
-    public class CombatPassiveMixin:PassiveSkillMixin, IAfterCombatListener//TODO Sub Classes or switch case?
+    public class CombatPassiveMixin:PassiveSkillMixin, IBattleEventListener//TODO Sub Classes or switch case?
     {
 
         public BattleEvent CombatState;
         private Unit target;
         private Unit unit;
         private int activatedLevel = -1;
-        public void Deactivate()
+        private bool activated = false;
+        public ConditionBigPackage conditionManager;
+       
+        public void Deactivate(Unit attacker, Unit defender)
         {
-            
+            if (!activated)
+                return;
+            Debug.Log("DEACTIVATE COMBAT PASSIVE MIXIN");
             foreach (var skillEffect in skillEffectMixins)
             {
                 if(skillEffect is SelfTargetSkillEffectMixin selfTargetSkillMixin)
@@ -53,6 +73,14 @@ namespace Game.GameActors.Units.Skills.Passive
         }
         public void Activate(Unit unit, Unit target)
         {
+            Debug.Log("ACTIVATE COMBAT PASSIVE MIXIN");
+            // foreach (var condition in conditions)
+            // {
+            //     if (!condition.CanTarget(unit, target))
+            //         return;
+            // }
+
+            activated = true;
             this.unit = unit;
             this.target = target;
             this.activatedLevel = skill.Level;
@@ -75,8 +103,9 @@ namespace Game.GameActors.Units.Skills.Passive
         
         public override void UnbindFromUnit(Unit unit, Skill skill)
         {
-            base.UnbindFromUnit(unit, skill);
             unit.BattleComponent.RemoveListener(BattleEvent.AfterCombat, this);
+            base.UnbindFromUnit(unit, skill);
+           
         }
 
    

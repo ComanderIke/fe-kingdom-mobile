@@ -17,6 +17,8 @@ namespace Game.GameActors.Units.Skills.Passive
         {
             if (TerrainTypes.Contains(tile.TileData.TerrainType))
             {
+                if (activated)
+                    return;
                 activated = true;
                 foreach (var skillEffect in skillEffectMixins)
                 {

@@ -16,7 +16,8 @@ namespace Game.GameActors.Units.CharStateEffects
         Poisened,
         Snarred,
         Slept,
-        Tempted
+        Tempted,
+        Frog
     }
     [CreateAssetMenu(fileName = "Debuff", menuName = "GameData/Debuff")]
     public class Debuff:BuffDebuffBase

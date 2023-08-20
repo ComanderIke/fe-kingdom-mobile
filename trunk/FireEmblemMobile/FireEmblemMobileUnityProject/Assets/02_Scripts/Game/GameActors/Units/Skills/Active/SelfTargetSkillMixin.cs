@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using LostGrace;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Skills
@@ -33,6 +35,16 @@ namespace Game.GameActors.Units.Skills
                 }
                 
             }
+        }
+
+        public List<EffectDescription> GetEffectDescription(Unit unit, int level)
+        {
+            var list = new List<EffectDescription>();
+            foreach (var skillEffect in effectMixins)
+            {
+                list.AddRange(skillEffect.GetEffectDescription(level));
+            }
+            return list;
         }
     }
 }

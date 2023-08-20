@@ -191,6 +191,17 @@ namespace LostGrace
                         line.GetComponent<UISkillEffectLine>().SetValues(effectDescription.label, effectDescription.value, effectDescription.upgValue);
                     }
                 }
+                else if (skill.FirstActiveMixin is SelfTargetSkillMixin sts)
+                {
+                    areaTypePreview.Hide();
+
+                    var effectDescriptions = sts.GetEffectDescription(Player.Instance.Party.ActiveUnit,skill.Level);
+                    foreach (var effectDescription in effectDescriptions)
+                    {
+                        var line = GameObject.Instantiate(linePrefab, lineContainer);
+                        line.GetComponent<UISkillEffectLine>().SetValues(effectDescription.label, effectDescription.value, effectDescription.upgValue);
+                    }
+                }
 
                 
             }

@@ -6,7 +6,6 @@ using Game.GameActors.Units.Skills.Passive;
 using Game.GameInput;
 using Game.Mechanics;
 using Game.Mechanics.Battle;
-using LostGrace;
 using UnityEngine;
 
 namespace Game.GameActors.Units
@@ -14,36 +13,6 @@ namespace Game.GameActors.Units
     public interface IEncounterEventListener
     {
         
-    }
-    public class EncounterComponent
-    {
-        private Dictionary<EncounterEvent, List<IEncounterEventListener>> encounterEvents;
-
-        public EncounterComponent()
-        {
-            encounterEvents = new Dictionary<EncounterEvent, List<IEncounterEventListener>>();
-        }
-        public void AddListener(EncounterEvent encounterEvent, IEncounterEventListener listener)
-        {
-            if (!encounterEvents.ContainsKey(encounterEvent))
-            {
-                encounterEvents.Add(encounterEvent, new List<IEncounterEventListener>(){listener});
-            }
-            else
-            {
-                encounterEvents[encounterEvent].Add(listener);
-            }
-           
-        }
-
-        public void RemoveListener(EncounterEvent encounterEvent, IEncounterEventListener listener)
-        {
-            if (encounterEvents.ContainsKey(encounterEvent))
-            {
-                encounterEvents[encounterEvent].Remove(listener);
-            }
-            
-        }
     }
 
     public class BattleComponent
@@ -143,6 +112,27 @@ namespace Game.GameActors.Units
                 if (attackEffects[i].skill == skill && attackEffects[i].attackEffect == attackEffectMixin)
                 {
                     attackEffects.RemoveAt(i);
+                }
+            }
+        }
+
+        public void InitiatesBattle(IBattleActor opponent)
+        {
+            if (battleEvents.ContainsKey(BattleEvent.InitiateCombat))
+            {
+                foreach (var listener in battleEvents[BattleEvent.InitiateCombat])
+                {
+                    listener.Activate((Unit)owner,(Unit)opponent);
+                }
+            }
+        }
+        public void BattleEnded(IBattleActor opponent)
+        {
+            if (battleEvents.ContainsKey(BattleEvent.InitiateCombat))
+            {
+                foreach (var listener in battleEvents[BattleEvent.InitiateCombat])
+                {
+                    listener.Deactivate((Unit)owner,(Unit)opponent);
                 }
             }
         }

@@ -7,11 +7,14 @@ namespace Game.GameActors.Units.CharStateEffects
 {
     public enum BuffType
     {
+        CurseResistance,
+        MagicResistance,
         Cleansing,
         Regeneration,
         Stealth,
         AbsorbingDmg,
         Invulnerability,
+        Stride
         //ClearMovement
         //Add as needed
     }
@@ -24,7 +27,7 @@ namespace Game.GameActors.Units.CharStateEffects
 
         public EffectDescription GetEffectDescription(int level)
         {
-            return new EffectDescription("TODO", "TODO", "TODO");
+            return new EffectDescription("Grants", buffType.ToString(), buffType.ToString());
         }
 
        

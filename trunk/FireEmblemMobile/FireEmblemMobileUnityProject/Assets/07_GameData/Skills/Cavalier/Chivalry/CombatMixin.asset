@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8c0bad0394f408eb8061a67ce75cb13, type: 3}
+  m_Name: CombatMixin
+  m_EditorClassIdentifier: 
+  skillEffectMixins:
+  - {fileID: 11400000, guid: 5cb499e0041195047ae183f056b9970c, type: 2}
+  CombatState: 0
+  conditionManager:
+    CompareType: 1
+    Conditions:
+    - CompareType: 0
+      Conditions:
+      - {fileID: 11400000, guid: 2524426e0b4085444af042fa0d087a5b, type: 2}
+      - {fileID: 11400000, guid: 141e9e2085ea49d4193e525646dc1619, type: 2}
+    - CompareType: 0
+      Conditions:
+      - {fileID: 11400000, guid: 9e62fcc40868fed4b815da4a2c94e2e1, type: 2}
+      - {fileID: 11400000, guid: be52bcfeba8e9554cae46665297b524c, type: 2}

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using _02_Scripts.Game.GameActors.Items.Consumables;
-using Game.Grid;
 using Game.Manager;
 using Game.Map;
 using LostGrace;
@@ -18,17 +17,22 @@ namespace Game.GameActors.Units.Skills
         Any
     }
 
-    
+    public abstract class SingleTargetCondition :ScriptableObject
+    {
+        public abstract bool CanTarget(Unit caster, Unit target);
+
+    }
+
     [System.Serializable]
     [CreateAssetMenu(menuName = "GameData/Skills/Active/SingleTarget", fileName = "SingleTargetMixin")]
     public class SingleTargetMixin : ActiveSkillMixin
     {
+        public List<SingleTargetCondition> conditions;
         public SingleTargetType targetType;
         [field: SerializeField] private int minRange = 0;
         [field: SerializeField] private int[] range;
         [SerializeField]private bool sameAsAttackRange = false;
         public List<SkillEffectMixin> SkillEffectMixins;
-
         public void Activate(Unit user, Unit target)
         {
             if(AnimationObject!=null)
@@ -98,6 +102,11 @@ namespace Game.GameActors.Units.Skills
 
         public bool CanTarget(Unit user, Unit target)
         {
+            foreach(var condition in conditions)
+            {
+                if (!condition.CanTarget(user, target))
+                    return false;
+            }
             if (target == user)
                 return false;
             if (targetType == SingleTargetType.Any)
@@ -129,7 +138,9 @@ namespace Game.GameActors.Units.Skills
             var list = new List<EffectDescription>();
             foreach (var skillEffect in SkillEffectMixins)
             {
-                list.AddRange(skillEffect.GetEffectDescription(level));
+                var skillEffectList = skillEffect.GetEffectDescription(level);
+                if(skillEffectList!=null)
+                list.AddRange(skillEffectList);
             }
             return list;
         }

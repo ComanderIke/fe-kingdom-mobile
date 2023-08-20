@@ -67,28 +67,4 @@ namespace Game.GameActors.Units.Skills
 
       
     }
-    [CreateAssetMenu(menuName = "GameData/Skills/Effectmixin/BattleModifier", fileName = "BattleModifierSkillEffect")]
-    public class battleModifierSkillEffectMixin : SelfTargetSkillEffectMixin
-    {
-        public bool excessHitToCrit = false;
-
-        public override void Activate(Unit user, int level)
-        {
-            user.BattleComponent.BattleStats.ExcessHitToCrit = excessHitToCrit;
-        }
-        
-
-        public override void Deactivate(Unit user, int skillLevel)
-        {
-            user.BattleComponent.BattleStats.ExcessHitToCrit = false;
-        }
-
-
-        public override List<EffectDescription> GetEffectDescription(int level)
-        {
-            return null;
-        }
-
-      
-    }
 }

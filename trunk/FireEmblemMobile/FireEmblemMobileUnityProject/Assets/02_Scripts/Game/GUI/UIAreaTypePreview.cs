@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using __2___Scripts.Game.Utility;
 using _02_Scripts.Game.GameActors.Items.Consumables;
 using Game.GameActors.Units.Skills;
+using Game.Manager;
 using Game.Map;
 using UnityEngine;
 
@@ -64,9 +65,17 @@ namespace LostGrace
             
         }
 
+        void AddToPosition(ref List<Vector2> positions, Vector2 pos)
+        {
+            if(!(pos.x<0|| pos.y<0||pos.x>=5||pos.y>=5))
+                positions.Add(pos);
+        }
+
+    
         public List<Vector2> GetTargetAreaPositions(int size, SkillTargetArea targetArea, Vector2 characterPos)
         {
             var positions = new List<Vector2>();
+  
             if (size > 0)
             {
                 if (targetArea == SkillTargetArea.Block)
@@ -75,10 +84,10 @@ namespace LostGrace
                     {
                         for (int j = 0; j < size + 1; j++)
                         {
-                            positions.Add(characterPos + new Vector2(i, j));
-                            positions.Add(characterPos + new Vector2(-i, j));
-                            positions.Add(characterPos + new Vector2(i, -j));
-                            positions.Add(characterPos + new Vector2(-i, -j));
+                            AddToPosition(ref positions, characterPos + new Vector2(i, j));
+                            AddToPosition(ref positions, characterPos + new Vector2(-i, j));
+                            AddToPosition(ref positions, characterPos + new Vector2(i, -j));
+                            AddToPosition(ref positions, characterPos + new Vector2(-i, -j));
                         }
                     }
                 }
@@ -89,15 +98,15 @@ namespace LostGrace
                         if (targetArea == SkillTargetArea.Line || targetArea == SkillTargetArea.Star ||
                             targetArea == SkillTargetArea.Cross)
                         {
-                            positions.Add(characterPos + new Vector2(-i, 0));
-                            positions.Add(characterPos + new Vector2(i, 0));
+                            AddToPosition(ref positions, characterPos + new Vector2(-i, 0));
+                            AddToPosition(ref positions, characterPos + new Vector2(i, 0));
                         }
 
                         if (targetArea == SkillTargetArea.NormalLine || targetArea == SkillTargetArea.Star ||
                             targetArea == SkillTargetArea.Cross)
                         {
-                            positions.Add(characterPos + new Vector2(0, -i));
-                            positions.Add(characterPos + new Vector2(0, i));
+                            AddToPosition(ref positions, characterPos + new Vector2(0, -i));  
+                            AddToPosition(ref positions, characterPos + new Vector2(0, i));
                         }
                     }
 
@@ -109,10 +118,10 @@ namespace LostGrace
                             {
                                 if (i != 0 && j != 0 && (i + j) <= size)
                                 {
-                                    positions.Add(characterPos + new Vector2(i, j));
-                                    positions.Add(characterPos + new Vector2(-i, j));
-                                    positions.Add(characterPos + new Vector2(i, -j));
-                                    positions.Add(characterPos + new Vector2(-i, -j));
+                                    AddToPosition(ref positions, characterPos + new Vector2(i, j));
+                                    AddToPosition(ref positions, characterPos + new Vector2(-i, j));
+                                    AddToPosition(ref positions, characterPos + new Vector2(i, -j));
+                                    AddToPosition(ref positions, characterPos + new Vector2(-i, -j));
                                 }
                             }
                         }

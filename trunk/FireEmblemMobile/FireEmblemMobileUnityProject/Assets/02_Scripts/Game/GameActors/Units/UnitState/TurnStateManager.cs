@@ -74,12 +74,16 @@ namespace Game.GameActors.Units
                 onSelected?.Invoke(value);
             }
         }
+
+        public bool HasCantoed { get; set; }
+
         public void UnitTurnFinished()
         {
            // IsActive = false;
             HasMoved = true;
             HasAttacked = true;
             IsWaiting = true;
+            HasCantoed = true;
         }
         public void EndTurn()
         {
@@ -100,7 +104,8 @@ namespace Game.GameActors.Units
             HasAttacked = false;
             IsWaiting = false;
             IsSelected = false;
-           // IsActive = false;
+            HasCantoed = false;
+            // IsActive = false;
         }
 
 
@@ -110,6 +115,7 @@ namespace Game.GameActors.Units
             IsWaiting = true;
             IsSelected = false;
             HasMoved = true;
+            HasCantoed = true;
         }
 
         public enum TurnStateEvent

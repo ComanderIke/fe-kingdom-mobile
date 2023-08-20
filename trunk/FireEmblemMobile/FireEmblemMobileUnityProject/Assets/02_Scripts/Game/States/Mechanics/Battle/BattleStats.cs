@@ -45,6 +45,7 @@ namespace Game.Mechanics.Battle
     {
         private const int AGILITY_TO_DOUBLE = 5;
         public bool ExcessHitToCrit { get; set; }
+        public bool MovementToDmg { get; set; }
         private readonly IBattleActor owner;
         private bool preventDoubleAttacks = false;
         public List<ImmunityType> Immunities { get; set; }
@@ -126,6 +127,8 @@ namespace Game.Mechanics.Battle
             }
 
             attack += owner.Stats.CombinedBonusStats().Attack;
+            if (MovementToDmg)
+                attack += ((GridActorComponent)owner.GridComponent).MovedTileCount;
 
             return (int) Mathf.Clamp(attack, 0, Mathf.Infinity);
         }
@@ -277,18 +280,18 @@ namespace Game.Mechanics.Battle
 
         public int GetCritAgainstTarget(IBattleActor defender)
         {
-            Debug.Log("GetCritAgainstTarget: "+defender);
+           
             if (ExcessHitToCrit)
             {
                 
                 int hit = GetHitAgainstTarget(defender);
-                Debug.Log("hit: "+hit);
+                
                 int excessHit = 0;
                 if (hit > 100)
                 {
                     excessHit=hit - 100;
                 }
-                Debug.Log("excessHit: "+excessHit);
+               
                 return Math.Max(0,excessHit + GetCrit() - defender.BattleComponent.BattleStats.GetCritAvoid());
             }
             else

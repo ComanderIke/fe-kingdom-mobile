@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Game.GameActors.Units.CharStateEffects;
-using Game.Grid;
 using LostGrace;
 using UnityEngine;
 
@@ -28,9 +27,14 @@ namespace Game.GameActors.Units.Skills
                 target.StatusEffectManager.AddStatModifier(Instantiate(AppliedStatModifier));
         }
 
-        public override void Deactivate(Unit user, Unit caster, int skillLevel)
+        public override void Deactivate(Unit target, Unit caster, int skillLevel)
         {
-            throw new System.NotImplementedException();
+            if (appliedBuff != null)
+                target.StatusEffectManager.RemoveBuff(Instantiate(appliedBuff));
+            if (appliedDebuff != null)
+                target.StatusEffectManager.RemoveDebuff(Instantiate(appliedDebuff));
+            if (AppliedStatModifier!= null)
+                target.StatusEffectManager.RemoveStatModifier(Instantiate(AppliedStatModifier));
         }
 
         public override List<EffectDescription> GetEffectDescription(int level)
@@ -40,9 +44,12 @@ namespace Game.GameActors.Units.Skills
             var debuff=appliedDebuff==null?null:appliedDebuff.GetEffectDescription(level);
             var statModifier=AppliedStatModifier==null?null:AppliedStatModifier.GetEffectDescription(level);
          
-            list.Add(buff);
-            list.Add(debuff);
-            list.AddRange(statModifier);
+            if(buff!=null)
+             list.Add(buff);
+            if(debuff!=null)
+                list.Add(debuff);
+            if(statModifier!=null)
+                list.AddRange(statModifier);
        
             return list;
         }

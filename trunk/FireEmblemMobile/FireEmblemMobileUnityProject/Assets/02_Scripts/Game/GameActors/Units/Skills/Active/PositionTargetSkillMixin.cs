@@ -75,7 +75,7 @@ Debug.Log("ACTIVATE POS TARGET SKILL MIXIN");
                     {
                         if(effect is TileTargetSkillEffectMixin tileTargetSkillEffectMixin)
                             tileTargetSkillEffectMixin.Activate(tiles[x,y], skill.Level);
-                        else if (effect is UnitTargetSkillEffectMixin unitTargetSkillEffectMixin)
+                        else if (effect is UnitTargetSkillEffectMixin unitTargetSkillEffectMixin&&(Unit)tiles[x,y].GridObject!=null)
                         {
                             unitTargetSkillEffectMixin.Activate((Unit)tiles[x,y].GridObject, user,skill.Level);
                         }

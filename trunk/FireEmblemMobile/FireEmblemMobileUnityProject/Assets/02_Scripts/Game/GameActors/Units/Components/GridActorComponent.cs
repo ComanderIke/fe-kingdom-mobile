@@ -15,6 +15,7 @@ namespace Game.GameActors.Units
         public static event Action<IGridActor> AnyUnitChangedPositionAfter;
       
         public Dictionary<TerrainType, int> BonusMovementCosts;
+        public int MovedTileCount { get; set; }
 
         public int GetMovementCosts(TerrainType m)
         {
@@ -25,20 +26,27 @@ namespace Game.GameActors.Units
             base.ResetPosition();
             if(gridActor.IsAlive())
                 gridActor.GameTransformManager.SetPosition(GridPosition.X, GridPosition.Y);
+            MovedTileCount = 0;
             AnyUnitChangedPosition?.Invoke(gridActor);
             AnyUnitChangedPositionAfter?.Invoke(gridActor);
+            
         }
         public override void SetPosition( Tile tile, bool moveTransform=true)
         {
-            //previousTile = Tile;
+            //previousTile = Tile
+            if(OriginTile!=null)
+                MovedTileCount = DeltaPos(tile.X, tile.Y, OriginTile.X, OriginTile.Y);
             base.SetPosition(tile);
             if(moveTransform)
                 gridActor.GameTransformManager.SetPosition(tile.X,tile.Y);
+           
             AnyUnitChangedPosition?.Invoke(gridActor);
             AnyUnitChangedPositionAfter?.Invoke(gridActor);
         }
         public override void SetInternPosition(Tile tile)
         {
+            if(OriginTile!=null)
+                MovedTileCount = DeltaPos(tile.X, tile.Y, OriginTile.X, OriginTile.Y);
             base.SetInternPosition(tile);
             
             AnyUnitChangedPosition?.Invoke(gridActor);

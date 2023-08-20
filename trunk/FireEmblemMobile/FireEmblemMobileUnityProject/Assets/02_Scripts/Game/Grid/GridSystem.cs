@@ -114,9 +114,9 @@ namespace Game.Map
 
         }
 
-        public void ShowMovementRangeOnGrid(IGridActor c)
+        public void ShowMovementRangeOnGrid(IGridActor c, bool cantoRange=false)
         {
-            ShowMovement(c.GridComponent.GridPosition.X, c.GridComponent.GridPosition.Y, c.MovementRange, 0, c);
+            ShowMovement(c.GridComponent.GridPosition.X, c.GridComponent.GridPosition.Y, cantoRange?c.GridComponent.Canto:c.MovementRange, 0, c);
         }
 
       

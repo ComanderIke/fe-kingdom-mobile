@@ -32,28 +32,22 @@ MonoBehaviour:
       lck: 6
       def: 6
       faith: 6
-    BonusStats:
-      <Hit>k__BackingField: 0
-      <Avoid>k__BackingField: 0
-      <CritAvoid>k__BackingField: 0
-      <Crit>k__BackingField: 0
-      <AttackSpeed>k__BackingField: 0
-      <Armor>k__BackingField: 0
-      <MagicResistance>k__BackingField: 0
-      <Attack>k__BackingField: 0
+    <BaseGrowths>k__BackingField:
+      str: 0
+      intel: 0
+      dex: 0
+      agi: 0
+      con: 0
+      lck: 0
+      def: 0
+      faith: 0
     Mov: 5
-  growths:
-    str: 0
-    intel: 0
-    dex: 0
-    agi: 0
-    con: 0
-    lck: 0
-    def: 0
-    faith: 0
   moveType: {fileID: 11400000, guid: d13592b1fa0af024a841b121149b8014, type: 2}
   SkillManager:
-    startSkills: []
+    startSkills:
+    - {fileID: 11400000, guid: 9a11bbe18cbaf5f4aab101ca8b350ce9, type: 2}
+    - {fileID: 11400000, guid: 57e794fbbf74a464f8dba328685c3cc8, type: 2}
+    maxSkillCount: 0
     skillPoints: 0
   rpgClass: 1
   bluePrintID: Merc

@@ -146,6 +146,8 @@ namespace Game.Mechanics
         {
             active = false;
             movementFinished = true;
+            if (unit.TurnStateManager.HasMoved && unit.GridComponent.Canto > 0)
+                unit.TurnStateManager.HasCantoed = true;
             unit.TurnStateManager.HasMoved = true;
         }
 

@@ -22,7 +22,7 @@ namespace __2___Scripts.Game.Utility
                 {
                     if (!go.gameObject.CompareTag("Grid"))
                     {
-                        Debug.Log("RAYCAST NOT GRID: "+go.gameObject.name);
+                      //  Debug.Log("RAYCAST NOT GRID: "+go.gameObject.name);
                        
                     }
                     else

@@ -4,7 +4,9 @@ using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameInput;
 using Game.Mechanics;
+using Game.Mechanics.Battle;
 using UnityEngine;
+using AttackData = Game.Mechanics.AttackData;
 
 public class AnimationStateManager
 {
@@ -112,7 +114,8 @@ public class AnimationStateManager
              MonoUtility.DelayFunction(this,TimeLineController.PlayZoomIn, timeBetweenAttacks);
          }
     }
-    
+
+   
     private void AllAttacksFinished()
     {
         TimeLineController.zoomOutFinished -= AllAttacksFinished;

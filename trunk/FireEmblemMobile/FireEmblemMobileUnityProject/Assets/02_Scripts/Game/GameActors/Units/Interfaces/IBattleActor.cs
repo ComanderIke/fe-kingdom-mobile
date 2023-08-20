@@ -24,6 +24,7 @@ namespace Game.GameInput
         GameTransformManager GameTransformManager { get; set; }
         AnimatedCombatCharacter BattleGO { get; set; }
         UnitVisual Visuals { get; }
+        GridComponent GridComponent { get; set; }
         Weapon GetEquippedWeapon();
         Tile GetTile();
 

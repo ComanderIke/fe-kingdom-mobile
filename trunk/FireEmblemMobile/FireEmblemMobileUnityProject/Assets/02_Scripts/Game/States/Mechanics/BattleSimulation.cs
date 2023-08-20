@@ -9,6 +9,7 @@ using Game.GameActors.Units.Skills;
 using Game.GameActors.Units.Skills.Passive;
 using Game.GameInput;
 using Game.Grid;
+using Game.Mechanics.Battle;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 
@@ -73,6 +74,7 @@ namespace Game.Mechanics
             Attacker = attacker.Clone() as IBattleActor;
             Defender = defender.Clone() as IBattleActor;
             this.continuos = continuos;
+            Attacker.BattleComponent.InitiatesBattle(Defender);
             if (continuos)
             {
                 //Multiple Rounds Get Count
@@ -112,7 +114,26 @@ namespace Game.Mechanics
                     DefenderAttackCount = Defender.BattleComponent.BattleStats.GetAttackCountAgainst(Attacker),
                     AttacksData = new List<AttackData>()
                 };
-
+                combatRound.AttackerStats =  new DuringBattleCharacterStats(Attacker.BattleComponent.BattleStats.GetDamage(),
+                    Attacker.Stats.BaseAttributes.AGI, Defender.BattleComponent.BattleStats.GetDamageType(),
+                    Defender.BattleComponent.BattleStats.GetDamageType() == DamageType.Physical
+                        ? Attacker.BattleComponent.BattleStats.GetPhysicalResistance()
+                        : Attacker.Stats.BaseAttributes.FAITH,
+                    Attacker.Stats.BaseAttributes.DEX,
+                    Attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(Defender),
+                    Attacker.BattleComponent.BattleStats.GetHitAgainstTarget(Defender),
+                    Attacker.BattleComponent.BattleStats.GetCritAgainstTarget(Defender),
+                    Attacker.BattleComponent.BattleStats.GetAttackCountAgainst(Defender), Attacker.Hp, Attacker.MaxHp); 
+                combatRound.DefenderStats = new DuringBattleCharacterStats(Defender.BattleComponent.BattleStats.GetDamage(),
+                    Defender.Stats.BaseAttributes.AGI, Defender.BattleComponent.BattleStats.GetDamageType(),
+                    Attacker.BattleComponent.BattleStats.GetDamageType() == DamageType.Physical
+                        ? Defender.BattleComponent.BattleStats.GetPhysicalResistance()
+                        : Defender.Stats.BaseAttributes.FAITH,
+                    Defender.Stats.BaseAttributes.DEX,
+                    Defender.BattleComponent.BattleStats.GetDamageAgainstTarget(Attacker),
+                    Defender.BattleComponent.BattleStats.GetHitAgainstTarget(Attacker),
+                    Defender.BattleComponent.BattleStats.GetCritAgainstTarget(Attacker),
+                    Attacker.BattleComponent.BattleStats.GetAttackCountAgainst(Attacker), Defender.Hp, Defender.MaxHp);
                 combatRounds.Add(combatRound);
 
             }
@@ -121,7 +142,7 @@ namespace Game.Mechanics
         }
         public bool DoAttack(IBattleActor attacker, IBattleActor defender, ref AttackData attackData)
         {
-            Debug.Log("TODO Do AttackEffects Mechanics here");
+          
           //  if(attacker.BattleComponent.BattleStats.BonusAttackStats.AttackEffects)
           float sol = 0;
           float luna = 0;
@@ -213,7 +234,7 @@ namespace Game.Mechanics
                                     if (!adeptFlag)
                                     {
                                         adeptFlag = true;
-                                        consecutiveAttack++;
+                                        consecutiveAttack+=(int)attackEffect.Value;
                                     }
 
                                     break;
@@ -297,7 +318,6 @@ namespace Game.Mechanics
         {
             this.certainHit = certainHit;
             Debug.Log("TODO if certainHit also check for skills and only do 100% procChance skills");
-            Debug.Log("START BATTLE: ATTACKERHIT: " +Attacker.BattleComponent.BattleStats.GetHitAgainstTarget(Defender));
             if (continuos)
             {
                 int cnt = 0;
@@ -318,6 +338,7 @@ namespace Game.Mechanics
                         DefenderAttackCount = Defender.BattleComponent.BattleStats.GetAttackCountAgainst(Attacker),
                         AttacksData = new List<AttackData>()
                     };
+                    
                     combatRounds.Add(combatRound);
                    
                     StartRound(combatRound, certainHit, grid);
@@ -341,6 +362,8 @@ namespace Game.Mechanics
                 AttackResult = AttackResult.Win;
             if (!Attacker.IsAlive())
                 AttackResult = AttackResult.Loss;
+            Attacker.BattleComponent.BattleEnded(Defender);
+            Defender.BattleComponent.BattleEnded(Attacker);
             // foreach (var combatRound in combatRounds)
             // {
             //     Debug.Log("Combat Round: " +combatRound.RoundIndex);

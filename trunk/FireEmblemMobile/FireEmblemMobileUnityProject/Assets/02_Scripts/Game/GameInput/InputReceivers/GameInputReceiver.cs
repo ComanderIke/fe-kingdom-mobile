@@ -250,9 +250,9 @@ namespace Game.GameInput
 
                     return;
                 }
-
+                Debug.Log("Clicked on Grid: "+x+" "+y+" "+selectionDataProvider.SelectedActor );
                 if (gridSystem.GridLogic.IsFieldFreeAndActive(x, y) && selectionDataProvider.SelectedActor != null &&
-                    !selectionDataProvider.SelectedActor.TurnStateManager.HasMoved)
+                    (!selectionDataProvider.SelectedActor.TurnStateManager.HasMoved||selectionDataProvider.SelectedActor.GridComponent.Canto>0&& !selectionDataProvider.SelectedActor.TurnStateManager.HasCantoed))
                 {
                     if (selectionDataProvider.IsSelectedTile(x, y))
                     {
@@ -532,7 +532,8 @@ namespace Game.GameInput
                 }
 
                 if (inputPathManager.HasValidMovementPath(selectedActor.MovementRange))
-                {
+                { 
+                    Debug.Log("PUT MOVEMENT STUFF HERE?");
                     UpdateMovementPath(selectedActor);
                     //Debug.Log("Check Attack Preview from HEre: "+x+" "+y+" "+inputPathManager.GetLastMovementPathPosition().x+" "+inputPathManager.GetLastMovementPathPosition().y);
                     if (selectedActor is IBattleActor battleActor && enemy is IBattleActor enemyBattleActor)

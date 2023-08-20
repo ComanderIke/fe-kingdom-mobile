@@ -1,6 +1,7 @@
 ﻿using System;
 using Game.GameActors.Units;
 using Game.Manager;
+using Game.Map;
 using UnityEngine;
 
 namespace Game.Mechanics.Commands
@@ -21,8 +22,12 @@ namespace Game.Mechanics.Commands
             if (unit != null && !unit.TurnStateManager.IsWaiting)
             {
                 GridGameManager.Instance.GetSystem<Map.GridSystem>().HideMoveRange();
-                unit.TurnStateManager.Wait();
-                
+                if(unit.GridComponent.Canto<=0|| !unit.TurnStateManager.HasAttacked)
+                    unit.TurnStateManager.Wait();
+                else
+                {
+                    GridGameManager.Instance.GetSystem<GridSystem>().ShowMovementRangeOnGrid(unit, true);
+                }
             }
            // unitSelectionManager.DeselectActiveCharacter();
             IsFinished = true;

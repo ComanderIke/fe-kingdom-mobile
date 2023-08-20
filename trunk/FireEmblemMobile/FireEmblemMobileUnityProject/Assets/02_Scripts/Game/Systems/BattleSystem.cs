@@ -158,13 +158,13 @@ namespace Game.Mechanics
                 if( attackerActivatedSkillMixins[i]is CombatSkillMixin csm)
                     csm.Deactivate();
                 if (attackerActivatedSkillMixins[i] is CombatPassiveMixin psm)
-                    psm.Deactivate();
+                    psm.Deactivate((Unit)attacker, (Unit)defender);
                 attackerActivatedSkillMixins.RemoveAt(i);
             }
             for (int i = defenderActivatedSkillMixins.Count - 1; i >= 0; i--)
             {
                 if (defenderActivatedSkillMixins[i] is CombatPassiveMixin psm)
-                    psm.Deactivate();
+                    psm.Deactivate((Unit)attacker, (Unit)defender);
                 defenderActivatedSkillMixins.RemoveAt(i);
             }
         }
@@ -238,31 +238,33 @@ namespace Game.Mechanics
                 battlePreview.Defender = defenderActor;
                 battleSimulation = new BattleSimulation(attacker, defenderActor, attackPosition);
                 battleSimulation.StartBattle(true, true);
+                
                 battlePreview.AttacksData = battleSimulation.combatRounds[0].AttacksData;
-            
-                battlePreview.AttackerStats = new BattlePreviewStats(attacker.BattleComponent.BattleStats.GetDamage(),
-                    attacker.Stats.BaseAttributes.AGI, defenderActor.BattleComponent.BattleStats.GetDamageType(),
-                    defenderActor.BattleComponent.BattleStats.GetDamageType() == DamageType.Physical
-                        ? attacker.BattleComponent.BattleStats.GetPhysicalResistance()
-                        : attacker.Stats.BaseAttributes.FAITH,
-                    attacker.Stats.BaseAttributes.DEX,
-                    attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defenderActor),
-                    attacker.BattleComponent.BattleStats.GetHitAgainstTarget(defenderActor),
-                    attacker.BattleComponent.BattleStats.GetCritAgainstTarget(defenderActor),
-                    battleSimulation.combatRounds[0].AttackerAttackCount, attacker.Hp, attacker.MaxHp,
-                    battleSimulation.Attacker.Hp); //, attacker.Sp, attacker.Stats.MaxSp, battleSimulation.Attacker.Sp, attacker.SpBars, battleSimulation.Attacker.SpBars, attacker.MaxSpBars);
-      
-                battlePreview.DefenderStats = new BattlePreviewStats(defenderActor.BattleComponent.BattleStats.GetDamage(),
-                    defenderActor.Stats.BaseAttributes.AGI, defenderActor.BattleComponent.BattleStats.GetDamageType(),
-                    attacker.BattleComponent.BattleStats.GetDamageType() == DamageType.Physical
-                        ? defenderActor.BattleComponent.BattleStats.GetPhysicalResistance()
-                        : defenderActor.Stats.BaseAttributes.FAITH,
-                    defenderActor.Stats.BaseAttributes.DEX,
-                    defenderActor.BattleComponent.BattleStats.GetDamageAgainstTarget(attacker),
-                    defenderActor.BattleComponent.BattleStats.GetHitAgainstTarget(attacker),
-                    defenderActor.BattleComponent.BattleStats.GetCritAgainstTarget(attacker),
-                    battleSimulation.combatRounds[0].DefenderAttackCount, defender.Hp, defenderActor.MaxHp,
-                    battleSimulation.Defender.Hp); //, defender.Sp, defender.Stats.MaxSp, battleSimulation.Defender.Sp,  defender.SpBars, battleSimulation.Defender.SpBars, defender.MaxSpBars);
+                battlePreview.AttackerStats = new BattlePreviewStats(battleSimulation.combatRounds[0].AttackerStats,attacker.Hp);
+                battlePreview.DefenderStats = new BattlePreviewStats(battleSimulation.combatRounds[0].DefenderStats,defender.Hp);
+                // battlePreview.AttackerStats = new BattlePreviewStats(attacker.BattleComponent.BattleStats.GetDamage(),
+                //     attacker.Stats.BaseAttributes.AGI, defenderActor.BattleComponent.BattleStats.GetDamageType(),
+                //     defenderActor.BattleComponent.BattleStats.GetDamageType() == DamageType.Physical
+                //         ? attacker.BattleComponent.BattleStats.GetPhysicalResistance()
+                //         : attacker.Stats.BaseAttributes.FAITH,
+                //     attacker.Stats.BaseAttributes.DEX,
+                //     attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defenderActor),
+                //     attacker.BattleComponent.BattleStats.GetHitAgainstTarget(defenderActor),
+                //     attacker.BattleComponent.BattleStats.GetCritAgainstTarget(defenderActor),
+                //     battleSimulation.combatRounds[0].AttackerAttackCount, attacker.Hp, attacker.MaxHp,
+                //     battleSimulation.Attacker.Hp); //, attacker.Sp, attacker.Stats.MaxSp, battleSimulation.Attacker.Sp, attacker.SpBars, battleSimulation.Attacker.SpBars, attacker.MaxSpBars);
+                //
+                // battlePreview.DefenderStats = new BattlePreviewStats(defenderActor.BattleComponent.BattleStats.GetDamage(),
+                //     defenderActor.Stats.BaseAttributes.AGI, defenderActor.BattleComponent.BattleStats.GetDamageType(),
+                //     attacker.BattleComponent.BattleStats.GetDamageType() == DamageType.Physical
+                //         ? defenderActor.BattleComponent.BattleStats.GetPhysicalResistance()
+                //         : defenderActor.Stats.BaseAttributes.FAITH,
+                //     defenderActor.Stats.BaseAttributes.DEX,
+                //     defenderActor.BattleComponent.BattleStats.GetDamageAgainstTarget(attacker),
+                //     defenderActor.BattleComponent.BattleStats.GetHitAgainstTarget(attacker),
+                //     defenderActor.BattleComponent.BattleStats.GetCritAgainstTarget(attacker),
+                //     battleSimulation.combatRounds[0].DefenderAttackCount, defender.Hp, defenderActor.MaxHp,
+                //     battleSimulation.Defender.Hp); //, defender.Sp, defender.Stats.MaxSp, battleSimulation.Defender.Sp,  defender.SpBars, battleSimulation.Defender.SpBars, defender.MaxSpBars);
             }
             else
             {
