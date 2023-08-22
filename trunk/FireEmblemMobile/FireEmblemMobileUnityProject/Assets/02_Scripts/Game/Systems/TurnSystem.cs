@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.GameActors.Units;
 using Game.GameInput;
 using Game.GUI.Text;
 using Game.Manager;
@@ -17,6 +18,7 @@ namespace Game.Mechanics
         public Action OnTriggerEndTurn;
 
         public event Action OnEndTurn;
+        public event Action OnStartTurn;
 
         // public static event Action OnStartTurn;
 
@@ -156,13 +158,15 @@ namespace Game.Mechanics
             OnEndTurn?.Invoke();
             if (factionManager.ActivePlayerNumber == 0){
                 TurnCount++;
+                OnStartTurn?.Invoke();
                 //Debug.Log("Update SP Bars: "+ factionManager.ActiveFaction.Id);
-                
+
             }
             //Debug.Log("Calling Start Phase From EndPhase");
             StartPhase();
         }
 
- 
+
+       
     }
 }

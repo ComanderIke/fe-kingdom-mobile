@@ -9,23 +9,28 @@ namespace Game.GameActors.Units.Skills
     [CreateAssetMenu(menuName = "GameData/Skills/Effectmixin/Heal", fileName = "HealEffect")]
     public class HealEffect : UnitTargetSkillEffectMixin
     {
-        public int [] heal;
+        public float [] heal;
         public AttributeType scalingType;
         public float[] scalingcoeefficient;
 
         public bool percentage = false;
+        public bool healToPercentageHealth = false;
         public override void Activate(Unit target, Unit caster, int level)
         {
-            int baseDamageg = heal[level];
+            float baseDamageg = heal[level];
 
             int scalingdmg = (int)(caster.Stats.CombinedAttributes().GetAttributeStat(scalingType) * scalingcoeefficient[level]);
 
-            if (percentage)
+            if (healToPercentageHealth)
+            {
+                target.Heal((int)((target.MaxHp * heal[level]) - target.Hp));
+            }
+            else if (percentage)
             {
                 target.Heal((int)(target.MaxHp*heal[level]));
             }
             else
-                target.Heal(baseDamageg+scalingdmg);
+                target.Heal((int)(baseDamageg+scalingdmg));
         }
 
         public override void Deactivate(Unit user, Unit caster, int skillLevel)

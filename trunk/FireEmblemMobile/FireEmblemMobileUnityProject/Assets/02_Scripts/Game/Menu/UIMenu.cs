@@ -13,6 +13,7 @@ public abstract class UIMenu: MonoBehaviour
     {
         canvas.enabled = true;
         
+        
     }
 
     public virtual void Hide()

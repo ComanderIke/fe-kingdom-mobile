@@ -17,9 +17,18 @@ namespace Game.GameActors.Units.Skills
         Any
     }
 
-    public abstract class SingleTargetCondition :ScriptableObject
+    public abstract class Condition:ScriptableObject
+    {
+        
+    }
+    public abstract class SingleTargetCondition :Condition
     {
         public abstract bool CanTarget(Unit caster, Unit target);
+
+    }
+    public abstract class SelfTargetCondition :Condition
+    {
+        public abstract bool CanTarget(Unit caster);
 
     }
 

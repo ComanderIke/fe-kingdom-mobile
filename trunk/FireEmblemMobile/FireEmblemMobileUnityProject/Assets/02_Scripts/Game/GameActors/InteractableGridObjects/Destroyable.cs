@@ -15,7 +15,7 @@ namespace Game.GameActors.Players
         public int MaxHp { get; set; }
         object Clone();
         bool IsAlive();
-        void Die();
+        void Die(Unit damageSource);
     }
     public interface IAttackableTargetThatCantFightBack:IAttackableTarget
     {
@@ -120,7 +120,7 @@ namespace Game.GameActors.Players
             return Hp > 0;
         }
 
-        public void Die()
+        public void Die(Unit damageSource)
         {
             Debug.Log("Die Dest");
             Controller.Die();

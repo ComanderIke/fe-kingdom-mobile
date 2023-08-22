@@ -13,9 +13,9 @@ public class TweenUtility
     {
         return LeanTween.alphaCanvas(a, 1, fadeInDuration).setEase(easeFadeIn);
     }
-    public static LTDescr FadeOut(CanvasGroup a)
+    public static LTDescr FadeOut(CanvasGroup a, float duration = fadeOutDuration)
     {
-        return LeanTween.alphaCanvas(a, 0, fadeOutDuration).setEase(easeFadeOut);
+        return LeanTween.alphaCanvas(a, 0, duration).setEase(easeFadeOut);
     }
 
     public static LTDescr FastFadeIn(CanvasGroup a)

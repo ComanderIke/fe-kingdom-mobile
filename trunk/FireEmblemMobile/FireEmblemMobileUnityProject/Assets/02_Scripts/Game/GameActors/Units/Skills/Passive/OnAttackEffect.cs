@@ -48,4 +48,6 @@ namespace Game.GameActors.Units.Skills.Passive
             target.BattleComponent.BattleStats.BonusAttackStats.AttackEffects.Remove(attackEffect);
         }
     }
+
+    
 }

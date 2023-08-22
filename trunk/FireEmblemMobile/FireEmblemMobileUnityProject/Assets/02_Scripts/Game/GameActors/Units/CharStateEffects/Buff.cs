@@ -14,7 +14,8 @@ namespace Game.GameActors.Units.CharStateEffects
         Stealth,
         AbsorbingDmg,
         Invulnerability,
-        Stride
+        Stride,
+        Rage
         //ClearMovement
         //Add as needed
     }

@@ -10,6 +10,7 @@ namespace LostGrace
 {
     public class SelectFileUI : UIMenu
     {
+        [SerializeField] private CanvasGroup canvasGroup;
         [SerializeField] private SaveFileUI slot1Button;
         [SerializeField] private SaveFileUI slot2Button;
         [SerializeField] private SaveFileUI slot3Button;
@@ -20,7 +21,8 @@ namespace LostGrace
         private static readonly int Show1 = Animator.StringToHash("Show");
         public override void Show()
         {
-            
+
+            TweenUtility.FadeIn(canvasGroup);
             animator.SetBool(Show1, true);
             if (SaveGameManager.FileSlotExists(1))
             {
@@ -73,6 +75,7 @@ namespace LostGrace
         }
         public override void Hide()
         {
+            TweenUtility.FadeOut(canvasGroup);
             StartCoroutine(HideCoroutine());
         }
 

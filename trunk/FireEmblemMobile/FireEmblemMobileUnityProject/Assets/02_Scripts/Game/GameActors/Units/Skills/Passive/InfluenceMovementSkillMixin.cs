@@ -12,8 +12,10 @@ namespace Game.GameActors.Units.Skills.Passive
     public class InfluenceMovementSkillMixin:PassiveSkillMixin, ITurnStateListener
     {
         public SerializableDictionary<TerrainType, int> TerrainTypeMovementCostsReduction;
-
-
+        
+        public bool canMoveThroughEnemies;
+        public List<SkillEffectMixin> onMoveOverEnemy;
+        
         private bool activated = false;
         public override void BindToUnit(Unit unit, Skill skill)
         {

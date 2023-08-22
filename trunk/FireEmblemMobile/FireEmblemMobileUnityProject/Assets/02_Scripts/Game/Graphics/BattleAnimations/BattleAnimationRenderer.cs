@@ -24,6 +24,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     void ShowActivatedAttackSkills(AttackData attackData)
     {
         skillActivationRenderer.Show(attackData.activatedAttackSkills, attackData.attacker);
+        skillActivationRenderer.Show(attackData.activatedDefenseSkills, !attackData.attacker);
     }
     void ShowActivatedCombatSkills(List<Skill> skills, bool attacker)
     {

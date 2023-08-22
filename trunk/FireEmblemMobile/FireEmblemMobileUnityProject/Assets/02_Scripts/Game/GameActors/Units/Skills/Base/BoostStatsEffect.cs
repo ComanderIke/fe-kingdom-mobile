@@ -14,6 +14,10 @@ namespace Game.GameActors.Units.Skills
       
         public Attributes[] BonusAttributes;
         public CombatStats[] BonusStats;
+        public int BonusMov;
+        public float multiplier = 1;
+        public bool skillTransferDataIsMultiplier;
+        public SkillTransferData SkillTransferData;
         public override void Activate(Unit target, int level)
         {
            

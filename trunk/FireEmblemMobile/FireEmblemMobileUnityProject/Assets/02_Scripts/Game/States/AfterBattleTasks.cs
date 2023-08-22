@@ -68,12 +68,12 @@ namespace Game.States
              
                 if (!attacker.IsAlive())
                 {
-                    attacker.Die();
+                    attacker.Die((Unit)defender);
                     yield return new WaitForSeconds(1.5f);
                 }
                 if (!defender.IsAlive())
                 {
-                    defender.Die();
+                    defender.Die(attacker);
                     yield return new WaitForSeconds(1.5f);
                 }
                 if (defender is Unit unitDefender)

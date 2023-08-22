@@ -17,13 +17,12 @@ namespace Game.GUI
         private static readonly int Show1 = Animator.StringToHash("Show");
         private static readonly int Side = Animator.StringToHash("Side");
        // [SerializeField] private Animator animator;
+       [SerializeField] private CanvasGroup canvasGroup;
         [SerializeField] private CanvasGroup titleCanvasGroup;
         [SerializeField] private CanvasGroup playButtonCanvasGroup;
         [SerializeField] private CanvasGroup optionsButtonCanvasGroup;
         [SerializeField] private CanvasGroup exitButtonCanvasGroup;
         [SerializeField] private CanvasGroup Fade;
-        [SerializeField] private Animator optionsButtonAnimator;
-        [SerializeField] private Animator playButtonAnimator;
         private static readonly int Selected = Animator.StringToHash("Selected");
 
         private void Awake()
@@ -43,13 +42,13 @@ namespace Game.GUI
         {
             // animator.SetBool(Show1, true);
             // animator.SetBool(Side, false);
-        
+            TweenUtility.FadeIn(canvasGroup);
             TweenUtility.FadeIn(titleCanvasGroup);
             TweenUtility.FadeIn(playButtonCanvasGroup);
             TweenUtility.FadeIn(optionsButtonCanvasGroup);
             TweenUtility.FadeIn(exitButtonCanvasGroup);
-            optionsButtonAnimator.SetBool(Selected, false);
-            playButtonAnimator.SetBool(Selected, false);
+            //optionsButtonAnimator.SetBool(Selected, false);
+           // playButtonAnimator.SetBool(Selected, false);
             base.Show();
         }
         
@@ -57,16 +56,17 @@ namespace Game.GUI
         {
             // animator.SetBool(Show1, false);
             // animator.SetBool(Side, false);
-            
-            base.Hide();
+            Debug.Log("FADEOUT");
+            TweenUtility.FadeOut(canvasGroup, 0.7f);
+            //base.Hide();
         }
 
         public void StartClicked()
         {
             HideOtherMenus(selectFileUI);
             selectFileUI.Show();
-            playButtonAnimator.SetBool(Selected, true);
-           // StartCoroutine(TransitionAnimation());
+            Hide();
+            // StartCoroutine(TransitionAnimation());
 
         }
 
@@ -105,8 +105,10 @@ namespace Game.GUI
         public void OptionsClicked()
         {
             HideOtherMenus(optionsMenu);
+          
             optionsMenu.Show();
-            optionsButtonAnimator.SetBool(Selected, true);
+            //optionsButtonAnimator.SetBool(Selected, true);
+            Hide();
         }
         public void ExitClicked()
         {

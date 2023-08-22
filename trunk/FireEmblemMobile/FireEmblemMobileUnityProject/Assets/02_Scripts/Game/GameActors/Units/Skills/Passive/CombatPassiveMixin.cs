@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Game.GameActors.Units.Numbers;
 using Game.Mechanics.Battle;
 using LostGrace;
@@ -34,13 +35,134 @@ namespace Game.GameActors.Units.Skills.Passive
     public class ConditionPackage
     {
         public ConditionCompareType CompareType;
-        public List<SingleTargetCondition> Conditions;
+        public List<Condition> Conditions;
+
+        public bool Valid(Unit unit)
+        {
+            if (Conditions == null || Conditions.Count == 0)
+                return true;
+            switch (CompareType)
+            {
+                case ConditionCompareType.AND:
+                    foreach (var condition in Conditions)
+                    {
+                        if (condition is SelfTargetCondition stc)
+                        {
+                            if (!stc.CanTarget(unit))
+                                return false;
+                        }
+                        else if (condition is SingleTargetCondition sitc)
+                        {
+                            if (!sitc.CanTarget(unit, unit))
+                                return false;
+                        }
+                        
+                    }
+
+                    return true;
+                    break;
+                case ConditionCompareType.OR:
+                    foreach (var condition in Conditions)
+                    {
+                        if (condition is SelfTargetCondition stc)
+                        {
+                            if (stc.CanTarget(unit))
+                                return true;
+                        }
+                        else if (condition is SingleTargetCondition sitc)
+                        {
+                            if (sitc.CanTarget(unit, unit))
+                                return true;
+                        }
+                    }
+
+                    return false;
+                    break;
+                case ConditionCompareType.XOR:
+                    bool oneValid = false;
+                    foreach (var condition in Conditions)
+                    {
+                        if (condition is SelfTargetCondition stc)
+                        {
+                            if (stc.CanTarget(unit))
+                            {
+                                if (oneValid == true)
+                                    return false;
+                                oneValid = true;
+                            }
+                        }
+                        else if (condition is SingleTargetCondition sitc)
+                        {
+                            if (sitc.CanTarget(unit, unit))
+                            {
+                                if (oneValid == true)
+                                    return false;
+                                oneValid = true;
+                            }
+                        }
+
+                        return oneValid;
+                    }
+
+                    return false;
+                    break;
+                
+            }
+
+            return true;
+        }
     }
     [Serializable]
     public class ConditionBigPackage
     {
         public ConditionCompareType CompareType;
         public List<ConditionPackage> Conditions;
+
+        public bool Valid(Unit unit)
+        {
+            if (Conditions == null || Conditions.Count == 0)
+                return true;
+            switch (CompareType)
+            {
+                case ConditionCompareType.AND:
+                    foreach (var conditionPackage in Conditions)
+                    {
+                        if (!conditionPackage.Valid(unit))
+                            return false;
+                    }
+
+                    return true;
+                    break;
+                case ConditionCompareType.OR:
+                    foreach (var conditionPackage in Conditions)
+                    {
+                        if (conditionPackage.Valid(unit))
+                            return true;
+                    }
+
+                    return false;
+                    break;
+                case ConditionCompareType.XOR:
+                    bool oneValid = false;
+                    foreach (var conditionPackage in Conditions)
+                    {
+                        if (conditionPackage.Valid(unit))
+                        {
+                            if (oneValid == true)
+                                return false;
+                            oneValid = true;
+                        }
+
+                        return oneValid;
+                    }
+
+                    return false;
+                    break;
+                
+            }
+
+            return true;
+        }
     }
     [Serializable]
     [CreateAssetMenu(menuName = "GameData/Skills/Passive/Combat", fileName = "CombatMixin")]

@@ -235,9 +235,10 @@ namespace Game.GameActors.Units
           
         }
 
-        public void Die()
+        public void Die(Unit damageSource)
         {
             Debug.Log("Die: " + name);
+            KilledBy = damageSource;
             UnitDied?.Invoke(this);
             
             Faction?.RemoveUnit(this);
@@ -293,6 +294,7 @@ namespace Game.GameActors.Units
         }
 
         public string Name => name;
+        public Unit KilledBy { get; private set; }
 
         public Sprite FaceSprite => visuals.CharacterSpriteSet.FaceSprite;
         public bool Fielded { get; set; }

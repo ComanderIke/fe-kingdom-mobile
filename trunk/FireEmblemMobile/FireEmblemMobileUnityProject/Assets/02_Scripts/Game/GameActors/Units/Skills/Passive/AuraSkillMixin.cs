@@ -37,6 +37,7 @@ namespace Game.GameActors.Units.Skills.Passive
     {
         public AuraType auraType;
         public AffectType affectType;
+        public SkillTargetArea areaType;
         private List<Unit> inRangeTargets;
        [SerializeField] private int[] range;
         

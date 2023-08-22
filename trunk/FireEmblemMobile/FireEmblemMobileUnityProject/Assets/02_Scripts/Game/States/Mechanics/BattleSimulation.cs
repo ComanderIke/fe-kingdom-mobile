@@ -23,6 +23,7 @@ namespace Game.Mechanics
         public bool kill;
         public bool crit;
         public List<Skill> activatedAttackSkills;
+        public List<Skill> activatedDefenseSkills;
         
     }
 
@@ -146,6 +147,8 @@ namespace Game.Mechanics
           //  if(attacker.BattleComponent.BattleStats.BonusAttackStats.AttackEffects)
           float sol = 0;
           float luna = 0;
+          float pavise = 0;
+          float wrath = 0;
           foreach (var attackEffect in attacker.BattleComponent.BattleStats.BonusAttackStats.AttackEffects)
           {
               switch (attackEffect.Key)
@@ -156,7 +159,18 @@ namespace Game.Mechanics
                       sol = (float)attackEffect.Value; break;
               }
           }
+          foreach (var defenseEffect in defender.BattleComponent.BattleStats.BonusAttackStats.DefenseEffects)
+          {
+              switch (defenseEffect.Key)
+              {
+                  case GetHitEffectEnum.Pavise:
+                      pavise = (float)defenseEffect.Value; break;
+                  case GetHitEffectEnum.Wrath:
+                      wrath = (float)defenseEffect.Value; break;
+              }
+          }
           int damage = attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defender, luna);
+         
             //int spDamage= attacker.BattleComponent.BattleStats.GetTotalSpDamageAgainstTarget(defender);
             var hitRng = UnityEngine.Random.Range(0, 101);
             var critRng = UnityEngine.Random.Range(0, 101);
@@ -166,6 +180,7 @@ namespace Game.Mechanics
             attackData.crit =  critRng< attacker.BattleComponent.BattleStats.GetCritAgainstTarget(defender)&&attackData.hit;
             if (attackData.crit)
                 damage *= 2;
+            damage -= (int)(damage * pavise);
             if (attacker == Attacker)
             {
                 attackData.Dmg = Math.Min(defender.Hp, damage);
@@ -174,6 +189,9 @@ namespace Game.Mechanics
             {
                 attackData.Dmg = Math.Min(defender.Hp, damage);
             }
+            int wrathDmg = (int)(damage * wrath);
+            Defender.BattleComponent.BattleStats.WrathDamage += wrathDmg;
+            Attacker.BattleComponent.BattleStats.WrathDamage = 0;
             if(attackData.hit||certainHit)
                 defender.Hp -= damage;
             if(sol>0)
@@ -221,10 +239,15 @@ namespace Game.Mechanics
                     {
                         AttackData attackData = new AttackData();
                         attackData.activatedAttackSkills = new List<Skill>();
+                        attackData.activatedDefenseSkills = new List<Skill>();
 
                         attackData.attacker = true;
                         if (!certainHit)
+                        {
                             attackData.activatedAttackSkills.AddRange(ActivateAttackSkills(Attacker));
+                            attackData.activatedDefenseSkills.AddRange(ActivateDefenseSkills(Defender));
+                        }
+
                         foreach (var attackEffect in Attacker.BattleComponent.BattleStats.BonusAttackStats
                                      .AttackEffects)
                         {
@@ -234,7 +257,8 @@ namespace Game.Mechanics
                                     if (!adeptFlag)
                                     {
                                         adeptFlag = true;
-                                        consecutiveAttack+=(int)attackEffect.Value;
+                                        Debug.Log(attackEffect.Value);
+                                        consecutiveAttack+=Convert.ToInt32(attackEffect.Value);
                                     }
 
                                     break;
@@ -276,9 +300,11 @@ namespace Game.Mechanics
                    
                     attackData.attacker = false;
                     attackData.activatedAttackSkills = new List<Skill>();
+                    attackData.activatedDefenseSkills = new List<Skill>();
                     if (!certainHit)
                     {
                         attackData.activatedAttackSkills.AddRange(ActivateAttackSkills(Defender));
+                        attackData.activatedAttackSkills.AddRange(ActivateDefenseSkills(Attacker));
                     }
 
                     if (DoAttack(Defender, Attacker, ref attackData))
@@ -313,9 +339,23 @@ namespace Game.Mechanics
 
             return skills;
         }
+        private IEnumerable<Skill> ActivateDefenseSkills(IBattleActor attacker)
+        {
+            var skills = new List<Skill>();
+            Debug.Log("ACTIVATE ATTACK SKILLS " +attacker.BattleComponent.defenseEffects.Count);
+            foreach (var attackEffect in attacker.BattleComponent.defenseEffects)
+            {
+                if(attackEffect.attackEffect.ReactToDefense(attacker))
+                    skills.Add(attackEffect.skill);
+            }
+
+            return skills;
+        }
 
         public void StartBattle(bool certainHit, bool grid)
         {
+            Attacker.BattleComponent.BattleStats.WrathDamage = 0;
+            Defender.BattleComponent.BattleStats.WrathDamage = 0;
             this.certainHit = certainHit;
             Debug.Log("TODO if certainHit also check for skills and only do 100% procChance skills");
             if (continuos)

@@ -38,6 +38,9 @@ namespace Game.Mechanics
             
             this.playerPhaseState = playerPhaseState;
         }
+
+        public static Vector2Int LastSkillTargetPosition { get; set; }
+
         public override void Enter()
         {
             gridSystem = GridGameManager.Instance.GetSystem<GridSystem>();
@@ -164,6 +167,7 @@ namespace Game.Mechanics
                     if (stm.CanTarget(selectedUnit, target)&& stm.IsInRange(selectedUnit, target))
                     {
                         Debug.Log("Activate SingleTargetMixin");
+                        LastSkillTargetPosition = new Vector2Int(x, y);
                         stm.Activate(selectedUnit,target);
                         if (selectionSystem.SelectedSkill.activeMixins.Count>1)
                         {
@@ -192,6 +196,7 @@ namespace Game.Mechanics
                      {
                          var targets = skill.GetAllTargets(selectedUnit, gridSystem.Tiles, x,y);
                          skill.Activate(selectedUnit, gridSystem.Tiles, x,y);
+                         LastSkillTargetPosition = new Vector2Int(x, y);
                          new GameplayCommands().Wait(selectedUnit);
                          new GameplayCommands().ExecuteInputActions(()=>
                          {
@@ -231,6 +236,7 @@ namespace Game.Mechanics
                  {
                      if (gridSystem.cursor.GetCurrentTile() == gridSystem.Tiles[x, y])
                      {
+                         LastSkillTargetPosition = new Vector2Int(x, y);
                          skill.Activate(selectedUnit, gridSystem.Tiles, x,y);
                          new GameplayCommands().Wait(selectedUnit);
                          new GameplayCommands().ExecuteInputActions(()=>

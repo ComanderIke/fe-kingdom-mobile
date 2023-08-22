@@ -4,6 +4,7 @@ using Game.GameInput;
 using Game.Grid;
 using Game.Manager;
 using Game.Map;
+using Game.Mechanics;
 using LostGrace;
 using UnityEngine;
 
@@ -17,7 +18,9 @@ namespace Game.GameActors.Units.Skills
         public bool towardsTarget;
         public bool swapPositions;
         public bool rescueTarget;
+        public bool priotizeXMovement;
         public bool towardsSkillTargetDataPosition;
+        public bool lastSkilltargetDirection;
         public SkillTransferData skillTransferData;
 
         private bool RescueToPosition( Vector2Int pos, Unit target )
@@ -66,6 +69,11 @@ namespace Game.GameActors.Units.Skills
                  return;
              }
             Vector2 direction = target.GridComponent.GridPosition.AsVector() - caster.GridComponent.GridPosition.AsVector() * (towardsTarget?-1:1);
+            if (lastSkilltargetDirection)
+            {
+                Vector2Int lastPos= ChooseTargetState.LastSkillTargetPosition;
+                direction =  lastPos- caster.GridComponent.GridPosition.AsVector() * (towardsTarget?-1:1);
+            } 
             if (towardsTarget)
             {
                 if (targetMove != 0)
@@ -77,17 +85,7 @@ namespace Game.GameActors.Units.Skills
                     MoveUnit(caster, direction);
                 }
             }
-            else
-            {
-                if (selfMove != 0)
-                {
-                    MoveUnit(caster, direction);
-                }
-                if (targetMove != 0)
-                {
-                    MoveUnit(target, direction);
-                }
-            }
+            
         }
 
         public override void Deactivate(Unit user, Unit caster, int skillLevel)

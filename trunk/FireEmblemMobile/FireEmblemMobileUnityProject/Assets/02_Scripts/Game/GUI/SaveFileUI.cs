@@ -9,8 +9,9 @@ namespace LostGrace
         [SerializeField] private Button button;
         [SerializeField] private TextMeshProUGUI nameText;
         [SerializeField] private Image image;
-        [SerializeField] private Color startColor;
-        [SerializeField] private Color loadedColor;
+        [SerializeField] private CanvasGroup canvasGroup;
+        [SerializeField] private float newGameTextAlpha;
+        [SerializeField] private float loadedTextAlpha;
         [SerializeField] private GameObject deleteButton;
         public void UpdateText(string name)
         {
@@ -19,7 +20,7 @@ namespace LostGrace
 
         public void SetLoaded(bool loaded)
         {
-            image.color = loaded ? loadedColor : startColor;
+            canvasGroup.alpha = loaded ? loadedTextAlpha : newGameTextAlpha;
         }
 
         public void SetInteractable(bool b)

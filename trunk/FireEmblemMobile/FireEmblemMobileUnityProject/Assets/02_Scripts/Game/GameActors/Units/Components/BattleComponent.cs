@@ -29,6 +29,7 @@ namespace Game.GameActors.Units
              owner = actor;
              battleEvents = new Dictionary<BattleEvent, List<IBattleEventListener>>();
              attackEffects = new List<AttackEffectContainer>();
+             defenseEffects = new List<DefenseEffectContainer>();
         }
         public BattleComponent(BattleComponent battleComponent)
         {
@@ -36,6 +37,7 @@ namespace Game.GameActors.Units
             owner = battleComponent.owner;
             battleEvents = battleComponent.battleEvents;
             attackEffects = battleComponent.attackEffects;
+            defenseEffects = battleComponent.defenseEffects;
         }
 
       
@@ -85,7 +87,17 @@ namespace Game.GameActors.Units
             }
             
         }
+        public struct DefenseEffectContainer
+        {
+            public IOnDefenseEffect attackEffect;
+            public Skill skill;
 
+            public DefenseEffectContainer(Skill skill, IOnDefenseEffect attackEffect)
+            {
+                this.skill = skill;
+                this.attackEffect = attackEffect;
+            }
+        }
         public struct AttackEffectContainer
         {
             public IOnAttackEffect attackEffect;
@@ -102,6 +114,11 @@ namespace Game.GameActors.Units
         {
             attackEffects.Add(new AttackEffectContainer(skill, attackEffectMixin));
         }
+        public List<DefenseEffectContainer> defenseEffects;
+        public void AddToDefenseSkillList(Skill skill, IOnDefenseEffect attackEffectMixin)
+        {
+            defenseEffects.Add(new DefenseEffectContainer(skill, attackEffectMixin));
+        }
         public void RemoveFromAttackSkillList(Skill skill, IOnAttackEffect attackEffectMixin)
         {
             Debug.Log("TRY REMOVE FROM ATTACK SKILL LIST: ");
@@ -112,6 +129,19 @@ namespace Game.GameActors.Units
                 if (attackEffects[i].skill == skill && attackEffects[i].attackEffect == attackEffectMixin)
                 {
                     attackEffects.RemoveAt(i);
+                }
+            }
+        }
+        public void RemoveFromDefenseSkillList(Skill skill, IOnDefenseEffect defenseEffectMixin)
+        {
+            Debug.Log("TRY REMOVE FROM DEFENSE SKILL LIST: ");
+            Debug.Log(skill.Name);
+            Debug.Log(defenseEffectMixin);
+            for (int i= defenseEffects.Count-1; i>=0; i--)
+            {
+                if (defenseEffects[i].skill == skill && defenseEffects[i].attackEffect == defenseEffectMixin)
+                {
+                    defenseEffects.RemoveAt(i);
                 }
             }
         }

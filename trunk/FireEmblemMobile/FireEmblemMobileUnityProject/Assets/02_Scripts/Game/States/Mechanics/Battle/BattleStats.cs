@@ -20,11 +20,12 @@ namespace Game.Mechanics.Battle
     {
         public bool BonusAttack { get; set; }
         public Dictionary<AttackEffectEnum, object> AttackEffects { get; set; } //object userData like for Sol healhamount for luna def/res reduction
-      
+        public Dictionary<GetHitEffectEnum, object> DefenseEffects { get; set; } 
         public BonusAttackStats()
         {
             BonusAttack = false;
             AttackEffects = new Dictionary<AttackEffectEnum, object>();
+            DefenseEffects = new Dictionary<GetHitEffectEnum, object>();
         }
 
         public void AddAttackEffect(AttackEffectEnum attackEffect, float f)
@@ -39,6 +40,19 @@ namespace Game.Mechanics.Battle
                     AttackEffects[attackEffect] = f;
             }
         }
+
+        public void AddGetHitEffect(GetHitEffectEnum getHitEffect, float f)
+        {
+            if (!DefenseEffects.ContainsKey(getHitEffect))
+            {
+                DefenseEffects.Add(getHitEffect, f);
+            }
+            else
+            {
+                if ((float)DefenseEffects[getHitEffect] < f) //Replace with stronger effect
+                    DefenseEffects[getHitEffect] = f;
+            }
+        }
     }
 
     public class BattleStats
@@ -50,6 +64,8 @@ namespace Game.Mechanics.Battle
         private bool preventDoubleAttacks = false;
         public List<ImmunityType> Immunities { get; set; }
         public BonusAttackStats BonusAttackStats { get; set; }
+        public int WrathDamage { get; set; }
+
         public enum ImmunityType
         {
             Critical,
@@ -127,6 +143,8 @@ namespace Game.Mechanics.Battle
             }
 
             attack += owner.Stats.CombinedBonusStats().Attack;
+            attack += WrathDamage;
+          
             if (MovementToDmg)
                 attack += ((GridActorComponent)owner.GridComponent).MovedTileCount;
 
