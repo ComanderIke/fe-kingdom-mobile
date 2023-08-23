@@ -284,6 +284,7 @@ namespace Game.GameActors.Units.Numbers
         DEF,
         FTH,
         LVL,
-        NONE
+        NONE,
+        ATK
     }
 }

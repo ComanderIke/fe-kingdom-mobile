@@ -10,6 +10,8 @@ namespace Game.GameActors.Units.Skills
     {
         public bool excessHitToCrit = false;
         public bool movementToDmg = false;
+        public bool desperationEffect = false;
+        public bool vantage;
 
         public override void Activate(Unit user, int level)
         {

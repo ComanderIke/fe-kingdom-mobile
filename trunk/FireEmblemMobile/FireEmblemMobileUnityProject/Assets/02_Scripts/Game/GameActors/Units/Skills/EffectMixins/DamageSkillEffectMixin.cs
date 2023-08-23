@@ -12,6 +12,7 @@ namespace Game.GameActors.Units.Skills
     public class DamageSkillEffectMixin : UnitTargetSkillEffectMixin
     {
         public DamageType damageType;
+        public bool damageTypeSameAsAttack;
         public int []dmg;
         public AttributeType scalingType;
         public float[] scalingcoeefficient;

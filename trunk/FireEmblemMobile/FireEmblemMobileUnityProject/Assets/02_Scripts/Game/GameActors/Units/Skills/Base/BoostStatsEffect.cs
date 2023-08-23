@@ -7,7 +7,6 @@ using UnityEngine;
 
 namespace Game.GameActors.Units.Skills
 {
- 
     [CreateAssetMenu(menuName = "GameData/Skills/Effectmixin/Stats", fileName = "StatsEffect")]
     public class BoostStatsEffect : SelfTargetSkillEffectMixin
     {

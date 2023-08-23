@@ -304,7 +304,7 @@ namespace Game.GameActors.Units
         public bool IsBoss { get; set; }
         public EncounterComponent EncounterComponent { get; set; }
         public List<float> HealingMultipliers { get; set; }
-        
+        public List<int> BonusAttackRanges { get; set; }
 
 
         public void Equip(Weapon w)
