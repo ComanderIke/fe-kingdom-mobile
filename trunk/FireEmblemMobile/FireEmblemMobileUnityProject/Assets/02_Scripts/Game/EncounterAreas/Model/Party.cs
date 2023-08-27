@@ -13,10 +13,10 @@ namespace Game.WorldMapStuff.Model
     [System.Serializable]
     public class Morality
     {
-        public event Action<int> OnMoralityChanged;
-        private int morality = 0;
+        public event Action<float> OnMoralityChanged;
+        private float morality = 0;
 
-        public void AddMorality(int add) // make it harder to gain morality if its close to 1 and harder to lose morality if close to -1?
+        public void AddMorality(float add) // make it harder to gain morality if its close to 1 and harder to lose morality if close to -1?
         {
             if (add == 0)
                 return;
@@ -29,7 +29,7 @@ namespace Game.WorldMapStuff.Model
                 morality = 1;
             OnMoralityChanged?.Invoke(morality);
         }
-        public int GetCurrentMoralityValue() // -1 to 1 or 0 to 1? with 0.5 being neutral
+        public float GetCurrentMoralityValue() // -1 to 1 or 0 to 1? with 0.5 being neutral
         {
             return morality;
         }
