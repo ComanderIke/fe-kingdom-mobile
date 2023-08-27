@@ -70,4 +70,5 @@ namespace Game.GameActors.Units.Skills.Passive
             return list;
         }
     }
+   
 }

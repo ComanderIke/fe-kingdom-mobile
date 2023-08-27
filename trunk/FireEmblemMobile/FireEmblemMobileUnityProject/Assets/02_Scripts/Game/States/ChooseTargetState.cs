@@ -121,8 +121,9 @@ namespace Game.Mechanics
                 UI.Hide();
                 UI.OnBackClicked -= BackClicked;
             }
-            new GameplayCommands().DeselectSkill();
-
+            UnitSelectionSystem.OnSkillDeselected -= SkillDeselected;
+             new GameplayCommands().DeselectSkill();
+            //
             gridSystem.HideMoveRange();
             gridSystem.HideCast();
             gridInputSystem.ResetInput();
@@ -131,7 +132,7 @@ namespace Game.Mechanics
             gridGameManager.GetSystem<UiSystem>().ShowMainCanvas();
             gridInputSystem.inputReceiver = previousGridInputReceiver;
             unitInputSystem.InputReceiver = previousUnitInputReceiver;
-            UnitSelectionSystem.OnSkillDeselected -= SkillDeselected;
+         
         }
 
         private void BackClicked()
@@ -152,12 +153,13 @@ namespace Game.Mechanics
         {
             if (activeSkillMixin is IPosTargeted psm)
             {
-                PositionTargetClicked(psm , x, y);
+                Debug.Log("PostargetSkill");
+                 PositionTargetClicked(psm , x, y);
                
             }
             else if (selectedItem is IPosTargeted throwableItem)
             {
-                PositionTargetClicked(throwableItem, x,y);
+                 PositionTargetClicked(throwableItem, x,y);
             }
             else if (activeSkillMixin is SingleTargetMixin stm)
             {
@@ -194,24 +196,26 @@ namespace Game.Mechanics
 
                      if (gridSystem.cursor.GetCurrentTile() == gridSystem.Tiles[x, y]|| !skill.ConfirmPosition())
                      {
+                         Debug.Log("SkillActivation!");
                          var targets = skill.GetAllTargets(selectedUnit, gridSystem.Tiles, x,y);
                          skill.Activate(selectedUnit, gridSystem.Tiles, x,y);
                          LastSkillTargetPosition = new Vector2Int(x, y);
                          new GameplayCommands().Wait(selectedUnit);
                          new GameplayCommands().ExecuteInputActions(()=>
                          {
+                             Debug.Log("TRIGGER CANCEL");
                              playerPhaseState.Feed(PPStateTrigger.Cancel);
                              var task = new AfterBattleTasks(ServiceProvider.Instance.GetSystem<UnitProgressSystem>(),(Unit)selectedUnit, targets);
-                             task.StartTask();
-                             task.OnFinished += () =>
-                             {
-                                 if(GridGameManager.Instance.FactionManager.ActiveFaction.IsPlayerControlled)
-                                     GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.PlayerPhaseState);
-                                 else
-                                     GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.EnemyPhaseState);
-                             };
+                              task.StartTask();
+                              task.OnFinished += () =>
+                              {
+                                  if(GridGameManager.Instance.FactionManager.ActiveFaction.IsPlayerControlled)
+                                      GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.PlayerPhaseState);
+                                  else
+                                      GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.EnemyPhaseState);
+                              };
                          });
-                         //Selected same Tile again
+                       
                      }
                      else
                      {

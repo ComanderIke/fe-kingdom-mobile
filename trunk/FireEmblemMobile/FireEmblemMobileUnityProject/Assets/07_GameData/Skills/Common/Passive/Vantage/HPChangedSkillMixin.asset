@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: HPChangedSkillMixin
   m_EditorClassIdentifier: 
   toogleAble: 0
-  skillEffectMixins: []
+  skillEffectMixins:
+  - {fileID: 11400000, guid: 5de75cc13cbaf0347b11585042a4ef5f, type: 2}
   conditionManager:
     CompareType: 0
-    Conditions: []
+    Conditions:
+    - CompareType: 0
+      Conditions:
+      - {fileID: 11400000, guid: 11670ce5bebce1c4baed015be5f65859, type: 2}
   SkillTransferData: {fileID: 0}

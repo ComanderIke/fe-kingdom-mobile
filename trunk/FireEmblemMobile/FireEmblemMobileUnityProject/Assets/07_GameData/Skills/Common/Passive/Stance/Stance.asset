@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42cf566ca2edd3849b9a53faf87d4b3e, type: 3}
   m_Name: Stance
   m_EditorClassIdentifier: 
-  Icon: {fileID: 0}
-  Description: 
-  Name: 
+  Icon: {fileID: 21300004, guid: 358b5d9f23bc9413e87c9948acc67ee1, type: 3}
+  Description: grants attack and protection if the opponent initates the fight.
+  Name: FierceStance
   Tier: 0
-  passiveMixins: []
+  passiveMixins:
+  - {fileID: 11400000, guid: 1a5809fe5b458be47941731aa85e4417, type: 2}
   combatSkillMixin: {fileID: 0}
   activeMixins: []
   maxLevel: 5

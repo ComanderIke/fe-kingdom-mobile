@@ -11,6 +11,31 @@ using UnityEngine;
 namespace Game.WorldMapStuff.Model
 {
     [System.Serializable]
+    public class Morality
+    {
+        public event Action<int> OnMoralityChanged;
+        private int morality = 0;
+
+        public void AddMorality(int add) // make it harder to gain morality if its close to 1 and harder to lose morality if close to -1?
+        {
+            if (add == 0)
+                return;
+            morality += add;
+            if (morality < -1)
+            {
+                morality = -1;
+            }
+            else if (morality > 1)
+                morality = 1;
+            OnMoralityChanged?.Invoke(morality);
+        }
+        public int GetCurrentMoralityValue() // -1 to 1 or 0 to 1? with 0.5 being neutral
+        {
+            return morality;
+        }
+        
+    }
+    [System.Serializable]
     public class Party
     {
 
@@ -22,7 +47,8 @@ namespace Game.WorldMapStuff.Model
         [SerializeField] int maxSize = 4;
         [SerializeField] private int money = default;
         [SerializeField] private int collectedGrace = default;
-   
+
+        public Morality Morality;
         public int MaxSize
         {
             get => maxSize;
@@ -89,7 +115,8 @@ namespace Game.WorldMapStuff.Model
             EncounterComponent = new EncounterPosition();
             DeadCharacters = new List<Unit>();
             money = 1000;
-            
+            Morality = new Morality();
+
         }
 
         public EncounterPosition EncounterComponent { get; set; }

@@ -11,6 +11,14 @@ namespace Game.GameActors.Units.Skills
         public float hpThreshold;
         public CompareNumbersType compareType;
         public bool checkTargetInsteadofCaster;
+        public bool useFixedHp;
+        public int fixedHp;
+        public bool useDexAsHp;
+
+        int GetScaledDexValue(Unit caster)
+        {
+            return caster.Stats.CombinedAttributes().DEX;
+        }
         public override bool CanTarget(Unit caster, Unit target)
         {
             Unit compareUnit = caster;
@@ -19,13 +27,45 @@ namespace Game.GameActors.Units.Skills
             switch (compareType)
             {
                 case CompareNumbersType.Equal:
-                    return Math.Abs(compareUnit.Hp / (compareUnit.MaxHp * 1.0f) - hpThreshold) < 0.01;break;
+                    if (useDexAsHp)
+                    {
+                        return compareUnit.Hp - GetScaledDexValue(caster) == 0;
+                    }
+                    if (useFixedHp)
+                    {
+                        return compareUnit.Hp - fixedHp == 0;
+                    }
+                    return Math.Abs(compareUnit.Hp / (compareUnit.MaxHp * 1.0f) - hpThreshold) < 0.01;
                 case CompareNumbersType.NotEqual:
-                    return Math.Abs(compareUnit.Hp / (compareUnit.MaxHp * 1.0f) - hpThreshold) > 0.01;break;
+                    if (useDexAsHp)
+                    {
+                        return compareUnit.Hp - GetScaledDexValue(caster) != 0;
+                    }
+                    if (useFixedHp)
+                    {
+                        return compareUnit.Hp - fixedHp != 0;
+                    }
+                    return Math.Abs(compareUnit.Hp / (compareUnit.MaxHp * 1.0f) - hpThreshold) > 0.01;
                 case CompareNumbersType.Higher:
-                    return compareUnit.Hp / (compareUnit.MaxHp * 1.0f) > hpThreshold;break;
+                    if (useDexAsHp)
+                    {
+                        return compareUnit.Hp - GetScaledDexValue(caster) > 0;
+                    }
+                    if (useFixedHp)
+                    {
+                        return compareUnit.Hp - fixedHp > 0;
+                    }
+                    return compareUnit.Hp / (compareUnit.MaxHp * 1.0f) > hpThreshold;
                 case CompareNumbersType.Lower:
-                    return compareUnit.Hp / (compareUnit.MaxHp * 1.0f) < hpThreshold;break;
+                    if (useDexAsHp)
+                    {
+                        return compareUnit.Hp - GetScaledDexValue(caster) < 0;
+                    }
+                    if (useFixedHp)
+                    {
+                        return compareUnit.Hp - fixedHp < 0;
+                    }
+                    return compareUnit.Hp / (compareUnit.MaxHp * 1.0f) < hpThreshold;
             }
 
             return false;

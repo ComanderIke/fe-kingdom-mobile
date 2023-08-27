@@ -16,22 +16,28 @@ namespace Game.GameActors.Units.Skills
         public int []dmg;
         public AttributeType scalingType;
         public float[] scalingcoeefficient;
+        public bool lethalDmg;
 
         public override void Activate(Unit target, Unit caster, int level)
         {
             
 
             
-            target.InflictFixedDamage(caster, CalculateDamage(caster, level), damageType);
+            target.InflictFixedDamage(caster, CalculateDamage(caster, target,level), damageType);
             
 
         }
 
-        int CalculateDamage(Unit caster, int level)
+        int CalculateDamage(Unit caster,Unit target, int level)
         {
+            if (lethalDmg)
+            {
+                return target.Hp;
+            }
             int baseDamageg = dmg[level];
 
             int scalingdmg = (int)(caster.Stats.CombinedAttributes().GetAttributeStat(scalingType) * scalingcoeefficient[level]);
+            
             return baseDamageg + scalingdmg;
         }
 

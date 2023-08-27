@@ -18,6 +18,7 @@ public class EncounterUIController : MonoBehaviour
     public UIEventController UIEventController;
     public UIMerchantController UIMerchantController;
 
+    public UIMoralityBar MoralityBar;
     private Party party;
     // Start is called before the first frame update
     public void Init(Party party)
@@ -28,6 +29,7 @@ public class EncounterUIController : MonoBehaviour
         GoldChanged(party.Money);
         GraceChanged(party.CollectedGrace);
 
+        MoralityBar.Show(party.Morality);
     }
 
     private void OnDestroy()

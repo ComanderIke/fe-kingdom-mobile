@@ -9,6 +9,7 @@ using Game.GameActors.Units.CharStateEffects;
 using Game.GameActors.Units.Humans;
 using Game.GameActors.Units.Numbers;
 using Game.GameActors.Units.OnGameObject;
+using Game.GameActors.Units.Skills;
 using Game.GameInput;
 using Game.Grid;
 using Game.Manager;
@@ -132,6 +133,7 @@ namespace Game.GameActors.Units
             StatusEffectManager = new StatusEffectManager(this);
             AIComponent = new AIComponent();
             MaxHp = Attributes.BASE_HP+stats.BaseAttributes.CON*Attributes.CON_HP_Mult;
+            tags = new List<UnitTags>();
             hp = MaxHp;
             Stats.AttackRanges.Clear();
             if (equippedWeapon != null)
@@ -472,6 +474,7 @@ namespace Game.GameActors.Units
             clone.Faction = Faction;
             clone.equippedWeapon = (Weapon)equippedWeapon?.Clone();
             clone.EquippedRelic= (Relic)EquippedRelic?.Clone();
+            clone.tags = new List<UnitTags>(tags);
             if(CombatItem1!=null)
                 clone.CombatItem1 = new StockedCombatItem((IEquipableCombatItem)CombatItem1.item.Clone(),CombatItem1.stock);
             if(CombatItem2!=null)
@@ -672,5 +675,17 @@ namespace Game.GameActors.Units
         }
 
         public event Action<Unit> OnAboutToDie;
+
+        private List<UnitTags> tags;
+        public void AddTag(UnitTags tag)
+        {
+            if(!tags.Contains(tag))
+                tags.Add(tag);
+        }
+        public void RemoveTag(UnitTags tag)
+        {
+            if(tags.Contains(tag))
+                tags.Remove(tag);
+        }
     }
 }

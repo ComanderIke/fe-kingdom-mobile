@@ -7,6 +7,7 @@
         Cross,
         Star,
         Block,
+        Fan,
         SingleTile
     }
 }

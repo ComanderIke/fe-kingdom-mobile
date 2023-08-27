@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42cf566ca2edd3849b9a53faf87d4b3e, type: 3}
   m_Name: Vantage
   m_EditorClassIdentifier: 
-  Icon: {fileID: 0}
-  Description: 
-  Name: 
+  Icon: {fileID: 21300000, guid: 3b129342e96a37d489c682c296054141, type: 3}
+  Description: The character attacks first in battle if below a certain hp threshold
+  Name: Vantage
   Tier: 0
-  passiveMixins: []
+  passiveMixins:
+  - {fileID: 11400000, guid: 4c29760966da66f4e8e3c8970bbc5985, type: 2}
   combatSkillMixin: {fileID: 0}
   activeMixins: []
   maxLevel: 5

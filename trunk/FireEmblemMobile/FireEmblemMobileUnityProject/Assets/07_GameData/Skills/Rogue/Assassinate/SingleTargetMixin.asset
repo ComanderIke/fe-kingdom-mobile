@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bab17bb935501b1498716d73895f3be9, type: 3}
+  m_Name: SingleTargetMixin
+  m_EditorClassIdentifier: 
+  AnimationObject: {fileID: 0}
+  maxUsesPerLevel: 01000000
+  hpCostPerLevel: 08000000
+  conditions:
+  - {fileID: 11400000, guid: d3121aa12150f1d40b5dfdea71a3502c, type: 2}
+  targetType: 1
+  minRange: 0
+  range: 01000000
+  sameAsAttackRange: 1
+  SkillEffectMixins:
+  - {fileID: 11400000, guid: fe453495caeac2c43b2579932b58b01a, type: 2}

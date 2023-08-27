@@ -74,7 +74,7 @@ namespace LostGrace
                 yield return TutorialCoroutine();
             else
             {
-                tutorialButton.interactable = true;
+                //tutorialButton.interactable = true;
                 newCampaignButton.interactable = true;
                 upgradesButton.interactable = true;
                 backButton.interactable = true;
@@ -94,7 +94,7 @@ namespace LostGrace
         {
             dialogueManager.dialogEnd -= IntroFinished;
             goddessUI.Hide();
-            tutorialButton.interactable = true;
+           // tutorialButton.interactable = true;
             newCampaignButton.interactable = false;
             upgradesButton.interactable = false;
             backButton.interactable = false;
