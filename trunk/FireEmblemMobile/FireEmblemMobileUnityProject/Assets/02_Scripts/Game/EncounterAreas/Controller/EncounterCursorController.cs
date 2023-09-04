@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using LostGrace;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +11,7 @@ public class EncounterCursorController : MonoBehaviour
     [SerializeField] private Image image;
     [SerializeField] private Image fillImage;
     [SerializeField] private CanvasGroup canvasGroup;
-    [SerializeField] private Image uiFillBar;
+    [SerializeField] private UIWhiteRadialFillBar uiFillBar;
     private LTDescr fadeTween = null;
 
     private bool visible = true;
@@ -33,11 +34,10 @@ public class EncounterCursorController : MonoBehaviour
             return;
         fillImage.fillAmount += 2*Time.deltaTime;
        
-        uiFillBar.fillAmount -= Time.deltaTime*2;
+        uiFillBar.AddFill(-Time.deltaTime*2);
         if (fillImage.fillAmount >= 1)
             fillImage.fillAmount = 1;
-        if (uiFillBar.fillAmount <= 0)
-            uiFillBar.fillAmount = 0;
+        
     }
     public void SetFill(float fill)
     {
@@ -45,8 +45,9 @@ public class EncounterCursorController : MonoBehaviour
             return;
         fillImage.fillAmount = fill;
         var specialFillAmount =0.5f-( (1 + (fill - 1)) / 2);
-     
-        uiFillBar.fillAmount = specialFillAmount;
+
+        uiFillBar.SetFill(specialFillAmount);
+   
     }
     public void SetScale(float scale)
     {

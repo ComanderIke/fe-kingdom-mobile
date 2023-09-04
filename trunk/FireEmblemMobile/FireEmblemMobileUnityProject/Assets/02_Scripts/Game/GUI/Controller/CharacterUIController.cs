@@ -18,6 +18,7 @@ namespace Game.GUI
     {
         // [SerializeField]
         // private UIStatPanel statPanel;
+        [SerializeField] private Canvas canvas;
         [SerializeField] private Animator animator;
         [SerializeField]
         private Image faceSprite;
@@ -25,6 +26,9 @@ namespace Game.GUI
         private TextMeshProUGUI characterName;
         [SerializeField]
         private IStatBar hpBar;
+
+        [SerializeField] private Vector2 selectedScale;
+        [SerializeField] private Vector2 normalScale;
         [SerializeField]
         private  Vector2 selectedSize;
         [SerializeField]
@@ -33,6 +37,10 @@ namespace Game.GUI
                 private  Vector2 normalSizeBars;
                 [SerializeField]
                 private  Vector2 selectedSizeBars;
+                [SerializeField]
+                private  Vector2 normalSizeExpBar;
+                [SerializeField]
+                private  Vector2 selectedSizeExpBar;
         [SerializeField]
         private RectTransform attractor;
         public IClickedReceiver parentController;
@@ -67,19 +75,23 @@ namespace Game.GUI
             unit.ExperienceManager.ExpGained += UpdateExp;
             UpdateValues();
             gameObject.SetActive(true);
-            GetComponent<RectTransform>().sizeDelta = selectedSize;
-            expBar.GetComponent<RectTransform>().sizeDelta = selectedSizeBars;
-            hpBar.GetComponent<RectTransform>().sizeDelta = selectedSizeBars;
+            hpBar.transform.localScale = selectedScale;
+            expBar.transform.localScale = selectedScale;
+             GetComponent<RectTransform>().sizeDelta = selectedSize;
+            // expBar.GetComponent<RectTransform>().sizeDelta = selectedSizeExpBar;
+            // hpBar.GetComponent<RectTransform>().sizeDelta = selectedSizeBars;
             animator.SetBool(Dead, !unit.IsAlive());
             animator.SetBool(Active, true);
+            canvas.sortingOrder = 10;
             //GameplayInput.SelectUnit(unit);
-           
-            
+
+
 
         }
         public override void Show(Unit unit)
         {
             this.unit = unit;
+            canvas.sortingOrder = 0;
            // Debug.Log("Show UnitCharacterUI: "+unit.name);
             unit.HpValueChanged -= UpdateValues;
             unit.HpValueChanged += UpdateValues;
@@ -87,9 +99,11 @@ namespace Game.GUI
             unit.ExperienceManager.ExpGained += UpdateExp;
             UpdateValues();
             gameObject.SetActive(true);
+            hpBar.transform.localScale = normalScale;
             GetComponent<RectTransform>().sizeDelta = normalSize;
-            expBar.GetComponent<RectTransform>().sizeDelta = normalSizeBars;
-            hpBar.GetComponent<RectTransform>().sizeDelta = normalSizeBars;
+             expBar.transform.localScale = normalScale;
+            // expBar.GetComponent<RectTransform>().sizeDelta = normalSizeExpBar;
+            // hpBar.GetComponent<RectTransform>().sizeDelta = normalSizeBars;
             
             animator.SetBool(Dead, !unit.IsAlive());
             animator.SetBool(Active, false);

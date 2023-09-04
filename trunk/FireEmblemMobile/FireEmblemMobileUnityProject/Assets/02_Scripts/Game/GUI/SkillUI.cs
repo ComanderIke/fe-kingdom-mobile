@@ -42,7 +42,7 @@ namespace LostGrace
             {
                 uses.text = skill.FirstActiveMixin.Uses + "/" +
                             skill.FirstActiveMixin.maxUsesPerLevel[skill.Level];
-                hpCost.text = ""+ skill.FirstActiveMixin.hpCostPerLevel[skill.Level];
+                hpCost.text = "-"+ skill.FirstActiveMixin.hpCostPerLevel[skill.Level];
                 if (!big)
                 {
                     hpTextGo.transform.localScale = new Vector3(scaleSmall, scaleSmall, scaleSmall);

@@ -15,6 +15,7 @@ namespace LostGrace
         [SerializeField] private Color goodColorHandle;
         [SerializeField] private Color goodColorBarBackground;
         [SerializeField] private Color neutralColor;
+        [SerializeField] private Color grayColor;
         [SerializeField] private Color evilColor;
         [SerializeField] private Color evilColorHandle;
         [SerializeField] private Color evilColorBarBackground;
@@ -55,14 +56,14 @@ namespace LostGrace
                 backgroundNeutral.alpha = 1 - morality;
                 backgroundGood.alpha = morality;
                 goodText.color = Color.Lerp(neutralColor, goodColor, morality);
-                evilText.color = neutralColor;
+                evilText.color = Color.Lerp(neutralColor, grayColor, morality);
                 barBackground.color=Color.Lerp(neutralColor, goodColorBarBackground, morality);
                 handle.color=Color.Lerp(neutralColor, goodColorHandle, morality);
             }
             else
             {
                 evilText.color = Color.Lerp(evilColor, neutralColor, morality+1);
-                goodText.color = neutralColor;
+                goodText.color = Color.Lerp(grayColor, neutralColor, morality + 1);
                 backgroundEvil.alpha = morality*-1;
                 backgroundNeutral.alpha =  morality+1;
                 backgroundGood.alpha = 0;

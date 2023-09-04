@@ -30,6 +30,8 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     public EncounterUIController uiCOntroller;
     public UIPartyCharacterCircleController uiPartyController;
     public Party playerStartParty;
+    private ActiveUnitGroundFX activeUnitGroundGO;
+    [SerializeField] private GameObject activeUnitGroundPrefab;
     public ColumnManager ColumnManager;
     // Start is called before the first frame update
     public Transform spawnParent;
@@ -123,6 +125,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         }
 
         FindObjectOfType<CameraSystem>().GetMixin<FocusCameraMixin>().SetTargets(Player.Instance.Party.EncounterComponent.EncounterNode.gameObject);
+        ShowActiveUnitGroundFX();
     }
 
     
@@ -302,9 +305,20 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         
         foreach (var child in Player.Instance.Party.EncounterComponent.EncounterNode.children)
         {
-            if(child!=Player.Instance.Party.EncounterComponent.EncounterNode)
+            if (child != Player.Instance.Party.EncounterComponent.EncounterNode)
+            {
                 child.SetMoveable(true);
-            
+                child.SetActive(true);
+                foreach (var nestedChild in child.children)
+                {
+                    nestedChild.SetActive(true);
+                }
+                foreach (var nestedRoad in child.roads)
+                {
+                    nestedRoad.SetMovedVisual();
+                }
+            }
+
 //            Debug.Log("Move Option: "+child+" "+child.gameObject.transform.position);
         
         }
@@ -391,7 +405,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         cursor.Show();
         cursor.SetPosition(encounterNode.gameObject.transform.position);
         cursor.SetSprite(encounterNode.renderer.moveOptionSprite);
-        cursor.SetColor(encounterNode.renderer.typeColor);
+       // cursor.SetColor(encounterNode.renderer.typeColor);
         cursor.SetScale(1.0f);
         if (encounterNode is BattleEncounterNode battleEncounterNode)
         {
@@ -437,6 +451,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     void MoveClicked(EncounterNode node)
     {
         HideMoveOptions();
+        activeUnitGroundGO.FadeOut();
         SetAllEncountersNotMovable();
         // foreach (var road in Player.Instance.Party.EncounterComponent.EncounterNode.roads)
         // {
@@ -471,12 +486,30 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
             yield return null;
 
         }
-       
-        
+
+        ShowActiveUnitGroundFX();
         ShowInactiveNodes();
  
         this.CallWithDelay(()=>target.Activate(Player.Instance.Party), 1.0f);
        
+        
+    }
+
+ 
+    private void ShowActiveUnitGroundFX()
+    {
+        Debug.Log("SHowActiveUnitGroundFX");
+        if (activeUnitGroundGO == null)
+        {
+            activeUnitGroundGO = Instantiate(activeUnitGroundPrefab, partyGo.transform, false)
+                .GetComponent<ActiveUnitGroundFX>();
+            Debug.Log("CREATING ACTIVE UNIT GROUND NEW");
+        }
+        else
+        {
+            Debug.Log("FADEIN");
+            activeUnitGroundGO.FadeIn();
+        }
         
     }
 
@@ -507,11 +540,38 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         //     if(child!=currentNode&& !(child is StartEncounterNode))
         //         child.renderer.SetInactive();
         // }
-Debug.Log("Show Inactive Nodes of: "+currentNode);
+        var parentId = Player.Instance.Party.EncounterComponent.MovedEncounterIds[Player.Instance.Party.EncounterComponent.MovedEncounterIds.Count-2];
+        Debug.Log("Parent ID Node: "+parentId);
+        Debug.Log("CurrentNode: "+currentNode.gameObject.name);
+        foreach (var child in EncounterTree.Instance.columns[currentNode.depth-1].children)
+        {
+            if (child.GetId() == parentId)
+            {
+                foreach (var road in child.roads)
+                {
+                    if (road.end != currentNode)
+                    {
+                        Debug.Log("Set Missed: "+road.end.gameObject.name);
+                        road.SetMissedVisual();
+                    }
+                }
+            }
+        }
+        Debug.Log("Show Inactive Nodes of: "+currentNode);
         foreach (var child in EncounterTree.Instance.columns[currentNode.depth].children)
         {
-            if(!Player.Instance.Party.EncounterComponent.MovedEncounterIds.Contains(child.GetId()))
+            if (!Player.Instance.Party.EncounterComponent.MovedEncounterIds.Contains(child.GetId()))
+            {
                 child.renderer.SetInactive();
+                foreach (var nestedchild in child.children)
+                {
+                    nestedchild.renderer.SetInactive();
+                }
+                foreach (var road in child.roads)
+                {
+                    road.SetMissedVisual();
+                }
+            }
         }
     }
     EncounterNode GetEncounterNodeById(string id)

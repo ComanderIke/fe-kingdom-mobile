@@ -8,6 +8,7 @@ namespace __2___Scripts.Game.Areas
     {
         public Material standard;
         public Material moved;
+        public Material future;
        // [HideInInspector]
         public LineRenderer line;
         [HideInInspector]
@@ -59,6 +60,7 @@ namespace __2___Scripts.Game.Areas
                     go.transform.right = endPos - go.transform.position;
                     go.GetComponent<ArrowAnimation>().SetTargetPosition(startPos + normalized * 1f);
                     instantiatedArrow = go.GetComponent<ArrowAnimation>();
+                    line.material = standard;
                 }
                 else
                 {
@@ -84,18 +86,18 @@ namespace __2___Scripts.Game.Areas
 
             if (transform.parent != null)
             {
-                 var newRoad=GameObject.Instantiate(this.gameObject, transform);
-                 newRoad.transform.DeleteChildren();
-                 var lineRenderer=newRoad.GetComponent<LineRenderer>();
-                 lineRenderer.sortingOrder++;
-                
-                 LeanTween.value(gameObject, lineRenderer.GetPosition(0), lineRenderer.GetPosition(1), 1.0f)
-                     .setEaseOutQuad().setOnUpdateVector3((value) =>
-                     {
-                         lineRenderer.SetPosition(1, new Vector3(value.x, value.y,value.z));
-                     });
-                 newRoad.GetComponent<Road>().line.material = moved;
-                 Destroy(newRoad.GetComponent<Road>());
+                 // var newRoad=GameObject.Instantiate(this.gameObject, transform);
+                 // newRoad.transform.DeleteChildren();
+                 // var lineRenderer=newRoad.GetComponent<LineRenderer>();
+                 // lineRenderer.sortingOrder++;
+                 //
+                 // LeanTween.value(gameObject, lineRenderer.GetPosition(0), lineRenderer.GetPosition(1), 1.0f)
+                 //     .setEaseOutQuad().setOnUpdateVector3((value) =>
+                 //     {
+                 //         lineRenderer.SetPosition(1, new Vector3(value.x, value.y,value.z));
+                 //     });
+               //  line.material = moved;
+                 //Destroy(newRoad.GetComponent<Road>());
                 line.material = moved;
             }
             else
@@ -105,7 +107,37 @@ namespace __2___Scripts.Game.Areas
             }
         }
 
+        public void SetMissedVisual()
+        {
+            if (transform == null)
+            {
+                Debug.Log("TRANSFORM IS NULL PROB BUG");
+                return;
+                
+            }
 
+            if (transform.parent != null)
+            {
+                // var newRoad=GameObject.Instantiate(this.gameObject, transform);
+                // newRoad.transform.DeleteChildren();
+                // var lineRenderer=newRoad.GetComponent<LineRenderer>();
+                // lineRenderer.sortingOrder++;
+                //
+                // LeanTween.value(gameObject, lineRenderer.GetPosition(0), lineRenderer.GetPosition(1), 1.0f)
+                //     .setEaseOutQuad().setOnUpdateVector3((value) =>
+                //     {
+                //         lineRenderer.SetPosition(1, new Vector3(value.x, value.y,value.z));
+                //     });
+                //  line.material = moved;
+                //Destroy(newRoad.GetComponent<Road>());
+                line.material = future;
+            }
+            else
+            {
+                Debug.Log("TRANSFORM PARENT IS NULL PROB BUG");
+                
+            }
+        }
 
         public void SetStartNode(EncounterNode child)
         {

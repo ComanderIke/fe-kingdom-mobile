@@ -100,6 +100,15 @@ public abstract class EncounterNode
         return null;
     }
 
+    public void SetActive(bool b)
+    {
+        if(b)
+            renderer.SetActive();
+        else
+        {
+            renderer.SetInactive();
+        }
+    }
     public void SetMoveable(bool b)
     {
         moveable = b;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class NodeRenderer : MonoBehaviour
@@ -6,17 +7,17 @@ public class NodeRenderer : MonoBehaviour
     [SerializeField] GameObject moveOptionPrefab;
     private GameObject moveEffect;
     [SerializeField] public Sprite moveOptionSprite;
-    [SerializeField] public Color typeColor;
-    [SerializeField] private Color inactiveColor;
-    [SerializeField] private SpriteRenderer iconRenderer;
-    [SerializeField] private SpriteRenderer nodeCircleRenderer;
-
+    [SerializeField] private float inactiveAlpha;
+   // [SerializeField] private SpriteRenderer iconRenderer;
+    //[SerializeField] private SpriteRenderer nodeCircleRenderer;
+    [SerializeField] private List<SpriteRenderer> fadeAffected;
 
     [SerializeField] private bool big;
 
     private const float defaultRotationSpeed = 25;
     const float defaultScale = 1.5f;
     const float bigScale = 2.0f;
+
     readonly  Vector3 nodeStartScale = new Vector3(0.12f,0.12f,0.12f);
     readonly  Vector3 nodeBigStartScale = new Vector3(0.2f,0.2f,0.2f);
 
@@ -38,10 +39,16 @@ public class NodeRenderer : MonoBehaviour
     {
       
         gameObject.transform.localScale =big?nodeBigStartScale: nodeStartScale;
+        foreach (var spriteRenderer in fadeAffected)
+        {
+            spriteRenderer.color = new Color(1,1,1, inactiveAlpha);
+
+        }
     }
     public void Reset()
     {
       
+        
         LeanTween.cancel(gameObject);
         LeanTween.scale(gameObject, big?nodeBigStartScale:nodeStartScale,0.2f).setEaseInQuad();
         
@@ -51,10 +58,19 @@ public class NodeRenderer : MonoBehaviour
 
     public void SetInactive()
     {
-        LeanTween.color(nodeCircleRenderer.gameObject, inactiveColor, .5f).setEaseInQuad();
-        LeanTween.color(iconRenderer.gameObject, inactiveColor, .5f).setEaseInQuad();
+        foreach (var spriteRenderer in fadeAffected)
+        {
+            LeanTween.alpha(spriteRenderer.gameObject, inactiveAlpha, .5f).setEaseInQuad();
+        }
     }
 
+    public void SetActive()
+    {
+        foreach (var spriteRenderer in fadeAffected)
+        {
+            LeanTween.alpha(spriteRenderer.gameObject, 1, .5f).setEaseInQuad();
+        }
+    }
     public void GrowAnimation()
     {
         if (moveEffect != null)
