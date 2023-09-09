@@ -70,7 +70,7 @@ namespace LostGrace
             TweenUtility.FadeIn(upgradeButtonCanvasGroup);
             TweenUtility.FadeIn(backButtonCanvasGroup);
             TweenUtility.FadeIn(tutorialButtonCanvasGroup);
-            if (GameConfig.Instance.config.tutorial)
+            if (GameConfig.Instance.tutorialEnabled)
                 yield return TutorialCoroutine();
             else
             {

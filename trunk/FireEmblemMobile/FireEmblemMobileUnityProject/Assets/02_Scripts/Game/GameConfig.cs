@@ -1,18 +1,30 @@
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+using Game.GameActors.Units;
+using Game.GameResources;
+using GameEngine;
 using UnityEngine;
 
 namespace LostGrace
 {
-    public class GameConfig : MonoBehaviour
+    [CreateAssetMenu(menuName = "GameConfig", fileName = "GameConfig")]
+    public class GameConfig : SingletonScriptableObject<GameConfig>
     {
-        public static GameConfig Instance;
-
-        public GameConfigFile config;
-        private void Awake()
+        public bool tutorialEnabled = false;
+        public bool debugModeEnabled = false;
+        [SerializeField] List<UnitBP> selectableCharacters;
+       
+        public  List<Unit> GetUnits()
         {
-            Instance = this;
+            var list = new List<Unit>();
+            foreach (var unitbp in selectableCharacters)
+            {
+                var unit = unitbp.Create();
+                //Debug.Log("Name: "+unit.Name+" "+"Skills: "+unit.SkillManager.Skills);
+                list.Add(unit);
+            }
+            return list;
         }
+       
     }
 }

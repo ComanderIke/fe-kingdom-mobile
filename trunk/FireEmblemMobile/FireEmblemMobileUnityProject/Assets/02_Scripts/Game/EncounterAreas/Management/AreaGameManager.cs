@@ -38,9 +38,9 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
 
     public float offsetBetweenCharacters = 0.25f;
     private const float moveToNodeHoldTime = 1.8f;
-    public int hour = 6;
-    public TimeCircleUI circleUI;
-    public DynamicAmbientLight lightController;
+   
+    
+    public TimeOfDayManager timeOfDayManager;
     [SerializeField] private bool startFreshSave = false;
     private static bool startFreshSaveFirstTime;
     private List<EncounterNodeClickController> nodeClickControllers;
@@ -110,7 +110,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         ResetMoveOptions();
 
         uiPartyController.Show(Player.Instance.Party);
-        lightController.UpdateHour(hour);
+        timeOfDayManager.InitHour(6);
         this.CallWithDelay(ShowMovedRoads,0.1f);//Some other scripts not started yet thtas why
 
  
@@ -459,12 +459,10 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         // }
         // SetAllEncountersNotMovable();
         StartCoroutine(MovementAnimation(node));
-        circleUI.Rotate();
+       
         cursor.Hide();
-        hour += 6;
-        if (hour >= 24)
-            hour = 0;
-        lightController.UpdateHour(hour);
+        
+        timeOfDayManager.ElapseTimeStep();
      
     }
     IEnumerator MovementAnimation(EncounterNode target)

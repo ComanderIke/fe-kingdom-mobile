@@ -104,10 +104,11 @@ namespace Effects
             }
 
         }
-        int hour=0;
+
+        public float hour=0;
         private bool lerp = false;
 
-        public void UpdateHour(int hour)
+        public void UpdateHour(float hour)
         {
             this.hour = hour;
             lerp = true;

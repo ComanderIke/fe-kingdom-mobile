@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Game.GameActors.Players;
 using Game.WorldMapStuff.Model;
+using LostGrace;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,7 +30,8 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
     public Button switchSellButton;
     [SerializeField] private TextMeshProUGUI merchantNameText;
     [SerializeField] private Image merchantFaceImage;
-    [SerializeField] private CanvasGroup SoldOutArea;
+    [SerializeField] private UISoldOutArea SoldOutArea;
+   
 
     public static event Action OnFinished;
  
@@ -89,14 +91,15 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
             switchSellButton.interactable = true;
             if (merchant.shopItems.Count == 0)
             {
-                SoldOutArea.alpha = 1;
+                
+                SoldOutArea.SetStateSoldOut();
 
                 buyItemUI.Hide();
             }
             else
             {
 
-                SoldOutArea.alpha = 0;
+                SoldOutArea.Hide();
 
                 for (int i = 0; i < merchant.shopItems.Count; i++)
                 {
@@ -120,7 +123,14 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
         }
         else
         {
-            SoldOutArea.alpha = 0;
+            if (party.Convoy.Items.Count == 0)
+            {
+                SoldOutArea.SetStateNothingToSell();
+            }
+            else
+            {
+                SoldOutArea.Hide();
+            }
 
             for (int i=0; i<party.Convoy.Items.Count; i++)
             {

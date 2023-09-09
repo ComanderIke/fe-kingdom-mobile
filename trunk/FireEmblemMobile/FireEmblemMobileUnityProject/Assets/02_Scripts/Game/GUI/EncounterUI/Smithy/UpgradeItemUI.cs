@@ -52,12 +52,11 @@ public class UpgradeItemUI : BuyItemUI
             cost2Icon.gameObject.SetActive(false);
         }
 
-        button.interactable = affordable &&
+        buyButton.interactable = affordable &&
                               Player.Instance.Party.Convoy.GetItemCount(GameBPData.Instance.GetDragonScale().Name) >=
                               dragonScaleCost &&
                               Player.Instance.Party.Convoy.GetItemCount(GameBPData.Instance.GetSmithingStone().Name) >=
                               upgradeStoneCost;
-        sellButtonCanvasGroup.alpha = button.interactable ? 1 : tooExpensiveAlpha;
         effectAfter.text = "-";
         buttonText.text = "Upgrade";
         if (equip is Weapon weapon)

@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 3599887482898363426}
   - component: {fileID: 596964642579991727}
   - component: {fileID: 5427053687129261369}
-  - component: {fileID: 3599319873302688374}
   - component: {fileID: 3599319873302688375}
   m_Layer: 0
   m_Name: '@SceneController'
@@ -78,6 +77,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3548e29459a4eae4cb650a409fad08f6, type: 2}
   - {fileID: 11400000, guid: 76159c489d2c4f64f90b1cfcce83274e, type: 2}
   - {fileID: 11400000, guid: bdbcf239f1bd3c148a54c303e94aeded, type: 2}
+  - {fileID: 11400000, guid: f6705c6f2ac399244be4344cb5808fac, type: 2}
 --- !u!81 &3599887482898363426
 AudioListener:
   m_ObjectHideFlags: 0
@@ -120,19 +120,6 @@ MonoBehaviour:
   m_InputActionsPerSecond: 10
   m_RepeatDelay: 0.5
   m_ForceModuleActive: 0
---- !u!114 &3599319873302688374
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3599319873302688373}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c35fdc8f44366e84bb620fc485817ebc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  config: {fileID: 11400000, guid: f6705c6f2ac399244be4344cb5808fac, type: 2}
 --- !u!114 &3599319873302688375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,6 +381,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3a703e663f50ff44bc184a830323651, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blinkTime: 0.5
+  pauseTime: 0.5
 --- !u!1 &3599887482208807873
 GameObject:
   m_ObjectHideFlags: 0

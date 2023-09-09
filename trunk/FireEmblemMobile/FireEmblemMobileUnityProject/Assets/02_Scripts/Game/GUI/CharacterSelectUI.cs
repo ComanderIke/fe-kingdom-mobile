@@ -80,14 +80,14 @@ namespace LostGrace
             TweenUtility.FadeIn(charViewCanvasGroup);
             TweenUtility.FadeIn(charButtonsCanvasGroup);
             TweenUtility.FadeIn(partySizeCanvasGroup);
-            characterSelector.Show(GameConfig.Instance.config.GetUnits());
+            characterSelector.Show(GameConfig.Instance.GetUnits());
             
             characterCircles.Show(Player.Instance.Party);
             yield return new WaitForSeconds(.6f);
             goddessUI.Show();
             yield return new WaitForSeconds(4.5f);
             TweenUtility.FadeIn(speechBubbleCanvasGroup);
-            if (GameConfig.Instance.config.tutorial)
+            if (GameConfig.Instance.tutorialEnabled)
                 yield return TutorialCoroutine();
 
         }

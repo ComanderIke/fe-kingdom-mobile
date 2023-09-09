@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class TimeCircleUI : MonoBehaviour
 {
-    public float rotateAmount = 90;
+    private float rotateAmount = 360f/24f;
 
+    [SerializeField] private float angleOffset = 90f;
     private float currentZRot = 0;
     // Start is called before the first frame update
     private Quaternion startRot;
@@ -34,11 +35,11 @@ public class TimeCircleUI : MonoBehaviour
         }
     }
 
-    public void Rotate()
+    public void Rotate(float hour)
     {
-        startRot = Quaternion.Euler(0,0,currentZRot);
-        currentZRot += rotateAmount;
-        targetRot = Quaternion.Euler(0,0,currentZRot);
+        startRot = Quaternion.Euler(0,0,currentZRot+angleOffset);
+        currentZRot = rotateAmount*hour;
+        targetRot = Quaternion.Euler(0,0,currentZRot+angleOffset);
         time = 0;
         rotate = true;
     }
