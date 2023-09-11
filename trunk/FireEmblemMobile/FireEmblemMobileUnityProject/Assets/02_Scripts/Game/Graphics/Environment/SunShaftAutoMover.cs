@@ -77,9 +77,9 @@ public class SunShaftAutoMover : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawCube(new Vector3(transform.position.x,transform.position.y,0), new Vector3(1f,1f,1f));
-        Gizmos.DrawCube(new Vector3(rightEdge,transform.position.y,0), new Vector3(0.1f,2f,0.1f));
-        Gizmos.DrawCube(new Vector3(leftEdge,transform.position.y,0), new Vector3(0.1f,2f,0.1f));
+        // Gizmos.DrawCube(new Vector3(transform.position.x,transform.position.y,0), new Vector3(1f,1f,1f));
+        // Gizmos.DrawCube(new Vector3(rightEdge,transform.position.y,0), new Vector3(0.1f,2f,0.1f));
+        // Gizmos.DrawCube(new Vector3(leftEdge,transform.position.y,0), new Vector3(0.1f,2f,0.1f));
     }
 
     private bool calculated = false;

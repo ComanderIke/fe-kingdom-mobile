@@ -16,13 +16,13 @@ MonoBehaviour:
   <Groups>k__BackingField:
   - <ID>k__BackingField: d96fbdee-cad3-4ec3-be32-53a519f68161
     <Name>k__BackingField: TheKnightAndHisHarem
-    <Position>k__BackingField: {x: 211, y: 120.000015}
+    <Position>k__BackingField: {x: 211, y: 120}
   - <ID>k__BackingField: 3903b474-f6d9-4717-b77b-59ad6b1efc75
     <Name>k__BackingField: ChasedBySkeletons
-    <Position>k__BackingField: {x: 261, y: 1090}
+    <Position>k__BackingField: {x: 260.9999, y: 1090}
   - <ID>k__BackingField: d88683db-1151-44f3-b059-93ec05b6f27a
     <Name>k__BackingField: LumberjackParty
-    <Position>k__BackingField: {x: 1822, y: 1103}
+    <Position>k__BackingField: {x: 2237, y: 1084}
   - <ID>k__BackingField: 836c2ea7-3376-488e-bb77-3cf691cda79c
     <Name>k__BackingField: MemoryGame
     <Position>k__BackingField: {x: 306, y: 2035}
@@ -172,7 +172,9 @@ MonoBehaviour:
     <DialgueType>k__BackingField: 3
     <Position>k__BackingField: {x: 881, y: 1479}
     <Headline>k__BackingField: 
-    <RewardResources>k__BackingField: []
+    <RewardResources>k__BackingField:
+    - Amount: -10
+      ResourceType: 3
     <RewardItems>k__BackingField: []
     <Events>k__BackingField: []
   - <ID>k__BackingField: 4198e551-7d0e-4b54-880a-d1ebc22c08fb
@@ -198,7 +200,7 @@ MonoBehaviour:
       <ItemRequirements>k__BackingField: []
     <GroupID>k__BackingField: d88683db-1151-44f3-b059-93ec05b6f27a
     <DialgueType>k__BackingField: 3
-    <Position>k__BackingField: {x: 1847, y: 1173}
+    <Position>k__BackingField: {x: 2262, y: 1154}
     <Headline>k__BackingField: Lumberjack Party
     <RewardResources>k__BackingField: []
     <RewardItems>k__BackingField: []
@@ -219,9 +221,11 @@ MonoBehaviour:
       <ItemRequirements>k__BackingField: []
     <GroupID>k__BackingField: d88683db-1151-44f3-b059-93ec05b6f27a
     <DialgueType>k__BackingField: 3
-    <Position>k__BackingField: {x: 2591, y: 1162}
+    <Position>k__BackingField: {x: 3006, y: 1143}
     <Headline>k__BackingField: 
-    <RewardResources>k__BackingField: []
+    <RewardResources>k__BackingField:
+    - Amount: 10
+      ResourceType: 3
     <RewardItems>k__BackingField:
     - {fileID: 11400000, guid: 38f3ce0806a4315449874b8ef5dcbb05, type: 2}
     <Events>k__BackingField: []
@@ -240,11 +244,13 @@ MonoBehaviour:
       <ItemRequirements>k__BackingField: []
     <GroupID>k__BackingField: d88683db-1151-44f3-b059-93ec05b6f27a
     <DialgueType>k__BackingField: 3
-    <Position>k__BackingField: {x: 2591, y: 1580}
+    <Position>k__BackingField: {x: 3006, y: 1561}
     <Headline>k__BackingField: 
     <RewardResources>k__BackingField:
     - Amount: 20
       ResourceType: 0
+    - Amount: -10
+      ResourceType: 3
     <RewardItems>k__BackingField: []
     <Events>k__BackingField: []
   - <ID>k__BackingField: 315025d5-d740-4240-a9ce-a380e249c1e4
@@ -496,26 +502,6 @@ MonoBehaviour:
     <RewardItems>k__BackingField: []
     <Events>k__BackingField:
     - {fileID: 11400000, guid: 0bc70c19398a0654991d0dcb17cd110d, type: 2}
-  - <ID>k__BackingField: 628ae275-470e-470f-ab38-79fe8a5639b0
-    <Name>k__BackingField: ChaseBySkeletons3
-    <Text>k__BackingField: "After the fight is over, you can\u2019t find the children
-      anywhere. It seems they ran away, only *goddess\u2019 name* knows where to. "
-    <IsPortraitLeft>k__BackingField: 1
-    <DialogActor>k__BackingField: {fileID: 0}
-    <Choices>k__BackingField:
-    - <Text>k__BackingField: End
-      <NodeID>k__BackingField: 
-      <NodeFailID>k__BackingField: 
-      <AttributeRequirements>k__BackingField: []
-      <CharacterRequirement>k__BackingField: {fileID: 0}
-      <ItemRequirements>k__BackingField: []
-    <GroupID>k__BackingField: 3903b474-f6d9-4717-b77b-59ad6b1efc75
-    <DialgueType>k__BackingField: 3
-    <Position>k__BackingField: {x: 1362, y: 1207}
-    <Headline>k__BackingField: Chased by Skeletons
-    <RewardResources>k__BackingField: []
-    <RewardItems>k__BackingField: []
-    <Events>k__BackingField: []
   - <ID>k__BackingField: 60271e98-9f9b-4d48-b317-47a409f695e1
     <Name>k__BackingField: KnightHaremWon
     <Text>k__BackingField: "The woman approaches you. \u201CThank you kindly, I was
@@ -542,6 +528,28 @@ MonoBehaviour:
     <RewardItems>k__BackingField:
     - {fileID: 11400000, guid: b4861a55f2e99854ab9f7b9b973eb143, type: 2}
     <Events>k__BackingField: []
+  - <ID>k__BackingField: 628ae275-470e-470f-ab38-79fe8a5639b0
+    <Name>k__BackingField: ChaseBySkeletons3
+    <Text>k__BackingField: "After the fight is over, you can\u2019t find the children
+      anywhere. It seems they ran away, only *goddess\u2019 name* knows where to. "
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: End
+      <NodeID>k__BackingField: 
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirement>k__BackingField: {fileID: 0}
+      <ItemRequirements>k__BackingField: []
+    <GroupID>k__BackingField: 3903b474-f6d9-4717-b77b-59ad6b1efc75
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 1388, y: 1168}
+    <Headline>k__BackingField: Chased by Skeletons
+    <RewardResources>k__BackingField:
+    - Amount: 10
+      ResourceType: 3
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
   <OldGroupNames>k__BackingField:
   - TheKnightAndHisHarem
   - ChasedBySkeletons
@@ -558,14 +566,14 @@ MonoBehaviour:
       - KnightHaremLost
       - KnightHarem3
       - KnightHarem1
-      - KnightHarem4
       - KnightHaremWon
+      - KnightHarem4
     - Key: ChasedBySkeletons
       Value:
       - ChasedBySkeletons1
       - ChasedBySkeletons4
-      - ChaseBySkeletons3
       - ChasedBySkeletons2
+      - ChaseBySkeletons3
     - Key: LumberjackParty
       Value:
       - LumberjackParty1

@@ -9,8 +9,7 @@ using UnityEngine.UI;
 
 public class UpgradeItemUI : BuyItemUI
 {
-
-    public TextMeshProUGUI weightAfter;
+    
     public TextMeshProUGUI hitAfter;
     public TextMeshProUGUI dmgAfter;
     public TextMeshProUGUI critAfter;
@@ -19,8 +18,7 @@ public class UpgradeItemUI : BuyItemUI
     public Image cost2Icon;
     public Sprite stoneIcon;
     public Sprite dragonScaleIcon;
-    [SerializeField]  TextMeshProUGUI relicEffectAfter;
-   
+
 
     // Start is called before the first frame update
     public void Show(EquipableItem equip,int upgradegoldCost, int upgradeStoneCost, int dragonScaleCost, bool affordable)

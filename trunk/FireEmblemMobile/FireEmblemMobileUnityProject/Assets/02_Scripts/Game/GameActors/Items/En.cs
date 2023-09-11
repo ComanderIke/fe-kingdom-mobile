@@ -5,6 +5,7 @@
         Gold,
         Grace,
         Exp,
+        Morality,
         HP_Percent
     }
 }

@@ -411,6 +411,7 @@ public class UIEventController : MonoBehaviour
                     case ResourceType.Gold:  Player.Instance.Party.AddGold(resource.Amount); break;
                     case ResourceType.Exp:  Player.Instance.Party.ActiveUnit.ExperienceManager.AddExp(resource.Amount); break;
                     case ResourceType.Grace:  Player.Instance.Party.AddGrace(resource.Amount); break;
+                    case ResourceType.Morality:  Player.Instance.Party.Morality.AddMorality(resource.Amount); break;
                     case ResourceType.HP_Percent:
                         if (resource.Amount < 0)
                         {

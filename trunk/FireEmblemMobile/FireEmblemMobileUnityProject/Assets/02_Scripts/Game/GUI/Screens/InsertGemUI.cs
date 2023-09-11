@@ -18,11 +18,9 @@ public class InsertGemUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI gemEffect;
     [SerializeField] Image slotGemImage;
     [SerializeField] GameObject slotGameObject;
-    [SerializeField] private TextMeshProUGUI buttonText;
     [SerializeField] private Button insertButton;
-    [SerializeField] private Color insertColor;
-    [SerializeField] private Color removeColor;
-    [SerializeField] private SmithingSlot relic1;
+    [SerializeField] private Button removeButton;
+    //[SerializeField] private SmithingSlot relic1;
    
     
     private List<SelectableItemController> instantiatedItems;
@@ -46,7 +44,7 @@ public class InsertGemUI : MonoBehaviour
         nameText.text = currentRelic.Name;
         description.text = currentRelic.Description;
         slotGameObject.SetActive(currentRelic.slotCount > 0);
-        relic1.Show(Player.Instance.Party.ActiveUnit.EquippedRelic, currentRelic == Player.Instance.Party.ActiveUnit.EquippedRelic);
+       // relic1.Show(Player.Instance.Party.ActiveUnit.EquippedRelic, currentRelic == Player.Instance.Party.ActiveUnit.EquippedRelic);
       
         gemParent.DeleteAllChildren();
         var equippedGem = currentRelic.GetGem(0);
@@ -98,22 +96,19 @@ public class InsertGemUI : MonoBehaviour
         if (selected != null && selected.item == currentRelic.GetGem(0))
         {
             var colors = insertButton.colors;
-            colors.normalColor = removeColor;
-            colors.highlightedColor = removeColor;
-            colors.selectedColor = removeColor;
-            colors.pressedColor = removeColor;
+            removeButton.gameObject.SetActive(true);
+            insertButton.gameObject.SetActive(false);
+          
             insertButton.colors = colors;
-            buttonText.text = "Remove";
+            
         }
         else
         {
             var colors = insertButton.colors;
-            colors.normalColor = insertColor;
-            colors.highlightedColor = insertColor;
-            colors.selectedColor = insertColor;
-            colors.pressedColor = insertColor;
+            removeButton.gameObject.SetActive(false);
+            insertButton.gameObject.SetActive(true);
             insertButton.colors = colors;
-            buttonText.text = "Insert";
+   
         }
     }
 

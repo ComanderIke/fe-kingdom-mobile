@@ -8,6 +8,7 @@ using Game.GameResources;
 using Game.WorldMapStuff.Model;
 using Pathfinding;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UISmithyController : MonoBehaviour
 {
@@ -26,11 +27,10 @@ public class UISmithyController : MonoBehaviour
     [SerializeField] private SmithingSlot weaponSlot;
     [SerializeField] private SmithingSlot relicSlot;
 
-    [SerializeField] private CanvasGroup smithingButtonAlpha;
-    [SerializeField] private CanvasGroup insertGemsButtonAlpha;
-    [SerializeField] private CanvasGroup combineGemsButtonAlpha;
-    [SerializeField] private CanvasGroup noRelicArea;
-    [SerializeField] private CanvasGroup noGemArea;
+    [SerializeField] private Button smithingButtonAlpha;
+    [SerializeField] private Button insertGemsButtonAlpha;
+    [SerializeField] private Button combineGemsButtonAlpha;
+  
     private Weapon selectedWeapon;
     private Relic selectedRelic;
     public SmithyUIState state = SmithyUIState.Smithing;
@@ -59,28 +59,29 @@ public class UISmithyController : MonoBehaviour
     {
         unitIdleAnimation.Show(party.ActiveUnit);
         characterFace.Show(party.ActiveUnit);
+        
+        combineGemsButtonAlpha.interactable = Player.Instance.Party.Convoy.HasGems();
+        insertGemsButtonAlpha.interactable = selectedRelic != null;
+        
         if (state == SmithyUIState.Smithing)
         {
             if (selectedWeapon == null)
                 selectedWeapon = party.ActiveUnit.equippedWeapon;
-            weaponSlot.Show(party.ActiveUnit.equippedWeapon, selectedWeapon == party.ActiveUnit.equippedWeapon);
+           // weaponSlot.Show(party.ActiveUnit.equippedWeapon, selectedWeapon == party.ActiveUnit.equippedWeapon);
             insertGemUI.Hide();
             combineGemUI.Hide();
             smithingArea.Show(selectedWeapon, smithy.GetGoldUpgradeCost(selectedWeapon),
                 smithy.GetStoneUpgradeCost(selectedWeapon), smithy.GetDragonScaleUpgradeCost(selectedWeapon),
                 party.CanAfford(smithy.GetGoldUpgradeCost(selectedWeapon)));
-            smithingButtonAlpha.alpha = 1.0f;
-            combineGemsButtonAlpha.alpha = 0.6f;
-            insertGemsButtonAlpha.alpha = 0.6f;
-            noGemArea.alpha = 0;
-            noRelicArea.alpha = 0;
+
+            
+           
         }
 
         if (state == SmithyUIState.InsertGems)
         {
             smithingArea.Hide();
-            noGemArea.alpha = 0;
-            noRelicArea.alpha = 0;
+          
             combineGemUI.Hide();
             if (selectedRelic == null)
             {
@@ -94,33 +95,24 @@ public class UISmithyController : MonoBehaviour
             else
             {
                 insertGemUI.Hide();
-           
-                noRelicArea.alpha = 1;
             }
 
             relicSlot.Show(party.ActiveUnit.EquippedRelic, selectedRelic == party.ActiveUnit.EquippedRelic);
-            smithingButtonAlpha.alpha = 0.6f;
-            combineGemsButtonAlpha.alpha = 0.6f;
-            insertGemsButtonAlpha.alpha = 1.0f;
+          
         }
 
         if (state == SmithyUIState.CombineGems)
         {
             insertGemUI.Hide();
             smithingArea.Hide();
-            noGemArea.alpha = 0;
-            noRelicArea.alpha = 0;
-            smithingButtonAlpha.alpha = 0.6f;
-            combineGemsButtonAlpha.alpha = 1.0f;
-            insertGemsButtonAlpha.alpha = 0.6f;
+            
             if (Player.Instance.Party.Convoy.HasGems())
             {
                 combineGemUI.Show();
             }
             else
             {
-                combineGemUI.Hide();
-                noGemArea.alpha = 1;
+                combineGemUI.Hide(); 
             }
         }
     }

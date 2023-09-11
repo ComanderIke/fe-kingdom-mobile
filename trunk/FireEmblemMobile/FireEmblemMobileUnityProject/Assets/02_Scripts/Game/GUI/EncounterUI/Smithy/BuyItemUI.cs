@@ -13,14 +13,13 @@ public class BuyItemUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI hitCurrent;
     [SerializeField] TextMeshProUGUI dmgCurrent;
     [SerializeField] TextMeshProUGUI critCurrent;
-    [SerializeField] TextMeshProUGUI weightCurrent;
+
     // public TextMeshProUGUI weightCurrent;
     // public TextMeshProUGUI weightAfter;
     [SerializeField] TextMeshProUGUI effectCurrent;
     [SerializeField] protected TextMeshProUGUI cost;
     [SerializeField] protected Button buyButton;
     [SerializeField] protected Button sellButton;
-    [SerializeField] Image buttonBg;
     [SerializeField] private GameObject weaponSection;
     [SerializeField] private GameObject relicSection;
     [SerializeField]  TextMeshProUGUI relicEffectCurrent;
@@ -29,8 +28,7 @@ public class BuyItemUI : MonoBehaviour
     [SerializeField] protected Color textNormalColor;
     [SerializeField] protected Color tooExpensiveTextColor;
 
-  
-    [SerializeField] protected float tooExpensiveAlpha;
+    
     // Start is called before the first frame update
     public void Show(Item item, bool affordable, bool buying)
     {
