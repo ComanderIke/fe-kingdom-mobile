@@ -10,6 +10,13 @@ using Pathfinding;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum WeaponUpgradeMode
+{
+    Power,
+    Accuracy,
+    Critical,
+    Special
+}
 public class UISmithyController : MonoBehaviour
 {
     public Canvas canvas;
@@ -24,16 +31,19 @@ public class UISmithyController : MonoBehaviour
     [SerializeField] UpgradeItemUI smithingArea;
     [SerializeField] private UICharacterFace characterFace;
     [SerializeField] private UIUnitIdleAnimation unitIdleAnimation;
-    [SerializeField] private SmithingSlot weaponSlot;
     [SerializeField] private SmithingSlot relicSlot;
 
     [SerializeField] private Button smithingButtonAlpha;
     [SerializeField] private Button insertGemsButtonAlpha;
     [SerializeField] private Button combineGemsButtonAlpha;
-  
+    [SerializeField] private Button powerSmithingButton;
+    [SerializeField] private Button accuracy;
+    [SerializeField] private Button criticalSmithingButton;
+    [SerializeField] private Button specialSmithingButton;
     private Weapon selectedWeapon;
     private Relic selectedRelic;
     public SmithyUIState state = SmithyUIState.Smithing;
+    private WeaponUpgradeMode upgradeMode;
     public void Show(SmithyEncounterNode node, Party party)
     {
         this.node = node;
@@ -57,8 +67,17 @@ public class UISmithyController : MonoBehaviour
     }
     public void UpdateUI()
     {
+        if (selectedRelic == null)
+        {
+            selectedRelic = party.ActiveUnit.EquippedRelic;
+        }
         unitIdleAnimation.Show(party.ActiveUnit);
         characterFace.Show(party.ActiveUnit);
+       
+        specialSmithingButton.interactable = upgradeMode != WeaponUpgradeMode.Special;
+        powerSmithingButton.interactable = upgradeMode != WeaponUpgradeMode.Power;
+        accuracy.interactable = upgradeMode != WeaponUpgradeMode.Accuracy;
+        criticalSmithingButton.interactable = upgradeMode != WeaponUpgradeMode.Critical;
         
         combineGemsButtonAlpha.interactable = Player.Instance.Party.Convoy.HasGems();
         insertGemsButtonAlpha.interactable = selectedRelic != null;
@@ -70,7 +89,7 @@ public class UISmithyController : MonoBehaviour
            // weaponSlot.Show(party.ActiveUnit.equippedWeapon, selectedWeapon == party.ActiveUnit.equippedWeapon);
             insertGemUI.Hide();
             combineGemUI.Hide();
-            smithingArea.Show(selectedWeapon, smithy.GetGoldUpgradeCost(selectedWeapon),
+            smithingArea.Show(selectedWeapon, upgradeMode, smithy.GetGoldUpgradeCost(selectedWeapon),
                 smithy.GetStoneUpgradeCost(selectedWeapon), smithy.GetDragonScaleUpgradeCost(selectedWeapon),
                 party.CanAfford(smithy.GetGoldUpgradeCost(selectedWeapon)));
 
@@ -83,10 +102,7 @@ public class UISmithyController : MonoBehaviour
             smithingArea.Hide();
           
             combineGemUI.Hide();
-            if (selectedRelic == null)
-            {
-                selectedRelic = party.ActiveUnit.EquippedRelic;
-            }
+         
 
             if (selectedRelic != null)
             {
@@ -97,7 +113,7 @@ public class UISmithyController : MonoBehaviour
                 insertGemUI.Hide();
             }
 
-            relicSlot.Show(party.ActiveUnit.EquippedRelic, selectedRelic == party.ActiveUnit.EquippedRelic);
+           // relicSlot.Show(party.ActiveUnit.EquippedRelic, selectedRelic == party.ActiveUnit.EquippedRelic);
           
         }
 
@@ -142,7 +158,7 @@ public class UISmithyController : MonoBehaviour
         party.Money -=smithy.GetGoldUpgradeCost(party.ActiveUnit.equippedWeapon);
         party.Convoy.RemoveSmithingStones(smithy.GetStoneUpgradeCost(party.ActiveUnit.equippedWeapon));
         party.Convoy.RemoveDragonScales(smithy.GetDragonScaleUpgradeCost(party.ActiveUnit.equippedWeapon));
-        party.ActiveUnit.equippedWeapon.Upgrade();
+        party.ActiveUnit.equippedWeapon.Upgrade(upgradeMode);
         UpdateUI();
     }
 
@@ -187,7 +203,29 @@ public class UISmithyController : MonoBehaviour
         this.selectedRelic = party.ActiveUnit.EquippedRelic;
         UpdateUI();
     }
- 
+
+    public void PowerSmithingClicked()
+    {
+        upgradeMode = WeaponUpgradeMode.Power;
+        UpdateUI();
+    }
+    public void AccuracySmithingClicked()
+    {
+        upgradeMode = WeaponUpgradeMode.Accuracy;
+        UpdateUI();
+    }
+    public void CriticalSmithingClicked()
+    {
+        upgradeMode = WeaponUpgradeMode.Critical;
+        UpdateUI();
+    }
+    public void SpecialSmithingClicked()
+    {
+        upgradeMode = WeaponUpgradeMode.Special;
+      
+        
+        UpdateUI();
+    }
 
     public enum SmithyUIState
     {

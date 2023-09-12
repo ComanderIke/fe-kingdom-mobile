@@ -3,6 +3,7 @@ using __2___Scripts.Game.Utility;
 using Game.GameActors.Items.Gems;
 using Game.GameActors.Items.Weapons;
 using Game.GameActors.Players;
+using Game.WorldMapStuff.Model;
 using Pathfinding;
 using TMPro;
 using UnityEngine;
@@ -104,9 +105,11 @@ public class InsertGemUI : MonoBehaviour
         }
         else
         {
+            insertButton.interactable = Player.Instance.Party.Convoy.HasGems();
             var colors = insertButton.colors;
             removeButton.gameObject.SetActive(false);
             insertButton.gameObject.SetActive(true);
+            
             insertButton.colors = colors;
    
         }

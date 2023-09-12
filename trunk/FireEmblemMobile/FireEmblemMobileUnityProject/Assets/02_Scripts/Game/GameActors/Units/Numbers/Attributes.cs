@@ -18,7 +18,7 @@ namespace Game.GameActors.Units.Numbers
         private int agi;
 
         [SerializeField] 
-        private int con;
+        private int maxHp;
 
         public Action AttributesUpdated => OnAttributesUpdated;
 
@@ -30,7 +30,7 @@ namespace Game.GameActors.Units.Numbers
 
         public int AGI => agi;
 
-        public int CON => con;
+        public int MaxHp => maxHp;
 
         public int LCK => lck;
 
@@ -46,7 +46,7 @@ namespace Game.GameActors.Units.Numbers
         private int faith;
 
         public const int CON_HP_Mult = 1;
-        public const int BASE_HP = 15;
+        public const int BASE_HP = 10;
 
         public Attributes()
         {
@@ -54,7 +54,7 @@ namespace Game.GameActors.Units.Numbers
         public Attributes(Attributes attributes)
         {
             intel = attributes.INT;
-            con = attributes.CON;
+            maxHp = attributes.MaxHp;
             dex = attributes.DEX;
             agi = attributes.AGI;
             str = attributes.STR;
@@ -70,7 +70,7 @@ namespace Game.GameActors.Units.Numbers
             sum.str += b.str;
             sum.def += b.def;
             sum.lck += b.lck;
-            sum.con += b.con;
+            sum.maxHp += b.maxHp;
             sum.dex += b.dex;
             sum.intel += b.intel;
             sum.faith += b.def;
@@ -83,7 +83,7 @@ namespace Game.GameActors.Units.Numbers
             sum.str -= b.str;
             sum.def -= b.def;
             sum.lck -= b.lck;
-            sum.con -= b.con;
+            sum.maxHp -= b.maxHp;
             sum.dex -= b.dex;
             sum.intel -= b.intel;
             sum.faith -= b.def;
@@ -98,7 +98,7 @@ namespace Game.GameActors.Units.Numbers
 
         public int[] AsArray()
         {
-            return new []{STR,DEX,INT,AGI,CON,LCK, DEF,FAITH};
+            return new []{STR,DEX,INT,AGI,MaxHp,LCK, DEF,FAITH};
         }
 
         public void Update(int[] statIncreases)
@@ -107,7 +107,7 @@ namespace Game.GameActors.Units.Numbers
             dex += statIncreases[1];
             intel+= statIncreases[2];
             agi += statIncreases[3];
-            con += statIncreases[4];
+            maxHp += statIncreases[4];
             lck += statIncreases[5];
             def += statIncreases[6];
             faith += statIncreases[7];
@@ -122,7 +122,7 @@ namespace Game.GameActors.Units.Numbers
                 case 1: return "DEX";
                 case 2: return "INT";
                 case 3: return "AGI";
-                case 4: return "CON";
+                case 4: return "MaxHP";
                 case 5: return "LCK";
                 case 6: return "DEF";
                 case 7: return "FTH";
@@ -137,7 +137,7 @@ namespace Game.GameActors.Units.Numbers
                 case 1: return "Dexterity";
                 case 2: return "Intelligence";
                 case 3: return "Agility";
-                case 4: return "Constitution";
+                case 4: return "Maximum HP";
                 case 5: return "Luck";
                 case 6: return "Defense";
                 case 7: return "Faith";
@@ -157,7 +157,7 @@ namespace Game.GameActors.Units.Numbers
             intel = 0;
             agi = 0;
             lck = 0;
-            con = 0;
+            maxHp = 0;
             def = 0;
             faith = 0;
         }
@@ -175,7 +175,7 @@ namespace Game.GameActors.Units.Numbers
                 case AttributeType.AGI:
                     return agi; 
                 case AttributeType.CON:
-                    return con; 
+                    return maxHp; 
                 case AttributeType.LCK:
                     return lck; 
                 case AttributeType.DEF:
@@ -199,7 +199,7 @@ namespace Game.GameActors.Units.Numbers
                 case AttributeType.AGI:
                     agi += value; break;
                 case AttributeType.CON:
-                    con += value; break;
+                    maxHp += value; break;
                 case AttributeType.LCK:
                     lck += value; break;
                 case AttributeType.DEF:
@@ -216,7 +216,7 @@ namespace Game.GameActors.Units.Numbers
             dex += bonusAttributes.DEX;
             intel += bonusAttributes.INT;
             agi += bonusAttributes.AGI;
-            con += bonusAttributes.CON;
+            maxHp += bonusAttributes.MaxHp;
             lck += bonusAttributes.LCK;
             def += bonusAttributes.DEF;
             faith += bonusAttributes.FAITH;
@@ -230,7 +230,7 @@ namespace Game.GameActors.Units.Numbers
             dex -= bonusAttributes.DEX;
             intel -= bonusAttributes.INT;
             agi -= bonusAttributes.AGI;
-            con -= bonusAttributes.CON;
+            maxHp -= bonusAttributes.MaxHp;
             lck -= bonusAttributes.LCK;
             def -= bonusAttributes.DEF;
             faith -= bonusAttributes.FAITH;
@@ -246,7 +246,7 @@ namespace Game.GameActors.Units.Numbers
                       + (DEX != 0 ? GetAsText(1) + "/" : "")
                       + (INT != 0 ? GetAsText(2) + "/" : "")
                       + (AGI != 0 ? GetAsText(3) + "/" : "")
-                      + (CON != 0 ? GetAsText(4) + "/" : "")
+                      + (MaxHp != 0 ? GetAsText(4) + "/" : "")
                       + (LCK != 0 ? GetAsText(5) + "/" : "")
                       + (DEF != 0 ? GetAsText(6) + "/" : "")
                       + (FAITH != 0 ? GetAsText(7) + "/" : "");
@@ -263,7 +263,7 @@ namespace Game.GameActors.Units.Numbers
                + (DEX != 0 ? DEX + "/" : "")
                + (INT != 0 ? INT + "/" : "")
                + (AGI != 0 ? AGI + "/" : "")
-               + (CON != 0 ? CON + "/" : "")
+               + (MaxHp != 0 ? MaxHp + "/" : "")
                + (LCK != 0 ? LCK + "/" : "")
                + (DEF != 0 ? DEF + "/" : "")
                 + (FAITH != 0 ? FAITH + "/" : "");

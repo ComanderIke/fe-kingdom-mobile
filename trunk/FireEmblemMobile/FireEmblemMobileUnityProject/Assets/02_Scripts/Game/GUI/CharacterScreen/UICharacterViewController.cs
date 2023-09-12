@@ -123,7 +123,7 @@ public class UICharacterViewController : MonoBehaviour
         INT.SetValue(unit.Stats.CombinedAttributes().INT,unit.Stats.GetAttributeBonusState(AttributeType.INT));
         DEX.SetValue(unit.Stats.CombinedAttributes().DEX,unit.Stats.GetAttributeBonusState(AttributeType.DEF));
         AGI.SetValue(unit.Stats.CombinedAttributes().AGI,unit.Stats.GetAttributeBonusState(AttributeType.AGI));
-        CON.SetValue(unit.Stats.CombinedAttributes().CON,unit.Stats.GetAttributeBonusState(AttributeType.CON));
+        CON.SetValue(unit.Stats.CombinedAttributes().MaxHp,unit.Stats.GetAttributeBonusState(AttributeType.CON));
         FTH.SetValue(unit.Stats.CombinedAttributes().FAITH,unit.Stats.GetAttributeBonusState(AttributeType.FTH));
         LCK.SetValue(unit.Stats.CombinedAttributes().LCK,unit.Stats.GetAttributeBonusState(AttributeType.LCK));
         DEF.SetValue(unit.Stats.CombinedAttributes().DEF,unit.Stats.GetAttributeBonusState(AttributeType.DEF));

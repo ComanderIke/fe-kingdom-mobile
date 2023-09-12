@@ -132,7 +132,7 @@ namespace Game.GameActors.Units
             GameTransformManager = new GameTransformManager();
             StatusEffectManager = new StatusEffectManager(this);
             AIComponent = new AIComponent();
-            MaxHp = Attributes.BASE_HP+stats.BaseAttributes.CON*Attributes.CON_HP_Mult;
+            MaxHp = Attributes.BASE_HP+stats.BaseAttributes.MaxHp*Attributes.CON_HP_Mult;
             tags = new List<UnitTags>();
             hp = MaxHp;
             Stats.AttackRanges.Clear();
@@ -318,8 +318,6 @@ namespace Game.GameActors.Units
                 stats.BonusStatsFromWeapon.Attack -= equippedWeapon.GetDamage();
                 stats.BonusStatsFromWeapon.Hit -= equippedWeapon.GetHit();
                 stats.BonusStatsFromWeapon.Crit -= equippedWeapon.GetCrit();
-                stats.BonusAttributesFromWeapon.IncreaseAttribute(equippedWeapon.GetWeight(), AttributeType.AGI);
-                stats.BonusAttributesFromWeapon.IncreaseAttribute(equippedWeapon.GetWeight(), AttributeType.DEX);
             }
             Stats.AttackRanges.Clear();
             equippedWeapon = w;
@@ -328,9 +326,7 @@ namespace Game.GameActors.Units
             stats.BonusStatsFromWeapon.Attack += equippedWeapon.GetDamage();
             stats.BonusStatsFromWeapon.Hit += equippedWeapon.GetHit();
             stats.BonusStatsFromWeapon.Crit += equippedWeapon.GetCrit();
-            stats.BonusAttributesFromWeapon.IncreaseAttribute(-equippedWeapon.GetWeight(), AttributeType.AGI);
-            stats.BonusAttributesFromWeapon.IncreaseAttribute(-equippedWeapon.GetWeight(), AttributeType.DEX);
-            
+
             OnEquippedWeapon?.Invoke();
         }
         public void AutoEquip()

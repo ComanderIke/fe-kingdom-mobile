@@ -8,7 +8,6 @@ namespace Game.GameActors.Items.Weapons
         public int Dmg=3;
         public int Hit=70;
         public int Crit=0;
-        public int Weight=1;
-        
+
     }
 }

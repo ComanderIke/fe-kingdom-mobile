@@ -16,7 +16,8 @@ namespace Game.GameActors.Items.Weapons
 
 
         [Header("WeaponAttributes")] 
-        public WeaponAttributes[] WeaponAttributes;
+        public WeaponAttributes WeaponAttributes;
+        public WeaponAttributes[] UpgradeAttributes;
         public int weaponLevel = 1;
         public int maxLevel = 3;
         
@@ -33,7 +34,7 @@ namespace Game.GameActors.Items.Weapons
                 effectiveness.Add(effectiveAgainst[i], effectiveAgainstCoefficients[i]);
             }
             return new Weapon(name, description, cost, rarity,maxStack,sprite, weaponLevel, maxLevel, AttackRanges,
-                WeaponAttributes, WeaponType, DamageType, effectiveness);
+                WeaponAttributes,UpgradeAttributes, WeaponType, DamageType, effectiveness);
         }
     }
 }

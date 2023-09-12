@@ -16,13 +16,10 @@ public class BuyItemUI : MonoBehaviour
 
     // public TextMeshProUGUI weightCurrent;
     // public TextMeshProUGUI weightAfter;
-    [SerializeField] TextMeshProUGUI effectCurrent;
     [SerializeField] protected TextMeshProUGUI cost;
     [SerializeField] protected Button buyButton;
     [SerializeField] protected Button sellButton;
     [SerializeField] private GameObject weaponSection;
-    [SerializeField] private GameObject relicSection;
-    [SerializeField]  TextMeshProUGUI relicEffectCurrent;
     [SerializeField] protected TextMeshProUGUI buttonText;
 
     [SerializeField] protected Color textNormalColor;
@@ -38,9 +35,7 @@ public class BuyItemUI : MonoBehaviour
         description.text = "" + item.Description;
         nameText.text = "" + item.Name;
         buttonText.text = affordable?"BUY": "Underfunded";
-        effectCurrent.text = "";
         weaponSection.gameObject.SetActive(false);
-        relicSection.gameObject.SetActive(false);
         buyButton.interactable = affordable;
         sellButton.gameObject.SetActive(!buying);
         buyButton.gameObject.SetActive(buying);

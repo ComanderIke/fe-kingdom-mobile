@@ -13,8 +13,13 @@ namespace Game.GameActors.Items.Weapons
         [Range(1, 4)] public int[] AttackRanges;
 
 
-        [Header("WeaponAttributes")] public WeaponAttributes[] WeaponAttributes;
+        [Header("WeaponAttributes")] public WeaponAttributes[] WeaponUpgrades;
+        public WeaponAttributes WeaponAttributes;
         public int weaponLevel = 1;
+        private int powerUpgLvl = 0;
+        private int accUpgLvl = 0;
+        private int critUpgLvl = 0;
+        private int specialUpgLvl = 0;
         public int maxLevel = 3;
         
         public WeaponType WeaponType;
@@ -22,7 +27,7 @@ namespace Game.GameActors.Items.Weapons
         [SerializeField] private Dictionary<EffectiveAgainstType, float> effectiveAgainst;
         
 
-        public Weapon(string name, string description, int cost,int rarity, int maxStack,Sprite sprite, int weaponLevel, int maxLevel,int[] attackRanges, WeaponAttributes[] weaponAttributes, WeaponType weaponType, DamageType damageType, Dictionary<EffectiveAgainstType, float> effectiveAgainst=null) : base(name, description, cost, rarity,maxStack,sprite)
+        public Weapon(string name, string description, int cost,int rarity, int maxStack,Sprite sprite, int weaponLevel, int maxLevel,int[] attackRanges, WeaponAttributes weaponAttributes,WeaponAttributes[] weaponUpgrades, WeaponType weaponType, DamageType damageType, Dictionary<EffectiveAgainstType, float> effectiveAgainst=null) : base(name, description, cost, rarity,maxStack,sprite)
         {
             this.weaponLevel = weaponLevel;
             this.maxLevel = maxLevel;
@@ -31,63 +36,65 @@ namespace Game.GameActors.Items.Weapons
             this.WeaponType = weaponType;
             this.DamageType = damageType;
             this.effectiveAgainst = effectiveAgainst;
-      
+            this.WeaponUpgrades = weaponUpgrades;
+
         }
     
 
         public int GetDamage()
         {
-            return WeaponAttributes[weaponLevel-1].Dmg;
+            return WeaponAttributes.Dmg;
         }
         public int GetHit()
         {
-            return WeaponAttributes[weaponLevel-1].Hit;
+            return WeaponAttributes.Hit;
         }
         public int GetCrit()
         {
-            return WeaponAttributes[weaponLevel-1].Crit;
+            return WeaponAttributes.Crit;
         }
-        public int GetWeight()
-        {
-            return WeaponAttributes[weaponLevel-1].Weight;
-        }
-
-
-        public void Upgrade()
+   
+        public void Upgrade(WeaponUpgradeMode mode)
         {
             weaponLevel++;
+            switch (mode)
+            {
+                case WeaponUpgradeMode.Power:
+                    WeaponAttributes.Dmg += WeaponUpgrades[powerUpgLvl].Dmg;
+                    powerUpgLvl++; break;
+                case WeaponUpgradeMode.Accuracy:
+                    WeaponAttributes.Hit += WeaponUpgrades[accUpgLvl].Hit;
+                    accUpgLvl++; break;
+                case WeaponUpgradeMode.Critical:
+                    WeaponAttributes.Crit += WeaponUpgrades[critUpgLvl].Crit;
+                    critUpgLvl++; break;
+                case WeaponUpgradeMode.Special:
+                    Debug.Log("TODO SPECIAL UPGRADE"); break;
+            }
             if (weaponLevel > maxLevel)
                 weaponLevel = maxLevel;
         }
 
-        public object GetUpgradeableWeight()
+       public int GetUpgradeableCrit()
         {
             if (weaponLevel + 1 <= maxLevel)
-                return WeaponAttributes[weaponLevel].Weight;
+                return WeaponUpgrades[critUpgLvl].Crit;
             else
                 return 0;
         }
 
-        public object GetUpgradeableCrit()
+        public int GetUpgradeableHit()
         {
             if (weaponLevel + 1 <= maxLevel)
-                return WeaponAttributes[weaponLevel].Crit;
+                return WeaponUpgrades[accUpgLvl].Hit;
             else
                 return 0;
         }
 
-        public object GetUpgradeableHit()
+        public int GetUpgradeableDmg()
         {
             if (weaponLevel + 1 <= maxLevel)
-                return WeaponAttributes[weaponLevel].Hit;
-            else
-                return 0;
-        }
-
-        public object GetUpgradeableDmg()
-        {
-            if (weaponLevel + 1 <= maxLevel)
-                return WeaponAttributes[weaponLevel].Dmg;
+                return WeaponUpgrades[powerUpgLvl].Dmg;
             else
                 return 0;
         }

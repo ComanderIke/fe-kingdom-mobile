@@ -215,7 +215,7 @@ public class UIEventController : MonoBehaviour
                 chance = GetSuccessChanceOffAttRequirement(req.Amount, compareUnit.Stats.CombinedAttributes().AGI);
                 break;
             case AttributeType.CON:
-                chance = GetSuccessChanceOffAttRequirement(req.Amount, compareUnit.Stats.CombinedAttributes().CON);
+                chance = GetSuccessChanceOffAttRequirement(req.Amount, compareUnit.Stats.CombinedAttributes().MaxHp);
                 break;
             case AttributeType.LCK:
                 chance = GetSuccessChanceOffAttRequirement(req.Amount, compareUnit.Stats.CombinedAttributes().LCK);
