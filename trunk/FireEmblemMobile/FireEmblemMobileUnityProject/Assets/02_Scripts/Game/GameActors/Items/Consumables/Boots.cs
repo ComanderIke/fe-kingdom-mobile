@@ -13,7 +13,7 @@ namespace Game.GameActors.Items.Weapons
             this.moveIncrease = moveIncrease;
         }
 
-        public override void Use(Unit character, Convoy convoy)
+        public override void Use(Unit character, Party convoy)
         {
             character.Stats.Mov += moveIncrease;
             base.Use(character, convoy);

@@ -24,7 +24,7 @@ namespace LostGrace
         public void Clicked()
         {
             Player.Instance.LastBattleOutcome = BattleOutcome.Victory;
-            GameSceneController.Instance.LoadWorldMapAfterBattle(true);
+            GameSceneController.Instance.LoadEncounterAreaAfterBattle(true);
         }
     }
 }

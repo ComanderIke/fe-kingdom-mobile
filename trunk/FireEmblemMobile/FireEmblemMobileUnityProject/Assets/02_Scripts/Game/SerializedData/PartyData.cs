@@ -21,6 +21,7 @@ namespace Game.GameActors.Players
         [SerializeField] public string currentEncounterNodeId;
         [SerializeField] public List<string> movedEncounterIds;
         public bool activatedEncounter;
+        [SerializeField]public ConvoyData storage;
 
         public PartyData(Party party)
         {
@@ -54,6 +55,7 @@ namespace Game.GameActors.Players
 
             activeUnitIndex = party.ActiveUnitIndex;
             convoy = new ConvoyData(party.Convoy);
+            storage = new ConvoyData(party.Storage);
             money = party.Money;
             humanData = new List<UnitData>();
             

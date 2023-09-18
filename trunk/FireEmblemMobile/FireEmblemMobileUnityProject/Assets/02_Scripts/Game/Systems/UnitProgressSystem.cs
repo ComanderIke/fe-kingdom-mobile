@@ -95,14 +95,15 @@ namespace Game.Mechanics
             skillSystem.LearnNewSkill(u);
         }
 
-        void Expgained(Unit unit, int exp)
+        void Expgained(Unit unit, int exp, int expBefore)
         {
       
             AnimationQueue.Add(() =>
             {
-                Debug.Log("Show from AnimationQueue"+unit.name);
+                Debug.Log("Show from AnimationQueue"+unit.name+" "+exp+" "+expBefore);
+                unit.visuals.UnitCharacterCircleUI.GetExpRenderer().UpdateInstant(expBefore);
                 unit.visuals.UnitCharacterCircleUI.GetExpRenderer().UpdateWithAnimatedTextOnly(exp);
-                ExpBarController.Show(unit.ExperienceManager.Exp);
+                ExpBarController.Show(unit.FaceSprite, expBefore);
                 ExpBarController.UpdateWithAnimatedTextOnly(exp);
                 ExpBarController.onFinished -= FinishedExpAnimation;
                 ExpBarController.onFinished += FinishedExpAnimation;

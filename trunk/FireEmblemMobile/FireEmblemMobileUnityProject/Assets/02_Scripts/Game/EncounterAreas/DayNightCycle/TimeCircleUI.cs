@@ -37,10 +37,19 @@ public class TimeCircleUI : MonoBehaviour
 
     public void Rotate(float hour)
     {
+        Debug.Log("Rotate to "+hour+" ");
         startRot = Quaternion.Euler(0,0,currentZRot+angleOffset);
         currentZRot = rotateAmount*hour;
         targetRot = Quaternion.Euler(0,0,currentZRot+angleOffset);
         time = 0;
         rotate = true;
     }
+    public void RotateFixed(float hour)
+    {
+        startRot = Quaternion.Euler(0,0,currentZRot+angleOffset);
+        currentZRot = rotateAmount*hour;
+        targetRot = Quaternion.Euler(0,0,currentZRot+angleOffset);
+        transform.rotation = targetRot;
+    }
+    
 }

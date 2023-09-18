@@ -56,7 +56,7 @@ namespace Game.GameActors.Units
         public static OnUnitDamagedEvent OnUnitDamaged;
         public static OnUnitHealedEvent OnUnitHealed;
         public delegate void LevelupEvent(Unit unit);
-        public static event Action<Unit, int> OnExpGained;
+        public static event Action<Unit, int, int> OnExpGained;
         public static LevelupEvent OnLevelUp;
         #endregion
         [NonSerialized]public UnitBP unitBP;
@@ -66,8 +66,8 @@ namespace Game.GameActors.Units
         public Relic EquippedRelic;
         [NonSerialized]
         public StockedCombatItem CombatItem1;
-        [NonSerialized]
-        public StockedCombatItem CombatItem2;
+        // [NonSerialized]
+        // public StockedCombatItem CombatItem2;
      
         public string name;
         [HideInInspector] private int hp=-1;
@@ -155,7 +155,7 @@ namespace Game.GameActors.Units
 
         void ExpGained(int expBefore, int expGained)
         {
-            OnExpGained?.Invoke(this, expGained);
+            OnExpGained?.Invoke(this, expGained, expBefore);
         }
         public GameTransformManager GameTransformManager { get; set; }
         public AnimatedCombatCharacter BattleGO { get; set; }
@@ -203,7 +203,7 @@ namespace Game.GameActors.Units
                 if(tmpHP>1&& hp <=0)
                     OnAboutToDie?.Invoke(this);
                 if (hp <= 0) hp = 0;
-                Debug.Log("HP VALUE CHANGED ON UNIT: "+name);
+                // Debug.Log("HP VALUE CHANGED ON UNIT: "+name);
                 HpValueChanged?.Invoke();
             }
         }
@@ -359,13 +359,13 @@ namespace Game.GameActors.Units
                 CombatItem1 = null;
                 OnUnequippedCombatItem?.Invoke(item);
             }
-            else if (CombatItem2 == item)
-            {
-                CombatItem2 = null;
-              
-                OnUnequippedCombatItem?.Invoke(item);
-                
-            }
+            // else if (CombatItem2 == item)
+            // {
+            //     CombatItem2 = null;
+            //   
+            //     OnUnequippedCombatItem?.Invoke(item);
+            //     
+            // }
             OnUnitDataChanged?.Invoke(this);
         }
         
@@ -394,23 +394,23 @@ namespace Game.GameActors.Units
                     OnEquippedCombatItem?.Invoke(CombatItem1);
                 }
             }
-            else if (slot==2)
-            {
-                if (CombatItem2 == null)
-                {
-                    CombatItem2=combatItem;
-                }
-                else
-                {
-                    UnEquip(CombatItem2);
-                    CombatItem2=combatItem;
-                }
-
-                if (triggerEvents)
-                {
-                    OnEquippedCombatItem?.Invoke(CombatItem2);
-                }
-            }
+            // else if (slot==2)
+            // {
+            //     if (CombatItem2 == null)
+            //     {
+            //         CombatItem2=combatItem;
+            //     }
+            //     else
+            //     {
+            //         UnEquip(CombatItem2);
+            //         CombatItem2=combatItem;
+            //     }
+            //
+            //     if (triggerEvents)
+            //     {
+            //         OnEquippedCombatItem?.Invoke(CombatItem2);
+            //     }
+            // }
 
             if (triggerEvents)
             {
@@ -473,8 +473,8 @@ namespace Game.GameActors.Units
             clone.tags = new List<UnitTags>(tags);
             if(CombatItem1!=null)
                 clone.CombatItem1 = new StockedCombatItem((IEquipableCombatItem)CombatItem1.item.Clone(),CombatItem1.stock);
-            if(CombatItem2!=null)
-                clone.CombatItem2 = new StockedCombatItem((IEquipableCombatItem)CombatItem2.item.Clone(),CombatItem2.stock);
+            // if(CombatItem2!=null)
+            //     clone.CombatItem2 = new StockedCombatItem((IEquipableCombatItem)CombatItem2.item.Clone(),CombatItem2.stock);
             //human.Inventory = (Inventory)Inventory.Clone();
             //Only for
         }
@@ -486,7 +486,7 @@ namespace Game.GameActors.Units
         }
         public void Heal(int heal)
         {
-            Debug.Log("Unit HEALED: "+ heal);
+            Debug.Log(name+" HEALED: "+ heal);
             float tmpHeal = heal;
             foreach (var mult in HealingMultipliers)
             {
@@ -659,8 +659,8 @@ namespace Game.GameActors.Units
         {
             if(CombatItem1==getCombatItem)
                 UnEquip(CombatItem1);
-            else if(CombatItem2==getCombatItem)
-                UnEquip(CombatItem2);
+            // else if(CombatItem2==getCombatItem)
+            //     UnEquip(CombatItem2);
         }
 
 

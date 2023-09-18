@@ -112,6 +112,12 @@ namespace Effects
         {
             this.hour = hour;
             lerp = true;
+            UpdateGoalValues();
+            
+        }
+
+        void UpdateGoalValues()
+        {
             lerpFromColor = lightSource.color;
             lerpFromColor_shafts = sunShafts[0].color;
             lerpFromColor_particles_small = particlesSmall.GetColor("_TintColor");
@@ -146,6 +152,26 @@ namespace Effects
                 value /= 12;
             lerpTargetIntensity_sunShaft = 0 + sunShaftBaseIntensity;//* (1 - value);
             lerpTargetIntensity_sunSpot = 0 + sunSpotsBaseIntensity;//* (1 - value);
+        }
+          public void UpdateHourFixed(float hour)
+          {
+              this.hour = hour;
+              UpdateGoalValues();
+              lightSource.color = lerpTargetColor;
+                foreach (var sunShaft in sunShafts)
+                {
+                    sunShaft.color = lerpTargetColor_shafts;
+                    sunShaft.intensity = lerpTargetIntensity_sunShaft;
+                }
+                particlesNormal.SetColor("_TintColor",lerpTargetColor_particles);
+                //currentParticleColor = particlesNormal.GetColor("_TintColor");
+                particlesBig.SetColor("_TintColor",lerpTargetColor_particles_big);
+                particlesSmall.SetColor("_TintColor",lerpTargetColor_particles_small);
+                foreach (var sunSpot in sunSpots)
+                {
+                    sunSpot.color = lerpTargetColor_shafts;
+                    sunSpot.intensity = lerpTargetIntensity_sunSpot;
+                }
         }
         private void IncreaseHour()
         {

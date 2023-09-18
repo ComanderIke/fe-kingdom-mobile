@@ -60,19 +60,19 @@ namespace __2___Scripts.External.Editor
                 selectedUnitName = activeUnit.name;
                 if (GUILayout.Button("+1 Stone"))
                 {
-                    Player.Instance.Party.Convoy.AddItem(GameBPData.Instance.GetSmithingStone());
+                    Player.Instance.Party.AddItem(GameBPData.Instance.GetSmithingStone());
                 }
                 if (GUILayout.Button("-1 Stone"))
                 {
-                    Player.Instance.Party.Convoy.RemoveItem(GameBPData.Instance.GetSmithingStone());
+                    Player.Instance.Party.RemoveItem(GameBPData.Instance.GetSmithingStone());
                 }
                 if (GUILayout.Button("+1 DragonScale"))
                 {
-                    Player.Instance.Party.Convoy.AddItem(GameBPData.Instance.GetDragonScale());
+                    Player.Instance.Party.AddItem(GameBPData.Instance.GetDragonScale());
                 }
                 if (GUILayout.Button("-1 DragonScale"))
                 {
-                    Player.Instance.Party.Convoy.RemoveItem(GameBPData.Instance.GetDragonScale());
+                    Player.Instance.Party.RemoveItem(GameBPData.Instance.GetDragonScale());
                 }
                 if (GUILayout.Button("+50 Gold"))
                 {

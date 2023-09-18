@@ -42,7 +42,7 @@ namespace Game.WorldMapStuff.Controller
         }
      
 
-        public void LoadWorldMapBeforeBattle()
+        public void LoadEncounterAreaBeforeBattle()
         {
             Debug.Log("Save Before LoadScene:");
             Debug.Log(SaveGameManager.currentSaveData.playerData.partyData.movedEncounterIds.Count);
@@ -63,10 +63,11 @@ namespace Game.WorldMapStuff.Controller
 
       
     
-        public void LoadWorldMapAfterBattle(bool victory)
+        public void LoadEncounterAreaAfterBattle(bool victory)
         {
             // SceneTransferData.Instance.BattleOutCome = victory?BattleOutcome.Victory:  BattleOutcome.Defeat;
             //
+            Player.Instance.Party.ResetFoodBuffs();
             SaveGameManager.Save();
             GridGameManager.Instance.CleanUp();
              SceneController.LoadSceneAsync(Scenes.EncounterArea, false);

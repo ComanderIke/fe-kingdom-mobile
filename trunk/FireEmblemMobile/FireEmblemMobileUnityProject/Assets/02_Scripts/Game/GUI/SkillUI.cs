@@ -31,6 +31,7 @@ namespace LostGrace
         [SerializeField] private GameObject deleteButton;
         [SerializeField] private GameObject selectedVfx;
         [SerializeField] private GameObject selectableVfx;
+        [SerializeField] private Image combatSkillActive;
         private bool showTooltips = false;
         public void SetSkill(Skill skill, bool big, bool showTooltips = false)
         {
@@ -38,6 +39,8 @@ namespace LostGrace
             this.showTooltips = showTooltips;
             icon.sprite = skill.Icon;
             this.Skill = skill;
+            if(combatSkillActive!=null)
+                combatSkillActive.gameObject.SetActive(false);
             if (skill.IsActive())
             {
                 uses.text = skill.FirstActiveMixin.Uses + "/" +
@@ -116,6 +119,11 @@ namespace LostGrace
             }
         }
 
+        public void SetActiveCombatSkill(bool show)
+        {
+            if(combatSkillActive!=null)
+                combatSkillActive.gameObject.SetActive(show);
+        }
         public void ShowDelete()
         {
             deleteButton.SetActive(true);

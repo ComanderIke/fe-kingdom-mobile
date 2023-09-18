@@ -47,6 +47,7 @@ public class UISmithyController : MonoBehaviour
     public void Show(SmithyEncounterNode node, Party party)
     {
         this.node = node;
+        
         canvas.enabled = true;
         this.party = party;
         this.smithy = node.smithy;
@@ -84,6 +85,7 @@ public class UISmithyController : MonoBehaviour
         
         if (state == SmithyUIState.Smithing)
         {
+            
             if (selectedWeapon == null)
                 selectedWeapon = party.ActiveUnit.equippedWeapon;
            // weaponSlot.Show(party.ActiveUnit.equippedWeapon, selectedWeapon == party.ActiveUnit.equippedWeapon);
@@ -159,6 +161,7 @@ public class UISmithyController : MonoBehaviour
         party.Convoy.RemoveSmithingStones(smithy.GetStoneUpgradeCost(party.ActiveUnit.equippedWeapon));
         party.Convoy.RemoveDragonScales(smithy.GetDragonScaleUpgradeCost(party.ActiveUnit.equippedWeapon));
         party.ActiveUnit.equippedWeapon.Upgrade(upgradeMode);
+       
         UpdateUI();
     }
 

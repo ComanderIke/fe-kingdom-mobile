@@ -54,7 +54,7 @@ namespace Game.States
         {
             Debug.Log("FINISH");
             Player.Instance.LastBattleOutcome = BattleOutcome.Victory;
-            GameSceneController.Instance.LoadWorldMapAfterBattle(true);
+            GameSceneController.Instance.LoadEncounterAreaAfterBattle(true);
         }
 
         public static WinState Create()

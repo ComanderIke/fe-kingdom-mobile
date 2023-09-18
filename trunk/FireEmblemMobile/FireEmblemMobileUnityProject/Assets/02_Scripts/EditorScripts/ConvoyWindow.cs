@@ -88,7 +88,7 @@ namespace __2___Scripts.External.Editor
                     }
                     if (GUILayout.Button(item.name,GUILayout.Width(200)))
                     {
-                        Player.Instance.Party.Convoy.AddStockedItem(new StockedItem(item.Create(), 1));
+                        Player.Instance.Party.AddStockedItem(new StockedItem(item.Create(), 1));
                     }
                     if (cnt % 5 == 0&&cnt!=0)
                     {

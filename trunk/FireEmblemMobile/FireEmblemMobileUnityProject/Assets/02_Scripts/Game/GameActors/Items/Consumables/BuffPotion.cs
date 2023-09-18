@@ -13,7 +13,7 @@ namespace Game.GameActors.Items.Weapons
             this.buff = buff;
         }
 
-        public override void Use(Unit character, Convoy convoy)
+        public override void Use(Unit character, Party convoy)
         {
             character.ApplyEncounterBuff(buff);
             base.Use(character, convoy);

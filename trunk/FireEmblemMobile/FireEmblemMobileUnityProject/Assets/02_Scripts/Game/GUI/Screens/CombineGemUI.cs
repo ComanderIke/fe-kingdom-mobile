@@ -91,9 +91,9 @@ private List<SelectableItemController> instantiatedItems;
     {
         for (int i = 0; i < combineCount; i++)
         {
-            Player.Instance.Party.Convoy.RemoveItem(selected.item);
+            Player.Instance.Party.RemoveItem(selected.item);
         }
-        Player.Instance.Party.Convoy.AddItem(((Gem)selected.item).GetUpgradedGem());
+        Player.Instance.Party.AddItem(((Gem)selected.item).GetUpgradedGem());
 
         UpdateUI();
     }

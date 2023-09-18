@@ -397,7 +397,7 @@ public class UIEventController : MonoBehaviour
             if(reward.itemBp!=null)
                 foreach (var item in reward.itemBp)
                 {
-                    Player.Instance.Party.Convoy.AddItem(item.Create()); 
+                    Player.Instance.Party.AddItem(item.Create()); 
                 }
         }
     }
@@ -432,7 +432,7 @@ public class UIEventController : MonoBehaviour
         if(currentNode.RewardItems!=null)
             foreach (var item in currentNode.RewardItems)
             {
-                 Player.Instance.Party.Convoy.AddItem(item.Create()); break;
+                 Player.Instance.Party.AddItem(item.Create()); break;
             }
         
     }

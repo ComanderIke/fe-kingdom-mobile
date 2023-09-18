@@ -27,13 +27,13 @@ namespace Game.GameActors.Units.Skills
                 {
                     target.Equip(new StockedCombatItem(combatItem, 1),1);
                 }
-                else if (target.CombatItem2 == null&&potion is IEquipableCombatItem combatItem2)
-                {
-                    target.Equip(new StockedCombatItem(combatItem2, 1),2);
-                }
+                // else if (target.CombatItem2 == null&&potion is IEquipableCombatItem combatItem2)
+                // {
+                //     target.Equip(new StockedCombatItem(combatItem2, 1),2);
+                // }
                 else
                 {
-                    Player.Instance.Party.Convoy.AddItem(potion);
+                    Player.Instance.Party.AddItem(potion);
                 }
             }
           

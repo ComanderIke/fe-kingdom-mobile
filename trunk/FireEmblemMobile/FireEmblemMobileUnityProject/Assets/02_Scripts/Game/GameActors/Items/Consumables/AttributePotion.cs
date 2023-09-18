@@ -15,7 +15,7 @@ namespace Game.GameActors.Items.Weapons
             this.attributeType = type;
         }
 
-        public override void Use(Unit character, Convoy convoy)
+        public override void Use(Unit character, Party convoy)
         {
             Debug.Log("use AttributePotion "+value+" "+attributeType);
             character.Stats.BaseAttributes.IncreaseAttribute(value, attributeType);

@@ -116,7 +116,7 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
     public void BuyClicked()
     {
         party.Money -= selectedItem.cost;
-        party.Convoy.AddItem(selectedItem.Item);
+        party.AddItem(selectedItem.Item);
         church.RemoveItem(selectedItem.Item);
         SelectNextItem();
         buyItemUI.Hide();

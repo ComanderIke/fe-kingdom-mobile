@@ -12,12 +12,12 @@ namespace Game.WorldMapStuff.Model
     public class Convoy
     {
         [NonSerialized] private List<StockedItem> items;
-        
+
         [SerializeField] public event Action convoyUpdated;
 
         private int selectedItemIndex = -1;
 
-      
+
 
         public void Select(StockedItem item)
         {
@@ -27,6 +27,7 @@ namespace Game.WorldMapStuff.Model
                 Debug.Log("Could not find Item: "+item);
             }
         }
+     
 
         public void Deselect()
         {
@@ -41,7 +42,7 @@ namespace Game.WorldMapStuff.Model
                 return items;
             }
         }
-
+       
         public StockedItem SelectedItem
         {
             get
@@ -60,6 +61,7 @@ namespace Game.WorldMapStuff.Model
         public Convoy()
         {
             items = new List<StockedItem>();
+           
         }
         public override string ToString()
         {
@@ -97,6 +99,7 @@ namespace Game.WorldMapStuff.Model
             //convoyUpdated?.Invoke();
             UpdateStockCounts();
         }
+     
         public void AddItem(StockedCombatItem item)
         {
             Debug.Log("Add Item to Convoy: "+item);
@@ -151,32 +154,11 @@ namespace Game.WorldMapStuff.Model
         }
         public void RemoveItem(StockedCombatItem item)
         {
-            
             StockedItem removeItem=new StockedItem((Item)item.item, item.stock);
-            // foreach (var stockedItem in Items)
-            // {
-            //     if (stockedItem.item.Equals(item))
-            //     {
-            //         stockedItem.stock--;
-            //         if (stockedItem.stock <= 0)
-            //             removeItem = stockedItem;
-            //         break;
-            //
-            //     }
-            // }
-            // foreach (var stockedItem in Items)
-            // {
-            //     if (stockedItem.Equals(removeItem))
-            //         removeItem = stockedItem;
-            // }
-
-            // if (removeItem != null)
-            Debug.Log("Try Remove Item: ");
             Items.Remove(removeItem);
             UpdateStockCounts();
-            //  convoyUpdated?.Invoke();
-           
         }
+       
 
         private void UpdateStockCounts()
         {
@@ -217,6 +199,7 @@ namespace Game.WorldMapStuff.Model
             convoyUpdated?.Invoke();
             //repeat
         }
+      
 
         public void AddStockedItem(StockedItem stockedItem)
         {

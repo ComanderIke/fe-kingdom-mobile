@@ -14,7 +14,7 @@ namespace Game.GameActors.Items.Weapons
         {
         }
 
-        public override void Use(Unit character, Convoy convoy)
+        public override void Use(Unit character, Party convoy)
         {
             Unit unitToRevive =Player.Instance.Party.DeadCharacters[ Player.Instance.Party.DeadCharacters.Count-1];
             Player.Instance.Party.ReviveCharacter(unitToRevive);

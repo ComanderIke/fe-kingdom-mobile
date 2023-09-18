@@ -113,7 +113,6 @@ namespace Game.GUI
 
         private void UpdateExp(int expbefore, int expgained)
         {
-            Debug.Log("UpdateExp: "+expbefore+" "+expgained);
             expBar.UpdateInstant(expbefore);
             expBar.UpdateWithAnimatedTextOnly(expgained);
         }

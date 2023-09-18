@@ -50,14 +50,14 @@ public class Merchant
     public void Buy(ShopItem selectedItem)
     {
         Player.Instance.Party.Money -=GetCost(selectedItem);
-        Player.Instance.Party.Convoy.AddItem(selectedItem.Item);
+        Player.Instance.Party.AddItem(selectedItem.Item);
         RemoveItem(selectedItem.Item);
     }
 
     public void Sell(ShopItem selectedItem)
     {
         Player.Instance.Party.Money += GetCost(selectedItem);
-        Player.Instance.Party.Convoy.RemoveItem(selectedItem.Item);
+        Player.Instance.Party.RemoveItem(selectedItem.Item);
     }
 
   

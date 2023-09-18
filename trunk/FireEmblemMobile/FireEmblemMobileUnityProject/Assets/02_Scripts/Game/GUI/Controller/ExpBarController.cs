@@ -26,6 +26,7 @@ namespace Game.GUI
         [SerializeField] private float tmpFillSecondsPerUnit= 0.1f;
         [SerializeField] private float fillSecondsPerUnit= 0.5f;
         [SerializeField] private ParticleSystem fillParticles;
+        [SerializeField] private Image faceSprite;
 
         public Action onFinished;
         public void ParticleArrived()
@@ -49,18 +50,12 @@ namespace Game.GUI
             }
         }
         
-        public void UpdateWithAnimatedParticles(int addedExp)
-        {
-            Debug.Log("CurrentExp: "+currentExp+" Gained: "+addedExp);
-            animate = true;
-            this.addedExp +=  addedExp;
-            //countingText?.SetTextCounting(currentExp, currentExp+this.addedExp);
-        }
 
         IEnumerator AnimatedText()
         {
             yield return new WaitForSeconds(.3f);
-            fillParticles.Play();
+            if(fillParticles!=null)
+                fillParticles.Play();
             while (addedExp != 0)
             {
                 addedExp--;
@@ -84,7 +79,8 @@ namespace Game.GUI
                 countingText?.SetText(currentExp.ToString());
                 yield return new WaitForSeconds(fillSecondsPerUnit);
             }
-           fillParticles.Stop();
+            if(fillParticles!=null)
+                fillParticles.Stop();
             yield return new WaitForSeconds(1.1f);
             onFinished?.Invoke();
             
@@ -127,12 +123,12 @@ namespace Game.GUI
 
             currentExp = expVal;
             tmpExp = currentExp;
-            //Debug.Log("Currentexp: "+currentExp);
+           
             if (fill == null)
             {
                 Debug.Log("Currentexp: "+gameObject.name);
             }
-                fill.fillAmount = currentExp / 100f;
+            fill.fillAmount = currentExp / 100f;
           
             if (Math.Abs(fill.fillAmount - 1) < 0.1f)
                 fill.fillAmount = 0;
@@ -142,10 +138,14 @@ namespace Game.GUI
             tmpAddedExp = 0;
         }
 
-        public void Show(int currentExp)
+        public void Show(Sprite sprite, int currentExp)
         {
+            if(hideFeedbacks!=null)
+                hideFeedbacks.StopFeedbacks();
             if(showFeedbacks!=null)
                 showFeedbacks.PlayFeedbacks();
+            if(faceSprite!=null)
+                faceSprite.sprite = sprite;
             UpdateInstant(currentExp);
             //TweenUtility.FadeIn(canvasGroup);
         }

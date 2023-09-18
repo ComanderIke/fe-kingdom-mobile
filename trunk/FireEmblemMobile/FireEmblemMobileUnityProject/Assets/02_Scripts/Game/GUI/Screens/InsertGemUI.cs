@@ -123,7 +123,7 @@ public class InsertGemUI : MonoBehaviour
         {
             Debug.Log("Remove Gem!");
             var gem=currentRelic.RemoveGem(0);
-            Player.Instance.Party.Convoy.AddItem(gem);
+            Player.Instance.Party.AddItem(gem);
             
         }
         else
@@ -131,7 +131,7 @@ public class InsertGemUI : MonoBehaviour
             Debug.Log("Insert Gem!");
             Debug.Log(currentRelic.Name);
             currentRelic.InsertGem((Gem)selected.item,0);
-            Player.Instance.Party.Convoy.RemoveItem(selected.item);
+            Player.Instance.Party.RemoveItem(selected.item);
         }
         UpdateUI();
     }

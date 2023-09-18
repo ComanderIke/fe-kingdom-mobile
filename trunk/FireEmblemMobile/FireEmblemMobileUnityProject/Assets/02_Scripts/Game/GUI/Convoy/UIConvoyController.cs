@@ -131,7 +131,7 @@ public class UIConvoyController:MonoBehaviour
                     if (contextItem.item is ConsumableItem consumableItem)
                     {
                         convoy.Deselect();
-                        consumableItem.Use(Player.Instance.Party.ActiveUnit, convoy);
+                        consumableItem.Use(Player.Instance.Party.ActiveUnit, Player.Instance.Party);
                     }
                     break;
             case ConvoyContext.Battle:

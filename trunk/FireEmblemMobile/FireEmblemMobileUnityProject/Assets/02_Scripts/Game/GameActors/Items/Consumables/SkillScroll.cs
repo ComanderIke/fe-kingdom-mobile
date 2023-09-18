@@ -16,7 +16,7 @@ namespace Game.GameActors.Items.Weapons
             this.skill = learntSkill;
         }
 
-        public override void Use(Unit character, Convoy convoy)
+        public override void Use(Unit character, Party convoy)
         {
             character.SkillManager.LearnSkill(skill);
             //ServiceProvider.Instance.GetSystem<UnitProgressSystem>().LearnNewSkill(character);

@@ -9,9 +9,9 @@ namespace Game.GameActors.Items
     public abstract class ConsumableItem:Item{
         public ItemTarget target;
         
-        public virtual void Use(Unit character, Convoy convoy)
+        public virtual void Use(Unit character, Party party)
         {
-            convoy.RemoveItem(this);
+            party.RemoveItem(this);
         }
 
         protected ConsumableItem(string name, string description, int cost,int rarity,int maxStack, Sprite sprite, ItemTarget target) : base(name, description, cost,rarity, maxStack,sprite)

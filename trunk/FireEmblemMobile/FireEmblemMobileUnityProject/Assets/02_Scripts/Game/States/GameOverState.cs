@@ -34,7 +34,7 @@ namespace Game.Mechanics
                 {
                     if (time >= DELAY)
                     {
-                        GameSceneController.Instance.LoadWorldMapAfterBattle(false);
+                        GameSceneController.Instance.LoadEncounterAreaAfterBattle(false);
                     }
                 }
             }

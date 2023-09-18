@@ -146,7 +146,7 @@ public class UIUnitPlacement : IUnitPlacementUI
         // SaveGameManager.Save();
         // SceneController.LoadSceneAsync(Scenes.TestScene, false);
 
-        GameSceneController.Instance.LoadWorldMapBeforeBattle();
+        GameSceneController.Instance.LoadEncounterAreaBeforeBattle();
     }
     public void UnitButtonClicked()
     {

@@ -271,6 +271,18 @@ namespace Game.GameActors.Units.Numbers
                 return valueLabel.Remove(valueLabel.Length - 1, 1);
             return valueLabel;
         }
+
+        public void Clear()
+        {
+            str = 0;
+            def = 0;
+            dex = 0;
+            intel = 0;
+            faith = 0;
+            agi = 0;
+            maxHp = 0;
+            lck = 0;
+        }
     }
 
     public enum AttributeType

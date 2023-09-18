@@ -14,7 +14,7 @@ namespace Game.GameActors.Items.Weapons
             this.strength = strength;
             this.healEffect = healEffect;
         }
-        public override void Use(Unit character, Convoy convoy)
+        public override void Use(Unit character, Party convoy)
         {
             Debug.Log("Use Healthpotion!");
             character.Heal(strength);

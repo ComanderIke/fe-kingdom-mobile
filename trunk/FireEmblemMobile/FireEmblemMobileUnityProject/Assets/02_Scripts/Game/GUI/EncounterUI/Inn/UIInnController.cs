@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Game.GameActors.Players;
 using Game.WorldMapStuff.Model;
+using LostGrace;
 using TMPro;
 using UnityEngine;
 
@@ -27,6 +28,8 @@ namespace Game.GUI.EncounterUI.Inn
         [SerializeField] private GameObject restCoinIcon;
         [SerializeField] private GameObject drinkCoinIcon;
         [SerializeField] private GameObject eatCoinIcon;
+
+        [SerializeField] private TimeOfDayManager timeManager;
         public UIInnItem innItemRest;
         public UIInnItem innItemSpecial;
         public UIInnItem innItemSmall1;
@@ -152,6 +155,7 @@ namespace Game.GUI.EncounterUI.Inn
         public void RestClicked()
         {
             Consume(restItem);
+            timeManager.SetNoon();
             UpdateUIValues();
         }
         public void ContinueClicked()

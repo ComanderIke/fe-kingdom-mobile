@@ -13,7 +13,7 @@ namespace Game.GameActors.Items.Weapons
             this.expvalue = expvalue;
         }
 
-        public override void Use(Unit character, Convoy convoy)
+        public override void Use(Unit character, Party convoy)
         {
             character.ExperienceManager.AddExp(expvalue);
             base.Use(character, convoy);

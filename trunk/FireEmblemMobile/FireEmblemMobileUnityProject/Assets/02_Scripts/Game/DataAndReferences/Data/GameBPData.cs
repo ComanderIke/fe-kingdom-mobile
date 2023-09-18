@@ -54,8 +54,8 @@ namespace Game.GameResources
         [SerializeField] private List<MetaUpgradeBP> metaUpgradeBps = default;
         [FormerlySerializedAs("humans")] [SerializeField] UnitBP []allUnits = default;
         [SerializeField] public List<CampaignConfig> campaigns;
-        [SerializeField] private ItemBP smithingStone;
-        [SerializeField] private ItemBP dragonScale;
+        [SerializeField] private StoneBP smithingStone;
+        [SerializeField] private StoneBP dragonScale;
         [SerializeField] private ItemBP memberCard;
         [SerializeField] private List<SkillBp> relicSkillPool;
         [SerializeField] private EventData eventData;

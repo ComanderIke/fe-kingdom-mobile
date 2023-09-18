@@ -31,7 +31,7 @@ namespace LostGrace
         [SerializeField] private SmithingSlot weaponSlot;
         [SerializeField] private SmithingSlot RelicSlot1;
         [SerializeField] private UICombatItemSlot combatItem1;
-        [SerializeField] private UICombatItemSlot combatItem2;
+        // [SerializeField] private UICombatItemSlot combatItem2;
         [SerializeField] private TextMeshProUGUI hp;
         [SerializeField] private UIBattleStatsBottom battleStatsController;
         [SerializeField] private Transform skillContainer;
@@ -56,12 +56,12 @@ namespace LostGrace
             UnitSelectionSystem.OnSkillDeselected -= SkillDeselected;
         }
 
-        private bool canSelectCombatSkillsRightNow = false;
+       
         private void HideSelectableCombatSkills()
         {
             if (!interactableForPlayer)
                 return;
-            canSelectCombatSkillsRightNow = false;
+        
             DeselectCombatSkill();
             if(instantiatedSkills!=null)
                 foreach (var skillUI in instantiatedSkills)
@@ -80,7 +80,7 @@ namespace LostGrace
         {
             if (!interactableForPlayer)
                 return;
-            canSelectCombatSkillsRightNow = true;
+            // canSelectCombatSkillsRightNow = true;
             selectedCombatSkill = null;
             attackStarted = false;
             foreach (var skillUI in instantiatedSkills)
@@ -121,8 +121,8 @@ namespace LostGrace
             RelicSlot1.Show(unit.EquippedRelic);
             combatItem1.Show(unit.CombatItem1);
             combatItem1.OnClicked += CombatItemClicked;
-            combatItem2.Show(unit.CombatItem2);
-            combatItem2.OnClicked += CombatItemClicked;
+            // combatItem2.Show(unit.CombatItem2);
+            // combatItem2.OnClicked += CombatItemClicked;
 
             hp.text = unit.Hp + "/" + unit.MaxHp;
             battleStatsController.Show(unit);
@@ -185,13 +185,14 @@ namespace LostGrace
             else if (skillUI.Skill.CombatSkillMixin != null)
             {
                // Debug.Log("CombatSkill Clicked!");
-                if (canSelectCombatSkillsRightNow)
-                {
+                // if (canSelectCombatSkillsRightNow)
+                // {
                    // Debug.Log("Can Select Right now");
                     if (selectedCombatSkill == skillUI)
                     {
                        // Debug.Log("Deselect SKILL "+ skillUI.Skill.Name);
                         
+                      
                         DeselectCombatSkill();
                         ServiceProvider.Instance.GetSystem<UnitActionSystem>().UpdateAttackpreview();
                     }
@@ -201,7 +202,7 @@ namespace LostGrace
                     }
 
                     
-                }
+                // }
             }
 
         }
@@ -214,6 +215,7 @@ namespace LostGrace
             {
                 selectedCombatSkill.Deselect();
                 selectedCombatSkill.ShowSelectable();
+                selectedCombatSkill.SetActiveCombatSkill(false);
                 selectedCombatSkill.Skill.CombatSkillMixin.Deactivate();
                 if(!attackStarted)
                     selectedCombatSkill.Skill.CombatSkillMixin.DeactivateForNextCombat();
@@ -254,6 +256,7 @@ namespace LostGrace
             DeselectCombatSkill();
             skillUI.Select();
             selectedCombatSkill = skillUI;
+            skillUI.SetActiveCombatSkill(true);
             skillUI.Skill.CombatSkillMixin.Activate(skillUI.Skill.owner, null);
             BattleState.OnStartBattle -= OnStartAttack;
             BattleState.OnStartBattle += OnStartAttack;

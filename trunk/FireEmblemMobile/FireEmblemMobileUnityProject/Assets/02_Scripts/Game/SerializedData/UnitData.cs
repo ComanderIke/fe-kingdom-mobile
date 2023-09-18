@@ -90,11 +90,11 @@ namespace Game.GameActors.Players
                 combatItem1Id = unit.CombatItem1.item.GetName();
                 combatItem1Stock = unit.CombatItem1.stock;
             }
-            if (unit.CombatItem2 != null)
-            {
-                combatItem2Id = unit.CombatItem2.item.GetName();
-                combatItem2Stock = unit.CombatItem2.stock;
-            }
+            // if (unit.CombatItem2 != null)
+            // {
+            //     combatItem2Id = unit.CombatItem2.item.GetName();
+            //     combatItem2Stock = unit.CombatItem2.stock;
+            // }
 
       
             skillIds = new List<string>();
@@ -134,10 +134,10 @@ namespace Game.GameActors.Players
             {
                 unit.CombatItem1 = new StockedCombatItem((IEquipableCombatItem)GameBPData.Instance.GetItemByName(combatItem1Id), combatItem1Stock);
             }
-            if (!string.IsNullOrEmpty(combatItem2Id))
-            {
-                unit.CombatItem2 = new StockedCombatItem((IEquipableCombatItem)GameBPData.Instance.GetItemByName(combatItem2Id), combatItem2Stock);
-            }
+            // if (!string.IsNullOrEmpty(combatItem2Id))
+            // {
+            //     unit.CombatItem2 = new StockedCombatItem((IEquipableCombatItem)GameBPData.Instance.GetItemByName(combatItem2Id), combatItem2Stock);
+            // }
             unit.ClassUpgraded = classUpgraded;
             if (unit.EquippedRelic != null)
             {

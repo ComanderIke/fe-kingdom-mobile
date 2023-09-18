@@ -43,7 +43,33 @@ namespace LostGrace
 
         public void ElapseTimeStep()
         {
+            Debug.Log("Current hour "+hour);
             UpdateHour(hour + 6);
+            Debug.Log("new hour "+hour);
+        }
+
+        public void SetNoon()
+        {
+           
+            float newTime = 6;
+            float tmphour = hour;
+            float diff =  newTime-hour;
+            if (diff <= 0)
+                diff += 24;
+      
+            LeanTween.value(0, diff, 2.5f).setOnUpdate((val) =>
+            {
+                float currentHour =(tmphour + val);
+                if (currentHour >= 24)
+                    currentHour -= 24;
+               
+                
+                lightController.UpdateHourFixed(currentHour);
+                circleUI.RotateFixed(currentHour);
+            }).setEaseInOutQuad();
+            hour = 6;
+            // lightController.UpdateHour(hour);
+            //  circleUI.RotateFull(hour);
         }
     }
 }

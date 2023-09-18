@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Game.GameActors.Items;
+using Game.GameActors.Items.Gems;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
+using Game.GameActors.Units.Numbers;
 using Game.GameActors.Units.OnGameObject;
 using UnityEngine;
 
@@ -57,6 +59,7 @@ namespace Game.WorldMapStuff.Model
         }
 
         public Convoy Convoy;
+        public Convoy Storage;
         int activeUnitIndex = 0;
 
         public int ActiveUnitIndex
@@ -113,6 +116,7 @@ namespace Game.WorldMapStuff.Model
         {
             members = new List<Unit>();
             Convoy = new Convoy();
+            Storage = new Convoy();
             EncounterComponent = new EncounterPosition();
             DeadCharacters = new List<Unit>();
             money = 1000;
@@ -158,14 +162,14 @@ namespace Game.WorldMapStuff.Model
             {
                 InitMember(member);
             }
-            Unit.OnUnequippedRelic -= Convoy.AddItem;
-            Unit.OnUnequippedRelic += Convoy.AddItem;
+            Unit.OnUnequippedRelic -= AddItem;
+            Unit.OnUnequippedRelic += AddItem;
             Unit.OnUnequippedCombatItem -= Convoy.AddItem;
             Unit.OnUnequippedCombatItem += Convoy.AddItem;
             Unit.OnEquippedCombatItem -= Convoy.RemoveItem;
             Unit.OnEquippedCombatItem += Convoy.RemoveItem;
-            Unit.OnEquippedRelic -=  Convoy.RemoveItem;
-            Unit.OnEquippedRelic += Convoy.RemoveItem;
+            Unit.OnEquippedRelic -=  RemoveItem;
+            Unit.OnEquippedRelic += RemoveItem;
 
         }
 
@@ -261,6 +265,8 @@ namespace Game.WorldMapStuff.Model
 
             Convoy = new Convoy();
             Convoy = playerDataPartyData.convoy.LoadData();
+            Storage = new Convoy();
+            Storage = playerDataPartyData.storage.LoadData();
             ActiveUnitIndex = activeUnitIndex;
             EncounterComponent = new EncounterPosition
             {
@@ -316,6 +322,50 @@ namespace Game.WorldMapStuff.Model
             return null;
         }
 
-        
+
+        public void ResetFoodBuffs()
+        {
+            foreach (var member in members)
+            {
+                member.Stats.BonusAttributesFromFood.Clear();
+            }
+        }
+
+        public void AddStockedItem(StockedItem stockedItem)
+        {
+            if (stockedItem.item is Gem || stockedItem.item is Stone)
+            {
+                Storage.AddStockedItem(stockedItem);
+            }
+            else
+            {
+                Convoy.AddStockedItem(stockedItem);
+            }
+
+        }
+
+        public void RemoveItem(Item item)
+        {
+            if (item is Gem || item is Stone)
+            {
+                Storage.RemoveItem(item);
+            }
+            else
+            {
+                Convoy.RemoveItem(item);
+            }
+        }
+
+        public void AddItem(Item item)
+        {
+            if (item is Gem || item is Stone)
+            {
+                Storage.AddItem(item);
+            }
+            else
+            {
+                Convoy.AddItem(item);
+            }
+        }
     }
 }
