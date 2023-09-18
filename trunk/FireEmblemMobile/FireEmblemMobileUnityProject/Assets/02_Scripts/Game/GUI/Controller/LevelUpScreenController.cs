@@ -14,8 +14,8 @@ namespace Game.GUI
         [SerializeField] private TextMeshProUGUI nameText;
         [SerializeField] private TextMeshProUGUI levelText;
         [SerializeField] private Image faceImage;
-        [SerializeField] private Color textBaseColor;
-        [SerializeField] private Color textIncreasedColor;
+        [SerializeField] private TMP_ColorGradient textBaseColor;
+        [SerializeField] private TMP_ColorGradient textIncreasedColor;
         [SerializeField] private TextMeshProUGUI conLabelText;
         [SerializeField] private TextMeshProUGUI agiLabelText;
         [SerializeField] private TextMeshProUGUI strLabelText;
@@ -50,10 +50,71 @@ namespace Game.GUI
         private int[] statsIncreases;
         private int levelAfter;
         private Canvas canvas;
+        [SerializeField] private Button RerollButton;
+        [SerializeField] private TextMeshProUGUI rerollAmountText;
 
         void Start()
         {
             canvas = GetComponent<Canvas>();
+        }
+
+        public void OnContinueClicked()
+        {
+            LeanTween.alphaCanvas(alphaCanvas, 0, 0.65f).setEaseInQuad()
+                .setOnComplete(()=>
+                {
+                    levelText.transform.localScale = Vector3.one;
+                    OnFinished?.Invoke();
+                    canvas.enabled = false;
+                });
+        }
+
+        void Reset()
+        {
+            actions.Clear();
+            actionIndex = 0;
+            LeanTween.cancel(gameObject);
+            LeanTween.cancel(levelText.gameObject);
+            LeanTween.cancel(alphaCanvas.gameObject);
+            LeanTween.cancel(strText.gameObject);
+            LeanTween.cancel(strAddedText.gameObject);
+            LeanTween.cancel(strLabelText.gameObject);
+            LeanTween.cancel(dexText.gameObject);
+            LeanTween.cancel(dexAddedText.gameObject);
+            LeanTween.cancel(dexLabelText.gameObject);
+            LeanTween.cancel(intText.gameObject);
+            LeanTween.cancel(intAddedText.gameObject);
+            LeanTween.cancel(intLabelText.gameObject);
+            LeanTween.cancel(agiText.gameObject);
+            LeanTween.cancel(agiAddedText.gameObject);
+            LeanTween.cancel(agiLabelText.gameObject);
+            LeanTween.cancel(conText.gameObject);
+            LeanTween.cancel(conAddedText.gameObject);
+            LeanTween.cancel(conLabelText.gameObject);
+            LeanTween.cancel(lckText.gameObject);
+            LeanTween.cancel(lckAddedText.gameObject);
+            LeanTween.cancel(lckLabelText.gameObject);
+            LeanTween.cancel(defText.gameObject);
+            LeanTween.cancel(defAddedText.gameObject);
+            LeanTween.cancel(defLabelText.gameObject);
+            LeanTween.cancel(fthText.gameObject);
+            LeanTween.cancel(fthAddedText.gameObject);
+            LeanTween.cancel(fthLabelText.gameObject);
+            levelText.transform.localScale = new Vector3(1,1,1);
+            ResetTextObject(strAddedText);
+            ResetTextObject(intAddedText);
+            ResetTextObject(dexAddedText);
+            ResetTextObject(agiAddedText);
+            ResetTextObject(defAddedText);
+            ResetTextObject(lckAddedText);
+            ResetTextObject(conAddedText);
+            ResetTextObject(fthAddedText);
+        }
+        public void OnRerollClicked()
+        {
+            
+            OnReroll.Invoke();
+           
         }
         // Start is called before the first frame update
         public void Play()
@@ -63,11 +124,15 @@ namespace Game.GUI
            // LeanTween.alphaCanvas(levelUpText.GetComponent<CanvasGroup>(), 1, 0.15f).setEaseOutQuad();
            // LeanTween.scale(levelUpText.gameObject, Vector3.one, 0.15f).setEaseOutQuad();
             
-                   
+                 
             
            
             
-
+           if (statsIncreases[4] > 0)
+           {
+               actions.Add(CreateStatPopUpActionAnimationIn(conLabelText, conText, "" + (stats[4] +statsIncreases[4]), conAddedText, statsIncreases[4]));
+               actions.Add(CreateStatPopUpActionAnimationOut(conText));
+           }
             if (statsIncreases[0] > 0) {
                 actions.Add(CreateStatPopUpActionAnimationIn(strLabelText, strText, "" + (stats[0] + statsIncreases[0]), strAddedText, statsIncreases[0]));
                 actions.Add(CreateStatPopUpActionAnimationOut(strText));
@@ -87,11 +152,7 @@ namespace Game.GUI
                 actions.Add(CreateStatPopUpActionAnimationIn(agiLabelText,agiText, "" + (stats[3] +statsIncreases[3]), agiAddedText, statsIncreases[3]));
                 actions.Add(CreateStatPopUpActionAnimationOut(agiText));
             }
-            if (statsIncreases[4] > 0)
-            {
-                actions.Add(CreateStatPopUpActionAnimationIn(conLabelText, conText, "" + (stats[4] +statsIncreases[4]), conAddedText, statsIncreases[4]));
-                actions.Add(CreateStatPopUpActionAnimationOut(conText));
-            }
+           
             if (statsIncreases[5] > 0)
             {
                 actions.Add(CreateStatPopUpActionAnimationIn(lckLabelText, lckText, "" + (stats[5] + statsIncreases[5]), lckAddedText, statsIncreases[5]));
@@ -107,13 +168,6 @@ namespace Game.GUI
                 actions.Add(CreateStatPopUpActionAnimationIn(fthLabelText, fthText, "" + (stats[7] + statsIncreases[7]), fthAddedText, statsIncreases[7]));
                 actions.Add(CreateStatPopUpActionAnimationOut(fthText));
             }
-            actions.Add(()=> LeanTween.alphaCanvas(alphaCanvas, 0, 0.65f).setEaseInQuad().setDelay(endDelay)
-                .setOnComplete(()=>
-                {
-                    levelText.transform.localScale = Vector3.one;
-                    OnFinished?.Invoke();
-                    canvas.enabled = false;
-                }));
             LeanTween.alphaCanvas(alphaCanvas, 1, 0.55f).setEaseOutQuad();
             LeanTween.scale(levelText.gameObject, levelText.transform.localScale * 1.2f, 0.5f).setEaseOutQuad().setDelay(0.65f).setOnStart(() => levelText.text = "Lv " + levelAfter)
                 .setOnComplete(() =>
@@ -126,9 +180,11 @@ namespace Game.GUI
                     });
                 });
         }
-        public void UpdateValues(string name, Sprite sprite,int levelBefore, int levelAfter, int[] stats, int[] statsIncreases)
+        public void UpdateValues(string name, Sprite sprite,int levelBefore, int levelAfter, int[] stats, int[] statsIncreases, int rerollAmount)
         {
-          
+
+            rerollAmountText.text = "" + rerollAmount+"(-1)";
+            RerollButton.interactable = rerollAmount > 0;
             faceImage.sprite = sprite;
             this.statsIncreases = statsIncreases;
             this.stats = stats;//str, int ,dex,agi,con,fth
@@ -143,22 +199,22 @@ namespace Game.GUI
             lckText.text = "" + stats[5];
             defText.text = "" + stats[6];
             fthText.text = "" + stats[7];
-            strLabelText.color = textBaseColor;
-            intLabelText.color = textBaseColor;
-            dexLabelText.color = textBaseColor;
-            agiLabelText.color = textBaseColor; 
-            conLabelText.color = textBaseColor;
-            fthLabelText.color = textBaseColor;
-            defLabelText.color = textBaseColor;
-            lckLabelText.color = textBaseColor;
-            strText.color = textBaseColor;
-            intText.color = textBaseColor;
-            dexText.color = textBaseColor;
-            agiText.color = textBaseColor; 
-            conText.color = textBaseColor;
-            fthText.color = textBaseColor;
-            defText.color = textBaseColor;
-            lckText.color = textBaseColor;
+            strLabelText.colorGradientPreset = textBaseColor;
+            intLabelText.colorGradientPreset = textBaseColor;
+            dexLabelText.colorGradientPreset = textBaseColor;
+            agiLabelText.colorGradientPreset = textBaseColor; 
+            conLabelText.colorGradientPreset = textBaseColor;
+            fthLabelText.colorGradientPreset = textBaseColor;
+            defLabelText.colorGradientPreset = textBaseColor;
+            lckLabelText.colorGradientPreset = textBaseColor;
+            strText.colorGradientPreset = textBaseColor;
+            intText.colorGradientPreset = textBaseColor;
+            dexText.colorGradientPreset = textBaseColor;
+            agiText.colorGradientPreset = textBaseColor; 
+            conText.colorGradientPreset = textBaseColor;
+            fthText.colorGradientPreset = textBaseColor;
+            defText.colorGradientPreset = textBaseColor;
+            lckText.colorGradientPreset = textBaseColor;
             strAddedText.text = "";
             intAddedText.text = "";
             dexAddedText.text = "";
@@ -167,9 +223,20 @@ namespace Game.GUI
             fthAddedText.text = "";
             defAddedText.text = "";
             lckAddedText.text = "";
+            Reset();
         }
 
         public event Action OnFinished;
+        public event Action OnReroll;
+        public void ResetForReroll()
+        {
+          Reset();
+        }
+
+        private void ResetTextObject(TextMeshProUGUI text)
+        {
+            text.GetComponent<CanvasGroup>().alpha = 0;
+        }
 
         private Action CreateStatPopUpActionAnimationIn(TMP_Text label, TMP_Text textObject, string text, TMP_Text textAddedObject, int statIncrease)
         {
@@ -178,8 +245,8 @@ namespace Game.GUI
                     .setOnComplete(() =>
                     {
                         textObject.text = text;
-                        textObject.color = textIncreasedColor;
-                        label.color = textIncreasedColor;
+                        textObject.colorGradientPreset = textIncreasedColor;
+                        label.colorGradientPreset = textIncreasedColor;
                         if (actionIndex < actions.Count)
                             actions[actionIndex].Invoke();
                         actionIndex++;

@@ -4,6 +4,7 @@ using System.Linq;
 using Game.AI;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
+using Game.GameActors.Units.Numbers;
 using Game.GameInput;
 using Game.GUI;
 using Game.Manager;
@@ -31,6 +32,8 @@ namespace Game.Mechanics
         public ExpBarController ExpBarController;
         private bool finished = false;
         private SkillSystem skillSystem;
+        private Unit currentLevelupUnit;
+        private int[] currentStatIncreases;
         public UnitProgressSystem(Party party)
         {
             factions = new List<Faction>();
@@ -134,18 +137,27 @@ namespace Game.Mechanics
             // }
         }
 
+        void Reroll()
+        {
+            currentLevelupUnit.Stats.BaseAttributes.IncreaseAttribute(-1, AttributeType.LCK);
+            levelUpRenderer.ResetForReroll();
+            LevelUp(currentLevelupUnit);
+        }
 
         public void LevelUp(Unit unit)
         {
-        
-            int[] statIncreases = CalculateStatIncreases(unit.Stats.CombinedGrowths().AsArray());
+
+            currentLevelupUnit = unit;
+            currentStatIncreases = CalculateStatIncreases(unit.Stats.CombinedGrowths().AsArray());
 
             if (levelUpRenderer != null)
             {
                 levelUpRenderer.UpdateValues(unit.name, unit.visuals.CharacterSpriteSet.FaceSprite,unit.ExperienceManager.Level - 1, unit.ExperienceManager.Level,
-                    unit.Stats.BaseAttributes.AsArray(), statIncreases);
+                    unit.Stats.BaseAttributes.AsArray(), currentStatIncreases, currentLevelupUnit.Stats.BaseAttributes.LCK);
                 
                 levelUpRenderer.Play();
+                levelUpRenderer.OnReroll -= Reroll;
+                levelUpRenderer.OnReroll += Reroll;
                 levelUpRenderer.OnFinished -= LevelUpFinished;
                 levelUpRenderer.OnFinished += LevelUpFinished;
             }
@@ -155,12 +167,13 @@ namespace Game.Mechanics
                 unit.SkillManager.SkillPoints += 1;
             }
 
-            unit.Stats.BaseAttributes.Update(statIncreases);
+            
            
         }
 
         void LevelUpFinished()
         {
+            currentLevelupUnit.Stats.BaseAttributes.Update(currentStatIncreases);
             AnimationQueue.OnAnimationEnded?.Invoke();
         }
 
@@ -245,6 +258,7 @@ namespace Game.Mechanics
         }
         private int[] CalculateStatIncreases(int[] growths)
         {
+            Debug.Log("Calculate Stat Increases");
             int[] increaseAmount = new int[growths.Length];
             bool atleast1 = false;
             while (!atleast1)
@@ -254,6 +268,7 @@ namespace Game.Mechanics
                     increaseAmount[i] = Method(growths[i]);
                     if (increaseAmount[i] > 0)
                         atleast1 = true;
+                    Debug.Log("IncreaseAmount: " +increaseAmount[i]);
                 }
             }
 
@@ -261,7 +276,8 @@ namespace Game.Mechanics
         }
         private int Method(int Growth)
         {
-            int rngNumber = (int) (UnityEngine.Random.value * 100f);
+            int rngNumber = (int)(UnityEngine.Random.value * 100f);
+                Debug.Log("RNG Number: "+rngNumber+" Growth: "+ Growth);
             if (Growth > 100)
             {
                 return 1 + Method(Growth - 100);

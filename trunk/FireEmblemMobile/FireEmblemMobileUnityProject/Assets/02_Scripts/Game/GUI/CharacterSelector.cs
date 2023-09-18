@@ -129,6 +129,7 @@ namespace LostGrace
 
         public void UnitClicked(SelectableCharacterUI unit)
         {
+            Debug.Log("Show unit: "+unit.unit);
             characterView.Show(unit.unit,true, unlockedUnits);
             if (Player.Instance.Party.members.Contains(unit.unit))
             {

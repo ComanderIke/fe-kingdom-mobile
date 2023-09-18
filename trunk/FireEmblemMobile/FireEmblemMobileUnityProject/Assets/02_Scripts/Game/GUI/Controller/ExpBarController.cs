@@ -25,7 +25,7 @@ namespace Game.GUI
         private bool animate;
         [SerializeField] private float tmpFillSecondsPerUnit= 0.1f;
         [SerializeField] private float fillSecondsPerUnit= 0.5f;
-
+        [SerializeField] private ParticleSystem fillParticles;
 
         public Action onFinished;
         public void ParticleArrived()
@@ -59,6 +59,8 @@ namespace Game.GUI
 
         IEnumerator AnimatedText()
         {
+            yield return new WaitForSeconds(.3f);
+            fillParticles.Play();
             while (addedExp != 0)
             {
                 addedExp--;
@@ -82,7 +84,7 @@ namespace Game.GUI
                 countingText?.SetText(currentExp.ToString());
                 yield return new WaitForSeconds(fillSecondsPerUnit);
             }
-           
+           fillParticles.Stop();
             yield return new WaitForSeconds(1.1f);
             onFinished?.Invoke();
             

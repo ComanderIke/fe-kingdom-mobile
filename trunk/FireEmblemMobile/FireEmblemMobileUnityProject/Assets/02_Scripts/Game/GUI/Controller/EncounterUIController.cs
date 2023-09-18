@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.GUI.EncounterUI.Inn;
 using Game.WorldMapStuff.Model;
 using LostGrace;
 using TMPro;

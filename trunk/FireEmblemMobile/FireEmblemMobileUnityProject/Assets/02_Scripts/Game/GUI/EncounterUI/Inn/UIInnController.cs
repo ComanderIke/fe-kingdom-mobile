@@ -4,177 +4,200 @@ using Game.GameActors.Players;
 using Game.WorldMapStuff.Model;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class UIInnController : MonoBehaviour
+namespace Game.GUI.EncounterUI.Inn
 {
-    // Start is called before the first frame update
-    public Canvas canvas;
-    [HideInInspector]
-    public Party party;
-   // public TextMeshProUGUI personName;
-    //public TextMeshProUGUI talkText;
-
-    private Inn inn;
-    [SerializeField] private UICharacterFace characterFace;
-    [SerializeField] private UIUnitIdleAnimation unitIdleAnimation;
-    [SerializeField] private TextMeshProUGUI restDescription;
-    [SerializeField] private TextMeshProUGUI drinkDescription;
-    [SerializeField] private TextMeshProUGUI eatDescription;
-    [SerializeField] private TextMeshProUGUI restPriceText;
-    [SerializeField] private TextMeshProUGUI drinkPriceText;
-    [SerializeField] private TextMeshProUGUI eatPriceText;
-    [SerializeField] private GameObject restCoinIcon;
-    [SerializeField] private GameObject drinkCoinIcon;
-    [SerializeField] private GameObject eatCoinIcon;
-    public List<UIShopItemController> shopItems;
-    public UIQuestItemController questOption;
-    private InnEncounterNode node;
-    private void OnDestroy()
+    public class UIInnController : MonoBehaviour
     {
-        party.onActiveUnitChanged -= ActiveUnitChanged;
-    }
-    public void Show(InnEncounterNode node, Party party)
-    {
-        Debug.Log("Showing inn ui screen");
-        canvas.enabled = true;
-        this.node = node;
-        this.party = party;
-        this.inn = node.inn;
-        foreach (var shopItem in shopItems)
-    {
-        shopItem.Select();
-    }
-    party.onActiveUnitChanged -= ActiveUnitChanged;
-    party.onActiveUnitChanged += ActiveUnitChanged;
-    
-    UpdateUI();
-    // for (int i=0; i<inn.shopItems.Count; i++)
-    // {
-    //     bool affordable = party.money >= inn.shopItems[i].cost;
-    //     shopItems[i].SetValues(inn.shopItems[i], affordable, this);
-    // }
-    //questOption.SetValues(inn.quest);
-    //recruitCharacter.SetValues(inn.recruitableCharacter);
-    // FindObjectOfType<UICharacterViewController>().Show(party.members[party.ActiveUnitIndex]);
-    }
-    public void NextClicked()
-    {
-        Player.Instance.Party.ActiveUnitIndex++;
-    }
-
-    public void PrevClicked()
-    {
-        Player.Instance.Party.ActiveUnitIndex--;
-    }
-    public void Hide()
-    {
-        canvas.enabled = false;
-        party.onActiveUnitChanged -= ActiveUnitChanged;
-   
-    }
-
-    void ActiveUnitChanged()
-    {
-        UpdateUI();
+        // Start is called before the first frame update
+        public Canvas canvas;
+        [HideInInspector]
+        public Party party;
+        // public TextMeshProUGUI personName;
+        //public TextMeshProUGUI talkText;
         
-    }
-    public void SpecialClicked()
-    {
-        inn.Special(Player.Instance.Party.ActiveUnit);
-        UpdateUIValues();
-    }
-    public void DrinkClicked()
-    {
-        inn.Drink( Player.Instance.Party.ActiveUnit);
-        UpdateUIValues();
-    }
-    public void FoodCLicked()
-    {
-        inn.Eat(Player.Instance.Party.ActiveUnit);
-        UpdateUIValues();
-    }
-    public void RestClicked()
-    {
-        inn.Rest(Player.Instance.Party.ActiveUnit);
-        UpdateUIValues();
-    }
-    public void ContinueClicked()
-    {
-        canvas.enabled=false;
-        node.Continue();
-        FindObjectOfType<UICharacterViewController>().Hide();
-    }
-    public void AcceptQuestClicked()
-    {
+        [SerializeField] private List<UICharacterFace> characterFaces;
+        [SerializeField] private UIUnitIdleAnimation unitIdleAnimation;
+        [SerializeField] private TextMeshProUGUI restDescription;
+        [SerializeField] private TextMeshProUGUI drinkDescription;
+        [SerializeField] private TextMeshProUGUI eatDescription;
+        [SerializeField] private TextMeshProUGUI restPriceText;
+        [SerializeField] private TextMeshProUGUI drinkPriceText;
+        [SerializeField] private TextMeshProUGUI eatPriceText;
+        [SerializeField] private GameObject restCoinIcon;
+        [SerializeField] private GameObject drinkCoinIcon;
+        [SerializeField] private GameObject eatCoinIcon;
+        public UIInnItem innItemRest;
+        public UIInnItem innItemSpecial;
+        public UIInnItem innItemSmall1;
+        public UIInnItem innItemSmall2;
+        public UIInnItem innItemSmall3;
+        public UIInnItem innItemSmall4;
+        public UIInnItem innItemSmall5;
+        public UIInnItem innItemSmall6;
+        [SerializeField] private Recipe restItem;
+        [SerializeField] private List<Recipe> specialItemPool;
+        [SerializeField] private List<Recipe> itemsPool;
+        private List<Recipe> items;
+        private Recipe specialItem;
         
-    }
-
-    public void RecruitCharacterClicked()
-    {
-        
-    }
-
-    void UpdateUIValues()
-    {
-        shopItems[0].SetAffordable(Player.Instance.Party.CanAfford(inn.GetRestPrice()));
-        shopItems[1].SetAffordable(Player.Instance.Party.CanAfford(inn.GetDrinkPrice()));
-        shopItems[2].SetAffordable(Player.Instance.Party.CanAfford(inn.GetEatPrice()));
-        shopItems[0].SetInteractable(true);
-        shopItems[1].SetInteractable(true);
-        shopItems[2].SetInteractable(true);
-        restDescription.text = GetDescriptionText(inn.GetRestHeal());
-
-        drinkDescription.text = GetDescriptionText(inn.GetDrinkHeal());
-        eatDescription.text = GetDescriptionText(inn.GetEatHeal());
-        if (!inn.CanUnitRest(party.ActiveUnit))
+        private List<Recipe> used;
+        private UIShopItemController test;
+        private InnEncounterNode node;
+        private void OnDestroy()
         {
-            shopItems[0].SetAffordable(false);
-            shopItems[0].SetInteractable(false);
-            restDescription.text = "Already rested.";
-        }
-        if (!inn.CanUnitDrink(party.ActiveUnit))
-        {
-            shopItems[1].SetAffordable(false);
-            shopItems[1].SetInteractable(false);
-            drinkDescription.text = "Already drank.";
-        }
-        if (!inn.CanUnitEat(party.ActiveUnit))
-        {
-           
-            shopItems[2].SetAffordable(false);
-            shopItems[2].SetInteractable(false);
-            eatDescription.text = "Already ate.";
+            party.onActiveUnitChanged -= ActiveUnitChanged;
         }
 
-        restPriceText.text = GetCostText(inn.GetRestPrice(), restCoinIcon);
-        drinkPriceText.text = GetCostText(inn.GetDrinkPrice(), drinkCoinIcon);
-        eatPriceText.text = GetCostText(inn.GetEatPrice(), eatCoinIcon);
-    }
-    public void UpdateUI()
-    {
-        unitIdleAnimation.Show(party.ActiveUnit);
-        characterFace.Show(party.ActiveUnit);
-
-       UpdateUIValues();
-
-       
-    }
-    private string GetDescriptionText(int heal)
-    {
-        return "Heal " + heal + " % Hp";
-    }
-    private string GetCostText(int cost, GameObject coinIcon)
-    {
-        
-        string costText = ""+cost;
-        coinIcon.gameObject.SetActive(cost != 0);
-        if (cost == 0)
+        void CreateRandomItemsFromPool()
         {
-            costText = "Free";
+            specialItem = specialItemPool[Random.Range(0, specialItemPool.Count)];
+            items = new List<Recipe>();
+            for (int i = 0; i < 6; i++)
+            {
+                var item = itemsPool[Random.Range(0, itemsPool.Count)];
+                while (items.Contains(item))
+                {
+                    item = itemsPool[Random.Range(0, itemsPool.Count)];
+                }
+                items.Add(item);
+            }
+        }
+        public void Show(InnEncounterNode node, Party party)
+        {
+            Debug.Log("Showing inn ui screen");
+            canvas.enabled = true;
+            this.node = node;
+            this.party = party;
+            used = new List<Recipe>();
+            party.onActiveUnitChanged -= ActiveUnitChanged;
+            party.onActiveUnitChanged += ActiveUnitChanged;
+            CreateRandomItemsFromPool();
+            UpdateUI();
+            // for (int i=0; i<inn.shopItems.Count; i++)
+            // {
+            //     bool affordable = party.money >= inn.shopItems[i].cost;
+            //     shopItems[i].SetValues(inn.shopItems[i], affordable, this);
+            // }
+            //questOption.SetValues(inn.quest);
+            //recruitCharacter.SetValues(inn.recruitableCharacter);
+            // FindObjectOfType<UICharacterViewController>().Show(party.members[party.ActiveUnitIndex]);
+        }
+        public void NextClicked()
+        {
+            Player.Instance.Party.ActiveUnitIndex++;
+        }
+        public void Consume(Recipe item)
+        {
+            foreach(var unit in Player.Instance.Party.members)
+                unit.Heal((int)((unit.MaxHp/100f)*item.heal));
+            Player.Instance.Party.AddGold(-item.price);
+            used.Add(item);
+            UpdateUI();
             
         }
+        public void PrevClicked()
+        {
+            Player.Instance.Party.ActiveUnitIndex--;
+        }
+        public void Hide()
+        {
+            canvas.enabled = false;
+            party.onActiveUnitChanged -= ActiveUnitChanged;
+   
+        }
 
-        return costText;
+        void ActiveUnitChanged()
+        {
+            UpdateUI();
+        
+        }
+        public void ItemClicked(int index)
+        {
+            Consume(items[index]);
+            UpdateUIValues();
+        }
+        public void SpecialCLicked()
+        {
+            Consume(specialItem);
+            UpdateUIValues();
+        }
+        public void RestClicked()
+        {
+            Consume(restItem);
+            UpdateUIValues();
+        }
+        public void ContinueClicked()
+        {
+            canvas.enabled=false;
+            node.Continue();
+            FindObjectOfType<UICharacterViewController>().Hide();
+        }
+        public void AcceptQuestClicked()
+        {
+        
+        }
+
+        public void RecruitCharacterClicked()
+        {
+        
+        }
+
+        void UpdateUIValues()
+        {
+           // innItemRest
+         
+           innItemRest.SetValues(restItem);
+           innItemSpecial.SetValues(specialItem);
+           innItemSmall1.SetValues(items[0]);
+           innItemSmall2.SetValues(items[1]);
+           innItemSmall3.SetValues(items[2]);
+           innItemSmall4.SetValues(items[3]);
+           innItemSmall5.SetValues(items[4]);
+           innItemSmall6.SetValues(items[5]);
+           innItemRest.SetInteractable(!used.Contains((restItem)));
+           innItemSpecial.SetInteractable(!used.Contains((specialItem)));
+           innItemSmall1.SetInteractable(!used.Contains((items[0])));
+           innItemSmall2.SetInteractable(!used.Contains((items[1])));
+           innItemSmall3.SetInteractable(!used.Contains((items[2])));
+           innItemSmall4.SetInteractable(!used.Contains((items[3])));
+           innItemSmall5.SetInteractable(!used.Contains((items[4])));
+           innItemSmall6.SetInteractable(!used.Contains((items[5])));
+           
+            
+            
+            
+        }
+        public void UpdateUI()
+        {
+            unitIdleAnimation.Show(party.ActiveUnit);
+            int index = 0;
+            if (party.members.Count == 4)
+            {
+                characterFaces[0].Show(party.members[0]);
+                characterFaces[1].Show(party.members[1]);
+                characterFaces[2].Hide();
+                characterFaces[3].Show(party.members[2]);
+                characterFaces[4].Show(party.members[3]);
+                characterFaces[5].Hide();
+            }
+            else
+            {
+                for (int i = 0; i < characterFaces.Count; i++)
+                {
+                    characterFaces[i].Hide();
+                    if (party.members.Count > i)
+                    {
+                        characterFaces[i].Show(party.members[i]);
+                    }
+                }
+            }
+
+            UpdateUIValues();
+
+       
+        }
+       
+       
     }
 }

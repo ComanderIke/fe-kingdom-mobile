@@ -16,13 +16,15 @@ namespace Game.GameActors.Players
 
 
         [SerializeField] public Attributes Attributes;
-        public StatsData(int mov, Attributes attributes,  List<int> attackRanges)
+        [SerializeField] public Attributes BaseGrowths;
+        public StatsData(int mov, Attributes attributes,Attributes baseGrowths,  List<int> attackRanges)
         {
             AttackRanges = attackRanges;
           
             // MaxSp = maxSp;
             Mov = mov;
             Attributes = attributes;
+            BaseGrowths = baseGrowths;
         }
     }
 }

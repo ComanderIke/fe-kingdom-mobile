@@ -37,7 +37,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     public Transform spawnParent;
 
     public float offsetBetweenCharacters = 0.25f;
-    private const float moveToNodeHoldTime = 1.8f;
+    [SerializeField]private float moveToNodeHoldTime = 1.5f;
    
     
     public TimeOfDayManager timeOfDayManager;
@@ -58,6 +58,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         }
         else
         {
+            Debug.Log("Load game Slot 0:");
             SaveGameManager.Load(0); //Trigger load at start of scenes to trigger all persistance objects observers
         }
         

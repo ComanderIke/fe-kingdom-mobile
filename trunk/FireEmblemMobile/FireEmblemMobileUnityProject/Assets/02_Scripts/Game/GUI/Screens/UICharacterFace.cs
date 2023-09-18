@@ -18,6 +18,7 @@ public class UICharacterFace : MonoBehaviour
     public void Show(Unit unit)
     {
 
+        gameObject.SetActive(true);
         if (unit != null)
         {
             unit.HpValueChanged -= UpdateHpBar;
@@ -72,9 +73,8 @@ public class UICharacterFace : MonoBehaviour
     }
 
 
-
-    
-  
-
- 
+    public void Hide()
+    {
+       gameObject.SetActive(false);
+    }
 }

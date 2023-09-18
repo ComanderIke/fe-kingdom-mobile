@@ -27,6 +27,7 @@ namespace LostGrace
         [SerializeField] private Image barBackground;
         [SerializeField] private Image handle;
         [SerializeField] private TextMeshProUGUI valueChangedText;
+        [SerializeField] private ParticleSystem fillParticles;
 
         private Morality morality;
         public void Show(Morality morality)
@@ -50,6 +51,7 @@ namespace LostGrace
 
         private void UpdateUI(float morality, float addedMorality)
         {
+            fillParticles.Play();
             Debug.Log("Morality: "+morality+" Added: "+addedMorality);
             valueChangedText.text = addedMorality>0?"+"+addedMorality:""+addedMorality;
             valueChangedText.gameObject.SetActive(true);
@@ -61,7 +63,7 @@ namespace LostGrace
                 val =>
                 {
                     moralitySlider.SetValueWithoutNotify(val);
-                });
+                }).setOnComplete(fillParticles.Stop);
          
             if (morality > 0)
             {

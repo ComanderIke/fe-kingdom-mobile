@@ -53,7 +53,7 @@ namespace Game.GameActors.Units.Numbers
 
         public StatsData GetSaveData()
         {
-            return new StatsData(Mov, BaseAttributes, AttackRanges);
+            return new StatsData(Mov, BaseAttributes, BaseGrowths, AttackRanges);
         }
 
         public int GetMaxAttackRange()
@@ -72,6 +72,7 @@ namespace Game.GameActors.Units.Numbers
 
             // stats.MaxSp = MaxSp;
             //  Debug.Log("Clone2Attriubtes");
+            stats.BaseGrowths = new Attributes(BaseGrowths);
             stats.BaseAttributes = new Attributes(BaseAttributes);
             stats.BonusGrowths = new Attributes(BonusGrowths);
             stats.BonusAttributesFromEffects = new Attributes(BonusAttributesFromEffects);
@@ -94,6 +95,7 @@ namespace Game.GameActors.Units.Numbers
             Mov = statsData.Mov;
             AttackRanges = statsData.AttackRanges;
             BaseAttributes = new Attributes(statsData.Attributes);
+            BaseGrowths = new Attributes(statsData.BaseGrowths);
         }
         public Attributes CombinedGrowths()
         {

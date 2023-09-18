@@ -70,6 +70,7 @@ public class UIPartyCharacterCircleController : MonoBehaviour, IClickedReceiver,
 
     public void Clicked(Unit unit)
     {
+        characterView.Show(unit);
         Debug.Log(("Clicked!"));
         for (int i = 0; i < party.members.Count; i++)
         {
@@ -87,10 +88,10 @@ public class UIPartyCharacterCircleController : MonoBehaviour, IClickedReceiver,
         layout.SetActive(true);
     }
 
-    public void PlusClicked(Unit unit)
-    {
-        characterView.Show(unit);
-    }
+    // public void PlusClicked(Unit unit)
+    // {
+    //     characterView.Show(unit);
+    // }
 
     public RectTransform GetUnitParticleAttractorTransform(Unit unit)
     {

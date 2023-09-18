@@ -120,11 +120,11 @@ namespace Game.GUI
 
         
 
-        public void PlusClicked()
-        {
-            
-            parentController.PlusClicked(unit);
-        }
+        // public void PlusClicked()
+        // {
+        //     
+        //     parentController.PlusClicked(unit);
+        // }
 
         public void Clicked()
         {
