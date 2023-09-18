@@ -91,6 +91,33 @@ namespace Game.GUI.EncounterUI.Inn
         {
             foreach(var unit in Player.Instance.Party.members)
                 unit.Heal((int)((unit.MaxHp/100f)*item.heal));
+            if (item.bonuses != 0)
+            {
+                if (item.bonusType == Recipe.InnBonusType.Exp)
+                {
+                    foreach (var member in party.members)
+                    {
+                        member.ExperienceManager.AddExp(item.bonuses);
+                    }
+                }
+                else if (item.bonusType == Recipe.InnBonusType.Permanent)
+                {
+                    foreach (var member in party.members)
+                    {
+                        foreach(var attType in item.AttributeType)
+                            member.Stats.BaseAttributes.IncreaseAttribute(item.bonuses,attType);
+                    }
+                }
+                else if (item.bonusType == Recipe.InnBonusType.Temporary)
+                {
+                    foreach (var member in party.members)
+                    {
+                        foreach(var attType in item.AttributeType)
+                            member.Stats.BonusAttributesFromFood.IncreaseAttribute(item.bonuses,attType);
+                    }
+                    Debug.Log("TODO Remove After Battle");
+                }
+            }
             Player.Instance.Party.AddGold(-item.price);
             used.Add(item);
             UpdateUI();

@@ -18,6 +18,7 @@ namespace LostGrace
         [SerializeField] private string labelSum;
         [SerializeField] private string labelWeapon;
         [SerializeField] private string labelRelic;
+        [SerializeField] private string labelFood;
         [SerializeField] private string labelEffects;
       
         [SerializeField] private LayoutGroup layoutGroup;
@@ -60,6 +61,16 @@ namespace LostGrace
                 var equipGo = Instantiate(statContainerPrefab, statContainerParent.transform);
                 var statContainerEquip= equipGo.GetComponent<StatContainerUI>();
                 statContainerEquip.SetValue(labelRelic, bonusFromEquips, true, bonusFromEquips>0?AttributeBonusState.Increasing:bonusFromEquips<0?AttributeBonusState.Decreasing:AttributeBonusState.Same);
+                instantiatedObjects.Add(equipGo);
+            }
+            int bonusFromFoods = unit.Stats.BonusAttributesFromFood.GetAttributeStat(attribute);
+          
+            if (bonusFromFoods != 0)
+            {
+                
+                var equipGo = Instantiate(statContainerPrefab, statContainerParent.transform);
+                var statContainerEquip= equipGo.GetComponent<StatContainerUI>();
+                statContainerEquip.SetValue(labelFood, bonusFromFoods, true, bonusFromFoods>0?AttributeBonusState.Increasing:bonusFromFoods<0?AttributeBonusState.Decreasing:AttributeBonusState.Same);
                 instantiatedObjects.Add(equipGo);
             }
             int bonusFromEffects = unit.Stats.BonusAttributesFromEffects.GetAttributeStat(attribute);

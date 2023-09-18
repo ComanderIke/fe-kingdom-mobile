@@ -73,7 +73,7 @@ namespace Game.GameActors.Units.Numbers
             sum.maxHp += b.maxHp;
             sum.dex += b.dex;
             sum.intel += b.intel;
-            sum.faith += b.def;
+            sum.faith += b.faith;
             return sum;
         }
         public static Attributes operator -(Attributes a, Attributes b)
@@ -86,7 +86,7 @@ namespace Game.GameActors.Units.Numbers
             sum.maxHp -= b.maxHp;
             sum.dex -= b.dex;
             sum.intel -= b.intel;
-            sum.faith -= b.def;
+            sum.faith -= b.faith;
             return sum;
         }
         public Attributes Clone()

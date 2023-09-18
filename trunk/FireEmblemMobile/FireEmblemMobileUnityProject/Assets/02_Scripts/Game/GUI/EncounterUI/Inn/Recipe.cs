@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using Game.GameActors.Units.Numbers;
+using UnityEngine;
 
 namespace Game.GUI.EncounterUI.Inn
 {
@@ -8,7 +10,17 @@ namespace Game.GUI.EncounterUI.Inn
         public int price;
         public string name;
         public int heal;
-        public string bonuses;
+        public int bonuses;
         public Sprite icon;
+        public InnBonusType bonusType;
+        public List<AttributeType> AttributeType;
+
+        public enum InnBonusType
+        {
+            Exp,
+            Temporary,
+            Permanent,
+            RefreshSkills,
+        }
     }
 }

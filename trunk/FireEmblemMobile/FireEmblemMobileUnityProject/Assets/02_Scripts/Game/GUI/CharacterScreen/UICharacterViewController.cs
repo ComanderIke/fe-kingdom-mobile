@@ -121,12 +121,13 @@ public class UICharacterViewController : MonoBehaviour
         
         STR.SetValue(unit.Stats.CombinedAttributes().STR,unit.Stats.GetAttributeBonusState(AttributeType.STR));
         INT.SetValue(unit.Stats.CombinedAttributes().INT,unit.Stats.GetAttributeBonusState(AttributeType.INT));
-        DEX.SetValue(unit.Stats.CombinedAttributes().DEX,unit.Stats.GetAttributeBonusState(AttributeType.DEF));
+        DEX.SetValue(unit.Stats.CombinedAttributes().DEX,unit.Stats.GetAttributeBonusState(AttributeType.DEX));
         AGI.SetValue(unit.Stats.CombinedAttributes().AGI,unit.Stats.GetAttributeBonusState(AttributeType.AGI));
         CON.SetValue(unit.Stats.CombinedAttributes().MaxHp,unit.Stats.GetAttributeBonusState(AttributeType.CON));
         FTH.SetValue(unit.Stats.CombinedAttributes().FAITH,unit.Stats.GetAttributeBonusState(AttributeType.FTH));
         LCK.SetValue(unit.Stats.CombinedAttributes().LCK,unit.Stats.GetAttributeBonusState(AttributeType.LCK));
         DEF.SetValue(unit.Stats.CombinedAttributes().DEF,unit.Stats.GetAttributeBonusState(AttributeType.DEF));
+        Debug.Log("FTH: "+unit.Stats.BaseAttributes.FAITH+" "+unit.Stats.CombinedAttributes().FAITH+" "+unit.Stats.BonusAttributesFromFood.FAITH+" "+unit.Stats.BonusAttributesFromEffects.FAITH+" "+unit.Stats.BonusAttributesFromEquips.FAITH+" "+unit.Stats.BonusAttributesFromWeapon.FAITH+" "+unit.Stats.BaseAttributesAndWeapons().FAITH+unit.Stats.GetAttributeBonusState(AttributeType.FTH));
     }
 
     public void CombatStatsButtonClicked()

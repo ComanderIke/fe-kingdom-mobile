@@ -17,6 +17,7 @@ namespace Game.GameActors.Units.Numbers
         [field:SerializeField] public Attributes BaseGrowths{ get; set; }
         public Attributes BonusAttributesFromEquips { get; set; }
         public Attributes BonusAttributesFromWeapon { get; set; }
+        public Attributes BonusAttributesFromFood { get; set; }
         public Attributes BonusAttributesFromEffects { get; set; }
         public CombatStats BonusStatsFromTerrain { get; set; }
         public CombatStats BonusStatsFromEffects { get; set; }
@@ -38,6 +39,7 @@ namespace Game.GameActors.Units.Numbers
             BonusAttributesFromEffects = new Attributes();
             BonusAttributesFromEquips = new Attributes();
             BonusAttributesFromWeapon = new Attributes();
+            BonusAttributesFromFood = new Attributes();
             BonusStatsFromEffects = new CombatStats();
             BonusStatsFromEquips = new CombatStats();
             BonusStatsFromTerrain = new CombatStats();
@@ -49,6 +51,7 @@ namespace Game.GameActors.Units.Numbers
 
 
         public Attributes BonusGrowths { get; set; }
+  
 
 
         public StatsData GetSaveData()
@@ -78,6 +81,7 @@ namespace Game.GameActors.Units.Numbers
             stats.BonusAttributesFromEffects = new Attributes(BonusAttributesFromEffects);
             stats.BonusAttributesFromWeapon = new Attributes(BonusAttributesFromWeapon);
             stats.BonusAttributesFromEquips = new Attributes(BonusAttributesFromEquips);
+            stats.BonusAttributesFromFood = new Attributes(BonusAttributesFromFood);
             stats.Mov = Mov;
             stats.BonusStatsFromEffects = new CombatStats(BonusStatsFromEffects);
             stats.BonusStatsFromTerrain = new CombatStats(BonusStatsFromTerrain);
@@ -103,7 +107,7 @@ namespace Game.GameActors.Units.Numbers
         }
         public Attributes CombinedAttributes()
         {
-            return BaseAttributes + BonusAttributesFromWeapon + BonusAttributesFromEffects + BonusAttributesFromEquips;
+            return BaseAttributes + BonusAttributesFromWeapon + BonusAttributesFromEffects + BonusAttributesFromEquips+ BonusAttributesFromFood;
         }
 
         public CombatStats CombinedBonusStats()
