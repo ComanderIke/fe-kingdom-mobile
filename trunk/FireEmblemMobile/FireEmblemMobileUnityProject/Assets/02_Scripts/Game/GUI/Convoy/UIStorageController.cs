@@ -124,7 +124,8 @@ public class UIStorageController : MonoBehaviour
     public void Hide()
     {
         Debug.Log("Hide Convoy");
-        storage.Deselect();
+        if(storage!=null)
+            storage.Deselect();
         canvas.enabled = false;
         OnHide?.Invoke();
     }

@@ -49,6 +49,10 @@ namespace LostGrace
            morality.OnMoralityChanged -= UpdateUI;
         }
 
+        public void Clicked()
+        {
+            ToolTipSystem.ShowMorality(morality.GetCurrentMoralityValue());
+        }
         private void UpdateUI(float morality, float addedMorality)
         {
             fillParticles.Play();

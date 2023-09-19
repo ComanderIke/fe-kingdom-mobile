@@ -8,7 +8,9 @@ using Game.GameActors.Units.Numbers;
 using Game.GameActors.Units.Skills;
 using Game.Mechanics.Battle;
 using Game.Utility;
+using Game.WorldMapStuff.Model;
 using LostGrace;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -24,6 +26,8 @@ public class ToolTipSystem : MonoBehaviour
     public AttributeValueTooltipUI AttributeValueTooltipUI;
     public CombatStatValueTooltipUI CombatStatalueTooltipUI;
     public RelicToolTip relicToolTip;
+    public UITimeOfDayTooltip TimeOfDayTooltip;
+    public UIMoralityBarTooltip MoralityBarTooltip;
     public void Awake()
     {
         instance = this;
@@ -35,11 +39,13 @@ public class ToolTipSystem : MonoBehaviour
         instance.relicToolTip.gameObject.SetActive(false);
         instance.WeaponToolTip.gameObject.SetActive(false);
 
+        instance.MoralityBarTooltip.gameObject.SetActive(false);
         instance.skillToolTip.gameObject.SetActive(false);
         instance.AttributeToolTip.gameObject.SetActive(false);
         //instance.skillTreeToolTip.gameObject.SetActive(false);
         instance.ItemToolTip.gameObject.SetActive(false);
         instance.CombatStatalueTooltipUI.gameObject.SetActive(false);
+        instance.TimeOfDayTooltip.gameObject.SetActive(false);
         instance.AttributeValueTooltipUI.gameObject.SetActive(false);
         
     }
@@ -143,5 +149,20 @@ public class ToolTipSystem : MonoBehaviour
         instance.AttributeToolTip.gameObject.SetActive(false);
     }
 
-    
+
+    public static void ShowTimeOfDay(float hour, TimeOfDayBonuses bonus)
+    {
+        instance.tooltipShownThisFrame = true;
+        CloseAllToolTips();
+        instance.TimeOfDayTooltip.Show((int) hour, bonus);
+        instance.TimeOfDayTooltip.gameObject.SetActive(true);
+    }
+
+    public static void ShowMorality(float morality)
+    {
+        instance.tooltipShownThisFrame = true;
+        CloseAllToolTips();
+        instance.MoralityBarTooltip.Show(morality);
+        instance.MoralityBarTooltip.gameObject.SetActive(true);
+    }
 }
