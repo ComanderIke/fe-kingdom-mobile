@@ -13,8 +13,8 @@ public class AnimationStateManager
     public event Action OnFinished;
     
     private TimeLineController TimeLineController;
-    public float timeBetweenAttacks = 1.0f;
-    public float EndBattleWaitDuration = 0.5f;
+    public float timeBetweenAttacks = 0.40f;
+    public float EndBattleWaitDuration = 0.3f;
     private CharacterCombatAnimations characterAnimations;
     public CombatTextRenderer CombatTextRenderer;
     private BattleSimulation battleSimulation;

@@ -149,7 +149,7 @@ namespace Game.Mechanics
         }
 
         private ActiveSkillMixin activeSkillMixin;
-        public void ClickedOnGrid(int x, int y)
+        public void ClickedOnGrid(int x, int y, bool resetPosition=false)
         {
             if (activeSkillMixin is IPosTargeted psm)
             {
@@ -338,7 +338,7 @@ namespace Game.Mechanics
             //
         }
 
-        public void ResetInput()
+        public void ResetInput(bool drag=false)
         {
             //
         }

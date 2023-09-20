@@ -13,10 +13,10 @@ namespace Game.GUI.Text
         public Image BackGround;
         public TMP_ColorGradient []TextGradients;
         public string[] phaseTexts;
-        private const float FADE_IN_DURATION =  0.20f;
-        private const float FADE_OUT_DURATION = 0.20f;
-        private const float TEXT_FADE_IN_DURATION = 0.50f;
-        private const float TEXT_FADE_OUT_DURATION = 0.50f;
+       [SerializeField] float FADE_IN_DURATION =  0.15f;
+       [SerializeField] float FADE_OUT_DURATION = 0.15f;
+       [SerializeField] float TEXT_FADE_IN_DURATION = 0.70f;
+       [SerializeField] float TEXT_FADE_OUT_DURATION = 0.70f;
 
         void Awake()
         {

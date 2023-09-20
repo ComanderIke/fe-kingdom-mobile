@@ -539,7 +539,7 @@ namespace Game.GameActors.Units
         }
         public void SetInternGridPosition(Tile newTile)
         {
-            Debug.Log("Set Intern Position: "+newTile.X+" "+newTile.Y+" OldTile: "+GridComponent.Tile.X+" "+GridComponent.Tile.Y);
+            //Debug.Log("Set Intern Position: "+newTile.X+" "+newTile.Y+" OldTile: "+GridComponent.Tile.X+" "+GridComponent.Tile.Y);
             UpdateTerrainBonuses(GridComponent.Tile, newTile);
             GridComponent.SetInternPosition(newTile);
         }

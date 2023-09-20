@@ -71,7 +71,7 @@ namespace Game.GameInput
                 inputReceiver.DraggedOnObject(tile.GridObject);
             }
 
-            ResetInput();
+            ResetInput(true);
         }
 
         public void ActorDoubleClicked(IGridActor unit)
@@ -140,11 +140,11 @@ namespace Game.GameInput
             return x == lastDragPosX && y == lastDragPosY;
         }
 
-        public void ResetInput()
+        public void ResetInput(bool drag=false)
         {
             lastDragPosX = -1;
             lastDragPosY = -1;
-            inputReceiver.ResetInput();
+            inputReceiver.ResetInput(drag);
             OnResetInput?.Invoke();
         }
 

@@ -70,14 +70,14 @@ namespace Game.Mechanics
             
             GameplayCommands.OnViewUnit -= ViewUnit;
             gridGameManager.GetSystem<GridSystem>().cursor.OnCursorPositionChanged -= CursorPosChanged;
-            gridInputSystem.ResetInput();
+            gridInputSystem.ResetInput(true);
             gridInputSystem.SetActive(false);
             unitInputSystem.SetActive(false);
             foreach (var unit in factionManager.Factions[1].Units)
             {
                 unit.visuals.unitRenderer.HideTemporaryVisuals();
             }
-               Debug.Log("Exit MAIN PLAYER PHASE STATE");
+            Debug.Log("Exit MAIN PLAYER PHASE STATE");
             playerPhaseUI.Hide();
             playerPhaseUI.HideTileInfo();
         }

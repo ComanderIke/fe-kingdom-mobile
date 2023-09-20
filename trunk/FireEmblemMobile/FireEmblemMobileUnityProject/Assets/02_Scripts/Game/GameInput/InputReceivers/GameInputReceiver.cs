@@ -38,12 +38,13 @@ namespace Game.GameInput
         {
             Debug.Log("DraggedOnGrid");
             selectionDataProvider.SetSelectedTile(x, y);
-            ClickedOnGrid(x, y);
+            ClickedOnGrid(x, y, true);
         }
 
-        public void ResetInput()
+        public void ResetInput(bool drag=false)
         {
-            SetUnitToOriginPosition(false, false);
+            if(!drag)
+                SetUnitToOriginPosition(false, false);
             inputPathManager.Reset();
             selectionDataProvider.ClearData();
            
@@ -94,6 +95,7 @@ namespace Game.GameInput
         }
         void SetUnitToOriginPosition(bool deleteOtherGridObject=true, bool moveGameObject=true)
         {
+            Debug.Log("SetUnitToOriginPosition");
             if(selectionDataProvider.SelectedActor!=null)
                 gridSystem.SetUnitPosition(selectionDataProvider.SelectedActor, selectionDataProvider.SelectedActor.GridComponent.OriginTile, deleteOtherGridObject, moveGameObject);
            // selectionDataProvider.SelectedActor.SetToOriginPosition();
@@ -139,7 +141,7 @@ namespace Game.GameInput
                 {
                     Debug.Log("Dragged over selected Actor");
                
-                    ResetInput();
+                    ResetInput(true);
                     UpdateMovementPath(selectionDataProvider.SelectedActor);
                 }
                 else
@@ -238,9 +240,9 @@ namespace Game.GameInput
             }
         }
 
-        public void ClickedOnGrid(int x, int y)
+        public void ClickedOnGrid(int x, int y, bool resetPosition=false)
             {
-                if(selectionDataProvider.SelectedActor!=null)
+                if(!resetPosition&&selectionDataProvider.SelectedActor!=null)
                     SetUnitToOriginPosition();
                 gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
                 if (!gridSystem.GridLogic.IsTileFree(x, y))

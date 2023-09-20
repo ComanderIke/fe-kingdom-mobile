@@ -13,7 +13,7 @@ public class TimeLineController : MonoBehaviour
     public TimelineAsset cameraZoomOut;
     public CameraShake cameraShake;
     public new Camera camera;
-    public float introWaitDuration = 0.5f;
+    public float introWaitDuration = 1.2f;
     public float introWalkInPlaySpeed = 1.8f;
     public float magnitude = 0.1f;
     public float duration = 0.1f;
@@ -58,7 +58,7 @@ public class TimeLineController : MonoBehaviour
         
         PlayAtSpeed(playableDirector, introWalkInPlaySpeed);
         
-        Invoke("IntroFinished", (float)playableDirector.duration / introWalkInPlaySpeed + introWaitDuration);
+        Invoke("IntroFinished", introWaitDuration);
     }
 
     void PlayIntro(bool reverse)

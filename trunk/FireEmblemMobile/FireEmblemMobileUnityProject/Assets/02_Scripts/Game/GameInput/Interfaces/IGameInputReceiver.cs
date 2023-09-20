@@ -5,7 +5,7 @@ namespace Game.GameInput
 {
     public interface IGameInputReceiver
     {
-        void ClickedOnGrid(int x, int y);
+        void ClickedOnGrid(int x, int y, bool resetPosition=false);
         void DraggedOnGrid(int gridPosX, int gridPosY);
         void DraggedOverGrid(int gridPosX, int gridPosY);
         void ClickedOnActor(IGridActor unit);
@@ -13,7 +13,7 @@ namespace Game.GameInput
         void DraggedOnObject(IGridObject gridObject);
         void DraggedOverObject(IGridObject gridObject);
         void StartDraggingActor(IGridActor actor);
-        void ResetInput();
+        void ResetInput(bool drag=false);
         void UndoClicked();
         
         void ClickedDownOnGrid(int x, int y);
