@@ -20,6 +20,8 @@ namespace LostGrace
     {
         [SerializeField] private UIMenu characterSelectMenu;
         [SerializeField] private UIMenu upgradeMenu;
+        [SerializeField] private GameObject backGround;
+        [SerializeField] private GameObject sanctuary;
       
         [Header("SaveLoadStuff: ")]
 
@@ -56,6 +58,8 @@ namespace LostGrace
             upgradesButton.interactable = false;
             backButton.interactable = false;
             tutorialButton.interactable = false;
+            sanctuary.gameObject.SetActive(true);
+            backGround.gameObject.SetActive(false);
 
         }
 
@@ -112,6 +116,8 @@ namespace LostGrace
 
             TweenUtility.FadeIn(Fade).setOnComplete(()=>
             {
+                sanctuary.gameObject.SetActive(false);
+                backGround.gameObject.SetActive(true);
                 base.Hide();
                 nextMenu?.Show();
                 TweenUtility.FadeOut(Fade);
