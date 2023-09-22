@@ -58,23 +58,23 @@ namespace LostGrace
                      instantiatedObjects.Add(go);
                      break;
                  case CombatStats.CombatStatType.Crit: 
-                     bonusState=unit.Stats.GetAttributeBonusState(AttributeType.DEX);
-                   
-                    
-                     statContainer.SetValue(Attributes.GetAsText((int)AttributeType.DEX), unit.Stats.CombinedAttributes().DEX,false, bonusState);
-                     instantiatedObjects.Add(go);
+                     // bonusState=unit.Stats.GetAttributeBonusState(AttributeType.DEX);
+                     //
+                     //
+                     // statContainer.SetValue(Attributes.GetAsText((int)AttributeType.DEX), unit.Stats.CombinedAttributes().DEX,false, bonusState);
+                     // instantiatedObjects.Add(go);
                      var go2 = Instantiate(statContainerPrefab, statContainerParent);
                      var statContainer2 = go2.GetComponent<StatContainerUI>();
                      bonusState=unit.Stats.GetAttributeBonusState(AttributeType.LCK);
                      statContainer2.SetValue(Attributes.GetAsText((int)AttributeType.LCK), unit.Stats.CombinedAttributes().LCK,false, bonusState);
                      instantiatedObjects.Add(go2);
                      break;
-                 case CombatStats.CombatStatType.Critavoid: 
-                    
-                     bonusState=unit.Stats.GetAttributeBonusState(AttributeType.LCK);
-                     statContainer.SetValue(Attributes.GetAsText((int)AttributeType.LCK)+" * "+BattleStats.CRIT_AVO_LCK_MULT, unit.Stats.CombinedAttributes().LCK*BattleStats.CRIT_AVO_LCK_MULT,false, bonusState);
-                     instantiatedObjects.Add(go);
-                     break;
+                 // case CombatStats.CombatStatType.Critavoid: 
+                 //    
+                 //     bonusState=unit.Stats.GetAttributeBonusState(AttributeType.LCK);
+                 //     statContainer.SetValue(Attributes.GetAsText((int)AttributeType.LCK)+" * "+BattleStats.CRIT_AVO_LCK_MULT, unit.Stats.CombinedAttributes().LCK*BattleStats.CRIT_AVO_LCK_MULT,false, bonusState);
+                 //     instantiatedObjects.Add(go);
+                 //     break;
                  case CombatStats.CombatStatType.Hit: 
                     
                      bonusState=unit.Stats.GetAttributeBonusState(AttributeType.DEX);

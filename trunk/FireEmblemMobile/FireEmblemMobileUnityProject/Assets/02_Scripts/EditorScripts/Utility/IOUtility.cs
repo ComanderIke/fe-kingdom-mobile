@@ -565,6 +565,7 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                 {
                     Text = nodeChoice.Text,
                     ItemRequirements = new List<ItemBP>(nodeChoice.ItemRequirements),
+                    ResourceRequirements = new List<ResourceEntry>(nodeChoice.ResourceRequirements),
                     CharacterRequirement = nodeChoice.CharacterRequirement,
                     AttributeRequirements = new List<ResponseStatRequirement>(nodeChoice.AttributeRequirements)
                   
@@ -597,6 +598,7 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                     NodeID = choice.NodeID,
                     NodeFailID = choice.NodeFailID,
                     ItemRequirements = new List<ItemBP>(choice.ItemRequirements),
+                    ResourceRequirements = new List<ResourceEntry>(choice.ResourceRequirements),
                     CharacterRequirement= choice.CharacterRequirement,
                     AttributeRequirements = new List<ResponseStatRequirement>(choice.AttributeRequirements)
                     

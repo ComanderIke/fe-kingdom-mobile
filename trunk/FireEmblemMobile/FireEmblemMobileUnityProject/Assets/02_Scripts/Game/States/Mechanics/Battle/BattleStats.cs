@@ -267,12 +267,13 @@ namespace Game.Mechanics.Battle
 
         public int GetCrit()
         {
-            return owner.Stats.CombinedAttributes().LCK+owner.Stats.CombinedAttributes().DEX+ owner.Stats.CombinedBonusStats().Crit;
+            return owner.Stats.CombinedAttributes().LCK+ owner.Stats.CombinedBonusStats().Crit;
         }
         public const int CRIT_AVO_LCK_MULT=2;
         public int GetCritAvoid()
         {
-            return owner.Stats.CombinedAttributes().LCK*CRIT_AVO_LCK_MULT+ owner.Stats.CombinedBonusStats().CritAvoid;
+            return 0;
+           // return owner.Stats.CombinedAttributes().LCK*CRIT_AVO_LCK_MULT+ owner.Stats.CombinedBonusStats().CritAvoid;
         }
 
         public int GetPhysicalResistance()

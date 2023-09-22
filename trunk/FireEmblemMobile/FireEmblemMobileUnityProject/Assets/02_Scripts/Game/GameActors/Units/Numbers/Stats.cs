@@ -142,14 +142,14 @@ namespace Game.GameActors.Units.Numbers
                     combinedAttributeValue = CombinedAttributes().AGI * BattleStats.AVO_AGI_MULT;
                     break;
                 case CombatStats.CombatStatType.Crit:
-                    baseAttributeValue = BaseAttributesAndWeapons().DEX + BaseAttributesAndWeapons().LCK;
+                    baseAttributeValue = BaseAttributesAndWeapons().LCK;
                     combinedAttributeValue =
-                        CombinedAttributes().DEX + CombinedAttributes().LCK;
+                        CombinedAttributes().LCK;
                     break;
-                case CombatStats.CombatStatType.Critavoid:
-                    baseAttributeValue = BaseAttributesAndWeapons().LCK * BattleStats.CRIT_AVO_LCK_MULT;
-                    combinedAttributeValue = CombinedAttributes().LCK * BattleStats.CRIT_AVO_LCK_MULT;
-                    break;
+                // case CombatStats.CombatStatType.Critavoid:
+                //     baseAttributeValue = BaseAttributesAndWeapons().LCK * BattleStats.CRIT_AVO_LCK_MULT;
+                //     combinedAttributeValue = CombinedAttributes().LCK * BattleStats.CRIT_AVO_LCK_MULT;
+                //     break;
                 case CombatStats.CombatStatType.Hit:
                     baseAttributeValue = BaseAttributesAndWeapons().DEX * BattleStats.HIT_DEX_MULT;
                     combinedAttributeValue = CombinedAttributes().DEX * BattleStats.HIT_DEX_MULT;

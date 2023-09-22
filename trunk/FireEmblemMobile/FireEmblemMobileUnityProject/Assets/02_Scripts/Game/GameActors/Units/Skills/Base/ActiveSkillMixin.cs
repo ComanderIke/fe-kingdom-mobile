@@ -36,5 +36,10 @@ namespace Game.GameActors.Units.Skills
         {
             return hpCostPerLevel[level];
         }
+
+        public void RefreshUses(int level)
+        {
+            Uses = GetMaxUses(level);
+        }
     }
 }

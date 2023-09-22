@@ -57,7 +57,8 @@ namespace LostGrace
                 hour = 0;
             this.hour = hour;
             lightController.UpdateHour(hour);
-            circleUI.Rotate(hour);
+            if(circleUI!=null)
+                circleUI.Rotate(hour);
         }
 
         public void ElapseTimeStep()
@@ -84,7 +85,8 @@ namespace LostGrace
                
                 
                 lightController.UpdateHourFixed(currentHour);
-                circleUI.RotateFixed(currentHour);
+                if(circleUI!=null)
+                    circleUI.RotateFixed(currentHour);
             }).setEaseInOutQuad();
             hour = 6;
             // lightController.UpdateHour(hour);

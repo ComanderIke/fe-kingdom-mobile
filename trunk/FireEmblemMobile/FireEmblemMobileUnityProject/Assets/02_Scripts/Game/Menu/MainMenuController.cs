@@ -12,7 +12,7 @@ namespace Game.GUI
         public static MainMenuController Instance;
         
         [SerializeField] private UIMenu optionsMenu;
-        [SerializeField] private UIMenu hubMenu;
+        [SerializeField] private POIManager hubMenu;
         [SerializeField] private UIMenu selectFileUI;
         private static readonly int Show1 = Animator.StringToHash("Show");
         private static readonly int Side = Animator.StringToHash("Side");

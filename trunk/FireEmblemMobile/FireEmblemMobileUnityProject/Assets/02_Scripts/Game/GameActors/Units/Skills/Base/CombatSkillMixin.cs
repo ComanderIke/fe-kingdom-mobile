@@ -95,5 +95,9 @@ namespace Game.GameActors.Units.Skills
         }
 
 
+        public void RefreshUses(int skillLevel)
+        {
+            Uses = GetMaxUses(skillLevel);
+        }
     }
 }

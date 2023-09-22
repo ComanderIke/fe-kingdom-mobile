@@ -16,6 +16,7 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
         [field: SerializeField] public List<ResponseStatRequirement> AttributeRequirements { get; set; }
         [field: SerializeField] public UnitBP CharacterRequirement { get; set; }
         [field: SerializeField] public List<ItemBP> ItemRequirements { get; set; }
+        [field: SerializeField] public List<ResourceEntry> ResourceRequirements { get; set; }
         
     }
 }

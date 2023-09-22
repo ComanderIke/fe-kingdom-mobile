@@ -154,12 +154,12 @@ namespace Game.Mechanics
             if (activeSkillMixin is IPosTargeted psm)
             {
                 Debug.Log("PostargetSkill");
-                 PositionTargetClicked(psm , x, y);
+                 PositionTargetClicked(psm , x, y, true);
                
             }
             else if (selectedItem is IPosTargeted throwableItem)
             {
-                 PositionTargetClicked(throwableItem, x,y);
+                 PositionTargetClicked(throwableItem, x,y, false);
             }
             else if (activeSkillMixin is SingleTargetMixin stm)
             {
@@ -187,7 +187,7 @@ namespace Game.Mechanics
             }
         }
 
-        private void PositionTargetClicked(IPosTargeted skill, int x, int y )
+        private void PositionTargetClicked(IPosTargeted skill, int x, int y, bool wait)
         {
              if (!skill.Rooted)
              {
@@ -200,7 +200,8 @@ namespace Game.Mechanics
                          var targets = skill.GetAllTargets(selectedUnit, gridSystem.Tiles, x,y);
                          skill.Activate(selectedUnit, gridSystem.Tiles, x,y);
                          LastSkillTargetPosition = new Vector2Int(x, y);
-                         new GameplayCommands().Wait(selectedUnit);
+                         if(wait)
+                            new GameplayCommands().Wait(selectedUnit);
                          new GameplayCommands().ExecuteInputActions(()=>
                          {
                              Debug.Log("TRIGGER CANCEL");
@@ -242,7 +243,8 @@ namespace Game.Mechanics
                      {
                          LastSkillTargetPosition = new Vector2Int(x, y);
                          skill.Activate(selectedUnit, gridSystem.Tiles, x,y);
-                         new GameplayCommands().Wait(selectedUnit);
+                         if(wait)
+                            new GameplayCommands().Wait(selectedUnit);
                          new GameplayCommands().ExecuteInputActions(()=>
                          {
                              playerPhaseState.Feed(PPStateTrigger.Cancel);

@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb843360a1e2024e9821031d19ee784, type: 3}
+  m_Name: ArmorKnightBP
+  m_EditorClassIdentifier: 
+  equippedWeaponBp: {fileID: 11400000, guid: 27fd3d36673542546a88f62a5ca45b0b, type: 2}
+  EquippedRelic1: {fileID: 11400000, guid: 647852495d9c59d4ea6316a815ed33ec, type: 2}
+  Name: ArmorKnight
+  combatItem1:
+    stock: 2
+    item: {fileID: 11400000, guid: c46079ef11e72164786330c04a1d6b63, type: 2}
+  combatItem2:
+    stock: 1
+    item: {fileID: 11400000, guid: db76b2fbece176940a46e35ffc806a11, type: 2}
+  stats:
+    AttackRanges: 01000000
+    BaseAttributes:
+      str: 7
+      intel: 6
+      dex: 6
+      agi: 12
+      maxHp: 0
+      lck: 6
+      def: 2
+      faith: 6
+    <BaseGrowths>k__BackingField:
+      str: 50
+      intel: 50
+      dex: 50
+      agi: 50
+      maxHp: 50
+      lck: 50
+      def: 50
+      faith: 50
+    Mov: 8
+  moveType: {fileID: 11400000, guid: 8ac0c8542b09d2e41b8cd5b26a5ebc20, type: 2}
+  SkillManager:
+    startSkills:
+    - {fileID: 11400000, guid: 50270911ef7144c43be3951bea8c29e2, type: 2}
+    - {fileID: 11400000, guid: 91a6b34b255eb4e4ba7aebd80409d22c, type: 2}
+    - {fileID: 11400000, guid: 75eb5648732a9d64194be18be03cf128, type: 2}
+    - {fileID: 11400000, guid: 7d1892e9df06bf543ad8017568952a2a, type: 2}
+    maxSkillCount: 0
+    skillPoints: 1
+  rpgClass: 7
+  bluePrintID: ArmorKnight
+  dialogActor: {fileID: 0}
+  visuals:
+    CharacterSpriteSet: {fileID: 11400000, guid: 0d6a4708cd96f9743b309d04b2d3861f,
+      type: 2}
+    CharacterClassUpgradeSpriteSet: {fileID: 11400000, guid: cb9a4612465bfe14093bc1662add9918,
+      type: 2}
+    UnitEffectVisual: {fileID: 11400000, guid: af10e6087dc82f34ebed15c0092e0174, type: 2}
+    Prefabs:
+      MapAnimatedSprite: {fileID: 2861010742256422526, guid: 3023e7b61d707844091efebe0d84d607,
+        type: 3}
+      EncounterAnimatedSprite: {fileID: 6168332596698552260, guid: 1e9adafc6c1020742ae6e972b41464ca,
+        type: 3}
+      UIAnimatorController: {fileID: 22100000, guid: b4bfd81d4edae7f468fe36513d7c3160,
+        type: 2}
+    UnitCharacterCircleUI: {fileID: 0}
+    unitRenderer: {fileID: 0}
+  audio: {fileID: 0}
+  experienceManager:
+    level: 1
+    exp: 0
+    drainableExp: 100
+    expLeftToDrain: 100

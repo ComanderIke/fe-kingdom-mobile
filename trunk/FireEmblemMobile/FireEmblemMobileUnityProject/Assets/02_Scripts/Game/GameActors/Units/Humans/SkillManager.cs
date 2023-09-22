@@ -156,5 +156,20 @@ namespace Game.GameActors.Units.Humans
                 }
             }
         }
+
+        public void RefreshSkills()
+        {
+            foreach (var skill in skills)
+            {
+                if (skill.FirstActiveMixin != null)
+                {
+                    skill.FirstActiveMixin.RefreshUses(skill.level);
+                }
+                if (skill.CombatSkillMixin != null)
+                {
+                    skill.CombatSkillMixin.RefreshUses(skill.level);
+                }
+            }
+        }
     }
 }

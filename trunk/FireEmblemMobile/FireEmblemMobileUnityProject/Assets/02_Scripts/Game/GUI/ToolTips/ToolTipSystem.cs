@@ -39,7 +39,8 @@ public class ToolTipSystem : MonoBehaviour
         instance.relicToolTip.gameObject.SetActive(false);
         instance.WeaponToolTip.gameObject.SetActive(false);
 
-        instance.MoralityBarTooltip.gameObject.SetActive(false);
+        if(instance.MoralityBarTooltip!=null)
+            instance.MoralityBarTooltip.gameObject.SetActive(false);
         instance.skillToolTip.gameObject.SetActive(false);
         instance.AttributeToolTip.gameObject.SetActive(false);
         //instance.skillTreeToolTip.gameObject.SetActive(false);

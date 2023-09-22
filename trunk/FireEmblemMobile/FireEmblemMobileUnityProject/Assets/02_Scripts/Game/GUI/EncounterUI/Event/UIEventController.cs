@@ -117,67 +117,48 @@ public class UIEventController : MonoBehaviour
         {
             string statText = "";
             TextOptionState textOptionType = TextOptionState.Normal;
-            if (textOption.CharacterRequirement != null)
-            {
-                bool contains = false;
-               
-                    if (party.MembersContainsByBluePrintID(textOption.CharacterRequirement.bluePrintID))
-                    {
-                        contains = true;
-                        textOptionType = TextOptionState.Secret;
-                    }
-                
-                if(!contains)
-                    continue;
-                
-            }
-            if (textOption.ItemRequirements != null&&textOption.ItemRequirements.Count>0)
+            //make all requirements GO and check and if some of them are not met make them RED
+            if (RequirementsMet(textOption))
             {
                
-                bool contains = false;
-                foreach (var req in textOption.ItemRequirements)
+                textOptionType = TextOptionState.Secret;
+                      
+                if (textOption.AttributeRequirements != null && textOption.AttributeRequirements.Count > 0)
                 {
-                    if (party.Convoy.ContainsItem(req.Create()))
+                    float combinedChance = 1;
+                    Unit compareUnit = party.ActiveUnit;
+                    if(textOption.CharacterRequirement!=null&&party.MembersContainsByBluePrintID(textOption.CharacterRequirement.bluePrintID))
+                     compareUnit = party.GetMembersContainsBluePrintID(textOption.CharacterRequirement.bluePrintID);
+                    foreach (var req in textOption.AttributeRequirements)
                     {
-                        contains = true;
-                        textOptionType = TextOptionState.Secret;
+                        float chance = GetSuccessChance(req, compareUnit);
+
+                        combinedChance *= chance;
+                       
                     }
+
+                    if (combinedChance >= 0.8f)
+                        textOptionType = TextOptionState.High;
+                    else if (combinedChance <= 0.2f)
+                        textOptionType = TextOptionState.Low;
+                    else if (combinedChance <= 0.5f)
+                        textOptionType = TextOptionState.Lowish;
+                    else
+                    {
+                        textOptionType = TextOptionState.Normal;
+                    }
+
+                    statText = combinedChance * 100f + " %";
+
                 }
-                if(!contains)
-                    continue;
-                
-            }
-
-            
-            if (textOption.AttributeRequirements != null && textOption.AttributeRequirements.Count > 0)
-            {
-                float combinedChance = 1;
-                Unit compareUnit = party.ActiveUnit;
-                if(textOption.CharacterRequirement!=null&&party.MembersContainsByBluePrintID(textOption.CharacterRequirement.bluePrintID))
-                 compareUnit = party.GetMembersContainsBluePrintID(textOption.CharacterRequirement.bluePrintID);
-                foreach (var req in textOption.AttributeRequirements)
-                {
-                    float chance = GetSuccessChance(req, compareUnit);
-
-                    combinedChance *= chance;
-                   
-                }
-
-                if (combinedChance >= 0.8f)
-                    textOptionType = TextOptionState.High;
-                else if (combinedChance <= 0.2f)
-                    textOptionType = TextOptionState.Low;
-                else if (combinedChance <= 0.5f)
-                    textOptionType = TextOptionState.Lowish;
-                else
-                {
-                    textOptionType = TextOptionState.Normal;
-                }
-
-                statText = combinedChance * 100f + " %";
-
-            }
            
+            }
+            else
+            {
+                textOptionType = TextOptionState.Locked;
+            }
+            
+         
             GameObject prefab = textOptionPrefab;
             if (textOption.NextDialogue is LGFightEventDialogSO)
                 prefab = fightOptionPrefab;
@@ -271,10 +252,10 @@ public class UIEventController : MonoBehaviour
 
     bool HasRequirement(LGDialogChoiceData choiceData)
     {
-        return choiceData.CharacterRequirement != null|| (choiceData.ItemRequirements!=null&&choiceData.ItemRequirements.Count>0)||(choiceData.AttributeRequirements!=null&&choiceData.AttributeRequirements.Count>0);
+        return choiceData.CharacterRequirement != null|| (choiceData.ItemRequirements!=null&&choiceData.ItemRequirements.Count>0)|| (choiceData.ResourceRequirements!=null&&choiceData.ResourceRequirements.Count>0)||(choiceData.AttributeRequirements!=null&&choiceData.AttributeRequirements.Count>0);
     }
 
-    bool RequirementSuccess(LGDialogChoiceData choiceData)
+    bool RequirementsMet(LGDialogChoiceData choiceData)
     {
         if (!HasRequirement(choiceData))
             return true;
@@ -285,25 +266,56 @@ public class UIEventController : MonoBehaviour
                 return false;
             }
         }
+        foreach (var res in choiceData.ResourceRequirements)
+        {
+            switch (res.ResourceType)
+            {
+                case ResourceType.Gold: 
+                    if (!party.CanAfford(res.Amount))
+                    {
+                        return false;
+                    } break;
+                case ResourceType.Grace:
+                    if (party.CollectedGrace<res.Amount)
+                    {
+                        return false;
+                    } break;
+                case ResourceType.HP_Percent: 
+                    if (party.ActiveUnit.Hp<party.ActiveUnit.MaxHp*res.Amount)
+                    {
+                        return false;
+                    } 
+                    break;
+            }
+            
+        }
 
         Unit compareUnit = party.ActiveUnit;
-        if(choiceData.CharacterRequirement!=null)
-          compareUnit = party.GetMembersContainsBluePrintID(choiceData.CharacterRequirement.bluePrintID);
+        if (choiceData.CharacterRequirement != null)
+        {
+            if (party.GetMembersContainsBluePrintID(choiceData.CharacterRequirement.bluePrintID) == null)
+                return false;
+        }
+        return true;
+
+    }
+
+    bool CheckAttributeRequirementsSuccess(LGDialogChoiceData choiceData)
+    {
         float combinedChance = 1.0f;
         foreach (var statReq in choiceData.AttributeRequirements)
         {
-            float chance=GetSuccessChance(statReq, compareUnit);
+            float chance=GetSuccessChance(statReq, party.ActiveUnit);
             combinedChance *= chance;
         }
 
-        party.SetActiveUnit(compareUnit);
+        
         return UnityEngine.Random.value <= combinedChance;
-
     }
    
     public void OptionClicked(TextOptionController textOptionController)
     {
-        if (RequirementSuccess(textOptionController.Option))
+        if (CheckAttributeRequirementsSuccess(textOptionController.Option))
         {
             
             current = textOptionController.Option;
@@ -432,7 +444,8 @@ public class UIEventController : MonoBehaviour
         if(currentNode.RewardItems!=null)
             foreach (var item in currentNode.RewardItems)
             {
-                 Player.Instance.Party.AddItem(item.Create()); break;
+                if(item !=null)
+                    Player.Instance.Party.AddItem(item.Create());
             }
         
     }

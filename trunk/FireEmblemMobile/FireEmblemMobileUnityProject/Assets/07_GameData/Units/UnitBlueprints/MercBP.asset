@@ -17,7 +17,7 @@ MonoBehaviour:
   Name: John
   combatItem1:
     stock: 1
-    item: {fileID: 11400000, guid: bde8571dc90c8034a8e7711defbac057, type: 2}
+    item: {fileID: 0}
   combatItem2:
     stock: 0
     item: {fileID: 0}
@@ -28,7 +28,7 @@ MonoBehaviour:
       intel: 6
       dex: 15
       agi: 6
-      con: 6
+      maxHp: 0
       lck: 6
       def: 6
       faith: 6
@@ -37,19 +37,18 @@ MonoBehaviour:
       intel: 0
       dex: 0
       agi: 0
-      con: 0
+      maxHp: 0
       lck: 0
       def: 0
       faith: 0
     Mov: 5
   moveType: {fileID: 11400000, guid: d13592b1fa0af024a841b121149b8014, type: 2}
   SkillManager:
-    startSkills:
-    - {fileID: 11400000, guid: 9a11bbe18cbaf5f4aab101ca8b350ce9, type: 2}
+    startSkills: []
     maxSkillCount: 0
     skillPoints: 0
   rpgClass: 1
-  bluePrintID: Merc
+  bluePrintID: Mercenary
   dialogActor: {fileID: 0}
   visuals:
     CharacterSpriteSet: {fileID: 11400000, guid: c185c26f8316f0e4085cfdb9f4d4d5d2,

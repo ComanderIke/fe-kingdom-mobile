@@ -11,6 +11,8 @@ namespace Game.GameActors.Units
         Cavalier,
         ScorpionRider,
         Cleric,
-        Valkyrie
+        Valkyrie,
+        Rogue,
+        ArmorKnight
     }
 }

@@ -38,7 +38,8 @@ namespace Effects
         {
             lightBaseIntensity = lightSource.intensity;
             sunShaftBaseIntensity = sunShafts[0].intensity;
-            sunSpotsBaseIntensity = sunSpots[0].intensity;
+            if(sunSpots.Count>0)
+                sunSpotsBaseIntensity = sunSpots[0].intensity;
            
         }
          float time = 0;
@@ -141,6 +142,8 @@ namespace Effects
             }
 
             lerpFromIntensity_sunShaft = sunShafts[0].intensity;
+            if (sunSpots.Count <= 0)
+                return;
             lerpFromIntensity_sunSpot = sunSpots[0].intensity;
             //hour 0 = intensitty0
             //hour 12 = intensity 1

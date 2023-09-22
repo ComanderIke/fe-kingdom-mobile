@@ -5,6 +5,7 @@ using __2___Scripts.External.Editor;
 using __2___Scripts.External.Editor.Data.Save;
 using __2___Scripts.External.Editor.Elements;
 using __2___Scripts.External.Editor.Utility;
+using _02_Scripts.Game.Dialog.DialogSystem;
 using Game.GameActors.Items;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Numbers;
@@ -64,6 +65,7 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
             if( choiceData.ItemRequirements.Contains(removeItem))
                 choiceData.ItemRequirements.Remove(removeItem);
         }
+       
         void AddResponse(LGChoiceSaveData choiceData)
         {
             
@@ -91,6 +93,7 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
                         newItem = (ItemBP)callback.newValue;
                         choiceData.ItemRequirements.Add(newItem);
                     }
+                   
                 });
                 var charItemPopup = ElementUtility.CreatePopup(new List<string> {"Character", "Item"}, "Character", callback =>
                 {
@@ -99,11 +102,13 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
                         case "Character": charItemField.objectType = typeof(UnitBP);
                             RemoveCharacterRequirement(newUnit, choiceData);
                             RemoveItemRequirement(newItem, choiceData);
+                        
                             choiceData.CharacterRequirement=newUnit;
                             charItemField.value = null; break;
                         case "Item": charItemField.objectType = typeof(ItemBP);
                             RemoveCharacterRequirement(newUnit, choiceData);
                             RemoveItemRequirement(newItem, choiceData);
+                    
                             choiceData.ItemRequirements.Add(newItem);
                             charItemField.value = null; break;
                     }
@@ -136,6 +141,25 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
                 responseContainer.Insert(3,atrPopup);
             });
             responseContainer.Add(addStatRequirement);
+            Button addResRequirement = ElementUtility.CreateButton("[RES]", () =>
+            {
+                TextField atrAmountTextField=null;
+                ResourceEntry resourceEntry = new ResourceEntry(0, ResourceType.Gold);
+                choiceData.ResourceRequirements.Add(resourceEntry);
+                atrAmountTextField=ElementUtility.CreateTextIntField("0", callback =>
+                {
+                    atrAmountTextField.value = ElementUtility.AllowOnlyNumbers(callback.newValue);
+                    resourceEntry.Amount =  Int32.Parse(atrAmountTextField.value);
+                    
+                });
+                responseContainer.Insert(2,atrAmountTextField);
+                var atrPopup = ElementUtility.CreatePopup(Enum.GetValues(typeof(ResourceType)).Cast<ResourceType>().ToList(), ResourceType.Gold, callback =>
+                {
+                    resourceEntry.ResourceType = callback.newValue;
+                });
+                responseContainer.Insert(3,atrPopup);
+            });
+            responseContainer.Add(addResRequirement);
             if (choiceData.CharacterRequirement!=null)
             {
                 ObjectField charItemField = new ObjectField();
@@ -167,11 +191,27 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
                 });
                 responseContainer.Insert(3,atrPopup);
             }
+            foreach (var resReq in choiceData.ResourceRequirements)
+            {
+                TextField atrAmountTextField = null;
+                atrAmountTextField=ElementUtility.CreateTextIntField(resReq.Amount.ToString(), callback =>
+                {
+                    atrAmountTextField.value = ElementUtility.AllowOnlyNumbers(callback.newValue);
+                    resReq.Amount =Int32.Parse(atrAmountTextField.value);
+                });
+                responseContainer.Insert(2,atrAmountTextField);
+                var atrPopup = ElementUtility.CreatePopup(Enum.GetValues(typeof(ResourceType)).Cast<ResourceType>().ToList(), resReq.ResourceType, callback =>
+                {
+                    resReq.ResourceType = callback.newValue;
+                });
+                responseContainer.Insert(3,atrPopup);
+            }
 
             
             Port choicePort = CreateChoicePort(choiceData);
             responseContainer.Add(choicePort);
-            if ((choiceData.AttributeRequirements != null && choiceData.AttributeRequirements.Count > 0) ||
+            if ((choiceData.AttributeRequirements != null && choiceData.AttributeRequirements.Count > 0) 
+                ||(choiceData.ResourceRequirements != null && choiceData.ResourceRequirements.Count > 0)||
                 (choiceData.CharacterRequirement != null) ||
                 choiceData.ItemRequirements != null && choiceData.ItemRequirements.Count > 0)
             {

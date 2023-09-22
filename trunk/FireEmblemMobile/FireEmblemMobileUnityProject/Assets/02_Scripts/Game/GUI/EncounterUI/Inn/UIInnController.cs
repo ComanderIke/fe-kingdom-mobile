@@ -120,6 +120,14 @@ namespace Game.GUI.EncounterUI.Inn
                     }
                     Debug.Log("TODO Remove After Battle");
                 }
+                else if (item.bonusType == Recipe.InnBonusType.RefreshSkills)
+                {
+                    foreach (var member in party.members)
+                    {
+                        member.SkillManager.RefreshSkills();
+                    }
+                    Debug.Log("TODO Remove After Battle");
+                }
             }
             Player.Instance.Party.AddGold(-item.price);
             used.Add(item);

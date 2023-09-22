@@ -120,7 +120,7 @@ namespace Game.Mechanics
                     var selectedCharacter = gridGameManager.GetSystem<UnitSelectionSystem>().SelectedCharacter;
                         //Debug.Log("SelectedCharacter: " + selectedCharacter);
                         consumableItem.Use((Unit)selectedCharacter, Player.Instance.Party);
-                        new GameplayCommands().Wait(selectedCharacter);
+                       // new GameplayCommands().Wait(selectedCharacter);
                         new GameplayCommands().ExecuteInputActions(null);
                 }
                 else

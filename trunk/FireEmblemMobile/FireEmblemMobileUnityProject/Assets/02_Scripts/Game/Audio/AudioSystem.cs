@@ -132,6 +132,16 @@ namespace Audio
             FadeOut(currentMusicName, fadeOutDuration, freshRestart);
             PlayMusic(newMusicName, fadeInDelay, fadeInDuration);
         }
+        public void ChangeAllMusic(string newMusicName,  bool freshRestart = false,
+            float fadeOutDuration = 1.0f, float fadeInDelay = 0.5f, float fadeInDuration = 1.0f)
+        {
+            foreach (var musicName in GetCurrentlyPlayedMusicTracks())
+            {
+                FadeOut(musicName, fadeOutDuration, freshRestart);
+            }
+           
+            PlayMusic(newMusicName, fadeInDelay, fadeInDuration);
+        }
 
         public List<string> GetCurrentlyPlayedMusicTracks()
         {

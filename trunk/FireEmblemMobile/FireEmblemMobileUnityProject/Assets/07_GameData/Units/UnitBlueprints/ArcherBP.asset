@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: ArcherBP
   m_EditorClassIdentifier: 
   equippedWeaponBp: {fileID: 11400000, guid: 83e1761a127b1a54ca3c98ca2850f24a, type: 2}
-  EquippedRelic1: {fileID: 11400000, guid: ce9cc6fa493c35e48853cefc641dbd25, type: 2}
+  EquippedRelic1: {fileID: 0}
   Name: Selena
   combatItem1:
     stock: 1
-    item: {fileID: 11400000, guid: f266e041927774849bcd4d53f7b991e5, type: 2}
+    item: {fileID: 0}
   combatItem2:
     stock: 0
     item: {fileID: 0}
@@ -28,7 +28,7 @@ MonoBehaviour:
       intel: 6
       dex: 6
       agi: 6
-      con: 6
+      maxHp: 0
       lck: 6
       def: 6
       faith: 6
@@ -37,15 +37,14 @@ MonoBehaviour:
       intel: 0
       dex: 0
       agi: 0
-      con: 0
+      maxHp: 0
       lck: 0
       def: 0
       faith: 0
     Mov: 3
   moveType: {fileID: 11400000, guid: d13592b1fa0af024a841b121149b8014, type: 2}
   SkillManager:
-    startSkills:
-    - {fileID: 11400000, guid: 2ad445333a838f44187fc5165e838665, type: 2}
+    startSkills: []
     maxSkillCount: 0
     skillPoints: 1
   rpgClass: 0
