@@ -181,14 +181,12 @@ namespace Game.Mechanics
             if (attackData.crit)
                 damage *= 2;
             damage -= (int)(damage * pavise);
-            if (attacker == Attacker)
-            {
-                attackData.Dmg = Math.Min(defender.Hp, damage);
-            }
-            else
-            {
-                attackData.Dmg = Math.Min(defender.Hp, damage);
-            }
+            // if (attacker == Attacker)
+            // {
+            //     attackData.Dmg = Math.Min(defender.Hp, damage);
+            // }
+            attackData.Dmg = damage;
+            
             int wrathDmg = (int)(damage * wrath);
             Defender.BattleComponent.BattleStats.WrathDamage += wrathDmg;
             Attacker.BattleComponent.BattleStats.WrathDamage = 0;
@@ -322,7 +320,9 @@ namespace Game.Mechanics
                     combatRound.AttacksData.Add(attackData);
                 }
             }
-
+            Debug.Log(combatRound.RoundIndex);
+            Debug.Log("HP After CombatRound: "+Attacker.Hp);
+            Debug.Log("HP After CombatRound: "+Defender.Hp);
             combatRound.AttackerHP = Attacker.Hp;
             combatRound.DefenderHP = Defender.Hp;
         }

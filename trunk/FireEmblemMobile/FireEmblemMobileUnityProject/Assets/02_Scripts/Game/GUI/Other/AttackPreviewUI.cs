@@ -5,65 +5,34 @@ using Game.GameActors.Units.OnGameObject;
 using Game.GameInput;
 using Game.GUI.Text;
 using Game.Mechanics.Battle;
+using LostGrace;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Game.GUI
 {
-    [ExecuteInEditMode]
     public class AttackPreviewUI : IAttackPreviewUI
     {
         [SerializeField] private Canvas canvas = default;
         [SerializeField] private CanvasGroup canvasGroup = default;
+        
+        [SerializeField] private UIAttackPreviewContainer left = default;
+        [SerializeField] private UIAttackPreviewContainer right = default;
 
-        [Header("Left")]
-        [SerializeField] private GameObject left = default;
-        // [SerializeField] private TextMeshProUGUI atkValue = default;
-        // [SerializeField] private TextMeshProUGUI spdValue = default;
-        // [SerializeField] private TextMeshProUGUI defLabel = default;
-        // [SerializeField] private TextMeshProUGUI defValue = default;
-        // [SerializeField] private TextMeshProUGUI sklValue = default;
-        [SerializeField] private Image faceSpriteLeft = default;
-        [SerializeField] private TextMeshProUGUI dmgValue = default;
-        [SerializeField] private TextMeshProUGUI hitValue = default;
-        [SerializeField] private TextMeshProUGUI critValue = default;
-        [SerializeField] private TextMeshProUGUI attackCount = default;
-        [SerializeField] private GameObject attackCountX = default;
-        [SerializeField] private AttackPreviewStatBar hpBar = default;
-        // [SerializeField] private AttackPreviewStatBar spBar = default;
-        [SerializeField] private ISPBarRenderer spBars;
-        [Header("Right")]
-        [SerializeField] private GameObject right = default;
-        // [SerializeField] private TextMeshProUGUI atkValueRight = default;
-        // [SerializeField] private TextMeshProUGUI spdValueRight = default;
-        // [SerializeField] private TextMeshProUGUI defLabelRight = default;
-        // [SerializeField] private TextMeshProUGUI defValueRight = default;
-        // [SerializeField] private TextMeshProUGUI sklValueRight = default;
-        [SerializeField] private Image faceSpriteRight = default;
-        [SerializeField] private TextMeshProUGUI dmgValueRight = default;
-        [SerializeField] private TextMeshProUGUI hitValueRight = default;
-        [SerializeField] private TextMeshProUGUI critValueRight = default;
-        [SerializeField] private TextMeshProUGUI attackCountRight = default;
-        [SerializeField] private GameObject attackCountRightX = default;
-        [SerializeField] private AttackPreviewStatBar hpBarRight = default;
-        // [SerializeField] private AttackPreviewStatBar spBarRight = default;
-        [SerializeField] private ISPBarRenderer spBarsRight;
-        RawImageUVOffsetAnimation[] uvAnimations;
+        [SerializeField] private UIAttackOrder attackOrderUI;
+        
         UILoopPingPongFade[] fadeAnimations;
         ScaleAnimation[] scaleAnimations;
         private RectTransform rectTransform;
         private Camera Camera;
-        //private bool visible = true;
         
-        [SerializeField] 
-        private Sprite attackerSprite;
-        [SerializeField] 
-        private Sprite defenderSprite;
-
         [SerializeField] private GameObject turnCount;
         [SerializeField] 
         private BattlePreview battlePreview;
+
+        private Sprite attackerSprite;
+        private Sprite defenderSprite;
 
         private void UpdateValues()
         {
@@ -72,60 +41,10 @@ namespace Game.GUI
              if (Camera == null)
                  Camera = Camera.main;
              
-
-             faceSpriteLeft.sprite = attackerSprite;
-             faceSpriteRight.sprite = defenderSprite;
-
-             dmgValue.text = "" + battlePreview.AttackerStats.Damage;
-             hitValue.text = "" + battlePreview.AttackerStats.Hit+"%";
-             critValue.text = "" + battlePreview.AttackerStats.Crit+"%";
-           
-             attackCountX.SetActive(battlePreview.AttackerStats.AttackCount > 1);
-             attackCount.gameObject.SetActive(battlePreview.AttackerStats.AttackCount > 1);
-             attackCount.text = "" + battlePreview.AttackerStats.AttackCount;
-             List<int> attackerDmg = new List<int>();
-             List<int> defenderDmg = new List<int>();
-    
-             for (int i = 0; i < battlePreview.AttacksData.Count; i++)
-             {
-                 if (battlePreview.AttacksData[i].attacker)
-                 {
-                   
-                     attackerDmg.Add(battlePreview.AttacksData[i].Dmg);
-                 }
-                 else
-                 {
-       
-                     defenderDmg.Add(battlePreview.AttacksData[i].Dmg);
-                 }
-             }
-            
-             hpBar.UpdateValues(battlePreview.AttackerStats.MaxHp, battlePreview.AttackerStats.CurrentHp, battlePreview.AttackerStats.AfterBattleHp, 
-                 defenderDmg);
-
-             if (battlePreview.DefenderStats.AttackCount == 0)
-             {
-                 dmgValueRight.text = "-";
-                 hitValueRight.text = "-";
-                 critValueRight.text = "-";
-
-             }
-             else
-             {
-                 dmgValueRight.text = "" + battlePreview.DefenderStats.Damage;
-                 hitValueRight.text = "" + battlePreview.DefenderStats.Hit+"%";
-                 critValueRight.text = "" + battlePreview.DefenderStats.Crit+"%";
-                 
-             }
-             attackCountRightX.SetActive(battlePreview.DefenderStats.AttackCount > 1);
-             attackCountRight.gameObject.SetActive(battlePreview.DefenderStats.AttackCount > 1);
-             attackCountRight.text = "" + battlePreview.DefenderStats.AttackCount;
-
-             hpBarRight.UpdateValues(battlePreview.DefenderStats.MaxHp, battlePreview.DefenderStats.CurrentHp, battlePreview.DefenderStats.AfterBattleHp,
-                     attackerDmg);
-             faceSpriteRight.color = new Color(1, 1, 1, 1);
-
-        }
+             left.Show(attackerSprite, battlePreview.AttackerStats.Damage,battlePreview.AttackerStats.Hit,battlePreview.AttackerStats.Crit, battlePreview.AttackerStats.CurrentHp,battlePreview.AttackerStats.MaxHp, battlePreview.AttackerStats.AfterBattleHp);
+             right.Show(defenderSprite, battlePreview.DefenderStats.Damage,battlePreview.DefenderStats.Hit,battlePreview.DefenderStats.Crit, battlePreview.DefenderStats.CurrentHp,battlePreview.DefenderStats.MaxHp, battlePreview.DefenderStats.AfterBattleHp,battlePreview.DefenderStats.AttackCount != 0);
+             attackOrderUI.Show(battlePreview.AttacksData);
+           }
 
         public override void Show(BattlePreview battlePreview, UnitVisual attackerVisual, UnitVisual defenderVisual)
         {
@@ -148,10 +67,6 @@ namespace Game.GUI
         {
 
             canvas.enabled = true;
-            foreach (var animation in uvAnimations)
-            {
-                animation.enabled = true;
-            }
             foreach (var animation in fadeAnimations)
             {
                 animation.enabled = true;
@@ -168,22 +83,20 @@ namespace Game.GUI
             right.transform.localPosition = new Vector3(rectTransform.rect.width, 0, 0);
             
             transform.localPosition = new Vector3(transform.localPosition.x, yPos - Screen.height / 2, transform.localPosition.z);
-            LeanTween.moveLocalX(left, -rectTransform.rect.width / 2, 0.3f).setEaseOutQuad();
-            LeanTween.moveLocalX(right, rectTransform.rect.width / 2, 0.3f).setEaseOutQuad();
+            LeanTween.moveLocalX(left.gameObject, -rectTransform.rect.width / 2, 0.3f).setEaseOutQuad();
+            LeanTween.moveLocalX(right.gameObject, rectTransform.rect.width / 2, 0.3f).setEaseOutQuad();
         }
         private void ClearTweens()
         {
             LeanTween.cancel(gameObject);
-            LeanTween.cancel(left);
-            LeanTween.cancel(right);
+            LeanTween.cancel(left.gameObject);
+            LeanTween.cancel(right.gameObject);
         }
         
 
         void OnEnable()
         {
             UpdateValues();
-            if (uvAnimations == null)
-                uvAnimations = GetComponentsInChildren<RawImageUVOffsetAnimation>();
             if (fadeAnimations == null)
                 fadeAnimations = GetComponentsInChildren<UILoopPingPongFade>();
             if (scaleAnimations == null)

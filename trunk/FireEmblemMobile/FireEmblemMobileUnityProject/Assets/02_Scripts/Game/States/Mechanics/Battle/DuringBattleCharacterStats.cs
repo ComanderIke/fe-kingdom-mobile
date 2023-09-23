@@ -48,10 +48,10 @@ namespace Game.Mechanics.Battle
             // MaxSpBars = maxSpBars;
         }
 
-        public BattlePreviewStats(DuringBattleCharacterStats stats, int hpBefore):this(stats.Attack, stats.Speed, stats.DamageType, stats.Defense, stats.Skill, stats.Damage, stats.Hit,
-            stats.Crit, stats.AttackCount, hpBefore, stats.MaxHp, stats.CurrentHp)
+        public BattlePreviewStats(DuringBattleCharacterStats stats, int hpAfter):this(stats.Attack, stats.Speed, stats.DamageType, stats.Defense, stats.Skill, stats.Damage, stats.Hit,
+            stats.Crit, stats.AttackCount, stats.CurrentHp, stats.MaxHp, hpAfter)
         {
-            
+           
         }
     }
     [Serializable]

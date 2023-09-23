@@ -240,8 +240,10 @@ namespace Game.Mechanics
                 battleSimulation.StartBattle(true, true);
                 
                 battlePreview.AttacksData = battleSimulation.combatRounds[0].AttacksData;
-                battlePreview.AttackerStats = new BattlePreviewStats(battleSimulation.combatRounds[0].AttackerStats,attacker.Hp);
-                battlePreview.DefenderStats = new BattlePreviewStats(battleSimulation.combatRounds[0].DefenderStats,defender.Hp);
+                Debug.Log(attacker.Hp+" "+battleSimulation.combatRounds[0].AttackerStats.MaxHp+ " "+battleSimulation.combatRounds[0].AttackerStats.CurrentHp);
+                Debug.Log(defender.Hp+" "+battleSimulation.combatRounds[0].DefenderStats.MaxHp+ " "+battleSimulation.combatRounds[0].DefenderStats.CurrentHp);
+                battlePreview.AttackerStats = new BattlePreviewStats(battleSimulation.combatRounds[0].AttackerStats,battleSimulation.combatRounds[0].AttackerHP);
+                battlePreview.DefenderStats = new BattlePreviewStats(battleSimulation.combatRounds[0].DefenderStats,battleSimulation.combatRounds[0].DefenderHP);
                 // battlePreview.AttackerStats = new BattlePreviewStats(attacker.BattleComponent.BattleStats.GetDamage(),
                 //     attacker.Stats.BaseAttributes.AGI, defenderActor.BattleComponent.BattleStats.GetDamageType(),
                 //     defenderActor.BattleComponent.BattleStats.GetDamageType() == DamageType.Physical
