@@ -15,12 +15,19 @@ namespace LostGrace
         [SerializeField] private TextMeshProUGUI hitValue;
         [SerializeField] private TextMeshProUGUI critValue;
         [SerializeField] private AttackPreviewStatBar hpBar;
-
+        private int maxHp;
+        
 
         public void Show(Sprite face, int dmg, int hit, int crit, int maxHp, int currentHp, int afterHp, bool canCounter=true)
         {
-            faceSprite.sprite = face;
+            this.maxHp = maxHp;
             hpBar.UpdateValues(maxHp, currentHp, afterHp);
+            UpdateAllButHpBar(face, dmg, hit, crit, canCounter);
+        }
+
+        void UpdateAllButHpBar(Sprite face, int dmg, int hit, int crit, bool canCounter=true)
+        {
+            faceSprite.sprite = face;
             if (!canCounter)
             {
                 dmgValue.text = "-";
@@ -31,9 +38,18 @@ namespace LostGrace
             dmgValue.text = "" + dmg;
             hitValue.text = "" + hit;
             critValue.text = "" + crit;
-           
         }
 
-  
+        public void ShowInBattleContext(Sprite face, int dmg, int hit, int crit, int maxHp, int currentHp, int afterHp, bool canCounter=true)
+        {
+            UpdateAllButHpBar(face, dmg, hit, crit, canCounter);
+            this.maxHp = maxHp;
+            hpBar.UpdateValuesWithoutDamagePreview(maxHp, currentHp, afterHp);
+        }
+
+        public void UpdateHP(int currentHpRight)
+        {
+            hpBar.UpdateValuesAnimated(maxHp, currentHpRight);
+        }
     }
 }

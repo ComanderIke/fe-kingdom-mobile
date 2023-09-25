@@ -5,38 +5,23 @@ using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameInput;
 using Game.Mechanics;
+using LostGrace;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BattleUI : MonoBehaviour
 {
-    public Image faceSpriteLeft;
+  
+    // [SerializeField] private TextMeshProUGUI hpText = default;
+    // [SerializeField] private TextMeshProUGUI hpTextRight = default;
+    // public BattleUIHPBar leftHPBar;
+    // public BattleUIHPBar rightHPBar;
+    
+    [SerializeField] private UIAttackPreviewContainer left = default;
+    [SerializeField] private UIAttackPreviewContainer right = default;
 
-    public Image faceSpriteRight;
-    [SerializeField] private TextMeshProUGUI attackCount = default;
-    [SerializeField] private GameObject attackCountX = default;
-    [SerializeField] private TextMeshProUGUI dmgValue = default;
-    [SerializeField] private TextMeshProUGUI hitValue = default;
-    [SerializeField] private TextMeshProUGUI critValue = default;
-    [SerializeField] private TextMeshProUGUI dmgValueRight = default;
-    [SerializeField] private TextMeshProUGUI hitValueRight = default;
-    [SerializeField] private TextMeshProUGUI critValueRight = default;
-    [SerializeField] private TextMeshProUGUI attackCountRight = default;
-    [SerializeField] private TextMeshProUGUI hpText = default;
-    [SerializeField] private TextMeshProUGUI hpTextRight = default;
-    [SerializeField] private GameObject attackCountRightX = default;
-
-    public BattleUIHPBar leftHPBar;
-    public BattleUIHPBar rightHPBar;
-
-    private int maxHPLeft;
-
-    private int currentHPLeft;
-
-    private int maxHPRight;
-
-    private int currentHPRight;
+    [SerializeField] private UIAttackOrder attackOrderUI;
     
     // Start is called before the first frame update
     void OnEnable()
@@ -56,136 +41,69 @@ public class BattleUI : MonoBehaviour
     {
         Show(battleSimulation, (Unit)attacker, (Unit)defender);
     }
+
+    private int currentHpLeft;
+    private int currentHpRight;
     public void Show(BattleSimulation battleSimulation, Unit attacker, Unit defender)
     {
-        playerUnitIsAttacker = attacker.Faction==null||attacker.Faction.Id == 0;
-        var playerUnit = playerUnitIsAttacker? attacker : defender;
-        var enemyUnit= playerUnitIsAttacker? defender : attacker;
-        currentHPLeft = playerUnit.Hp;
-        currentHPRight = enemyUnit.Hp;
-        maxHPLeft = playerUnit.MaxHp;
-        maxHPRight = enemyUnit.MaxHp;
-      //  Debug.Log(currentHPLeft+" "+currentHPRight+" "+battleSimulation.Attacker.Stats.MaxHp+" "+battleSimulation.Attacker.Hp);
-        hpText.SetText(""+currentHPLeft);
-        hpTextRight.SetText(""+currentHPRight);
+        var leftCharacter = defender;
+        var rightCharacter = attacker;
+        playerUnitIsAttacker = attacker.Faction.IsPlayerControlled;
+        if (playerUnitIsAttacker)
+        {
+            leftCharacter = attacker;
+            rightCharacter = defender;
+        }
 
-        faceSpriteLeft.sprite = playerUnit.visuals.CharacterSpriteSet.FaceSprite;
-        faceSpriteRight.sprite = enemyUnit.visuals.CharacterSpriteSet.FaceSprite;
+      
         var combatRound = battleSimulation.combatRounds[0];
-        
-        
-        dmgValue.text = playerUnitIsAttacker? ""+ combatRound.AttackerDamage:""+combatRound.DefenderDamage;
-        hitValue.text = playerUnitIsAttacker?"" + combatRound.AttackerHit:""+combatRound.DefenderHit;
-        critValue.text = playerUnitIsAttacker?"" + combatRound.AttackerCrit:""+combatRound.DefenderCrit;
-        dmgValueRight.text = !playerUnitIsAttacker? ""+ combatRound.AttackerDamage:""+combatRound.DefenderDamage;
-        hitValueRight.text = !playerUnitIsAttacker?"" + combatRound.AttackerHit:""+combatRound.DefenderHit;
-        critValueRight.text = !playerUnitIsAttacker?"" + combatRound.AttackerCrit:""+combatRound.DefenderCrit;
-
-
-        if(playerUnitIsAttacker){
-                attackCountX.SetActive(combatRound.AttackerAttackCount > 1);
-                attackCount.gameObject.SetActive(attackCountX.activeSelf);
-                attackCount.text = "" + combatRound.AttackerAttackCount;
-                attackCountRightX.SetActive(combatRound.DefenderAttackCount > 1);
-                attackCountRight.gameObject.SetActive(attackCountRightX.activeSelf);
-                attackCountRight.text = "" + combatRound.DefenderAttackCount;
-                if (combatRound.DefenderAttackCount > 0)
-                {
-                    dmgValueRight.text = "" + combatRound.DefenderDamage;
-                    hitValueRight.text = "" + combatRound.DefenderHit;
-                    critValueRight.text = "" + combatRound.DefenderCrit;
-                }
-                else
-                {
-                    dmgValueRight.text = "-";
-                    hitValueRight.text = "-" ;
-                    critValueRight.text = "-" ;
-                }
-        }
-        else{
-            attackCountX.SetActive(combatRound.DefenderAttackCount > 1);
-            attackCount.gameObject.SetActive(attackCountX.activeSelf);
-            attackCount.text = "" + combatRound.DefenderAttackCount;
-            attackCountRightX.SetActive(combatRound.AttackerAttackCount > 1);
-            attackCountRight.gameObject.SetActive(attackCountRightX.activeSelf);
-            attackCountRight.text = "" + combatRound.AttackerAttackCount;
-            dmgValueRight.text = ""+ combatRound.AttackerDamage;
-            hitValueRight.text = "" + combatRound.AttackerHit;
-            critValueRight.text = "" + combatRound.AttackerCrit;
-            if (combatRound.DefenderAttackCount > 0)
-            {
-                dmgValue.text = "" + combatRound.DefenderDamage;
-                hitValue.text = "" + combatRound.DefenderHit;
-                critValue.text = "" + combatRound.DefenderCrit;
-            }
-            else
-            {
-                dmgValue.text = "-";
-                hitValue.text = "-" ;
-                critValue.text = "-" ;
-            }
-        }
+        currentHpLeft = combatRound.AttackerStats.CurrentHp;
+        currentHpRight = combatRound.DefenderStats.CurrentHp;
+        left.ShowInBattleContext(leftCharacter.visuals.CharacterSpriteSet.FaceSprite, combatRound.AttackerStats.Damage,combatRound.AttackerStats.Hit,combatRound.AttackerStats.Crit, combatRound.AttackerStats.CurrentHp,combatRound.AttackerStats.MaxHp, combatRound.AttackerHP);
+        right.ShowInBattleContext(rightCharacter.visuals.CharacterSpriteSet.FaceSprite, combatRound.DefenderStats.Damage,combatRound.DefenderStats.Hit,combatRound.DefenderStats.Crit, combatRound.DefenderStats.CurrentHp,combatRound.DefenderStats.MaxHp, combatRound.DefenderHP,combatRound.DefenderStats.AttackCount != 0);
+        attackOrderUI.Show(combatRound.AttacksData);
 
         CharacterCombatAnimations.OnDamageDealt -= UpdateHpBars;
         CharacterCombatAnimations.OnDamageDealt += UpdateHpBars;
         
-        leftHPBar.SetValues(playerUnit.MaxHp,playerUnit.Hp);
-        rightHPBar.SetValues(enemyUnit.MaxHp,enemyUnit.Hp);
+        // leftHPBar.SetValues(playerUnit.MaxHp,playerUnit.Hp);
+        // rightHPBar.SetValues(enemyUnit.MaxHp,enemyUnit.Hp);
    
     }
 
    
-    // public void UpdateAttackerHPBar(AttackData attackData)
-    // {
-    //     if (playerUnitIsAttacker)
-    //     {
-    //         currentHPLeft -= attackData.Dmg;
-    //         hpText.SetText("" + currentHPLeft);
-    //         leftHPBar.SetValues(maxHPLeft, currentHPLeft);
-    //     }
-    //     else
-    //     {
-    //         currentHPRight -= attackData.Dmg;
-    //   
-    //         hpTextRight.SetText(""+currentHPRight);
-    //         rightHPBar.SetValues(maxHPRight,currentHPRight);
-    //     }
-    // }
+   
     public void UpdateHpBars(AttackData attackData)
     {
-        
+      
         if (playerUnitIsAttacker)
         {
             if (attackData.attacker)
             {
-                currentHPRight -= attackData.Dmg;
-
-                hpTextRight.SetText("" + currentHPRight);
-                rightHPBar.SetValues(maxHPRight, currentHPRight);
+               
+                currentHpRight -= attackData.Dmg;
+                right.UpdateHP(currentHpRight);
+     
             }
             else
             {
-                currentHPLeft -= attackData.Dmg;
-                hpText.SetText("" + currentHPLeft);
-                leftHPBar.SetValues(maxHPLeft, currentHPLeft);
+                currentHpLeft -= attackData.Dmg;
+                left.UpdateHP(currentHpLeft);
             }
-
+        
         }
         else
         {
             if (attackData.attacker)
             {
-                currentHPLeft -= attackData.Dmg;
-                hpText.SetText("" + currentHPLeft);
-                leftHPBar.SetValues(maxHPLeft, currentHPLeft);
+                currentHpLeft-= attackData.Dmg;
+                left.UpdateHP(currentHpLeft);
                
             }
             else
             {
-                currentHPRight -= attackData.Dmg;
-
-                hpTextRight.SetText("" + currentHPRight);
-                rightHPBar.SetValues(maxHPRight, currentHPRight);
+                currentHpRight -= attackData.Dmg;
+                right.UpdateHP(currentHpRight);
             }
         }
     }
