@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using _02_Scripts.Game.Dialog.DialogSystem;
 using Game.GameActors.Items;
+using Game.GameActors.Players;
 using Game.GUI.Text;
 using TMPro;
 using UnityEngine;
@@ -30,12 +31,18 @@ public class TextOptionController : MonoBehaviour
     public Color textLowColor;
     public Color textLowishColor;
     public Color textHighColor;
+    [SerializeField] private TMP_ColorGradient useColor;
+    [SerializeField] private TMP_ColorGradient notEnoughColor;
     public LGDialogChoiceData Option;
     [SerializeField] private float delay = 0.25f;
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private Animator animator;
     [SerializeField] private Button button;
-    [SerializeField] private TextMeshProUGUI healtext;
+    [SerializeField] private TextMeshProUGUI healText;
+    [SerializeField] private Image rollImage;
+    [SerializeField] private Image healImage;
+    [SerializeField] private TextMeshProUGUI damageText;
+    [SerializeField] private Image damageImage;
     [SerializeField] private TextMeshProUGUI charText;
     [SerializeField] private Image charImage;
     [SerializeField] private TextMeshProUGUI blessingText;
@@ -46,19 +53,29 @@ public class TextOptionController : MonoBehaviour
     [SerializeField] private Image receiveItemImage;
     [SerializeField] private TextMeshProUGUI useResourceText;
     [SerializeField] private Image useResImage;
+    [SerializeField] private TextMeshProUGUI failResourceText;
+    [SerializeField] private Image failResImage;
     [SerializeField] private TextMeshProUGUI receiveResourceText;
     [SerializeField] private Image receiveResImage;
     [SerializeField] private Sprite goldSprite;
     [SerializeField] private Sprite graceSprite;
+    [SerializeField] private Sprite hpSprite;
+    [SerializeField] private Sprite damageSprite;
+    [SerializeField] private Sprite expSprite;
+    private bool locked = false;
     public void SetIndex(int index)
     {
         gameObject.SetActive(true);
         animator.enabled = false;
-        MonoUtility.DelayFunction(() =>
+        if (!locked)
         {
-            if (animator != null)
-                animator.enabled = true;
-        },delay*index);
+            
+            MonoUtility.DelayFunction(() =>
+            {
+                if (animator != null)
+                    animator.enabled = true;
+            }, delay * index);
+        }
     }
 
     public void Setup(LGDialogChoiceData option,string text,string statText,TextOptionState textState, UIEventController controller)
@@ -69,6 +86,7 @@ public class TextOptionController : MonoBehaviour
         this.text.color = textNormalColor;
         this.StatPreview.SetText(String.IsNullOrEmpty(statText)?"": "("+statText+")");
         canvasGroup.alpha = 1;
+        locked = false;
         button.interactable = true;
         animator.enabled = true;
         switch (textState)
@@ -82,13 +100,24 @@ public class TextOptionController : MonoBehaviour
             case TextOptionState.Locked:
                 canvasGroup.alpha = 0.45f;
                 button.interactable = false; 
-                animator.enabled = false;break;
+                animator.enabled = false;
+                locked = true;
+                break;
         }
-
+        //
+        if (option.NextDialogueFail != null && Player.Instance.DialogOptionsExperienced.Contains(option))
+        {
+            var failOption = (LGEventDialogSO)option.NextDialogueFail;
+            failResourceText.gameObject.SetActive(true);
+            var item = failOption.RewardResources[0];
+            failResImage.sprite =GetSpriteFromResourceType(item.ResourceType, item.Amount);
+            //rollImage.gameObject.SetActive(true);
+            
+        }
         if (option.CharacterRequirement != null)
         {
             charText.gameObject.SetActive(true);
-            charText.text = option.CharacterRequirement.name;
+            charText.text = option.CharacterRequirement.Name== Player.Instance.Party.ActiveUnit.Name?option.CharacterRequirement.Name:"switch to "+option.CharacterRequirement.Name;
             charImage.sprite = option.CharacterRequirement.visuals.CharacterSpriteSet.FaceSprite;
         }
         // if (option.BlessingRequirement != null)
@@ -108,9 +137,11 @@ public class TextOptionController : MonoBehaviour
                 useItemText.gameObject.SetActive(true);
                 useItemText.text = item.name;
                 useItemImage.sprite = item.sprite;
+                bool canAfford = Player.Instance.Party.CanAfford(item.Create());
+                useItemText.colorGradientPreset = canAfford ? useColor : notEnoughColor;
             }
         }
-        if (test.RewardItems != null&& test.RewardItems.Count>0)
+        if (test !=null&&test.RewardItems != null&& test.RewardItems.Count>0)
         {
             var item = test.RewardItems[0];
             if (item != null)
@@ -118,6 +149,7 @@ public class TextOptionController : MonoBehaviour
                 receiveItemText.gameObject.SetActive(true);
                 receiveItemText.text = item.name;
                 receiveItemImage.sprite = item.sprite;
+                
             }
         }
         if (option.ResourceRequirements != null&& option.ResourceRequirements.Count>0)
@@ -127,17 +159,42 @@ public class TextOptionController : MonoBehaviour
             {
                 useResourceText.gameObject.SetActive(true);
                 useResourceText.text = "use " + item.Amount;
-                useResImage.sprite = GetSpriteFromResourceType(item.ResourceType);
+                useResImage.sprite = GetSpriteFromResourceType(item.ResourceType, item.Amount);
+                bool canAfford = Player.Instance.Party.CanAfford(item.ResourceType, item.Amount);
+                useResourceText.colorGradientPreset = canAfford ? useColor : notEnoughColor;
             }
         }
-        if (test.RewardResources != null&& test.RewardResources.Count>0)
+        if (test !=null&&test.RewardResources != null&& test.RewardResources.Count>0)
         {
-            var item = test.RewardResources[0];
-            if (item != null&& item.ResourceType!=ResourceType.Morality)
+            foreach (var reward in test.RewardResources)
             {
-                receiveResourceText.gameObject.SetActive(true);
-                receiveResourceText.text = "receive " + item.Amount;
-                receiveResImage.sprite = GetSpriteFromResourceType(item.ResourceType);
+                var item = reward;
+                if (Player.Instance.DialogOptionsExperienced.Contains(option)&&item != null && item.ResourceType != ResourceType.Morality &&
+                    item.ResourceType !=
+                    ResourceType
+                        .HP_Percent) //if (Player.Instance.DialogOptionsExperienced.Contains(option)&&item != null&& item.ResourceType!=ResourceType.Morality)
+                {
+                    receiveResourceText.gameObject.SetActive(true);
+                  
+                    receiveResourceText.text = "(receive           )"; //+ item.Amount;
+                    if(option.NextDialogueFail!=null)
+                        receiveResourceText.text = "(Success          )"; 
+                    receiveResImage.sprite = GetSpriteFromResourceType(item.ResourceType, item.Amount);
+                }
+                else if (Player.Instance.DialogOptionsExperienced.Contains(option)&&item != null && item.ResourceType == ResourceType.HP_Percent)
+                {
+                    if (item.Amount > 0)
+                    {
+                        healText.gameObject.SetActive(true);
+                        healText.text = "";
+                    }
+                    else
+                    {
+                        damageText.gameObject.SetActive(true);
+                        damageText.text = "";
+                    }
+
+                }
             }
         }
         this.text.enabled = false;
@@ -149,7 +206,7 @@ public class TextOptionController : MonoBehaviour
         });
 
     }
-   Sprite GetSpriteFromResourceType(ResourceType type)
+   Sprite GetSpriteFromResourceType(ResourceType type, int amount)
    {
        switch (type)
        {
@@ -157,6 +214,13 @@ public class TextOptionController : MonoBehaviour
                return goldSprite; break;
            case ResourceType.Grace:
                return graceSprite; break;
+           case ResourceType.Exp:
+               return expSprite; break;
+           case ResourceType.HP_Percent:
+               if(amount>0)
+                   return hpSprite;
+               return damageSprite; break;
+    
            default: return goldSprite;
                break;
        }
@@ -164,6 +228,8 @@ public class TextOptionController : MonoBehaviour
 
     public void Clicked()
     {
+        if( !Player.Instance.DialogOptionsExperienced.Contains(Option))
+            Player.Instance.DialogOptionsExperienced.Add(Option);
         controller.OptionClicked(this);
     }
 }

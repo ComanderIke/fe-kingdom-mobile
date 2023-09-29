@@ -8,6 +8,7 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
     {
         public int Amount;
         public ResourceType ResourceType;
+        
 
         public ResourceEntry(int i, ResourceType gold)
         {

@@ -280,6 +280,26 @@ namespace Game.WorldMapStuff.Model
         {
             return Money >= price;
         }
+        public bool CanAfford(Item item)
+        {
+            return Convoy.ContainsItem(item);
+        }
+        public bool CanAfford(ResourceType resourceType, int amount)
+        {
+            switch (resourceType)
+            {
+                case ResourceType.Gold:
+                    return CanAfford(amount);
+                case ResourceType.Grace:
+                    return CollectedGrace>= amount;
+                case ResourceType.Morality:
+                    return true;
+                case ResourceType.HP_Percent:
+                    return ActiveUnit.Hp> ActiveUnit.MaxHp * (amount/100f);
+            }
+
+            return false;
+        }
 
         public void EncounterTick()
         {
@@ -366,6 +386,17 @@ namespace Game.WorldMapStuff.Model
             {
                 Convoy.AddItem(item);
             }
+        }
+
+        public Unit GetUnitByName(string characterRequirementName)
+        {
+            foreach (var member in members)
+            {
+                if (member.Name == characterRequirementName)
+                    return member;
+            }
+
+            return null;
         }
     }
 }

@@ -102,7 +102,7 @@ public class SkillSystem : IEngineSystem
                         skill = upgSkill.Clone();
                         skill.Level++;
                         upgradeCount++;
-                        Debug.Log("Upgrade: "+skill.Name);
+                        //Debug.Log("Upgrade: "+skill.Name);
                         break;
                     }
                 }
@@ -111,12 +111,12 @@ public class SkillSystem : IEngineSystem
             if (skill == null)
             {
                 skill = GenerateSkill(unit);
-                Debug.Log("NewSkill: "+skill.Name);
+              //  Debug.Log("NewSkill: "+skill.Name);
             }
 
             if (!skills.Contains(skill))
             {
-                Debug.Log("Adding Skill: "+skill.Name);
+               // Debug.Log("Adding Skill: "+skill.Name);
                 skills.Add(skill);
             }
         }

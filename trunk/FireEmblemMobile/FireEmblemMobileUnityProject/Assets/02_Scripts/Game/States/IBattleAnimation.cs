@@ -8,7 +8,7 @@ namespace Game.Mechanics
     {
         void Show(BattleSimulation battleSimulation, IBattleActor attacker, IAttackableTarget defender);
         void Hide();
-        event Action OnFinished;
+        event Action<int> OnFinished;
         void Cleanup();
     }
 }

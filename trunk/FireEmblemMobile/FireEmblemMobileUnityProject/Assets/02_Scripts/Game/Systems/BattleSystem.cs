@@ -62,7 +62,7 @@ namespace Game.Mechanics
         }
         public void StartBattle(IBattleActor attacker, IBattleActor defender, bool grid, bool continuos =false)
         {
-            Debug.Log("SSTTTTTTTTTAAAAAAART BAAAAAAATTTTTTTLLLLLLE");
+            Debug.Log("SSTTTTTTTTTAAAAAAART BAAAAAAATTTTTTTLLLLLLE" +attacker+" "+defender);
             this.attacker = attacker;
             this.defender = defender;
             ActivateSkillsAtBattleStart();
@@ -168,21 +168,20 @@ namespace Game.Mechanics
                 defenderActivatedSkillMixins.RemoveAt(i);
             }
         }
-        private void EndBattle()
+        private void EndBattle(int lastCombatRoundIndex)
         {
-
-            int hpDelta = attacker.Hp - battleSimulation.Attacker.Hp;
+            int hpDelta = attacker.Hp - battleSimulation.combatRounds[lastCombatRoundIndex].AttackerHP;
             ((Unit) attacker).InflictDirectDamage((Unit)defender, hpDelta,defender.GetEquippedWeapon().DamageType, false);
            // attacker.Hp = battleSimulation.Attacker.Hp;
             if (battleSimulation.AttackableTarget == null)
             {
-                hpDelta = defender.Hp - battleSimulation.Defender.Hp;
+                hpDelta = defender.Hp - battleSimulation.combatRounds[lastCombatRoundIndex].DefenderHP;
                 ((Unit) defender).InflictDirectDamage((Unit)attacker, hpDelta,attacker.GetEquippedWeapon().DamageType, false);
                 //defender.Hp = battleSimulation.Defender.Hp;
             }
             else
             {
-                hpDelta = defender.Hp - battleSimulation.AttackableTarget.Hp;
+                hpDelta = defender.Hp - battleSimulation.combatRounds[lastCombatRoundIndex].DefenderHP;
                 ((Unit) defender).InflictDirectDamage((Unit)attacker, hpDelta,attacker.GetEquippedWeapon().DamageType, false);
                 //defender.Hp = battleSimulation.AttackableTarget.Hp;
             }

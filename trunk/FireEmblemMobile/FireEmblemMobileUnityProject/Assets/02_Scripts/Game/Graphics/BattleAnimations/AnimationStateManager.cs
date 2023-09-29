@@ -10,7 +10,7 @@ using AttackData = Game.Mechanics.AttackData;
 
 public class AnimationStateManager
 {
-    public event Action OnFinished;
+    public event Action<int> OnFinished;
     
     private TimeLineController TimeLineController;
     public float timeBetweenAttacks = 0.40f;
@@ -50,6 +50,7 @@ public class AnimationStateManager
     }
     public void Start()
     {
+        surrender = false;
         TimeLineController.zoomInFinished -= ContinueBattle;
         TimeLineController.zoomInFinished += ContinueBattle;
         currentRound = battleSimulation.combatRounds[0];
@@ -75,6 +76,7 @@ public class AnimationStateManager
     }
 
     public event Action<AttackData> OnCharacterAttack;
+    private bool surrender = false;
     private void ContinueBattle()
     {
      
@@ -94,6 +96,10 @@ public class AnimationStateManager
 
     }
 
+    public void Surrender()
+    {
+        surrender = true;
+    }
     void AttackFinished()
     {
         attackSequenzIndex++;
@@ -119,10 +125,10 @@ public class AnimationStateManager
     private void AllAttacksFinished()
     {
         TimeLineController.zoomOutFinished -= AllAttacksFinished;
-        if (currentRound.RoundIndex >= battleSimulation.combatRounds.Count-1)
+        if (surrender||currentRound.RoundIndex >= battleSimulation.combatRounds.Count-1)
         {
            
-            MonoUtility.DelayFunction(this,BattleFinished, EndBattleWaitDuration);
+            MonoUtility.DelayFunction(this,()=>BattleFinished(currentRound.RoundIndex), EndBattleWaitDuration);
         }
         else
         {
@@ -132,10 +138,10 @@ public class AnimationStateManager
             MonoUtility.DelayFunction(this, TimeLineController.PlayZoomIn, timeBetweenAttacks);
         }
     }
-    public void BattleFinished()
+    public void BattleFinished(int index)
     {
         
-        OnFinished?.Invoke();
+        OnFinished?.Invoke(index);
     }
 
     public void CleanUp()

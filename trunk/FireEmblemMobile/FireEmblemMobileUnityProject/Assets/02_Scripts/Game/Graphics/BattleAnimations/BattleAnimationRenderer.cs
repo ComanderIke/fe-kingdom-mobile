@@ -18,7 +18,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     public static event Action<BattleSimulation, IBattleActor, IAttackableTarget> OnShow;
     
     public Volume volume;
-    public event Action OnFinished;
+    public event Action<int> OnFinished;
 
 
     void ShowActivatedAttackSkills(AttackData attackData)
@@ -30,13 +30,22 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     {
         skillActivationRenderer.Show(skills, attacker);
     }
-  
+
+    void Surrender()
+    {
+        animationStateManager.Surrender();
+    }
     public void Show(BattleSimulation battleSimulation, IBattleActor attackingActor, IAttackableTarget defendingActor)
     {
         gameObject.SetActive(true);
-    
+        battleSimulation = battleSimulation;
         canvas.Show();
+        Debug.Log("Test: "+attackingActor+" "+defendingActor);
         OnShow?.Invoke(battleSimulation, attackingActor, defendingActor);
+        BattleUI.onSurrender -= Surrender;
+        BattleUI.onSurrender += Surrender;
+        BattleUI.onSkip -= Skip;
+        BattleUI.onSkip += Skip;
        
         animationStateManager = new AnimationStateManager(attackingActor, defendingActor, battleSimulation, GetComponent<TimeLineController>(),GetComponent<CharacterCombatAnimations>());
         animationStateManager.OnCharacterAttack -= ShowActivatedAttackSkills;
@@ -52,19 +61,24 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         
     }
 
-    void Finished()
+    private BattleSimulation battleSimulation;
+    
+    void Finished(int lastCombatRoundIndex)
     {
         Cleanup();
-        OnFinished?.Invoke();
+        BattleUI.onSurrender -= Surrender;
+        BattleUI.onSkip -= Skip;
+        OnFinished?.Invoke(lastCombatRoundIndex);
     }
 
-    private void Update()
+    public void Skip()
     {
-        if (Input.GetMouseButtonDown(0)&&animationStateManager!=null)
+        if (animationStateManager!=null)
         {
+            Debug.Log("UPDATE BUTTON CLICKED");
             CancelInvoke();//TODO DO THIS ON COROUTINE MONOBEHAVIOUR 
             Debug.Log("TODO Reset Cameras and Volumes!");
-            animationStateManager.BattleFinished();
+            animationStateManager.BattleFinished(battleSimulation.combatRounds.Count-1);
             //Hide(); Hide should be called from battle finished event
         }
     }

@@ -20,9 +20,12 @@ public class BattleUI : MonoBehaviour
     
     [SerializeField] private UIAttackPreviewContainer left = default;
     [SerializeField] private UIAttackPreviewContainer right = default;
-
+    [SerializeField] private Button SurrenderButton;
+    [SerializeField] private Button skipButton;
     [SerializeField] private UIAttackOrder attackOrderUI;
-    
+
+    public static event Action onSurrender;
+    public static event Action onSkip;
     // Start is called before the first frame update
     void OnEnable()
     {
@@ -39,23 +42,44 @@ public class BattleUI : MonoBehaviour
 
     private void Show(BattleSimulation battleSimulation, IBattleActor attacker, IAttackableTarget defender)
     {
+        Debug.Log("TEST2"+attacker+" "+defender);
         Show(battleSimulation, (Unit)attacker, (Unit)defender);
     }
 
     private int currentHpLeft;
     private int currentHpRight;
+
+    public void SkipClicked()
+    {
+        onSkip?.Invoke();
+        skipButton.gameObject.SetActive(false);
+        SurrenderButton.gameObject.SetActive(false);
+    }
+    public void SurrenderClicked()
+    {
+        onSurrender?.Invoke();
+        SurrenderButton.gameObject.SetActive(false);
+       
+        Debug.Log("SurrenderClicked");
+    }
     public void Show(BattleSimulation battleSimulation, Unit attacker, Unit defender)
     {
         var leftCharacter = defender;
         var rightCharacter = attacker;
-        playerUnitIsAttacker = attacker.Faction.IsPlayerControlled;
+        if(attacker.Faction!=null)
+            playerUnitIsAttacker = attacker.Faction.IsPlayerControlled;
+        else
+        {
+            playerUnitIsAttacker = attacker.Party != null;
+        }
         if (playerUnitIsAttacker)
         {
             leftCharacter = attacker;
             rightCharacter = defender;
         }
+        skipButton.gameObject.SetActive(true);
+        SurrenderButton.gameObject.SetActive(battleSimulation.combatRounds.Count > 1);
 
-      
         var combatRound = battleSimulation.combatRounds[0];
         currentHpLeft = combatRound.AttackerStats.CurrentHp;
         currentHpRight = combatRound.DefenderStats.CurrentHp;

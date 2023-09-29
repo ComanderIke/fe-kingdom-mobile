@@ -171,7 +171,7 @@ public class MapBattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     void Finished()
     {
         Debug.Log("BattleAnimationFinished");
-        OnFinished?.Invoke();
+        OnFinished?.Invoke(0);
     }
 
     public void Hide()
@@ -191,7 +191,7 @@ public class MapBattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         //throw new NotImplementedException();
     }
 
-    public event Action OnFinished;
+    public event Action<int> OnFinished;
     public void Cleanup()
     {
         

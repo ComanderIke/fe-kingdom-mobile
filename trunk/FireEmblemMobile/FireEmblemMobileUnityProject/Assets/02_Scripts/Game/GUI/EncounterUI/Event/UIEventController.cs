@@ -87,6 +87,7 @@ public class UIEventController : MonoBehaviour
     {
         headline.SetText(randomEvent.HeadLine);
         layout.DeleteAllChildren();
+        Debug.Log("CurrentNode: "+currentNode);
         description.text = currentNode.Text;
         ShowTextOptions(currentNode.Choices);
     }
@@ -164,11 +165,13 @@ public class UIEventController : MonoBehaviour
                 prefab = fightOptionPrefab;
     
             var go = Instantiate(prefab, layout);
-            go.GetComponent<TextOptionController>().SetIndex(index);
+           
 
             var textOptionController = go.GetComponent<TextOptionController>();
             
             textOptionController.Setup(textOption, textOption.Text,statText,textOptionType, this);
+            if(textOptionType != TextOptionState.Locked)
+                textOptionController.SetIndex(index);
             
             
             index++;
@@ -239,7 +242,7 @@ public class UIEventController : MonoBehaviour
     void BattleEnded(AttackResult result)
     {
         Debug.Log("BATTLE ENDED");
-        BattleSystem.OnBattleFinished -= BattleEnded;
+        BattleSystem.OnBattleFinishedBeforeAfterBattleStuff -= BattleEnded;
         //var battleOutcome = GetBattleOutcome(result);
         if(result == AttackResult.Win)
             currentNode =(LGEventDialogSO)currentNode.Choices[0].NextDialogue;
@@ -305,14 +308,35 @@ public class UIEventController : MonoBehaviour
         float combinedChance = 1.0f;
         foreach (var statReq in choiceData.AttributeRequirements)
         {
+            Debug.Log("Stat Req: "+statReq.AttributeType+" "+statReq.Amount);
             float chance=GetSuccessChance(statReq, party.ActiveUnit);
             combinedChance *= chance;
         }
 
+        float randomValue = UnityEngine.Random.value;
+        Debug.Log("Roll: "+randomValue+" Goal<= "+combinedChance);
         
-        return UnityEngine.Random.value <= combinedChance;
+        return randomValue <= combinedChance;
     }
-   
+
+    void PayRequirements()
+    {
+        if (current.CharacterRequirement != null)
+        {
+            Player.Instance.Party.SetActiveUnit( Player.Instance.Party.GetUnitByName(current.CharacterRequirement.Name));
+        }
+        foreach (var req in current.ResourceRequirements)
+        {
+            switch (req.ResourceType)
+            {
+                case ResourceType.Gold: Player.Instance.Party.AddGold(-req.Amount);break;
+                case ResourceType.Grace: Player.Instance.Party.AddGrace(- req.Amount);break;
+                case ResourceType.Morality:Player.Instance.Party.Morality.AddMorality(- req.Amount); break;
+                case ResourceType.HP_Percent:
+                    Player.Instance.Party.ActiveUnit.Hp -= Player.Instance.Party.ActiveUnit.MaxHp * req.Amount; break;
+            }
+        }
+    }
     public void OptionClicked(TextOptionController textOptionController)
     {
         if (CheckAttributeRequirementsSuccess(textOptionController.Option))
@@ -330,6 +354,7 @@ public class UIEventController : MonoBehaviour
 
         if (currentNode!=null)
         {
+            PayRequirements();
             CheckPossibleRewards();
             CheckEvents();
             if (currentNode is LGFightEventDialogSO)
@@ -374,7 +399,7 @@ public class UIEventController : MonoBehaviour
     {
         var battleSystem = AreaGameManager.Instance.GetSystem<BattleSystem>();
         var enemy = ((LGFightEventDialogSO)current.NextDialogue).Enemy.Create();
-            
+            Debug.Log("Start Event Battle: "+party.ActiveUnit+" "+enemy);
         battleSystem.StartBattle(party.ActiveUnit, enemy, false, true);
         BattleSystem.OnBattleFinishedBeforeAfterBattleStuff += BattleEnded;
     }
@@ -415,32 +440,49 @@ public class UIEventController : MonoBehaviour
     }
     void CheckPossibleRewards()
     {
-        if(currentNode.RewardResources!=null)
+        Debug.Log("CHECK REWARDS");
+        if (currentNode.RewardResources != null)
+        {
+            Debug.Log(currentNode.RewardResources.Count);
             foreach (var resource in currentNode.RewardResources)
             {
+                Debug.Log(resource.ResourceType);
                 switch (resource.ResourceType)
                 {
-                    case ResourceType.Gold:  Player.Instance.Party.AddGold(resource.Amount); break;
-                    case ResourceType.Exp:  Player.Instance.Party.ActiveUnit.ExperienceManager.AddExp(resource.Amount); break;
-                    case ResourceType.Grace:  Player.Instance.Party.AddGrace(resource.Amount); break;
-                    case ResourceType.Morality:  Player.Instance.Party.Morality.AddMorality(resource.Amount); break;
+                    case ResourceType.Gold:
+                        Debug.Log("ADD GOLD " + resource.Amount);
+                        Player.Instance.Party.AddGold(resource.Amount);
+                        break;
+                    case ResourceType.Exp:
+                        Player.Instance.Party.ActiveUnit.ExperienceManager.AddExp(resource.Amount);
+                        break;
+                    case ResourceType.Grace:
+                        Player.Instance.Party.AddGrace(resource.Amount);
+                        break;
+                    case ResourceType.Morality:
+                        Player.Instance.Party.Morality.AddMorality(resource.Amount);
+                        break;
                     case ResourceType.HP_Percent:
                         if (resource.Amount < 0)
                         {
-                           // Debug.Log(resource.Amount / 100f+" "+resource.Amount / 100f * Player.Instance.Party.ActiveUnit.MaxHp+" "+Math.Ceiling(resource.Amount / 100f * Player.Instance.Party.ActiveUnit.MaxHp));
-                           
+                            // Debug.Log(resource.Amount / 100f+" "+resource.Amount / 100f * Player.Instance.Party.ActiveUnit.MaxHp+" "+Math.Ceiling(resource.Amount / 100f * Player.Instance.Party.ActiveUnit.MaxHp));
+
                             Player.Instance.Party.ActiveUnit.InflictNonLethalTrueDamage(null,
-                                (int)Math.Ceiling(-1*resource.Amount / 100f * Player.Instance.Party.ActiveUnit.MaxHp));
+                                (int)Math.Ceiling(-1 * resource.Amount / 100f *
+                                                  Player.Instance.Party.ActiveUnit.MaxHp));
                         }
                         else
                         {
-                            Player.Instance.Party.ActiveUnit.Heal((int)Math.Ceiling((resource.Amount / 100f * Player.Instance.Party.ActiveUnit.MaxHp)));
+                            Player.Instance.Party.ActiveUnit.Heal(
+                                (int)Math.Ceiling((resource.Amount / 100f * Player.Instance.Party.ActiveUnit.MaxHp)));
                         }
 
                         break;
                 }
-               
+
             }
+        }
+
         if(currentNode.RewardItems!=null)
             foreach (var item in currentNode.RewardItems)
             {

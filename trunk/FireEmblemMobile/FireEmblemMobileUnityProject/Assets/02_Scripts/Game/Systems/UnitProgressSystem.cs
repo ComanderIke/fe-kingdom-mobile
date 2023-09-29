@@ -269,7 +269,7 @@ namespace Game.Mechanics
                     increaseAmount[i] = Method(growths[i]);
                     if (increaseAmount[i] > 0)
                         atleast1 = true;
-                    Debug.Log("IncreaseAmount: " +increaseAmount[i]);
+                    //Debug.Log("IncreaseAmount: " +increaseAmount[i]);
                 }
             }
 
@@ -278,7 +278,7 @@ namespace Game.Mechanics
         private int Method(int Growth)
         {
             int rngNumber = (int)(UnityEngine.Random.value * 100f);
-                Debug.Log("RNG Number: "+rngNumber+" Growth: "+ Growth);
+              //  Debug.Log("RNG Number: "+rngNumber+" Growth: "+ Growth);
             if (Growth > 100)
             {
                 return 1 + Method(Growth - 100);

@@ -94,7 +94,26 @@ namespace Game.Mechanics
                     DefenderAttackCount = Defender.BattleComponent.BattleStats.GetAttackCountAgainst(Attacker),
                     AttacksData = new List<AttackData>()
                 };
-
+                combatRound.AttackerStats =  new DuringBattleCharacterStats(Attacker.BattleComponent.BattleStats.GetDamage(),
+                    Attacker.Stats.BaseAttributes.AGI, Defender.BattleComponent.BattleStats.GetDamageType(),
+                    Defender.BattleComponent.BattleStats.GetDamageType() == DamageType.Physical
+                        ? Attacker.BattleComponent.BattleStats.GetPhysicalResistance()
+                        : Attacker.Stats.BaseAttributes.FAITH,
+                    Attacker.Stats.BaseAttributes.DEX,
+                    Attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(Defender),
+                    Attacker.BattleComponent.BattleStats.GetHitAgainstTarget(Defender),
+                    Attacker.BattleComponent.BattleStats.GetCritAgainstTarget(Defender),
+                    Attacker.BattleComponent.BattleStats.GetAttackCountAgainst(Defender), Attacker.Hp, Attacker.MaxHp); 
+                combatRound.DefenderStats = new DuringBattleCharacterStats(Defender.BattleComponent.BattleStats.GetDamage(),
+                    Defender.Stats.BaseAttributes.AGI, Defender.BattleComponent.BattleStats.GetDamageType(),
+                    Attacker.BattleComponent.BattleStats.GetDamageType() == DamageType.Physical
+                        ? Defender.BattleComponent.BattleStats.GetPhysicalResistance()
+                        : Defender.Stats.BaseAttributes.FAITH,
+                    Defender.Stats.BaseAttributes.DEX,
+                    Defender.BattleComponent.BattleStats.GetDamageAgainstTarget(Attacker),
+                    Defender.BattleComponent.BattleStats.GetHitAgainstTarget(Attacker),
+                    Defender.BattleComponent.BattleStats.GetCritAgainstTarget(Attacker),
+                    Attacker.BattleComponent.BattleStats.GetAttackCountAgainst(Attacker), Defender.Hp, Defender.MaxHp);
                 combatRounds.Add(combatRound);
                 
             }
@@ -378,7 +397,26 @@ namespace Game.Mechanics
                         DefenderAttackCount = Defender.BattleComponent.BattleStats.GetAttackCountAgainst(Attacker),
                         AttacksData = new List<AttackData>()
                     };
-                    
+                    combatRound.AttackerStats =  new DuringBattleCharacterStats(Attacker.BattleComponent.BattleStats.GetDamage(),
+                        Attacker.Stats.BaseAttributes.AGI, Defender.BattleComponent.BattleStats.GetDamageType(),
+                        Defender.BattleComponent.BattleStats.GetDamageType() == DamageType.Physical
+                            ? Attacker.BattleComponent.BattleStats.GetPhysicalResistance()
+                            : Attacker.Stats.BaseAttributes.FAITH,
+                        Attacker.Stats.BaseAttributes.DEX,
+                        Attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(Defender),
+                        Attacker.BattleComponent.BattleStats.GetHitAgainstTarget(Defender),
+                        Attacker.BattleComponent.BattleStats.GetCritAgainstTarget(Defender),
+                        Attacker.BattleComponent.BattleStats.GetAttackCountAgainst(Defender), Attacker.Hp, Attacker.MaxHp); 
+                    combatRound.DefenderStats = new DuringBattleCharacterStats(Defender.BattleComponent.BattleStats.GetDamage(),
+                        Defender.Stats.BaseAttributes.AGI, Defender.BattleComponent.BattleStats.GetDamageType(),
+                        Attacker.BattleComponent.BattleStats.GetDamageType() == DamageType.Physical
+                            ? Defender.BattleComponent.BattleStats.GetPhysicalResistance()
+                            : Defender.Stats.BaseAttributes.FAITH,
+                        Defender.Stats.BaseAttributes.DEX,
+                        Defender.BattleComponent.BattleStats.GetDamageAgainstTarget(Attacker),
+                        Defender.BattleComponent.BattleStats.GetHitAgainstTarget(Attacker),
+                        Defender.BattleComponent.BattleStats.GetCritAgainstTarget(Attacker),
+                        Attacker.BattleComponent.BattleStats.GetAttackCountAgainst(Attacker), Defender.Hp, Defender.MaxHp);
                     combatRounds.Add(combatRound);
                    
                     StartRound(combatRound, certainHit, grid);

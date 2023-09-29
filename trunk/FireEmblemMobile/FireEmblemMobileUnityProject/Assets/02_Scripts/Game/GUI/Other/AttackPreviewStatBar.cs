@@ -17,6 +17,7 @@ namespace Game.GUI
         [SerializeField] private Image backgroundHpBar;
         [SerializeField] private Image currentHpBar;
         [SerializeField] private Image beforeHpBar;
+        [SerializeField] private Image losingHpBar;
         [SerializeField] private TextMeshProUGUI hpText = default;
         [SerializeField] private TextMeshProUGUI valueAfterText = default;
         [SerializeField] private MMF_Player feedbacks;
@@ -39,6 +40,7 @@ namespace Game.GUI
                  rectTransform = GetComponent<RectTransform>();
 
              valueAfterText.gameObject.SetActive(true);
+             losingHpBar.gameObject.SetActive(false);
              valueAfterText.text = "" + afterBattleHp;
              hpText.text =""+ currentHp;
              hpIndicator.gameObject.SetActive(true);
@@ -57,6 +59,7 @@ namespace Game.GUI
             hpText.text =""+ currentHp;
            // currentHpBar.rectTransform.sizeDelta = new Vector2(width*((currentHp * 1.0f)/maxHp),currentHpBar.rectTransform.sizeDelta.y);
             valueAfterText.gameObject.SetActive(false);
+            losingHpBar.gameObject.SetActive(true);
            // beforeHpBar.gameObject.SetActive(false);
             hpIndicator.gameObject.SetActive(false);
             Debug.Log("set HP Bar: "+(this.currentHp * 1.0f)/maxHp);

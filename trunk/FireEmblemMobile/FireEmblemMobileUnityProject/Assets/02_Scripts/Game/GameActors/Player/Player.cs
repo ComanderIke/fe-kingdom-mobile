@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _02_Scripts.Game.Dialog.DialogSystem;
 using Game.GameActors.Items;
 using Game.Systems;
 using Game.WorldMapStuff.Model;
@@ -65,6 +66,17 @@ namespace Game.GameActors.Players
             }
           
         }
+        private List<LGDialogChoiceData> dialogOptionsExperienced;
+        public  List<LGDialogChoiceData> DialogOptionsExperienced
+        {
+            get
+            {
+                return dialogOptionsExperienced ??= new List<LGDialogChoiceData>(); 
+                
+            }
+          
+        }
+        [HideInInspector]
         [field:SerializeField]
         public List<string> UnlockedCharacterIds
         {
@@ -180,5 +192,7 @@ namespace Game.GameActors.Players
             else
                 Quests[questName] = true;
         }
+
+       
     }
 }
