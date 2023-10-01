@@ -36,6 +36,8 @@ public class BattleSuccessRenderer : MonoBehaviour, IBattleSuccessRenderer
 
     public void Hide()
     {
+        if (gameObject == null)
+            return;
         shown = false;
         canvas.enabled = false;
         OnFinished?.Invoke();

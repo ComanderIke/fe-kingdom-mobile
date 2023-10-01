@@ -20,7 +20,6 @@ namespace Game.GameResources
         {
             if(rng==null)
                 rng = new Random();
-            Debug.Log("Getting Random Event: "+tier0Events.Count+ " "+rng.Next(0, tier0Events.Count));
             switch (tier)
             {
                 case 0: return tier0Events[rng.Next(0, tier0Events.Count)];

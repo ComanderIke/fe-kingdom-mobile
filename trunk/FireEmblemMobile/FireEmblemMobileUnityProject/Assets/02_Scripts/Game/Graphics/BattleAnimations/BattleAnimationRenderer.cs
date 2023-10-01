@@ -78,7 +78,12 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
             Debug.Log("UPDATE BUTTON CLICKED");
             CancelInvoke();//TODO DO THIS ON COROUTINE MONOBEHAVIOUR 
             Debug.Log("TODO Reset Cameras and Volumes!");
-            animationStateManager.BattleFinished(battleSimulation.combatRounds.Count-1);
+            if(battleSimulation != null && battleSimulation.combatRounds!=null)
+                animationStateManager.BattleFinished(battleSimulation.combatRounds.Count-1);
+            else
+            {
+                animationStateManager.BattleFinished(0);
+            }
             //Hide(); Hide should be called from battle finished event
         }
     }

@@ -35,7 +35,7 @@ public class EnemyLayoutViewer : MonoBehaviour
         //     spawnedUnitLayouts.Add(go.GetComponent<UnitSpawner>());
         // }
 
-        battleMapInstantiation = Instantiate(enemyLayout.battleMapPool.GetRandomMap().mapPrefab, null);
+        battleMapInstantiation = Instantiate(enemyLayout.GetBattleMap().mapPrefab, null);
     }
 
     public void Hide()

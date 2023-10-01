@@ -41,8 +41,8 @@ namespace Game.States
         }
         public override void Exit()
         {
-            successRenderer.Hide();
-            battleResultRenderer.Hide();
+            // successRenderer.Hide();
+            // battleResultRenderer.Hide();
         }
 
         public override GameState<NextStateTrigger> Update()

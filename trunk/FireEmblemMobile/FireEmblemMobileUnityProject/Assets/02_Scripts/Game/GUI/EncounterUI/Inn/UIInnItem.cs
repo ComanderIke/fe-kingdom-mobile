@@ -34,7 +34,7 @@ namespace Game.GUI.EncounterUI.Inn
             price.color = affordable ? Color.white : Color.red;
             coinIcon.gameObject.SetActive(recipe.price!=0);
             name.text = recipe.name;
-            description.text = "Heal " + recipe.heal + " % Hp";
+            description.text = "+ " + recipe.heal + " % Hp";
             string attributeText = "";
             foreach (var attType in recipe.AttributeType)
             {
@@ -42,9 +42,9 @@ namespace Game.GUI.EncounterUI.Inn
             }
             if(attributeText.Length>=2)
                 attributeText=attributeText.Remove(attributeText.Length - 1);
-            bonus.text = "+"+recipe.bonuses +attributeText+( recipe.bonusType == Recipe.InnBonusType.Permanent?" permanent":"");
+            bonus.text = "+ "+recipe.bonuses +attributeText+( recipe.bonusType == Recipe.InnBonusType.Permanent?" permanent":"");
             if(recipe.bonusType == Recipe.InnBonusType.Exp)
-                bonus.text = "+"+recipe.bonuses +" exp";
+                bonus.text = "+ "+recipe.bonuses +" exp";
             if(recipe.bonusType == Recipe.InnBonusType.RefreshSkills)
                 bonus.text = "Refresh Skills";
             bonus.gameObject.SetActive(recipe.bonuses!=0);

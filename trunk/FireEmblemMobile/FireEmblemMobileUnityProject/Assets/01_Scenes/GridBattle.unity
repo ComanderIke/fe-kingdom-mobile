@@ -11631,7 +11631,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 005271953062aa84c836e6c370496b68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyLayout: {fileID: 11400000, guid: f99b0f1f08d60804ca7debfade419e11, type: 2}
+  enemyLayout: {fileID: 0}
 --- !u!1 &418867738 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5879667393529888112, guid: 27ba58f46876ce5428d6116e6d8c1161,
@@ -36434,12 +36434,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1130299866}
   m_CullTransparentMesh: 1
---- !u!20 &1132502762 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 5096924485376107014, guid: 4d990c85cf026354888266b1b198d3fe,
-    type: 3}
-  m_PrefabInstance: {fileID: 5096924486458277100}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1133976520
 GameObject:
   m_ObjectHideFlags: 0
@@ -51972,7 +51966,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c588c2ed97e90fd429ef106f96656dc0, type: 2}
   - {fileID: 11400000, guid: 8d0171e7cfb2f134bbfabaf8e9b89193, type: 2}
   - {fileID: 11400000, guid: 08614606a99f97c448e43f01ab20b263, type: 2}
-  battleMap: {fileID: 11400000, guid: 15cd292001c154e4f8df1f2d07983c80, type: 2}
+  battleMap: {fileID: 11400000, guid: f29d782e2a32de24b83cff62d4385495, type: 2}
 --- !u!4 &1692818760
 Transform:
   m_ObjectHideFlags: 0
@@ -71688,31 +71682,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1915216222}
     m_Modifications:
-    - target: {fileID: 3882222539487224503, guid: 8853c4635b727954b92c096b74a0dc9d,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3882222539487224503, guid: 8853c4635b727954b92c096b74a0dc9d,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3882222539487224503, guid: 8853c4635b727954b92c096b74a0dc9d,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3882222539487224503, guid: 8853c4635b727954b92c096b74a0dc9d,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4403991446756510303, guid: 8853c4635b727954b92c096b74a0dc9d,
-        type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
-      objectReference: {fileID: 0}
     - target: {fileID: 6559398821077210786, guid: 8853c4635b727954b92c096b74a0dc9d,
         type: 3}
       propertyPath: m_Name
@@ -71822,31 +71791,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8749199965269042284, guid: 8853c4635b727954b92c096b74a0dc9d,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8749199965269042284, guid: 8853c4635b727954b92c096b74a0dc9d,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8749199965269042284, guid: 8853c4635b727954b92c096b74a0dc9d,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8749199965269042284, guid: 8853c4635b727954b92c096b74a0dc9d,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9142458209366954862, guid: 8853c4635b727954b92c096b74a0dc9d,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -61.100098
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8853c4635b727954b92c096b74a0dc9d, type: 3}
@@ -75506,11 +75450,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1076625656}
     m_Modifications:
-    - target: {fileID: 6060367887998727296, guid: e8102d1f44011c64b866168e2e3926a1,
-        type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 1525353921}
     - target: {fileID: 6060367887998727299, guid: e8102d1f44011c64b866168e2e3926a1,
         type: 3}
       propertyPath: m_Pivot.x
@@ -75621,16 +75560,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BattleAnimationCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 6060367887998727359, guid: e8102d1f44011c64b866168e2e3926a1,
-        type: 3}
-      propertyPath: canvas
-      value: 
-      objectReference: {fileID: 1076625657}
-    - target: {fileID: 6060367888459643080, guid: e8102d1f44011c64b866168e2e3926a1,
-        type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 1132502762}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8102d1f44011c64b866168e2e3926a1, type: 3}
 --- !u!222 &6780882850597653661
