@@ -18,6 +18,7 @@ public class BattleEncounterNode : EncounterNode
 
     public override void Activate(Party party)
     {
+        base.Activate(party);
         //TODO Continue should be called after the battle has ended.
         Continue();
         base.gameObject.GetComponent<BattleEncounterController>().Activate();

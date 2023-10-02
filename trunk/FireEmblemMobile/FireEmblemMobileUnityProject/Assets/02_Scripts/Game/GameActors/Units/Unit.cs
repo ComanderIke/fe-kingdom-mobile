@@ -97,8 +97,8 @@ namespace Game.GameActors.Units
             set => stats = value;
         }
 
-        public Blessing Blessing => SkillManager.Skills.OfType<Blessing>()?.First();
-        public Curse Curse => SkillManager.Skills.OfType<Curse>()?.First();
+        public Blessing Blessing => null;//SkillManager.Skills==null?null:SkillManager.Skills.OfType<Blessing>()?.First();
+        public List<Curse> Curses => SkillManager.GetCurses();
 
        
         public RpgClass rpgClass;
@@ -666,8 +666,8 @@ namespace Game.GameActors.Units
 
         public void RemoveCurse()
         {
-            if(Curse!=null)
-                SkillManager.RemoveSkill(Curse);
+            // if(Curse!=null)
+            //     SkillManager.RemoveSkill(Curse);
         }
 
         public event Action<Unit> OnAboutToDie;

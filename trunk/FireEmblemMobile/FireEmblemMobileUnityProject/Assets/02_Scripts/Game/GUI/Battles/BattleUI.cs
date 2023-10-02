@@ -5,10 +5,12 @@ using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameInput;
 using Game.Mechanics;
+using Game.Mechanics.Battle;
 using LostGrace;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using AttackData = Game.Mechanics.AttackData;
 
 public class BattleUI : MonoBehaviour
 {
@@ -40,10 +42,10 @@ public class BattleUI : MonoBehaviour
 
     private bool playerUnitIsAttacker;
 
-    private void Show(BattleSimulation battleSimulation, IBattleActor attacker, IAttackableTarget defender)
+    private void Show(BattleSimulation battleSimulation, BattlePreview battlePreview, IBattleActor attacker, IAttackableTarget defender)
     {
         Debug.Log("TEST2"+attacker+" "+defender);
-        Show(battleSimulation, (Unit)attacker, (Unit)defender);
+        Show(battleSimulation, battlePreview, (Unit)attacker, (Unit)defender);
     }
 
     private int currentHpLeft;
@@ -62,7 +64,7 @@ public class BattleUI : MonoBehaviour
        
         Debug.Log("SurrenderClicked");
     }
-    public void Show(BattleSimulation battleSimulation, Unit attacker, Unit defender)
+    public void Show(BattleSimulation battleSimulation, BattlePreview battlePreview, Unit attacker, Unit defender)
     {
         var leftCharacter = defender;
         var rightCharacter = attacker;
@@ -80,12 +82,58 @@ public class BattleUI : MonoBehaviour
         skipButton.gameObject.SetActive(true);
         SurrenderButton.gameObject.SetActive(battleSimulation.combatRounds.Count > 1);
 
-        var combatRound = battleSimulation.combatRounds[0];
-        currentHpLeft = combatRound.AttackerStats.CurrentHp;
-        currentHpRight = combatRound.DefenderStats.CurrentHp;
-        left.ShowInBattleContext(leftCharacter.visuals.CharacterSpriteSet.FaceSprite, combatRound.AttackerStats.Damage,combatRound.AttackerStats.Hit,combatRound.AttackerStats.Crit, combatRound.AttackerStats.CurrentHp,combatRound.AttackerStats.MaxHp, combatRound.AttackerHP);
-        right.ShowInBattleContext(rightCharacter.visuals.CharacterSpriteSet.FaceSprite, combatRound.DefenderStats.Damage,combatRound.DefenderStats.Hit,combatRound.DefenderStats.Crit, combatRound.DefenderStats.CurrentHp,combatRound.DefenderStats.MaxHp, combatRound.DefenderHP,combatRound.DefenderStats.AttackCount != 0);
-        attackOrderUI.Show(combatRound.AttacksData);
+        currentHpLeft = battlePreview.AttackerStats.CurrentHp;
+        currentHpRight = battlePreview.DefenderStats.CurrentHp;
+        if (playerUnitIsAttacker)
+        {
+            left.ShowInBattleContext(battlePreview.Attacker.Visuals.CharacterSpriteSet.FaceSprite, battlePreview.AttackerStats.Damage,
+                battlePreview.AttackerStats.Hit, battlePreview.AttackerStats.Crit,
+                battlePreview.AttackerStats.CurrentHp, battlePreview.AttackerStats.MaxHp,
+                battlePreview.AttackerStats.AfterBattleHp);
+            right.ShowInBattleContext(battlePreview.Defender.Visuals.CharacterSpriteSet.FaceSprite, battlePreview.DefenderStats.Damage,
+                battlePreview.DefenderStats.Hit, battlePreview.DefenderStats.Crit,
+                battlePreview.DefenderStats.CurrentHp, battlePreview.DefenderStats.MaxHp,
+                battlePreview.DefenderStats.AfterBattleHp, battlePreview.DefenderStats.AttackCount != 0);
+        }
+        else
+        {
+            left.ShowInBattleContext(battlePreview.Defender.Visuals.CharacterSpriteSet.FaceSprite, battlePreview.DefenderStats.Damage,
+                battlePreview.DefenderStats.Hit, battlePreview.DefenderStats.Crit,
+                battlePreview.DefenderStats.CurrentHp, battlePreview.DefenderStats.MaxHp,
+                battlePreview.DefenderStats.AfterBattleHp, battlePreview.DefenderStats.AttackCount != 0);
+            right.ShowInBattleContext(battlePreview.Attacker.Visuals.CharacterSpriteSet.FaceSprite, battlePreview.AttackerStats.Damage,
+                battlePreview.AttackerStats.Hit, battlePreview.AttackerStats.Crit,
+                battlePreview.AttackerStats.CurrentHp, battlePreview.AttackerStats.MaxHp,
+                battlePreview.AttackerStats.AfterBattleHp);
+        }
+
+        attackOrderUI.Show(battlePreview.AttacksData, playerUnitIsAttacker);
+        // var combatRound = battleSimulation.combatRounds[0];
+        // currentHpLeft = combatRound.AttackerStats.CurrentHp;
+        // currentHpRight = combatRound.DefenderStats.CurrentHp;
+        // Debug.Log(leftCharacter.name+" vs "+rightCharacter.Name);
+        // Debug.Log(combatRound.DefenderStats.AttackCount != 0);
+        // if (playerUnitIsAttacker)
+        // {
+        //     left.ShowInBattleContext(leftCharacter.visuals.CharacterSpriteSet.FaceSprite,
+        //         combatRound.AttackerStats.Damage, combatRound.AttackerStats.Hit, combatRound.AttackerStats.Crit,
+        //         combatRound.AttackerStats.CurrentHp, combatRound.AttackerStats.MaxHp, combatRound.AttackerHP);
+        //     right.ShowInBattleContext(rightCharacter.visuals.CharacterSpriteSet.FaceSprite,
+        //         combatRound.DefenderStats.Damage, combatRound.DefenderStats.Hit, combatRound.DefenderStats.Crit,
+        //         combatRound.DefenderStats.CurrentHp, combatRound.DefenderStats.MaxHp, combatRound.DefenderHP,
+        //         combatRound.DefenderStats.AttackCount != 0);
+        // }
+        // else
+        // {
+        //     left.ShowInBattleContext(leftCharacter.visuals.CharacterSpriteSet.FaceSprite,combatRound.DefenderStats.Damage, combatRound.DefenderStats.Hit, combatRound.DefenderStats.Crit,
+        //         combatRound.DefenderStats.CurrentHp, combatRound.DefenderStats.MaxHp, combatRound.DefenderHP,
+        //         combatRound.DefenderStats.AttackCount != 0);
+        //     right.ShowInBattleContext(rightCharacter.visuals.CharacterSpriteSet.FaceSprite,
+        //         combatRound.AttackerStats.Damage, combatRound.AttackerStats.Hit, combatRound.AttackerStats.Crit,
+        //         combatRound.AttackerStats.CurrentHp, combatRound.AttackerStats.MaxHp, combatRound.AttackerHP);
+        // }
+        //
+        // attackOrderUI.Show(combatRound.AttacksData, playerUnitIsAttacker);
 
         CharacterCombatAnimations.OnDamageDealt -= UpdateHpBars;
         CharacterCombatAnimations.OnDamageDealt += UpdateHpBars;

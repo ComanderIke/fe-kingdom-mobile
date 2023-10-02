@@ -87,7 +87,10 @@ public abstract class EncounterNode
         GameObject.FindObjectOfType<AreaGameManager>().Continue();
     }
 
-    public abstract void Activate(Party party);
+    public virtual void Activate(Party party)
+    {
+        Player.Instance.Party.EncounterComponent.activatedEncounter = false;
+    }
 
     public Road GetRoad(EncounterNode node)
     {

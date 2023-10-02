@@ -47,6 +47,7 @@ public class UIEventController : MonoBehaviour
         randomEvent = node.randomEvent;
         if (!String.IsNullOrEmpty(Player.Instance.CurrentEventDialogID))
         {
+            Debug.Log("Event visited previously");
             currentNode = GameBPData.Instance.GetEventData().GetEventById(Player.Instance.CurrentEventDialogID);
             if (currentNode is LGBattleEventDialogSO)
             {
@@ -57,6 +58,7 @@ public class UIEventController : MonoBehaviour
         }
         else
         {
+            Debug.Log("First Time this Event");
             currentNode = randomEvent;
         }
         
@@ -237,6 +239,8 @@ public class UIEventController : MonoBehaviour
         {
             currentNode =(LGEventDialogSO)currentNode.Choices[1].NextDialogue;
         }
+
+        CheckPossibleRewards();
         UpdateUI();
     }
     void BattleEnded(AttackResult result)

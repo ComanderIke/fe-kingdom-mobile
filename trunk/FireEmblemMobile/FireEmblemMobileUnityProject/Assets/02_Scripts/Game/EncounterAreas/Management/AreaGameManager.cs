@@ -116,6 +116,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
 
  
         ShowAllInactiveNodes();
+        Debug.Log("Loaded Area Game Manager: " + Player.Instance.Party.EncounterComponent.activatedEncounter);
         if (!Player.Instance.Party.EncounterComponent.activatedEncounter)
         {
             Player.Instance.Party.EncounterComponent.EncounterNode.Activate(Player.Instance.Party);

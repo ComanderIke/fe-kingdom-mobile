@@ -176,10 +176,10 @@ public class UIDetailedCharacterViewController : UICharacterViewController
     {
         ToolTipSystem.Show(unit.Blessing, clickedTransform.position);
     }
-    void CurseClicked(RectTransform clickedTransform)
-    {
-        ToolTipSystem.Show(unit.Curse, clickedTransform.position);
-    }
+    // void CurseClicked(RectTransform clickedTransform)
+    // {
+    //     ToolTipSystem.Show(unit.Curse, clickedTransform.position);
+    // }
 
     public override void Hide()
     {

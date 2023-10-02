@@ -6,8 +6,10 @@ using Game.GameActors.Units;
 using Game.GameInput;
 using Game.GUI.PopUpText;
 using Game.Mechanics;
+using Game.Mechanics.Battle;
 using UnityEditor;
 using UnityEngine;
+using AttackData = Game.Mechanics.AttackData;
 
 public class MapBattleAnimationRenderer : MonoBehaviour, IBattleAnimation
 {
@@ -18,7 +20,7 @@ public class MapBattleAnimationRenderer : MonoBehaviour, IBattleAnimation
   
     private int attackSequenceIndex;
     private List<AttackData> attackData;
-    public void Show(BattleSimulation battleSimulation, IBattleActor attacker, IAttackableTarget defender)
+    public void Show(BattleSimulation battleSimulation,BattlePreview battlePreview, IBattleActor attacker, IAttackableTarget defender)
     {
         
         this.attacker = (Unit)attacker;

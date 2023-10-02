@@ -171,5 +171,12 @@ namespace Game.GameActors.Units.Humans
                 }
             }
         }
+
+        public List<Curse> GetCurses()
+        {
+            if (Skills.Count == 0)
+                return null;
+            return Skills.OfType<Curse>().ToList();
+        }
     }
 }

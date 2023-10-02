@@ -27,6 +27,7 @@ public class EventEncounterNode : EncounterNode
 
     public override void Activate(Party party)
     {
+        base.Activate(party);
         GameObject.FindObjectOfType<UIEventController>().Show(this,party);
         
         

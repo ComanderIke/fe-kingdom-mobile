@@ -197,7 +197,7 @@ namespace Game.Mechanics
             attackData.hit =  hitRng< attacker.BattleComponent.BattleStats.GetHitAgainstTarget(defender);
         
             attackData.crit =  critRng< attacker.BattleComponent.BattleStats.GetCritAgainstTarget(defender)&&attackData.hit;
-            if (attackData.crit)
+            if (attackData.crit&&!preview)
                 damage *= 2;
             damage -= (int)(damage * pavise);
             // if (attacker == Attacker)
@@ -209,16 +209,16 @@ namespace Game.Mechanics
             int wrathDmg = (int)(damage * wrath);
             Defender.BattleComponent.BattleStats.WrathDamage += wrathDmg;
             Attacker.BattleComponent.BattleStats.WrathDamage = 0;
-            if(attackData.hit||certainHit)
+            if(attackData.hit||this.preview)
                 defender.Hp -= damage;
             if(sol>0)
                 attacker.Hp += (int)(damage * sol);
             return defender.Hp > 0;
         }
 
-        private bool certainHit = false;
+        private bool preview = false;
 
-        private void StartRound(CombatRound combatRound, bool certainHit, bool grid)
+        private void StartRound(CombatRound combatRound, bool preview, bool grid)
         {
             if (AttackableTarget != null)
             {
@@ -235,14 +235,13 @@ namespace Game.Mechanics
             }
             int attackerAttackCount = Attacker.BattleComponent.BattleStats.GetAttackCountAgainst(Defender);
             int defenderAttackCount = Defender.BattleComponent.BattleStats.GetAttackCountAgainst(Attacker);
-    
+       
             GridPosition attackerGridPos = attackPosition;
    
             if (grid&&!((IGridActor)Defender).GetActorGridComponent().CanAttack(attackerGridPos.X, attackerGridPos.Y))
             {
                 defenderAttackCount = 0;
-            }
-        
+            } 
             combatRound.DefenderAttackCount = defenderAttackCount;
             bool death = false;
             while ((attackerAttackCount > 0||defenderAttackCount>0)&&!death)
@@ -259,7 +258,7 @@ namespace Game.Mechanics
                         attackData.activatedDefenseSkills = new List<Skill>();
 
                         attackData.attacker = true;
-                        if (!certainHit)
+                        if (!preview)
                         {
                             attackData.activatedAttackSkills.AddRange(ActivateAttackSkills(Attacker));
                             attackData.activatedDefenseSkills.AddRange(ActivateDefenseSkills(Defender));
@@ -299,11 +298,18 @@ namespace Game.Mechanics
                         }
                         else
                         {
-                            death = true;
-                            defenderAttackCount = 0;
-                            attackData.kill = true;
-                            combatRound.AttacksData.Add(attackData);
-                            break;
+                            
+                            
+                            if (!preview)
+                            {
+                                death = true;
+                                attackData.kill = true;
+                                defenderAttackCount = 0;
+                                combatRound.AttacksData.Add(attackData);
+                                break;
+                            }
+                            attackerAttackCount--;
+                           
                         }
 
                         combatRound.AttacksData.Add(attackData);
@@ -318,7 +324,7 @@ namespace Game.Mechanics
                     attackData.attacker = false;
                     attackData.activatedAttackSkills = new List<Skill>();
                     attackData.activatedDefenseSkills = new List<Skill>();
-                    if (!certainHit)
+                    if (!preview)
                     {
                         attackData.activatedAttackSkills.AddRange(ActivateAttackSkills(Defender));
                         attackData.activatedAttackSkills.AddRange(ActivateDefenseSkills(Attacker));
@@ -331,10 +337,16 @@ namespace Game.Mechanics
                     }
                     else
                     {
-                        death = true;
-                        attackData.kill = true;
-                        combatRound.AttacksData.Add(attackData);
-                        break;
+                        if (!preview)
+                        {
+                            attackData.kill = true;
+                            death = true;
+                            combatRound.AttacksData.Add(attackData);
+                            break;
+                        }
+                        defenderAttackCount--;
+                       
+                       
                     }
                     combatRound.AttacksData.Add(attackData);
                 }
@@ -375,7 +387,7 @@ namespace Game.Mechanics
         {
             Attacker.BattleComponent.BattleStats.WrathDamage = 0;
             Defender.BattleComponent.BattleStats.WrathDamage = 0;
-            this.certainHit = certainHit;
+            this.preview = certainHit;
             Debug.Log("TODO if certainHit also check for skills and only do 100% procChance skills");
             if (continuos)
             {

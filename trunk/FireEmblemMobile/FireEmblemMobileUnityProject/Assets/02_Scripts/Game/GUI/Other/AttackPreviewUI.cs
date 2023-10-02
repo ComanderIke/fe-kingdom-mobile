@@ -43,7 +43,7 @@ namespace Game.GUI
              
              left.Show(attackerSprite, battlePreview.AttackerStats.Damage,battlePreview.AttackerStats.Hit,battlePreview.AttackerStats.Crit, battlePreview.AttackerStats.CurrentHp,battlePreview.AttackerStats.MaxHp, battlePreview.AttackerStats.AfterBattleHp);
              right.Show(defenderSprite, battlePreview.DefenderStats.Damage,battlePreview.DefenderStats.Hit,battlePreview.DefenderStats.Crit, battlePreview.DefenderStats.CurrentHp,battlePreview.DefenderStats.MaxHp, battlePreview.DefenderStats.AfterBattleHp,battlePreview.DefenderStats.AttackCount != 0);
-             attackOrderUI.Show(battlePreview.AttacksData);
+             attackOrderUI.Show(battlePreview.AttacksData, true);
            }
 
         public override void Show(BattlePreview battlePreview, UnitVisual attackerVisual, UnitVisual defenderVisual)

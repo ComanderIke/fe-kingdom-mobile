@@ -102,7 +102,7 @@ namespace LostGrace
                 Debug.Log("Save Game: " + path);
                 if (WriteToFile(path, jsonData))
                 {
-                    Debug.Log("Save Successfull!");
+                    Debug.Log("<color=#73E6FF>Save Successfull!</color>");
                 }
 
                 // Load(slotNumber);

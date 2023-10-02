@@ -50,6 +50,7 @@ public class SmithyEncounterNode : EncounterNode
 
     public override void Activate(Party party)
     {
+        base.Activate(party);
         GameObject.FindObjectOfType<UISmithyController>().Show(this,party);
         Debug.Log("Activate SmithyEncounterNode");
     }

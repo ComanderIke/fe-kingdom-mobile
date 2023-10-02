@@ -5,9 +5,11 @@ using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
 using Game.GameInput;
 using Game.Mechanics;
+using Game.Mechanics.Battle;
 using LostGrace;
 using UnityEngine;
 using UnityEngine.Rendering;
+using AttackData = Game.Mechanics.AttackData;
 
 public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
 {
@@ -15,7 +17,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     
     private AnimationStateManager animationStateManager;
     [SerializeField] private SkillActivationRenderer skillActivationRenderer;
-    public static event Action<BattleSimulation, IBattleActor, IAttackableTarget> OnShow;
+    public static event Action<BattleSimulation,BattlePreview, IBattleActor, IAttackableTarget> OnShow;
     
     public Volume volume;
     public event Action<int> OnFinished;
@@ -35,13 +37,13 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     {
         animationStateManager.Surrender();
     }
-    public void Show(BattleSimulation battleSimulation, IBattleActor attackingActor, IAttackableTarget defendingActor)
+    public void Show(BattleSimulation battleSimulation, BattlePreview battlePreview, IBattleActor attackingActor, IAttackableTarget defendingActor)
     {
         gameObject.SetActive(true);
         battleSimulation = battleSimulation;
         canvas.Show();
         Debug.Log("Test: "+attackingActor+" "+defendingActor);
-        OnShow?.Invoke(battleSimulation, attackingActor, defendingActor);
+        OnShow?.Invoke(battleSimulation,battlePreview, attackingActor, defendingActor);
         BattleUI.onSurrender -= Surrender;
         BattleUI.onSurrender += Surrender;
         BattleUI.onSkip -= Skip;

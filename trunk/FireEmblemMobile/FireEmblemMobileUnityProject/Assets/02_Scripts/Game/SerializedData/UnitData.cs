@@ -69,8 +69,8 @@ namespace Game.GameActors.Players
            
             if(unit.Blessing!=null)
                 blessingId = unit.Blessing.Name;
-            if(unit.Curse!=null)
-                curseId = unit.Curse.Name;
+            // if(unit.Curses!=null)
+            //     curseId = unit.Curse.Name;
             classUpgraded = unit.ClassUpgraded;
            
             relic1slotIds = new List<string>();

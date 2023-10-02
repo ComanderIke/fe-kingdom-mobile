@@ -66,7 +66,7 @@ namespace Game.Mechanics
             this.attacker = attacker;
             this.defender = defender;
             ActivateSkillsAtBattleStart();
-         
+            BattlePreview preview = GetBattlePreview(attacker, defender, attacker.GridComponent.GridPosition);
          
             battleSimulation = GetBattleSimulation(attacker, (IBattleActor)defender, grid, continuos);
             Debug.Log("ACTIVATED SKILLS: ");
@@ -91,9 +91,9 @@ namespace Game.Mechanics
 
             battleSimulation.AttackerActivatedCombatSkills = SkillMixinToSkillList(attackerActivatedSkillMixins);
             battleSimulation.DefenderActivatedCombatSkills = SkillMixinToSkillList(defenderActivatedSkillMixins);
-          
-            
-            BattleAnimation.Show(battleSimulation, attacker, (IBattleActor)defender);
+
+         
+            BattleAnimation.Show(battleSimulation, preview, attacker, (IBattleActor)defender);
             BattleAnimation.OnFinished -= EndBattle;
             BattleAnimation.OnFinished += EndBattle;
             
@@ -214,7 +214,7 @@ namespace Game.Mechanics
         public BattleSimulation GetBattleSimulation(IBattleActor attacker, IBattleActor defender, bool grid, bool continuos=false)
         {
    
-            battleSimulation = new BattleSimulation(attacker, defender, continuos);
+            battleSimulation = new BattleSimulation(attacker, defender, continuos); 
             battleSimulation.StartBattle(false, grid);
 
             return battleSimulation;

@@ -104,7 +104,7 @@ namespace LostGrace
             if (unit == null)
                 return;
             faceSprite.sprite = unit.visuals.CharacterSpriteSet.FaceSprite;
-            nameText.text = unit.Name + ", " + unit.rpgClass;
+            nameText.text = unit.Name;
             lvl.text = "" + unit.ExperienceManager.Level;
             exp.text = unit.ExperienceManager.Exp + "/" + ExperienceManager.MAX_EXP;
             //weaponType.text = unit.equippedWeapon.WeaponType.WeaponName;

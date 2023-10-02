@@ -16,6 +16,7 @@ public class InnEncounterNode : EncounterNode
 
     public override void Activate(Party party)
     {
+        base.Activate(party);
         GameObject.FindObjectOfType<UIInnController>().Show(this, party);
        
     }
