@@ -45,6 +45,7 @@ namespace Game.WorldMapStuff.Model
         public event Action<int> onGoldChanged;
         public event Action<int> onGraceChanged;
         [field:NonSerialized] public List<Unit> members;
+        [field:NonSerialized] public List<Unit> deadMembers;
 
         public static Action<Party> PartyDied;
         [SerializeField] int maxSize = 4;
@@ -115,6 +116,7 @@ namespace Game.WorldMapStuff.Model
         public Party()
         {
             members = new List<Unit>();
+            deadMembers = new List<Unit>();
             Convoy = new Convoy();
             Storage = new Convoy();
             EncounterComponent = new EncounterPosition();
@@ -131,7 +133,11 @@ namespace Game.WorldMapStuff.Model
 
         public Unit ActiveUnit
         {
-            get { return members[ActiveUnitIndex]; }
+            get
+            {
+                Debug.Log(ActiveUnitIndex+" "+members.Count);
+                return members[ActiveUnitIndex];
+            }
         }
 
         public List<Unit> DeadCharacters { get; set; }
@@ -155,6 +161,34 @@ namespace Game.WorldMapStuff.Model
             return members.Count(a => a.IsAlive()) != 0;
         }
 
+        public void PartyMemberDied(Unit member)
+        {
+            var tempUnit = ActiveUnit;
+            if (ActiveUnit.Equals(member))
+            {
+                if (ActiveUnitIndex != 0)
+                    tempUnit = members[0];
+                else if (members.Count >= 2)
+                    tempUnit = members[1];
+                else tempUnit = null;
+            }
+          
+            
+            members.Remove(member);
+            deadMembers.Add(member);
+            for (int i = 0; i < members.Count; i++)
+            {
+                if (members[i].Equals(tempUnit))
+                {
+                    bool change = ActiveUnitIndex == i;
+                    ActiveUnitIndex = i;
+                    if(change)
+                        onActiveUnitChanged?.Invoke();
+                  
+                    break;
+                }
+            }
+        }
         
         public void Initialize()
         {
@@ -162,6 +196,9 @@ namespace Game.WorldMapStuff.Model
             {
                 InitMember(member);
             }
+
+            Unit.UnitDied -= PartyMemberDied;
+            Unit.UnitDied += PartyMemberDied;
             Unit.OnUnequippedRelic -= AddItem;
             Unit.OnUnequippedRelic += AddItem;
             Unit.OnUnequippedCombatItem -= Convoy.AddItem;
@@ -212,6 +249,7 @@ namespace Game.WorldMapStuff.Model
             Debug.Log("Before Inner Event");
             Debug.Log(members.Count+" "+activeUnitIndex);
             Debug.Log(ActiveUnit);
+            
             onMemberAdded?.Invoke(unit);
         }
 

@@ -77,9 +77,9 @@ public class UIPartyCharacterCircleController : MonoBehaviour, IClickedReceiver,
             if (party.members[i] == unit)
             {
                 party.ActiveUnitIndex = i;
-                MonoUtility.InvokeNextFrame(()=>Show(party));//Otherwise mouse click will go through UI
-                characterView.UpdateUnit(unit);
-                FindObjectOfType<AreaGameManager>()?.UpdatePartyGameObjects();
+                // MonoUtility.InvokeNextFrame(()=>Show(party));//Otherwise mouse click will go through UI
+                
+                
                 break;
             }
         }

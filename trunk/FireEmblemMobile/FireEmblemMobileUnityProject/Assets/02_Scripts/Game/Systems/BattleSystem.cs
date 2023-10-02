@@ -66,7 +66,7 @@ namespace Game.Mechanics
             this.attacker = attacker;
             this.defender = defender;
             ActivateSkillsAtBattleStart();
-            BattlePreview preview = GetBattlePreview(attacker, defender, attacker.GridComponent.GridPosition);
+            BattlePreview preview = GetBattlePreview(attacker, defender, attacker.GridComponent.GridPosition, grid);
          
             battleSimulation = GetBattleSimulation(attacker, (IBattleActor)defender, grid, continuos);
             Debug.Log("ACTIVATED SKILLS: ");
@@ -228,7 +228,7 @@ namespace Game.Mechanics
             return battleSimulation;
         }
 
-        public BattlePreview GetBattlePreview(IBattleActor attacker, IAttackableTarget defender, GridPosition attackPosition)
+        public BattlePreview GetBattlePreview(IBattleActor attacker, IAttackableTarget defender, GridPosition attackPosition, bool grid=true)
         {
             var battlePreview = ScriptableObject.CreateInstance<BattlePreview>();
             battlePreview.Attacker = attacker;
@@ -236,7 +236,7 @@ namespace Game.Mechanics
             {
                 battlePreview.Defender = defenderActor;
                 battleSimulation = new BattleSimulation(attacker, defenderActor, attackPosition);
-                battleSimulation.StartBattle(true, true);
+                battleSimulation.StartBattle(true, grid);
                 
                 battlePreview.AttacksData = battleSimulation.combatRounds[0].AttacksData;
                 Debug.Log(attacker.Hp+" "+battleSimulation.combatRounds[0].AttackerStats.MaxHp+ " "+battleSimulation.combatRounds[0].AttackerStats.CurrentHp);
@@ -272,7 +272,7 @@ namespace Game.Mechanics
                 battlePreview.TargetObject = defender;
                 
                 battleSimulation = new BattleSimulation(attacker, defender, attackPosition);
-                battleSimulation.StartBattle(true, true);
+                battleSimulation.StartBattle(true, grid);
                 
                 battlePreview.AttacksData = battleSimulation.combatRounds[0].AttacksData;
                 Debug.Log("BattlePreview: " + battleSimulation.combatRounds[0].AttackerAttackCount + "DefenderAttackCount: " +

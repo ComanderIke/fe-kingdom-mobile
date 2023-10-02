@@ -6,6 +6,7 @@ using __2___Scripts.Game.Areas;
 using Audio;
 using Effects;
 using Game.GameActors.Players;
+using Game.GameActors.Units;
 using Game.GameResources;
 using Game.GUI;
 using Game.Manager;
@@ -25,18 +26,16 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
 {
     public static AreaGameManager Instance;
     private List<IEngineSystem> Systems { get; set; }
-    public GameObject playerPrefab;
     private Area_ActionSystem actionSystem;
     public EncounterUIController uiCOntroller;
     public UIPartyCharacterCircleController uiPartyController;
-    public Party playerStartParty;
     private ActiveUnitGroundFX activeUnitGroundGO;
     [SerializeField] private GameObject activeUnitGroundPrefab;
-    public ColumnManager ColumnManager;
+    public UICharacterViewController uiCharacterView;
     // Start is called before the first frame update
     public Transform spawnParent;
 
-    public float offsetBetweenCharacters = 0.25f;
+
     [SerializeField]private float moveToNodeHoldTime = 1.5f;
    
     
@@ -219,7 +218,12 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
             partyGameObjects.Add(go.GetComponent<EncounterPlayerUnitController>());
         }
         Player.Instance.Party.GameObject = partyGo;
+        Player.Instance.Party.onActiveUnitChanged-=UpdatePartyGameObjects;
+        Player.Instance.Party.onActiveUnitChanged+=UpdatePartyGameObjects;
+        
     }
+
+    
 
     private void UnitClicked(EncounterPlayerUnitController clickedUnitController)
     {
@@ -235,7 +239,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
 
         foreach (var unitController in partyGameObjects)
         {
-            if (unitController.unit == activeUnit)
+            if (unitController.unit.Equals(activeUnit))
             {
                 activeMemberGo = unitController.gameObject;
             }
@@ -243,7 +247,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
 
         foreach (var member in Player.Instance.Party.members)
         {
-            if (member == activeUnit)
+            if (member.Equals(activeUnit))
             {
                 foreach (var unitController in partyGameObjects)
                 {
@@ -262,7 +266,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
             {
                 foreach (var unitController in partyGameObjects)
                 {
-                    if (unitController.unit == member)
+                    if (unitController.unit.Equals(member))
                     {
                         //unitController.transform.localPosition = new Vector3(-offsetBetweenCharacters*cnt,0,0);
                         unitController.Hide();
@@ -277,8 +281,20 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
             cnt++;
 
         }
+        foreach (var member in Player.Instance.Party.deadMembers)
+        {
+            foreach (var unitController in partyGameObjects)
+            {
+                if (unitController.unit.Equals(member))
+                {
+                    unitController.Hide();
+                }
+            }
+        }
+        MonoUtility.InvokeNextFrame(()=>uiPartyController.Show(Player.Instance.Party));//Otherwise mouse click will go through UI
+        uiCharacterView.UpdateUnit(Player.Instance.Party.ActiveUnit);
     }
-
+   
     private void ResetMoveOptions()
     {
        
