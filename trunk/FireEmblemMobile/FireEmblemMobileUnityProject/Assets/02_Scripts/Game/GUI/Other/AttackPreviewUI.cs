@@ -41,8 +41,8 @@ namespace Game.GUI
              if (Camera == null)
                  Camera = Camera.main;
              
-             left.Show(attackerSprite, battlePreview.AttackerStats.Damage,battlePreview.AttackerStats.Hit,battlePreview.AttackerStats.Crit, battlePreview.AttackerStats.CurrentHp,battlePreview.AttackerStats.MaxHp, battlePreview.AttackerStats.AfterBattleHp);
-             right.Show(defenderSprite, battlePreview.DefenderStats.Damage,battlePreview.DefenderStats.Hit,battlePreview.DefenderStats.Crit, battlePreview.DefenderStats.CurrentHp,battlePreview.DefenderStats.MaxHp, battlePreview.DefenderStats.AfterBattleHp,battlePreview.DefenderStats.AttackCount != 0);
+             left.Show(attackerSprite, battlePreview.AttackerStats.TotalDamage,battlePreview.AttackerStats.Hit,battlePreview.AttackerStats.Crit, battlePreview.AttackerStats.CurrentHp,battlePreview.AttackerStats.MaxHp, battlePreview.AttackerStats.AfterBattleHp);
+             right.Show(defenderSprite, battlePreview.DefenderStats.TotalDamage,battlePreview.DefenderStats.Hit,battlePreview.DefenderStats.Crit, battlePreview.DefenderStats.CurrentHp,battlePreview.DefenderStats.MaxHp, battlePreview.DefenderStats.AfterBattleHp,battlePreview.DefenderStats.AttackCount != 0);
              attackOrderUI.Show(battlePreview.AttacksData, true);
            }
 

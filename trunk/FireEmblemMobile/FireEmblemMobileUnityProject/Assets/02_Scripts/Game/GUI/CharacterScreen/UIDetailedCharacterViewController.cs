@@ -15,7 +15,7 @@ public class UIDetailedCharacterViewController : UICharacterViewController
     public TextMeshProUGUI Lv;
     public IStatBar ExpBar;
     public UIEquipmentController equipmentController;
-   
+    [SerializeField] private UIAnimationSpriteSwapper uiAnimationSpriteSwapper;
     public SkillTreeUI skillTreeUI;
     public Animator IdleAnimation;
     public SkillsUI skillsUI;
@@ -35,6 +35,7 @@ public class UIDetailedCharacterViewController : UICharacterViewController
     public override void Show(Unit unit, bool useFixedUnitList = false, List<Unit> availableUnits = null)
     {
         base.Show(unit, useFixedUnitList, availableUnits);
+     
         boonBaneController.OnBoonSelected -= BoonSelected;
         boonBaneController.OnBaneSelected -= BaneSelected;
         boonBaneController.OnBoonSelected += BoonSelected;
@@ -94,6 +95,7 @@ public class UIDetailedCharacterViewController : UICharacterViewController
     [SerializeField] private Color normalColor;
     protected override void UpdateUI(Unit unit)
     {
+        uiAnimationSpriteSwapper.Init(unit.visuals.CharacterSpriteSet);
         if (unit != base.unit)
         {
             boonBaneController.SoftResetBoonBane();

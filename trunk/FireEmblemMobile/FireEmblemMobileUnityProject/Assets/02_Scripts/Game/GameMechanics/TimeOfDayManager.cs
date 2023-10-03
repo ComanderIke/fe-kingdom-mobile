@@ -21,7 +21,7 @@ namespace LostGrace
         [SerializeField] private DynamicAmbientLight lightController;
         [SerializeField] private int timeStep = 6;
         [SerializeField] private UIDebugTimeSlider timeSlider;
-        private float hour;
+        [SerializeField] private float hour;
         public TimeCircleUI circleUI;
         [SerializeField] private TimeOfDayBonuses nightBonuses;
         [SerializeField] private TimeOfDayBonuses dayBonuses;

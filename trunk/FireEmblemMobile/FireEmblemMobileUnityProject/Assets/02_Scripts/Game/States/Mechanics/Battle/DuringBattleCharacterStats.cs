@@ -53,6 +53,11 @@ namespace Game.Mechanics.Battle
         {
            
         }
+
+        public int TotalDamage
+        {
+            get { return Damage * AttackCount; }
+        }
     }
     [Serializable]
     public class DuringBattleCharacterStats

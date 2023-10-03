@@ -28,32 +28,24 @@ MonoBehaviour:
       intel: 6
       dex: 6
       agi: 6
-      con: 6
+      maxHp: 0
       lck: 6
       def: 6
       faith: 6
-    BonusStats:
-      <Hit>k__BackingField: 0
-      <Avoid>k__BackingField: 0
-      <CritAvoid>k__BackingField: 0
-      <Crit>k__BackingField: 0
-      <AttackSpeed>k__BackingField: 0
-      <Armor>k__BackingField: 0
-      <MagicResistance>k__BackingField: 0
-      <Attack>k__BackingField: 0
+    <BaseGrowths>k__BackingField:
+      str: 0
+      intel: 0
+      dex: 0
+      agi: 0
+      maxHp: 0
+      lck: 0
+      def: 0
+      faith: 0
     Mov: 5
-  growths:
-    str: 0
-    intel: 0
-    dex: 0
-    agi: 0
-    con: 0
-    lck: 0
-    def: 0
-    faith: 0
   moveType: {fileID: 11400000, guid: 580bbea6e1e3e824a81881f8e2a825ba, type: 2}
   SkillManager:
     startSkills: []
+    maxSkillCount: 0
     skillPoints: 1
   rpgClass: 4
   bluePrintID: Scorpion
@@ -65,11 +57,9 @@ MonoBehaviour:
       type: 2}
     UnitEffectVisual: {fileID: 11400000, guid: af10e6087dc82f34ebed15c0092e0174, type: 2}
     Prefabs:
-      MapAnimatedSprite: {fileID: 2861010742256422526, guid: 7e373fae0dfd0de4aa0656b3697e5c9f,
-        type: 3}
       EncounterAnimatedSprite: {fileID: 6168332596698552260, guid: 6f675fcd02765934594b6ea438f44b17,
         type: 3}
-      UIAnimatorController: {fileID: 22100000, guid: 27638b6708c7f604cbc4b442b4ace57f,
+      UIAnimatorController: {fileID: 22100000, guid: a0473296261b98a42bf1002f0e348e23,
         type: 2}
     UnitCharacterCircleUI: {fileID: 0}
     unitRenderer: {fileID: 0}

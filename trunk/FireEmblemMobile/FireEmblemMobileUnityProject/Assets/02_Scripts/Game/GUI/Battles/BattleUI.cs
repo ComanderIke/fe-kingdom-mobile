@@ -86,22 +86,22 @@ public class BattleUI : MonoBehaviour
         currentHpRight = battlePreview.DefenderStats.CurrentHp;
         if (playerUnitIsAttacker)
         {
-            left.ShowInBattleContext(battlePreview.Attacker.Visuals.CharacterSpriteSet.FaceSprite, battlePreview.AttackerStats.Damage,
+            left.ShowInBattleContext(battlePreview.Attacker.Visuals.CharacterSpriteSet.FaceSprite, battlePreview.AttackerStats.TotalDamage,
                 battlePreview.AttackerStats.Hit, battlePreview.AttackerStats.Crit,
                 battlePreview.AttackerStats.CurrentHp, battlePreview.AttackerStats.MaxHp,
                 battlePreview.AttackerStats.AfterBattleHp);
-            right.ShowInBattleContext(battlePreview.Defender.Visuals.CharacterSpriteSet.FaceSprite, battlePreview.DefenderStats.Damage,
+            right.ShowInBattleContext(battlePreview.Defender.Visuals.CharacterSpriteSet.FaceSprite, battlePreview.DefenderStats.TotalDamage,
                 battlePreview.DefenderStats.Hit, battlePreview.DefenderStats.Crit,
                 battlePreview.DefenderStats.CurrentHp, battlePreview.DefenderStats.MaxHp,
                 battlePreview.DefenderStats.AfterBattleHp, battlePreview.DefenderStats.AttackCount != 0);
         }
         else
         {
-            left.ShowInBattleContext(battlePreview.Defender.Visuals.CharacterSpriteSet.FaceSprite, battlePreview.DefenderStats.Damage,
+            left.ShowInBattleContext(battlePreview.Defender.Visuals.CharacterSpriteSet.FaceSprite, battlePreview.DefenderStats.TotalDamage,
                 battlePreview.DefenderStats.Hit, battlePreview.DefenderStats.Crit,
                 battlePreview.DefenderStats.CurrentHp, battlePreview.DefenderStats.MaxHp,
                 battlePreview.DefenderStats.AfterBattleHp, battlePreview.DefenderStats.AttackCount != 0);
-            right.ShowInBattleContext(battlePreview.Attacker.Visuals.CharacterSpriteSet.FaceSprite, battlePreview.AttackerStats.Damage,
+            right.ShowInBattleContext(battlePreview.Attacker.Visuals.CharacterSpriteSet.FaceSprite, battlePreview.AttackerStats.TotalDamage,
                 battlePreview.AttackerStats.Hit, battlePreview.AttackerStats.Crit,
                 battlePreview.AttackerStats.CurrentHp, battlePreview.AttackerStats.MaxHp,
                 battlePreview.AttackerStats.AfterBattleHp);
