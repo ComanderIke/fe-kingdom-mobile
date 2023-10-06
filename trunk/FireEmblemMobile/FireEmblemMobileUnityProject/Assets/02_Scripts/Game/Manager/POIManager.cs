@@ -130,10 +130,16 @@ namespace LostGrace
         {
             Hide();
         }
+
+        public void PortalClicked()
+        {
+            characterSelectMenu.Show();
+        }
         public void NewGameClicked()
         {
             if (SaveGameManager.HasOngoingCampaignSaveData())
             {
+                Debug.Log("START RUN");
                 MenuActionController.StartGame();
             }
             else

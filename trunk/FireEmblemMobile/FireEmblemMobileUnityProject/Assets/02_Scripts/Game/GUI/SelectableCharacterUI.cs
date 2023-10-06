@@ -12,16 +12,16 @@ namespace LostGrace
         [FormerlySerializedAs("unitBp")] public Unit unit;
         [SerializeField]private UIUnitIdleAnimation unitUIIdleAnimation;
         public event Action<SelectableCharacterUI> onClicked;
-        [SerializeField] private Color normalColor;
-        [SerializeField] private Color selectedColor;
-        [SerializeField] private Image checkMark;
+        [SerializeField] private GameObject selected;
+        [SerializeField] private GameObject added;
         [SerializeField] private Image frame;
         [SerializeField] private Button button;
         [SerializeField] private Color notUnlockedColor;
         [SerializeField] private GameObject notUnlockedGo;
         [SerializeField] private Image unitImage;
         [SerializeField] private TextMeshProUGUI text;
-        private bool selected = false;
+        [SerializeField] private GameObject nameGO;
+        private bool isSelected = false;
         public void SetCharacter(Unit unit, bool locked)
         {
             this.unit = unit;
@@ -30,22 +30,34 @@ namespace LostGrace
                 notUnlockedGo.SetActive(true);
                 unitImage.color = notUnlockedColor;
                 SetInteractable(false);
+                nameGO.SetActive(false);
+                //unitUIIdleAnimation.gameObject.SetActive(false);
             }
-            text.gameObject.SetActive(false);
+            text.SetText(unit.Name);
+            //text.gameObject.SetActive(false);
+            
             unitUIIdleAnimation.Show(unit);
         }
 
+        public void Add()
+        {
+            added.gameObject.SetActive(true);
+
+        }
+
+        public void Remove()
+        {
+            added.gameObject.SetActive(false);
+        }
         public void Select()
         {
-            checkMark.gameObject.SetActive(true);
-            frame.color = selectedColor;
-            selected = true;
+            selected.gameObject.SetActive(true);
+            isSelected = true;
         }
         public void Deselect()
         {
-            checkMark.gameObject.SetActive(false);
-            frame.color = normalColor;
-            selected = false;
+            selected.gameObject.SetActive(false);
+            isSelected = false;
         }
         public void Clicked()
         {

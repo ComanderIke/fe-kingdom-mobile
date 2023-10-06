@@ -46,7 +46,7 @@ namespace LostGrace
                 if (cnt == 0)
                 {
                     Debug.Log("Select Last: "+last.unit);
-                    Select(last);
+                    AddUnit(last);
                     characterView.Show(last.unit, true, unlockedUnits);
                 }
 
@@ -78,7 +78,7 @@ namespace LostGrace
         {
             selectedUnitCount.text = "Party Size "+ Player.Instance.Party.members.Count+"/"+Player.Instance.startPartyMemberCount;
         }
-        public void Select(SelectableCharacterUI unit)
+        public void AddUnit(SelectableCharacterUI unit)
         {
             Debug.Log(Player.Instance.Party.IsFull()+" "+Player.Instance.Party.members.Count+" "+Player.Instance.startPartyMemberCount);
             if (Player.Instance.Party.IsFull()||Player.Instance.Party.members.Count>= Player.Instance.startPartyMemberCount)
@@ -86,7 +86,7 @@ namespace LostGrace
             Debug.Log("Before Add");
             Player.Instance.Party.AddMember(unit.unit);
             Debug.Log("Before Select");
-            unit.Select();
+            unit.Add();
             Debug.Log("Actually Selected: "+unit.unit);
             
             UpdatePartySizeText();
@@ -107,10 +107,10 @@ namespace LostGrace
                 SetAllInteractable();
             }
         }
-        public void Deselect(SelectableCharacterUI unit)
+        public void RemoveUnit(SelectableCharacterUI unit)
         {
             Player.Instance.Party.RemoveMember(unit.unit);
-            unit.Deselect();
+            unit.Remove();
             UpdatePartySizeText();
             SetAllInteractable();
             Debug.Log("Actually Deselect: "+unit.unit);
@@ -127,20 +127,43 @@ namespace LostGrace
             }
         }
 
-        public void UnitClicked(SelectableCharacterUI unit)
+        public void AddRemoveUnit()
         {
-            Debug.Log("Show unit: "+unit.unit);
-            characterView.Show(unit.unit,true, unlockedUnits);
-            if (Player.Instance.Party.members.Contains(unit.unit))
+            if (Player.Instance.Party.members.Contains(lastSelected.unit))
             {
-                Debug.Log("Deselect: "+unit.unit);
-                Deselect(unit);
+                Debug.Log("Deselect: "+lastSelected.unit);
+                RemoveUnit(lastSelected);
             }
             else
             {
-                Debug.Log("Select: "+unit.unit);
-                Select(unit);
+                Debug.Log("Select: "+lastSelected.unit);
+                AddUnit(lastSelected);
             }
+            if(Player.Instance.Party.members.Contains(lastSelected.unit))
+                addRemoveButton.ShowRemove();
+            else
+            {
+                addRemoveButton.ShowAdd();
+            }
+        }
+
+        private SelectableCharacterUI lastSelected;
+        [SerializeField] private UIAddRemoveButton addRemoveButton;
+        public void UnitClicked(SelectableCharacterUI unit)
+        {
+            if(lastSelected!=null)
+                lastSelected.Deselect();
+            lastSelected = unit;
+            unit.Select();
+            if(Player.Instance.Party.members.Contains(unit.unit))
+                addRemoveButton.ShowRemove();
+            else
+            {
+                addRemoveButton.ShowAdd();
+            }
+            Debug.Log("Show unit: "+unit.unit);
+            characterView.Show(unit.unit,true, unlockedUnits);
+            
         }
     }
 }

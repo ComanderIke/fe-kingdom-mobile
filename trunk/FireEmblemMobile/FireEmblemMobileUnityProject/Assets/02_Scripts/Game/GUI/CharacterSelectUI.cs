@@ -31,10 +31,12 @@ namespace LostGrace
         [SerializeField] private CharacterSelector characterSelector;
         [SerializeField] private UIPartyCharacterCircleController characterCircles;
         [SerializeField] private UIDetailedCharacterViewController characterViewController;
+        [SerializeField] private Image disableBackground;
         
         public override void Show()
         {
             Debug.Log("Creating new party");
+            //disableBackground.gameObject.SetActive(false);
             Player.Instance.Party = new Party();
             Player.Instance.Party.onMemberRemoved += PartyChanged;
             Player.Instance.Party.onMemberAdded += PartyChanged;
