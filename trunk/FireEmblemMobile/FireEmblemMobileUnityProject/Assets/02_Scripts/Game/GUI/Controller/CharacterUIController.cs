@@ -27,8 +27,11 @@ namespace Game.GUI
         [SerializeField]
         private IStatBar hpBar;
 
+        [SerializeField] private Transform hpBarToScale;
+        [SerializeField] private Vector2 selectedScaleHpBarBackground;
         [SerializeField] private Vector2 selectedScale;
         [SerializeField] private Vector2 normalScale;
+        [SerializeField] private Vector2 expSelectedScale;
         [SerializeField]
         private  Vector2 selectedSize;
         [SerializeField]
@@ -76,7 +79,8 @@ namespace Game.GUI
             UpdateValues();
             gameObject.SetActive(true);
             hpBar.transform.localScale = selectedScale;
-            expBar.transform.localScale = selectedScale;
+            hpBarToScale.transform.localScale = selectedScaleHpBarBackground;
+            expBar.transform.localScale = expSelectedScale;
              GetComponent<RectTransform>().sizeDelta = selectedSize;
             // expBar.GetComponent<RectTransform>().sizeDelta = selectedSizeExpBar;
             // hpBar.GetComponent<RectTransform>().sizeDelta = selectedSizeBars;
@@ -100,6 +104,7 @@ namespace Game.GUI
             UpdateValues();
             gameObject.SetActive(true);
             hpBar.transform.localScale = normalScale;
+            hpBarToScale.transform.localScale = normalScale;
             GetComponent<RectTransform>().sizeDelta = normalSize;
              expBar.transform.localScale = normalScale;
             // expBar.GetComponent<RectTransform>().sizeDelta = normalSizeExpBar;

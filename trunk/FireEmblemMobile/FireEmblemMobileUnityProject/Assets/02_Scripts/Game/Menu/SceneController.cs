@@ -25,7 +25,7 @@ namespace Menu
       //  private AsyncOperation sceneLoadTask;
         private SceneState sceneState;
         [SerializeField] private LoadingScreen LoadingScreen;
-        [SerializeField] private Image progressBar = default;
+        [SerializeField] private UIFillStrechedImage progressBar = default;
          [SerializeField] private TextMeshProUGUI clickContinueText = default;
         [SerializeField] private TextMeshProUGUI progressText = default;
         [SerializeField] private TextMeshProUGUI tipsText = default;
@@ -162,7 +162,7 @@ namespace Menu
             sceneState = SceneState.Load;
            
             OnBeforeSceneReady?.Invoke();
-            progressBar.fillAmount = 0;
+            progressBar.SetFill(0);
             progressText.text = "0%";
             loadTime = 0;
             clickContinueText.gameObject.SetActive(false);
@@ -220,7 +220,7 @@ namespace Menu
                 if (Input.touchCount > 0|| unload)
                 {
                     sceneState = SceneState.Unload;
-                    progressBar.fillAmount = 0;
+                    progressBar.SetFill(0);
                     progressText.text = "0%";
                     LoadingScreen.Hide();
                     OnSceneReady?.Invoke();
@@ -238,7 +238,7 @@ namespace Menu
                 sumProgress /= scenesToLoad.Count(s=>s.task!=null);
               
                 float progress = Mathf.Clamp01( sumProgress / .9f);//loadTime / MinLoadTime);
-                progressBar.fillAmount = progress;
+                progressBar.SetFill(progress);
                 progressText.text = ((int)(progress*100))+"%";
                 //Debug.Log("Progress: "+progress);
                 loadTime += Time.deltaTime;

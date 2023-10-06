@@ -11,9 +11,10 @@ public class UICharacterFace : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private UIStatBar hpBar;
-    [SerializeField] private UIStatBar expBar;
+  //  [SerializeField] private UIStatBar expBar;
     [SerializeField] private Image faceImage;
     [SerializeField] private MMF_Player feedbacks;
+    [SerializeField] private ExpBarController expBar = default;
     private Unit unit;
     public void Show(Unit unit)
     {
@@ -27,6 +28,7 @@ public class UICharacterFace : MonoBehaviour
 
         this.unit = unit;
         unit.HpValueChanged += UpdateHpBar;
+        
         unit.ExperienceManager.ExpGained += UpdateExpBar;
         InitHpBar();
         faceImage.sprite = unit.visuals.CharacterSpriteSet.FaceSprite;
@@ -48,7 +50,7 @@ public class UICharacterFace : MonoBehaviour
         //
         hpBar.SetValue(unit.Hp, unit.MaxHp, false);
         if(expBar!=null)
-            expBar.SetValue(unit.ExperienceManager.Exp, ExperienceManager.MAX_EXP, false);
+            expBar.UpdateInstant(unit.ExperienceManager.Exp);
     }
 
     void UpdateHpBar()
@@ -69,7 +71,8 @@ public class UICharacterFace : MonoBehaviour
         //     feedbacks.PlayFeedbacks();
         // }
         
-        expBar.SetValue(expBefore+expGained, ExperienceManager.MAX_EXP, true);
+        expBar.UpdateInstant(expBefore);
+        expBar.UpdateWithAnimatedTextOnly(expGained);
     }
 
 
