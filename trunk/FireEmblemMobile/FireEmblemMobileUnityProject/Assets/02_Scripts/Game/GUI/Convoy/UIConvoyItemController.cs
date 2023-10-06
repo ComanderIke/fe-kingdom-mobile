@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.GameActors.Items;
 using Game.GameActors.Items.Weapons;
+using Game.GameActors.Units;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,10 +15,16 @@ public class UIConvoyItemController : UIButtonController
     [SerializeField] private Image gemImage;
     [SerializeField] private GameObject slot;
     public event Action<UIConvoyItemController> onClicked;
+    [SerializeField] private Image backgroundImage;
+    [SerializeField] private Sprite normalSprite;
+    [SerializeField] private Sprite relicSprite;
+    [SerializeField] private Sprite combatItemSprite;
     public void SetValues(StockedItem stockeditem, bool grayedOut=false)
     {
+        backgroundImage.sprite = normalSprite;
         if (stockeditem.item is Relic relic)
         {
+            backgroundImage.sprite = relicSprite;
            slot.gameObject.SetActive(relic.slotCount>0);
            if (relic.GetGem(0) == null)
            {
@@ -28,6 +36,11 @@ public class UIConvoyItemController : UIButtonController
                gemImage.enabled = true;
                gemImage.sprite = relic.GetGem(0).Sprite;
            }
+        }
+        else if (stockeditem.item is IEquipableCombatItem)
+        {
+            backgroundImage.sprite = combatItemSprite;
+            slot.gameObject.SetActive(false);
         }
         else
         {
