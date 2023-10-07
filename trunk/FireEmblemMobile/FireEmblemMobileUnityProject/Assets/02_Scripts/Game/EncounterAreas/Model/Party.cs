@@ -8,6 +8,7 @@ using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Numbers;
 using Game.GameActors.Units.OnGameObject;
+using LostGrace;
 using UnityEngine;
 
 namespace Game.WorldMapStuff.Model
@@ -434,6 +435,23 @@ namespace Game.WorldMapStuff.Model
             }
 
             return null;
+        }
+
+        public bool CanReceiveBlessing(Unit unit, God god)
+        {
+            if (unit.CanReceiveBlessing(god))
+            {
+                foreach (var member in members)
+                {
+                    if (member.Blessing != null && member.Blessing.God == god)
+                        return false;
+                }
+
+                return true;
+            }
+
+            return false;
+           
         }
     }
 }

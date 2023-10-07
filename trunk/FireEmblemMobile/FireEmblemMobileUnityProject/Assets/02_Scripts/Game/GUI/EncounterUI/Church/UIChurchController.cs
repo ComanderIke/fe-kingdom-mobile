@@ -39,6 +39,9 @@ public class UIChurchController : MonoBehaviour
     private List<UIGodBlessing> uiGodBlessings;
     [SerializeField] private Slider slider;
     private int selectedGod = 0;
+    [SerializeField] private Color tooExpensiveTextColor;
+    [SerializeField] private Button prayButton;
+    [SerializeField] private Button receiveBlessingButton;
     public void UpdateUI()
     {
 
@@ -48,12 +51,21 @@ public class UIChurchController : MonoBehaviour
         bottomRowLayout.DeleteAllChildren();
         uiGodBlessings = new List<UIGodBlessing>();
         int cnt = 0;
+        bool affordable = party.CanAfford((int)slider.value);
+        prayGoldAmount.color = affordable ? Color.white : tooExpensiveTextColor;
+        prayButton.interactable = affordable;
+        receiveBlessingButton.gameObject.SetActive(false);
+        if (party.CanReceiveBlessing(party.ActiveUnit, gods[selectedGod]))
+        {
+            receiveBlessingButton.gameObject.SetActive(true);
+        }
+        
         foreach (var god in gods)
         {
             var parent = cnt>=4?bottomRowLayout:topRowParentLayout;
             var go = Instantiate(GodBlessingUIPrefab, parent);
             var uiGodController= go.GetComponent<UIGodBlessing>();
-            uiGodController.Show(party.ActiveUnit,god, cnt);
+            uiGodController.Show(party.ActiveUnit,god, cnt, (int)slider.value, selectedGod == cnt);
             uiGodController.onClicked += GodClicked;
             if(cnt==selectedGod)
                 uiGodController.Select();
@@ -152,7 +164,8 @@ public class UIChurchController : MonoBehaviour
     }
     public void PrayClicked()
     {
-        church.DonateSmall(party.ActiveUnit, party.ActiveUnit.Stats.CombinedAttributes().FAITH);
+        party.AddGold(-(int)slider.value);
+        party.ActiveUnit.Bonds.Increase(gods[selectedGod],(int)slider.value);
         //state = ChurchUIState.Blessing;
         UpdateUI();
         
@@ -166,7 +179,8 @@ public class UIChurchController : MonoBehaviour
 
     public void RemoveCurse()
     {
-        //church.RemoveCurse(party.ActiveUnit, selectedCurse);
+        party.ActiveUnit.RemoveCurse(party.ActiveUnit.Curses[removeCurseUI.curseIndex]);
+        party.AddGold(-removeCurseUI.removeCurseCost);
         
         UpdateUI();
         Debug.Log("Remove Curse");

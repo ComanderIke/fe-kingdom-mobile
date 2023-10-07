@@ -13,6 +13,16 @@ namespace Game.GameActors.Units
             level = 1;
             experience = 0;
         }
+
+        public void AddExp(int expAdded)
+        {
+            experience += expAdded;
+            while (experience >= 100)
+            {
+                experience -= 100;
+                level++;
+            }
+        }
     }
     public class Bonds
     {
@@ -45,6 +55,11 @@ namespace Game.GameActors.Units
             }
 
             return bonds;
+        }
+
+        public void Increase(God god, int expAdded)
+        {
+            Experiences[god].AddExp(expAdded);
         }
     }
     

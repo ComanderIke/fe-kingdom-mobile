@@ -1193,35 +1193,35 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2259819790768035044}
     m_Modifications:
-    - target: {fileID: 1108566980687798769, guid: 478a8a92767ef6545ae4c48f8062919f,
+    - target: {fileID: 848669491853100191, guid: 478a8a92767ef6545ae4c48f8062919f,
         type: 3}
-      propertyPath: m_IsActive
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 848669491853100191, guid: 478a8a92767ef6545ae4c48f8062919f,
+        type: 3}
+      propertyPath: m_FillAmount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1479528758772165078, guid: 478a8a92767ef6545ae4c48f8062919f,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -3.7399986
+      objectReference: {fileID: 0}
+    - target: {fileID: 1479528758772165078, guid: 478a8a92767ef6545ae4c48f8062919f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.87000066
+      objectReference: {fileID: 0}
+    - target: {fileID: 1488333780733746917, guid: 478a8a92767ef6545ae4c48f8062919f,
+        type: 3}
+      propertyPath: preview
+      value: 
+      objectReference: {fileID: 1484897360039684166}
     - target: {fileID: 3334441815428069690, guid: 478a8a92767ef6545ae4c48f8062919f,
         type: 3}
       propertyPath: m_Name
       value: FaceExpBar
-      objectReference: {fileID: 0}
-    - target: {fileID: 4073983877203871165, guid: 478a8a92767ef6545ae4c48f8062919f,
-        type: 3}
-      propertyPath: m_Pivot.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4073983877203871165, guid: 478a8a92767ef6545ae4c48f8062919f,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 266.13
-      objectReference: {fileID: 0}
-    - target: {fileID: 4073983877203871165, guid: 478a8a92767ef6545ae4c48f8062919f,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 23
-      objectReference: {fileID: 0}
-    - target: {fileID: 4073983877203871165, guid: 478a8a92767ef6545ae4c48f8062919f,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4091102643010752216, guid: 478a8a92767ef6545ae4c48f8062919f,
         type: 3}
@@ -1328,29 +1328,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5200154378400346705, guid: 478a8a92767ef6545ae4c48f8062919f,
+    - target: {fileID: 6607316793806168990, guid: 478a8a92767ef6545ae4c48f8062919f,
         type: 3}
-      propertyPath: m_Enabled
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6216124752165532781, guid: 478a8a92767ef6545ae4c48f8062919f,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 1.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6216124752165532781, guid: 478a8a92767ef6545ae4c48f8062919f,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0.3199768
-      objectReference: {fileID: 0}
-    - target: {fileID: 6216124752165532781, guid: 478a8a92767ef6545ae4c48f8062919f,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 1.65
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2291902431592863675, guid: 478a8a92767ef6545ae4c48f8062919f, type: 3}
-    - {fileID: 5551985846739507705, guid: 478a8a92767ef6545ae4c48f8062919f, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 478a8a92767ef6545ae4c48f8062919f, type: 3}
 --- !u!224 &2853868250601120257 stripped
 RectTransform:
@@ -1368,5 +1351,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 335cb5fbbc371844abd07e10b36e94c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1484897360039684166 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 848669491853100191, guid: 478a8a92767ef6545ae4c48f8062919f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2259819789214624985}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

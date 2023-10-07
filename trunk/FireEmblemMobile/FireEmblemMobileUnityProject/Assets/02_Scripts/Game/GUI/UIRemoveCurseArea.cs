@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using __2___Scripts.Game.Utility;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
+using Game.WorldMapStuff.Model;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,16 +14,24 @@ namespace LostGrace
     public class UIRemoveCurseArea : MonoBehaviour
     {
         private List<Curse> curses;
-        private int curseIndex = 0;
+        public int curseIndex = 0;
         [SerializeField] private Image selectedCurse;
         [SerializeField] private Image prevCurse;
         [SerializeField] private Image nextCurse;
+        [SerializeField] public int removeCurseCost = 200;
+        [SerializeField] private TextMeshProUGUI costText;
+        [SerializeField] private Button removeCurseButton;
+        [SerializeField] private Color tooExpensiveTextColor;
         public void Show(Unit unit)
         {
             curses = unit.Curses;
             
             gameObject.SetActive(true);
             curseIndex = 0;
+            bool affordable = Player.Instance.Party.CanAfford(removeCurseCost);
+            removeCurseButton.interactable =affordable ;
+            costText.color = affordable ? Color.white:tooExpensiveTextColor;
+            costText.SetText(""+removeCurseCost);
             UpdateUI();
            
         }

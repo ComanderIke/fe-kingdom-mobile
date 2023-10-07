@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Units;
+﻿using System.Collections.Generic;
+using Game.GameActors.Units;
 using Game.GameActors.Units.CharStateEffects;
 using Game.GameActors.Units.Numbers;
 using Game.WorldMapStuff.Model;
@@ -15,7 +16,8 @@ namespace Game.GameActors.Items.Weapons
 
         public override void Use(Unit character, Party convoy)
         {
-            character.RemoveCurse();
+            
+            character.RemoveCurse(character.Curses.GetRandomElement());
             base.Use(character, convoy);
         }
     }

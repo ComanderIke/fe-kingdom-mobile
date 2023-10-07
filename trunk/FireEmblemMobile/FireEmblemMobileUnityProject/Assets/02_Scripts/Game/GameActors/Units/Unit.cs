@@ -668,8 +668,9 @@ namespace Game.GameActors.Units
         }
 
 
-        public void RemoveCurse()
+        public void RemoveCurse(Curse curse)
         {
+            SkillManager.RemoveSkill(curse);
             // if(Curse!=null)
             //     SkillManager.RemoveSkill(Curse);
         }
@@ -687,5 +688,21 @@ namespace Game.GameActors.Units
             if(tags.Contains(tag))
                 tags.Remove(tag);
         }
+
+        public bool CanReceiveBlessing(God god)
+        {
+            if (Blessing == null)
+            {
+                return Bonds.GetBondLevel(god) > 1;
+            }
+            else if (Blessing.God != god)
+            {
+                return Bonds.GetBondLevel(god) > 1;
+            }
+
+            return false;
+        }
+
+        
     }
 }

@@ -27,6 +27,7 @@ namespace Game.GUI
         [SerializeField] private float fillSecondsPerUnit= 0.5f;
         [SerializeField] private ParticleSystem fillParticles;
         [SerializeField] private Image faceSprite;
+        [SerializeField] private Image preview;
 
         public Action onFinished;
         public void ParticleArrived()
@@ -108,6 +109,10 @@ namespace Game.GUI
             StartCoroutine(AnimatedTmpFillText());
         }
 
+        public void UpdatePreview(int expVal)
+        {
+            preview.fillAmount = expVal / 100f;
+        }
         public void UpdateInstant(int expVal)
         {
           //  Debug.Log("UpdateInstant: "+expVal);
