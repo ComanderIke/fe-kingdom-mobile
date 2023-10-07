@@ -19,6 +19,8 @@ namespace LostGrace
         {
         }
 
+        public God God { get; set; }
+
         public override Skill Clone()
         {
             var newBlessing = new Blessing(Name, Description, Icon, Tier, maxLevel,passiveMixins,CombatSkillMixin, activeMixins, skillTransferData);

@@ -307,7 +307,10 @@ namespace Game.GameActors.Units
         public EncounterComponent EncounterComponent { get; set; }
         public List<float> HealingMultipliers { get; set; }
         public List<int> BonusAttackRanges { get; set; }
+        public Bonds Bonds { get; set; }
 
+       
+       
 
         public void Equip(Weapon w)
         {
