@@ -123,7 +123,7 @@ namespace Game.GameActors.Units
             this.name = name;
             SkillManager = skillManager;
             SkillManager.SkillPointsUpdated += SkillPointsUpdated;
-           
+            Bonds = new Bonds();
             ExperienceManager = experienceManager;
             InitExperienceManager();
             TurnStateManager = new TurnStateManager();
@@ -467,7 +467,8 @@ namespace Game.GameActors.Units
             clone.SkillManager = new SkillManager(clone.SkillManager);
             clone.hp = hp;
             //clone.sp = sp;
-        
+
+            clone.Bonds = (Bonds)Bonds.Clone();
             clone.Stats = (Stats) Stats.Clone();
             clone.MoveType = MoveType;
             clone.Faction = Faction;

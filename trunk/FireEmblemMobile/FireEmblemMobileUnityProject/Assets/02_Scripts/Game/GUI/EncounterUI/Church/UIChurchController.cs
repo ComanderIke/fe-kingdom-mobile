@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using __2___Scripts.Game.Utility;
 using Game.GameActors.Players;
 using Game.WorldMapStuff.Model;
 using LostGrace;
@@ -8,99 +9,81 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
+public class UIChurchController : MonoBehaviour
 {
     public enum ChurchUIState
     {
-        Store,Pray,Blessing
+        Blessing, Curse
     }
     public Canvas canvas;
     public ChurchEncounterNode node;
     [HideInInspector]
     public Party party;
-    private List<UIShopItemController> shopItems;
     [SerializeField] private UICharacterFace characterFace;
     [SerializeField] private UIUnitIdleAnimation unitIdleAnimation;
-    public Transform itemParent;
-    public GameObject shopItemPrefab;
-    private Church church;    
-    [SerializeField] BuyItemUI buyItemUI;
+    private Church church;
     [SerializeField] UIRemoveCurseArea removeCurseUI;
-    [SerializeField] UIPrayArea prayUI;
-    [SerializeField] private GameObject prayButton;
-    [SerializeField] private GameObject saleButton;
-    [SerializeField] private TextMeshProUGUI inStoreText;
-    private ShopItem selectedItem;
-    private List<GameObject> instantiatedItems= new List<GameObject>();
-    private ChurchUIState state = ChurchUIState.Store;
-    [SerializeField] private CanvasGroup SoldOutArea;
+    [SerializeField] GameObject prayUI;
+    [SerializeField] private Button blessingButton;
+    [SerializeField] private Button curseButton;
+    [SerializeField] private TextMeshProUGUI faithStat;
+    private ChurchUIState state = ChurchUIState.Blessing;
+
+    [SerializeField] private Transform topRowParentLayout;
+    [SerializeField] private Transform bottomRowLayout;
+    [SerializeField]
+    private GameObject GodBlessingUIPrefab;
+
+    [SerializeField] private List<God> gods;
+    [SerializeField] private TextMeshProUGUI prayGoldAmount;
+    private List<UIGodBlessing> uiGodBlessings;
+    [SerializeField] private Slider slider;
+    private int selectedGod = 0;
     public void UpdateUI()
     {
-        // if (state == ChurchUIState.Pray && !church.CanDonate(party.ActiveUnit))
-        //     state = ChurchUIState.Blessing;
-        // if (state == ChurchUIState.Blessing && church.CanDonate(party.ActiveUnit))
-        //     state = ChurchUIState.Pray;
-        shopItems.Clear();
-        saleButton.gameObject.SetActive(false);
-        prayButton.gameObject.SetActive(false);
-        prayUI.Hide();
-        removeCurseUI.Hide();
-        buyItemUI.Hide();
-        for (int i = instantiatedItems.Count - 1; i >= 0; i--)
+
+        faithStat.text = ""+party.ActiveUnit.Stats.CombinedAttributes().FAITH;
+        prayGoldAmount.text = ""+slider.value;
+        topRowParentLayout.DeleteAllChildren();
+        bottomRowLayout.DeleteAllChildren();
+        uiGodBlessings = new List<UIGodBlessing>();
+        int cnt = 0;
+        foreach (var god in gods)
         {
-            Destroy(instantiatedItems[i]);
+            var parent = cnt>=4?bottomRowLayout:topRowParentLayout;
+            var go = Instantiate(GodBlessingUIPrefab, parent);
+            var uiGodController= go.GetComponent<UIGodBlessing>();
+            uiGodController.Show(party.ActiveUnit,god, cnt);
+            uiGodController.onClicked += GodClicked;
+            if(cnt==selectedGod)
+                uiGodController.Select();
+            uiGodBlessings.Add(uiGodController);
+            cnt++;
         }
-        instantiatedItems.Clear();
+        prayUI.gameObject.SetActive(false);
+        removeCurseUI.Hide();
         unitIdleAnimation.Show(party.ActiveUnit);
         characterFace.Show(party.ActiveUnit);
-        if (state == ChurchUIState.Store)
+       
+        if (state == ChurchUIState.Blessing)
         {
-          
-            for (int i = 0; i < church.shopItems.Count; i++)
-            {
-                var go = Instantiate(shopItemPrefab, itemParent);
-                var item = church.shopItems[i];
-                instantiatedItems.Add(go);
-                shopItems.Add(go.GetComponent<UIShopItemController>());
-                bool affordable = party.CanAfford(item.cost);
-
-                shopItems[i].SetValues(item, affordable, this);
-            }
-
-            if (church.shopItems.Count >= 1)
-            {
-                buyItemUI.Show(church.shopItems[0].Item, party.CanAfford(church.shopItems[0].cost), true);
-                SoldOutArea.alpha = 0;
-            }
-            else
-            {
-                SoldOutArea.alpha = 1;
-              
-                buyItemUI.Hide();
-            }
-            saleButton.gameObject.SetActive(false);
-            prayButton.gameObject.SetActive(true);
-            inStoreText.gameObject.SetActive(true);
+            blessingButton.interactable = false;
+            curseButton.interactable = true;
+            prayUI.gameObject.SetActive(true);
         }
-        else if (state == ChurchUIState.Pray)
+        else if (state == ChurchUIState.Curse)
         {
-            SoldOutArea.alpha = 0;
-
-            saleButton.gameObject.SetActive(true);
-            prayButton.gameObject.SetActive(false);
-            inStoreText.gameObject.SetActive(false);
-            prayUI.Show(party.ActiveUnit, !church.CanDonate(party.ActiveUnit));
+            blessingButton.interactable = true;
+            curseButton.interactable = false;
+            removeCurseUI.Show(party.ActiveUnit);
         }
-        else if (state == ChurchUIState.Blessing)
-        {
-            SoldOutArea.alpha = 0;
+    }
 
-            saleButton.gameObject.SetActive(true);
-            prayButton.gameObject.SetActive(false);
-            inStoreText.gameObject.SetActive(false);
-            removeCurseUI.Show(party.ActiveUnit, church.AlreadyRemovedCurse(party.ActiveUnit));
-        }
-        UpdateSelectionColors();
+    void GodClicked(int index)
+    {
+        uiGodBlessings[selectedGod].Deselect();
+        selectedGod = index;
+        uiGodBlessings[selectedGod].Select();
     }
     public void NextClicked()
     {
@@ -113,33 +96,7 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
         Player.Instance.Party.ActiveUnitIndex--;
         
     }
-    public void BuyClicked()
-    {
-        party.Money -= selectedItem.cost;
-        party.AddItem(selectedItem.Item);
-        church.RemoveItem(selectedItem.Item);
-        SelectNextItem();
-        buyItemUI.Hide();
-        UpdateUI();
-    }
-    private void SelectNextItem()
-    {
-        
-        if(church.shopItems.Count!=0)
-            selectedItem = church.shopItems[0];
-        else
-        {
-            selectedItem = null;
-        }
-        
-     
-    }
-    public void ItemClicked(ShopItem item)
-    {
-        selectedItem = item;
-        UpdateUI();
-        buyItemUI.Show(item.Item,  party.CanAfford(item.cost), true);
-    }
+
 
     public void Hide()
     {
@@ -165,8 +122,6 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
         canvas.enabled = true;
         this.party = party;
         this.church = node.church;
-        shopItems = new List<UIShopItemController>();
-        selectedItem = church.shopItems[0];
         party.onActiveUnitChanged -= ActiveUnitChanged;
         party.onActiveUnitChanged += ActiveUnitChanged;
         UpdateUI();
@@ -174,16 +129,14 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
     }
 
     
-    public void PrayClicked()
+    public void BlessingClicked()
     {
-        state = ChurchUIState.Pray;
-        if (!church.CanDonate(party.ActiveUnit))
-            state = ChurchUIState.Blessing;
+        state = ChurchUIState.Blessing;
         UpdateUI();
     }
-    public void SaleClicked()
+    public void CurseClicked()
     {
-        state = ChurchUIState.Store;
+        state = ChurchUIState.Curse;
         UpdateUI();
     }
     public void ContinueClicked()
@@ -192,22 +145,12 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
         FindObjectOfType<UICharacterViewController>().Hide();
         node.Continue();
     }
-    void UpdateSelectionColors()
-    {
 
-        foreach (var shopItem in shopItems)
-        {
-            shopItem.Deselect();
-            
-            if (shopItem.item.Equals(selectedItem))
-            {
-              
-                shopItem.Select();
-            }
-        }
+    public void SliderValueChanged(float value)
+    {
+        UpdateUI();
     }
-    
-    public void DonateSmall()
+    public void PrayClicked()
     {
         church.DonateSmall(party.ActiveUnit, party.ActiveUnit.Stats.CombinedAttributes().FAITH);
         //state = ChurchUIState.Blessing;
@@ -215,19 +158,11 @@ public class UIChurchController : MonoBehaviour, IShopItemClickedReceiver
         
     }
 
-    public void DonateMedium()
+    public void ReceiveBlessingClicked()
     {
-        church.DonateMedium(party.ActiveUnit, party.ActiveUnit.Stats.CombinedAttributes().FAITH);
-        //state = ChurchUIState.Blessing;
-        UpdateUI();
+        
     }
-
-    public void DonateHigh()
-    {
-        church.DonateHigh(party.ActiveUnit, party.ActiveUnit.Stats.CombinedAttributes().FAITH);
-        //state = ChurchUIState.Blessing;
-        UpdateUI();
-    }
+    
 
     public void RemoveCurse()
     {

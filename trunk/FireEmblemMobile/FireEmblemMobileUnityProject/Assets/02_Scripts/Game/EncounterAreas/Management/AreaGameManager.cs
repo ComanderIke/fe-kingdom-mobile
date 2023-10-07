@@ -557,8 +557,8 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         //         child.renderer.SetInactive();
         // }
         var parentId = Player.Instance.Party.EncounterComponent.MovedEncounterIds[Player.Instance.Party.EncounterComponent.MovedEncounterIds.Count-2];
-        Debug.Log("Parent ID Node: "+parentId);
-        Debug.Log("CurrentNode: "+currentNode.gameObject.name);
+        // Debug.Log("Parent ID Node: "+parentId);
+        // Debug.Log("CurrentNode: "+currentNode.gameObject.name);
         foreach (var child in EncounterTree.Instance.columns[currentNode.depth-1].children)
         {
             if (child.GetId() == parentId)
@@ -567,13 +567,13 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
                 {
                     if (road.end != currentNode)
                     {
-                        Debug.Log("Set Missed: "+road.end.gameObject.name);
+                        // Debug.Log("Set Missed: "+road.end.gameObject.name);
                         road.SetMissedVisual();
                     }
                 }
             }
         }
-        Debug.Log("Show Inactive Nodes of: "+currentNode);
+        // Debug.Log("Show Inactive Nodes of: "+currentNode);
         foreach (var child in EncounterTree.Instance.columns[currentNode.depth].children)
         {
             if (!Player.Instance.Party.EncounterComponent.MovedEncounterIds.Contains(child.GetId()))

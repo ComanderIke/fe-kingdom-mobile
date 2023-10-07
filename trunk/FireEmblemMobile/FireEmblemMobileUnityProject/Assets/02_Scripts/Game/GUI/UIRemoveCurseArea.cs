@@ -11,56 +11,49 @@ namespace LostGrace
 {
     public class UIRemoveCurseArea : MonoBehaviour
     {
-        [SerializeField] private Image icon;
-        [SerializeField] private TextMeshProUGUI nameText;
-        [SerializeField] private TextMeshProUGUI Description;
-        [SerializeField] private TextMeshProUGUI effect;
-        [SerializeField] private TextMeshProUGUI Faith;
-        [SerializeField] private TextMeshProUGUI buttonText;
-        [SerializeField] private Button AcceptButton;
-        [SerializeField] UIChurchController churchController;
-        [SerializeField]GameObject extraEffectDescriptionPrefab;
-        [SerializeField]GameObject extraEffectValuePrefab;
-        [SerializeField]GameObject extraEffectContainerPrefab;
-        [SerializeField] Transform extraEffectParent;
-
-        public void Show(Unit unit,  bool alreadyRemovedCurse)
+        private List<Curse> curses;
+        private int curseIndex = 0;
+        [SerializeField] private Image selectedCurse;
+        [SerializeField] private Image prevCurse;
+        [SerializeField] private Image nextCurse;
+        public void Show(Unit unit)
         {
+            curses = unit.Curses;
+            
             gameObject.SetActive(true);
-            Faith.SetText("" + unit.Stats.BaseAttributes.FAITH);
-            // nameText.SetText(blessing.Name);
-            // Description.SetText(blessing.Description);
-            // effect.SetText(blessing.Description);
-            // AcceptButton.interactable = !alreadyAccepted;
-            // icon.sprite = blessing.Icon;
-            // if (alreadyAccepted)
-            // {
-            //     buttonText.text = "Received";
-            // }
-            // else
-            // {
-            //     buttonText.text = "Accept";
-            // }
-            // var effects = blessing.GetEffectDescription();
-            // if (effects != null)
-            // {
-            //     extraEffectParent.gameObject.SetActive(true);
-            //     extraEffectParent.DeleteAllChildren();
-            //     foreach (var effect in effects)
-            //     {
-            //         var container = Instantiate(extraEffectContainerPrefab, extraEffectParent);
-            //         var label = Instantiate(extraEffectDescriptionPrefab, container.transform);
-            //         var value = Instantiate(extraEffectValuePrefab, container.transform);
-            //         label.GetComponent<TextMeshProUGUI>().text = effect.label;
-            //         value.GetComponent<TextMeshProUGUI>().text = effect.value;
-            //            
-            //     }
-            // }
-            // else
-            // {
-            //     extraEffectParent.gameObject.SetActive(false);
-            //     extraEffectParent.DeleteAllChildren();
-            // }
+            curseIndex = 0;
+            UpdateUI();
+           
+        }
+
+        void UpdateUI()
+        {
+            if (curses.Count == 0)
+            {
+                selectedCurse.sprite=null;
+                nextCurse.sprite = null;
+                prevCurse.sprite = null;
+                return;
+            }
+                
+            int prevIndex = curseIndex - 1;
+            if (prevIndex < 0)
+            {
+                prevIndex = curses.Count - 1;
+            }
+
+            int nextIndex = curseIndex + 1;
+            if (nextIndex >= curses.Count)
+            {
+                nextIndex = 0;
+            }
+            Debug.Log("Curse Index: "+curseIndex+" next: "+nextIndex+" prev: "+prevIndex);
+            Debug.Log(curses[curseIndex].Name+" "+curses[nextIndex].Name+" "+curses[prevIndex].Name);
+            prevCurse.sprite = curses[prevIndex].Icon;
+            nextCurse.sprite = curses[nextIndex].Icon;
+            selectedCurse.sprite = curses[curseIndex].Icon;
+            nextCurse.gameObject.SetActive(nextIndex!=curseIndex&& (nextIndex !=prevIndex||nextIndex>curseIndex));
+            prevCurse.gameObject.SetActive(prevIndex!=curseIndex&& (prevIndex!= nextIndex||prevIndex<curseIndex));
         }
 
         public void Hide()
@@ -68,9 +61,24 @@ namespace LostGrace
             gameObject.SetActive(false);
         }
 
-        // public void AcceptClicked()
-        // {
-        //     churchController.RemoveCurse();
-        // }
+        public void NextClicked()
+        {
+            Debug.Log("Next");
+            curseIndex++;
+            if (curseIndex >= curses.Count)
+                curseIndex = 0;
+            UpdateUI();
+        }
+
+        public void PrevClicked()
+        {
+            Debug.Log("Prev");
+            curseIndex--;
+            if (curseIndex < 0)
+                curseIndex = curses.Count-1;
+            UpdateUI();
+        }
+
+       
     }
 }

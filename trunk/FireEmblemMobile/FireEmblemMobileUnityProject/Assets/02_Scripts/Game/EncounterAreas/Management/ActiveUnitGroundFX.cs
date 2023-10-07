@@ -6,7 +6,7 @@ public class ActiveUnitGroundFX:MonoBehaviour
     [SerializeField]private List<SpriteRenderer> fadeSprites;
     public void FadeIn()
     {
-        Debug.Log("FadeIn ACTIVE UNIT GOUND FX");
+        //Debug.Log("FadeIn ACTIVE UNIT GOUND FX");
         foreach (var sprite in fadeSprites)
         {
            // LeanTween.cancel(sprite.gameObject);
@@ -15,12 +15,12 @@ public class ActiveUnitGroundFX:MonoBehaviour
     }
     public void FadeOut()
     {
-        Debug.Log("FADE OUT ACTIVE UNIT GOUND FX");
+        //Debug.Log("FADE OUT ACTIVE UNIT GOUND FX");
         //LeanTween.alpha(fadeSprites[0].gameObject, 0f, .2f).setEaseInOutQuad();
         foreach (var sprite in fadeSprites)
         {
            // LeanTween.cancel(sprite.gameObject);
-           Debug.Log("Start Tween for: "+sprite.gameObject);
+          // Debug.Log("Start Tween for: "+sprite.gameObject);
           // sprite.color = new Color(1, 1, 1, 0);
             LeanTween.alpha(sprite.gameObject, 0f, .3f).setEaseInOutQuad();
         }

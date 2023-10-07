@@ -135,7 +135,6 @@ namespace Game.WorldMapStuff.Model
         {
             get
             {
-                Debug.Log(ActiveUnitIndex+" "+members.Count);
                 return members[ActiveUnitIndex];
             }
         }

@@ -50,17 +50,6 @@ namespace LostGrace
             gameObject.SetActive(false);
         }
 
-        public void DonateSmallClicked()
-        {
-            churchController.DonateSmall();
-        }
-        public void DonateMediumClicked()
-        {
-            churchController.DonateMedium();
-        }
-        public void DonateHighClicked()
-        {
-            churchController.DonateHigh();
-        }
+        
     }
 }

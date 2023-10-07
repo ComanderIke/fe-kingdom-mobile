@@ -9,12 +9,6 @@ using UnityEngine.UI;
 
 namespace LostGrace
 {
-    public class God
-    {
-        public string name;
-        public Sprite face;
-        public Sprite Body;
-    }
     public class UIGodBlessing : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI name;
@@ -23,30 +17,40 @@ namespace LostGrace
         [SerializeField] private GameObject blessed;
         [SerializeField] private TextMeshProUGUI lv;
         [SerializeField] private ExpBarController expBarController;
-        public event Action onClicked;
+        public event Action<int> onClicked;
 
-        public void Show(Unit unit, God god)
+        [SerializeField]
+        private Vector3 normalScale;
+        [SerializeField]
+        private Vector3 selectedScale;
+
+        private int index = 0;
+        public void Show(Unit unit, God god, int index)
         {
             name.SetText(god.name);
-            face.sprite = god.face;
+            this.index = index;
+            face.sprite = god.Face;
             lv.SetText("Lv. "+unit.Bonds.GetBondLevel(god));
             expBarController.UpdateInstant(unit.Bonds.GetBondExperience(god));
-            blessed.gameObject.SetActive(unit.Blessing.God==god);
+            blessed.gameObject.SetActive(unit.Blessing!=null && unit.Blessing.God==god);
+            transform.localScale = normalScale;
         }
 
         public void Select()
         {
             selected.gameObject.SetActive(true);
+            transform.localScale = selectedScale;
         }
 
         public void Deselect()
         {
             selected.gameObject.SetActive(false);
+            transform.localScale = normalScale;
         }
 
         public void Clicked()
         {
-            onClicked?.Invoke();
+            onClicked?.Invoke(index);
         }
     }
 }

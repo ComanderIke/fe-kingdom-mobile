@@ -15,8 +15,11 @@ namespace __2___Scripts.Game.Utility
             var children = transform.GetComponentsInChildren<Transform>();
             for (int i = children.Length - 1; i >= 0; i--)
             {
-                if(children[i]!=transform)
+                if (children[i] != transform)
+                {
+                    Debug.Log("Destroy: "+children[i].gameObject.name);
                     GameObject.Destroy(children[i].gameObject);
+                }
             }
         }
         public static void DeleteAllChildrenImmediate(this Transform transform)
