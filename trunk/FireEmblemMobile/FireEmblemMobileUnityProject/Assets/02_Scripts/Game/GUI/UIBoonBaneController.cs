@@ -90,9 +90,9 @@ namespace LostGrace
                 case AttributeType.INT:
                     baneImage.transform.position = INTObject.transform.position- baneOffset; break;
                 case AttributeType.AGI:
-                    baneImage.transform.position = AGIObject.transform.position -baneOffset; break;
+                    baneImage.transform.position = AGIObject.transform.position +baneOffset; break;
                 case AttributeType.CON:
-                    baneImage.transform.position = CONObject.transform.position+ baneOffset; break;
+                    baneImage.transform.position = CONObject.transform.position- baneOffset; break;
                 case AttributeType.LCK:
                     baneImage.transform.position = LCKObject.transform.position+ baneOffset; break;
                 case AttributeType.DEF:
@@ -112,9 +112,9 @@ namespace LostGrace
                 case AttributeType.INT:
                     boonImage.transform.position = INTObject.transform.position- baneOffset; break;
                 case AttributeType.AGI:
-                    boonImage.transform.position = AGIObject.transform.position- baneOffset; break;
+                    boonImage.transform.position = AGIObject.transform.position+ baneOffset; break;
                 case AttributeType.CON:
-                    boonImage.transform.position = CONObject.transform.position+ baneOffset; break;
+                    boonImage.transform.position = CONObject.transform.position- baneOffset; break;
                 case AttributeType.LCK:
                     boonImage.transform.position = LCKObject.transform.position+ baneOffset; break;
                 case AttributeType.DEF:

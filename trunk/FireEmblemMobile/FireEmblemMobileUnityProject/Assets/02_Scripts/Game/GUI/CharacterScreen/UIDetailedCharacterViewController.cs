@@ -32,9 +32,9 @@ public class UIDetailedCharacterViewController : UICharacterViewController
     //         return;
     //     ToolTipSystem.Show(unit.Blessing, blessingImage.transform.position);
     // }
-    public override void Show(Unit unit, bool useFixedUnitList = false, List<Unit> availableUnits = null)
+    public override void Show(Unit unit)
     {
-        base.Show(unit, useFixedUnitList, availableUnits);
+        base.Show(unit);
      
         boonBaneController.OnBoonSelected -= BoonSelected;
         boonBaneController.OnBaneSelected -= BaneSelected;
@@ -59,35 +59,15 @@ public class UIDetailedCharacterViewController : UICharacterViewController
     }
     public void NextClicked()
     {
-        if (useFixedUnitList)
-        {
-            currentFixedIndex++;
-            if (currentFixedIndex >= availableUnits.Count)
-                currentFixedIndex = availableUnits.Count - 1;
-            UpdateUI(availableUnits[currentFixedIndex]);
-        }
-        else
-        {
+        
             Player.Instance.Party.ActiveUnitIndex++;
             UpdateUI(Player.Instance.Party.ActiveUnit);
-        }
+        
     }
     public void PrevClicked()
     {
-        if (useFixedUnitList)
-        {
-            currentFixedIndex--;
-            if (currentFixedIndex < 0)
-                currentFixedIndex = 0;
-            UpdateUI(availableUnits[currentFixedIndex]);
-        }
-        else
-        {
-            Player.Instance.Party.ActiveUnitIndex--;
-            UpdateUI(Player.Instance.Party.ActiveUnit);
-        }
-
-      
+        Player.Instance.Party.ActiveUnitIndex--;
+        UpdateUI(Player.Instance.Party.ActiveUnit);
     }
 
     [SerializeField] private Color baneColor;
@@ -95,14 +75,16 @@ public class UIDetailedCharacterViewController : UICharacterViewController
     [SerializeField] private Color normalColor;
     protected override void UpdateUI(Unit unit)
     {
-        uiAnimationSpriteSwapper.Init(unit.visuals.CharacterSpriteSet);
+        if(uiAnimationSpriteSwapper!=null)
+            uiAnimationSpriteSwapper.Init(unit.visuals.CharacterSpriteSet);
         if (unit != base.unit)
         {
             boonBaneController.SoftResetBoonBane();
         }
         base.UpdateUI(unit);
         Lv.SetText("Lv. "+unit.ExperienceManager.Level);
-        ExpBar.SetValue(unit.ExperienceManager.Exp, ExperienceManager.MAX_EXP, false);
+        if(ExpBar!=null)
+            ExpBar.SetValue(unit.ExperienceManager.Exp, ExperienceManager.MAX_EXP, false);
         skillsUI.Show(unit);
         STR_Label.color=normalColor;
         DEX_Label.color=normalColor;
@@ -171,7 +153,8 @@ public class UIDetailedCharacterViewController : UICharacterViewController
        
 
         equipmentController.Show(unit);
-        IdleAnimation.runtimeAnimatorController = unit.visuals.Prefabs.UIAnimatorController;
+        if(IdleAnimation!=null)
+            IdleAnimation.runtimeAnimatorController = unit.visuals.Prefabs.UIAnimatorController;
     }
 
     void BlessingClicked(RectTransform clickedTransform)

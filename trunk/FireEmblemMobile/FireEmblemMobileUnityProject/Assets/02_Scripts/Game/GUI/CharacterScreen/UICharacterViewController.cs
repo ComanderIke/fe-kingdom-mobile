@@ -56,7 +56,12 @@ public class UICharacterViewController : MonoBehaviour
     public UIStatText DEF;
     public UICharacterFace CharacterFace;
 
-    public bool IsVisible => canvas.enabled;
+    public bool IsVisible ()
+    {
+        if (canvas != null)
+            return canvas.enabled;
+        return true;
+    }
 
     void OnEnable()
     {
@@ -68,24 +73,18 @@ public class UICharacterViewController : MonoBehaviour
     {
         Unit.OnUnitDataChanged -= UpdateUI;
     }
-    protected bool useFixedUnitList;
-    protected List<Unit> availableUnits;
+ 
+    
     protected int currentFixedIndex;
-    public virtual void Show(Unit unit, bool useFixedUnitList=false, List<Unit> availableUnits=null)
+    public virtual void Show(Unit unit)
     {
-        this.availableUnits = availableUnits;
-        this.useFixedUnitList = useFixedUnitList;
-        currentFixedIndex = 0;
-        canvas.enabled = true;
+        
+      
+        if(canvas!=null)
+            canvas.enabled = true;
         Player.Instance.Party.SetActiveUnit(unit);
         Debug.Log("Showing Character UI for: "+unit.name);
-        if (useFixedUnitList)
-        {
-            Debug.Log(availableUnits.Count + " " + currentFixedIndex);
-            UpdateUnit(availableUnits[currentFixedIndex]);
-        }
-        else
-            UpdateUI(unit);
+        UpdateUI(unit);
 
     }
 
@@ -127,7 +126,7 @@ public class UICharacterViewController : MonoBehaviour
         FTH.SetValue(unit.Stats.CombinedAttributes().FAITH,unit.Stats.GetAttributeBonusState(AttributeType.FTH));
         LCK.SetValue(unit.Stats.CombinedAttributes().LCK,unit.Stats.GetAttributeBonusState(AttributeType.LCK));
         DEF.SetValue(unit.Stats.CombinedAttributes().DEF,unit.Stats.GetAttributeBonusState(AttributeType.DEF));
-        Debug.Log("FTH: "+unit.Stats.BaseAttributes.FAITH+" "+unit.Stats.CombinedAttributes().FAITH+" "+unit.Stats.BonusAttributesFromFood.FAITH+" "+unit.Stats.BonusAttributesFromEffects.FAITH+" "+unit.Stats.BonusAttributesFromEquips.FAITH+" "+unit.Stats.BonusAttributesFromWeapon.FAITH+" "+unit.Stats.BaseAttributesAndWeapons().FAITH+unit.Stats.GetAttributeBonusState(AttributeType.FTH));
+        //Debug.Log("FTH: "+unit.Stats.BaseAttributes.FAITH+" "+unit.Stats.CombinedAttributes().FAITH+" "+unit.Stats.BonusAttributesFromFood.FAITH+" "+unit.Stats.BonusAttributesFromEffects.FAITH+" "+unit.Stats.BonusAttributesFromEquips.FAITH+" "+unit.Stats.BonusAttributesFromWeapon.FAITH+" "+unit.Stats.BaseAttributesAndWeapons().FAITH+unit.Stats.GetAttributeBonusState(AttributeType.FTH));
     }
 
     public void CombatStatsButtonClicked()
@@ -230,7 +229,8 @@ public class UICharacterViewController : MonoBehaviour
     
     public virtual void Hide()
     {
-        canvas.enabled = false;
+        if(canvas!=null)
+            canvas.enabled = false;
     }
     public void UpdateUnit(Unit unit1)
     {

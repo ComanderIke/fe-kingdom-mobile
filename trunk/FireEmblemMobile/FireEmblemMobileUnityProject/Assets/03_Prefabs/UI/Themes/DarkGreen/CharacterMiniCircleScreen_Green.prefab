@@ -1681,6 +1681,7 @@ GameObject:
   - component: {fileID: 6214694422252930241}
   - component: {fileID: 2692420259242508431}
   - component: {fileID: 7577547902705462350}
+  - component: {fileID: 5891077732585014020}
   m_Layer: 5
   m_Name: CharacterMiniCircleScreen_Green
   m_TagString: Untagged
@@ -1728,10 +1729,10 @@ MonoBehaviour:
   characterName: {fileID: 8212968953170096582}
   hpBar: {fileID: 8212968953242901896}
   hpBarToScale: {fileID: 8212968953141962521}
-  selectedScaleHpBarBackground: {x: 1.4, y: 1}
-  selectedScale: {x: 1.2, y: 1.2}
-  normalScale: {x: 1, y: 1}
-  expSelectedScale: {x: 1.66, y: 1.2}
+  selectedScaleHpBarBackground: {x: 1.4, y: 1, z: 1}
+  selectedScale: {x: 1.2, y: 1.2, z: 1}
+  normalScale: {x: 1, y: 1, z: 1}
+  expSelectedScale: {x: 1.66, y: 1.2, z: 1}
   selectedSize: {x: 140, y: 140}
   normalSize: {x: 100, y: 100}
   normalSizeBars: {x: 100, y: 22}
@@ -1753,6 +1754,7 @@ MonoBehaviour:
       drainableExp: 100
       expLeftToDrain: 100
   lowHealthThreshold: 0.25
+  sortOrder: 501
 --- !u!95 &6214694422252930241
 Animator:
   serializedVersion: 3
@@ -1786,12 +1788,12 @@ Canvas:
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
-  m_OverrideSorting: 1
+  m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 501
   m_TargetDisplay: 0
 --- !u!114 &7577547902705462350
 MonoBehaviour:
@@ -1810,6 +1812,17 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!210 &5891077732585014020
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8212968952469230515}
+  m_Enabled: 1
+  m_SortingLayerID: 215948683
+  m_SortingLayer: 5
+  m_SortingOrder: 501
 --- !u!1 &8212968952827714961
 GameObject:
   m_ObjectHideFlags: 0
@@ -2773,24 +2786,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e64226cfd2042b4ca657c2593e84a82, type: 3}
---- !u!114 &8212968953831140463 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8479147133011501906, guid: 7e64226cfd2042b4ca657c2593e84a82,
-    type: 3}
-  m_PrefabInstance: {fileID: 311215509041745725}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!224 &8212968953141962521 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8479147134167296036, guid: 7e64226cfd2042b4ca657c2593e84a82,
-    type: 3}
-  m_PrefabInstance: {fileID: 311215509041745725}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8212968953242901896 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8479147134537192117, guid: 7e64226cfd2042b4ca657c2593e84a82,
@@ -2806,6 +2801,24 @@ MonoBehaviour:
 --- !u!224 &8212968953242901903 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8479147134537192114, guid: 7e64226cfd2042b4ca657c2593e84a82,
+    type: 3}
+  m_PrefabInstance: {fileID: 311215509041745725}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8212968953831140463 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8479147133011501906, guid: 7e64226cfd2042b4ca657c2593e84a82,
+    type: 3}
+  m_PrefabInstance: {fileID: 311215509041745725}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!224 &8212968953141962521 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8479147134167296036, guid: 7e64226cfd2042b4ca657c2593e84a82,
     type: 3}
   m_PrefabInstance: {fileID: 311215509041745725}
   m_PrefabAsset: {fileID: 0}

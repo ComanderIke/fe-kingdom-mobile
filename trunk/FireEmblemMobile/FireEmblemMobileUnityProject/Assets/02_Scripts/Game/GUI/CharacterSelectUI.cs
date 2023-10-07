@@ -14,8 +14,8 @@ namespace LostGrace
     public class CharacterSelectUI : UIMenu
     {
        
-        [SerializeField] private Canvas sortingCanvas;
-        [SerializeField] private Canvas charViewCanvas;
+       // [SerializeField] private Canvas sortingCanvas;
+     //   [SerializeField] private Canvas charViewCanvas;
         [SerializeField] private CanvasGroup speechBubbleCanvasGroup;
         [SerializeField] private TextMeshProUGUI speechBubbleText;
         [SerializeField] private CanvasGroup charCirclesCanvasGroup;
@@ -24,7 +24,9 @@ namespace LostGrace
         [SerializeField] private CanvasGroup charButtonsCanvasGroup;
         [SerializeField] private CanvasGroup partySizeCanvasGroup;
         [SerializeField] private CanvasGroup titleCanvasGroup;
-        [SerializeField] private CanvasGroup newGameButtonCanvasGroup;
+
+        [SerializeField] private Button newGameButton;
+       // [SerializeField] private CanvasGroup newGameButtonCanvasGroup;
         [SerializeField] private CanvasGroup backButtonCanvasGroup;
         [SerializeField] private CanvasGroup Fade;
         [SerializeField] private GoddessUI goddessUI;
@@ -62,8 +64,8 @@ namespace LostGrace
         IEnumerator ShowCoroutine()
         {
             base.Show();
-            sortingCanvas.enabled = true;
-            newGameButtonCanvasGroup.alpha = 0;
+            //sortingCanvas.enabled = true;
+           // newGameButtonCanvasGroup.alpha = 0;
             titleCanvasGroup.alpha = 0;
             backButtonCanvasGroup.alpha = 0;
             charCirclesCanvasGroup.alpha = 0;
@@ -71,11 +73,11 @@ namespace LostGrace
             charButtonsCanvasGroup.alpha = 0;
             speechBubbleCanvasGroup.alpha = 0;
             partySizeCanvasGroup.alpha = 0;
-            charViewCanvas.enabled = true;
+            //charViewCanvas.enabled = true;
             yield return new WaitForSeconds(.5f);
 
-            LeanTween.alphaCanvas(newGameButtonCanvasGroup, UIUtility.INACTIVE_CANVAS_GROUP_ALPHA,
-                TweenUtility.fadeInDuration).setEase(TweenUtility.easeFadeIn);
+            // LeanTween.alphaCanvas(newGameButtonCanvasGroup, UIUtility.INACTIVE_CANVAS_GROUP_ALPHA,
+            //     TweenUtility.fadeInDuration).setEase(TweenUtility.easeFadeIn);
             TweenUtility.FadeIn(titleCanvasGroup);
             TweenUtility.FadeIn(backButtonCanvasGroup);
             TweenUtility.FadeIn(charCirclesCanvasGroup);
@@ -109,7 +111,7 @@ namespace LostGrace
         IEnumerator HideCoroutine()
         {
             TweenUtility.FadeOut(backButtonCanvasGroup);
-            TweenUtility.FadeOut(newGameButtonCanvasGroup);
+            // TweenUtility.FadeOut(newGameButtonCanvasGroup);
             TweenUtility.FadeOut(speechBubbleCanvasGroup);
             goddessUI.Hide();
             yield return new WaitForSeconds(0.5f);
@@ -124,7 +126,7 @@ namespace LostGrace
             TweenUtility.FadeIn(Fade).setOnComplete(()=>
             {
                 base.Hide();
-                sortingCanvas.enabled = false;
+             //   sortingCanvas.enabled = false;
                 parent?.Show();
                 TweenUtility.FadeOut(Fade);
             });
@@ -140,13 +142,13 @@ namespace LostGrace
         {
             if (Player.Instance.Party.members.Count<Player.Instance.startPartyMemberCount)
             {
-                newGameButtonCanvasGroup.alpha = UIUtility.INACTIVE_CANVAS_GROUP_ALPHA;
-                newGameButtonCanvasGroup.GetComponent<Button>().interactable = false;
+               // newGameButtonCanvasGroup.alpha = UIUtility.INACTIVE_CANVAS_GROUP_ALPHA;
+               newGameButton.interactable = false;
             }
             else
             {
-                newGameButtonCanvasGroup.alpha = 1;
-                newGameButtonCanvasGroup.GetComponent<Button>().interactable = true;
+               // newGameButtonCanvasGroup.alpha = 1;
+                newGameButton.interactable = true;
             }
         }
         public override void Hide()

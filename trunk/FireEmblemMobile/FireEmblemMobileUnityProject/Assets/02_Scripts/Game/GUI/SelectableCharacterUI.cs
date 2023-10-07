@@ -21,9 +21,11 @@ namespace LostGrace
         [SerializeField] private Image unitImage;
         [SerializeField] private TextMeshProUGUI text;
         [SerializeField] private GameObject nameGO;
+        [SerializeField] private Image faceImage;
         private bool isSelected = false;
         public void SetCharacter(Unit unit, bool locked)
         {
+          
             this.unit = unit;
             if (locked)
             {
@@ -31,8 +33,11 @@ namespace LostGrace
                 unitImage.color = notUnlockedColor;
                 SetInteractable(false);
                 nameGO.SetActive(false);
+                faceImage.gameObject.SetActive(false);
                 //unitUIIdleAnimation.gameObject.SetActive(false);
             }
+
+            faceImage.sprite = unit.visuals.CharacterSpriteSet.FaceSprite;
             text.SetText(unit.Name);
             //text.gameObject.SetActive(false);
             
@@ -61,6 +66,7 @@ namespace LostGrace
         }
         public void Clicked()
         {
+            Debug.Log("CLICKED: "+unit.Name);
             onClicked?.Invoke(this);
         }
 

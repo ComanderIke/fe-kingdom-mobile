@@ -47,7 +47,8 @@ namespace LostGrace
                 {
                     Debug.Log("Select Last: "+last.unit);
                     AddUnit(last);
-                    characterView.Show(last.unit, true, unlockedUnits);
+                    SelectUnit(last);
+                    characterView.Show(last.unit);
                 }
 
                 cnt++;
@@ -147,9 +148,7 @@ namespace LostGrace
             }
         }
 
-        private SelectableCharacterUI lastSelected;
-        [SerializeField] private UIAddRemoveButton addRemoveButton;
-        public void UnitClicked(SelectableCharacterUI unit)
+        void SelectUnit(SelectableCharacterUI unit)
         {
             if(lastSelected!=null)
                 lastSelected.Deselect();
@@ -161,8 +160,14 @@ namespace LostGrace
             {
                 addRemoveButton.ShowAdd();
             }
+        }
+        private SelectableCharacterUI lastSelected;
+        [SerializeField] private UIAddRemoveButton addRemoveButton;
+        public void UnitClicked(SelectableCharacterUI unit)
+        {
+            SelectUnit(unit);
             Debug.Log("Show unit: "+unit.unit);
-            characterView.Show(unit.unit,true, unlockedUnits);
+            characterView.Show(unit.unit);
             
         }
     }

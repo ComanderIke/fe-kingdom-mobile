@@ -20,7 +20,7 @@ namespace LostGrace
         public void Show(Unit unit, bool showDeleteIfFull=false)
         {
             this.unit = unit;
-            Debug.Log("SKill UI Show");
+           // Debug.Log("SKill UI Show");
             transform.DeleteAllChildren();
             instantiatedButtons = new List<SkillUI>();
             foreach (var skill in unit.SkillManager.Skills)

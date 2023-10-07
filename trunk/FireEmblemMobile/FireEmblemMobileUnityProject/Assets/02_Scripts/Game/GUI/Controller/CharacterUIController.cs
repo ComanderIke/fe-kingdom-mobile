@@ -28,10 +28,10 @@ namespace Game.GUI
         private IStatBar hpBar;
 
         [SerializeField] private Transform hpBarToScale;
-        [SerializeField] private Vector2 selectedScaleHpBarBackground;
-        [SerializeField] private Vector2 selectedScale;
-        [SerializeField] private Vector2 normalScale;
-        [SerializeField] private Vector2 expSelectedScale;
+        [SerializeField] private Vector3 selectedScaleHpBarBackground;
+        [SerializeField] private Vector3 selectedScale;
+        [SerializeField] private Vector3 normalScale;
+        [SerializeField] private Vector3 expSelectedScale;
         [SerializeField]
         private  Vector2 selectedSize;
         [SerializeField]
@@ -61,8 +61,8 @@ namespace Game.GUI
         private static readonly int Dead = Animator.StringToHash("Dead");
         private static readonly int Active = Animator.StringToHash("Active");
         [SerializeField]private float lowHealthThreshold=0.25f;
-
-
+        [SerializeField] private int sortOrder = 0;
+        
         private void Start()
         {
            
@@ -86,7 +86,7 @@ namespace Game.GUI
             // hpBar.GetComponent<RectTransform>().sizeDelta = selectedSizeBars;
             animator.SetBool(Dead, !unit.IsAlive());
             animator.SetBool(Active, true);
-            canvas.sortingOrder = 10;
+            canvas.sortingOrder = sortOrder+10;
             //GameplayInput.SelectUnit(unit);
 
 
@@ -95,7 +95,7 @@ namespace Game.GUI
         public override void Show(Unit unit)
         {
             this.unit = unit;
-            canvas.sortingOrder = 0;
+            canvas.sortingOrder =sortOrder;
            // Debug.Log("Show UnitCharacterUI: "+unit.name);
             unit.HpValueChanged -= UpdateValues;
             unit.HpValueChanged += UpdateValues;

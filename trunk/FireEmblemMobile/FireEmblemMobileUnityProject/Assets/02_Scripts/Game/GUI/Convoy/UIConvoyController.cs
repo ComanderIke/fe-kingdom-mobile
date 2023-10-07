@@ -157,7 +157,7 @@ public class UIConvoyController:MonoBehaviour
         typeFilter = filter;
        
         canvas.enabled = true;
-        if(!charView.IsVisible)
+        if(!charView.IsVisible())
             charView.Show(Player.Instance.Party.ActiveUnit);
 
         if (typeFilter == typeof(Gem))
