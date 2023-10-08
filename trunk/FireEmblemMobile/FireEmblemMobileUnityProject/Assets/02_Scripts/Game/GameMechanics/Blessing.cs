@@ -15,15 +15,16 @@ namespace LostGrace
         // }
 
 
-        public Blessing(string Name, string Description, Sprite icon, int tier,int maxLevel, List<PassiveSkillMixin> passiveMixins, CombatSkillMixin combatSkillMixin, List<ActiveSkillMixin> activeMixins, SkillTransferData skillTransferData) : base(Name, Description, icon, tier,maxLevel, passiveMixins, combatSkillMixin, activeMixins, skillTransferData)
+        public Blessing(string Name, string Description, Sprite icon, int tier,int maxLevel, List<PassiveSkillMixin> passiveMixins, CombatSkillMixin combatSkillMixin, List<ActiveSkillMixin> activeMixins, SkillTransferData skillTransferData,  God god) : base(Name, Description, icon, tier,maxLevel, passiveMixins, combatSkillMixin, activeMixins, skillTransferData)
         {
+            God = god;
         }
 
         public God God { get; set; }
 
         public override Skill Clone()
         {
-            var newBlessing = new Blessing(Name, Description, Icon, Tier, maxLevel,passiveMixins,CombatSkillMixin, activeMixins, skillTransferData);
+            var newBlessing = new Blessing(Name, Description, Icon, Tier, maxLevel,passiveMixins,CombatSkillMixin, activeMixins, skillTransferData, God);
             newBlessing.level = Level;
             return newBlessing;
         }

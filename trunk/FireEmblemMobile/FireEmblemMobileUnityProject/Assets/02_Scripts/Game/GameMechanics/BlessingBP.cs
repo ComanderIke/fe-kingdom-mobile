@@ -8,6 +8,7 @@ namespace LostGrace
     [CreateAssetMenu(menuName = "GameData/Skills/Blessing", fileName = "Blessing")]
     public class BlessingBP : SkillBp
     {
+        [SerializeField]private God god;
         public override Skill Create()
         {
             var instantiatedPassiveMixins = new List<PassiveSkillMixin>();
@@ -22,7 +23,7 @@ namespace LostGrace
                 {
                     instantiatedActiveMixins.Add(Instantiate(active));
                 }
-            return new Blessing(Name, Description, Icon, Tier, maxLevel, instantiatedPassiveMixins, combatSkillMixin==null?null:Instantiate(combatSkillMixin),instantiatedActiveMixins, SkillTransferData);
+            return new Blessing(Name, Description, Icon, Tier, maxLevel, instantiatedPassiveMixins, combatSkillMixin==null?null:Instantiate(combatSkillMixin),instantiatedActiveMixins, SkillTransferData, god);
         }
 
     }

@@ -173,7 +173,7 @@ public class UIChurchController : MonoBehaviour
 
     public void ReceiveBlessingClicked()
     {
-        
+        party.ActiveUnit.ReceiveBlessing(gods[selectedGod].GetBlessing());
     }
     
 

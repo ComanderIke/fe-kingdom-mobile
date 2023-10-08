@@ -9,5 +9,12 @@ namespace LostGrace
         public Sprite Face;
         public Sprite Body;
         public Color Color;
+        public BlessingBP BlessingBp;
+        public Material GlowMaterial;
+
+        public Blessing GetBlessing()
+        {
+            return (Blessing)BlessingBp.Create();
+        }
     }
 }

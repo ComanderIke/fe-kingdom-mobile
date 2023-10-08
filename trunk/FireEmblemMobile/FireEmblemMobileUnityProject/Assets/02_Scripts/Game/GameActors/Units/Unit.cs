@@ -97,7 +97,7 @@ namespace Game.GameActors.Units
             set => stats = value;
         }
 
-        public Blessing Blessing => null;//SkillManager.Skills==null?null:SkillManager.Skills.OfType<Blessing>()?.First();
+        public Blessing Blessing => SkillManager.GetBlessing();//SkillManager.Skills==null?null:SkillManager.Skills.OfType<Blessing>()?.First();
         public List<Curse> Curses => SkillManager.GetCurses();
 
        

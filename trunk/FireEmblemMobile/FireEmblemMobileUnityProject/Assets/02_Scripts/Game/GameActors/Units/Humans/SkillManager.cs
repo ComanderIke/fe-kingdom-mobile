@@ -14,9 +14,12 @@ namespace Game.GameActors.Units.Humans
     {
         public Action<int> SkillPointsUpdated;
         [SerializeField] private List<SkillBp> startSkills;
+        [SerializeField] private BlessingBP startBlessing;
         private List<Skill> skills;
         private Unit unit;
+        private Blessing blessing;
         public int maxSkillCount = 5;
+        
 
         public void AddStartSkills()
         {
@@ -28,6 +31,11 @@ namespace Game.GameActors.Units.Humans
                     Debug.Log("Create Start Skill");
                 }
             }
+            Debug.Log("Add Start Skills/Blessings");
+            if (startBlessing != null)
+                blessing = (Blessing)startBlessing.Create();
+            Debug.Log("Blessing: "+blessing);
+
         }
         public List<Skill> Skills
         {
@@ -73,7 +81,10 @@ namespace Game.GameActors.Units.Humans
             {
                 Skills.Add(skill);
             }
-           
+
+            startBlessing = sm.startBlessing;
+            blessing = sm.blessing;
+
         }
 
 
@@ -90,12 +101,21 @@ namespace Game.GameActors.Units.Humans
                 clone.Skills.Add(skill);
             }
 
+            clone.blessing = blessing;
             return clone;
         }
         public void LearnSkill(Skill skill)
         {
-            skill.BindSkill(unit);
-            Skills.Add(skill);
+            if (skill is Blessing blessing)
+            {
+                this.blessing = blessing;
+            }
+            else
+            {
+                skill.BindSkill(unit);
+                Skills.Add(skill);
+            }
+
             OnSkillsChanged?.Invoke();
         }
 
@@ -130,18 +150,8 @@ namespace Game.GameActors.Units.Humans
 
         public Blessing GetBlessing()
         {
-            if (Skills != null&& Skills.Count!=0)
-            {
-                int cnt = Skills.Count(s => s is Blessing);
-                if (cnt >= 1)
-                {
-                    var first = Skills.First(s => s is Blessing);
-                    if (first != null)
-                        return (Blessing)first;
-                }
-            }
-
-            return null;
+          //  Debug.Log("Return Blessing: "+blessing);
+            return blessing;
         }
 
         public void UpgradeSkill(bool randomly)

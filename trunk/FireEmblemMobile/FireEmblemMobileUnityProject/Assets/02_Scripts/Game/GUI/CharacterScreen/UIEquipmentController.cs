@@ -26,7 +26,9 @@ public class UIEquipmentController:MonoBehaviour
     [NonSerialized] private IEquipableCombatItem combatItem1;
   //  [NonSerialized] private IEquipableCombatItem combatItem2;
     public SmithingSlot selectedSlot = null;
+    [SerializeField] private Material blessedMaterial;
 
+    [SerializeField]Image equipmentLineImage;
     public UICombatItemSlot selectedSlotCombatItemSlot = null;
 
     public void RelicSlotUpperClicked()
@@ -102,7 +104,7 @@ public class UIEquipmentController:MonoBehaviour
         {
             weapon = null;
         }
- 
+        equipmentLineImage.material = unit.Blessing==null?null:blessedMaterial;
         RelicSlotUpper.Show(unit.EquippedRelic);
         relic = unit.EquippedRelic;
         combatItemSlot1.Show(unit.CombatItem1);

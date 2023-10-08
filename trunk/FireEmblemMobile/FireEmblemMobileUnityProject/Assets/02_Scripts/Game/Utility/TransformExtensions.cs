@@ -17,7 +17,7 @@ namespace __2___Scripts.Game.Utility
             {
                 if (children[i] != transform)
                 {
-                    Debug.Log("Destroy: "+children[i].gameObject.name);
+                    // Debug.Log("Destroy: "+children[i].gameObject.name);
                     GameObject.Destroy(children[i].gameObject);
                 }
             }

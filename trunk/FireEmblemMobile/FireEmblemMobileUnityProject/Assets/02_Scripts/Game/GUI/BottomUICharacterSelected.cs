@@ -137,7 +137,7 @@ namespace LostGrace
                     prefab = combatSkillprefab;
                 var go =Instantiate(prefab, skillContainer);
                 var skillUI =  go.GetComponent<SkillUI>();
-                skillUI.SetSkill(skill, true);
+                skillUI.SetSkill(skill, true, unit.Blessing!=null);
                 skillUI.OnClicked += SkillClicked;
                 instantiatedSkills.Add(skillUI);
 

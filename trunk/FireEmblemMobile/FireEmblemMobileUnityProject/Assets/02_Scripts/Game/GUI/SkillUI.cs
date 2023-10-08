@@ -12,6 +12,7 @@ namespace LostGrace
 {
     public class SkillUI : MonoBehaviour
     {
+        [SerializeField] private Image blessingEffect;
         [SerializeField] private Image icon;
         public Skill Skill;
         [SerializeField] private TextMeshProUGUI hpCost;
@@ -33,12 +34,13 @@ namespace LostGrace
         [SerializeField] private GameObject selectableVfx;
         [SerializeField] private Image combatSkillActive;
         private bool showTooltips = false;
-        public void SetSkill(Skill skill, bool big, bool showTooltips = false)
+        public void SetSkill(Skill skill, bool big, bool blessed, bool showTooltips = false)
         {
             deleteButton.SetActive(false);
             this.showTooltips = showTooltips;
             icon.sprite = skill.Icon;
             this.Skill = skill;
+            blessingEffect.gameObject.SetActive(blessed);
             if(combatSkillActive!=null)
                 combatSkillActive.gameObject.SetActive(false);
             if (skill.IsActive())
