@@ -17,6 +17,7 @@ namespace LostGrace
         [SerializeField] private GameObject blessed;
         [SerializeField] private TextMeshProUGUI lv;
         [SerializeField] private ExpBarController expBarController;
+        [SerializeField] private Image godColorImage;
         public event Action<int> onClicked;
 
         [SerializeField]
@@ -35,6 +36,7 @@ namespace LostGrace
             this.index = index;
             face.sprite = god.Face;
             lv.SetText("Lv. "+unit.Bonds.GetBondLevel(god));
+            godColorImage.color = god.Color;
             if(selected)
                 expBarController.UpdatePreview(unit.Bonds.GetBondExperience(god)+addedExp);
             else

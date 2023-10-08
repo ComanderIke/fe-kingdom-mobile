@@ -8,5 +8,6 @@ namespace LostGrace
         public string Name;
         public Sprite Face;
         public Sprite Body;
+        public Color Color;
     }
 }
