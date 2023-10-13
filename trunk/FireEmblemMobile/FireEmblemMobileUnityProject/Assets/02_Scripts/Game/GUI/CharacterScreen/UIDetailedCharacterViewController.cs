@@ -39,16 +39,19 @@ public class UIDetailedCharacterViewController : UICharacterViewController
     public override void Show(Unit unit)
     {
         base.Show(unit);
-     
-        boonBaneController.OnBoonSelected -= BoonSelected;
-        boonBaneController.OnBaneSelected -= BaneSelected;
-        boonBaneController.OnBoonSelected += BoonSelected;
-        boonBaneController.OnBaneSelected += BaneSelected;
+        if (boonBaneController != null)
+        {
+            boonBaneController.OnBoonSelected -= BoonSelected;
+            boonBaneController.OnBaneSelected -= BaneSelected;
+            boonBaneController.OnBoonSelected += BoonSelected;
+            boonBaneController.OnBaneSelected += BaneSelected;
+        }
     }
 
     public void ShowBoonBaneSelection()
     {
-        boonBaneController.Show();
+        if(boonBaneController!=null)
+            boonBaneController.Show();
     }
     void BoonSelected(AttributeType boon)
     {
@@ -81,7 +84,7 @@ public class UIDetailedCharacterViewController : UICharacterViewController
     {
         if(uiAnimationSpriteSwapper!=null)
             uiAnimationSpriteSwapper.Init(unit.visuals.CharacterSpriteSet);
-        if (unit != base.unit)
+        if (unit != base.unit&&boonBaneController!=null)
         {
             boonBaneController.SoftResetBoonBane();
         }
@@ -112,7 +115,8 @@ public class UIDetailedCharacterViewController : UICharacterViewController
         LCK_Label.color=normalColor;
         DEF_Label.color=normalColor;
         FTH_Label.color=normalColor;
-        boonBaneController.UpdateUI();
+        if(boonBaneController!=null)
+            boonBaneController.UpdateUI();
        
         switch (unit.Stats.Bane)
         {

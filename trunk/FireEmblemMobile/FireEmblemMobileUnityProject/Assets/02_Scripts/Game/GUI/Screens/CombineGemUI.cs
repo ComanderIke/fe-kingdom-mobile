@@ -40,8 +40,8 @@ private List<SelectableItemController> instantiatedItems;
         combineButton.interactable = false;
      
         gemParent.DeleteAllChildren();
-       Debug.Log("GemCount: "+Player.Instance.Party.Convoy.GetAllGems().Count());
-        foreach (var gem in Player.Instance.Party.Convoy.GetAllGems())
+       Debug.Log("GemCount: "+Player.Instance.Party.Storage.GetAllGems().Count());
+        foreach (var gem in Player.Instance.Party.Storage.GetAllGems())
         {
             var gemGO=Instantiate(gemPrefab, gemParent);
             var selectableItemUI =gemGO.GetComponent<SelectableItemController>();
@@ -62,7 +62,7 @@ private List<SelectableItemController> instantiatedItems;
             Icon.sprite = selected.item.Sprite;
             nameText.text = selected.item.Name;
             description.text = selected.item.Description;
-            int count = Player.Instance.Party.Convoy.GetGemCount((Gem)selected.item);
+            int count = Player.Instance.Party.Storage.GetGemCount((Gem)selected.item);
             smallIcon.sprite = selected.item.Sprite;
             if (gem.HasUpgrade())
             {

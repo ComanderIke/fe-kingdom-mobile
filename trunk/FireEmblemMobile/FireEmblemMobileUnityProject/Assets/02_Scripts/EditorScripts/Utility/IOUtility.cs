@@ -8,6 +8,7 @@ using _02_Scripts.EditorScripts.DialogueSystem.Elements;
 using _02_Scripts.Game.GUI.Utility;
 using Game.GameActors.Items;
 using Game.GameActors.Units;
+using LostGrace;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -566,8 +567,9 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                     Text = nodeChoice.Text,
                     ItemRequirements = new List<ItemBP>(nodeChoice.ItemRequirements),
                     ResourceRequirements = new List<ResourceEntry>(nodeChoice.ResourceRequirements),
-                    CharacterRequirement = nodeChoice.CharacterRequirement,
-                    AttributeRequirements = new List<ResponseStatRequirement>(nodeChoice.AttributeRequirements)
+                    CharacterRequirements = new List<UnitBP>(nodeChoice.CharacterRequirements),
+                    AttributeRequirements = new List<ResponseStatRequirement>(nodeChoice.AttributeRequirements),
+                    BlessingRequirements = new List<BlessingBP>(nodeChoice.BlessingRequirements)
                   
                 };
                 dialogChoices.Add(choiceData);
@@ -599,7 +601,7 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                     NodeFailID = choice.NodeFailID,
                     ItemRequirements = new List<ItemBP>(choice.ItemRequirements),
                     ResourceRequirements = new List<ResourceEntry>(choice.ResourceRequirements),
-                    CharacterRequirement= choice.CharacterRequirement,
+                    CharacterRequirements= new List<UnitBP>(choice.CharacterRequirements),
                     AttributeRequirements = new List<ResponseStatRequirement>(choice.AttributeRequirements)
                     
                 };

@@ -28,7 +28,7 @@ namespace Game.WorldMapStuff.Model
             int index = 0;
             foreach (var itemId in itemIds)
             {
-                retConvoy.AddStockedItem(new StockedItem(GameBPData.Instance.GetItemByName(itemId),stock[index]));
+                retConvoy.AddItem(new StockedItem(GameBPData.Instance.GetItemByName(itemId),stock[index]));
                 index++;
             }
 

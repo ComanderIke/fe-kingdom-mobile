@@ -68,10 +68,12 @@ namespace LostGrace
         public void Show()
         {
             gameObject.SetActive(true);
+            StopAllCoroutines();
             StartCoroutine(ShowGoddessAnimation());
         }
         public void Hide()
         {
+            StopAllCoroutines();
             StartCoroutine(HideGoddessAnimation());
            
         }

@@ -18,6 +18,7 @@ namespace LostGrace
         [SerializeField] private TextMeshProUGUI lv;
         [SerializeField] private ExpBarController expBarController;
         [SerializeField] private Image godColorImage;
+        [SerializeField] private Image blessedChar;
         public event Action<int> onClicked;
 
         [SerializeField]
@@ -28,10 +29,12 @@ namespace LostGrace
         private int index = 0;
         private Unit unit;
         private God god;
-        public void Show(Unit unit, God god, int index, int addedExp, bool selected)
+        public void Show(Unit unit, God god, int index, int addedExp, bool selected, Unit blessedUnit)
         {
             name.SetText(god.name);
             this.unit = unit;
+            if(blessedUnit!=null)
+                blessedChar.sprite = blessedUnit.FaceSprite;
             this.god = god;
             this.index = index;
             face.sprite = god.Face;
@@ -44,7 +47,7 @@ namespace LostGrace
                 expBarController.UpdatePreview(0);
             }
             expBarController.UpdateInstant(unit.Bonds.GetBondExperience(god));
-            blessed.gameObject.SetActive(unit.Blessing!=null && unit.Blessing.God==god);
+            blessed.gameObject.SetActive(blessedUnit!=null);
             transform.localScale = normalScale;
         }
 

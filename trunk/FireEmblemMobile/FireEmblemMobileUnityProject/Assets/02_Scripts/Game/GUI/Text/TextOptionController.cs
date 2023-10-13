@@ -114,11 +114,12 @@ public class TextOptionController : MonoBehaviour
             //rollImage.gameObject.SetActive(true);
             
         }
-        if (option.CharacterRequirement != null)
+        if (option.CharacterRequirements != null&& option.CharacterRequirements.Count>0)
         {
-            charText.gameObject.SetActive(true);
-            charText.text = option.CharacterRequirement.Name== Player.Instance.Party.ActiveUnit.Name?option.CharacterRequirement.Name:"switch to "+option.CharacterRequirement.Name;
-            charImage.sprite = option.CharacterRequirement.visuals.CharacterSpriteSet.FaceSprite;
+            this.text.color = Color.blue;
+            // charText.gameObject.SetActive(true);
+            // charText.text = option.CharacterRequirement.Name== Player.Instance.Party.ActiveUnit.Name?option.CharacterRequirement.Name:"switch to "+option.CharacterRequirement.Name;
+            //charImage.sprite = option.CharacterRequirement.visuals.CharacterSpriteSet.FaceSprite;
         }
         // if (option.BlessingRequirement != null)
         // {

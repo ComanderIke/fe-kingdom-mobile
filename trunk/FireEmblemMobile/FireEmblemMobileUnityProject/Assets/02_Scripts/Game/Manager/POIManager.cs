@@ -54,10 +54,10 @@ namespace LostGrace
             //LoadButton.SetActive(GetLoadFiles()!=0);
             base.Show();
             StartCoroutine(ShowCoroutine());
-            poiPortal.SetInteractable(false);
-            poiUpgrades.SetInteractable(false);
+          //  poiPortal.SetInteractable(false);
+          //  poiUpgrades.SetInteractable(false);
             backButton.interactable = false;
-            poiTutorial.SetInteractable(false);
+           // poiTutorial.SetInteractable(false);
             sanctuary.gameObject.SetActive(true);
             backGround.gameObject.SetActive(false);
 
@@ -76,8 +76,8 @@ namespace LostGrace
             else
             {
                 //tutorialButton.interactable = true;
-                poiPortal.SetInteractable(true);
-                poiUpgrades.SetInteractable(true);
+                //poiPortal.SetInteractable(true);
+               // poiUpgrades.SetInteractable(true);
                 backButton.interactable = true;
             }
         }
@@ -95,9 +95,9 @@ namespace LostGrace
         {
             dialogueManager.dialogEnd -= IntroFinished;
             goddessUI.Hide();
-            poiTutorial.SetInteractable(true);
-            poiPortal.SetInteractable(true);
-            poiUpgrades.SetInteractable(true);
+            // poiTutorial.SetInteractable(true);
+            // poiPortal.SetInteractable(true);
+            // poiUpgrades.SetInteractable(true);
             backButton.interactable = false;
         }
         IEnumerator HideCoroutine(UIMenu nextMenu)

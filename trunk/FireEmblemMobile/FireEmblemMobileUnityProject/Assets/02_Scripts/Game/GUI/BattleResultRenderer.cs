@@ -133,10 +133,12 @@ namespace LostGrace
 
         IEnumerator ItemCoroutine()
         {
+            int index = 0;
             foreach (var stockedItem in itemBonusesList)
             {
                 var go = Instantiate(itemRewardGO, itemRewardParent);
-                go.GetComponent<UIConvoyItemController>().SetValues(stockedItem);
+                go.GetComponent<UIConvoyItemController>().SetValues(stockedItem,index);
+                index++;
                 yield return new WaitForSeconds(0.5f);
             }
         }

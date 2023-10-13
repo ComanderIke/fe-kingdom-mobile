@@ -130,8 +130,7 @@ public class UIEventController : MonoBehaviour
                 {
                     float combinedChance = 1;
                     Unit compareUnit = party.ActiveUnit;
-                    if(textOption.CharacterRequirement!=null&&party.MembersContainsByBluePrintID(textOption.CharacterRequirement.bluePrintID))
-                     compareUnit = party.GetMembersContainsBluePrintID(textOption.CharacterRequirement.bluePrintID);
+                  
                     foreach (var req in textOption.AttributeRequirements)
                     {
                         float chance = GetSuccessChance(req, compareUnit);
@@ -165,18 +164,21 @@ public class UIEventController : MonoBehaviour
             GameObject prefab = textOptionPrefab;
             if (textOption.NextDialogue is LGFightEventDialogSO)
                 prefab = fightOptionPrefab;
-    
-            var go = Instantiate(prefab, layout);
-           
 
-            var textOptionController = go.GetComponent<TextOptionController>();
+            if (textOptionType != TextOptionState.Locked)
+            {
+                var go = Instantiate(prefab, layout);
+
+
+                var textOptionController = go.GetComponent<TextOptionController>();
+
+                textOptionController.Setup(textOption, textOption.Text, statText, textOptionType, this);
+                if (textOptionType != TextOptionState.Locked)
+                    textOptionController.SetIndex(index);
+                index++;
+            }
+
             
-            textOptionController.Setup(textOption, textOption.Text,statText,textOptionType, this);
-            if(textOptionType != TextOptionState.Locked)
-                textOptionController.SetIndex(index);
-            
-            
-            index++;
         }
     }
 
@@ -259,7 +261,7 @@ public class UIEventController : MonoBehaviour
 
     bool HasRequirement(LGDialogChoiceData choiceData)
     {
-        return choiceData.CharacterRequirement != null|| (choiceData.ItemRequirements!=null&&choiceData.ItemRequirements.Count>0)|| (choiceData.ResourceRequirements!=null&&choiceData.ResourceRequirements.Count>0)||(choiceData.AttributeRequirements!=null&&choiceData.AttributeRequirements.Count>0);
+        return (choiceData.CharacterRequirements!=null&&choiceData.CharacterRequirements.Count>0)|| (choiceData.BlessingRequirements!=null&&choiceData.BlessingRequirements.Count>0)|| (choiceData.ItemRequirements!=null&&choiceData.ItemRequirements.Count>0)|| (choiceData.ResourceRequirements!=null&&choiceData.ResourceRequirements.Count>0)||(choiceData.AttributeRequirements!=null&&choiceData.AttributeRequirements.Count>0);
     }
 
     bool RequirementsMet(LGDialogChoiceData choiceData)
@@ -296,12 +298,28 @@ public class UIEventController : MonoBehaviour
             }
             
         }
-
-        Unit compareUnit = party.ActiveUnit;
-        if (choiceData.CharacterRequirement != null)
+        
+        if (choiceData.CharacterRequirements != null&& choiceData.CharacterRequirements.Count>0)
         {
-            if (party.GetMembersContainsBluePrintID(choiceData.CharacterRequirement.bluePrintID) == null)
-                return false;
+            foreach (var charReq in choiceData.CharacterRequirements)
+            {
+                if (party.ActiveUnit.bluePrintID==charReq.bluePrintID)
+                    return true;
+            }
+
+            return false;
+
+        }
+        if (choiceData.BlessingRequirements != null&& choiceData.BlessingRequirements.Count>0)
+        {
+            foreach (var blessing in choiceData.BlessingRequirements)
+            {
+                if (party.ActiveUnit.Blessing!=null&&party.ActiveUnit.Blessing.Name==blessing.Name)
+                    return true;
+            }
+
+            return false;
+
         }
         return true;
 
@@ -325,10 +343,10 @@ public class UIEventController : MonoBehaviour
 
     void PayRequirements()
     {
-        if (current.CharacterRequirement != null)
-        {
-            Player.Instance.Party.SetActiveUnit( Player.Instance.Party.GetUnitByName(current.CharacterRequirement.Name));
-        }
+        // if (current.CharacterRequirement != null)
+        // {
+        //     Player.Instance.Party.SetActiveUnit( Player.Instance.Party.GetUnitByName(current.CharacterRequirement.Name));
+        // }
         foreach (var req in current.ResourceRequirements)
         {
             switch (req.ResourceType)

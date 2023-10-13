@@ -9,6 +9,7 @@ using _02_Scripts.Game.Dialog.DialogSystem;
 using Game.GameActors.Items;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Numbers;
+using LostGrace;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -58,12 +59,18 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
 
         void RemoveCharacterRequirement(UnitBP removeChar,LGChoiceSaveData choiceData)
         {
-            choiceData.CharacterRequirement=null;
+            if( choiceData.CharacterRequirements.Contains(removeChar))
+                choiceData.CharacterRequirements.Remove(removeChar);
         }
         void RemoveItemRequirement(ItemBP removeItem,LGChoiceSaveData choiceData)
         {
             if( choiceData.ItemRequirements.Contains(removeItem))
                 choiceData.ItemRequirements.Remove(removeItem);
+        }
+        void RemoveBlessingRequirement(BlessingBP removeBlessing,LGChoiceSaveData choiceData)
+        {
+            if( choiceData.BlessingRequirements.Contains(removeBlessing))
+                choiceData.BlessingRequirements.Remove(removeBlessing);
         }
        
         void AddResponse(LGChoiceSaveData choiceData)
@@ -78,38 +85,53 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
                 responseContainer.Insert(2,charItemField);
                 UnitBP newUnit = ScriptableObject.CreateInstance<UnitBP>();
                 ItemBP newItem = ScriptableObject.CreateInstance<ItemBP>();
-                choiceData.CharacterRequirement=newUnit;
+                BlessingBP newBlessing = ScriptableObject.CreateInstance<BlessingBP>();
                 charItemField.RegisterValueChangedCallback(callback =>
                 {
                     RemoveCharacterRequirement(newUnit,choiceData);
                     RemoveItemRequirement(newItem,choiceData);
+                    RemoveBlessingRequirement(newBlessing,choiceData);
                     if (charItemField.objectType == typeof(UnitBP))
                     {
                         newUnit = (UnitBP)callback.newValue;
-                        choiceData.CharacterRequirement=newUnit;
+                        choiceData.CharacterRequirements.Add(newUnit);
                     }
                     else if (charItemField.objectType == typeof(ItemBP))
                     {
                         newItem = (ItemBP)callback.newValue;
                         choiceData.ItemRequirements.Add(newItem);
                     }
+                    else if (charItemField.objectType == typeof(BlessingBP))
+                    {
+                        newBlessing = (BlessingBP)callback.newValue;
+                        choiceData.BlessingRequirements.Add(newBlessing);
+                    }
                    
                 });
-                var charItemPopup = ElementUtility.CreatePopup(new List<string> {"Character", "Item"}, "Character", callback =>
+                var charItemPopup = ElementUtility.CreatePopup(new List<string> {"Character", "Item", "Blessing"}, "Character", callback =>
                 {
                     switch (callback.newValue)
                     {
                         case "Character": charItemField.objectType = typeof(UnitBP);
                             RemoveCharacterRequirement(newUnit, choiceData);
                             RemoveItemRequirement(newItem, choiceData);
+                            RemoveBlessingRequirement(newBlessing, choiceData);
                         
-                            choiceData.CharacterRequirement=newUnit;
+                            choiceData.CharacterRequirements.Add(newUnit);
                             charItemField.value = null; break;
                         case "Item": charItemField.objectType = typeof(ItemBP);
                             RemoveCharacterRequirement(newUnit, choiceData);
                             RemoveItemRequirement(newItem, choiceData);
+                            RemoveBlessingRequirement(newBlessing, choiceData);
                     
                             choiceData.ItemRequirements.Add(newItem);
+                            charItemField.value = null; break;
+                        case "Blessing": charItemField.objectType = typeof(BlessingBP);
+                            RemoveCharacterRequirement(newUnit, choiceData);
+                            RemoveItemRequirement(newItem, choiceData);
+                            RemoveBlessingRequirement(newBlessing, choiceData);
+                    
+                            choiceData.BlessingRequirements.Add(newBlessing);
                             charItemField.value = null; break;
                     }
                 });
@@ -160,13 +182,19 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
                 responseContainer.Insert(3,atrPopup);
             });
             responseContainer.Add(addResRequirement);
-            if (choiceData.CharacterRequirement!=null)
+            foreach (var charReq in choiceData.CharacterRequirements)
             {
                 ObjectField charItemField = new ObjectField();
                 charItemField.objectType = typeof(UnitBP);
-                charItemField.value = choiceData.CharacterRequirement;
+                charItemField.value =charReq;
                 responseContainer.Insert(2,charItemField);
-
+            }
+            foreach (var blessingReq in choiceData.BlessingRequirements)
+            {
+                ObjectField charItemField = new ObjectField();
+                charItemField.objectType = typeof(BlessingBP);
+                charItemField.value =blessingReq;
+                responseContainer.Insert(2,charItemField);
             }
             foreach (var itemReq in choiceData.ItemRequirements)
             {
@@ -175,6 +203,7 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
                 charItemField.value =itemReq;
                 responseContainer.Insert(2,charItemField);
             }
+           
 
             foreach (var atrReq in choiceData.AttributeRequirements)
             {
@@ -212,7 +241,8 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
             responseContainer.Add(choicePort);
             if ((choiceData.AttributeRequirements != null && choiceData.AttributeRequirements.Count > 0) 
                 ||(choiceData.ResourceRequirements != null && choiceData.ResourceRequirements.Count > 0)||
-                (choiceData.CharacterRequirement != null) ||
+                (choiceData.BlessingRequirements != null && choiceData.BlessingRequirements.Count > 0)||
+                ( choiceData.CharacterRequirements != null && choiceData.CharacterRequirements.Count > 0) ||
                 choiceData.ItemRequirements != null && choiceData.ItemRequirements.Count > 0)
             {
                 Port failChoicePort = CreateUnDeletableChoicePort(choiceData, "Fail");

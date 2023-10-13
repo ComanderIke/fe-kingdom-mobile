@@ -80,7 +80,7 @@ public class UISmithyController : MonoBehaviour
         accuracy.interactable = upgradeMode != WeaponUpgradeMode.Accuracy;
         criticalSmithingButton.interactable = upgradeMode != WeaponUpgradeMode.Critical;
         
-        combineGemsButtonAlpha.interactable = Player.Instance.Party.Convoy.HasGems();
+        combineGemsButtonAlpha.interactable = Player.Instance.Party.Storage.HasGems();
         insertGemsButtonAlpha.interactable = selectedRelic != null;
         
         if (state == SmithyUIState.Smithing)
@@ -124,7 +124,7 @@ public class UISmithyController : MonoBehaviour
             insertGemUI.Hide();
             smithingArea.Hide();
             
-            if (Player.Instance.Party.Convoy.HasGems())
+            if (Player.Instance.Party.Storage.HasGems())
             {
                 combineGemUI.Show();
             }
@@ -158,8 +158,8 @@ public class UISmithyController : MonoBehaviour
     public void UpgradeClicked()
     {
         party.Money -=smithy.GetGoldUpgradeCost(party.ActiveUnit.equippedWeapon);
-        party.Convoy.RemoveSmithingStones(smithy.GetStoneUpgradeCost(party.ActiveUnit.equippedWeapon));
-        party.Convoy.RemoveDragonScales(smithy.GetDragonScaleUpgradeCost(party.ActiveUnit.equippedWeapon));
+        party.Storage.RemoveSmithingStones(smithy.GetStoneUpgradeCost(party.ActiveUnit.equippedWeapon));
+        party.Storage.RemoveDragonScales(smithy.GetDragonScaleUpgradeCost(party.ActiveUnit.equippedWeapon));
         party.ActiveUnit.equippedWeapon.Upgrade(upgradeMode);
        
         UpdateUI();

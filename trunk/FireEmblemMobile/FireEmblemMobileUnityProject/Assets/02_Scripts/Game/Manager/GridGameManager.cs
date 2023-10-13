@@ -154,8 +154,15 @@ namespace Game.Manager
             GameStateManager.PlayerPhaseState.mainState.playerPhaseUI = FindObjectsOfType<MonoBehaviour>().OfType<IPlayerPhaseUI>().First();
             GameStateManager.PlayerPhaseState.chooseTargetState.UI = FindObjectsOfType<MonoBehaviour>().OfType<IChooseTargetUI>().First();
             GetSystem<UnitProgressSystem>().levelUpRenderer = FindObjectsOfType<MonoBehaviour>().OfType<ILevelUpRenderer>().First();
+            
             GetSystem<UnitProgressSystem>().expRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IExpRenderer>().First();
-            GetSystem<UnitProgressSystem>().ExpBarController = FindObjectsOfType<MonoBehaviour>().OfType<ExpBarController>().First();
+            var expBars = FindObjectsOfType<MonoBehaviour>().OfType<ExpBarController>();
+            foreach (var expBar in expBars)
+            {
+                if (expBar.CompareTag("MainExpBar"))
+                    GetSystem<UnitProgressSystem>().ExpBarController = expBar;
+            }
+           // GetSystem<UnitProgressSystem>().ExpBarController = FindObjectsOfType<MonoBehaviour>().OfType<ExpBarController>().First();
             Debug.Log("ExpBarController: "+GetSystem<UnitProgressSystem>().ExpBarController.gameObject.name);
         }
 

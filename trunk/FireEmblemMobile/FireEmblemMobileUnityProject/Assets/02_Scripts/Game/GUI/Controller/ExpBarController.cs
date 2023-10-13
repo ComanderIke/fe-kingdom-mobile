@@ -11,6 +11,7 @@ namespace Game.GUI
 {
     public class ExpBarController : MonoBehaviour
     {
+        
         [SerializeField] Image fill;
         [SerializeField] Image tmpFill;
         [SerializeField] int currentExp;
@@ -101,7 +102,7 @@ namespace Game.GUI
         }
         public void UpdateWithAnimatedTextOnly(int expgained)
         {
-            //Debug.Log("CurrentExp: "+currentExp+" Gained: "+addedExp);
+            Debug.Log("Show With Animatedtext: CurrentExp: "+currentExp+" Gained: "+addedExp);
             
             this.addedExp += expgained;
             this.tmpAddedExp += expgained;
@@ -111,11 +112,12 @@ namespace Game.GUI
 
         public void UpdatePreview(int expVal)
         {
+            Debug.Log("Update Preview");
             preview.fillAmount = expVal / 100f;
         }
         public void UpdateInstant(int expVal)
         {
-          //  Debug.Log("UpdateInstant: "+expVal);
+            Debug.Log("UpdateInstant: "+expVal);
             if (animate)
             {
                 return;
@@ -145,6 +147,7 @@ namespace Game.GUI
 
         public void Show(Sprite sprite, int currentExp)
         {
+            Debug.Log("Show Normal");
             if(hideFeedbacks!=null)
                 hideFeedbacks.StopFeedbacks();
             if(showFeedbacks!=null)
@@ -154,12 +157,17 @@ namespace Game.GUI
             UpdateInstant(currentExp);
             //TweenUtility.FadeIn(canvasGroup);
         }
+
+        
         public void Hide()
         {
             if(showFeedbacks!=null)
                 showFeedbacks.StopFeedbacks();
-            if(hideFeedbacks!=null)
+            if (hideFeedbacks != null)
+            {
                 hideFeedbacks.PlayFeedbacks();
+            }
+
             //TweenUtility.FadeOut(canvasGroup);
         }
 

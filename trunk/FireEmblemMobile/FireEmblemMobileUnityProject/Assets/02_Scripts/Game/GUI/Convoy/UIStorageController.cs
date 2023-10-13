@@ -38,7 +38,13 @@ public class UIStorageController : MonoBehaviour
             Show();
         }
     }
-    
+    void DeselectAllItems()
+    {
+        foreach (var dropArea in DropAreas)
+        {
+            dropArea.Deselect();
+        }
+    }
     public void Show()
     {
         
@@ -54,7 +60,11 @@ public class UIStorageController : MonoBehaviour
     {
         var go = Instantiate(convoyItemPrefab, DropAreas[index].transform);
         var itemController = go.GetComponent<UIConvoyItemController>();
-        itemController.SetValues(stockedItem, false);
+        bool isNewItem = newItems.Contains(stockedItem);
+        Debug.Log("Create Item: "+stockedItem.item+" isNew: "+isNewItem);
+        itemController.SetValues(stockedItem, index, isNewItem,false);
+        if(isNewItem)
+            newItems.Remove(stockedItem);
         itemController.onClicked += ItemClicked;
  
         instantiatedItems.Add(go);
@@ -67,7 +77,9 @@ public class UIStorageController : MonoBehaviour
         {
             init = true;
             Player.Instance.Party.Storage.convoyUpdated += UpdateStorage;
+            Player.Instance.Party.Storage.itemAdded += AddedItem;
             instantiatedItems = new List<GameObject>();
+            newItems = new List<StockedItem>();
         }
 
         if (instantiatedItems.Count != 0)
@@ -97,25 +109,40 @@ public class UIStorageController : MonoBehaviour
             var itemController = CreateItemGameObject(sortedList[i], i);
             if (storage.SelectedItem == sortedList[i])
             {
+                DropAreas[i].Select();
                 itemController.Select();
             }
             else
             {
+                DropAreas[i].Deselect();
                 itemController.Deselect();
             }
         }
  
+    }
+
+    private List<StockedItem> newItems;
+    void AddedItem(StockedItem item)
+    {
+        Debug.Log("Added item: "+item.item);
+        newItems.Add(item);
+        UpdateValues();
     }
     private void UpdateStorage()
     {
         Debug.Log("Update Convoy!");
         UpdateValues();
     }
+
+    private int currentSelected = 0;
  
     private void ItemClicked(UIConvoyItemController clickedItem)
     {
         Debug.Log("Item Clicked: "+clickedItem);
         storage.Select(clickedItem.stockedItem);
+        // DropAreas[currentSelected].Deselect();
+        // currentSelected = clickedItem.index;
+        // DropAreas[currentSelected].Select();
         ToolTipSystem.Show(clickedItem.stockedItem.item, clickedItem.transform.position);
         UpdateValues();
         
@@ -124,14 +151,18 @@ public class UIStorageController : MonoBehaviour
     public void Hide()
     {
         Debug.Log("Hide Convoy");
+        DeselectAllItems();
         if(storage!=null)
             storage.Deselect();
         canvas.enabled = false;
         OnHide?.Invoke();
     }
+
+   
     private void OnDestroy()
     {
         Player.Instance.Party.Storage.convoyUpdated -= UpdateStorage;
+        Player.Instance.Party.Storage.itemAdded -= AddedItem;
     }
 
     public event Action OnHide;

@@ -21,6 +21,7 @@ namespace LostGrace
         }
 
         public God God { get; set; }
+        
 
         public override Skill Clone()
         {

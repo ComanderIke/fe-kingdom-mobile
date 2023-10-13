@@ -23,17 +23,17 @@ namespace LostGrace
         [SerializeField] private CanvasGroup charViewCanvasGroup;
         [SerializeField] private CanvasGroup charButtonsCanvasGroup;
         [SerializeField] private CanvasGroup partySizeCanvasGroup;
-        [SerializeField] private CanvasGroup titleCanvasGroup;
+     
 
         [SerializeField] private Button newGameButton;
        // [SerializeField] private CanvasGroup newGameButtonCanvasGroup;
-        [SerializeField] private CanvasGroup backButtonCanvasGroup;
+       
         [SerializeField] private CanvasGroup Fade;
         [SerializeField] private GoddessUI goddessUI;
         [SerializeField] private CharacterSelector characterSelector;
         [SerializeField] private UIPartyCharacterCircleController characterCircles;
         [SerializeField] private UIDetailedCharacterViewController characterViewController;
-        [SerializeField] private Image disableBackground;
+       
         
         public override void Show()
         {
@@ -66,20 +66,20 @@ namespace LostGrace
             base.Show();
             //sortingCanvas.enabled = true;
            // newGameButtonCanvasGroup.alpha = 0;
-            titleCanvasGroup.alpha = 0;
-            backButtonCanvasGroup.alpha = 0;
+          
+   
             charCirclesCanvasGroup.alpha = 0;
             charViewCanvasGroup.alpha = 0;
             charButtonsCanvasGroup.alpha = 0;
             speechBubbleCanvasGroup.alpha = 0;
             partySizeCanvasGroup.alpha = 0;
             //charViewCanvas.enabled = true;
-            yield return new WaitForSeconds(.5f);
+          //  yield return new WaitForSeconds(.5f);
 
             // LeanTween.alphaCanvas(newGameButtonCanvasGroup, UIUtility.INACTIVE_CANVAS_GROUP_ALPHA,
             //     TweenUtility.fadeInDuration).setEase(TweenUtility.easeFadeIn);
-            TweenUtility.FadeIn(titleCanvasGroup);
-            TweenUtility.FadeIn(backButtonCanvasGroup);
+         
+       
             TweenUtility.FadeIn(charCirclesCanvasGroup);
             TweenUtility.FadeIn(charViewCanvasGroup);
             TweenUtility.FadeIn(charButtonsCanvasGroup);
@@ -87,7 +87,7 @@ namespace LostGrace
             characterSelector.Show(GameConfig.Instance.GetUnits());
             
             characterCircles.Show(Player.Instance.Party);
-            yield return new WaitForSeconds(.6f);
+            yield return new WaitForSeconds(.2f);
             goddessUI.Show();
             yield return new WaitForSeconds(4.5f);
             TweenUtility.FadeIn(speechBubbleCanvasGroup);
@@ -110,26 +110,26 @@ namespace LostGrace
         }
         IEnumerator HideCoroutine()
         {
-            TweenUtility.FadeOut(backButtonCanvasGroup);
             // TweenUtility.FadeOut(newGameButtonCanvasGroup);
             TweenUtility.FadeOut(speechBubbleCanvasGroup);
             goddessUI.Hide();
-            yield return new WaitForSeconds(0.5f);
-           
-            TweenUtility.FadeOut(titleCanvasGroup);
+            //yield return new WaitForSeconds(0.5f);
+            
             TweenUtility.FadeOut(partySizeCanvasGroup);
             TweenUtility.FadeOut(charCirclesCanvasGroup);
             TweenUtility.FadeOut(charViewCanvasGroup);
             TweenUtility.FadeOut(charButtonsCanvasGroup);
-            yield return new WaitForSeconds(2.0f);
-            
-            TweenUtility.FadeIn(Fade).setOnComplete(()=>
-            {
-                base.Hide();
-             //   sortingCanvas.enabled = false;
-                parent?.Show();
-                TweenUtility.FadeOut(Fade);
-            });
+            base.Hide();
+           // yield return new WaitForSeconds(2.0f);
+           
+           //   sortingCanvas.enabled = false;
+           //parent?.Show();
+           //TweenUtility.FadeOut(Fade);
+            // TweenUtility.FadeIn(Fade).setOnComplete(()=>
+            // {
+            //    
+            // });
+            yield return null;
         }
 
         void PartyChanged(Unit u)

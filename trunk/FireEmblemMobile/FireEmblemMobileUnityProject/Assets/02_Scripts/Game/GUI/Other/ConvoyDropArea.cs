@@ -5,6 +5,7 @@ namespace Game.GUI
     public class ConvoyDropArea:MonoBehaviour
     {
         protected DropArea DropArea;
+        [SerializeField] GameObject selected;
 
         protected virtual void Awake()
         {
@@ -12,6 +13,14 @@ namespace Game.GUI
             DropArea.OnDropHandler += OnItemDropped;
         }
 
+        public void Select()
+        {
+            selected.gameObject.SetActive(true);
+        }
+        public void Deselect()
+        {
+            selected.gameObject.SetActive(false);
+        }
         private void OnItemDropped(UIDragable dragable)
         {
             Debug.Log("Item Dropped on Convoy");

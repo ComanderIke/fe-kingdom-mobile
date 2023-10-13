@@ -14,6 +14,7 @@ namespace Game.WorldMapStuff.Model
         [NonSerialized] private List<StockedItem> items;
 
         [SerializeField] public event Action convoyUpdated;
+        [SerializeField] public event Action<StockedItem> itemAdded;
 
         private int selectedItemIndex = -1;
 
@@ -83,13 +84,14 @@ namespace Game.WorldMapStuff.Model
                 {
                     instock = true;
                     stockedItem.stock++;
+                    UpdateStockCounts();
                     break;
                 }
             }
             if(!instock)
-                Items.Add(new StockedItem(item, 1));
+                AddItem(new StockedItem(item, 1));
          //   convoyUpdated?.Invoke();
-            UpdateStockCounts();
+           
         }
         public void AddItem(StockedItem item)
         {
@@ -98,15 +100,17 @@ namespace Game.WorldMapStuff.Model
             Items.Add(item);
             //convoyUpdated?.Invoke();
             UpdateStockCounts();
+            itemAdded?.Invoke(item);
         }
      
         public void AddItem(StockedCombatItem item)
         {
             Debug.Log("Add Item to Convoy: "+item);
-            
-            Items.Add(new StockedItem((Item)item.item, item.stock));
+            var stockedItem = new StockedItem((Item)item.item, item.stock);
+            Items.Add(stockedItem);
             //convoyUpdated?.Invoke();
             UpdateStockCounts();
+            itemAdded?.Invoke(stockedItem);
         }
         public void RemoveItem(Item item)
         {
@@ -125,7 +129,10 @@ namespace Game.WorldMapStuff.Model
             }
 
             if (removeItem != null)
+            {
                 Items.Remove(removeItem);
+            }
+
             UpdateStockCounts();
           //  convoyUpdated?.Invoke();
            
@@ -201,11 +208,12 @@ namespace Game.WorldMapStuff.Model
         }
       
 
-        public void AddStockedItem(StockedItem stockedItem)
-        {
-            items.Add(stockedItem);
-            convoyUpdated?.Invoke();
-        }
+        // public void AddStockedItem(StockedItem stockedItem)
+        // {
+        //     items.Add(stockedItem);
+        //     UpdateStockCounts();
+        //     convoyUpdated?.Invoke();
+        // }
 
         public bool ContainsItem(Item item)
         {
@@ -246,16 +254,19 @@ namespace Game.WorldMapStuff.Model
             {
                 RemoveItem(items.Find(i => i.item.Name== GameBPData.Instance.GetSmithingStone().Name).item);
             }
-            convoyUpdated?.Invoke();
+     
         }
 
         public void RemoveDragonScales(int getDragonScaleUpgradeCost)
         {
             for (int i = 0; i < getDragonScaleUpgradeCost; i++)
             {
-                RemoveItem(items.Find(i => i.item.Name == GameBPData.Instance.GetDragonScale().Name).item);
+                var item = items.Find(i => i.item.Name == GameBPData.Instance.GetDragonScale().Name).item;
+                RemoveItem(item);
+                
             }
-            convoyUpdated?.Invoke();
+           
+          
         }
 
         public int GetItemCount(Item item)
@@ -280,6 +291,7 @@ namespace Game.WorldMapStuff.Model
             if(items.Contains(item))
                 items.Remove(item);
             convoyUpdated?.Invoke();
+        
         }
 
 

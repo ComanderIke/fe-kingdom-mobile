@@ -15,6 +15,7 @@ public class UICharacterFace : MonoBehaviour
     [SerializeField] private Image faceImage;
     [SerializeField] private MMF_Player feedbacks;
     [SerializeField] private ExpBarController expBar = default;
+    [SerializeField] private Image blessingBackground;
     private Unit unit;
     public void Show(Unit unit)
     {
@@ -26,6 +27,10 @@ public class UICharacterFace : MonoBehaviour
             unit.ExperienceManager.ExpGained -= UpdateExpBar;
         }
 
+        if(blessingBackground!=null)
+            blessingBackground.gameObject.SetActive(unit.Blessing!=null);
+        if(unit.Blessing!=null&& blessingBackground!=null)
+            blessingBackground.color = unit.Blessing.God.Color;
         this.unit = unit;
         unit.HpValueChanged += UpdateHpBar;
         

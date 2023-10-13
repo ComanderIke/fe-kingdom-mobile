@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using __2___Scripts.Game.Utility;
 using Game.GameActors.Players;
+using Game.GameActors.Units;
 using Game.WorldMapStuff.Model;
 using LostGrace;
 using TMPro;
@@ -42,6 +43,8 @@ public class UIChurchController : MonoBehaviour
     [SerializeField] private Color tooExpensiveTextColor;
     [SerializeField] private Button prayButton;
     [SerializeField] private Button receiveBlessingButton;
+    [SerializeField] private float goldExpConvert = .5f;
+    [SerializeField] private float faithExpMult = 2f;
     public void UpdateUI()
     {
 
@@ -65,7 +68,8 @@ public class UIChurchController : MonoBehaviour
             var parent = cnt>=4?bottomRowLayout:topRowParentLayout;
             var go = Instantiate(GodBlessingUIPrefab, parent);
             var uiGodController= go.GetComponent<UIGodBlessing>();
-            uiGodController.Show(party.ActiveUnit,god, cnt, (int)slider.value, selectedGod == cnt);
+            Unit blessedUnit = GetUnitFromGod(god);
+            uiGodController.Show(party.ActiveUnit,god, cnt, GoldToExp((int)slider.value, party.ActiveUnit.Stats.CombinedAttributes().FAITH), selectedGod == cnt, blessedUnit);
             uiGodController.onClicked += GodClicked;
             if(cnt==selectedGod)
                 uiGodController.Select();
@@ -91,11 +95,31 @@ public class UIChurchController : MonoBehaviour
         }
     }
 
+    int GoldToExp(int gold, int faith)
+    {
+        
+        return (int)((gold*goldExpConvert)*(1+((faith*faithExpMult)/100f)));
+    }
+
+    Unit GetUnitFromGod(God god)
+    {
+        foreach (var member in party.members)
+        {
+            if (member.Blessing != null && member.Blessing.God == god)
+            {
+                return member;
+            }
+        }
+
+        return null;
+    }
+
     void GodClicked(int index)
     {
         uiGodBlessings[selectedGod].Deselect();
         selectedGod = index;
         uiGodBlessings[selectedGod].Select();
+        UpdateUI();
     }
     public void NextClicked()
     {
@@ -165,7 +189,7 @@ public class UIChurchController : MonoBehaviour
     public void PrayClicked()
     {
         party.AddGold(-(int)slider.value);
-        party.ActiveUnit.Bonds.Increase(gods[selectedGod],(int)slider.value);
+        party.ActiveUnit.Bonds.Increase(gods[selectedGod],GoldToExp((int)slider.value, party.ActiveUnit.Stats.CombinedAttributes().FAITH));
         //state = ChurchUIState.Blessing;
         UpdateUI();
         
@@ -174,13 +198,14 @@ public class UIChurchController : MonoBehaviour
     public void ReceiveBlessingClicked()
     {
         party.ActiveUnit.ReceiveBlessing(gods[selectedGod].GetBlessing());
+        UpdateUI();
     }
     
 
     public void RemoveCurse()
     {
         party.ActiveUnit.RemoveCurse(party.ActiveUnit.Curses[removeCurseUI.curseIndex]);
-        party.AddGold(-removeCurseUI.removeCurseCost);
+        party.AddGold(-removeCurseUI.CalculateFaithPriceReduction(party.ActiveUnit.Stats.CombinedAttributes().FAITH));
         
         UpdateUI();
         Debug.Log("Remove Curse");

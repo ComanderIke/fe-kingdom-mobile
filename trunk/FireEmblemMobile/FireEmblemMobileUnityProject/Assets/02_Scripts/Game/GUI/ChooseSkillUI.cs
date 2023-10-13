@@ -25,8 +25,10 @@ public class ChooseSkillUI : MonoBehaviour, ISkillUIRenderer
    
     public Action OnFinished { get; set; }
 
+
     [SerializeField] private SkillsUI skillsUI;
-    
+
+    [SerializeField] private UIAnimationSpriteSwapper uiAnimation;
     [SerializeField] private Animator uIIdleAnimation;
     [SerializeField] private ChooseSkillButtonUI chooseSkill1;
     [SerializeField] private ChooseSkillButtonUI chooseSkill2;
@@ -45,6 +47,7 @@ public class ChooseSkillUI : MonoBehaviour, ISkillUIRenderer
         this.skill1 = skill1;
         this.skill2 = skill2;
         this.skill3 = skill3;
+        uiAnimation.Init(unit.visuals.CharacterSpriteSet);
         uIIdleAnimation.runtimeAnimatorController = unit.visuals.Prefabs.UIAnimatorController;
         unit.SkillManager.OnSkillsChanged -= UpdateUI;
         unit.SkillManager.OnSkillsChanged += UpdateUI;

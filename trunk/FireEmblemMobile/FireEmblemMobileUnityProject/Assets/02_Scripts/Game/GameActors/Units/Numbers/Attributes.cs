@@ -44,9 +44,8 @@ namespace Game.GameActors.Units.Numbers
         private int def;
         [SerializeField]
         private int faith;
-
-        public const int CON_HP_Mult = 1;
-        public const int BASE_HP = 10;
+        
+   
 
         public Attributes()
         {

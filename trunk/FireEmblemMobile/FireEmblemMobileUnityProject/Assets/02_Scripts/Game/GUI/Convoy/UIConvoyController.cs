@@ -33,7 +33,8 @@ public class UIConvoyController:MonoBehaviour
     [SerializeField] private GameObject noneButton;
     [SerializeField] private UIEquipmentController equipmentController;
     [SerializeField] private UICharacterViewController charView;
-    [SerializeField] private ClickAndHoldButton contextButton;
+    [SerializeField] private ClickAndHoldButton equipButton;
+    [SerializeField] private ClickAndHoldButton useButton;
     [SerializeField] private ClickAndHoldButton dropButton;
     [SerializeField] private TextMeshProUGUI contextText;
     [SerializeField] private Color EquipColor;
@@ -52,9 +53,9 @@ public class UIConvoyController:MonoBehaviour
     private void Start()
     {
         Debug.Log("ConvoyStart");
-        contextButton.OnClick -= ContextButtonClicked;
+        useButton.OnClick -= UseClicked;
         dropButton.OnClick -= DropButtonClicked;
-        contextButton.OnClick += ContextButtonClicked;
+        equipButton.OnClick += EquipClicked;
         dropButton.OnClick += DropButtonClicked;
     }
     private void Update()
@@ -64,14 +65,14 @@ public class UIConvoyController:MonoBehaviour
         timeShown += Time.deltaTime;
         if (InputUtility.TouchEnd()&&convoy != null&& timeShown>=.3f)
         {
-            if (!itemClicked&& !contextButton.WasPressingUntilLastFrame&&!dropButton.WasPressingUntilLastFrame)
+            if (!itemClicked&& !useButton.WasPressingUntilLastFrame&&!equipButton.WasPressingUntilLastFrame&&!dropButton.WasPressingUntilLastFrame)
             {
                 Debug.Log("Deselect");
                 convoy.Deselect();
           
                 UpdateValues();
-                if(!UIHelper.IsPointerOverUIObject())
-                    Hide();
+                // if(!UIHelper.IsPointerOverUIObject())
+                //     Hide();
             }
             else
             {
@@ -98,46 +99,46 @@ public class UIConvoyController:MonoBehaviour
         convoy.Deselect();
         convoy.RemoveStockedItem(dropItem);
     }
-    void ContextButtonClicked()
+
+    public void UseClicked()
+    {
+        var contextItem = convoy.SelectedItem;
+        context = ConvoyContext.Default;
+        if(contextItem==null)
+            return;
+        if (contextItem.item is ConsumableItem consumableItem)
+        {
+            convoy.Deselect();
+            consumableItem.Use(Player.Instance.Party.ActiveUnit, Player.Instance.Party);
+        }
+
+       
+        charView.UpdateUnit(Player.Instance.Party.ActiveUnit);
+        
+    }
+
+    void EquipClicked()
     {
         Debug.Log("ContextClicked: "+context);
         var contextItem = convoy.SelectedItem;
-        switch (context)
+        context = ConvoyContext.Default;
+        if(contextItem==null)
+            return;
+        if (contextItem.item is Relic relic)
         {
-            case ConvoyContext.SelectRelic:
-                if (contextItem != null && contextItem.item is Relic relic)
-                {
-                    convoy.Deselect();
-                    Player.Instance.Party.ActiveUnit.Equip(relic);
-                    Hide();
-                    
-                }
-
-                break;
-                
-            case ConvoyContext.SelectCombatItem:
-                if (contextItem != null && contextItem.item is IEquipableCombatItem equipableItem)
-                {
-                    var selectedCombatItem = new StockedCombatItem(equipableItem, contextItem.stock);
-                    convoy.Deselect();
-                    
-                    Player.Instance.Party.ActiveUnit.Equip(selectedCombatItem,equipmentController.selectedSlotCombatItemSlot.slotNumber);
-                    Hide();
-                    
-                }
-
-                break;
-            case ConvoyContext.Default:
-                    if (contextItem.item is ConsumableItem consumableItem)
-                    {
-                        convoy.Deselect();
-                        consumableItem.Use(Player.Instance.Party.ActiveUnit, Player.Instance.Party);
-                    }
-                    break;
-            case ConvoyContext.Battle:
-                UseItemInBattle();
-                break;
+            convoy.Deselect();
+            Player.Instance.Party.ActiveUnit.Equip(relic);
+         
+            
         }
+        else if (contextItem.item is IEquipableCombatItem equipableItem)
+        {
+                var selectedCombatItem = new StockedCombatItem(equipableItem, contextItem.stock);
+                convoy.Deselect();
+                Player.Instance.Party.ActiveUnit.Equip(selectedCombatItem,equipmentController.selectedSlotCombatItemSlot.slotNumber);
+        }
+        charView.UpdateUnit(Player.Instance.Party.ActiveUnit);
+        
     }
   
     public void Show()
@@ -174,8 +175,14 @@ public class UIConvoyController:MonoBehaviour
            typeFilter = typeof(Item);
         var go = Instantiate(convoyItemPrefab, DropAreas[index].transform);
         var itemController = go.GetComponent<UIConvoyItemController>();
+        bool isNewItem = newItems.Contains(stockedItem);
+        Debug.Log("Create Item: "+stockedItem.item+" isNew: "+isNewItem);
+      
+      
        // Debug.Log("Item type: "+stockedItem.item.GetType()+" "+typeFilter.IsAssignableFrom(stockedItem.item.GetType()));
-        itemController.SetValues(stockedItem, !typeFilter.IsAssignableFrom(stockedItem.item.GetType()));
+        itemController.SetValues(stockedItem,  index,isNewItem, !typeFilter.IsAssignableFrom(stockedItem.item.GetType()));
+        if(isNewItem)
+            newItems.Remove(stockedItem);
         itemController.onClicked += ItemClicked;
         // var dragController = go.GetComponent<UIDragable>();
         // dragController.SetItem(stockedItem.item);
@@ -201,30 +208,28 @@ public class UIConvoyController:MonoBehaviour
             dropButton.gameObject.SetActive(true);
             if (selectedItem.item is Relic)
             {
-                contextButton.gameObject.SetActive(true);
-                contextButton.SetBackgroundColor(EquipColor);
-                contextButton.SetText("Equip");
+                equipButton.gameObject.SetActive(true);
+               
             }
 
             if (context==ConvoyContext.SelectCombatItem)
             {
                 if (selectedItem.item is IEquipableCombatItem)
                 {
-                    contextButton.gameObject.SetActive(true);
-                    contextButton.SetBackgroundColor(EquipColor);
-                    contextButton.SetText("Equip");
+                    equipButton.gameObject.SetActive(true);
+                    
                 }
             }
-            else if (selectedItem.item is ConsumableItem)
+            if (selectedItem.item is ConsumableItem)
             {
-                contextButton.gameObject.SetActive(true);
-                contextButton.SetBackgroundColor(UseColor);
-                contextButton.SetText("Use");
+                useButton.gameObject.SetActive(true);
+
             }
         }
         else
         {
-            contextButton.gameObject.SetActive(false);
+            useButton.gameObject.SetActive(false);
+            equipButton.gameObject.SetActive(false);
             dropButton.gameObject.SetActive(false);
         }
     }
@@ -236,7 +241,9 @@ public class UIConvoyController:MonoBehaviour
         {
             init = true;
             Player.Instance.Party.Convoy.convoyUpdated += UpdateConvoy;
+            Player.Instance.Party.Convoy.itemAdded += AddedItem;
             instantiatedItems = new List<GameObject>();
+            newItems = new List<StockedItem>();
         }
 
         if (instantiatedItems.Count != 0)
@@ -282,10 +289,12 @@ public class UIConvoyController:MonoBehaviour
             var itemController = CreateItemGameObject(sortedList[i], i);
             if (convoy.SelectedItem == sortedList[i])
             {
+                DropAreas[i].Select();
                 itemController.Select();
             }
             else
             {
+                DropAreas[i].Deselect();
                 itemController.Deselect();
             }
         }
@@ -314,53 +323,38 @@ public class UIConvoyController:MonoBehaviour
         context = ConvoyContext.ChooseGem;
         UpdateValues();
     }
+
+    private int selecteditemIndex = 0;
     private void ItemClicked(UIConvoyItemController clickedItem)
     {
         Debug.Log("ItemClicked "+clickedItem.stockedItem.item);
-        if (context == ConvoyContext.SelectRelic)
-        {
-            Debug.Log("ItemClicked in Relic Context");
-            var contextItem = clickedItem.stockedItem;
-            if (contextItem != null && contextItem.item is Relic relic)
-            {
-                convoy.Deselect();
-                Player.Instance.Party.ActiveUnit.Equip(relic);
-                UpdateValues();
-                //Hide();
-            }
+        itemClicked = true;
+        Debug.Log("Item Clicked: "+clickedItem);
+        convoy.Select(clickedItem.stockedItem);
+        ToolTipSystem.Show(clickedItem.stockedItem.item, clickedItem.transform.position);
+        UpdateValues();
 
-
-        }
-        else  if (context == ConvoyContext.SelectCombatItem)
-        { 
-            Debug.Log("ItemClicked in Combat Context");
-            var contextItem = clickedItem.stockedItem;
-            if (contextItem != null && contextItem.item is IEquipableCombatItem equipableItem)
-            {
-                Debug.Log("ClickedItem is combatItem");
-                var selectedCombatItem = new StockedCombatItem(equipableItem, contextItem.stock);
-                convoy.Deselect();
-                    
-                Player.Instance.Party.ActiveUnit.Equip(selectedCombatItem,equipmentController.selectedSlotCombatItemSlot.slotNumber);
-                UpdateValues();
-                //Hide();
-                    
-            }
-        }
-        else
+    }
+    private List<StockedItem> newItems;
+    void AddedItem(StockedItem item)
+    {
+        Debug.Log("Added item: "+item.item);
+        newItems.Add(item);
+        UpdateValues();
+    }
+    void DeselectAllItems()
+    {
+        foreach (var dropArea in DropAreas)
         {
-            itemClicked = true;
-            Debug.Log("Item Clicked: "+clickedItem);
-            convoy.Select(clickedItem.stockedItem);
-            ToolTipSystem.Show(clickedItem.stockedItem.item, clickedItem.transform.position);
-            UpdateValues();
+            dropArea.Deselect();
         }
-        
     }
     public void Hide()
     {
+        DeselectAllItems();
         Debug.Log("Hide Convoy");
-        convoy.Deselect();
+        if(convoy!=null)
+            convoy.Deselect();
         context = ConvoyContext.Default;
         canvas.enabled = false;
         charView.Hide();
@@ -369,18 +363,24 @@ public class UIConvoyController:MonoBehaviour
     private void OnDestroy()
     {
         Player.Instance.Party.Convoy.convoyUpdated -= UpdateConvoy;
+        Player.Instance.Party.Convoy.itemAdded -= AddedItem;
     }
     public void NoneClicked()
     {
+
+        
         if (context == ConvoyContext.SelectRelic)
         {
+            
+            
             Player.Instance.Party.ActiveUnit.UnEquipRelic();
         }
         else if (context == ConvoyContext.SelectCombatItem)
         {
-            Player.Instance.Party.ActiveUnit.UnEquipCombatItem(equipmentController.selectedSlotCombatItemSlot
-                .GetCombatItem());
+            Player.Instance.Party.ActiveUnit.UnEquipCombatItem();
         }
+        context = ConvoyContext.Default;
+        charView.UpdateUnit(Player.Instance.Party.ActiveUnit);
         //Hide();
     }
 

@@ -28,7 +28,14 @@ public class EventEncounterNode : EncounterNode
     public override void Activate(Party party)
     {
         base.Activate(party);
+        int cnt = 0;
+        while (party.HasVisitedEvent(randomEvent)|| cnt>100)
+        {
+            randomEvent = GenerateEvent();
+            cnt++;
+        }
         GameObject.FindObjectOfType<UIEventController>().Show(this,party);
+        party.VisitedEvents.Add(randomEvent);
         
         
     }

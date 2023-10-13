@@ -77,7 +77,7 @@ public class InsertGemUI : MonoBehaviour
         }
       
         
-        foreach (var gem in Player.Instance.Party.Convoy.GetAllGems())
+        foreach (var gem in Player.Instance.Party.Storage.GetAllGems())
         {
             var gemGO=Instantiate(gemPrefab, gemParent);
             var selectableItemUI =gemGO.GetComponent<SelectableItemController>();
@@ -105,7 +105,7 @@ public class InsertGemUI : MonoBehaviour
         }
         else
         {
-            insertButton.interactable = Player.Instance.Party.Convoy.HasGems();
+            insertButton.interactable = Player.Instance.Party.Storage.HasGems();
             var colors = insertButton.colors;
             removeButton.gameObject.SetActive(false);
             insertButton.gameObject.SetActive(true);

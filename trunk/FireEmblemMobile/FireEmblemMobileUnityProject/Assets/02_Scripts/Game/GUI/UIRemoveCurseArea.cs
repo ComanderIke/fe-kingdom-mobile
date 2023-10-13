@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
@@ -22,6 +23,7 @@ namespace LostGrace
         [SerializeField] private TextMeshProUGUI costText;
         [SerializeField] private Button removeCurseButton;
         [SerializeField] private Color tooExpensiveTextColor;
+        [SerializeField] private float faithPriceReduction = 5;
         public void Show(Unit unit)
         {
             curses = unit.Curses;
@@ -31,9 +33,15 @@ namespace LostGrace
             bool affordable = Player.Instance.Party.CanAfford(removeCurseCost);
             removeCurseButton.interactable =affordable ;
             costText.color = affordable ? Color.white:tooExpensiveTextColor;
-            costText.SetText(""+removeCurseCost);
+            costText.SetText(""+CalculateFaithPriceReduction(unit.Stats.CombinedAttributes().FAITH));
             UpdateUI();
            
+        }
+
+        public int CalculateFaithPriceReduction(int faith)
+        {
+        
+            return (int)Math.Max(0,(removeCurseCost)*(1-((faith*faithPriceReduction)/100f)));
         }
 
         void UpdateUI()

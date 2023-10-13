@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using _02_Scripts.Game.Dialog.DialogSystem;
 using Game.GameActors.Items;
 using Game.GameActors.Items.Gems;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Numbers;
 using Game.GameActors.Units.OnGameObject;
+using Game.GameResources;
 using LostGrace;
 using UnityEngine;
 
@@ -48,6 +50,7 @@ namespace Game.WorldMapStuff.Model
         [field:NonSerialized] public List<Unit> members;
         [field:NonSerialized] public List<Unit> deadMembers;
 
+        public List<LGEventDialogSO> VisitedEvents;
         public static Action<Party> PartyDied;
         [SerializeField] int maxSize = 4;
         [SerializeField] private int money = default;
@@ -305,6 +308,11 @@ namespace Game.WorldMapStuff.Model
             Convoy = playerDataPartyData.convoy.LoadData();
             Storage = new Convoy();
             Storage = playerDataPartyData.storage.LoadData();
+            VisitedEvents = new List<LGEventDialogSO>();
+            foreach (var id in playerDataPartyData.visitedEvents)
+            {
+                VisitedEvents.Add(GameBPData.Instance.GetEventData().GetEventById(id));
+            }
             ActiveUnitIndex = activeUnitIndex;
             EncounterComponent = new EncounterPosition
             {
@@ -312,6 +320,7 @@ namespace Game.WorldMapStuff.Model
                 EncounterNodeId = playerDataPartyData.currentEncounterNodeId,
                 MovedEncounterIds = playerDataPartyData.movedEncounterIds
             };
+            
         }
 
         public bool CanAfford(int price)
@@ -393,11 +402,11 @@ namespace Game.WorldMapStuff.Model
         {
             if (stockedItem.item is Gem || stockedItem.item is Stone)
             {
-                Storage.AddStockedItem(stockedItem);
+                Storage.AddItem(stockedItem);
             }
             else
             {
-                Convoy.AddStockedItem(stockedItem);
+                Convoy.AddItem(stockedItem);
             }
 
         }
@@ -452,6 +461,11 @@ namespace Game.WorldMapStuff.Model
 
             return false;
            
+        }
+
+        public bool HasVisitedEvent(LGEventDialogSO randomEvent)
+        {
+            return VisitedEvents.Contains(randomEvent);
         }
     }
 }

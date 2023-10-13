@@ -82,6 +82,7 @@ namespace Game.GameActors.Units
         [NonSerialized]
         public SkillManager SkillManager;
         private List<EncounterBasedBuff> encounterBuffs;
+        public string BluePrintId;
         public MoveType MoveType
         {
             get => moveType;
@@ -132,7 +133,7 @@ namespace Game.GameActors.Units
             GameTransformManager = new GameTransformManager();
             StatusEffectManager = new StatusEffectManager(this);
             AIComponent = new AIComponent();
-            MaxHp = Attributes.BASE_HP+stats.BaseAttributes.MaxHp*Attributes.CON_HP_Mult;
+            MaxHp = stats.CombinedAttributes().MaxHp;
             tags = new List<UnitTags>();
             hp = MaxHp;
             Stats.AttackRanges.Clear();
@@ -652,6 +653,8 @@ namespace Game.GameActors.Units
 
         public void UnEquipRelic()
         {
+            if (EquippedRelic == null)
+                return;
             var relic = EquippedRelic;
             relic.Unequip(this);
             EquippedRelic = null;
@@ -659,12 +662,9 @@ namespace Game.GameActors.Units
         }
 
 
-        public void UnEquipCombatItem(StockedCombatItem getCombatItem)
+        public void UnEquipCombatItem()
         {
-            if(CombatItem1==getCombatItem)
-                UnEquip(CombatItem1);
-            // else if(CombatItem2==getCombatItem)
-            //     UnEquip(CombatItem2);
+            UnEquip(CombatItem1);
         }
 
 

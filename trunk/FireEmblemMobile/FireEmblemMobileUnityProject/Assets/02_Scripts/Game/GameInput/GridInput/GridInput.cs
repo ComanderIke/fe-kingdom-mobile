@@ -3,6 +3,7 @@ using __2___Scripts.Game.Utility;
 using Game.GameActors.Units.OnGameObject;
 using Game.Manager;
 using GameCamera;
+using LostGrace;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -31,7 +32,7 @@ namespace Game.GameInput
         
         public void Update()
         {
-            if(Input.touchCount ==1){
+            if(Input.touchCount ==1&& !InteractionBlocker.Instance.gameObject.activeSelf){
                 var touch = Input.GetTouch(0);
                 if (touch.phase == TouchPhase.Ended) //&& !EventSystem.current.IsPointerOverGameObject())
                 {

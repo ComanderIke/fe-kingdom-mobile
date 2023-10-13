@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Game.GameActors.Items;
 using Game.GameActors.Items.Weapons;
 using Game.GameActors.Units;
+using MoreMountains.Feedbacks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,9 +20,14 @@ public class UIConvoyItemController : UIButtonController
     [SerializeField] private Sprite normalSprite;
     [SerializeField] private Sprite relicSprite;
     [SerializeField] private Sprite combatItemSprite;
-    public void SetValues(StockedItem stockeditem, bool grayedOut=false)
+    [SerializeField] private MMF_Player addedFeedbacks;
+    public int index;
+    public void SetValues(StockedItem stockeditem, int index, bool added=false,bool grayedOut=false)
     {
+        if(added)
+            addedFeedbacks.PlayFeedbacks();
         backgroundImage.sprite = normalSprite;
+        this.index = index;
         if (stockeditem.item is Relic relic)
         {
             backgroundImage.sprite = relicSprite;
@@ -61,6 +67,7 @@ public class UIConvoyItemController : UIButtonController
             canvasGroup.alpha = 1.0f;
         }
     }
+    
 
     public void Clicked()
     {
