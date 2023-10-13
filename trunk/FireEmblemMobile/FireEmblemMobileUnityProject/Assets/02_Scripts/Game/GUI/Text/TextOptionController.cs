@@ -14,10 +14,13 @@ public enum TextOptionState
     Normal,
     High,
     Secret,
+    SecretHidden,
     Impossible,
     Lowish,
     Low,
-    Locked
+    Locked,
+    Evil,
+    Good
 }
 public class TextOptionController : MonoBehaviour
 {
@@ -27,6 +30,8 @@ public class TextOptionController : MonoBehaviour
     private UIEventController controller;
     public Color textNormalColor;
     public Color textSecretColor;
+    public Color textGoodColor;
+    public Color textEvilColor;
     public Color textNotPossibleColor;
     public Color textLowColor;
     public Color textLowishColor;
@@ -92,7 +97,9 @@ public class TextOptionController : MonoBehaviour
         switch (textState)
         {
             case TextOptionState.Impossible:  this.StatPreview.color = textNotPossibleColor;break;
-            case TextOptionState.Secret:  this.StatPreview.color = textSecretColor;break;
+            case TextOptionState.Secret:  this.text.color = textSecretColor;break;
+            case TextOptionState.Evil:  this.text.color = textEvilColor;break;
+            case TextOptionState.Good:  this.text.color = textGoodColor;break;
             case TextOptionState.Normal:  this.StatPreview.color = textNormalColor;break;
             case TextOptionState.High:  this.StatPreview.color = textHighColor;break;
             case TextOptionState.Low:  this.StatPreview.color = textLowColor;break;
@@ -114,13 +121,13 @@ public class TextOptionController : MonoBehaviour
             //rollImage.gameObject.SetActive(true);
             
         }
-        if (option.CharacterRequirements != null&& option.CharacterRequirements.Count>0)
-        {
-            this.text.color = Color.blue;
-            // charText.gameObject.SetActive(true);
-            // charText.text = option.CharacterRequirement.Name== Player.Instance.Party.ActiveUnit.Name?option.CharacterRequirement.Name:"switch to "+option.CharacterRequirement.Name;
-            //charImage.sprite = option.CharacterRequirement.visuals.CharacterSpriteSet.FaceSprite;
-        }
+        // if (option.CharacterRequirements != null&& option.CharacterRequirements.Count>0)
+        // {
+        //     this.text.color = Color.blue;
+        //     // charText.gameObject.SetActive(true);
+        //     // charText.text = option.CharacterRequirement.Name== Player.Instance.Party.ActiveUnit.Name?option.CharacterRequirement.Name:"switch to "+option.CharacterRequirement.Name;
+        //     //charImage.sprite = option.CharacterRequirement.visuals.CharacterSpriteSet.FaceSprite;
+        // }
         // if (option.BlessingRequirement != null)
         // {
         //     charText.gameObject.SetActive(true);
@@ -156,7 +163,7 @@ public class TextOptionController : MonoBehaviour
         if (option.ResourceRequirements != null&& option.ResourceRequirements.Count>0)
         {
             var item = option.ResourceRequirements[0];
-            if (item != null)
+            if (item != null&& item.ResourceType!=ResourceType.Morality)
             {
                 useResourceText.gameObject.SetActive(true);
                 useResourceText.text = "use " + item.Amount;

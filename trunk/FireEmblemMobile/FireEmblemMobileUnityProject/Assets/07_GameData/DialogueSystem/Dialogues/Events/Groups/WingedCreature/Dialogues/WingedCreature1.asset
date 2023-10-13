@@ -29,6 +29,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 08614606a99f97c448e43f01ab20b263, type: 2}
     - {fileID: 11400000, guid: c588c2ed97e90fd429ef106f96656dc0, type: 2}
     <ItemRequirements>k__BackingField: []
+    <BlessingRequirements>k__BackingField: []
     <ResourceRequirements>k__BackingField: []
   - <Text>k__BackingField: 'Make a stance and await the creature with your sword
       in hand. '
@@ -38,6 +39,7 @@ MonoBehaviour:
     <AttributeRequirements>k__BackingField: []
     <CharacterRequirements>k__BackingField: []
     <ItemRequirements>k__BackingField: []
+    <BlessingRequirements>k__BackingField: []
     <ResourceRequirements>k__BackingField: []
   - <Text>k__BackingField: 'Hide below the trees behind you. '
     <NextDialogue>k__BackingField: {fileID: 11400000, guid: 2438d78b83f313b4a81bfb05257253f2,
@@ -46,7 +48,30 @@ MonoBehaviour:
     <AttributeRequirements>k__BackingField: []
     <CharacterRequirements>k__BackingField: []
     <ItemRequirements>k__BackingField: []
+    <BlessingRequirements>k__BackingField: []
     <ResourceRequirements>k__BackingField: []
+  - <Text>k__BackingField: Morality Evil Test
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 2438d78b83f313b4a81bfb05257253f2,
+      type: 2}
+    <NextDialogueFail>k__BackingField: {fileID: 0}
+    <AttributeRequirements>k__BackingField: []
+    <CharacterRequirements>k__BackingField: []
+    <ItemRequirements>k__BackingField: []
+    <BlessingRequirements>k__BackingField: []
+    <ResourceRequirements>k__BackingField:
+    - Amount: -100
+      ResourceType: 3
+  - <Text>k__BackingField: Morality Good Test
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 2438d78b83f313b4a81bfb05257253f2,
+      type: 2}
+    <NextDialogueFail>k__BackingField: {fileID: 0}
+    <AttributeRequirements>k__BackingField: []
+    <CharacterRequirements>k__BackingField: []
+    <ItemRequirements>k__BackingField: []
+    <BlessingRequirements>k__BackingField: []
+    <ResourceRequirements>k__BackingField:
+    - Amount: 100
+      ResourceType: 3
   <DialogueType>k__BackingField: 3
   <IsStartingDialogue>k__BackingField: 1
   <IsPortraitLeft>k__BackingField: 1

@@ -121,43 +121,40 @@ public class UIEventController : MonoBehaviour
             string statText = "";
             TextOptionState textOptionType = TextOptionState.Normal;
             //make all requirements GO and check and if some of them are not met make them RED
-            if (RequirementsMet(textOption))
+            if (!SemiRequirementsMet(textOption))
             {
-               
-                textOptionType = TextOptionState.Secret;
-                      
-                if (textOption.AttributeRequirements != null && textOption.AttributeRequirements.Count > 0)
-                {
-                    float combinedChance = 1;
-                    Unit compareUnit = party.ActiveUnit;
-                  
-                    foreach (var req in textOption.AttributeRequirements)
-                    {
-                        float chance = GetSuccessChance(req, compareUnit);
-
-                        combinedChance *= chance;
-                       
-                    }
-
-                    if (combinedChance >= 0.8f)
-                        textOptionType = TextOptionState.High;
-                    else if (combinedChance <= 0.2f)
-                        textOptionType = TextOptionState.Low;
-                    else if (combinedChance <= 0.5f)
-                        textOptionType = TextOptionState.Lowish;
-                    else
-                    {
-                        textOptionType = TextOptionState.Normal;
-                    }
-
-                    statText = combinedChance * 100f + " %";
-
-                }
-           
-            }
-            else
-            {
+                
                 textOptionType = TextOptionState.Locked;
+               
+            }
+            if (HasSecredRequirements(textOption))
+            {
+                Debug.Log("SECRET REQUIREMENTS" +textOption.Text);
+                if (SecretRequirementsMet(textOption))
+                {
+                    Debug.Log("MET REQUIREMENTS");
+                    textOptionType = TextOptionState.Secret;
+                    if (textOption.ResourceRequirements != null && textOption.ResourceRequirements.Count > 0)
+                    {
+                        foreach (var req in textOption.ResourceRequirements)
+                        {
+                            if (req.ResourceType == ResourceType.Morality)
+                            {
+                                if (req.Amount > 0)
+                                    textOptionType = TextOptionState.Good;
+                                else
+                                {
+                                    textOptionType = TextOptionState.Evil;
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    Debug.Log("NOTMET REQUIREMENTS");
+                    textOptionType = TextOptionState.SecretHidden;
+                }
             }
             
          
@@ -165,7 +162,8 @@ public class UIEventController : MonoBehaviour
             if (textOption.NextDialogue is LGFightEventDialogSO)
                 prefab = fightOptionPrefab;
 
-            if (textOptionType != TextOptionState.Locked)
+
+            if (textOptionType != TextOptionState.SecretHidden)
             {
                 var go = Instantiate(prefab, layout);
 
@@ -178,7 +176,8 @@ public class UIEventController : MonoBehaviour
                 index++;
             }
 
-            
+
+
         }
     }
 
@@ -261,10 +260,76 @@ public class UIEventController : MonoBehaviour
 
     bool HasRequirement(LGDialogChoiceData choiceData)
     {
-        return (choiceData.CharacterRequirements!=null&&choiceData.CharacterRequirements.Count>0)|| (choiceData.BlessingRequirements!=null&&choiceData.BlessingRequirements.Count>0)|| (choiceData.ItemRequirements!=null&&choiceData.ItemRequirements.Count>0)|| (choiceData.ResourceRequirements!=null&&choiceData.ResourceRequirements.Count>0)||(choiceData.AttributeRequirements!=null&&choiceData.AttributeRequirements.Count>0);
+        return (choiceData.ItemRequirements!=null&&choiceData.ItemRequirements.Count>0)|| (choiceData.ResourceRequirements!=null&&choiceData.ResourceRequirements.Count>0)||(choiceData.AttributeRequirements!=null&&choiceData.AttributeRequirements.Count>0);
     }
 
-    bool RequirementsMet(LGDialogChoiceData choiceData)
+    bool HasSecredRequirements(LGDialogChoiceData choiceData)
+    {
+        var resReq = false;
+        if ((choiceData.ResourceRequirements != null && choiceData.ResourceRequirements.Count > 0))
+        {
+            foreach (var req in choiceData.ResourceRequirements)
+            {
+                if (req.ResourceType == ResourceType.Morality)
+                    return true;
+            }
+        }
+
+        return resReq||(choiceData.CharacterRequirements!=null&&choiceData.CharacterRequirements.Count>0)|| (choiceData.BlessingRequirements!=null&&choiceData.BlessingRequirements.Count>0);
+
+    }
+    bool SecretRequirementsMet(LGDialogChoiceData choiceData)
+    {
+        if (choiceData.CharacterRequirements != null&& choiceData.CharacterRequirements.Count>0)
+        {
+            foreach (var charReq in choiceData.CharacterRequirements)
+            {
+                if (party.ActiveUnit.bluePrintID==charReq.bluePrintID)
+                    return true;
+            }
+
+            return false;
+
+        }
+        if (choiceData.BlessingRequirements != null&& choiceData.BlessingRequirements.Count>0)
+        {
+            foreach (var blessing in choiceData.BlessingRequirements)
+            {
+                if (party.ActiveUnit.Blessing!=null&&party.ActiveUnit.Blessing.Name==blessing.Name)
+                    return true;
+            }
+
+            return false;
+
+        }
+
+        foreach (var res in choiceData.ResourceRequirements)
+        {
+            switch (res.ResourceType)
+            {
+                case ResourceType.Morality:
+                    if (res.Amount > 0)
+                    {
+                        if (party.Morality.GetCurrentMoralityValue() < res.Amount)
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        if (party.Morality.GetCurrentMoralityValue() > res.Amount)
+                        {
+                            return false;
+                        }
+                    }
+
+                    break;
+            }
+        }
+
+        return true;
+    }
+    bool SemiRequirementsMet(LGDialogChoiceData choiceData)
     {
         if (!HasRequirement(choiceData))
             return true;
@@ -295,32 +360,12 @@ public class UIEventController : MonoBehaviour
                         return false;
                     } 
                     break;
+                
             }
             
         }
         
-        if (choiceData.CharacterRequirements != null&& choiceData.CharacterRequirements.Count>0)
-        {
-            foreach (var charReq in choiceData.CharacterRequirements)
-            {
-                if (party.ActiveUnit.bluePrintID==charReq.bluePrintID)
-                    return true;
-            }
-
-            return false;
-
-        }
-        if (choiceData.BlessingRequirements != null&& choiceData.BlessingRequirements.Count>0)
-        {
-            foreach (var blessing in choiceData.BlessingRequirements)
-            {
-                if (party.ActiveUnit.Blessing!=null&&party.ActiveUnit.Blessing.Name==blessing.Name)
-                    return true;
-            }
-
-            return false;
-
-        }
+      
         return true;
 
     }

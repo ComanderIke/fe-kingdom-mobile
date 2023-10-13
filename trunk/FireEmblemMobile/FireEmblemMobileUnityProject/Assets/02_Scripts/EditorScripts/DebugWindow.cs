@@ -90,6 +90,14 @@ namespace __2___Scripts.External.Editor
                 {
                     Player.Instance.Party.AddGrace(-50);
                 }
+                if (GUILayout.Button("+20 Morality"))
+                {
+                    Player.Instance.Party.Morality.AddMorality(20);
+                }
+                if (GUILayout.Button("-20 Morality"))
+                {
+                    Player.Instance.Party.Morality.AddMorality(-20);
+                }
                 if (GUILayout.Button("+30 EXP"))
                 {
                     activeUnit.ExperienceManager.AddExp(30);
