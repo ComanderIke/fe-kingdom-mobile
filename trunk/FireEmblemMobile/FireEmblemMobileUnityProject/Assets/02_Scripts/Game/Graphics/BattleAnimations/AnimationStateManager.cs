@@ -75,19 +75,22 @@ public class AnimationStateManager
        //characterAnimations.SetPlaySpeed(1.0f);
     }
 
-    public event Action<AttackData> OnCharacterAttack;
+    public event Action<IBattleActor, AttackData> OnCharacterAttack;
+    public event Action<IBattleActor, AttackData> OnPreCharacterAttack;
     private bool surrender = false;
     private void ContinueBattle()
     {
      
-        
+      
         if (attackSequenzIndex >= currentRound.AttacksData.Count)
         {
             AllAttacksFinished();
            
             return;
         }
-        OnCharacterAttack?.Invoke(currentRound.AttacksData[attackSequenzIndex]);
+        OnCharacterAttack?.Invoke(currentRound.AttacksData[attackSequenzIndex].attacker?realAttacker:realDefender,currentRound.AttacksData[attackSequenzIndex]);
+       // OnPreCharacterAttack?.Invoke(currentRound.AttacksData[attackSequenzIndex].attacker?realAttacker:realDefender,currentRound.AttacksData[attackSequenzIndex]);
+       
         characterAnimations.CharacterAttack(currentRound.AttacksData[attackSequenzIndex],currentRound.AttacksData[attackSequenzIndex].attacker, leftCharacterAttacker);
         characterAnimations.OnAttackFinished -= AttackFinished;
         characterAnimations.OnAttackFinished += AttackFinished;

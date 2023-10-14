@@ -23,14 +23,14 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     public event Action<int> OnFinished;
 
 
-    void ShowActivatedAttackSkills(AttackData attackData)
+    void ShowActivatedAttackSkills(IBattleActor activater, AttackData attackData)
     {
-        skillActivationRenderer.Show(attackData.activatedAttackSkills, attackData.attacker);
-        skillActivationRenderer.Show(attackData.activatedDefenseSkills, !attackData.attacker);
+        skillActivationRenderer.Show((Unit)activater, attackData.activatedAttackSkills, attackData.attacker);
+        skillActivationRenderer.Show((Unit)activater, attackData.activatedDefenseSkills, !attackData.attacker);
     }
-    void ShowActivatedCombatSkills(List<Skill> skills, bool attacker)
+    void ShowActivatedCombatSkills(Unit activater,List<Skill> skills, bool attacker)
     {
-        skillActivationRenderer.Show(skills, attacker);
+        skillActivationRenderer.Show(activater, skills, attacker);
     }
 
     void Surrender()
@@ -40,7 +40,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     public void Show(BattleSimulation battleSimulation, BattlePreview battlePreview, IBattleActor attackingActor, IAttackableTarget defendingActor)
     {
         gameObject.SetActive(true);
-        battleSimulation = battleSimulation;
+        this.battleSimulation = battleSimulation;
         canvas.Show();
         Debug.Log("Test: "+attackingActor+" "+defendingActor);
         OnShow?.Invoke(battleSimulation,battlePreview, attackingActor, defendingActor);
@@ -52,8 +52,8 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         animationStateManager = new AnimationStateManager(attackingActor, defendingActor, battleSimulation, GetComponent<TimeLineController>(),GetComponent<CharacterCombatAnimations>());
         animationStateManager.OnCharacterAttack -= ShowActivatedAttackSkills;
         animationStateManager.OnCharacterAttack += ShowActivatedAttackSkills;
-        ShowActivatedCombatSkills(battleSimulation.AttackerActivatedCombatSkills, true);
-        ShowActivatedCombatSkills(battleSimulation.DefenderActivatedCombatSkills, false);
+        ShowActivatedCombatSkills((Unit)battleSimulation.Attacker, battleSimulation.AttackerActivatedCombatSkills, true);
+        ShowActivatedCombatSkills((Unit)battleSimulation.Defender,battleSimulation.DefenderActivatedCombatSkills, false);
         animationStateManager.Start();
         animationStateManager.OnFinished -= Finished;
         animationStateManager.OnFinished += Finished;

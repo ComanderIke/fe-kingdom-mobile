@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using __2___Scripts.Game.Utility;
+using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
 using MoreMountains.Feedbacks;
 using UnityEngine;
@@ -14,7 +15,7 @@ namespace LostGrace
         [SerializeField] private Transform leftParent;
         [SerializeField] private Transform rightParent;
        
-        public void Show(List<Skill> activatedSkills, bool left)
+        public void Show(Unit activater, List<Skill> activatedSkills, bool left)
         {
             if(left)
                 leftParent.DeleteChildren();
@@ -22,7 +23,7 @@ namespace LostGrace
             {
                 rightParent.DeleteChildren();
             }
-            StartCoroutine(SpawnSkillActivationUICoroutine(activatedSkills, left));
+            StartCoroutine(SpawnSkillActivationUICoroutine(activater, activatedSkills, left));
           
         }
         public void Hide(List<Skill> activatedSkills)
@@ -30,12 +31,12 @@ namespace LostGrace
             leftParent.DeleteChildren();
             rightParent.DeleteChildren();
         }
-        IEnumerator SpawnSkillActivationUICoroutine(List<Skill> activatedSkills, bool left)
+        IEnumerator SpawnSkillActivationUICoroutine(Unit activater, List<Skill> activatedSkills, bool left)
         {
             foreach (var skill in activatedSkills)
             {
                 var go = Instantiate(skillActivationPrefab, left?leftParent:rightParent);
-                go.GetComponent<SkillActivatedUI>().SetSkill(skill);
+                go.GetComponent<SkillActivatedUI>().SetSkill(activater, skill);
                 yield return new WaitForSeconds(delayBetweenSkills);
             }
             
