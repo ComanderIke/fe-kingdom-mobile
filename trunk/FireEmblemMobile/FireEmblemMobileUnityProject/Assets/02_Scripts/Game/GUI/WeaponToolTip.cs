@@ -23,9 +23,9 @@ namespace LostGrace
         
         }
 
-        public void SetValues(Weapon weapon, string header, string description, Sprite icon, Vector3 position)
+        public void SetValues(Weapon weapon,  Vector3 position)
         {
-            base.SetValues(weapon,header, description, icon, position);
+            base.SetValues(new StockedItem(weapon,1), position);
             dmg.text = ""+weapon.GetDamage();
             hit.text = ""+weapon.GetHit()+" %";
             crit.text = ""+weapon.GetCrit()+" %";

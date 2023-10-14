@@ -15,7 +15,7 @@ public class RelicToolTip : ItemToolTip
     [SerializeField] private Image gemImage;
     private Relic relic;
 
-    public void SetValues(Relic relic, string header, string description, Sprite icon, Vector3 position)
+    public void SetValues(Relic relic,  Vector3 position)
     {
         this.relic = relic;
         Debug.Log(""+relic.GetSlotCount());
@@ -38,7 +38,7 @@ public class RelicToolTip : ItemToolTip
             slotButtonPanel.gameObject.SetActive(false);
            
         }
-        base.SetValues(relic, header, description, icon, position);
+        base.SetValues(new StockedItem(relic,1), position);
     }
 
     public void SlotClicked()

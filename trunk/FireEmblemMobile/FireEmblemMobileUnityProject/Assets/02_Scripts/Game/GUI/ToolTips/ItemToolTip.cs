@@ -15,16 +15,12 @@ public class ItemToolTip : MonoBehaviour
 {
     public TextMeshProUGUI headerText;
     public TextMeshProUGUI descriptionText;
-
-
-    public LayoutElement layoutElement;
-    public int characterWrapLimit;
-    public Image itemIcon;
+    public UIConvoyItemController itemIcon;
   
     [SerializeField]
     private RectTransform rectTransform;
     private Unit itemOwner;
-    public LayoutElement frame;
+    
     
     // Start is called before the first frame update
   
@@ -41,45 +37,23 @@ public class ItemToolTip : MonoBehaviour
 
     void UpdateTextWrap(Vector3 position)
     {
-        frame.enabled = false;
-        frame.enabled = true;
         if(rectTransform==null)
             rectTransform = GetComponent<RectTransform>();
-        int headerLength = headerText.text.Length;
-        int contentLength = descriptionText.text.Length;
-        layoutElement.enabled =
-            (headerLength > characterWrapLimit || contentLength > characterWrapLimit) ? true : false;
-
-
         float pivotX = 0;//position.x / Screen.width;
         float pivotY = position.y / Screen.height;
         rectTransform.pivot = new Vector2(pivotX, pivotY);
-        
     }
 
     public void ExitClicked()
     {
         gameObject.SetActive(false);
     }
-    public void SetValues(Item item, string header, string description, Sprite icon, Vector3 position)
+    public void SetValues(StockedItem item, Vector3 position)
     {
-        
-        if (string.IsNullOrEmpty(header))
-        {
-            headerText.gameObject.SetActive(false);
-        }
-        else
-        {
-            headerText.gameObject.SetActive(true);
-            headerText.text = header;
-        }
-        Unit human = Player.Instance.Party.ActiveUnit;
-        
-
-        descriptionText.text = description;
-        itemIcon.sprite = icon;
+        headerText.text = item.item.Name;
+        descriptionText.text = item.item.Description;
+        itemIcon.SetValues(item, 0);
         rectTransform.anchoredPosition = position+ new Vector3(0,280,0);
         UpdateTextWrap(position);
-
     }
 }

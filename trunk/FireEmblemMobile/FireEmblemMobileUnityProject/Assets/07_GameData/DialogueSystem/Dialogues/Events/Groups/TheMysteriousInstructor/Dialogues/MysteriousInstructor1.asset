@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8adcf8ab5ec4f11bcd0989248836a45, type: 3}
+  m_Name: MysteriousInstructor1
+  m_EditorClassIdentifier: 
+  <DialogName>k__BackingField: MysteriousInstructor1
+  <Text>k__BackingField: While traveling through a desolate landscape, you come across
+    a hidden campfire. Sitting beside it is a hooded figure who exudes an aura of
+    wisdom and power. As you approach, they offer to teach you their unique skills.
+  <Choices>k__BackingField:
+  - <Text>k__BackingField: Choose to accept the instructor's offer and train under
+      their guidance.
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: a1c97e2dc6851a241a6fbdd50a9934cf,
+      type: 2}
+    <NextDialogueFail>k__BackingField: {fileID: 0}
+    <AttributeRequirements>k__BackingField: []
+    <CharacterRequirements>k__BackingField: []
+    <ItemRequirements>k__BackingField: []
+    <BlessingRequirements>k__BackingField: []
+    <ResourceRequirements>k__BackingField: []
+  - <Text>k__BackingField: Decide to decline the instructor's offer, wary of their
+      mysterious nature.
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 42aceb9ec6dbd154b853bfa1338aa95d,
+      type: 2}
+    <NextDialogueFail>k__BackingField: {fileID: 0}
+    <AttributeRequirements>k__BackingField: []
+    <CharacterRequirements>k__BackingField: []
+    <ItemRequirements>k__BackingField: []
+    <BlessingRequirements>k__BackingField: []
+    <ResourceRequirements>k__BackingField: []
+  - <Text>k__BackingField: Attempt to overpower and rob the instructor of their knowledge,
+      believing that their skills can be exploited.
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 00e416bc39a18d54cb1b3b731ce51107,
+      type: 2}
+    <NextDialogueFail>k__BackingField: {fileID: 0}
+    <AttributeRequirements>k__BackingField:
+    - AttributeType: 8
+      Amount: 5
+    <CharacterRequirements>k__BackingField: []
+    <ItemRequirements>k__BackingField: []
+    <BlessingRequirements>k__BackingField: []
+    <ResourceRequirements>k__BackingField:
+    - Amount: -50
+      ResourceType: 3
+  <DialogueType>k__BackingField: 3
+  <IsStartingDialogue>k__BackingField: 1
+  <IsPortraitLeft>k__BackingField: 1
+  <DialogActor>k__BackingField: {fileID: 0}
+  <HeadLine>k__BackingField: The mysterious Instructor
+  <RewardResources>k__BackingField: []
+  <RewardItems>k__BackingField: []
+  <Events>k__BackingField: []

@@ -143,7 +143,7 @@ public class UIStorageController : MonoBehaviour
         // DropAreas[currentSelected].Deselect();
         // currentSelected = clickedItem.index;
         // DropAreas[currentSelected].Select();
-        ToolTipSystem.Show(clickedItem.stockedItem.item, clickedItem.transform.position);
+        ToolTipSystem.Show(clickedItem.stockedItem, clickedItem.transform.position);
         UpdateValues();
         
         

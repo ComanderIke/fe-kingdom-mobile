@@ -23,7 +23,7 @@ public class UIEquipmentController:MonoBehaviour
     public Color inActiveColor;
     [FormerlySerializedAs("weaponBp")] public Weapon weapon;
     [NonSerialized] private Relic relic;
-    [NonSerialized] private IEquipableCombatItem combatItem1;
+    [NonSerialized] private StockedCombatItem combatItem1;
   //  [NonSerialized] private IEquipableCombatItem combatItem2;
     public SmithingSlot selectedSlot = null;
     [SerializeField] private Material blessedMaterial;
@@ -36,8 +36,7 @@ public class UIEquipmentController:MonoBehaviour
         if (relic != null)
         {
             
-            ToolTipSystem.Show(relic, RelicSlotUpper.transform.position, relic.Name, relic.Description,
-                relic.GetIcon());
+            ToolTipSystem.Show(new StockedItem(relic,1), RelicSlotUpper.transform.position);
           
         }
         // else
@@ -54,8 +53,7 @@ public class UIEquipmentController:MonoBehaviour
     {
         if (combatItem1 != null)
         {
-            var item = (Item)combatItem1;
-            ToolTipSystem.Show(item, combatItemSlot1.transform.position);
+            ToolTipSystem.Show(new StockedItem((Item)combatItem1.item, combatItem1.stock), combatItemSlot1.transform.position);
           
         }
         // else
@@ -90,7 +88,7 @@ public class UIEquipmentController:MonoBehaviour
     public void WeaponSlotClicked()
     {
         Debug.Log("ClickedWeapobn");
-        ToolTipSystem.Show(weapon,WeaponSlot.transform.position, weapon.Name, weapon.Description, weapon.GetIcon());
+        ToolTipSystem.Show(weapon,WeaponSlot.transform.position);
     }
     public void Show(Unit unit)
     {
@@ -109,7 +107,7 @@ public class UIEquipmentController:MonoBehaviour
         relic = unit.EquippedRelic;
         combatItemSlot1.Show(unit.CombatItem1);
         if(unit.CombatItem1!=null)
-            combatItem1 = (IEquipableCombatItem)unit.CombatItem1.item;
+            combatItem1 = unit.CombatItem1;
         else
         {
             combatItem1 = null;

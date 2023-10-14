@@ -160,7 +160,7 @@ namespace LostGrace
          
             var combatItem = clickedCombatItemUI.GetCombatItem();
             Debug.Log("CLICKED COMBAT ITEM: " +combatItem.item.GetName());
-            ToolTipSystem.Show((Item)combatItem.item, clickedCombatItemUI.transform.position);
+            ToolTipSystem.Show(new StockedItem((Item)combatItem.item, combatItem.stock), clickedCombatItemUI.transform.position);
             if (!interactableForPlayer)
                 return;
             useItemDialogController.Show((Item)combatItem.item,()=>new GameplayCommands().SelectItem((Item)combatItem.item));

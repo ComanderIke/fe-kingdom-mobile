@@ -6,6 +6,14 @@
         Grace,
         Exp,
         Morality,
-        HP_Percent
+        HP_Percent,
+        MaxHP,
+        STR,
+        DEX,
+        INT,
+        AGI,
+        LCK,
+        DEF,
+        FTH
     }
 }

@@ -497,7 +497,7 @@ public class UIEventController : MonoBehaviour
                 Player.Instance.Party.ActiveUnit.ExperienceManager.AddExp(reward.experience);
             if(reward.grace!=0)
                 Player.Instance.Party.AddGrace(reward.grace); 
-            
+         
             if(reward.itemBp!=null)
                 foreach (var item in reward.itemBp)
                 {
@@ -528,6 +528,30 @@ public class UIEventController : MonoBehaviour
                         break;
                     case ResourceType.Morality:
                         Player.Instance.Party.Morality.AddMorality(resource.Amount);
+                        break;
+                    case ResourceType.STR:
+                        Player.Instance.Party.ActiveUnit.Stats.BaseAttributes.IncreaseAttribute(resource.Amount, AttributeType.STR);
+                        break;
+                    case ResourceType.DEX:
+                        Player.Instance.Party.ActiveUnit.Stats.BaseAttributes.IncreaseAttribute(resource.Amount, AttributeType.DEX);
+                        break;
+                    case ResourceType.INT:
+                        Player.Instance.Party.ActiveUnit.Stats.BaseAttributes.IncreaseAttribute(resource.Amount, AttributeType.INT);
+                        break;
+                    case ResourceType.AGI:
+                        Player.Instance.Party.ActiveUnit.Stats.BaseAttributes.IncreaseAttribute(resource.Amount, AttributeType.AGI);
+                        break;
+                    case ResourceType.LCK:
+                        Player.Instance.Party.ActiveUnit.Stats.BaseAttributes.IncreaseAttribute(resource.Amount, AttributeType.LCK);
+                        break;
+                    case ResourceType.MaxHP:
+                        Player.Instance.Party.ActiveUnit.Stats.BaseAttributes.IncreaseAttribute(resource.Amount, AttributeType.CON);
+                        break;
+                    case ResourceType.DEF:
+                        Player.Instance.Party.ActiveUnit.Stats.BaseAttributes.IncreaseAttribute(resource.Amount, AttributeType.DEF);
+                        break;
+                    case ResourceType.FTH:
+                        Player.Instance.Party.ActiveUnit.Stats.BaseAttributes.IncreaseAttribute(resource.Amount, AttributeType.FTH);
                         break;
                     case ResourceType.HP_Percent:
                         if (resource.Amount < 0)
