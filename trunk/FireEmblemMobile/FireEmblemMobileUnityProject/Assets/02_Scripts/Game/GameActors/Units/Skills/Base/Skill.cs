@@ -96,6 +96,8 @@ namespace Game.GameActors.Units.Skills
         public ActiveSkillMixin FirstActiveMixin {
             get
             {
+                if (activeMixins == null || activeMixins.Count == 0)
+                    return null;
                 return activeMixins.First();
             }
         }

@@ -170,7 +170,7 @@ namespace LostGrace
          
            
             Debug.Log("CLICKED Skill: " +skillUI.Skill.Name);
-            ToolTipSystem.Show(skillUI.Skill, skillUI.transform.position);
+            ToolTipSystem.Show(skillUI.Skill, unit.Blessing!=null,skillUI.transform.position);
             if (!interactableForPlayer)
                 return;
             if (skillUI.Skill.activeMixins.Count > 0)

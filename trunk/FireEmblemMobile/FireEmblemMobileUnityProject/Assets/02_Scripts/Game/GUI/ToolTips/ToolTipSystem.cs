@@ -78,13 +78,13 @@ public class ToolTipSystem : MonoBehaviour
         instance.tooltipShownThisFrame = false;
     }
 
-    public static void Show(Skill skill, Vector3 position)
+    public static void Show(Skill skill, bool blessed, Vector3 position)
     {
         instance.tooltipShownThisFrame = true;
         CloseAllToolTips();
         //Debug.Log(skill.Name);
         //Debug.Log("TooltipPosition: "+GameObject.FindWithTag("UICamera").GetComponent<Camera>().WorldToScreenPoint(position));
-        instance.skillToolTip.SetValues(skill, skill.Name,skill.Description,skill.Icon, Camera.main.WorldToScreenPoint(position));
+        instance.skillToolTip.SetValues(skill, blessed, Camera.main.WorldToScreenPoint(position));
         
         instance.skillToolTip.gameObject.SetActive(true);
     }

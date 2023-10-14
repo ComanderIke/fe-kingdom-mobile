@@ -181,7 +181,7 @@ public class UIDetailedCharacterViewController : UICharacterViewController
 
     void BlessingClicked(RectTransform clickedTransform)
     {
-        ToolTipSystem.Show(unit.Blessing, clickedTransform.position);
+        ToolTipSystem.Show(unit.Blessing,true, clickedTransform.position);
     }
     // void CurseClicked(RectTransform clickedTransform)
     // {

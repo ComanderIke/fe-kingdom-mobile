@@ -34,9 +34,11 @@ namespace LostGrace
         [SerializeField] private GameObject selectableVfx;
         [SerializeField] private Image combatSkillActive;
         private bool showTooltips = false;
+        private bool blessed;
         public void SetSkill(Skill skill, bool big, bool blessed, bool showTooltips = false)
         {
             deleteButton.SetActive(false);
+            this.blessed = blessed;
             this.showTooltips = showTooltips;
             icon.sprite = skill.Icon;
             this.Skill = skill;
@@ -102,7 +104,7 @@ namespace LostGrace
             
             if (showTooltips)
             {
-                ToolTipSystem.Show(Skill, transform.position);
+                ToolTipSystem.Show(Skill,blessed, transform.position);
                 return;
             }
             if (Skill.activeMixins.Count > 0)
@@ -117,7 +119,7 @@ namespace LostGrace
             else
             {
                 Debug.Log("Show Skill Tooltip!"+transform.position);
-                ToolTipSystem.Show(Skill, transform.position);
+                ToolTipSystem.Show(Skill,blessed, transform.position);
             }
         }
 

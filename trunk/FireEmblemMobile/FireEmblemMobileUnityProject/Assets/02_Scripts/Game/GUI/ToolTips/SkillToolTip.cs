@@ -37,7 +37,7 @@ public class SkillToolTip : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
-    public void SetValues(Skill skill, string header, string description, Sprite icon, Vector3 position)
+    public void SetValues(Skill skill, bool blessed, Vector3 position)
     {
         this.skill = skill;
         // if (string.IsNullOrEmpty(header))
@@ -52,7 +52,7 @@ public class SkillToolTip : MonoBehaviour
         //
         // descriptionText.text = description;
         // skillIcon.sprite = icon;
-        chooseSkillButtonUI.SetSkill(skill);
+        chooseSkillButtonUI.SetSkill(skill, blessed);
         rectTransform.anchoredPosition=position+ new Vector3(0,080+((chooseSkillButtonUI.transform as RectTransform).rect.height/2),0);
         UpdateTextWrap(position);
 

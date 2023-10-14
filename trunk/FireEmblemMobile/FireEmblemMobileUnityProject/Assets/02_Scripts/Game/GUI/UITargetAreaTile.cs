@@ -7,30 +7,30 @@ namespace LostGrace
     public class UITargetAreaTile : MonoBehaviour
     {
         [SerializeField] private Image image;
-        [SerializeField] private Color defaultColor;
-        [SerializeField] private Color green;
-        [SerializeField] private Color red;
-        [SerializeField] private Color orange;
-        [SerializeField] private Color white;
+        [SerializeField] private Sprite defaultColor;
+        [SerializeField] private Sprite green;
+        [SerializeField] private Sprite red;
+        [SerializeField] private Sprite orange;
+        [SerializeField] private Sprite white;
         public void Show(EffectType effectType)
         {
             switch (effectType)
             {
-                case EffectType.Bad: image.color = red; break;
-                case EffectType.Good: image.color = orange; break;
-                case EffectType.Heal: image.color = green; break;
-                case EffectType.Neutral: image.color = white; break;
+                case EffectType.Bad: image.sprite = red; break;
+                case EffectType.Good: image.sprite = orange; break;
+                case EffectType.Heal: image.sprite = green; break;
+                case EffectType.Neutral: image.sprite = white; break;
             }
         }
 
         public void ShowDefault()
         {
-            image.color = defaultColor;
+            image.sprite = defaultColor;
         }
 
         public void Blink()
         {
-            LeanTween.color(image.rectTransform, defaultColor, 1f).setLoopPingPong(-1).setEaseInOutQuad();
+            LeanTween.color(image.rectTransform, new Color(1,1,1,.5f),1).setLoopPingPong(-1).setEaseInOutQuad();
         }
 
         public void StopBlink()
