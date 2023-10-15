@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &823608911644785893
 RectTransform:
   m_ObjectHideFlags: 0
@@ -76,6 +76,61 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &360710453657546180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6429164046979079782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 460c417068d041c4b2438073d46c7077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blessingEffect: {fileID: 5811973615267137811}
+  icon: {fileID: 9216424683134576249}
+  Skill:
+    Icon: {fileID: 0}
+    level: 0
+    Name: 
+    Description: 
+    Tier: 0
+    CombatSkillMixin: {fileID: 0}
+    passiveMixins: []
+    activeMixins: []
+    owner:
+      bluePrintID: 
+      name: 
+      moveType: {fileID: 0}
+      BluePrintId: 
+      rpgClass: 0
+      experienceManager:
+        level: 1
+        exp: 0
+        drainableExp: 100
+        expLeftToDrain: 100
+    skillTransferData: {fileID: 0}
+  hpCost: {fileID: 0}
+  uses: {fileID: 0}
+  scaleSmall: 0.7
+  scaleBig: 0.9
+  hpTextGo: {fileID: 0}
+  usesTextGo: {fileID: 0}
+  frame: {fileID: 6429164047735654197}
+  background: {fileID: 6429164046979079802}
+  blessingFrameColor: {r: 0.7607843, g: 1, b: 0.99607843, a: 1}
+  blessingFrameMaterial: {fileID: 2100000, guid: bece9561e313fca468e3b02ac8e2305c,
+    type: 2}
+  curseFrameMaterial: {fileID: 2100000, guid: 7c0ec793958df7446884d2308cbacc50, type: 2}
+  curseFrameColor: {r: 1, g: 1, b: 1, a: 1}
+  blessingBackgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  curseBackgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  deleteButton: {fileID: 2221111895963975827}
+  selectedVfx: {fileID: 1335257147185255973}
+  selectableVfx: {fileID: 3644879005965979317}
+  combatSkillActive: {fileID: 0}
+  bigSize: {x: 120, y: 120}
 --- !u!1 &1335257147185255973
 GameObject:
   m_ObjectHideFlags: 0
@@ -9698,61 +9753,6 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!114 &360710453657546180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6429164046979079782}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 460c417068d041c4b2438073d46c7077, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  blessingEffect: {fileID: 5811973615267137811}
-  icon: {fileID: 9216424683134576249}
-  Skill:
-    Icon: {fileID: 0}
-    level: 0
-    Name: 
-    Description: 
-    Tier: 0
-    CombatSkillMixin: {fileID: 0}
-    passiveMixins: []
-    activeMixins: []
-    owner:
-      bluePrintID: 
-      name: 
-      moveType: {fileID: 0}
-      BluePrintId: 
-      rpgClass: 0
-      experienceManager:
-        level: 1
-        exp: 0
-        drainableExp: 100
-        expLeftToDrain: 100
-    skillTransferData: {fileID: 0}
-  hpCost: {fileID: 0}
-  uses: {fileID: 0}
-  scaleSmall: 0.7
-  scaleBig: 0.9
-  hpTextGo: {fileID: 0}
-  usesTextGo: {fileID: 0}
-  frame: {fileID: 6429164047735654197}
-  background: {fileID: 6429164046979079802}
-  blessingFrameColor: {r: 0.7607843, g: 1, b: 0.99607843, a: 1}
-  blessingFrameMaterial: {fileID: 2100000, guid: bece9561e313fca468e3b02ac8e2305c,
-    type: 2}
-  curseFrameMaterial: {fileID: 2100000, guid: 7c0ec793958df7446884d2308cbacc50, type: 2}
-  curseFrameColor: {r: 1, g: 1, b: 1, a: 1}
-  blessingBackgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  curseBackgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  deleteButton: {fileID: 2221111895963975827}
-  selectedVfx: {fileID: 1335257147185255973}
-  selectableVfx: {fileID: 3644879005965979317}
-  combatSkillActive: {fileID: 0}
-  bigSize: {x: 120, y: 120}
 --- !u!1 &6621118712362520977
 GameObject:
   m_ObjectHideFlags: 0
@@ -10188,6 +10188,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6429164046979079783}
     m_Modifications:
+    - target: {fileID: 970372535569624941, guid: 038f86897b4753941b9367f51ac4fbd4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1523991176938929184, guid: 038f86897b4753941b9367f51ac4fbd4,
         type: 3}
       propertyPath: m_fontSize
@@ -10198,6 +10203,73 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2726709508169230155, guid: 038f86897b4753941b9367f51ac4fbd4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2726709508169230156, guid: 038f86897b4753941b9367f51ac4fbd4,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2726709508169230156, guid: 038f86897b4753941b9367f51ac4fbd4,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2726709508169230156, guid: 038f86897b4753941b9367f51ac4fbd4,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2726709508169230156, guid: 038f86897b4753941b9367f51ac4fbd4,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2726709508169230156, guid: 038f86897b4753941b9367f51ac4fbd4,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2726709508169230156, guid: 038f86897b4753941b9367f51ac4fbd4,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 53.000004
+      objectReference: {fileID: 0}
+    - target: {fileID: 2726709508169230156, guid: 038f86897b4753941b9367f51ac4fbd4,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2726709508169230157, guid: 038f86897b4753941b9367f51ac4fbd4,
+        type: 3}
+      propertyPath: m_text
+      value: x
+      objectReference: {fileID: 0}
+    - target: {fileID: 2726709508169230157, guid: 038f86897b4753941b9367f51ac4fbd4,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 2726709508169230157, guid: 038f86897b4753941b9367f51ac4fbd4,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: e1c0b5e98650bca4e975a569fa85e9ce,
+        type: 2}
+    - target: {fileID: 2726709508169230157, guid: 038f86897b4753941b9367f51ac4fbd4,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 2726709508169230157, guid: 038f86897b4753941b9367f51ac4fbd4,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -277420651515494432, guid: e1c0b5e98650bca4e975a569fa85e9ce,
+        type: 2}
     - target: {fileID: 3383950842407449049, guid: 038f86897b4753941b9367f51ac4fbd4,
         type: 3}
       propertyPath: m_PixelsPerUnitMultiplier
@@ -10256,7 +10328,7 @@ PrefabInstance:
     - target: {fileID: 3383950843262658698, guid: 038f86897b4753941b9367f51ac4fbd4,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3383950843262658699, guid: 038f86897b4753941b9367f51ac4fbd4,
         type: 3}
@@ -10362,6 +10434,27 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3383950843262658710, guid: 038f86897b4753941b9367f51ac4fbd4,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 3b6974ab7e60981449244d2e97408b0f,
+        type: 3}
+    - target: {fileID: 3383950843262658710, guid: 038f86897b4753941b9367f51ac4fbd4,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3383950843262658710, guid: 038f86897b4753941b9367f51ac4fbd4,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3383950843262658710, guid: 038f86897b4753941b9367f51ac4fbd4,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 038f86897b4753941b9367f51ac4fbd4, type: 3}

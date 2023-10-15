@@ -193,5 +193,16 @@ namespace Game.GameActors.Units.Humans
         {
             return skills.Any(s => s.Name == skill.Name);
         }
+
+        public int GetSkillIndex(Skill selectedSkill)
+        {
+            for (int i = 0; i < skills.Count; i++)
+            {
+                if (selectedSkill.Name == skills[i].Name)
+                    return i;
+            }
+
+            return -1;
+        }
     }
 }

@@ -60,7 +60,7 @@ namespace LostGrace
         private Vector3 defaultSkillPosition;
         private bool locked = false;
         private bool blessed;
-        private bool upgrade;
+        public bool upgrade;
         public void OnEnable()
         {
             defaultSkillPosition = moveSkill.GetComponent<RectTransform>().anchoredPosition;
@@ -93,6 +93,8 @@ namespace LostGrace
            this.blessed = blessed;
            this.upgrade = upgrade;
             this.locked = locked;
+            if (locked && upgrade)
+                this.locked = false;
             moveSkill.GetComponent<RectTransform>().anchoredPosition = defaultSkillPosition;
             moveSkill.gameObject.SetActive(true);
             UpdateUI();

@@ -83,10 +83,13 @@ public class ChooseSkillUI : MonoBehaviour, ISkillUIRenderer
 
         if (unit != null)
             skillCount = unit.SkillManager.Skills.Count;
-        float extraOffset = skillCount * xOffsetPerSkill;
+        int index = skillCount;
+        if (selected.upgrade)
+            index = unit.SkillManager.GetSkillIndex(selected.skill);
+        float extraOffset = index * xOffsetPerSkill;
         selected.MoveSkill(new Vector3(skillsUI.transform.position.x+ xOffsetFixed+extraOffset, skillsUI.transform.position.y, skillsUI.transform.position.z),()=> skillsUI.AddSkill(chooseSkill1.skill));
        
-        MonoUtility.DelayFunction(()=>onSkillChosen?.Invoke(chooseSkill1.skill), 1.5f);
+        MonoUtility.DelayFunction(()=>onSkillChosen?.Invoke(selected.skill), 1.5f);
     }
 
     void UpdateUI()
