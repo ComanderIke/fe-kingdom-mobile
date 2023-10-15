@@ -18,7 +18,7 @@ namespace LostGrace
         [SerializeField] private BottomUIRightEmpty bottomUIRightEmpty;
         [SerializeField] private GameObject wholeBottomUI;
         [SerializeField] private GameObject wholeBottomUIRed;
-
+        private static BottomUI instance;
         private void Start()
         {
             GameplayCommands.OnSelectUnit += UnitSelected;
@@ -28,6 +28,7 @@ namespace LostGrace
             GridActorComponent.AnyUnitChangedPositionAfter += AnyUnitChangedPosition;
             WinState.OnEnter += HideAll;
 
+            instance = this;
             // UnitSelectionSystem.OnEnemyDeselected+= UnitDeselected;
         }
 
@@ -123,6 +124,12 @@ LeanTween.cancel(wholeBottomUI);
             UnitSelectionSystem.OnEnemySelected-= EnemySelected;
             GridActorComponent.AnyUnitChangedPositionAfter -= AnyUnitChangedPosition;
             WinState.OnEnter -= HideAll;
+        }
+
+        public static void Hide()
+        {
+            if(instance!=null&& instance.gameObject!=null)
+                instance.HideAll();
         }
     }
 }

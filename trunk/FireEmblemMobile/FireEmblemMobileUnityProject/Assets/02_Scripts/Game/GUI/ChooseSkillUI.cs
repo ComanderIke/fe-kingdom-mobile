@@ -41,6 +41,8 @@ public class ChooseSkillUI : MonoBehaviour, ISkillUIRenderer
     private Skill skill1, skill2, skill3;
     public void Show(Unit unit, Skill skill1, Skill skill2, Skill skill3)
     {
+        BottomUI.Hide();
+        PlayerPhaseUI.StaticHide();
         canvasGroup.gameObject.SetActive(true);
         TweenUtility.FadeIn(canvasGroup);
         this.unit = unit;
@@ -56,9 +58,12 @@ public class ChooseSkillUI : MonoBehaviour, ISkillUIRenderer
 
     void UpdateUI()
     {
-        chooseSkill1.SetSkill(skill1,unit.SkillManager.IsFull());
-        chooseSkill2.SetSkill(skill2,unit.SkillManager.IsFull());
-        chooseSkill3.SetSkill(skill3,unit.SkillManager.IsFull());
+        //Debug.Log("Unit has Skill: "+skill1.Name+" "+unit.SkillManager.HasSkill(skill1));
+        chooseSkill1.SetSkill(skill1,unit.Blessing!=null,unit.SkillManager.HasSkill(skill1),unit.SkillManager.IsFull());
+        //Debug.Log("Unit has Skill: "+skill2.Name+" "+unit.SkillManager.HasSkill(skill2));
+        chooseSkill2.SetSkill(skill2,unit.Blessing!=null,unit.SkillManager.HasSkill(skill2),unit.SkillManager.IsFull());
+        //Debug.Log("Unit has Skill: "+skill3.Name+" "+unit.SkillManager.HasSkill(skill3));
+        chooseSkill3.SetSkill(skill3,unit.Blessing!=null,unit.SkillManager.HasSkill(skill3),unit.SkillManager.IsFull());
         if (skill1 is Blessing && skill2 is Blessing && skill3 is Blessing)
         {
             headline.SetText("Choose Blessing");

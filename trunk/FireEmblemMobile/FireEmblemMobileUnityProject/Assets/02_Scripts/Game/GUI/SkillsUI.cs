@@ -25,7 +25,7 @@ namespace LostGrace
             instantiatedButtons = new List<SkillUI>();
             foreach (var skill in unit.SkillManager.Skills)
             {
-                Debug.Log("instantiate: "+skill.Name+" "+transform.parent.parent.name);
+              //  Debug.Log("instantiate: "+skill.Name+" "+transform.parent.parent.name);
                 InstantiateSkill(skill, showDeleteIfFull);
             }
             // var addButtonGo = Instantiate(addSkillButtonPrefab, transform);

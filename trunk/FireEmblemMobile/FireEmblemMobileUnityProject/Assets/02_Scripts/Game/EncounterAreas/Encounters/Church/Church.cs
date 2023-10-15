@@ -78,44 +78,44 @@ public class Church
 
     private float blessingUpgradeChance = .1f;
     private int maxUpgrades = 2;
-    void ShowBlessings(int faith, int donation)
-    {
-        Blessing blessing1 = null;
-        var playerBlessing = Player.Instance.Party.ActiveUnit.SkillManager.GetBlessing();
-        if (playerBlessing!=null&& playerBlessing.Upgradable())
-        {
-            blessing1 = (Blessing)playerBlessing.Clone();
-            blessing1.Level++;
-        }
-        else{
-            blessing1 = GenerateBlessing(faith, donation);
-        }
-        var blessing2 = GenerateBlessing(faith, donation);
-        var blessing3 = GenerateBlessing(faith, donation);
-        ServiceProvider.Instance.GetSystem<SkillSystem>().LearnNewSkill(Player.Instance.Party.ActiveUnit, blessing1, blessing2, blessing3);
-    }
-    public void DonateSmall(Unit unit, int faith)
-    {
-        alreadyDonated.Add(unit);
-        unit.Party.Money -= ChurchDonationSmallCost;
-        ShowBlessings(faith, ChurchDonationSmallAmount);
-    }
-
-    public void DonateMedium(Unit unit, int faith)
-    {
-        alreadyDonated.Add(unit);
-        unit.Party.Money -= ChurchDonationMiddleCost;
-        ShowBlessings(faith, ChurchDonationMiddleAmount);
-        
-    }
-
-    public void DonateHigh(Unit unit, int faith)
-    {
-        Debug.Log("DonateHigh");
-        alreadyDonated.Add(unit);
-        unit.Party.Money -= ChurchDonationHighCost;
-        ShowBlessings(faith, ChurchDonationHighAmount);
-    }
+    // void ShowBlessings(int faith, int donation)
+    // {
+    //     Blessing blessing1 = null;
+    //     var playerBlessing = Player.Instance.Party.ActiveUnit.SkillManager.GetBlessing();
+    //     if (playerBlessing!=null&& playerBlessing.Upgradable())
+    //     {
+    //         blessing1 = (Blessing)playerBlessing.Clone();
+    //         blessing1.Level++;
+    //     }
+    //     else{
+    //         blessing1 = GenerateBlessing(faith, donation);
+    //     }
+    //     var blessing2 = GenerateBlessing(faith, donation);
+    //     var blessing3 = GenerateBlessing(faith, donation);
+    //     ServiceProvider.Instance.GetSystem<SkillSystem>().LearnNewSkill(Player.Instance.Party.ActiveUnit, blessing1, blessing2, blessing3);
+    // // }
+    // public void DonateSmall(Unit unit, int faith)
+    // {
+    //     alreadyDonated.Add(unit);
+    //     unit.Party.Money -= ChurchDonationSmallCost;
+    //    // ShowBlessings(faith, ChurchDonationSmallAmount);
+    // }
+    //
+    // public void DonateMedium(Unit unit, int faith)
+    // {
+    //     alreadyDonated.Add(unit);
+    //     unit.Party.Money -= ChurchDonationMiddleCost;
+    //    // ShowBlessings(faith, ChurchDonationMiddleAmount);
+    //     
+    // }
+    //
+    // public void DonateHigh(Unit unit, int faith)
+    // {
+    //     Debug.Log("DonateHigh");
+    //     alreadyDonated.Add(unit);
+    //     unit.Party.Money -= ChurchDonationHighCost;
+    //     ShowBlessings(faith, ChurchDonationHighAmount);
+    // }
 
    
     public bool CanDonate(Unit unit)

@@ -41,7 +41,7 @@ namespace LostGrace
         {
             if(level<MAXLEVEL)
                 return new List<EffectDescription>()
-                { new EffectDescription(effectLabel, "+" + ((multiplicator[level] * 100) - 100) + "%",  + ((multiplicator[level+1] * 100) - 100) + "%") };
+                { new EffectDescription(effectLabel, "+" + ((multiplicator[level] * 100) - 100) + "%",   "+"+((multiplicator[level+1] * 100) - 100) + "%") };
             else
             {
                 return new List<EffectDescription>()

@@ -91,6 +91,7 @@ public class SkillSystem : IEngineSystem
         {
             Skill skill = null;
             Rounds--;
+            bool upgrade = false;
             if (upgradeCount < maxUpgrades)
             {
                 foreach (var upgSkill in unit.SkillManager.Skills)
@@ -100,8 +101,9 @@ public class SkillSystem : IEngineSystem
                     if (upgSkill.Upgradable()&&Random.value < chanceIndividualSkillUpgrade&&!skills.Contains(upgSkill))
                     {
                         skill = upgSkill.Clone();
-                        skill.Level++;
+                        //skill.Level++;
                         upgradeCount++;
+                        upgrade = true;
                         //Debug.Log("Upgrade: "+skill.Name);
                         break;
                     }
@@ -114,7 +116,7 @@ public class SkillSystem : IEngineSystem
               //  Debug.Log("NewSkill: "+skill.Name);
             }
 
-            if (!skills.Contains(skill))
+            if (!skills.Contains(skill)&&(!unit.SkillManager.HasSkill(skill)||upgrade))
             {
                // Debug.Log("Adding Skill: "+skill.Name);
                 skills.Add(skill);

@@ -188,5 +188,10 @@ namespace Game.GameActors.Units.Humans
                 return null;
             return Skills.OfType<Curse>().ToList();
         }
+
+        public bool HasSkill(Skill skill)
+        {
+            return skills.Any(s => s.Name == skill.Name);
+        }
     }
 }

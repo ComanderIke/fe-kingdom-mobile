@@ -18,9 +18,15 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
     public TextMeshProUGUI turnText;
     public TileInfoPanel TileInfoPanel;
     [SerializeField] private UICharacterViewController characterView;
-   // [SerializeField] private UICharacterViewController enemyView;
 
-    public static Action<Unit> OnUnitCircleClicked;
+    private static PlayerPhaseUI instance;
+   // [SerializeField] private UICharacterViewController enemyView;
+   private void Start()
+   {
+       instance = this;
+   }
+
+   public static Action<Unit> OnUnitCircleClicked;
     public void ShowTileInfo(Tile selectedTile)
     {
         //Debug.Log("ShowTileInfo!");
@@ -94,6 +100,12 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
                 selectionUI.HideUndo();
         }
 
+    }
+
+    public static void StaticHide()
+    {
+        if(instance!=null && instance.gameObject!=null)
+            instance.Hide();
     }
 
     public void UnitCircleClicked(Unit u)

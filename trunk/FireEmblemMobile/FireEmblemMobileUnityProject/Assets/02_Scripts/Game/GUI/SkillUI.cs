@@ -33,6 +33,7 @@ namespace LostGrace
         [SerializeField] private GameObject selectedVfx;
         [SerializeField] private GameObject selectableVfx;
         [SerializeField] private Image combatSkillActive;
+        [SerializeField] private Vector2 bigSize;
         private bool showTooltips = false;
         private bool blessed;
         public void SetSkill(Skill skill, bool big, bool blessed, bool showTooltips = false)
@@ -45,6 +46,8 @@ namespace LostGrace
             blessingEffect.gameObject.SetActive(blessed);
             if(combatSkillActive!=null)
                 combatSkillActive.gameObject.SetActive(false);
+            if(big)
+                (transform as RectTransform).sizeDelta = bigSize;
             if (skill.IsActive())
             {
                 uses.text = skill.FirstActiveMixin.Uses + "/" +
