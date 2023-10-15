@@ -29,10 +29,10 @@ public class SkillSystem : IEngineSystem
 
     }
 
-    public void LearnNewSkill(Unit unit)
+    public void LearnNewSkill(Unit unit, List<SkillBp> skillPool)
     {
         Debug.Log("Learn new SKill");
-        var skills = GenerateSkills(unit);
+        var skills = GenerateSkills(unit, skillPool);
         renderer.OnFinished += FinishedAnimation;
         skillClickedDelegate = ( skill) =>
         {
@@ -81,7 +81,7 @@ public class SkillSystem : IEngineSystem
 
     private float chanceIndividualSkillUpgrade = .1f;
     private int maxUpgrades = 2;
-    private List<Skill> GenerateSkills(Unit unit)
+    private List<Skill> GenerateSkills(Unit unit, List<SkillBp> skillPool, bool includeUpgrades=true)
     {
         Debug.Log("GENERATE SKILLS");
         List<Skill> skills = new List<Skill>();
@@ -92,7 +92,7 @@ public class SkillSystem : IEngineSystem
             Skill skill = null;
             Rounds--;
             bool upgrade = false;
-            if (upgradeCount < maxUpgrades)
+            if (upgradeCount < maxUpgrades&& includeUpgrades)
             {
                 foreach (var upgSkill in unit.SkillManager.Skills)
                 {
@@ -112,7 +112,7 @@ public class SkillSystem : IEngineSystem
 
             if (skill == null)
             {
-                skill = GenerateSkill(unit);
+                skill = GenerateSkill(unit, skillPool);
               //  Debug.Log("NewSkill: "+skill.Name);
             }
 
@@ -125,9 +125,9 @@ public class SkillSystem : IEngineSystem
 
         return skills;
     }
-    private Skill GenerateSkill(Unit unit)
+    private Skill GenerateSkill(Unit unit, List<SkillBp> skPool)
     {
-        var skillPool = new List<SkillBp>(config.CommonSkillPool);
+        var skillPool = skPool==null?new List<SkillBp>(config.CommonSkillPool):skPool;
         skillPool.AddRange(config.GetClassSkillPool(unit.rpgClass));
         Debug.Log("SKILLPOOL SIZE: "+skillPool.Count);
         int rng = Random.Range(0, skillPool.Count);

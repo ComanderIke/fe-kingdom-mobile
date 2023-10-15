@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8adcf8ab5ec4f11bcd0989248836a45, type: 3}
+  m_Name: SilentMentor
+  m_EditorClassIdentifier: 
+  <DialogName>k__BackingField: SilentMentor
+  <Text>k__BackingField: Deep in the heart of a dark forest, you come across a solitary
+    figure sitting beside a tranquil pond. The figure, dressed in enigmatic robes,
+    gazes at the water's reflection. As you approach, they acknowledge your presence
+    and offer to teach you their unique skills.
+  <Choices>k__BackingField:
+  - <Text>k__BackingField: Choose to accept the mentor's offer and embark on a path
+      of training under their guidance.
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 08c0a8cef7660a34aad15b80c154236f,
+      type: 2}
+    <NextDialogueFail>k__BackingField: {fileID: 0}
+    <AttributeRequirements>k__BackingField: []
+    <CharacterRequirements>k__BackingField: []
+    <ItemRequirements>k__BackingField: []
+    <BlessingRequirements>k__BackingField: []
+    <ResourceRequirements>k__BackingField: []
+  - <Text>k__BackingField: Decide to decline the mentor's offer, hesitant about the
+      mysterious figure's intentions.
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: af21d776f7a38b342bad3d41a29496b1,
+      type: 2}
+    <NextDialogueFail>k__BackingField: {fileID: 0}
+    <AttributeRequirements>k__BackingField: []
+    <CharacterRequirements>k__BackingField: []
+    <ItemRequirements>k__BackingField: []
+    <BlessingRequirements>k__BackingField: []
+    <ResourceRequirements>k__BackingField: []
+  - <Text>k__BackingField: Attempt to overpower the mentor, and rob them of their
+      belongings.
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 1e3a443e7510e3541bbc7b2927d55e45,
+      type: 2}
+    <NextDialogueFail>k__BackingField: {fileID: 11400000, guid: 24af490088daa834aba079b7b173f701,
+      type: 2}
+    <AttributeRequirements>k__BackingField:
+    - AttributeType: 8
+      Amount: 10
+    <CharacterRequirements>k__BackingField: []
+    <ItemRequirements>k__BackingField: []
+    <BlessingRequirements>k__BackingField: []
+    <ResourceRequirements>k__BackingField:
+    - Amount: -80
+      ResourceType: 3
+  <DialogueType>k__BackingField: 3
+  <IsStartingDialogue>k__BackingField: 1
+  <IsPortraitLeft>k__BackingField: 1
+  <DialogActor>k__BackingField: {fileID: 0}
+  <HeadLine>k__BackingField: The Silent Mentor
+  <RewardResources>k__BackingField: []
+  <RewardItems>k__BackingField: []
+  <Events>k__BackingField: []

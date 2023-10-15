@@ -5,6 +5,7 @@ using Game.AI;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Numbers;
+using Game.GameActors.Units.Skills;
 using Game.GameInput;
 using Game.GUI;
 using Game.Manager;
@@ -89,10 +90,10 @@ namespace Game.Mechanics
             LearnNewSkill(u);
         }
 
-        public void LearnNewSkill(Unit u)
+        public void LearnNewSkill(Unit u, List<SkillBp> skillPool = null)
         {
             Debug.Log("HÄH");
-            skillSystem.LearnNewSkill(u);
+            skillSystem.LearnNewSkill(u, skillPool);
         }
 
         void Expgained(Unit unit, int exp, int expBefore)

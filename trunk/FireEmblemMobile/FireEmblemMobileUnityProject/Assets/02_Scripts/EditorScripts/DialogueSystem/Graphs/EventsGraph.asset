@@ -35,6 +35,9 @@ MonoBehaviour:
   - <ID>k__BackingField: ad049841-049f-4d19-8b41-cb59cb8a288b
     <Name>k__BackingField: TheMysteriousInstructor
     <Position>k__BackingField: {x: 4128, y: 178}
+  - <ID>k__BackingField: 20233066-993d-493d-9331-1bd3cecbfc53
+    <Name>k__BackingField: TheSilentMentor
+    <Position>k__BackingField: {x: 4687, y: 1706}
   <Nodes>k__BackingField: []
   <EventNodes>k__BackingField:
   - <ID>k__BackingField: f0365265-1533-4609-86dd-57480bfe2d00
@@ -712,55 +715,6 @@ MonoBehaviour:
     <RewardResources>k__BackingField: []
     <RewardItems>k__BackingField: []
     <Events>k__BackingField: []
-  - <ID>k__BackingField: 32e6745d-dc1b-4a36-a4f3-71bf72ee0538
-    <Name>k__BackingField: MysteriousInstructor5
-    <Text>k__BackingField: You manage to overpower the instructor and gain hold of
-      his bag which is filled with valuables.
-    <IsPortraitLeft>k__BackingField: 1
-    <DialogActor>k__BackingField: {fileID: 0}
-    <Choices>k__BackingField:
-    - <Text>k__BackingField: End
-      <NodeID>k__BackingField: 
-      <NodeFailID>k__BackingField: 
-      <AttributeRequirements>k__BackingField: []
-      <CharacterRequirements>k__BackingField: []
-      <ResourceRequirements>k__BackingField: []
-      <ItemRequirements>k__BackingField: []
-      <BlessingRequirements>k__BackingField: []
-    <GroupID>k__BackingField: ad049841-049f-4d19-8b41-cb59cb8a288b
-    <DialgueType>k__BackingField: 3
-    <Position>k__BackingField: {x: 5378, y: 1371}
-    <Headline>k__BackingField: 
-    <RewardResources>k__BackingField:
-    - Amount: 100
-      ResourceType: 0
-    - Amount: -20
-      ResourceType: 3
-    <RewardItems>k__BackingField:
-    - {fileID: 11400000, guid: 325f81d1108930648b0929426f1b080b, type: 2}
-    <Events>k__BackingField: []
-  - <ID>k__BackingField: 23adc13b-ba69-4e31-b4f4-5e2e66fee424
-    <Name>k__BackingField: MysteriousInstructor3
-    <Text>k__BackingField: Your caution prevents you from engaging with the mysterious
-      instructor, and you continue your journey, avoiding the risks and unknown practices.
-    <IsPortraitLeft>k__BackingField: 1
-    <DialogActor>k__BackingField: {fileID: 0}
-    <Choices>k__BackingField:
-    - <Text>k__BackingField: End
-      <NodeID>k__BackingField: 
-      <NodeFailID>k__BackingField: 
-      <AttributeRequirements>k__BackingField: []
-      <CharacterRequirements>k__BackingField: []
-      <ResourceRequirements>k__BackingField: []
-      <ItemRequirements>k__BackingField: []
-      <BlessingRequirements>k__BackingField: []
-    <GroupID>k__BackingField: ad049841-049f-4d19-8b41-cb59cb8a288b
-    <DialgueType>k__BackingField: 3
-    <Position>k__BackingField: {x: 5378, y: 611}
-    <Headline>k__BackingField: 
-    <RewardResources>k__BackingField: []
-    <RewardItems>k__BackingField: []
-    <Events>k__BackingField: []
   - <ID>k__BackingField: e8c232a4-ba70-469d-bf22-b388f72beb1d
     <Name>k__BackingField: MysteriousInstructor4
     <Text>k__BackingField: Driven by your thirst for power, you betray the instructor
@@ -850,6 +804,295 @@ MonoBehaviour:
       ResourceType: 11
     <RewardItems>k__BackingField: []
     <Events>k__BackingField: []
+  - <ID>k__BackingField: 40f17fdc-4b0f-451c-b55c-6b553e5d1aad
+    <Name>k__BackingField: SilentMentor
+    <Text>k__BackingField: Deep in the heart of a dark forest, you come across a
+      solitary figure sitting beside a tranquil pond. The figure, dressed in enigmatic
+      robes, gazes at the water's reflection. As you approach, they acknowledge your
+      presence and offer to teach you their unique skills.
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Choose to accept the mentor's offer and embark on a
+        path of training under their guidance.
+      <NodeID>k__BackingField: f42fdfa6-87b8-4ea5-b2eb-ba433f8facdf
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+    - <Text>k__BackingField: Decide to decline the mentor's offer, hesitant about
+        the mysterious figure's intentions.
+      <NodeID>k__BackingField: 9690f522-e6da-4d8e-b494-b8eea809eba5
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+    - <Text>k__BackingField: Attempt to overpower the mentor, and rob them of their
+        belongings.
+      <NodeID>k__BackingField: 352986b7-1bc1-4ae8-828f-c83f7f0a3a33
+      <NodeFailID>k__BackingField: 181d5d3f-54ef-4421-842e-20b1d641e00e
+      <AttributeRequirements>k__BackingField:
+      - AttributeType: 8
+        Amount: 10
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField:
+      - Amount: -80
+        ResourceType: 3
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+    <GroupID>k__BackingField: 20233066-993d-493d-9331-1bd3cecbfc53
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 4712, y: 1792}
+    <Headline>k__BackingField: The Silent Mentor
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: 32e6745d-dc1b-4a36-a4f3-71bf72ee0538
+    <Name>k__BackingField: MysteriousInstructor5
+    <Text>k__BackingField: You manage to overpower the instructor and gain hold of
+      his bag which is filled with valuables.
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: End
+      <NodeID>k__BackingField: 
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+    <GroupID>k__BackingField: ad049841-049f-4d19-8b41-cb59cb8a288b
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 5378, y: 1241}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField:
+    - Amount: 100
+      ResourceType: 0
+    - Amount: -20
+      ResourceType: 3
+    <RewardItems>k__BackingField:
+    - {fileID: 11400000, guid: 325f81d1108930648b0929426f1b080b, type: 2}
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: 23adc13b-ba69-4e31-b4f4-5e2e66fee424
+    <Name>k__BackingField: MysteriousInstructor3
+    <Text>k__BackingField: Your caution prevents you from engaging with the mysterious
+      instructor, and you continue your journey, avoiding the risks and unknown practices.
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: End
+      <NodeID>k__BackingField: 
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+    <GroupID>k__BackingField: ad049841-049f-4d19-8b41-cb59cb8a288b
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 5380, y: 606}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: f42fdfa6-87b8-4ea5-b2eb-ba433f8facdf
+    <Name>k__BackingField: SilentMentor1
+    <Text>k__BackingField: DialogueText
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Instead of new knowledge ask for advice to improve upon
+        your existing skills.
+      <NodeID>k__BackingField: 5dfd5af6-4a41-44b4-aa98-ce4b326e4a1e
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField:
+      - Amount: 50
+        ResourceType: 0
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+    - <Text>k__BackingField: Learn the mentor's ways of compassion and healing, vowing
+        to use your newfound abilities to aid those in need.
+      <NodeID>k__BackingField: 1943c0c9-d885-4907-84dc-b18294fc95f1
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField:
+      - Amount: 80
+        ResourceType: 3
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+    - <Text>k__BackingField: Embrace their teachings soly focusing on your mentors
+        advice.
+      <NodeID>k__BackingField: 27c75f68-3553-421e-adf5-56a8d677aba0
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+    <GroupID>k__BackingField: 20233066-993d-493d-9331-1bd3cecbfc53
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 5832, y: 1792}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: 352986b7-1bc1-4ae8-828f-c83f7f0a3a33
+    <Name>k__BackingField: SilentMentor3Success
+    <Text>k__BackingField: Driven by low morality and the thirst for power, you attempt
+      to overpower and rob the mentor of their knowledge. The confrontation turns
+      hostile, leading to a fierce battle
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: End
+      <NodeID>k__BackingField: 
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+    <GroupID>k__BackingField: 20233066-993d-493d-9331-1bd3cecbfc53
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 5832, y: 2452}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField:
+    - Amount: -20
+      ResourceType: 3
+    - Amount: 300
+      ResourceType: 0
+    - Amount: 50
+      ResourceType: 4
+    <RewardItems>k__BackingField:
+    - {fileID: 11400000, guid: c60c13a3599d5564b866250aa84f16a9, type: 2}
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: 181d5d3f-54ef-4421-842e-20b1d641e00e
+    <Name>k__BackingField: SilentMentor3Fail
+    <Text>k__BackingField: You lose the battle and the silent mentor leaves in disappointment.
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: End
+      <NodeID>k__BackingField: 
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+    <GroupID>k__BackingField: 20233066-993d-493d-9331-1bd3cecbfc53
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 5832, y: 2942}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField:
+    - Amount: -10
+      ResourceType: 3
+    - Amount: -99
+      ResourceType: 4
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: 9690f522-e6da-4d8e-b494-b8eea809eba5
+    <Name>k__BackingField: SilentMentor2
+    <Text>k__BackingField: Your hesitation about the mentor's intentions leads you
+      to decline their offer, avoiding involvement with the enigmatic figure.
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: End
+      <NodeID>k__BackingField: 
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+    <GroupID>k__BackingField: 20233066-993d-493d-9331-1bd3cecbfc53
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 5832, y: 2108}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: 5dfd5af6-4a41-44b4-aa98-ce4b326e4a1e
+    <Name>k__BackingField: TheSilentMentor1a
+    <Text>k__BackingField: After a short examination by the mentor, he senses potential
+      in one of your skills. He write down his knowledge an hands you the scroll.
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Thank the mentor and move on.
+      <NodeID>k__BackingField: 
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+    <GroupID>k__BackingField: 20233066-993d-493d-9331-1bd3cecbfc53
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 7075, y: 1765}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField:
+    - {fileID: 11400000, guid: 325f81d1108930648b0929426f1b080b, type: 2}
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: 27c75f68-3553-421e-adf5-56a8d677aba0
+    <Name>k__BackingField: TheSilentMentor1c
+    <Text>k__BackingField: You immerse yourself in the mentor's silent teachings,
+      focusing on meditation, patience, and inner strength. Over time, you develop
+      a deep sense of inner peace and resilience,. A new power awakend within you.
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Thank the mentor and move on.
+      <NodeID>k__BackingField: 
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+    <GroupID>k__BackingField: 20233066-993d-493d-9331-1bd3cecbfc53
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 7065, y: 2627}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField:
+    - {fileID: 11400000, guid: c60c13a3599d5564b866250aa84f16a9, type: 2}
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: 1943c0c9-d885-4907-84dc-b18294fc95f1
+    <Name>k__BackingField: TheSilentMentor1b
+    <Text>k__BackingField: You wholeheartedly embrace the mentor's ways of compassion
+      and healing, vowing to use your newfound abilities to aid those in need. As
+      you hone your skills, you become a healer and protector, tending to the wounded
+      and helping survivors find solace and hope.
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Thank the mentor and move on.
+      <NodeID>k__BackingField: 
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+    <GroupID>k__BackingField: 20233066-993d-493d-9331-1bd3cecbfc53
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 7075, y: 2184}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField:
+    - {fileID: 11400000, guid: c60c13a3599d5564b866250aa84f16a9, type: 2}
+    <Events>k__BackingField: []
   <OldGroupNames>k__BackingField:
   - TheKnightAndHisHarem
   - ChasedBySkeletons
@@ -858,6 +1101,7 @@ MonoBehaviour:
   - SecretMerchant
   - WingedCreature
   - TheMysteriousInstructor
+  - TheSilentMentor
   <OldUngroupedNodeNames>k__BackingField: []
   <OldGroupedNodeNames>k__BackingField:
     list:
@@ -900,11 +1144,21 @@ MonoBehaviour:
       Value:
       - MysteriousInstructor1
       - MysteriousInstructor2
-      - MysteriousInstructor5
-      - MysteriousInstructor3
       - MysteriousInstructor4
       - MysteriousInstructor2a
       - MysteriousInstructor2b
+      - MysteriousInstructor5
+      - MysteriousInstructor3
+    - Key: TheSilentMentor
+      Value:
+      - SilentMentor
+      - SilentMentor1
+      - SilentMentor3Success
+      - SilentMentor3Fail
+      - SilentMentor2
+      - TheSilentMentor1a
+      - TheSilentMentor1c
+      - TheSilentMentor1b
   <FightNodes>k__BackingField:
   - <ID>k__BackingField: 36c0ee15-7245-41c5-a77c-30ff36dd6224
     <Name>k__BackingField: KnightHarem4

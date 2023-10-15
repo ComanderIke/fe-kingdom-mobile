@@ -55,6 +55,7 @@ namespace LostGrace
        
        
         [SerializeField] private GameObject moveSkill;
+        public event Action<ChooseSkillButtonUI> OnClick;
       
         private Vector3 defaultSkillPosition;
         private bool locked = false;
@@ -323,19 +324,22 @@ namespace LostGrace
 
         public void Clicked()
         {
-            Select();
+            OnClick?.Invoke(this);
             UpdateUI();
         }
 
-        void Select()
+        public void Select()
         {
-            transform.localScale = selectedScale;
+            LeanTween.scale(gameObject, selectedScale, .1f).setEaseOutQuad();
+            //transform.localScale = selectedScale;
         }
 
         [SerializeField] private Vector3 selectedScale;
-        void Deselect()
+
+        public void Deselect()
         {
-            transform.localScale = new Vector3(1,1,1);
+            LeanTween.scale(gameObject, new Vector3(1,1,1), .1f).setEaseInQuad();
+            //transform.localScale = new Vector3(1,1,1);
         }
     }
 

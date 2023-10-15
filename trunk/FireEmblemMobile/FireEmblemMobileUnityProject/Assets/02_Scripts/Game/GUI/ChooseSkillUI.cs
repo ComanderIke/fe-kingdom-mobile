@@ -48,7 +48,15 @@ public class ChooseSkillUI : MonoBehaviour, ISkillUIRenderer
         this.unit = unit;
         this.skill1 = skill1;
         this.skill2 = skill2;
+        skillChosen = false;
         this.skill3 = skill3;
+        selected = null;
+        chooseSkill1.OnClick -= SkillButtonClicked;
+        chooseSkill2.OnClick -= SkillButtonClicked;
+        chooseSkill3.OnClick -= SkillButtonClicked;
+        chooseSkill1.OnClick += SkillButtonClicked;
+        chooseSkill2.OnClick += SkillButtonClicked;
+        chooseSkill3.OnClick += SkillButtonClicked;
         uiAnimation.Init(unit.visuals.CharacterSpriteSet);
         uIIdleAnimation.runtimeAnimatorController = unit.visuals.Prefabs.UIAnimatorController;
         unit.SkillManager.OnSkillsChanged -= UpdateUI;
@@ -56,10 +64,36 @@ public class ChooseSkillUI : MonoBehaviour, ISkillUIRenderer
         UpdateUI();
     }
 
+    private ChooseSkillButtonUI selected;
+    void SkillButtonClicked(ChooseSkillButtonUI button)
+    {
+        if (selected != null)
+            selected.Deselect();
+        selected = button;
+        button.Select();
+    }
+
+    private bool skillChosen = false;
+    public void ChooseClicked()
+    {
+        if (selected == null||skillChosen)
+            return;
+        skillChosen = true;
+        Debug.Log("SkillSelected");
+
+        if (unit != null)
+            skillCount = unit.SkillManager.Skills.Count;
+        float extraOffset = skillCount * xOffsetPerSkill;
+        selected.MoveSkill(new Vector3(skillsUI.transform.position.x+ xOffsetFixed+extraOffset, skillsUI.transform.position.y, skillsUI.transform.position.z),()=> skillsUI.AddSkill(chooseSkill1.skill));
+       
+        MonoUtility.DelayFunction(()=>onSkillChosen?.Invoke(chooseSkill1.skill), 1.5f);
+    }
+
     void UpdateUI()
     {
         //Debug.Log("Unit has Skill: "+skill1.Name+" "+unit.SkillManager.HasSkill(skill1));
         chooseSkill1.SetSkill(skill1,unit.Blessing!=null,unit.SkillManager.HasSkill(skill1),unit.SkillManager.IsFull());
+        
         //Debug.Log("Unit has Skill: "+skill2.Name+" "+unit.SkillManager.HasSkill(skill2));
         chooseSkill2.SetSkill(skill2,unit.Blessing!=null,unit.SkillManager.HasSkill(skill2),unit.SkillManager.IsFull());
         //Debug.Log("Unit has Skill: "+skill3.Name+" "+unit.SkillManager.HasSkill(skill3));

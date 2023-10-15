@@ -18,7 +18,7 @@ namespace Game.GameActors.Units.Humans
         private List<Skill> skills;
         private Unit unit;
         private Blessing blessing;
-        public int maxSkillCount = 5;
+        public int maxSkillCount = 4;
         
 
         public void AddStartSkills()

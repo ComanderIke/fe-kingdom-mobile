@@ -30,10 +30,11 @@ namespace Game.GameActors.Units
         [FormerlySerializedAs("EquippedWeapon")] public WeaponBP equippedWeaponBp;
         public RelicBP EquippedRelic1;
         public string Name;
-
+        [SerializeField] private bool isBoss;
+        [SerializeField] private bool isBig2x2;
         [SerializeField] public StockedItemBP combatItem1;
         [SerializeField] public StockedItemBP combatItem2;
-        
+       
         [SerializeField]
         public Stats stats;
         [SerializeField]

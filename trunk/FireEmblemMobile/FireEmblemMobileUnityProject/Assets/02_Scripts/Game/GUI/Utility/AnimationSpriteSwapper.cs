@@ -17,9 +17,20 @@ namespace LostGrace
         public void Init(CharacterSpriteSet spriteSet)
         {
             this.spriteSet = spriteSet;
-      
+            if(weaponSpriteRenderer!=null)
+                weaponSpriteRenderer.flipX = spriteRenderer.flipX;
+
         }
-        
+        public void OnChargeAnimation(int frame)
+        {
+            if (spriteSet is BossSpriteSet bossSpriteSet)
+            {
+                spriteRenderer.sprite = bossSpriteSet.RunningSpritesAlternate[frame];
+                if (weaponSpriteRenderer != null && bossSpriteSet.RunningSpritesAlternateWeapon != null &&
+                    bossSpriteSet.RunningSpritesAlternateWeapon.Length > frame)
+                    weaponSpriteRenderer.sprite = bossSpriteSet.RunningSpritesAlternateWeapon[frame];
+            }
+        }
         public void OnWalkAnimation(int frame)
         {
             spriteRenderer.sprite=spriteSet.WalkSprites[frame];
@@ -31,6 +42,16 @@ namespace LostGrace
             spriteRenderer.sprite=spriteSet.IdleSprites[frame];
             if(weaponSpriteRenderer!=null&&spriteSet.IdleSpritesWeapon!=null&& spriteSet.IdleSpritesWeapon.Length>frame)
                 weaponSpriteRenderer.sprite = spriteSet.IdleSpritesWeapon[frame];
+        }
+        public void OnIdleAlternateAnimation(int frame)
+        {
+            if (spriteSet is BossSpriteSet bossSpriteSet)
+            {
+                spriteRenderer.sprite = bossSpriteSet.IdleSpritesAlternate[frame];
+                if (weaponSpriteRenderer != null && bossSpriteSet.IdleSpritesAlternateWeapon != null &&
+                    bossSpriteSet.IdleSpritesAlternateWeapon.Length > frame)
+                    weaponSpriteRenderer.sprite = bossSpriteSet.IdleSpritesAlternateWeapon[frame];
+            }
         }
         public void OnAttackAnimation()
         {
