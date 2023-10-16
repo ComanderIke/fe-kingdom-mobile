@@ -29,7 +29,7 @@ public class EventEncounterNode : EncounterNode
     {
         base.Activate(party);
         int cnt = 0;
-        while (party.HasVisitedEvent(randomEvent)|| cnt>100)
+        while (party.HasVisitedEvent(randomEvent)&& cnt<100)
         {
             randomEvent = GenerateEvent();
             cnt++;
