@@ -210,14 +210,14 @@ namespace Game.Grid
             return !invalid;
         }
 
-        public bool IsTileAccessible(int x, int y, IGridActor character)
+        public bool IsTileAccessible(int x, int y, IGridActor character, bool checkUnits=true)
         {
             bool invalid = (x < 0) || (y < 0) || (x >= GridManager.width) || (y >= GridManager.height);
             var tile = Tiles[x, y];
             if (!invalid)
             {
                 invalid = !character.GetActorGridComponent().CanMoveOnTo(tile);
-                if (tile.GridObject != null)
+                if (tile.GridObject != null&&checkUnits)
                 {
                     if (tile.GridObject != character)
                         invalid = true;
@@ -226,7 +226,10 @@ namespace Game.Grid
 
             return !invalid;
         }
-
+        public bool IsTileFreeAndNotBlocked(int x, int y)
+        {
+            return Tiles[x, y].HasFreeSpace() && Tiles[x,y].TileData.walkable;
+        }
         public bool IsTileFree(int x, int y)
         {
             return Tiles[x, y].HasFreeSpace();
@@ -255,5 +258,7 @@ namespace Game.Grid
         {
             return gridSessionData.IsTargetable(x,y);
         }
+
+       
     }
 }

@@ -241,8 +241,8 @@ namespace Game.Mechanics
                 battlePreview.AttacksData = battleSimulation.combatRounds[0].AttacksData;
                 Debug.Log(attacker.Hp+" "+battleSimulation.combatRounds[0].AttackerStats.MaxHp+ " "+battleSimulation.combatRounds[0].AttackerStats.CurrentHp);
                 Debug.Log(defender.Hp+" "+battleSimulation.combatRounds[0].DefenderStats.MaxHp+ " "+battleSimulation.combatRounds[0].DefenderStats.CurrentHp);
-                battlePreview.AttackerStats = new BattlePreviewStats(battleSimulation.combatRounds[0].AttackerStats,battleSimulation.combatRounds[0].AttackerHP);
-                battlePreview.DefenderStats = new BattlePreviewStats(battleSimulation.combatRounds[0].DefenderStats,battleSimulation.combatRounds[0].DefenderHP);
+                battlePreview.AttackerStats = new BattlePreviewStats(battleSimulation.combatRounds[0].AttackerStats,true, battleSimulation.combatRounds[0].AttackerHP);
+                battlePreview.DefenderStats = new BattlePreviewStats(battleSimulation.combatRounds[0].DefenderStats,battleSimulation.combatRounds[0].DefenderCanCounter, battleSimulation.combatRounds[0].DefenderHP);
                 // battlePreview.AttackerStats = new BattlePreviewStats(attacker.BattleComponent.BattleStats.GetDamage(),
                 //     attacker.Stats.BaseAttributes.AGI, defenderActor.BattleComponent.BattleStats.GetDamageType(),
                 //     defenderActor.BattleComponent.BattleStats.GetDamageType() == DamageType.Physical
@@ -285,7 +285,7 @@ namespace Game.Mechanics
                     0,
                     battleSimulation.combatRounds[0].DefenderAttackCount, attacker.Hp, attacker.MaxHp,
                     battleSimulation.Attacker
-                        .Hp); //, attacker.Sp, attacker.Stats.MaxSp, battleSimulation.Attacker.Sp, attacker.SpBars, battleSimulation.Attacker.SpBars, attacker.MaxSpBars);
+                        .Hp, true); //, attacker.Sp, attacker.Stats.MaxSp, battleSimulation.Attacker.Sp, attacker.SpBars, battleSimulation.Attacker.SpBars, attacker.MaxSpBars);
                 Debug.Log(attacker.BattleComponent.BattleStats.GetDamageType());
                 Debug.Log(battlePreview.DefenderStats);
                 Debug.Log(battleSimulation.Defender);
@@ -298,7 +298,7 @@ namespace Game.Mechanics
                     0,
                    0, defender.Hp, defender.MaxHp,
                     battleSimulation.AttackableTarget
-                        .Hp);
+                        .Hp,false);
             }
             return battlePreview;
         }

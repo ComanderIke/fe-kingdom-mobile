@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.GameActors.Units.CharStateEffects;
 using Game.Mechanics;
 using LostGrace;
 using MoreMountains.Feedbacks;
@@ -26,22 +27,34 @@ namespace Game.GameActors.Units.OnGameObject
         private static readonly int AnimationDownRight = Animator.StringToHash("BattleAnimationDownRight");
         private static readonly int AnimationUpLeft = Animator.StringToHash("BattleAnimationUpLeft");
         private static readonly int AnimationUpRight = Animator.StringToHash("BattleAnimationUpRight");
+        [SerializeField] private MMF_Player walkInFeedbacks;
+        [SerializeField] private MMF_Player idleFeedbacks;
+        [SerializeField] private MMF_Player criticalFeedbacks;
+        [SerializeField] private MMF_Player attackFeedbacks;
+        [SerializeField] private MMF_Player dodgeFeedbacks;
+        [SerializeField] private HitFeedbackController hitFeedbackController;
         [FormerlySerializedAs("unitBp")] public Unit unit;
         private Vector3 lastPosition;
         private bool moving;
         private int FrameCountMovingCheck= 0;
         private int frameCount = 0;
         [SerializeField]private MMF_Player deathFeedbacks;
+        private static readonly int AlternateWalk = Animator.StringToHash("AlternateWalk");
+
         void Start()
         {
             // if(unit!=null)
             //  unit.TurnStateManager.onSelected += SetSelected;
             lastPosition = transform.position;
+            Unit.OnUnitDamaged -= UnitDamaged;
+            Unit.OnUnitDamaged += UnitDamaged;
         }
 
         
         private void Update()
         {
+            if (lockAnimation)
+                return;
            // Debug.Log(name+" "+Vector3.Distance(lastPosition,transform.position));
             if (Vector3.Distance(lastPosition,transform.position)>0.001f)
             {
@@ -67,10 +80,32 @@ namespace Game.GameActors.Units.OnGameObject
             lastPosition = transform.position;
         }
 
+      
+
         private void OnDestroy()
         {
-            // if(unit!=null)
+            if (unit != null)
+            {
+                Unit.OnUnitDamaged -= UnitDamaged;
+                unit.StatusEffectManager.OnStatusEffectAdded -= StatusEffectAnimation;
+                unit.StatusEffectManager.OnStatusEffectRemoved -= StatusEffectRemovedAnimation;
+            }
             //     unit.TurnStateManager.onSelected -= SetSelected;
+        }
+
+        private void UnitDamaged(Unit unit1, int damage, DamageType damagetype, bool crit, bool eff)
+        {
+            if (unit1 == unit)
+            {
+                DamagedState state = DamagedState.Damage;
+                if (crit)
+                    state = DamagedState.HighDmg;
+                if (damage == 0)
+                    state = DamagedState.NoDamage;
+                Damaged(1.0f, state);
+
+            }
+                
         }
 
         public void AttackConnected()
@@ -88,6 +123,42 @@ namespace Game.GameActors.Units.OnGameObject
         // {
         //     animator.SetBool(Selected, selected);
         // }
+        public void Attack(float playSpeed)
+        {
+            // PlayAtSpeed(attack, playSpeed);
+            attackFeedbacks.PlayFeedbacks();
+          //  spriteRenderer.sortingOrder = sortOrderAttack;
+      
+        }
+        public void Critical(float playSpeed)
+        {
+            //PlayAtSpeed(critical, playSpeed);
+            criticalFeedbacks.PlayFeedbacks();
+           // spriteRenderer.sortingOrder = sortOrderAttack;
+        }
+        public void Death(float playSpeed)
+        {
+            // PlayAtSpeed(death, playSpeed);
+       
+            deathFeedbacks.PlayFeedbacks();
+           // spriteRenderer.sortingOrder = sortOrderNormal;
+        }
+        public void Dodge(float playSpeed)
+        {
+            //PlayAtSpeed(dodge, playSpeed);
+            dodgeFeedbacks.PlayFeedbacks();
+           // spriteRenderer.sortingOrder = sortOrderNormal;
+        }
+
+    
+        public void Damaged(float playSpeed,DamagedState damagedState)
+        {
+       
+            hitFeedbackController.SetState(damagedState);
+            hitFeedbackController.PlayHitFeedback();
+         //  spriteRenderer.sortingOrder = sortOrderNormal;
+            // PlayAtSpeed(damaged, playSpeed);
+        }
         public void DeathAnimation()
         {
             deathFeedbacks.PlayFeedbacks();
@@ -125,10 +196,26 @@ namespace Game.GameActors.Units.OnGameObject
             animator.SetTrigger(AnimationUpRight);
         }
         // protected AnimationClipOverrides clipOverrides;
+        void StatusEffectAnimation(Unit u, BuffDebuffBase effect)
+        {
+            Debug.Log("StatusEffectAdded: "+effect.name);
+            if (effect.name.Contains("Stunned"))
+            {
+                animator.SetBool(Stunned,true);
+            }
+        }
+        void StatusEffectRemovedAnimation(Unit u, BuffDebuffBase effect)
+        {
+            if (effect.name.Contains("Stunned"))
+            {
+                animator.SetBool(Stunned,false);
+            }
+        }
         public void SetUnit(Unit unit1)
         {
             this.unit = unit1;
-        
+            unit.StatusEffectManager.OnStatusEffectAdded += StatusEffectAnimation;
+            unit.StatusEffectManager.OnStatusEffectRemoved+= StatusEffectRemovedAnimation;
             spriteSwapper.Init(unit.Visuals.CharacterSpriteSet);
             // if (unit1.visuals.CharacterSpriteSet.idleAnimation != null)
             //     return;
@@ -145,6 +232,15 @@ namespace Game.GameActors.Units.OnGameObject
             //     clipOverrides["Idle"] = unit1.visuals.CharacterSpriteSet.idleAnimation;
             // }
             // aoc.ApplyOverrides(clipOverrides);
+        }
+
+        private bool lockAnimation = false;
+        private static readonly int Stunned = Animator.StringToHash("Stunned");
+
+        public void SetAlternateWalk(bool value)
+        {
+            lockAnimation = value;
+            animator.SetBool("AlternateWalk", value);
         }
     }
 

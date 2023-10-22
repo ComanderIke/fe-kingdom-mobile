@@ -25,8 +25,9 @@ namespace Game.Mechanics.Battle
         public int CurrentHp;
         public int MaxHp;
         public int AfterBattleHp;
+        public bool CanCounter;
         
-        public BattlePreviewStats(int attack, int speed, DamageType damageType, int defense, int skill, int damage, int hit,int crit, int attackCount, int currentHp, int maxHp, int afterBattleHp)//, int currentSp, int maxSp, int afterBattleSp, int currentSpBars,int afterSpBars, int maxSpBars)
+        public BattlePreviewStats(int attack, int speed, DamageType damageType, int defense, int skill, int damage, int hit,int crit, int attackCount, int currentHp, int maxHp, int afterBattleHp, bool canCounter)//, int currentSp, int maxSp, int afterBattleSp, int currentSpBars,int afterSpBars, int maxSpBars)
         {
             Attack = attack;
             Speed = speed;
@@ -40,6 +41,7 @@ namespace Game.Mechanics.Battle
             CurrentHp = currentHp;
             MaxHp = maxHp;
             AfterBattleHp = afterBattleHp;
+            CanCounter = canCounter;
             // CurrentSp = currentSp;
             // MaxSp = maxSp;
             // AfterBattleSp = afterBattleSp;
@@ -48,8 +50,8 @@ namespace Game.Mechanics.Battle
             // MaxSpBars = maxSpBars;
         }
 
-        public BattlePreviewStats(DuringBattleCharacterStats stats, int hpAfter):this(stats.Attack, stats.Speed, stats.DamageType, stats.Defense, stats.Skill, stats.Damage, stats.Hit,
-            stats.Crit, stats.AttackCount, stats.CurrentHp, stats.MaxHp, hpAfter)
+        public BattlePreviewStats(DuringBattleCharacterStats stats, bool canCounter, int hpAfter):this(stats.Attack, stats.Speed, stats.DamageType, stats.Defense, stats.Skill, stats.Damage, stats.Hit,
+            stats.Crit, stats.AttackCount, stats.CurrentHp, stats.MaxHp, hpAfter, canCounter)
         {
            
         }

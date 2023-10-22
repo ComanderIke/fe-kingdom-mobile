@@ -89,22 +89,22 @@ public class BattleUI : MonoBehaviour
             left.ShowInBattleContext(battlePreview.Attacker.Visuals.CharacterSpriteSet.FaceSprite, battlePreview.AttackerStats.TotalDamage,
                 battlePreview.AttackerStats.Hit, battlePreview.AttackerStats.Crit,
                 battlePreview.AttackerStats.CurrentHp, battlePreview.AttackerStats.MaxHp,
-                battlePreview.AttackerStats.AfterBattleHp);
+                battlePreview.AttackerStats.AfterBattleHp, true);
             right.ShowInBattleContext(battlePreview.Defender.Visuals.CharacterSpriteSet.FaceSprite, battlePreview.DefenderStats.TotalDamage,
                 battlePreview.DefenderStats.Hit, battlePreview.DefenderStats.Crit,
                 battlePreview.DefenderStats.CurrentHp, battlePreview.DefenderStats.MaxHp,
-                battlePreview.DefenderStats.AfterBattleHp, battlePreview.DefenderStats.AttackCount != 0);
+                battlePreview.DefenderStats.AfterBattleHp, battlePreview.DefenderStats.CanCounter);
         }
         else
         {
             left.ShowInBattleContext(battlePreview.Defender.Visuals.CharacterSpriteSet.FaceSprite, battlePreview.DefenderStats.TotalDamage,
                 battlePreview.DefenderStats.Hit, battlePreview.DefenderStats.Crit,
                 battlePreview.DefenderStats.CurrentHp, battlePreview.DefenderStats.MaxHp,
-                battlePreview.DefenderStats.AfterBattleHp, battlePreview.DefenderStats.AttackCount != 0);
+                battlePreview.DefenderStats.AfterBattleHp, battlePreview.DefenderStats.CanCounter);
             right.ShowInBattleContext(battlePreview.Attacker.Visuals.CharacterSpriteSet.FaceSprite, battlePreview.AttackerStats.TotalDamage,
                 battlePreview.AttackerStats.Hit, battlePreview.AttackerStats.Crit,
                 battlePreview.AttackerStats.CurrentHp, battlePreview.AttackerStats.MaxHp,
-                battlePreview.AttackerStats.AfterBattleHp);
+                battlePreview.AttackerStats.AfterBattleHp, true);
         }
 
         attackOrderUI.Show(battlePreview.AttacksData, playerUnitIsAttacker);

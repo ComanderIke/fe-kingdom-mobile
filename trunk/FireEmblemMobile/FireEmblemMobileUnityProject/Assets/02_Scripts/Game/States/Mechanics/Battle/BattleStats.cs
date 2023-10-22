@@ -95,6 +95,10 @@ namespace Game.Mechanics.Battle
             return owner.GetEquippedWeapon().AttackRanges.Length == 1 &&
                    owner.GetEquippedWeapon().AttackRanges.Contains(1);
         }
+        public bool CanCounter(int attackingRange)
+        {
+            return owner.GetEquippedWeapon().AttackRanges.Contains(attackingRange);
+        }
         public bool IsRangeOnly()
         {
             return !owner.GetEquippedWeapon().AttackRanges.Contains(1);

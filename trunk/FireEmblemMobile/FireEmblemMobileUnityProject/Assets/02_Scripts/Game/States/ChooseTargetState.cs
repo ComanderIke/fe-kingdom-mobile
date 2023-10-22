@@ -187,18 +187,18 @@ namespace Game.Mechanics
             }
         }
 
-        private void PositionTargetClicked(IPosTargeted skill, int x, int y, bool wait)
+        private void PositionTargetClicked(IPosTargeted skillMixin, int x, int y, bool wait)
         {
-             if (!skill.Rooted)
+             if (!skillMixin.Rooted)
              {
                  if (gridSystem.IsTargetAble(x, y))
                  {
 
-                     if (gridSystem.cursor.GetCurrentTile() == gridSystem.Tiles[x, y]|| !skill.ConfirmPosition())
+                     if (gridSystem.cursor.GetCurrentTile() == gridSystem.Tiles[x, y]|| !skillMixin.ConfirmPosition())
                      {
                          Debug.Log("SkillActivation!");
-                         var targets = skill.GetAllTargets(selectedUnit, gridSystem.Tiles, x,y);
-                         skill.Activate(selectedUnit, gridSystem.Tiles, x,y);
+                         var targets = skillMixin.GetAllTargets(selectedUnit, gridSystem.Tiles, x,y);
+                         skillMixin.Activate(selectedUnit, gridSystem.Tiles, x,y);
                          LastSkillTargetPosition = new Vector2Int(x, y);
                          if(wait)
                             new GameplayCommands().Wait(selectedUnit);
@@ -223,12 +223,12 @@ namespace Game.Mechanics
                          gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
                          gridSystem.HideCast();
                          Debug.Log("ShowSkillCastRange:");
-                         if(skill is ActiveSkillMixin s)
+                         if(skillMixin is ActiveSkillMixin s)
                             ShowSkillCastRange(s);
-                         else if(skill is Item)
+                         else if(skillMixin is Item)
                              ShowItemCastRange();
                          Debug.Log("ShowSkillCast");
-                         gridSystem.ShowCast(skill.GetSize(), skill.TargetArea, skill.EffectType);
+                         gridSystem.ShowCast(skillMixin.GetSize(), skillMixin.TargetArea, skillMixin.EffectType);
                      }
 
 
@@ -242,7 +242,7 @@ namespace Game.Mechanics
                      if (gridSystem.cursor.GetCurrentTile() == gridSystem.Tiles[x, y])
                      {
                          LastSkillTargetPosition = new Vector2Int(x, y);
-                         skill.Activate(selectedUnit, gridSystem.Tiles, x,y);
+                         skillMixin.Activate(selectedUnit, gridSystem.Tiles, x,y);
                          if(wait)
                             new GameplayCommands().Wait(selectedUnit);
                          new GameplayCommands().ExecuteInputActions(()=>
@@ -255,9 +255,12 @@ namespace Game.Mechanics
                      {
                          gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
                          gridSystem.HideCast();
-                         ShowSkillCastRange(((Skill)skill).FirstActiveMixin);
+                         if(skillMixin is ActiveSkillMixin s)
+                             ShowSkillCastRange(s);
+                         else if(skillMixin is Item)
+                             ShowItemCastRange();
                          gridSystem.ShowRootedCast(selectedUnit.GridComponent.GridPosition.AsVector(),
-                             skill.GetSize(), skill.TargetArea);
+                             skillMixin.GetSize(), skillMixin.TargetArea, skillMixin.EffectType, x, y);
                      }
                  }
                     

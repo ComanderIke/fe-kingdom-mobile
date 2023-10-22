@@ -76,6 +76,8 @@ namespace Game.Mechanics
             Defender = defender.Clone() as IBattleActor;
             this.continuos = continuos;
             Attacker.BattleComponent.InitiatesBattle(Defender);
+            int range =(int) new Vector2(attackPosition.X - Defender.GridComponent.GridPosition.X,
+                attackPosition.Y - defender.GridComponent.GridPosition.Y).magnitude;
             if (continuos)
             {
                 //Multiple Rounds Get Count
@@ -92,7 +94,8 @@ namespace Game.Mechanics
                     DefenderCrit = Defender.BattleComponent.BattleStats.GetCritAgainstTarget(attacker),
                     AttackerAttackCount = Attacker.BattleComponent.BattleStats.GetAttackCountAgainst(Defender),
                     DefenderAttackCount = Defender.BattleComponent.BattleStats.GetAttackCountAgainst(Attacker),
-                    AttacksData = new List<AttackData>()
+                    AttacksData = new List<AttackData>(),
+                    DefenderCanCounter = Defender.BattleComponent.BattleStats.CanCounter(range)
                 };
                 combatRound.AttackerStats =  new DuringBattleCharacterStats(Attacker.BattleComponent.BattleStats.GetDamage(),
                     Attacker.Stats.BaseAttributes.AGI, Defender.BattleComponent.BattleStats.GetDamageType(),
@@ -132,7 +135,8 @@ namespace Game.Mechanics
                     DefenderCrit = Defender.BattleComponent.BattleStats.GetCritAgainstTarget(Attacker),
                     AttackerAttackCount = Attacker.BattleComponent.BattleStats.GetAttackCountAgainst(Defender),
                     DefenderAttackCount = Defender.BattleComponent.BattleStats.GetAttackCountAgainst(Attacker),
-                    AttacksData = new List<AttackData>()
+                    AttacksData = new List<AttackData>(),
+                    DefenderCanCounter = Defender.BattleComponent.BattleStats.CanCounter(range)
                 };
                 combatRound.AttackerStats =  new DuringBattleCharacterStats(Attacker.BattleComponent.BattleStats.GetDamage(),
                     Attacker.Stats.BaseAttributes.AGI, Defender.BattleComponent.BattleStats.GetDamageType(),

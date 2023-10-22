@@ -25,6 +25,8 @@ namespace Game.Mechanics
 
         void UnitDealingDamage(Unit unit, int damage)
         {
+            if (unit == null)
+                return;
             if (!unit.Faction.IsPlayerControlled)
                 return;
             if(!unitBattleStats.ContainsKey(unit))

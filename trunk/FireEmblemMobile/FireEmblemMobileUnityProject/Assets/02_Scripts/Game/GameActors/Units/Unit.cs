@@ -109,9 +109,10 @@ namespace Game.GameActors.Units
         {
             get { return visuals; }
         }
+        
 
-        public Unit(string bluePrintID, string name,RpgClass rpgClass,Stats stats, MoveType moveType,
-             UnitVisual visuals, SkillManager skillManager, ExperienceManager experienceManager)
+        public Unit(string bluePrintID, string name, RpgClass rpgClass, Stats stats, MoveType moveType,
+            UnitVisual visuals, SkillManager skillManager, ExperienceManager experienceManager, bool isBoss)
         {
             this.bluePrintID = bluePrintID;
             HealingMultipliers = new List<float>();
@@ -143,6 +144,7 @@ namespace Game.GameActors.Units
                     Stats.AttackRanges.Add(r);
             }
             SkillManager.Init(this);
+            IsBoss = isBoss;
 
         }
 
@@ -201,6 +203,11 @@ namespace Game.GameActors.Units
 
                 int tmpHP = hp;
                 hp = value > MaxHp ? MaxHp : value;
+                if (hp <= 0&&RevivalStones > 0)
+                {
+                    RevivalStones--;
+                    hp = MaxHp;
+                }
                 if(tmpHP>1&& hp <=0)
                     OnAboutToDie?.Invoke(this);
                 if (hp <= 0) hp = 0;
@@ -256,16 +263,16 @@ namespace Game.GameActors.Units
             if(callDamagedEvent)
                 OnUnitDamaged?.Invoke(this,dmg, damageType,false, false);
         }
-        public void InflictDamage(Unit attacker, DamageType damageType)
-        {
-            int dmg=attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(this);
-            
-            Hp -= dmg;
-            Debug.Log("TODO Crits and EFF Dmg!");
-            OnDealingDamage?.Invoke(attacker, dmg);
-            OnUnitDamaged?.Invoke(this,dmg, damageType,false, false);
-
-        }
+        // public void InflictDamage(Unit attacker, DamageType damageType)
+        // {
+        //     int dmg=attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(this);
+        //     
+        //     Hp -= dmg;
+        //     Debug.Log("TODO Crits and EFF Dmg!");
+        //     OnDealingDamage?.Invoke(attacker, dmg);
+        //     OnUnitDamaged?.Invoke(this,dmg, damageType,false, false);
+        //
+        // }
         public void InflictFixedDamage(Unit attacker,int damage, DamageType damageType)
         {
             int defense = 0;
@@ -278,14 +285,22 @@ namespace Game.GameActors.Units
                 case DamageType.Physical:defense=BattleComponent.BattleStats.GetPhysicalResistance();
                     break;
             }
+
+            Debug.Log("Defense: " + defense);
             int dmg = damage - defense;
+            Debug.Log("Take Damage: " + dmg);
             Hp -= dmg;
             Debug.Log("TODO Crits and EFF Dmg!");
             OnDealingDamage?.Invoke(attacker, dmg);
             OnUnitDamaged?.Invoke(this,dmg, damageType,false, false);
-
+            CheckDeath(attacker);
         }
-       
+
+        void CheckDeath(Unit damageSource)
+        {
+            if(!IsAlive())
+                Die(damageSource);
+        }
         public void InflictNonLethalTrueDamage(Unit attacker,int damage)
         {
             //Debug.Log("Inflict True Damage: "+damage);
@@ -309,9 +324,8 @@ namespace Game.GameActors.Units
         public List<float> HealingMultipliers { get; set; }
         public List<int> BonusAttackRanges { get; set; }
         public Bonds Bonds { get; set; }
+        public int RevivalStones { get; set; }
 
-       
-       
 
         public void Equip(Weapon w)
         {
@@ -678,6 +692,8 @@ namespace Game.GameActors.Units
         public event Action<Unit> OnAboutToDie;
 
         private List<UnitTags> tags;
+   
+
         public void AddTag(UnitTags tag)
         {
             if(!tags.Contains(tag))

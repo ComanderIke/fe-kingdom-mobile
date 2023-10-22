@@ -17,13 +17,17 @@ namespace Game.GameActors.Units.Skills
         public AttributeType scalingType;
         public float[] scalingcoeefficient;
         public bool lethalDmg;
+        [SerializeField] private SkillTransferData skillTransferData;
 
         public override void Activate(Unit target, Unit caster, int level)
         {
             
 
-            
-            target.InflictFixedDamage(caster, CalculateDamage(caster, target,level), damageType);
+            Debug.Log("Activate Damage: "+CalculateDamage(caster, target,level)+" "+damageType);
+            if(skillTransferData!=null)
+                MonoUtility.DelayFunction(()=>target.InflictFixedDamage(caster, CalculateDamage(caster, target,level), damageType), (float)skillTransferData.data);
+            else
+                target.InflictFixedDamage(caster, CalculateDamage(caster, target,level), damageType);
             
 
         }
@@ -36,9 +40,13 @@ namespace Game.GameActors.Units.Skills
             }
             int baseDamageg = dmg[level];
 
-            int scalingdmg = (int)(caster.Stats.CombinedAttributes().GetAttributeStat(scalingType) * scalingcoeefficient[level]);
-            
-            return baseDamageg + scalingdmg;
+            if (scalingcoeefficient.Length > level + 1)
+            {
+                baseDamageg += (int)(caster.Stats.CombinedAttributes().GetAttributeStat(scalingType) *
+                                       scalingcoeefficient[level]);
+            }
+
+            return baseDamageg ;
         }
 
         public override void Deactivate(Unit user, Unit caster, int skillLevel)
@@ -67,7 +75,7 @@ namespace Game.GameActors.Units.Skills
             return new List<EffectDescription>()
             {
                 new EffectDescription("Damage: ", "" + dmg[level],
-                    "" + dmg[level + 1]),
+                    "" + ((level+1<dmg.Length)?dmg[level + 1]:dmg[level])),
                 new EffectDescription("Scaling "+scalingType+": ", valueLabel, upgLabel)
             };
         }

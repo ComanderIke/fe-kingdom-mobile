@@ -363,13 +363,16 @@ namespace Game.Map
         {
             HideMoveRange();
             Vector2 characterPos = character.GridComponent.GridPosition.AsVector();
-            if (pts.GetSize(level) > 0)
+            Debug.Log("CAST RANGE: "+pts.GetRange(level));
+            if (pts.GetRange(level) > 0)
             {
-                if (pts.TargetArea == SkillTargetArea.Block)
+                for (int i = 0; i <= pts.GetRange(level); i++)
                 {
-                    for (int i = 0; i < pts.GetSize(level) + 1; i++)
+                    for (int j = 0; j <= pts.GetRange(level); j++)
                     {
-                        for (int j = 0; j< pts.GetSize(level)+ 1; j++)
+                        if(i==0&&j==0)
+                            continue;
+                        if ((i+j)<=pts.GetRange(level))
                         {
                             var pos = characterPos + new Vector2(i, j);
                             ShowCastRange(pos,character.Faction.Id);
@@ -380,56 +383,72 @@ namespace Game.Map
                             pos = characterPos + new Vector2(-i, -j);
                             ShowCastRange(pos,character.Faction.Id);
                         }
+                       
                     }
                 }
-                else
-                {
-                    for (int i = 1; i < pts.GetSize(level) + 1; i++)
-                    {
-                        if (pts.TargetArea == SkillTargetArea.Line||pts.TargetArea == SkillTargetArea.Star||pts.TargetArea == SkillTargetArea.Cross)
-                        {
-                            var pos = characterPos + new Vector2(-i, 0);
-                            ShowCastRange(pos,character.Faction.Id);
-                            pos = characterPos + new Vector2(i, 0);
-                            ShowCastRange(pos,character.Faction.Id);
-                          
-                        }
-
-                        if (pts.TargetArea == SkillTargetArea.NormalLine||pts.TargetArea == SkillTargetArea.Star||pts.TargetArea == SkillTargetArea.Cross)
-                        {
-                            var pos = characterPos + new Vector2(0, -i);
-                            ShowCastRange(pos,character.Faction.Id);
-                            pos = characterPos + new Vector2(0, i);
-                            ShowCastRange(pos,character.Faction.Id);
-                        }
-
-                        
-                    }
-
-                    if (pts.TargetArea == SkillTargetArea.Star)
-                    {
-                        for (int i = 0; i < pts.GetSize(level); i++)
-                        {
-                            for (int j = 0; j < pts.GetSize(level); j++)
-                            {
-                                if (i !=0 && j!=0&&(i+j)<=pts.GetSize(level))
-                                {
-                                    var pos = characterPos + new Vector2(i, j);
-                                    ShowCastRange(pos,character.Faction.Id);
-                                    pos = characterPos + new Vector2(-i, j);
-                                    ShowCastRange(pos,character.Faction.Id);
-                                    pos = characterPos + new Vector2(i, -j);
-                                    ShowCastRange(pos,character.Faction.Id);
-                                    pos = characterPos + new Vector2(-i, -j);
-                                    ShowCastRange(pos,character.Faction.Id);
-                                }
-                               
-                            }
-                        }
-                    }
-
-                    
-                }
+                // if (pts.TargetArea == SkillTargetArea.Block)
+                // {
+                //     for (int i = 0; i < pts.GetSize(level) + 1; i++)
+                //     {
+                //         for (int j = 0; j< pts.GetSize(level)+ 1; j++)
+                //         {
+                //             var pos = characterPos + new Vector2(i, j);
+                //             ShowCastRange(pos,character.Faction.Id);
+                //             pos = characterPos + new Vector2(-i, j);
+                //             ShowCastRange(pos,character.Faction.Id);
+                //             pos = characterPos + new Vector2(i, -j);
+                //             ShowCastRange(pos,character.Faction.Id);
+                //             pos = characterPos + new Vector2(-i, -j);
+                //             ShowCastRange(pos,character.Faction.Id);
+                //         }
+                //     }
+                // }
+                // else
+                // {
+                //     for (int i = 1; i < pts.GetSize(level) + 1; i++)
+                //     {
+                //         if (pts.TargetArea == SkillTargetArea.Line||pts.TargetArea == SkillTargetArea.Star||pts.TargetArea == SkillTargetArea.Cross)
+                //         {
+                //             var pos = characterPos + new Vector2(-i, 0);
+                //             ShowCastRange(pos,character.Faction.Id);
+                //             pos = characterPos + new Vector2(i, 0);
+                //             ShowCastRange(pos,character.Faction.Id);
+                //           
+                //         }
+                //
+                //         if (pts.TargetArea == SkillTargetArea.NormalLine||pts.TargetArea == SkillTargetArea.Star||pts.TargetArea == SkillTargetArea.Cross)
+                //         {
+                //             var pos = characterPos + new Vector2(0, -i);
+                //             ShowCastRange(pos,character.Faction.Id);
+                //             pos = characterPos + new Vector2(0, i);
+                //             ShowCastRange(pos,character.Faction.Id);
+                //         }
+                //
+                //         
+                //     }
+                //
+                //     if (pts.TargetArea == SkillTargetArea.Star)
+                //     {
+                //         for (int i = 0; i < pts.GetSize(level); i++)
+                //         {
+                //             for (int j = 0; j < pts.GetSize(level); j++)
+                //             {
+                //                 if (i !=0 && j!=0&&(i+j)<=pts.GetSize(level))
+                //                 {
+                //                     var pos = characterPos + new Vector2(i, j);
+                //                     ShowCastRange(pos,character.Faction.Id);
+                //                     pos = characterPos + new Vector2(-i, j);
+                //                     ShowCastRange(pos,character.Faction.Id);
+                //                     pos = characterPos + new Vector2(i, -j);
+                //                     ShowCastRange(pos,character.Faction.Id);
+                //                     pos = characterPos + new Vector2(-i, -j);
+                //                     ShowCastRange(pos,character.Faction.Id);
+                //                 }
+                //                
+                //             }
+                //         }
+                //     }
+            // }
             }
             
                       
@@ -532,9 +551,87 @@ namespace Game.Map
            
         }
 
-        public void ShowRootedCast(Vector2 asVector, int ptsSize, SkillTargetArea ptsTargetArea)
+        public void ShowRootedCast(Vector2 startPos, int radius, SkillTargetArea skillTargetArea, EffectType effectType, int clickedX, int clickedY)
         {
-            throw new NotImplementedException();
+            Debug.Log("Show Cast: "+radius+ " "+skillTargetArea+" "+startPos);
+            if (radius > 0)
+            {
+                if (skillTargetArea==SkillTargetArea.Block)
+                {
+                    for (int i = 0; i < radius + 1; i++)
+                    {
+                        for (int j = 0; j< radius + 1; j++)
+                        {
+                            GridRenderer.SetTileCastCursorMaterial(new Vector2(i,-j)+startPos,effectType,0);
+                            GridRenderer.SetTileCastCursorMaterial(new Vector2(i,j)+startPos,effectType,0);
+                            GridRenderer.SetTileCastCursorMaterial(new Vector2(-i,-j)+startPos,effectType,0);
+                            GridRenderer.SetTileCastCursorMaterial(new Vector2(-i,j)+startPos,effectType,0);
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 1; i < radius + 1; i++)
+                    {
+                        if (skillTargetArea==SkillTargetArea.Line||skillTargetArea==SkillTargetArea.Cross||skillTargetArea==SkillTargetArea.Star)
+                        {
+                            // if (Math.Abs(i + startPos.x - clickedX) < 0.01f)
+                            // {
+                                if (clickedX > startPos.x)
+                                {
+                                    GridRenderer.SetTileCastCursorMaterial(new Vector2(i, 0) + startPos, effectType, 0);
+                                }
+                                else if(clickedX< startPos.x)
+                                {
+
+                                    GridRenderer.SetTileCastCursorMaterial(new Vector2(-i, 0) + startPos, effectType,
+                                        0);
+                                }
+                            // }
+
+                        }
+
+                        if (skillTargetArea==SkillTargetArea.Line||skillTargetArea==SkillTargetArea.Cross||skillTargetArea==SkillTargetArea.Star)
+                        {
+                            // if (Math.Abs(i + startPos.y - clickedX) < 0.01f)
+                            // {
+                                if (clickedY < startPos.y)
+                                {
+                                    GridRenderer.SetTileCastCursorMaterial(new Vector2(0, -i) + startPos, effectType,
+                                        0);
+                                }
+                                else if(clickedY> startPos.y)
+                                {
+                                    GridRenderer.SetTileCastCursorMaterial(new Vector2(0, i) + startPos, effectType, 0);
+                                }
+                            // }
+
+                        }
+
+                        
+                    }
+
+                    if (skillTargetArea==SkillTargetArea.Star)
+                    {
+                        for (int i = 0; i < radius; i++)
+                        {
+                            for (int j = 0; j < radius; j++)
+                            {
+                                if (i !=0 && j!=0&&(i+j)<=radius)
+                                {
+                                    GridRenderer.SetTileCastCursorMaterial(new Vector2(i,-j)+startPos,effectType,0);
+                                    GridRenderer.SetTileCastCursorMaterial(new Vector2(i,j)+startPos,effectType,0);
+                                    GridRenderer.SetTileCastCursorMaterial(new Vector2(-i,-j)+startPos,effectType,0);
+                                    GridRenderer.SetTileCastCursorMaterial(new Vector2(-i,j)+startPos,effectType,0);
+                                }
+                               
+                            }
+                        }
+                    }
+
+                    
+                }
+            }
         }
     }
 }

@@ -122,6 +122,10 @@ namespace __2___Scripts.External.Editor
                 {
                     activeUnit.Heal(5);
                 }
+                if (GUILayout.Button("Take 5 Damage"))
+                {
+                    activeUnit.InflictFixedDamage(null,5, DamageType.True);
+                }
             }
             else
             {

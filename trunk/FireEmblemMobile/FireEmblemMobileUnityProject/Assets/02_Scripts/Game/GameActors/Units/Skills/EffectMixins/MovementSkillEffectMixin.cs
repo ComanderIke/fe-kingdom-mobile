@@ -21,6 +21,7 @@ namespace Game.GameActors.Units.Skills
         public bool priotizeXMovement;
         public bool towardsSkillTargetDataPosition;
         public bool lastSkilltargetDirection;
+        public bool randomMovement;
         public SkillTransferData skillTransferData;
 
         private bool RescueToPosition( Vector2Int pos, Unit target )
@@ -78,12 +79,44 @@ namespace Game.GameActors.Units.Skills
             {
                 if (targetMove != 0)
                 {
-                    MoveUnit(target, direction);
+                    MoveUnit(target, direction, 0);
                 }
                 if (selfMove != 0)
                 {
-                    MoveUnit(caster, direction);
+                    MoveUnit(caster, direction, 0);
                 }
+            }
+
+            if (randomMovement)
+            {
+                var gridSystem= ServiceProvider.Instance.GetSystem<GridSystem>();
+                Vector2 rand =new Vector2(Random.Range(-1, 2), Random.Range(-1, 2));
+                Vector2Int newPosition = new Vector2Int(target.GridComponent.GridPosition.X + (int)rand.x,
+                    target.GridComponent.GridPosition.Y + (int)rand.y);
+                int radius = 1;
+                int cnt = 0;
+                Debug.Log("Rand: "+rand);
+                while ((rand.x==0&&rand.y==0)||gridSystem.IsOutOfBounds(newPosition.x, newPosition.y)||!gridSystem.GridLogic.IsTileFreeAndNotBlocked(newPosition.x, newPosition.y))
+                {
+                    rand = new Vector2(Random.Range(-radius, radius+1), Random.Range(-radius, radius+1));
+                    newPosition = new Vector2Int(target.GridComponent.GridPosition.X + (int)rand.x,
+                        target.GridComponent.GridPosition.Y + (int)rand.y);
+                    if (cnt >= 10)
+                    {
+                        radius++;
+                        cnt = 0;
+                        if (radius > 3)
+                            return;
+                        //return;
+                    }
+
+                    cnt++;
+                    Debug.Log("Rand: "+rand);
+                    Debug.Log("NewPosition: "+newPosition);
+                
+                }
+                Debug.Log("move Unit: "+rand);
+                MoveUnit(target, rand, skillTransferData==null?0:(float)skillTransferData.data);
             }
             
         }
@@ -93,13 +126,16 @@ namespace Game.GameActors.Units.Skills
             throw new System.NotImplementedException();
         }
 
-        private void MoveUnit(Unit unit, Vector2 direction)
+        private void MoveUnit(Unit unit, Vector2 direction, float delay)
         {
             var gridSystem= ServiceProvider.Instance.GetSystem<GridSystem>();
             Vector2Int newPosition = new Vector2Int(unit.GridComponent.GridPosition.X + (int)direction.x,
                 unit.GridComponent.GridPosition.Y + (int)direction.y);
             if(!gridSystem.IsOutOfBounds(newPosition)&&gridSystem.GridLogic.IsTileFree(newPosition.x, newPosition.y))
-                gridSystem.SetUnitPosition(unit, newPosition.x,newPosition.y);
+                gridSystem.SetUnitPosition(unit, newPosition.x,newPosition.y, true, false);//true, false
+            LeanTween.move(unit.GameTransformManager.GameObject, new Vector2(newPosition.x, newPosition.y), .3f)
+                .setEaseOutSine().setDelay(delay);
+            //  .setEaseOutQuad();
         }
       
         public override List<EffectDescription> GetEffectDescription(int level)

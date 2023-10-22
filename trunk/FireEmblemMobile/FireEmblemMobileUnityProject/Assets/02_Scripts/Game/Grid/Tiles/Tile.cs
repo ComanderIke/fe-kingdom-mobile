@@ -169,7 +169,7 @@ namespace Game.Grid
         
         public bool HasFreeSpace()
         {
-            return GridObject == null&&GridObject==null;
+            return GridObject == null;
         }
 
 

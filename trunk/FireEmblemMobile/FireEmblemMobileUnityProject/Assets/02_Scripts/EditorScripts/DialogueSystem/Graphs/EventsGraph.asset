@@ -40,10 +40,10 @@ MonoBehaviour:
     <Position>k__BackingField: {x: 4687, y: 1706}
   - <ID>k__BackingField: 5ed337f7-ab86-46e3-a6a7-55bb99b1cbe6
     <Name>k__BackingField: TheWeepingWidow
-    <Position>k__BackingField: {x: -2299.9998, y: 299}
+    <Position>k__BackingField: {x: -2300, y: 299}
   - <ID>k__BackingField: a3bbcb7e-5491-414a-908c-d959a3106355
     <Name>k__BackingField: TheEthicalDilemma
-    <Position>k__BackingField: {x: -2470, y: 1551.0001}
+    <Position>k__BackingField: {x: -2470, y: 1551}
   - <ID>k__BackingField: c86b40d2-9e0e-4f26-8fb4-94ec6822e670
     <Name>k__BackingField: MoralityBased
     <Position>k__BackingField: {x: -1631.3516, y: 43.317993}
@@ -56,6 +56,9 @@ MonoBehaviour:
   - <ID>k__BackingField: 9fbbdde4-3712-4fd6-98ef-4e0bf11a7f0d
     <Name>k__BackingField: TheRitual
     <Position>k__BackingField: {x: -2859, y: 3420}
+  - <ID>k__BackingField: e2a96299-4356-4d55-9050-504f9807d971
+    <Name>k__BackingField: TheStarvingSettlement
+    <Position>k__BackingField: {x: -2708, y: 4887}
   <Nodes>k__BackingField: []
   <EventNodes>k__BackingField:
   - <ID>k__BackingField: f0365265-1533-4609-86dd-57480bfe2d00
@@ -1560,6 +1563,148 @@ MonoBehaviour:
     <RewardResources>k__BackingField: []
     <RewardItems>k__BackingField: []
     <Events>k__BackingField: []
+  - <ID>k__BackingField: 7e99fe77-d9a8-4133-99f1-717e8229d462
+    <Name>k__BackingField: StarvingSettlement
+    <Text>k__BackingField: You come across a struggling settlement on the brink of
+      famine, with desperate survivors and skeletal threats closing in.
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Choose to share your resources with the settlement to
+        help them endure the famine.
+      <NodeID>k__BackingField: 0fe38b45-54b3-4bbd-b5b6-6a02a34d52c5
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+    - <Text>k__BackingField: Stay with the settlement to assist them in defending
+        against the skeletal threats.
+      <NodeID>k__BackingField: da73db0c-b309-4377-a58d-0558432a2828
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+    - <Text>k__BackingField: Decide to leave the settlement behind, prioritizing
+        your own survival over helping others.
+      <NodeID>k__BackingField: 79e4d541-ae34-4c6b-a041-0272790cb735
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+    <GroupID>k__BackingField: e2a96299-4356-4d55-9050-504f9807d971
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: -2683, y: 4946}
+    <Headline>k__BackingField: The Starving Settlement
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: bc54523f-01ed-428e-bae3-ad8a02d23549
+    <Name>k__BackingField: StarvingSettlement2Success
+    <Text>k__BackingField: Your manage to repel the threats and secure the settlement's
+      safety. The gratefull village elder gifts you their family heirloom. Cause
+      of the elder insisting, you accept the gift
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: End
+      <NodeID>k__BackingField: 
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+    <GroupID>k__BackingField: e2a96299-4356-4d55-9050-504f9807d971
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: -1025, y: 5191}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField:
+    - Amount: 20
+      ResourceType: 3
+    <RewardItems>k__BackingField:
+    - {fileID: 11400000, guid: b4861a55f2e99854ab9f7b9b973eb143, type: 2}
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: 37c88a3d-1485-44f3-956e-e40b2d8c8b1c
+    <Name>k__BackingField: StarvingSettlement2Fail
+    <Text>k__BackingField: You retreated from the fight leaving the village to its
+      grim fate.
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: 
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+    <GroupID>k__BackingField: e2a96299-4356-4d55-9050-504f9807d971
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: -1025, y: 5609}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField:
+    - Amount: -5
+      ResourceType: 3
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: 79e4d541-ae34-4c6b-a041-0272790cb735
+    <Name>k__BackingField: StarvingSettlement3
+    <Text>k__BackingField: ' Prioritizing your own survival, you decide to leave
+      the struggling settlement behind, focusing on your journey and avoiding the
+      risks of involvement with others. Your choice preserves your own safety but
+      leaves the survivors to face their grim situation without your help.'
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: End
+      <NodeID>k__BackingField: 
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+    <GroupID>k__BackingField: e2a96299-4356-4d55-9050-504f9807d971
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: -1802, y: 5774}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField:
+    - Amount: -10
+      ResourceType: 3
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: 0fe38b45-54b3-4bbd-b5b6-6a02a34d52c5
+    <Name>k__BackingField: StarvingSettlement1
+    <Text>k__BackingField: DialogueText
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: 
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+    <GroupID>k__BackingField: e2a96299-4356-4d55-9050-504f9807d971
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: -1644, y: 4946}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField:
+    - Amount: -100
+      ResourceType: 0
+    - Amount: 10
+      ResourceType: 3
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
   <OldGroupNames>k__BackingField:
   - TheKnightAndHisHarem
   - ChasedBySkeletons
@@ -1575,6 +1720,7 @@ MonoBehaviour:
   - StartEvents
   - InstructorEvents
   - TheRitual
+  - TheStarvingSettlement
   <OldUngroupedNodeNames>k__BackingField: []
   <OldGroupedNodeNames>k__BackingField:
     list:
@@ -1653,6 +1799,14 @@ MonoBehaviour:
       - TheRitual1b
       - TheRitual1c
       - TheRitual1
+    - Key: TheStarvingSettlement
+      Value:
+      - StarvingSettlement
+      - StarvingSettlement2
+      - StarvingSettlement2Success
+      - StarvingSettlement2Fail
+      - StarvingSettlement3
+      - StarvingSettlement1
   <FightNodes>k__BackingField:
   - <ID>k__BackingField: 36c0ee15-7245-41c5-a77c-30ff36dd6224
     <Name>k__BackingField: KnightHarem4
@@ -1711,6 +1865,36 @@ MonoBehaviour:
     <GroupID>k__BackingField: 3903b474-f6d9-4717-b77b-59ad6b1efc75
     <DialgueType>k__BackingField: 4
     <Position>k__BackingField: {x: 870, y: 1168}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+    <EnemyArmy>k__BackingField: {fileID: 0}
+  - <ID>k__BackingField: da73db0c-b309-4377-a58d-0558432a2828
+    <Name>k__BackingField: StarvingSettlement2
+    <Text>k__BackingField: Test
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Won
+      <NodeID>k__BackingField: bc54523f-01ed-428e-bae3-ad8a02d23549
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+    - <Text>k__BackingField: Lost
+      <NodeID>k__BackingField: 37c88a3d-1485-44f3-956e-e40b2d8c8b1c
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+    <GroupID>k__BackingField: e2a96299-4356-4d55-9050-504f9807d971
+    <DialgueType>k__BackingField: 4
+    <Position>k__BackingField: {x: -1644, y: 5323}
     <Headline>k__BackingField: 
     <RewardResources>k__BackingField: []
     <RewardItems>k__BackingField: []

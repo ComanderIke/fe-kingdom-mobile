@@ -220,5 +220,7 @@ namespace Game.GameActors.Units.OnGameObject
                 weaponTypeAnimator.SetBool(Ineffective, false);
             }
         }
+
+        
     }
 }

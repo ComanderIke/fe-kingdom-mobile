@@ -8,6 +8,8 @@ namespace Game.GameActors.Units
     public class CharacterSpriteSet:ScriptableObject
     {
         public Sprite FaceSprite;
+        public DialogSpriteSet DialogSpriteSet;
+        
         public Sprite MapSprite;
         public GameObject battleAnimatedSprite;
         public GameObject animatedSprite;
@@ -25,5 +27,6 @@ namespace Game.GameActors.Units
         [field:SerializeField]public Sprite TakeDamageWeapon { get; set; }
         [field:SerializeField]public Sprite BlockSprite { get; set; }
         [field:SerializeField]public Sprite BlockSpriteWeapon { get; set; }
+
     }
 }
