@@ -25,9 +25,12 @@ namespace Game.GameActors.Units.Skills
 
         void HpValueChanged()
         {
+            Debug.Log("HP VALUE CHANGED MIXN");
             if (conditionManager.Valid(skill.owner))
             {
-                SkillTransferData.data = skill.owner.MaxHp - skill.owner.Hp;
+                Debug.Log("CONDITION VALID");
+                if(SkillTransferData!=null)
+                    SkillTransferData.data = skill.owner.MaxHp - skill.owner.Hp;
                 foreach (var skilleffect in skillEffectMixins)
                 {
                     if (skilleffect is SelfTargetSkillEffectMixin stsm)
@@ -40,7 +43,9 @@ namespace Game.GameActors.Units.Skills
             }
             else
             {
-                SkillTransferData.data = null;
+                Debug.Log("CONDITION INVALID");
+                if(SkillTransferData!=null)
+                    SkillTransferData.data = null;
                 if (bound)
                 {
                     foreach (var skilleffect in skillEffectMixins)

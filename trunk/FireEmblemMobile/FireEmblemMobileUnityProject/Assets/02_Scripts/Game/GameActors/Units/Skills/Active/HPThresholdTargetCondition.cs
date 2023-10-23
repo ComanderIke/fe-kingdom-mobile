@@ -14,6 +14,8 @@ namespace Game.GameActors.Units.Skills
         public bool useFixedHp;
         public int fixedHp;
         public bool useDexAsHp;
+        public bool checkRevivalStones;
+        public int revivalStones;
 
         int GetScaledDexValue(Unit caster)
         {
@@ -27,6 +29,10 @@ namespace Game.GameActors.Units.Skills
             switch (compareType)
             {
                 case CompareNumbersType.Equal:
+                    if (checkRevivalStones)
+                    {
+                        return compareUnit.RevivalStones == revivalStones;
+                    }
                     if (useDexAsHp)
                     {
                         return compareUnit.Hp - GetScaledDexValue(caster) == 0;
