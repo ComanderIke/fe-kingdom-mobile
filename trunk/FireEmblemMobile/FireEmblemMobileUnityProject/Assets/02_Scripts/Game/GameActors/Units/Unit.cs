@@ -16,6 +16,7 @@ using Game.Manager;
 using Game.Mechanics;
 using Game.WorldMapStuff.Model;
 using LostGrace;
+using MoreMountains.Tools;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
@@ -70,6 +71,23 @@ namespace Game.GameActors.Units
         // public StockedCombatItem CombatItem2;
      
         public string name;
+
+        private bool specialState=false;
+        public bool SpecialState
+        {
+            get
+            {
+                return specialState;
+            }
+            set
+            {
+                if (value != specialState)
+                {
+                    specialState = value;
+                    OnSpecialState?.Invoke(value);
+                }
+            }
+        }
         [HideInInspector] private int hp=-1;
 
         // private int maxBlessings = 3;
@@ -706,6 +724,7 @@ namespace Game.GameActors.Units
             return false;
         }
 
-        
+
+        public event Action<bool> OnSpecialState;
     }
 }

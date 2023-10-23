@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42cf566ca2edd3849b9a53faf87d4b3e, type: 3}
   m_Name: EndlessRage
   m_EditorClassIdentifier: 
-  Icon: {fileID: 0}
-  Description: 
-  Name: 
+  Icon: {fileID: 21300000, guid: 6fb33295d3eecdb40a305c1f695241b1, type: 3}
+  Description: The user goes into rage mode once his last revival stone is depleted.
+  Name: Endless Rage
   Tier: 0
-  passiveMixins: []
+  passiveMixins:
+  - {fileID: 11400000, guid: 2f880e07ccdaa2f4299d31c31f08d340, type: 2}
   combatSkillMixin: {fileID: 0}
   activeMixins: []
   maxLevel: 5

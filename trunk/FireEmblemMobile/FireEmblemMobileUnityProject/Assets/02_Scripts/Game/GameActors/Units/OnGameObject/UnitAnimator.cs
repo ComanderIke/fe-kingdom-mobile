@@ -89,6 +89,7 @@ namespace Game.GameActors.Units.OnGameObject
                 Unit.OnUnitDamaged -= UnitDamaged;
                 unit.StatusEffectManager.OnStatusEffectAdded -= StatusEffectAnimation;
                 unit.StatusEffectManager.OnStatusEffectRemoved -= StatusEffectRemovedAnimation;
+                unit.OnSpecialState -= SpecialState;
             }
             //     unit.TurnStateManager.onSelected -= SetSelected;
         }
@@ -211,11 +212,17 @@ namespace Game.GameActors.Units.OnGameObject
                 animator.SetBool(Stunned,false);
             }
         }
+
+        void SpecialState(bool value)
+        {
+            spriteSwapper.SetSpecialState(value);
+        }
         public void SetUnit(Unit unit1)
         {
             this.unit = unit1;
             unit.StatusEffectManager.OnStatusEffectAdded += StatusEffectAnimation;
             unit.StatusEffectManager.OnStatusEffectRemoved+= StatusEffectRemovedAnimation;
+            unit.OnSpecialState += SpecialState;
             spriteSwapper.Init(unit.Visuals.CharacterSpriteSet);
             // if (unit1.visuals.CharacterSpriteSet.idleAnimation != null)
             //     return;
