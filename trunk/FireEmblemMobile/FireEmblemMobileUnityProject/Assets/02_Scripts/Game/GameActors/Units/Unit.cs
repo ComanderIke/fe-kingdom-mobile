@@ -108,11 +108,10 @@ namespace Game.GameActors.Units
         public UnitVisual Visuals
         {
             get { return visuals; }
-        }
-        
+        } 
 
         public Unit(string bluePrintID, string name, RpgClass rpgClass, Stats stats, MoveType moveType,
-            UnitVisual visuals, SkillManager skillManager, ExperienceManager experienceManager, bool isBoss)
+            UnitVisual visuals, SkillManager skillManager, ExperienceManager experienceManager, bool isBoss, AIBehaviour aiBehaviour)
         {
             this.bluePrintID = bluePrintID;
             HealingMultipliers = new List<float>();
@@ -133,7 +132,7 @@ namespace Game.GameActors.Units
             BattleComponent = new BattleComponent(this);
             GameTransformManager = new GameTransformManager();
             StatusEffectManager = new StatusEffectManager(this);
-            AIComponent = new AIComponent();
+            AIComponent = new AIComponent(aiBehaviour);
             MaxHp = stats.CombinedAttributes().MaxHp;
             tags = new List<UnitTags>();
             hp = MaxHp;
@@ -275,19 +274,7 @@ namespace Game.GameActors.Units
         // }
         public void InflictFixedDamage(Unit attacker,int damage, DamageType damageType)
         {
-            int defense = 0;
-            switch (damageType)
-            {
-                case DamageType.Faith:defense=BattleComponent.BattleStats.GetFaithResistance();
-                    break;
-                case DamageType.Magic:defense=BattleComponent.BattleStats.GetFaithResistance();
-                    break;
-                case DamageType.Physical:defense=BattleComponent.BattleStats.GetPhysicalResistance();
-                    break;
-            }
-
-            Debug.Log("Defense: " + defense);
-            int dmg = damage - defense;
+            int dmg = DecisionMaker.BattleHelper.GetDamageAgainst(this, damage, damageType);
             Debug.Log("Take Damage: " + dmg);
             Hp -= dmg;
             Debug.Log("TODO Crits and EFF Dmg!");
@@ -476,7 +463,7 @@ namespace Game.GameActors.Units
             // clone.GridComponent.previousTile = GridComponent.previousTile;
             clone.GameTransformManager = new GameTransformManager();
             clone.StatusEffectManager = new StatusEffectManager(clone);
-            clone.AIComponent = new AIComponent();
+            clone.AIComponent = new AIComponent(clone.AIComponent.AIBehaviour);
             clone.visuals.UnitEffectVisual = visuals.UnitEffectVisual;
             clone.visuals = visuals;
             clone.SkillManager = new SkillManager(clone.SkillManager);

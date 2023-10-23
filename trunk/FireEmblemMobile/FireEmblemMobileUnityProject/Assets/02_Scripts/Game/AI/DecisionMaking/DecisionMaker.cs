@@ -1,10 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
+using Game.GameActors.Units.Skills;
 using Game.GameInput;
+using Game.Grid;
+using Game.Map;
 using Game.Mechanics;
 using UnityEngine;
+
 
 namespace Game.AI
 {
@@ -15,6 +20,7 @@ namespace Game.AI
         private ScoreCalculator scoreCalculator;
         public List<IAIAgent> moveOrderList;
         public List<IAIAgent> attackerList;
+        public List<IAIAgent> skillUserList;
         public List<Vector2Int> blockedTiles;
 
 
@@ -108,7 +114,7 @@ namespace Game.AI
             else
             {
                 Vector2Int location = ChooseBestLocationToChaseTarget(unit, chaseTarget);
-                return new AIUnitAction(location, null, UnitActionType.Wait, (Unit)unit);
+                return new AIUnitAction(location, null, UnitActionType.Wait, (Unit)unit, Vector2Int.zero);
             }
 
             return bestAction;
@@ -166,7 +172,15 @@ namespace Game.AI
         {
 
             CreateAttackerList(units);
-            if (attackerList.Count != 0)
+            CreateSkillUserList(units);
+            if (skillUserList.Count != 0)
+            {
+                CalculateOptimalTilesToUseSkills();
+                ChooseBestSkillTargets();
+                var bestSkillUser = ChooseBestSkillUser();
+                return CreateUseSkillAction(bestSkillUser);
+            }
+            else if (attackerList.Count != 0)
             {
                 CalculateOptimalTilesToAttack();
                 ChooseBestAttackTargets();
@@ -185,15 +199,31 @@ namespace Game.AI
                 moveOrderList.Remove(unit);
             if(attackerList.Contains(unit))
                 attackerList.Remove(unit);
+            if(skillUserList.Contains(unit))
+                skillUserList.Remove(unit);
         }
         private AIUnitAction CreateAttackAction(IAIAgent attacker)
         {
-            return new AIUnitAction(attacker.AIComponent.BestAttackTarget.OptimalAttackPos,attacker.AIComponent.BestAttackTarget.Target, UnitActionType.Attack, attacker );
+            return new AIUnitAction(attacker.AIComponent.BestAttackTarget.OptimalAttackPos,attacker.AIComponent.BestAttackTarget.Target, UnitActionType.Attack, attacker, Vector2Int.zero );
+
+        }
+        private AIUnitAction CreateUseSkillAction(IAIAgent attacker)
+        {
+            return new AIUnitAction(attacker.AIComponent.BestAttackTarget.OptimalAttackPos,attacker.AIComponent.BestAttackTarget.Target, UnitActionType.UseSkill, attacker , attacker.AIComponent.BestAttackTarget.OptimalCastPos);
 
         }
         private void ChooseBestAttackTargets()
         {
             foreach (var attacker in attackerList)
+            {
+                attacker.AIComponent.AttackableTargets.Sort(new AttackTargetComparer());
+
+                attacker.AIComponent.BestAttackTarget = attacker.AIComponent.AttackableTargets.Last();
+            }
+        }
+        private void ChooseBestSkillTargets()
+        {
+            foreach (var attacker in skillUserList)
             {
                 attacker.AIComponent.AttackableTargets.Sort(new AttackTargetComparer());
 
@@ -206,7 +236,141 @@ namespace Game.AI
             attackerList.Sort(new AttackerComparer());
             return attackerList.Last();
         }
+        private IAIAgent ChooseBestSkillUser()
+        {
+            skillUserList.Sort(new AttackerComparer());
+            return skillUserList.Last();
+        }
 
+        private void CalculateOptimalTilesToUseSkills()
+        {
+            foreach (var attacker in skillUserList)
+            {
+                Unit user = (Unit)attacker;
+                // Debug.Log("attacker in List: " +attacker);
+                // Debug.Log("AttackTargetCount: " +attacker.AIComponent.AttackableTargets.Count());
+                var skill = user.SkillManager.ActiveSkills[0];
+                var skillMixin = skill.FirstActiveMixin;
+                foreach (var target in attacker.AIComponent.AttackableTargets)
+                {
+                    var tiles = target.AttackableTiles;
+                    var combatInfos = new List<ISkillResult>();
+                    Unit targetUnit = (Unit)target.Target;
+                    if (target.Target == null)
+                    {
+                        // Debug.Log("AttackableTargetTarget is null!" + target);
+                        continue;
+                    }
+                    //check for each tile how many targets get hit and how much damage is done as a whole?
+                    // also tile bonuses ofc (not important for charge skill though)
+                    //how to get damage done?
+                    foreach (var tile in tiles)
+                    {
+                        if (skillMixin is PositionTargetSkillMixin ptsm)
+                        {
+                            foreach (var castTarget in ptsm.GetCastTargets(user, gridInfo.GetTiles(), skill.level,
+                                         tile.x, tile.y))
+                            {
+                                var tmpDirection = new Vector2(castTarget.x-tile.x,
+                                     castTarget.y-tile.y).normalized;
+                                var direction = new Vector2Int((int)tmpDirection.x, (int)tmpDirection.y);
+                                int damageRatio = 0;
+
+                                foreach (var skillTarget in ptsm.GetAllTargets((Unit)attacker, gridInfo.GetTiles(),
+                                             castTarget.x,
+                                             castTarget.y, direction))
+                                {
+
+                                    var damageMixin = ptsm.GetDamageMixin();
+                                    int damage = damageMixin.CalculateDamage(user, (Unit)skillTarget, skill.level);
+                                    var damageType = damageMixin.GetDamageType();
+                                    damageRatio += BattleHelper.GetDamageAgainst((Unit)skillTarget, damage, damageType);
+                                }
+
+                                ISkillResult combatInfo = new SkillResult((Unit)attacker,
+                                    gridInfo.GetTile(tile.x, tile.y), gridInfo.GetTile(castTarget.x, castTarget.y),damageRatio);
+                                combatInfos.Add(
+                                    combatInfo); //combatInfo.GetCombatResultAtAttackLocation((IBattleActor)attacker,target.Target, tile));
+                            }
+                        }
+
+                        
+                    }
+                    //make new ResultComparer based on target number and damage
+                    combatInfos.Sort(new CombatResultComparer());
+                    target.OptimalAttackPos =combatInfos.Last().GetAttackPosition() ;
+                    target.OptimalCastPos = combatInfos.Last().GetCastPosition();
+                    target.CombatResult = combatInfos.Last();
+                }
+            }
+        }
+
+        public class BattleHelper
+        {
+            public static int GetDamageAgainst(Unit damageReceiver, int damage, DamageType damageType)
+            {
+                int defense = 0;
+                switch (damageType)
+                {
+                    case DamageType.Faith:defense=damageReceiver.BattleComponent.BattleStats.GetFaithResistance();
+                        break;
+                    case DamageType.Magic:defense=damageReceiver.BattleComponent.BattleStats.GetFaithResistance();
+                        break;
+                    case DamageType.Physical:defense=damageReceiver.BattleComponent.BattleStats.GetPhysicalResistance();
+                        break;
+                }
+
+                Debug.Log("Defense: " + defense);
+                return damage - defense;
+            }
+        }
+        public class SkillResult : ISkillResult
+        {
+            
+            private Unit user;
+            private Tile useSkillPosition;
+            private Skill skill;
+            private int damageRatio;
+            private Tile castTile;
+            public SkillResult(Unit user, Tile tile,Tile castTile, int damageRatio)
+            {
+                AttackResult = AttackResult.Win;
+                useSkillPosition = tile;
+                this.user = user;
+                this.skill = user.SkillManager.ActiveSkills[0];
+                this.damageRatio = damageRatio;
+                this.castTile = castTile;
+            }
+            public Vector2Int GetAttackPosition()
+            {
+                return new Vector2Int(useSkillPosition.X, useSkillPosition.Y);
+            }
+            public Vector2Int GetCastPosition()
+            {
+                return new Vector2Int(castTile.X, castTile.Y);
+            }
+
+            public AttackResult AttackResult { get; set; }
+            public int GetDamageRatio()
+            {
+                
+                return damageRatio;
+            }
+
+            public int GetTileDefenseBonuses()
+            {
+                return useSkillPosition.TileData.defenseBonus;
+            }
+
+            public int GetTileSpeedBonuses()
+            {
+                return useSkillPosition.TileData.speedMalus;
+            }
+            public int GetTileAvoidBonuses()
+            {
+                return useSkillPosition.TileData.avoBonus;
+            }
+        }
         private void CalculateOptimalTilesToAttack()
         {
             foreach (var attacker in attackerList)
@@ -235,7 +399,22 @@ namespace Game.AI
 
        
        
+        private void CreateSkillUserList(IEnumerable<IAIAgent> units)
+        {
+            skillUserList.Clear();
+            foreach (var unit in units)
+            {
+                if (unit.AIComponent.AIBehaviour != null &&
+                    unit.AIComponent.AIBehaviour.GetState() == AIBehaviour.State.UseSkill)
+                {
+                    unit.AIComponent.AttackableTargets = GetSkillTargets(unit);
 
+                    if (unit.AIComponent.AttackableTargets.Count() != 0)
+                        skillUserList.Add(unit);
+                }
+            }
+            Debug.Log("SkillUserListCount: "+skillUserList.Count);
+        }
         private void CreateAttackerList(IEnumerable<IAIAgent> units)
         {
             attackerList.Clear();
@@ -271,6 +450,29 @@ namespace Game.AI
 
             return attackTargetList;
         }
+        List<AIAttackTarget> GetSkillTargets(IAIAgent unit)
+        {
+            var skillTargetList = new List<AIAttackTarget>();
+            var targetList = new List<IAttackableTarget>();
+            foreach (var moveOption in unit.AIComponent.MovementOptions)
+            {
+                if (gridInfo.GetGridObject(moveOption) != null && gridInfo.GetGridObject(moveOption) != unit)
+                    continue;
+                var targets = gridInfo.GetSkillTargetsAtPosition(unit, moveOption.x, moveOption.y);
+                foreach (var target in targets)
+                {
+                    var attackTarget = new AIAttackTarget(target);
+                    attackTarget.AttackableTiles.Add(moveOption);
+                    if (!targetList.Contains(target))
+                    {
+                        skillTargetList.Add(attackTarget);
+                        targetList.Add(target);
+                    }
+                }
+            }
+
+            return skillTargetList;
+        }
 
         public void InitMoveOptions(IEnumerable<IAIAgent> units)
         {
@@ -286,8 +488,22 @@ namespace Game.AI
             moveOrderList = CreateMoveOrderList(units);
             InitMoveOptions(units);
             attackerList = new List<IAIAgent>();
+            skillUserList = new List<IAIAgent>();
+            UpdateAIBehaviours(units);
             CreateAttackerList(units);
+            CreateSkillUserList(units);
             //Debug.Log("moveOrderlistCount: "+moveOrderList.Count());
+        }
+
+        void UpdateAIBehaviours(IEnumerable<IAIAgent> units)
+        {
+            foreach (var unit in units)
+            {
+                if (unit.AIComponent.AIBehaviour != null)
+                {
+                    unit.AIComponent.AIBehaviour.UpdateState(unit);
+                }
+            }
         }
     }
 }

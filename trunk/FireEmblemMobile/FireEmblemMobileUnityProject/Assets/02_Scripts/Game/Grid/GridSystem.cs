@@ -386,75 +386,8 @@ namespace Game.Map
                        
                     }
                 }
-                // if (pts.TargetArea == SkillTargetArea.Block)
-                // {
-                //     for (int i = 0; i < pts.GetSize(level) + 1; i++)
-                //     {
-                //         for (int j = 0; j< pts.GetSize(level)+ 1; j++)
-                //         {
-                //             var pos = characterPos + new Vector2(i, j);
-                //             ShowCastRange(pos,character.Faction.Id);
-                //             pos = characterPos + new Vector2(-i, j);
-                //             ShowCastRange(pos,character.Faction.Id);
-                //             pos = characterPos + new Vector2(i, -j);
-                //             ShowCastRange(pos,character.Faction.Id);
-                //             pos = characterPos + new Vector2(-i, -j);
-                //             ShowCastRange(pos,character.Faction.Id);
-                //         }
-                //     }
-                // }
-                // else
-                // {
-                //     for (int i = 1; i < pts.GetSize(level) + 1; i++)
-                //     {
-                //         if (pts.TargetArea == SkillTargetArea.Line||pts.TargetArea == SkillTargetArea.Star||pts.TargetArea == SkillTargetArea.Cross)
-                //         {
-                //             var pos = characterPos + new Vector2(-i, 0);
-                //             ShowCastRange(pos,character.Faction.Id);
-                //             pos = characterPos + new Vector2(i, 0);
-                //             ShowCastRange(pos,character.Faction.Id);
-                //           
-                //         }
-                //
-                //         if (pts.TargetArea == SkillTargetArea.NormalLine||pts.TargetArea == SkillTargetArea.Star||pts.TargetArea == SkillTargetArea.Cross)
-                //         {
-                //             var pos = characterPos + new Vector2(0, -i);
-                //             ShowCastRange(pos,character.Faction.Id);
-                //             pos = characterPos + new Vector2(0, i);
-                //             ShowCastRange(pos,character.Faction.Id);
-                //         }
-                //
-                //         
-                //     }
-                //
-                //     if (pts.TargetArea == SkillTargetArea.Star)
-                //     {
-                //         for (int i = 0; i < pts.GetSize(level); i++)
-                //         {
-                //             for (int j = 0; j < pts.GetSize(level); j++)
-                //             {
-                //                 if (i !=0 && j!=0&&(i+j)<=pts.GetSize(level))
-                //                 {
-                //                     var pos = characterPos + new Vector2(i, j);
-                //                     ShowCastRange(pos,character.Faction.Id);
-                //                     pos = characterPos + new Vector2(-i, j);
-                //                     ShowCastRange(pos,character.Faction.Id);
-                //                     pos = characterPos + new Vector2(i, -j);
-                //                     ShowCastRange(pos,character.Faction.Id);
-                //                     pos = characterPos + new Vector2(-i, -j);
-                //                     ShowCastRange(pos,character.Faction.Id);
-                //                 }
-                //                
-                //             }
-                //         }
-                //     }
-            // }
             }
-            
-                      
-                    
-                
-            
+
         }
         
         public bool IsTargetAble(int x, int y)

@@ -248,6 +248,7 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
                 Port failChoicePort = CreateUnDeletableChoicePort(choiceData, "Fail");
                 responseContainer.Add(failChoicePort);
             }
+            
 
             outputContainer.Add(responseContainer);
         }

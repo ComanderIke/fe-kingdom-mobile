@@ -6,7 +6,7 @@ namespace GameCamera
 {
     public class ViewOnGridMixin : CameraMixin
     {
-        private int currentZoom = -1;
+       
         [SerializeField]
         private float maxZoom=7.0f;
         [SerializeField]

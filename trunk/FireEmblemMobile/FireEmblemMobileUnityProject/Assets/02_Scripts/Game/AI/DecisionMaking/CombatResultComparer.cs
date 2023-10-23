@@ -30,8 +30,8 @@ namespace Game.AI
 
         private int CompareDefenseTiles(ICombatResult x, ICombatResult y)
         {
-            int  xBonuses= x.GetTileDefenseBonuses() + x.GetTileAvoidBonuses();
-            int yBonuses = y.GetTileDefenseBonuses() + y.GetTileAvoidBonuses();
+            int  xBonuses= x.GetTileDefenseBonuses() + x.GetTileAvoidBonuses()+x.GetTileSpeedBonuses();
+            int yBonuses = y.GetTileDefenseBonuses() + y.GetTileAvoidBonuses()+y.GetTileSpeedBonuses();
             if ( xBonuses> yBonuses)
             {
                 return 1;

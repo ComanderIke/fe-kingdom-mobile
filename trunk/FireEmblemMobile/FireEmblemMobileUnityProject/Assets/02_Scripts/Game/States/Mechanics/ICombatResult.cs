@@ -10,6 +10,12 @@ namespace Game.Mechanics
         int GetDamageRatio();
         int GetTileDefenseBonuses();
         int GetTileAvoidBonuses();
+        int GetTileSpeedBonuses();
  
     }
+    public interface ISkillResult:ICombatResult
+    {
+        Vector2Int GetCastPosition();
+    }
+   
 }

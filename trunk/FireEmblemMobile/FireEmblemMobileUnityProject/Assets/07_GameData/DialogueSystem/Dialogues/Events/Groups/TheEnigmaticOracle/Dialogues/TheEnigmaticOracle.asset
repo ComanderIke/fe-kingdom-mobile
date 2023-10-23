@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8adcf8ab5ec4f11bcd0989248836a45, type: 3}
+  m_Name: TheEnigmaticOracle
+  m_EditorClassIdentifier: 
+  <DialogName>k__BackingField: TheEnigmaticOracle
+  <Text>k__BackingField: As you venture deeper into the forest, you come upon a mysterious
+    figure. A hooded and cloaked individual stands beneath an ancient oak tree. The
+    air around them seems charged with mystical energy, and their eyes gleam with
+    an otherworldly light.
+  <Choices>k__BackingField:
+  - <Text>k__BackingField: Approach the oracle with reverence and ask, "Oh wise oracle,
+      share your insight with a humble traveler. What path should I follow in these
+      turbulent times?"
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 1c3766f3f142a5547b759fe0aa2d7fe0,
+      type: 2}
+    <NextDialogueFail>k__BackingField: {fileID: 11400000, guid: 472e0a8795c556c4ca1b23902b922aa4,
+      type: 2}
+    <AttributeRequirements>k__BackingField:
+    - AttributeType: 5
+      Amount: 5
+    <CharacterRequirements>k__BackingField: []
+    <ItemRequirements>k__BackingField: []
+    <BlessingRequirements>k__BackingField: []
+    <ResourceRequirements>k__BackingField: []
+  - <Text>k__BackingField: Ignore the oracle and leave.
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 15f77fa8e0944834b813cb1b78c9a160,
+      type: 2}
+    <NextDialogueFail>k__BackingField: {fileID: 0}
+    <AttributeRequirements>k__BackingField: []
+    <CharacterRequirements>k__BackingField: []
+    <ItemRequirements>k__BackingField: []
+    <BlessingRequirements>k__BackingField: []
+    <ResourceRequirements>k__BackingField: []
+  <DialogueType>k__BackingField: 3
+  <IsStartingDialogue>k__BackingField: 1
+  <IsPortraitLeft>k__BackingField: 1
+  <DialogActor>k__BackingField: {fileID: 0}
+  <HeadLine>k__BackingField: The Enigmatic Oracle
+  <RewardResources>k__BackingField: []
+  <RewardItems>k__BackingField: []
+  <Events>k__BackingField: []

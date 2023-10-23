@@ -5,6 +5,7 @@ using System.Linq;
 using Game.AI;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
+using Game.GameActors.Units.Skills;
 using Game.Manager;
 using Game.Map;
 using Game.Mechanics;
@@ -58,10 +59,43 @@ namespace Game.Grid
 
             return targets;
         }
+        public List<IAttackableTarget> GetSkillTargetsAtPosition(IGridActor gridActor, int x, int y)
+        {
+            Unit unit = (Unit)gridActor;
+            Skill skill =unit.SkillManager.ActiveSkills[0];
+            ActiveSkillMixin activeSkillMixin = skill.FirstActiveMixin;
+         
+            List<IAttackableTarget> targets = new List<IAttackableTarget>();
+            if (activeSkillMixin is PositionTargetSkillMixin ptsm)
+            {
+                List<Vector2Int> castTargets = ptsm.GetCastTargets(unit, Tiles, skill.level,x, y);
+                
+                foreach (var castTarget in castTargets)
+                {
+                    var tmpdirection = new Vector2(castTarget.x-x, castTarget.y-y).normalized;
+                    var direction = new Vector2Int((int)tmpdirection.x, (int)tmpdirection.y);
+                    targets.AddRange(ptsm.GetAllTargets(unit, Tiles, castTarget.x, castTarget.y, direction));
+                }
+               
+            }
+            
+            return targets;
+        }
+
 
         public IGridObject GetGridObject(Vector2Int loc)
         {
             return Tiles[loc.x, loc.y].GridObject;
+        }
+
+        public Tile GetTile(int x, int y)
+        {
+            return Tiles[x, y];
+        }
+
+        public Tile[,] GetTiles()
+        {
+            return Tiles;
         }
 
         public List<IGridObject> GetAttackTargetsAtGameObjectPosition(Unit unit)

@@ -110,6 +110,9 @@ namespace Game.AI
                 case UnitActionType.Attack:
                     unitActionSystem.AddCommand(new AttackCommand((Unit)action.Performer, action.Target));
                     break;
+                case UnitActionType.UseSkill:
+                    unitActionSystem.AddCommand(new UseSkillCommand((Unit)action.Performer, action.Target, action.CastLocation));
+                    break;
             }
 
             unitActionSystem.AddCommand(new WaitCommand(action.Performer));
@@ -131,7 +134,7 @@ namespace Game.AI
         {
             
             FocusCameraMixin.OnArrived -= CameraOnUnit;
-            cameraSystem.GetMixin<FocusCameraMixin>().SetTargets(unitAction.Performer.GameTransformManager.GameObject, cameraTargetTime, true);
+            cameraSystem.GetMixin<FocusCameraMixin>().SetTargets(unitAction.Target.GameTransformManager.GameObject, cameraTargetTime, true);
             gridSystem.cursor.SetCurrentTile(gridSystem.GetTileFromVector2(unitAction.Location));
             unitActionSystem.ExecuteActions();
             

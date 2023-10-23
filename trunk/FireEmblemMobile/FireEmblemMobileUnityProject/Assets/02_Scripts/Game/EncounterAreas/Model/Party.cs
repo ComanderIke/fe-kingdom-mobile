@@ -127,6 +127,7 @@ namespace Game.WorldMapStuff.Model
             DeadCharacters = new List<Unit>();
             money = 1000;
             Morality = new Morality();
+            VisitedEvents = new List<LGEventDialogSO>();
 
         }
 

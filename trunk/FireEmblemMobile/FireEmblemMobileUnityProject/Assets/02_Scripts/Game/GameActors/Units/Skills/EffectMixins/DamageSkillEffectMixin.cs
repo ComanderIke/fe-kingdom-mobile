@@ -32,7 +32,11 @@ namespace Game.GameActors.Units.Skills
 
         }
 
-        int CalculateDamage(Unit caster,Unit target, int level)
+        public DamageType GetDamageType()
+        {
+            return damageType;
+        }
+        public int CalculateDamage(Unit caster,Unit target, int level)
         {
             if (lethalDmg)
             {

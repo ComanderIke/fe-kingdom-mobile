@@ -36,7 +36,7 @@ namespace Game.GameActors.Units
         [SerializeField] private int revivalStones;
         [SerializeField] public StockedItemBP combatItem1;
         [SerializeField] public StockedItemBP combatItem2;
-       
+        [SerializeField] private AIBehaviour aiBehaviour;
         [SerializeField]
         public Stats stats;
         [SerializeField]
@@ -85,7 +85,7 @@ namespace Game.GameActors.Units
             skillManager.AddStartSkills();
             var unit = new Unit(bluePrintID, Name, rpgClass, (Stats)stats.Clone(), moveType, 
                 new UnitVisual(visuals), skillManager,
-                new ExperienceManager(experienceManager), isBoss);
+                new ExperienceManager(experienceManager), isBoss, aiBehaviour);
             unit.RevivalStones = revivalStones;
             Weapon weapon = null;
             if (equippedWeaponBp != null)

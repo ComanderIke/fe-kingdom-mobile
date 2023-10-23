@@ -13,6 +13,7 @@ namespace Game.GameActors.Players
     {
         public int Hp { get; set; }
         public int MaxHp { get; set; }
+        GameTransformManager GameTransformManager { get; set; }
         object Clone();
         bool IsAlive();
         void Die(Unit damageSource);
@@ -52,6 +53,9 @@ namespace Game.GameActors.Players
                 maxHp = value;
             }
         }
+
+        public GameTransformManager GameTransformManager { get; set; }
+
         [SerializeField]
         private Sprite sprite;
         [SerializeField]

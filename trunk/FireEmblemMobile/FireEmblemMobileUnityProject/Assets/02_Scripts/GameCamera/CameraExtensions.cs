@@ -13,8 +13,20 @@ namespace GameCamera
 
         public static bool TryGetBounds(this GameObject[] gameObjects, out Bounds bounds)
         {
-            var renderers = gameObjects.Where(g => g).SelectMany(g => g.GetComponentsInChildren<Renderer>()).ToArray();
-            return renderers.TryGetBounds( out bounds);
+            //var renderers = gameObjects.Where(g => g).SelectMany(g => g.GetComponentsInChildren<Renderer>()).ToArray();
+            //var renderers = gameObjects.Where(g => g).Select(g => g.GetComponent<Renderer>()).ToArray();
+            // if (renderers == null|| renderers.Length==0)
+            // {
+                Vector3 sumPositions= Vector3.zero;
+                foreach (var go in gameObjects)
+                {
+                    sumPositions += go.transform.position;
+                }
+
+                bounds = new Bounds(sumPositions/gameObjects.Length, new Vector3(1,1,0));
+                return true;
+            // }
+            //return renderers.TryGetBounds( out bounds);
         }
 
         public static bool TryGetBounds(this Renderer[] renderers, out Bounds bounds)

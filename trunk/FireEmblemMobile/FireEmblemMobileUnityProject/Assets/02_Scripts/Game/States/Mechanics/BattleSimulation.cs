@@ -9,6 +9,8 @@ using Game.GameActors.Units.Skills;
 using Game.GameActors.Units.Skills.Passive;
 using Game.GameInput;
 using Game.Grid;
+using Game.Manager;
+using Game.Map;
 using Game.Mechanics.Battle;
 using MoreMountains.Feedbacks;
 using UnityEngine;
@@ -39,6 +41,7 @@ namespace Game.Mechanics
         public GridPosition attackPosition;
         public List<Skill> AttackerActivatedCombatSkills;
         public List<Skill> DefenderActivatedCombatSkills;
+        private Tile attackPosTile;
         public BattleSimulation(IBattleActor attacker, IAttackableTarget attackableTarget):this(attacker, attackableTarget, ((Unit)attacker).GridComponent.GridPosition)
         {
            
@@ -49,7 +52,7 @@ namespace Game.Mechanics
             Debug.Log("Constructor for IAttackableTarget");
             AttackerActivatedCombatSkills = new List<Skill>();
             DefenderActivatedCombatSkills = new List<Skill>();
-                
+            attackPosTile = ServiceProvider.Instance.GetSystem<GridSystem>().GetTile(attackPosition.X, attackPosition.Y);
             combatRounds = new List<CombatRound>();
             Attacker = attacker.Clone() as IBattleActor;
             AttackableTarget = attackableTarget.Clone() as IAttackableTarget;
@@ -72,6 +75,7 @@ namespace Game.Mechanics
         public BattleSimulation(IBattleActor attacker, IBattleActor defender, GridPosition attackPosition, bool continuos = false)
         {
             combatRounds = new List<CombatRound>();
+            attackPosTile = ServiceProvider.Instance.GetSystem<GridSystem>().GetTile(attackPosition.X, attackPosition.Y);
             Attacker = attacker.Clone() as IBattleActor;
             Defender = defender.Clone() as IBattleActor;
             this.continuos = continuos;
@@ -498,14 +502,18 @@ namespace Game.Mechanics
 
         public int GetTileDefenseBonuses()
         {
-            return Attacker.Stats.BonusStatsFromTerrain.Armor;
+            
+            return attackPosTile.TileData.defenseBonus;
         }
 
-       
+        public int GetTileSpeedBonuses()
+        {
+            return attackPosTile.TileData.speedMalus;
+        }
 
         public int GetTileAvoidBonuses()
         {
-            return Attacker.Stats.BonusStatsFromTerrain.Avoid;
+            return attackPosTile.TileData.avoBonus;
         }
     }
 
