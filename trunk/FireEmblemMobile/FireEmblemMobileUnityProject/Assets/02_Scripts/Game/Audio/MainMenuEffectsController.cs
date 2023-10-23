@@ -9,7 +9,8 @@ namespace LostGrace
     {
         void Start()
         {
-            AudioSystem.Instance.PlayMusic("MainMenuTheme");
+            
+
         }
 
         void Update()

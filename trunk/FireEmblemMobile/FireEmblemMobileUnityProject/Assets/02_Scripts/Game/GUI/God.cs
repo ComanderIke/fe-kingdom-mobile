@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Game.GameActors.Units;
+using UnityEngine;
 
 namespace LostGrace
 {
@@ -6,7 +7,7 @@ namespace LostGrace
     public class God :ScriptableObject
     {
         public string Name;
-        public Sprite Face;
+        public DialogSpriteSet DialogSpriteSet;
         public Sprite Body;
         public Color Color;
         public BlessingBP BlessingBp;

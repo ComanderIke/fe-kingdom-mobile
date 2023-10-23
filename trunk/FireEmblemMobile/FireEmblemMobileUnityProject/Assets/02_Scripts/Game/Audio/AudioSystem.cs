@@ -64,7 +64,7 @@ namespace Audio
             }
 
             currentlyPlayedMusic = new List<MusicData>();
-            PlayMusic("PlayerTheme", 0, 1);
+            //PlayMusic("PlayerTheme", 0, 1);
         }
         private void OnDisable()
         {

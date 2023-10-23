@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Audio;
 using Game.WorldMapStuff.Model;
 using LostGrace;
 using Menu;
@@ -42,6 +43,15 @@ namespace Game.GUI
         {
             // animator.SetBool(Show1, true);
             // animator.SetBool(Side, false);
+            if (AudioSystem.Instance.GetCurrentlyPlayedMusicTracks().Count > 0)
+            {
+                AudioSystem.Instance.ChangeMusic("MainMenuTheme", 
+                    AudioSystem.Instance.GetCurrentlyPlayedMusicTracks()[0],true, 2f,.5f, 1f);
+            }
+            else
+            {
+                AudioSystem.Instance.PlayMusic("MainMenuTheme");
+            }
             TweenUtility.FadeIn(canvasGroup);
             TweenUtility.FadeIn(titleCanvasGroup);
             TweenUtility.FadeIn(playButtonCanvasGroup);

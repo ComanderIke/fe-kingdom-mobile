@@ -37,7 +37,7 @@ namespace LostGrace
                 blessedChar.sprite = blessedUnit.FaceSprite;
             this.god = god;
             this.index = index;
-            face.sprite = god.Face;
+            face.sprite = god.DialogSpriteSet.FaceSprite;
             lv.SetText("Lv. "+unit.Bonds.GetBondLevel(god));
             godColorImage.color = god.Color;
             if(selected)

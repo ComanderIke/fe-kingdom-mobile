@@ -1,9 +1,11 @@
 ﻿using System.Collections;
+using Audio;
 using Game.Dialog;
 using Game.WorldMapStuff.Model;
 using Menu;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 namespace LostGrace
@@ -53,6 +55,9 @@ namespace LostGrace
             //SaveButton.SetActive(SaveData.currentSaveData!=null);
             //LoadButton.SetActive(GetLoadFiles()!=0);
             base.Show();
+            
+            AudioSystem.Instance.ChangeMusic("SanctuaryTheme", 
+                AudioSystem.Instance.GetCurrentlyPlayedMusicTracks()[0],true, 4f,.0f, 2f);
             StartCoroutine(ShowCoroutine());
           //  poiPortal.SetInteractable(false);
           //  poiUpgrades.SetInteractable(false);
