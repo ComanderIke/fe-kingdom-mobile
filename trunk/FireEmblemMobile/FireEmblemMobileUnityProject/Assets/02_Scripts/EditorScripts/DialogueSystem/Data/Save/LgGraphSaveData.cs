@@ -17,6 +17,7 @@ namespace __2___Scripts.External.Editor.Data.Save
         [field:SerializeField] public SerializableDictionary<string, List<string>> OldGroupedNodeNames { get; set; }
         [field:SerializeField] public List<LGFightNodeSaveData> FightNodes { get; set; }
         [field:SerializeField] public List<LGBattleNodeSaveData> BattleNodes { get; set; }
+        [field:SerializeField] public List<LGEventNodeSaveData> RandomNodes { get; set; }
         public void Initialize(string fileName)
         {
             FileName = fileName;
@@ -25,6 +26,7 @@ namespace __2___Scripts.External.Editor.Data.Save
             EventNodes = new List<LGEventNodeSaveData>();
             FightNodes = new List<LGFightNodeSaveData>();
             BattleNodes = new List<LGBattleNodeSaveData>();
+            RandomNodes = new List<LGEventNodeSaveData>();
         }
     }
 }

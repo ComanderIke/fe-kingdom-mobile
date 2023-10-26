@@ -120,6 +120,7 @@ namespace __2___Scripts.External.Editor
             this.AddManipulator(CreateNodeContextualMenu("Add Multiple Choice Node",DialogType.MultiChoice));
             this.AddManipulator(CreateNodeContextualMenu("Add Fight Node",DialogType.Fight));
             this.AddManipulator(CreateNodeContextualMenu("Add Battle Node",DialogType.Battle));
+            this.AddManipulator(CreateNodeContextualMenu("Add Random Node",DialogType.RandomOutcome));
             this.AddManipulator(CreateNodeContextualMenu("Add Multiple Choice Event Node",DialogType.MultiChoiceEvent));
         
             this.AddManipulator(CreateGroupContextualMenu());
@@ -378,6 +379,20 @@ namespace __2___Scripts.External.Editor
                 groups.Remove(oldGroupName);
             }
         }
+        bool IsDigitsOnly(string str)
+        {
+            foreach (char c in str)
+            {
+                if (c == ' ')
+                    continue;
+                if (c < '0' || c > '9')
+                    return false;
+            }
+
+            if (str.Length <= 0)
+                return false;
+            return true;
+        }
 
         private void OnGraphViewChanged()
         {
@@ -389,8 +404,11 @@ namespace __2___Scripts.External.Editor
                     {
                         DialogNode nextNode = (DialogNode)edge.input.node;
                         LGChoiceSaveData choiceData = (LGChoiceSaveData)edge.output.userData;
-                        if(edge.output.portName!="Fail")
+
+                        if (edge.output.portName != "Fail")
+                        {
                             choiceData.NodeID = nextNode.ID;
+                        }
                         else
                         {
                             Debug.Log("NEVER CALLED?!");

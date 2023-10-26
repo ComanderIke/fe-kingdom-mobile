@@ -182,6 +182,7 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
                 responseContainer.Insert(3,atrPopup);
             });
             responseContainer.Add(addResRequirement);
+         
             foreach (var charReq in choiceData.CharacterRequirements)
             {
                 ObjectField charItemField = new ObjectField();
@@ -203,8 +204,7 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
                 charItemField.value =itemReq;
                 responseContainer.Insert(2,charItemField);
             }
-           
-
+            
             foreach (var atrReq in choiceData.AttributeRequirements)
             {
                 TextField atrAmountTextField = null;

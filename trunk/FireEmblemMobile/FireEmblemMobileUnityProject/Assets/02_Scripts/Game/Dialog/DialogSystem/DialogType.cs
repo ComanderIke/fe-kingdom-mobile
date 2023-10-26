@@ -6,6 +6,7 @@
         MultiChoice,
         Fight,
         MultiChoiceEvent,
-        Battle
+        Battle,
+        RandomOutcome
     }
 }

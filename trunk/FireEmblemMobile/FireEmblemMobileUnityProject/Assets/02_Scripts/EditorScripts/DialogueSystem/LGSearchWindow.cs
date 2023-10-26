@@ -74,6 +74,10 @@ namespace __2___Scripts.External.Editor
                     BattleNode battleNode = (BattleNode)graphView.CreateNode("DialogueName",DialogType.Battle, localMousePos);
                     graphView.AddElement(battleNode);
                     return true;
+                case DialogType.RandomOutcome: 
+                    RandomOutcomeNode randomNode = (RandomOutcomeNode)graphView.CreateNode("DialogueName",DialogType.RandomOutcome, localMousePos);
+                    graphView.AddElement(randomNode);
+                    return true;
                 case DialogType.MultiChoiceEvent: 
                     MultiChoiceEventNode eventNode = (MultiChoiceEventNode)graphView.CreateNode("DialogueName",DialogType.MultiChoiceEvent, localMousePos);
                     graphView.AddElement(eventNode);

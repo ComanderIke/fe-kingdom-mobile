@@ -12,6 +12,7 @@ using LostGrace;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Networking.Types;
 using UnityEngine.UIElements;
 
 namespace _02_Scripts.Game.Dialog.DialogSystem
@@ -65,6 +66,7 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
             LoadEventNodes(graphData.EventNodes);
             LoadFightNodes(graphData.FightNodes);
             LoadBattleNodes(graphData.BattleNodes);
+            LoadRandomNodes(graphData.RandomNodes);
             LoadNodesConnections();
         }
         private static void LoadBattleNodes(List<LGBattleNodeSaveData> nodes)
@@ -97,6 +99,53 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                     {
                         fightNode.EnemyArmy = nodeData.EnemyArmy;
                     }
+                   
+                }
+                
+                node.Draw();
+                
+                graphView.AddElement(node);
+                loadedNodes.Add(node.ID, node);
+                if (string.IsNullOrEmpty(nodeData.GroupID))
+                {
+                    continue;
+                }
+
+                DialogGroup group = loadedGroups[nodeData.GroupID];
+                node.Group = group;
+                group.AddElement(node);
+            }
+        }
+        private static void LoadRandomNodes(List<LGEventNodeSaveData> nodes)
+        {
+          
+            foreach (LGEventNodeSaveData nodeData in nodes)
+            {
+                DialogNode node = graphView.CreateNode(nodeData.Name,nodeData.DialgueType, nodeData.Position, false);
+
+                
+                List<LGChoiceSaveData> choices = CloneNodeChoices(nodeData.Choices);
+               
+                node.ID = nodeData.ID;
+                node.Choices = choices;
+                node.Text = nodeData.Text;
+                node.DialogActor = nodeData.DialogActor;
+              
+                if (node is EventNode eventNode)
+                {
+               
+                    List<ResourceEntry> resources = CloneNodeResources(nodeData.RewardResources);
+                    List<ItemBP> items = new List<ItemBP>(nodeData.RewardItems);
+                    List<DialogEvent> events = new List<DialogEvent>(nodeData.Events);
+                //    Debug.Log("HÄH?");
+                    eventNode.ResourceRewards = resources;
+                    eventNode.ItemRewards = items;
+                    eventNode.Events = events;
+                    eventNode.Headline = nodeData.Headline;
+                    // if (node is BattleNode fightNode)
+                    // {
+                    //     fightNode.EnemyArmy = nodeData.EnemyArmy;
+                    // }
                    
                 }
                 
@@ -149,6 +198,7 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                 node.Draw();
                 
                 graphView.AddElement(node);
+                Debug.Log("Load FIGHT NODE: "+node.DialogueName+" "+node.ID);
                 loadedNodes.Add(node.ID, node);
                 if (string.IsNullOrEmpty(nodeData.GroupID))
                 {
@@ -185,6 +235,7 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                 List<LGChoiceSaveData> loadedChoiceData = new List<LGChoiceSaveData>();
                 foreach (VisualElement container in loadedNode.Value.outputContainer.Children())
                 {
+                    List<string> loadedNodeIds = new List<string>();
                     foreach (Port choicePort in container.Children().Where(n=> n is Port))
                     {
                         LGChoiceSaveData choiceData = (LGChoiceSaveData)choicePort.userData;
@@ -192,13 +243,34 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                         {
                             continue;
                         }
-                        DialogNode nextNode = loadedNodes[choiceData.NodeID];
+
+                        DialogNode nextNode = null;
+                       
                         if (loadedChoiceData.Contains(choiceData)&&!string.IsNullOrEmpty(choiceData.NodeFailID))
                         {
+                         
                             nextNode= loadedNodes[choiceData.NodeFailID];
+                            loadedNodeIds.Add(choiceData.NodeFailID);
                         }
-                        loadedChoiceData.Add(choiceData);
+                        else
+                        {
+                     
+                            if (loadedNodes.ContainsKey(choiceData.NodeID))
+                            {
+                                nextNode = loadedNodes[choiceData.NodeID];
+                                loadedNodeIds.Add(choiceData.NodeID);
+                            }
+                        }
+
                        
+                        loadedChoiceData.Add(choiceData);
+
+                        if (nextNode == null)
+                        {
+                       
+                            continue;
+                        }
+
                         Port nextNodeInputPort = (Port)nextNode.inputContainer.Children().First();
                         Edge edge = choicePort.ConnectTo(nextNodeInputPort);
                         graphView.AddElement(edge);
@@ -329,6 +401,11 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                 {
                     SaveNodeToGraph(battleNode, graphSaveData);
                     SaveNodeToScriptableObject(battleNode, dialogContainer);
+                }
+                else if (node is RandomOutcomeNode randomNode)
+                {
+                    SaveNodeToGraph(randomNode, graphSaveData);
+                    SaveNodeToScriptableObject(randomNode, dialogContainer);
                 }
                 else if (node is EventNode eventNode)
                 {
@@ -569,9 +646,12 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                     ResourceRequirements = new List<ResourceEntry>(nodeChoice.ResourceRequirements),
                     CharacterRequirements = new List<UnitBP>(nodeChoice.CharacterRequirements),
                     AttributeRequirements = new List<ResponseStatRequirement>(nodeChoice.AttributeRequirements),
-                    BlessingRequirements = new List<BlessingBP>(nodeChoice.BlessingRequirements)
+                    BlessingRequirements = new List<BlessingBP>(nodeChoice.BlessingRequirements),
+                    RandomRate = nodeChoice.RandomRate
+                    
                   
                 };
+
                 dialogChoices.Add(choiceData);
             }
 
@@ -602,8 +682,9 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                     ItemRequirements = new List<ItemBP>(choice.ItemRequirements),
                     ResourceRequirements = new List<ResourceEntry>(choice.ResourceRequirements),
                     CharacterRequirements= new List<UnitBP>(choice.CharacterRequirements),
-                    AttributeRequirements = new List<ResponseStatRequirement>(choice.AttributeRequirements)
-                    
+                    AttributeRequirements = new List<ResponseStatRequirement>(choice.AttributeRequirements),
+                    RandomRate = choice.RandomRate
+
                 };
                 choices.Add(choiceSaveData);
             }

@@ -21,7 +21,8 @@ namespace __2___Scripts.External.Editor.Data.Save
        [field: SerializeField] public List<ResourceEntry> ResourceRequirements { get; set; }
        [field: SerializeField] public List<ItemBP> ItemRequirements { get; set; }
        [field: SerializeField] public List<BlessingBP> BlessingRequirements { get; set; }
-     
+       public int RandomRate { get; set; }
+
 
        public LGChoiceSaveData()
        {
@@ -30,6 +31,8 @@ namespace __2___Scripts.External.Editor.Data.Save
            AttributeRequirements = new List<ResponseStatRequirement>();
            CharacterRequirements = new List<UnitBP>();
            BlessingRequirements = new List<BlessingBP>();
+           
+           // RandomEffects = new float[]();
        }
     }
 }
