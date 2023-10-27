@@ -432,8 +432,14 @@ public class UIEventController : MonoBehaviour
             {
                 StartBattle();
             }
+            else if (currentNode is LGRandomOutcomeEventDialogSO randomOutcomeEventDialogSo)
+            {
+                Debug.Log("RANDOM OUTCOME NODE");
+                RandomOutcome(randomOutcomeEventDialogSo);
+            }
             else
             {
+                Debug.Log("Normal EVENT NODE");
                 UpdateUIValues();
             }
         }
@@ -443,8 +449,40 @@ public class UIEventController : MonoBehaviour
         }
     }
 
-  
 
+    void RandomOutcome(LGRandomOutcomeEventDialogSO randomNode)
+    {
+        int sum = 0;
+        foreach (var choice in randomNode.Choices)
+        {
+            if(choice.NextDialogue!=null)
+                sum += choice.RandomRate;
+        }
+
+        Debug.Log("Roll Between: "+1+"(inclusive) and "+sum+"(inclusive)");
+        int rand = UnityEngine.Random.Range(1, sum+1);
+        Debug.Log("RandomRoll: "+rand);
+        int currentSum = 0;
+        foreach (var choice in randomNode.Choices)
+        {
+            if(choice.NextDialogue!=null)
+            {
+                if (rand <= choice.RandomRate + currentSum)
+                {
+                    
+                    currentNode =(LGEventDialogSO)choice.NextDialogue;
+                    UpdateUI();
+                    return;
+                }
+                 
+                UpdateUI();
+                //Change to this node
+                currentSum += choice.RandomRate;
+            }
+            
+        }
+
+    }
     void EndEvent()
     {
         Hide();

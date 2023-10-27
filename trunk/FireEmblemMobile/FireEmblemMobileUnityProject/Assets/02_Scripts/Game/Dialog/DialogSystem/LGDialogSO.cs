@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using __2___Scripts.External.Editor.Data.Save;
 using __2___Scripts.External.Editor.Elements;
+using Game.GameActors.Items;
+using Game.GameActors.Units;
 using UnityEditor;
 using UnityEngine;
 
@@ -26,5 +29,29 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
             IsPortraitLeft = portraitLeft;
             DialogActor = dialogActor;
         }
+        // public static List<LGDialogChoiceData> CloneNodeChoices(List<LGDialogChoiceData> nodeChoices)
+        // {
+        //     List<LGDialogChoiceData> choices =new List<LGDialogChoiceData>();
+        //     foreach (LGDialogChoiceData choice in nodeChoices)
+        //     {
+        //         //Debug.Log("Clone Node Choices: "+choice.RandomRate);
+        //         LGDialogChoiceData choiceSaveData = new LGDialogChoiceData()
+        //         {
+        //             Text = choice.Text,
+        //             NextDialogue = choice.NextDialogue,
+        //             NextDialogueFail = choice.NextDialogueFail,
+        //             NextDialogueRandom = new List<LGDialogSO>(choice.NextDialogueRandom),
+        //             ItemRequirements = new List<ItemBP>(choice.ItemRequirements),
+        //             ResourceRequirements = new List<ResourceEntry>(choice.ResourceRequirements),
+        //             CharacterRequirements= new List<UnitBP>(choice.CharacterRequirements),
+        //             AttributeRequirements = new List<ResponseStatRequirement>(choice.AttributeRequirements),
+        //             RandomRate = choice.RandomRate
+        //
+        //         };
+        //         choices.Add(choiceSaveData);
+        //     }
+        //
+        //     return choices;
+        // }
     }
 }

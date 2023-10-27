@@ -66,6 +66,7 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
             LoadEventNodes(graphData.EventNodes);
             LoadFightNodes(graphData.FightNodes);
             LoadBattleNodes(graphData.BattleNodes);
+            Debug.Log(graphData.RandomNodes[0].Choices[0].RandomRate);
             LoadRandomNodes(graphData.RandomNodes);
             LoadNodesConnections();
         }
@@ -90,7 +91,7 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                     List<ResourceEntry> resources = CloneNodeResources(nodeData.RewardResources);
                     List<ItemBP> items = new List<ItemBP>(nodeData.RewardItems);
                     List<DialogEvent> events = new List<DialogEvent>(nodeData.Events);
-                    Debug.Log("HÄH?");
+                   
                     eventNode.ResourceRewards = resources;
                     eventNode.ItemRewards = items;
                     eventNode.Events = events;
@@ -122,10 +123,17 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
             foreach (LGEventNodeSaveData nodeData in nodes)
             {
                 DialogNode node = graphView.CreateNode(nodeData.Name,nodeData.DialgueType, nodeData.Position, false);
-
                 
+                foreach (var choice in nodeData.Choices)
+                {
+                    Debug.Log(choice.RandomRate);
+                }
                 List<LGChoiceSaveData> choices = CloneNodeChoices(nodeData.Choices);
-               
+             
+               foreach (var choice in choices)
+               {
+                   Debug.Log(choice.RandomRate);
+               }
                 node.ID = nodeData.ID;
                 node.Choices = choices;
                 node.Text = nodeData.Text;
@@ -198,7 +206,7 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                 node.Draw();
                 
                 graphView.AddElement(node);
-                Debug.Log("Load FIGHT NODE: "+node.DialogueName+" "+node.ID);
+               // Debug.Log("Load FIGHT NODE: "+node.DialogueName+" "+node.ID);
                 loadedNodes.Add(node.ID, node);
                 if (string.IsNullOrEmpty(nodeData.GroupID))
                 {
@@ -623,6 +631,39 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
             createdDialogs.Add(node.ID, dialog);
             SaveAsset(dialog);
         }
+        private static void SaveNodeToScriptableObject(RandomOutcomeNode node, LGDialogContainerSO dialogContainer)
+        {
+            LGRandomOutcomeEventDialogSO dialog;
+            if (node.Group != null)
+            {
+                dialog = CreateAsset<LGRandomOutcomeEventDialogSO>($"{containerFolderPath}/Groups/{node.Group.title}/Dialogues", node.DialogueName);
+                dialogContainer.DialogueGroupes.AddItem(createdDialogGroups[node.Group.ID], dialog);
+            }
+            else
+            {
+                dialog = CreateAsset<LGRandomOutcomeEventDialogSO>($"{containerFolderPath}/Global/Dialogues", node.DialogueName);
+                dialogContainer.UngroupedDialogs.Add(dialog);
+            }
+
+            Debug.Log("Save To SO " + node.ItemRewards.Count);
+            if(node.ItemRewards.Count>=1)
+                Debug.Log("Item: " + node.ItemRewards[0].name);
+            dialog.Initialize(
+                node.DialogueName, 
+                node.DialogActor,
+                node.Text,
+                ConvertNodeChoicesToDialogueChoices(node.Choices),
+                node.DialogType, 
+                node.PortraitLeft,
+                node.IsStartingNode(),
+                node.Headline,
+                CopyResourceRewards(node.ResourceRewards), 
+                new List<ItemBP>(node.ItemRewards), 
+                new List<DialogEvent>(node.Events)
+            );
+            createdDialogs.Add(node.ID, dialog);
+            SaveAsset(dialog);
+        }
 
         private static List<ResourceEntry> CopyResourceRewards(List<ResourceEntry> nodeResourceRewards)
         {
@@ -669,11 +710,12 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
 
             return choices;
         }
-        private static List<LGChoiceSaveData> CloneNodeChoices(List<LGChoiceSaveData> nodeChoices)
+        public static List<LGChoiceSaveData> CloneNodeChoices(List<LGChoiceSaveData> nodeChoices)
         {
             List<LGChoiceSaveData> choices =new List<LGChoiceSaveData>();
             foreach (LGChoiceSaveData choice in nodeChoices)
             {
+                //Debug.Log("Clone Node Choices: "+choice.RandomRate);
                 LGChoiceSaveData choiceSaveData = new LGChoiceSaveData()
                 {
                     Text = choice.Text,
@@ -750,6 +792,32 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                 Enemy = node.Enemy
             };
             graphSaveData.FightNodes.Add(nodeData);
+        }
+        private static void SaveNodeToGraph(RandomOutcomeNode node, LgGraphSaveData graphSaveData)
+        {
+            List<LGChoiceSaveData> choices = CloneNodeChoices(node.Choices);
+            LGEventNodeSaveData nodeData = new LGEventNodeSaveData()
+            {
+                ID = node.ID,
+                Name = node.DialogueName,
+                Choices = choices,
+                Text = node.Text,
+                IsPortraitLeft = node.PortraitLeft,
+                DialogActor = node.DialogActor,
+                GroupID = node.Group?.ID,
+                DialgueType = node.DialogType,
+                Position = node.GetPosition().position,
+                Headline = node.Headline,
+                RewardResources = node.ResourceRewards,
+                RewardItems = node.ItemRewards,
+                Events = node.Events
+            };
+            Debug.Log("SAVE RANDOM OUTCOME NODE:");
+            foreach (var choice in nodeData.Choices)
+            {
+                Debug.Log(choice.RandomRate);
+            }
+            graphSaveData.RandomNodes.Add(nodeData);
         }
         private static void SaveNodeToGraph(BattleNode node, LgGraphSaveData graphSaveData)
         {

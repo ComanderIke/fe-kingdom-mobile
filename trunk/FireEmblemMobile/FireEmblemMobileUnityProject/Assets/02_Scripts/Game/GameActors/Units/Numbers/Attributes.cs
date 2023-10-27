@@ -205,6 +205,16 @@ namespace Game.GameActors.Units.Numbers
                     def += value; break;
                 case AttributeType.FTH:
                     faith += value; break;
+                case AttributeType.ALL:
+                    str += value; 
+                    dex += value;
+                    intel += value;
+                    agi += value;
+                    maxHp += value;
+                    lck += value;
+                    def += value;
+                    faith += value;
+                    break;
             }
             OnAttributesUpdated?.Invoke();
         }
@@ -296,6 +306,7 @@ namespace Game.GameActors.Units.Numbers
         FTH,
         LVL,
         NONE,
-        ATK
+        ATK,
+        ALL
     }
 }

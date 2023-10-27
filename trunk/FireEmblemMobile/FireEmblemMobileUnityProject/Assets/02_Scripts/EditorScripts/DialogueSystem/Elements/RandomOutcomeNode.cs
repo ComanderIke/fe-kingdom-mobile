@@ -30,9 +30,14 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
             {
                 Text = "Option 3"
             };
+            LGChoiceSaveData option4Data = new LGChoiceSaveData()
+            {
+                Text = "Option 4"
+            };
             Choices.Add(option1Data);
             Choices.Add(option2Data);
             Choices.Add(option3Data);
+            Choices.Add(option4Data);
             
         }
 
