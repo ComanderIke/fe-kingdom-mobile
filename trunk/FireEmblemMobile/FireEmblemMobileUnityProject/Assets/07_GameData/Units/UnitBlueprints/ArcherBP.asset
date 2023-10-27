@@ -15,16 +15,20 @@ MonoBehaviour:
   equippedWeaponBp: {fileID: 11400000, guid: 83e1761a127b1a54ca3c98ca2850f24a, type: 2}
   EquippedRelic1: {fileID: 0}
   Name: Selena
+  isBoss: 0
+  isBig2x2: 0
+  revivalStones: 0
   combatItem1:
     stock: 1
     item: {fileID: 0}
   combatItem2:
     stock: 0
     item: {fileID: 0}
+  aiBehaviour: {fileID: 0}
   stats:
     AttackRanges: 02000000
     BaseAttributes:
-      str: 16
+      str: 12
       intel: 6
       dex: 6
       agi: 6
@@ -33,18 +37,19 @@ MonoBehaviour:
       def: 6
       faith: 6
     <BaseGrowths>k__BackingField:
-      str: 0
-      intel: 0
-      dex: 0
-      agi: 0
-      maxHp: 0
-      lck: 0
-      def: 0
-      faith: 0
+      str: 30
+      intel: 30
+      dex: 30
+      agi: 30
+      maxHp: 30
+      lck: 30
+      def: 30
+      faith: 30
     Mov: 3
   moveType: {fileID: 11400000, guid: d13592b1fa0af024a841b121149b8014, type: 2}
   SkillManager:
-    startSkills: []
+    startSkills:
+    - {fileID: 0}
     startBlessing: {fileID: 11400000, guid: c70f27e718bc80146b9cd0d4de69166c, type: 2}
     maxSkillCount: 0
     skillPoints: 1

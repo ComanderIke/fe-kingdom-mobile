@@ -36,8 +36,8 @@ namespace Game.GUI.EncounterUI.Inn
         public UIInnItem innItemSmall2;
         public UIInnItem innItemSmall3;
         public UIInnItem innItemSmall4;
-        public UIInnItem innItemSmall5;
-        public UIInnItem innItemSmall6;
+       // public UIInnItem innItemSmall5;
+        //public UIInnItem innItemSmall6;
         [SerializeField] private Recipe restItem;
         [SerializeField] private List<Recipe> specialItemPool;
         [SerializeField] private List<Recipe> itemsPool;
@@ -192,16 +192,16 @@ namespace Game.GUI.EncounterUI.Inn
            innItemSmall2.SetValues(items[1]);
            innItemSmall3.SetValues(items[2]);
            innItemSmall4.SetValues(items[3]);
-           innItemSmall5.SetValues(items[4]);
-           innItemSmall6.SetValues(items[5]);
+           // innItemSmall5.SetValues(items[4]);
+           // innItemSmall6.SetValues(items[5]);
            innItemRest.SetInteractable(!used.Contains((restItem)));
            innItemSpecial.SetInteractable(!used.Contains((specialItem)));
            innItemSmall1.SetInteractable(!used.Contains((items[0])));
            innItemSmall2.SetInteractable(!used.Contains((items[1])));
            innItemSmall3.SetInteractable(!used.Contains((items[2])));
            innItemSmall4.SetInteractable(!used.Contains((items[3])));
-           innItemSmall5.SetInteractable(!used.Contains((items[4])));
-           innItemSmall6.SetInteractable(!used.Contains((items[5])));
+           // innItemSmall5.SetInteractable(!used.Contains((items[4])));
+           // innItemSmall6.SetInteractable(!used.Contains((items[5])));
            
             
             
