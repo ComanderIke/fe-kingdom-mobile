@@ -35,7 +35,8 @@ namespace LostGrace
         [SerializeField] TMP_ColorGradient legendaryColorGradient;
         [SerializeField] TMP_ColorGradient mythicColorGradient;
 
-   
+
+        [SerializeField] private Image selectedBorder;
         [SerializeField] private TextMeshProUGUI rarityText;
         [SerializeField] private GameObject lockedOverlay;
         [SerializeField] private TextMeshProUGUI lockedText;
@@ -333,6 +334,7 @@ namespace LostGrace
         public void Select()
         {
             LeanTween.scale(gameObject, selectedScale, .1f).setEaseOutQuad();
+            selectedBorder.enabled = true;
             //transform.localScale = selectedScale;
         }
 
@@ -340,6 +342,7 @@ namespace LostGrace
 
         public void Deselect()
         {
+            selectedBorder.enabled = false;
             LeanTween.scale(gameObject, new Vector3(1,1,1), .1f).setEaseInQuad();
             //transform.localScale = new Vector3(1,1,1);
         }
