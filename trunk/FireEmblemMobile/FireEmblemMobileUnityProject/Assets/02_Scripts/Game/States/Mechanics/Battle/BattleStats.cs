@@ -236,7 +236,7 @@ namespace Game.Mechanics.Battle
             return 0;
         }
 
-        public const int HIT_DEX_MULT=2;
+        public const int HIT_DEX_MULT=3;
         
         public int GetHitrate()
         {

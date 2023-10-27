@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 4
+  version: 5
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -23,14 +23,16 @@ Material:
   m_Name: GetHitParticles
   m_Shader: {fileID: -6465566751694194690, guid: ed2261f7c88840d498dc1b052fbce28e,
     type: 3}
-  m_ShaderKeywords: _EMISSION _RECEIVE_SHADOWS_OFF
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - _EMISSION
+  - _RECEIVE_SHADOWS_OFF
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
-  disabledShaderPasses:
-  - SHADOWCASTER
+  disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -110,6 +112,7 @@ Material:
     - _Glossiness: 0
     - _Metallic: 0
     - _Mode: 0
+    - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 0
     - _Smoothness: 0.5
@@ -121,6 +124,7 @@ Material:
     - _SrcBlend: 5
     - _Surface: 1
     - _ZWrite: 0
+    - alphaclip: 0.5
     - intensity: 2
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}

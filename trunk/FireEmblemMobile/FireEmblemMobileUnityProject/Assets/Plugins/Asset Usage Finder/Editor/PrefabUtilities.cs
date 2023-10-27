@@ -1,6 +1,6 @@
 ﻿#if UNITY_2018_3_OR_NEWER
 using UnityEditor;
-using UnityEditor.Experimental.SceneManagement;
+
 using UnityEngine;
 
 namespace AssetUsageFinder {
@@ -38,7 +38,7 @@ namespace AssetUsageFinder {
 				p.IsAssetRoot = (gameObject == p.PrefabAssetRoot);
 			}
 
-			var editorPrefabStage = PrefabStageUtility.GetCurrentPrefabStage();
+			var editorPrefabStage = UnityEditor.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage();
 			if (editorPrefabStage != null) {
 				if (p.IsPartOfPrefabAsset == false)
 					p.IsPartOfStage = true;

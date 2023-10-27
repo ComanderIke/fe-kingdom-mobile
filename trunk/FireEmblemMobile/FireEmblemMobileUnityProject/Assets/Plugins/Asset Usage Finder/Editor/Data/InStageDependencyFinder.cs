@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using UnityEditor;
-using UnityEditor.Experimental.SceneManagement;
+
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -9,7 +9,7 @@ namespace AssetUsageFinder {
     [Serializable]
     sealed class InStageDependencyFinder : DependencyAbstractFinder {
         [SerializeField] string _stagePath;
-        [SerializeField] PrefabStage _stage;
+        [SerializeField] UnityEditor.SceneManagement.PrefabStage _stage;
 
         public InStageDependencyFinder(Object target, string stagePath) {
             Target = new SearchTarget(target, FindModeEnum.Stage, stagePath);

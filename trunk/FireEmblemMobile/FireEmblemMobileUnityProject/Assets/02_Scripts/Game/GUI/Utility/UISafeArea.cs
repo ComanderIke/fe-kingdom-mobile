@@ -8,7 +8,7 @@ public class UISafeArea : MonoBehaviour
 
     public Canvas canvas;
     private RectTransform panelSafeArea;
-    private ScreenOrientation currentOrientation = ScreenOrientation.Landscape;
+    private ScreenOrientation currentOrientation = ScreenOrientation.LandscapeLeft;
 
     private Rect currentSaveArea = new Rect();
 

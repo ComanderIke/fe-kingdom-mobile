@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering.Universal;
+
 
 public class LightsColors : MonoBehaviour, DayNightInterface
 {
     public Gradient Gradient;
 
-    public Light2D []lights;
+    public UnityEngine.Rendering.Universal.Light2D []lights;
     // Start is called before the first frame update
     void Start()
     {

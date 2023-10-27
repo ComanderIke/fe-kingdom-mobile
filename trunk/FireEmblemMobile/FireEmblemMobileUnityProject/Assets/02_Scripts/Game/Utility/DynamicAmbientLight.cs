@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering.Universal;
+
 
 namespace Effects
 {
@@ -24,9 +24,9 @@ namespace Effects
         public Material particlesNormal;
         
        // public Gradient sunrise;
-        public Light2D lightSource;
-        public List<Light2D> sunShafts;
-        public List<Light2D> sunSpots;
+        public UnityEngine.Rendering.Universal.Light2D lightSource;
+        public List<UnityEngine.Rendering.Universal.Light2D> sunShafts;
+        public List<UnityEngine.Rendering.Universal.Light2D> sunSpots;
         public float fadeDuration = 1;
      
         private float lightBaseIntensity;

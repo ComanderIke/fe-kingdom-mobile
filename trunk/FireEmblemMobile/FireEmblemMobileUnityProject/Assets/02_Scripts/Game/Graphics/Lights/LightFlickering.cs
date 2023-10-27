@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering.Universal;
+
 
 namespace Effects
 {
@@ -8,7 +8,7 @@ namespace Effects
     public class LightFlickering : MonoBehaviour
     {
         [Tooltip("External light to flicker; you can leave this null if you attach script to a light")]
-        public new Light2D light;
+        public new UnityEngine.Rendering.Universal.Light2D light;
         [Tooltip("Minimum random light intensity")]
         public float minIntensity = 0f;
         [Tooltip("Maximum random light intensity")]
@@ -40,7 +40,7 @@ namespace Effects
             // External or internal light?
             if (light == null)
             {
-                light = GetComponent<Light2D>();
+                light = GetComponent<UnityEngine.Rendering.Universal.Light2D>();
             }
         }
 

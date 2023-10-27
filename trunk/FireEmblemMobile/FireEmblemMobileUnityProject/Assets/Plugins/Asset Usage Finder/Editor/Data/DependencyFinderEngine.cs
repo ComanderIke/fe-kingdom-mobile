@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.Animations;
-using UnityEditor.Experimental.SceneManagement;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
@@ -345,7 +345,7 @@ namespace AssetUsageFinder {
             }
         }
 
-        public static IEnumerable<ResultRow> GetDependenciesInStage(SearchTarget target, PrefabStage stage) {
+        public static IEnumerable<ResultRow> GetDependenciesInStage(SearchTarget target, UnityEditor.SceneManagement.PrefabStage stage) {
             var referencedBy = new List<ResultRow>();
 
             var allObjects = stage.scene

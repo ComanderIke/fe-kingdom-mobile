@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering.Universal;
+
 
 [ExecuteInEditMode]
 public class SunShaftAutoMover : MonoBehaviour
@@ -13,7 +13,7 @@ public class SunShaftAutoMover : MonoBehaviour
 
   
 
-    public new Light2D light;
+    public new UnityEngine.Rendering.Universal.Light2D light;
     public GameObject leftGO;
     public GameObject rightGO;
     public Vector3 startPos;

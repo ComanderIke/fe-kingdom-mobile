@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using UnityEditor;
-using UnityEditor.Experimental.SceneManagement;
+
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
@@ -15,7 +15,7 @@ namespace AssetUsageFinder {
         public Option<Object[]> Nested;
         public Object Root;
         public Scene Scene;
-        public PrefabStage Stage;
+        public UnityEditor.SceneManagement.PrefabStage Stage;
 
         public SearchTarget(Object target, FindModeEnum findMode, string sceneOrStagePath = null) {
             Asr.IsNotNull(target, "Asset you're trying to search is corrupted");
@@ -53,7 +53,7 @@ namespace AssetUsageFinder {
                                 break;
                         }
 
-                        Stage = PrefabStageUtility.GetCurrentPrefabStage();
+                        Stage = UnityEditor.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage();
                         if (findMode == FindModeEnum.Scene) {
                             if (string.IsNullOrEmpty(sceneOrStagePath))
                                 sceneOrStagePath = go.scene.path;
