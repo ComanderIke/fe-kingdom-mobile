@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.Systems;
-using UnityEditor.UIElements;
-using UnityEngine;
 using Random = UnityEngine.Random;
 
 [Serializable]

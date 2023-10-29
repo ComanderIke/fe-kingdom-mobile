@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using Game.GameActors.Units;
 using Game.Mechanics;
-using UnityEditor;
-using UnityEditor.UIElements;
 using UnityEngine;
 
 namespace Game.GameResources

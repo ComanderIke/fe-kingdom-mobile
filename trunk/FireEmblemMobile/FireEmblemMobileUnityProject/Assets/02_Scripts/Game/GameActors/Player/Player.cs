@@ -87,6 +87,37 @@ namespace Game.GameActors.Players
             }
           
         }
+        [HideInInspector]
+        [field:SerializeField]
+        public List<string> SeenSinsIds
+        {
+            get
+            {
+                return seenSinsIds ??= new List<string>(); 
+                
+            }
+          
+        }
+        [field:SerializeField]
+        public List<string> SeenEnemyIds
+        {
+            get
+            {
+                return seenEnemiesIds ??= new List<string>(); 
+                
+            }
+          
+        }
+        [field:SerializeField]
+        public List<string> SeenGodsIds
+        {
+            get
+            {
+                return seenGodsIds ??= new List<string>(); 
+                
+            }
+          
+        }
         private List<string> completedQuests;
         [HideInInspector]
         public List <string> CompletedQuests
@@ -104,6 +135,12 @@ namespace Game.GameActors.Players
         public int startPartyMemberCount = 2;
         [SerializeField]
         private List<string> unlockedCharacterIds;
+        [SerializeField]
+        private List<string> seenSinsIds;
+        [SerializeField]
+        private List<string> seenGodsIds;
+        [SerializeField]
+        private List<string> seenEnemiesIds;
         [field: SerializeField] public MetaUpgradeManager MetaUpgradeManager { get; set; }
         public string CurrentEventDialogID { get; set; }
         public BattleOutcome LastBattleOutcome { get; set; }

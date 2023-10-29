@@ -1,6 +1,6 @@
-﻿using UnityEditor.UIElements;
+﻿
 using UnityEngine;
-using UnityEngine.Serialization;
+
 
 namespace GameCamera
 {

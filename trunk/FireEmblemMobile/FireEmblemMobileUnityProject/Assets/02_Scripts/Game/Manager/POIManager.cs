@@ -1,6 +1,9 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using Audio;
 using Game.Dialog;
+using Game.GameActors.Players;
+using Game.GameResources;
 using Game.WorldMapStuff.Model;
 using Menu;
 using TMPro;
@@ -20,6 +23,8 @@ namespace LostGrace
         [SerializeField] private POIController poiPortal;
         [SerializeField] private POIController poiLore;
 
+        [SerializeField] private ChronikUI chronikUI;
+        [SerializeField] private UIMenu achievementUI;
         [SerializeField] private UIMenu characterSelectMenu;
         [SerializeField] private UIMenu upgradeMenu;
         [SerializeField] private UIMenu goBackMenu;
@@ -135,7 +140,62 @@ namespace LostGrace
         {
             Hide();
         }
+        public void LoreClicked()
+        {
+            var unlockedCharacter = Player.Instance.UnlockedCharacterIds;
+            var seenSins = Player.Instance.SeenSinsIds;
+            var seenEnemys= Player.Instance.SeenEnemyIds;
+            var seenGods= Player.Instance.SeenGodsIds;
 
+            var chronikEntries = new List<IChronikEntry>();
+         
+            var units = GameBPData.Instance.GetAllPlayableUnits();
+            var gods = GameBPData.Instance.GetAllGods();
+            var sins = GameBPData.Instance.GetAllSins();
+            var enemies = GameBPData.Instance.GetAllEnemies();
+            foreach (var unit in units)
+            {
+                if (unlockedCharacter.Contains(unit.bluePrintID))
+                {
+                    chronikEntries.Add(unit.ChronikComponent);
+                }
+            }
+            foreach (var god in gods)
+            {
+                if (seenGods.Contains(god.Name))
+                {
+                    chronikEntries.Add(god.ChronikComponent);
+                }
+            }
+            foreach (var sin in sins)
+            {
+                if (seenSins.Contains(sin.bluePrintID))
+                {
+                    chronikEntries.Add(sin.ChronikComponent);
+                }
+            }
+            foreach (var enemy in enemies)
+            {
+                if (seenEnemys.Contains(enemy.bluePrintID))
+                {
+                    chronikEntries.Add(enemy.ChronikComponent);
+                }
+            }
+            
+            chronikUI.Show(chronikEntries);
+        }
+        public void HeavensGateClicked()
+        {
+            achievementUI.Show();
+        }
+        public void StatueClicked()
+        {
+            achievementUI.Show();
+        }
+        public void StonePoneglyphClicked()
+        {
+            achievementUI.Show();
+        }
         public void PortalClicked()
         {
             characterSelectMenu.Show();

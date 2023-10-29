@@ -17,6 +17,7 @@ using Game.GUI;
 using Game.Mechanics;
 using Game.Mechanics.Battle;
 using Game.WorldMapStuff.Model;
+using LostGrace;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -30,7 +31,8 @@ namespace Game.GameActors.Units
         [FormerlySerializedAs("EquippedWeapon")] public WeaponBP equippedWeaponBp;
         public RelicBP EquippedRelic1;
         public string Name;
-        [SerializeField] private bool isBoss;
+        public bool isEnemy;
+        [SerializeField] public bool isBoss;
       
         [SerializeField] private bool isBig2x2;
         [SerializeField] private int revivalStones;
@@ -51,6 +53,8 @@ namespace Game.GameActors.Units
         [SerializeField]
         public CharacterAudioSet audio;
         [SerializeField] public ExperienceManager experienceManager;
+     
+        [field:SerializeField]public ChronikEntry ChronikComponent { get; set; }
 
         public override string ToString()
         {

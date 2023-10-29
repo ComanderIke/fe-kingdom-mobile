@@ -19,7 +19,7 @@ MonoBehaviour:
     <Position>k__BackingField: {x: 211, y: 120}
   - <ID>k__BackingField: 3903b474-f6d9-4717-b77b-59ad6b1efc75
     <Name>k__BackingField: ChasedBySkeletons
-    <Position>k__BackingField: {x: 261.00003, y: 1090.0001}
+    <Position>k__BackingField: {x: 261, y: 1090}
   - <ID>k__BackingField: d88683db-1151-44f3-b059-93ec05b6f27a
     <Name>k__BackingField: LumberjackParty
     <Position>k__BackingField: {x: 2237, y: 1084}
@@ -55,7 +55,7 @@ MonoBehaviour:
     <Position>k__BackingField: {x: 5740, y: -80}
   - <ID>k__BackingField: 9fbbdde4-3712-4fd6-98ef-4e0bf11a7f0d
     <Name>k__BackingField: TheRitual
-    <Position>k__BackingField: {x: -2859.0002, y: 3420}
+    <Position>k__BackingField: {x: -2859, y: 3420}
   - <ID>k__BackingField: e2a96299-4356-4d55-9050-504f9807d971
     <Name>k__BackingField: TheStarvingSettlement
     <Position>k__BackingField: {x: -2708, y: 4887}
@@ -73,7 +73,13 @@ MonoBehaviour:
     <Position>k__BackingField: {x: -6103, y: 3449}
   - <ID>k__BackingField: cab05029-89a7-4a48-9b92-b9b6b86b8dfa
     <Name>k__BackingField: ThemysteriousAltar
-    <Position>k__BackingField: {x: -6346.0005, y: 5118}
+    <Position>k__BackingField: {x: -6346, y: 5118}
+  - <ID>k__BackingField: fb9eb19d-6688-4605-b329-b19dde6f20ab
+    <Name>k__BackingField: Normal
+    <Position>k__BackingField: {x: -7680, y: 8}
+  - <ID>k__BackingField: 5429885d-7ed3-49d3-a1b7-1c09d2655955
+    <Name>k__BackingField: TheWhisperingWoods
+    <Position>k__BackingField: {x: -7905.0005, y: -250}
   <Nodes>k__BackingField: []
   <EventNodes>k__BackingField:
   - <ID>k__BackingField: f0365265-1533-4609-86dd-57480bfe2d00
@@ -2526,13 +2532,12 @@ MonoBehaviour:
       observing it carefully while keeping your guard up. The hooded figure stands
       beside the altar, seemingly deep in contemplation.
 
-      
 
-      As you
-      watch, you notice subtle energy patterns surrounding the altar. It becomes
-      evident that this ancient structure holds great mystical power. Your vigilance
-      ensures your safety, and you remain ready to react if the situation takes a
-      hostile turn.'
+
+      As you watch, you
+      notice subtle energy patterns surrounding the altar. It becomes evident that
+      this ancient structure holds great mystical power. Your vigilance ensures your
+      safety, and you remain ready to react if the situation takes a hostile turn.'
     <IsPortraitLeft>k__BackingField: 1
     <DialogActor>k__BackingField: {fileID: 0}
     <Choices>k__BackingField:
@@ -2571,6 +2576,262 @@ MonoBehaviour:
     <RewardResources>k__BackingField: []
     <RewardItems>k__BackingField: []
     <Events>k__BackingField: []
+  - <ID>k__BackingField: 32908c2e-f18e-48c5-bbf2-fea62fbed423
+    <Name>k__BackingField: TheWhisperingWoods
+    <Text>k__BackingField: You find yourself within an ancient forest, its towering
+      trees and misty ambiance creating an eerie atmosphere. You hear faint whispers
+      in the wind and glimpse spectral figures flitting among the trees.
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Follow the spectral figures.
+      <NodeID>k__BackingField: 3ca8e356-8099-4483-8ec0-89112efd6255
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+      <RandomRate>k__BackingField: 0
+    - <Text>k__BackingField: Leave and go around the whispering woods
+      <NodeID>k__BackingField: cea43099-c0d6-46ac-9908-16c76e2f358a
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+      <RandomRate>k__BackingField: 0
+    <GroupID>k__BackingField: 5429885d-7ed3-49d3-a1b7-1c09d2655955
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: -7880, y: 327}
+    <Headline>k__BackingField: The Whispering Woods
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: 4729669d-76dc-4512-9a1a-00974de17fce
+    <Name>k__BackingField: TheWhisperingWoods1R1
+    <Text>k__BackingField: The spectral figures cease their whispers and slowly reveal
+      themselves. They appear as ethereal beings, some sorrowful and some curious.
+      They ask you to leave the forest.
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: '"What Secret lies within this forest?"'
+      <NodeID>k__BackingField: a26e96ee-a1fb-418d-bb3a-51101dacc621
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+      <RandomRate>k__BackingField: 0
+    - <Text>k__BackingField: '"I have sworn to protect the woods and its inhabitants,
+        please let us through."'
+      <NodeID>k__BackingField: 6bc396b6-1bed-4935-80c9-77c203a1f76f
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField:
+      - {fileID: 11400000, guid: 08614606a99f97c448e43f01ab20b263, type: 2}
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+      <RandomRate>k__BackingField: 0
+    - <Text>k__BackingField: '"As chosen champion of Artemis, I command you to let
+        us through."'
+      <NodeID>k__BackingField: 83abcc10-4883-47b7-9219-5a42fa004db2
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+      <RandomRate>k__BackingField: 0
+    - <Text>k__BackingField: Attack Them
+      <NodeID>k__BackingField: db5a2f1f-6cbd-4955-821e-a4082f9f1843
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+      <RandomRate>k__BackingField: 0
+    - <Text>k__BackingField: Leavee
+      <NodeID>k__BackingField: cea43099-c0d6-46ac-9908-16c76e2f358a
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+      <RandomRate>k__BackingField: 0
+    <GroupID>k__BackingField: 5429885d-7ed3-49d3-a1b7-1c09d2655955
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: -6766, y: 99}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: d27de2bd-d9a8-4bb6-9ac2-a89bb9a7d48b
+    <Name>k__BackingField: TheWhisperingWoods1R2Won
+    <Text>k__BackingField: You defeated the spirits which allows you to safely explore
+      the central part of the forest. You manage to find a treasure chest with a
+      rare relic.
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: End
+      <NodeID>k__BackingField: 
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+      <RandomRate>k__BackingField: 0
+    <GroupID>k__BackingField: 5429885d-7ed3-49d3-a1b7-1c09d2655955
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: -5545, y: 746}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField:
+    - {fileID: 11400000, guid: bb3f471bacc8ca84b84dfd49c2a3d3e2, type: 2}
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: a26e96ee-a1fb-418d-bb3a-51101dacc621
+    <Name>k__BackingField: TheWhisperingWoods1R1a
+    <Text>k__BackingField: Despite your inquiry about the forest's secrets, the spirits
+      react with an air of somber superiority. They claim you are not trustworthy
+      and send you on your way with some subtle clues about how to navigate the forest
+      come out the other side.
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: End
+      <NodeID>k__BackingField: 
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+      <RandomRate>k__BackingField: 0
+    <GroupID>k__BackingField: 5429885d-7ed3-49d3-a1b7-1c09d2655955
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: -5658, y: -191}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: 83abcc10-4883-47b7-9219-5a42fa004db2
+    <Name>k__BackingField: TheWhisperingWoods1R1c
+    <Text>k__BackingField: the spectral figures react with recognition and warmth.
+      The spirits express their gratitude for your presence and offer a rare relic
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: End
+      <NodeID>k__BackingField: 
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+      <RandomRate>k__BackingField: 0
+    <GroupID>k__BackingField: 5429885d-7ed3-49d3-a1b7-1c09d2655955
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: -5545, y: 321}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField:
+    - {fileID: 11400000, guid: bb3f471bacc8ca84b84dfd49c2a3d3e2, type: 2}
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: 6bc396b6-1bed-4935-80c9-77c203a1f76f
+    <Name>k__BackingField: TheWhisperingWoods1R1b
+    <Text>k__BackingField: 'Selena is well-known among the spirits of the Whispering
+      Woods, as she has been a protector of nature her whole life.
+
+      
+
+      The
+      spirits show great respect for Selena and approach both of you with reverence.
+      They share stories of the forest''s history and its struggles against malevolent
+      forces, highlighting Selena''s tireless dedication to its protection.'
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: End
+      <NodeID>k__BackingField: 
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+      <RandomRate>k__BackingField: 0
+    <GroupID>k__BackingField: 5429885d-7ed3-49d3-a1b7-1c09d2655955
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: -5153, y: -76}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField:
+    - Amount: 70
+      ResourceType: 2
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: db5a2f1f-6cbd-4955-821e-a4082f9f1843
+    <Name>k__BackingField: TheWhisperingWoods2R
+    <Text>k__BackingField: 'the spectral figures react with aggression. They surround
+      you, their eerie wails intensifying, and they seem to be preparing to attack.
+
+      
+
+      Their
+      hostile response forces you into a precarious situation, and you must now engage
+      in a battle against the angered spirits'
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Battle
+      <NodeID>k__BackingField: 9326cb6d-9bd7-4483-8e50-f1f726aa0716
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+      <RandomRate>k__BackingField: 0
+    <GroupID>k__BackingField: 5429885d-7ed3-49d3-a1b7-1c09d2655955
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: -6779, y: 590}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField:
+    - Amount: -5
+      ResourceType: 3
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: cea43099-c0d6-46ac-9908-16c76e2f358a
+    <Name>k__BackingField: TheWhisperingWoods2
+    <Text>k__BackingField: You exit the forest without discovering its secrets, ensuring
+      your safety but missing out on the potential rewards and challenges within.
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: End
+      <NodeID>k__BackingField: 
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+      <RandomRate>k__BackingField: 0
+    <GroupID>k__BackingField: 5429885d-7ed3-49d3-a1b7-1c09d2655955
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: -7198, y: 863}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
   <OldGroupNames>k__BackingField:
   - TheKnightAndHisHarem
   - ChasedBySkeletons
@@ -2592,6 +2853,8 @@ MonoBehaviour:
   - TheEnigmaticOracle
   - TheEnchantedGarden
   - ThemysteriousAltar
+  - Normal
+  - TheWhisperingWoods
   <OldUngroupedNodeNames>k__BackingField: []
   <OldGroupedNodeNames>k__BackingField:
     list:
@@ -2712,6 +2975,18 @@ MonoBehaviour:
       - TheMysteriousAltar2
       - TheMysteriousAltar
       - TheMysteriousAltar3
+    - Key: TheWhisperingWoods
+      Value:
+      - TheWhisperingWoods
+      - TheWhisperingWoods1R
+      - TheWhisperingWoods1R2
+      - TheWhisperingWoods1R1
+      - TheWhisperingWoods1R2Won
+      - TheWhisperingWoods1R1a
+      - TheWhisperingWoods1R1c
+      - TheWhisperingWoods1R1b
+      - TheWhisperingWoods2R
+      - TheWhisperingWoods2
   <FightNodes>k__BackingField:
   - <ID>k__BackingField: 36c0ee15-7245-41c5-a77c-30ff36dd6224
     <Name>k__BackingField: KnightHarem4
@@ -2811,6 +3086,38 @@ MonoBehaviour:
     <RewardItems>k__BackingField: []
     <Events>k__BackingField: []
     <EnemyArmy>k__BackingField: {fileID: 0}
+  - <ID>k__BackingField: 9326cb6d-9bd7-4483-8e50-f1f726aa0716
+    <Name>k__BackingField: TheWhisperingWoods1R2
+    <Text>k__BackingField: 
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Won
+      <NodeID>k__BackingField: d27de2bd-d9a8-4bb6-9ac2-a89bb9a7d48b
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+      <RandomRate>k__BackingField: 0
+    - <Text>k__BackingField: Lost
+      <NodeID>k__BackingField: 
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+      <RandomRate>k__BackingField: 0
+    <GroupID>k__BackingField: 5429885d-7ed3-49d3-a1b7-1c09d2655955
+    <DialgueType>k__BackingField: 4
+    <Position>k__BackingField: {x: -6016, y: 546}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+    <EnemyArmy>k__BackingField: {fileID: 0}
   <RandomNodes>k__BackingField:
   - <ID>k__BackingField: f86098f4-266b-4b1f-93d1-137730ee75ec
     <Name>k__BackingField: TheEnchantedGarden1R
@@ -2857,6 +3164,55 @@ MonoBehaviour:
     <GroupID>k__BackingField: bed37b0c-b82f-46b5-8d12-b3d19c880211
     <DialgueType>k__BackingField: 5
     <Position>k__BackingField: {x: -4113, y: 3584}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: 3ca8e356-8099-4483-8ec0-89112efd6255
+    <Name>k__BackingField: TheWhisperingWoods1R
+    <Text>k__BackingField: DialogueText
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Option 1
+      <NodeID>k__BackingField: 4729669d-76dc-4512-9a1a-00974de17fce
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+      <RandomRate>k__BackingField: 50
+    - <Text>k__BackingField: Option 2
+      <NodeID>k__BackingField: db5a2f1f-6cbd-4955-821e-a4082f9f1843
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+      <RandomRate>k__BackingField: 50
+    - <Text>k__BackingField: Option 3
+      <NodeID>k__BackingField: 
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+      <RandomRate>k__BackingField: 0
+    - <Text>k__BackingField: Option 4
+      <NodeID>k__BackingField: 
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+      <RandomRate>k__BackingField: 0
+    <GroupID>k__BackingField: 5429885d-7ed3-49d3-a1b7-1c09d2655955
+    <DialgueType>k__BackingField: 5
+    <Position>k__BackingField: {x: -7182, y: 327}
     <Headline>k__BackingField: 
     <RewardResources>k__BackingField: []
     <RewardItems>k__BackingField: []

@@ -24,5 +24,7 @@ namespace Game.Graphics
         public List<IUnitEffectVisual> unitVisualEffects;
         [SerializeField]
         public InnSprites InnSprites;
+
+        public Icons Icons;
     }
 }

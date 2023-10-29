@@ -12,6 +12,8 @@ namespace LostGrace
         public Color Color;
         public BlessingBP BlessingBp;
         public Material GlowMaterial;
+        [field:SerializeField]public ChronikEntry ChronikComponent { get; set; }
+
 
         public Blessing GetBlessing()
         {

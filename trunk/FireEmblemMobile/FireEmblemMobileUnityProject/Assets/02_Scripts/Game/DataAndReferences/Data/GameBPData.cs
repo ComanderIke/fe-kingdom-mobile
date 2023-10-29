@@ -38,6 +38,7 @@ namespace Game.GameResources
         [SerializeField] private RelicBP[]superRareRelics = default;
         [SerializeField] private WeaponBP[] allWeapons;
         [SerializeField] private SkillBp[] allSkills;
+        [SerializeField] private God[] allGods;
         [SerializeField] private GemBP[] allGems;
         [SerializeField] private GemBP[] allSmallGems;
         [SerializeField] private GemBP[] allMediumGems;
@@ -114,6 +115,7 @@ namespace Game.GameResources
             eventData.OnValidate();
             statusEffectData.OnValidate();
             allUnits = GetAllInstances<UnitBP>();
+            allGods = GetAllInstances<God>();
             allBlessings = GetAllInstances<BlessingBP>();
             tier0Blessings = Array.FindAll(allBlessings,a => a.Tier == 0);
             tier1Blessings = Array.FindAll(allBlessings,a => a.Tier == 1);
@@ -337,6 +339,22 @@ namespace Game.GameResources
             return potions[Random.Range(0, potions.Count)].Create();
         }
 
-        
+
+        public IEnumerable<UnitBP> GetAllPlayableUnits()
+        {
+            return allUnits.Where(u => !u.isEnemy);
+        }
+        public IEnumerable<UnitBP> GetAllSins()
+        {
+            return allUnits.Where(u => u.isBoss);
+        }
+        public IEnumerable<God> GetAllGods()
+        {
+            return allGods.ToList();
+        }
+        public IEnumerable<UnitBP> GetAllEnemies()
+        {
+            return allUnits.Where(u => u.isEnemy&&!u.isBoss);
+        }
     }
 }
