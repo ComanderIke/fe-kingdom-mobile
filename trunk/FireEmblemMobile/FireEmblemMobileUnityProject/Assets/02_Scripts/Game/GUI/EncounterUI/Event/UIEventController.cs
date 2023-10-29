@@ -493,7 +493,7 @@ public class UIEventController : MonoBehaviour
     {
         Debug.Log("TODO Start Battle from EVENT");
         var battleDialogSO = ((LGBattleEventDialogSO)current.NextDialogue);
-        var enemyData = battleDialogSO.EnemyArmy;
+        var enemyData = battleDialogSO.battleMap;
         Player.Instance.CurrentEventDialogID=(battleDialogSO.name);
         GameSceneController.Instance.LoadBattleLevel(Scenes.Battle1, enemyData);
         //Get Enemy Army Data/Layout and Map Prefab from Node

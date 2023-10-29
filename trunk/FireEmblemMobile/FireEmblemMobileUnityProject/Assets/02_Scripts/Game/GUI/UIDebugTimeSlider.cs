@@ -12,7 +12,7 @@ namespace LostGrace
         [SerializeField] private TimeOfDayManager timeManager;
         void Start()
         {
-            gameObject.SetActive(GameConfig.Instance.debugModeEnabled);
+            gameObject.SetActive(GameConfig.Instance.ConfigProfile.debugModeEnabled);
         }
 
         void Update()

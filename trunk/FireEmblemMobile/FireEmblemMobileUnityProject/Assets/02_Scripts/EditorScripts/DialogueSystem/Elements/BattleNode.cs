@@ -12,7 +12,7 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
 {
     public class BattleNode : EventNode
     {
-        public EnemyArmyData EnemyArmy { get; set; }
+        public BattleMap EnemyArmy { get; set; }
         public override void Initialize(string nodeName, LGGraphView graphView,Vector2 position)
         {
             base.Initialize(nodeName, graphView,position);
@@ -35,11 +35,11 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
         {
             base.Draw();
             ObjectField prop = new ObjectField("EnemyArmy");
-            prop.objectType = typeof(EnemyArmyData);
+            prop.objectType = typeof(BattleMap);
             prop.value = EnemyArmy;
             prop.RegisterValueChangedCallback(callback =>
             {
-                EnemyArmy = (EnemyArmyData)callback.newValue;
+                EnemyArmy = (BattleMap)callback.newValue;
             });
             customDataContainer.Insert(1, prop);
             foreach (LGChoiceSaveData choice in Choices)

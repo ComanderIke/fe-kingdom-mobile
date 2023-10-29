@@ -12,7 +12,7 @@ namespace Game.WorldMapStuff.Model
             get { return _instance ??= new SceneTransferData(); }
         }
         
-        public EnemyArmyData EnemyArmyData { get; set; }
+        public BattleMap BattleMap { get; set; }
         public string PartyID { get; set; }
         public Party Party{ get; set; }
         public string EnemyPartyID { get; set; }
@@ -28,7 +28,7 @@ namespace Game.WorldMapStuff.Model
         public void Reset()
         {
             BattleOutCome = BattleOutcome.None;
-            EnemyArmyData = null;
+            BattleMap = null;
             UnitsGoingIntoBattle = new List<Unit>();
         }
     }

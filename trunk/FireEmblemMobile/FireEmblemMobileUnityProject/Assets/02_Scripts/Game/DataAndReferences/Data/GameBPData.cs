@@ -4,8 +4,10 @@ using System.Linq;
 using _02_Scripts.Game.Dialog.DialogSystem;
 using _02_Scripts.Game.GameActors.Items.Consumables;
 using Game.GameActors.Items;
+using Game.GameActors.Items.Consumables;
 using Game.GameActors.Items.Gems;
 using Game.GameActors.Items.Weapons;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
 using Game.GameActors.Units.Monsters;
@@ -69,6 +71,10 @@ namespace Game.GameResources
         [SerializeField] BlessingBP[]  tier1Blessings;
         [SerializeField] BlessingBP[]  tier2Blessings;
         [SerializeField] BlessingBP[]  tier3Blessings;
+        [SerializeField] BattleMap[] battleEncounterMapsArea1;
+        [SerializeField] BattleMap[] battleEncounterMapsArea2;
+        [SerializeField] BattleMap[] eliteBattleEncounterMapsArea1;
+        [SerializeField] BattleMap[] eliteBattleEncounterMapsArea2;
    
         
         public BlessingBP[]  GetBlessingPool(int tier)
@@ -88,6 +94,7 @@ namespace Game.GameResources
         [field:SerializeField] public SkillGenerationConfiguration SkillGenerationConfig { get; set; }
         [field:SerializeField] public Sprite DefaultMerchantSprite { get; set; }
         [field:SerializeField] public string DefaultMerchantName { get; set; }
+        [field:SerializeField]  public BattleMap TutorialMap { get; set; }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void FirstInitialize()
@@ -121,23 +128,57 @@ namespace Game.GameResources
             tier1Blessings = Array.FindAll(allBlessings,a => a.Tier == 1);
             tier2Blessings = Array.FindAll(allBlessings,a => a.Tier == 2);
             tier3Blessings = Array.FindAll(allBlessings,a => a.Tier == 3);
-            allGems = GetAllInstances<GemBP>();
-            allSmallGems = Array.FindAll(allGems,a => a.GetRarity() == 1);
-            allMediumGems = Array.FindAll(allGems,a => a.GetRarity() == 2);
-            allLargeGems = Array.FindAll(allGems,a => a.GetRarity() == 3);
-            allSkills = GetAllInstances<SkillBp>();
             allWeapons = GetAllInstances<WeaponBP>();
             allCurses = GetAllInstances<CurseBP>();
-            allBombs = GetAllInstances<BombBP>();
-            allBuffPotions = GetAllInstances<BuffPotionBP>();
-            allAttributePotions = GetAllInstances<AttributePotionBP>();
-            allConsumables = GetAllInstances<ConsumableItemBp>();
-            allItems = Array.FindAll(GetAllInstances<ItemBP>(), a => !(a is WeaponBP));
-            allRelics = GetAllInstances<RelicBP>();
+            
+            if (GameConfig.Instance.ConfigProfile.overWriteSkills)
+            {
+                var demoSkills = GameConfig.Instance.ConfigProfile.OverwritenSkills;
+                allSkills = GetAllInstances<SkillBp>().Intersect(demoSkills).ToArray();
+            }
+            else
+            {
+                allSkills = GetAllInstances<SkillBp>();
+            }
+            
+            
+            if (GameConfig.Instance.ConfigProfile.overWriteItems)
+            {
+                var demoItems = GameConfig.Instance.ConfigProfile.OverwritenItems;
+                allItems = Array.FindAll(GetAllInstances<ItemBP>().Intersect(demoItems).ToArray(), a => !(a is WeaponBP));
+            }
+            else
+            {
+                allItems = Array.FindAll(GetAllInstances<ItemBP>(), a => !(a is WeaponBP));
+            }
+
+          
+            int cnt = allItems.Count(a => a is BombBP);
+            allBombs = new BombBP[cnt];
+            Array.Copy( allItems.Where(a => a is BombBP).ToArray(), allBombs,cnt );
+            cnt = allItems.Count(a => a is BuffPotionBP);
+            allBuffPotions = new BuffPotionBP[cnt];
+            Array.Copy( allItems.Where(a => a is BuffPotionBP).ToArray(), allBuffPotions,  cnt);
+            cnt = allItems.Count(a => a is AttributePotionBP);
+            allAttributePotions = new AttributePotionBP[cnt];
+            Array.Copy( allItems.Where(a => a is AttributePotionBP).ToArray(), allAttributePotions,cnt);
+            cnt = allItems.Count(a => a is ConsumableItemBp);
+            allConsumables = new ConsumableItemBp[cnt];
+            Array.Copy(  allItems.Where(a => a is ConsumableItemBp).ToArray(),allConsumables,cnt);
+            cnt = allItems.Count(a => a is RelicBP);
+            allRelics = new RelicBP[cnt];
+            Array.Copy(  allItems.Where(a => a is RelicBP).ToArray(),allRelics,cnt);
+            cnt = allItems.Count(a => a is GemBP);
+            allGems = new GemBP[cnt];
+            Array.Copy(   allItems.Where(a => a is GemBP).ToArray(),allGems,cnt);
+          
+
             uncommonRelics = Array.FindAll(allRelics, a => a.rarity == 1);
             rareRelics = Array.FindAll(allRelics, a => a.rarity == 2);
             superRareRelics = Array.FindAll(allRelics, a => a.rarity == 3);
-
+            allSmallGems = Array.FindAll(allGems,a => a.GetRarity() == 1);
+            allMediumGems = Array.FindAll(allGems,a => a.GetRarity() == 2);
+            allLargeGems = Array.FindAll(allGems,a => a.GetRarity() == 3);
         }
 
         public static T[] GetAllInstances<T>() where T : ScriptableObject
@@ -283,6 +324,7 @@ namespace Game.GameResources
 
         public Item GetRandomGem()
         {
+          
             return allGems[Random.Range(0, allGems.Length)].Create();
         }
 
@@ -355,6 +397,37 @@ namespace Game.GameResources
         public IEnumerable<UnitBP> GetAllEnemies()
         {
             return allUnits.Where(u => u.isEnemy&&!u.isBoss);
+        }
+
+        public BattleMap GetRandomMap(BattleType battleType)
+        {
+            int areaIndex = Player.Instance.Party.AreaIndex;
+            switch (battleType)
+            {
+                case BattleType.Boss:
+                    return null;
+                case BattleType.Normal:
+                    switch (areaIndex)
+                    {
+                        case 1:   return battleEncounterMapsArea1  [Random.Range(0, battleEncounterMapsArea1.Length)];
+                        case 2:   return battleEncounterMapsArea2  [Random.Range(0, battleEncounterMapsArea2.Length)];
+                    }
+
+                    break;
+                  
+                case BattleType.Elite: 
+                    switch (areaIndex)
+                    {
+                        case 1:   return eliteBattleEncounterMapsArea1
+                            [Random.Range(0, eliteBattleEncounterMapsArea1.Length)];
+                        case 2:   return eliteBattleEncounterMapsArea2
+                            [Random.Range(0, eliteBattleEncounterMapsArea2.Length)];
+                    }
+
+                    break;
+            }
+
+            return null;
         }
     }
 }

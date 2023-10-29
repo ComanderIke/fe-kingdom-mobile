@@ -91,7 +91,7 @@ namespace LostGrace
             goddessUI.Show();
             yield return new WaitForSeconds(4.5f);
             TweenUtility.FadeIn(speechBubbleCanvasGroup);
-            if (GameConfig.Instance.tutorialEnabled)
+            if (GameConfig.Instance.ConfigProfile.tutorialEnabled)
                 yield return TutorialCoroutine();
 
         }

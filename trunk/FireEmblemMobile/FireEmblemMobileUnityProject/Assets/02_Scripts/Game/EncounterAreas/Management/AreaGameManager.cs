@@ -433,7 +433,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         cursor.SetScale(1.0f);
         if (encounterNode is BattleEncounterNode battleEncounterNode)
         {
-            if(battleEncounterNode.enemyArmyData.isBoss)
+            if(battleEncounterNode.BattleType==BattleType.Boss)
                 cursor.SetScale(1.8f);
         }
        

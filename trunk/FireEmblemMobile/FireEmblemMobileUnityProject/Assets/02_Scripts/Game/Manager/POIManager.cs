@@ -23,6 +23,7 @@ namespace LostGrace
         [SerializeField] private POIController poiPortal;
         [SerializeField] private POIController poiLore;
 
+        [SerializeField] private ChronikUI guideUI;
         [SerializeField] private ChronikUI chronikUI;
         [SerializeField] private UIMenu achievementUI;
         [SerializeField] private UIMenu characterSelectMenu;
@@ -47,7 +48,7 @@ namespace LostGrace
         [SerializeField] private GoddessUI goddessUI;
         [SerializeField] private DialogueManager dialogueManager;
         [SerializeField] private Conversation introConversation;
-        [SerializeField] private EnemyArmyData tutorialBattleData;
+        
            
         public void POIClicked(int index)
         {
@@ -81,7 +82,7 @@ namespace LostGrace
             TweenUtility.FadeIn(titleCanvasGroup);
             TweenUtility.FadeIn(backButtonCanvasGroup);
  
-            if (GameConfig.Instance.tutorialEnabled)
+            if (GameConfig.Instance.ConfigProfile.tutorialEnabled)
                 yield return TutorialCoroutine();
             else
             {
@@ -186,7 +187,7 @@ namespace LostGrace
         }
         public void HeavensGateClicked()
         {
-            achievementUI.Show();
+            //achievementUI.Show();
         }
         public void StatueClicked()
         {
@@ -194,7 +195,7 @@ namespace LostGrace
         }
         public void StonePoneglyphClicked()
         {
-            achievementUI.Show();
+            guideUI.Show();
         }
         public void PortalClicked()
         {
@@ -216,7 +217,7 @@ namespace LostGrace
         public void TutorialClicked()
         {
             SceneTransferData.Instance.Reset();
-            SceneTransferData.Instance.EnemyArmyData = tutorialBattleData;
+            SceneTransferData.Instance.BattleMap = GameBPData.Instance.TutorialMap;
             SceneTransferData.Instance.TutorialBattle1 = true;
             SceneController.LoadSceneAsync(Scenes.Battle1, false);
         }

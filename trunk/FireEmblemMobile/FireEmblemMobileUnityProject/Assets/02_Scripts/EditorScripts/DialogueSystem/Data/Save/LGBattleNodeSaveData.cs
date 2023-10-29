@@ -6,6 +6,6 @@ using UnityEngine;
 public class LGBattleNodeSaveData :LGEventNodeSaveData
 {
    
-    [field:SerializeField] public EnemyArmyData EnemyArmy { get; set; }
+    [field:SerializeField] public BattleMap BattleMap { get; set; }
     
 }

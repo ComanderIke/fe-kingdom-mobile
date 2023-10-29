@@ -21,7 +21,7 @@ namespace Game.WorldMapStuff.Controller
         public static GameSceneController Instance => instance ??= new GameSceneController();
 
         
-        public void LoadBattleLevel(Scenes buildIndex, EnemyArmyData enemyParty)//, EncounterNode node)
+        public void LoadBattleLevel(Scenes buildIndex, BattleMap battleMap)//, EncounterNode node)
         {
             Vector3 cameraPos = GameObject.FindObjectOfType<EncounterAreaCameraController>().transform.position;
             PlayerPrefs.SetFloat("CameraX", cameraPos.x);
@@ -29,9 +29,9 @@ namespace Game.WorldMapStuff.Controller
             PlayerPrefs.Save();
             SceneTransferData.Instance.Reset();
             
-            Debug.Log("Load Battle Level: "+enemyParty.level + " " + enemyParty.name);
+           // Debug.Log("Load Battle Level: "+enemyParty.level + " " + enemyParty.name);
             Debug.Log("Scene: "+buildIndex);
-            SceneTransferData.Instance.EnemyArmyData = enemyParty;
+            SceneTransferData.Instance.BattleMap = battleMap;
             //SceneTransferData.Instance.EnemyPartyID = enemyParty.name;
             //SceneTransferData.Instance.NodeData =new NodeData(node.UniqueId);
             

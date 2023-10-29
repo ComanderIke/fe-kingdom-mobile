@@ -1,10 +1,10 @@
 ﻿using System;
-using Game.GameActors.Items;
+using _02_Scripts.Game.GameActors.Items.Consumables;
 using Game.GameActors.Units.CharStateEffects;
 using Game.GameActors.Units.Skills;
 using UnityEngine;
 
-namespace _02_Scripts.Game.GameActors.Items.Consumables
+namespace Game.GameActors.Items.Consumables
 {
     [Serializable]
     [CreateAssetMenu(menuName = "GameData/Items/Bomb", fileName = "Bomb")]

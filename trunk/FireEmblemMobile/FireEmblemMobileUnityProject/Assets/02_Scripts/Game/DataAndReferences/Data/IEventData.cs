@@ -4,8 +4,8 @@ namespace Game.GameResources
 {
     public interface IEventData
     {
-        LGEventDialogSO GetRandomEvent(int tier);
-        LGEventDialogSO GetSpecialEvent(int index);
+        LGEventDialogSO GetRandomEvent();
+   
         LGEventDialogSO GetEventById(string prefabId);
     }
 }

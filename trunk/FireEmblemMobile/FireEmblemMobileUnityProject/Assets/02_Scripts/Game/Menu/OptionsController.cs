@@ -21,8 +21,8 @@ public class OptionsController : UIMenu
     public override void Show()
     {
         animator.SetBool(Show1, true);
-        debugModeToggle.SetIsOnWithoutNotify(GameConfig.Instance.debugModeEnabled);
-        tutorialToogle.SetIsOnWithoutNotify(GameConfig.Instance.tutorialEnabled);
+        debugModeToggle.SetIsOnWithoutNotify(GameConfig.Instance.ConfigProfile.debugModeEnabled);
+        tutorialToogle.SetIsOnWithoutNotify(GameConfig.Instance.ConfigProfile.tutorialEnabled);
         base.Show();
     }
     public override void Hide()
@@ -55,12 +55,12 @@ public class OptionsController : UIMenu
 
     public void OnTutorialToggled(bool value)
     {
-        GameConfig.Instance.tutorialEnabled = value;
+        GameConfig.Instance.ConfigProfile.tutorialEnabled = value;
     }
 
     public void OnDebugModeToggled(bool value)
     {
-        GameConfig.Instance.debugModeEnabled = value;
+        GameConfig.Instance.ConfigProfile.debugModeEnabled = value;
     }
    
 }

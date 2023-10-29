@@ -145,6 +145,7 @@ namespace Game.WorldMapStuff.Model
         }
 
         public List<Unit> DeadCharacters { get; set; }
+        public int AreaIndex { get; set; }
 
 
         public void SetActiveUnit(Unit unit)
@@ -201,6 +202,7 @@ namespace Game.WorldMapStuff.Model
                 InitMember(member);
             }
 
+            AreaIndex = 1;
             Unit.UnitDied -= PartyMemberDied;
             Unit.UnitDied += PartyMemberDied;
             Unit.OnUnequippedRelic -= AddItem;
@@ -321,7 +323,8 @@ namespace Game.WorldMapStuff.Model
                 EncounterNodeId = playerDataPartyData.currentEncounterNodeId,
                 MovedEncounterIds = playerDataPartyData.movedEncounterIds
             };
-            
+            AreaIndex = playerDataPartyData.areaIndex;
+
         }
 
         public bool CanAfford(int price)

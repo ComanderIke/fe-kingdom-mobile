@@ -23,6 +23,7 @@ namespace Game.GameActors.Players
         public bool activatedEncounter;
         [SerializeField]public ConvoyData storage;
         public List<string> visitedEvents;
+        public int areaIndex;
 
         public PartyData(Party party)
         {
@@ -63,6 +64,7 @@ namespace Game.GameActors.Players
             convoy = new ConvoyData(party.Convoy);
             storage = new ConvoyData(party.Storage);
             money = party.Money;
+            areaIndex = party.AreaIndex;
             humanData = new List<UnitData>();
             
             foreach (var member in party.members)

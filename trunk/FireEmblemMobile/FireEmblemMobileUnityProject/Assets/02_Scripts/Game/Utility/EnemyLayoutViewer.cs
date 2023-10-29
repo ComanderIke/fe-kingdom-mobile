@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class EnemyLayoutViewer : MonoBehaviour
 {
-    public EnemyArmyData enemyLayout;
+    public BattleMap map;
 
     // public Transform container;
 
@@ -35,7 +35,7 @@ public class EnemyLayoutViewer : MonoBehaviour
         //     spawnedUnitLayouts.Add(go.GetComponent<UnitSpawner>());
         // }
 
-        battleMapInstantiation = Instantiate(enemyLayout.GetBattleMap().mapPrefab, null);
+        battleMapInstantiation = Instantiate(map.mapPrefab, null);
     }
 
     public void Hide()

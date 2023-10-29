@@ -46,7 +46,6 @@ namespace LostGrace
         [SerializeField] private GoddessUI goddessUI;
         [SerializeField] private DialogueManager dialogueManager;
         [SerializeField] private Conversation introConversation;
-        [SerializeField] private EnemyArmyData tutorialBattleData;
         public override void Show()
         {
             //ContinueButton.SetActive(SaveData.currentSaveData!=null);
@@ -74,7 +73,7 @@ namespace LostGrace
             TweenUtility.FadeIn(upgradeButtonCanvasGroup);
             TweenUtility.FadeIn(backButtonCanvasGroup);
             TweenUtility.FadeIn(tutorialButtonCanvasGroup);
-            if (GameConfig.Instance.tutorialEnabled)
+            if (GameConfig.Instance.ConfigProfile.tutorialEnabled)
                 yield return TutorialCoroutine();
             else
             {
@@ -153,7 +152,7 @@ namespace LostGrace
         public void TutorialClicked()
         {
             SceneTransferData.Instance.Reset();
-            SceneTransferData.Instance.EnemyArmyData = tutorialBattleData;
+            SceneTransferData.Instance.BattleMap = GameBPData.Instance.TutorialMap;
             SceneTransferData.Instance.TutorialBattle1 = true;
             SceneController.LoadSceneAsync(Scenes.Battle1, false);
         }

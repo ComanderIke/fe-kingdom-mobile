@@ -98,7 +98,7 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                     eventNode.Headline = nodeData.Headline;
                     if (node is BattleNode fightNode)
                     {
-                        fightNode.EnemyArmy = nodeData.EnemyArmy;
+                        fightNode.EnemyArmy = nodeData.BattleMap;
                     }
                    
                 }
@@ -837,7 +837,7 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                 RewardResources = node.ResourceRewards,
                 RewardItems = node.ItemRewards,
                 Events = node.Events,
-                EnemyArmy = node.EnemyArmy
+                BattleMap = node.EnemyArmy
             };
             graphSaveData.BattleNodes.Add(nodeData);
         }

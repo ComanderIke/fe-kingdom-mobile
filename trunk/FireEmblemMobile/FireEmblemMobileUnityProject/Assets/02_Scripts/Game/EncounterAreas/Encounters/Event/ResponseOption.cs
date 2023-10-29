@@ -16,7 +16,7 @@ public enum EventSceneType
 [System.Serializable]
 public class EventFightData
 {
-    public EnemyArmyData EnemyArmyData;
+    public BattleMap battleMap;
     public UnitBP EnemyToFight;
     public bool lethalfight;
 }

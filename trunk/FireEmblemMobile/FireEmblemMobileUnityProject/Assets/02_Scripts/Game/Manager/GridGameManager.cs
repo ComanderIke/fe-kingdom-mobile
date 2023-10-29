@@ -40,8 +40,8 @@ namespace Game.Manager
         private void Awake()
         {
             Instance = this;
-            if (SceneTransferData.Instance != null &&SceneTransferData.Instance.EnemyArmyData!=null&&SceneTransferData.Instance.EnemyArmyData!=null )
-                BattleMap = SceneTransferData.Instance.EnemyArmyData.GetBattleMap();
+            if (SceneTransferData.Instance != null &&SceneTransferData.Instance.BattleMap!=null&&SceneTransferData.Instance.BattleMap!=null )
+                BattleMap = SceneTransferData.Instance.BattleMap;
             else
                 BattleMap = FindObjectOfType<DemoUnits>().battleMap;
             Debug.Log("Choose BattleMap: "+BattleMap);
