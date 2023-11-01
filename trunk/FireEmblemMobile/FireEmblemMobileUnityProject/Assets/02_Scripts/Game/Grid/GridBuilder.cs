@@ -20,6 +20,7 @@ namespace Game.Grid
         private Tile[,] tiles;
         public Transform gridTransform;
         private bool initialized;
+        [SerializeField]private GameObject tilePrefab;
 
         public void OnDrawGizmos()
         {
@@ -75,7 +76,8 @@ namespace Game.Grid
                 for (int j = 0; j < height; j++)
                 {
                     var cell = gridTransform.GetChild(i * height + j).gameObject;
-                    tiles[i, j] = new Tile(i, j, cell.transform, new SpriteTileRenderer(cell.GetComponent<SpriteRenderer>(), GameAssets.Instance.tiles.tileSpriteSets),tileeffectVisualRenderer);
+                    var tileController = cell.GetComponent<TileContainer>();
+                    tiles[i, j] = new Tile(i, j, cell.transform, new SpriteTileRenderer(tileController.topLayer, tileController.middleLayer, tileController.baseLayer, GameAssets.Instance.tiles.tileSpriteSets),tileeffectVisualRenderer);
                 }
             }
 
@@ -84,16 +86,12 @@ namespace Game.Grid
 
         private GameObject CreateGridTileGameObject(int x, int y)
         {
-            var go = new GameObject
-            {
-                layer = CELL_LAYER, tag = CELL_TAG, name = CELL_NAME + " " + x + " " + y
-            };
-            go.transform.parent = gridTransform.transform;
+            var go = GameObject.Instantiate(tilePrefab, gridTransform.transform);
+            go.name = CELL_NAME + " " + x + " " + y;
+            go.layer = CELL_LAYER;
+            go.tag = CELL_TAG;
             go.transform.localPosition = new Vector3(x + 0.5f, y + 0.5f, 0);
-            var spriteRenderer = go.AddComponent<SpriteRenderer>();
-            spriteRenderer.sprite = GameAssets.Instance.grid.standardSprite;
-            spriteRenderer.sortingOrder = 0;
-            go.AddComponent<BoxCollider2D>().size = new Vector3(1, 1);
+           
 
             return go;
         }

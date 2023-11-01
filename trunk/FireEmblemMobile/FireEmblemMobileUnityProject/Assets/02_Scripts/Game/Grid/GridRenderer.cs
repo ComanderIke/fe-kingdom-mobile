@@ -34,6 +34,12 @@ namespace Game.Grid
            
 
         }
+        public void SetFieldMaterialDanger(Vector2 pos,bool active)
+        {
+            Tiles[(int) pos.x, (int) pos.y].SetDangerMaterial(active);
+           
+
+        }
         public void SetFieldMaterial(Vector2 pos, FactionId playerId, bool activeUnit, bool activePlayer)
         {
             Tiles[(int) pos.x, (int) pos.y].SetMaterial(playerId, activeUnit,activePlayer);

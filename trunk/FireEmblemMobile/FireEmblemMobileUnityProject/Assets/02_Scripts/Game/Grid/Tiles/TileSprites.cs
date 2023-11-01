@@ -13,6 +13,7 @@ namespace Game.Grid
         public Sprite GridSpriteStandOn;
         public Sprite GridSpriteAlly;
         public Sprite GridSwapSprite;
+        public Sprite GridDangerSprite;
         public Sprite BlockedSprite;
         public Sprite CastSprite;
         public Sprite CastHealSprite;

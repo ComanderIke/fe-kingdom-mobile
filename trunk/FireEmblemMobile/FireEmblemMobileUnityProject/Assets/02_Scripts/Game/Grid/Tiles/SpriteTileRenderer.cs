@@ -5,13 +5,17 @@ namespace Game.Grid
 {
     public class SpriteTileRenderer : ITileRenderer
     {
-        private SpriteRenderer spriteRenderer;
+        private SpriteRenderer baseGrid;
+        private SpriteRenderer middleLayer;
+        private SpriteRenderer topLayer;
         private TileSprites activeSpriteSet;
         private Dictionary<int, TileSprites> spriteSets;
         private int idCounter;
-        public SpriteTileRenderer(SpriteRenderer spriteRenderer, TileSprites[] spriteSets)
+        public SpriteTileRenderer(SpriteRenderer topLayer,SpriteRenderer middleLayer,SpriteRenderer baseLayer, TileSprites[] spriteSets)
         {
-            this.spriteRenderer = spriteRenderer;
+            this.topLayer = topLayer;
+            this.middleLayer = middleLayer;
+            this.baseGrid = baseLayer;
             this.spriteSets = new Dictionary<int, TileSprites>();
             foreach(var spriteSet in spriteSets)
                 AddSpriteSet((spriteSet));
@@ -27,6 +31,10 @@ namespace Game.Grid
 
         }
 
+        public void DangerVisual(bool active)
+        {
+            middleLayer.sprite = active?activeSpriteSet.GridDangerSprite:null;
+        }
         public void SetVisualStyle(FactionId id)
         {
             activeSpriteSet = spriteSets[(int)id];
@@ -34,67 +42,67 @@ namespace Game.Grid
 
         public void SwapVisual()
         {
-            spriteRenderer.sprite = activeSpriteSet.GridSwapSprite;
+            topLayer.sprite = activeSpriteSet.GridSwapSprite;
         }
 
         public void BlockedVisual()
         {
-            spriteRenderer.sprite = activeSpriteSet.BlockedSprite;
+            topLayer.sprite = activeSpriteSet.BlockedSprite;
         }
 
         public void CastBadVisual()
         {
-            spriteRenderer.sprite = activeSpriteSet.CastBadSprite;
+            topLayer.sprite = activeSpriteSet.CastBadSprite;
         }
 
         public void CastGoodVisual()
         {
-            spriteRenderer.sprite = activeSpriteSet.CastGoodSprite;
+            topLayer.sprite = activeSpriteSet.CastGoodSprite;
         }
 
         public void CastHealVisual()
         {
-            spriteRenderer.sprite = activeSpriteSet.CastHealSprite;
+            topLayer.sprite = activeSpriteSet.CastHealSprite;
         }
 
 
         public void Reset()
         {
-            spriteRenderer.sprite = activeSpriteSet.GridSprite;
+            topLayer.sprite = activeSpriteSet.GridSprite;
         }
 
         public void AttackVisual()
         {
-            spriteRenderer.sprite = activeSpriteSet.GridAttackSprite;
+            topLayer.sprite = activeSpriteSet.GridAttackSprite;
         }
         public void CastVisual()
         {
-            spriteRenderer.sprite = activeSpriteSet.CastSprite;
+            topLayer.sprite = activeSpriteSet.CastSprite;
         }
     
         public void AllyVisual()
         {
-            spriteRenderer.sprite = activeSpriteSet.GridSpriteAlly;
+            topLayer.sprite = activeSpriteSet.GridSpriteAlly;
         }
 
         public void MoveVisual()
         {
-            spriteRenderer.sprite = activeSpriteSet.GridMoveSprite;
+            topLayer.sprite = activeSpriteSet.GridMoveSprite;
         }
 
         public void ActiveAttackVisual()
         {
-            spriteRenderer.sprite = activeSpriteSet.GridActiveAttackSprite;
+            topLayer.sprite = activeSpriteSet.GridActiveAttackSprite;
         }
 
         public void ActiveMoveVisual()
         {
-            spriteRenderer.sprite = activeSpriteSet.GridActiveMoveSprite;
+            topLayer.sprite = activeSpriteSet.GridActiveMoveSprite;
         }
 
         public void StandOnVisual()
         {
-            spriteRenderer.sprite = activeSpriteSet.GridSpriteStandOn;
+            topLayer.sprite = activeSpriteSet.GridSpriteStandOn;
         }
 
     }

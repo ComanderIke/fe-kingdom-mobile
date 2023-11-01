@@ -7,6 +7,7 @@
         void AllyVisual();
         void MoveVisual();
         void CastVisual();
+        void DangerVisual(bool active);
         void ActiveAttackVisual();
         void ActiveMoveVisual();
         void StandOnVisual();

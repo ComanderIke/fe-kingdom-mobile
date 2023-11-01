@@ -87,6 +87,11 @@ namespace Game.Grid
             TileRenderer.SetVisualStyle(playerId);
             TileRenderer.CastVisual();
         }
+
+        public void SetDangerMaterial(bool active)
+        {
+            TileRenderer.DangerVisual(active);
+        }
         public void SetAttackMaterial(FactionId playerId, bool activeUnit, bool activePlayer)
         {
             Reset();

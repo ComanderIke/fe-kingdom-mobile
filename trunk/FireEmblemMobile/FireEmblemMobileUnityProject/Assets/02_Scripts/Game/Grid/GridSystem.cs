@@ -114,14 +114,14 @@ namespace Game.Map
 
         }
 
-        public void ShowMovementRangeOnGrid(IGridActor c, bool cantoRange=false)
+        public void ShowMovementRangeOnGrid(IGridActor c, bool cantoRange=false, bool dangerArea=false)
         {
-            ShowMovement(c.GridComponent.GridPosition.X, c.GridComponent.GridPosition.Y, cantoRange?c.GridComponent.Canto:c.MovementRange, 0, c);
+            ShowMovement(c.GridComponent.GridPosition.X, c.GridComponent.GridPosition.Y, cantoRange?c.GridComponent.Canto:c.MovementRange, 0, c, dangerArea);
         }
 
       
 
-        public void ShowAttackRangeOnGrid(IGridActor character, List<int> attack, bool soft=false)
+        public void ShowAttackRangeOnGrid(IGridActor character, List<int> attack, bool soft=false, bool dangerArea=false)
         {
             NodeHelper.Reset();
             foreach (var f in GridLogic.TilesFromWhereYouCanAttack(character))
@@ -130,11 +130,11 @@ namespace Game.Map
                 int y = f.Y;
                 foreach (int range in attack)
                 {
-                    ShowAttackRecursive(character, x, y, range, new List<int>(), soft);
+                    ShowAttackRecursive(character, x, y, range, new List<int>(), soft, dangerArea);
                 }
             }
-
-            GridRenderer.ShowStandOnVisual(character);
+            if(!dangerArea)
+                GridRenderer.ShowStandOnVisual(character);
         }
 
         public void ShowAttackFromPosition(Unit character, int x, int y)
@@ -187,13 +187,23 @@ namespace Game.Map
             }
             
         }
-        public void ShowAttackRecursive(IGridActor character, int x, int y, int range, List<int> direction, bool soft=false)
+        public void ShowAttackRecursive(IGridActor character, int x, int y, int range, List<int> direction, bool soft=false, bool dangerArea=false)
         {
             if (range <= 0)
             {
                 if (!IsTileMoveableAndActive(x, y))
                 {
-                    GridRenderer.SetFieldMaterialAttack(new Vector2(x, y), character.Faction.Id, !character.TurnStateManager.IsWaiting, GridGameManager.Instance.FactionManager.IsActiveFaction(character.Faction));
+                    if (!dangerArea)
+                    {
+                        GridRenderer.SetFieldMaterialAttack(new Vector2(x, y), character.Faction.Id,
+                            !character.TurnStateManager.IsWaiting,
+                            GridGameManager.Instance.FactionManager.IsActiveFaction(character.Faction));
+                    }
+                    else
+                    {
+                        GridRenderer.SetFieldMaterialDanger(new Vector2(x, y), true);
+                    }
+
                     GridLogic.gridSessionData.AddValidAttackPosition(x, y);
                 }
 
@@ -205,7 +215,7 @@ namespace Game.Map
                 if (GridLogic.CheckAttackField(x + 1, y))
                 {
                     var newDirection = new List<int>(direction) {1};
-                    ShowAttackRecursive(character, x + 1, y, range - 1, newDirection, soft);
+                    ShowAttackRecursive(character, x + 1, y, range - 1, newDirection, soft, dangerArea);
                 }
             }
 
@@ -214,7 +224,7 @@ namespace Game.Map
                 if (GridLogic.CheckAttackField(x - 1, y))
                 {
                     var newDirection = new List<int>(direction) {2};
-                    ShowAttackRecursive(character, x - 1, y, range - 1, newDirection, soft);
+                    ShowAttackRecursive(character, x - 1, y, range - 1, newDirection, soft, dangerArea);
                 }
             }
 
@@ -223,7 +233,7 @@ namespace Game.Map
                 if (GridLogic.CheckAttackField(x, y + 1))
                 {
                     var newDirection = new List<int>(direction) {3};
-                    ShowAttackRecursive(character, x, y + 1, range - 1, newDirection, soft);
+                    ShowAttackRecursive(character, x, y + 1, range - 1, newDirection, soft, dangerArea);
                 }
             }
 
@@ -232,30 +242,70 @@ namespace Game.Map
                 if (GridLogic.CheckAttackField(x, y - 1))
                 {
                     var newDirection = new List<int>(direction) {4};
-                    ShowAttackRecursive(character, x, y - 1, range - 1, newDirection, soft);
+                    ShowAttackRecursive(character, x, y - 1, range - 1, newDirection, soft, dangerArea);
                 }
             }
         }
-        
-        private void ShowMovement(int x, int y, int range, int c, IGridActor unit)
+
+        public void ResetDangerArea()
+        {
+            foreach (var tile in Tiles)
+            {
+                tile.SetDangerMaterial(false);
+            }
+        }
+        public void ShowDangerArea()
+        {
+            ResetDangerArea();
+            var factionManager = GridGameManager.Instance.FactionManager;
+            foreach (var faction in factionManager.Factions)
+            {
+                if (factionManager.GetPlayerControlledFaction().IsOpponentFaction(faction))
+                {
+                    Debug.Log("FACTION: ");
+                    foreach (var enemy in faction.FieldedUnits)
+                    {
+                        ShowMovementRangeOnGrid(enemy, false, true);
+
+                        ShowAttackRangeOnGrid(enemy, new List<int>(enemy.AttackRanges), true, true);
+                        GridLogic.gridSessionData.Clear();
+                    }
+                }
+            }
+           
+            //TODO Show All Attack Ranges add a bool for dangerzone than make mov and attack use danger sprite instead
+        }
+        private void ShowMovement(int x, int y, int range, int c, IGridActor unit, bool dangerArea=false)
         {
             if (range < 0)
             {
                 return;
             }
 
-            GridRenderer.SetFieldMaterial(new Vector2(x, y), unit.Faction.Id, !unit.TurnStateManager.HasMoved,GridGameManager.Instance.FactionManager.IsActiveFaction(unit.Faction));
+            if (dangerArea)
+            {
+                GridRenderer.SetFieldMaterialDanger(new Vector2(x, y), true);
+            }
+            else
+            {
+
+                GridRenderer.SetFieldMaterial(new Vector2(x, y), unit.Faction.Id, !unit.TurnStateManager.HasMoved,
+                    GridGameManager.Instance.FactionManager.IsActiveFaction(unit.Faction));
+            }
+
             GridLogic.gridSessionData.AddValidPosition(x, y);
+            
+
             NodeHelper.Nodes[x, y].C = c;
             c+=GetTileChecker().GetMovementCost(x, y, unit);
             if (GridLogic.CheckField(x - 1, y, unit, range) && NodeHelper.NodeFaster(x - 1, y, c))
-                ShowMovement(x - 1, y, range - GetTileChecker().GetMovementCost(x-1, y, unit), c, unit);
+                ShowMovement(x - 1, y, range - GetTileChecker().GetMovementCost(x-1, y, unit), c, unit,dangerArea);
             if (GridLogic.CheckField(x + 1, y, unit, range) && NodeHelper.NodeFaster(x + 1, y, c))
-                ShowMovement(x + 1, y, range -GetTileChecker().GetMovementCost(x+1, y, unit), c, unit);
+                ShowMovement(x + 1, y, range -GetTileChecker().GetMovementCost(x+1, y, unit), c, unit,dangerArea);
             if (GridLogic.CheckField(x, y - 1, unit, range) && NodeHelper.NodeFaster(x, y - 1, c))
-                ShowMovement(x, y - 1, range - GetTileChecker().GetMovementCost(x, y - 1, unit), c, unit);
+                ShowMovement(x, y - 1, range - GetTileChecker().GetMovementCost(x, y - 1, unit), c, unit,dangerArea);
             if (GridLogic.CheckField(x, y + 1, unit, range) && NodeHelper.NodeFaster(x, y + 1, c))
-                ShowMovement(x, y + 1, range - GetTileChecker().GetMovementCost(x, y+1, unit), c, unit);
+                ShowMovement(x, y + 1, range - GetTileChecker().GetMovementCost(x, y+1, unit), c, unit,dangerArea);
         }
 
         public bool IsTileMoveableAndActive(int x, int y)
@@ -564,6 +614,19 @@ namespace Game.Map
 
                     
                 }
+            }
+        }
+
+        private bool dangerAreaShown = false;
+
+        public void ToggleDangerArea()
+        {
+            dangerAreaShown = !dangerAreaShown;
+            if(dangerAreaShown)
+                ShowDangerArea();
+            else
+            {
+                ResetDangerArea();
             }
         }
     }

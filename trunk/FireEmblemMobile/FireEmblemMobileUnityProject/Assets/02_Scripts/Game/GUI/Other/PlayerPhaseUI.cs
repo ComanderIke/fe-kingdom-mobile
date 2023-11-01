@@ -5,6 +5,7 @@ using Game.GameActors.Units;
 using Game.GameInput;
 using Game.Grid;
 using Game.Manager;
+using Game.Map;
 using Game.Mechanics;
 using Game.WorldMapStuff.Systems;
 using TMPro;
@@ -113,11 +114,14 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
         OnUnitCircleClicked?.Invoke(u);
     }
 
-   
 
-    
-   
-   
+
+
+
+    public void ToggleDangerArea()
+    {
+        GridGameManager.Instance.GetSystem<GridSystem>().ToggleDangerArea();
+    }
     public void EndTurnClicked()
     {
         OkCancelDialogController.Show("Do you want to end the turn?", () =>
