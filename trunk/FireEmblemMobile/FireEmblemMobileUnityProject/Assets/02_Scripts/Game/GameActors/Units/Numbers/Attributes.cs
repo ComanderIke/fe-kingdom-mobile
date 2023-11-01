@@ -10,13 +10,21 @@ namespace Game.GameActors.Units.Numbers
         [SerializeField]
         private int str;
 
-        [SerializeField]
-        private int intel;
+       
         [SerializeField]
         private int dex;
         [SerializeField]
+        private int intel;
+        [SerializeField]
         private int agi;
 
+        [SerializeField]
+        private int lck;
+       
+        [SerializeField]
+        private int def;
+        [SerializeField]
+        private int faith;
         [SerializeField] 
         private int maxHp;
 
@@ -38,15 +46,11 @@ namespace Game.GameActors.Units.Numbers
 
         public int FAITH => faith;
 
-        [SerializeField]
-        private int lck;
-        [SerializeField]
-        private int def;
-        [SerializeField]
-        private int faith;
-        
-   
+       
+        [SerializeField] public int sum;
 
+
+        
         public Attributes()
         {
         }
@@ -95,6 +99,7 @@ namespace Game.GameActors.Units.Numbers
             
         }
 
+        public const int MaxHPIndex = 4;
         public int[] AsArray()
         {
             return new []{STR,DEX,INT,AGI,MaxHp,LCK, DEF,FAITH};
@@ -291,6 +296,11 @@ namespace Game.GameActors.Units.Numbers
             agi = 0;
             maxHp = 0;
             lck = 0;
+        }
+
+        public int GetSum(bool hpHalf=false)
+        {
+            return STR + DEX + INT + LCK + AGI + DEF + FAITH + (hpHalf?MaxHp/2:MaxHp);
         }
     }
 

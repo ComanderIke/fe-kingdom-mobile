@@ -15,33 +15,50 @@ MonoBehaviour:
   equippedWeaponBp: {fileID: 11400000, guid: 7f44d82801c2b3147ab601f150b30e01, type: 2}
   EquippedRelic1: {fileID: 0}
   Name: Mehmed
+  isEnemy: 0
+  isBoss: 0
+  isBig2x2: 0
+  revivalStones: 0
   combatItem1:
     stock: 0
     item: {fileID: 11400000, guid: 9492c4b8add5ab14eaeccd294e49062c, type: 2}
   combatItem2:
     stock: 0
     item: {fileID: 0}
+  aiBehaviour: {fileID: 0}
   stats:
     AttackRanges: 01000000
     BaseAttributes:
-      str: 30
-      intel: 6
+      str: 8
       dex: 6
-      agi: 6
-      maxHp: 10
+      intel: 4
+      agi: 5
       lck: 6
-      def: 6
-      faith: 6
+      def: 7
+      faith: 2
+      maxHp: 18
+      sum: 47
     <BaseGrowths>k__BackingField:
-      str: 0
-      intel: 0
-      dex: 0
-      agi: 0
-      maxHp: 0
-      lck: 0
-      def: 0
-      faith: 0
-    Mov: 5
+      str: 50
+      dex: 35
+      intel: 20
+      agi: 35
+      lck: 35
+      def: 45
+      faith: 20
+      maxHp: 60
+      sum: 300
+    <FixedGrowthOffsets>k__BackingField:
+      str: 60
+      dex: 40
+      intel: 35
+      agi: 35
+      lck: 25
+      def: 45
+      faith: 25
+      maxHp: 35
+      sum: 0
+    Mov: 3
   moveType: {fileID: 11400000, guid: 580bbea6e1e3e824a81881f8e2a825ba, type: 2}
   SkillManager:
     startSkills: []
@@ -70,3 +87,8 @@ MonoBehaviour:
     exp: 0
     drainableExp: 100
     expLeftToDrain: 100
+  <ChronikComponent>k__BackingField:
+    <BodySprite>k__BackingField: {fileID: 0}
+    <FaceSprite>k__BackingField: {fileID: 0}
+    <Name>k__BackingField: 
+    <Description>k__BackingField: 

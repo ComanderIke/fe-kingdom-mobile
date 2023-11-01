@@ -8,16 +8,23 @@ namespace Game.GameActors.Items.Weapons
     {
         public int strength;
         public GameObject healEffect;
+        public bool percentage;
 
-        public HealthPotion(string name, string description, int cost, int rarity, int maxStack,Sprite sprite, ItemTarget target, int strength, GameObject healEffect):base (name, description, cost, rarity, maxStack,sprite, target)
+        public HealthPotion(string name, string description, int cost, int rarity, int maxStack,Sprite sprite, ItemTarget target, int strength, GameObject healEffect, bool percentage):base (name, description, cost, rarity, maxStack,sprite, target)
         {
             this.strength = strength;
             this.healEffect = healEffect;
+            this.percentage = percentage;
         }
         public override void Use(Unit character, Party convoy)
         {
             Debug.Log("Use Healthpotion!");
-            character.Heal(strength);
+            if (percentage)
+            {
+                character.Heal(strength, true);
+            }
+            else
+                character.Heal(strength);
             //Different Animation in GridBattle
             if(character.GameTransformManager.GameObject!=null)
                 GameObject.Instantiate(healEffect, character.GameTransformManager.GetCenterPosition(), Quaternion.identity,null);

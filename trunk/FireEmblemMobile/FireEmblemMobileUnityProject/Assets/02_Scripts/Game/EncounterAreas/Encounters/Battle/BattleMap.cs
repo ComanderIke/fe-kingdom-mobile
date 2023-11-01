@@ -10,4 +10,5 @@ public class BattleMap : ScriptableObject
     public int width;
     public int height;
     public int playerUnitsSpawnPoints = 4;
+    public int initialEnemyCount = 5;
 }

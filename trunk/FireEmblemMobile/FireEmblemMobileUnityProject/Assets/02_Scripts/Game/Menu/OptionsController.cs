@@ -57,6 +57,10 @@ public class OptionsController : UIMenu
     {
         GameConfig.Instance.ConfigProfile.tutorialEnabled = value;
     }
+    public void OnFixedGrowthsToggled(bool value)
+    {
+        GameConfig.Instance.ConfigProfile.fixedGrowths = value;
+    }
 
     public void OnDebugModeToggled(bool value)
     {

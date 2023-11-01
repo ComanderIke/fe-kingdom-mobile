@@ -10,7 +10,7 @@ using Random = System.Random;
 
 public class Church
 {
-    public List<ShopItem> shopItems = new List<ShopItem>();
+  //  public List<ShopItem> shopItems = new List<ShopItem>();
     private List<Unit> alreadyDonated;
     private Dictionary<Unit, Blessing> alreadyGeneratedBlessing;
     private Dictionary<Unit, Blessing> alreadyAcceptedBlessing;
@@ -28,35 +28,35 @@ public class Church
         alreadyAcceptedBlessing = new Dictionary<Unit, Blessing>();
         alreadyGeneratedBlessing = new Dictionary<Unit, Blessing>();
     }
-    public void AddItem(ShopItem item)
-    {
-        shopItems.Add(item);
-    }
+    // public void AddItem(ShopItem item)
+    // {
+    //     shopItems.Add(item);
+    // }
 
-    public void RemoveItem(Item selectedItem)
-    {
-        ShopItem itemToRemove = null;
-        foreach (var shopItem in shopItems)
-        {
-            if (shopItem.Item == selectedItem)
-            {
-              
-                itemToRemove = shopItem;
-                break;
-            }
-        }
-
-        if (itemToRemove != null)
-        {
-            itemToRemove.stock--;
-            if (itemToRemove.stock <= 0)
-                shopItems.Remove(itemToRemove);
-        }
-        else
-        {
-            Debug.Log("No item found to remove!");
-        }
-    }
+    // public void RemoveItem(Item selectedItem)
+    // {
+    //     ShopItem itemToRemove = null;
+    //     foreach (var shopItem in shopItems)
+    //     {
+    //         if (shopItem.Item == selectedItem)
+    //         {
+    //           
+    //             itemToRemove = shopItem;
+    //             break;
+    //         }
+    //     }
+    //
+    //     if (itemToRemove != null)
+    //     {
+    //         itemToRemove.stock--;
+    //         if (itemToRemove.stock <= 0)
+    //             shopItems.Remove(itemToRemove);
+    //     }
+    //     else
+    //     {
+    //         Debug.Log("No item found to remove!");
+    //     }
+    // }
 
     Blessing GenerateBlessing(int faith, int donation)
     {

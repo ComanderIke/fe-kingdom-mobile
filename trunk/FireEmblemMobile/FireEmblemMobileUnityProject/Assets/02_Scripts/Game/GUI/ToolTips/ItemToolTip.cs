@@ -52,7 +52,8 @@ public class ItemToolTip : MonoBehaviour
     {
         headerText.text = item.item.Name;
         descriptionText.text = item.item.Description;
-        itemIcon.SetValues(item, 0);
+        if(itemIcon!=null)
+            itemIcon.SetValues(item, 0);
         rectTransform.anchoredPosition = position+ new Vector3(0,280,0);
         UpdateTextWrap(position);
     }

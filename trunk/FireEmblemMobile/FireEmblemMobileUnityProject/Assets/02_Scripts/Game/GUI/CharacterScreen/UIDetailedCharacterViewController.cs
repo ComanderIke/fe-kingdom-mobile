@@ -39,6 +39,7 @@ public class UIDetailedCharacterViewController : UICharacterViewController
     public override void Show(Unit unit)
     {
         base.Show(unit);
+        Debug.Log("SHOW");
         if (boonBaneController != null)
         {
             boonBaneController.OnBoonSelected -= BoonSelected;
@@ -173,7 +174,7 @@ public class UIDetailedCharacterViewController : UICharacterViewController
         //     
         // }
        
-
+Debug.Log("UPDATE UI");
         equipmentController.Show(unit);
         if(IdleAnimation!=null)
             IdleAnimation.runtimeAnimatorController = unit.visuals.Prefabs.UIAnimatorController;

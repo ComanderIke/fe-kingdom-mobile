@@ -29,31 +29,39 @@ MonoBehaviour:
   stats:
     AttackRanges: 01000000
     BaseAttributes:
-      str: 15
-      intel: 6
-      dex: 6
-      agi: 12
-      maxHp: 20
-      lck: 6
-      def: 2
-      faith: 6
+      str: 8
+      dex: 7
+      intel: 5
+      agi: 6
+      lck: 5
+      def: 5
+      faith: 4
+      maxHp: 14
+      sum: 47
     <BaseGrowths>k__BackingField:
-      str: 50
-      intel: 50
-      dex: 50
-      agi: 50
+      str: 45
+      dex: 40
+      intel: 30
+      agi: 35
+      lck: 35
+      def: 35
+      faith: 30
       maxHp: 50
-      lck: 50
-      def: 50
-      faith: 50
-    Mov: 8
+      sum: 300
+    <FixedGrowthOffsets>k__BackingField:
+      str: 60
+      dex: 60
+      intel: 30
+      agi: 50
+      lck: 40
+      def: 60
+      faith: 20
+      maxHp: 20
+      sum: 0
+    Mov: 4
   moveType: {fileID: 11400000, guid: 580bbea6e1e3e824a81881f8e2a825ba, type: 2}
   SkillManager:
-    startSkills:
-    - {fileID: 11400000, guid: f20e9f7119beee14cb8f9eabfa401172, type: 2}
-    - {fileID: 11400000, guid: 17c18eb103f96ba4bbd182ff3050dd1b, type: 2}
-    - {fileID: 11400000, guid: d9f1f30d416b2514cad5481451998c8a, type: 2}
-    - {fileID: 11400000, guid: d048bf096dcbd1d429fb06490fddf033, type: 2}
+    startSkills: []
     startBlessing: {fileID: 0}
     maxSkillCount: 0
     skillPoints: 1
@@ -84,7 +92,7 @@ MonoBehaviour:
       type: 3}
     <FaceSprite>k__BackingField: {fileID: 21300000, guid: 94e27656bc98e2147918f29e8d6bebc7,
       type: 3}
-    <Name>k__BackingField: Hector
+    <Name>k__BackingField: Lorian the Noble Knight.
     <Description>k__BackingField: 'Sir Lorian, often hailed as the "Azure Knight",
       comes from the illustrious region of Valoria, a land where the galloping hooves
       of horses resonate as a symphony of freedom and power. Valoria, with its vast

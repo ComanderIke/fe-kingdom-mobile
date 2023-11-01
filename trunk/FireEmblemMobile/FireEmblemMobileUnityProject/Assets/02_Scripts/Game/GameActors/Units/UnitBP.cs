@@ -81,6 +81,11 @@ namespace Game.GameActors.Units
 
         }
 
+        private void OnValidate()
+        {
+            stats.OnValidate();
+        }
+
         public virtual Unit Create()
         {
           

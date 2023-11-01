@@ -46,7 +46,7 @@ namespace LostGrace
                 if (cnt == 0)
                 {
                     Debug.Log("Select Last: "+last.unit);
-                    AddUnit(last);
+                    //AddUnit(last);
                     SelectUnit(last);
                     characterView.Show(last.unit);
                 }
@@ -154,6 +154,7 @@ namespace LostGrace
                 lastSelected.Deselect();
             lastSelected = unit;
             unit.Select();
+            OnUnitSelected?.Invoke(unit.unit);
             if(Player.Instance.Party.members.Contains(unit.unit))
                 addRemoveButton.ShowRemove();
             else
@@ -170,5 +171,7 @@ namespace LostGrace
             characterView.Show(unit.unit);
             
         }
+
+        public event Action<Unit> OnUnitSelected;
     }
 }

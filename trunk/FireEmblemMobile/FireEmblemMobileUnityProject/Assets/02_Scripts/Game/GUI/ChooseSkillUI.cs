@@ -76,6 +76,7 @@ public class ChooseSkillUI : MonoBehaviour, ISkillUIRenderer
     private bool skillChosen = false;
     public void ChooseClicked()
     {
+        Debug.Log("Choose Clicked");
         if (selected == null||skillChosen)
             return;
         skillChosen = true;

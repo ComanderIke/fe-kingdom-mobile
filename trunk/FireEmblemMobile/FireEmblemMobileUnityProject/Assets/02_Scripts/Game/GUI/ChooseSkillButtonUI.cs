@@ -105,7 +105,9 @@ namespace LostGrace
         
         public void Hide()
         {
+            Deselect(true);
             gameObject.SetActive(false);
+           
             moveSkill.GetComponent<RectTransform>().anchoredPosition = defaultSkillPosition;
             moveSkill.gameObject.SetActive(true);
         }
@@ -340,10 +342,13 @@ namespace LostGrace
 
         [SerializeField] private Vector3 selectedScale;
 
-        public void Deselect()
+        public void Deselect(bool instant = false)
         {
             selectedBorder.enabled = false;
-            LeanTween.scale(gameObject, new Vector3(1,1,1), .1f).setEaseInQuad();
+            if (instant)
+                gameObject.transform.localScale = new Vector3(1, 1, 1);
+            else
+                LeanTween.scale(gameObject, new Vector3(1, 1, 1), .1f).setEaseInQuad();
             //transform.localScale = new Vector3(1,1,1);
         }
     }

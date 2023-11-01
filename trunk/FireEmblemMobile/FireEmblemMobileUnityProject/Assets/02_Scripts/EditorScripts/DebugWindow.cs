@@ -108,10 +108,14 @@ namespace __2___Scripts.External.Editor
                 }
                 GUILayout.Label("Selected Unit: " + selectedUnitName);
                 GUILayout.Label("Hp: " + activeUnit.Hp + "/" + activeUnit.MaxHp);
-                GUILayout.Label("SkillsCount: " + activeUnit.SkillManager.Skills.Count);
-                foreach (var skill in activeUnit.SkillManager.Skills)
+                if (activeUnit.SkillManager.Skills != null)
                 {
-                    GUILayout.Label("Skill: " + skill.Name);
+                    GUILayout.Label("SkillsCount: " + activeUnit.SkillManager.Skills.Count);
+                    foreach (var skill in activeUnit.SkillManager.Skills)
+                    {
+                        GUILayout.Label("Skill: " + skill.Name);
+                    }
+
                 }
 
                 if (GUILayout.Button("Lose 5 HP"))

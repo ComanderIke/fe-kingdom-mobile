@@ -12,6 +12,7 @@ namespace LostGrace
     {
         public bool tutorialEnabled = false;
         public bool debugModeEnabled = false;
+        public bool fixedGrowths = false;
         public bool overWriteItems = false;
         public bool overWriteSkills = false;
         public bool overWriteEvents = false;

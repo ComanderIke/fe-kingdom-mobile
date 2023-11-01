@@ -15,33 +15,50 @@ MonoBehaviour:
   equippedWeaponBp: {fileID: 11400000, guid: 97dfc89d724c8a640b61ad4e5ab83aa0, type: 2}
   EquippedRelic1: {fileID: 0}
   Name: Sigrun
+  isEnemy: 0
+  isBoss: 0
+  isBig2x2: 0
+  revivalStones: 0
   combatItem1:
     stock: 1
     item: {fileID: 11400000, guid: c46079ef11e72164786330c04a1d6b63, type: 2}
   combatItem2:
     stock: 0
     item: {fileID: 0}
+  aiBehaviour: {fileID: 0}
   stats:
     AttackRanges: 01000000
     BaseAttributes:
-      str: 15
-      intel: 6
-      dex: 15
-      agi: 6
-      maxHp: 10
-      lck: 6
-      def: 6
-      faith: 6
+      str: 10
+      dex: 5
+      intel: 2
+      agi: 8
+      lck: 8
+      def: 4
+      faith: 2
+      maxHp: 16
+      sum: 47
     <BaseGrowths>k__BackingField:
-      str: 0
-      intel: 0
-      dex: 0
-      agi: 0
-      maxHp: 0
-      lck: 0
-      def: 0
-      faith: 0
-    Mov: 5
+      str: 50
+      dex: 35
+      intel: 20
+      agi: 45
+      lck: 45
+      def: 35
+      faith: 20
+      maxHp: 50
+      sum: 300
+    <FixedGrowthOffsets>k__BackingField:
+      str: 70
+      dex: 25
+      intel: 25
+      agi: 55
+      lck: 35
+      def: 40
+      faith: 40
+      maxHp: 25
+      sum: 0
+    Mov: 3
   moveType: {fileID: 11400000, guid: d13592b1fa0af024a841b121149b8014, type: 2}
   SkillManager:
     startSkills: []
@@ -70,3 +87,8 @@ MonoBehaviour:
     exp: 0
     drainableExp: 100
     expLeftToDrain: 100
+  <ChronikComponent>k__BackingField:
+    <BodySprite>k__BackingField: {fileID: 0}
+    <FaceSprite>k__BackingField: {fileID: 0}
+    <Name>k__BackingField: 
+    <Description>k__BackingField: 

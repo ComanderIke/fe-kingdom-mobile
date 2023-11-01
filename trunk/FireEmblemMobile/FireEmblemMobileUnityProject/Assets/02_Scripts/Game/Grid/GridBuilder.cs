@@ -24,10 +24,10 @@ namespace Game.Grid
         public void OnDrawGizmos()
         {
             // Gizmos.color = new Color(1, 0, 0, 0.5f);
-            // Gizmos.DrawWireCube(transform.position+new Vector3(width/2f, height/2f), new Vector3(width, height, 1));
-            Gizmos.color = new Color(.6f, .4f, .3f, 0.5f);
-            Gizmos.DrawWireCube(transform.position+new Vector3((width+6)/2f-3, (height+2)/2f-1), new Vector3(width+6, height+2, 1));
+            // Gizmos.DrawWireCube(transform.position+new Vector3(width/2f, height/
             Gizmos.color = new Color(1, 0, 0, 0.5f);
+            Gizmos.DrawWireCube(transform.position+new Vector3((width+6)/2f-3, (height+2)/2f-1), new Vector3(width+6, height+2, 1));
+            Gizmos.color = new Color(.6f, .4f, .3f, 0.5f);
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)

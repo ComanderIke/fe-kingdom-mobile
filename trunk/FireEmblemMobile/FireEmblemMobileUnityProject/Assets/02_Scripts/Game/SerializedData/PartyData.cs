@@ -23,6 +23,7 @@ namespace Game.GameActors.Players
         public bool activatedEncounter;
         [SerializeField]public ConvoyData storage;
         public List<string> visitedEvents;
+        public List<string> visitedMaps;
         public int areaIndex;
 
         public PartyData(Party party)
@@ -59,6 +60,11 @@ namespace Game.GameActors.Players
             foreach (var id in party.VisitedEvents)
             {
                 visitedEvents.Add(id.name);
+            }
+            visitedMaps = new List<string>();
+            foreach (var id in party.VisitedMaps)
+            {
+                visitedMaps.Add(id.name);
             }
             activeUnitIndex = party.ActiveUnitIndex;
             convoy = new ConvoyData(party.Convoy);

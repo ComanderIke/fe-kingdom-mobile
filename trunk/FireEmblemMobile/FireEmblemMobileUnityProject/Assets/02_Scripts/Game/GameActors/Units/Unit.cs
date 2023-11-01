@@ -508,10 +508,14 @@ namespace Game.GameActors.Units
             HandleCloned(clone);
             return clone;
         }
-        public void Heal(int heal)
+        public void Heal(int heal, bool percentage=false)
         {
             Debug.Log(name+" HEALED: "+ heal);
             float tmpHeal = heal;
+            if (percentage)
+            {
+                tmpHeal = stats.CombinedAttributes().MaxHp * (heal / 100f);
+            }
             foreach (var mult in HealingMultipliers)
             {
                 tmpHeal *= mult;

@@ -83,7 +83,7 @@ public class UICharacterViewController : MonoBehaviour
         if(canvas!=null)
             canvas.enabled = true;
         Player.Instance.Party.SetActiveUnit(unit);
-        Debug.Log("Showing Character UI for: "+unit.name);
+       // Debug.Log("Showing Character UI for: "+unit.name);
         UpdateUI(unit);
 
     }
@@ -92,10 +92,10 @@ public class UICharacterViewController : MonoBehaviour
   
     protected virtual void UpdateUI(Unit unit)
     {
-      
+       
         this.unit = unit;
        // Debug.Log("CharFace: "+CharacterFace);
-        Debug.Log("ShowUnitCharView: "+unit);
+        Debug.Log("UpdateUI: "+unit);
         if(CharacterFace!=null)
             CharacterFace.Show(unit);
         charName.SetText(unit.name);//+", "+unit.jobClass);

@@ -83,9 +83,9 @@ namespace LostGrace
         public void SaveFileClicked(int slot)
         {
             selected = slot;
-            slot1Button.SetInteractable(false);
-            slot2Button.SetInteractable(false);
-            slot3Button.SetInteractable(false);
+            // slot1Button.SetInteractable(false);
+            // slot2Button.SetInteractable(false);
+            // slot3Button.SetInteractable(false);
             if (!SaveGameManager.FileSlotExists(slot))
             {
                 textFieldPopUp.onSubmittedText -= FileNameSubmitted;
@@ -150,9 +150,9 @@ namespace LostGrace
                 case 3:  slot3Button.UpdateText(name);
                     SaveGameManager.NewGame(3, name);break;
             }
-            slot1Button.SetInteractable(true);
-            slot2Button.SetInteractable(true);
-            slot3Button.SetInteractable(true);
+            // slot1Button.SetInteractable(true);
+            // slot2Button.SetInteractable(true);
+            // slot3Button.SetInteractable(true);
             Show();
         }
 

@@ -8,7 +8,7 @@ using UnityEngine;
 
 public enum BattleType
 {
-    Normal, Elite, Boss
+    Normal, Elite, Boss, Final
 }
 public class BattleEncounterNode : EncounterNode
 {
@@ -33,6 +33,13 @@ public class BattleEncounterNode : EncounterNode
         {
             BattleMap = GameBPData.Instance.GetRandomMap(BattleType);
         }
+        int cnt = 0;
+        while (party.HasVisitedMap(BattleMap)&& cnt<100)
+        {
+            BattleMap = GameBPData.Instance.GetRandomMap(BattleType);;
+            cnt++;
+        }
+        party.VisitedMaps.Add(BattleMap);
         GameSceneController.Instance.LoadBattleLevel(levelindex, BattleMap); //, this);
     }
 }

@@ -75,6 +75,7 @@ namespace Game.GameResources
         [SerializeField] BattleMap[] battleEncounterMapsArea2;
         [SerializeField] BattleMap[] eliteBattleEncounterMapsArea1;
         [SerializeField] BattleMap[] eliteBattleEncounterMapsArea2;
+        [SerializeField] BattleMap[] allBattleMaps;
    
         
         public BlessingBP[]  GetBlessingPool(int tier)
@@ -123,6 +124,7 @@ namespace Game.GameResources
             statusEffectData.OnValidate();
             allUnits = GetAllInstances<UnitBP>();
             allGods = GetAllInstances<God>();
+            allBattleMaps = GetAllInstances<BattleMap>();
             allBlessings = GetAllInstances<BlessingBP>();
             tier0Blessings = Array.FindAll(allBlessings,a => a.Tier == 0);
             tier1Blessings = Array.FindAll(allBlessings,a => a.Tier == 1);
@@ -428,6 +430,11 @@ namespace Game.GameResources
             }
 
             return null;
+        }
+
+        public BattleMap GetMapById(string id)
+        {
+            return allBattleMaps.First(a => a.name == id);
         }
     }
 }

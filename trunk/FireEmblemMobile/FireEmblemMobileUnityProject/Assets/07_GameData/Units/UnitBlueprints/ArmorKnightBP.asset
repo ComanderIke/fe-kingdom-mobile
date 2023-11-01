@@ -15,40 +15,53 @@ MonoBehaviour:
   equippedWeaponBp: {fileID: 11400000, guid: 27fd3d36673542546a88f62a5ca45b0b, type: 2}
   EquippedRelic1: {fileID: 11400000, guid: 647852495d9c59d4ea6316a815ed33ec, type: 2}
   Name: ArmorKnight
+  isEnemy: 0
+  isBoss: 0
+  isBig2x2: 0
+  revivalStones: 0
   combatItem1:
     stock: 2
     item: {fileID: 11400000, guid: c46079ef11e72164786330c04a1d6b63, type: 2}
   combatItem2:
     stock: 1
     item: {fileID: 11400000, guid: db76b2fbece176940a46e35ffc806a11, type: 2}
+  aiBehaviour: {fileID: 0}
   stats:
     AttackRanges: 01000000
     BaseAttributes:
-      str: 7
-      intel: 6
-      dex: 6
-      agi: 12
-      maxHp: 10
-      lck: 6
-      def: 2
-      faith: 6
+      str: 10
+      dex: 5
+      intel: 3
+      agi: 3
+      lck: 4
+      def: 9
+      faith: 2
+      maxHp: 22
+      sum: 47
     <BaseGrowths>k__BackingField:
-      str: 50
-      intel: 50
-      dex: 50
-      agi: 50
-      maxHp: 50
-      lck: 50
+      str: 55
+      dex: 30
+      intel: 25
+      agi: 20
+      lck: 35
       def: 50
-      faith: 50
-    Mov: 8
+      faith: 15
+      maxHp: 70
+      sum: 300
+    <FixedGrowthOffsets>k__BackingField:
+      str: 45
+      dex: 35
+      intel: 40
+      agi: 35
+      lck: 45
+      def: 60
+      faith: 25
+      maxHp: 40
+      sum: 0
+    Mov: 2
   moveType: {fileID: 11400000, guid: 8ac0c8542b09d2e41b8cd5b26a5ebc20, type: 2}
   SkillManager:
-    startSkills:
-    - {fileID: 11400000, guid: 50270911ef7144c43be3951bea8c29e2, type: 2}
-    - {fileID: 11400000, guid: 91a6b34b255eb4e4ba7aebd80409d22c, type: 2}
-    - {fileID: 11400000, guid: 75eb5648732a9d64194be18be03cf128, type: 2}
-    - {fileID: 11400000, guid: 7d1892e9df06bf543ad8017568952a2a, type: 2}
+    startSkills: []
     startBlessing: {fileID: 0}
     maxSkillCount: 0
     skillPoints: 1
@@ -74,3 +87,8 @@ MonoBehaviour:
     exp: 0
     drainableExp: 100
     expLeftToDrain: 100
+  <ChronikComponent>k__BackingField:
+    <BodySprite>k__BackingField: {fileID: 0}
+    <FaceSprite>k__BackingField: {fileID: 0}
+    <Name>k__BackingField: 
+    <Description>k__BackingField: 

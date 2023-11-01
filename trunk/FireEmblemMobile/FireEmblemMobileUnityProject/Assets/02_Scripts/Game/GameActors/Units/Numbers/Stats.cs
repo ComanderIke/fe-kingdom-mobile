@@ -15,6 +15,7 @@ namespace Game.GameActors.Units.Numbers
         [HideInInspector] [SerializeField] public List<int> AttackRanges;
         [SerializeField] public Attributes BaseAttributes;
         [field:SerializeField] public Attributes BaseGrowths{ get; set; }
+        [field:SerializeField] public Attributes FixedGrowthOffsets{ get; set; }
         public Attributes BonusAttributesFromEquips { get; set; }
         public Attributes BonusAttributesFromWeapon { get; set; }
         public Attributes BonusAttributesFromFood { get; set; }
@@ -35,7 +36,7 @@ namespace Game.GameActors.Units.Numbers
             BaseAttributes = new Attributes();
             BaseGrowths = new Attributes();
             BonusGrowths = new Attributes();
-            
+            FixedGrowthOffsets = new Attributes();
             BonusAttributesFromEffects = new Attributes();
             BonusAttributesFromEquips = new Attributes();
             BonusAttributesFromWeapon = new Attributes();
@@ -78,6 +79,7 @@ namespace Game.GameActors.Units.Numbers
             stats.BaseGrowths = new Attributes(BaseGrowths);
             stats.BaseAttributes = new Attributes(BaseAttributes);
             stats.BonusGrowths = new Attributes(BonusGrowths);
+            stats.FixedGrowthOffsets = new Attributes(FixedGrowthOffsets);
             stats.BonusAttributesFromEffects = new Attributes(BonusAttributesFromEffects);
             stats.BonusAttributesFromWeapon = new Attributes(BonusAttributesFromWeapon);
             stats.BonusAttributesFromEquips = new Attributes(BonusAttributesFromEquips);
@@ -87,6 +89,7 @@ namespace Game.GameActors.Units.Numbers
             stats.BonusStatsFromTerrain = new CombatStats(BonusStatsFromTerrain);
             stats.BonusStatsFromEquips = new CombatStats(BonusStatsFromEquips);
             stats.BonusStatsFromWeapon = new CombatStats(BonusStatsFromWeapon);
+            
 
             return stats;
         }
@@ -218,6 +221,12 @@ namespace Game.GameActors.Units.Numbers
             this.Boon = boon;
             BaseAttributes.IncreaseAttribute(1, this.Boon);
             BaseGrowths.IncreaseAttribute(10, this.Boon);
+        }
+
+        public void OnValidate()
+        {
+            BaseAttributes.sum = BaseAttributes.GetSum(true);
+            BaseGrowths.sum = BaseGrowths.GetSum();
         }
     }
 }

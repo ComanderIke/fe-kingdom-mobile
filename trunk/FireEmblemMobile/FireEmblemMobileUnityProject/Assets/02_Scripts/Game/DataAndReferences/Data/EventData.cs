@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using _02_Scripts.Game.Dialog.DialogSystem;
+using Game.GameActors.Players;
 using Game.GameActors.Units.Skills;
 using LostGrace;
 using UnityEngine;
@@ -12,16 +13,31 @@ namespace Game.GameResources
     [Serializable]
     public class EventData:IEventData
     {
-        [SerializeField] List<LGEventDialogSO> tier0Events;
+        [SerializeField] List<LGEventDialogSO> testEvents;
+        [SerializeField] List<LGEventDialogSO> Area1OnlyEvents;
+        [SerializeField] List<LGEventDialogSO> Area2OnlyEvents;
         [SerializeField] private LGEventDialogSO[] allEvents;
+        [SerializeField] private List<LGEventDialogSO> allEventsExceptAreaOnlyEvents;
         private Random rng = new Random();
         public LGEventDialogSO GetRandomEvent()
         {
             if(rng==null)
                 rng = new Random();
-            if(GameConfig.Instance.ConfigProfile.overWriteEvents)
-                return allEvents[rng.Next(0, allEvents.Length)];
-            return tier0Events[rng.Next(0, tier0Events.Count)];
+            if (GameConfig.Instance.ConfigProfile.overWriteEvents)
+            {
+                var eventPool = new List<LGEventDialogSO>(allEventsExceptAreaOnlyEvents);
+                switch (Player.Instance.Party.AreaIndex)
+                {
+                    case 1: 
+                        eventPool.AddRange(Area1OnlyEvents);
+                        break;
+                    case 2:
+                        eventPool.AddRange(Area2OnlyEvents);break;
+                }
+                return eventPool[rng.Next(0, eventPool.Count)];
+            }
+                
+            return testEvents[rng.Next(0, testEvents.Count)];
            
         }
        
@@ -36,7 +52,10 @@ namespace Game.GameResources
             else
             {
                 allEvents = GameBPData.GetAllInstances<LGEventDialogSO>();
+               
             }
+            allEventsExceptAreaOnlyEvents = allEvents.Except(Area1OnlyEvents).ToList();
+            allEventsExceptAreaOnlyEvents = allEventsExceptAreaOnlyEvents.Except(Area2OnlyEvents).ToList();
         }
         #endif
        

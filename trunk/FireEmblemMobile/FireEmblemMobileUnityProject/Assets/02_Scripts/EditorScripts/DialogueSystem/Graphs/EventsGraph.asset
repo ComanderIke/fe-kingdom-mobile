@@ -79,7 +79,7 @@ MonoBehaviour:
     <Position>k__BackingField: {x: -7680, y: 8}
   - <ID>k__BackingField: 5429885d-7ed3-49d3-a1b7-1c09d2655955
     <Name>k__BackingField: TheWhisperingWoods
-    <Position>k__BackingField: {x: -7905.0005, y: -250}
+    <Position>k__BackingField: {x: -7905, y: -250}
   <Nodes>k__BackingField: []
   <EventNodes>k__BackingField:
   - <ID>k__BackingField: f0365265-1533-4609-86dd-57480bfe2d00
@@ -560,34 +560,6 @@ MonoBehaviour:
     <Headline>k__BackingField: Chased by Skeletons
     <RewardResources>k__BackingField:
     - Amount: 10
-      ResourceType: 3
-    <RewardItems>k__BackingField: []
-    <Events>k__BackingField: []
-  - <ID>k__BackingField: b67d4dee-6c86-4190-a29a-505aab18708e
-    <Name>k__BackingField: WingedCreature3
-    <Text>k__BackingField: 'The creature flies straight towards you at an alarming
-      speed. You barely redirect its claws, targeting your heart, to your shoulder
-      as the creature flies off into the distance. '
-    <IsPortraitLeft>k__BackingField: 1
-    <DialogActor>k__BackingField: {fileID: 0}
-    <Choices>k__BackingField:
-    - <Text>k__BackingField: End
-      <NodeID>k__BackingField: 
-      <NodeFailID>k__BackingField: 
-      <AttributeRequirements>k__BackingField: []
-      <CharacterRequirements>k__BackingField: []
-      <ResourceRequirements>k__BackingField: []
-      <ItemRequirements>k__BackingField: []
-      <BlessingRequirements>k__BackingField: []
-      <RandomRate>k__BackingField: 0
-    <GroupID>k__BackingField: 15e1ea3e-fe26-4c1f-8e6b-baa8cfbb6e24
-    <DialgueType>k__BackingField: 3
-    <Position>k__BackingField: {x: 1452, y: 3706}
-    <Headline>k__BackingField: 
-    <RewardResources>k__BackingField:
-    - Amount: 20
-      ResourceType: 2
-    - Amount: -30
       ResourceType: 3
     <RewardItems>k__BackingField: []
     <Events>k__BackingField: []
@@ -2751,11 +2723,11 @@ MonoBehaviour:
     <Text>k__BackingField: 'Selena is well-known among the spirits of the Whispering
       Woods, as she has been a protector of nature her whole life.
 
-      
 
-      The
-      spirits show great respect for Selena and approach both of you with reverence.
-      They share stories of the forest''s history and its struggles against malevolent
+
+      The spirits
+      show great respect for Selena and approach both of you with reverence. They
+      share stories of the forest''s history and its struggles against malevolent
       forces, highlighting Selena''s tireless dedication to its protection.'
     <IsPortraitLeft>k__BackingField: 1
     <DialogActor>k__BackingField: {fileID: 0}
@@ -2783,7 +2755,7 @@ MonoBehaviour:
     <Text>k__BackingField: 'the spectral figures react with aggression. They surround
       you, their eerie wails intensifying, and they seem to be preparing to attack.
 
-      
+
 
       Their
       hostile response forces you into a precarious situation, and you must now engage
@@ -2830,6 +2802,34 @@ MonoBehaviour:
     <Position>k__BackingField: {x: -7198, y: 863}
     <Headline>k__BackingField: 
     <RewardResources>k__BackingField: []
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
+  - <ID>k__BackingField: b67d4dee-6c86-4190-a29a-505aab18708e
+    <Name>k__BackingField: WingedCreature3
+    <Text>k__BackingField: 'The creature flies straight towards you at an alarming
+      speed. You barely redirect its claws, targeting your heart, to your shoulder
+      as the creature flies off into the distance. '
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: End
+      <NodeID>k__BackingField: 
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+      <RandomRate>k__BackingField: 0
+    <GroupID>k__BackingField: 15e1ea3e-fe26-4c1f-8e6b-baa8cfbb6e24
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 1452, y: 3668}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField:
+    - Amount: 20
+      ResourceType: 2
+    - Amount: -30
+      ResourceType: 5
     <RewardItems>k__BackingField: []
     <Events>k__BackingField: []
   <OldGroupNames>k__BackingField:
@@ -2891,8 +2891,8 @@ MonoBehaviour:
       - WingedCreature1Success
       - WingedCreature4
       - WingedCreature1Fail
-      - WingedCreature3
       - WingedCreature1
+      - WingedCreature3
     - Key: TheMysteriousInstructor
       Value:
       - MysteriousInstructor1
@@ -2978,8 +2978,6 @@ MonoBehaviour:
     - Key: TheWhisperingWoods
       Value:
       - TheWhisperingWoods
-      - TheWhisperingWoods1R
-      - TheWhisperingWoods1R2
       - TheWhisperingWoods1R1
       - TheWhisperingWoods1R2Won
       - TheWhisperingWoods1R1a
@@ -2987,6 +2985,8 @@ MonoBehaviour:
       - TheWhisperingWoods1R1b
       - TheWhisperingWoods2R
       - TheWhisperingWoods2
+      - TheWhisperingWoods1R2
+      - TheWhisperingWoods1R
   <FightNodes>k__BackingField:
   - <ID>k__BackingField: 36c0ee15-7245-41c5-a77c-30ff36dd6224
     <Name>k__BackingField: KnightHarem4
@@ -3053,7 +3053,7 @@ MonoBehaviour:
     <RewardResources>k__BackingField: []
     <RewardItems>k__BackingField: []
     <Events>k__BackingField: []
-    <EnemyArmy>k__BackingField: {fileID: 0}
+    <BattleMap>k__BackingField: {fileID: 0}
   - <ID>k__BackingField: cb7f778e-e291-4bbc-b207-6b1779cafe26
     <Name>k__BackingField: ChasedBySkeletons2
     <Text>k__BackingField: DialogueText
@@ -3085,7 +3085,7 @@ MonoBehaviour:
     <RewardResources>k__BackingField: []
     <RewardItems>k__BackingField: []
     <Events>k__BackingField: []
-    <EnemyArmy>k__BackingField: {fileID: 0}
+    <BattleMap>k__BackingField: {fileID: 0}
   - <ID>k__BackingField: 9326cb6d-9bd7-4483-8e50-f1f726aa0716
     <Name>k__BackingField: TheWhisperingWoods1R2
     <Text>k__BackingField: 
@@ -3117,7 +3117,7 @@ MonoBehaviour:
     <RewardResources>k__BackingField: []
     <RewardItems>k__BackingField: []
     <Events>k__BackingField: []
-    <EnemyArmy>k__BackingField: {fileID: 0}
+    <BattleMap>k__BackingField: {fileID: 0}
   <RandomNodes>k__BackingField:
   - <ID>k__BackingField: f86098f4-266b-4b1f-93d1-137730ee75ec
     <Name>k__BackingField: TheEnchantedGarden1R

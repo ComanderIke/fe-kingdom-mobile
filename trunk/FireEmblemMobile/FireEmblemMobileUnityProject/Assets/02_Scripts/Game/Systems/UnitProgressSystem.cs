@@ -12,6 +12,7 @@ using Game.Manager;
 using Game.States;
 using Game.WorldMapStuff.Model;
 using GameEngine;
+using LostGrace;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.PlayerLoop;
@@ -150,7 +151,31 @@ namespace Game.Mechanics
         {
 
             currentLevelupUnit = unit;
-            currentStatIncreases = CalculateStatIncreases(unit.Stats.CombinedGrowths().AsArray());
+            if (GameConfig.Instance.ConfigProfile.fixedGrowths)
+            {
+                
+                var growths=unit.Stats.CombinedGrowths().AsArray();
+                int[] increaseAmount = new int[growths.Length];
+                unit.Stats.FixedGrowthOffsets.Update(growths);
+                unit.Stats.FixedGrowthOffsets.IncreaseAttribute(unit.Stats.CombinedGrowths().MaxHp, AttributeType.CON); // Do it again but for HP only
+              
+                var fixedGrowthsOffsets=  unit.Stats.FixedGrowthOffsets.AsArray();
+                for (int i = 0; i < fixedGrowthsOffsets.Length; i++)
+                {
+                    while (fixedGrowthsOffsets[i] >= 100)
+                    {
+                        increaseAmount[i] += 1;
+                        fixedGrowthsOffsets[i] -= 100;
+                        unit.Stats.FixedGrowthOffsets.IncreaseAttribute(-100, (AttributeType)i);
+                    }
+                }
+
+                currentStatIncreases = increaseAmount;
+            }
+            else
+            {
+                currentStatIncreases = CalculateStatIncreases(unit.Stats.CombinedGrowths().AsArray());
+            }
 
             if (levelUpRenderer != null)
             {
@@ -267,7 +292,12 @@ namespace Game.Mechanics
             {
                 for (int i = 0; i < growths.Length; i++)
                 {
+                   
                     increaseAmount[i] = Method(growths[i]);
+                    if (i == Attributes.MaxHPIndex)
+                    {
+                        increaseAmount[i]+=Method(growths[i]);
+                    }
                     if (increaseAmount[i] > 0)
                         atleast1 = true;
                     //Debug.Log("IncreaseAmount: " +increaseAmount[i]);
@@ -292,6 +322,7 @@ namespace Game.Mechanics
 
             return 0;
         }
+        
 
 
         public bool IsFinished()

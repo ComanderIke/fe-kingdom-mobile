@@ -63,6 +63,7 @@ public class UIEquipmentController:MonoBehaviour
         selectedSlotCombatItemSlot = combatItemSlot1;
        // selectedSlotNumber = 1;
        combatItemSlot1.Select();
+       if(convoy!=null)
         convoy.Show(typeof(IEquipableCombatItem), UIConvoyController.ConvoyContext.SelectCombatItem);
         // }
     }

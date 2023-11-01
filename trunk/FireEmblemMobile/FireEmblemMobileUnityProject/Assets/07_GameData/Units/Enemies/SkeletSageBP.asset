@@ -29,23 +29,35 @@ MonoBehaviour:
   stats:
     AttackRanges: 0100000002000000
     BaseAttributes:
-      str: 3
-      intel: 3
-      dex: 3
-      agi: 3
-      maxHp: 10
-      lck: 3
-      def: 3
-      faith: 3
+      str: 1
+      dex: 4
+      intel: 7
+      agi: 5
+      lck: 0
+      def: 1
+      faith: 2
+      maxHp: 13
+      sum: 26
     <BaseGrowths>k__BackingField:
+      str: 5
+      dex: 30
+      intel: 35
+      agi: 30
+      lck: 0
+      def: 10
+      faith: 25
+      maxHp: 25
+      sum: 160
+    <FixedGrowthOffsets>k__BackingField:
       str: 0
-      intel: 0
       dex: 0
+      intel: 0
       agi: 0
-      maxHp: 0
       lck: 0
       def: 0
       faith: 0
+      maxHp: 0
+      sum: 0
     Mov: 2
   moveType: {fileID: 11400000, guid: bff40a3de87900a4496abf2b9dfca7a2, type: 2}
   SkillManager:

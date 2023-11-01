@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Game.GameActors.Items.Weapons;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace LostGrace
 {
@@ -11,6 +12,8 @@ namespace LostGrace
         public TextMeshProUGUI dmg;
         public TextMeshProUGUI hit;
         public TextMeshProUGUI crit;
+
+        public Image icon;
         // Start is called before the first frame update
         void Start()
         {
@@ -29,6 +32,7 @@ namespace LostGrace
             dmg.text = ""+weapon.GetDamage();
             hit.text = ""+weapon.GetHit()+" %";
             crit.text = ""+weapon.GetCrit()+" %";
+            icon.sprite = weapon.Sprite;
         }
     }
 }

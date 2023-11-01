@@ -51,6 +51,7 @@ namespace Game.WorldMapStuff.Model
         [field:NonSerialized] public List<Unit> deadMembers;
 
         public List<LGEventDialogSO> VisitedEvents;
+        public List<BattleMap> VisitedMaps;
         public static Action<Party> PartyDied;
         [SerializeField] int maxSize = 4;
         [SerializeField] private int money = default;
@@ -128,6 +129,7 @@ namespace Game.WorldMapStuff.Model
             money = 1000;
             Morality = new Morality();
             VisitedEvents = new List<LGEventDialogSO>();
+            VisitedMaps = new List<BattleMap>();
 
         }
 
@@ -316,6 +318,11 @@ namespace Game.WorldMapStuff.Model
             {
                 VisitedEvents.Add(GameBPData.Instance.GetEventData().GetEventById(id));
             }
+            VisitedMaps = new List<BattleMap>();
+            foreach (var id in playerDataPartyData.visitedEvents)
+            {
+                VisitedMaps.Add(GameBPData.Instance.GetMapById(id));
+            }
             ActiveUnitIndex = activeUnitIndex;
             EncounterComponent = new EncounterPosition
             {
@@ -470,6 +477,11 @@ namespace Game.WorldMapStuff.Model
         public bool HasVisitedEvent(LGEventDialogSO randomEvent)
         {
             return VisitedEvents.Contains(randomEvent);
+        }
+
+        public bool HasVisitedMap(BattleMap battleMap)
+        {
+            return VisitedMaps.Contains(battleMap);
         }
     }
 }

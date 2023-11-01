@@ -85,6 +85,8 @@ namespace LostGrace
             TweenUtility.FadeIn(charButtonsCanvasGroup);
             TweenUtility.FadeIn(partySizeCanvasGroup);
             characterSelector.Show(GameConfig.Instance.GetUnits());
+            characterSelector.OnUnitSelected-=UnitSelected;
+            characterSelector.OnUnitSelected+=UnitSelected;
             
             characterCircles.Show(Player.Instance.Party);
             yield return new WaitForSeconds(.2f);
@@ -94,6 +96,11 @@ namespace LostGrace
             if (GameConfig.Instance.ConfigProfile.tutorialEnabled)
                 yield return TutorialCoroutine();
 
+        }
+
+        void UnitSelected(Unit unit)
+        {
+            characterViewController.Show(unit);
         }
 
         IEnumerator TutorialCoroutine()
@@ -114,7 +121,7 @@ namespace LostGrace
             TweenUtility.FadeOut(speechBubbleCanvasGroup);
             goddessUI.Hide();
             //yield return new WaitForSeconds(0.5f);
-            
+            characterSelector.OnUnitSelected-=UnitSelected;
             TweenUtility.FadeOut(partySizeCanvasGroup);
             TweenUtility.FadeOut(charCirclesCanvasGroup);
             TweenUtility.FadeOut(charViewCanvasGroup);

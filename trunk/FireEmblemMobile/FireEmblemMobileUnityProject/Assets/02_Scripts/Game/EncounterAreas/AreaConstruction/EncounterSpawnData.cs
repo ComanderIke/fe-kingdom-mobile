@@ -14,6 +14,7 @@ public class EncounterSpawnData
     public float chanceToConnectToOtherNode = 0.5f;
     public int columnMaxEncounter = 3;
     public List<ColumnSpawn> ColumnSpawns;
+    public List<ColumnSpawn> Area2ColumnSpawns;
     public EncounterNodeData startNodeData;
     public EncounterNodeData FirstEncounter;
     public List<EncounterNodeData> allNodeDatas;

@@ -10,10 +10,11 @@ namespace Game.GameActors.Items.Weapons
     {
         public int strength;
         public GameObject healEffect;
+        public bool percentage;
 
         public override Item Create()
         {
-            return new HealthPotion(name, description, cost, rarity, maxStack,sprite, target, strength, healEffect);
+            return new HealthPotion(name, description, cost, rarity, maxStack,sprite, target, strength, healEffect, percentage);
 
         }
     }
