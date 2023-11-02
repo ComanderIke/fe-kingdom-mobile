@@ -25,7 +25,7 @@ namespace LostGrace
         public override List<EffectDescription> GetEffectDescription(Unit unit, int level)
         {
             return new List<EffectDescription>()
-                { new EffectDescription("Canto", ""+cantoAmount[level],  ""+cantoAmount[level+1]) };
+                { new EffectDescription("Amount", ""+cantoAmount[level],  ""+cantoAmount[level+1]) };
         }
 
     }

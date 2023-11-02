@@ -254,8 +254,9 @@ namespace Game.GameInput
                 }
                 Debug.Log("Clicked on Grid: "+x+" "+y+" "+selectionDataProvider.SelectedActor );
                 if (gridSystem.GridLogic.IsFieldFreeAndActive(x, y) && selectionDataProvider.SelectedActor != null &&
-                    (!selectionDataProvider.SelectedActor.TurnStateManager.HasMoved||selectionDataProvider.SelectedActor.GridComponent.Canto>0&& !selectionDataProvider.SelectedActor.TurnStateManager.HasCantoed))
+                    (!selectionDataProvider.SelectedActor.TurnStateManager.HasMoved||(selectionDataProvider.SelectedActor.GridComponent.Canto>0&& !selectionDataProvider.SelectedActor.TurnStateManager.HasCantoed)))
                 {
+                    
                     if (selectionDataProvider.IsSelectedTile(x, y))
                     {
                         gameplayCommands.MoveUnit(selectionDataProvider.SelectedActor, new GridPosition(x, y),

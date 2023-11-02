@@ -98,8 +98,15 @@ namespace Game.Mechanics
 
         private void SetUpMusic()
         {
-            startMusic = AudioSystem.Instance.GetCurrentlyPlayedMusicTracks()[0];
-            AudioSystem.Instance.ChangeMusic("BattleTheme", startMusic);
+            if (AudioSystem.Instance.GetCurrentlyPlayedMusicTracks().Count != 0)
+            {
+                startMusic = AudioSystem.Instance.GetCurrentlyPlayedMusicTracks()[0];
+                AudioSystem.Instance.ChangeMusic("BattleTheme", startMusic);
+            }
+            else
+            {
+                AudioSystem.Instance.PlayMusic("BattleTheme");
+            }
         }
 
         public static event Action<IBattleActor, IAttackableTarget> OnStartBattle;

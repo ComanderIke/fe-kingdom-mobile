@@ -134,7 +134,10 @@ namespace Game.AI
         {
             
             FocusCameraMixin.OnArrived -= CameraOnUnit;
-            cameraSystem.GetMixin<FocusCameraMixin>().SetTargets(unitAction.Target.GameTransformManager.GameObject, cameraTargetTime, true);
+            var cameraTarget = unitAction.Target != null
+                ? unitAction.Target.GameTransformManager.GameObject
+                : unitAction.Performer.GameTransformManager.GameObject;
+            cameraSystem.GetMixin<FocusCameraMixin>().SetTargets(cameraTarget, cameraTargetTime, true);
             gridSystem.cursor.SetCurrentTile(gridSystem.GetTileFromVector2(unitAction.Location));
             unitActionSystem.ExecuteActions();
             

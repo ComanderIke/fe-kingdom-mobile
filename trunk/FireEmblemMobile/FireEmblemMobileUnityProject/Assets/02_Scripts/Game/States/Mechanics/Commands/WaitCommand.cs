@@ -22,11 +22,11 @@ namespace Game.Mechanics.Commands
             if (unit != null && !unit.TurnStateManager.IsWaiting)
             {
                 GridGameManager.Instance.GetSystem<Map.GridSystem>().HideMoveRange();
-                if(unit.GridComponent.Canto<=0|| !unit.TurnStateManager.HasAttacked)
+                if(unit.GridComponent.Canto<=0|| unit.TurnStateManager.HasCantoed|| !unit.TurnStateManager.HasAttacked)
                     unit.TurnStateManager.Wait();
                 else
                 {
-                    GridGameManager.Instance.GetSystem<GridSystem>().ShowMovementRangeOnGrid(unit, true);
+                    GridGameManager.Instance.GetSystem<GridSystem>().ShowMovementRangeOnGrid(unit, unit.GridComponent.Canto>0&& !unit.TurnStateManager.HasCantoed);
                 }
             }
            // unitSelectionManager.DeselectActiveCharacter();

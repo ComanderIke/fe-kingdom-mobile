@@ -23,8 +23,10 @@ namespace LostGrace
         private List<Unit> selectableUnits;
         private List<SelectableCharacterUI> selectableCharacterUis;
         private List<Unit> unlockedUnits;
+        public static SelectableCharacterUI lastSelected;
         public void Show(List<Unit> selectableUnits)
         {
+            lastSelected = null;
             this.selectableUnits = selectableUnits;
             int cnt = 0;
             selectableCharacterUis = new List<SelectableCharacterUI>();
@@ -162,7 +164,7 @@ namespace LostGrace
                 addRemoveButton.ShowAdd();
             }
         }
-        private SelectableCharacterUI lastSelected;
+     
         [SerializeField] private UIAddRemoveButton addRemoveButton;
         public void UnitClicked(SelectableCharacterUI unit)
         {

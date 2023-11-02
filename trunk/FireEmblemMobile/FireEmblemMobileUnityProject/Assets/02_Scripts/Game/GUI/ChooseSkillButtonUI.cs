@@ -144,6 +144,17 @@ namespace LostGrace
             name.text = skill.Name;
             description.text = skill.Description;
             bool isActiveMixin = skill.IsActive();
+            Unit unit = null;
+            if (Player.Instance.Party.members.Count != 0)
+            {
+                unit = Player.Instance.Party.ActiveUnit;
+            }
+            else
+            {
+                unit=CharacterSelector.lastSelected.unit;
+            }
+            
+               
 
             if (!isActiveMixin)
             {
@@ -169,7 +180,7 @@ namespace LostGrace
                     castline.GetComponent<UISkillEffectLine>().SetValues("Castrange: ",""+(castUpgrade?upgcastRange:castRange),castUpgrade);
                     // line = GameObject.Instantiate(linePrefab, lineContainer);
                     // line.GetComponent<UISkillEffectLine>().SetValues("Damage: ",""+damage,""+upgDamage);
-                    var effectDescriptions = ptsm.GetEffectDescription(Player.Instance.Party.ActiveUnit,skill.Level);
+                    var effectDescriptions = ptsm.GetEffectDescription(unit,skill.Level);
                     foreach (var effectDescription in effectDescriptions)
                     {
                         var line = GameObject.Instantiate(linePrefab, lineContainer);
@@ -187,7 +198,7 @@ namespace LostGrace
                     var castLine = GameObject.Instantiate(linePrefab, lineContainer);
                     castLine.GetComponent<UISkillEffectLine>().SetValues("Castrange: ",""+castRange,upgcastRange!=castRange);
                     
-                    var effectDescriptions = stsm.GetEffectDescription(Player.Instance.Party.ActiveUnit,skill.Level);
+                    var effectDescriptions = stsm.GetEffectDescription(unit,skill.Level);
                     foreach (var effectDescription in effectDescriptions)
                     {
                         var line = GameObject.Instantiate(linePrefab, lineContainer);
@@ -199,7 +210,7 @@ namespace LostGrace
                 {
                     areaTypePreview.Hide();
 
-                    var effectDescriptions = sts.GetEffectDescription(Player.Instance.Party.ActiveUnit,skill.Level);
+                    var effectDescriptions = sts.GetEffectDescription(unit,skill.Level);
                     foreach (var effectDescription in effectDescriptions)
                     {
                         var line = GameObject.Instantiate(linePrefab, lineContainer);
@@ -213,7 +224,7 @@ namespace LostGrace
 
             if (skill.CombatSkillMixin != null)
             {
-                var effectDescriptions = skill.CombatSkillMixin.GetEffectDescription(Player.Instance.Party.ActiveUnit,skill.Level);
+                var effectDescriptions = skill.CombatSkillMixin.GetEffectDescription(unit,skill.Level);
                 foreach (var effectDescription in effectDescriptions)
                 {
                     if(effectDescription==null)
@@ -225,7 +236,7 @@ namespace LostGrace
             }
             foreach (var passive in skill.passiveMixins)
             {
-                var effectDescriptions = passive.GetEffectDescription(Player.Instance.Party.ActiveUnit,skill.Level);
+                var effectDescriptions = passive.GetEffectDescription(unit,skill.Level);
                 foreach (var effectDescription in effectDescriptions)
                 {
                     var line = GameObject.Instantiate(linePrefab, lineContainer);

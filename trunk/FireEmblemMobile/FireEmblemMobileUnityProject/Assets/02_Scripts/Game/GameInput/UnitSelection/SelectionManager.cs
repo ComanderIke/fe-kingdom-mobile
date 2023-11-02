@@ -54,7 +54,11 @@ namespace Game.GameInput
 
         public void SetUndoAbleActor(IGridActor selectedActor)
         {
+            if (SelectedActor.TurnStateManager.HasCantoed || SelectedActor.TurnStateManager.HasAttacked)
+                return;
+                
             undoAbleActor = selectedActor;
+           
             selectionUI.ShowUndo();
         }
         public IGridActor GetUndoAbleActor()
