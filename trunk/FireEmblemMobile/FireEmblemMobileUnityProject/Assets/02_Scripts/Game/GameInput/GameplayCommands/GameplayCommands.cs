@@ -64,7 +64,7 @@ namespace Game.GameInput
         }
         public void Wait(IGridActor u)
         {
-            Debug.Log("GameInput: Wait Unit: " + u);
+            Debug.Log("GameInput: Wait Unit: " + u+" "+u.GridComponent.GridPosition.AsVector());
             OnWait?.Invoke(u);
         }
         public void SelectItem(Item item)

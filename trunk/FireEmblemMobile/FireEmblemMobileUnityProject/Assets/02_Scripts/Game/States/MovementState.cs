@@ -38,7 +38,7 @@ namespace Game.Mechanics
         public void StartMovement(IGridActor c,  int x, int y, bool skipAnimation=false,List<GridPosition> path = null )
         {
             this.skipAnimation = skipAnimation;
-            //Debug.Log("Move to: "+x+" "+y+" "+c);
+            Debug.Log("Move to: "+x+" "+y+" from "+c);
             mousePath = path;
             this.x = x;
             this.y = y;
@@ -133,9 +133,10 @@ namespace Game.Mechanics
         public override void Exit()
         {
          //   Debug.Log("Exit MoveState!"+x+" "+y);
-           
-          
+
+            var originTile = unit.GridComponent.OriginTile;
             gridGameManager.GetSystem<GridSystem>().SetUnitPosition(unit,x,y);
+            gridGameManager.GetSystem<GridSystem>().DeleteObjectAtTile(originTile);
             //unit.TurnStateManager.IsSelected = false;
             
             OnMovementFinished?.Invoke(unit);

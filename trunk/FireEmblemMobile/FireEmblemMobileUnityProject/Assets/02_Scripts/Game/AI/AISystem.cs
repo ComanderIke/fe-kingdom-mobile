@@ -24,6 +24,7 @@ namespace Game.AI
         private GridSystem gridSystem;
         public AIRenderer AiRenderer;
 
+        private float cameraPerformerTime = 0.45f;
         private float cameraTargetTime = 0.35f;
 
         public Faction PlayerFaction
@@ -120,7 +121,7 @@ namespace Game.AI
             UnitActionSystem.OnAllCommandsFinished += UnitActionsFinished;
             Debug.Log("Focus Camera on: "+action.Performer.GameTransformManager.GameObject.transform.position);
             unitAction = action;
-            cameraSystem.GetMixin<FocusCameraMixin>().SetTargets(unitAction.Performer.GameTransformManager.GameObject, cameraTargetTime);
+            cameraSystem.GetMixin<FocusCameraMixin>().SetTargets(unitAction.Performer.GameTransformManager.GameObject, cameraPerformerTime);
             gridSystem.cursor.SetCurrentTile(action.Performer.GridComponent.Tile);
             FocusCameraMixin.OnArrived += CameraOnUnit;
             

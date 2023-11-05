@@ -26,7 +26,20 @@ namespace Game.GameActors.Units
             base.ResetPosition();
             if(gridActor.IsAlive())
                 gridActor.GameTransformManager.SetPosition(GridPosition.X, GridPosition.Y);
+            Debug.Log("RESET MOVEDTILECOUNT");
             MovedTileCount = 0;
+            AnyUnitChangedPosition?.Invoke(gridActor);
+            AnyUnitChangedPositionAfter?.Invoke(gridActor);
+            
+        }
+        public void ResetPosition(bool updateMovedTiles)
+        {
+            base.ResetPosition();
+            if(gridActor.IsAlive())
+                gridActor.GameTransformManager.SetPosition(GridPosition.X, GridPosition.Y);
+            Debug.Log("RESET MOVEDTILECOUNT");
+            if(updateMovedTiles)
+                MovedTileCount = 0;
             AnyUnitChangedPosition?.Invoke(gridActor);
             AnyUnitChangedPositionAfter?.Invoke(gridActor);
             
@@ -34,8 +47,13 @@ namespace Game.GameActors.Units
         public override void SetPosition( Tile tile, bool moveTransform=true)
         {
             //previousTile = Tile
-            if(OriginTile!=null)
+            
+            if (OriginTile != null)
+            {
                 MovedTileCount = DeltaPos(tile.X, tile.Y, OriginTile.X, OriginTile.Y);
+                
+            }
+
             base.SetPosition(tile);
             if(moveTransform)
                 gridActor.GameTransformManager.SetPosition(tile.X,tile.Y);
@@ -45,8 +63,12 @@ namespace Game.GameActors.Units
         }
         public override void SetInternPosition(Tile tile)
         {
-            if(OriginTile!=null)
+            if (OriginTile != null)
+            {
                 MovedTileCount = DeltaPos(tile.X, tile.Y, OriginTile.X, OriginTile.Y);
+                Debug.Log("MOVEDTILEOCUNT: "+MovedTileCount);
+            }
+
             base.SetInternPosition(tile);
             
             AnyUnitChangedPosition?.Invoke(gridActor);

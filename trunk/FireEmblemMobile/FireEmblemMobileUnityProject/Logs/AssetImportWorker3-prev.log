@@ -15,7 +15,7 @@ D:/Projects/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProjec
 -logFile
 Logs/AssetImportWorker3.log
 -srvPort
-61457
+50655
 Successfully changed project path to: D:/Projects/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject
 D:/Projects/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -47,12 +47,12 @@ D:/Projects/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProjec
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [26016] Host "[IP] 192.168.0.11 [Port] 0 [Flags] 2 [Guid] 1707115681 [EditorId] 1707115681 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-N1UFFTN) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+Player connection [33460] Host "[IP] 192.168.0.11 [Port] 0 [Flags] 2 [Guid] 765165559 [EditorId] 765165559 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-N1UFFTN) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
 
-Player connection [26016] Host "[IP] 192.168.0.11 [Port] 0 [Flags] 2 [Guid] 1707115681 [EditorId] 1707115681 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-N1UFFTN) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [33460] Host "[IP] 192.168.0.11 [Port] 0 [Flags] 2 [Guid] 765165559 [EditorId] 765165559 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-N1UFFTN) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
 
 [Physics::Module] Initialized MultithreadedJobDispatcher with {0} workers.
-Refreshing native plugins compatible for Editor in 114.51 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 101.85 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2021.3.31f1 (3409e2af086f)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2021.3.31f1/Editor/Data/Resources/UnitySubsystems
@@ -65,375 +65,109 @@ Direct3D:
     VRAM:     8031 MB
     Driver:   31.0.15.3699
 Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
 Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2021.3.31f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2021.3.31f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2021.3.31f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56540
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56344
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.3.31f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.3.31f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.3.31f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.005962 seconds.
+Registered in 0.229991 seconds.
 Native extension for WindowsStandalone target not found
 [usbmuxd] Start listen thread
 [usbmuxd] Listen thread started
 Native extension for iOS target not found
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 192 ms
-Refreshing native plugins compatible for Editor in 92.91 ms, found 3 plugins.
+Android Extension - Scanning For ADB Devices 297 ms
+Refreshing native plugins compatible for Editor in 103.42 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.845 seconds
+- Completed reload, in  5.082 seconds
 Domain Reload Profiling:
-	ReloadAssembly (845ms)
-		BeginReloadAssembly (96ms)
+	ReloadAssembly (5083ms)
+		BeginReloadAssembly (3018ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (1ms)
-		EndReloadAssembly (657ms)
-			LoadAssemblies (97ms)
-			RebuildTransferFunctionScriptingTraits (1ms)
-			SetupTypeCache (104ms)
+		EndReloadAssembly (1578ms)
+			LoadAssemblies (3020ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (820ms)
 			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (25ms)
-			SetupLoadedEditorAssemblies (485ms)
+			RebuildScriptCaches (21ms)
+			SetupLoadedEditorAssemblies (701ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (286ms)
+				InitializePlatformSupportModulesInManaged (493ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (93ms)
+				RefreshPlugins (103ms)
 				BeforeProcessingInitializeOnLoad (1ms)
-				ProcessInitializeOnLoadAttributes (70ms)
-				ProcessInitializeOnLoadMethodAttributes (35ms)
+				ProcessInitializeOnLoadAttributes (67ms)
+				ProcessInitializeOnLoadMethodAttributes (36ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.004241 seconds.
+Registered in 0.003778 seconds.
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory is not a mono symbol file
 Native extension for WindowsStandalone target not found
 Native extension for iOS target not found
 Native extension for Android target not found
-Refreshing native plugins compatible for Editor in 96.39 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 109.97 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Package Manager log level set to [2]
 [Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
 [Package Manager] Cannot connect to Unity Package Manager local server
 Mono: successfully reloaded assembly
-- Completed reload, in  1.733 seconds
+- Completed reload, in  8.694 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1733ms)
-		BeginReloadAssembly (97ms)
+	ReloadAssembly (8694ms)
+		BeginReloadAssembly (98ms)
 			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (6ms)
+			DisableScriptedObjects (5ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (15ms)
-		EndReloadAssembly (1559ms)
-			LoadAssemblies (99ms)
+			CreateAndSetChildDomain (18ms)
+		EndReloadAssembly (8458ms)
+			LoadAssemblies (5884ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (352ms)
+			SetupTypeCache (655ms)
 			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (91ms)
-			SetupLoadedEditorAssemblies (977ms)
+			RebuildScriptCaches (93ms)
+			SetupLoadedEditorAssemblies (1798ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (23ms)
+				InitializePlatformSupportModulesInManaged (27ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (96ms)
-				BeforeProcessingInitializeOnLoad (101ms)
-				ProcessInitializeOnLoadAttributes (612ms)
-				ProcessInitializeOnLoadMethodAttributes (139ms)
+				RefreshPlugins (110ms)
+				BeforeProcessingInitializeOnLoad (102ms)
+				ProcessInitializeOnLoadAttributes (667ms)
+				ProcessInitializeOnLoadMethodAttributes (886ms)
 				AfterProcessingInitializeOnLoad (5ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (5ms)
+			AwakeInstancesAfterBackupRestoration (4ms)
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
 Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.03 seconds
-Refreshing native plugins compatible for Editor in 1.92 ms, found 3 plugins.
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.06 seconds
+Refreshing native plugins compatible for Editor in 1.55 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 6552 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 96 unused Assets / (2.0 MB). Loaded Objects now: 7072.
-Memory consumption went from 362.8 MB to 360.7 MB.
-Total: 6.957200 ms (FindLiveObjects: 0.449000 ms CreateObjectMapping: 0.346700 ms MarkObjects: 5.680000 ms  DeleteObjects: 0.480500 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.003842 seconds.
-Begin MonoManager ReloadAssembly
-Symbol file LoadedFromMemory is not a mono symbol file
-Native extension for WindowsStandalone target not found
-Native extension for iOS target not found
-Native extension for Android target not found
-Refreshing native plugins compatible for Editor in 1.89 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
-[Package Manager] Cannot connect to Unity Package Manager local server
-Mono: successfully reloaded assembly
-- Completed reload, in  1.653 seconds
-Domain Reload Profiling:
-	ReloadAssembly (1654ms)
-		BeginReloadAssembly (143ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (5ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (42ms)
-		EndReloadAssembly (1438ms)
-			LoadAssemblies (99ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (268ms)
-			ReleaseScriptCaches (3ms)
-			RebuildScriptCaches (110ms)
-			SetupLoadedEditorAssemblies (908ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (22ms)
-				SetLoadedEditorAssemblies (1ms)
-				RefreshPlugins (2ms)
-				BeforeProcessingInitializeOnLoad (104ms)
-				ProcessInitializeOnLoadAttributes (626ms)
-				ProcessInitializeOnLoadMethodAttributes (148ms)
-				AfterProcessingInitializeOnLoad (5ms)
-				EditorAssembliesLoaded (0ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (11ms)
-Platform modules already initialized, skipping
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Refreshing native plugins compatible for Editor in 2.13 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 6334 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 87 unused Assets / (2.0 MB). Loaded Objects now: 7076.
-Memory consumption went from 343.4 MB to 341.4 MB.
-Total: 7.820800 ms (FindLiveObjects: 0.429400 ms CreateObjectMapping: 0.403300 ms MarkObjects: 6.293000 ms  DeleteObjects: 0.693900 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.003608 seconds.
-Begin MonoManager ReloadAssembly
-Symbol file LoadedFromMemory is not a mono symbol file
-Native extension for WindowsStandalone target not found
-Native extension for iOS target not found
-Native extension for Android target not found
-Refreshing native plugins compatible for Editor in 1.78 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
-[Package Manager] Cannot connect to Unity Package Manager local server
-Mono: successfully reloaded assembly
-- Completed reload, in  1.599 seconds
-Domain Reload Profiling:
-	ReloadAssembly (1600ms)
-		BeginReloadAssembly (135ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (5ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (46ms)
-		EndReloadAssembly (1400ms)
-			LoadAssemblies (82ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (284ms)
-			ReleaseScriptCaches (4ms)
-			RebuildScriptCaches (94ms)
-			SetupLoadedEditorAssemblies (887ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (25ms)
-				SetLoadedEditorAssemblies (1ms)
-				RefreshPlugins (2ms)
-				BeforeProcessingInitializeOnLoad (106ms)
-				ProcessInitializeOnLoadAttributes (611ms)
-				ProcessInitializeOnLoadMethodAttributes (135ms)
-				AfterProcessingInitializeOnLoad (6ms)
-				EditorAssembliesLoaded (0ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (12ms)
-Platform modules already initialized, skipping
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Refreshing native plugins compatible for Editor in 1.73 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 6333 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 87 unused Assets / (2.0 MB). Loaded Objects now: 7079.
-Memory consumption went from 343.4 MB to 341.3 MB.
-Total: 6.902200 ms (FindLiveObjects: 0.645200 ms CreateObjectMapping: 0.224500 ms MarkObjects: 5.548300 ms  DeleteObjects: 0.483400 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Prepare
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Refreshing native plugins compatible for Editor in 8.66 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 73 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 73 unused Assets / (2.0 MB). Loaded Objects now: 7079.
-Memory consumption went from 216.3 MB to 214.2 MB.
-Total: 6.452300 ms (FindLiveObjects: 0.435700 ms CreateObjectMapping: 0.181300 ms MarkObjects: 5.269800 ms  DeleteObjects: 0.564800 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.003724 seconds.
-Begin MonoManager ReloadAssembly
-Symbol file LoadedFromMemory is not a mono symbol file
-Native extension for WindowsStandalone target not found
-Native extension for iOS target not found
-Native extension for Android target not found
-Refreshing native plugins compatible for Editor in 1.70 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
-[Package Manager] Cannot connect to Unity Package Manager local server
-Mono: successfully reloaded assembly
-- Completed reload, in  1.680 seconds
-Domain Reload Profiling:
-	ReloadAssembly (1681ms)
-		BeginReloadAssembly (168ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (7ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (67ms)
-		EndReloadAssembly (1436ms)
-			LoadAssemblies (91ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (287ms)
-			ReleaseScriptCaches (4ms)
-			RebuildScriptCaches (95ms)
-			SetupLoadedEditorAssemblies (916ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (25ms)
-				SetLoadedEditorAssemblies (1ms)
-				RefreshPlugins (2ms)
-				BeforeProcessingInitializeOnLoad (120ms)
-				ProcessInitializeOnLoadAttributes (627ms)
-				ProcessInitializeOnLoadMethodAttributes (136ms)
-				AfterProcessingInitializeOnLoad (5ms)
-				EditorAssembliesLoaded (1ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (11ms)
-Platform modules already initialized, skipping
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Refreshing native plugins compatible for Editor in 2.08 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 6333 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 87 unused Assets / (2.0 MB). Loaded Objects now: 7082.
-Memory consumption went from 343.4 MB to 341.3 MB.
-Total: 7.498000 ms (FindLiveObjects: 0.414100 ms CreateObjectMapping: 0.188900 ms MarkObjects: 6.253900 ms  DeleteObjects: 0.640200 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.003814 seconds.
-Begin MonoManager ReloadAssembly
-Symbol file LoadedFromMemory is not a mono symbol file
-Native extension for WindowsStandalone target not found
-Native extension for iOS target not found
-Native extension for Android target not found
-Refreshing native plugins compatible for Editor in 2.71 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
-[Package Manager] Cannot connect to Unity Package Manager local server
-Mono: successfully reloaded assembly
-- Completed reload, in  1.586 seconds
-Domain Reload Profiling:
-	ReloadAssembly (1587ms)
-		BeginReloadAssembly (132ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (5ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (43ms)
-		EndReloadAssembly (1383ms)
-			LoadAssemblies (80ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (278ms)
-			ReleaseScriptCaches (3ms)
-			RebuildScriptCaches (92ms)
-			SetupLoadedEditorAssemblies (879ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (23ms)
-				SetLoadedEditorAssemblies (1ms)
-				RefreshPlugins (3ms)
-				BeforeProcessingInitializeOnLoad (116ms)
-				ProcessInitializeOnLoadAttributes (599ms)
-				ProcessInitializeOnLoadMethodAttributes (132ms)
-				AfterProcessingInitializeOnLoad (5ms)
-				EditorAssembliesLoaded (0ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (11ms)
-Platform modules already initialized, skipping
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Refreshing native plugins compatible for Editor in 1.68 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 6333 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 87 unused Assets / (2.0 MB). Loaded Objects now: 7085.
-Memory consumption went from 343.4 MB to 341.3 MB.
-Total: 6.378700 ms (FindLiveObjects: 0.442900 ms CreateObjectMapping: 0.188700 ms MarkObjects: 5.191600 ms  DeleteObjects: 0.554500 ms)
+Unloading 6560 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 96 unused Assets / (2.0 MB). Loaded Objects now: 7080.
+Memory consumption went from 363.4 MB to 361.3 MB.
+Total: 6.449700 ms (FindLiveObjects: 0.488200 ms CreateObjectMapping: 0.196700 ms MarkObjects: 5.125500 ms  DeleteObjects: 0.638100 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
@@ -449,208 +183,436 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  Time since last request: 10864.554235 seconds.
-  path: Assets/08_Animations/TimeLine/AngelCleric/ClericDamaged.playable
-  artifactKey: Guid(ac750e751948f0b418fc33f00f248ccd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+  Time since last request: 511536.552647 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Empty_001.png
+  artifactKey: Guid(7c8639d8fbb2e6d4a8c4bf38f888da7e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Number of updated assets reloaded before import = 0
-Start importing Assets/08_Animations/TimeLine/AngelCleric/ClericDamaged.playable using Guid(ac750e751948f0b418fc33f00f248ccd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'eccf2d779dc8789530f234fd8c4c3172') in 0.062629 seconds 
-Number of asset objects unloaded after import = 8
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Empty_001.png using Guid(7c8639d8fbb2e6d4a8c4bf38f888da7e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1c8c4e22708869ac78ccd9a75389729d') in 0.135668 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 7.658037 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Masks/Flame 001 Mask 001.png
+  artifactKey: Guid(5ef9673b16ea2d444b251187df186e78) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Masks/Flame 001 Mask 001.png using Guid(5ef9673b16ea2d444b251187df186e78) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4b76b18a745f674ee244bb058110bf96') in 0.036350 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Flame_003.png
+  artifactKey: Guid(b200adc6becad0444966f6f9a3c0fc1c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Flame_003.png using Guid(b200adc6becad0444966f6f9a3c0fc1c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b54691b0d36cc67dbc7d348e37ae78d3') in 0.027405 seconds 
+Number of asset objects unloaded after import = 3
 ========================================================================
 Received Import Request.
   Time since last request: 0.000018 seconds.
-  path: Assets/08_Animations/TimeLine/AngelCleric/ClericDeath.playable
-  artifactKey: Guid(710f7d4f56be9e84687b139537f9834f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+  path: Assets/Cartoon Coffee/VFX Deluxe/Masks/Flame_002_Mask_001.png
+  artifactKey: Guid(36c3f924afce0944e89c8b539d1f074d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Number of updated assets reloaded before import = 0
-Start importing Assets/08_Animations/TimeLine/AngelCleric/ClericDeath.playable using Guid(710f7d4f56be9e84687b139537f9834f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0521636983786fdf89bd1c914958be6c') in 0.006803 seconds 
-Number of asset objects unloaded after import = 10
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Masks/Flame_002_Mask_001.png using Guid(36c3f924afce0944e89c8b539d1f074d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd3fe2f39edc98d2df793f099f8dfa07f') in 0.029524 seconds 
+Number of asset objects unloaded after import = 3
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000018 seconds.
-  path: Assets/08_Animations/TimeLine/AngelCleric/ClericIdle.playable
-  artifactKey: Guid(53b0ca97a6235d740889de2621f8684e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+  Time since last request: 0.000015 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Flame_004.png
+  artifactKey: Guid(e454f3906aab46449b580588499ce96f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Number of updated assets reloaded before import = 0
-Start importing Assets/08_Animations/TimeLine/AngelCleric/ClericIdle.playable using Guid(53b0ca97a6235d740889de2621f8684e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bb4cf52cb5c58cd36a47b115b033f31f') in 0.016087 seconds 
-Number of asset objects unloaded after import = 6
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Flame_004.png using Guid(e454f3906aab46449b580588499ce96f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '328d70210e2c84ac68a364def819d810') in 0.029373 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.108245 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Flame_005.png
+  artifactKey: Guid(c026f271b6f80854aba0fed8d2eddbf8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Flame_005.png using Guid(c026f271b6f80854aba0fed8d2eddbf8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00faa9d402dae00ebd2ea6f62d19acab') in 0.042062 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.290058 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Masks/Glass_001_Mask_001.png
+  artifactKey: Guid(ecbbc07bb826e9e4198fa41af6f47d03) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Masks/Glass_001_Mask_001.png using Guid(ecbbc07bb826e9e4198fa41af6f47d03) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8d5ff483d37d154818456d3a4d1aeaf4') in 0.030622 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000019 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Glass_002.png
+  artifactKey: Guid(4d92328744ac3514ea45c316c178e2ac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Glass_002.png using Guid(4d92328744ac3514ea45c316c178e2ac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a26cfe91fc2ace8828060585e4ee22e0') in 0.033730 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Glow_001.png
+  artifactKey: Guid(8e280e089bc2e37409063ebe49eee45d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Glow_001.png using Guid(8e280e089bc2e37409063ebe49eee45d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dff4ce578d1f52d0f19dc83da014449f') in 0.029845 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 1.197339 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Halo_002.png
+  artifactKey: Guid(f457a681d4ee1d54cbcb6137cba1fcaf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Halo_002.png using Guid(f457a681d4ee1d54cbcb6137cba1fcaf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e30c7ced1d6921fa11cbda98c3b59ff3') in 0.028155 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Masks/Heal_001_Mask_001.png
+  artifactKey: Guid(6b406bf06b6766d4183958addfe4c1e5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Masks/Heal_001_Mask_001.png using Guid(6b406bf06b6766d4183958addfe4c1e5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9c9abb3ac9bfa05617aa3d2451f96adc') in 0.030054 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Heart_001.png
+  artifactKey: Guid(42f43a7220cbe76489c8f7ff14fe44c3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Heart_001.png using Guid(42f43a7220cbe76489c8f7ff14fe44c3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '07e44a0e958e5da664079d3d1fb02e08') in 0.028910 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.038640 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Masks/Hexagon_001_Mask_001.png
+  artifactKey: Guid(9922a29ba8cdf3b4999ece25f4bb8a1c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Masks/Hexagon_001_Mask_001.png using Guid(9922a29ba8cdf3b4999ece25f4bb8a1c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '28424ef406bc3563def1ff3a1f9ea57f') in 0.029079 seconds 
+Number of asset objects unloaded after import = 3
 ========================================================================
 Received Import Request.
   Time since last request: 0.000014 seconds.
-  path: Assets/08_Animations/TimeLine/AngelCleric/ClericDodge.playable
-  artifactKey: Guid(8517c80595e6ea64b89e3db703d70e3f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Ice_Shard_003.png
+  artifactKey: Guid(4751b7aff7d399a40a838cda2617e811) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Number of updated assets reloaded before import = 0
-Start importing Assets/08_Animations/TimeLine/AngelCleric/ClericDodge.playable using Guid(8517c80595e6ea64b89e3db703d70e3f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8b73cf564ff0ce085d563f3dc8fef09e') in 0.015634 seconds 
-Number of asset objects unloaded after import = 6
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Ice_Shard_003.png using Guid(4751b7aff7d399a40a838cda2617e811) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'adc1ce48c52d06ac780a5420cd0549ab') in 0.030369 seconds 
+Number of asset objects unloaded after import = 3
 ========================================================================
 Received Import Request.
-  Time since last request: 0.017862 seconds.
-  path: Assets/07_GameData/Units/Visuals/ClericSpriteSet.asset
-  artifactKey: Guid(360a4df67a83ed9479500506440226cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+  Time since last request: 0.000016 seconds.
+  path: Assets/04_Textures/NewUI/Dialog/image 66.png
+  artifactKey: Guid(067090deee5e13c48b71dd28b6b42498) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/Units/Visuals/ClericSpriteSet.asset using Guid(360a4df67a83ed9479500506440226cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'df22844651b72531c1e1934ebea31ba9') in 0.165868 seconds 
-Number of asset objects unloaded after import = 775
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.004273 seconds.
-Begin MonoManager ReloadAssembly
-Symbol file LoadedFromMemory is not a mono symbol file
-Native extension for WindowsStandalone target not found
-Native extension for iOS target not found
-Native extension for Android target not found
-Refreshing native plugins compatible for Editor in 2.09 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
-[Package Manager] Cannot connect to Unity Package Manager local server
-Mono: successfully reloaded assembly
-- Completed reload, in  1.596 seconds
-Domain Reload Profiling:
-	ReloadAssembly (1597ms)
-		BeginReloadAssembly (141ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (6ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (48ms)
-		EndReloadAssembly (1383ms)
-			LoadAssemblies (87ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (275ms)
-			ReleaseScriptCaches (3ms)
-			RebuildScriptCaches (91ms)
-			SetupLoadedEditorAssemblies (876ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (27ms)
-				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (2ms)
-				BeforeProcessingInitializeOnLoad (104ms)
-				ProcessInitializeOnLoadAttributes (598ms)
-				ProcessInitializeOnLoadMethodAttributes (138ms)
-				AfterProcessingInitializeOnLoad (6ms)
-				EditorAssembliesLoaded (0ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (16ms)
-Platform modules already initialized, skipping
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Refreshing native plugins compatible for Editor in 2.11 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 6333 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 88 unused Assets / (2.0 MB). Loaded Objects now: 7090.
-Memory consumption went from 343.6 MB to 341.6 MB.
-Total: 6.344800 ms (FindLiveObjects: 0.406200 ms CreateObjectMapping: 0.168700 ms MarkObjects: 5.299100 ms  DeleteObjects: 0.469700 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+Start importing Assets/04_Textures/NewUI/Dialog/image 66.png using Guid(067090deee5e13c48b71dd28b6b42498) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '235422a32960f38e76b9bc60e8de018f') in 0.065673 seconds 
+Number of asset objects unloaded after import = 3
 ========================================================================
 Received Import Request.
-  Time since last request: 85.481095 seconds.
-  path: Assets/07_GameData/Units/UnitBlueprints/ClericBP.asset
-  artifactKey: Guid(b847a6c80cf906a419eaf993031bc5fa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+  Time since last request: 0.000022 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Impact_006.png
+  artifactKey: Guid(b061282be81a36a4bb8eb10f61c3dfa1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/Units/UnitBlueprints/ClericBP.asset using Guid(b847a6c80cf906a419eaf993031bc5fa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6dbd06f4cee436dc50054140bae6bb14') in 0.208161 seconds 
-Number of asset objects unloaded after import = 839
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Impact_006.png using Guid(b061282be81a36a4bb8eb10f61c3dfa1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b7fdc6c11718e06c77db7af91af57401') in 0.029738 seconds 
+Number of asset objects unloaded after import = 3
 ========================================================================
 Received Import Request.
-  Time since last request: 21.172586 seconds.
-  path: Assets/02_Scripts/External/Runtime/AstarPathfindingProject/ExampleScenes/Example2_Terrain/checkerGround.psd
-  artifactKey: Guid(ee2523340e7944c4297a80937a51484c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+  Time since last request: 0.000023 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Masks/Impact_010_Mask_001.png
+  artifactKey: Guid(c77a360957b9149478e101b28d2edb72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Number of updated assets reloaded before import = 0
-Start importing Assets/02_Scripts/External/Runtime/AstarPathfindingProject/ExampleScenes/Example2_Terrain/checkerGround.psd using Guid(ee2523340e7944c4297a80937a51484c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b127bb7f36a98d2f0afac1895e39453f') in 0.058078 seconds 
-Number of asset objects unloaded after import = 2
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Masks/Impact_010_Mask_001.png using Guid(c77a360957b9149478e101b28d2edb72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1e02afae1b8ac50d4008db7b8b1f05a3') in 0.028648 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000025 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Light_Ray_005.png
+  artifactKey: Guid(e3daf8fa2508afa438aa1c1713c6b667) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Light_Ray_005.png using Guid(e3daf8fa2508afa438aa1c1713c6b667) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ae6e55f566b5670c626d5ffe99297238') in 0.031158 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Light_Ray_007.png
+  artifactKey: Guid(1d39c2df4918edb43b3e2d14dab3cf6f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Light_Ray_007.png using Guid(1d39c2df4918edb43b3e2d14dab3cf6f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f999dfbaf15aecd001356392eff6a143') in 0.028849 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Masks/Impact_002_Mask_001.png
+  artifactKey: Guid(e001cbf605270a047920621e3a654222) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Masks/Impact_002_Mask_001.png using Guid(e001cbf605270a047920621e3a654222) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7915aaa287f653f0e80f067a593d04b1') in 0.030998 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Masks/Impact_008_Mask_001.png
+  artifactKey: Guid(9eec64ee0530407439c8997375c425bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Masks/Impact_008_Mask_001.png using Guid(9eec64ee0530407439c8997375c425bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5221083c76bda151113e8eaf0802b17b') in 0.031076 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000100 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Ice_Shard_002.png
+  artifactKey: Guid(05cf0d1f23a82994ab28cf322141c8fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Ice_Shard_002.png using Guid(05cf0d1f23a82994ab28cf322141c8fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ed03138d3fd1d2a97595542e34f48f2b') in 0.030839 seconds 
+Number of asset objects unloaded after import = 3
 ========================================================================
 Received Import Request.
   Time since last request: 0.000017 seconds.
-  path: Assets/Feel/MMTools/Tools/MMPrototypeTextures/Textures/MMCheckers/MMCheckers.png
-  artifactKey: Guid(ff6ef20764af32745ad151687042db56) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Light_Ray_006.png
+  artifactKey: Guid(bec796d04b187d04383565817acd909b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Tools/MMPrototypeTextures/Textures/MMCheckers/MMCheckers.png using Guid(ff6ef20764af32745ad151687042db56) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ac7ac2c20a0b7619a9b23df93a687db4') in 0.059247 seconds 
-Number of asset objects unloaded after import = 2
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Light_Ray_006.png using Guid(bec796d04b187d04383565817acd909b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e1d14e473012c4c5186f6ceb1cc05b44') in 0.033286 seconds 
+Number of asset objects unloaded after import = 3
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000026 seconds.
-  path: Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/Neutral/MMBRP_NeutralCheckers.mat
-  artifactKey: Guid(98f9943149e70e84f969f66047eb997f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+  Time since last request: 0.000016 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Light_Ray_001.png
+  artifactKey: Guid(070021d3e2c35cf49ab59820f91ece97) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/Neutral/MMBRP_NeutralCheckers.mat using Guid(98f9943149e70e84f969f66047eb997f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ec9eeabdc4430b5203aafa6e38b0c2aa') in 0.234053 seconds 
-Number of asset objects unloaded after import = 15
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Light_Ray_001.png using Guid(070021d3e2c35cf49ab59820f91ece97) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3a4edc61daa49897f9978abaa9fcfada') in 0.028097 seconds 
+Number of asset objects unloaded after import = 3
 ========================================================================
 Received Import Request.
-  Time since last request: 2.109874 seconds.
-  path: Assets/03_Prefabs/Units/BattleAnimation/SkeletCavalryBattleGONew.prefab
-  artifactKey: Guid(901b3f882622c8048b2011471e71d696) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+  Time since last request: 0.000024 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Hit Effect 001.png
+  artifactKey: Guid(a7b56ea8a9e3ef947817aa152f446941) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Number of updated assets reloaded before import = 0
-Start importing Assets/03_Prefabs/Units/BattleAnimation/SkeletCavalryBattleGONew.prefab using Guid(901b3f882622c8048b2011471e71d696) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a0c1b88ccafcdec3b0006b22b74a75de') in 0.506629 seconds 
-Number of asset objects unloaded after import = 1810
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Hit Effect 001.png using Guid(a7b56ea8a9e3ef947817aa152f446941) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b8836bf89cb209a8e287f55f8bebf50f') in 0.025687 seconds 
+Number of asset objects unloaded after import = 3
 ========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.003907 seconds.
-Begin MonoManager ReloadAssembly
-Symbol file LoadedFromMemory is not a mono symbol file
-Native extension for WindowsStandalone target not found
-Native extension for iOS target not found
-Native extension for Android target not found
-Refreshing native plugins compatible for Editor in 2.02 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
-[Package Manager] Cannot connect to Unity Package Manager local server
-Mono: successfully reloaded assembly
-- Completed reload, in  1.743 seconds
-Domain Reload Profiling:
-	ReloadAssembly (1744ms)
-		BeginReloadAssembly (154ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (7ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (57ms)
-		EndReloadAssembly (1501ms)
-			LoadAssemblies (86ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (275ms)
-			ReleaseScriptCaches (4ms)
-			RebuildScriptCaches (118ms)
-			SetupLoadedEditorAssemblies (942ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (27ms)
-				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (2ms)
-				BeforeProcessingInitializeOnLoad (133ms)
-				ProcessInitializeOnLoadAttributes (617ms)
-				ProcessInitializeOnLoadMethodAttributes (149ms)
-				AfterProcessingInitializeOnLoad (12ms)
-				EditorAssembliesLoaded (1ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (17ms)
-Platform modules already initialized, skipping
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Refreshing native plugins compatible for Editor in 2.19 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 6341 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 103 unused Assets / (1.6 MB). Loaded Objects now: 7190.
-Memory consumption went from 349.4 MB to 347.7 MB.
-Total: 7.458600 ms (FindLiveObjects: 0.462600 ms CreateObjectMapping: 0.315200 ms MarkObjects: 6.277100 ms  DeleteObjects: 0.402700 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Masks/Impact_004_Mask_001.png
+  artifactKey: Guid(43438a73f53dbdd428aafbd29d690fdd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Masks/Impact_004_Mask_001.png using Guid(43438a73f53dbdd428aafbd29d690fdd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c43c4757b7c8ec91a335cc717a3bedab') in 0.026120 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000012 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Masks/Impact_009_Mask_001.png
+  artifactKey: Guid(d181b8a80fbfcb14cbea8cb212076b84) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Masks/Impact_009_Mask_001.png using Guid(d181b8a80fbfcb14cbea8cb212076b84) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a5a92299cbf14f73f7375b6f14980336') in 0.025271 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Ice_Shard_001.png
+  artifactKey: Guid(af7fc1f13b77fe94a92ea81794c2201e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Ice_Shard_001.png using Guid(af7fc1f13b77fe94a92ea81794c2201e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9977e78fa48762b4334558b8bee527fd') in 0.026108 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 12.217749 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Radial_Glow_003.png
+  artifactKey: Guid(a72781667f06a4648b7b37d24e583c55) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Radial_Glow_003.png using Guid(a72781667f06a4648b7b37d24e583c55) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7089c7116108f452b8f371301555d9d0') in 0.079289 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.215651 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Rainbow_Ring_Semi_001.png
+  artifactKey: Guid(d44e8f12f63f1f64ea397dc81441d8a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Rainbow_Ring_Semi_001.png using Guid(d44e8f12f63f1f64ea397dc81441d8a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ed2ec0e913e0002988036b5e147d4d81') in 0.038644 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Raindrop_002.png
+  artifactKey: Guid(1c4ae60f3e6c64344adc4567f187c60a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Raindrop_002.png using Guid(1c4ae60f3e6c64344adc4567f187c60a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c9f251cb133d165ddd6a361e4c176274') in 0.028665 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 198.650782 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Debris_001.png
+  artifactKey: Guid(d73135023c9f08847800d8ab02c6eb50) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Debris_001.png using Guid(d73135023c9f08847800d8ab02c6eb50) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bab0ee11d5f216ab0090505fd626d571') in 0.033010 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Crescent Mid.png
+  artifactKey: Guid(823baa3493699e8478143b630b0da25f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Crescent Mid.png using Guid(823baa3493699e8478143b630b0da25f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '90b79ea510678182b03b722a380b1b94') in 0.033382 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000011 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Crescent Small.png
+  artifactKey: Guid(c56d50e4f0bdb7f409312740e8fc0e3f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Crescent Small.png using Guid(c56d50e4f0bdb7f409312740e8fc0e3f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e4727d3d71324386505acc62946e97c4') in 0.028516 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.169625 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Circle_Small_Aura_001.png
+  artifactKey: Guid(4839ddac56f19da448f3eca529dde447) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Circle_Small_Aura_001.png using Guid(4839ddac56f19da448f3eca529dde447) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8f8c8307125f59df3e1107da559cdfa1') in 0.036527 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Masks/Circle_Small_Mask_002.png
+  artifactKey: Guid(ebba4bf92ee8e5a459d660dfb2137914) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Masks/Circle_Small_Mask_002.png using Guid(ebba4bf92ee8e5a459d660dfb2137914) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '93442df451e10c29641d7c69b80a06f1') in 0.025381 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Masks/Circle_Splash_001_Mask.png
+  artifactKey: Guid(24ee671fb4253d24cbd15ec67d16744d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Masks/Circle_Splash_001_Mask.png using Guid(24ee671fb4253d24cbd15ec67d16744d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b13d9d24e01786f45c98264fcd0f8bce') in 0.041441 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Circle_Wind_Lines_001.png
+  artifactKey: Guid(467a427d185c25f40b91347e12a75976) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Circle_Wind_Lines_001.png using Guid(467a427d185c25f40b91347e12a75976) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1c68c09357387bb0867e15c0b632d43b') in 0.030205 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000012 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Masks/Circle_Small_Mask_003.png
+  artifactKey: Guid(d271fc71b12275e4ebe6469a446a8df0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Masks/Circle_Small_Mask_003.png using Guid(d271fc71b12275e4ebe6469a446a8df0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '078d91bba264c402be5d659807a0e82e') in 0.029885 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Circle_Splash_001.png
+  artifactKey: Guid(36bd46d65545bae48a5f3daa13d910ba) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Circle_Splash_001.png using Guid(36bd46d65545bae48a5f3daa13d910ba) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '680b14cd00a6ebf17bf6f6b46c531c73') in 0.035921 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.136838 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Masks/Circle Mask 007 - Wind.png
+  artifactKey: Guid(b9b8f2bc00d67894ca654978fefbb77b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Masks/Circle Mask 007 - Wind.png using Guid(b9b8f2bc00d67894ca654978fefbb77b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '370fd978ffefbe1295326e02e45a4981') in 0.045604 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Circle Ripple.png
+  artifactKey: Guid(801bac182bf4fb14cb4c5eb4c36e9878) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Circle Ripple.png using Guid(801bac182bf4fb14cb4c5eb4c36e9878) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b2c19845ddb169892349c6c73ec19939') in 0.030093 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Masks/Circle Outline Mask 02.png
+  artifactKey: Guid(7375be391beb4674489235c63be8c380) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Masks/Circle Outline Mask 02.png using Guid(7375be391beb4674489235c63be8c380) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c237c3452304df1be4056990046a714d') in 0.029709 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Masks/Circle Mask 009.png
+  artifactKey: Guid(510846942b32b8842be7e05b52a986d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Masks/Circle Mask 009.png using Guid(510846942b32b8842be7e05b52a986d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5dfd51559a2ad61f7ef49f14071fea74') in 0.033173 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Masks/Circle Mask 001.png
+  artifactKey: Guid(4d33ee2e152ac44408a5c455f9ee0528) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Masks/Circle Mask 001.png using Guid(4d33ee2e152ac44408a5c455f9ee0528) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dffc2a12f6ab3bf0d6ddccf122ca88c3') in 0.026595 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Masks/Circle Mask 003.png
+  artifactKey: Guid(bb519aead20bebd4d8bb1929440b9728) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Masks/Circle Mask 003.png using Guid(bb519aead20bebd4d8bb1929440b9728) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fe5a6787aed6e999f7d0b26a2b404904') in 0.031946 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Circle.png
+  artifactKey: Guid(806dd3e73c1633d42829cfa167960b0d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Circle.png using Guid(806dd3e73c1633d42829cfa167960b0d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8f3f68e17d8e97d3fedfd19c330f0ff1') in 0.033123 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Masks/Circle Mask 004.png
+  artifactKey: Guid(75ca5bef17900fc4083edf4ff7196649) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Masks/Circle Mask 004.png using Guid(75ca5bef17900fc4083edf4ff7196649) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '33c9a15736936a3f01ee260fd22234b5') in 0.029341 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000019 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Circle_Outline_003.png
+  artifactKey: Guid(41e62755c61f0ae43a444a63f59c9578) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Circle_Outline_003.png using Guid(41e62755c61f0ae43a444a63f59c9578) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '553c864f8d19ac73a5e6ef23c7fd5a48') in 0.031739 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Circle Outline.png
+  artifactKey: Guid(ceca65ef11ca7b942ae9e70de29e7554) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Circle Outline.png using Guid(ceca65ef11ca7b942ae9e70de29e7554) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b5ce7e82c2012a8ce2eba01a07db27a8') in 0.030466 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000012 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Bubbles_001.png
+  artifactKey: Guid(fd44f03e440fd204f810622702f7d5b6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Bubbles_001.png using Guid(fd44f03e440fd204f810622702f7d5b6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f4d76591c6362f7be23f8a3888fa47ae') in 0.028891 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 1.033251 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Arrow_001.png
+  artifactKey: Guid(c8d268a9d28a75a44884504efe9b4314) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Arrow_001.png using Guid(c8d268a9d28a75a44884504efe9b4314) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '59a249e5f72839c4d39da229e770902c') in 0.029320 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Arrow_005.png
+  artifactKey: Guid(9f492ae1a121e474492bc652d1512226) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Arrow_005.png using Guid(9f492ae1a121e474492bc652d1512226) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f15f2f6dcb7a83ef4eb292bc7e1534ab') in 0.026267 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000012 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Textures/Arrow_004.png
+  artifactKey: Guid(f3fc46ccf7a1e104e836e58d3e050942) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Textures/Arrow_004.png using Guid(f3fc46ccf7a1e104e836e58d3e050942) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '358d9f8483731694289b2a737007d15c') in 0.028797 seconds 
+Number of asset objects unloaded after import = 3
 Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
 AssetImportWorker is now disconnected from the server
 Process exiting

@@ -21,6 +21,7 @@ namespace LostGrace
         public ItemBP[] OverwritenItems;
         public SkillBp[] OverwritenSkills;
         public LGEventDialogSO[] OverwritenEvents;
+        public DifficultyProfile chosenDifficulty;
         
         [SerializeField] List<UnitBP> playableCharacters;
         public  List<Unit> GetUnits()

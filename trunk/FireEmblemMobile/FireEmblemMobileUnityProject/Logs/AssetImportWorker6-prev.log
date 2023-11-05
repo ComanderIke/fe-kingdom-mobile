@@ -15,7 +15,7 @@ D:/Projects/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProjec
 -logFile
 Logs/AssetImportWorker6.log
 -srvPort
-61457
+50655
 Successfully changed project path to: D:/Projects/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject
 D:/Projects/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -47,12 +47,12 @@ D:/Projects/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProjec
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [28624] Host "[IP] 192.168.0.11 [Port] 0 [Flags] 2 [Guid] 2461745620 [EditorId] 2461745620 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-N1UFFTN) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+Player connection [27912] Host "[IP] 192.168.0.11 [Port] 0 [Flags] 2 [Guid] 3544811599 [EditorId] 3544811599 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-N1UFFTN) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
 
-Player connection [28624] Host "[IP] 192.168.0.11 [Port] 0 [Flags] 2 [Guid] 2461745620 [EditorId] 2461745620 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-N1UFFTN) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [27912] Host "[IP] 192.168.0.11 [Port] 0 [Flags] 2 [Guid] 3544811599 [EditorId] 3544811599 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-N1UFFTN) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
 
 [Physics::Module] Initialized MultithreadedJobDispatcher with {0} workers.
-Refreshing native plugins compatible for Editor in 122.04 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 126.80 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2021.3.31f1 (3409e2af086f)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2021.3.31f1/Editor/Data/Resources/UnitySubsystems
@@ -65,48 +65,50 @@ Direct3D:
     VRAM:     8031 MB
     Driver:   31.0.15.3699
 Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
 Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2021.3.31f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2021.3.31f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2021.3.31f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56472
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56092
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.3.31f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.3.31f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.3.31f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.004395 seconds.
+Registered in 0.004822 seconds.
 Native extension for WindowsStandalone target not found
 [usbmuxd] Start listen thread
 [usbmuxd] Listen thread started
 Native extension for iOS target not found
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 192 ms
-Refreshing native plugins compatible for Editor in 103.25 ms, found 3 plugins.
+Android Extension - Scanning For ADB Devices 212 ms
+Refreshing native plugins compatible for Editor in 114.66 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.771 seconds
+- Completed reload, in  0.832 seconds
 Domain Reload Profiling:
-	ReloadAssembly (771ms)
+	ReloadAssembly (832ms)
 		BeginReloadAssembly (84ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (1ms)
-		EndReloadAssembly (613ms)
+		EndReloadAssembly (668ms)
 			LoadAssemblies (83ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (72ms)
+			SetupTypeCache (83ms)
 			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (19ms)
-			SetupLoadedEditorAssemblies (484ms)
+			RebuildScriptCaches (21ms)
+			SetupLoadedEditorAssemblies (528ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (276ms)
+				InitializePlatformSupportModulesInManaged (305ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (103ms)
+				RefreshPlugins (115ms)
 				BeforeProcessingInitializeOnLoad (1ms)
-				ProcessInitializeOnLoadAttributes (67ms)
+				ProcessInitializeOnLoadAttributes (70ms)
 				ProcessInitializeOnLoadMethodAttributes (37ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
@@ -114,42 +116,42 @@ Domain Reload Profiling:
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.004052 seconds.
+Registered in 0.004085 seconds.
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory is not a mono symbol file
 Native extension for WindowsStandalone target not found
 Native extension for iOS target not found
 Native extension for Android target not found
-Refreshing native plugins compatible for Editor in 100.54 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 131.58 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Package Manager log level set to [2]
 [Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
 [Package Manager] Cannot connect to Unity Package Manager local server
 Mono: successfully reloaded assembly
-- Completed reload, in  1.670 seconds
+- Completed reload, in  1.710 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1671ms)
-		BeginReloadAssembly (99ms)
+	ReloadAssembly (1710ms)
+		BeginReloadAssembly (102ms)
 			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (4ms)
+			DisableScriptedObjects (5ms)
 			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (18ms)
-		EndReloadAssembly (1494ms)
-			LoadAssemblies (104ms)
+			ReleaseScriptingObjects (1ms)
+			CreateAndSetChildDomain (19ms)
+		EndReloadAssembly (1529ms)
+			LoadAssemblies (91ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (298ms)
+			SetupTypeCache (282ms)
 			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (93ms)
-			SetupLoadedEditorAssemblies (961ms)
+			RebuildScriptCaches (99ms)
+			SetupLoadedEditorAssemblies (1023ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (21ms)
+				InitializePlatformSupportModulesInManaged (24ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (101ms)
-				BeforeProcessingInitializeOnLoad (97ms)
-				ProcessInitializeOnLoadAttributes (600ms)
-				ProcessInitializeOnLoadMethodAttributes (137ms)
-				AfterProcessingInitializeOnLoad (5ms)
+				RefreshPlugins (132ms)
+				BeforeProcessingInitializeOnLoad (126ms)
+				ProcessInitializeOnLoadAttributes (596ms)
+				ProcessInitializeOnLoadMethodAttributes (142ms)
+				AfterProcessingInitializeOnLoad (4ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (4ms)
@@ -157,13 +159,15 @@ Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
 Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
 Launched and connected shader compiler UnityShaderCompiler.exe after 0.03 seconds
-Refreshing native plugins compatible for Editor in 1.59 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 1.75 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 6552 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 96 unused Assets / (2.0 MB). Loaded Objects now: 7072.
-Memory consumption went from 362.8 MB to 360.7 MB.
-Total: 5.941700 ms (FindLiveObjects: 0.387900 ms CreateObjectMapping: 0.164900 ms MarkObjects: 4.883000 ms  DeleteObjects: 0.504800 ms)
+Unloading 6560 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 96 unused Assets / (2.0 MB). Loaded Objects now: 7080.
+Memory consumption went from 363.3 MB to 361.3 MB.
+Total: 6.706400 ms (FindLiveObjects: 0.480000 ms CreateObjectMapping: 0.172700 ms MarkObjects: 5.607000 ms  DeleteObjects: 0.445500 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
@@ -180,52 +184,54 @@ AssetImportParameters requested are different than current active one (requested
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.004549 seconds.
+Registered in 0.003687 seconds.
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory is not a mono symbol file
 Native extension for WindowsStandalone target not found
 Native extension for iOS target not found
 Native extension for Android target not found
-Refreshing native plugins compatible for Editor in 1.66 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 2.62 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 [Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
 [Package Manager] Cannot connect to Unity Package Manager local server
 Mono: successfully reloaded assembly
-- Completed reload, in  1.650 seconds
+- Completed reload, in  1.649 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1651ms)
-		BeginReloadAssembly (141ms)
+	ReloadAssembly (1650ms)
+		BeginReloadAssembly (135ms)
 			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (5ms)
+			DisableScriptedObjects (6ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (47ms)
-		EndReloadAssembly (1445ms)
-			LoadAssemblies (96ms)
+			CreateAndSetChildDomain (43ms)
+		EndReloadAssembly (1443ms)
+			LoadAssemblies (91ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (273ms)
-			ReleaseScriptCaches (4ms)
-			RebuildScriptCaches (99ms)
-			SetupLoadedEditorAssemblies (914ms)
+			SetupTypeCache (258ms)
+			ReleaseScriptCaches (3ms)
+			RebuildScriptCaches (105ms)
+			SetupLoadedEditorAssemblies (933ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (27ms)
-				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (2ms)
-				BeforeProcessingInitializeOnLoad (107ms)
-				ProcessInitializeOnLoadAttributes (621ms)
-				ProcessInitializeOnLoadMethodAttributes (152ms)
+				InitializePlatformSupportModulesInManaged (26ms)
+				SetLoadedEditorAssemblies (1ms)
+				RefreshPlugins (3ms)
+				BeforeProcessingInitializeOnLoad (118ms)
+				ProcessInitializeOnLoadAttributes (638ms)
+				ProcessInitializeOnLoadMethodAttributes (142ms)
 				AfterProcessingInitializeOnLoad (5ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (12ms)
+			AwakeInstancesAfterBackupRestoration (11ms)
 Platform modules already initialized, skipping
 Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Refreshing native plugins compatible for Editor in 1.71 ms, found 3 plugins.
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.81 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 6334 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 87 unused Assets / (2.0 MB). Loaded Objects now: 7076.
-Memory consumption went from 343.4 MB to 341.3 MB.
-Total: 8.213300 ms (FindLiveObjects: 0.718200 ms CreateObjectMapping: 0.489500 ms MarkObjects: 6.450400 ms  DeleteObjects: 0.554200 ms)
+Unloading 6340 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 87 unused Assets / (2.0 MB). Loaded Objects now: 7084.
+Memory consumption went from 343.8 MB to 341.7 MB.
+Total: 6.695100 ms (FindLiveObjects: 0.428600 ms CreateObjectMapping: 0.341700 ms MarkObjects: 5.409400 ms  DeleteObjects: 0.514500 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
@@ -239,7 +245,27 @@ AssetImportParameters requested are different than current active one (requested
   custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
   custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
-AssetImportWorker is now disconnected from the server
-Process exiting
-Exiting without the bug reporter. Application will terminate with return code 0
+========================================================================
+Received Import Request.
+  Time since last request: 540168.345770 seconds.
+  path: Assets/04_Textures/Characters/Gods
+  artifactKey: Guid(ed882148056f7e6478b6c3b5adfd2647) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/04_Textures/Characters/Gods using Guid(ed882148056f7e6478b6c3b5adfd2647) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2f9d0c3cccb1104477ab4167a9e76ea7') in 0.242490 seconds 
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 2.761717 seconds.
+  path: Assets/04_Textures/Characters/Gods/New Folder
+  artifactKey: Guid(292df35ae041ce749b3edaefee6f2607) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/04_Textures/Characters/Gods/New Folder using Guid(292df35ae041ce749b3edaefee6f2607) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e021119e5f670e943acda4e280e64ca7') in 0.005079 seconds 
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 10.023465 seconds.
+  path: Assets/04_Textures/Characters/Materials
+  artifactKey: Guid(48fde8d204526da4d8a493a26fac7dec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/04_Textures/Characters/Materials using Guid(48fde8d204526da4d8a493a26fac7dec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ae267ea5fadb4c2ec211226306a03abf') in 0.005224 seconds 
+Number of asset objects unloaded after import = 0

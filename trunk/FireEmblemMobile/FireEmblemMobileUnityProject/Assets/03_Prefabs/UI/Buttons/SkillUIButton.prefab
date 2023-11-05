@@ -28,6 +28,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6795005364969409637}
   m_RootOrder: 2
@@ -76,61 +77,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &360710453657546180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6429164046979079782}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 460c417068d041c4b2438073d46c7077, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  blessingEffect: {fileID: 5811973615267137811}
-  icon: {fileID: 9216424683134576249}
-  Skill:
-    Icon: {fileID: 0}
-    level: 0
-    Name: 
-    Description: 
-    Tier: 0
-    CombatSkillMixin: {fileID: 0}
-    passiveMixins: []
-    activeMixins: []
-    owner:
-      bluePrintID: 
-      name: 
-      moveType: {fileID: 0}
-      BluePrintId: 
-      rpgClass: 0
-      experienceManager:
-        level: 1
-        exp: 0
-        drainableExp: 100
-        expLeftToDrain: 100
-    skillTransferData: {fileID: 0}
-  hpCost: {fileID: 0}
-  uses: {fileID: 0}
-  scaleSmall: 0.7
-  scaleBig: 0.9
-  hpTextGo: {fileID: 0}
-  usesTextGo: {fileID: 0}
-  frame: {fileID: 6429164047735654197}
-  background: {fileID: 6429164046979079802}
-  blessingFrameColor: {r: 0.7607843, g: 1, b: 0.99607843, a: 1}
-  blessingFrameMaterial: {fileID: 2100000, guid: bece9561e313fca468e3b02ac8e2305c,
-    type: 2}
-  curseFrameMaterial: {fileID: 2100000, guid: 7c0ec793958df7446884d2308cbacc50, type: 2}
-  curseFrameColor: {r: 1, g: 1, b: 1, a: 1}
-  blessingBackgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  curseBackgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  deleteButton: {fileID: 2221111895963975827}
-  selectedVfx: {fileID: 1335257147185255973}
-  selectableVfx: {fileID: 3644879005965979317}
-  combatSkillActive: {fileID: 0}
-  bigSize: {x: 120, y: 120}
 --- !u!1 &1335257147185255973
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,6 +105,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6429164046979079783}
   m_RootOrder: 4
@@ -4918,6 +4865,7 @@ ParticleSystemRenderer:
   m_SortingLayer: 5
   m_SortingOrder: 10
   m_RenderMode: 0
+  m_MeshDistribution: 0
   m_SortMode: 0
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
@@ -4941,6 +4889,10 @@ ParticleSystemRenderer:
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
+  m_MeshWeighting: 1
+  m_MeshWeighting1: 1
+  m_MeshWeighting2: 1
+  m_MeshWeighting3: 1
   m_MaskInteraction: 0
 --- !u!1 &3644879005965979317
 GameObject:
@@ -4970,6 +4922,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6429164046979079783}
   m_RootOrder: 5
@@ -9729,6 +9682,7 @@ ParticleSystemRenderer:
   m_SortingLayer: 5
   m_SortingOrder: 10
   m_RenderMode: 0
+  m_MeshDistribution: 0
   m_SortMode: 0
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
@@ -9752,6 +9706,10 @@ ParticleSystemRenderer:
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
+  m_MeshWeighting: 1
+  m_MeshWeighting1: 1
+  m_MeshWeighting2: 1
+  m_MeshWeighting3: 1
   m_MaskInteraction: 0
 --- !u!1 &6621118712362520977
 GameObject:
@@ -9781,6 +9739,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6429164046979079783}
   m_RootOrder: 6
@@ -10126,6 +10085,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8856877979379653981, guid: b294b49d745bfdb40b448f29352bb17a,
+        type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9202852548338311845, guid: b294b49d745bfdb40b448f29352bb17a,
         type: 3}
       propertyPath: m_IsActive
@@ -10133,12 +10097,80 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b294b49d745bfdb40b448f29352bb17a, type: 3}
+--- !u!114 &6429164046979079781 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6644595403744421185, guid: b294b49d745bfdb40b448f29352bb17a,
+    type: 3}
+  m_PrefabInstance: {fileID: 364407787016928036}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6429164046979079782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6429164046979079782 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6644595403744421186, guid: b294b49d745bfdb40b448f29352bb17a,
     type: 3}
   m_PrefabInstance: {fileID: 364407787016928036}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &360710453657546180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6429164046979079782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 460c417068d041c4b2438073d46c7077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blessingEffect: {fileID: 5811973615267137811}
+  icon: {fileID: 9216424683134576249}
+  Skill:
+    Icon: {fileID: 0}
+    level: 0
+    Name: 
+    Description: 
+    Tier: 0
+    CombatSkillMixin: {fileID: 0}
+    passiveMixins: []
+    activeMixins: []
+    owner:
+      bluePrintID: 
+      name: 
+      moveType: {fileID: 0}
+      BluePrintId: 
+      rpgClass: 0
+      experienceManager:
+        level: 1
+        exp: 0
+        drainableExp: 100
+        expLeftToDrain: 100
+    skillTransferData: {fileID: 0}
+  hpCost: {fileID: 0}
+  uses: {fileID: 0}
+  scaleSmall: 0.7
+  scaleBig: 0.9
+  hpTextGo: {fileID: 0}
+  usesTextGo: {fileID: 0}
+  frame: {fileID: 6429164047735654197}
+  background: {fileID: 6429164046979079802}
+  blessingFrameColor: {r: 0.7607843, g: 1, b: 0.99607843, a: 1}
+  blessingFrameMaterial: {fileID: 2100000, guid: bece9561e313fca468e3b02ac8e2305c,
+    type: 2}
+  curseFrameMaterial: {fileID: 2100000, guid: 7c0ec793958df7446884d2308cbacc50, type: 2}
+  curseFrameColor: {r: 1, g: 1, b: 1, a: 1}
+  blessingBackgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  curseBackgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  deleteButton: {fileID: 2221111895963975827}
+  selectedVfx: {fileID: 1335257147185255973}
+  selectableVfx: {fileID: 3644879005965979317}
+  combatSkillActive: {fileID: 0}
+  bigSize: {x: 120, y: 120}
+  button: {fileID: 6429164046979079781}
 --- !u!224 &6429164046979079783 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6644595403744421187, guid: b294b49d745bfdb40b448f29352bb17a,
@@ -10157,9 +10189,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &9216424683134576249 stripped
+--- !u!114 &6429164047735654197 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8856877979379653981, guid: b294b49d745bfdb40b448f29352bb17a,
+  m_CorrespondingSourceObject: {fileID: 6644595405037812753, guid: b294b49d745bfdb40b448f29352bb17a,
     type: 3}
   m_PrefabInstance: {fileID: 364407787016928036}
   m_PrefabAsset: {fileID: 0}
@@ -10169,9 +10201,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6429164047735654197 stripped
+--- !u!114 &9216424683134576249 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6644595405037812753, guid: b294b49d745bfdb40b448f29352bb17a,
+  m_CorrespondingSourceObject: {fileID: 8856877979379653981, guid: b294b49d745bfdb40b448f29352bb17a,
     type: 3}
   m_PrefabInstance: {fileID: 364407787016928036}
   m_PrefabAsset: {fileID: 0}

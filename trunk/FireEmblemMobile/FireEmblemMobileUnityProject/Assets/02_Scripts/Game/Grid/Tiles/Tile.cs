@@ -58,7 +58,11 @@ namespace Game.Grid
 
         }
 
-        
+        public override string ToString()
+        {
+            return "X :" + X + " Y: " + Y;
+        }
+
         public Transform GetTransform()
         {
             return transform;

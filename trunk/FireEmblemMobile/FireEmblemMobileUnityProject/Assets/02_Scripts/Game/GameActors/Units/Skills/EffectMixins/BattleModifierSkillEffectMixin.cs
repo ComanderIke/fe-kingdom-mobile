@@ -12,12 +12,15 @@ namespace Game.GameActors.Units.Skills
         public bool movementToDmg = false;
         public bool desperationEffect = false;
         public bool vantage;
+        public int[] multiplier;
 
         public override void Activate(Unit user, int level)
         {
             Debug.Log("ACTIVATE BATTLE MODIFIER");
             user.BattleComponent.BattleStats.ExcessHitToCrit = excessHitToCrit;
             user.BattleComponent.BattleStats.MovementToDmg = movementToDmg;
+            if(movementToDmg)
+                user.BattleComponent.BattleStats.MovementToDmgMultiplier = multiplier[level];
         }
         
 
@@ -26,12 +29,21 @@ namespace Game.GameActors.Units.Skills
             Debug.Log("DEACTIVATE BATTLE MODIFIER");
             user.BattleComponent.BattleStats.ExcessHitToCrit = false;
             user.BattleComponent.BattleStats.MovementToDmg = false;
+            user.BattleComponent.BattleStats.MovementToDmgMultiplier = 1;
         }
 
 
         public override List<EffectDescription> GetEffectDescription(int level)
         {
-            return new List<EffectDescription>();
+            var list = new List<EffectDescription>();
+            if (level < multiplier.Length)
+            {
+                string upg = ""+multiplier[level];
+                if (level + 1 < multiplier.Length)
+                    upg = ""+multiplier[level + 1];
+                list.Add(new EffectDescription("Multiplier", ""+multiplier[level], upg));
+            }
+            return list;
         }
 
       

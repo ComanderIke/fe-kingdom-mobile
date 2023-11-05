@@ -81,7 +81,7 @@ namespace LostGrace
                 prefab = combatSkillButtonPrefab;
             var go = Instantiate(prefab, skillUIParent);
             var skillUI = go.GetComponent<SkillUI>();
-            skillUI.SetSkill(skill, true, blessing);
+            skillUI.SetSkill(skill, true, blessing, false, false);
        
         }
         public void SetSkill(Skill skill, bool blessed,bool upgrade, bool locked =false)
@@ -176,7 +176,7 @@ namespace LostGrace
                             upgSize, ptsm.Rooted);
                     
                     var castline = GameObject.Instantiate(linePrefab, lineContainer);
-                    bool castUpgrade = castRange != upgcastRange;
+                    bool castUpgrade = castRange != upgcastRange && upgrade;
                     castline.GetComponent<UISkillEffectLine>().SetValues("Castrange: ",""+(castUpgrade?upgcastRange:castRange),castUpgrade);
                     // line = GameObject.Instantiate(linePrefab, lineContainer);
                     // line.GetComponent<UISkillEffectLine>().SetValues("Damage: ",""+damage,""+upgDamage);
@@ -184,7 +184,7 @@ namespace LostGrace
                     foreach (var effectDescription in effectDescriptions)
                     {
                         var line = GameObject.Instantiate(linePrefab, lineContainer);
-                        bool upg = effectDescription.upgValue != effectDescription.value;
+                        bool upg = effectDescription.upgValue != effectDescription.value && upgrade;
                         line.GetComponent<UISkillEffectLine>().SetValues(effectDescription.label, upg?effectDescription.upgValue: effectDescription.value, upg);
                     }
                 }
@@ -202,7 +202,7 @@ namespace LostGrace
                     foreach (var effectDescription in effectDescriptions)
                     {
                         var line = GameObject.Instantiate(linePrefab, lineContainer);
-                        bool upg = effectDescription.upgValue != effectDescription.value;
+                        bool upg = effectDescription.upgValue != effectDescription.value && upgrade;
                         line.GetComponent<UISkillEffectLine>().SetValues(effectDescription.label, upg?effectDescription.upgValue: effectDescription.value, upg);
                     }
                 }
@@ -214,7 +214,7 @@ namespace LostGrace
                     foreach (var effectDescription in effectDescriptions)
                     {
                         var line = GameObject.Instantiate(linePrefab, lineContainer);
-                        bool upg = effectDescription.upgValue != effectDescription.value;
+                        bool upg = effectDescription.upgValue != effectDescription.value && upgrade;
                         line.GetComponent<UISkillEffectLine>().SetValues(effectDescription.label, upg?effectDescription.upgValue: effectDescription.value, upg);
                     }
                 }
@@ -230,7 +230,8 @@ namespace LostGrace
                     if(effectDescription==null)
                         continue;
                     var line = GameObject.Instantiate(linePrefab, lineContainer);
-                    bool upg = effectDescription.upgValue != effectDescription.value;
+                    bool upg = effectDescription.upgValue != effectDescription.value && upgrade;
+                    Debug.Log("CombatSkill Mixin: "+upg+" "+effectDescription.value+" "+effectDescription.upgValue);
                     line.GetComponent<UISkillEffectLine>().SetValues(effectDescription.label, upg?effectDescription.upgValue: effectDescription.value, upg);
                 }
             }
@@ -241,7 +242,7 @@ namespace LostGrace
                 {
                     var line = GameObject.Instantiate(linePrefab, lineContainer);
                     Debug.Log(effectDescription.label+" "+effectDescription.value+" "+effectDescription.upgValue);
-                    bool upg = effectDescription.upgValue != effectDescription.value;
+                    bool upg = effectDescription.upgValue != effectDescription.value && upgrade;
                     line.GetComponent<UISkillEffectLine>().SetValues(effectDescription.label,upg?effectDescription.upgValue: effectDescription.value, upg);
                 }
             }

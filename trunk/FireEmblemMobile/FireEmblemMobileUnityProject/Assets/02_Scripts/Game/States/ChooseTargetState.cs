@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using _02_Scripts.Game.GameActors.Items.Consumables;
 using Game.GameActors.Items;
 using Game.GameActors.Players;
@@ -171,14 +172,15 @@ namespace Game.Mechanics
                         Debug.Log("Activate SingleTargetMixin");
                         LastSkillTargetPosition = new Vector2Int(x, y);
                         stm.Activate(selectedUnit,target);
-                        if (selectionSystem.SelectedSkill.activeMixins.Count>1)
-                        {
-                            activeSkillMixin = selectionSystem.SelectedSkill.activeMixins[1];
-                            ShowSkillCastRange(activeSkillMixin);
-                            //selectionSystem.SelectedSkill.activeMixins[1].ShowTargets((Unit)selectionSystem.SelectedCharacter);
-                            // + stm.GetCastRangeIncrease(((Unit)selectionSystem.SelectedCharacter).Stats
-                            // .BaseAttributes));
-                        }
+                        WaitAfterSkills(new List<IAttackableTarget>(){target}, true);
+                        // if (selectionSystem.SelectedSkill.activeMixins.Count>1)
+                        // {
+                        //     activeSkillMixin = selectionSystem.SelectedSkill.activeMixins[1];
+                        //     ShowSkillCastRange(activeSkillMixin);
+                        //     //selectionSystem.SelectedSkill.activeMixins[1].ShowTargets((Unit)selectionSystem.SelectedCharacter);
+                        //     // + stm.GetCastRangeIncrease(((Unit)selectionSystem.SelectedCharacter).Stats
+                        //     // .BaseAttributes));
+                        // }
                     }
                 }
                 
@@ -187,6 +189,26 @@ namespace Game.Mechanics
             }
         }
 
+        void WaitAfterSkills(List<IAttackableTarget>targets, bool wait)
+        {
+            Debug.Log("Wait after Skills");
+            if(wait)
+                new GameplayCommands().Wait(selectedUnit);
+            new GameplayCommands().ExecuteInputActions(()=>
+            {
+                Debug.Log("TRIGGER CANCEL");
+                playerPhaseState.Feed(PPStateTrigger.Cancel);
+                var task = new AfterBattleTasks(ServiceProvider.Instance.GetSystem<UnitProgressSystem>(),(Unit)selectedUnit, targets);
+                task.StartTask();
+                task.OnFinished += () =>
+                {
+                    if(GridGameManager.Instance.FactionManager.ActiveFaction.IsPlayerControlled)
+                        GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.PlayerPhaseState);
+                    else
+                        GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.EnemyPhaseState);
+                };
+            });
+        }
         private void PositionTargetClicked(IPosTargeted skillMixin, int x, int y, bool wait)
         {
              if (!skillMixin.Rooted)
@@ -200,23 +222,8 @@ namespace Game.Mechanics
                          var targets = skillMixin.GetAllTargets(selectedUnit, gridSystem.Tiles, x,y);
                          skillMixin.Activate(selectedUnit, gridSystem.Tiles, x,y);
                          LastSkillTargetPosition = new Vector2Int(x, y);
-                         if(wait)
-                            new GameplayCommands().Wait(selectedUnit);
-                         new GameplayCommands().ExecuteInputActions(()=>
-                         {
-                             Debug.Log("TRIGGER CANCEL");
-                             playerPhaseState.Feed(PPStateTrigger.Cancel);
-                             var task = new AfterBattleTasks(ServiceProvider.Instance.GetSystem<UnitProgressSystem>(),(Unit)selectedUnit, targets);
-                              task.StartTask();
-                              task.OnFinished += () =>
-                              {
-                                  if(GridGameManager.Instance.FactionManager.ActiveFaction.IsPlayerControlled)
-                                      GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.PlayerPhaseState);
-                                  else
-                                      GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.EnemyPhaseState);
-                              };
-                         });
-                       
+                         WaitAfterSkills(targets, wait);
+
                      }
                      else
                      {

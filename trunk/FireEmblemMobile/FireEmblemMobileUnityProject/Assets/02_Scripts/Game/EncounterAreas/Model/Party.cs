@@ -264,7 +264,8 @@ namespace Game.WorldMapStuff.Model
         void InitMember(Unit unit)
         {
             unit.Party = this;
-
+            Debug.Log("INIT UNIT "+unit.name);
+            unit.SkillManager.RefreshSkills();
         }
 
         public void AddGold(int gold)

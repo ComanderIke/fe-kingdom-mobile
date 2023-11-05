@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Game.GameActors.Units;
 using Game.GameActors.Units.OnGameObject;
 using Game.Manager;
@@ -19,8 +20,8 @@ namespace Game.GameInput
         private RaycastManager RaycastManager { get; set; }
         public DragManager DragManager { get; set; }
 
-        private bool dragInitiated;
-        private bool dragStarted;
+        private Dictionary<UnitInputController,bool> dragInitiated;
+        private Dictionary<UnitInputController,bool> dragStarted;
         private bool doubleClick;
         private float timerForDoubleClick;
         private const float DOUBLE_CLICK_TIME = 0.4f;
@@ -31,6 +32,8 @@ namespace Game.GameInput
         {
             DragManager = new DragManager(this);
             RaycastManager = new RaycastManager();
+            dragInitiated = new Dictionary<UnitInputController, bool>();
+            dragStarted = new Dictionary<UnitInputController, bool>();
         }
 
         public void Deactivate()
@@ -68,11 +71,12 @@ namespace Game.GameInput
         {
             // if (EventSystem.current.currentSelectedGameObject==null||EventSystem.current.currentSelectedGameObject.CompareTag(TagManager.UnitTag) && (dragStarted || dragInitiated))
             // {
-            if ((dragStarted || dragInitiated))
+            AddToDictionary(unitController);
+            if ((dragStarted[unitController] || dragInitiated[unitController]))
             {
                
-                dragStarted = false;
-                dragInitiated = true;
+                dragStarted[unitController] = false;
+                dragInitiated[unitController] = true;
                 if (unitController.unit.IsDragable()) 
                     
                     DragManager.Dragging(unitController.transform);
@@ -86,8 +90,9 @@ namespace Game.GameInput
 
         public void OnMouseDown(UnitInputController unitController)
         {
-            dragStarted = false;
-            dragInitiated = false;
+            AddToDictionary(unitController);
+            dragStarted[unitController] = false;
+            dragInitiated[unitController] = false;
             doubleClick = false;
             if (InputReceiver==null)
             {
@@ -130,13 +135,15 @@ namespace Game.GameInput
             }
 
             MouseUp?.Invoke(unitController.unit);
-            
-            if (DragManager.IsDragging)
+            DragManager.AddToDictionary(unitController.transform);
+            unitController.boxCollider.enabled = true;
+            if (DragManager.IsDragging[unitController.transform])
             {
                
                 DragManager.Update();// Update Dragmanager because he should notice first when MouseUp happens
-                dragStarted = false;
-                dragInitiated = false;
+                AddToDictionary(unitController);
+                dragStarted[unitController] = false;
+                dragInitiated[unitController] = false;
                 Unit.OnUnitActiveStateUpdated?.Invoke(unit, true, false);
                 var gridPos = RaycastManager.GetMousePositionOnGrid();
                 if (RaycastManager.ConnectedLatestHit())
@@ -144,7 +151,7 @@ namespace Game.GameInput
                     InputReceiver.ActorDragEnded(unit, (int)gridPos.x, (int)gridPos.y);
                 }
 
-                unitController.boxCollider.enabled = true;
+                // unitController.boxCollider.enabled = true;
             }
             else if (!CameraSystem.IsDragging && (unitSelectedBeforeClicking||( !GridGameManager.Instance.FactionManager.IsActiveFaction(unit.Faction)||doubleClick||unit.TurnStateManager.IsWaiting)))
             {
@@ -199,13 +206,21 @@ namespace Game.GameInput
            
         }
 
+        void AddToDictionary(UnitInputController unitInputController)
+        {
+            if(!dragStarted.ContainsKey(unitInputController))
+                dragStarted.Add(unitInputController,false);
+            if(!dragInitiated.ContainsKey(unitInputController))
+                dragInitiated.Add(unitInputController,false);
+        }
+
         public void StartDrag(Transform dragObject)
         {
             StartedDrag?.Invoke();
             var unitController = dragObject.GetComponent<UnitInputController>();
             var unit = unitController.unit;
-            
-            dragStarted = true;
+            AddToDictionary(unitController);
+            dragStarted[unitController] = true;
             InputReceiver.StartDraggingActor(unit);
             unitSelectedBeforeClicking = unit.TurnStateManager.IsSelected;
             if (!unit.TurnStateManager.IsSelected)

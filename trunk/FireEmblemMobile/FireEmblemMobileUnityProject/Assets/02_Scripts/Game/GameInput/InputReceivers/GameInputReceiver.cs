@@ -95,10 +95,15 @@ namespace Game.GameInput
         }
         void SetUnitToOriginPosition(bool deleteOtherGridObject=true, bool moveGameObject=true)
         {
-            Debug.Log("SetUnitToOriginPosition");
-            if(selectionDataProvider.SelectedActor!=null)
-                gridSystem.SetUnitPosition(selectionDataProvider.SelectedActor, selectionDataProvider.SelectedActor.GridComponent.OriginTile, deleteOtherGridObject, moveGameObject);
-           // selectionDataProvider.SelectedActor.SetToOriginPosition();
+            //Debug.Log("SetUnitToOriginPosition" + selectionDataProvider.SelectedActor.GameTransformManager.GameObject);
+            if (selectionDataProvider.SelectedActor != null)
+            {
+                Debug.Log("SetUnitToOriginPosition" + selectionDataProvider.SelectedActor.GameTransformManager.GameObject+" "+  selectionDataProvider.SelectedActor.GridComponent.OriginTile);
+                gridSystem.SetUnitPosition(selectionDataProvider.SelectedActor,
+                    selectionDataProvider.SelectedActor.GridComponent.OriginTile, deleteOtherGridObject,
+                    moveGameObject);
+            }
+            // selectionDataProvider.SelectedActor.SetToOriginPosition();
         }
         private void SetUnitToLastValidPosition()
         {
@@ -202,7 +207,8 @@ namespace Game.GameInput
             gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
             if (!gridSystem.GridLogic.IsTileFree(x, y))
             {
-                Debug.Log("Somehow clicked Down on non empty Tile");
+                var unit = ((Unit)(gridSystem.Tiles[x, y].GridObject));
+                Debug.Log("Somehow clicked Down on non empty Tile"+unit.Name+ unit.GridComponent.GridPosition.AsVector());
                 //ClickOnObject(x,y);
                 return;
             }
@@ -252,7 +258,7 @@ namespace Game.GameInput
 
                     return;
                 }
-                Debug.Log("Clicked on Grid: "+x+" "+y+" "+selectionDataProvider.SelectedActor );
+                Debug.Log("Clicked on Grid: "+x+" "+y+" "+selectionDataProvider.SelectedActor +" "+resetPosition);
                 if (gridSystem.GridLogic.IsFieldFreeAndActive(x, y) && selectionDataProvider.SelectedActor != null &&
                     (!selectionDataProvider.SelectedActor.TurnStateManager.HasMoved||(selectionDataProvider.SelectedActor.GridComponent.Canto>0&& !selectionDataProvider.SelectedActor.TurnStateManager.HasCantoed)))
                 {
@@ -461,7 +467,8 @@ namespace Game.GameInput
             private void AttackEnemy(IGridActor character, IGridObject enemy, List<Vector2Int> movePath)
             {
                 Debug.Log("ATTACK ENEMY: => RESET GRIDPOSITION => HIDE MOVE RANGE");
-                character.GridComponent.ResetPosition();
+                ((GridActorComponent)character.GridComponent).ResetPosition(false);
+                
                 gridSystem.HideMoveRange();
                 selectionDataProvider.ClearData();
                 /* Enemy is in attackRange already */

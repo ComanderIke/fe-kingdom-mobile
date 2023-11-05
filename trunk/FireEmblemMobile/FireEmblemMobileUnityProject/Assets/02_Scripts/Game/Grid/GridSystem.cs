@@ -361,7 +361,9 @@ namespace Game.Map
                     if(deleteOldGridObject|| (Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y].GridObject!=null &&Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y].GridObject.Equals(unit)))
                         Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y].GridObject = null;
                 }
-                
+
+                var u = (Unit)unit;
+                Debug.Log("Set Unit Position: "+u.Name+" "+x+" "+y+" "+unit.GridComponent.GridPosition.AsVector()+" "+deleteOldGridObject);
                 
                 unit.SetGridPosition(Tiles[x,y], moveGameObject);
                 Tiles[x, y].GridObject = unit;
@@ -628,6 +630,12 @@ namespace Game.Map
             {
                 ResetDangerArea();
             }
+        }
+
+        public void DeleteObjectAtTile(Tile gridComponentOriginTile)
+        {
+            Debug.Log("TODO TEST IF THIS WORKS AS INTENDED"+gridComponentOriginTile.X+" "+gridComponentOriginTile.Y);
+            gridComponentOriginTile.GridObject = null;
         }
     }
 }

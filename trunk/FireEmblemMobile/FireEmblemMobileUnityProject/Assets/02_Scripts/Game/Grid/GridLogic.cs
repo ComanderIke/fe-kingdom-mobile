@@ -216,7 +216,7 @@ namespace Game.Grid
 
         #endregion
 
-        public bool IsValidLocation(IGridActor unit, int sx, int sy, int x, int y, bool isAdjacent)
+        public bool IsValidLocation(IGridActor unit, int sx, int sy, int x, int y, bool isAdjacent, bool allyInvalid=false)
         {
             bool invalid = (x < 0) || (y < 0) || (x >= GridManager.width) || (y >= GridManager.height);
             var tile = Tiles[x, y];
@@ -232,6 +232,11 @@ namespace Game.Grid
                     if (tile.GridObject.IsEnemy(unit))
                     {
                         invalid = true;
+                    }
+                    else
+                    {
+                        if (allyInvalid)
+                            invalid = true;
                     }
 
                     if (isAdjacent)

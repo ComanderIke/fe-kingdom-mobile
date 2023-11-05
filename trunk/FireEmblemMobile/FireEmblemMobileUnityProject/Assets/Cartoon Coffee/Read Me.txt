@@ -1,0 +1,15 @@
+#Common Problem 1 - VFX in scene view looks different than game view.
+
+If the colors of the VFX look odd, it may be because it's suppose to utilize Unity's HDR features, but it's not enabled in your project. 
+
+To enable this you will need to change some of your project's settings.
+
+To do this, follow these steps.
+
+Edit > Project Settings... > Graphics > High(Tier3) > Uncheck "Use Defaults" Toggle > Toggle on "Use HDR"
+
+The VFX should now look as intended in both the scene view and game view.
+
+#Common Problem 2 - Error Message in Console
+
+If you have multiple of my VFX assets, you may encounter an error in the console. This may be due to have duplicates of the "ParticleShaderGUI" script. Delete any multiples of this script in your project, and leave only 1 in your project.

@@ -116,7 +116,7 @@ namespace Game.Mechanics
             {
                 if (skillMixin is CombatSkillMixin csm)
                 {
-                    csm.Activate((Unit)attacker, (Unit)defender);
+                    csm.Activate((Unit)attacker, (Unit)defender, true);
                 }
                 else if (skillMixin is CombatPassiveMixin cpm)
                 {

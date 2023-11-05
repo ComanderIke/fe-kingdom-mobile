@@ -17,6 +17,7 @@ namespace Game.GameActors.Units.Skills
         private Unit unit;
         private int activatedLevel = -1;
         public bool preventDouble = true;
+        private bool activated = false;
         [HideInInspector]public int Uses { get; set; }
         
         public int GetMaxUses(int level)
@@ -45,8 +46,17 @@ namespace Game.GameActors.Units.Skills
             ServiceProvider.Instance.GetSystem<BattleSystem>().AddAttackerActivatedSkills(this);
         }
 
-        public void Activate(Unit user, Unit enemy)
+        public void Activate(Unit user, Unit enemy, bool reduceHp=false)
         {
+            if (activated)
+                return;
+            if (reduceHp)
+            {
+                user.Hp -= hpCostPerLevel[skill.level];
+                Uses--;
+            }
+
+            activated = true;
             this.unit = user;
             this.target = enemy;
             this.activatedLevel = skill.Level;
@@ -73,6 +83,9 @@ namespace Game.GameActors.Units.Skills
 
         public void Deactivate()
         {
+            if (!activated)
+                return;
+            activated = false;
             unit.BattleComponent.BattleStats.SetPreventDoubleAttacks(false);
             foreach (var skilleffect in skillEffectMixins)
             {

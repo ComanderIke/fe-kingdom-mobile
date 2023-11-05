@@ -158,8 +158,12 @@ namespace Game.Mechanics
         }
         public void UpdateAttackpreview()
         {
-            var preview = GridGameManager.Instance.GetSystem<BattleSystem>().GetBattlePreview(currentBattleActor, currentAttackedTarget, currentAttackPosition);
-            OnUpdateAttackPreview?.Invoke(preview);
+            if (currentBattleActor != null && currentAttackedTarget != null&& currentAttackPosition!=null)
+            {
+                var preview = GridGameManager.Instance.GetSystem<BattleSystem>()
+                    .GetBattlePreview(currentBattleActor, currentAttackedTarget, currentAttackPosition);
+                OnUpdateAttackPreview?.Invoke(preview);
+            }
         }
 
         private IBattleActor currentBattleActor;

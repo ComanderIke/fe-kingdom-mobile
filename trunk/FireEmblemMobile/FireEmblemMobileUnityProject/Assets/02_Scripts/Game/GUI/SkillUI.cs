@@ -34,10 +34,12 @@ namespace LostGrace
         [SerializeField] private GameObject selectableVfx;
         [SerializeField] private Image combatSkillActive;
         [SerializeField] private Vector2 bigSize;
+        [SerializeField] private Button button;
         private bool showTooltips = false;
         private bool blessed;
-        public void SetSkill(Skill skill, bool big, bool blessed, bool showTooltips = false)
+        public void SetSkill(Skill skill, bool big, bool blessed, bool showTooltips = false, bool interactable=true)
         {
+            
             deleteButton.SetActive(false);
             this.blessed = blessed;
             this.showTooltips = showTooltips;
@@ -48,11 +50,26 @@ namespace LostGrace
                 combatSkillActive.gameObject.SetActive(false);
             if(big)
                 (transform as RectTransform).sizeDelta = bigSize;
-            if (skill.IsActive())
+            button.interactable = interactable;
+            background.raycastTarget = interactable;
+            if (skill.IsActive() || skill.IsCombat())
             {
-                uses.text = skill.FirstActiveMixin.Uses + "/" +
-                            skill.FirstActiveMixin.maxUsesPerLevel[skill.Level];
-                hpCost.text = "-"+ skill.FirstActiveMixin.hpCostPerLevel[skill.Level];
+                if (skill.FirstActiveMixin != null)
+                {
+
+
+                    uses.text = skill.FirstActiveMixin.Uses + "/" +
+                                skill.FirstActiveMixin.maxUsesPerLevel[skill.Level];
+                    hpCost.text = "-" + skill.FirstActiveMixin.hpCostPerLevel[skill.Level];
+                }
+                else
+                {
+                    uses.text = skill.CombatSkillMixin.Uses + "/" +
+                                skill.CombatSkillMixin.maxUsesPerLevel[skill.Level];
+                    hpCost.text = "-" + skill.CombatSkillMixin.hpCostPerLevel[skill.Level];
+                }
+
+
                 if (!big)
                 {
                     hpTextGo.transform.localScale = new Vector3(scaleSmall, scaleSmall, scaleSmall);

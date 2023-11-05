@@ -52,7 +52,15 @@ namespace Game.GameInput
 
         public void OnMouseDrag()
         {
-            touchInputReceiver?.OnMouseDrag(this);
+            if (!UIClickChecker.CheckUIObjectsInPosition())
+            {
+                //Debug.Log("ON MOUSE Drag");
+                touchInputReceiver?.OnMouseDrag(this);
+            }
+            else
+            {
+                
+            }
         }
 
         private bool downClicked = false;
@@ -67,6 +75,7 @@ namespace Game.GameInput
                     holdDuration += Time.deltaTime;
                     if (holdDuration > HOLD_DURATION)
                     {
+                        Debug.Log("ON MOUSE HOLD");
                         touchInputReceiver.OnMouseHold(this);
                     }
                 }
@@ -80,6 +89,7 @@ namespace Game.GameInput
             {
                 downClicked = false;
                 holdDuration = 0;
+                boxCollider.enabled = true;
             }
             
         }
@@ -90,7 +100,7 @@ namespace Game.GameInput
             {
                 downClicked = true;
                 holdDuration = 0;
-                //Debug.Log("NoUIOnUnit");
+                Debug.Log("ON MOUSE DOWN");
                 touchInputReceiver?.OnMouseDown(this);
             }
         }
@@ -99,6 +109,7 @@ namespace Game.GameInput
             
             if (!UIClickChecker.CheckUIObjectsInPosition())
             {
+                Debug.Log("ON MOUSE UP");
                 touchInputReceiver?.OnMouseUp(this);
             }
         }
@@ -112,7 +123,10 @@ namespace Game.GameInput
         
         public void OnDrop()
         {
-            touchInputReceiver?.OnDrop(this);
+            if (!UIClickChecker.CheckUIObjectsInPosition())
+            {
+                touchInputReceiver?.OnDrop(this);
+            }
         }
     }
 }

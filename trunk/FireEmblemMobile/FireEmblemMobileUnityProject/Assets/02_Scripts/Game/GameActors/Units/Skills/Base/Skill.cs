@@ -170,5 +170,10 @@ namespace Game.GameActors.Units.Skills
         {
             Level++;
         }
+
+        public bool IsCombat()
+        {
+            return CombatSkillMixin!=null;
+        }
     }
 }

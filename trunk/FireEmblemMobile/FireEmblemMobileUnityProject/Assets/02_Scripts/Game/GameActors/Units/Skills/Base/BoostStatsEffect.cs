@@ -78,7 +78,7 @@ namespace Game.GameActors.Units.Skills
                     level++;
                 
                 string upgLabel = BonusAttributes[level].GetTooltipValue();
-                list.Add(new EffectDescription(attributeslabel, valueLabel, upgLabel));
+                list.Add(new EffectDescription(attributeslabel, "+"+valueLabel, "+"+upgLabel));
             }
             if (level < BonusStats.Length)
             {
@@ -93,7 +93,7 @@ namespace Game.GameActors.Units.Skills
 
                 for (int i = 0; i < bonusStatsLabels.Count; i++)
                 {
-                    list.Add(new EffectDescription(bonusStatsLabels[i], bonusStatsValues[i], bonusStatsUpgrades[i]));
+                    list.Add(new EffectDescription(bonusStatsLabels[i], "+"+bonusStatsValues[i], "+"+bonusStatsUpgrades[i]));
                 }
             }
 

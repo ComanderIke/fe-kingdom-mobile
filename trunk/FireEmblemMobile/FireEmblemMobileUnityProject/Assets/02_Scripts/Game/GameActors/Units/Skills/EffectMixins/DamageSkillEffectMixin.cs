@@ -13,7 +13,7 @@ namespace Game.GameActors.Units.Skills
     {
         public DamageType damageType;
         public bool damageTypeSameAsAttack;
-        public int []dmg;
+        public int[] dmg;
         public AttributeType scalingType;
         public float[] scalingcoeefficient;
         public bool lethalDmg;
@@ -21,14 +21,16 @@ namespace Game.GameActors.Units.Skills
 
         public override void Activate(Unit target, Unit caster, int level)
         {
-            
 
-            Debug.Log("Activate Damage: "+CalculateDamage(caster, target,level)+" "+damageType);
-            if(skillTransferData!=null)
-                MonoUtility.DelayFunction(()=>target.InflictFixedDamage(caster, CalculateDamage(caster, target,level), damageType), (float)skillTransferData.data);
+
+            Debug.Log("Activate Damage: " + CalculateDamage(caster, target, level) + " " + damageType);
+            if (skillTransferData != null)
+                MonoUtility.DelayFunction(
+                    () => target.InflictFixedDamage(caster, CalculateDamage(caster, target, level), damageType),
+                    (float)skillTransferData.data);
             else
-                target.InflictFixedDamage(caster, CalculateDamage(caster, target,level), damageType);
-            
+                target.InflictFixedDamage(caster, CalculateDamage(caster, target, level), damageType);
+
 
         }
 
@@ -36,21 +38,31 @@ namespace Game.GameActors.Units.Skills
         {
             return damageType;
         }
-        public int CalculateDamage(Unit caster,Unit target, int level)
+
+        public int CalculateDamage(Unit caster, Unit target, int level)
         {
             if (lethalDmg)
             {
                 return target.Hp;
             }
+
             int baseDamageg = dmg[level];
 
-            if (scalingcoeefficient.Length > level + 1)
+            if (scalingcoeefficient.Length > level)
             {
-                baseDamageg += (int)(caster.Stats.CombinedAttributes().GetAttributeStat(scalingType) *
-                                       scalingcoeefficient[level]);
+                if (scalingType == AttributeType.ATK)
+                {
+                    baseDamageg += (int)(caster.BattleComponent.BattleStats.GetDamage()* scalingcoeefficient[level]);
+                }
+                else
+                {
+                    baseDamageg += (int)(caster.Stats.CombinedAttributes().GetAttributeStat(scalingType) *
+                                         scalingcoeefficient[level]);
+                }
+
             }
 
-            return baseDamageg ;
+            return baseDamageg;
         }
 
         public override void Deactivate(Unit user, Unit caster, int skillLevel)
@@ -67,7 +79,8 @@ namespace Game.GameActors.Units.Skills
             {
                 valueLabel += scalingcoeefficient[level];
             }
-            if (level+1 < scalingcoeefficient.Length)
+
+            if (level + 1 < scalingcoeefficient.Length)
             {
                 upgLabel += scalingcoeefficient[level + 1];
             }
@@ -79,11 +92,13 @@ namespace Game.GameActors.Units.Skills
             return new List<EffectDescription>()
             {
                 new EffectDescription("Damage: ", "" + dmg[level],
-                    "" + ((level+1<dmg.Length)?dmg[level + 1]:dmg[level])),
-                new EffectDescription("Scaling "+scalingType+": ", valueLabel, upgLabel)
+                    "" + ((level + 1 < dmg.Length) ? dmg[level + 1] : dmg[level])),
+                new EffectDescription("Scaling " + scalingType + ": ", valueLabel, upgLabel)
             };
         }
 
-      
+
     }
 }
+
+     

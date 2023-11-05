@@ -65,6 +65,7 @@ namespace Game.Mechanics.Battle
         public List<ImmunityType> Immunities { get; set; }
         public BonusAttackStats BonusAttackStats { get; set; }
         public int WrathDamage { get; set; }
+        public int MovementToDmgMultiplier { get; set; }
 
         public enum ImmunityType
         {
@@ -148,10 +149,15 @@ namespace Game.Mechanics.Battle
 
             attack += owner.Stats.CombinedBonusStats().Attack;
             attack += WrathDamage;
-          
-            if (MovementToDmg)
-                attack += ((GridActorComponent)owner.GridComponent).MovedTileCount;
 
+            if (MovementToDmg)
+            {
+                attack += ((GridActorComponent)owner.GridComponent).MovedTileCount* MovementToDmgMultiplier;
+                Debug.Log("Get Damage: "+((GridActorComponent)owner.GridComponent).MovedTileCount);
+            }
+             
+
+            
             return (int) Mathf.Clamp(attack, 0, Mathf.Infinity);
         }
 

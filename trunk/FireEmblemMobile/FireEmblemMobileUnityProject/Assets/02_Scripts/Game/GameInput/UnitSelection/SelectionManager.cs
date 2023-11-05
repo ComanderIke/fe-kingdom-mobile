@@ -54,7 +54,7 @@ namespace Game.GameInput
 
         public void SetUndoAbleActor(IGridActor selectedActor)
         {
-            if (SelectedActor.TurnStateManager.HasCantoed || SelectedActor.TurnStateManager.HasAttacked)
+            if (selectedActor.TurnStateManager.HasCantoed || selectedActor.TurnStateManager.HasAttacked)
                 return;
                 
             undoAbleActor = selectedActor;
