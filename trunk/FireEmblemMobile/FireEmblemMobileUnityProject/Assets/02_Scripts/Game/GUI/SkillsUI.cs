@@ -17,6 +17,8 @@ namespace LostGrace
 
         private List<SkillUI> instantiatedButtons;
         private Unit unit;
+        [SerializeField]private bool showToolTips;
+        [SerializeField]private bool interactable = true;
         public void Show(Unit unit, bool showDeleteIfFull=false)
         {
             this.unit = unit;
@@ -42,7 +44,7 @@ namespace LostGrace
             var go = Instantiate(prefab, transform);
             var skillUI = go.GetComponent<SkillUI>();
             instantiatedButtons.Add(skillUI);
-            skillUI.SetSkill(skill, false, unit.Blessing!=null);
+            skillUI.SetSkill(skill, false, unit.Blessing!=null, showToolTips, interactable);
             if(showDeleteIfFull)
                 skillUI.ShowDelete();
             skillUI.OnDeleteClicked += DeleteClicked;

@@ -31,7 +31,7 @@ namespace Game.GUI
             negativeStateParent.DeleteAllChildren();
             positiveStateParent.DeleteAllChildren();
             statusEffectManager.OnStatusEffectAdded += AddStatusEffect;
-            statusEffectManager.OnStatusEffectRemoved-= RemoveStatusEffect;
+            statusEffectManager.OnStatusEffectRemoved+= RemoveStatusEffect;
             foreach (var state in statusEffectManager.Buffs)
             {
                 AddStatusEffect(unit, state);

@@ -146,6 +146,23 @@ namespace Game.GameActors.Units
             }
         }
 
+        public void GetInitiatedOnBattle(IBattleActor opponent)
+        {
+            if (battleEvents.ContainsKey(BattleEvent.InitiatedOnCombat))
+            {
+                foreach (var listener in battleEvents[BattleEvent.InitiatedOnCombat])
+                {
+                    listener.Activate((Unit)owner,(Unit)opponent);
+                }
+            }
+            if (battleEvents.ContainsKey(BattleEvent.DuringCombat))
+            {
+                foreach (var listener in battleEvents[BattleEvent.DuringCombat])
+                {
+                    listener.Activate((Unit)owner,(Unit)opponent);
+                }
+            }
+        }
         public void InitiatesBattle(IBattleActor opponent)
         {
             if (battleEvents.ContainsKey(BattleEvent.InitiateCombat))
@@ -155,6 +172,15 @@ namespace Game.GameActors.Units
                     listener.Activate((Unit)owner,(Unit)opponent);
                 }
             }
+            if (battleEvents.ContainsKey(BattleEvent.DuringCombat))
+            {
+                foreach (var listener in battleEvents[BattleEvent.DuringCombat])
+                {
+                    listener.Activate((Unit)owner,(Unit)opponent);
+                }
+            }
+
+            opponent.BattleComponent.GetInitiatedOnBattle(owner);
         }
         public void BattleEnded(IBattleActor opponent)
         {
@@ -162,7 +188,17 @@ namespace Game.GameActors.Units
             {
                 foreach (var listener in battleEvents[BattleEvent.InitiateCombat])
                 {
-                    listener.Deactivate((Unit)owner,(Unit)opponent);
+                    listener.Deactivate((Unit)owner, (Unit)opponent);
+                }
+
+                
+            }
+            if (battleEvents.ContainsKey(BattleEvent.DuringCombat))
+            {
+                Debug.Log("OWNER: "+owner);
+                foreach (var listener in battleEvents[BattleEvent.DuringCombat])
+                {
+                    listener.Deactivate((Unit)owner, (Unit)opponent);
                 }
             }
         }

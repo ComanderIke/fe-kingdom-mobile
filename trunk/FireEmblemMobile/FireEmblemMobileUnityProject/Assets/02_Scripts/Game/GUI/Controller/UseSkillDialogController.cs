@@ -1,5 +1,6 @@
 ﻿using System;
 using Game.GameActors.Units.Skills;
+using LostGrace;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,15 +8,12 @@ using UnityEngine.UI;
 public class UseSkillDialogController : OKCancelDialogController
 {
     [SerializeField] private TextMeshProUGUI skillName;
-    [SerializeField] private Image skillIcon;
-    [SerializeField] private TextMeshProUGUI skillCost;
-    [SerializeField] private TextMeshProUGUI skillUses;
+    [SerializeField] private SkillUI skillUI;
     public void Show(Skill skill, Action action)
     {
-        skillIcon.sprite = skill.Icon;
+        
         skillName.text = skill.Name;
-        skillCost.text = ""+0;
-        skillUses.text = 0 + "/" + 0;
+        skillUI.SetSkill(skill, true, false,false,false);
         base.Show(skill.Description, action);
 
      

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8c0bad0394f408eb8061a67ce75cb13, type: 3}
   m_Name: CombatMixin
   m_EditorClassIdentifier: 
+  toogleAble: 0
   skillEffectMixins:
   - {fileID: 11400000, guid: 5cb499e0041195047ae183f056b9970c, type: 2}
   CombatState: 0
@@ -20,8 +21,8 @@ MonoBehaviour:
     Conditions:
     - CompareType: 0
       Conditions:
-      - {fileID: 11400000, guid: 2524426e0b4085444af042fa0d087a5b, type: 2}
       - {fileID: 11400000, guid: 141e9e2085ea49d4193e525646dc1619, type: 2}
+      - {fileID: 11400000, guid: 2524426e0b4085444af042fa0d087a5b, type: 2}
     - CompareType: 0
       Conditions:
       - {fileID: 11400000, guid: 9e62fcc40868fed4b815da4a2c94e2e1, type: 2}

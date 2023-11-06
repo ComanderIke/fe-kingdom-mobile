@@ -174,10 +174,15 @@ namespace LostGrace
 
                     areaTypePreview.Show(ptsm.TargetArea, size, EffectType.Heal,
                             upgSize, ptsm.Rooted);
-                    
-                    var castline = GameObject.Instantiate(linePrefab, lineContainer);
-                    bool castUpgrade = castRange != upgcastRange && upgrade;
-                    castline.GetComponent<UISkillEffectLine>().SetValues("Castrange: ",""+(castUpgrade?upgcastRange:castRange),castUpgrade);
+
+                    if (castRange != 0)
+                    {
+                        var castline = GameObject.Instantiate(linePrefab, lineContainer);
+                        bool castUpgrade = castRange != upgcastRange && upgrade;
+                        castline.GetComponent<UISkillEffectLine>().SetValues("Castrange: ",
+                            "" + (castUpgrade ? upgcastRange : castRange), castUpgrade);
+                    }
+
                     // line = GameObject.Instantiate(linePrefab, lineContainer);
                     // line.GetComponent<UISkillEffectLine>().SetValues("Damage: ",""+damage,""+upgDamage);
                     var effectDescriptions = ptsm.GetEffectDescription(unit,skill.Level);

@@ -133,7 +133,7 @@ namespace Game.Mechanics
                 foreach (var c in factionManager.ActiveFaction.Units)
                 {
                     c.TurnStateManager.EndTurn();
-                    
+                  
                     //c.gameObject.GetComponent<CharacterScript>().SetSelected(false);
                 }
             }
@@ -158,6 +158,13 @@ namespace Game.Mechanics
             OnEndTurn?.Invoke();
             if (factionManager.ActivePlayerNumber == 0){
                 TurnCount++;
+                foreach(var faction in factionManager.Factions)
+                {
+                    foreach (var c in faction.Units)
+                    {
+                        c.StatusEffectManager.UpdateTurn();
+                    }
+                }
                 OnStartTurn?.Invoke();
                 //Debug.Log("Update SP Bars: "+ factionManager.ActiveFaction.Id);
 

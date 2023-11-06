@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Game.GameActors.Units.CharStateEffects;
 using Game.GameResources;
+using UnityEngine;
 
 namespace Game.GameActors.Units
 {
@@ -34,9 +35,10 @@ namespace Game.GameActors.Units
         //     StatusEffects.Remove(statusEffect);
         //     OnStatusEffectRemoved?.Invoke(statusEffect);
         // }
-        public void AddBuff(Buff buff)
+        public void AddBuff(Buff buff, Unit caster, int level)
         {
             Buffs.Add(buff);
+            buff.Apply(caster, unit, level);
             OnStatusEffectAdded?.Invoke(unit, buff);
         }
         public void AddDebuff(Debuff debuff)
@@ -55,6 +57,7 @@ namespace Game.GameActors.Units
         public void RemoveBuff(Buff buff)
         {
             Buffs.Remove(buff);
+            buff.Unapply(unit);
             OnStatusEffectRemoved?.Invoke(unit, buff);
         }
         public void RemoveDebuff(Debuff debuff)
@@ -72,11 +75,12 @@ namespace Game.GameActors.Units
         }
 
 
-        public void Update()
+        public void UpdateTurn()
         {
             var debuffEnd = Debuffs.Where(d => d.TakeEffect(unit)).ToList();
             var buffEnd = Buffs.Where(b => b.TakeEffect(unit)).ToList();
             var statModifierEnd = StatModifiers.Where(s => s.TakeEffect(unit)).ToList();
+            Debug.Log("UPDATE TURN BUFF END: "+buffEnd.Count);
             foreach (var d in debuffEnd) RemoveDebuff(d);
             foreach (var b in buffEnd) RemoveBuff(b);
             foreach (var s in statModifierEnd) RemoveStatModifier(s);

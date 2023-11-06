@@ -92,7 +92,23 @@ namespace Game.Mechanics
             {
                 if (pts.Rooted)
                 {
-                    gridGameManager.GetSystem<GridSystem>().ShowRootedCastRange(selectionSystem.SelectedCharacter, selectionSystem.SelectedSkill.Level, pts);
+                    if (pts.GetRange(pts.skill.level) == 0)
+                    {
+                        gridSystem.HideMoveRange();
+                        gridGameManager.GetSystem<GridSystem>().ShowRootedCastRange(selectionSystem.SelectedCharacter,
+                            selectionSystem.SelectedSkill.Level, pts);
+                        gridSystem.ShowRootedCast(selectedUnit.GridComponent.GridPosition.AsVector(),
+                            pts.GetSize(), pts.TargetArea, pts.EffectType, selectionSystem.SelectedCharacter.GridComponent.GridPosition.X, selectionSystem.SelectedCharacter.GridComponent.GridPosition.Y);
+
+                    }
+                    else
+                    {
+
+                        gridGameManager.GetSystem<GridSystem>().ShowRootedCastRange(selectionSystem.SelectedCharacter,
+                            selectionSystem.SelectedSkill.Level, pts);
+                    }
+
+
                 }
                 else
                 {
@@ -244,6 +260,7 @@ namespace Game.Mechanics
              }
              else
              {
+                 Debug.Log("ROOTED SKILL POS TARGET CLICKED");
                  if (gridSystem.IsTargetAble(x, y))
                  {
                      if (gridSystem.cursor.GetCurrentTile() == gridSystem.Tiles[x, y])
@@ -260,20 +277,25 @@ namespace Game.Mechanics
                      }
                      else
                      {
-                         gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
-                         gridSystem.HideCast();
-                         if(skillMixin is ActiveSkillMixin s)
-                             ShowSkillCastRange(s);
-                         else if(skillMixin is Item)
-                             ShowItemCastRange();
-                         gridSystem.ShowRootedCast(selectedUnit.GridComponent.GridPosition.AsVector(),
-                             skillMixin.GetSize(), skillMixin.TargetArea, skillMixin.EffectType, x, y);
+                         Debug.Log("ROOTED SKILL POS ROOTED CAST");
+                       
                      }
                  }
                     
              }
         }
 
+        void ShowRootedPosSkillEffectRange(IPosTargeted skillMixin, int x, int y)
+        {
+            gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
+            gridSystem.HideCast();
+            if(skillMixin is ActiveSkillMixin s)
+                ShowSkillCastRange(s);
+            else if(skillMixin is Item)
+                ShowItemCastRange();
+            gridSystem.ShowRootedCast(selectedUnit.GridComponent.GridPosition.AsVector(),
+                skillMixin.GetSize(), skillMixin.TargetArea, skillMixin.EffectType, x, y);
+        }
         private bool IsInCastRange(int x, int y)
         {
             if (selectedSkill.FirstActiveMixin is PositionTargetSkillMixin pts)

@@ -8,6 +8,7 @@ namespace Game.GameActors.Units.Skills
     [CreateAssetMenu(menuName = "GameData/Skills/Effectmixin/ApplyBuff", fileName = "ApplyBuffSkillEffect")]
     public class ApplyBuffSkillEffectMixin : UnitTargetSkillEffectMixin
     {
+        public GameObject effect;
         public float[] applyChance;
         public Buff appliedBuff;
         public StatModifier AppliedStatModifier;
@@ -19,8 +20,10 @@ namespace Game.GameActors.Units.Skills
 
         public override void Activate(Unit target,Unit caster, int level)
         {
+            if (effect != null)
+                GameObject.Instantiate(effect, target.GameTransformManager.GetCenterPosition(), Quaternion.identity);
             if (appliedBuff != null)
-                target.StatusEffectManager.AddBuff(Instantiate(appliedBuff));
+                target.StatusEffectManager.AddBuff(Instantiate(appliedBuff), caster, level);
             if (appliedDebuff != null)
                 target.StatusEffectManager.AddDebuff(Instantiate(appliedDebuff));
             if (AppliedStatModifier!= null)

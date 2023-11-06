@@ -15,7 +15,7 @@ D:/Projects/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProjec
 -logFile
 Logs/AssetImportWorker2.log
 -srvPort
-54544
+54326
 Successfully changed project path to: D:/Projects/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject
 D:/Projects/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -47,12 +47,12 @@ D:/Projects/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProjec
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [18328] Host "[IP] 192.168.0.11 [Port] 0 [Flags] 2 [Guid] 3776292353 [EditorId] 3776292353 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-N1UFFTN) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+Player connection [29144] Host "[IP] 192.168.0.11 [Port] 0 [Flags] 2 [Guid] 974218965 [EditorId] 974218965 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-N1UFFTN) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
 
-Player connection [18328] Host "[IP] 192.168.0.11 [Port] 0 [Flags] 2 [Guid] 3776292353 [EditorId] 3776292353 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-N1UFFTN) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [29144] Host "[IP] 192.168.0.11 [Port] 0 [Flags] 2 [Guid] 974218965 [EditorId] 974218965 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-N1UFFTN) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
 
 [Physics::Module] Initialized MultithreadedJobDispatcher with {0} workers.
-Refreshing native plugins compatible for Editor in 134.72 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 110.66 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2021.3.31f1 (3409e2af086f)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2021.3.31f1/Editor/Data/Resources/UnitySubsystems
@@ -71,44 +71,44 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2021.3.31f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2021.3.31f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2021.3.31f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56100
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56428
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.3.31f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.3.31f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.3.31f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.004108 seconds.
+Registered in 0.004040 seconds.
 Native extension for WindowsStandalone target not found
 [usbmuxd] Start listen thread
 [usbmuxd] Listen thread started
 Native extension for iOS target not found
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 188 ms
-Refreshing native plugins compatible for Editor in 104.68 ms, found 3 plugins.
+Android Extension - Scanning For ADB Devices 176 ms
+Refreshing native plugins compatible for Editor in 98.18 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.757 seconds
+- Completed reload, in  0.697 seconds
 Domain Reload Profiling:
-	ReloadAssembly (757ms)
-		BeginReloadAssembly (77ms)
+	ReloadAssembly (697ms)
+		BeginReloadAssembly (67ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (1ms)
-		EndReloadAssembly (612ms)
-			LoadAssemblies (75ms)
+			CreateAndSetChildDomain (0ms)
+		EndReloadAssembly (564ms)
+			LoadAssemblies (66ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (81ms)
+			SetupTypeCache (71ms)
 			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (20ms)
-			SetupLoadedEditorAssemblies (478ms)
+			RebuildScriptCaches (19ms)
+			SetupLoadedEditorAssemblies (443ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (280ms)
+				InitializePlatformSupportModulesInManaged (254ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (105ms)
+				RefreshPlugins (98ms)
 				BeforeProcessingInitializeOnLoad (1ms)
-				ProcessInitializeOnLoadAttributes (61ms)
+				ProcessInitializeOnLoadAttributes (60ms)
 				ProcessInitializeOnLoadMethodAttributes (30ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
@@ -116,41 +116,41 @@ Domain Reload Profiling:
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.004588 seconds.
+Registered in 0.003868 seconds.
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory is not a mono symbol file
 Native extension for WindowsStandalone target not found
 Native extension for iOS target not found
 Native extension for Android target not found
-Refreshing native plugins compatible for Editor in 107.49 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 98.85 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Package Manager log level set to [2]
 [Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
 [Package Manager] Cannot connect to Unity Package Manager local server
 Mono: successfully reloaded assembly
-- Completed reload, in  1.587 seconds
+- Completed reload, in  1.562 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1587ms)
-		BeginReloadAssembly (89ms)
+	ReloadAssembly (1562ms)
+		BeginReloadAssembly (100ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (4ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (15ms)
-		EndReloadAssembly (1427ms)
-			LoadAssemblies (84ms)
+			CreateAndSetChildDomain (21ms)
+		EndReloadAssembly (1391ms)
+			LoadAssemblies (88ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (269ms)
+			SetupTypeCache (259ms)
 			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (80ms)
-			SetupLoadedEditorAssemblies (963ms)
+			RebuildScriptCaches (79ms)
+			SetupLoadedEditorAssemblies (940ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (24ms)
+				InitializePlatformSupportModulesInManaged (21ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (108ms)
-				BeforeProcessingInitializeOnLoad (100ms)
-				ProcessInitializeOnLoadAttributes (598ms)
-				ProcessInitializeOnLoadMethodAttributes (128ms)
+				RefreshPlugins (99ms)
+				BeforeProcessingInitializeOnLoad (96ms)
+				ProcessInitializeOnLoadAttributes (590ms)
+				ProcessInitializeOnLoadMethodAttributes (130ms)
 				AfterProcessingInitializeOnLoad (4ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
@@ -162,12 +162,12 @@ Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not fou
 Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
 Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
 Launched and connected shader compiler UnityShaderCompiler.exe after 0.03 seconds
-Refreshing native plugins compatible for Editor in 1.53 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 1.62 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 6560 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 96 unused Assets / (2.0 MB). Loaded Objects now: 7080.
-Memory consumption went from 363.3 MB to 361.3 MB.
-Total: 6.456600 ms (FindLiveObjects: 0.388900 ms CreateObjectMapping: 0.166300 ms MarkObjects: 5.489100 ms  DeleteObjects: 0.411400 ms)
+Unloading 6564 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 96 unused Assets / (2.0 MB). Loaded Objects now: 7084.
+Memory consumption went from 363.4 MB to 361.4 MB.
+Total: 5.921500 ms (FindLiveObjects: 0.384100 ms CreateObjectMapping: 0.165900 ms MarkObjects: 4.869700 ms  DeleteObjects: 0.500900 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
@@ -183,71 +183,1367 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  Time since last request: 540442.472616 seconds.
-  path: Assets/07_GameData/Gods/Ares/AresSpriteSet.asset
-  artifactKey: Guid(736ff125ac6810a46b7950ef1040543e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+  Time since last request: 608317.884986 seconds.
+  path: Assets/07_GameData/Skills/Cavalier/Stride/Stride_Buff_V3 Variant.prefab
+  artifactKey: Guid(e30f9c30ff1830c42bd572eeaac956db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/Gods/Ares/AresSpriteSet.asset using Guid(736ff125ac6810a46b7950ef1040543e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2f427d0842f39beabf1026e5aafda288') in 0.038284 seconds 
+Start importing Assets/07_GameData/Skills/Cavalier/Stride/Stride_Buff_V3 Variant.prefab using Guid(e30f9c30ff1830c42bd572eeaac956db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3e70bab9489b979e5d64717dbcbf43ab') in 0.232306 seconds 
+Number of asset objects unloaded after import = 75
+========================================================================
+Received Import Request.
+  Time since last request: 11.194295 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Materials/CartoonCoffee_Arrow_006-Basic-[1.0].mat
+  artifactKey: Guid(8cc6ca6c0b3bf7b4db7fcce8c0511f60) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Materials/CartoonCoffee_Arrow_006-Basic-[1.0].mat using Guid(8cc6ca6c0b3bf7b4db7fcce8c0511f60) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'eeefa42e07c66a62d75d218d3a4db31c') in 0.034474 seconds 
 Number of asset objects unloaded after import = 6
 ========================================================================
 Received Import Request.
-  Time since last request: 2.675577 seconds.
-  path: Assets/07_GameData/Dialog/DialogEvents/Memory/MemoryGameData.asset
-  artifactKey: Guid(73c5243b9ebc4d54a9d1ddce843aa731) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+  Time since last request: 1.665654 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Materials/CartoonCoffee_Glow_001-Basic-[1.0].mat
+  artifactKey: Guid(a052b79a1aa0f7d4ba473bc15519925c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/Dialog/DialogEvents/Memory/MemoryGameData.asset using Guid(73c5243b9ebc4d54a9d1ddce843aa731) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '908b708bd6c74dcae9504b3914c3013c') in 0.011031 seconds 
-Number of asset objects unloaded after import = 11
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Materials/CartoonCoffee_Glow_001-Basic-[1.0].mat using Guid(a052b79a1aa0f7d4ba473bc15519925c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a83d4f0ed81a91a2cebd3087642ecb11') in 0.012514 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.364638 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Materials/CartoonCoffee_Light_Ray_004-Add-[1.0].mat
+  artifactKey: Guid(72a6a1db034cde94c86fcf8141f3538b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Materials/CartoonCoffee_Light_Ray_004-Add-[1.0].mat using Guid(72a6a1db034cde94c86fcf8141f3538b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1c222585363fad8cce722860a8871986') in 0.014489 seconds 
+Number of asset objects unloaded after import = 4
+========================================================================
+Received Import Request.
+  Time since last request: 1.381268 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Materials/CartoonCoffee_Circle_Ring_003-Basic-[1.0].mat
+  artifactKey: Guid(f43a115677f419d429466b2bb2cd8e9b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Materials/CartoonCoffee_Circle_Ring_003-Basic-[1.0].mat using Guid(f43a115677f419d429466b2bb2cd8e9b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '81ba44b90bad0d6ecd0e4f72888f2666') in 0.016709 seconds 
+Number of asset objects unloaded after import = 5
+========================================================================
+Received Import Request.
+  Time since last request: 75.761063 seconds.
+  path: Assets/07_GameData/Skills/Cavalier/Stride/Stride_Buff_V3 Variant.prefab
+  artifactKey: Guid(e30f9c30ff1830c42bd572eeaac956db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/Cavalier/Stride/Stride_Buff_V3 Variant.prefab using Guid(e30f9c30ff1830c42bd572eeaac956db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bc548f930c80c5e4d34b41a4e8776403') in 0.025731 seconds 
+Number of asset objects unloaded after import = 65
+========================================================================
+Received Import Request.
+  Time since last request: 159.586413 seconds.
+  path: Assets/07_GameData/Skills/Cavalier/Stride/ApplyBuffSkillEffect.asset
+  artifactKey: Guid(4b96b5422079d3d4096de21dae90adf1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/Cavalier/Stride/ApplyBuffSkillEffect.asset using Guid(4b96b5422079d3d4096de21dae90adf1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '525a380c46fc9be71fa488ae0ff2c8bc') in 0.010918 seconds 
+Number of asset objects unloaded after import = 3
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.006846 seconds.
+Registered in 0.004731 seconds.
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory is not a mono symbol file
 Native extension for WindowsStandalone target not found
 Native extension for iOS target not found
 Native extension for Android target not found
-Refreshing native plugins compatible for Editor in 2.19 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 1.55 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 [Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
 [Package Manager] Cannot connect to Unity Package Manager local server
 Mono: successfully reloaded assembly
-- Completed reload, in  1.798 seconds
+- Completed reload, in  1.503 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1799ms)
-		BeginReloadAssembly (187ms)
+	ReloadAssembly (1504ms)
+		BeginReloadAssembly (140ms)
 			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (9ms)
+			DisableScriptedObjects (7ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (58ms)
-		EndReloadAssembly (1526ms)
-			LoadAssemblies (109ms)
+			CreateAndSetChildDomain (50ms)
+		EndReloadAssembly (1296ms)
+			LoadAssemblies (80ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (305ms)
+			SetupTypeCache (245ms)
 			ReleaseScriptCaches (3ms)
-			RebuildScriptCaches (109ms)
-			SetupLoadedEditorAssemblies (976ms)
+			RebuildScriptCaches (86ms)
+			SetupLoadedEditorAssemblies (826ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (21ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (2ms)
+				BeforeProcessingInitializeOnLoad (96ms)
+				ProcessInitializeOnLoadAttributes (583ms)
+				ProcessInitializeOnLoadMethodAttributes (120ms)
+				AfterProcessingInitializeOnLoad (4ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (14ms)
+Platform modules already initialized, skipping
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.65 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 6352 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 101 unused Assets / (1.6 MB). Loaded Objects now: 7182.
+Memory consumption went from 349.3 MB to 347.7 MB.
+Total: 6.124900 ms (FindLiveObjects: 0.391300 ms CreateObjectMapping: 0.305200 ms MarkObjects: 5.118300 ms  DeleteObjects: 0.309400 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 183.675455 seconds.
+  path: Assets/01_Scenes/GridBattle.unity
+  artifactKey: Guid(032b15885d0bd3841b298133dc6636ad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/01_Scenes/GridBattle.unity using Guid(032b15885d0bd3841b298133dc6636ad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '11b96b633f0cdf1bee00bae5014cea6c') in 0.021398 seconds 
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003737 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for WindowsStandalone target not found
+Native extension for iOS target not found
+Native extension for Android target not found
+Refreshing native plugins compatible for Editor in 1.59 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.501 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1502ms)
+		BeginReloadAssembly (139ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (5ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (49ms)
+		EndReloadAssembly (1298ms)
+			LoadAssemblies (82ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (236ms)
+			ReleaseScriptCaches (3ms)
+			RebuildScriptCaches (89ms)
+			SetupLoadedEditorAssemblies (843ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (21ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (2ms)
+				BeforeProcessingInitializeOnLoad (103ms)
+				ProcessInitializeOnLoadAttributes (586ms)
+				ProcessInitializeOnLoadMethodAttributes (124ms)
+				AfterProcessingInitializeOnLoad (6ms)
+				EditorAssembliesLoaded (1ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (16ms)
+Platform modules already initialized, skipping
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.83 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 6341 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 84 unused Assets / (1.6 MB). Loaded Objects now: 7185.
+Memory consumption went from 348.4 MB to 346.8 MB.
+Total: 6.849900 ms (FindLiveObjects: 0.428700 ms CreateObjectMapping: 0.165000 ms MarkObjects: 5.895000 ms  DeleteObjects: 0.360000 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 32.477624 seconds.
+  path: Assets/07_GameData/Skills/Cavalier/Stride/Stride_Buff_V3 Variant.prefab
+  artifactKey: Guid(e30f9c30ff1830c42bd572eeaac956db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/Cavalier/Stride/Stride_Buff_V3 Variant.prefab using Guid(e30f9c30ff1830c42bd572eeaac956db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '964d441e0bcae2b2ca65d6f6f7e85075') in 0.155300 seconds 
+Number of asset objects unloaded after import = 65
+========================================================================
+Received Import Request.
+  Time since last request: 2.791094 seconds.
+  path: Assets/07_GameData/Skills/Cavalier/Stride/PositionTargetSkillMixin.asset
+  artifactKey: Guid(5b952829d3ad6cc458fe2f2a5b309c22) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/Cavalier/Stride/PositionTargetSkillMixin.asset using Guid(5b952829d3ad6cc458fe2f2a5b309c22) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4dc527a4580f5243f4f072cf6e7a581e') in 0.008721 seconds 
+Number of asset objects unloaded after import = 29
+========================================================================
+Received Import Request.
+  Time since last request: 1.115594 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Star_Bursts_Center_V5.prefab
+  artifactKey: Guid(526ac8f9af52d494aa33281f1f8ec04f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Star_Bursts_Center_V5.prefab using Guid(526ac8f9af52d494aa33281f1f8ec04f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '135a08ff9bf04ed7527288ceaa1569b3') in 0.038933 seconds 
+Number of asset objects unloaded after import = 15
+========================================================================
+Received Import Request.
+  Time since last request: 0.000019 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Star_Bursts_V3.prefab
+  artifactKey: Guid(640d879f89693244597271bfe20e6cbb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Star_Bursts_V3.prefab using Guid(640d879f89693244597271bfe20e6cbb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '64484c7a44090c7df06f4772ef56215e') in 0.055539 seconds 
+Number of asset objects unloaded after import = 24
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/White Slash v3.prefab
+  artifactKey: Guid(9f5a3ba2da667354b8f0da3d17b985b2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/White Slash v3.prefab using Guid(9f5a3ba2da667354b8f0da3d17b985b2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9e97e0dbdd15a8eb16bbf41a6ef3c278') in 0.042355 seconds 
+Number of asset objects unloaded after import = 24
+========================================================================
+Received Import Request.
+  Time since last request: 0.000019 seconds.
+  path: Assets/03_Prefabs/UI/PopUps/UseSkillDialog Variant.prefab
+  artifactKey: Guid(5825833f6e227dd4e8e40141c9ae8a6e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/UI/PopUps/UseSkillDialog Variant.prefab using Guid(5825833f6e227dd4e8e40141c9ae8a6e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '80744f4f11194cc59682119085794458') in 0.059409 seconds 
+Number of asset objects unloaded after import = 191
+========================================================================
+Received Import Request.
+  Time since last request: 0.000035 seconds.
+  path: Assets/03_Prefabs/UI/Tooltips/TooltipCanvas.prefab
+  artifactKey: Guid(c6c03bca595390e44a711ed75c557a3b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/UI/Tooltips/TooltipCanvas.prefab using Guid(c6c03bca595390e44a711ed75c557a3b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0221e0e134c90df7f0078b4239df3a14') in 0.112314 seconds 
+Number of asset objects unloaded after import = 1203
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Tech_Bursts_Center_V2.prefab
+  artifactKey: Guid(1348ebde3ea090b4b8935bcccb6c6118) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Tech_Bursts_Center_V2.prefab using Guid(1348ebde3ea090b4b8935bcccb6c6118) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0be2ad4938499ec6691663e50a32097a') in 0.028060 seconds 
+Number of asset objects unloaded after import = 17
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/Le Tai's Asset/TrueShadow/Demo/Inspiration/Prefabs/Toggle.prefab
+  artifactKey: Guid(a6729faa6b0c5bb47b7157d2de4eff34) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Le Tai's Asset/TrueShadow/Demo/Inspiration/Prefabs/Toggle.prefab using Guid(a6729faa6b0c5bb47b7157d2de4eff34) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4b0da39798dcc05546bb66b0dea1330e') in 0.025316 seconds 
+Number of asset objects unloaded after import = 24
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Star_Bursts_Center_V9.prefab
+  artifactKey: Guid(6dc97c221ec28924a98a522214da9a37) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Star_Bursts_Center_V9.prefab using Guid(6dc97c221ec28924a98a522214da9a37) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '81c031f7f351104fbbae8b15c2998033') in 0.027154 seconds 
+Number of asset objects unloaded after import = 31
+========================================================================
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Loops/White Slash v4 - Flurry.prefab
+  artifactKey: Guid(0a45501f27ee10a4d813de3acb9b4831) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Loops/White Slash v4 - Flurry.prefab using Guid(0a45501f27ee10a4d813de3acb9b4831) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1e4c17c30f85b3331efe85e522045a37') in 0.043890 seconds 
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Import Request.
+  Time since last request: 0.000026 seconds.
+  path: Assets/03_Prefabs/AIHelper/TileAIRedFieldPrefab.prefab
+  artifactKey: Guid(1a4403bd775c47f4b9cd294d3501d975) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/AIHelper/TileAIRedFieldPrefab.prefab using Guid(1a4403bd775c47f4b9cd294d3501d975) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a294c18c985c64363b055c56e0421b9d') in 0.011039 seconds 
+Number of asset objects unloaded after import = 9
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/03_Prefabs/Units/UIIdleAnimation (1).prefab
+  artifactKey: Guid(526d0f2beb570b64787185c5bf22829f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/Units/UIIdleAnimation (1).prefab using Guid(526d0f2beb570b64787185c5bf22829f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '09db69fe73e04d5452a9ead802184e25') in 0.007834 seconds 
+Number of asset objects unloaded after import = 9
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Star_ColorBurst_V2.prefab
+  artifactKey: Guid(a7ff72184ffc5eb4ea854566b83d2c59) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Star_ColorBurst_V2.prefab using Guid(a7ff72184ffc5eb4ea854566b83d2c59) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2372e01b44e8630193f223c257882278') in 0.024575 seconds 
+Number of asset objects unloaded after import = 19
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/Feel/MMFeedbacks/Demos/MMFeedbacksDemo/UI/Title.prefab
+  artifactKey: Guid(d0c10e574f6f1af43b3af7996a878151) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/MMFeedbacks/Demos/MMFeedbacksDemo/UI/Title.prefab using Guid(d0c10e574f6f1af43b3af7996a878151) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5bf47b45fd2d1b250c4356976964d22c') in 0.014543 seconds 
+Number of asset objects unloaded after import = 13
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Tech_Hex_Burst_V3.prefab
+  artifactKey: Guid(d1b27ba218bbf6d4da06d4e4b40d0abb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Tech_Hex_Burst_V3.prefab using Guid(d1b27ba218bbf6d4da06d4e4b40d0abb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '64aeede183b4a20d96f155c746b7ba96') in 0.039365 seconds 
+Number of asset objects unloaded after import = 39
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Tech_Square_V3.prefab
+  artifactKey: Guid(391084267ad8d0145a1fef0244d0a0ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Tech_Square_V3.prefab using Guid(391084267ad8d0145a1fef0244d0a0ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '80b27f86cee82a928668e312827aecfc') in 0.022830 seconds 
+Number of asset objects unloaded after import = 25
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/03_Prefabs/AIHelper/TileAIBlueFieldPrefab.prefab
+  artifactKey: Guid(7b1e112bae706484e8e19a2fc7e32e9d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/AIHelper/TileAIBlueFieldPrefab.prefab using Guid(7b1e112bae706484e8e19a2fc7e32e9d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd81fdc748be7e942057593bb012c46b5') in 0.012742 seconds 
+Number of asset objects unloaded after import = 9
+========================================================================
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Loops/White Slash v5 - Spin.prefab
+  artifactKey: Guid(88885797cd615ea43bf5bce063b6e1fc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Loops/White Slash v5 - Spin.prefab using Guid(88885797cd615ea43bf5bce063b6e1fc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9d719f077574487748cff6beeb430d13') in 0.033103 seconds 
+Number of asset objects unloaded after import = 25
+========================================================================
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/03_Prefabs/UI/TopUICircle.prefab
+  artifactKey: Guid(86587c2f8fd321344b3267dd480952c6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/UI/TopUICircle.prefab using Guid(86587c2f8fd321344b3267dd480952c6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'db8a3ba26162426268d76a8a3b30d9a3') in 0.023632 seconds 
+Number of asset objects unloaded after import = 64
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Tech_Hex_Burst_V2.prefab
+  artifactKey: Guid(976b07dd0f238eb4992c2aefb39a2af6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Tech_Hex_Burst_V2.prefab using Guid(976b07dd0f238eb4992c2aefb39a2af6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9f2e1ea0be4f2a5ae48577ebd0403a4d') in 0.020586 seconds 
+Number of asset objects unloaded after import = 31
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Tech_Hex_V4.prefab
+  artifactKey: Guid(08da27b518965eb4a9670ca744493cd0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Tech_Hex_V4.prefab using Guid(08da27b518965eb4a9670ca744493cd0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6dd4496deb21130b6deefcaf2435f0ef') in 0.017029 seconds 
+Number of asset objects unloaded after import = 31
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/03_Prefabs/UI/Screens/Teile/SwitchScreenButton.prefab
+  artifactKey: Guid(959c5561291f742448fc9c78d5f0213d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/UI/Screens/Teile/SwitchScreenButton.prefab using Guid(959c5561291f742448fc9c78d5f0213d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ef53ad40c11be9cace5f931c98905214') in 0.019390 seconds 
+Number of asset objects unloaded after import = 39
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Stun_Stars_V2.prefab
+  artifactKey: Guid(e45de5d670786cc4facf4fca24320bd6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Stun_Stars_V2.prefab using Guid(e45de5d670786cc4facf4fca24320bd6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4c81ea99f0b9772a10b7903b9f856ddf') in 0.035334 seconds 
+Number of asset objects unloaded after import = 26
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Tech_Buff_V2.prefab
+  artifactKey: Guid(7f29f29de0e9ca64aaaf6798901a96e5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Tech_Buff_V2.prefab using Guid(7f29f29de0e9ca64aaaf6798901a96e5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1827098f28256e668dc81db63218cb44') in 0.018074 seconds 
+Number of asset objects unloaded after import = 21
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/White Slash v12.prefab
+  artifactKey: Guid(bb6fdebd8dd05f442b4f4bb7f590c13e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/White Slash v12.prefab using Guid(bb6fdebd8dd05f442b4f4bb7f590c13e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3647016198b828338f84293103751c58') in 0.014562 seconds 
+Number of asset objects unloaded after import = 15
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Star_ColorBurst_V3.prefab
+  artifactKey: Guid(f0277804d761dde42a9ed444935bea74) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Star_ColorBurst_V3.prefab using Guid(f0277804d761dde42a9ed444935bea74) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0c79c512df41999d2578dcde889a1d6a') in 0.030444 seconds 
+Number of asset objects unloaded after import = 26
+========================================================================
+Received Import Request.
+  Time since last request: 0.000025 seconds.
+  path: Assets/03_Prefabs/UI/Events/TextOption.prefab
+  artifactKey: Guid(4e924c0749f37c340b1c24ef24d4b8ed) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/UI/Events/TextOption.prefab using Guid(4e924c0749f37c340b1c24ef24d4b8ed) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '581754ee864c4f8c41eae417b07b26cf') in 0.127956 seconds 
+Number of asset objects unloaded after import = 139
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/White Slash v17.prefab
+  artifactKey: Guid(3bc2b22d8b0b7d942a188949a2de1819) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/White Slash v17.prefab using Guid(3bc2b22d8b0b7d942a188949a2de1819) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '42a570d858257e4e474a025ee68397b1') in 0.066496 seconds 
+Number of asset objects unloaded after import = 33
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/03_Prefabs/UI/CharView/UIIdleAnimation.prefab
+  artifactKey: Guid(19619ffd6dede044db0f4ae2e627d388) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/UI/CharView/UIIdleAnimation.prefab using Guid(19619ffd6dede044db0f4ae2e627d388) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '42d8216b2324c2c37ade82289ae2f1f4') in 0.008454 seconds 
+Number of asset objects unloaded after import = 19
+========================================================================
+Received Import Request.
+  Time since last request: 0.000019 seconds.
+  path: Assets/03_Prefabs/Units/EncounterArea/TwoHandedWorldMapPlayerUnit.prefab
+  artifactKey: Guid(6e08e38ea6d6377438b38025eeb916b3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/Units/EncounterArea/TwoHandedWorldMapPlayerUnit.prefab using Guid(6e08e38ea6d6377438b38025eeb916b3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd0c411a6a0920fca51e18948df35d09f') in 0.022916 seconds 
+Number of asset objects unloaded after import = 31
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/White Slash v4.prefab
+  artifactKey: Guid(111dd7adf10886f46be1f42dc626827d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/White Slash v4.prefab using Guid(111dd7adf10886f46be1f42dc626827d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a89c48b555adae355c2b3d593d7e4874') in 0.029352 seconds 
+Number of asset objects unloaded after import = 25
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/03_Prefabs/UI/Tooltips/StatContainer.prefab
+  artifactKey: Guid(a35da043675db9b4f8159bb6790b8356) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/UI/Tooltips/StatContainer.prefab using Guid(a35da043675db9b4f8159bb6790b8356) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd185625a85621efdc1731ceb622eda59') in 0.017289 seconds 
+Number of asset objects unloaded after import = 48
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/03_Prefabs/UI/UnitCanvas/StatusEffectPrefab.prefab
+  artifactKey: Guid(102079e38d6a3ca4ca10e46165566bfb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/UI/UnitCanvas/StatusEffectPrefab.prefab using Guid(102079e38d6a3ca4ca10e46165566bfb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b8589e3ff130c851b5a0adde0ff66695') in 0.007404 seconds 
+Number of asset objects unloaded after import = 27
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/Feel/NiceVibrations/Demo/_Common/Prefabs/VerticalProgressBar.prefab
+  artifactKey: Guid(a34261c2adaebf04a843bbcd2393bc03) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/NiceVibrations/Demo/_Common/Prefabs/VerticalProgressBar.prefab using Guid(a34261c2adaebf04a843bbcd2393bc03) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd5f3200bfe93f23fa45137b9d0bdaf43') in 0.019448 seconds 
+Number of asset objects unloaded after import = 19
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Tech_Diamond_V2.prefab
+  artifactKey: Guid(bde652d04dc4456458e2453755033234) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Tech_Diamond_V2.prefab using Guid(bde652d04dc4456458e2453755033234) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e700ed116c360a8e6423ac7efe9b3526') in 0.012436 seconds 
+Number of asset objects unloaded after import = 19
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Loops/White Slash v16 - Spin.prefab
+  artifactKey: Guid(5440f5c414c5f2c48908f1b2045680b4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Loops/White Slash v16 - Spin.prefab using Guid(5440f5c414c5f2c48908f1b2045680b4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '05045f0927231fa6585c7624b43f1fdf') in 0.032173 seconds 
+Number of asset objects unloaded after import = 25
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Star_Flash_V2.prefab
+  artifactKey: Guid(0bed6fdeb3191e0478b5744febdaddb1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Star_Flash_V2.prefab using Guid(0bed6fdeb3191e0478b5744febdaddb1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '188e516dbf78e7296870b8ca67c78dd5') in 0.066977 seconds 
+Number of asset objects unloaded after import = 30
+========================================================================
+Received Import Request.
+  Time since last request: 0.000026 seconds.
+  path: Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/White Slash v6.prefab
+  artifactKey: Guid(a1d69020cc5fd1f4c86f55b8ccbb57cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/White Slash v6.prefab using Guid(a1d69020cc5fd1f4c86f55b8ccbb57cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0f07b38087a65e926cc6c31674498700') in 0.014696 seconds 
+Number of asset objects unloaded after import = 15
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/03_Prefabs/NewUI/UpgradeButton.prefab
+  artifactKey: Guid(ad51a5ebc85c7a24cb0ffae74049b46d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/NewUI/UpgradeButton.prefab using Guid(ad51a5ebc85c7a24cb0ffae74049b46d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8094cee2a2839d009ff549200f22aaa0') in 0.019196 seconds 
+Number of asset objects unloaded after import = 26
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/03_Prefabs/UI/Themes/DarkGreen/UITextAuto.prefab
+  artifactKey: Guid(35c0c31c75bb9a343843d47645518f6c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/UI/Themes/DarkGreen/UITextAuto.prefab using Guid(35c0c31c75bb9a343843d47645518f6c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0d1f5a9725a202e3efca56060d5bf77f') in 0.010883 seconds 
+Number of asset objects unloaded after import = 12
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Tech_Bursts_Center_V4.prefab
+  artifactKey: Guid(86a6c610e6ddb994c98b1e6a615537a1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Tech_Bursts_Center_V4.prefab using Guid(86a6c610e6ddb994c98b1e6a615537a1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e3c149aff689d5e15a935e8f0c051994') in 0.017677 seconds 
+Number of asset objects unloaded after import = 26
+========================================================================
+Received Import Request.
+  Time since last request: 0.000019 seconds.
+  path: Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/White Slash v21.prefab
+  artifactKey: Guid(27cb069e4c03924438c45221523df0cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/White Slash v21.prefab using Guid(27cb069e4c03924438c45221523df0cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8ef4fb77d7536bc92254f6afa6aac35c') in 0.024420 seconds 
+Number of asset objects unloaded after import = 19
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Star_Bursts_V4.prefab
+  artifactKey: Guid(33cbd3364e5f53544a4e01568fb0f481) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Star_Bursts_V4.prefab using Guid(33cbd3364e5f53544a4e01568fb0f481) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9d256e612bbd94370b76e83462ebe090') in 0.016946 seconds 
+Number of asset objects unloaded after import = 16
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Tech_Square_Burst_V2.prefab
+  artifactKey: Guid(bc368155a9abf504a828dd0b8022e0a0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Tech_Square_Burst_V2.prefab using Guid(bc368155a9abf504a828dd0b8022e0a0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fc6eaaae4b48010496d7b5d9085a82e2') in 0.016994 seconds 
+Number of asset objects unloaded after import = 29
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Tech_Hex_V3.prefab
+  artifactKey: Guid(b593a502078b7934c827e174b45654a9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Tech_Hex_V3.prefab using Guid(b593a502078b7934c827e174b45654a9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '354ed3fe57c5d3ed99055e294bc74629') in 0.019839 seconds 
+Number of asset objects unloaded after import = 26
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Tech_Bursts_Center_V3.prefab
+  artifactKey: Guid(47493064fa8d84e4e9d4fa339300f3d1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Tech_Bursts_Center_V3.prefab using Guid(47493064fa8d84e4e9d4fa339300f3d1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ed2b532948068afb2aac3f0e4eddcbd2') in 0.013735 seconds 
+Number of asset objects unloaded after import = 22
+========================================================================
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Loops/White Slash v5 - Flurry.prefab
+  artifactKey: Guid(f716122ff3dbb6a48b4e69c00423115b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Loops/White Slash v5 - Flurry.prefab using Guid(f716122ff3dbb6a48b4e69c00423115b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '16af527edac29d560fabec9a79d598b5') in 0.015021 seconds 
+Number of asset objects unloaded after import = 19
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/02_Scripts/External/Runtime/AstarPathfindingProject/ExampleScenes/Prefabs/SomeBox.prefab
+  artifactKey: Guid(b1a1bb6d1bcc546df826488cc72438c3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/02_Scripts/External/Runtime/AstarPathfindingProject/ExampleScenes/Prefabs/SomeBox.prefab using Guid(b1a1bb6d1bcc546df826488cc72438c3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '86eb7dfee3d5e3d9d7514026c78a2bcb') in 0.018791 seconds 
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/Stab_V6.prefab
+  artifactKey: Guid(04fc45911d5616e40a43c668a592c57d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/Stab_V6.prefab using Guid(04fc45911d5616e40a43c668a592c57d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '27e9ab4cae3cc92d5a32cfb1d6c78702') in 0.039922 seconds 
+Number of asset objects unloaded after import = 32
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/07_GameData/BattleMaps/BattleMaps/Level1_DeadForest_Encounter_Big_3_2.prefab
+  artifactKey: Guid(faabd7d96e0eee84faf224e98e6fc8d8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/BattleMaps/BattleMaps/Level1_DeadForest_Encounter_Big_3_2.prefab using Guid(faabd7d96e0eee84faf224e98e6fc8d8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '708ba3ede6a0d7f15d59b61b13ba97c0') in 0.987857 seconds 
+Number of asset objects unloaded after import = 4799
+========================================================================
+Received Import Request.
+  Time since last request: 0.000031 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V37.prefab
+  artifactKey: Guid(ca690e76039067d40b34c218fbb57c9e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V37.prefab using Guid(ca690e76039067d40b34c218fbb57c9e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9f04f482ad53622ea34d0853de83c1eb') in 0.030822 seconds 
+Number of asset objects unloaded after import = 16
+========================================================================
+Received Import Request.
+  Time since last request: 0.000026 seconds.
+  path: Assets/03_Prefabs/NewUI/PlayButton.prefab
+  artifactKey: Guid(24d7b40b9c20fc44d8cd7482d593d430) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/NewUI/PlayButton.prefab using Guid(24d7b40b9c20fc44d8cd7482d593d430) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1bb727835fe38347d365fdfeb9c3694b') in 0.020627 seconds 
+Number of asset objects unloaded after import = 26
+========================================================================
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Lens_Flare.prefab
+  artifactKey: Guid(e6ea59b377599d8418fc82a849198702) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Lens_Flare.prefab using Guid(e6ea59b377599d8418fc82a849198702) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5cc4c98ddd8466eb151f503ad3a1ef30') in 0.049785 seconds 
+Number of asset objects unloaded after import = 58
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Lightning_Small.prefab
+  artifactKey: Guid(991f4319df6cf7b42a19e527a12bad3f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Lightning_Small.prefab using Guid(991f4319df6cf7b42a19e527a12bad3f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd1b073617aa584f7b82110b97aa319f0') in 0.038408 seconds 
+Number of asset objects unloaded after import = 37
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/07_GameData/BattleMaps/BattleMaps/Level1_DeadForest_Encounter_Conquest_10.prefab
+  artifactKey: Guid(be9841dce2428b94b8486b93d06c037b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/BattleMaps/BattleMaps/Level1_DeadForest_Encounter_Conquest_10.prefab using Guid(be9841dce2428b94b8486b93d06c037b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dba773889c8cbeb8b5cc162e8191bf3d') in 0.722756 seconds 
+Number of asset objects unloaded after import = 4351
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V23.prefab
+  artifactKey: Guid(646773af4199f114bad98f9699e6f329) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V23.prefab using Guid(646773af4199f114bad98f9699e6f329) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '100eac466c12d69ec6378c25e823fdef') in 0.042545 seconds 
+Number of asset objects unloaded after import = 16
+========================================================================
+Received Import Request.
+  Time since last request: 0.000020 seconds.
+  path: Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/Blue Slash v22.prefab
+  artifactKey: Guid(c020374ae7d811147a0226d969cae2f9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/Blue Slash v22.prefab using Guid(c020374ae7d811147a0226d969cae2f9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9412855d89a3f64e65229ad03562b1c3') in 0.018478 seconds 
+Number of asset objects unloaded after import = 15
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V40.prefab
+  artifactKey: Guid(b1ca6ebc25d230a498b42289b112b946) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V40.prefab using Guid(b1ca6ebc25d230a498b42289b112b946) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '02fcac96dccab3f60d9d5bf20ba91750') in 0.049096 seconds 
+Number of asset objects unloaded after import = 16
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/03_Prefabs/UI/Screens/ChooseSkillScreen/Line.prefab
+  artifactKey: Guid(e9a83034c13898f49a66c8e7979a78ca) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/UI/Screens/ChooseSkillScreen/Line.prefab using Guid(e9a83034c13898f49a66c8e7979a78ca) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2a3c0736bf4eeb73cd0391fb0deeffce') in 0.017199 seconds 
+Number of asset objects unloaded after import = 29
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/Feel/MMTools/Tools/MMDebugMenu/Prefabs/MMDebugTouchDisplayPrefab.prefab
+  artifactKey: Guid(626a9fe06209d574da486d5d818915f2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/MMTools/Tools/MMDebugMenu/Prefabs/MMDebugTouchDisplayPrefab.prefab using Guid(626a9fe06209d574da486d5d818915f2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b9cfff7ccdce1865ca6647df6822e7a4') in 0.008650 seconds 
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Negative_Buff_V1.prefab
+  artifactKey: Guid(9df534e030ed4674fbfcf5241f44c06b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Negative_Buff_V1.prefab using Guid(9df534e030ed4674fbfcf5241f44c06b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9117f8a6b8dcd2f678b9ffb595e0a4e7') in 0.021962 seconds 
+Number of asset objects unloaded after import = 29
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Loops/Blue Slash v7 - Flurry.prefab
+  artifactKey: Guid(e51211efc45aa6a4495e572b919e604a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Loops/Blue Slash v7 - Flurry.prefab using Guid(e51211efc45aa6a4495e572b919e604a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fa7576e07b49a9563eebe0e3705a54fb') in 0.023236 seconds 
+Number of asset objects unloaded after import = 26
+========================================================================
+Received Import Request.
+  Time since last request: 0.000012 seconds.
+  path: Assets/07_GameData/BattleMaps/BattleMaps/Level1_DeadForest_Encounter_Big_3_1.prefab
+  artifactKey: Guid(41aa21a4e5e522e4fb89af9b5c2db670) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/BattleMaps/BattleMaps/Level1_DeadForest_Encounter_Big_3_1.prefab using Guid(41aa21a4e5e522e4fb89af9b5c2db670) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '57611ad01940ce2aadd4986bad6cda0c') in 0.690132 seconds 
+Number of asset objects unloaded after import = 4591
+========================================================================
+Received Import Request.
+  Time since last request: 0.000020 seconds.
+  path: Assets/03_Prefabs/Effects/Particles/TouchScreenParticles/OnTouchParticles.prefab
+  artifactKey: Guid(73f4cff3656ad1d4e96318c80142a336) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/Effects/Particles/TouchScreenParticles/OnTouchParticles.prefab using Guid(73f4cff3656ad1d4e96318c80142a336) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c9fc11b155b2701afb6d557183489b7f') in 0.026430 seconds 
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Power_Burst_Star_V4.prefab
+  artifactKey: Guid(8ade798b48c7c9a41a49b730983083ff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Power_Burst_Star_V4.prefab using Guid(8ade798b48c7c9a41a49b730983083ff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dba04524fd829e422acdd50b78694bb5') in 0.019888 seconds 
+Number of asset objects unloaded after import = 25
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/03_Prefabs/Unused/Buildings/market.prefab
+  artifactKey: Guid(9caef55198a2fbb4290d2a2df71a08e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/Unused/Buildings/market.prefab using Guid(9caef55198a2fbb4290d2a2df71a08e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd15d16d994ed8b3b460972b674bd0b27') in 0.013405 seconds 
+Number of asset objects unloaded after import = 20
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Star_Bursts_Center_V2.prefab
+  artifactKey: Guid(acdf18b67c2b0454bb9f464e1e9eda8a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Star_Bursts_Center_V2.prefab using Guid(acdf18b67c2b0454bb9f464e1e9eda8a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1af9f0ed8edf94432f316b3088d91b00') in 0.014878 seconds 
+Number of asset objects unloaded after import = 20
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/Feel/MMFeedbacks/Demos/MMFeedbacksDemo/Models/Dude/MMFeedbackDemoDude@Idle.fbx
+  artifactKey: Guid(b2fccabcb9892894a8720b37575d77ad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/MMFeedbacks/Demos/MMFeedbacksDemo/Models/Dude/MMFeedbackDemoDude@Idle.fbx using Guid(b2fccabcb9892894a8720b37575d77ad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '38073128a972cea399f9afb2d935a100') in 0.028124 seconds 
+Number of asset objects unloaded after import = 88
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/Feel/MMTools/Tools/MMDebugMenu/Prefabs/MMDebugMenuTextLong.prefab
+  artifactKey: Guid(4332ad3ebf8592c41bc275ff77d24b29) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/MMTools/Tools/MMDebugMenu/Prefabs/MMDebugMenuTextLong.prefab using Guid(4332ad3ebf8592c41bc275ff77d24b29) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '578f2299bad7e01c7814bcf59ed29d1a') in 0.009094 seconds 
+Number of asset objects unloaded after import = 14
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V13.prefab
+  artifactKey: Guid(8c978005442133a45a339c0e66a58964) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V13.prefab using Guid(8c978005442133a45a339c0e66a58964) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b57b412fb318a141cf95ababf3821b40') in 0.045061 seconds 
+Number of asset objects unloaded after import = 16
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/Feel/MMTools/Tools/MMDebugMenu/Prefabs/MMDebugMenu.prefab
+  artifactKey: Guid(da6a4f914ed52e6488c1fb9d94e8cbb0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/MMTools/Tools/MMDebugMenu/Prefabs/MMDebugMenu.prefab using Guid(da6a4f914ed52e6488c1fb9d94e8cbb0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5176fa4434048e9557cdd3a20a20713a') in 0.056291 seconds 
+Number of asset objects unloaded after import = 375
+========================================================================
+Received Import Request.
+  Time since last request: 0.000028 seconds.
+  path: Assets/Feel/MMTools/Tools/MMDebugMenu/Prefabs/MMDebugMenuSlider.prefab
+  artifactKey: Guid(addcaa6f7df18984691dc300b3be4f7b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/MMTools/Tools/MMDebugMenu/Prefabs/MMDebugMenuSlider.prefab using Guid(addcaa6f7df18984691dc300b3be4f7b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c447c932ab7098866f458e652273b4e3') in 0.009456 seconds 
+Number of asset objects unloaded after import = 34
+========================================================================
+Received Import Request.
+  Time since last request: 0.000025 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V27.prefab
+  artifactKey: Guid(fd4eb78a530a7054cb91ca31fe9dd33e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V27.prefab using Guid(fd4eb78a530a7054cb91ca31fe9dd33e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cc9f2ff4a69275514f696cb38d50403b') in 0.025523 seconds 
+Number of asset objects unloaded after import = 16
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V38.prefab
+  artifactKey: Guid(3f085a7e75813aa4691e7382f8f9884c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V38.prefab using Guid(3f085a7e75813aa4691e7382f8f9884c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '65e2126bcf114b24a91bfb7885fcf33a') in 0.026485 seconds 
+Number of asset objects unloaded after import = 16
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/Blue Slash v23.prefab
+  artifactKey: Guid(bf15a163be902274ba8fdabcc3f29922) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/Blue Slash v23.prefab using Guid(bf15a163be902274ba8fdabcc3f29922) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd986e95e7b124c7088ea220e4e4136c8') in 0.017315 seconds 
+Number of asset objects unloaded after import = 21
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/03_Prefabs/Grid/Props/Pillar.prefab
+  artifactKey: Guid(d5d467663e4494a44932807577c95f31) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/Grid/Props/Pillar.prefab using Guid(d5d467663e4494a44932807577c95f31) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9cccc2d82a730c2cf8473baabd874759') in 0.037292 seconds 
+Number of asset objects unloaded after import = 33
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/07_GameData/BattleMaps/BattleMaps/Level1_DeadForest_Encounter_Medium_2_2.prefab
+  artifactKey: Guid(0853e914f210668479030dfe4ea503c1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/BattleMaps/BattleMaps/Level1_DeadForest_Encounter_Medium_2_2.prefab using Guid(0853e914f210668479030dfe4ea503c1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '53ad1af2135d33ea54be8be691afaf6d') in 0.717617 seconds 
+Number of asset objects unloaded after import = 4134
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/Blue Slash v14.prefab
+  artifactKey: Guid(a5df5a86c5822d84ba3da7021380b4dc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/Blue Slash v14.prefab using Guid(a5df5a86c5822d84ba3da7021380b4dc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '54b8fcd197d8daa84604331f6d681890') in 0.017632 seconds 
+Number of asset objects unloaded after import = 20
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/07_GameData/BattleMaps/Area1Maps/Area1_RiverSplit_Encounter_Small.prefab
+  artifactKey: Guid(4c26ee0727b12264ba980f9fa0a4841e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/BattleMaps/Area1Maps/Area1_RiverSplit_Encounter_Small.prefab using Guid(4c26ee0727b12264ba980f9fa0a4841e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '48c6a72571d540dd260e6b33c64a0fde') in 0.703899 seconds 
+Number of asset objects unloaded after import = 4859
+========================================================================
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V30.prefab
+  artifactKey: Guid(68059d7754f79534798343300c4db4dd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V30.prefab using Guid(68059d7754f79534798343300c4db4dd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a1be81d2292ce2f853e1f8d749496c1d') in 0.073957 seconds 
+Number of asset objects unloaded after import = 16
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/03_Prefabs/Units/Grid/MinoTaurAnimatedSprite 1.prefab
+  artifactKey: Guid(aa509024bcacd8442959915ca2a42f1f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/Units/Grid/MinoTaurAnimatedSprite 1.prefab using Guid(aa509024bcacd8442959915ca2a42f1f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9b6b68c6d282f4a56cd0736fd7e44418') in 0.385942 seconds 
+Number of asset objects unloaded after import = 1549
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/Blue Slash v13.prefab
+  artifactKey: Guid(85f3e3eeb46cd754092b6561cfdb822d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/Blue Slash v13.prefab using Guid(85f3e3eeb46cd754092b6561cfdb822d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cf356d9e3692ce628ae3ad8fe7e74e96') in 0.024875 seconds 
+Number of asset objects unloaded after import = 21
+========================================================================
+Received Import Request.
+  Time since last request: 0.000026 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V9.prefab
+  artifactKey: Guid(da357e5a82a6155488c09ea8f1d7279b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V9.prefab using Guid(da357e5a82a6155488c09ea8f1d7279b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5c59283d01e0a9dd9295de852dd3aa29') in 0.024402 seconds 
+Number of asset objects unloaded after import = 15
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Loops/Blue Slash v14 - Spin.prefab
+  artifactKey: Guid(6fe6cce6db5a4f74badc56b6c8e19d95) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Loops/Blue Slash v14 - Spin.prefab using Guid(6fe6cce6db5a4f74badc56b6c8e19d95) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'db396866aa7cd8f318e16716336de831') in 0.022605 seconds 
+Number of asset objects unloaded after import = 20
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Tornado_Lightning.prefab
+  artifactKey: Guid(0646c1ca8c07a3343b01fc35925e9267) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Tornado_Lightning.prefab using Guid(0646c1ca8c07a3343b01fc35925e9267) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f171d89c1ec9cc9ee1b0009016e41d13') in 0.042255 seconds 
+Number of asset objects unloaded after import = 34
+========================================================================
+Received Import Request.
+  Time since last request: 0.000019 seconds.
+  path: Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/White Slash v18.prefab
+  artifactKey: Guid(e55015a5d697a6c42ad1add6aba17107) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/White Slash v18.prefab using Guid(e55015a5d697a6c42ad1add6aba17107) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '04dc9cd2aab6ba5910bd68b575828286') in 0.021533 seconds 
+Number of asset objects unloaded after import = 15
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/03_Prefabs/Grid/Props/WhiteFence.prefab
+  artifactKey: Guid(6f0dc621afc087b41a84f30aec29b4aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/Grid/Props/WhiteFence.prefab using Guid(6f0dc621afc087b41a84f30aec29b4aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '96db2f93d2efc681b4d24225e77d0894') in 0.014022 seconds 
+Number of asset objects unloaded after import = 15
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/07_GameData/BattleMaps/BattleMaps/Level1_DeadForest_Encounter_Small1_3.prefab
+  artifactKey: Guid(a3417224f0f87114e80e1b31df1a8790) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/BattleMaps/BattleMaps/Level1_DeadForest_Encounter_Small1_3.prefab using Guid(a3417224f0f87114e80e1b31df1a8790) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '31112f18d0511b92b48700fcafd9a85b') in 0.698673 seconds 
+Number of asset objects unloaded after import = 3825
+========================================================================
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V7.prefab
+  artifactKey: Guid(6b9b45f8cdd612e47a38ff269068b6d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V7.prefab using Guid(6b9b45f8cdd612e47a38ff269068b6d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ab78f0f10165badb139f7d3dd11325b6') in 0.032431 seconds 
+Number of asset objects unloaded after import = 16
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Particles_Basic_Floor_V1.prefab
+  artifactKey: Guid(2c46a95f8a1cc6946bf0dbd9bc74cf8a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Particles_Basic_Floor_V1.prefab using Guid(2c46a95f8a1cc6946bf0dbd9bc74cf8a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6850cb36e91d12a79acbdb532353a2a9') in 0.014976 seconds 
+Number of asset objects unloaded after import = 14
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/03_Prefabs/NewUI/OptionsLabelAndSlider.prefab
+  artifactKey: Guid(d7c13d3ed08c6f64a99838bca6b7d606) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/NewUI/OptionsLabelAndSlider.prefab using Guid(d7c13d3ed08c6f64a99838bca6b7d606) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e31d4404c09929e5072caf08b49d9422') in 0.020750 seconds 
+Number of asset objects unloaded after import = 49
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/02_Scripts/External/Runtime/AstarPathfindingProject/ExampleScenes/Prefabs/TargetReachedEffect.prefab
+  artifactKey: Guid(441e67a4721e749f0bca9581956f2729) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/02_Scripts/External/Runtime/AstarPathfindingProject/ExampleScenes/Prefabs/TargetReachedEffect.prefab using Guid(441e67a4721e749f0bca9581956f2729) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fc9af62dc8e008a25a0a453e2301af18') in 0.005665 seconds 
+Number of asset objects unloaded after import = 5
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Loops/White Slash v15 - Spin.prefab
+  artifactKey: Guid(97a5b244c62bc90419fa5a7a65e9ff33) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Loops/White Slash v15 - Spin.prefab using Guid(97a5b244c62bc90419fa5a7a65e9ff33) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'db2f411fc412459068e727383498a621') in 0.019686 seconds 
+Number of asset objects unloaded after import = 25
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/03_Prefabs/UI/Themes/DarkGreen/UiTextBold.prefab
+  artifactKey: Guid(5eb73e42dc2db6542994450492710f3f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/UI/Themes/DarkGreen/UiTextBold.prefab using Guid(5eb73e42dc2db6542994450492710f3f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6062b27cf7297bdf1675e8492233bd26') in 0.011235 seconds 
+Number of asset objects unloaded after import = 12
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/03_Prefabs/Units/BattleAnimation/ValkyrieBattleGONew.prefab
+  artifactKey: Guid(b7f422ad5db31e44e8586f47d349fa97) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/Units/BattleAnimation/ValkyrieBattleGONew.prefab using Guid(b7f422ad5db31e44e8586f47d349fa97) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8f157cacbd096e5a1b91722f84690c8d') in 0.374999 seconds 
+Number of asset objects unloaded after import = 1685
+========================================================================
+Received Import Request.
+  Time since last request: 0.000037 seconds.
+  path: Assets/03_Prefabs/Unused/SPBarEmptyAttackPreview.prefab
+  artifactKey: Guid(975d7159c6b5ad04fa36bc338b604857) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/Unused/SPBarEmptyAttackPreview.prefab using Guid(975d7159c6b5ad04fa36bc338b604857) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '057566867d58e48c7260b72d729760d5') in 0.007896 seconds 
+Number of asset objects unloaded after import = 18
+========================================================================
+Received Import Request.
+  Time since last request: 0.000020 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Particles_Basic_Floor_V3.prefab
+  artifactKey: Guid(57ff7d1c89ce87847b3985f2999b0b04) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Particles_Basic_Floor_V3.prefab using Guid(57ff7d1c89ce87847b3985f2999b0b04) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '44149ca809bd2796c43698a3a7c51b1d') in 0.016921 seconds 
+Number of asset objects unloaded after import = 22
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V42.prefab
+  artifactKey: Guid(a543c384a91844a45a81a806fc7c509f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V42.prefab using Guid(a543c384a91844a45a81a806fc7c509f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6b50b1bb9c4728187a88d0a6a58007d8') in 0.015143 seconds 
+Number of asset objects unloaded after import = 14
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/Blue Slash v15.prefab
+  artifactKey: Guid(c2d4790eea2e65a4cbc8a5507ea0c745) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/Blue Slash v15.prefab using Guid(c2d4790eea2e65a4cbc8a5507ea0c745) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c8a3f03109e5894db0051614380ad049') in 0.020839 seconds 
+Number of asset objects unloaded after import = 26
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V25.prefab
+  artifactKey: Guid(0798575628c6faa4f8e6a739050161a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V25.prefab using Guid(0798575628c6faa4f8e6a739050161a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8047a80efd258c3febaacb03697d5abd') in 0.028140 seconds 
+Number of asset objects unloaded after import = 16
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/03_Prefabs/NewUI/PanelBG.prefab
+  artifactKey: Guid(e04bceb45c8d4f945b294b612b19ebca) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/NewUI/PanelBG.prefab using Guid(e04bceb45c8d4f945b294b612b19ebca) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '225b2cc783b0c0cfb99ea6c15924a41b') in 0.011102 seconds 
+Number of asset objects unloaded after import = 9
+========================================================================
+Received Import Request.
+  Time since last request: 0.000019 seconds.
+  path: Assets/03_Prefabs/Effects/Particles/LoseGrace.prefab
+  artifactKey: Guid(0e6a1db0279134e469b98834813e3574) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/Effects/Particles/LoseGrace.prefab using Guid(0e6a1db0279134e469b98834813e3574) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '99358589cf262ca9d017522d377a4a26') in 0.036634 seconds 
+Number of asset objects unloaded after import = 30
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/03_Prefabs/Units/Grid/ArmorKnightAnimatedSprite.prefab
+  artifactKey: Guid(3023e7b61d707844091efebe0d84d607) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/Units/Grid/ArmorKnightAnimatedSprite.prefab using Guid(3023e7b61d707844091efebe0d84d607) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ff20b6f5acfb9b0f17e905af43b15615') in 0.380425 seconds 
+Number of asset objects unloaded after import = 1541
+========================================================================
+Received Import Request.
+  Time since last request: 0.000025 seconds.
+  path: Assets/03_Prefabs/UI/Themes/DarkGreen/PanelLightGreen.prefab
+  artifactKey: Guid(5e945d32ada53b4419d0269b07e6f315) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/UI/Themes/DarkGreen/PanelLightGreen.prefab using Guid(5e945d32ada53b4419d0269b07e6f315) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '38ab6fe3b18747ff6e9da176d0ef9524') in 0.009843 seconds 
+Number of asset objects unloaded after import = 20
+========================================================================
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V26.prefab
+  artifactKey: Guid(b9be014e13c6f7249a719db03572704c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V26.prefab using Guid(b9be014e13c6f7249a719db03572704c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0f77a48b8c88dc6ee07f8216391793da') in 0.017599 seconds 
+Number of asset objects unloaded after import = 16
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Loops/Blue Slash v15 - Spin.prefab
+  artifactKey: Guid(e5ee966145764f44d8ff7f43e3a6ffe9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Loops/Blue Slash v15 - Spin.prefab using Guid(e5ee966145764f44d8ff7f43e3a6ffe9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4053d7b26803ff3877cbf89deb54db88') in 0.019758 seconds 
+Number of asset objects unloaded after import = 26
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V22.prefab
+  artifactKey: Guid(4788c38eb0a834543bfaf32f65e349f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V22.prefab using Guid(4788c38eb0a834543bfaf32f65e349f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '90e7b4f0e89f0d295a021e0d550a81c7') in 0.034526 seconds 
+Number of asset objects unloaded after import = 16
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/03_Prefabs/EncounterArea/NodeRandomOption.prefab
+  artifactKey: Guid(d40950c235134bb4598bdb6ca796f37a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/EncounterArea/NodeRandomOption.prefab using Guid(d40950c235134bb4598bdb6ca796f37a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '99dbb9278c97e10ca578fadd34579bdf') in 0.019520 seconds 
+Number of asset objects unloaded after import = 21
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V14.prefab
+  artifactKey: Guid(73f0db7cced783c48ad20b2444c5bd2a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V14.prefab using Guid(73f0db7cced783c48ad20b2444c5bd2a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '78b51142996d98ff9b01c656e11e7011') in 0.023608 seconds 
+Number of asset objects unloaded after import = 16
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Loops/Blue Slash v22 - Spin.prefab
+  artifactKey: Guid(9a349d48748e18e45a9648b3d58dafa9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Loops/Blue Slash v22 - Spin.prefab using Guid(9a349d48748e18e45a9648b3d58dafa9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1d73ddfa9cdd91cf7e5b60b542f2870f') in 0.040567 seconds 
+Number of asset objects unloaded after import = 20
+========================================================================
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/Feel/MMTools/Tools/MMDebugMenu/Prefabs/MMDebugMenuTabSpacer.prefab
+  artifactKey: Guid(57633cde530d56a48995d0733efa9450) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/MMTools/Tools/MMDebugMenu/Prefabs/MMDebugMenuTabSpacer.prefab using Guid(57633cde530d56a48995d0733efa9450) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd9182af1de1ae78aa573979235ecceb5') in 0.007829 seconds 
+Number of asset objects unloaded after import = 6
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Loops/Blue Slash v4 - Spin.prefab
+  artifactKey: Guid(0f6cf556d1b118843a6e591106a35f8e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Loops/Blue Slash v4 - Spin.prefab using Guid(0f6cf556d1b118843a6e591106a35f8e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '721d7782617ea9d77a8e1b4f7b70da65') in 0.016962 seconds 
+Number of asset objects unloaded after import = 20
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/03_Prefabs/Effects/Particles/LoseMoneyAnimation.prefab
+  artifactKey: Guid(eb8453640487d804cb8f511e52e2eff0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/Effects/Particles/LoseMoneyAnimation.prefab using Guid(eb8453640487d804cb8f511e52e2eff0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '56806872a59bc2c1585a8936735cdbea') in 0.016290 seconds 
+Number of asset objects unloaded after import = 18
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Star_Bursts_Center_V1.prefab
+  artifactKey: Guid(0742e990123489442bdd4baa69de7a73) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Star_Bursts_Center_V1.prefab using Guid(0742e990123489442bdd4baa69de7a73) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '228321af0ab32e0b73703f1026bffc9b') in 0.017046 seconds 
+Number of asset objects unloaded after import = 16
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/Blue Slash v12.prefab
+  artifactKey: Guid(83f3b83127f98594ca476f2119817f02) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/Blue Slash v12.prefab using Guid(83f3b83127f98594ca476f2119817f02) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '06a35267ae901e78f9cde0f275cd6317') in 0.016878 seconds 
+Number of asset objects unloaded after import = 15
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/03_Prefabs/EncounterArea/Nodes/MerchantEncounter.prefab
+  artifactKey: Guid(d5147c6567c3eb643a2dc741a1efe41f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/EncounterArea/Nodes/MerchantEncounter.prefab using Guid(d5147c6567c3eb643a2dc741a1efe41f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ba7e89bc52ff7e8dd0fe4b4cfd2343c0') in 0.033885 seconds 
+Number of asset objects unloaded after import = 127
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V31.prefab
+  artifactKey: Guid(34382c6d498ea8248b4623ae1f3db404) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V31.prefab using Guid(34382c6d498ea8248b4623ae1f3db404) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '947733d510c135dbd1895db53764e60d') in 0.025736 seconds 
+Number of asset objects unloaded after import = 15
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Loops/Blue Slash v1 - Spin.prefab
+  artifactKey: Guid(239cdba136625e04888064aa4bf06328) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Loops/Blue Slash v1 - Spin.prefab using Guid(239cdba136625e04888064aa4bf06328) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '37f258323301056e89036074fbc57a76') in 0.040193 seconds 
+Number of asset objects unloaded after import = 20
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/03_Prefabs/Effects/Particles/TouchScreenParticles/OnTouchDownParticles.prefab
+  artifactKey: Guid(07267085dc6f5094a9e92cf081fcae1e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/Effects/Particles/TouchScreenParticles/OnTouchDownParticles.prefab using Guid(07267085dc6f5094a9e92cf081fcae1e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '32b23c76fe82e0e97e939fa2223d24fe') in 0.015357 seconds 
+Number of asset objects unloaded after import = 16
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/Le Tai's Asset/TrueShadow/Demo/Neumorphism/Knob Soft.prefab
+  artifactKey: Guid(41f317746f098c74793be4879edb0c94) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Le Tai's Asset/TrueShadow/Demo/Neumorphism/Knob Soft.prefab using Guid(41f317746f098c74793be4879edb0c94) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '29d9879b61b590ae767bc24c808c8ca7') in 0.007855 seconds 
+Number of asset objects unloaded after import = 21
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Particles_Basic_Cone_V2.prefab
+  artifactKey: Guid(69d4d1563be7f2f4cbf6ada34f6653af) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Particles_Basic_Cone_V2.prefab using Guid(69d4d1563be7f2f4cbf6ada34f6653af) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1c1fa629d601b9dadc8759660fb474b9') in 0.014814 seconds 
+Number of asset objects unloaded after import = 18
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/07_GameData/BattleMaps/BattleMaps/Level1_DeadForest_Encounter_Boss.prefab
+  artifactKey: Guid(a558e6c03a2eb4a4da25141c6243e20e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/BattleMaps/BattleMaps/Level1_DeadForest_Encounter_Boss.prefab using Guid(a558e6c03a2eb4a4da25141c6243e20e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f755d37224037bfaa889ac20fd07962f') in 0.544681 seconds 
+Number of asset objects unloaded after import = 2951
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/Stab_V4.prefab
+  artifactKey: Guid(224f922c61902dd4fa05f8acb13d59cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/Stab_V4.prefab using Guid(224f922c61902dd4fa05f8acb13d59cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8b083ee37cbe96db33dd4be623ca14d1') in 0.025415 seconds 
+Number of asset objects unloaded after import = 23
+========================================================================
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/03_Prefabs/Units/Spawns/SpawnPosition.prefab
+  artifactKey: Guid(6e446575f1596ed43aa8e950d2a6f39a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/Units/Spawns/SpawnPosition.prefab using Guid(6e446575f1596ed43aa8e950d2a6f39a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '02f8988a71cbb4be6bda06dde40ed140') in 0.010218 seconds 
+Number of asset objects unloaded after import = 13
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V5.prefab
+  artifactKey: Guid(8134fd3fc2925294cb11c744bd5c463d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V5.prefab using Guid(8134fd3fc2925294cb11c744bd5c463d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a7789bd87500ebabfb9188d2c5cff12d') in 0.015656 seconds 
+Number of asset objects unloaded after import = 16
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V44.prefab
+  artifactKey: Guid(d863696cb78c1b64fafe47bb4cfef633) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V44.prefab using Guid(d863696cb78c1b64fafe47bb4cfef633) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6ac17b7beb8e8a167428224e3026f5dc') in 0.031552 seconds 
+Number of asset objects unloaded after import = 16
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/Blue Slash v21.prefab
+  artifactKey: Guid(8d0b9628500edbb4c8d3824cf30b21a8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/Blue Slash v21.prefab using Guid(8d0b9628500edbb4c8d3824cf30b21a8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6aba1fd77ca328bf3cf582457ddd4043') in 0.040739 seconds 
+Number of asset objects unloaded after import = 20
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/White Slash v9.prefab
+  artifactKey: Guid(38d00fcffc0d34c4a8685a89be7fa8b2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/White Slash v9.prefab using Guid(38d00fcffc0d34c4a8685a89be7fa8b2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9dbda02ef29e33f870a6c8866b3fbfc5') in 0.018268 seconds 
+Number of asset objects unloaded after import = 21
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/03_Prefabs/Units/BattleAnimation/MercBattleGONew.prefab
+  artifactKey: Guid(e47a1c87b9db65c458cdc74d1da4efbf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/Units/BattleAnimation/MercBattleGONew.prefab using Guid(e47a1c87b9db65c458cdc74d1da4efbf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5ef769912572cdebdf8d721fd31ee053') in 0.399991 seconds 
+Number of asset objects unloaded after import = 1685
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/Feel/MMTools/Tools/MMDebugMenu/Prefabs/MMDebugMenuDebugPanel.prefab
+  artifactKey: Guid(94cfa935aa4cff74a9451b22cb7627a6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/MMTools/Tools/MMDebugMenu/Prefabs/MMDebugMenuDebugPanel.prefab using Guid(94cfa935aa4cff74a9451b22cb7627a6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '019e7c44c616be77943248f9caabac22') in 0.007659 seconds 
+Number of asset objects unloaded after import = 65
+========================================================================
+Received Import Request.
+  Time since last request: 0.000020 seconds.
+  path: Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Loops/Blue Slash v25 - Flurry.prefab
+  artifactKey: Guid(8a1e82b57f0874f4a99fa73250e550b3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Cartoon Coffee/2D Slash VFX/Prefabs/Loops/Blue Slash v25 - Flurry.prefab using Guid(8a1e82b57f0874f4a99fa73250e550b3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a112be205ad65cde982c883514d1b5fa') in 0.016668 seconds 
+Number of asset objects unloaded after import = 15
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.006033 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for WindowsStandalone target not found
+Native extension for iOS target not found
+Native extension for Android target not found
+Refreshing native plugins compatible for Editor in 1.65 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.641 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1641ms)
+		BeginReloadAssembly (146ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (7ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (50ms)
+		EndReloadAssembly (1408ms)
+			LoadAssemblies (94ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (270ms)
+			ReleaseScriptCaches (3ms)
+			RebuildScriptCaches (88ms)
+			SetupLoadedEditorAssemblies (901ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (21ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (2ms)
+				BeforeProcessingInitializeOnLoad (110ms)
+				ProcessInitializeOnLoadAttributes (610ms)
+				ProcessInitializeOnLoadMethodAttributes (152ms)
+				AfterProcessingInitializeOnLoad (5ms)
+				EditorAssembliesLoaded (1ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (18ms)
+Platform modules already initialized, skipping
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 2.73 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 6341 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 108 unused Assets / (1.7 MB). Loaded Objects now: 7232.
+Memory consumption went from 351.7 MB to 350.0 MB.
+Total: 8.473600 ms (FindLiveObjects: 0.789900 ms CreateObjectMapping: 0.242900 ms MarkObjects: 6.787800 ms  DeleteObjects: 0.651800 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.004152 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for WindowsStandalone target not found
+Native extension for iOS target not found
+Native extension for Android target not found
+Refreshing native plugins compatible for Editor in 1.66 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.565 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1566ms)
+		BeginReloadAssembly (143ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (5ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (46ms)
+		EndReloadAssembly (1358ms)
+			LoadAssemblies (91ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (264ms)
+			ReleaseScriptCaches (3ms)
+			RebuildScriptCaches (91ms)
+			SetupLoadedEditorAssemblies (851ms)
 				LogAssemblyErrors (0ms)
 				InitializePlatformSupportModulesInManaged (25ms)
 				SetLoadedEditorAssemblies (0ms)
 				RefreshPlugins (2ms)
-				BeforeProcessingInitializeOnLoad (110ms)
-				ProcessInitializeOnLoadAttributes (668ms)
-				ProcessInitializeOnLoadMethodAttributes (165ms)
-				AfterProcessingInitializeOnLoad (5ms)
-				EditorAssembliesLoaded (1ms)
+				BeforeProcessingInitializeOnLoad (100ms)
+				ProcessInitializeOnLoadAttributes (586ms)
+				ProcessInitializeOnLoadMethodAttributes (133ms)
+				AfterProcessingInitializeOnLoad (4ms)
+				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (12ms)
+			AwakeInstancesAfterBackupRestoration (15ms)
 Platform modules already initialized, skipping
 Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
 Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
 Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
-Refreshing native plugins compatible for Editor in 1.79 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 2.47 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 6340 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 87 unused Assets / (2.0 MB). Loaded Objects now: 7085.
-Memory consumption went from 343.8 MB to 341.8 MB.
-Total: 6.467900 ms (FindLiveObjects: 0.412100 ms CreateObjectMapping: 0.173700 ms MarkObjects: 5.192200 ms  DeleteObjects: 0.688700 ms)
+Unloading 6341 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 84 unused Assets / (1.6 MB). Loaded Objects now: 7235.
+Memory consumption went from 351.6 MB to 349.9 MB.
+Total: 7.724500 ms (FindLiveObjects: 0.545800 ms CreateObjectMapping: 0.415500 ms MarkObjects: 6.314400 ms  DeleteObjects: 0.447600 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
@@ -261,67 +1557,7 @@ AssetImportParameters requested are different than current active one (requested
   custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
   custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.005216 seconds.
-Begin MonoManager ReloadAssembly
-Symbol file LoadedFromMemory is not a mono symbol file
-Native extension for WindowsStandalone target not found
-Native extension for iOS target not found
-Native extension for Android target not found
-Refreshing native plugins compatible for Editor in 2.81 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
-[Package Manager] Cannot connect to Unity Package Manager local server
-Mono: successfully reloaded assembly
-- Completed reload, in  1.818 seconds
-Domain Reload Profiling:
-	ReloadAssembly (1819ms)
-		BeginReloadAssembly (174ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (6ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (55ms)
-		EndReloadAssembly (1560ms)
-			LoadAssemblies (109ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (327ms)
-			ReleaseScriptCaches (4ms)
-			RebuildScriptCaches (128ms)
-			SetupLoadedEditorAssemblies (952ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (30ms)
-				SetLoadedEditorAssemblies (1ms)
-				RefreshPlugins (3ms)
-				BeforeProcessingInitializeOnLoad (113ms)
-				ProcessInitializeOnLoadAttributes (637ms)
-				ProcessInitializeOnLoadMethodAttributes (161ms)
-				AfterProcessingInitializeOnLoad (6ms)
-				EditorAssembliesLoaded (1ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (13ms)
-Platform modules already initialized, skipping
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
-Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
-Refreshing native plugins compatible for Editor in 1.87 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 6339 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 87 unused Assets / (2.0 MB). Loaded Objects now: 7088.
-Memory consumption went from 343.8 MB to 341.7 MB.
-Total: 8.111900 ms (FindLiveObjects: 0.729000 ms CreateObjectMapping: 0.200900 ms MarkObjects: 6.439400 ms  DeleteObjects: 0.741400 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0

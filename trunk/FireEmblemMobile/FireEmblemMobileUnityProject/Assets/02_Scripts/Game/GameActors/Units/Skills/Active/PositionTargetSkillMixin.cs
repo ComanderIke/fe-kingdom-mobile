@@ -49,6 +49,7 @@ namespace Game.GameActors.Units.Skills
 
         [field: SerializeField] public List<SkillEffectMixin> SkillEffects;
         [field: SerializeField] public bool Rooted { get; set; }
+        [field: SerializeField] public bool IncludeCasterInRooted { get; set; }
 
         public int GetRange(int level) => range[level];
         public int GetMinRange(int level) => minRange;
@@ -87,7 +88,7 @@ namespace Game.GameActors.Units.Skills
             {
                 int xPosition = (int)(user.GridComponent.GridPosition.X + pos.x);
                 int yPosition = (int)(user.GridComponent.GridPosition.Y + pos.y);
-                if (xPosition == unitPos.x && yPosition == unitPos.y)
+                if (xPosition == unitPos.x && yPosition == unitPos.y && !IncludeCasterInRooted)
                     continue;
                 Debug.Log("Targetposition: " + pos + " " + xPosition + " " + yPosition);
                 if (xPosition >= 0 && xPosition < tiles.GetLength(0) && yPosition >= 0 &&
@@ -128,10 +129,11 @@ namespace Game.GameActors.Units.Skills
                     Debug.Log("ACTIVATE On " + xPosition + " " + yPosition);
                     Vector2 tiledifference = new Vector2Int(xPosition, yPosition) - unitPos;
 
-                    skillTransferData.data = tiledifference.magnitude * speedPerTile - speedPerTile;
-                    if (AnimationObject != null)
-                        GameObject.Instantiate(AnimationObject, tiles[xPosition, yPosition].GetTransform().position,
-                            Quaternion.identity, null);
+                    if(skillTransferData!=null)
+                        skillTransferData.data = tiledifference.magnitude * speedPerTile - speedPerTile;
+                    // if (AnimationObject != null&& (SpawnEffectsOnTargetsOnly ))
+                    //     GameObject.Instantiate(AnimationObject, tiles[xPosition, yPosition].GetTransform().position,
+                    //         Quaternion.identity, null);
 
                     foreach (SkillEffectMixin effect in SkillEffects)
                     {
@@ -230,6 +232,8 @@ namespace Game.GameActors.Units.Skills
             List<Vector2Int> targetPositions = new List<Vector2Int>();
             if (direction == default)
                 direction = new Vector2Int(1, 1);
+            if(IncludeCasterInRooted)
+                targetPositions.Add(new Vector2Int(0,0));
             if (GetSize(level) > 0)
             {
                 if (TargetArea == SkillTargetArea.Block)

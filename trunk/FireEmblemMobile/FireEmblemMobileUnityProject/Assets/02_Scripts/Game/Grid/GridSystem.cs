@@ -415,7 +415,7 @@ namespace Game.Map
         {
             HideMoveRange();
             Vector2 characterPos = character.GridComponent.GridPosition.AsVector();
-            Debug.Log("CAST RANGE: "+pts.GetRange(level));
+           // Debug.Log("CAST RANGE: "+pts.GetRange(level));
             if (pts.GetRange(level) > 0)
             {
                 for (int i = 0; i <= pts.GetRange(level); i++)
@@ -438,6 +438,10 @@ namespace Game.Map
                        
                     }
                 }
+            }
+            else
+            {
+                ShowCastRange(characterPos,character.Faction.Id);
             }
 
         }
@@ -562,11 +566,11 @@ namespace Game.Map
                         {
                             // if (Math.Abs(i + startPos.x - clickedX) < 0.01f)
                             // {
-                                if (clickedX > startPos.x)
+                                if (clickedX > startPos.x||skillTargetArea==SkillTargetArea.Star)
                                 {
                                     GridRenderer.SetTileCastCursorMaterial(new Vector2(i, 0) + startPos, effectType, 0);
                                 }
-                                else if(clickedX< startPos.x)
+                                if(clickedX< startPos.x||skillTargetArea==SkillTargetArea.Star)
                                 {
 
                                     GridRenderer.SetTileCastCursorMaterial(new Vector2(-i, 0) + startPos, effectType,
@@ -580,12 +584,12 @@ namespace Game.Map
                         {
                             // if (Math.Abs(i + startPos.y - clickedX) < 0.01f)
                             // {
-                                if (clickedY < startPos.y)
+                                if (clickedY < startPos.y||skillTargetArea==SkillTargetArea.Star)
                                 {
                                     GridRenderer.SetTileCastCursorMaterial(new Vector2(0, -i) + startPos, effectType,
                                         0);
                                 }
-                                else if(clickedY> startPos.y)
+                                if(clickedY> startPos.y||skillTargetArea==SkillTargetArea.Star)
                                 {
                                     GridRenderer.SetTileCastCursorMaterial(new Vector2(0, i) + startPos, effectType, 0);
                                 }

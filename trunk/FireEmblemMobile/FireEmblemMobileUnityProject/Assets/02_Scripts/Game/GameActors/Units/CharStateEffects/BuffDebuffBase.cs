@@ -19,7 +19,14 @@ namespace Game.GameActors.Units.CharStateEffects
         }
         public virtual bool TakeEffect(Unit unit)
         {
-            return false;
+            Debug.Log("TAKE EFFECT"+duration[level]);
+            duration[level]--;
+            return duration[level] <= 0;
+        }
+
+        public virtual void Unapply(Unit target)
+        {
+            
         }
     }
 }

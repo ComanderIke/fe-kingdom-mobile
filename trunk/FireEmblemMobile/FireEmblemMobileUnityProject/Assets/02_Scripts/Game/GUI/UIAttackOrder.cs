@@ -19,10 +19,10 @@ namespace LostGrace
             parent.DeleteAllChildren();
             GameObject.Instantiate(attackLabelPrefab, parent);
            // Debug.Log("TODO Consecutive Attacks(Brave Effect)");
-            Debug.Log("Attacks in Order: ");
+          //  Debug.Log("Attacks in Order: ");
             foreach (var attack in battlePreviewAttacksData)
             {
-                Debug.Log(attack.attacker);
+               // Debug.Log(attack.attacker);
                 var prefab = allyAttackPrefab;
                 if(attackerIsPlayer)
                     prefab = attack.attacker ? allyAttackPrefab : enemyAttackPrefab;

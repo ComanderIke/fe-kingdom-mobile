@@ -42,8 +42,8 @@ namespace Game.GUI
                  Camera = Camera.main;
              
              Debug.Log(battlePreview.AttackerStats.AttackCount+" "+battlePreview.DefenderStats.AttackCount);
-             left.Show(attackerSprite, battlePreview.AttackerStats.TotalDamage,battlePreview.AttackerStats.Hit,battlePreview.AttackerStats.Crit, battlePreview.AttackerStats.CurrentHp,battlePreview.AttackerStats.MaxHp, battlePreview.AttackerStats.AfterBattleHp, true);
-             right.Show(defenderSprite, battlePreview.DefenderStats.TotalDamage,battlePreview.DefenderStats.Hit,battlePreview.DefenderStats.Crit, battlePreview.DefenderStats.CurrentHp,battlePreview.DefenderStats.MaxHp, battlePreview.DefenderStats.AfterBattleHp,battlePreview.DefenderStats.CanCounter);
+             left.Show(attackerSprite, battlePreview.AttackerStats.TotalDamage,battlePreview.AttackerStats.Hit,battlePreview.AttackerStats.Crit, battlePreview.AttackerStats.MaxHp,battlePreview.AttackerStats.CurrentHp, battlePreview.AttackerStats.AfterBattleHp, true);
+             right.Show(defenderSprite, battlePreview.DefenderStats.TotalDamage,battlePreview.DefenderStats.Hit,battlePreview.DefenderStats.Crit, battlePreview.DefenderStats.MaxHp,battlePreview.DefenderStats.CurrentHp, battlePreview.DefenderStats.AfterBattleHp,battlePreview.DefenderStats.CanCounter);
              attackOrderUI.Show(battlePreview.AttacksData, true);
            }
 

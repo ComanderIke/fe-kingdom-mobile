@@ -26,11 +26,20 @@ namespace Game.GameActors.Units.CharStateEffects
         
         [SerializeField] private BuffType buffType;
 
-        public EffectDescription GetEffectDescription(int level)
+        public virtual EffectDescription GetEffectDescription(int level)
         {
             return new EffectDescription("Grants", buffType.ToString(), buffType.ToString());
         }
 
-       
+        public override void Apply(Unit caster, Unit target, int skilllevel)
+        {
+            base.Apply(caster, target, skilllevel);
+            
+        }
+
+        public override void Unapply(Unit target)
+        {
+            
+        }
     }
 }
