@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Skills
@@ -7,6 +8,11 @@ namespace Game.GameActors.Units.Skills
     public class ActiveSkillMixin : SkillMixin
     {
         public GameObject AnimationObject;
+
+        public bool useScreenPosition;
+
+        public float effectDelay = 0f;
+        public float logicDelay = 0f;
       //this cannot be in a ScriptableObject...
         // Solution 1) create Instance of this SO before assigning it to a skill
         // Solution 2) save currentUses in Skill class (weird because only active skills use it, but some passives might use it(so it triggers only once per combat etc..)

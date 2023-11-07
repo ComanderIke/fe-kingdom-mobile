@@ -26,6 +26,7 @@ namespace LostGrace
         [SerializeField] private TextMeshProUGUI name;
         [SerializeField] private TextMeshProUGUI description;
         [SerializeField] private Image middleImage;
+        [SerializeField] private Image middleImageFace;
         private bool showBody = true;
         [SerializeField] private TextMeshProUGUI toggleButtonText;
         
@@ -69,7 +70,10 @@ namespace LostGrace
             toggleButtonText.text = showBody ? "Show Portrait" : "Show Body";
             name.text = currentEntry.Name;
             description.text = currentEntry.Description;
-            middleImage.sprite = showBody?currentEntry.BodySprite:currentEntry.FaceSprite;
+            middleImage.enabled = showBody;
+            middleImageFace.enabled = !showBody;
+            middleImage.sprite = currentEntry.BodySprite;
+            middleImageFace.sprite=currentEntry.FaceSprite;
             entryListUI.UpdateUI(currentIndex);
         }
         IEnumerator ShowCoroutine()

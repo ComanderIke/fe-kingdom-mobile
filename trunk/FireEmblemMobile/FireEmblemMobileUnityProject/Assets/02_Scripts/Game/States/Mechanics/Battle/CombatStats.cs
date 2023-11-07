@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Game.Mechanics.Battle
@@ -167,6 +168,7 @@ namespace Game.Mechanics.Battle
             string firstlabel = "";
             int cnt = 0;
             int[] asArray = AsArray();
+            int bonusCount = asArray.Count(a => a != 0);
             for (int i = 0; i < asArray.Length; i++)
             {
                 if (asArray[i] != 0)
@@ -174,7 +176,7 @@ namespace Game.Mechanics.Battle
                     firstlabel += "" + GetAsShortText((CombatStatType)i) + "/";
                     cnt++;
                 }
-                if (cnt >= 2||(i==asArray.Length-1&&cnt!=0))
+                if (cnt >= 2||(i==asArray.Length-1&&cnt!=0)||(bonusCount<=2&&cnt!=0))
                 {
                     cnt = 0;
                     if (firstlabel.Length > 0)
@@ -192,7 +194,8 @@ namespace Game.Mechanics.Battle
             List<string> list = new List<string>();
             string firstlabel = "";
             int cnt = 0;
-            int[] asArray = AsArray();
+            int[] asArray = AsArray(); 
+            int bonusCount = asArray.Count(a => a != 0);
             for (int i = 0; i < asArray.Length; i++)
             {
                 if (asArray[i] != 0)
@@ -200,7 +203,7 @@ namespace Game.Mechanics.Battle
                     firstlabel += "" + asArray[i] + "/";
                     cnt++;
                 }
-                if (cnt >= 2||(i==asArray.Length-1&&cnt!=0))
+                if (cnt >= 2||(i==asArray.Length-1&&cnt!=0)||(bonusCount<=2&&cnt!=0))
                 {
                     cnt = 0;
                     if (firstlabel.Length > 0)

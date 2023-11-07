@@ -44,19 +44,35 @@ namespace Game.GameActors.Units.Skills
         public List<SkillEffectMixin> SkillEffectMixins;
         public void Activate(Unit user, Unit target)
         {
-            if(AnimationObject!=null)
-                GameObject.Instantiate(AnimationObject, target.GameTransformManager.Transform.position, Quaternion.identity, null);
-            foreach (SkillEffectMixin effect in SkillEffectMixins)
+            if (AnimationObject != null)
             {
-                if(effect is UnitTargetSkillEffectMixin unitTargetSkillEffectMixin)
-                    unitTargetSkillEffectMixin.Activate(target, user, skill.Level);
+                MonoUtility.DelayFunction(() =>
+                {
+                    if(useScreenPosition)
+                        GameObject.Instantiate(AnimationObject, Camera.main.WorldToScreenPoint(target.GameTransformManager.GetCenterPosition()), Quaternion.identity, null);
+                    else
+                    {
+                        GameObject.Instantiate(AnimationObject, target.GameTransformManager.Transform.position, Quaternion.identity, null);
+                    }
+                }, effectDelay);
+             
             }
-            Debug.Log("ACTIVATE SINGLE TARGET MIXIN");
-            if (target != null && skill.skillTransferData != null)
+
+            MonoUtility.DelayFunction(() =>
             {
-                Debug.Log("Set SkilltransferData");
-                skill.skillTransferData.data = (object)target;
-            }
+                foreach (SkillEffectMixin effect in SkillEffectMixins)
+                {
+                    if (effect is UnitTargetSkillEffectMixin unitTargetSkillEffectMixin)
+                        unitTargetSkillEffectMixin.Activate(target, user, skill.Level);
+                }
+
+                Debug.Log("ACTIVATE SINGLE TARGET MIXIN");
+                if (target != null && skill.skillTransferData != null)
+                {
+                    Debug.Log("Set SkilltransferData");
+                    skill.skillTransferData.data = (object)target;
+                }
+            }, logicDelay);
         }
 
 
