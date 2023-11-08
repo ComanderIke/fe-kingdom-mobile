@@ -32,7 +32,7 @@ namespace Game.GUI
 //            Debug.Log("UpdateValues");
             this.currentHp = currentHp;
             width = backgroundHpBar.rectTransform.rect.width;
-            Debug.Log(maxHp+" "+currentHp+" "+afterBattleHp);
+           // Debug.Log(maxHp+" "+currentHp+" "+afterBattleHp);
             currentHpBar.rectTransform.sizeDelta = new Vector2(width*((afterBattleHp * 1.0f)/maxHp),currentHpBar.rectTransform.sizeDelta.y);
             beforeHpBar.gameObject.SetActive(true);
             beforeHpBar.rectTransform.sizeDelta = new Vector2(width*((currentHp * 1.0f) / maxHp),beforeHpBar.rectTransform.sizeDelta.y);

@@ -5,6 +5,7 @@ using Game.GameActors.Units;
 using Game.GameInput;
 using Game.Grid;
 using Game.Manager;
+using Game.Map;
 using Game.Mechanics.Battle;
 using Game.Mechanics.Commands;
 using GameEngine;
@@ -174,6 +175,10 @@ namespace Game.Mechanics
             this.currentAttackPosition = attackPosition;
             this.currentBattleActor = u;
             this.currentAttackedTarget = target;
+            Debug.Log("Could be Future bug here?");
+            var tiles = ServiceProvider.Instance.GetSystem<GridSystem>().Tiles;
+            ((Unit) u).SetInternGridPosition(tiles[attackPosition.X, attackPosition.Y]);
+           
             var preview = GridGameManager.Instance.GetSystem<BattleSystem>().GetBattlePreview(u, target, attackPosition);
           
             OnCheckAttackPreview?.Invoke(preview);

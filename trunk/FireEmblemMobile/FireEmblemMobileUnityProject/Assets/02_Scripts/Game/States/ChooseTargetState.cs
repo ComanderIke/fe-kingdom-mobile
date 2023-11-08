@@ -376,7 +376,7 @@ namespace Game.Mechanics
             //
         }
 
-        public void ResetInput(bool drag=false)
+        public void ResetInput(bool drag=false, bool move=false)
         {
             //
         }

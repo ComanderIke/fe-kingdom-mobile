@@ -239,8 +239,8 @@ namespace Game.Mechanics
                 battleSimulation.StartBattle(true, grid);
                 
                 battlePreview.AttacksData = battleSimulation.combatRounds[0].AttacksData;
-                Debug.Log(attacker.Hp+" "+battleSimulation.combatRounds[0].AttackerStats.MaxHp+ " "+battleSimulation.combatRounds[0].AttackerStats.CurrentHp);
-                Debug.Log(defender.Hp+" "+battleSimulation.combatRounds[0].DefenderStats.MaxHp+ " "+battleSimulation.combatRounds[0].DefenderStats.CurrentHp);
+               // Debug.Log(attacker.Hp+" "+battleSimulation.combatRounds[0].AttackerStats.MaxHp+ " "+battleSimulation.combatRounds[0].AttackerStats.CurrentHp);
+                //Debug.Log(defender.Hp+" "+battleSimulation.combatRounds[0].DefenderStats.MaxHp+ " "+battleSimulation.combatRounds[0].DefenderStats.CurrentHp);
                 battlePreview.AttackerStats = new BattlePreviewStats(battleSimulation.combatRounds[0].AttackerStats,true, battleSimulation.combatRounds[0].AttackerHP);
                 battlePreview.DefenderStats = new BattlePreviewStats(battleSimulation.combatRounds[0].DefenderStats,battleSimulation.combatRounds[0].DefenderCanCounter, battleSimulation.combatRounds[0].DefenderHP);
                 // battlePreview.AttackerStats = new BattlePreviewStats(attacker.BattleComponent.BattleStats.GetDamage(),

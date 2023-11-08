@@ -41,10 +41,10 @@ namespace Game.GameInput
             ClickedOnGrid(x, y, true);
         }
 
-        public void ResetInput(bool drag=false)
+        public void ResetInput(bool drag=false, bool move=false)
         {
             if(!drag)
-                SetUnitToOriginPosition(false, false);
+                SetUnitToOriginPosition(false, move);
             inputPathManager.Reset();
             selectionDataProvider.ClearData();
            
@@ -80,7 +80,7 @@ namespace Game.GameInput
            
                 ResetInput();
                 
-                UpdateMovementPath(selectionDataProvider.SelectedActor);
+                UpdateMovementPath(selectionDataProvider.SelectedActor, false);
             }
 
             
@@ -513,6 +513,22 @@ namespace Game.GameInput
                 inputPathManager.AddToPath(x, y, gridActor);
             }
 
+            void DraggedOverEnemyWithoutMovePath(IGridActor selectedActor, int x, int y, IGridObject enemy)
+            {
+                if (selectedActor.GetActorGridComponent().CanAttack(x, y))
+                {
+                    Debug.Log("Check Attack Preview from HEre: " + x + " " + y);
+
+                    if (selectedActor is IBattleActor battleActor && enemy is IBattleActor enemyBattleActor)
+                        gameplayCommands.CheckAttackPreview(battleActor, enemyBattleActor,
+                            selectedActor.GridComponent.GridPosition);
+                    selectionDataProvider.SetUndoAbleActor(selectionDataProvider.SelectedActor);
+                }
+                else
+                {
+                    inputPathManager.CalculateAttackPathToTarget(selectedActor, enemy);
+                }
+            }
             private void DraggedOverEnemy(int x, int y, IGridObject enemy)
             {
                 var selectedActor = selectionDataProvider.SelectedActor;
@@ -522,28 +538,40 @@ namespace Game.GameInput
                 selectionDataProvider.SetSelectedAttackTarget(enemy);
                 if (inputPathManager.IsMovementPathEmpty())
                 {
-                    if (selectedActor.GetActorGridComponent().CanAttack(x, y))
+                  
+                    if (inputPathManager.IsPreviousMovementPathEmpty())
                     {
-                        Debug.Log("Check Attack Preview from HEre: " + x + " " + y);
-
-                        if (selectedActor is IBattleActor battleActor && enemy is IBattleActor enemyBattleActor)
-                            gameplayCommands.CheckAttackPreview(battleActor, enemyBattleActor,
-                                selectedActor.GridComponent.GridPosition);
-                        selectionDataProvider.SetUndoAbleActor(selectionDataProvider.SelectedActor);
+                        Debug.Log("PREVIOUS PATH EMPTY");
+                        DraggedOverEnemyWithoutMovePath(selectedActor, x, y, enemy);
                     }
                     else
                     {
-                        inputPathManager.CalculateAttackPathToTarget(selectedActor, enemy);
+                        Debug.Log("PREVIOUS PATH NOT EMPTY");
+                        int attackPositionIndex = -1;
+                        bool foundAttackPosition = false;
+                        attackPositionIndex = SearchForSuitableAttackPositionFromPreviousDraggedOverTiles(x, y, selectedActor,
+                            attackPositionIndex, ref foundAttackPosition);
+                        if (foundAttackPosition)
+                        {
+                            Debug.Log("PREVIOUS PATH FOUND ATTACK POS");
+                            inputPathManager.SetMovementPathToPrevious();
+                            SearchForSuitableAttackPosition(x, y, enemy, selectedActor);
+                        }
+                        else
+                        {
+                            Debug.Log("PREVIOUS PATH FOUND NO ATTACK POS");
+                            DraggedOverEnemyWithoutMovePath(selectedActor, x, y, enemy);
+                        }
                     }
                 }
                 else // Search for suitable AttackPosition
                 {
                     SearchForSuitableAttackPosition(x, y, enemy, selectedActor);
                 }
-
+                
                 if (inputPathManager.HasValidMovementPath(selectedActor.MovementRange))
                 { 
-                    Debug.Log("PUT MOVEMENT STUFF HERE?");
+                  //  Debug.Log("PUT MOVEMENT STUFF HERE?");
                     UpdateMovementPath(selectedActor);
                     //Debug.Log("Check Attack Preview from HEre: "+x+" "+y+" "+inputPathManager.GetLastMovementPathPosition().x+" "+inputPathManager.GetLastMovementPathPosition().y);
                     if (selectedActor is IBattleActor battleActor && enemy is IBattleActor enemyBattleActor)
@@ -554,10 +582,10 @@ namespace Game.GameInput
                 }
             }
 
-            void UpdateMovementPath(IGridActor selectedActor)
+            void UpdateMovementPath(IGridActor selectedActor, bool resetPrevious=true)
             {
                 inputPathManager.UpdatedMovementPath(selectedActor.GridComponent.OriginTile.X,
-                    selectedActor.GridComponent.OriginTile.Y);
+                    selectedActor.GridComponent.OriginTile.Y, resetPrevious);
             }
             private void SearchForSuitableAttackPosition(int x, int y, IGridObject enemy, IGridActor selectedActor)
             {
@@ -615,6 +643,30 @@ namespace Game.GameInput
 
                 return attackPositionIndex;
             }
+            private int SearchForSuitableAttackPositionFromPreviousDraggedOverTiles(int x, int y,
+                IGridActor selectedActor,
+                int attackPositionIndex, ref bool foundAttackPosition)
+            {
+                for (int i = inputPathManager.previousMovementPath.Count - 1;
+                     i >= 0;
+                     i--) //Search for suitable Position from already dragged over tiles
+                {
+                    var lastMousePathPositionX = (int)inputPathManager.previousMovementPath[i].x;
+                    var lastMousePathPositionY = (int)inputPathManager.previousMovementPath[i].y;
+                    var lastMousePathField = gridSystem.GetTileFromVector2(inputPathManager.previousMovementPath[i]);
+                    int delta = Mathf.Abs(lastMousePathPositionX - x) + Mathf.Abs(lastMousePathPositionY - y);
+                    if (selectedActor.AttackRanges.Contains(delta))
+                        if (lastMousePathField.GridObject == null)
+                        {
+                            attackPositionIndex = i;
+                            foundAttackPosition = true;
+                            break;
+                        }
+                }
+
+                return attackPositionIndex;
+            }
+
 
 
             // private void OnSelectedCharacter(IGridActor u)

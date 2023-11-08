@@ -182,7 +182,7 @@ namespace Game.GameInput
 
         public void OnMouseHold(UnitInputController unitInputController)
         {
-            Debug.Log("OnTouchHold!");
+           // Debug.Log("OnTouchHold!");
             InputReceiver.ActorLongHold(unitInputController.unit);
         }
 

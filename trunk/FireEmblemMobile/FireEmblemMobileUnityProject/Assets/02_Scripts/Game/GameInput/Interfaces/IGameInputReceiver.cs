@@ -13,7 +13,7 @@ namespace Game.GameInput
         void DraggedOnObject(IGridObject gridObject);
         void DraggedOverObject(IGridObject gridObject);
         void StartDraggingActor(IGridActor actor);
-        void ResetInput(bool drag=false);
+        void ResetInput(bool drag=false, bool move=false);
         void UndoClicked();
         
         void ClickedDownOnGrid(int x, int y);

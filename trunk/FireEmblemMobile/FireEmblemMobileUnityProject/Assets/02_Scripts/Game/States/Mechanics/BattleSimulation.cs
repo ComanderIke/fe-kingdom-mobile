@@ -359,9 +359,9 @@ namespace Game.Mechanics
                     combatRound.AttacksData.Add(attackData);
                 }
             }
-            Debug.Log(combatRound.RoundIndex);
-            Debug.Log("HP After CombatRound: "+Attacker.Hp);
-            Debug.Log("HP After CombatRound: "+Defender.Hp);
+          //  Debug.Log(combatRound.RoundIndex);
+          //  Debug.Log("HP After CombatRound: "+Attacker.Hp);
+          //  Debug.Log("HP After CombatRound: "+Defender.Hp);
             combatRound.AttackerHP = Attacker.Hp;
             combatRound.DefenderHP = Defender.Hp;
         }
@@ -369,7 +369,7 @@ namespace Game.Mechanics
         private IEnumerable<Skill> ActivateAttackSkills(IBattleActor attacker)
         {
             var skills = new List<Skill>();
-            Debug.Log("ACTIVATE ATTACK SKILLS " +attacker.BattleComponent.attackEffects.Count);
+           // Debug.Log("ACTIVATE ATTACK SKILLS " +attacker.BattleComponent.attackEffects.Count);
             foreach (var attackEffect in attacker.BattleComponent.attackEffects)
             {
                 if(attackEffect.attackEffect.ReactToAttack(attacker))

@@ -144,7 +144,7 @@ namespace Game.Mechanics
         }
         private void OnDeselectedCharacter(IGridActor character)
         {
-            gridInputSystem.inputReceiver.ResetInput();
+            gridInputSystem.inputReceiver.ResetInput(false, true);
             foreach (var unit in factionManager.Factions[1].Units)
             {
                 unit.visuals.unitRenderer.HideTemporaryVisuals();

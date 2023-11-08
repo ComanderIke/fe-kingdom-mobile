@@ -54,10 +54,13 @@ namespace Game.GameActors.Units
                 
             }
 
-            base.SetPosition(tile);
-            if(moveTransform)
-                gridActor.GameTransformManager.SetPosition(tile.X,tile.Y);
-           
+            base.SetPosition(tile, moveTransform);
+            if (moveTransform)
+            {
+                Debug.Log("also Move Transform to: "+tile.X+" "+tile.Y);
+                gridActor.GameTransformManager.SetPosition(tile.X, tile.Y);
+            }
+
             AnyUnitChangedPosition?.Invoke(gridActor);
             AnyUnitChangedPositionAfter?.Invoke(gridActor);
         }
@@ -66,7 +69,7 @@ namespace Game.GameActors.Units
             if (OriginTile != null)
             {
                 MovedTileCount = DeltaPos(tile.X, tile.Y, OriginTile.X, OriginTile.Y);
-                Debug.Log("MOVEDTILEOCUNT: "+MovedTileCount);
+               // Debug.Log("MOVEDTILEOCUNT: "+MovedTileCount);
             }
 
             base.SetInternPosition(tile);
