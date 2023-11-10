@@ -46,7 +46,8 @@ namespace Game.GUI
                 valueAfterText.text = "" + afterBattleHp;
              if(hpText!=null)
                  hpText.text =""+ currentHp;
-             hpIndicator.gameObject.SetActive(true);
+             if(hpIndicator!=null)
+                hpIndicator.gameObject.SetActive(true);
              MonoUtility.InvokeNextFrame(() =>
              {
                  feedbacks.PlayFeedbacks();
@@ -67,7 +68,8 @@ namespace Game.GUI
                 valueAfterText.gameObject.SetActive(false);
             losingHpBar.gameObject.SetActive(true);
            // beforeHpBar.gameObject.SetActive(false);
-            hpIndicator.gameObject.SetActive(false);
+           if(hpIndicator!=null)
+             hpIndicator.gameObject.SetActive(false);
             Debug.Log("set HP Bar: "+(this.currentHp * 1.0f)/maxHp);
             //progressBar.Initialization();
             progressBar.SetBar01(((this.currentHp * 1.0f)/maxHp));

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameInput;
@@ -57,6 +58,11 @@ namespace Game.GUI
             //     attackPreview.Hide();
         }
 
+        private void OnEnable()
+        {
+            attackPreviewOnMapShown = new List<Unit>();
+        }
+
         private void OnDisable()
         {
            // Deactivate();
@@ -72,15 +78,22 @@ namespace Game.GUI
             UnitActionSystem.OnCheckAttackPreview -= ShowAttackPreviewUI;
             UnitActionSystem.OnUpdateAttackPreview -= UpdateAttackPreviewUI;
             GridInputSystem.OnResetInput -= HideAttackPreviewUI;//TODO Remove somehow
+            GridInputSystem.OnResetInput -=  HideAttackPreviewOnMapHPBar;//TODO Remove somehow
             UnitActionSystem.OnCheckAttackPreview -= ShowAttackPreviewOnMapHPBar;
             UnitActionSystem.OnUpdateAttackPreview -= ShowAttackPreviewOnMapHPBar;
             SelectionUI.OnBackClicked -= HideAttackPreviewUI;
-            GridGameManager.Instance.GetSystem<GridSystem>().cursor.OnCursorPositionChanged -= (Vector2Int v)=>HideAttackPreviewUI();
+            SelectionUI.OnBackClicked -= HideAttackPreviewOnMapHPBar;
+            GridGameManager.Instance.GetSystem<GridSystem>().cursor.OnCursorPositionChanged -= (Vector2Int v)=>
+            {
+                HideAttackPreviewUI();
+                HideAttackPreviewOnMapHPBar();
+            };
         }
 
         public void Activate()
         {
             SelectionUI.OnBackClicked += HideAttackPreviewUI;
+            SelectionUI.OnBackClicked += HideAttackPreviewOnMapHPBar;
             UnitSelectionSystem.OnSelectedCharacter += SelectedCharacter;
             UnitSelectionSystem.OnSelectedInActiveCharacter += SelectedCharacter;
             UnitSelectionSystem.OnEnemySelected += SelectedEnemyCharacter;
@@ -90,7 +103,12 @@ namespace Game.GUI
             UnitActionSystem.OnUpdateAttackPreview += ShowAttackPreviewOnMapHPBar;
             UnitActionSystem.OnUpdateAttackPreview += UpdateAttackPreviewUI;
             GridInputSystem.OnResetInput += HideAttackPreviewUI;//TODO Remove somehow
-            GridGameManager.Instance.GetSystem<GridSystem>().cursor.OnCursorPositionChanged += (Vector2Int v)=>HideAttackPreviewUI();
+            GridInputSystem.OnResetInput += HideAttackPreviewOnMapHPBar;
+            GridGameManager.Instance.GetSystem<GridSystem>().cursor.OnCursorPositionChanged += (Vector2Int v)=>
+            {
+                HideAttackPreviewUI();
+                HideAttackPreviewOnMapHPBar();
+            };
         }
 
         public void ShowObjectiveCanvas(BattleMap chapter)
@@ -112,10 +130,15 @@ namespace Game.GUI
 
             }
         }
+
+        private List<Unit> attackPreviewOnMapShown;
         private void ShowAttackPreviewOnMapHPBar(BattlePreview battlePreview)
         {
             if (battlePreview.Defender is Unit defender)
+            {
                 defender.visuals.unitRenderer.ShowPreviewHp(battlePreview.DefenderStats.AfterBattleHp);
+                attackPreviewOnMapShown.Add(defender);
+            }
         }
         private void ShowAttackPreviewUI(BattlePreview battlePreview)
         {
@@ -131,6 +154,15 @@ namespace Game.GUI
                     attackPreviewUI.Show(battlePreview, attacker.visuals, dest.Sprite);
                 }
 
+            }
+        }
+        private void HideAttackPreviewOnMapHPBar()
+        {
+            Debug.Log("HideAttackPreviewOnMapHPBar"+attackPreviewOnMapShown.Count);
+            for (int i = attackPreviewOnMapShown.Count - 1; i >= 0; i--)
+            {
+                attackPreviewOnMapShown[i].visuals.unitRenderer.HidePreviewHp();
+                attackPreviewOnMapShown.RemoveAt(i);
             }
         }
 

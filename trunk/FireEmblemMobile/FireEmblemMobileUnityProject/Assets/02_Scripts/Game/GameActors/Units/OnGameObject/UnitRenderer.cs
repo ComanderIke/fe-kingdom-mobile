@@ -252,6 +252,14 @@ namespace Game.GameActors.Units.OnGameObject
             }
         }
 
-        
+
+        public void HidePreviewHp()
+        {
+            if (hpBarAlternate != null && unit != null){
+                Debug.Log("HidePreviewHP"+unit.name);
+                hpBarAlternate.UpdateValuesWithoutDamagePreview(unit.MaxHp, unit.Hp,0);
+                
+            }
+        }
     }
 }
