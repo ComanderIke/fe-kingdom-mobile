@@ -30,6 +30,7 @@ namespace Game.GameActors.Units.CharStateEffects
         public List<EffectDescription> GetEffectDescription(int todoLevel)
         {
             var list = new List<EffectDescription>();
+            list.Add(new EffectDescription("For "+duration[level]+" Turns: ", "", ""));
             if (level < BonusAttributes.Length)
             {
                 string attributeslabel = BonusAttributes[level].GetTooltipText();

@@ -34,6 +34,19 @@ namespace Game.GameActors.Units.Skills
 
         }
 
+        public void ShowDamagePreview(Unit target, Unit caster, int level)
+        {
+            int hpAfter = target.Hp-target.GetDamageDealt(caster, CalculateDamage(caster, target, level), damageType);
+            if (hpAfter < 0)
+                hpAfter = 0;
+            target.visuals.unitRenderer.ShowPreviewHp(hpAfter);
+        }
+        public void HideDamagePreview(Unit target)
+        {
+            
+            target.visuals.unitRenderer.HidePreviewHp();
+        }
+
         public DamageType GetDamageType()
         {
             return damageType;

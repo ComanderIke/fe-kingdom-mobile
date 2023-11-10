@@ -32,6 +32,8 @@ namespace Game.GameActors.Units.Skills
 
         public override void Deactivate(Unit target, Unit caster, int skillLevel)
         {
+            if (target == null)
+                return;
             if (appliedBuff != null)
                 target.StatusEffectManager.RemoveBuff(Instantiate(appliedBuff));
             if (appliedDebuff != null)

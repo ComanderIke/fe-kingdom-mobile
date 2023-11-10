@@ -290,6 +290,10 @@ namespace Game.GameActors.Units
         //     OnUnitDamaged?.Invoke(this,dmg, damageType,false, false);
         //
         // }
+        public int GetDamageDealt(Unit attacker, int damage, DamageType damageType)
+        {
+            return DecisionMaker.BattleHelper.GetDamageAgainst(this, damage, damageType);
+        }
         public void InflictFixedDamage(Unit attacker,int damage, DamageType damageType)
         {
             int dmg = DecisionMaker.BattleHelper.GetDamageAgainst(this, damage, damageType);

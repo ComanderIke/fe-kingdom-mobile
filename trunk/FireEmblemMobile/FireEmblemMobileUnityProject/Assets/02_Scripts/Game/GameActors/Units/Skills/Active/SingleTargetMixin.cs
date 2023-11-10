@@ -48,11 +48,20 @@ namespace Game.GameActors.Units.Skills
             {
                 MonoUtility.DelayFunction(() =>
                 {
-                    if(useScreenPosition)
-                        GameObject.Instantiate(AnimationObject, Camera.main.WorldToScreenPoint(target.GameTransformManager.GetCenterPosition()), Quaternion.identity, null);
+                    if (useScreenPosition)
+                    {
+                        var go =GameObject.Instantiate(AnimationObject,
+                            Camera.main.WorldToScreenPoint(target.GameTransformManager.GetCenterPosition()),
+                            Quaternion.identity, null);
+                        go.GetComponentInChildren<CastPosition>().transform.position =
+                            Camera.main.WorldToScreenPoint(user.GameTransformManager.GetCenterPosition());
+
+                    }
                     else
                     {
-                        GameObject.Instantiate(AnimationObject, target.GameTransformManager.Transform.position, Quaternion.identity, null);
+                       var go= GameObject.Instantiate(AnimationObject, target.GameTransformManager.Transform.position, Quaternion.identity, null);
+                       go.GetComponentInChildren<CastPosition>().transform.position =
+                           user.GameTransformManager.GetCenterPosition();
                     }
                 }, effectDelay);
              
@@ -76,6 +85,7 @@ namespace Game.GameActors.Units.Skills
         }
 
 
+       
         public int GetRange(int level)
         {
             
@@ -154,10 +164,18 @@ namespace Game.GameActors.Units.Skills
             gridSystem.ShowCastRange(user, GetRange(skill.Level), GetMinRange(skill.Level));
             foreach (var target in targets)
             {
+                foreach (SkillEffectMixin effect in SkillEffectMixins)
+                {
+                    if (effect is DamageSkillEffectMixin dmgMixin)
+                        dmgMixin.ShowDamagePreview(target, user, skill.Level);
+                }
+                
                 tiles[target.GridComponent.GridPosition.X, target.GridComponent.GridPosition.Y].SetCastCursorMaterial(EffectType.Bad, user.Faction.Id);
             }
 
         }
+
+        
         public List<EffectDescription> GetEffectDescription(Unit unit, int level)
         {
             var list = new List<EffectDescription>();
