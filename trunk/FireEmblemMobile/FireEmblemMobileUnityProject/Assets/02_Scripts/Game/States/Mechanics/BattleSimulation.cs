@@ -80,8 +80,9 @@ namespace Game.Mechanics
             Defender = defender.Clone() as IBattleActor;
             this.continuos = continuos;
             Attacker.BattleComponent.InitiatesBattle(Defender);
-            int range =(int) new Vector2(attackPosition.X - Defender.GridComponent.GridPosition.X,
-                attackPosition.Y - defender.GridComponent.GridPosition.Y).magnitude;
+            int range =Math.Abs(attackPosition.X - defender.GridComponent.GridPosition.X)+Math.Abs(
+                attackPosition.Y - defender.GridComponent.GridPosition.Y);
+            Debug.Log("Attack Range: "+range+ " "+defender.GridComponent.GridPosition.AsVector()+" "+attackPosition.AsVector());
             if (continuos)
             {
                 //Multiple Rounds Get Count

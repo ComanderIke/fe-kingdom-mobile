@@ -39,11 +39,13 @@ namespace Game.GUI
              if (rectTransform == null)
                  rectTransform = GetComponent<RectTransform>();
 
-             valueAfterText.gameObject.SetActive(true);
+             if(valueAfterText!=null)
+                valueAfterText.gameObject.SetActive(true);
              losingHpBar.gameObject.SetActive(false);
-             valueAfterText.text = "" + afterBattleHp;
-           
-             hpText.text =""+ currentHp;
+             if(valueAfterText!=null)
+                valueAfterText.text = "" + afterBattleHp;
+             if(hpText!=null)
+                 hpText.text =""+ currentHp;
              hpIndicator.gameObject.SetActive(true);
              MonoUtility.InvokeNextFrame(() =>
              {
@@ -57,10 +59,12 @@ namespace Game.GUI
         {
             this.currentHp = currentHp;
             width = backgroundHpBar.rectTransform.rect.width;
-            hpText.text =""+ currentHp;
+            if(hpText!=null)
+                hpText.text =""+ currentHp;
             Debug.Log(maxHp+" "+currentHp+" "+afterHp);
            // currentHpBar.rectTransform.sizeDelta = new Vector2(width*((currentHp * 1.0f)/maxHp),currentHpBar.rectTransform.sizeDelta.y);
-            valueAfterText.gameObject.SetActive(false);
+           if(valueAfterText!=null)
+                valueAfterText.gameObject.SetActive(false);
             losingHpBar.gameObject.SetActive(true);
            // beforeHpBar.gameObject.SetActive(false);
             hpIndicator.gameObject.SetActive(false);
@@ -72,7 +76,8 @@ namespace Game.GUI
 
         public void UpdateValuesAnimated(int maxHp, int newHp)
         {
-            hpText.text =""+ newHp;
+            if(hpText!=null)
+                hpText.text =""+ newHp;
             //currentHpBar.rectTransform.sizeDelta = new Vector2(width*((newHp * 1.0f)/maxHp),currentHpBar.rectTransform.sizeDelta.y);
            // beforeHpBar.gameObject.SetActive(true);
           //  beforeHpBar.rectTransform.sizeDelta = new Vector2(width*((currentHp * 1.0f) / maxHp),beforeHpBar.rectTransform.sizeDelta.y);

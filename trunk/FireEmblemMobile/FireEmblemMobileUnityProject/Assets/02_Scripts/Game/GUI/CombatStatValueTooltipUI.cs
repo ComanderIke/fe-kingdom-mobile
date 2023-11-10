@@ -63,11 +63,11 @@ namespace LostGrace
                      //
                      // statContainer.SetValue(Attributes.GetAsText((int)AttributeType.DEX), unit.Stats.CombinedAttributes().DEX,false, bonusState);
                      // instantiatedObjects.Add(go);
-                     var go2 = Instantiate(statContainerPrefab, statContainerParent);
-                     var statContainer2 = go2.GetComponent<StatContainerUI>();
+                     // var go2 = Instantiate(statContainerPrefab, statContainerParent);
+                     // var statContainer2 = go2.GetComponent<StatContainerUI>();
                      bonusState=unit.Stats.GetAttributeBonusState(AttributeType.LCK);
-                     statContainer2.SetValue(Attributes.GetAsText((int)AttributeType.LCK), unit.Stats.CombinedAttributes().LCK,false, bonusState);
-                     instantiatedObjects.Add(go2);
+                     statContainer.SetValue(Attributes.GetAsText((int)AttributeType.LCK), unit.Stats.CombinedAttributes().LCK,false, bonusState);
+                     instantiatedObjects.Add(go);
                      break;
                  // case CombatStats.CombatStatType.Critavoid: 
                  //    
@@ -96,6 +96,10 @@ namespace LostGrace
                     
                      bonusState=unit.Stats.GetAttributeBonusState(AttributeType.AGI);
                      statContainer.SetValue(Attributes.GetAsText((int)AttributeType.AGI), unit.Stats.CombinedAttributes().AGI,false,bonusState);
+                     instantiatedObjects.Add(go);
+                     break;
+                 default:
+                     Debug.Log("WEIRD STAT TYPE WTF"+statType);
                      instantiatedObjects.Add(go);
                      break;
              }

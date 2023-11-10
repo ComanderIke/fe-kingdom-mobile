@@ -72,6 +72,8 @@ namespace Game.GUI
             UnitActionSystem.OnCheckAttackPreview -= ShowAttackPreviewUI;
             UnitActionSystem.OnUpdateAttackPreview -= UpdateAttackPreviewUI;
             GridInputSystem.OnResetInput -= HideAttackPreviewUI;//TODO Remove somehow
+            UnitActionSystem.OnCheckAttackPreview -= ShowAttackPreviewOnMapHPBar;
+            UnitActionSystem.OnUpdateAttackPreview -= ShowAttackPreviewOnMapHPBar;
             SelectionUI.OnBackClicked -= HideAttackPreviewUI;
             GridGameManager.Instance.GetSystem<GridSystem>().cursor.OnCursorPositionChanged -= (Vector2Int v)=>HideAttackPreviewUI();
         }
@@ -84,6 +86,8 @@ namespace Game.GUI
             UnitSelectionSystem.OnEnemySelected += SelectedEnemyCharacter;
             UnitSelectionSystem.OnDeselectCharacter += DeselectedCharacter;
             UnitActionSystem.OnCheckAttackPreview += ShowAttackPreviewUI;
+            UnitActionSystem.OnCheckAttackPreview += ShowAttackPreviewOnMapHPBar;
+            UnitActionSystem.OnUpdateAttackPreview += ShowAttackPreviewOnMapHPBar;
             UnitActionSystem.OnUpdateAttackPreview += UpdateAttackPreviewUI;
             GridInputSystem.OnResetInput += HideAttackPreviewUI;//TODO Remove somehow
             GridGameManager.Instance.GetSystem<GridSystem>().cursor.OnCursorPositionChanged += (Vector2Int v)=>HideAttackPreviewUI();
@@ -107,6 +111,11 @@ namespace Game.GUI
                 }
 
             }
+        }
+        private void ShowAttackPreviewOnMapHPBar(BattlePreview battlePreview)
+        {
+            if (battlePreview.Defender is Unit defender)
+                defender.visuals.unitRenderer.ShowPreviewHp(battlePreview.DefenderStats.AfterBattleHp);
         }
         private void ShowAttackPreviewUI(BattlePreview battlePreview)
         {

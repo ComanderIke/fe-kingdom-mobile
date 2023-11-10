@@ -27,6 +27,7 @@ namespace LostGrace
 
         void UpdateAllButHpBar(Sprite face, int dmg, int hit, int crit, bool canCounter=true)
         {
+            
             faceSprite.sprite = face;
             if (!canCounter)
             {
@@ -49,6 +50,7 @@ namespace LostGrace
 
         public void UpdateHP(int currentHpRight)
         {
+            Debug.Log("update HP in Container: "+maxHp+ " "+currentHpRight);
             hpBar.UpdateValuesAnimated(maxHp, currentHpRight);
         }
     }

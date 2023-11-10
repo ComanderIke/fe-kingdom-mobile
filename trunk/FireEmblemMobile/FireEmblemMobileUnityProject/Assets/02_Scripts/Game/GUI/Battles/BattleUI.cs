@@ -82,10 +82,13 @@ public class BattleUI : MonoBehaviour
         skipButton.gameObject.SetActive(true);
         SurrenderButton.gameObject.SetActive(battleSimulation.combatRounds.Count > 1);
 
-        currentHpLeft = battlePreview.AttackerStats.CurrentHp;
-        currentHpRight = battlePreview.DefenderStats.CurrentHp;
+       
+        Debug.Log("PLAYER UNIT IS ATTACKER: "+playerUnitIsAttacker);
         if (playerUnitIsAttacker)
         {
+            currentHpLeft = battlePreview.AttackerStats.CurrentHp;
+            currentHpRight = battlePreview.DefenderStats.CurrentHp;
+            Debug.Log("Right Defender Can Counter: "+battlePreview.DefenderStats.CanCounter);
             left.ShowInBattleContext(battlePreview.Attacker.Visuals.CharacterSpriteSet.FaceSprite, battlePreview.AttackerStats.TotalDamage,
                 battlePreview.AttackerStats.Hit, battlePreview.AttackerStats.Crit,
                 battlePreview.AttackerStats.MaxHp, battlePreview.AttackerStats.CurrentHp,
@@ -97,6 +100,9 @@ public class BattleUI : MonoBehaviour
         }
         else
         {
+            currentHpLeft = battlePreview.DefenderStats.CurrentHp;
+            currentHpRight = battlePreview.AttackerStats.CurrentHp;
+            Debug.Log("Left Defender Can Counter: "+battlePreview.DefenderStats.CanCounter);
             left.ShowInBattleContext(battlePreview.Defender.Visuals.CharacterSpriteSet.FaceSprite, battlePreview.DefenderStats.TotalDamage,
                 battlePreview.DefenderStats.Hit, battlePreview.DefenderStats.Crit,
                 battlePreview.DefenderStats.MaxHp, battlePreview.DefenderStats.CurrentHp,
@@ -168,12 +174,14 @@ public class BattleUI : MonoBehaviour
         {
             if (attackData.attacker)
             {
+                Debug.Log(currentHpLeft+" "+attackData.Dmg);
                 currentHpLeft-= attackData.Dmg;
                 left.UpdateHP(currentHpLeft);
                
             }
             else
             {
+                Debug.Log(currentHpRight+" "+attackData.Dmg);
                 currentHpRight -= attackData.Dmg;
                 right.UpdateHP(currentHpRight);
             }

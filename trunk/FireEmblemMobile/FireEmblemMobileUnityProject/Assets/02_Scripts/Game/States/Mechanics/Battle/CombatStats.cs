@@ -66,9 +66,9 @@ namespace Game.Mechanics.Battle
                 case CombatStatType.Crit: return "Critical";
                 case CombatStatType.Critavoid: return "Critavoid";
                 case CombatStatType.Hit: return "Hitrate";
-                case CombatStatType.Resistance: return "Resistance";
-                case CombatStatType.Protection: return "Protection";
-                case CombatStatType.AttackSpeed: return "Attackspeed";
+                case CombatStatType.Resistance: return "Faith";
+                case CombatStatType.Protection: return "Defense";
+                case CombatStatType.AttackSpeed: return "Speed";
             }
 
             return "";

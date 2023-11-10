@@ -1,8 +1,10 @@
-﻿using Game.GameActors.Units.Humans;
+﻿using System;
+using Game.GameActors.Units.Humans;
 using Game.GameActors.Units.Monsters;
 using Game.GameResources;
 using Game.GUI;
 using Game.Manager;
+using LostGrace;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -22,6 +24,10 @@ namespace Game.GameActors.Units.OnGameObject
         [SerializeField] private Image moveTypeIcon;
         [SerializeField] private Animator weaponTypeAnimator;
         [SerializeField] private Animator moveTypeAnimator;
+        [SerializeField] private AttackPreviewStatBar hpBarAlternate;
+        [SerializeField] private TextMeshProUGUI internPositionText;
+        [SerializeField] private TextMeshProUGUI tilePositionText;
+        [SerializeField] private TextMeshProUGUI originPositionText;
         //[SerializeField] private Image EquippedItemBackground;
         [SerializeField] private GameObject spriteMask;
         [SerializeField] private CanvasGroup alphaCanvas;
@@ -62,6 +68,17 @@ namespace Game.GameActors.Units.OnGameObject
            // hoverCanvas.alpha = 0;
             HpValueChanged();
         }
+
+        private void Update()
+        {
+            if (unit != null&& GameConfig.Instance.ConfigProfile.debugModeEnabled)
+            {
+                internPositionText.SetText("Grid: "+unit.GridComponent.GridPosition.X+"/"+unit.GridComponent.GridPosition.Y);
+                tilePositionText.SetText("Tile: "+unit.GridComponent.Tile.X+"/"+unit.GridComponent.Tile.Y);
+                originPositionText.SetText("Origin: "+unit.GridComponent.OriginTile.X+"/"+unit.GridComponent.OriginTile.Y);
+            }
+        }
+
         public void HideHover()
         {
            // hoverCanvas.alpha = 0;
@@ -72,6 +89,7 @@ namespace Game.GameActors.Units.OnGameObject
         }
         public void Init()
         {
+            //hpBarAlternate.SetColor();
             hpBar.GetComponent<Image>().color = ColorManager.Instance.GetFactionColor(unit.Faction.Id);
             hpText.color = ColorManager.Instance.GetFactionColor(unit.Faction.Id);
             float intensity = 2;
@@ -147,6 +165,19 @@ namespace Game.GameActors.Units.OnGameObject
             if (hpBar != null && unit != null){
                 hpBar.SetValue(unit.Hp, unit.MaxHp, false);
                 hpText.SetText(""+unit.Hp);
+            }
+            if (hpBarAlternate != null && unit != null){
+                hpBarAlternate.UpdateValuesAnimated(unit.MaxHp, unit.Hp);
+                
+            }
+        }
+
+        public void ShowPreviewHp(int afterBattleHp)
+        {
+            Debug.Log("SHOW HP BAR");
+            if (hpBarAlternate != null && unit != null){
+                hpBarAlternate.UpdateValues(unit.MaxHp, unit.Hp, afterBattleHp);
+                
             }
         }
         private void SetWaitingSprite(bool waiting)
