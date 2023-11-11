@@ -24,18 +24,21 @@ namespace Game.States
         private const float WaitTimeWhenFinished = 1.5f;
         private const float initialDelay= 0.5f;
         private List<IAttackableTarget> defenders;
-        public AfterBattleTasks(UnitProgressSystem system,Unit attacker, IAttackableTarget defender)
+        private bool expForTargets;
+        public AfterBattleTasks(UnitProgressSystem system,Unit attacker, IAttackableTarget defender, bool expForTarget=true)
         {
             this.progressSystem = system;
             this.attacker = attacker;
+            this.expForTargets = expForTarget;
             defenders = new List<IAttackableTarget>();
             defenders.Add(defender);
         }
-        public AfterBattleTasks(UnitProgressSystem system,Unit attacker, List<IAttackableTarget> defenders)
+        public AfterBattleTasks(UnitProgressSystem system,Unit attacker, List<IAttackableTarget> defenders, bool expForTargets=true)
         {
             this.progressSystem = system;
             this.attacker = attacker;
             this.defenders = defenders;
+            this.expForTargets = expForTargets;
         }
         public void StartTask()
         {
@@ -84,7 +87,8 @@ namespace Game.States
                     
                     if (defender.IsAlive() && unitDefender.IsPlayerControlled())
                     {
-                        yield return ExpForDefender(unitDefender);
+                        if(expForTargets)
+                            yield return ExpForDefender(unitDefender);
                     }
 
                 }

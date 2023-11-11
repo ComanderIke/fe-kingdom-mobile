@@ -42,7 +42,7 @@ namespace Game.GameActors.Units.Skills
                 target.StatusEffectManager.RemoveStatModifier(Instantiate(AppliedStatModifier));
         }
 
-        public override List<EffectDescription> GetEffectDescription(int level)
+        public override List<EffectDescription> GetEffectDescription(Unit caster,int level)
         {
             var list = new List<EffectDescription>();
             var buff=appliedBuff==null?null:appliedBuff.GetEffectDescription(level);

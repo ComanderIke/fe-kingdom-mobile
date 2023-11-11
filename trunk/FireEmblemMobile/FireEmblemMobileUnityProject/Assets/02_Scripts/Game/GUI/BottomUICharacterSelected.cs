@@ -103,6 +103,8 @@ namespace LostGrace
         {
             if (unit == null)
                 return;
+            parentCanvasGroup.interactable = !unit.TurnStateManager.IsWaiting;
+            parentCanvasGroup.alpha = unit.TurnStateManager.IsWaiting ? inActiveAlpha : 1f;
             faceSprite.sprite = unit.visuals.CharacterSpriteSet.FaceSprite;
             nameText.text = unit.Name;
             lvl.text = "" + unit.ExperienceManager.Level;

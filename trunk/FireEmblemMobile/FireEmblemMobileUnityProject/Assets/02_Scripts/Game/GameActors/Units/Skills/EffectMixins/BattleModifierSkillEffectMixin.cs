@@ -33,7 +33,7 @@ namespace Game.GameActors.Units.Skills
         }
 
 
-        public override List<EffectDescription> GetEffectDescription(int level)
+        public override List<EffectDescription> GetEffectDescription(Unit caster,int level)
         {
             var list = new List<EffectDescription>();
             if (level < multiplier.Length)

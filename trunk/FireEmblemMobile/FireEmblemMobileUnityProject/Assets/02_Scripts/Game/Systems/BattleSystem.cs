@@ -280,6 +280,7 @@ namespace Game.Mechanics
                 battlePreview.AttackerStats = new BattlePreviewStats(attacker.BattleComponent.BattleStats.GetDamage(),
                     attacker.Stats.BaseAttributes.AGI, attacker.BattleComponent.BattleStats.GetDamageType(),0,
                     attacker.Stats.BaseAttributes.DEX,
+                    0,
                     attacker.BattleComponent.BattleStats.GetDamage(),
                     100,
                     0,
@@ -291,6 +292,7 @@ namespace Game.Mechanics
                 Debug.Log(battleSimulation.Defender);
                 battlePreview.DefenderStats = new BattlePreviewStats(0,
                     0, attacker.BattleComponent.BattleStats.GetDamageType(),
+                    0,
                     0,
                     0,
                     0,

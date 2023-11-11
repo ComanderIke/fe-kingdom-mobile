@@ -18,6 +18,8 @@ namespace Game.GUI
     {
         // [SerializeField]
         // private UIStatPanel statPanel;
+        [SerializeField] private CanvasGroup canvasGroup;
+        [SerializeField] private float inActiveAlpha=.7f;
         [SerializeField] private Canvas canvas;
         [SerializeField] private Animator animator;
         [SerializeField]
@@ -95,6 +97,7 @@ namespace Game.GUI
         public override void Show(Unit unit)
         {
             this.unit = unit;
+            canvasGroup.alpha = unit.TurnStateManager.IsWaiting ? inActiveAlpha : 1;
             canvas.sortingOrder =sortOrder;
            // Debug.Log("Show UnitCharacterUI: "+unit.name);
             unit.HpValueChanged -= UpdateValues;

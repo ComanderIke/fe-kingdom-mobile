@@ -87,12 +87,12 @@ namespace Game.GameActors.Units.Skills
         }
 
 
-        public override List<EffectDescription> GetEffectDescription(int level)
+        public override List<EffectDescription> GetEffectDescription(Unit caster,int level)
         {
             var list = new List<EffectDescription>();
             foreach (var effect in skillEffects)
             {
-                list.AddRange(effect.GetEffectDescription(level));
+                list.AddRange(effect.GetEffectDescription(caster, level));
             }
             return list;
         }

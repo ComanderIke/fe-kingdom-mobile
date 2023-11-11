@@ -71,6 +71,7 @@ namespace Game.GameInput
             }
            // Debug.Log("NotWaiting "+unit);
             selectedCharacter = unit;
+            Player.Instance.Party.SetActiveUnit(selectedCharacter);
 
             waitButton.SetActive(true);
             //Debug.Log("WaitButton true ");

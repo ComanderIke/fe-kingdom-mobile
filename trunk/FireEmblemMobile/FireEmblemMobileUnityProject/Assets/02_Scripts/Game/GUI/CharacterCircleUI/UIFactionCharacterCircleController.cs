@@ -6,6 +6,7 @@ using __2___Scripts.Game.Utility;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GUI;
+using Game.Mechanics;
 using Game.WorldMapStuff.Model;
 using UnityEngine;
 
@@ -36,12 +37,22 @@ public class UIFactionCharacterCircleController : MonoBehaviour,IClickedReceiver
     private void OnDisable()
     {
         Unit.UnitDied -= DeleteUI;
-  
+        UnitSelectionSystem.OnSelectedCharacter -= SelectUnit;
+        UnitSelectionSystem.OnSelectedInActiveCharacter -= SelectUnit;
+        UnitSelectionSystem.OnDeselectCharacter -= DeselectUnit;
+
     }
     private void OnEnable()
     {
         Unit.UnitDied -= DeleteUI;
         Unit.UnitDied += DeleteUI;
+        UnitSelectionSystem.OnSelectedCharacter -= SelectUnit;
+        UnitSelectionSystem.OnSelectedCharacter += SelectUnit;
+        UnitSelectionSystem.OnSelectedInActiveCharacter -= SelectUnit;
+        UnitSelectionSystem.OnSelectedInActiveCharacter += SelectUnit;
+        UnitSelectionSystem.OnDeselectCharacter -= DeselectUnit;
+        UnitSelectionSystem.OnDeselectCharacter += DeselectUnit;
+
 
     }
 
@@ -50,6 +61,7 @@ public class UIFactionCharacterCircleController : MonoBehaviour,IClickedReceiver
         this.units = units;
         Unit.UnitDied -= DeleteUI;
         Unit.UnitDied += DeleteUI;
+        
 
       
         if(characterUIgGameObjects==null||characterUIgGameObjects.Count!=   units.Count(u => u.IsAlive()))
@@ -84,12 +96,23 @@ public class UIFactionCharacterCircleController : MonoBehaviour,IClickedReceiver
         layout.SetActive(false);
         layout.SetActive(true);
     }
-    public void SelectUnit(Unit u)
+
+    private void DeselectUnit(IGridActor u)
+    {
+        foreach (var unit in units)
+        {
+            characterUIs[unit].Show(unit);
+        }
+        layout.SetActive(false);
+        layout.SetActive(true);
+    }
+
+    private void SelectUnit(IGridActor u)
     {
 
         foreach (var unit in units)
         {
-            if (unit == u)
+            if (Equals(unit, u))
             {
                 characterUIs[unit].ShowActive(unit);
             }
@@ -142,12 +165,13 @@ public class UIFactionCharacterCircleController : MonoBehaviour,IClickedReceiver
         // }
         // layout.SetActive(false);
         // layout.SetActive(true);
+        characterView.Show(unit);
     }
 
     public void PlusClicked(Unit unit)
     {
         //
-        characterView.Show(unit);
+       
     }
 
     public RectTransform GetUnitParticleAttractorTransform(Unit unit)

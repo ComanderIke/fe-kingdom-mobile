@@ -73,9 +73,18 @@ namespace Game.GameActors.Units.OnGameObject
         {
             if (unit != null&& GameConfig.Instance.ConfigProfile.debugModeEnabled)
             {
+                internPositionText.enabled = true;
+                tilePositionText.enabled = true;
+                originPositionText.enabled = true;
                 internPositionText.SetText("Grid: "+unit.GridComponent.GridPosition.X+"/"+unit.GridComponent.GridPosition.Y);
                 tilePositionText.SetText("Tile: "+unit.GridComponent.Tile.X+"/"+unit.GridComponent.Tile.Y);
                 originPositionText.SetText("Origin: "+unit.GridComponent.OriginTile.X+"/"+unit.GridComponent.OriginTile.Y);
+            }
+            else
+            {
+                internPositionText.enabled = false;
+                tilePositionText.enabled = false;
+                originPositionText.enabled = false;
             }
         }
 

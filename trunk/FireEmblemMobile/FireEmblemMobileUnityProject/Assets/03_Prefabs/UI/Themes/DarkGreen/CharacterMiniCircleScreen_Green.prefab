@@ -29,6 +29,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5889344963921970604}
   - {fileID: 381994567070711333}
@@ -118,6 +119,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: -0.076980084, w: 0.99703264}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2944988205522629164}
   m_RootOrder: 0
@@ -192,6 +194,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8212968952469230508}
   m_RootOrder: 1
@@ -283,15 +286,16 @@ MonoBehaviour:
         m_Calls: []
   DebugActive: 0
   FeedbacksList:
-  - id: 0
-  - id: 1
-  - id: 2
+  - rid: 0
+  - rid: 1
+  - rid: 2
   KeepPlayModeChanges: 0
   PerformanceMode: 0
   ForceStopFeedbacksOnDisable: 1
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: MMF_Image, ns: MoreMountains.Feedbacks, asm: MoreMountains.Feedbacks}
       data:
         Active: 1
@@ -398,7 +402,7 @@ MonoBehaviour:
         EnableOnPlay: 0
         DisableOnSequenceEnd: 0
         DisableOnStop: 0
-    00000001:
+    - rid: 1
       type: {class: MMF_Image, ns: MoreMountains.Feedbacks, asm: MoreMountains.Feedbacks}
       data:
         Active: 1
@@ -505,7 +509,7 @@ MonoBehaviour:
         EnableOnPlay: 0
         DisableOnSequenceEnd: 0
         DisableOnStop: 0
-    00000002:
+    - rid: 2
       type: {class: MMF_Looper, ns: MoreMountains.Feedbacks, asm: MoreMountains.Feedbacks}
       data:
         Active: 1
@@ -616,6 +620,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8212968954078367597}
   m_RootOrder: 2
@@ -703,6 +708,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6513781778846088098}
   m_RootOrder: 1
@@ -779,6 +785,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8212968954078367597}
   m_RootOrder: 1
@@ -866,6 +873,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2944988205522629164}
   m_RootOrder: 1
@@ -941,6 +949,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6243370610220022393}
   m_RootOrder: 0
@@ -1015,6 +1024,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8212968952469230508}
   m_RootOrder: 2
@@ -1106,15 +1116,16 @@ MonoBehaviour:
         m_Calls: []
   DebugActive: 0
   FeedbacksList:
-  - id: 0
-  - id: 1
-  - id: 2
+  - rid: 0
+  - rid: 1
+  - rid: 2
   KeepPlayModeChanges: 0
   PerformanceMode: 0
   ForceStopFeedbacksOnDisable: 1
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: MMF_Image, ns: MoreMountains.Feedbacks, asm: MoreMountains.Feedbacks}
       data:
         Active: 1
@@ -1221,7 +1232,7 @@ MonoBehaviour:
         EnableOnPlay: 0
         DisableOnSequenceEnd: 0
         DisableOnStop: 0
-    00000001:
+    - rid: 1
       type: {class: MMF_Image, ns: MoreMountains.Feedbacks, asm: MoreMountains.Feedbacks}
       data:
         Active: 1
@@ -1328,7 +1339,7 @@ MonoBehaviour:
         EnableOnPlay: 0
         DisableOnSequenceEnd: 0
         DisableOnStop: 0
-    00000002:
+    - rid: 2
       type: {class: MMF_Looper, ns: MoreMountains.Feedbacks, asm: MoreMountains.Feedbacks}
       data:
         Active: 1
@@ -1438,6 +1449,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6248584594080528035}
   m_Father: {fileID: 6513781778846088098}
@@ -1512,6 +1524,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8212968954078367597}
   m_RootOrder: 6
@@ -1551,6 +1564,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6243370610220022393}
   - {fileID: 1008229553023175329}
@@ -1682,6 +1696,7 @@ GameObject:
   - component: {fileID: 2692420259242508431}
   - component: {fileID: 7577547902705462350}
   - component: {fileID: 5891077732585014020}
+  - component: {fileID: 3324773654089039420}
   m_Layer: 5
   m_Name: CharacterMiniCircleScreen_Green
   m_TagString: Untagged
@@ -1699,6 +1714,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8212968954078367597}
   - {fileID: 9203543895318167777}
@@ -1723,6 +1739,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 131c1d7b7128a524e9a0b114337f1e07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 3324773654089039420}
+  inActiveAlpha: 0.4
   canvas: {fileID: 2692420259242508431}
   animator: {fileID: 6214694422252930241}
   faceSprite: {fileID: 8212968954010927512}
@@ -1747,6 +1765,7 @@ MonoBehaviour:
     bluePrintID: 
     name: 
     moveType: {fileID: 0}
+    BluePrintId: 
     rpgClass: 0
     experienceManager:
       level: 0
@@ -1757,7 +1776,7 @@ MonoBehaviour:
   sortOrder: 501
 --- !u!95 &6214694422252930241
 Animator:
-  serializedVersion: 3
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1770,10 +1789,12 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!223 &2692420259242508431
 Canvas:
   m_ObjectHideFlags: 0
@@ -1823,6 +1844,18 @@ SortingGroup:
   m_SortingLayerID: 215948683
   m_SortingLayer: 5
   m_SortingOrder: 501
+--- !u!225 &3324773654089039420
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8212968952469230515}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &8212968952827714961
 GameObject:
   m_ObjectHideFlags: 0
@@ -1852,6 +1885,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8212968954274018821}
   m_RootOrder: 2
@@ -1939,6 +1973,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8212968954274018821}
   m_RootOrder: 1
@@ -2014,6 +2049,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8212968954118956377}
   m_RootOrder: 0
@@ -2152,6 +2188,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8212968954274018821}
   m_RootOrder: 3
@@ -2308,6 +2345,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8212968954274018821}
   - {fileID: 1480716228635925332}
@@ -2353,6 +2391,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8212968954274018821}
   m_RootOrder: 0
@@ -2429,6 +2468,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8212968953170096581}
   m_Father: {fileID: 8212968954078367597}
@@ -2521,6 +2561,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8212968954110999167}
   - {fileID: 8212968953087680710}
@@ -2786,6 +2827,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e64226cfd2042b4ca657c2593e84a82, type: 3}
+--- !u!224 &8212968953141962521 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8479147134167296036, guid: 7e64226cfd2042b4ca657c2593e84a82,
+    type: 3}
+  m_PrefabInstance: {fileID: 311215509041745725}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8212968953242901896 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8479147134537192117, guid: 7e64226cfd2042b4ca657c2593e84a82,
@@ -2816,12 +2863,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &8212968953141962521 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8479147134167296036, guid: 7e64226cfd2042b4ca657c2593e84a82,
-    type: 3}
-  m_PrefabInstance: {fileID: 311215509041745725}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &751048843838816200
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -4,8 +4,9 @@ namespace LostGrace
 {
     public class BottomUIBase : MonoBehaviour
     {
-        [SerializeField] private CanvasGroup canvasGroup;
-   
+        [SerializeField] public CanvasGroup canvasGroup;
+        [SerializeField] public CanvasGroup parentCanvasGroup;
+        [SerializeField] public float inActiveAlpha = .7f;
 
         public void Show()
         {

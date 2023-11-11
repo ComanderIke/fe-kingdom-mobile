@@ -36,7 +36,7 @@ namespace Game.GameActors.Units.Skills
 
         public void ShowDamagePreview(Unit target, Unit caster, int level)
         {
-            int hpAfter = target.Hp-target.GetDamageDealt(caster, CalculateDamage(caster, target, level), damageType);
+            int hpAfter = target.Hp-GetDamageDealtToTarget(caster,target,level);
             if (hpAfter < 0)
                 hpAfter = 0;
             target.visuals.unitRenderer.ShowPreviewHp(hpAfter);
@@ -59,17 +59,24 @@ namespace Game.GameActors.Units.Skills
                 return target.Hp;
             }
 
+            
+
+            return GetScaledDamage(caster, level);
+        }
+
+        private int GetScaledDamage(Unit user, int level)
+        {
             int baseDamageg = dmg[level];
 
             if (scalingcoeefficient.Length > level)
             {
                 if (scalingType == AttributeType.ATK)
                 {
-                    baseDamageg += (int)(caster.BattleComponent.BattleStats.GetDamage()* scalingcoeefficient[level]);
+                    baseDamageg += (int)(user.BattleComponent.BattleStats.GetDamage()* scalingcoeefficient[level]);
                 }
                 else
                 {
-                    baseDamageg += (int)(caster.Stats.CombinedAttributes().GetAttributeStat(scalingType) *
+                    baseDamageg += (int)(user.Stats.CombinedAttributes().GetAttributeStat(scalingType) *
                                          scalingcoeefficient[level]);
                 }
 
@@ -77,15 +84,15 @@ namespace Game.GameActors.Units.Skills
 
             return baseDamageg;
         }
-
         public override void Deactivate(Unit user, Unit caster, int skillLevel)
         {
             throw new System.NotImplementedException();
         }
 
 
-        public override List<EffectDescription> GetEffectDescription(int level)
+        public override List<EffectDescription> GetEffectDescription(Unit caster, int level)
         {
+            var list = new List<EffectDescription>();
             string upgLabel = "";
             string valueLabel = "";
             if (level < scalingcoeefficient.Length)
@@ -102,15 +109,18 @@ namespace Game.GameActors.Units.Skills
                 upgLabel = valueLabel;
             }
 
-            return new List<EffectDescription>()
-            {
-                new EffectDescription("Damage: ", "" + dmg[level],
-                    "" + ((level + 1 < dmg.Length) ? dmg[level + 1] : dmg[level])),
-                new EffectDescription("Scaling " + scalingType + ": ", valueLabel, upgLabel)
-            };
+            list.Add(new EffectDescription("Damage: ", "" + GetScaledDamage(caster, level),
+                "" + ((level + 1 < dmg.Length) ?GetScaledDamage(caster, level+1) : GetScaledDamage(caster, level))));
+            if (level < scalingcoeefficient.Length)
+                list.Add(new EffectDescription("Scaling " + scalingType + ": ", valueLabel, upgLabel));
+            return list;
         }
 
 
+        public int GetDamageDealtToTarget(Unit caster, Unit target, int level)
+        {
+            return target.GetDamageDealt(caster, CalculateDamage(caster, target, level), damageType);
+        }
     }
 }
 

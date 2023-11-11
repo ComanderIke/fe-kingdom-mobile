@@ -49,7 +49,7 @@ namespace Game.GameActors.Units.Skills
 
         [field: SerializeField] public List<SkillEffectMixin> SkillEffects;
         [field: SerializeField] public bool Rooted { get; set; }
-        [field: SerializeField] public bool IncludeCasterInRooted { get; set; }
+        [field: SerializeField] public bool IncludeMiddlePos { get; set; }
 
         public int GetRange(int level) => range[level];
         public int GetMinRange(int level) => minRange;
@@ -88,7 +88,7 @@ namespace Game.GameActors.Units.Skills
             {
                 int xPosition = (int)(user.GridComponent.GridPosition.X + pos.x);
                 int yPosition = (int)(user.GridComponent.GridPosition.Y + pos.y);
-                if (xPosition == unitPos.x && yPosition == unitPos.y && !IncludeCasterInRooted)
+                if (xPosition == unitPos.x && yPosition == unitPos.y && !IncludeMiddlePos)
                     continue;
                 Debug.Log("Targetposition: " + pos + " " + xPosition + " " + yPosition);
                 if (xPosition >= 0 && xPosition < tiles.GetLength(0) && yPosition >= 0 &&
@@ -154,6 +154,7 @@ namespace Game.GameActors.Units.Skills
                     previousPos.Add(new Vector2Int(xPosition, yPosition));
                     chosenPrevPos = previousPos[previousPos.Count - 1];
                 }
+                var go= GameObject.Instantiate(AnimationObject, spawnAnimationAtCaster?user.GameTransformManager.GetCenterPosition():new Vector3(x+.5f, y+0.5f), Quaternion.identity, null);
 
 
             }
@@ -226,13 +227,14 @@ namespace Game.GameActors.Units.Skills
 
             return targetPos;
         }
+      
 
-        protected List<Vector2Int> GetTargetPositions(int level, Vector2Int direction = default)
+        public List<Vector2Int> GetTargetPositions(int level, Vector2Int direction = default)
         {
             List<Vector2Int> targetPositions = new List<Vector2Int>();
             if (direction == default)
                 direction = new Vector2Int(1, 1);
-            if(IncludeCasterInRooted)
+            if(IncludeMiddlePos)
                 targetPositions.Add(new Vector2Int(0,0));
             if (GetSize(level) > 0)
             {
@@ -301,7 +303,7 @@ namespace Game.GameActors.Units.Skills
                                     if (!targetPositions.Contains(new Vector2Int(-i, -j)))
                                         targetPositions.Add(new Vector2Int(-i, -j));
                                 }
-
+                        
                             }
                         }
                     }
@@ -318,6 +320,64 @@ namespace Game.GameActors.Units.Skills
             }
 
             return targetPositions;
+        }
+
+        public void ShowPreview(Unit caster, int x, int y)
+        {
+            prevPreviewPosX = x;
+            prevPreviewPosY = y;
+            foreach (var target in GetAllTargets(caster, ServiceProvider.Instance.GetSystem<GridSystem>().Tiles,x, y))
+            {
+                foreach (SkillEffectMixin effect in SkillEffects)
+                {
+                    if (effect is DamageSkillEffectMixin dmgMixin)
+                        dmgMixin.ShowDamagePreview((Unit)target, caster, skill.Level);
+                    if (effect is HealEffect healMixin)
+                        healMixin.ShowHealPreview((Unit)target, caster, skill.Level);
+                }
+            }
+        }
+
+        private int prevPreviewPosX;
+        private int prevPreviewPosY;
+        public void HidePreview(Unit caster)
+        {
+            foreach (var target in GetAllTargets(caster, ServiceProvider.Instance.GetSystem<GridSystem>().Tiles,prevPreviewPosX, prevPreviewPosY))
+            {
+                foreach (SkillEffectMixin effect in SkillEffects)
+                {
+                    if (effect is DamageSkillEffectMixin dmgMixin)
+                        dmgMixin.HideDamagePreview((Unit)target);
+                    if (effect is HealEffect healMixin)
+                        healMixin.HideHealPreview((Unit)target);
+                }
+            }
+        }
+
+        public int GetHpCost()
+        {
+            return GetHpCost(skill.level);
+        }
+
+        public int GetDamageDone(Unit selectedUnit, Unit target)
+        {
+            foreach (SkillEffectMixin effect in SkillEffects)
+            {
+                if (effect is DamageSkillEffectMixin damageSkillEffectMixin)
+                    return damageSkillEffectMixin.GetDamageDealtToTarget(selectedUnit, target, skill.level);
+            }
+
+            return 0;
+        }
+        public int GetHealingDone(Unit selectedUnit, Unit target)
+        {
+            foreach (SkillEffectMixin effect in SkillEffects)
+            {
+                if (effect is HealEffect healMixin)
+                    return healMixin.GetHealAmount(selectedUnit, target,skill.level);
+            }
+
+            return 0;
         }
 
         public void Effect(Unit user, Vector3 target)
@@ -358,7 +418,7 @@ namespace Game.GameActors.Units.Skills
             var list = new List<EffectDescription>();
             foreach (var skillEffect in SkillEffects)
             {
-                list.AddRange(skillEffect.GetEffectDescription(level));
+                list.AddRange(skillEffect.GetEffectDescription(unit,level));
             }
 
             return list;

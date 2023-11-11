@@ -104,7 +104,7 @@ namespace Game.GameActors.Units.Skills.Passive
         
             foreach (var skillEffect in skillEffectMixins)
             {
-                list.AddRange(skillEffect.GetEffectDescription(level));
+                list.AddRange(skillEffect.GetEffectDescription(unit,level));
             }
             
             return list;

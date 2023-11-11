@@ -9,6 +9,7 @@ namespace Game.GameActors.Units.Skills
     [CreateAssetMenu(menuName = "GameData/Skills/Effectmixin/Heal", fileName = "HealEffect")]
     public class HealEffect : UnitTargetSkillEffectMixin
     {
+        public GameObject healingVfx;
         public float [] heal;
         public AttributeType scalingType;
         public float[] scalingcoeefficient;
@@ -17,20 +18,23 @@ namespace Game.GameActors.Units.Skills
         public bool healToPercentageHealth = false;
         public override void Activate(Unit target, Unit caster, int level)
         {
-            float baseDamageg = heal[level];
+      
 
-            int scalingdmg = (int)(caster.Stats.CombinedAttributes().GetAttributeStat(scalingType) * scalingcoeefficient[level]);
+          
+            target.Heal(GetHealAmount(caster,target, level));
 
+            var go = Instantiate(healingVfx, target.GameTransformManager.Transform);
+        }
+
+        public int GetHealAmount(Unit caster, Unit target, int level)
+        {
             if (healToPercentageHealth)
-            {
-                target.Heal((int)((target.MaxHp * heal[level]) - target.Hp));
-            }
-            else if (percentage)
-            {
-                target.Heal((int)(target.MaxHp*heal[level]));
-            }
-            else
-                target.Heal((int)(baseDamageg+scalingdmg));
+                return (int)((target.MaxHp * heal[level]) - target.Hp);
+            if (percentage)
+                return (int)(target.MaxHp*heal[level]);
+            if(level<scalingcoeefficient.Length)
+                return (int)(heal[level]+(caster.Stats.CombinedAttributes().GetAttributeStat(scalingType) * scalingcoeefficient[level]));
+            return (int)(heal[level]);
         }
 
         public override void Deactivate(Unit user, Unit caster, int skillLevel)
@@ -39,22 +43,51 @@ namespace Game.GameActors.Units.Skills
         }
 
 
-        public override List<EffectDescription> GetEffectDescription(int level)
+        public override List<EffectDescription> GetEffectDescription(Unit caster, int level)
         {
-            
-            string valueLabel= (percentage?+(heal[level]*100)+"%":""+heal[level]);
+            var list = new List<EffectDescription>();
+            string upgLabelScaling = "";
+            string valueLabelScaling = "";
+            string valueLabel= (percentage?+(heal[level]*100)+"%":""+GetHealAmount(caster,null,level));
+            if (level < scalingcoeefficient.Length)
+            {
+                valueLabelScaling += scalingcoeefficient[level];
+            }
             if (level < heal.Length-1)
             {
                 level++;
             }
-            string upgLabel=(percentage?+(heal[level]*100)+"%":""+heal[level]);
-            return new List<EffectDescription>()
+            if (level < scalingcoeefficient.Length)
             {
-                new EffectDescription("Heal: ", valueLabel,
-                    upgLabel)
-            };
+                upgLabelScaling += scalingcoeefficient[level];
+            }
+            string upgLabel=(percentage?+(heal[level]*100)+"%":""+GetHealAmount(caster,null,level));
+            
+         
+
+            
+            
+            list.Add( new EffectDescription("Heal: ", valueLabel, upgLabel));
+            if(level< scalingcoeefficient.Length)
+                list.Add(  new EffectDescription("Scaling " + scalingType + ": ", valueLabelScaling, upgLabelScaling));
+            return list;
+            
         }
 
-  
+
+        public void ShowHealPreview(Unit target, Unit caster, int skillLevel)
+        {
+           
+            int hpAfter = target.Hp+GetHealAmount(caster,target,skillLevel);
+            if (hpAfter > target.MaxHp)
+                hpAfter = target.MaxHp;
+            target.visuals.unitRenderer.ShowPreviewHp(hpAfter);
+            
+        }
+
+        public void HideHealPreview(Unit target)
+        {
+            target.visuals.unitRenderer.HidePreviewHp();
+        }
     }
 }

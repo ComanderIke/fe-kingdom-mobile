@@ -37,11 +37,14 @@ namespace Game.GameActors.Units.Skills
     public class SingleTargetMixin : ActiveSkillMixin
     {
         public List<SingleTargetCondition> conditions;
+        
         public SingleTargetType targetType;
         [field: SerializeField] private int minRange = 0;
         [field: SerializeField] private int[] range;
         [SerializeField]private bool sameAsAttackRange = false;
         public List<SkillEffectMixin> SkillEffectMixins;
+        public bool confirmPosition = true;
+
         public void Activate(Unit user, Unit target)
         {
             if (AnimationObject != null)
@@ -59,9 +62,10 @@ namespace Game.GameActors.Units.Skills
                     }
                     else
                     {
-                       var go= GameObject.Instantiate(AnimationObject, target.GameTransformManager.Transform.position, Quaternion.identity, null);
-                       go.GetComponentInChildren<CastPosition>().transform.position =
-                           user.GameTransformManager.GetCenterPosition();
+                       var go= GameObject.Instantiate(AnimationObject, spawnAnimationAtCaster?user.GameTransformManager.GetCenterPosition():target.GameTransformManager.GetCenterPosition(), Quaternion.identity, null);
+                       var castPosition=go.GetComponentInChildren<CastPosition>();
+                       if(castPosition!=null)
+                           castPosition.transform.position = user.GameTransformManager.GetCenterPosition();
                     }
                 }, effectDelay);
              
@@ -153,8 +157,28 @@ namespace Game.GameActors.Units.Skills
             return !user.Faction.IsOpponentFaction(target.Faction);
         }
 
-     
 
+
+        public void HideTargets(Unit user)
+        {
+            var gridSystem = ServiceProvider.Instance.GetSystem<GridSystem>();
+            var tiles = gridSystem.Tiles;
+            var targets = GetTargets(user);
+            gridSystem.HideMoveRange();
+            gridSystem.ShowCastRange(user, GetRange(skill.Level), GetMinRange(skill.Level));
+            foreach (var target in targets)
+            {
+                foreach (SkillEffectMixin effect in SkillEffectMixins)
+                {
+                    if (effect is DamageSkillEffectMixin dmgMixin)
+                        dmgMixin.HideDamagePreview(target);
+                    if (effect is HealEffect healMixin)
+                        healMixin.HideHealPreview(target);
+                }
+                
+                tiles[target.GridComponent.GridPosition.X, target.GridComponent.GridPosition.Y].SetCastCursorMaterial(EffectType.Bad, user.Faction.Id);
+            }
+        }
         public void ShowTargets(Unit user)
         {
             var gridSystem = ServiceProvider.Instance.GetSystem<GridSystem>();
@@ -168,6 +192,8 @@ namespace Game.GameActors.Units.Skills
                 {
                     if (effect is DamageSkillEffectMixin dmgMixin)
                         dmgMixin.ShowDamagePreview(target, user, skill.Level);
+                    if (effect is HealEffect healMixin)
+                        healMixin.ShowHealPreview(target, user, skill.Level);
                 }
                 
                 tiles[target.GridComponent.GridPosition.X, target.GridComponent.GridPosition.Y].SetCastCursorMaterial(EffectType.Bad, user.Faction.Id);
@@ -181,11 +207,32 @@ namespace Game.GameActors.Units.Skills
             var list = new List<EffectDescription>();
             foreach (var skillEffect in SkillEffectMixins)
             {
-                var skillEffectList = skillEffect.GetEffectDescription(level);
+                var skillEffectList = skillEffect.GetEffectDescription(unit,level);
                 if(skillEffectList!=null)
-                list.AddRange(skillEffectList);
+                    list.AddRange(skillEffectList);
             }
             return list;
+        }
+
+        public int GetDamageDone(Unit selectedUnit, Unit target)
+        {
+            foreach (SkillEffectMixin effect in SkillEffectMixins)
+            {
+                if (effect is DamageSkillEffectMixin damageSkillEffectMixin)
+                    return damageSkillEffectMixin.GetDamageDealtToTarget(selectedUnit, target, skill.level);
+            }
+
+            return 0;
+        }
+        public int GetHealingDone(Unit selectedUnit, Unit target)
+        {
+            foreach (SkillEffectMixin effect in SkillEffectMixins)
+            {
+                if (effect is HealEffect healMixin)
+                    return healMixin.GetHealAmount(selectedUnit, target,skill.level);
+            }
+
+            return 0;
         }
     }
 }

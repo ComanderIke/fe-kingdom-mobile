@@ -18,7 +18,7 @@ namespace Game.GameActors.Units.Skills
 
             foreach (var skillEffect in skillEffectMixins)
             {
-                list.AddRange(skillEffect.GetEffectDescription(level));
+                list.AddRange(skillEffect.GetEffectDescription(unit, level));
             }
             return list;
         }

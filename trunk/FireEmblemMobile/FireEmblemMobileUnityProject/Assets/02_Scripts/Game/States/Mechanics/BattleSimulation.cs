@@ -21,6 +21,7 @@ namespace Game.Mechanics
     {
         public bool attacker;
         public int Dmg;
+        public int Heal;
         public bool hit;
         public bool kill;
         public bool crit;

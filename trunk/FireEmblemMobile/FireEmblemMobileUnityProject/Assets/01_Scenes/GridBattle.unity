@@ -1030,8 +1030,11 @@ MonoBehaviour:
   nameText: {fileID: 1429945401}
   icon: {fileID: 1326469166}
   descriptionText: {fileID: 643265944}
+  selectionUI: {fileID: 64607486}
   topLayout: {fileID: 823256846}
+  attackPreviewUI: {fileID: 1428428005}
   bottomLayout: {fileID: 414307780}
+  battlePreviewSo: {fileID: 11400000, guid: 642250ae21962184891aad081a44ed51, type: 2}
 --- !u!114 &4521737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6427,9 +6430,9 @@ MonoBehaviour:
   StartButton: {fileID: 4944318107267056841}
   unitSelectionUI: {fileID: 2093429718}
   conditionUI: {fileID: 2112981719}
-  charCircleController: {fileID: 903124158}
+  charCircleController: {fileID: 903124162}
   darkenBackground: {fileID: 133226966}
-  convoyController: {fileID: 0}
+  convoyController: {fileID: 2116896369}
 --- !u!114 &184068265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6921,6 +6924,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 199714101}
+  parentCanvasGroup: {fileID: 0}
+  inActiveAlpha: 0.7
   redbackgroundAndFrame: {fileID: 842723049}
 --- !u!222 &199714103
 CanvasRenderer:
@@ -9590,6 +9595,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 361545029}
+  parentCanvasGroup: {fileID: 0}
+  inActiveAlpha: 0.7
 --- !u!222 &361545031
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19667,6 +19674,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 1
+--- !u!1 &823547247 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1588849245878493152, guid: c29907c6ea1a4df479703c6588336dbf,
+    type: 3}
+  m_PrefabInstance: {fileID: 2112248158}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &832630013
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20054,6 +20067,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 853876120}
+  parentCanvasGroup: {fileID: 0}
+  inActiveAlpha: 0.7
   useItemDialogController: {fileID: 0}
   useSkillDialogController: {fileID: 0}
   faceSprite: {fileID: 0}
@@ -21153,18 +21168,22 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 2112248158}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &903124158 stripped
+--- !u!114 &903124162
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1588849245878493163, guid: c29907c6ea1a4df479703c6588336dbf,
-    type: 3}
-  m_PrefabInstance: {fileID: 2112248158}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 823547247}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00d3344e7814d024590255902e4eac95, type: 3}
+  m_Script: {fileID: 11500000, guid: 50e4a8f43f1c6f54fa3b55a4878e9e89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CircleCharacterUIPrefab: {fileID: 8212968952469230515, guid: f2620c5f3153aad409a35dfbae1d4453,
+    type: 3}
+  characterView: {fileID: 568106065}
+  layout: {fileID: 823547247}
 --- !u!1 &904604847
 GameObject:
   m_ObjectHideFlags: 0
@@ -23134,6 +23153,8 @@ MonoBehaviour:
   attackLabelPrefab: {fileID: 3447558093418475340, guid: 8a4f9de9d99a9cd47bffa952cb903720,
     type: 3}
   allyAttackPrefab: {fileID: 7312265420822401843, guid: a86f2d28d759d4645954f64413f80ef6,
+    type: 3}
+  allyHealPrefab: {fileID: 7312265420822401843, guid: 65a186dacbc79a84fbf12da0d8609b60,
     type: 3}
   enemyAttackPrefab: {fileID: 1444253509269705713, guid: 5e478715106f7044db47978b6ae100b3,
     type: 3}
@@ -30742,6 +30763,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 1281658718}
+  parentCanvasGroup: {fileID: 0}
+  inActiveAlpha: 0.7
 --- !u!222 &1281658720
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -46006,7 +46029,7 @@ MonoBehaviour:
   objectiveUI: {fileID: 2112981719}
   unitPlacementUI: {fileID: 0}
   MainUICanvas: {fileID: 914268625}
-  characterCircleController: {fileID: 903124158}
+  characterCircleController: {fileID: 0}
 --- !u!224 &1915216222
 RectTransform:
   m_ObjectHideFlags: 0
@@ -49316,7 +49339,8 @@ PrefabInstance:
       propertyPath: characterView
       value: 
       objectReference: {fileID: 568106065}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1588849245878493163, guid: c29907c6ea1a4df479703c6588336dbf, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c29907c6ea1a4df479703c6588336dbf, type: 3}
 --- !u!1 &2112981715
 GameObject:
@@ -50356,6 +50380,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 2134136724}
+  parentCanvasGroup: {fileID: 0}
+  inActiveAlpha: 0.7
   redbackgroundAndFrame: {fileID: 1575595267}
 --- !u!222 &2134136726
 CanvasRenderer:
@@ -52644,6 +52670,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3841690189852963069, guid: c67d4846dd934414390b5ec8ccba523f,
         type: 3}
+      propertyPath: inActiveAlpha
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841690189852963069, guid: c67d4846dd934414390b5ec8ccba523f,
+        type: 3}
       propertyPath: useItemDialogController
       value: 
       objectReference: {fileID: 2066815272647825754}
@@ -52886,6 +52917,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -454.69995
+      objectReference: {fileID: 0}
+    - target: {fileID: 4947836823651369278, guid: c67d4846dd934414390b5ec8ccba523f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 75.70001
       objectReference: {fileID: 0}
     - target: {fileID: 5294785855743159024, guid: c67d4846dd934414390b5ec8ccba523f,
         type: 3}

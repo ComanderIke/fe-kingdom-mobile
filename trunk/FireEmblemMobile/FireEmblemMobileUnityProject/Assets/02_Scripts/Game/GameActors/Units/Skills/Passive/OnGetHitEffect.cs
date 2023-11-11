@@ -16,7 +16,7 @@ namespace Game.GameActors.Units.Skills.Passive
         public string getHitExtraDataLabel;
         public ExtraDataType extraDataType;
         public float[] getHitEffectExtraData;
-        public override List<EffectDescription> GetEffectDescription(int level)
+        public override List<EffectDescription> GetEffectDescription(Unit caster,int level)
         {
             var list = new List<EffectDescription>();
             string valueLabel = "";

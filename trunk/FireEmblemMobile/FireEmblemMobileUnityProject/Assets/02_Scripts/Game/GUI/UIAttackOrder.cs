@@ -12,6 +12,7 @@ namespace LostGrace
         [SerializeField] private Transform parent;
         [SerializeField] private GameObject attackLabelPrefab;
         [SerializeField] private GameObject allyAttackPrefab;
+        [SerializeField] private GameObject allyHealPrefab;
         [SerializeField] private GameObject enemyAttackPrefab;
 
         public void Show(List<AttackData> battlePreviewAttacksData, bool attackerIsPlayer)
@@ -24,12 +25,21 @@ namespace LostGrace
             {
                // Debug.Log(attack.attacker);
                 var prefab = allyAttackPrefab;
-                if(attackerIsPlayer)
-                    prefab = attack.attacker ? allyAttackPrefab : enemyAttackPrefab;
+                if (attackerIsPlayer)
+                {
+                    if (attack.Heal > 0)
+                    {
+                        prefab = attack.attacker ? allyHealPrefab : enemyAttackPrefab;
+                    }
+                    else
+                    {
+                        prefab = attack.attacker ? allyAttackPrefab : enemyAttackPrefab;
+                    }
+                }
                 else
                     prefab = attack.attacker ? enemyAttackPrefab: allyAttackPrefab;
                 var go = GameObject.Instantiate(prefab, parent);
-                go.GetComponentInChildren<TextMeshProUGUI>().SetText(""+attack.Dmg);
+                go.GetComponentInChildren<TextMeshProUGUI>().SetText(""+(attack.Heal>0?attack.Heal:attack.Dmg));
             }
         }
        

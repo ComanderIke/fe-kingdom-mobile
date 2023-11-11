@@ -20,7 +20,7 @@ namespace Game.GameActors.Units.Skills
             target.BonusAttackRanges=new List<int>();
         }
 
-        public override List<EffectDescription> GetEffectDescription(int level)
+        public override List<EffectDescription> GetEffectDescription(Unit caster,int level)
         {
             var list = new List<EffectDescription>();
 

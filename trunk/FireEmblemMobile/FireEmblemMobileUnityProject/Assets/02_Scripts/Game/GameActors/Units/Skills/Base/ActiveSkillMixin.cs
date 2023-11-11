@@ -8,7 +8,7 @@ namespace Game.GameActors.Units.Skills
     public class ActiveSkillMixin : SkillMixin
     {
         public GameObject AnimationObject;
-
+        public bool spawnAnimationAtCaster;
         public bool useScreenPosition;
 
         public float effectDelay = 0f;

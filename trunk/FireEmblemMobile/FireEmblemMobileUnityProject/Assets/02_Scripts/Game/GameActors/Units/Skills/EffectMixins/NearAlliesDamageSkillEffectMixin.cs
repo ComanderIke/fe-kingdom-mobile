@@ -55,7 +55,7 @@ namespace Game.GameActors.Units.Skills
             throw new System.NotImplementedException();
         }
 
-        public override List<EffectDescription> GetEffectDescription(int level)
+        public override List<EffectDescription> GetEffectDescription(Unit caster,int level)
         {
             return new List<EffectDescription>()
             {

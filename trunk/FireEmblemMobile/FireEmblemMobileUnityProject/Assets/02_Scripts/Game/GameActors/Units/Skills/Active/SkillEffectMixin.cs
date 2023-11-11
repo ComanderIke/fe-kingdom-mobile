@@ -7,7 +7,7 @@ namespace Game.GameActors.Units.Skills
 {
     public abstract class SkillEffectMixin:ScriptableObject
     {
-        public abstract List<EffectDescription> GetEffectDescription(int level);
+        public abstract List<EffectDescription> GetEffectDescription(Unit caster, int level);
 
     }
     public abstract class SelfTargetSkillEffectMixin : SkillEffectMixin

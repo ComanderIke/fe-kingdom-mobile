@@ -11,7 +11,7 @@ namespace Game.GameActors.Units.Skills.Passive
         public string attackEffectExtraDataLabel;
         public ExtraDataType extraDataType;
         public float[] attackEffectExtraData;
-        public override List<EffectDescription> GetEffectDescription(int level)
+        public override List<EffectDescription> GetEffectDescription(Unit caster,int level)
         {
             var list = new List<EffectDescription>();
             string valueLabel = "";
@@ -23,7 +23,7 @@ namespace Game.GameActors.Units.Skills.Passive
                     if (level < attackEffectExtraData.Length - 1)
                         level++;
                     upgLabel =""+attackEffectExtraData[level];
-                    list.Add(new EffectDescription(attackEffectExtraDataLabel,valueLabel , upgLabel));
+                    list.Add(new EffectDescription(attackEffectExtraDataLabel,"+"+valueLabel , "+"+upgLabel));
                     break;
                 case ExtraDataType.percentage:  
                     valueLabel = ""+attackEffectExtraData[level]*100+"%";

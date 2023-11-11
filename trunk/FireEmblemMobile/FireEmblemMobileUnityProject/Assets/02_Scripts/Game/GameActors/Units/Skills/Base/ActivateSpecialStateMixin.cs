@@ -17,7 +17,7 @@ namespace Game.GameActors.Units.Skills
             user.SpecialState = false;
         }
 
-        public override List<EffectDescription> GetEffectDescription(int level)
+        public override List<EffectDescription> GetEffectDescription(Unit caster,int level)
         {
             return null;
         }

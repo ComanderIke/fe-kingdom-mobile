@@ -40,7 +40,7 @@ public class UIUnitPlacement : IUnitPlacementUI
 
     [SerializeField] private IUnitSelectionUI unitSelectionUI;
     [SerializeField] private UIObjectiveController conditionUI;
-    [SerializeField] private UIPartyCharacterCircleController charCircleController;
+    [SerializeField] private UIFactionCharacterCircleController charCircleController;
     [SerializeField] private Image darkenBackground;
     private List<Unit> selectedUnits;
     // Update is called once per frame
@@ -103,7 +103,7 @@ public class UIUnitPlacement : IUnitPlacementUI
         //UpdateValues();
         GetComponent<Canvas>().enabled = true;
         Debug.Log("party size: "+Player.Instance.Party.members.Count);
-        charCircleController.Show(Player.Instance.Party);
+        charCircleController.Show(units);
         
     }
     

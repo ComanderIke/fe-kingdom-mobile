@@ -21,7 +21,16 @@ namespace LostGrace
         public void Show(Sprite face, int dmg, int hit, int crit, int maxHp, int currentHp, int afterHp, bool canCounter=true)
         {
             this.maxHp = maxHp;
-            hpBar.UpdateValues(maxHp, currentHp, afterHp);
+            Debug.Log(afterHp +" "+currentHp);
+            if (afterHp > currentHp) //Heal{
+            {
+                hpBar.UpdateValues(maxHp, currentHp, afterHp);
+            }
+            else
+            {
+                hpBar.UpdateValues(maxHp, currentHp, afterHp);
+            }
+
             UpdateAllButHpBar(face, dmg, hit, crit, canCounter);
         }
 
