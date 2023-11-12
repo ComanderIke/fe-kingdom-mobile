@@ -369,6 +369,12 @@ namespace Game.GameActors.Units.Skills
 
             return 0;
         }
+
+        public string GetName()
+        {
+            return skill.Name;
+        }
+
         public int GetHealingDone(Unit selectedUnit, Unit target)
         {
             foreach (SkillEffectMixin effect in SkillEffects)

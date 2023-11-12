@@ -33,6 +33,8 @@ namespace Game.GUI
 
         private Sprite attackerSprite;
         private Sprite defenderSprite;
+        private bool ally = false;
+        private string attackLabel;
 
         private void UpdateValues()
         {
@@ -42,19 +44,22 @@ namespace Game.GUI
                  Camera = Camera.main;
              
          //    Debug.Log(battlePreview.AttackerStats.AttackCount+" "+battlePreview.DefenderStats.AttackCount);
-             left.Show(attackerSprite, battlePreview.AttackerStats.TotalDamage,battlePreview.AttackerStats.Hit,battlePreview.AttackerStats.Crit, battlePreview.AttackerStats.MaxHp,battlePreview.AttackerStats.CurrentHp, battlePreview.AttackerStats.AfterBattleHp, true);
-             right.Show(defenderSprite, battlePreview.DefenderStats.TotalDamage,battlePreview.DefenderStats.Hit,battlePreview.DefenderStats.Crit, battlePreview.DefenderStats.MaxHp,battlePreview.DefenderStats.CurrentHp, battlePreview.DefenderStats.AfterBattleHp,battlePreview.DefenderStats.CanCounter);
-             attackOrderUI.Show(battlePreview.AttacksData, true);
+             left.Show(attackerSprite, battlePreview.AttackerStats.Heal>0?battlePreview.AttackerStats.Heal:battlePreview.AttackerStats.TotalDamage,battlePreview.AttackerStats.Hit,battlePreview.AttackerStats.Crit, battlePreview.AttackerStats.MaxHp,battlePreview.AttackerStats.CurrentHp, battlePreview.AttackerStats.AfterBattleHp, true);
+             right.Show(defenderSprite, battlePreview.DefenderStats.TotalDamage,battlePreview.DefenderStats.Hit,battlePreview.DefenderStats.Crit, battlePreview.DefenderStats.MaxHp,battlePreview.DefenderStats.CurrentHp, battlePreview.DefenderStats.AfterBattleHp,battlePreview.DefenderStats.CanCounter, !ally);
+             attackOrderUI.Show(battlePreview.AttacksData, attackLabel,true);
            }
 
-        public override void Show(BattlePreview battlePreview, UnitVisual attackerVisual, UnitVisual defenderVisual)
+        public override void Show(BattlePreview battlePreview, Unit attacker, Unit defender, string attackLabel)
         {
-            Show(battlePreview, attackerVisual, defenderVisual.CharacterSpriteSet.FaceSprite);
+          
+            ally = !attacker.IsEnemy(defender);
+            Show(battlePreview, attacker, attackLabel,defender.visuals.CharacterSpriteSet.FaceSprite);
         }
-        public override void Show(BattlePreview battlePreview, UnitVisual attackerVisual, Sprite attackableObjectSprite)
+        public override void Show(BattlePreview battlePreview, Unit attacker, string attackLabel,Sprite attackableObjectSprite)
         {
-           
-            attackerSprite = attackerVisual.CharacterSpriteSet.FaceSprite;
+            Debug.Log("ATTACKPREVIEWLABEL: " + attackLabel);
+            this.attackLabel = attackLabel;
+            attackerSprite = attacker.visuals.CharacterSpriteSet.FaceSprite;
             defenderSprite = attackableObjectSprite;
             this.battlePreview = battlePreview;
             this.gameObject.SetActive(true);

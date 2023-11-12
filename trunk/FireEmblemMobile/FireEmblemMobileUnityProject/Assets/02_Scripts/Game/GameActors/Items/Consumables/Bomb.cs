@@ -25,6 +25,7 @@ namespace _02_Scripts.Game.GameActors.Items.Consumables
         int GetHpCost();
         int GetHealingDone(Unit selectedUnit, Unit target);
         int GetDamageDone(Unit selectedUnit, Unit target);
+        string GetName();
     }
     interface IThrowableItem
     {

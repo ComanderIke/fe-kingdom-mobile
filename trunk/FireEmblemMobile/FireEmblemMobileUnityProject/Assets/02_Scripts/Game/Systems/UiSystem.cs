@@ -120,12 +120,12 @@ namespace Game.GUI
             if (battlePreview.Attacker is Unit attacker)
             {
                 if (battlePreview.Defender is Unit defender)
-                    attackPreviewUI.Show(battlePreview, attacker.visuals, defender.visuals);
+                    attackPreviewUI.Show(battlePreview, attacker, defender, "Attack");
                 else if (battlePreview.TargetObject != null &&
                          battlePreview.TargetObject is Destroyable dest)
                 {
          
-                    attackPreviewUI.Show(battlePreview, attacker.visuals, dest.Sprite);
+                    attackPreviewUI.Show(battlePreview, attacker,"Attack", dest.Sprite);
                 }
 
             }
@@ -146,12 +146,12 @@ namespace Game.GUI
             if (battlePreview.Attacker is Unit attacker)
             {
                 if (battlePreview.Defender is Unit defender)
-                    attackPreviewUI.Show(battlePreview, attacker.visuals, defender.visuals);
+                    attackPreviewUI.Show(battlePreview, attacker, defender, "Attack");
                 else if (battlePreview.TargetObject != null &&
                          battlePreview.TargetObject is Destroyable dest)
                 {
          
-                    attackPreviewUI.Show(battlePreview, attacker.visuals, dest.Sprite);
+                    attackPreviewUI.Show(battlePreview, attacker,"Attack", dest.Sprite);
                 }
 
             }

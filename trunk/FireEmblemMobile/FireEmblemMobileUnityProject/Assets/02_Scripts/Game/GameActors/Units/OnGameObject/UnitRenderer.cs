@@ -185,7 +185,12 @@ namespace Game.GameActors.Units.OnGameObject
         {
             Debug.Log("SHOW HP BAR");
             if (hpBarAlternate != null && unit != null){
-                hpBarAlternate.UpdateValues(unit.MaxHp, unit.Hp, afterBattleHp);
+                // if (afterBattleHp > unit.Hp)
+                // {
+                //     hpBarAlternate.UpdateValues(unit.MaxHp, afterBattleHp, unit.Hp);
+                // }
+                // else
+                    hpBarAlternate.UpdateValues(unit.MaxHp, unit.Hp, afterBattleHp);
                 
             }
         }

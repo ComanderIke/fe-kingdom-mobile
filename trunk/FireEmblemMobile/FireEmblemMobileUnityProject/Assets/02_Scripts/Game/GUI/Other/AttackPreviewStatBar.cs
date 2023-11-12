@@ -18,6 +18,7 @@ namespace Game.GUI
         [SerializeField] private Image currentHpBar;
         [SerializeField] private Image beforeHpBar;
         [SerializeField] private Image losingHpBar;
+        [SerializeField] private Image healingHpBar;
         [SerializeField] private TextMeshProUGUI hpText = default;
         [SerializeField] private TextMeshProUGUI valueAfterText = default;
         [SerializeField] private MMF_Player feedbacks;
@@ -26,13 +27,21 @@ namespace Game.GUI
         private RectTransform rectTransform;
         private float width;
         private int currentHp;
+        [SerializeField] private Color mainAllyColor;
+        [SerializeField] private Color mainEnemyColor;
+        [SerializeField] private Color previewAllyColor;
+        [SerializeField] private Color previewEnemyColor;
+        [SerializeField] private Gradient blinkColorAlly;
+        [SerializeField] private Gradient blinkColorEnemy;
+        [SerializeField] private Color healColor;
+        [SerializeField] private Gradient blinkColorEnemyHeal;
         public void UpdateValues(int maxHp, int currentHp, int afterBattleHp)
         {
 
 //            Debug.Log("UpdateValues");
             this.currentHp = currentHp;
             width = backgroundHpBar.rectTransform.rect.width;
-           // Debug.Log(maxHp+" "+currentHp+" "+afterBattleHp);
+            Debug.Log(maxHp+" "+currentHp+" "+afterBattleHp);
             currentHpBar.rectTransform.sizeDelta = new Vector2(width*((afterBattleHp * 1.0f)/maxHp),currentHpBar.rectTransform.sizeDelta.y);
             beforeHpBar.gameObject.SetActive(true);
             beforeHpBar.rectTransform.sizeDelta = new Vector2(width*((currentHp * 1.0f) / maxHp),beforeHpBar.rectTransform.sizeDelta.y);
@@ -42,6 +51,14 @@ namespace Game.GUI
              if(valueAfterText!=null)
                 valueAfterText.gameObject.SetActive(true);
              losingHpBar.gameObject.SetActive(false);
+             if (afterBattleHp > currentHp)
+             {
+                 healingHpBar.rectTransform.sizeDelta = new Vector2(width*((afterBattleHp * 1.0f) / maxHp),beforeHpBar.rectTransform.sizeDelta.y);
+                 currentHpBar.rectTransform.sizeDelta = new Vector2(width*((currentHp * 1.0f)/maxHp),currentHpBar.rectTransform.sizeDelta.y);
+                
+             }
+             beforeHpBar.gameObject.SetActive(afterBattleHp<=currentHp);
+             healingHpBar.gameObject.SetActive(afterBattleHp>currentHp);
              if(valueAfterText!=null)
                 valueAfterText.text = "" + afterBattleHp;
              if(hpText!=null)
@@ -67,6 +84,7 @@ namespace Game.GUI
            if(valueAfterText!=null)
                 valueAfterText.gameObject.SetActive(false);
             losingHpBar.gameObject.SetActive(true);
+            healingHpBar.gameObject.SetActive(true);
            // beforeHpBar.gameObject.SetActive(false);
            if(hpIndicator!=null)
              hpIndicator.gameObject.SetActive(false);
@@ -87,7 +105,8 @@ namespace Game.GUI
           currentHp = newHp;
             //progressBar.SetBar01(((currentHp * 1.0f) / maxHp));
             Debug.Log("update HP Bar: "+(newHp * 1.0f)/maxHp);
-
+            healingHpBar.gameObject.SetActive(true);
+            losingHpBar.gameObject.SetActive(true);
             
             progressBar.UpdateBar01(((newHp * 1.0f)/maxHp));
             MonoUtility.InvokeNextFrame(() =>
@@ -95,6 +114,20 @@ namespace Game.GUI
                // progressBar.Minus10Percent();
                 feedbacks.PlayFeedbacks();
             });
+        }
+
+        public void SetEnemyColors()
+        {
+            currentHpBar.color = mainEnemyColor;
+            beforeHpBar.color=previewEnemyColor;
+            feedbacks.GetFeedbackOfType<MMF_Image>().ColorOverTime = blinkColorEnemy;
+        }
+
+        public void SetAllyColors()
+        {
+            currentHpBar.color = mainAllyColor;
+            beforeHpBar.color=previewAllyColor;
+            feedbacks.GetFeedbackOfType<MMF_Image>().ColorOverTime = blinkColorAlly;
         }
     }
 }

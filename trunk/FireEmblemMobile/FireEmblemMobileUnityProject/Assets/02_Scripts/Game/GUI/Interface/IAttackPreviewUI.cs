@@ -8,8 +8,8 @@ namespace Game.GUI
     public abstract class IAttackPreviewUI : MonoBehaviour
     {
      
-        public abstract void Show(BattlePreview battlePreview, UnitVisual attackerVisual, UnitVisual defenderVisual);
+        public abstract void Show(BattlePreview battlePreview, Unit attacker, Unit defender, string attackLabel);
         public abstract void Hide();
-        public abstract void Show(BattlePreview battlePreview, UnitVisual attackerVisual, Sprite attackableObjectSprite);
+        public abstract void Show(BattlePreview battlePreview, Unit attacker,string attackLabel, Sprite attackableObjectSprite);
     }
 }

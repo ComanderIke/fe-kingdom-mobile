@@ -14,13 +14,16 @@ namespace LostGrace
         [SerializeField] private GameObject allyAttackPrefab;
         [SerializeField] private GameObject allyHealPrefab;
         [SerializeField] private GameObject enemyAttackPrefab;
+       
 
-        public void Show(List<AttackData> battlePreviewAttacksData, bool attackerIsPlayer)
+        public void Show(List<AttackData> battlePreviewAttacksData,string attackLabel, bool attackerIsPlayer)
         {
             parent.DeleteAllChildren();
-            GameObject.Instantiate(attackLabelPrefab, parent);
+            var label= GameObject.Instantiate(attackLabelPrefab, parent);
+            label.GetComponentInChildren<TextMeshProUGUI>().text = attackLabel;
            // Debug.Log("TODO Consecutive Attacks(Brave Effect)");
           //  Debug.Log("Attacks in Order: ");
+         // attackLabelText.text = attackLabel;
             foreach (var attack in battlePreviewAttacksData)
             {
                // Debug.Log(attack.attacker);

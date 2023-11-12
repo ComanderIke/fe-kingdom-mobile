@@ -25,7 +25,7 @@ public class ChooseTargetUI : MonoBehaviour, IChooseTargetUI, IClickedReceiver
     public Image icon;
     public TextMeshProUGUI descriptionText;
     public SelectionUI selectionUI;
-    public LayoutGroup topLayout;
+  //  public LayoutGroup topLayout;
     [SerializeField]private AttackPreviewUI attackPreviewUI;
     public LayoutGroup bottomLayout;
 
@@ -56,7 +56,7 @@ public class ChooseTargetUI : MonoBehaviour, IChooseTargetUI, IClickedReceiver
         descriptionText.SetText(targetableObject.GetDescription());
         icon.sprite=targetableObject.GetIcon();
   
-        LayoutRebuilder.ForceRebuildLayoutImmediate(topLayout.transform as RectTransform);
+        //LayoutRebuilder.ForceRebuildLayoutImmediate(topLayout.transform as RectTransform);
         LayoutRebuilder.ForceRebuildLayoutImmediate(bottomLayout.transform as RectTransform);
         canvas.enabled = true;
         selectionUI.ShowUndo();
@@ -75,11 +75,11 @@ public class ChooseTargetUI : MonoBehaviour, IChooseTargetUI, IClickedReceiver
         int totalDamage = stm.GetDamageDone(selectedUnit, target);
         int totalHeal = stm.GetHealingDone(selectedUnit, target);
         int hpAfter = selectedUnit.Hp - stm.GetHpCost(stm.skill.level);
-        NoNameYet(selectedUnit, target,totalDamage,totalHeal , hpAfter);
+        NoNameYet(selectedUnit, target,stm.skill.Name,totalDamage,totalHeal , hpAfter);
        
     }
 
-    private void NoNameYet(Unit selectedUnit, Unit target, int totalDamage, int totalHeal, int hpAfter)
+    private void NoNameYet(Unit selectedUnit, Unit target,string skillName, int totalDamage, int totalHeal, int hpAfter)
     {
         Debug.Log("TOTALHEAL: "+totalHeal);
         battlePreviewSo.Attacker = selectedUnit;
@@ -89,6 +89,10 @@ public class ChooseTargetUI : MonoBehaviour, IChooseTargetUI, IClickedReceiver
         int attackCount = 1;
      
         int hpTargetAfter = target.Hp - totalDamage + totalHeal;
+        if (hpTargetAfter < 0)
+            hpTargetAfter = 0;
+        if (hpTargetAfter > target.MaxHp)
+            hpTargetAfter = target.MaxHp;
         battlePreviewSo.AttackerStats = new BattlePreviewStats(0, 0, 0, 0, 0, totalHeal,totalDamage, 100, crit, attackCount,
             selectedUnit.Hp, selectedUnit.MaxHp, hpAfter, true);
         battlePreviewSo.DefenderStats = new BattlePreviewStats(0, 0, 0, 0, 0,0, 0, 0, 0, 0,
@@ -104,7 +108,7 @@ public class ChooseTargetUI : MonoBehaviour, IChooseTargetUI, IClickedReceiver
             activatedAttackSkills =  new List<Skill>(),
             activatedDefenseSkills = new List<Skill>()
         });
-        attackPreviewUI.Show(battlePreviewSo, selectedUnit.visuals, target.visuals);
+        attackPreviewUI.Show(battlePreviewSo, selectedUnit, target, skillName);
     }
 
     public void ShowSkillPreview(IPosTargeted posTargetSkill, Unit selectedUnit, Unit target)
@@ -112,7 +116,7 @@ public class ChooseTargetUI : MonoBehaviour, IChooseTargetUI, IClickedReceiver
         int totalDamage = posTargetSkill.GetDamageDone(selectedUnit, target);
         int totalHeal = posTargetSkill.GetHealingDone(selectedUnit, target);
         int hpAfter = selectedUnit.Hp - posTargetSkill.GetHpCost();
-        NoNameYet(selectedUnit, target, totalDamage, totalHeal, hpAfter);
+        NoNameYet(selectedUnit, target,posTargetSkill.GetName(), totalDamage, totalHeal, hpAfter);
     }
 
     public void HideSkillPreview(SingleTargetMixin stm)

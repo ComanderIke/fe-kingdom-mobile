@@ -11,6 +11,7 @@ namespace LostGrace
     {
  
         [SerializeField] private Image faceSprite;
+        [SerializeField] private TextMeshProUGUI dmgLabel;
         [SerializeField] private TextMeshProUGUI dmgValue;
         [SerializeField] private TextMeshProUGUI hitValue;
         [SerializeField] private TextMeshProUGUI critValue;
@@ -18,17 +19,28 @@ namespace LostGrace
         private int maxHp;
         
 
-        public void Show(Sprite face, int dmg, int hit, int crit, int maxHp, int currentHp, int afterHp, bool canCounter=true)
+        public void Show(Sprite face, int dmg, int hit, int crit, int maxHp, int currentHp, int afterHp, bool canCounter=true, bool enemy =false)
         {
             this.maxHp = maxHp;
             Debug.Log(afterHp +" "+currentHp);
             if (afterHp > currentHp) //Heal{
             {
+                dmgLabel.text = "Heal";
                 hpBar.UpdateValues(maxHp, currentHp, afterHp);
             }
             else
             {
+                dmgLabel.text = "Damage";
                 hpBar.UpdateValues(maxHp, currentHp, afterHp);
+            }
+
+            if (enemy)
+            {
+                hpBar.SetEnemyColors();
+            }
+            else
+            {
+                hpBar.SetAllyColors();
             }
 
             UpdateAllButHpBar(face, dmg, hit, crit, canCounter);

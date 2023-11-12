@@ -113,7 +113,7 @@ public class BattleUI : MonoBehaviour
                 battlePreview.AttackerStats.AfterBattleHp, true);
         }
 
-        attackOrderUI.Show(battlePreview.AttacksData, playerUnitIsAttacker);
+        attackOrderUI.Show(battlePreview.AttacksData,"Attack", playerUnitIsAttacker);
         // var combatRound = battleSimulation.combatRounds[0];
         // currentHpLeft = combatRound.AttackerStats.CurrentHp;
         // currentHpRight = combatRound.DefenderStats.CurrentHp;
