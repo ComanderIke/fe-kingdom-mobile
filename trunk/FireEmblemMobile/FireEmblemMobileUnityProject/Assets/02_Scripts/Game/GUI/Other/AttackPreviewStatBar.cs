@@ -83,8 +83,8 @@ namespace Game.GUI
            // currentHpBar.rectTransform.sizeDelta = new Vector2(width*((currentHp * 1.0f)/maxHp),currentHpBar.rectTransform.sizeDelta.y);
            if(valueAfterText!=null)
                 valueAfterText.gameObject.SetActive(false);
-            losingHpBar.gameObject.SetActive(true);
-            healingHpBar.gameObject.SetActive(true);
+           // beforeHpBar.gameObject.SetActive(afterHp<=currentHp);
+           // healingHpBar.gameObject.SetActive(afterHp>currentHp);
            // beforeHpBar.gameObject.SetActive(false);
            if(hpIndicator!=null)
              hpIndicator.gameObject.SetActive(false);
@@ -98,6 +98,8 @@ namespace Game.GUI
         {
             if(hpText!=null)
                 hpText.text =""+ newHp;
+            beforeHpBar.gameObject.SetActive(false);
+            healingHpBar.gameObject.SetActive(true);
             //currentHpBar.rectTransform.sizeDelta = new Vector2(width*((newHp * 1.0f)/maxHp),currentHpBar.rectTransform.sizeDelta.y);
            // beforeHpBar.gameObject.SetActive(true);
           //  beforeHpBar.rectTransform.sizeDelta = new Vector2(width*((currentHp * 1.0f) / maxHp),beforeHpBar.rectTransform.sizeDelta.y);
@@ -105,8 +107,7 @@ namespace Game.GUI
           currentHp = newHp;
             //progressBar.SetBar01(((currentHp * 1.0f) / maxHp));
             Debug.Log("update HP Bar: "+(newHp * 1.0f)/maxHp);
-            healingHpBar.gameObject.SetActive(true);
-            losingHpBar.gameObject.SetActive(true);
+          
             
             progressBar.UpdateBar01(((newHp * 1.0f)/maxHp));
             MonoUtility.InvokeNextFrame(() =>
