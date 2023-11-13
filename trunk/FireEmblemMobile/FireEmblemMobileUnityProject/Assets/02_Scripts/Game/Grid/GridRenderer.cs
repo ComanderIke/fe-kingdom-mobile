@@ -27,10 +27,10 @@ namespace Game.Grid
            
 
         }
-        public void SetTileCastCursorMaterial(Vector2 pos,EffectType effectiveAgainstType, FactionId playerId)
+        public void SetTileCastCursorMaterial(Vector2 pos,EffectType effectType, FactionId playerId)
         {
             if(pos.x>=0&& pos.y>=0&& pos.x < Tiles.GetLength(0)&& pos.y <Tiles.GetLength(1))
-                Tiles[(int) pos.x, (int) pos.y].SetCastCursorMaterial(effectiveAgainstType, playerId);
+                Tiles[(int) pos.x, (int) pos.y].SetCastCursorMaterial(effectType, playerId);
            
 
         }

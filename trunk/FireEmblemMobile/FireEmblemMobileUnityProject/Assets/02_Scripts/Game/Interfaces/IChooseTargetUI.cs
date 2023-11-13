@@ -12,4 +12,5 @@ public interface IChooseTargetUI
     void ShowSkillPreview(IPosTargeted posTargetSkill, Unit selectedUnit, Unit gridObject);
     void HideSkillPreview(SingleTargetMixin stm);
     void HideSkillPreview(IPosTargeted posTargetSkill);
+    void ShowSkillDialogController(Skill selectedSkill, Action action);
 }

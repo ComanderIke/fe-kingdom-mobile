@@ -196,7 +196,7 @@ namespace Game.GameActors.Units.Skills
                         healMixin.ShowHealPreview(target, user, skill.Level);
                 }
                 
-                tiles[target.GridComponent.GridPosition.X, target.GridComponent.GridPosition.Y].SetCastCursorMaterial(EffectType.Bad, user.Faction.Id);
+                tiles[target.GridComponent.GridPosition.X, target.GridComponent.GridPosition.Y].SetCastCursorMaterial(effectType, user.Faction.Id);
             }
 
         }

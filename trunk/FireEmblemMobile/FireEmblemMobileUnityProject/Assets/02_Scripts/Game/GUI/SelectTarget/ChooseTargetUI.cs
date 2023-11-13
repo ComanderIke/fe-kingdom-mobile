@@ -20,11 +20,11 @@ public class ChooseTargetUI : MonoBehaviour, IChooseTargetUI, IClickedReceiver
     public GameObject SelectedCharacterCirclePrefab;
 
     public Transform CharacterCircleSpawnParent;
-
+    [SerializeField] UseSkillDialogController useSkillDialogController;
     public TextMeshProUGUI nameText;
     public Image icon;
     public TextMeshProUGUI descriptionText;
-    public SelectionUI selectionUI;
+    
   //  public LayoutGroup topLayout;
     [SerializeField]private AttackPreviewUI attackPreviewUI;
     public LayoutGroup bottomLayout;
@@ -59,14 +59,14 @@ public class ChooseTargetUI : MonoBehaviour, IChooseTargetUI, IClickedReceiver
         //LayoutRebuilder.ForceRebuildLayoutImmediate(topLayout.transform as RectTransform);
         LayoutRebuilder.ForceRebuildLayoutImmediate(bottomLayout.transform as RectTransform);
         canvas.enabled = true;
-        selectionUI.ShowUndo();
+       
     }
 
     public void Hide()
     {
         canvas.enabled = false;
         CharacterCircleSpawnParent.DeleteAllChildren();
-        selectionUI.HideUndo();
+        
     }
 
     public void ShowSkillPreview(SingleTargetMixin stm, Unit selectedUnit, Unit target)
@@ -127,6 +127,11 @@ public class ChooseTargetUI : MonoBehaviour, IChooseTargetUI, IClickedReceiver
     public void HideSkillPreview(IPosTargeted posTargetSkill)
     {
         attackPreviewUI.Hide();
+    }
+
+    public void ShowSkillDialogController(Skill selectedSkill, Action action)
+    {
+        useSkillDialogController.Show(selectedSkill, action);
     }
 
     public void BackClicked()

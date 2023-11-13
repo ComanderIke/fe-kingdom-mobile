@@ -40,7 +40,7 @@ namespace Game.GameActors.Units.Skills
         [SerializeField] private string Animation;
 
         [field: SerializeField] public SkillTargetArea TargetArea { get; set; }
-        public EffectType EffectType { get; set; }
+       
 
         public bool ConfirmPosition()
         {
@@ -373,6 +373,11 @@ namespace Game.GameActors.Units.Skills
         public string GetName()
         {
             return skill.Name;
+        }
+
+        public EffectType GetEffectType()
+        {
+            return effectType;
         }
 
         public int GetHealingDone(Unit selectedUnit, Unit target)

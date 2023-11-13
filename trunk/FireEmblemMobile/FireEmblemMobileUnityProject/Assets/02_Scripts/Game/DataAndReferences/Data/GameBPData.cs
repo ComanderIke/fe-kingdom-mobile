@@ -51,6 +51,8 @@ namespace Game.GameResources
         [SerializeField] private BuffPotionBP[] allBuffPotions;
     
         [SerializeField] private BombBP[] allBombs;
+        [SerializeField] private List<ConsumableItemBp> commonPotions;
+        [SerializeField] private List<ConsumableItemBp> rarePotions;
         [SerializeField] private List<WeaponBP> staffs = default;
         [SerializeField] private List<WeaponBP> spears = default;
         [SerializeField] private List<WeaponBP> bows = default;
@@ -377,9 +379,19 @@ namespace Game.GameResources
             //return relicSkillPool[Random.Range(0, relicSkillPool.Count)].Create();
         }
 
-        public Item GetRandomPotion()
+        public Item GetRandomPotion(float chanceForRare)
         {
-            List<ConsumableItemBp> potions = allConsumables.Where(item => item.name.Contains("Potion")).ToList();
+            List<ConsumableItemBp> potions;
+            if (Random.value <= chanceForRare)
+            {
+                potions = rarePotions;
+            }
+            else
+            {
+                potions = commonPotions;
+            }
+
+            
             return potions[Random.Range(0, potions.Count)].Create();
         }
 

@@ -20,6 +20,8 @@ namespace Game.GameActors.Units.Skills
                 }
                 
             }
+            var go=Instantiate(AnimationObject);
+            go.transform.position = user.GameTransformManager.GetCenterPosition();
         }
 
         // protected SelfTargetSkillMixin( int[] maxUses, int[] hpCost,GameObject animationObject) : base(maxUses,hpCost,animationObject)

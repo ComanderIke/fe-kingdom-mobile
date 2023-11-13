@@ -83,6 +83,8 @@ namespace Game.Grid
                     break;
                 case EffectType.Bad: TileRenderer.CastBadVisual();
                     break;
+                case EffectType.Neutral: TileRenderer.CastGoodVisual();
+                    break;
             }
             
         }

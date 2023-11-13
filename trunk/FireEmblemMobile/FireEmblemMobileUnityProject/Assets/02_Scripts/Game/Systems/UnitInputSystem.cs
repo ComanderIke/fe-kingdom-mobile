@@ -88,6 +88,8 @@ namespace Game.GameInput
             
         }
 
+        public UnitInputController lastClickedUnitInputController;
+
         public void OnMouseDown(UnitInputController unitController)
         {
             AddToDictionary(unitController);
@@ -105,7 +107,7 @@ namespace Game.GameInput
             // if (EventSystem.current.currentSelectedGameObject==null||EventSystem.current.currentSelectedGameObject.CompareTag(TagManager.UnitTag))
             // {
                 //Debug.Log("Clicked Unit: "+unitController.unit.name);
-                if (timerForDoubleClick != 0 &&  Time.time - timerForDoubleClick < DOUBLE_CLICK_TIME)
+                if (timerForDoubleClick != 0 &&  Time.time - timerForDoubleClick < DOUBLE_CLICK_TIME&&lastClickedUnitInputController==unitController)
                 {
                    
                     timerForDoubleClick = 0;
@@ -119,12 +121,12 @@ namespace Game.GameInput
                         DragManager.StartDrag(unitController.transform);
                 }
 
-                
-            // }
-            // else
-            // {
-            //     Debug.Log("Clicked On Unit BUT POINTER OVER GAMEOBJECT" + EventSystem.current.currentSelectedGameObject.name+" "+EventSystem.current.currentSelectedGameObject.tag);
-            // }
+                lastClickedUnitInputController = unitController;
+                // }
+                // else
+                // {
+                //     Debug.Log("Clicked On Unit BUT POINTER OVER GAMEOBJECT" + EventSystem.current.currentSelectedGameObject.name+" "+EventSystem.current.currentSelectedGameObject.tag);
+                // }
         }
         public void OnMouseUp(UnitInputController unitController)
         {

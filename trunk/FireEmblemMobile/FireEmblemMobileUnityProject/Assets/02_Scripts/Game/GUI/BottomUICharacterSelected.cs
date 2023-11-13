@@ -177,8 +177,11 @@ namespace LostGrace
                 return;
             if (skillUI.Skill.activeMixins.Count > 0)
             {
-                if(ServiceProvider.Instance.GetSystem<UnitSelectionSystem>().SelectedSkill==null)
-                    useSkillDialogController.Show(skillUI.Skill, () => new GameplayCommands().SelectSkill(skillUI.Skill));
+                if (ServiceProvider.Instance.GetSystem<UnitSelectionSystem>().SelectedSkill == null)
+                {
+                    new GameplayCommands().SelectSkill(skillUI.Skill);
+                    
+                }
                 else
                 {
                     new GameplayCommands().DeselectSkill();
@@ -246,7 +249,7 @@ namespace LostGrace
             {
                 if (skillUI.Skill.Equals(skill))
                 {
-                    skillUI.ShowSelectable();
+                    skillUI.Select();
                 }
             }
         }

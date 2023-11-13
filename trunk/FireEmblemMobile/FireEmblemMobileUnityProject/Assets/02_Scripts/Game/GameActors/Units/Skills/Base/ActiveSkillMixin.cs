@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Security.Cryptography.X509Certificates;
+using _02_Scripts.Game.GameActors.Items.Consumables;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Skills
@@ -11,6 +12,7 @@ namespace Game.GameActors.Units.Skills
         public bool spawnAnimationAtCaster;
         public bool useScreenPosition;
 
+        public EffectType effectType;
         public float effectDelay = 0f;
         public float logicDelay = 0f;
       //this cannot be in a ScriptableObject...

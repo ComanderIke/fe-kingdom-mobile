@@ -40,11 +40,11 @@ namespace Game.GUI
 
 //            Debug.Log("UpdateValues");
             this.currentHp = currentHp;
-            width = backgroundHpBar.rectTransform.rect.width;
-            Debug.Log(maxHp+" "+currentHp+" "+afterBattleHp);
-            currentHpBar.rectTransform.sizeDelta = new Vector2(width*((afterBattleHp * 1.0f)/maxHp),currentHpBar.rectTransform.sizeDelta.y);
+            width = GetComponent<RectTransform>().rect.width;
+            Debug.Log(maxHp+" "+currentHp+" "+afterBattleHp+ " "+width+" "+width*((currentHp * 1.0f) / maxHp)+" "+Math.Min(width,width*((currentHp * 1.0f) / maxHp)));
+            currentHpBar.rectTransform.sizeDelta = new Vector2(Math.Min(width, width*((afterBattleHp * 1.0f)/maxHp)),currentHpBar.rectTransform.sizeDelta.y);
             beforeHpBar.gameObject.SetActive(true);
-            beforeHpBar.rectTransform.sizeDelta = new Vector2(width*((currentHp * 1.0f) / maxHp),beforeHpBar.rectTransform.sizeDelta.y);
+            beforeHpBar.rectTransform.sizeDelta = new Vector2(Math.Min(width,width*((currentHp * 1.0f) / maxHp)),beforeHpBar.rectTransform.sizeDelta.y);
              if (rectTransform == null)
                  rectTransform = GetComponent<RectTransform>();
 
@@ -53,8 +53,8 @@ namespace Game.GUI
              losingHpBar.gameObject.SetActive(false);
              if (afterBattleHp > currentHp)
              {
-                 healingHpBar.rectTransform.sizeDelta = new Vector2(width*((afterBattleHp * 1.0f) / maxHp),beforeHpBar.rectTransform.sizeDelta.y);
-                 currentHpBar.rectTransform.sizeDelta = new Vector2(width*((currentHp * 1.0f)/maxHp),currentHpBar.rectTransform.sizeDelta.y);
+                 healingHpBar.rectTransform.sizeDelta = new Vector2(Math.Min(width,width*((afterBattleHp * 1.0f) / maxHp)),beforeHpBar.rectTransform.sizeDelta.y);
+                 currentHpBar.rectTransform.sizeDelta = new Vector2(Math.Min(width,width*((currentHp * 1.0f)/maxHp)),currentHpBar.rectTransform.sizeDelta.y);
                 
              }
              beforeHpBar.gameObject.SetActive(afterBattleHp<=currentHp);
@@ -76,13 +76,18 @@ namespace Game.GUI
         public void UpdateValuesWithoutDamagePreview(int maxHp, int currentHp, int afterHp)
         {
             this.currentHp = currentHp;
-            width = backgroundHpBar.rectTransform.rect.width;
+            width = GetComponent<RectTransform>().rect.width;
             if(hpText!=null)
                 hpText.text =""+ currentHp;
-            Debug.Log(maxHp+" "+currentHp+" "+afterHp);
+         //   Debug.Log(maxHp+" "+currentHp+" "+afterHp);
            // currentHpBar.rectTransform.sizeDelta = new Vector2(width*((currentHp * 1.0f)/maxHp),currentHpBar.rectTransform.sizeDelta.y);
            if(valueAfterText!=null)
                 valueAfterText.gameObject.SetActive(false);
+           Debug.Log(maxHp+" "+currentHp+" "+afterHp+ " "+width+" "+width*((currentHp * 1.0f) / maxHp)+" "+Math.Min(width,width*((currentHp * 1.0f) / maxHp)));
+
+           healingHpBar.rectTransform.sizeDelta = new Vector2(Math.Min(width,width*((afterHp * 1.0f) / maxHp)),beforeHpBar.rectTransform.sizeDelta.y);
+           currentHpBar.rectTransform.sizeDelta = new Vector2(Math.Min(width,width*((currentHp * 1.0f)/maxHp)),currentHpBar.rectTransform.sizeDelta.y);
+
            // beforeHpBar.gameObject.SetActive(afterHp<=currentHp);
            // healingHpBar.gameObject.SetActive(afterHp>currentHp);
            // beforeHpBar.gameObject.SetActive(false);

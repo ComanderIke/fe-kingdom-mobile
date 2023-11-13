@@ -16,13 +16,14 @@ namespace Game.GameActors.Units.Skills
         public ItemBP itemToCreate;
         public bool equipIfPossible = false;
         public bool randomPotion = false;
+        public float[] rarityIncrease;
        
         public override void Activate(Unit target, int level)
         {
             // check if objects in the way
             if (randomPotion)
             {
-                var potion = GameBPData.Instance.GetRandomPotion();
+                var potion = GameBPData.Instance.GetRandomPotion(rarityIncrease[level]);
                 if (target.CombatItem1 == null&&potion is IEquipableCombatItem combatItem)
                 {
                     target.Equip(new StockedCombatItem(combatItem, 1),1);
@@ -35,8 +36,11 @@ namespace Game.GameActors.Units.Skills
                 {
                     Player.Instance.Party.AddItem(potion);
                 }
+                
             }
+
           
+
         }
 
         public override void Deactivate(Unit user, int skillLevel)
@@ -48,7 +52,13 @@ namespace Game.GameActors.Units.Skills
       
         public override List<EffectDescription> GetEffectDescription(Unit caster,int level)
         {
-            return new List<EffectDescription>();
+            var list = new List<EffectDescription>();
+            string value = ""+rarityIncrease[level]*100+"%";
+            string upg = value;
+            if(level+1 < rarityIncrease.Length)
+               upg =""+ rarityIncrease[level + 1]*100+"%";
+            list.Add(new EffectDescription("Rare Item: ", value, upg));
+            return list;
         }
         
     }

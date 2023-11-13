@@ -7,6 +7,7 @@ namespace Game.GameResources
     public class Prefabs
     {
         public GameObject DamagePopUptext;
+        public GameObject SelectedSkillTargetVFX;
 
     }
 }

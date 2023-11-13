@@ -482,7 +482,7 @@ namespace Game.Map
 
         public void ShowCast(List<Vector2Int> positions, EffectType effectType)
         {
-            Debug.Log("Show Cast: "+" "+cursor.GetPosition());
+            Debug.Log("Show Cast: "+" "+cursor.GetPosition()+" "+ effectType);
 
             foreach (var pos in positions)
             {

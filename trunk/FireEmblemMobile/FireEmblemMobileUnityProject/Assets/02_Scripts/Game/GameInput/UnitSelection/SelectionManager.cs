@@ -1,5 +1,6 @@
 ﻿using Game.GameActors.Players;
 using Game.GameActors.Units;
+using Game.GUI;
 using Game.Manager;
 using Game.Mechanics;
 using UnityEngine;
@@ -15,7 +16,6 @@ namespace Game.GameInput
         private int SelectedTileY { get; set; }
         private IGridObject selectedAttackTarget;
         private IGridActor undoAbleActor;
-        private ISelectionUI selectionUI;
 
         public void SetSelectedAttackTarget(IGridObject target)
         {
@@ -59,7 +59,7 @@ namespace Game.GameInput
                 
             undoAbleActor = selectedActor;
            
-            selectionUI.ShowUndo();
+            GridGameManager.Instance.GetSystem<UiSystem>().SelectionUI.ShowUndo();
         }
         public IGridActor GetUndoAbleActor()
         {
@@ -73,7 +73,6 @@ namespace Game.GameInput
         public SelectionManager()
         {
             unitSelectionSystem = GridGameManager.Instance.GetSystem<UnitSelectionSystem>();
-            selectionUI = GameObject.FindObjectOfType<SelectionUI>();
             SelectedTileX = -1;
             SelectedTileY = -1;
         }

@@ -65,7 +65,7 @@ namespace Game.States
         IEnumerator ExpCoroutine()
         {
             yield return new WaitForSeconds(initialDelay);
-            Debug.Log("Start EXP Coroutine: "+attacker+" "+defenders.Count);
+            //Debug.Log("Start EXP Coroutine: "+attacker+" "+defenders.Count);
             foreach (var defender in defenders)
             {
              

@@ -17,7 +17,6 @@ namespace _02_Scripts.Game.GameActors.Items.Consumables
         List<IAttackableTarget> GetAllTargets(Unit selectedUnit, Tile[,] gridSystemTiles, int i, int i1, Vector2Int direction = default);
         int GetSize();
         SkillTargetArea TargetArea { get; set; }
-        EffectType EffectType { get; set; }
         bool ConfirmPosition();
         List<Vector2Int> GetTargetPositions(int selectedSkillLevel, Vector2Int direction = default);
         void ShowPreview(Unit caster, int x, int y);
@@ -26,6 +25,7 @@ namespace _02_Scripts.Game.GameActors.Items.Consumables
         int GetHealingDone(Unit selectedUnit, Unit target);
         int GetDamageDone(Unit selectedUnit, Unit target);
         string GetName();
+        EffectType GetEffectType();
     }
     interface IThrowableItem
     {

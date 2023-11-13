@@ -11,8 +11,10 @@ public class TileEffectRenderer : MonoBehaviour, ITileEffectVisualRenderer
     [SerializeField]
     private TileEffectVisual swapable;
 
+
     private Dictionary<Tile, TileEffectVisual> attackableVFXs;
     private Dictionary<Tile, TileEffectVisual> swapAbleVFXs;
+
     // Start is called before the first frame update
 
     void Start()

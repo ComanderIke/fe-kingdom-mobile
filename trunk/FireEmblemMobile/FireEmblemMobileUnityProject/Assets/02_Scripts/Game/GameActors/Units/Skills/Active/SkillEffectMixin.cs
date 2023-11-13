@@ -12,6 +12,7 @@ namespace Game.GameActors.Units.Skills
     }
     public abstract class SelfTargetSkillEffectMixin : SkillEffectMixin
     {
+        
         public abstract void Activate(Unit target,  int level);
 
         public abstract void Deactivate(Unit user, int skillLevel);

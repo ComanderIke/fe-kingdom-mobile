@@ -35,6 +35,7 @@ namespace LostGrace
         [SerializeField] private Image combatSkillActive;
         [SerializeField] private Vector2 bigSize;
         [SerializeField] private Button button;
+        [SerializeField] private Button CancelSkillButton;
         private bool showTooltips = false;
         private bool blessed;
         public void SetSkill(Skill skill, bool big, bool blessed, bool showTooltips = false, bool interactable=true)
@@ -101,21 +102,25 @@ namespace LostGrace
 
         public void Select()
         {
+            CancelSkillButton.gameObject.SetActive(true);
             selectableVfx.gameObject.SetActive(false);
             selectedVfx.gameObject.SetActive(true);
         }
         public void Deselect()
         {
+            CancelSkillButton.gameObject.SetActive(false);
             selectableVfx.gameObject.SetActive(false);
             selectedVfx.gameObject.SetActive(false);
         }
         public void ShowSelectable()
         {
+            
             selectableVfx.gameObject.SetActive(true);
             selectedVfx.gameObject.SetActive(false);
         }
         public void HideSelectable()
         {
+            
             selectableVfx.gameObject.SetActive(false);
             selectedVfx.gameObject.SetActive(false);
         }

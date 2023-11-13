@@ -24,6 +24,7 @@ namespace Game.GUI
         public IUnitPlacementUI unitPlacementUI;
         public Canvas MainUICanvas;
 
+        public SelectionUI SelectionUI;
         public static event Action OnShowAttackPreview;
         public static event Action OnHideAttackPreview;
         //public UIFactionCharacterCircleController characterCircleController;
@@ -90,6 +91,14 @@ namespace Game.GUI
             };
         }
 
+        public void ShowSelectionUI()
+        {
+            SelectionUI.Show();
+        }
+        public void HideSelectionUI()
+        {
+            SelectionUI.Hide();
+        }
         public void Activate()
         {
             SelectionUI.OnBackClicked += HideAttackPreviewUI;

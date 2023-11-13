@@ -113,5 +113,14 @@ namespace Game.GameInput
             undoButton.SetActive(false);
         }
 
+        public void Show()
+        {
+            gameObject.SetActive(true);
+        }
+
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

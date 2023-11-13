@@ -6,6 +6,7 @@ using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
 using Game.GameInput;
+using Game.GameResources;
 using Game.GUI;
 using Game.Manager;
 using Game.Map;
@@ -48,6 +49,7 @@ namespace Game.Mechanics
             gridSystem = GridGameManager.Instance.GetSystem<GridSystem>();
           
             gridGameManager.GetSystem<UiSystem>().HideMainCanvas();
+            gridGameManager.GetSystem<UiSystem>().HideSelectionUI();
             selectionSystem = gridGameManager.GetSystem<UnitSelectionSystem>();
             gridInputSystem.SetActive(true);
             unitInputSystem.SetActive(true);
@@ -57,14 +59,29 @@ namespace Game.Mechanics
             unitInputSystem.InputReceiver = this;
             selectedUnit = (Unit)selectionSystem.SelectedCharacter;
             gridSystem.cursor.SetCurrentTile(selectedUnit.GridComponent.Tile);
-        
+            Debug.Log("ENTER CHOOSE TARGET");
             UI.OnBackClicked += BackClicked;
             UnitSelectionSystem.OnSkillDeselected += SkillDeselected;
             if (selectionSystem.SelectedSkill != null)
             {
+                Debug.Log("ENTER HÄH TARGET");
                 selectedSkill = selectionSystem.SelectedSkill;
                 activeSkillMixin = selectedSkill.FirstActiveMixin;
-                ShowSkillCastRange(selectionSystem.SelectedSkill.FirstActiveMixin);
+                if (activeSkillMixin is SelfTargetSkillMixin stsm)
+                {
+                    Debug.Log("SHOW SKILL DIALOG CHOOSE TARGET");
+                    UI.ShowSkillDialogController(selectedSkill, () =>
+                    {
+                        stsm.Activate(selectedUnit);
+                        WaitAfterSkills(null,true,0);
+                    });
+               
+                }
+                else
+                {
+                    ShowSkillCastRange(selectionSystem.SelectedSkill.FirstActiveMixin);
+                }
+
                 UI.Show((Unit)selectionSystem.SelectedCharacter, selectionSystem.SelectedSkill);
                 
             }
@@ -89,6 +106,22 @@ namespace Game.Mechanics
                     .ShowCastRange(selectionSystem.SelectedCharacter, throwableItem.Range, 0);
             }
         }
+
+        private Color GetEffectColor(EffectType effectType)
+        {
+            switch (effectType)
+            {
+                case EffectType.Bad:
+                    return GameAssets.Instance.colors.AttackColor; break;
+                case EffectType.Good:
+                    return GameAssets.Instance.colors.BuffColor; break;
+                case EffectType.Heal:
+                    return GameAssets.Instance.colors.HealColor; break;
+                case EffectType.Neutral:
+                    return GameAssets.Instance.colors.BuffColor; break;
+            }
+            return Color.black;
+        }
         void ShowSkillCastRange(ActiveSkillMixin activeSkillMixin)
         {
             Debug.Log("ShowCastRange");
@@ -101,13 +134,24 @@ namespace Game.Mechanics
                         gridSystem.HideMoveRange();
                         gridGameManager.GetSystem<GridSystem>().ShowRootedCastRange(selectionSystem.SelectedCharacter,
                             selectionSystem.SelectedSkill.Level, pts);
+                        if(instantiatedSkilLTargetVFX==null)
+                            instantiatedSkilLTargetVFX =GameObject.Instantiate(GameAssets.Instance.prefabs.SelectedSkillTargetVFX);
+
+                        instantiatedSkilLTargetVFX.GetComponent<Renderer>().material.color =
+                            GetEffectColor(pts.effectType);
+                        instantiatedSkilLTargetVFX.transform.position =  selectedUnit.GameTransformManager.GetCenterPosition();
                         gridSystem.ShowRootedCast(selectedUnit.GridComponent.GridPosition.AsVector(),
-                            pts.GetSize(), pts.TargetArea, pts.EffectType, selectionSystem.SelectedCharacter.GridComponent.GridPosition.X, selectionSystem.SelectedCharacter.GridComponent.GridPosition.Y);
+                            pts.GetSize(), pts.TargetArea, pts.effectType, selectionSystem.SelectedCharacter.GridComponent.GridPosition.X, selectionSystem.SelectedCharacter.GridComponent.GridPosition.Y);
 
                     }
                     else
                     {
 
+                        if(instantiatedSkilLTargetVFX==null)
+                            instantiatedSkilLTargetVFX =GameObject.Instantiate(GameAssets.Instance.prefabs.SelectedSkillTargetVFX);
+                        instantiatedSkilLTargetVFX.transform.position =  selectedUnit.GameTransformManager.GetCenterPosition();
+                        instantiatedSkilLTargetVFX.GetComponent<Renderer>().material.color =
+                            GetEffectColor(activeSkillMixin.effectType);
                         gridGameManager.GetSystem<GridSystem>().ShowRootedCastRange(selectionSystem.SelectedCharacter,
                             selectionSystem.SelectedSkill.Level, pts);
                     }
@@ -143,9 +187,18 @@ namespace Game.Mechanics
                 UI.Hide();
                 UI.OnBackClicked -= BackClicked;
             }
+            if(instantiatedSkilLTargetVFX!=null)
+                GameObject.Destroy(instantiatedSkilLTargetVFX);
             UnitSelectionSystem.OnSkillDeselected -= SkillDeselected;
              new GameplayCommands().DeselectSkill();
-            
+            gridGameManager.GetSystem<UiSystem>().ShowSelectionUI();
+            foreach (var faction in factionManager.Factions)
+            {
+                foreach (var unit in faction.FieldedUnits)
+                {
+                    unit.visuals.unitRenderer.HidePreviewHp();
+                }
+            }
             gridSystem.HideMoveRange();
             gridSystem.HideCast();
             gridInputSystem.ResetInput();
@@ -171,6 +224,7 @@ namespace Game.Mechanics
         }
 
         private ActiveSkillMixin activeSkillMixin;
+        private GameObject instantiatedSkilLTargetVFX;
         public void ClickedOnGrid(int x, int y, bool resetPosition=false)
         {
             if (activeSkillMixin is IPosTargeted psm)
@@ -208,6 +262,11 @@ namespace Game.Mechanics
                         else
                         {
                             gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
+                            if(instantiatedSkilLTargetVFX==null)
+                                instantiatedSkilLTargetVFX =GameObject.Instantiate(GameAssets.Instance.prefabs.SelectedSkillTargetVFX);
+                            instantiatedSkilLTargetVFX.transform.position = gridSystem.cursor.GetPosition() + new Vector2(.5f, .5f);
+                            instantiatedSkilLTargetVFX.GetComponent<Renderer>().material.color =
+                                GetEffectColor(activeSkillMixin.effectType);
                             UI.ShowSkillPreview(stm, selectedUnit, (Unit)gridSystem.Tiles[x, y].GridObject);
                         }
                     }
@@ -263,6 +322,11 @@ namespace Game.Mechanics
                      {
                          gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
                          gridSystem.HideCast();
+                         if(instantiatedSkilLTargetVFX==null)
+                             instantiatedSkilLTargetVFX =GameObject.Instantiate(GameAssets.Instance.prefabs.SelectedSkillTargetVFX);
+                         instantiatedSkilLTargetVFX.transform.position = gridSystem.cursor.GetPosition() + new Vector2(.5f, .5f);
+                         instantiatedSkilLTargetVFX.GetComponent<Renderer>().material.color =
+                             GetEffectColor(activeSkillMixin.effectType);
                          Debug.Log("ShowSkillCastRange:");
                          if(skillMixin is ActiveSkillMixin s)
                             ShowSkillCastRange(s);
@@ -270,7 +334,8 @@ namespace Game.Mechanics
                              ShowItemCastRange();
                          Debug.Log("ShowSkillCast");
                          //gridSystem.ShowCast(skillMixin.GetSize(), skillMixin.TargetArea, skillMixin.EffectType);
-                         gridSystem.ShowCast(skillMixin.GetTargetPositions(selectedSkill.level), skillMixin.EffectType);
+                         Debug.Log(skillMixin.GetName()+" "+skillMixin.GetEffectType());
+                         gridSystem.ShowCast(skillMixin.GetTargetPositions(selectedSkill.level), skillMixin.GetEffectType());
                          skillMixin.ShowPreview(selectedUnit, x, y);
                          var gridObject = gridSystem.Tiles[x, y].GridObject;
                          if(gridObject!=null)
@@ -303,6 +368,7 @@ namespace Game.Mechanics
                          Debug.Log("ROOTED SKILL POS ROOTED CAST");
                          skillMixin.ShowPreview(selectedUnit, x, y);
                          var gridObject = gridSystem.Tiles[x, y].GridObject;
+                        
                          if(gridObject!=null)
                             UI.ShowSkillPreview(skillMixin, selectedUnit, (Unit)gridObject);
                      }
@@ -320,7 +386,7 @@ namespace Game.Mechanics
             else if(skillMixin is Item)
                 ShowItemCastRange();
             gridSystem.ShowRootedCast(selectedUnit.GridComponent.GridPosition.AsVector(),
-                skillMixin.GetSize(), skillMixin.TargetArea, skillMixin.EffectType, x, y);
+                skillMixin.GetSize(), skillMixin.TargetArea, skillMixin.GetEffectType(), x, y);
         }
         private bool IsInCastRange(int x, int y)
         {
