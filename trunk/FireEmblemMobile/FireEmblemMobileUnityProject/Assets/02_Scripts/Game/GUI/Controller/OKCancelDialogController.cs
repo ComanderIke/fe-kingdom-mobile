@@ -11,11 +11,13 @@ public class OKCancelDialogController : MonoBehaviour
 
 
     private Action action;
+    private Action cancelAction;
     // Start is called before the first frame update
-    public void Show(string questionText, Action okAction)
+    public void Show(string questionText, Action okAction, Action cancelAction=null)
     {
         QuestionText.SetText(questionText);
         action = okAction;
+        this.cancelAction = cancelAction;
         gameObject.SetActive(true);
     }
 
@@ -28,6 +30,7 @@ public class OKCancelDialogController : MonoBehaviour
     public void CancelClicked()
     {
         Debug.Log("Cancel Clicked!");
+        cancelAction?.Invoke();
         gameObject.SetActive(false);
     }
 }

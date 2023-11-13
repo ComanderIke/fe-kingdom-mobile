@@ -69,6 +69,15 @@ namespace Game.GameActors.Units.Skills
                  gridSystem.SetUnitPosition(caster, (int)tmpPos.x, (int)tmpPos.y);
                  return;
              }
+
+             if (towardsSkillTargetDataPosition)
+             {
+                 if (skillTransferData != null)
+                 {
+                     Vector2 towardsCenterDirection = (Vector2)skillTransferData.data-target.GridComponent.GridPosition.AsVector() ;
+                     MoveUnit(target, towardsCenterDirection, 0);
+                 }
+             }
             Vector2 direction = target.GridComponent.GridPosition.AsVector() - caster.GridComponent.GridPosition.AsVector() * (towardsTarget?-1:1);
             if (lastSkilltargetDirection)
             {
@@ -131,10 +140,34 @@ namespace Game.GameActors.Units.Skills
             var gridSystem= ServiceProvider.Instance.GetSystem<GridSystem>();
             Vector2Int newPosition = new Vector2Int(unit.GridComponent.GridPosition.X + (int)direction.x,
                 unit.GridComponent.GridPosition.Y + (int)direction.y);
-            if(!gridSystem.IsOutOfBounds(newPosition)&&gridSystem.GridLogic.IsTileFree(newPosition.x, newPosition.y))
-                gridSystem.SetUnitPosition(unit, newPosition.x,newPosition.y, true, false);//true, false
-            LeanTween.move(unit.GameTransformManager.GameObject, new Vector2(newPosition.x, newPosition.y), .3f)
-                .setEaseOutSine().setDelay(delay);
+            if (!gridSystem.IsOutOfBounds(newPosition) && gridSystem.GridLogic.IsTileFree(newPosition.x, newPosition.y))
+            {
+                gridSystem.SetUnitPosition(unit, newPosition.x, newPosition.y, true, false); //true, false
+                LeanTween.move(unit.GameTransformManager.GameObject, new Vector2(newPosition.x, newPosition.y), .3f)
+                    .setEaseOutSine().setDelay(delay);
+            }
+            else
+            {
+                newPosition = new Vector2Int(unit.GridComponent.GridPosition.X + (int)direction.x,
+                    unit.GridComponent.GridPosition.Y);
+                if (!gridSystem.IsOutOfBounds(newPosition) && gridSystem.GridLogic.IsTileFree(newPosition.x, newPosition.y))
+                {
+                    gridSystem.SetUnitPosition(unit, newPosition.x, newPosition.y, true, false); //true, false
+                    LeanTween.move(unit.GameTransformManager.GameObject, new Vector2(newPosition.x, newPosition.y), .3f)
+                        .setEaseOutSine().setDelay(delay);
+                }
+                else
+                {
+                    newPosition = new Vector2Int(unit.GridComponent.GridPosition.X,
+                        unit.GridComponent.GridPosition.Y+ (int)direction.y);
+                    if (!gridSystem.IsOutOfBounds(newPosition) && gridSystem.GridLogic.IsTileFree(newPosition.x, newPosition.y))
+                    {
+                        gridSystem.SetUnitPosition(unit, newPosition.x, newPosition.y, true, false); //true, false
+                        LeanTween.move(unit.GameTransformManager.GameObject, new Vector2(newPosition.x, newPosition.y), .3f)
+                            .setEaseOutSine().setDelay(delay);
+                    }
+                }
+            }
             //  .setEaseOutQuad();
         }
       

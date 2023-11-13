@@ -129,9 +129,9 @@ public class ChooseTargetUI : MonoBehaviour, IChooseTargetUI, IClickedReceiver
         attackPreviewUI.Hide();
     }
 
-    public void ShowSkillDialogController(Skill selectedSkill, Action action)
+    public void ShowSkillDialogController(Skill selectedSkill, Action action, Action cancelAction=null)
     {
-        useSkillDialogController.Show(selectedSkill, action);
+        useSkillDialogController.Show(selectedSkill, action, cancelAction);
     }
 
     public void BackClicked()

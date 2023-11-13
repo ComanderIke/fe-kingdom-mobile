@@ -22,6 +22,11 @@ namespace Game.GameActors.Units.Skills
         None
     }
 
+    public enum SkillTransferDataType
+    {
+        TileDifferenceDelay,
+        TargetPosition
+    }
     [System.Serializable]
     [CreateAssetMenu(menuName = "GameData/Skills/Active/PositionTarget", fileName = "PositionTargetSkillMixin")]
     public class PositionTargetSkillMixin : ActiveSkillMixin, IPosTargeted
@@ -37,6 +42,7 @@ namespace Game.GameActors.Units.Skills
         [SerializeField] private int minRange = 0;
         [SerializeField] private bool confirmPositionClick = true;
         [SerializeField] private SkillTransferData skillTransferData;
+        [SerializeField] private SkillTransferDataType skillTransferDataType;
         [SerializeField] private string Animation;
 
         [field: SerializeField] public SkillTargetArea TargetArea { get; set; }
@@ -49,6 +55,7 @@ namespace Game.GameActors.Units.Skills
 
         [field: SerializeField] public List<SkillEffectMixin> SkillEffects;
         [field: SerializeField] public bool Rooted { get; set; }
+        [field: SerializeField] public bool IncludeUnitPos { get; set; }
         [field: SerializeField] public bool IncludeMiddlePos { get; set; }
 
         public int GetRange(int level) => range[level];
@@ -84,11 +91,28 @@ namespace Game.GameActors.Units.Skills
 
             var chosenPrevPos = previousPos[0];
             Vector2Int unitPos = new Vector2Int(user.GridComponent.GridPosition.X, user.GridComponent.GridPosition.Y);
+            if (skillTransferData != null)
+            {
+                if (skillTransferDataType == SkillTransferDataType.TargetPosition)
+                    skillTransferData.data = new Vector2(x, y);
+            }
+
             foreach (var pos in targetPositions)
             {
-                int xPosition = (int)(user.GridComponent.GridPosition.X + pos.x);
-                int yPosition = (int)(user.GridComponent.GridPosition.Y + pos.y);
-                if (xPosition == unitPos.x && yPosition == unitPos.y && !IncludeMiddlePos)
+                int xPosition = 0;
+                int yPosition = 0;
+                if (Rooted)
+                {
+                    xPosition = (int)(user.GridComponent.GridPosition.X + pos.x);
+                    yPosition = (int)(user.GridComponent.GridPosition.Y + pos.y);
+                }
+                else
+                {
+                    xPosition = (int)(x + pos.x);
+                    yPosition = (int)(y + pos.y);
+                }
+
+                if (xPosition == unitPos.x && yPosition == unitPos.y && !IncludeUnitPos)
                     continue;
                 Debug.Log("Targetposition: " + pos + " " + xPosition + " " + yPosition);
                 if (xPosition >= 0 && xPosition < tiles.GetLength(0) && yPosition >= 0 &&
@@ -129,8 +153,11 @@ namespace Game.GameActors.Units.Skills
                     Debug.Log("ACTIVATE On " + xPosition + " " + yPosition);
                     Vector2 tiledifference = new Vector2Int(xPosition, yPosition) - unitPos;
 
-                    if(skillTransferData!=null)
-                        skillTransferData.data = tiledifference.magnitude * speedPerTile - speedPerTile;
+                    if (skillTransferData != null)
+                    {
+                        if(skillTransferDataType==SkillTransferDataType.TileDifferenceDelay)
+                            skillTransferData.data = tiledifference.magnitude * speedPerTile - speedPerTile;
+                    }
                     // if (AnimationObject != null&& (SpawnEffectsOnTargetsOnly ))
                     //     GameObject.Instantiate(AnimationObject, tiles[xPosition, yPosition].GetTransform().position,
                     //         Quaternion.identity, null);
@@ -154,9 +181,16 @@ namespace Game.GameActors.Units.Skills
                     previousPos.Add(new Vector2Int(xPosition, yPosition));
                     chosenPrevPos = previousPos[previousPos.Count - 1];
                 }
-                var go= GameObject.Instantiate(AnimationObject, spawnAnimationAtCaster?user.GameTransformManager.GetCenterPosition():new Vector3(x+.5f, y+0.5f), Quaternion.identity, null);
+
+                if (AnimationObject != null)
+                {
+                    var go = GameObject.Instantiate(AnimationObject,
+                        spawnAnimationAtCaster
+                            ? user.GameTransformManager.GetCenterPosition()
+                            : new Vector3(x + .5f, y + 0.5f), Quaternion.identity, null);
 
 
+                }
             }
 
             if (jump)

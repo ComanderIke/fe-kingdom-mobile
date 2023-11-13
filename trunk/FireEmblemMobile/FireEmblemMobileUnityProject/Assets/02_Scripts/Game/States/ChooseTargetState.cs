@@ -74,6 +74,9 @@ namespace Game.Mechanics
                     {
                         stsm.Activate(selectedUnit);
                         WaitAfterSkills(null,true,0);
+                    }, () =>
+                    {
+                        new GameplayCommands().DeselectSkill();
                     });
                
                 }

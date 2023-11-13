@@ -444,7 +444,8 @@ namespace Game.Map
             }
             else
             {
-                ShowCastRange(characterPos,character.Faction.Id);
+                GridRenderer.SetTileCastCursorMaterial(characterPos, pts.effectType, character.Faction.Id);
+                //ShowCastRange(characterPos,character.Faction.Id);
             }
 
         }
