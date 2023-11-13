@@ -81,7 +81,7 @@ namespace LostGrace
                 prefab = combatSkillButtonPrefab;
             var go = Instantiate(prefab, skillUIParent);
             var skillUI = go.GetComponent<SkillUI>();
-            skillUI.SetSkill(skill, true, blessing, false, false);
+            skillUI.SetSkill(skill, true, blessing, true,false,false, false);
        
         }
         public void SetSkill(Skill skill, bool blessed,bool upgrade, bool locked =false)

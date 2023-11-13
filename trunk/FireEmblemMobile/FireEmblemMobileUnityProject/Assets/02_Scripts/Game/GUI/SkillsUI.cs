@@ -44,7 +44,10 @@ namespace LostGrace
             var go = Instantiate(prefab, transform);
             var skillUI = go.GetComponent<SkillUI>();
             instantiatedButtons.Add(skillUI);
-            skillUI.SetSkill(skill, false, unit.Blessing!=null, showToolTips, interactable);
+            bool canAffordHPCost = skill.FirstActiveMixin != null && unit.Hp > skill.FirstActiveMixin.GetHpCost(skill.level) || skill.CombatSkillMixin != null && unit.Hp > skill.CombatSkillMixin.GetHpCost(skill.level);
+            bool hasUses=skill.FirstActiveMixin != null &&skill.FirstActiveMixin.Uses>0 || skill.CombatSkillMixin != null && skill.CombatSkillMixin.Uses>0;
+
+            skillUI.SetSkill(skill, false, unit.Blessing!=null, canAffordHPCost,hasUses,showToolTips, interactable);
             if(showDeleteIfFull)
                 skillUI.ShowDelete();
             skillUI.OnDeleteClicked += DeleteClicked;

@@ -30,12 +30,19 @@ namespace Game.GameActors.Units.Skills
         //     this.currentUses = maxUsesPerLevel;
         //     this.hpCostPerLevel = hpCostPerLevel;
         // }
-        private void OnEnable()
+        public void Activate()
         {
-           
+            skill.owner.Hp -= hpCostPerLevel[skill.level];
+            Uses--;
         }
 
-       
+        private void OnEnable()
+        {
+
+
+        }
+
+
         public int GetMaxUses(int level)
         {
             return maxUsesPerLevel[level];

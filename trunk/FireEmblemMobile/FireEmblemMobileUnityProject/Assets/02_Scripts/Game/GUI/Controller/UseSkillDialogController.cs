@@ -13,7 +13,7 @@ public class UseSkillDialogController : OKCancelDialogController
     {
         
         skillName.text = skill.Name;
-        skillUI.SetSkill(skill, true, false,false,false);
+        skillUI.SetSkill(skill, true, false,false,false,false);
         base.Show(skill.Description, action);
 
      

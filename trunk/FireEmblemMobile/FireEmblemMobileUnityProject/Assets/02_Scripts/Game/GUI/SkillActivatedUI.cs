@@ -35,7 +35,10 @@ namespace LostGrace
                 prefab = combatSkillPrefab;
             var go = Instantiate(prefab, skillPlaceHolder.transform);
             var skillUI = go.GetComponent<SkillUI>();
-            skillUI.SetSkill(skill, false, activater.Blessing!=null);
+            bool canAffordHPCost = skill.FirstActiveMixin != null && activater.Hp > skill.FirstActiveMixin.GetHpCost(skill.level) || skill.CombatSkillMixin != null && activater.Hp > skill.CombatSkillMixin.GetHpCost(skill.level);
+            bool hasUses=skill.FirstActiveMixin != null &&skill.FirstActiveMixin.Uses>0 || skill.CombatSkillMixin != null && skill.CombatSkillMixin.Uses>0;
+
+            skillUI.SetSkill(skill, false, activater.Blessing!=null,canAffordHPCost,hasUses);
         }
     }
 }

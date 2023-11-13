@@ -70,6 +70,7 @@ namespace Game.GameActors.Units.Skills
                 }, effectDelay);
              
             }
+            
 
             MonoUtility.DelayFunction(() =>
             {
@@ -86,6 +87,7 @@ namespace Game.GameActors.Units.Skills
                     skill.skillTransferData.data = (object)target;
                 }
             }, logicDelay);
+            base.Activate();
         }
 
 

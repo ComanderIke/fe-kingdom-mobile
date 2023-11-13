@@ -19,8 +19,7 @@ namespace LostGrace
         [SerializeField] private TextMeshProUGUI uses;
         [SerializeField] private float scaleSmall = 0.7f;
         [SerializeField] private float scaleBig = 0.9f;
-        [SerializeField] private GameObject hpTextGo;
-        [SerializeField] private GameObject usesTextGo;
+   
         [SerializeField] private Image frame;
         [SerializeField] private Image background;
         [SerializeField] private Color blessingFrameColor;
@@ -29,6 +28,8 @@ namespace LostGrace
         [SerializeField] private Color curseFrameColor;
         [SerializeField] private Color blessingBackgroundColor;
         [SerializeField] private Color curseBackgroundColor;
+        [SerializeField] private TMP_ColorGradient hpCostBlueColor;
+        [SerializeField] private TMP_ColorGradient hpCostRedColor;
         [SerializeField] private GameObject deleteButton;
         [SerializeField] private GameObject selectedVfx;
         [SerializeField] private GameObject selectableVfx;
@@ -38,7 +39,9 @@ namespace LostGrace
         [SerializeField] private Button CancelSkillButton;
         private bool showTooltips = false;
         private bool blessed;
-        public void SetSkill(Skill skill, bool big, bool blessed, bool showTooltips = false, bool interactable=true)
+        private bool canAffordHpCost;
+        private bool hasUses;
+        public void SetSkill(Skill skill, bool big, bool blessed,bool canAfforHpCost,bool hasUses, bool showTooltips = false, bool interactable=true)
         {
             
             deleteButton.SetActive(false);
@@ -52,6 +55,10 @@ namespace LostGrace
             if(big)
                 (transform as RectTransform).sizeDelta = bigSize;
             button.interactable = interactable;
+            this.canAffordHpCost = canAfforHpCost;
+            this.hasUses = hasUses;
+            // if (button.interactable)
+            //     button.interactable = canAfforHpCost;
             background.raycastTarget = interactable;
             if (skill.IsActive() || skill.IsCombat())
             {
@@ -73,13 +80,13 @@ namespace LostGrace
 
                 if (!big)
                 {
-                    hpTextGo.transform.localScale = new Vector3(scaleSmall, scaleSmall, scaleSmall);
-                    usesTextGo.transform.localScale = new Vector3(scaleSmall, scaleSmall, scaleSmall);
+                    hpCost.transform.localScale = new Vector3(scaleSmall, scaleSmall, scaleSmall);
+                    uses.transform.localScale = new Vector3(scaleSmall, scaleSmall, scaleSmall);
                 }
                 else
                 {
-                    hpTextGo.transform.localScale = new Vector3(scaleBig, scaleBig, scaleBig);
-                    usesTextGo.transform.localScale = new Vector3(scaleBig, scaleBig ,scaleBig);
+                    hpCost.transform.localScale = new Vector3(scaleBig, scaleBig, scaleBig);
+                    uses.transform.localScale = new Vector3(scaleBig, scaleBig ,scaleBig);
                 }
             }
 
@@ -96,19 +103,22 @@ namespace LostGrace
                 background.color = curseBackgroundColor;
             }
 
+            if(hpCost!=null)
+                hpCost.colorGradientPreset = canAfforHpCost?hpCostBlueColor: hpCostRedColor;
             
-         
         }
 
         public void Select()
         {
-            CancelSkillButton.gameObject.SetActive(true);
+            if(CancelSkillButton!=null)
+                CancelSkillButton.gameObject.SetActive(true);
             selectableVfx.gameObject.SetActive(false);
             selectedVfx.gameObject.SetActive(true);
         }
         public void Deselect()
         {
-            CancelSkillButton.gameObject.SetActive(false);
+            if(CancelSkillButton!=null)
+                CancelSkillButton.gameObject.SetActive(false);
             selectableVfx.gameObject.SetActive(false);
             selectedVfx.gameObject.SetActive(false);
         }
@@ -132,13 +142,22 @@ namespace LostGrace
                 ToolTipSystem.Show(Skill,blessed, transform.position);
                 return;
             }
+
+            Debug.Log(Skill.CombatSkillMixin+" "+canAffordHpCost+" "+hasUses);
+           
             if (Skill.activeMixins.Count > 0)
             {
-                
+                ToolTipSystem.Show(Skill,blessed, transform.position);
+                if (!canAffordHpCost||!hasUses)
+                    return;
                 OnClicked?.Invoke(this);
             }
             else if (Skill.CombatSkillMixin!=null)
             {
+                ToolTipSystem.Show(Skill,blessed, transform.position);
+                if (!canAffordHpCost||!hasUses)
+                    return;
+                
                 OnClicked?.Invoke(this);
             }
             else

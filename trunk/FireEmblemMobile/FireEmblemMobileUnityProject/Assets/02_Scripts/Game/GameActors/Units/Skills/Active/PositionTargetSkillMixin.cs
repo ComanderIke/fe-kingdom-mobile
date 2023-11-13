@@ -176,6 +176,7 @@ namespace Game.GameActors.Units.Skills
                 Debug.Log("Set To Position: " + targetPos);
 
             }
+            base.Activate();
 
 
         }

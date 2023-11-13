@@ -42,6 +42,7 @@ namespace LostGrace
         private bool interactableForPlayer;
         private void Start()
         {
+            
             UiSystem.OnShowAttackPreview += ShowSelectableCombatSkills;
             UiSystem.OnHideAttackPreview += HideSelectableCombatSkills;
             UnitSelectionSystem.OnSkillSelected += SkillSelected;
@@ -50,6 +51,8 @@ namespace LostGrace
 
         private void OnDestroy()
         {
+            if(unit!=null)
+                unit.HpValueChanged -= UpdateUI;
             UiSystem.OnShowAttackPreview -= ShowSelectableCombatSkills;
             UiSystem.OnHideAttackPreview -= HideSelectableCombatSkills;
             UnitSelectionSystem.OnSkillSelected -= SkillSelected;
@@ -139,7 +142,10 @@ namespace LostGrace
                     prefab = combatSkillprefab;
                 var go =Instantiate(prefab, skillContainer);
                 var skillUI =  go.GetComponent<SkillUI>();
-                skillUI.SetSkill(skill, true, unit.Blessing!=null);
+                bool canAffordHPCost = skill.FirstActiveMixin != null && unit.Hp > skill.FirstActiveMixin.GetHpCost(skill.level) || skill.CombatSkillMixin != null && unit.Hp > skill.CombatSkillMixin.GetHpCost(skill.level);
+                bool hasUses=skill.FirstActiveMixin != null &&skill.FirstActiveMixin.Uses>0 || skill.CombatSkillMixin != null && skill.CombatSkillMixin.Uses>0;
+
+                skillUI.SetSkill(skill, true, unit.Blessing!=null, canAffordHPCost, hasUses);
                 skillUI.OnClicked += SkillClicked;
                 instantiatedSkills.Add(skillUI);
 
@@ -151,7 +157,11 @@ namespace LostGrace
         public void Show(Unit unit, bool interactableForPlayer=true)
         {
             base.Show();
+            if(unit!=null)
+                unit.HpValueChanged -= UpdateUI;
             this.unit = unit;
+            unit.HpValueChanged -= UpdateUI;
+            unit.HpValueChanged += UpdateUI;
             this.interactableForPlayer = interactableForPlayer;
            
            UpdateUI();
@@ -172,7 +182,7 @@ namespace LostGrace
          
            
             Debug.Log("CLICKED Skill: " +skillUI.Skill.Name);
-            ToolTipSystem.Show(skillUI.Skill, unit.Blessing!=null,skillUI.transform.position);
+            //ToolTipSystem.Show(skillUI.Skill, unit.Blessing!=null,skillUI.transform.position);
             if (!interactableForPlayer)
                 return;
             if (skillUI.Skill.activeMixins.Count > 0)
