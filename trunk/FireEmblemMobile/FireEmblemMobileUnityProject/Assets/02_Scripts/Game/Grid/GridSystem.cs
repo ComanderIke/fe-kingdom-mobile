@@ -444,6 +444,7 @@ namespace Game.Map
             }
             else
             {
+                GridLogic.gridSessionData.AddValidTargetPosition(characterPos);
                 GridRenderer.SetTileCastCursorMaterial(characterPos, pts.effectType, character.Faction.Id);
                 //ShowCastRange(characterPos,character.Faction.Id);
             }

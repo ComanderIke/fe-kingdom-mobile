@@ -14,9 +14,12 @@ namespace LostGrace
         public float ExpMult = 1.0f;
         public float GraceMult = 1.0f;
         public float GoldMult = 1.0f;
+        public float BondexpRate = 1.0f;
         public float ItemRate = 1.0f;
         public float EliteEnemyRate = 1.0f;
         public int LevelInfluence;
+        [TextArea]
+        public string Description;
         public Attributes BaseStatInfluences;
         public Attributes GrowthInfluences;
         public List<LGEventDialogSO> extraEvents;
@@ -32,6 +35,25 @@ namespace LostGrace
         public Attributes BaseStats2;
         public int revivalStones2;
         private List<SkillBp> skills2;
+        public Sprite Icon;
+
+        public List<DifficultyVariable> GetDifficultyVariables()
+        {
+            var list = new List<DifficultyVariable>();
+            var textStyle = ExpMult < 1 ? DifficultyVariableStyle.Decrease : DifficultyVariableStyle.Increase;
+            string prefix = ExpMult < 1 ? "-" : "+";
+            list.Add(new DifficultyVariable("Exp:", prefix+(ExpMult*100f-100)+"%", textStyle));
+            textStyle = GoldMult < 1 ? DifficultyVariableStyle.Decrease : DifficultyVariableStyle.Increase;
+            prefix = GoldMult < 1 ? "-" : "+";
+            list.Add(new DifficultyVariable("Gold:", prefix+(GoldMult*100f-100)+"%", textStyle));
+            textStyle = GraceMult < 0 ? DifficultyVariableStyle.Decrease : DifficultyVariableStyle.Increase;
+            prefix = GraceMult < 0 ? "-" : "+";
+            list.Add(new DifficultyVariable("Grace:", prefix+(GraceMult*100f-100)+"%", textStyle));
+            textStyle = BondexpRate < 0 ? DifficultyVariableStyle.Decrease : DifficultyVariableStyle.Increase;
+            prefix = BondexpRate < 0 ? "-" : "+";
+            list.Add(new DifficultyVariable("Bond Exp:", prefix+(BondexpRate*100f-100)+"%", textStyle));
+            return list;
+        }
 
     }
 }
