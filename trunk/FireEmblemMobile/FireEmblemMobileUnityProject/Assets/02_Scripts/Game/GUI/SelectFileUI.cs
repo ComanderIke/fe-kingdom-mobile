@@ -28,39 +28,39 @@ namespace LostGrace
             {
               
                 slot1Button.SetLoaded(true);
-                slot1Button.UpdateText(SaveGameManager.GetFileSlotName(1));
+                slot1Button.UpdateText(SaveGameManager.GetFileSlotName(1),SaveGameManager.GetFileSlotDifficulty(1));
                 slot1Button.ShowDeleteButton();
             }
             else
             {
                 slot1Button.SetLoaded(false);
-                slot1Button.UpdateText("New Game");
+                slot1Button.UpdateText("New Game", "");
                 slot1Button.HideDeleteButton();
             }
             if (SaveGameManager.FileSlotExists(2))
             {
                 Debug.Log("Slot 2 Exists");
                 slot2Button.SetLoaded(true);
-                slot2Button.UpdateText(SaveGameManager.GetFileSlotName(2));
+                slot2Button.UpdateText(SaveGameManager.GetFileSlotName(2), SaveGameManager.GetFileSlotDifficulty(2));
                 slot2Button.ShowDeleteButton();
             }
             else
             {
                 slot2Button.SetLoaded(false);
-                slot2Button.UpdateText("New Game");
+                slot2Button.UpdateText("New Game", "");
                 slot2Button.HideDeleteButton();
             }
             if (SaveGameManager.FileSlotExists(3))
             {
                 Debug.Log("Slot 3 Exists");
                 slot3Button.SetLoaded(true);
-                slot3Button.UpdateText(SaveGameManager.GetFileSlotName(3));
+                slot3Button.UpdateText(SaveGameManager.GetFileSlotName(3),SaveGameManager.GetFileSlotDifficulty(3));
                 slot3Button.ShowDeleteButton();
             }
             else
             {
                 slot3Button.SetLoaded(false);
-                slot3Button.UpdateText("New Game");
+                slot3Button.UpdateText("New Game", "");
                 slot3Button.HideDeleteButton();
             }
             slot1Button.SetInteractable(true);
@@ -121,16 +121,22 @@ namespace LostGrace
             
         }
 
+        [SerializeField] private ChooseDifficultyUI chooseDifficultyUI;
+        private string chosenFileName = "";
         void FileNameSubmitted(string name)
         {
             textFieldPopUp.onSubmittedText -= FileNameSubmitted;
-            //DO some Animation SaveFile changes Color and text
-            //All Buttons non Interactable
-
-            StartCoroutine(AnimationCoroutine(name));
+            chosenFileName = name;
+            chooseDifficultyUI.Show();
+            chooseDifficultyUI.OnFinished -= DifficultyChosen;
+            chooseDifficultyUI.OnFinished += DifficultyChosen;
         }
 
-        IEnumerator AnimationCoroutine(string name)
+        void DifficultyChosen()
+        {
+            StartCoroutine(AnimationCoroutine(chosenFileName, GameConfig.Instance.ConfigProfile.chosenDifficulty.name));
+        }
+        IEnumerator AnimationCoroutine(string name, string difficulty)
         {
             switch (selected)
             {
@@ -142,12 +148,12 @@ namespace LostGrace
             yield return new WaitForSeconds(.5f);
             switch (selected)
             {
-                case 1:  slot1Button.UpdateText(name);
+                case 1:  slot1Button.UpdateText(name, difficulty);
                     SaveGameManager.NewGame(1, name);
                     break;
-                case 2:  slot2Button.UpdateText(name);
+                case 2:  slot2Button.UpdateText(name, difficulty);
                     SaveGameManager.NewGame(2, name);break;
-                case 3:  slot3Button.UpdateText(name);
+                case 3:  slot3Button.UpdateText(name, difficulty);
                     SaveGameManager.NewGame(3, name);break;
             }
             // slot1Button.SetInteractable(true);

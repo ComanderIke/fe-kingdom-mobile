@@ -70,5 +70,10 @@ namespace LostGrace
             this.profile = difficulty1;
             gameObject.SetActive(true);
         }
+
+        public void Show()
+        {
+            gameObject.SetActive(true);
+        }
     }
 }

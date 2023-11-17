@@ -15,19 +15,18 @@ public class ChooseDifficultyUI : MonoBehaviour
     private bool difficultySelected = false;
     private ChooseDifficultyButtonUI selected;
 
-    private void OnEnable()
-    {
-        Show();
-    }
+    
 
     public void Show()
     {
+        
     
         canvasGroup.gameObject.SetActive(true);
         TweenUtility.FadeIn(canvasGroup);
         
         difficultySelected = false;
     
+       
         selected = null;
         difficultyButton1.OnClick -= SkillButtonClicked;
         difficultyButton2.OnClick -= SkillButtonClicked;
@@ -35,7 +34,11 @@ public class ChooseDifficultyUI : MonoBehaviour
         difficultyButton1.OnClick += SkillButtonClicked;
         difficultyButton2.OnClick += SkillButtonClicked;
         difficultyButton3.OnClick += SkillButtonClicked;
-      
+        difficultyButton1.Show();
+        difficultyButton2.Show();
+        difficultyButton3.Show();
+
+
     }
 
     void SkillButtonClicked(ChooseDifficultyButtonUI button)
@@ -54,7 +57,7 @@ public class ChooseDifficultyUI : MonoBehaviour
             return;
         difficultySelected = true;
         GameConfig.Instance.ConfigProfile.chosenDifficulty = selected.profile;
-
+        Hide();
     }
 
     
@@ -66,8 +69,8 @@ public class ChooseDifficultyUI : MonoBehaviour
            
             OnFinished?.Invoke();
             difficultyButton1.Hide();
-            difficultyButton1.Hide();
-            difficultyButton1.Hide();
+            difficultyButton2.Hide();
+            difficultyButton3.Hide();
             canvasGroup.gameObject.SetActive(false);
         });
     }

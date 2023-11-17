@@ -322,6 +322,12 @@ namespace LostGrace
           //  Debug.Log("FileSlotName: "+currentSaveData.fileLabel);
             return metaData;
         }
+        public static string GetFileSlotDifficulty(int slot)
+        {
+            var metaData = LoadMetaDataOnly(slot);
+            //  Debug.Log("FileSlotName: "+currentSaveData.fileLabel);
+            return "Normal";
+        }
 
         public static bool HasEncounterSaveData()
         {
