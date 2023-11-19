@@ -68,8 +68,8 @@ namespace LostGrace
         void UpdateUI()
         {
             toggleButtonText.text = showBody ? "Show Portrait" : "Show Body";
-            name.text = currentEntry.Name;
-            description.text = currentEntry.Description;
+            name.text = "<shine>"+currentEntry.Name+"</shine>";
+            description.text = "{fade}"+currentEntry.Description;
             middleImage.enabled = showBody;
             middleImageFace.enabled = !showBody;
             middleImage.sprite = currentEntry.BodySprite;

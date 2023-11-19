@@ -150,11 +150,13 @@ namespace LostGrace
             if (Player.Instance.Party.members.Count<Player.Instance.startPartyMemberCount)
             {
                // newGameButtonCanvasGroup.alpha = UIUtility.INACTIVE_CANVAS_GROUP_ALPHA;
+               newGameButton.GetComponentInChildren<TextMeshProUGUI>().SetText("Start Journey");
                newGameButton.interactable = false;
             }
             else
             {
                // newGameButtonCanvasGroup.alpha = 1;
+               newGameButton.GetComponentInChildren<TextMeshProUGUI>().SetText("<bounce>Start Journey");
                 newGameButton.interactable = true;
             }
         }
