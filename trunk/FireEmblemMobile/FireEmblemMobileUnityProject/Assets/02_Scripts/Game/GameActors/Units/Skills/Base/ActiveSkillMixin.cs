@@ -32,7 +32,8 @@ namespace Game.GameActors.Units.Skills
         // }
         public void Activate()
         {
-            skill.owner.Hp -= hpCostPerLevel[skill.level];
+            if(skill.owner!=null)
+                skill.owner.Hp -= hpCostPerLevel[skill.level];
             Uses--;
         }
 

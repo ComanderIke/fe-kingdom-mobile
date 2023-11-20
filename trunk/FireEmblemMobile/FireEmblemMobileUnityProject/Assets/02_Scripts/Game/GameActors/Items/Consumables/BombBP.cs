@@ -10,17 +10,17 @@ namespace Game.GameActors.Items.Consumables
     [CreateAssetMenu(menuName = "GameData/Items/Bomb", fileName = "Bomb")]
     public class BombBP : ConsumableItemBp
     {
-        public Debuff appliedDebuff;
-        public int power;
-        public int range;
-        public int size;
-        public EffectType effectType;
-        
-        public SkillTargetArea targetArea;
+        //public Debuff appliedDebuff;
+       // public int power;
+      //  public int range;
+      //  public int size;
+       // public EffectType effectType;
+        public SkillBp skill;
+        //public SkillTargetArea targetArea;
 
         public override Item Create()
         {
-            return new Bomb(power, range, size, targetArea,effectType, appliedDebuff, name, description, cost, rarity,maxStack,sprite);
+            return new Bomb(skill.Create(),name, description, cost, rarity,maxStack,sprite);
         }
     }
 }

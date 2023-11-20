@@ -47,19 +47,31 @@ namespace LostGrace
             UiSystem.OnHideAttackPreview += HideSelectableCombatSkills;
             UnitSelectionSystem.OnSkillSelected += SkillSelected;
             UnitSelectionSystem.OnSkillDeselected += SkillDeselected;
+            Unit.OnUnitDataChanged += UnitDataChanged;
         }
 
         private void OnDestroy()
         {
-            if(unit!=null)
+            if (unit != null)
+            {
                 unit.HpValueChanged -= UpdateUI;
+                
+            }
+
+            Unit.OnUnitDataChanged -= UnitDataChanged;
             UiSystem.OnShowAttackPreview -= ShowSelectableCombatSkills;
             UiSystem.OnHideAttackPreview -= HideSelectableCombatSkills;
             UnitSelectionSystem.OnSkillSelected -= SkillSelected;
             UnitSelectionSystem.OnSkillDeselected -= SkillDeselected;
         }
 
-       
+        void UnitDataChanged(Unit unit)
+        {
+            if (unit.Equals(this.unit))
+            {
+                UpdateUI();
+            }
+        }
         private void HideSelectableCombatSkills()
         {
             if (!interactableForPlayer)
@@ -125,6 +137,7 @@ namespace LostGrace
             weaponSlot.Show(unit.equippedWeapon);
             RelicSlot1.Show(unit.EquippedRelic);
             combatItem1.Show(unit.CombatItem1);
+            combatItem1.OnClicked -= CombatItemClicked;
             combatItem1.OnClicked += CombatItemClicked;
             // combatItem2.Show(unit.CombatItem2);
             // combatItem2.OnClicked += CombatItemClicked;
@@ -157,8 +170,12 @@ namespace LostGrace
         public void Show(Unit unit, bool interactableForPlayer=true)
         {
             base.Show();
-            if(unit!=null)
+            if (unit != null)
+            {
                 unit.HpValueChanged -= UpdateUI;
+           
+            }
+
             this.unit = unit;
             unit.HpValueChanged -= UpdateUI;
             unit.HpValueChanged += UpdateUI;
@@ -175,7 +192,16 @@ namespace LostGrace
             ToolTipSystem.Show(new StockedItem((Item)combatItem.item, combatItem.stock), clickedCombatItemUI.transform.position);
             if (!interactableForPlayer)
                 return;
-            useItemDialogController.Show((Item)combatItem.item,()=>new GameplayCommands().SelectItem((Item)combatItem.item));
+            if (ServiceProvider.Instance.GetSystem<UnitSelectionSystem>().SelectedItem == null)
+            {
+                new GameplayCommands().SelectItem((Item)clickedCombatItemUI.GetCombatItem().item);
+                    
+            }
+            else
+            {
+                new GameplayCommands().DeselectSkill();
+            }
+            //useItemDialogController.Show((Item)combatItem.item,()=>new GameplayCommands().SelectItem((Item)combatItem.item));
         }
         public void SkillClicked(SkillUI skillUI)
         {

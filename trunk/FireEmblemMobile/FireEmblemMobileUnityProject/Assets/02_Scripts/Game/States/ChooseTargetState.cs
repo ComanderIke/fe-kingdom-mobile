@@ -67,23 +67,7 @@ namespace Game.Mechanics
                 Debug.Log("ENTER HÄH TARGET");
                 selectedSkill = selectionSystem.SelectedSkill;
                 activeSkillMixin = selectedSkill.FirstActiveMixin;
-                if (activeSkillMixin is SelfTargetSkillMixin stsm)
-                {
-                    Debug.Log("SHOW SKILL DIALOG CHOOSE TARGET");
-                    UI.ShowSkillDialogController(selectedSkill, () =>
-                    {
-                        stsm.Activate(selectedUnit);
-                        WaitAfterSkills(null,true,0);
-                    }, () =>
-                    {
-                        new GameplayCommands().DeselectSkill();
-                    });
-               
-                }
-                else
-                {
-                    ShowSkillCastRange(selectionSystem.SelectedSkill.FirstActiveMixin);
-                }
+                SkillSelected();
 
                 UI.Show((Unit)selectionSystem.SelectedCharacter, selectionSystem.SelectedSkill);
                 
@@ -91,13 +75,37 @@ namespace Game.Mechanics
             else if (selectionSystem.SelectedItem != null)
             {
                 selectedItem = selectionSystem.SelectedItem;
-                ShowItemCastRange();
+                if (selectedItem is Bomb bomb )
+                {
+                    activeSkillMixin = bomb.skill.FirstActiveMixin;
+                    selectedSkill = bomb.skill;
+                    SkillSelected();
+                    //ShowItemCastRange();
               
-                UI.Show((Unit)selectionSystem.SelectedCharacter, selectionSystem.SelectedItem);
+                    UI.Show((Unit)selectionSystem.SelectedCharacter, selectionSystem.SelectedItem);
+                }
+              
             }
             else
             {
                 Debug.LogError("No Item or Skill Selected BUGGGG!");
+            }
+        }
+
+        private void SkillSelected()
+        {
+            if (activeSkillMixin is SelfTargetSkillMixin stsm)
+            {
+                Debug.Log("SHOW SKILL DIALOG CHOOSE TARGET");
+                UI.ShowSkillDialogController(selectedSkill, () =>
+                {
+                    stsm.Activate(selectedUnit);
+                    WaitAfterSkills(null, true, 0);
+                }, () => { new GameplayCommands().DeselectSkill(); });
+            }
+            else
+            {
+                ShowSkillCastRange(selectedSkill.FirstActiveMixin);
             }
         }
 
@@ -136,7 +144,7 @@ namespace Game.Mechanics
                     {
                         gridSystem.HideMoveRange();
                         gridGameManager.GetSystem<GridSystem>().ShowRootedCastRange(selectionSystem.SelectedCharacter,
-                            selectionSystem.SelectedSkill.Level, pts);
+                            selectedSkill.Level, pts);
                         if(instantiatedSkilLTargetVFX==null)
                             instantiatedSkilLTargetVFX =GameObject.Instantiate(GameAssets.Instance.prefabs.SelectedSkillTargetVFX);
 
@@ -156,7 +164,7 @@ namespace Game.Mechanics
                         instantiatedSkilLTargetVFX.GetComponent<Renderer>().material.color =
                             GetEffectColor(activeSkillMixin.effectType);
                         gridGameManager.GetSystem<GridSystem>().ShowRootedCastRange(selectionSystem.SelectedCharacter,
-                            selectionSystem.SelectedSkill.Level, pts);
+                            selectedSkill.Level, pts);
                     }
 
 
@@ -165,7 +173,7 @@ namespace Game.Mechanics
                 {
                     Debug.Log("ShowGridCastRange:");
                     gridGameManager.GetSystem<GridSystem>().ShowCastRange(selectionSystem.SelectedCharacter,
-                        pts.GetRange(selectionSystem.SelectedSkill.Level),pts.GetMinRange(selectionSystem.SelectedSkill.Level)); //+ pts.GetCastRangeIncrease(((Unit)selectionSystem.SelectedCharacter).Stats
+                        pts.GetRange(selectedSkill.Level),pts.GetMinRange(selectedSkill.Level)); //+ pts.GetCastRangeIncrease(((Unit)selectionSystem.SelectedCharacter).Stats
                           //  .BaseAttributes));
                 }
             }
@@ -285,6 +293,12 @@ namespace Game.Mechanics
             MonoUtility.DelayFunction(()=>
             {
                 Debug.Log("Wait after Skills");
+                if (selectedItem != null && selectedItem is ConsumableItem c)
+                {
+                    var unit = (Unit)selectionSystem.SelectedCharacter;
+                    unit.UseCombatItem();
+                }
+                    
                 if(wait)
                     new GameplayCommands().Wait(selectedUnit);
                 new GameplayCommands().ExecuteInputActions(()=>

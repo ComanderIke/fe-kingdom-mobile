@@ -334,7 +334,7 @@ namespace Game.GameActors.Units
         public List<int> BonusAttackRanges { get; set; }
         public Bonds Bonds { get; set; }
         public int RevivalStones { get; set; }
-
+     
 
         public void Equip(Weapon w)
         {
@@ -531,6 +531,13 @@ namespace Game.GameActors.Units
             
         }
 
+        public void UseCombatItem()
+        {
+            CombatItem1.stock--;
+            if (CombatItem1.stock <= 0)
+                CombatItem1 = null;
+            OnUnitDataChanged?.Invoke(this);
+        }
         public bool IsAlive()
         {
             return Hp > 0;

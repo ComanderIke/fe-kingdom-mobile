@@ -12,5 +12,14 @@ namespace Game.GameActors.Units
             this.stock = stock;
             this.item = item;
         }
+
+        public void Use()
+        {
+            stock--;
+            if (stock <= 0)
+            {
+                
+            }
+        }
     }
 }
