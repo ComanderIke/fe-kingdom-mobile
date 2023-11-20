@@ -34,7 +34,7 @@ public class BuyItemUI : MonoBehaviour
         cost.text = "" + item.cost;
         description.text = "" + item.Description;
         nameText.text = "" + item.Name;
-        buttonText.text = affordable?"BUY": "Underfunded";
+        buttonText.text = affordable?"<bounce>BUY": "Underfunded";
         weaponSection.gameObject.SetActive(false);
         buyButton.interactable = affordable;
         sellButton.gameObject.SetActive(!buying);

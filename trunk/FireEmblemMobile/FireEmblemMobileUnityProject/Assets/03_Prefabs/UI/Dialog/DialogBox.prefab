@@ -96,7 +96,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1778055526221264926
 RectTransform:
   m_ObjectHideFlags: 0
@@ -104,7 +104,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1778055526221264921}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -165,7 +165,6 @@ MonoBehaviour:
   dialogCanvas: {fileID: 1778055527574729505}
   letterSource: {fileID: 1778055526221264924}
   nextLineSource: {fileID: 1778055526221264927}
-  typingSpeed: 0.01
   continueObject: {fileID: 1778055527568107845}
 --- !u!82 &1778055526221264924
 AudioSource:
@@ -498,7 +497,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -25}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -199.3, y: -187.5}
+  m_AnchoredPosition: {x: -153.3, y: -187.5}
   m_SizeDelta: {x: 600, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1778055526532756973
@@ -529,7 +528,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2426b03ab721a7c48aef4ea2eab544b7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ce11d8fd8ecbbd14291b5aca204c9b9d, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -576,8 +575,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 25}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 436.2, y: -18.3}
-  m_SizeDelta: {x: 389.9, y: 355.8}
+  m_AnchoredPosition: {x: 538.2, y: -21.8}
+  m_SizeDelta: {x: 482.4, y: 432}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &1778055526606125864
 CanvasRenderer:
@@ -716,6 +715,8 @@ GameObject:
   - component: {fileID: 1778055527150584378}
   - component: {fileID: 1778055527150584376}
   - component: {fileID: 1778055527150584379}
+  - component: {fileID: 8659735612674246555}
+  - component: {fileID: 8856938348376777851}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -841,6 +842,77 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8659735612674246555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1778055527150584373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8ace8ced0e81c847968cdca0aeda757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  typewriterStartsAutomatically: 1
+  animationLoop: 0
+  timeScale: 0
+  _text: 'Lorem ipsum dolor amet, Lorem ipsum dolor amet,  Lorem ipsum dolor amet, '
+  useDynamicScaling: 1
+  referenceFontSize: 10
+  isResettingTimeOnNewText: 1
+  useDefaultDatabases: 1
+  databaseBehaviors: {fileID: 11400000, guid: 0c54bbaf701437a40a4696ae482ec11c, type: 2}
+  databaseAppearances: {fileID: 11400000, guid: 4225a8ad4d2aa174f90e81fafc6cc5cf,
+    type: 2}
+  databaseActions: {fileID: 11400000, guid: d25fd51e13c026a49bae38d5c716428d, type: 2}
+  defaultAppearancesTags: []
+  defaultDisappearancesTags:
+  - fade
+  defaultBehaviorsTags: []
+  defaultTagsMode: 0
+--- !u!114 &8856938348376777851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1778055527150584373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57a6945b90dcd0c4b81619c0d8b5c283, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useTypeWriter: 1
+  startTypewriterMode: 3
+  hideAppearancesOnSkip: 0
+  triggerEventsOnSkip: 0
+  resetTypingSpeedAtStartup: 1
+  disappearanceOrientation: 0
+  onTextShowed:
+    m_PersistentCalls:
+      m_Calls: []
+  onTypewriterStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onTextDisappeared:
+    m_PersistentCalls:
+      m_Calls: []
+  onCharacterVisible:
+    m_PersistentCalls:
+      m_Calls: []
+  onMessage:
+    m_PersistentCalls:
+      m_Calls: []
+  waitForNormalChars: 0.03
+  waitLong: 0.6
+  waitMiddle: 0.2
+  avoidMultiplePunctuactionWait: 0
+  waitForNewLines: 1
+  waitForLastCharacter: 1
+  useTypewriterWaitForDisappearances: 1
+  disappearanceWaitTime: 0.015
+  disappearanceSpeedMultiplier: 1
 --- !u!1 &1778055527226680147
 GameObject:
   m_ObjectHideFlags: 0
@@ -878,7 +950,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -0.25006104, y: -2.1500854}
-  m_SizeDelta: {x: 450, y: 400}
+  m_SizeDelta: {x: 487.5, y: 443.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1778055527226680150
 CanvasRenderer:

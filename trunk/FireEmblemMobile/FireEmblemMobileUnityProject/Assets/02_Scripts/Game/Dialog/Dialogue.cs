@@ -23,22 +23,22 @@ namespace Unused.Dialogs
 		public AudioSource letterSource;
 		public AudioSource nextLineSource;
 		
-		public float typingSpeed;
+		//public float typingSpeed;
 		private string line;
 		public GameObject continueObject;
 		private Coroutine textCoroutine;
 
 		
-		IEnumerator TextAnimation()
-		{
-			foreach (char letter in line)
-			{
-				textDisplay.text += letter;
-				letterSource.Play();
-				yield return new WaitForSeconds(typingSpeed);
-				letterSource.Stop();
-			}
-		}
+		// IEnumerator TextAnimation()
+		// {
+		// 	foreach (char letter in line)
+		// 	{
+		// 		textDisplay.text += letter;
+		// 		letterSource.Play();
+		// 		yield return new WaitForSeconds(typingSpeed);
+		// 		letterSource.Stop();
+		// 	}
+		// }
 
 		private void Update()
 		{
@@ -70,10 +70,10 @@ namespace Unused.Dialogs
 			}
 
 			this.line = sentence;
-			textDisplay.text = "";
-			if(textCoroutine!=null)
-				StopCoroutine(textCoroutine);
-			textCoroutine = StartCoroutine(TextAnimation());
+			textDisplay.text = ""+line;
+			// if(textCoroutine!=null)
+			// 	StopCoroutine(textCoroutine);
+			//textCoroutine = StartCoroutine(TextAnimation());
 		}
 
 		

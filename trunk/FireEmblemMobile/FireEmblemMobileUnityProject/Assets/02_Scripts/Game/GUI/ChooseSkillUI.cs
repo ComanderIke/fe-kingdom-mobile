@@ -27,7 +27,7 @@ public class ChooseSkillUI : MonoBehaviour, ISkillUIRenderer
 
 
     [SerializeField] private SkillsUI skillsUI;
-
+    [SerializeField] private TextMeshProUGUI chooseButtonText;
     [SerializeField] private UIAnimationSpriteSwapper uiAnimation;
     [SerializeField] private Animator uIIdleAnimation;
     [SerializeField] private ChooseSkillButtonUI chooseSkill1;
@@ -43,6 +43,8 @@ public class ChooseSkillUI : MonoBehaviour, ISkillUIRenderer
     {
         BottomUI.Hide();
         PlayerPhaseUI.StaticHide();
+        
+        chooseButtonText.SetText("</>Choose");
         canvasGroup.gameObject.SetActive(true);
         TweenUtility.FadeIn(canvasGroup);
         this.unit = unit;
@@ -70,6 +72,7 @@ public class ChooseSkillUI : MonoBehaviour, ISkillUIRenderer
         if (selected != null)
             selected.Deselect();
         selected = button;
+        chooseButtonText.SetText("<bounce>Choose");
         button.Select();
     }
 

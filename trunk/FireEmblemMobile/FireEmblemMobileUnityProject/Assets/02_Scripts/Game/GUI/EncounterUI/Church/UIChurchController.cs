@@ -57,6 +57,7 @@ public class UIChurchController : MonoBehaviour
         bool affordable = party.CanAfford((int)slider.value);
         prayGoldAmount.color = affordable ? Color.white : tooExpensiveTextColor;
         prayButton.interactable = affordable;
+        prayButton.GetComponentInChildren<TextMeshProUGUI>().text = prayButton.interactable ? "<bounce>Pray" : "</bounce>Underfunded";
         receiveBlessingButton.gameObject.SetActive(false);
         if (party.CanReceiveBlessing(party.ActiveUnit, gods[selectedGod]))
         {
@@ -76,7 +77,7 @@ public class UIChurchController : MonoBehaviour
             uiGodBlessings.Add(uiGodController);
             cnt++;
         }
-        prayUI.gameObject.SetActive(false);
+        
         removeCurseUI.Hide();
         unitIdleAnimation.Show(party.ActiveUnit);
         characterFace.Show(party.ActiveUnit);
@@ -85,10 +86,12 @@ public class UIChurchController : MonoBehaviour
         {
             blessingButton.interactable = false;
             curseButton.interactable = true;
-            prayUI.gameObject.SetActive(true);
+            if(!prayUI.activeSelf)
+                prayUI.gameObject.SetActive(true);
         }
         else if (state == ChurchUIState.Curse)
         {
+            prayUI.gameObject.SetActive(false);
             blessingButton.interactable = true;
             curseButton.interactable = false;
             removeCurseUI.Show(party.ActiveUnit);

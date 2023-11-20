@@ -19,7 +19,7 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
     public TextMeshProUGUI turnText;
     public TileInfoPanel TileInfoPanel;
     [SerializeField] private UICharacterViewController characterView;
-
+    [SerializeField] private TextMeshProUGUI endTurnButtonText;
     private static PlayerPhaseUI instance;
    // [SerializeField] private UICharacterViewController enemyView;
    private void Start()
@@ -115,7 +115,32 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
     }
 
 
+    private bool buttonAnimated = false;
+    //TODO PERFORMANCE? only check on any unit waited?
+    private void Update()
+    {
+        bool allWaiting = true;
+        foreach (var unit in GridGameManager.Instance.FactionManager.ActiveFaction.FieldedUnits)
+        {
+            if (!unit.TurnStateManager.IsWaiting)
+                allWaiting = false;
+        }
 
+        if (allWaiting)
+        {
+            if(!buttonAnimated)
+                endTurnButtonText.text = "<bounce><shinier>End Turn";
+            buttonAnimated = true;
+        }
+        else
+        {
+           
+            if(buttonAnimated)
+                endTurnButtonText.text = "</bounce></shinier>End Turn";
+            buttonAnimated = false;
+        }
+       
+    }
 
 
     public void ToggleDangerArea()

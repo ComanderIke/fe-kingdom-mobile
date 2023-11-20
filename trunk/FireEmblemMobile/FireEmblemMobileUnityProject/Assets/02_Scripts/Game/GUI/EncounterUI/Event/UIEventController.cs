@@ -90,7 +90,12 @@ public class UIEventController : MonoBehaviour
         headline.SetText(randomEvent.HeadLine);
         layout.DeleteAllChildren();
         Debug.Log("CurrentNode: "+currentNode);
-        description.text = currentNode.Text;
+        if (String.Compare(description.text, "<noparse></noparse>"+currentNode.Text, StringComparison.Ordinal)!=0)
+        {
+            Debug.Log("Update Text");
+            description.text = currentNode.Text;
+        }
+
         ShowTextOptions(currentNode.Choices);
     }
     public void UpdateUI()

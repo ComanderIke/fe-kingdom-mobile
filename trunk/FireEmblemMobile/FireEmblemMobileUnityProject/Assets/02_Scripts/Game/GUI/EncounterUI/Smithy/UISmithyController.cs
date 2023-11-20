@@ -6,6 +6,7 @@ using Game.GameActors.Players;
 using Game.GameActors.Units.Humans;
 using Game.GameResources;
 using Game.WorldMapStuff.Model;
+using LostGrace;
 using Pathfinding;
 using UnityEngine;
 using UnityEngine.UI;
@@ -43,11 +44,12 @@ public class UISmithyController : MonoBehaviour
     private Weapon selectedWeapon;
     private Relic selectedRelic;
     public SmithyUIState state = SmithyUIState.Smithing;
+    [SerializeField] private NPCFaceController npcFaceController;
     private WeaponUpgradeMode upgradeMode;
     public void Show(SmithyEncounterNode node, Party party)
     {
         this.node = node;
-        
+        npcFaceController.Show("Welcome, have any weapons you want to upgrade?");
         canvas.enabled = true;
         this.party = party;
         this.smithy = node.smithy;

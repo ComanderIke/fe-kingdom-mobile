@@ -25,6 +25,7 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
     private Merchant merchant;
     public BuyItemUI buyItemUI;
     private ShopItem selectedItem;
+    [SerializeField] private NPCFaceController npcFaceController;
     private List<GameObject> instantiatedItems= new List<GameObject>();
     public Button switchBuyButton;
     public Button switchSellButton;
@@ -48,6 +49,7 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
         shopItems = new List<UIShopItemController>();
         selectedItem = merchant.shopItems[0];
         buying = true;
+        npcFaceController.Show("Travelers are welcome to check out these wares.");
         party.onActiveUnitChanged -= ActiveUnitChanged;
         party.onActiveUnitChanged += ActiveUnitChanged;
         UpdateUI();

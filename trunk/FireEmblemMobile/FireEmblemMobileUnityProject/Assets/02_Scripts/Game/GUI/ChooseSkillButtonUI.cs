@@ -141,7 +141,7 @@ namespace LostGrace
             
             
             lineContainer.DeleteAllChildrenImmediate();
-            name.text = skill.Name;
+            name.text = selectedBorder.enabled?"<bounce><shine>"+skill.Name:"</>"+skill.Name;
             description.text = skill.Description;
             bool isActiveMixin = skill.IsActive();
             Unit unit = null;
@@ -361,6 +361,7 @@ namespace LostGrace
 
         public void Deselect(bool instant = false)
         {
+            name.SetText("</>"+skill.Name);
             selectedBorder.enabled = false;
             if (instant)
                 gameObject.transform.localScale = new Vector3(1, 1, 1);

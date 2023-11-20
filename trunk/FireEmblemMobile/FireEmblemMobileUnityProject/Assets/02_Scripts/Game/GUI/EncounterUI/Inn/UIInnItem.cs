@@ -27,6 +27,9 @@ namespace Game.GUI.EncounterUI.Inn
             {
                 button.interactable = false;
             }
+
+            if (price.text == "Free")
+                price.text = button.interactable ? "<bounce>Free" : "</bounce>Free";
         } 
         void UpdateUI()
         {

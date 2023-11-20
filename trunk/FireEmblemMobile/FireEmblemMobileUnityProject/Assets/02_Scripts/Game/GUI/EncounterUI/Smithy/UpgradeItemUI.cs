@@ -54,7 +54,7 @@ public class UpgradeItemUI : BuyItemUI
                               dragonScaleCost &&
                               Player.Instance.Party.Convoy.GetItemCount(GameBPData.Instance.GetSmithingStone().Name) >=
                               upgradeStoneCost;
-        buttonText.text = "Upgrade";
+        buttonText.text = buyButton.interactable?"<bounce>Upgrade": "</>Upgrade";
         if (equip is Weapon weapon)
         {
             hitAfter.gameObject.SetActive(upgradeMode== WeaponUpgradeMode.Accuracy);

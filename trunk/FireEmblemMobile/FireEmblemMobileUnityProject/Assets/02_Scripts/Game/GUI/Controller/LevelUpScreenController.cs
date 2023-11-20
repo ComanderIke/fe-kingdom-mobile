@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.GameActors.Units.Numbers;
 using Game.States;
 using TMPro;
 using UnityEngine;
@@ -123,17 +124,23 @@ namespace Game.GUI
             canvas.enabled = true;
            // LeanTween.alphaCanvas(levelUpText.GetComponent<CanvasGroup>(), 1, 0.15f).setEaseOutQuad();
            // LeanTween.scale(levelUpText.gameObject, Vector3.one, 0.15f).setEaseOutQuad();
-            
-                 
-            
+
+
+
+           conLabelText.text = "</>"+Attributes.GetAsLongText(4);
+           strLabelText.text =  "</>"+Attributes.GetAsLongText(0);
+           dexLabelText.text =  "</>"+Attributes.GetAsLongText(1);
+           intLabelText.text =  "</>"+Attributes.GetAsLongText(2);
+           agiLabelText.text =  "</>"+Attributes.GetAsLongText(3);
+           fthAddedText.text =  "</>"+Attributes.GetAsLongText(7);
+           defLabelText.text =  "</>"+Attributes.GetAsLongText(6);
            
-            
            if (statsIncreases[4] > 0)
            {
                actions.Add(CreateStatPopUpActionAnimationIn(conLabelText, conText, "" + (stats[4] +statsIncreases[4]), conAddedText, statsIncreases[4]));
                actions.Add(CreateStatPopUpActionAnimationOut(conText));
            }
-            if (statsIncreases[0] > 0) {
+           if (statsIncreases[0] > 0) {
                 actions.Add(CreateStatPopUpActionAnimationIn(strLabelText, strText, "" + (stats[0] + statsIncreases[0]), strAddedText, statsIncreases[0]));
                 actions.Add(CreateStatPopUpActionAnimationOut(strText));
             }
@@ -244,14 +251,15 @@ namespace Game.GUI
                 LeanTween.scale(textObject.gameObject, textObject.transform.localScale * 1.0f, 0.20f).setEaseOutQuad().setDelay(delaybetweenPopups)
                     .setOnComplete(() =>
                     {
-                        textObject.text = text;
+                        textObject.text = "<bounce>"+text;
                         textObject.colorGradientPreset = textIncreasedColor;
+                        label.text = "<bounce>"+label.text;
                         label.colorGradientPreset = textIncreasedColor;
                         if (actionIndex < actions.Count)
                             actions[actionIndex].Invoke();
                         actionIndex++;
                     });
-                textAddedObject.text = "+"+statIncrease;
+                textAddedObject.text = "<bounce>+"+statIncrease;
                 LeanTween.alphaCanvas(textAddedObject.GetComponent<CanvasGroup>(), 1, 0.20f).setEaseOutQuad().setDelay(delaybetweenPopups);
                 LeanTween.scale(textAddedObject.gameObject, Vector3.one, 0.20f).setEaseOutQuad().setDelay(delaybetweenPopups);
             };

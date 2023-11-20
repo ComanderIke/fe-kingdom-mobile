@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Febucci.UI;
 using Game.WorldMapStuff.Model;
 using TMPro;
 using UnityEngine;
@@ -28,6 +29,8 @@ namespace LostGrace
         [SerializeField] private Image handle;
         [SerializeField] private TextMeshProUGUI valueChangedText;
         [SerializeField] private ParticleSystem fillParticles;
+        [SerializeField]private string GoodAnimationTags;
+        [SerializeField]private string EvilAnimationTags;
 
         private Morality morality;
         public void Show(Morality morality)
@@ -59,6 +62,9 @@ namespace LostGrace
             Debug.Log("Morality: "+morality+" Added: "+addedMorality);
             valueChangedText.text = addedMorality>0?"+"+addedMorality:""+addedMorality;
             valueChangedText.gameObject.SetActive(true);
+            Debug.Log("UPDATE TEXT");
+             evilText.SetText(addedMorality<0?EvilAnimationTags+"Evil":"Evil");
+             goodText.SetText(addedMorality>0?GoodAnimationTags+"Good":"Good");
             MonoUtility.DelayFunction(()=>valueChangedText.gameObject.SetActive(false), 2.0f);
             morality = morality / 100f;
             float tweenDuration = Math.Max(0.5f,4.0f * Math.Abs(morality));
@@ -67,7 +73,18 @@ namespace LostGrace
                 val =>
                 {
                     moralitySlider.SetValueWithoutNotify(val);
-                }).setOnComplete(fillParticles.Stop);
+                }).setOnComplete(()=>
+            {
+                Debug.Log("RESET TEXT");
+              
+               
+                fillParticles.Stop();
+            });
+            MonoUtility.DelayFunction(() =>
+            {
+                 evilText.SetText("<noparse>Evil");
+                goodText.SetText("<noparse>Good");
+            }, tweenDuration+1);
          
             if (morality > 0)
             {
@@ -81,10 +98,22 @@ namespace LostGrace
                 LeanTween.alphaCanvas(backgroundEvil, 0, tweenDuration) .setEaseInOutQuad();
                 LeanTween.alphaCanvas(backgroundNeutral, 1 - morality, tweenDuration) .setEaseInOutQuad();
                 LeanTween.alphaCanvas(backgroundGood, morality, tweenDuration) .setEaseInOutQuad();
-                LeanTween.color(goodText.transform as RectTransform, Color.Lerp(neutralColor, goodColor, morality), tweenDuration)
-                    .setEaseInOutQuad();
-                LeanTween.color(evilText.transform as RectTransform, Color.Lerp(neutralColor, grayColor, morality), tweenDuration)
-                    .setEaseInOutQuad();
+                var startColor = goodText.color;
+                LeanTween.value(goodText.gameObject, startColor, Color.Lerp(neutralColor, goodColor, morality),
+                    tweenDuration).setOnUpdate((Color val) =>
+                {
+                    goodText.color = val;
+                }).setEaseInOutQuad();
+                // LeanTween.color(goodText.transform as RectTransform, Color.Lerp(neutralColor, goodColor, morality), tweenDuration)
+                //     .setEaseInOutQuad();
+                // LeanTween.color(evilText.transform as RectTransform, Color.Lerp(neutralColor, grayColor, morality), tweenDuration)
+                //     .setEaseInOutQuad();
+                startColor = evilText.color;
+                LeanTween.value(evilText.gameObject, startColor, Color.Lerp(neutralColor, grayColor, morality),
+                    tweenDuration).setOnUpdate((Color val) =>
+                {
+                    evilText.color = val;
+                }).setEaseInOutQuad();
                 LeanTween.color(barBackground.transform as RectTransform, Color.Lerp(neutralColor, goodColorBarBackground, morality), tweenDuration)
                     .setEaseInOutQuad();
                 LeanTween.color(handle.transform as RectTransform, Color.Lerp(neutralColor, goodColorHandle, morality), tweenDuration)
@@ -102,10 +131,22 @@ namespace LostGrace
                 LeanTween.alphaCanvas(backgroundEvil, morality*-1, tweenDuration) .setEaseInOutQuad();
                 LeanTween.alphaCanvas(backgroundNeutral, morality+1, tweenDuration) .setEaseInOutQuad();
                 LeanTween.alphaCanvas(backgroundGood, 0, tweenDuration) .setEaseInOutQuad();
-                LeanTween.color(goodText.transform as RectTransform, Color.Lerp(grayColor, neutralColor, morality + 1), tweenDuration)
-                    .setEaseInOutQuad();
-                LeanTween.color(evilText.transform as RectTransform, Color.Lerp(evilColor, neutralColor, morality+1), tweenDuration)
-                    .setEaseInOutQuad();
+                var startColor = goodText.color;
+                LeanTween.value(goodText.gameObject, startColor, Color.Lerp(grayColor, neutralColor, morality + 1),
+                    tweenDuration).setOnUpdate((Color val) =>
+                {
+                    goodText.color = val;
+                }).setEaseInOutQuad();
+                // LeanTween.color(goodText.transform as RectTransform, Color.Lerp(grayColor, neutralColor, morality + 1), tweenDuration)
+                //     .setEaseInOutQuad();
+                // LeanTween.color(evilText.transform as RectTransform, Color.Lerp(evilColor, neutralColor, morality+1), tweenDuration)
+                //     .setEaseInOutQuad();
+                startColor = evilText.color;
+                LeanTween.value(evilText.gameObject, startColor, Color.Lerp(evilColor, neutralColor, morality+1),
+                    tweenDuration).setOnUpdate((Color val) =>
+                {
+                    evilText.color = val;
+                }).setEaseInOutQuad();
                 LeanTween.color(barBackground.transform as RectTransform, Color.Lerp(evilColorBarBackground, neutralColor, morality+1), tweenDuration)
                     .setEaseInOutQuad();
                 LeanTween.color(handle.transform as RectTransform, Color.Lerp(evilColorHandle, neutralColor, morality+1), tweenDuration)

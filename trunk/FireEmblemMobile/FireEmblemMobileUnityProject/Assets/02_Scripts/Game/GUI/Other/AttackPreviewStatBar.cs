@@ -60,7 +60,7 @@ namespace Game.GUI
              beforeHpBar.gameObject.SetActive(afterBattleHp<=currentHp);
              healingHpBar.gameObject.SetActive(afterBattleHp>currentHp);
              if(valueAfterText!=null)
-                valueAfterText.text = "" + afterBattleHp;
+                valueAfterText.text = "<incr>" + afterBattleHp;
              if(hpText!=null)
                  hpText.text =""+ currentHp;
              if(hpIndicator!=null)

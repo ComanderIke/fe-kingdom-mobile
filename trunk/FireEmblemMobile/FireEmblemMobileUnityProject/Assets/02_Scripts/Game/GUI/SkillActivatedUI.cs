@@ -20,7 +20,7 @@ namespace LostGrace
         [SerializeField] private GameObject combatSkillPrefab;
         public void SetSkill(Unit activater, Skill skill)
         {
-            this.nameText.text = skill.Name;
+            this.nameText.text = "<shinier><bounce>"+skill.Name;
            // icon.sprite = skill.GetIcon();
             InstantiateSkill(activater, skill);
             MonoUtility.InvokeNextFrame(()=>skillActivationFeedback.PlayFeedbacks());

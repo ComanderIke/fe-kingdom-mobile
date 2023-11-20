@@ -8008,6 +8008,7 @@ MonoBehaviour:
   turnText: {fileID: 1167775487}
   TileInfoPanel: {fileID: 8702662}
   characterView: {fileID: 568106065}
+  endTurnButtonText: {fileID: 683259625}
 --- !u!114 &271894344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11945,6 +11946,12 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &458598809 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8705720168446585180, guid: 35c0c31c75bb9a343843d47645518f6c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1281140783}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &459940804
 GameObject:
   m_ObjectHideFlags: 0
@@ -17168,6 +17175,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 678436823}
   m_CullTransparentMesh: 1
+--- !u!1 &683259623 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 508037892728896388, guid: b294b49d745bfdb40b448f29352bb17a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1109790836}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &683259625 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 508037892728896390, guid: b294b49d745bfdb40b448f29352bb17a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1109790836}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 683259623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &683259627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 683259623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8ace8ced0e81c847968cdca0aeda757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  typewriterStartsAutomatically: 0
+  animationLoop: 0
+  timeScale: 0
+  _text: End Turn
+  useDynamicScaling: 1
+  referenceFontSize: 10
+  isResettingTimeOnNewText: 1
+  useDefaultDatabases: 1
+  databaseBehaviors: {fileID: 11400000, guid: 0c54bbaf701437a40a4696ae482ec11c, type: 2}
+  databaseAppearances: {fileID: 11400000, guid: 4225a8ad4d2aa174f90e81fafc6cc5cf,
+    type: 2}
+  databaseActions: {fileID: 11400000, guid: d25fd51e13c026a49bae38d5c716428d, type: 2}
+  defaultAppearancesTags: []
+  defaultDisappearancesTags:
+  - fade
+  defaultBehaviorsTags: []
+  defaultTagsMode: 0
 --- !u!1 &686519550
 GameObject:
   m_ObjectHideFlags: 0
@@ -30513,7 +30567,7 @@ PrefabInstance:
     - target: {fileID: 8705720168446585178, guid: 35c0c31c75bb9a343843d47645518f6c,
         type: 3}
       propertyPath: m_text
-      value: Battle
+      value: <shine><bounce>Battle
       objectReference: {fileID: 0}
     - target: {fileID: 8705720168446585178, guid: 35c0c31c75bb9a343843d47645518f6c,
         type: 3}
@@ -40957,6 +41011,35 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1281140783}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1663332270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 458598809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8ace8ced0e81c847968cdca0aeda757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  typewriterStartsAutomatically: 0
+  animationLoop: 0
+  timeScale: 0
+  _text: <bounce><shine>Battle
+  useDynamicScaling: 1
+  referenceFontSize: 10
+  isResettingTimeOnNewText: 1
+  useDefaultDatabases: 1
+  databaseBehaviors: {fileID: 11400000, guid: 0c54bbaf701437a40a4696ae482ec11c, type: 2}
+  databaseAppearances: {fileID: 11400000, guid: 4225a8ad4d2aa174f90e81fafc6cc5cf,
+    type: 2}
+  databaseActions: {fileID: 11400000, guid: d25fd51e13c026a49bae38d5c716428d, type: 2}
+  defaultAppearancesTags: []
+  defaultDisappearancesTags:
+  - fade
+  defaultBehaviorsTags: []
+  defaultTagsMode: 0
 --- !u!1 &1666696586
 GameObject:
   m_ObjectHideFlags: 0

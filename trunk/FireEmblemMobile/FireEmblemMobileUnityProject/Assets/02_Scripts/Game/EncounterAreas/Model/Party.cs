@@ -142,7 +142,9 @@ namespace Game.WorldMapStuff.Model
         {
             get
             {
-                return members[ActiveUnitIndex];
+                if(activeUnitIndex<members.Count)
+                    return members[ActiveUnitIndex];
+                return null;
             }
         }
 

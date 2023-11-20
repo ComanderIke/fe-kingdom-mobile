@@ -16,6 +16,7 @@ namespace Game.GUI.EncounterUI.Inn
         public Party party;
         // public TextMeshProUGUI personName;
         //public TextMeshProUGUI talkText;
+        [SerializeField] private NPCFaceController npcFaceController;
         
         [SerializeField] private List<UICharacterFace> characterFaces;
         [SerializeField] private UIUnitIdleAnimation unitIdleAnimation;
@@ -69,6 +70,7 @@ namespace Game.GUI.EncounterUI.Inn
         public void Show(InnEncounterNode node, Party party)
         {
             Debug.Log("Showing inn ui screen");
+            npcFaceController.Show("Welcome how about a nice drink, some grilled meat and a warm bed after?");
             canvas.enabled = true;
             this.node = node;
             this.party = party;
