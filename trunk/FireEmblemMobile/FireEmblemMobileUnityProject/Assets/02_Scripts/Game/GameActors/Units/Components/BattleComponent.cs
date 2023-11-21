@@ -201,6 +201,19 @@ namespace Game.GameActors.Units
                     listener.Deactivate((Unit)owner, (Unit)opponent);
                 }
             }
+            
+        }
+
+        public void RealBattleEnded(IBattleActor opponent)
+        {
+            if (battleEvents.ContainsKey(BattleEvent.AfterCombat))
+            {
+                //Debug.Log("OWNER: "+owner);
+                foreach (var listener in battleEvents[BattleEvent.AfterCombat])
+                {
+                    listener.Activate((Unit)owner, (Unit)opponent);
+                }
+            }
         }
     }
     public interface IOnAttackEffect

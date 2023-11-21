@@ -100,7 +100,7 @@ namespace Game.GameInput
             {
                 downClicked = true;
                 holdDuration = 0;
-                Debug.Log("ON MOUSE DOWN");
+                // Debug.Log("ON MOUSE DOWN");
                 touchInputReceiver?.OnMouseDown(this);
             }
         }
@@ -109,7 +109,7 @@ namespace Game.GameInput
             
             if (!UIClickChecker.CheckUIObjectsInPosition())
             {
-                Debug.Log("ON MOUSE UP");
+                // Debug.Log("ON MOUSE UP");
                 touchInputReceiver?.OnMouseUp(this);
             }
         }

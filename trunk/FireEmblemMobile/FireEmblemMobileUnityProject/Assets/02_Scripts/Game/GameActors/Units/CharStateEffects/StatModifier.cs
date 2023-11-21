@@ -13,17 +13,43 @@ namespace Game.GameActors.Units.CharStateEffects
         public Attributes[] BonusAttributes;
         public CombatStats[] BonusStats;
 
+        public override void Apply(Unit caster, Unit target, int skilllevel)
+        {
+            base.Apply(caster, target, skilllevel);
+            if(level < BonusAttributes.Length)
+                target.Stats.BonusAttributesFromEffects += BonusAttributes[level]; 
+            if(level < BonusStats.Length)
+                target.Stats.BonusStatsFromEffects += BonusStats[level];
+        }
+        public override void Unapply(Unit target)
+        {
+            if(level < BonusAttributes.Length)
+                target.Stats.BonusAttributesFromEffects -= BonusAttributes[level]; 
+            if(level < BonusStats.Length)
+                target.Stats.BonusStatsFromEffects -= BonusStats[level];
+            base.Unapply(target);
+            
+        }
+
         public bool HasPositives()
         {
-            bool positiveAttributes = BonusAttributes[level].AsArray().Any(i => i > 0);
-            bool positiveStats = BonusStats[level].AsArray().Any(i => i > 0);
+            bool positiveAttributes = false;
+            bool positiveStats = false;
+            if(level < BonusAttributes.Length)
+                positiveAttributes = BonusAttributes[level].AsArray().Any(i => i > 0);
+            if(level < BonusStats.Length)
+                positiveStats = BonusStats[level].AsArray().Any(i => i > 0);
             return positiveAttributes||positiveStats;
         }
 
         public bool HasNegatives()
         {
-            bool negativeAttributes = BonusAttributes[level].AsArray().Any(i => i < 0);
-            bool negativeStats = BonusStats[level].AsArray().Any(i => i < 0);
+            bool negativeAttributes = false;
+            bool negativeStats = false;
+            if(level < BonusAttributes.Length)
+                negativeAttributes = BonusAttributes[level].AsArray().Any(i => i < 0);
+            if(level < BonusStats.Length)
+                negativeStats = BonusStats[level].AsArray().Any(i => i < 0);
             return negativeAttributes||negativeStats;
         }
 

@@ -73,7 +73,7 @@ namespace Game.Mechanics
         public override void Enter()
         {
 
-            Debug.Log("PlayerPhaseEnter");
+            // Debug.Log("PlayerPhaseEnter");
             stateMachine = new StateMachine<PPStateTrigger>(mainState);
            stateMachine.Init();
 

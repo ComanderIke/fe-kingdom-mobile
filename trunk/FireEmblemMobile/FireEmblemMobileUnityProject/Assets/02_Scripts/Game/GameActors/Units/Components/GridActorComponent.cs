@@ -26,7 +26,7 @@ namespace Game.GameActors.Units
             base.ResetPosition();
             if(gridActor.IsAlive())
                 gridActor.GameTransformManager.SetPosition(GridPosition.X, GridPosition.Y);
-            Debug.Log("RESET MOVEDTILECOUNT");
+            // Debug.Log("RESET MOVEDTILECOUNT");
             MovedTileCount = 0;
             AnyUnitChangedPosition?.Invoke(gridActor);
             AnyUnitChangedPositionAfter?.Invoke(gridActor);
@@ -57,7 +57,7 @@ namespace Game.GameActors.Units
             base.SetPosition(tile, moveTransform);
             if (moveTransform)
             {
-                Debug.Log("also Move Transform to: "+tile.X+" "+tile.Y);
+                // Debug.Log("also Move Transform to: "+tile.X+" "+tile.Y);
                 gridActor.GameTransformManager.SetPosition(tile.X, tile.Y);
             }
 

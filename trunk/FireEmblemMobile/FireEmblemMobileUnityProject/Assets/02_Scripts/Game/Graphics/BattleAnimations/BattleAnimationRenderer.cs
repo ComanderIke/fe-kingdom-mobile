@@ -42,7 +42,7 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
         gameObject.SetActive(true);
         this.battleSimulation = battleSimulation;
         canvas.Show();
-        Debug.Log("Test: "+attackingActor+" "+defendingActor);
+        // Debug.Log("Test: "+attackingActor+" "+defendingActor);
         OnShow?.Invoke(battleSimulation,battlePreview, attackingActor, defendingActor);
         BattleUI.onSurrender -= Surrender;
         BattleUI.onSurrender += Surrender;
@@ -97,8 +97,8 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     {
         canvas.Hide();
         //light.SetActive(false);
-        Debug.Log("Volume: "+volume.weight);
-        Debug.Log("GameObject: "+gameObject);
+        // Debug.Log("Volume: "+volume.weight);
+        // Debug.Log("GameObject: "+gameObject);
         LeanTween.value(volume.weight, 0, 0.4f).setEaseInQuad().setOnUpdate((value) => { volume.weight = value; })
             .setOnComplete(() => gameObject.SetActive(false));
     }

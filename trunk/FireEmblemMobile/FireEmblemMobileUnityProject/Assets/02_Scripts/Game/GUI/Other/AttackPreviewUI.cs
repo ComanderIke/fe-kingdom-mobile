@@ -57,7 +57,7 @@ namespace Game.GUI
         }
         public override void Show(BattlePreview battlePreview, Unit attacker, string attackLabel,Sprite attackableObjectSprite)
         {
-            Debug.Log("ATTACKPREVIEWLABEL: " + attackLabel);
+            // Debug.Log("ATTACKPREVIEWLABEL: " + attackLabel);
             this.attackLabel = attackLabel;
             attackerSprite = attacker.visuals.CharacterSpriteSet.FaceSprite;
             defenderSprite = attackableObjectSprite;

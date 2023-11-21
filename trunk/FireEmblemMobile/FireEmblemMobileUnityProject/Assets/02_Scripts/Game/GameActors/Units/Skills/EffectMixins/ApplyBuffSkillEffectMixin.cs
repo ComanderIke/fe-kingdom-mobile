@@ -20,26 +20,30 @@ namespace Game.GameActors.Units.Skills
 
         public override void Activate(Unit target,Unit caster, int level)
         {
+            Debug.Log("ACTIVATE APPLY BUFF EFFECT MIXIN");
             if (effect != null)
                 GameObject.Instantiate(effect, target.GameTransformManager.GetCenterPosition(), Quaternion.identity);
             if (appliedBuff != null)
                 target.StatusEffectManager.AddBuff(Instantiate(appliedBuff), caster, level);
             if (appliedDebuff != null)
                 target.StatusEffectManager.AddDebuff(Instantiate(appliedDebuff));
-            if (AppliedStatModifier!= null)
-                target.StatusEffectManager.AddStatModifier(Instantiate(AppliedStatModifier));
+            if (AppliedStatModifier != null)
+            {
+                Debug.Log("ADD STAT MODIFIER");
+                target.StatusEffectManager.AddStatModifier(Instantiate(AppliedStatModifier), level);
+            }
         }
 
         public override void Deactivate(Unit target, Unit caster, int skillLevel)
         {
-            if (target == null)
-                return;
-            if (appliedBuff != null)
-                target.StatusEffectManager.RemoveBuff(Instantiate(appliedBuff));
-            if (appliedDebuff != null)
-                target.StatusEffectManager.RemoveDebuff(Instantiate(appliedDebuff));
-            if (AppliedStatModifier!= null)
-                target.StatusEffectManager.RemoveStatModifier(Instantiate(AppliedStatModifier));
+            // if (target == null)
+            //     return;
+            // if (appliedBuff != null)
+            //     target.StatusEffectManager.RemoveBuff(Instantiate(appliedBuff));
+            // if (appliedDebuff != null)
+            //     target.StatusEffectManager.RemoveDebuff(Instantiate(appliedDebuff));
+            // if (AppliedStatModifier!= null)
+            //     target.StatusEffectManager.RemoveStatModifier(Instantiate(AppliedStatModifier));
         }
 
         public override List<EffectDescription> GetEffectDescription(Unit caster,int level)

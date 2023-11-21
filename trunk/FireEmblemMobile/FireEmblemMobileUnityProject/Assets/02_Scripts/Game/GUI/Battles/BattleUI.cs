@@ -44,7 +44,7 @@ public class BattleUI : MonoBehaviour
 
     private void Show(BattleSimulation battleSimulation, BattlePreview battlePreview, IBattleActor attacker, IAttackableTarget defender)
     {
-        Debug.Log("TEST2"+attacker+" "+defender);
+        // Debug.Log("TEST2"+attacker+" "+defender);
         Show(battleSimulation, battlePreview, (Unit)attacker, (Unit)defender);
     }
 
@@ -83,12 +83,12 @@ public class BattleUI : MonoBehaviour
         SurrenderButton.gameObject.SetActive(battleSimulation.combatRounds.Count > 1);
 
        
-        Debug.Log("PLAYER UNIT IS ATTACKER: "+playerUnitIsAttacker);
+        // Debug.Log("PLAYER UNIT IS ATTACKER: "+playerUnitIsAttacker);
         if (playerUnitIsAttacker)
         {
             currentHpLeft = battlePreview.AttackerStats.CurrentHp;
             currentHpRight = battlePreview.DefenderStats.CurrentHp;
-            Debug.Log("Right Defender Can Counter: "+battlePreview.DefenderStats.CanCounter);
+            // Debug.Log("Right Defender Can Counter: "+battlePreview.DefenderStats.CanCounter);
             left.ShowInBattleContext(battlePreview.Attacker.Visuals.CharacterSpriteSet.FaceSprite, battlePreview.AttackerStats.TotalDamage,
                 battlePreview.AttackerStats.Hit, battlePreview.AttackerStats.Crit,
                 battlePreview.AttackerStats.MaxHp, battlePreview.AttackerStats.CurrentHp,
@@ -102,7 +102,7 @@ public class BattleUI : MonoBehaviour
         {
             currentHpLeft = battlePreview.DefenderStats.CurrentHp;
             currentHpRight = battlePreview.AttackerStats.CurrentHp;
-            Debug.Log("Left Defender Can Counter: "+battlePreview.DefenderStats.CanCounter);
+            // Debug.Log("Left Defender Can Counter: "+battlePreview.DefenderStats.CanCounter);
             left.ShowInBattleContext(battlePreview.Defender.Visuals.CharacterSpriteSet.FaceSprite, battlePreview.DefenderStats.TotalDamage,
                 battlePreview.DefenderStats.Hit, battlePreview.DefenderStats.Crit,
                 battlePreview.DefenderStats.MaxHp, battlePreview.DefenderStats.CurrentHp,

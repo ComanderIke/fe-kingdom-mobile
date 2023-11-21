@@ -77,7 +77,7 @@ namespace Game.Mechanics
             {
                 unit.visuals.unitRenderer.HideTemporaryVisuals();
             }
-            Debug.Log("Exit MAIN PLAYER PHASE STATE");
+            // Debug.Log("Exit MAIN PLAYER PHASE STATE");
             playerPhaseUI.Hide();
             playerPhaseUI.HideTileInfo();
         }

@@ -119,7 +119,7 @@ namespace Game.Mechanics
         }
         public void Deactivate()
         {
-            Debug.Log("UnitProgressSystem Deactivate");
+            // Debug.Log("UnitProgressSystem Deactivate");
             // foreach (var unit in units)
             // {
             //     unit.OnLevelUp -= LevelUp;
@@ -130,7 +130,7 @@ namespace Game.Mechanics
 
         public void Activate()
         {
-            Debug.Log("UnitProgressSystem activate");
+            // Debug.Log("UnitProgressSystem activate");
             Unit.OnExpGained += Expgained;
             Unit.OnLevelUp += OnLevelUp;
             // foreach (var unit in units)

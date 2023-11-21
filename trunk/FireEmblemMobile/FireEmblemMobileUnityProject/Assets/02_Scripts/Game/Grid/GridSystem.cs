@@ -360,13 +360,13 @@ namespace Game.Map
                 {
                     if(deleteOldGridObject|| (Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y].GridObject!=null &&Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y].GridObject.Equals(unit))){
 
-                        Debug.Log("Delete Object at: "+unit.GridComponent.GridPosition.X +" "+ unit.GridComponent.GridPosition.Y);
+                        // Debug.Log("Delete Object at: "+unit.GridComponent.GridPosition.X +" "+ unit.GridComponent.GridPosition.Y);
                         Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y].GridObject = null;
                     }
                 }
 
                 var u = (Unit)unit;
-                Debug.Log("Set Unit Position: "+u.Name+" "+x+" "+y+" "+unit.GridComponent.GridPosition.AsVector()+" "+deleteOldGridObject+" "+moveGameObject);
+                // Debug.Log("Set Unit Position: "+u.Name+" "+x+" "+y+" "+unit.GridComponent.GridPosition.AsVector()+" "+deleteOldGridObject+" "+moveGameObject);
                 
                 unit.SetGridPosition(Tiles[x,y], moveGameObject);
                 Tiles[x, y].GridObject = unit;

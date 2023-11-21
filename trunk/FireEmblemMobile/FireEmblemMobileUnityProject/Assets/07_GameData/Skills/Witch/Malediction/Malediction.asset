@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 42cf566ca2edd3849b9a53faf87d4b3e, type: 3}
-  m_Name: DebuffQueen
+  m_Name: Malediction
   m_EditorClassIdentifier: 
   Icon: {fileID: 21300000, guid: e25eb4ade7fa30a4e8ddddce65396bd3, type: 3}
-  Description: Hitting an enemy with an attack or spell will apply a debuff.
+  Description: Hitting an enemy with an attack or spell will apply a random stat
+    debuff.
   Name: Debuff Queen
   Tier: 0
-  passiveMixins: []
+  passiveMixins:
+  - {fileID: 11400000, guid: 1f7d6c853d3d13c46ba118173467b467, type: 2}
   combatSkillMixin: {fileID: 0}
   activeMixins: []
   maxLevel: 5

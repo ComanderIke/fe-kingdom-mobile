@@ -53,7 +53,7 @@ namespace LostGrace
             blessingEffect.gameObject.SetActive(blessed);
             if (combatSkillActive != null)
             {
-                Debug.Log("combatSkillActive MISSING " + skill.Name+" "+gameObject.name+" "+combatSkillSelected);
+                // Debug.Log("combatSkillActive MISSING " + skill.Name+" "+gameObject.name+" "+combatSkillSelected);
                 combatSkillActive.enabled=combatSkillSelected;
             }
 

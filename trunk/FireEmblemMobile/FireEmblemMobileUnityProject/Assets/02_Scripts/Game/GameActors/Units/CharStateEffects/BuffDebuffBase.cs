@@ -26,7 +26,12 @@ namespace Game.GameActors.Units.CharStateEffects
 
         public virtual void Unapply(Unit target)
         {
-            
+            level = 0;
+        }
+
+        public int GetDuration()
+        {
+            return duration[level];
         }
     }
 }

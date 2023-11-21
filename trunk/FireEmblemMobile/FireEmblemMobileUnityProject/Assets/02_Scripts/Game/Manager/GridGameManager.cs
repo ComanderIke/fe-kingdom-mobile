@@ -203,7 +203,7 @@ namespace Game.Manager
 
         private void Deactivate()
         {
-            Debug.Log("DEACTIVATE SYSTEMS: "+Systems.Count);
+            // Debug.Log("DEACTIVATE SYSTEMS: "+Systems.Count);
             foreach (var system in Systems)
             {
                 system.Deactivate();

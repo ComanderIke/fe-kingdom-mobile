@@ -130,7 +130,7 @@ namespace Game.GameInput
                 }
             }
 
-            Debug.Log("Updated Prev path: "+previousMovementPath.Count+" "+MovementPath.Count);
+            // Debug.Log("Updated Prev path: "+previousMovementPath.Count+" "+MovementPath.Count);
             movePathVisual.DrawMovementPath(MovementPath, startX, startY);
            // OnMovementPathUpdated?.Invoke(MovementPath, startX, startY);
         }

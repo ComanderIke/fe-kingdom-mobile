@@ -102,7 +102,7 @@ namespace Game.GUI
         }
         public void UpdateWithAnimatedTextOnly(int expgained)
         {
-            Debug.Log("Show With Animatedtext: CurrentExp: "+currentExp+" Gained: "+addedExp);
+            // Debug.Log("Show With Animatedtext: CurrentExp: "+currentExp+" Gained: "+addedExp);
             
             this.addedExp += expgained;
             this.tmpAddedExp += expgained;
@@ -112,12 +112,12 @@ namespace Game.GUI
 
         public void UpdatePreview(int expVal)
         {
-            Debug.Log("Update Preview");
+            // Debug.Log("Update Preview");
             preview.fillAmount = expVal / 100f;
         }
         public void UpdateInstant(int expVal)
         {
-            Debug.Log("UpdateInstant: "+expVal);
+            // Debug.Log("UpdateInstant: "+expVal);
             if (animate)
             {
                 return;
@@ -147,7 +147,7 @@ namespace Game.GUI
 
         public void Show(Sprite sprite, int currentExp)
         {
-            Debug.Log("Show Normal");
+            // Debug.Log("Show Normal");
             if(hideFeedbacks!=null)
                 hideFeedbacks.StopFeedbacks();
             if(showFeedbacks!=null)

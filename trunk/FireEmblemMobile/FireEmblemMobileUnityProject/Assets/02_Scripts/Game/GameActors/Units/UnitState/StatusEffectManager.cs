@@ -75,6 +75,7 @@ namespace Game.GameActors.Units
         }
 
 
+        
         public void UpdateTurn()
         {
             var debuffEnd = Debuffs.Where(d => d.TakeEffect(unit)).ToList();
@@ -86,16 +87,21 @@ namespace Game.GameActors.Units
             foreach (var s in statModifierEnd) RemoveStatModifier(s);
         }
 
-        public void AddStatModifier(StatModifier appliedStatModifier)
+        public void AddStatModifier(StatModifier appliedStatModifier, int level )
         {
-            
-           StatModifiers.Add(appliedStatModifier);
-           OnStatusEffectAdded?.Invoke(unit, appliedStatModifier);
+            appliedStatModifier.Apply(unit,unit,level);
+           
+            StatModifiers.Add(appliedStatModifier);
+            Debug.Log("ADD STATUS MODIFIER: "+unit.name+" "+appliedStatModifier.name+" "+level);
+            OnStatusEffectAdded?.Invoke(unit, appliedStatModifier);
         }
-        public void RemoveStatModifier(StatModifier debuff)
+        //Stay Private stat modifers should either be removed by duration end or all at oncewill be removed by cleansing skill
+        private void RemoveStatModifier(StatModifier appliedStatModifier)
         {
-            StatModifiers.Remove(debuff);
-            OnStatusEffectRemoved?.Invoke(unit, debuff);
+            Debug.Log("TODO how to check if clone is equal? add id to stat modifiers?");
+            StatModifiers.First(a=>a.Equals(appliedStatModifier)).Unapply(unit);
+            StatModifiers.Remove(appliedStatModifier);
+            OnStatusEffectRemoved?.Invoke(unit, appliedStatModifier);
         }
     }
 }

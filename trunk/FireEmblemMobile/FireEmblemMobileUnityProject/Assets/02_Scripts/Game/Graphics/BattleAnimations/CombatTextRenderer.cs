@@ -27,7 +27,7 @@ public class CombatTextRenderer
         // {
         //     Debug.Log(impactPos.transform.position);
         // }
-        Debug.Log("create Damage Number: "+character.GameObject+" "+character.GetImpactPosition()+" InstanceId:"+character.GetSpriteController().GetInstanceID());
+        // Debug.Log("create Damage Number: "+character.GameObject+" "+character.GetImpactPosition()+" InstanceId:"+character.GetSpriteController().GetInstanceID());
         var pos = character.GetImpactPosition();
         if (dmg == 0)
             style = TextStyle.NoDamage;

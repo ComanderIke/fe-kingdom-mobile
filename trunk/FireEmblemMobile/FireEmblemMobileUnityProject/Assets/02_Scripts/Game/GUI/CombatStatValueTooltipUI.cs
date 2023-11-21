@@ -29,7 +29,7 @@ namespace LostGrace
         public void Show(Unit unit, CombatStats.CombatStatType statType, Vector3 position)
         {
             instantiatedObjects ??= new List<GameObject>();
-            Debug.Log("SHOW TOOLTIP FOR : "+statType);
+            // Debug.Log("SHOW TOOLTIP FOR : "+statType);
             for (int i = instantiatedObjects.Count - 1; i >= 0; i--)
             {
                 Destroy(instantiatedObjects[i]);

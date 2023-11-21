@@ -41,7 +41,7 @@ namespace Game.GUI
 //            Debug.Log("UpdateValues");
             this.currentHp = currentHp;
             width = GetComponent<RectTransform>().rect.width;
-            Debug.Log(maxHp+" "+currentHp+" "+afterBattleHp+ " "+width+" "+width*((currentHp * 1.0f) / maxHp)+" "+Math.Min(width,width*((currentHp * 1.0f) / maxHp)));
+            // Debug.Log(maxHp+" "+currentHp+" "+afterBattleHp+ " "+width+" "+width*((currentHp * 1.0f) / maxHp)+" "+Math.Min(width,width*((currentHp * 1.0f) / maxHp)));
             currentHpBar.rectTransform.sizeDelta = new Vector2(Math.Min(width, width*((afterBattleHp * 1.0f)/maxHp)),currentHpBar.rectTransform.sizeDelta.y);
             beforeHpBar.gameObject.SetActive(true);
             beforeHpBar.rectTransform.sizeDelta = new Vector2(Math.Min(width,width*((currentHp * 1.0f) / maxHp)),beforeHpBar.rectTransform.sizeDelta.y);
@@ -83,7 +83,7 @@ namespace Game.GUI
            // currentHpBar.rectTransform.sizeDelta = new Vector2(width*((currentHp * 1.0f)/maxHp),currentHpBar.rectTransform.sizeDelta.y);
            if(valueAfterText!=null)
                 valueAfterText.gameObject.SetActive(false);
-           Debug.Log(maxHp+" "+currentHp+" "+afterHp+ " "+width+" "+width*((currentHp * 1.0f) / maxHp)+" "+Math.Min(width,width*((currentHp * 1.0f) / maxHp)));
+           // Debug.Log(maxHp+" "+currentHp+" "+afterHp+ " "+width+" "+width*((currentHp * 1.0f) / maxHp)+" "+Math.Min(width,width*((currentHp * 1.0f) / maxHp)));
 
            healingHpBar.rectTransform.sizeDelta = new Vector2(Math.Min(width,width*((afterHp * 1.0f) / maxHp)),beforeHpBar.rectTransform.sizeDelta.y);
            currentHpBar.rectTransform.sizeDelta = new Vector2(Math.Min(width,width*((currentHp * 1.0f)/maxHp)),currentHpBar.rectTransform.sizeDelta.y);
@@ -93,7 +93,7 @@ namespace Game.GUI
            // beforeHpBar.gameObject.SetActive(false);
            if(hpIndicator!=null)
              hpIndicator.gameObject.SetActive(false);
-            Debug.Log("set HP Bar: "+(this.currentHp * 1.0f)/maxHp);
+            // Debug.Log("set HP Bar: "+(this.currentHp * 1.0f)/maxHp);
             //progressBar.Initialization();
             progressBar.SetBar01(((this.currentHp * 1.0f)/maxHp));
            // progressBar.UpdateBar01(((afterHp * 1.0f)/maxHp));
@@ -111,7 +111,7 @@ namespace Game.GUI
          // progressBar.SetBar01(((this.currentHp * 1.0f)/maxHp)); 
           currentHp = newHp;
             //progressBar.SetBar01(((currentHp * 1.0f) / maxHp));
-            Debug.Log("update HP Bar: "+(newHp * 1.0f)/maxHp);
+            // Debug.Log("update HP Bar: "+(newHp * 1.0f)/maxHp);
           
             
             progressBar.UpdateBar01(((newHp * 1.0f)/maxHp));

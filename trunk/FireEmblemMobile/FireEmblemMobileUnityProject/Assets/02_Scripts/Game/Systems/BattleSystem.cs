@@ -62,22 +62,22 @@ namespace Game.Mechanics
         }
         public void StartBattle(IBattleActor attacker, IBattleActor defender, bool grid, bool continuos =false)
         {
-            Debug.Log("SSTTTTTTTTTAAAAAAART BAAAAAAATTTTTTTLLLLLLE" +attacker+" "+defender);
+            // Debug.Log("SSTTTTTTTTTAAAAAAART BAAAAAAATTTTTTTLLLLLLE" +attacker+" "+defender);
             this.attacker = attacker;
             this.defender = defender;
             ActivateSkillsAtBattleStart();
             BattlePreview preview = GetBattlePreview(attacker, defender, attacker.GridComponent.GridPosition, grid);
          
             battleSimulation = GetBattleSimulation(attacker, (IBattleActor)defender, grid, continuos);
-            Debug.Log("ACTIVATED SKILLS: ");
-            foreach (var skill in attackerActivatedSkillMixins)
-            {
-                Debug.Log("ACTIVATED ATTACKER COMBAT SKILL "+skill.skill.Name);
-            }
-            foreach (var skill in defenderActivatedSkillMixins)
-            {
-                Debug.Log("ACTIVATED DEFENDER COMBAT SKILL "+skill.skill.Name);
-            }
+            // Debug.Log("ACTIVATED SKILLS: ");
+            // foreach (var skill in attackerActivatedSkillMixins)
+            // {
+            //     Debug.Log("ACTIVATED ATTACKER COMBAT SKILL "+skill.skill.Name);
+            // }
+            // foreach (var skill in defenderActivatedSkillMixins)
+            // {
+            //     Debug.Log("ACTIVATED DEFENDER COMBAT SKILL "+skill.skill.Name);
+            // }
             foreach (var combatRound in battleSimulation.combatRounds)
             {
                 foreach (var attackData in combatRound.AttacksData)
@@ -170,6 +170,9 @@ namespace Game.Mechanics
         }
         private void EndBattle(int lastCombatRoundIndex)
         {
+            attacker.BattleComponent.RealBattleEnded(defender);
+            defender.BattleComponent.RealBattleEnded(attacker);
+            
             int hpDelta = attacker.Hp - battleSimulation.combatRounds[lastCombatRoundIndex].AttackerHP;
             ((Unit) attacker).InflictDirectDamage((Unit)defender, hpDelta,defender.GetEquippedWeapon().DamageType, false);
            // attacker.Hp = battleSimulation.Attacker.Hp;
@@ -185,6 +188,8 @@ namespace Game.Mechanics
                 ((Unit) defender).InflictDirectDamage((Unit)attacker, hpDelta,attacker.GetEquippedWeapon().DamageType, false);
                 //defender.Hp = battleSimulation.AttackableTarget.Hp;
             }
+
+           
 
             DeactivateCombatSkills();
             BattleAnimation.Hide();
@@ -202,12 +207,12 @@ namespace Game.Mechanics
          
             
             var system = ServiceProvider.Instance.GetSystem<UnitProgressSystem>();
-            Debug.Log("GET SYSTEM: "+system +" from serviceProvider: "+ServiceProvider.Instance);
+            // Debug.Log("GET SYSTEM: "+system +" from serviceProvider: "+ServiceProvider.Instance);
             var task = new AfterBattleTasks(system, (Unit)attacker, defender);
             task.StartTask();
             task.OnFinished += () =>
             {
-                Debug.Log("AfterBattleTaskFinished");
+                // Debug.Log("AfterBattleTaskFinished");
                 OnBattleFinished?.Invoke(battleSimulation.AttackResult);
             };
         }

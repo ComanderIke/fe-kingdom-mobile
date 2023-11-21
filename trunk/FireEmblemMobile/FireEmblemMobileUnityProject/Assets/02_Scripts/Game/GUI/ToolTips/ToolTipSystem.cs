@@ -102,7 +102,7 @@ public class ToolTipSystem : MonoBehaviour
     {
         instance.tooltipShownThisFrame = true;
         CloseAllToolTips();
-        Debug.Log("transformPos: "+position+" ScreenPos"+Camera.main.WorldToScreenPoint(position));
+        // Debug.Log("transformPos: "+position+" ScreenPos"+Camera.main.WorldToScreenPoint(position));
         instance.AttributeValueTooltipUI.gameObject.SetActive(true);
         instance.AttributeValueTooltipUI.Show(unit,  attributeType, Camera.main.WorldToScreenPoint(position));
     }
@@ -110,7 +110,7 @@ public class ToolTipSystem : MonoBehaviour
     {
         instance.tooltipShownThisFrame = true;
         CloseAllToolTips();
-        Debug.Log("transformPos: "+position+" ScreenPos"+Camera.main.WorldToScreenPoint(position));
+        // Debug.Log("transformPos: "+position+" ScreenPos"+Camera.main.WorldToScreenPoint(position));
         instance.CombatStatalueTooltipUI.gameObject.SetActive(true);
         instance.CombatStatalueTooltipUI.Show(unit,  combatStatType, Camera.main.WorldToScreenPoint(position));
     }

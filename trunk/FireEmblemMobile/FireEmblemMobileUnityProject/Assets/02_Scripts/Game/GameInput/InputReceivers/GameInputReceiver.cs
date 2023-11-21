@@ -203,7 +203,7 @@ namespace Game.GameInput
 
         public void ClickedDownOnGrid(int x, int y)
         {
-            Debug.Log("Show Movement Path if character is selected else still change cursor position");
+            // Debug.Log("Show Movement Path if character is selected else still change cursor position");
             gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
             if (!gridSystem.GridLogic.IsTileFree(x, y))
             {

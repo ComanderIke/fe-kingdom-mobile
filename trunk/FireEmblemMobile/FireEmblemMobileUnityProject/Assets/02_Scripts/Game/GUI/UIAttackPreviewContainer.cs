@@ -22,7 +22,7 @@ namespace LostGrace
         public void Show(Sprite face, int dmg, int hit, int crit, int maxHp, int currentHp, int afterHp, bool canCounter=true, bool enemy =false)
         {
             this.maxHp = maxHp;
-            Debug.Log(afterHp +" "+currentHp);
+            // Debug.Log(afterHp +" "+currentHp);
             if (afterHp > currentHp) //Heal{
             {
                 dmgLabel.text = "Heal";
@@ -71,7 +71,7 @@ namespace LostGrace
 
         public void UpdateHP(int currentHpRight)
         {
-            Debug.Log("update HP in Container: "+maxHp+ " "+currentHpRight);
+            // Debug.Log("update HP in Container: "+maxHp+ " "+currentHpRight);
             hpBar.UpdateValuesAnimated(maxHp, currentHpRight);
         }
     }

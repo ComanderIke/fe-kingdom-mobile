@@ -71,7 +71,7 @@ namespace Game.GUI
 
         public void Deactivate()
         {
-            Debug.Log("DEACTIVATE UI SYSTEM================================");
+            // Debug.Log("DEACTIVATE UI SYSTEM================================");
             UnitSelectionSystem.OnSelectedCharacter -= SelectedCharacter;
             UnitSelectionSystem.OnSelectedInActiveCharacter -= SelectedCharacter;
             UnitSelectionSystem.OnEnemySelected -= SelectedEnemyCharacter;

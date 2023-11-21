@@ -4,6 +4,7 @@ using __2___Scripts.Game.Utility;
 using Game.GameActors.Units;
 using Game.GameActors.Units.CharStateEffects;
 using Game.GameResources;
+using LostGrace;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -74,15 +75,33 @@ namespace Game.GUI
         }
         void AddStatusEffect(Unit unit,BuffDebuffBase state)
         {
+            Debug.Log("ADD STATUS EFFECT: "+unit.name+" "+state.name);
             if (instantiatedStatusEffects.ContainsKey(state))
                 return;
-            bool good = state is Buff;
-            var parent = good ? positiveStateParent : negativeStateParent;
-            var go = Instantiate(statePrefab, parent);
-            var image = go.GetComponent<Image>();
-            image.color = good ? positiveStateColor : negativeStateColor;
-            image.sprite = state.Icon;
-            go.SetActive(false);
+            GameObject go = null;
+            if (state is StatModifier statModifier)
+            {
+                bool negatives = statModifier.HasNegatives();
+                bool positives = statModifier.HasPositives();
+                bool both = negatives && positives;
+                go = Instantiate(statePrefab, statModifierParent);
+                var statusEffect = go.GetComponent<StatusEffectUI>();
+                statusEffect.Show( both ? mixedStatModifierIcon :
+                    positives ? positiveStatModifierIcon : negativeStatModifierIcon, Color.white,both?positiveStateColor:negatives?negativeStateColor:positiveStateColor, state.GetDuration());
+              
+            }
+            else
+            {
+                bool good = state is Buff;
+                var parent = good ? positiveStateParent : negativeStateParent;
+                go = Instantiate(statePrefab, parent);
+                var statusEffect = go.GetComponent<StatusEffectUI>();
+                statusEffect.Show( state.Icon, good?positiveStateColor:negativeStateColor,good?positiveStateColor:negativeStateColor, state.GetDuration());
+
+                
+                go.SetActive(false);
+            }
+
             instantiatedStatusEffects.Add(state, go);
         }
         void RemoveStatusEffect(Unit unit, BuffDebuffBase state)

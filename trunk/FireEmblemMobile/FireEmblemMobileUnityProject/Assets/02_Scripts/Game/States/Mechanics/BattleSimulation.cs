@@ -83,7 +83,7 @@ namespace Game.Mechanics
             Attacker.BattleComponent.InitiatesBattle(Defender);
             int range =Math.Abs(attackPosition.X - defender.GridComponent.GridPosition.X)+Math.Abs(
                 attackPosition.Y - defender.GridComponent.GridPosition.Y);
-            Debug.Log("Attack Range: "+range+ " "+defender.GridComponent.GridPosition.AsVector()+" "+attackPosition.AsVector());
+            // Debug.Log("Attack Range: "+range+ " "+defender.GridComponent.GridPosition.AsVector()+" "+attackPosition.AsVector());
             if (continuos)
             {
                 //Multiple Rounds Get Count

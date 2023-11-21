@@ -145,7 +145,7 @@ namespace LostGrace
             hp.text = unit.Hp + "/" + unit.MaxHp;
             battleStatsController.Show(unit);
             skillContainer.DeleteAllChildren();
-            Debug.Log("CHILDCOUNT: "+skillContainer.childCount);
+            // Debug.Log("CHILDCOUNT: "+skillContainer.childCount);
             instantiatedSkills = new List<SkillUI>();
             foreach (var skill in unit.SkillManager.Skills)
             {

@@ -183,7 +183,7 @@ namespace Game.GameActors.Units.OnGameObject
 
         public void ShowPreviewHp(int afterBattleHp)
         {
-            Debug.Log("SHOW HP BAR");
+            // Debug.Log("SHOW HP BAR");
             if (hpBarAlternate != null && unit != null){
                 // if (afterBattleHp > unit.Hp)
                 // {
@@ -270,7 +270,7 @@ namespace Game.GameActors.Units.OnGameObject
         public void HidePreviewHp()
         {
             if (hpBarAlternate != null && unit != null){
-                Debug.Log("HidePreviewHP"+unit.name);
+                // Debug.Log("HidePreviewHP"+unit.name);
                 hpBarAlternate.UpdateValuesWithoutDamagePreview(unit.MaxHp, unit.Hp,0);
                 
             }

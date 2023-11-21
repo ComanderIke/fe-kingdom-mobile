@@ -40,7 +40,7 @@ namespace Game.GameInput
         }
         public void DeselectUnit(IGridActor unit)
         {
-            Debug.Log("GameInput: Deselect Unit");
+            // Debug.Log("GameInput: Deselect Unit");
             if(unit!=null)
                 OnDeselectUnit?.Invoke(unit);
         }

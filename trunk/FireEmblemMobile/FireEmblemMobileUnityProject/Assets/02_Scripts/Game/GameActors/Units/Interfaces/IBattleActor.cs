@@ -25,6 +25,7 @@ namespace Game.GameInput
         AnimatedCombatCharacter BattleGO { get; set; }
         UnitVisual Visuals { get; }
         GridComponent GridComponent { get; set; }
+        StatusEffectManager StatusEffectManager { get; set; }
         Weapon GetEquippedWeapon();
         Tile GetTile();
 
