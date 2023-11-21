@@ -41,6 +41,7 @@ namespace LostGrace
         private bool blessed;
         private bool canAffordHpCost;
         private bool hasUses;
+        private bool combatSkillSelected = false;
         public void SetSkill(Skill skill, bool big, bool blessed,bool canAfforHpCost,bool hasUses, bool showTooltips = false, bool interactable=true)
         {
             
@@ -50,8 +51,12 @@ namespace LostGrace
             icon.sprite = skill.Icon;
             this.Skill = skill;
             blessingEffect.gameObject.SetActive(blessed);
-            if(combatSkillActive!=null)
-                combatSkillActive.gameObject.SetActive(false);
+            if (combatSkillActive != null)
+            {
+                Debug.Log("combatSkillActive MISSING " + skill.Name+" "+gameObject.name+" "+combatSkillSelected);
+                combatSkillActive.enabled=combatSkillSelected;
+            }
+
             if(big)
                 (transform as RectTransform).sizeDelta = bigSize;
             button.interactable = interactable;
@@ -110,6 +115,7 @@ namespace LostGrace
 
         public void Select()
         {
+            Skill.CombatSkillMixin.Selected = true;
             if(CancelSkillButton!=null)
                 CancelSkillButton.gameObject.SetActive(true);
             selectableVfx.gameObject.SetActive(false);
@@ -117,6 +123,7 @@ namespace LostGrace
         }
         public void Deselect()
         {
+            Skill.CombatSkillMixin.Selected = false;
             if(CancelSkillButton!=null)
                 CancelSkillButton.gameObject.SetActive(false);
             selectableVfx.gameObject.SetActive(false);
@@ -169,8 +176,14 @@ namespace LostGrace
 
         public void SetActiveCombatSkill(bool show)
         {
-            if(combatSkillActive!=null)
-                combatSkillActive.gameObject.SetActive(show);
+
+            Debug.Log("TRY SET ACTIVE COMBAT SKILL"+Skill.Name+" "+gameObject.name);
+            if (combatSkillActive != null)
+            {
+                combatSkillSelected = show;
+                combatSkillActive.enabled=combatSkillSelected;
+                Debug.Log("SET COMBAT BUTTON: "+show+" " + Skill.Name+" "+gameObject.name);
+            }
         }
         public void ShowDelete()
         {

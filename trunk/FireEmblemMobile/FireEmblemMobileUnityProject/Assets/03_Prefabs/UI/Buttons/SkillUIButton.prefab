@@ -9711,6 +9711,82 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!1 &4244298888625487593
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7292460143713310708}
+  - component: {fileID: 1794999110924228588}
+  - component: {fileID: 2240588661722991076}
+  m_Layer: 5
+  m_Name: Activated
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &7292460143713310708
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4244298888625487593}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1848365098818949776}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1794999110924228588
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4244298888625487593}
+  m_CullTransparentMesh: 1
+--- !u!114 &2240588661722991076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4244298888625487593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: ea95642055b5df34397ed422deab1075, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &6621118712362520977
 GameObject:
   m_ObjectHideFlags: 0
@@ -10097,6 +10173,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b294b49d745bfdb40b448f29352bb17a, type: 3}
+--- !u!224 &1848365098818949776 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2064923176115300788, guid: b294b49d745bfdb40b448f29352bb17a,
+    type: 3}
+  m_PrefabInstance: {fileID: 364407787016928036}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &6429164046979079781 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6644595403744421185, guid: b294b49d745bfdb40b448f29352bb17a,
@@ -10154,8 +10236,6 @@ MonoBehaviour:
   uses: {fileID: 0}
   scaleSmall: 0.7
   scaleBig: 0.9
-  hpTextGo: {fileID: 0}
-  usesTextGo: {fileID: 0}
   frame: {fileID: 6429164047735654197}
   background: {fileID: 6429164046979079802}
   blessingFrameColor: {r: 0.7607843, g: 1, b: 0.99607843, a: 1}
@@ -10170,7 +10250,7 @@ MonoBehaviour:
   deleteButton: {fileID: 2221111895963975827}
   selectedVfx: {fileID: 1335257147185255973}
   selectableVfx: {fileID: 3644879005965979317}
-  combatSkillActive: {fileID: 0}
+  combatSkillActive: {fileID: 2240588661722991076}
   bigSize: {x: 120, y: 120}
   button: {fileID: 6429164046979079781}
   CancelSkillButton: {fileID: 0}

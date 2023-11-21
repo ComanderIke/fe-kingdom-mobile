@@ -52,11 +52,11 @@ namespace LostGrace
 
         private void OnDestroy()
         {
-            if (unit != null)
-            {
-                unit.HpValueChanged -= UpdateUI;
-                
-            }
+            // if (unit != null)
+            // {
+            //     unit.HpValueChanged -= UpdateUI;
+            //     
+            // }
 
             Unit.OnUnitDataChanged -= UnitDataChanged;
             UiSystem.OnShowAttackPreview -= ShowSelectableCombatSkills;
@@ -145,6 +145,7 @@ namespace LostGrace
             hp.text = unit.Hp + "/" + unit.MaxHp;
             battleStatsController.Show(unit);
             skillContainer.DeleteAllChildren();
+            Debug.Log("CHILDCOUNT: "+skillContainer.childCount);
             instantiatedSkills = new List<SkillUI>();
             foreach (var skill in unit.SkillManager.Skills)
             {
@@ -157,12 +158,17 @@ namespace LostGrace
                 var skillUI =  go.GetComponent<SkillUI>();
                 bool canAffordHPCost = skill.FirstActiveMixin != null && unit.Hp > skill.FirstActiveMixin.GetHpCost(skill.level) || skill.CombatSkillMixin != null && unit.Hp > skill.CombatSkillMixin.GetHpCost(skill.level);
                 bool hasUses=skill.FirstActiveMixin != null &&skill.FirstActiveMixin.Uses>0 || skill.CombatSkillMixin != null && skill.CombatSkillMixin.Uses>0;
-
+            
                 skillUI.SetSkill(skill, true, unit.Blessing!=null, canAffordHPCost, hasUses);
+                // if (skill.CombatSkillMixin != null&& skill.CombatSkillMixin.Selected)
+                // {
+                //     SelectSkill(skillUI);
+                // }
                 skillUI.OnClicked += SkillClicked;
                 instantiatedSkills.Add(skillUI);
-
+            
             }
+         
 
         }
 
@@ -170,15 +176,15 @@ namespace LostGrace
         public void Show(Unit unit, bool interactableForPlayer=true)
         {
             base.Show();
-            if (unit != null)
-            {
-                unit.HpValueChanged -= UpdateUI;
-           
-            }
+            // if (unit != null)
+            // {
+            //     unit.HpValueChanged -= UpdateUI;
+            //
+            // }
 
             this.unit = unit;
-            unit.HpValueChanged -= UpdateUI;
-            unit.HpValueChanged += UpdateUI;
+            // unit.HpValueChanged -= UpdateUI;
+            // unit.HpValueChanged += UpdateUI;
             this.interactableForPlayer = interactableForPlayer;
            
            UpdateUI();
@@ -199,6 +205,7 @@ namespace LostGrace
             }
             else
             {
+                Debug.Log("DESELECT SKILL");
                 new GameplayCommands().DeselectSkill();
             }
             //useItemDialogController.Show((Item)combatItem.item,()=>new GameplayCommands().SelectItem((Item)combatItem.item));
@@ -220,6 +227,7 @@ namespace LostGrace
                 }
                 else
                 {
+                    Debug.Log("DESELECT SKILL");
                     new GameplayCommands().DeselectSkill();
                 }
             }
@@ -232,14 +240,15 @@ namespace LostGrace
                     if (selectedCombatSkill == skillUI)
                     {
                        // Debug.Log("Deselect SKILL "+ skillUI.Skill.Name);
-                        
+                       Debug.Log("DESELECT COMBAT SKILL");
                       
                         DeselectCombatSkill();
                         ServiceProvider.Instance.GetSystem<UnitActionSystem>().UpdateAttackpreview();
                     }
                     else
                     {
-                        SelectSkill(skillUI);
+                        Debug.Log("SELECT COMBATSKILL");
+                        SelectCombatSkill(skillUI);
                     }
 
                     
@@ -254,6 +263,7 @@ namespace LostGrace
                 return;
             if (selectedCombatSkill != null)
             {
+                
                 selectedCombatSkill.Deselect();
                 selectedCombatSkill.ShowSelectable();
                 selectedCombatSkill.SetActiveCombatSkill(false);
@@ -289,7 +299,7 @@ namespace LostGrace
                 }
             }
         }
-        public void SelectSkill(SkillUI skillUI)
+        public void SelectCombatSkill(SkillUI skillUI)
         {
             if (!interactableForPlayer)
                 return;
@@ -298,10 +308,10 @@ namespace LostGrace
             skillUI.Select();
             selectedCombatSkill = skillUI;
             skillUI.SetActiveCombatSkill(true);
-            skillUI.Skill.CombatSkillMixin.Activate(skillUI.Skill.owner, null);
-            BattleState.OnStartBattle -= OnStartAttack;
-            BattleState.OnStartBattle += OnStartAttack;
-            ServiceProvider.Instance.GetSystem<UnitActionSystem>().UpdateAttackpreview();
+             skillUI.Skill.CombatSkillMixin.Activate(skillUI.Skill.owner, null);
+             BattleState.OnStartBattle -= OnStartAttack;
+             BattleState.OnStartBattle += OnStartAttack;
+             ServiceProvider.Instance.GetSystem<UnitActionSystem>().UpdateAttackpreview();
         }
 
         private bool attackStarted = false;
