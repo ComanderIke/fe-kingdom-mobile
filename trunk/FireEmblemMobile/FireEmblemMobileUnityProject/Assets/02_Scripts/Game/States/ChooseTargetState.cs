@@ -329,9 +329,11 @@ namespace Game.Mechanics
                      if (gridSystem.cursor.GetCurrentTile() == gridSystem.Tiles[x, y]|| !skillMixin.ConfirmPosition())
                      {
                          Debug.Log("SkillActivation!");
-                         var targets = skillMixin.GetAllTargets(selectedUnit, gridSystem.Tiles, x,y);
-                         skillMixin.Activate(selectedUnit, gridSystem.Tiles, x,y);
                          LastSkillTargetPosition = new Vector2Int(x, y);
+                         var targets = skillMixin.GetAllTargets(selectedUnit, gridSystem.Tiles, x,y);
+                        
+                         skillMixin.Activate(selectedUnit, gridSystem.Tiles, x,y);
+                         
                          WaitAfterSkills(targets, wait);
 
                      }

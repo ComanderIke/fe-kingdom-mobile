@@ -27,16 +27,17 @@ namespace Game.GameActors.Units.Skills
         TileDifferenceDelay,
         TargetPosition
     }
+
     [System.Serializable]
     [CreateAssetMenu(menuName = "GameData/Skills/Active/PositionTarget", fileName = "PositionTargetSkillMixin")]
     public class PositionTargetSkillMixin : ActiveSkillMixin, IPosTargeted
     {
-
-
         [field: SerializeField] private int[] range;
         [field: SerializeField] private int[] size;
         [SerializeField] private bool jump;
         [SerializeField] private bool jumpPush;
+
+        [SerializeField] private bool rotateFXTowardsTarget;
         [SerializeField] private bool stopOnCollision;
         [field: SerializeField] private List<SkillEffectMixin> OnCollisionEffects;
         [SerializeField] private int minRange = 0;
@@ -46,7 +47,7 @@ namespace Game.GameActors.Units.Skills
         [SerializeField] private string Animation;
 
         [field: SerializeField] public SkillTargetArea TargetArea { get; set; }
-       
+
 
         public bool ConfirmPosition()
         {
@@ -64,10 +65,6 @@ namespace Game.GameActors.Units.Skills
         public int GetSize() => size[skill.Level];
 
 
-
-
-
-
         public bool CanTarget(Tile t)
         {
             if (jump && !jumpPush)
@@ -80,6 +77,7 @@ namespace Game.GameActors.Units.Skills
         public virtual void Activate(Unit user, Tile[,] tiles, int x, int y)
         {
             Debug.Log("ACTIVATE POS TARGET SKILL MIXIN");
+
             var targetPos = new Vector2Int(x, y);
             GridSystem gridSystem = ServiceProvider.Instance.GetSystem<GridSystem>();
             Vector2 directionTmp = new Vector2(targetPos.x - user.GridComponent.GridPosition.X,
@@ -97,122 +95,133 @@ namespace Game.GameActors.Units.Skills
                     skillTransferData.data = new Vector2(x, y);
             }
 
-            foreach (var pos in targetPositions)
-            {
-                int xPosition = 0;
-                int yPosition = 0;
-                if (Rooted)
+            MonoUtility.DelayFunction(() =>
                 {
-                    xPosition = (int)(user.GridComponent.GridPosition.X + pos.x);
-                    yPosition = (int)(user.GridComponent.GridPosition.Y + pos.y);
-                }
-                else
-                {
-                    xPosition = (int)(x + pos.x);
-                    yPosition = (int)(y + pos.y);
-                }
-
-                if (xPosition == unitPos.x && yPosition == unitPos.y && !IncludeUnitPos)
-                    continue;
-                Debug.Log("Targetposition: " + pos + " " + xPosition + " " + yPosition);
-                if (xPosition >= 0 && xPosition < tiles.GetLength(0) && yPosition >= 0 &&
-                    yPosition < tiles.GetLength(1))
-                {
-                    Debug.Log("Check: " + xPosition + " " + yPosition);
-                    if (stopOnCollision && !gridSystem.GridLogic.IsTileAccessible(xPosition, yPosition, user, false))
+                    foreach (var pos in targetPositions)
                     {
-                        Debug.Log("Tile no accessible: " + xPosition + " " + yPosition);
-                        foreach (SkillEffectMixin effect in OnCollisionEffects)
+                        int xPosition = 0;
+                        int yPosition = 0;
+                        if (Rooted)
                         {
-                            if (effect is UnitTargetSkillEffectMixin unitTargetSkillEffectMixin)
-                            {
-                                unitTargetSkillEffectMixin.Activate(user, user, skill.Level);
-                            }
+                            xPosition = (int)(user.GridComponent.GridPosition.X + pos.x);
+                            yPosition = (int)(user.GridComponent.GridPosition.Y + pos.y);
+                        }
+                        else
+                        {
+                            xPosition = (int)(x + pos.x);
+                            yPosition = (int)(y + pos.y);
                         }
 
-                        Debug.Log("Set Unit Position: " + previousPos + " " + xPosition + " " + yPosition);
-                        while (!IsValidTargetPosition(chosenPrevPos, user, gridSystem, tiles))
+                        if (xPosition == unitPos.x && yPosition == unitPos.y && !IncludeUnitPos)
+                            continue;
+                        Debug.Log("Targetposition: " + pos + " " + xPosition + " " + yPosition);
+                        if (xPosition >= 0 && xPosition < tiles.GetLength(0) && yPosition >= 0 &&
+                            yPosition < tiles.GetLength(1))
                         {
-                            previousPos.RemoveAt(previousPos.Count - 1);
-
-                            if (previousPos.Count == 0)
+                            Debug.Log("Check: " + xPosition + " " + yPosition);
+                            if (stopOnCollision &&
+                                !gridSystem.GridLogic.IsTileAccessible(xPosition, yPosition, user, false))
                             {
-                                chosenPrevPos = new Vector2Int(unitPos.x, unitPos.y);
+                                Debug.Log("Tile no accessible: " + xPosition + " " + yPosition);
+                                foreach (SkillEffectMixin effect in OnCollisionEffects)
+                                {
+                                    if (effect is UnitTargetSkillEffectMixin unitTargetSkillEffectMixin)
+                                    {
+                                        unitTargetSkillEffectMixin.Activate(user, user, skill.Level);
+                                    }
+                                }
+
+                                Debug.Log("Set Unit Position: " + previousPos + " " + xPosition + " " + yPosition);
+                                while (!IsValidTargetPosition(chosenPrevPos, user, gridSystem, tiles))
+                                {
+                                    previousPos.RemoveAt(previousPos.Count - 1);
+
+                                    if (previousPos.Count == 0)
+                                    {
+                                        chosenPrevPos = new Vector2Int(unitPos.x, unitPos.y);
+                                        break;
+                                    }
+
+                                    chosenPrevPos = previousPos[previousPos.Count - 1];
+                                }
+
+                                MoveUnit(chosenPrevPos, unitPos, user);
+                                // ServiceProvider.Instance.GetSystem<GridSystem>().SetUnitPosition(user, chosenPrevPos.x, chosenPrevPos.y);
+                                return;
                                 break;
                             }
 
+                            Debug.Log("ACTIVATE On " + xPosition + " " + yPosition);
+                            Vector2 tiledifference = new Vector2Int(xPosition, yPosition) - unitPos;
+
+                            if (skillTransferData != null)
+                            {
+                                if (skillTransferDataType == SkillTransferDataType.TileDifferenceDelay)
+                                    skillTransferData.data = tiledifference.magnitude * speedPerTile - speedPerTile;
+                            }
+                            // if (AnimationObject != null&& (SpawnEffectsOnTargetsOnly ))
+                            //     GameObject.Instantiate(AnimationObject, tiles[xPosition, yPosition].GetTransform().position,
+                            //         Quaternion.identity, null);
+
+                            foreach (SkillEffectMixin effect in SkillEffects)
+                            {
+                                //Debug.Log("ACTIVATE SKILLEFFECTMIXINS:")
+                                if (effect is TileTargetSkillEffectMixin tileTargetSkillEffectMixin)
+                                    tileTargetSkillEffectMixin.Activate(tiles[xPosition, yPosition], skill.Level);
+                                else if (effect is UnitTargetSkillEffectMixin unitTargetSkillEffectMixin &&
+                                         (Unit)tiles[xPosition, yPosition].GridObject != null)
+                                {
+                                    unitTargetSkillEffectMixin.Activate((Unit)tiles[xPosition, yPosition].GridObject,
+                                        user,
+                                        skill.Level);
+                                }
+                            }
+
+
+                            previousPos.Add(new Vector2Int(xPosition, yPosition));
                             chosenPrevPos = previousPos[previousPos.Count - 1];
                         }
-
-                        MoveUnit(chosenPrevPos, unitPos, user);
-                        // ServiceProvider.Instance.GetSystem<GridSystem>().SetUnitPosition(user, chosenPrevPos.x, chosenPrevPos.y);
-                        return;
-                        break;
                     }
 
-                    Debug.Log("ACTIVATE On " + xPosition + " " + yPosition);
-                    Vector2 tiledifference = new Vector2Int(xPosition, yPosition) - unitPos;
-
-                    if (skillTransferData != null)
+                    if (jump)
                     {
-                        if(skillTransferDataType==SkillTransferDataType.TileDifferenceDelay)
-                            skillTransferData.data = tiledifference.magnitude * speedPerTile - speedPerTile;
-                    }
-                    // if (AnimationObject != null&& (SpawnEffectsOnTargetsOnly ))
-                    //     GameObject.Instantiate(AnimationObject, tiles[xPosition, yPosition].GetTransform().position,
-                    //         Quaternion.identity, null);
-
-                    foreach (SkillEffectMixin effect in SkillEffects)
-                    {
-                        //Debug.Log("ACTIVATE SKILLEFFECTMIXINS:")
-                        if (effect is TileTargetSkillEffectMixin tileTargetSkillEffectMixin)
-                            tileTargetSkillEffectMixin.Activate(tiles[xPosition, yPosition], skill.Level);
-                        else if (effect is UnitTargetSkillEffectMixin unitTargetSkillEffectMixin &&
-                                 (Unit)tiles[xPosition, yPosition].GridObject != null)
+                        int index = targetPositions.Count - 1;
+                        if (TargetArea == SkillTargetArea.Line)
                         {
-
-                            unitTargetSkillEffectMixin.Activate((Unit)tiles[xPosition, yPosition].GridObject, user,
-                                skill.Level);
+                            targetPos = new Vector2Int((int)(unitPos.x + targetPositions[index].x),
+                                (int)(unitPos.y + targetPositions[index].y));
+                            Debug.Log("Jump to: " + targetPos);
                         }
+
+                        Debug.Log("Direction: " + direction);
+                        targetPos = FindValidTargetPosition(user, tiles, targetPos, gridSystem, index, unitPos,
+                            targetPositions);
+                        MoveUnit(targetPos, unitPos, user);
+                        Debug.Log("Set To Position: " + targetPos);
                     }
+                }, logicDelay
+            );
 
 
-
-                    previousPos.Add(new Vector2Int(xPosition, yPosition));
-                    chosenPrevPos = previousPos[previousPos.Count - 1];
-                }
-
-                if (AnimationObject != null)
-                {
-                    var go = GameObject.Instantiate(AnimationObject,
-                        spawnAnimationAtCaster
-                            ? user.GameTransformManager.GetCenterPosition()
-                            : new Vector3(x + .5f, y + 0.5f), Quaternion.identity, null);
-
-
-                }
-            }
-
-            if (jump)
+            if (AnimationObject != null)
             {
-                int index = targetPositions.Count - 1;
-                if (TargetArea == SkillTargetArea.Line)
+                Vector3 rotation = new Vector3(0, 0, 0);
+                if (rotateFXTowardsTarget)
                 {
-                    targetPos = new Vector2Int((int)(unitPos.x + targetPositions[index].x),
-                        (int)(unitPos.y + targetPositions[index].y));
-                    Debug.Log("Jump to: " + targetPos);
+                    rotation = new Vector3(0, 0,
+                        direction.x > 0 ? 0 :
+                        direction.x < 0 ? 180 :
+                        direction.y > 0 ? 90 :
+                        direction.y < 0 ? 270 : 0);
                 }
 
-                Debug.Log("Direction: " + direction);
-                targetPos = FindValidTargetPosition(user, tiles, targetPos, gridSystem, index, unitPos,
-                    targetPositions);
-                MoveUnit(targetPos, unitPos, user);
-                Debug.Log("Set To Position: " + targetPos);
-
+                var go = GameObject.Instantiate(AnimationObject,
+                    spawnAnimationAtCaster
+                        ? user.GameTransformManager.GetCenterPosition()
+                        : new Vector3(x + .5f, y + 0.5f), Quaternion.Euler(rotation), null);
             }
+
             base.Activate();
-
-
         }
 
         private void MoveUnit(Vector2Int targetPos, Vector2 unitPos, Unit user)
@@ -262,15 +271,15 @@ namespace Game.GameActors.Units.Skills
 
             return targetPos;
         }
-      
+
 
         public List<Vector2Int> GetTargetPositions(int level, Vector2Int direction = default)
         {
             List<Vector2Int> targetPositions = new List<Vector2Int>();
             if (direction == default)
                 direction = new Vector2Int(1, 1);
-            if(IncludeMiddlePos)
-                targetPositions.Add(new Vector2Int(0,0));
+            if (IncludeMiddlePos)
+                targetPositions.Add(new Vector2Int(0, 0));
             if (GetSize(level) > 0)
             {
                 if (TargetArea == SkillTargetArea.Block)
@@ -307,7 +316,7 @@ namespace Game.GameActors.Units.Skills
                                     targetPositions.Add(new Vector2Int(i * -direction.x, 0));
                             }
                         }
-                        
+
 
                         if (TargetArea == SkillTargetArea.Line || TargetArea == SkillTargetArea.Cross ||
                             TargetArea == SkillTargetArea.Star)
@@ -320,6 +329,7 @@ namespace Game.GameActors.Units.Skills
                                     targetPositions.Add(new Vector2Int(0, i * -direction.y));
                             }
                         }
+
                         if (TargetArea == SkillTargetArea.NormalLine && direction.x != 0)
                         {
                             if (!targetPositions.Contains(new Vector2Int(0, i * direction.x)))
@@ -330,6 +340,7 @@ namespace Game.GameActors.Units.Skills
                                     targetPositions.Add(new Vector2Int(0, i * -direction.x));
                             }
                         }
+
                         if (TargetArea == SkillTargetArea.NormalLine)
                         {
                             if (!targetPositions.Contains(new Vector2Int(i * direction.y, 0)))
@@ -359,20 +370,15 @@ namespace Game.GameActors.Units.Skills
                                     if (!targetPositions.Contains(new Vector2Int(-i, -j)))
                                         targetPositions.Add(new Vector2Int(-i, -j));
                                 }
-                        
                             }
                         }
                     }
-
-
                 }
             }
             else
             {
                 if (!targetPositions.Contains(new Vector2Int(0, 0)))
                     targetPositions.Add(new Vector2Int(0, 0));
-
-
             }
 
             return targetPositions;
@@ -382,7 +388,7 @@ namespace Game.GameActors.Units.Skills
         {
             prevPreviewPosX = x;
             prevPreviewPosY = y;
-            foreach (var target in GetAllTargets(caster, ServiceProvider.Instance.GetSystem<GridSystem>().Tiles,x, y))
+            foreach (var target in GetAllTargets(caster, ServiceProvider.Instance.GetSystem<GridSystem>().Tiles, x, y))
             {
                 foreach (SkillEffectMixin effect in SkillEffects)
                 {
@@ -396,9 +402,11 @@ namespace Game.GameActors.Units.Skills
 
         private int prevPreviewPosX;
         private int prevPreviewPosY;
+
         public void HidePreview(Unit caster)
         {
-            foreach (var target in GetAllTargets(caster, ServiceProvider.Instance.GetSystem<GridSystem>().Tiles,prevPreviewPosX, prevPreviewPosY))
+            foreach (var target in GetAllTargets(caster, ServiceProvider.Instance.GetSystem<GridSystem>().Tiles,
+                         prevPreviewPosX, prevPreviewPosY))
             {
                 foreach (SkillEffectMixin effect in SkillEffects)
                 {
@@ -441,7 +449,7 @@ namespace Game.GameActors.Units.Skills
             foreach (SkillEffectMixin effect in SkillEffects)
             {
                 if (effect is HealEffect healMixin)
-                    return healMixin.GetHealAmount(selectedUnit, target,skill.level);
+                    return healMixin.GetHealAmount(selectedUnit, target, skill.level);
             }
 
             return 0;
@@ -485,7 +493,7 @@ namespace Game.GameActors.Units.Skills
             var list = new List<EffectDescription>();
             foreach (var skillEffect in SkillEffects)
             {
-                list.AddRange(skillEffect.GetEffectDescription(unit,level));
+                list.AddRange(skillEffect.GetEffectDescription(unit, level));
             }
 
             return list;
@@ -507,31 +515,28 @@ namespace Game.GameActors.Units.Skills
                         if ((i + j) <= GetRange(level))
                         {
                             var pos = castPosition + new Vector2Int(i, j);
-                            if(!gridSystem.IsOutOfBounds(pos.x,pos.y))
+                            if (!gridSystem.IsOutOfBounds(pos.x, pos.y))
                                 castTargets.Add(pos);
                             pos = castPosition + new Vector2Int(-i, j);
-                            if(!gridSystem.IsOutOfBounds(pos.x,pos.y))
+                            if (!gridSystem.IsOutOfBounds(pos.x, pos.y))
                                 castTargets.Add(pos);
                             pos = castPosition + new Vector2Int(i, -j);
-                            if(!gridSystem.IsOutOfBounds(pos.x,pos.y))
+                            if (!gridSystem.IsOutOfBounds(pos.x, pos.y))
                                 castTargets.Add(pos);
                             pos = castPosition + new Vector2Int(-i, -j);
-                            if(!gridSystem.IsOutOfBounds(pos.x,pos.y))
+                            if (!gridSystem.IsOutOfBounds(pos.x, pos.y))
                                 castTargets.Add(pos);
-
                         }
-
                     }
                 }
             }
 
             return castTargets;
-
         }
 
         public DamageSkillEffectMixin GetDamageMixin()
         {
-           return (DamageSkillEffectMixin)SkillEffects.First(s => s is DamageSkillEffectMixin);
+            return (DamageSkillEffectMixin)SkillEffects.First(s => s is DamageSkillEffectMixin);
         }
     }
 }

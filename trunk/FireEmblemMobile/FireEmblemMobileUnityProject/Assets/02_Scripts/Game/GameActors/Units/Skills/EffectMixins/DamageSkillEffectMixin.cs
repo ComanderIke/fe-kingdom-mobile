@@ -67,19 +67,25 @@ namespace Game.GameActors.Units.Skills
         private int GetScaledDamage(Unit user, int level)
         {
             int baseDamageg = dmg[level];
-
-            if (scalingcoeefficient.Length > level)
+            if (scalingcoeefficient.Length > 1)
             {
+                float scaling = scalingcoeefficient[0];
+                if (level < scalingcoeefficient.Length)
+                    scaling = scalingcoeefficient[level];
                 if (scalingType == AttributeType.ATK)
                 {
-                    baseDamageg += (int)(user.BattleComponent.BattleStats.GetDamage()* scalingcoeefficient[level]);
+                    baseDamageg += (int)(user.BattleComponent.BattleStats.GetDamage()* scaling);
                 }
                 else
                 {
                     baseDamageg += (int)(user.Stats.CombinedAttributes().GetAttributeStat(scalingType) *
-                                         scalingcoeefficient[level]);
+                                         scaling);
                 }
 
+            }
+            else
+            {
+                
             }
 
             return baseDamageg;
