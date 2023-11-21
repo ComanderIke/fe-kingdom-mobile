@@ -170,8 +170,14 @@ namespace Game.Mechanics
         }
         private void EndBattle(int lastCombatRoundIndex)
         {
-            attacker.BattleComponent.RealBattleEnded(defender);
-            defender.BattleComponent.RealBattleEnded(attacker);
+            MonoUtility.DelayFunction(() =>
+            {
+                attacker.BattleComponent.RealBattleEnded(defender);
+                defender.BattleComponent.RealBattleEnded(attacker);
+                attacker = null;
+                defender = null;
+            }, .7f);
+            
             
             int hpDelta = attacker.Hp - battleSimulation.combatRounds[lastCombatRoundIndex].AttackerHP;
             ((Unit) attacker).InflictDirectDamage((Unit)defender, hpDelta,defender.GetEquippedWeapon().DamageType, false);
@@ -194,8 +200,7 @@ namespace Game.Mechanics
             DeactivateCombatSkills();
             BattleAnimation.Hide();
             CheckExp();
-            attacker = null;
-            defender = null;
+           
             OnBattleFinishedBeforeAfterBattleStuff?.Invoke(battleSimulation.AttackResult);
            
             //After Exp Animation and possibly level up animation finished hide battleAnimation and invoke battle finished

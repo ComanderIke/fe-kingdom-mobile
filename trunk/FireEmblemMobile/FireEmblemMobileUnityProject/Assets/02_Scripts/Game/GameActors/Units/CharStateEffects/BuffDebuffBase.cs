@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.Rendering.LookDev;
 
 namespace Game.GameActors.Units.CharStateEffects
 {
     public abstract class BuffDebuffBase : ScriptableObject
     {
+        [SerializeField] private GameObject vfx;
         [SerializeField] public int[] duration;
         [field:SerializeField] public Sprite Icon { get; set; }
 
@@ -11,6 +13,9 @@ namespace Game.GameActors.Units.CharStateEffects
 
         public virtual void Apply(Unit caster, Unit target, int skilllevel)
         {
+            var go = Instantiate(vfx,null);
+            go.transform.position = target.GameTransformManager.GetCenterPosition();
+            Debug.Log("SPAWNED VFX");
             this.level = skilllevel;
         }
         public void IncreaseCurrentDuration()
