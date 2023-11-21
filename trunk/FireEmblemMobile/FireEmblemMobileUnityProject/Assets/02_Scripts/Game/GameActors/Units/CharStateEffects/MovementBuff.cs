@@ -1,4 +1,5 @@
-﻿using LostGrace;
+﻿using System.Collections.Generic;
+using LostGrace;
 using UnityEngine;
 
 namespace Game.GameActors.Units.CharStateEffects
@@ -10,13 +11,13 @@ namespace Game.GameActors.Units.CharStateEffects
 
         [SerializeField] private int[] extraMov;
 
-        public override EffectDescription GetEffectDescription(int level)
+        public override List<EffectDescription> GetEffectDescription(int level)
         {
             string value="+"+extraMov[level];
             string upg = value;
             if(level + 1 <extraMov.Length)
                 upg="+"+extraMov[level + 1];
-            return new EffectDescription("Mov", value, upg);
+            return new List<EffectDescription>() { new EffectDescription("Mov", value, upg) };
         }
         public override void Apply(Unit caster, Unit target, int skilllevel)
         {

@@ -13,12 +13,18 @@ MonoBehaviour:
   m_Name: SingleTargetMixin
   m_EditorClassIdentifier: 
   AnimationObject: {fileID: 0}
-  maxUsesPerLevel: 01000000
+  spawnAnimationAtCaster: 0
+  useScreenPosition: 0
+  effectType: 2
+  effectDelay: 0
+  logicDelay: 0
+  maxUsesPerLevel: 010000000200000003000000
   hpCostPerLevel: 01000000
   conditions: []
   targetType: 1
   minRange: 0
-  range: 0300000004000000
+  range: 030000000400000005000000
   sameAsAttackRange: 0
   SkillEffectMixins:
   - {fileID: 11400000, guid: ed8de21ce55862c49b59233b33a056c7, type: 2}
+  confirmPosition: 1

@@ -26,7 +26,7 @@ namespace Game.GameActors.Units.Skills
             if (appliedBuff != null)
                 target.StatusEffectManager.AddBuff(Instantiate(appliedBuff), caster, level);
             if (appliedDebuff != null)
-                target.StatusEffectManager.AddDebuff(Instantiate(appliedDebuff));
+                target.StatusEffectManager.AddDebuff(Instantiate(appliedDebuff), caster, level);
             if (AppliedStatModifier != null)
             {
                 Debug.Log("ADD STAT MODIFIER");
@@ -54,9 +54,9 @@ namespace Game.GameActors.Units.Skills
             var statModifier=AppliedStatModifier==null?null:AppliedStatModifier.GetEffectDescription(level);
          
             if(buff!=null)
-             list.Add(buff);
+             list.AddRange(buff);
             if(debuff!=null)
-                list.Add(debuff);
+                list.AddRange(debuff);
             if(statModifier!=null)
                 list.AddRange(statModifier);
        

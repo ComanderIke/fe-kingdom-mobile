@@ -13,8 +13,12 @@ namespace Game.GameActors.Units.CharStateEffects
 
         public virtual void Apply(Unit caster, Unit target, int skilllevel)
         {
-            var go = Instantiate(vfx,null);
-            go.transform.position = target.GameTransformManager.GetCenterPosition();
+            if (vfx != null)
+            {
+                var go = Instantiate(vfx, null);
+                go.transform.position = target.GameTransformManager.GetCenterPosition();
+            }
+
             Debug.Log("SPAWNED VFX");
             this.level = skilllevel;
         }

@@ -352,7 +352,11 @@ namespace Game.Mechanics
                          Debug.Log("ShowSkillCast");
                          //gridSystem.ShowCast(skillMixin.GetSize(), skillMixin.TargetArea, skillMixin.EffectType);
                          Debug.Log(skillMixin.GetName()+" "+skillMixin.GetEffectType());
-                         gridSystem.ShowCast(skillMixin.GetTargetPositions(selectedSkill.level), skillMixin.GetEffectType());
+                         
+                         Vector2 directionTmp = new Vector2(x - selectedUnit.GridComponent.GridPosition.X,
+                             y - selectedUnit.GridComponent.GridPosition.Y).normalized;
+                         Vector2Int direction = new Vector2Int((int)directionTmp.x, (int)directionTmp.y);
+                         gridSystem.ShowCast(skillMixin.GetTargetPositions(selectedSkill.level, direction), skillMixin.GetEffectType());
                          skillMixin.ShowPreview(selectedUnit, x, y);
                          var gridObject = gridSystem.Tiles[x, y].GridObject;
                          if(gridObject!=null)
@@ -382,10 +386,16 @@ namespace Game.Mechanics
                      }
                      else
                      {
+                         gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[x, y]);
+                         gridSystem.HideCast();
                          Debug.Log("ROOTED SKILL POS ROOTED CAST");
                          skillMixin.ShowPreview(selectedUnit, x, y);
                          var gridObject = gridSystem.Tiles[x, y].GridObject;
-                        
+                         Vector2 directionTmp = new Vector2(x - selectedUnit.GridComponent.GridPosition.X,
+                             y - selectedUnit.GridComponent.GridPosition.Y).normalized;
+                         Vector2Int direction = new Vector2Int((int)directionTmp.x, (int)directionTmp.y);
+                         gridSystem.ShowCast(skillMixin.GetTargetPositions(selectedSkill.level, direction), skillMixin.GetEffectType());
+
                          if(gridObject!=null)
                             UI.ShowSkillPreview(skillMixin, selectedUnit, (Unit)gridObject);
                      }

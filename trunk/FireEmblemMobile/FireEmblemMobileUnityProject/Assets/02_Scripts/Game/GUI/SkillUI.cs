@@ -115,7 +115,6 @@ namespace LostGrace
 
         public void Select()
         {
-            Skill.CombatSkillMixin.Selected = true;
             if(CancelSkillButton!=null)
                 CancelSkillButton.gameObject.SetActive(true);
             selectableVfx.gameObject.SetActive(false);
@@ -123,7 +122,7 @@ namespace LostGrace
         }
         public void Deselect()
         {
-            Skill.CombatSkillMixin.Selected = false;
+          
             if(CancelSkillButton!=null)
                 CancelSkillButton.gameObject.SetActive(false);
             selectableVfx.gameObject.SetActive(false);

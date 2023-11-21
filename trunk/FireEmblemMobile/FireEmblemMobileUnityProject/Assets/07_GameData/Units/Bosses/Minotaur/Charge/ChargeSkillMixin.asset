@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: ChargeSkillMixin
   m_EditorClassIdentifier: 
   AnimationObject: {fileID: 0}
+  spawnAnimationAtCaster: 0
+  useScreenPosition: 0
+  effectType: 2
+  effectDelay: 0
+  logicDelay: 0
   maxUsesPerLevel: 03000000
   hpCostPerLevel: 01000000
   range: 01000000
@@ -25,9 +30,12 @@ MonoBehaviour:
   minRange: 0
   confirmPositionClick: 1
   skillTransferData: {fileID: 11400000, guid: 552f73c92b3a21b4c887cd8674f2a431, type: 2}
+  skillTransferDataType: 0
   Animation: Charge
   <TargetArea>k__BackingField: 0
   SkillEffects:
   - {fileID: 11400000, guid: 140b2ec6b45e5ca42b0c01c542ebd8ce, type: 2}
   - {fileID: 11400000, guid: 9b26b56079857384db05ef79caa9a0a0, type: 2}
   <Rooted>k__BackingField: 1
+  <IncludeUnitPos>k__BackingField: 0
+  <IncludeMiddlePos>k__BackingField: 0

@@ -19,7 +19,7 @@ namespace Game.GameActors.Units.Skills
         public bool preventDouble = true;
         private bool activated = false;
         [HideInInspector]public int Uses { get; set; }
-        public bool Selected { get; set; }
+      
 
         public int GetMaxUses(int level)
         {

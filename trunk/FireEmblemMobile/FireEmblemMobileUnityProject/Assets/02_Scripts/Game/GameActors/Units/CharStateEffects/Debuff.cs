@@ -39,9 +39,12 @@ namespace Game.GameActors.Units.CharStateEffects
             }
         }
 
-        public EffectDescription GetEffectDescription(int level)
+        public List<EffectDescription> GetEffectDescription(int level)
         {
-            return new EffectDescription("TODO", "TODO", "TODO");
+            var list = new List<EffectDescription>();
+            list.Add(new EffectDescription("For "+duration[level]+" Turns: ", "", ""));
+            list.Add(new EffectDescription("Applies: ", debuffType.ToString(), debuffType.ToString()));
+            return list;
         }
         public override bool TakeEffect(Unit unit)
         {

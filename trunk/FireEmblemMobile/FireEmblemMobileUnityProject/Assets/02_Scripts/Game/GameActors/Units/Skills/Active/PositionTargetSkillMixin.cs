@@ -307,6 +307,7 @@ namespace Game.GameActors.Units.Skills
                                     targetPositions.Add(new Vector2Int(i * -direction.x, 0));
                             }
                         }
+                        
 
                         if (TargetArea == SkillTargetArea.Line || TargetArea == SkillTargetArea.Cross ||
                             TargetArea == SkillTargetArea.Star)
@@ -317,6 +318,26 @@ namespace Game.GameActors.Units.Skills
                             {
                                 if (!targetPositions.Contains(new Vector2Int(0, i * -direction.y)))
                                     targetPositions.Add(new Vector2Int(0, i * -direction.y));
+                            }
+                        }
+                        if (TargetArea == SkillTargetArea.NormalLine && direction.x != 0)
+                        {
+                            if (!targetPositions.Contains(new Vector2Int(0, i * direction.x)))
+                                targetPositions.Add(new Vector2Int(0, i * direction.x));
+                            if (TargetArea != SkillTargetArea.Line)
+                            {
+                                if (!targetPositions.Contains(new Vector2Int(0, i * -direction.x)))
+                                    targetPositions.Add(new Vector2Int(0, i * -direction.x));
+                            }
+                        }
+                        if (TargetArea == SkillTargetArea.NormalLine)
+                        {
+                            if (!targetPositions.Contains(new Vector2Int(i * direction.y, 0)))
+                                targetPositions.Add(new Vector2Int(i * direction.y, 0));
+                            if (TargetArea != SkillTargetArea.Line)
+                            {
+                                if (!targetPositions.Contains(new Vector2Int(i * -direction.y, 0)))
+                                    targetPositions.Add(new Vector2Int(i * -direction.y, 0));
                             }
                         }
                     }

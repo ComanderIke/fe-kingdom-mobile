@@ -41,7 +41,7 @@ namespace Game.GameActors.Units
             buff.Apply(caster, unit, level);
             OnStatusEffectAdded?.Invoke(unit, buff);
         }
-        public void AddDebuff(Debuff debuff)
+        public void AddDebuff(Debuff debuff, Unit caster, int level)
         {
             foreach (var negate in debuff.negateTypes)
             {
@@ -51,6 +51,7 @@ namespace Game.GameActors.Units
                     Debuffs.Remove(entry);
                 }
             }
+            debuff.Apply(caster,unit, level);
             Debuffs.Add(debuff);
             OnStatusEffectAdded?.Invoke(unit, debuff);
         }
