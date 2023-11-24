@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
@@ -15,7 +16,9 @@ public class AchievenmentListIngame : MonoBehaviour
     [HideInInspector] public Scrollbar Scrollbar;
 
     private bool MenuOpen = false;
-  
+
+
+   
 
     /// <summary>
     /// Adds all achievements to the UI based on a filter

@@ -144,6 +144,19 @@ namespace Game.GameActors.Players
         [field: SerializeField] public MetaUpgradeManager MetaUpgradeManager { get; set; }
         public string CurrentEventDialogID { get; set; }
         public BattleOutcome LastBattleOutcome { get; set; }
+        private int grace;
+        public int Grace
+        {
+            get { return grace;}
+            set
+            {
+                grace = value;
+                onGraceValueChanged?.Invoke();
+            }
+        }
+
+        public event Action onGraceValueChanged;
+    
 
         public override string ToString()
         {

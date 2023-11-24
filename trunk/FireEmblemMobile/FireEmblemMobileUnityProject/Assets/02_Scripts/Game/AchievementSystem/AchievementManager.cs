@@ -2,6 +2,8 @@
 using UnityEngine;
 using System;
 using System.Linq;
+using Game.GameActors.Players;
+using LostGrace.AchievementSystem;
 
 /// <summary>
 /// Controls interactions with the Achievement System
@@ -34,21 +36,29 @@ public class AchievementManager : MonoBehaviour
 
     public static AchievementManager instance = null; //Singleton Instance
     public AchievenmentStack Stack;
-
+    private AchievementEventsManager eventManager;
     void Awake()
     {
        if (instance == null)
        {
             instance = this;
+            eventManager = new AchievementEventsManager(this);
+            eventManager.InitEvents();
        }
        else if (instance != this)
        {
             Destroy(gameObject);
        }
-        DontDestroyOnLoad(gameObject);
-        AudioSource = gameObject.GetComponent<AudioSource>();
-        Stack = GetComponentInChildren<AchievenmentStack>();
-        LoadAchievementState();
+       Debug.Log("SET DONT DESTROY ON LOAD");
+       DontDestroyOnLoad(gameObject);
+       AudioSource = gameObject.GetComponent<AudioSource>();
+       Stack = GetComponentInChildren<AchievenmentStack>();
+       LoadAchievementState();
+    }
+
+    private void OnDestroy()
+    {
+        eventManager.Cleanup();
     }
 
     private void PlaySound (AudioClip Sound)
@@ -120,6 +130,12 @@ public class AchievementManager : MonoBehaviour
         {
             States[Index].Progress = AchievementList[Index].ProgressGoal;
             States[Index].Achieved = true;
+            if (AchievementList[Index].Chain &&AchievementList[Index].UnlockedAfter != null)
+            {
+                int unlockedIndex=FindAchievementIndex(AchievementList[Index].UnlockedAfter);
+                AchievementList[unlockedIndex].Spoiler = false;
+            }
+            onAchievementUnlocked?.Invoke();
             DisplayUnlock(Index);
             AutoSaveStates();
         }
@@ -170,6 +186,11 @@ public class AchievementManager : MonoBehaviour
     /// <param name="Progress">Add this number to progress</param>
     public void AddAchievementProgress(int Index, float Progress)
     {
+        while (AchievementList[Index].Chain && (States[Index].Achieved || States[Index].Claimed))
+        {
+            Debug.Log("UNIT DIED 3" + Index);
+            Index = FindAchievementIndex(AchievementList[Index].UnlockedAfter);
+        }
         if (AchievementList[Index].Progression)
         {
             if (States[Index].Progress + Progress >= AchievementList[Index].ProgressGoal)
@@ -284,4 +305,22 @@ public class AchievementManager : MonoBehaviour
             // }
         }
     }
+
+    public event Action onAchievementUnlocked;
+
+    public void Claim(string key)
+    {
+        int index = FindAchievementIndex(key);
+        States[index].Claimed = true;
+        int amount = int.Parse(AchievementList[index].RewardAmount);
+        switch (AchievementList[index].RewardType)
+        {
+            case RewardType.Grace:
+                Player.Instance.Grace += amount; break;
+        }
+        onStateChanged?.Invoke();
+        SaveAchievementState();
+    }
+
+    public event Action onStateChanged;
 }

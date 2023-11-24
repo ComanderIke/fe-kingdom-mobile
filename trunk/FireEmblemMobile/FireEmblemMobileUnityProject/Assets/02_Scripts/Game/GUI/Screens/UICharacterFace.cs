@@ -61,6 +61,7 @@ public class UICharacterFace : MonoBehaviour
     {
         if (hpBar.currentValue > unit.Hp)
         {
+            Debug.Log(unit.name);
             feedbacks.PlayFeedbacks();
         }
         

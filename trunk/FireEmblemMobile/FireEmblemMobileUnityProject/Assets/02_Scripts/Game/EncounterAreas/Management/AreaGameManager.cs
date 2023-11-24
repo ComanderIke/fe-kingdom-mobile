@@ -383,6 +383,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     private EncounterCursorController cursor;
     public void Deactivate()
     {
+        Player.Instance.Party.onActiveUnitChanged-=UpdatePartyGameObjects;
         foreach (var system in Systems)
         {
             system.Deactivate();

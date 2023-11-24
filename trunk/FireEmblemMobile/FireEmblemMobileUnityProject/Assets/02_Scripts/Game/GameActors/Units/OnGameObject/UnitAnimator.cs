@@ -82,13 +82,17 @@ namespace Game.GameActors.Units.OnGameObject
 
       
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             if (unit != null)
             {
                 Unit.OnUnitDamaged -= UnitDamaged;
-                unit.StatusEffectManager.OnStatusEffectAdded -= StatusEffectAnimation;
-                unit.StatusEffectManager.OnStatusEffectRemoved -= StatusEffectRemovedAnimation;
+                if (unit.StatusEffectManager != null)
+                {
+                    unit.StatusEffectManager.OnStatusEffectAdded -= StatusEffectAnimation;
+                    unit.StatusEffectManager.OnStatusEffectRemoved -= StatusEffectRemovedAnimation;
+                }
+
                 unit.OnSpecialState -= SpecialState;
             }
             //     unit.TurnStateManager.onSelected -= SetSelected;

@@ -76,6 +76,15 @@ namespace Game.WorldMapStuff.Controller
             // SceneController.LoadSceneAsync(Scenes.WM_Gameplay, true);
 
         }
-        
+
+        public void LoadSanctuary()
+        {
+            SaveGameManager.Save();
+            if(AreaGameManager.Instance!=null)
+                AreaGameManager.Instance.CleanUp();
+            if(GridGameManager.Instance!=null)
+                GridGameManager.Instance.CleanUp();
+            SceneController.LoadSceneAsync(Scenes.Sanctuary, false);
+        }
     }
 }

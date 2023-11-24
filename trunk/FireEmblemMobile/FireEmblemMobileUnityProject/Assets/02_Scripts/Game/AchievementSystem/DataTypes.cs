@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 /// <summary>
 /// Storesinformation related to a single achievement
 /// </summary>
 /// 
 [System.Serializable]
-public struct AchievementInfromation
+// [CreateAssetMenu(menuName = "GameData/Achievement")]
+public class AchievementInfromation 
 {
     [Tooltip("Name used to unlock/set achievement progress")]
     [SerializeField] public string Key;
@@ -34,6 +36,8 @@ public struct AchievementInfromation
     [SerializeField] public float NotificationFrequency;
     [Tooltip("A string which will be displayed with a progress achievement e.g. $, KM, Miles etc")]
     [SerializeField] public string ProgressSuffix;
+    [SerializeField] public bool Chain;
+    [FormerlySerializedAs("unlockedAfter")] [SerializeField] public string UnlockedAfter;
 }
 
 public enum RewardType

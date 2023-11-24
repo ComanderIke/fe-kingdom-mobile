@@ -30,6 +30,8 @@ public class UIAchievement : MonoBehaviour
     [SerializeField] private Sprite BackgroundSpriteNormal;
 
     [SerializeField] private CanvasGroup canvasGroup;
+
+    private string key;
         //, OverlayIcon, ProgressBar;
    // public GameObject SpoilerOverlay;
    // public TextMeshProUGUI SpoilerText;
@@ -43,6 +45,10 @@ public class UIAchievement : MonoBehaviour
         StartCoroutine(Wait());
     }
 
+    public void ClaimClicked()
+    {
+        AchievementManager.instance.Claim(key);
+    }
     /// <summary>
     /// Add information  about an Achievement to the UI elements
     /// </summary>
@@ -55,6 +61,7 @@ public class UIAchievement : MonoBehaviour
         // }
         // else
         // {
+        key = Information.Key;
             Title.text = Information.DisplayName;
             Description.text = Information.Description;
             claimText.text = State.Claimed?"Claimed":"Claim";

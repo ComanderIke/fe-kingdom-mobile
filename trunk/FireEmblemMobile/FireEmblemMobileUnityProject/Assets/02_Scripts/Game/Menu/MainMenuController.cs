@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using Audio;
+using Game.WorldMapStuff.Controller;
 using Game.WorldMapStuff.Model;
 using LostGrace;
 using Menu;
@@ -92,15 +93,9 @@ namespace Game.GUI
             TweenUtility.FadeOut(optionsButtonCanvasGroup);
             TweenUtility.FadeOut(exitButtonCanvasGroup);
             yield return new WaitForSeconds(.4f);
-            TweenUtility.FadeIn(Fade).setOnComplete(() =>
-            {
-                base.Hide();
-                hubMenu.Show();
-                TweenUtility.FadeOut(Fade);
-            });
             TweenUtility.FadeOut(playButtonCanvasGroup);
             TweenUtility.FadeOut(titleCanvasGroup);
-
+            GameSceneController.Instance.LoadSanctuary();
         }
 
         void HideOtherMenus(UIMenu menu)

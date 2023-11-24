@@ -188,6 +188,12 @@ public class AchievementManagerEditor : Editor
                 EditorGUILayout.PropertyField(Achievement.FindPropertyRelative("NotificationFrequency"));
                 EditorGUILayout.PropertyField(Achievement.FindPropertyRelative("ProgressSuffix"));
             }
+            EditorGUILayout.PropertyField(Achievement.FindPropertyRelative("Chain"));
+             if (Achievement.FindPropertyRelative("Chain").boolValue)
+             {
+                 EditorGUILayout.PropertyField(Achievement.FindPropertyRelative("UnlockedAfter"));
+             }
+
        }
        GUILayout.EndVertical();
        GUILayout.EndVertical();
