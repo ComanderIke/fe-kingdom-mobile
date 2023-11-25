@@ -2,6 +2,7 @@
 using System.Collections;
 using Game.GameActors.Units;
 using Game.States;
+using LostGrace;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +14,7 @@ namespace Game.GUI
     {
         
         [SerializeField] Image fill;
+        [SerializeField] private UIFillStrechedImage fillAlternate;
         [SerializeField] Image tmpFill;
         [SerializeField] int currentExp;
         [SerializeField] int tmpExp;
@@ -41,7 +43,10 @@ namespace Game.GUI
                
             }
 
-            fill.fillAmount = currentExp / 100f;
+            if(fill!=null)
+                fill.fillAmount = currentExp / 100f;
+            if(fillAlternate!=null)
+                fillAlternate.SetFill(currentExp / 100f);
             countingText?.SetText(currentExp.ToString());
             if (addedExp <=0)
             {
@@ -76,7 +81,10 @@ namespace Game.GUI
 
                 }
 
-                fill.fillAmount = currentExp / 100f;
+                if(fill!=null)
+                    fill.fillAmount = currentExp / 100f;
+                if(fillAlternate!=null)
+                    fillAlternate.SetFill(currentExp / 100f);
                 
                 countingText?.SetText(currentExp.ToString());
                 yield return new WaitForSeconds(fillSecondsPerUnit);
@@ -130,16 +138,25 @@ namespace Game.GUI
 
             currentExp = expVal;
             tmpExp = currentExp;
-           
-            if (fill == null)
+
+
+            if (fill != null)
             {
-                Debug.Log("Currentexp: "+gameObject.name);
+                fill.fillAmount = currentExp / 100f;
+                if (Math.Abs(fill.fillAmount - 1) < 0.1f)
+                    fill.fillAmount = 0;
             }
-            fill.fillAmount = currentExp / 100f;
+
+            if (fillAlternate != null)
+            {
+                fillAlternate.SetFill(currentExp / 100f);
+                if (Math.Abs(currentExp/100f - 1) < 0.1f)
+                    fill.fillAmount = 0;
+            }
+               
           
-            if (Math.Abs(fill.fillAmount - 1) < 0.1f)
-                fill.fillAmount = 0;
-            tmpFill.fillAmount = fill.fillAmount;
+           
+            tmpFill.fillAmount =currentExp / 100f;
             countingText?.SetText(currentExp.ToString());
             addedExp = 0;
             tmpAddedExp = 0;
