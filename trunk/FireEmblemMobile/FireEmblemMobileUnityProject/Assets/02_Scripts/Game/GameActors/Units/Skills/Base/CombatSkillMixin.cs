@@ -12,7 +12,7 @@ namespace Game.GameActors.Units.Skills
     {
         
         [SerializeField]protected List<SkillEffectMixin> skillEffectMixins;
-        [SerializeField]public SerializableDictionary<BlessingBP,List<SkillEffectMixin>> synergies;
+        
         public int[] maxUsesPerLevel;
         public int[] hpCostPerLevel;
         private Unit target;
@@ -72,7 +72,7 @@ namespace Game.GameActors.Units.Skills
             var key = GetKey(unit);
             if (key != null)
             {
-                foreach (var skillEffect in synergies[key])
+                foreach (var skillEffect in synergies[key].skillEffectMixins)
                 {
                     ActivateSkillEffect(user, enemy, skillEffect);
                 }
@@ -100,28 +100,7 @@ namespace Game.GameActors.Units.Skills
         }
 
 
-        private BlessingBP GetKey(Unit user)
-        {
-            if (user.Blessing == null)
-                return null;
-            foreach (var key in synergies.Keys)
-            {
-                if (key.Name == user.Blessing.Name)
-                    return key;
-            }
-
-            return null;
-        }
-        private bool HasSynergy(Unit user)
-        {
-            foreach (var key in synergies.Keys)
-            {
-                if (key.Name == user.Blessing.Name)
-                    return true;
-            }
-
-            return false;
-        }
+       
         public void Deactivate()
         {
             if (!activated)
@@ -135,7 +114,7 @@ namespace Game.GameActors.Units.Skills
             var key = GetKey(unit);
             if (key != null)
             {
-                foreach (var skillEffect in synergies[key])
+                foreach (var skillEffect in synergies[key].skillEffectMixins)
                 {
                     DeactivateSkillEffects(skillEffect);
                 }

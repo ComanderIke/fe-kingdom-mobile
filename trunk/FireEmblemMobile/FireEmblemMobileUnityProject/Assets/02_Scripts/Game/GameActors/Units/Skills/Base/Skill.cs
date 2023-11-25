@@ -178,10 +178,14 @@ namespace Game.GameActors.Units.Skills
             return CombatSkillMixin!=null;
         }
 
-        public SerializableDictionary<BlessingBP, List<SkillEffectMixin>> GetSynergies()
+        public SerializableDictionary<BlessingBP, SynergieEffects> GetSynergies()
         {
             if (CombatSkillMixin != null)
                 return CombatSkillMixin.synergies;
+            if (FirstActiveMixin != null)
+                return FirstActiveMixin.synergies;
+            if (passiveMixins.Count != 0)
+                return passiveMixins[0].synergies;
             return null;
         }
     }

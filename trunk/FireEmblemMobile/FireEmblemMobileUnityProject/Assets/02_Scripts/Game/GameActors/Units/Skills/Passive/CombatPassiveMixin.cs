@@ -46,10 +46,15 @@ namespace Game.GameActors.Units.Skills.Passive
             
             foreach (var skillEffect in skillEffectMixins)
             {
-                if(skillEffect is SelfTargetSkillEffectMixin selfTargetSkillMixin)
-                    selfTargetSkillMixin.Deactivate(unit, activatedLevel);
-                if(skillEffect is UnitTargetSkillEffectMixin utm)
-                    utm.Deactivate(target, unit, activatedLevel);
+                DeactivateSkillEffects(unit, target, skillEffect);
+            }
+            var key = GetKey(unit);
+            if (key != null)
+            {
+                foreach (var skillEffect in synergies[key].skillEffectMixins)
+                {
+                    DeactivateSkillEffects(unit,target, skillEffect);
+                }
             }
             this.unit = null;
             this.target = null;
@@ -57,6 +62,15 @@ namespace Game.GameActors.Units.Skills.Passive
             activatedLevel = -1;
 
         }
+
+        private void DeactivateSkillEffects(Unit unit, Unit target, SkillEffectMixin skillEffect)
+        {
+            if (skillEffect is SelfTargetSkillEffectMixin selfTargetSkillMixin)
+                selfTargetSkillMixin.Deactivate(unit, activatedLevel);
+            if (skillEffect is UnitTargetSkillEffectMixin utm)
+                utm.Deactivate(target, unit, activatedLevel);
+        }
+
         public void Activate(Unit unit, Unit target)
         {
            
@@ -67,7 +81,20 @@ namespace Game.GameActors.Units.Skills.Passive
             // }
             if (activated)
                 return;
-            if (!conditionManager.Valid(unit, target))
+            var compareConditions = conditionManager;
+            var key = GetKey(unit);
+            if (key != null)
+            {
+                if (synergies[key].conditionManager.Conditions.Count != 0)
+                {
+                    if (synergies[key].replacesOtherCOnditions)
+                    {
+                        compareConditions = synergies[key].conditionManager;
+                    }
+                }
+            }
+
+            if (!compareConditions.Valid(unit, target))
                 return;
             if(CombatState!= BattleEvent.AfterCombat)
                 activated = true;
@@ -77,13 +104,26 @@ namespace Game.GameActors.Units.Skills.Passive
             this.activatedLevel = skill.Level;
             foreach (var skillEffect in skillEffectMixins)
             {
-                if(skillEffect is SelfTargetSkillEffectMixin selfTargetSkillMixin)
-                    selfTargetSkillMixin.Activate(unit, skill.Level);
-                if(skillEffect is UnitTargetSkillEffectMixin utm)
-                    utm.Activate(target, unit, skill.Level);
+                ActivateSkillEffects(unit, target, skillEffect);
+            }
+            if (key != null)
+            {
+                foreach (var skillEffect in synergies[key].skillEffectMixins)
+                {
+                    ActivateSkillEffects(unit,target, skillEffect);
+                }
             }
            
         }
+
+        private void ActivateSkillEffects(Unit unit, Unit target, SkillEffectMixin skillEffect)
+        {
+            if (skillEffect is SelfTargetSkillEffectMixin selfTargetSkillMixin)
+                selfTargetSkillMixin.Activate(unit, skill.Level);
+            if (skillEffect is UnitTargetSkillEffectMixin utm)
+                utm.Activate(target, unit, skill.Level);
+        }
+
         public override void BindToUnit(Unit unit, Skill skill)
         {
             //skill.SubscribeTo(unit.BattleComponent.onAttack);

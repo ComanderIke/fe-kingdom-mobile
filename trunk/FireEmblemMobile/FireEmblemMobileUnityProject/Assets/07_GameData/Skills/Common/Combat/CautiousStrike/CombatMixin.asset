@@ -12,19 +12,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c56b3e1b098645cc927f11edf7885e69, type: 3}
   m_Name: CombatMixin
   m_EditorClassIdentifier: 
-  skillEffectMixins:
-  - {fileID: 11400000, guid: 0680e3da8c6a3154c92226ee53c89541, type: 2}
   synergies:
     list:
     - Key: {fileID: 11400000, guid: 574b483c7e49fe2449dd8e280a0a969f, type: 2}
       Value:
-      - {fileID: 0}
+        skillEffectMixins:
+        - {fileID: 11400000, guid: 4058f97a794b34821bc1d7a8aff8ff08, type: 2}
+        compareTypeWithExistingConditions: 0
+        conditionManager:
+          CompareType: 0
+          Conditions: []
+        replacesOtherCOnditions: 0
     - Key: {fileID: 11400000, guid: c70f27e718bc80146b9cd0d4de69166c, type: 2}
       Value:
-      - {fileID: 0}
+        skillEffectMixins:
+        - {fileID: 11400000, guid: d87960bceeeb144918143a3b095cfa7c, type: 2}
+        compareTypeWithExistingConditions: 0
+        conditionManager:
+          CompareType: 0
+          Conditions: []
+        replacesOtherCOnditions: 0
     - Key: {fileID: 11400000, guid: c0ffba5dec8b08d47b73e56e3a25b706, type: 2}
       Value:
-      - {fileID: 0}
+        skillEffectMixins:
+        - {fileID: 11400000, guid: 361c2881ecbd74fa49ccaa467e51ab0f, type: 2}
+        compareTypeWithExistingConditions: 0
+        conditionManager:
+          CompareType: 0
+          Conditions: []
+        replacesOtherCOnditions: 0
+  skillEffectMixins:
+  - {fileID: 11400000, guid: 0680e3da8c6a3154c92226ee53c89541, type: 2}
   maxUsesPerLevel: 01000000
   hpCostPerLevel: 01000000
   preventDouble: 0
