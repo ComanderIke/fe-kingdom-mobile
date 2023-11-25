@@ -12,7 +12,7 @@ namespace Game.GameActors.Units.Skills
     {
         
         [SerializeField]protected List<SkillEffectMixin> skillEffectMixins;
-        [SerializeField] private SerializableDictionary<BlessingBP,List<SkillEffectMixin>> synergies;
+        [SerializeField]public SerializableDictionary<BlessingBP,List<SkillEffectMixin>> synergies;
         public int[] maxUsesPerLevel;
         public int[] hpCostPerLevel;
         private Unit target;

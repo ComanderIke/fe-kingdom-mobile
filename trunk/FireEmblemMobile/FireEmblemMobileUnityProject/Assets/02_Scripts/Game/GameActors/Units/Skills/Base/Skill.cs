@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using _02_Scripts.Game.GUI.Utility;
 using Game.GameInput;
 using LostGrace;
 using UnityEngine;
@@ -174,6 +176,13 @@ namespace Game.GameActors.Units.Skills
         public bool IsCombat()
         {
             return CombatSkillMixin!=null;
+        }
+
+        public SerializableDictionary<BlessingBP, List<SkillEffectMixin>> GetSynergies()
+        {
+            if (CombatSkillMixin != null)
+                return CombatSkillMixin.synergies;
+            return null;
         }
     }
 }
