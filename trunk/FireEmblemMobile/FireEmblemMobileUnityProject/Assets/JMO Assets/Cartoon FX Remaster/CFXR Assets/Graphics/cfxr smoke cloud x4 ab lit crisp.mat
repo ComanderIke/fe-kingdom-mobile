@@ -14,8 +14,9 @@ Material:
   - _ALPHABLEND_ON
   - _CFXR_DISSOLVE
   - _CFXR_DITHERED_SHADOWS_ON
-  - _CFXR_LIGHTING_ALL
+  - _CFXR_HDR_BOOST
   - _CFXR_LIGHTING_BACK
+  - _CFXR_LIGHTING_INDIRECT
   - _CFXR_LIGHTING_WPOS_OFFSET
   - _FADING_ON
   m_InvalidKeywords:
@@ -74,7 +75,7 @@ Material:
     - _DebugDissolveTime: 0
     - _DirLightScreenAtten: 1
     - _DirectLightingMix: 0.5
-    - _DirectLightingRamp: 0.1
+    - _DirectLightingRamp: 0.108
     - _DirectLightingThreshold: 1.71
     - _DissolveSmooth: 0.15
     - _Distort: 0.1
@@ -82,8 +83,8 @@ Material:
     - _DstBlend: 10
     - _EdgeFadePow: 1
     - _FadeAlongU: 0
-    - _HdrBoost: 0
-    - _HdrMultiply: 3
+    - _HdrBoost: 1
+    - _HdrMultiply: 10
     - _IndirectLightingMix: 1
     - _InvertDissolveTex: 0
     - _LightingWorldPosStrength: 1
@@ -106,7 +107,7 @@ Material:
     - _UseFB: 0
     - _UseFontColor: 0
     - _UseGradientMap: 0
-    - _UseLighting: 3
+    - _UseLighting: 2
     - _UseLightingWorldPosOffset: 1
     - _UseNormalMap: 0
     - _UseSP: 1

@@ -20,8 +20,13 @@ namespace Game.GameActors.Units.Skills
                 }
                 
             }
-            var go=Instantiate(AnimationObject);
-            go.transform.position = user.GameTransformManager.GetCenterPosition();
+
+            if (user != null)
+            {
+                var go = Instantiate(AnimationObject);
+                go.transform.position = user.GameTransformManager.GetCenterPosition();
+            }
+
             base.Activate();
         }
 

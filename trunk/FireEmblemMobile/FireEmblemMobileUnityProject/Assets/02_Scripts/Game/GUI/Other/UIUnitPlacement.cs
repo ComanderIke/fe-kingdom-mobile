@@ -2,9 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using _02_Scripts.Game.GameActors.Items.Consumables;
+using Game.GameActors.Items.Consumables;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.OnGameObject;
+using Game.GameActors.Units.Skills;
 using Game.GameInput;
 using Game.Grid;
 using Game.GUI;
@@ -141,12 +144,35 @@ public class UIUnitPlacement : IUnitPlacementUI
         GetComponent<Canvas>().enabled = true;
 
     }
+
+    //[SerializeField] private SmokeScreenSkillEffectMixin smokeScreenSkillEffectMixin;
     public void ExitButtonClicked()
     {
         // SaveGameManager.Save();
         // SceneController.LoadSceneAsync(Scenes.TestScene, false);
-
-        GameSceneController.Instance.LoadEncounterAreaBeforeBattle();
+        if (Player.Instance.Party.Convoy.ContainsItem(new Bomb(null, "SmokeBomb", "", 0, 0, 0, null)))
+        {
+            var smokeBomb =
+                Player.Instance.Party.Convoy.Items.First(a => a.item is Bomb && a.item.Name == "SmokeBomb").item as Bomb;
+            ((SelfTargetSkillMixin)smokeBomb.skill.FirstActiveMixin).Activate(null);
+            Hide();
+            //smokeScreenSkillEffectMixin.Activate(null, 1);
+        }
+        else
+        {
+            foreach (var member in Player.Instance.Party.members)
+            {
+                if (member.CombatItem1 != null && member.CombatItem1.item.GetName() == "SmokeBomb")
+                {
+                    var smokeBomb = (Bomb)member.CombatItem1.item;
+                    ((SelfTargetSkillMixin)smokeBomb.skill.FirstActiveMixin).Activate(null);
+                    Hide();
+                    return;
+                }
+            }
+        }
+        
+        //GameSceneController.Instance.LoadEncounterAreaBeforeBattle();
     }
     public void UnitButtonClicked()
     {
