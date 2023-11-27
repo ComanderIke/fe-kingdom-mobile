@@ -180,18 +180,18 @@ namespace Game.Mechanics
             
             
             int hpDelta = attacker.Hp - battleSimulation.combatRounds[lastCombatRoundIndex].AttackerHP;
-            ((Unit) attacker).InflictDirectDamage((Unit)defender, hpDelta,defender.GetEquippedWeapon().DamageType, false);
+            ((Unit) attacker).InflictDirectDamage((Unit)defender, hpDelta,defender.GetEquippedWeapon().DamageType, true);
            // attacker.Hp = battleSimulation.Attacker.Hp;
             if (battleSimulation.AttackableTarget == null)
             {
                 hpDelta = defender.Hp - battleSimulation.combatRounds[lastCombatRoundIndex].DefenderHP;
-                ((Unit) defender).InflictDirectDamage((Unit)attacker, hpDelta,attacker.GetEquippedWeapon().DamageType, false);
+                ((Unit) defender).InflictDirectDamage((Unit)attacker, hpDelta,attacker.GetEquippedWeapon().DamageType, true);
                 //defender.Hp = battleSimulation.Defender.Hp;
             }
             else
             {
                 hpDelta = defender.Hp - battleSimulation.combatRounds[lastCombatRoundIndex].DefenderHP;
-                ((Unit) defender).InflictDirectDamage((Unit)attacker, hpDelta,attacker.GetEquippedWeapon().DamageType, false);
+                ((Unit) defender).InflictDirectDamage((Unit)attacker, hpDelta,attacker.GetEquippedWeapon().DamageType, true);
                 //defender.Hp = battleSimulation.AttackableTarget.Hp;
             }
 

@@ -174,6 +174,18 @@ namespace Game.AI
 
             return int.MaxValue;
         }
+        public int GetDistanceToLocation(Vector2Int startPos, Vector2Int location, IGridActor unit)
+        {
+            if (startPos == location)
+                return 0;
+            var path = pathFinder.FindPath(startPos.x, startPos.y, location.x, location.y, unit);
+            if (path!=null)
+            {
+                return path.GetLength()-1;
+            }
+
+            return int.MaxValue;
+        }
     }
     
 }

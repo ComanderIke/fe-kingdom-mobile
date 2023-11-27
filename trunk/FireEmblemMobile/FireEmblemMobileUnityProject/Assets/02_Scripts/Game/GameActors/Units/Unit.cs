@@ -68,7 +68,7 @@ namespace Game.GameActors.Units
         [NonSerialized]
         public StockedCombatItem CombatItem1;
         // [NonSerialized]
-        // public StockedCombatItem CombatItem2;
+        // public StockedCombatIte CombatItem2;
      
         public string name;
 
@@ -150,7 +150,7 @@ namespace Game.GameActors.Units
             BattleComponent = new BattleComponent(this);
             GameTransformManager = new GameTransformManager();
             StatusEffectManager = new StatusEffectManager(this);
-            AIComponent = new AIComponent(aiBehaviour);
+            AIComponent = new AIComponent(aiBehaviour, this);
             MaxHp = stats.CombinedAttributes().MaxHp;
             tags = new List<UnitTags>();
             hp = MaxHp;
@@ -485,10 +485,10 @@ namespace Game.GameActors.Units
             // clone.GridComponent.previousTile = GridComponent.previousTile;
             clone.GameTransformManager = new GameTransformManager();
             clone.StatusEffectManager = new StatusEffectManager(clone);
-            clone.AIComponent = new AIComponent(clone.AIComponent.AIBehaviour);
+            clone.AIComponent = new AIComponent(AIComponent.AIBehaviour, clone,false);
             clone.visuals.UnitEffectVisual = visuals.UnitEffectVisual;
             clone.visuals = visuals;
-            clone.SkillManager = new SkillManager(clone.SkillManager);
+            clone.SkillManager = new SkillManager(SkillManager);
             clone.hp = hp;
             //clone.sp = sp;
 

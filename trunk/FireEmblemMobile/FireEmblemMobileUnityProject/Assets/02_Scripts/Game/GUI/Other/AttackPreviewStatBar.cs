@@ -22,6 +22,7 @@ namespace Game.GUI
         [SerializeField] private TextMeshProUGUI hpText = default;
         [SerializeField] private TextMeshProUGUI valueAfterText = default;
         [SerializeField] private MMF_Player feedbacks;
+        [SerializeField] private MMF_Player losingHPBarFeedbacks;
         [SerializeField] private Image hpIndicator;
         [SerializeField] private MMProgressBar progressBar;
         private RectTransform rectTransform;
@@ -34,6 +35,8 @@ namespace Game.GUI
         [SerializeField] private Gradient blinkColorAlly;
         [SerializeField] private Gradient blinkColorEnemy;
         [SerializeField] private Color healColor;
+        //[SerializeField] private Color losingHPBarColor;
+        
         [SerializeField] private Gradient blinkColorEnemyHeal;
         public void UpdateValues(int maxHp, int currentHp, int afterBattleHp)
         {
@@ -126,7 +129,9 @@ namespace Game.GUI
         {
             currentHpBar.color = mainEnemyColor;
             beforeHpBar.color=previewEnemyColor;
+            
             feedbacks.GetFeedbackOfType<MMF_Image>().ColorOverTime = blinkColorEnemy;
+            losingHPBarFeedbacks.GetFeedbackOfType<MMF_Image>().ColorOverTime = blinkColorEnemy;
         }
 
         public void SetAllyColors()

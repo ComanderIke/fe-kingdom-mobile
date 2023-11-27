@@ -108,16 +108,57 @@ namespace Game.AI
             moveOrderList.RemoveAll(unit => unit.TurnStateManager.HasMoved);
             IAIAgent unit = moveOrderList.First();
             Debug.Log("First Unit in MoveOrderList: " + unit);
-            var chaseTarget = ChooseChaseTarget(unit);
-            if (chaseTarget == null)
-                Debug.Log("Chase Target = null!");
+
+            if (unit.AIComponent.AIBehaviour != null &&
+                unit.AIComponent.AIBehaviour.GetState() == AIBehaviour.State.Patrol)
+            {
+                var activePatrolPoint =unit.AIComponent.AIBehaviour.GetActivePatrolPoints();
+                if (unit.GridComponent.GridPosition.AsVector() == unit.AIComponent.AIBehaviour.GetActivePatrolPoints())
+                {
+                    unit.AIComponent.AIBehaviour.UpdatePatrolPoint();
+                    activePatrolPoint = unit.AIComponent.AIBehaviour.GetActivePatrolPoints();
+                }
+
+                var location = ChooseBestLocationToNextPatrolPoint(unit, activePatrolPoint);
+              
+                return new AIUnitAction(location, null, UnitActionType.Wait, (Unit)unit, Vector2Int.zero);
+            
+                //Get towards current patrolPoint and if reached activate it.
+            }
             else
             {
-                Vector2Int location = ChooseBestLocationToChaseTarget(unit, chaseTarget);
-                return new AIUnitAction(location, null, UnitActionType.Wait, (Unit)unit, Vector2Int.zero);
+                var chaseTarget = ChooseChaseTarget(unit);
+                if (chaseTarget == null)
+                    Debug.Log("Chase Target = null!");
+                else
+                {
+                    Vector2Int location = ChooseBestLocationToChaseTarget(unit, chaseTarget);
+                    return new AIUnitAction(location, null, UnitActionType.Wait, (Unit)unit, Vector2Int.zero);
+                }
             }
 
             return bestAction;
+        }
+        private Vector2Int ChooseBestLocationToNextPatrolPoint(IAIAgent unit, Vector2Int patrolPoint)
+        {
+            var moveLocs = unit.AIComponent.MovementOptions;
+            int minDistance = int.MaxValue;
+            Vector2Int bestloc = new Vector2Int(unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y);
+            foreach (var loc in moveLocs)
+            {
+                var gridObject = gridInfo.GetGridObject(loc);
+                if(gridObject!=null && gridObject != unit)
+                    continue;
+                int distanceToTarget = scoreCalculator.GetDistanceToLocation(loc, patrolPoint, unit);
+                if (distanceToTarget < minDistance)
+                {
+                    bestloc = loc;
+                    minDistance = distanceToTarget;
+                }
+            }
+            
+
+            return bestloc;
         }
 
         private Vector2Int ChooseBestLocationToChaseTarget(IAIAgent unit, AITarget chaseTarget)
@@ -178,6 +219,7 @@ namespace Game.AI
                 CalculateOptimalTilesToUseSkills();
                 ChooseBestSkillTargets();
                 var bestSkillUser = ChooseBestSkillUser();
+                bestSkillUser.AIComponent.AIBehaviour.UpdateState(bestSkillUser, false, true);
                 return CreateUseSkillAction(bestSkillUser);
             }
             else if (attackerList.Count != 0)
@@ -421,9 +463,14 @@ namespace Game.AI
             foreach (var unit in units)
             {
                 unit.AIComponent.AttackableTargets=GetAttackTargets(unit);
-                
-                if(unit.AIComponent.AttackableTargets.Count()!=0)
-                    attackerList.Add(unit);
+                if(unit.AIComponent.AIBehaviour!=null)
+                    unit.AIComponent.AIBehaviour.UpdateState(unit, unit.AIComponent.AttackableTargets.Count()!=0 );
+                if (unit.AIComponent.AttackableTargets.Count() != 0)
+                {
+                    if (unit.AIComponent.AIBehaviour == null|| unit.AIComponent.AIBehaviour.GetState() == AIBehaviour.State.Aggressive)
+                        attackerList.Add(unit);
+                }
+                    
             }
         }
 
@@ -501,7 +548,7 @@ namespace Game.AI
             {
                 if (unit.AIComponent.AIBehaviour != null)
                 {
-                    unit.AIComponent.AIBehaviour.UpdateState(unit);
+                    unit.AIComponent.AIBehaviour.UpdateState(unit, false);
                 }
             }
         }

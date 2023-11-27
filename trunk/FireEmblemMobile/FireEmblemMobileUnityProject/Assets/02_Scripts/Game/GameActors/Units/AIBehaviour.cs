@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Game.Mechanics;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Game.GameActors.Units
 {
@@ -9,7 +11,7 @@ namespace Game.GameActors.Units
     [CreateAssetMenu(menuName = "GameData/AIBehaviour", fileName = "AIBehaviour")]
     public class AIBehaviour : ScriptableObject
     {
-        [SerializeField] private List<Vector2> patrolPoints;
+        [SerializeField] private List<Vector2Int> patrolPoints;
         public enum State
         {
             Patrol,
@@ -19,21 +21,48 @@ namespace Game.GameActors.Units
         }
 
         private Unit target;
-
-        private State state = State.UseSkill;
+        private Unit agent;
+        private State state = State.Patrol;
         private int rageMeter = 0;
+        private int activeIndex = 0;
         [SerializeField] private int fullRageAmount = 4;
+        public Action OnRageMeterChanged;
 
-
-        public void Init()
+        public int GetMaxRageMeter()
         {
-            state = State.UseSkill;
+            return fullRageAmount;
+        }
+        public int GetRageMeter()
+        {
+            return rageMeter;
+        }
+        public void Init(Unit agent)
+        {
+            this.agent = agent;
+            target = null;
+            state = State.Patrol;
+            rageMeter = 0;
+            activeIndex = 0;
+            Unit.OnUnitDamaged -= UnitDamaged;
+            Unit.OnUnitDamaged += UnitDamaged;
+        }
+
+        void UnitDamaged(Unit unit, int damage, DamageType damageType, bool crit, bool eff)
+        {
+            if (unit.Equals(agent))
+            {
+                rageMeter++;
+                if (rageMeter > fullRageAmount)
+                    rageMeter = fullRageAmount;
+                OnRageMeterChanged?.Invoke();
+            }
         }
         public State GetState()
         {
             return state;
         }
-        public void UpdateState(IAIAgent agent)
+
+        public void UpdateState(IAIAgent agent, bool hasAttackableTargets, bool usedSkill = false)
         {
             if (agent is Unit unit)
             {
@@ -67,6 +96,13 @@ namespace Game.GameActors.Units
                         //if no=> change state to aggressive
                         break;
                     case State.UseSkill:
+                        if (usedSkill)
+                        {
+                            state = State.Aggressive;
+                            rageMeter = 0;
+                            OnRageMeterChanged?.Invoke();
+                        }
+                            
                         // if no enemies in attackrange AND no enemies in Range to stun
                         // do normal aggressive behaviour
                         // EITHER
@@ -90,12 +126,36 @@ namespace Game.GameActors.Units
 
                         break;
                     case State.Patrol:
+                        if (hasAttackableTargets)
+                        {
+                            state = State.Aggressive;
+                            UpdateState(agent, hasAttackableTargets);
+                        }
+                           
                         //check if enemy is in range
                         //if Yes => change state to aggressive
                         //if No => Move Unit along the patrol points
                         break;
                 }
             }
+        }
+
+        public List<Vector2Int> GetPatrolPoints()
+        {
+            return patrolPoints;
+        }
+
+       
+
+        public void UpdatePatrolPoint()
+        {
+            activeIndex++;
+            if (activeIndex >= patrolPoints.Count)
+                activeIndex = 0;
+        }
+        public Vector2Int GetActivePatrolPoints()
+        {
+            return patrolPoints[activeIndex];
         }
     }
 }

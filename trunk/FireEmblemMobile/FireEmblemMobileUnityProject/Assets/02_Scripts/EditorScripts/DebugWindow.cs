@@ -14,6 +14,7 @@ namespace __2___Scripts.External.Editor
     public class DebugWindow: EditorWindow
     {
         private Unit activeUnit;
+        private Unit activeEnemy;
         [MenuItem("Tools/FE_Debug_Window")]
         public static void ShowMyEditor()
         {
@@ -30,12 +31,17 @@ namespace __2___Scripts.External.Editor
             if (system != null)
             {
                 
-                if (activeUnit != (Unit)system.SelectedCharacter)
+                if (!Equals(activeUnit,(Unit)system.SelectedCharacter)&&system.SelectedCharacter!=null)
                 {
                     activeUnit = (Unit)system.SelectedCharacter;
                     
                     Repaint();
                     //Debug.Log("Repaint!");
+                } 
+                if (!Equals((Unit)system.SelectedEnemy, activeEnemy) && system.SelectedEnemy != null)
+                {
+                    activeEnemy = (Unit)system.SelectedEnemy;
+                    Repaint();
                 }
             }
             else
@@ -52,7 +58,11 @@ namespace __2___Scripts.External.Editor
         public void OnGUI()
         {
             //Debug.Log("OnGUI");
-            
+            if(GUILayout.Button("Reset"))
+            {
+                activeUnit = null;
+                activeEnemy = null;
+            }
           
             string selectedUnitName = "";
             if (activeUnit != null)
@@ -108,7 +118,7 @@ namespace __2___Scripts.External.Editor
                 }
                 GUILayout.Label("Selected Unit: " + selectedUnitName);
                 GUILayout.Label("Hp: " + activeUnit.Hp + "/" + activeUnit.MaxHp);
-                if (activeUnit.SkillManager.Skills != null)
+                if (activeUnit.SkillManager!=null && activeUnit.SkillManager.Skills != null)
                 {
                     GUILayout.Label("SkillsCount: " + activeUnit.SkillManager.Skills.Count);
                     foreach (var skill in activeUnit.SkillManager.Skills)
@@ -129,6 +139,23 @@ namespace __2___Scripts.External.Editor
                 if (GUILayout.Button("Take 5 Damage"))
                 {
                     activeUnit.InflictFixedDamage(null,5, DamageType.True);
+                }
+            }
+            else if (activeEnemy != null)
+            {
+                GUILayout.Label("Selected Enemy: " + activeEnemy.name);
+                GUILayout.Label("Hp: " + activeEnemy.Hp + "/" + activeEnemy.MaxHp);
+                if (GUILayout.Button("Lose 5 HP"))
+                {
+                    activeEnemy.Hp -= 5;
+                }
+                if (GUILayout.Button("Heal 5"))
+                {
+                    activeEnemy.Heal(5);
+                }
+                if (GUILayout.Button("Take 5 Damage"))
+                {
+                    activeEnemy.InflictFixedDamage(null,5, DamageType.True);
                 }
             }
             else
