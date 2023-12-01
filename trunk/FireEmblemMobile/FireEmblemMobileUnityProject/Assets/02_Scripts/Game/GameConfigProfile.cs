@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using _02_Scripts.Game.Dialog.DialogSystem;
 using Game.GameActors.Items;
 using Game.GameActors.Units;
@@ -29,7 +30,7 @@ namespace LostGrace
             var list = new List<Unit>();
             foreach (var unitbp in playableCharacters)
             {
-                var unit = unitbp.Create();
+                var unit = unitbp.Create(Guid.NewGuid());
                 //Debug.Log("Name: "+unit.Name+" "+"Skills: "+unit.SkillManager.Skills);
                 list.Add(unit);
             }

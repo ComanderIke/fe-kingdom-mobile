@@ -86,13 +86,15 @@ namespace Game.GameActors.Units
             stats.OnValidate();
         }
 
-        public virtual Unit Create()
+        public virtual Unit Create(Guid uniqueIdentifierPostfix)
         {
           
            
             var skillManager = new SkillManager(SkillManager);
             skillManager.AddStartSkills();
-            var unit = new Unit(bluePrintID, Name, rpgClass, (Stats)stats.Clone(), moveType, 
+            // kstring identifier = Name+uniqueIdentifierPostfix;
+           
+            var unit = new Unit(bluePrintID, uniqueIdentifierPostfix,Name, rpgClass, (Stats)stats.Clone(), moveType, 
                 new UnitVisual(visuals), skillManager,
                 new ExperienceManager(experienceManager), isBoss, aiBehaviour);
             unit.RevivalStones = revivalStones;

@@ -13,6 +13,19 @@ namespace Game.GameActors.Units.CharStateEffects
         public Attributes[] BonusAttributes;
         public CombatStats[] BonusStats;
 
+        public override bool Equals(object other)
+        {
+            if (other is StatModifier statModifier)
+            {
+                return statModifier.BonusAttributes.Equals(BonusAttributes) && statModifier.BonusStats.Equals(BonusStats);
+            }
+            return base.Equals(other);
+        }
+        public override int GetHashCode()
+        {
+            return BonusAttributes.GetHashCode();
+        }
+
         public override void Apply(Unit caster, Unit target, int skilllevel)
         {
             base.Apply(caster, target, skilllevel);

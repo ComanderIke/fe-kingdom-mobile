@@ -18,6 +18,10 @@ namespace Game.GameActors.Units.Skills
                 {
                     unitTargetSkillEffectMixin.Activate(user, skill.Level);
                 }
+                else if (effect is UnitTargetSkillEffectMixin utsm)
+                {
+                    utsm.Activate(user, user, skill.Level);
+                }
                 
             }
 
@@ -40,6 +44,10 @@ namespace Game.GameActors.Units.Skills
                 if (effect is SelfTargetSkillEffectMixin unitTargetSkillEffectMixin)
                 {
                     unitTargetSkillEffectMixin.Deactivate(unit, skill.Level);
+                }
+                else if (effect is UnitTargetSkillEffectMixin utsm)
+                {
+                    utsm.Deactivate(unit, unit, skill.Level);
                 }
                 
             }

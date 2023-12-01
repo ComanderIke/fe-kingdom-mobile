@@ -66,34 +66,35 @@ namespace Game.States
         {
             yield return new WaitForSeconds(initialDelay);
             //Debug.Log("Start EXP Coroutine: "+attacker+" "+defenders.Count);
-            foreach (var defender in defenders)
-            {
-             
-                if (!attacker.IsAlive())
+            if(defenders!=null)
+                foreach (var defender in defenders)
                 {
-                    attacker.Die((Unit)defender);
-                    yield return new WaitForSeconds(1.5f);
-                }
-                if (!defender.IsAlive())
-                {
-                    defender.Die(attacker);
-                    yield return new WaitForSeconds(1.5f);
-                }
-                if (defender is Unit unitDefender)
-                {
-
-                    if(attacker.IsAlive()&& attacker.IsPlayerControlled())
-                        yield return ExpForAttacker(unitDefender);
-                    
-                    if (defender.IsAlive() && unitDefender.IsPlayerControlled())
+                 
+                    if (!attacker.IsAlive())
                     {
-                        if(expForTargets)
-                            yield return ExpForDefender(unitDefender);
+                        attacker.Die((Unit)defender);
+                        yield return new WaitForSeconds(1.5f);
                     }
+                    if (!defender.IsAlive())
+                    {
+                        defender.Die(attacker);
+                        yield return new WaitForSeconds(1.5f);
+                    }
+                    if (defender is Unit unitDefender)
+                    {
 
+                        if(attacker.IsAlive()&& attacker.IsPlayerControlled())
+                            yield return ExpForAttacker(unitDefender);
+                        
+                        if (defender.IsAlive() && unitDefender.IsPlayerControlled())
+                        {
+                            if(expForTargets)
+                                yield return ExpForDefender(unitDefender);
+                        }
+
+                    }
+                    
                 }
-                
-            }
             Debug.Log("ALMOST FINISHED EXP COROUTINE");
             yield return new WaitForSeconds(WaitTimeWhenFinished);
             Finished();

@@ -34,6 +34,20 @@ namespace Game.GameActors.Units.CharStateEffects
             return list;
         }
 
+        public override int GetHashCode()
+        {
+            return buffType.GetHashCode();
+        }
+
+        public override bool Equals(object other)
+        {
+            if (other is Buff buff)
+            {
+                return buff.buffType == buffType;
+            }
+            return base.Equals(other);
+        }
+
         public override void Apply(Unit caster, Unit target, int skilllevel)
         {
             base.Apply(caster, target, skilllevel);

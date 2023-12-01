@@ -92,6 +92,7 @@ namespace Game.GUI
             }
             else
             {
+                Debug.Log("Instantiate Buff/DEBUFF");
                 bool good = state is Buff;
                 var parent = good ? positiveStateParent : negativeStateParent;
                 go = Instantiate(statePrefab, parent);
@@ -99,17 +100,32 @@ namespace Game.GUI
                 statusEffect.Show( state.Icon, good?positiveStateColor:negativeStateColor,good?positiveStateColor:negativeStateColor, state.GetDuration());
 
                 
-                go.SetActive(false);
+                //go.SetActive(false);
             }
 
             instantiatedStatusEffects.Add(state, go);
         }
         void RemoveStatusEffect(Unit unit, BuffDebuffBase state)
         {
-            if (!instantiatedStatusEffects.ContainsKey(state))
-                return;
-            Destroy(instantiatedStatusEffects[state]);
-            instantiatedStatusEffects.Remove(state);
+            Debug.Log("try remove status effect from UI" + state);
+            Debug.Log(instantiatedStatusEffects.Count);
+            if (state is Debuff debuff)
+            {
+                if (!instantiatedStatusEffects.ContainsKey(debuff))
+                    return;
+                Debug.Log("DESTROY statuseffect GO DEBUFF");
+                Destroy(instantiatedStatusEffects[debuff]);
+                instantiatedStatusEffects.Remove(debuff);
+            }
+            else
+            {
+                if (!instantiatedStatusEffects.ContainsKey(state))
+                    return;
+                Debug.Log("DESTROY statuseffect GO");
+                Destroy(instantiatedStatusEffects[state]);
+                instantiatedStatusEffects.Remove(state);
+            }
+            
         }
       
 

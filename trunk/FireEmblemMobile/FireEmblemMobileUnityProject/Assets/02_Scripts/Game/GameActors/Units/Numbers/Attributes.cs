@@ -190,6 +190,18 @@ namespace Game.GameActors.Units.Numbers
 
             return 0;
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Attributes attributes)
+            {
+                return attributes.MaxHp == MaxHp && attributes.str == str && attributes.intel == intel &&
+                       attributes.dex == dex && attributes.lck == lck && attributes.faith == faith &&
+                       attributes.agi == agi && attributes.def == def;
+            }
+            return base.Equals(obj);
+        }
+
         public void IncreaseAttribute(int value, AttributeType attributeType)
         {
             switch (attributeType)

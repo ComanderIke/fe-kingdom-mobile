@@ -63,6 +63,7 @@ namespace Game.GameActors.Units
         }
         public void RemoveDebuff(Debuff debuff)
         {
+            Debug.Log("REMOVE DEBUFFS"+ Debuffs.Contains(debuff)+ Debuffs.Count);
             Debuffs.Remove(debuff);
             OnStatusEffectRemoved?.Invoke(unit, debuff);
         }
@@ -82,7 +83,7 @@ namespace Game.GameActors.Units
             var debuffEnd = Debuffs.Where(d => d.TakeEffect(unit)).ToList();
             var buffEnd = Buffs.Where(b => b.TakeEffect(unit)).ToList();
             var statModifierEnd = StatModifiers.Where(s => s.TakeEffect(unit)).ToList();
-            Debug.Log("UPDATE TURN BUFF END: "+buffEnd.Count);
+            //Debug.Log("UPDATE TURN BUFF END: "+buffEnd.Count);
             foreach (var d in debuffEnd) RemoveDebuff(d);
             foreach (var b in buffEnd) RemoveBuff(b);
             foreach (var s in statModifierEnd) RemoveStatModifier(s);
@@ -97,7 +98,7 @@ namespace Game.GameActors.Units
             OnStatusEffectAdded?.Invoke(unit, appliedStatModifier);
         }
         //Stay Private stat modifers should either be removed by duration end or all at oncewill be removed by cleansing skill
-        private void RemoveStatModifier(StatModifier appliedStatModifier)
+        public void RemoveStatModifier(StatModifier appliedStatModifier)
         {
             Debug.Log("TODO how to check if clone is equal? add id to stat modifiers?");
             StatModifiers.First(a=>a.Equals(appliedStatModifier)).Unapply(unit);
