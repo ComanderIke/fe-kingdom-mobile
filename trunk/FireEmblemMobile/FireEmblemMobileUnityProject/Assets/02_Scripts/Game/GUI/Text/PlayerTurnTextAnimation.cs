@@ -17,6 +17,9 @@ namespace Game.GUI.Text
        [SerializeField] float FADE_OUT_DURATION = 0.15f;
        [SerializeField] float TEXT_FADE_IN_DURATION = 0.70f;
        [SerializeField] float TEXT_FADE_OUT_DURATION = 0.70f;
+       [SerializeField] private Image playerTurnImage;
+       [SerializeField] private Image enemyTurnImage;
+       [SerializeField] private Image allyTurnImage;
 
         void Awake()
         {
@@ -26,6 +29,17 @@ namespace Game.GUI.Text
         {
            // Debug.Log("Show PLayer Text");
             canvas.enabled = true;
+            if (playerId == FactionId.ENEMY)
+            {
+                enemyTurnImage.gameObject.SetActive(true);
+                playerTurnImage.gameObject.SetActive(false);
+            }
+            else if (playerId == FactionId.PLAYER)
+            {
+                enemyTurnImage.gameObject.SetActive(false);
+                playerTurnImage.gameObject.SetActive(true);
+            }
+              
 
            // text.material = textMaterials[playerId];
             text.colorGradientPreset = TextGradients[(int)playerId];

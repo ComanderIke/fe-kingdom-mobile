@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb843360a1e2024e9821031d19ee784, type: 3}
+  m_Name: SlothBP
+  m_EditorClassIdentifier: 
+  equippedWeaponBp: {fileID: 11400000, guid: 22ea5063ad9984e59acf30d99a63173a, type: 2}
+  EquippedRelic1: {fileID: 0}
+  Name: Nemean Lion Sin of Sloth
+  isEnemy: 1
+  isBoss: 1
+  isBig2x2: 0
+  revivalStones: 2
+  combatItem1:
+    stock: 0
+    item: {fileID: 0}
+  combatItem2:
+    stock: 0
+    item: {fileID: 0}
+  aiBehaviour: {fileID: 0}
+  stats:
+    AttackRanges: 
+    BaseAttributes:
+      str: 15
+      dex: 7
+      intel: 5
+      agi: 8
+      lck: 0
+      def: 12
+      faith: 7
+      maxHp: 50
+      sum: 79
+    <BaseGrowths>k__BackingField:
+      str: 0
+      dex: 0
+      intel: 0
+      agi: 0
+      lck: 0
+      def: 0
+      faith: 0
+      maxHp: 0
+      sum: 0
+    <FixedGrowthOffsets>k__BackingField:
+      str: 0
+      dex: 0
+      intel: 0
+      agi: 0
+      lck: 0
+      def: 0
+      faith: 0
+      maxHp: 0
+      sum: 0
+    Mov: 3
+  moveType: {fileID: 11400000, guid: 580bbea6e1e3e824a81881f8e2a825ba, type: 2}
+  SkillManager:
+    startSkills: []
+    startBlessing: {fileID: 0}
+    maxSkillCount: 0
+    skillPoints: 0
+  rpgClass: 0
+  bluePrintID: Sloth
+  dialogActor: {fileID: 0}
+  visuals:
+    CharacterSpriteSet: {fileID: 11400000, guid: 569f26b11a5864939beb659fabb37a70,
+      type: 2}
+    CharacterClassUpgradeSpriteSet: {fileID: 0}
+    UnitEffectVisual: {fileID: 11400000, guid: af10e6087dc82f34ebed15c0092e0174, type: 2}
+    Prefabs:
+      EncounterAnimatedSprite: {fileID: 2861010742256422526, guid: f782b017bae238340ba6faff38e743c9,
+        type: 3}
+      UIAnimatorController: {fileID: 22100000, guid: a0473296261b98a42bf1002f0e348e23,
+        type: 2}
+    UnitCharacterCircleUI: {fileID: 0}
+    unitRenderer: {fileID: 0}
+  audio: {fileID: 0}
+  experienceManager:
+    level: 0
+    exp: 0
+    drainableExp: 100
+    expLeftToDrain: 100
+  <ChronikComponent>k__BackingField:
+    <BodySprite>k__BackingField: {fileID: 88114694, guid: b4c935d198ab4d841908bb86727e6ba9,
+      type: 3}
+    <FaceSprite>k__BackingField: {fileID: 21300000, guid: 24ac2419721801f4b99a369cc219bc3b,
+      type: 3}
+    <Name>k__BackingField: Nemean Lion Sin of Sloth
+    <Description>k__BackingField: 'The chaos of the war disrupted the natural cycle
+      of sleep. Witnessing the relentless exhaustion of mortals and gods without
+      his soothing presence turned Hypnos''s calm nature into one of indifference.
+      He became the Demon Lord of Sloth. No longer the gentle bringer of sleep, he
+      now enveloped beings into a deep, endless slumber from which they might never
+      awaken. His appearance grew more ethereal, with heavier wings that symbolized
+      the weight of perpetual lethargy he now brought.
+
+'
