@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Game.GameActors.Players;
 using Game.Map;
+using LostGrace;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Tile = Game.Grid.Tile;
 using TileData = Game.Map.TileData;
 
 public class TileManager : MonoBehaviour
@@ -21,6 +23,7 @@ public class TileManager : MonoBehaviour
     [SerializeField] private Transform propsParent;
     private List<PropOnGrid> props;
     private List<DestroyableController> destroyables;
+    private List<GlowSpot> glowSpots;
 
     private Dictionary<TileBase, TileData> dataFromTiles;
     // Start is called before the first frame update
@@ -30,6 +33,7 @@ public class TileManager : MonoBehaviour
         dataFromTiles = new Dictionary<TileBase, TileData>();
         props = new List<PropOnGrid>();
         destroyables = new List<DestroyableController>();
+        glowSpots = new List<GlowSpot>();
         foreach (var prop in propsParent.GetComponentsInChildren<PropOnGrid>())
         {
             props.Add(prop);
@@ -38,6 +42,10 @@ public class TileManager : MonoBehaviour
         {
             destroyables.Add(destroyable);
         }
+        foreach (var glowSpot in FindObjectsOfType<GlowSpot>())
+        {
+            glowSpots.Add(glowSpot);
+        }
         foreach (var tileData in tileDatas)
         {
             if(tileData.tiles!=null&&tileData.tiles.Length>0)
@@ -45,6 +53,14 @@ public class TileManager : MonoBehaviour
                 {
                     dataFromTiles.Add(tile, tileData);
                 }
+        }
+    }
+
+    public void InitGlowSpots(Tile[,] tiles)
+    {
+        foreach (var glowSpot in glowSpots)
+        {
+            tiles[glowSpot.X, glowSpot.Y].SetGlowSpot(glowSpot);
         }
     }
 

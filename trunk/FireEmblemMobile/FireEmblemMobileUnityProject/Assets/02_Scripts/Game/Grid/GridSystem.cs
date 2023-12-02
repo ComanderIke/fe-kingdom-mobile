@@ -43,6 +43,7 @@ namespace Game.Map
             GridLogic = new GridLogic(this);
            
             NodeHelper = new NodeHelper(width,height);
+            TileManager.Instance.InitGlowSpots(Tiles);
             
         }
 

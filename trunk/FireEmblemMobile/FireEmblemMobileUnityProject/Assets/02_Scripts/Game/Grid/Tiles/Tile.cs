@@ -4,6 +4,7 @@ using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.Graphics;
 using Game.Map;
+using LostGrace;
 using UnityEngine;
 
 namespace Game.Grid
@@ -40,6 +41,7 @@ namespace Game.Grid
         public readonly ITileRenderer TileRenderer;
         public ITileEffectVisualRenderer tileVfx;
         private Transform transform;
+        private GlowSpot glowSpot;
 
         public GridTerrainData TileData
         {
@@ -184,6 +186,20 @@ namespace Game.Grid
         }
 
 
-      
+        public bool HasGlowSpot()
+        {
+            return glowSpot != null;
+        }
+
+        public void RemoveGlowSpot()
+        {
+            glowSpot.Remove();
+            glowSpot = null;
+        }
+
+        public void SetGlowSpot(GlowSpot glowSpot1)
+        {
+            glowSpot = glowSpot1;
+        }
     }
 }
