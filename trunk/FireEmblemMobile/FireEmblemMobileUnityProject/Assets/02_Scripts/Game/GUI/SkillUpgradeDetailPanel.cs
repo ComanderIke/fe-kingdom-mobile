@@ -109,11 +109,7 @@ namespace LostGrace
                
                 break;
         }
-
-        if (user.SkillManager.SkillPoints == 0)
-        {
-            learnButton.interactable = false;
-        }
+        
     }
 
     void OnEnable()

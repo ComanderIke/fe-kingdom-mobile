@@ -6,7 +6,6 @@ namespace Game.GameActors.Units.Numbers
     [Serializable]
     public class Attributes
     {
-        public Action OnAttributesUpdated;
         [SerializeField]
         private int str;
 
@@ -28,7 +27,7 @@ namespace Game.GameActors.Units.Numbers
         [SerializeField] 
         private int maxHp;
 
-        public Action AttributesUpdated => OnAttributesUpdated;
+        public event Action OnAttributesUpdated;
 
         public int STR => str;
 
@@ -66,6 +65,7 @@ namespace Game.GameActors.Units.Numbers
             lck = attributes.LCK;
            
         }
+        
         public static Attributes operator +(Attributes a, Attributes b)
         {
             var sum = new Attributes(a);
