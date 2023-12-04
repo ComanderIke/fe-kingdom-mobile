@@ -9,15 +9,15 @@ namespace Game.AI
 {
     public class AIComponent
     {
-        public AIComponent(AIBehaviour aiBehaviour)
+        public AIComponent(AIBehaviour aiBehaviour, Unit unit, bool initBehaviour=true)
         {
             AIGoals = new List<Goal>();
             Targets = new List<AITarget>();
             MovementOptions = new List<Vector2Int>();
             AttackableTargets = new List<AIAttackTarget>();
             AIBehaviour = aiBehaviour;
-            if(AIBehaviour!=null)
-                AIBehaviour.Init();
+            if(AIBehaviour!=null&&initBehaviour)
+                AIBehaviour.Init(unit);
         }
 
        public AIBehaviour AIBehaviour { get; set; }

@@ -43,6 +43,12 @@ namespace Game.Mechanics
             playerPhaseUI.Show(gridGameManager.GetSystem<TurnSystem>().TurnCount);
             playerPhaseUI.SubscribeOnBackClicked(Undo);
             playerPhaseUI.SubscribeOnCharacterCircleClicked(OnCharacterCircleClicked);
+            foreach (var member in factionManager.EnemyFaction.Units)
+            {
+                if(member.IsBoss)
+                    playerPhaseUI.ShowBossUI(member);
+            }
+            
             SetUpInputForUnits();
             UnitSelectionSystem.OnSelectedInActiveCharacter -=OnSelectedCharacter;
             UnitSelectionSystem.OnDeselectCharacter -= OnDeselectedCharacter;

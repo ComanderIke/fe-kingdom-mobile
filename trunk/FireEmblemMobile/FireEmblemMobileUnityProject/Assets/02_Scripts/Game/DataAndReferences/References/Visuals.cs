@@ -5,6 +5,7 @@ using Game.GameInput;
 using Game.Grid;
 using Game.Mechanics;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Game.Graphics
 {
@@ -26,5 +27,11 @@ namespace Game.Graphics
         public InnSprites InnSprites;
 
         public Icons Icons;
+        public DebugVisuals debug;
+    }
+    [Serializable]
+    public class DebugVisuals
+    {
+        public GameObject auraRangePrefab;
     }
 }

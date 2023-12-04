@@ -14,4 +14,5 @@ public interface IPlayerPhaseUI
     public void SubscribeOnCharacterCircleClicked(Action<Unit> onCharacterCircleClicked);
     void UnsubscribeOnCharacterCircleClicked(Action<Unit> onCharacterCircleClicked);
     void ViewUnit(Unit unit);
+    void ShowBossUI(Unit unit);
 }

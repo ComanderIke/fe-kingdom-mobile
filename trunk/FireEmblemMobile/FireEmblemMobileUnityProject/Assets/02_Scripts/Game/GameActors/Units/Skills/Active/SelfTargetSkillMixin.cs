@@ -18,10 +18,19 @@ namespace Game.GameActors.Units.Skills
                 {
                     unitTargetSkillEffectMixin.Activate(user, skill.Level);
                 }
+                else if (effect is UnitTargetSkillEffectMixin utsm)
+                {
+                    utsm.Activate(user, user, skill.Level);
+                }
                 
             }
-            var go=Instantiate(AnimationObject);
-            go.transform.position = user.GameTransformManager.GetCenterPosition();
+
+            if (user != null)
+            {
+                var go = Instantiate(AnimationObject);
+                go.transform.position = user.GameTransformManager.GetCenterPosition();
+            }
+
             base.Activate();
         }
 
@@ -35,6 +44,10 @@ namespace Game.GameActors.Units.Skills
                 if (effect is SelfTargetSkillEffectMixin unitTargetSkillEffectMixin)
                 {
                     unitTargetSkillEffectMixin.Deactivate(unit, skill.Level);
+                }
+                else if (effect is UnitTargetSkillEffectMixin utsm)
+                {
+                    utsm.Deactivate(unit, unit, skill.Level);
                 }
                 
             }

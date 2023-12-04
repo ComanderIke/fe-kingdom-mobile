@@ -21,6 +21,7 @@ namespace Game.GameActors.Units.Skills
         // Solution 3) 
         public int[] maxUsesPerLevel;
         public int[] hpCostPerLevel;
+        public bool costIsSkillPoints= true;
         [HideInInspector]public int Uses { get; set; }
        
         // public ActiveSkillMixin(int[] maxUsesPerLevel, int[] hpCostPerLevel, GameObject animationObject):base()
@@ -32,8 +33,18 @@ namespace Game.GameActors.Units.Skills
         // }
         public void Activate()
         {
-            if(skill.owner!=null)
-                skill.owner.Hp -= hpCostPerLevel[skill.level];
+            if (skill.owner != null)
+            {
+                if (costIsSkillPoints)
+                {
+                    skill.owner.SkillManager.SkillPoints -= hpCostPerLevel[skill.level];
+                }
+                else
+                {
+                    skill.owner.Hp -= hpCostPerLevel[skill.level];
+                }
+            }
+                
             Uses--;
         }
 

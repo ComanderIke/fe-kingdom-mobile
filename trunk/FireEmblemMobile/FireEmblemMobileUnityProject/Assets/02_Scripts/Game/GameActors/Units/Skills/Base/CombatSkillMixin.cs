@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using _02_Scripts.Game.GUI.Utility;
 using Game.Manager;
 using Game.Mechanics;
 using LostGrace;
@@ -11,6 +12,7 @@ namespace Game.GameActors.Units.Skills
     {
         
         [SerializeField]protected List<SkillEffectMixin> skillEffectMixins;
+        
         public int[] maxUsesPerLevel;
         public int[] hpCostPerLevel;
         private Unit target;
@@ -64,24 +66,41 @@ namespace Game.GameActors.Units.Skills
             user.BattleComponent.BattleStats.SetPreventDoubleAttacks(preventDouble);
             foreach (var skilleffect in skillEffectMixins)
             {
-                if (skilleffect is SelfTargetSkillEffectMixin selfTargetSkillEffectMixin)
+                ActivateSkillEffect(user, enemy, skilleffect);
+            }
+
+            var key = GetKey(unit);
+            if (key != null)
+            {
+                foreach (var skillEffect in synergies[key].skillEffectMixins)
                 {
-                    //Debug.Log(skill.Name);
-                   // Debug.Log(user.Name);
-                   // Debug.Log(skilleffect);
-                    selfTargetSkillEffectMixin.Activate(user, skill.Level);
-                }
-                if (skilleffect is UnitTargetSkillEffectMixin unitTargetSkillEffectMixin)
-                {
-                    if(unitTargetSkillEffectMixin.TargetIsCaster)
-                        unitTargetSkillEffectMixin.Activate(user,user, skill.Level);
-                    else
-                        unitTargetSkillEffectMixin.Activate(enemy,user, skill.Level);
+                    ActivateSkillEffect(user, enemy, skillEffect);
                 }
             }
-           // Debug.Log("UpdateBattlePreview");
+            
         }
 
+        private void ActivateSkillEffect(Unit user, Unit enemy, SkillEffectMixin skilleffect)
+        {
+            if (skilleffect is SelfTargetSkillEffectMixin selfTargetSkillEffectMixin)
+            {
+                //Debug.Log(skill.Name);
+                // Debug.Log(user.Name);
+                // Debug.Log(skilleffect);
+                selfTargetSkillEffectMixin.Activate(user, skill.Level);
+            }
+
+            if (skilleffect is UnitTargetSkillEffectMixin unitTargetSkillEffectMixin)
+            {
+                if (unitTargetSkillEffectMixin.TargetIsCaster)
+                    unitTargetSkillEffectMixin.Activate(user, user, skill.Level);
+                else
+                    unitTargetSkillEffectMixin.Activate(enemy, user, skill.Level);
+            }
+        }
+
+
+       
         public void Deactivate()
         {
             if (!activated)
@@ -90,16 +109,31 @@ namespace Game.GameActors.Units.Skills
             unit.BattleComponent.BattleStats.SetPreventDoubleAttacks(false);
             foreach (var skilleffect in skillEffectMixins)
             {
-                if (skilleffect is SelfTargetSkillEffectMixin selfTargetSkillEffectMixin)
+                DeactivateSkillEffects(skilleffect);
+            }
+            var key = GetKey(unit);
+            if (key != null)
+            {
+                foreach (var skillEffect in synergies[key].skillEffectMixins)
                 {
-                    selfTargetSkillEffectMixin.Deactivate(unit, activatedLevel);
-                }
-                if (skilleffect is UnitTargetSkillEffectMixin unitTargetSkillEffectMixin)
-                {
-                    unitTargetSkillEffectMixin.Deactivate(target,unit, activatedLevel);
+                    DeactivateSkillEffects(skillEffect);
                 }
             }
         }
+
+        private void DeactivateSkillEffects(SkillEffectMixin skilleffect)
+        {
+            if (skilleffect is SelfTargetSkillEffectMixin selfTargetSkillEffectMixin)
+            {
+                selfTargetSkillEffectMixin.Deactivate(unit, activatedLevel);
+            }
+
+            if (skilleffect is UnitTargetSkillEffectMixin unitTargetSkillEffectMixin)
+            {
+                unitTargetSkillEffectMixin.Deactivate(target, unit, activatedLevel);
+            }
+        }
+
         public void DeactivateForNextCombat()
         {
             ServiceProvider.Instance.GetSystem<BattleSystem>().RemoveAttackerActivatedSkills(this);

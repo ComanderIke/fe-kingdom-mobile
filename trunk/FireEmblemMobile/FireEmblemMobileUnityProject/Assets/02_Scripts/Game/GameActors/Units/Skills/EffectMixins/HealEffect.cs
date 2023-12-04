@@ -19,7 +19,7 @@ namespace Game.GameActors.Units.Skills
         public override void Activate(Unit target, Unit caster, int level)
         {
       
-
+            Debug.Log("ACTIVATE HEAL" +GetHealAmount(caster,target, level));
           
             target.Heal(GetHealAmount(caster,target, level));
 

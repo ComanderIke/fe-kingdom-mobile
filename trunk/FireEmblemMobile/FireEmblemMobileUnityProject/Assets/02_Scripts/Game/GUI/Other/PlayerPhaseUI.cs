@@ -8,6 +8,7 @@ using Game.Manager;
 using Game.Map;
 using Game.Mechanics;
 using Game.WorldMapStuff.Systems;
+using LostGrace;
 using TMPro;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
@@ -20,6 +21,7 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
     public TileInfoPanel TileInfoPanel;
     [SerializeField] private UICharacterViewController characterView;
     [SerializeField] private TextMeshProUGUI endTurnButtonText;
+    [SerializeField] private BossUI bossUI;
     private static PlayerPhaseUI instance;
    // [SerializeField] private UICharacterViewController enemyView;
    private void Start()
@@ -68,6 +70,11 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
             characterView.Show(unit);
         // else
         //     enemyView.Show(unit);
+    }
+
+    public void ShowBossUI(Unit unit)
+    {
+        bossUI.Show(unit);
     }
 
     public void Show(int turnCount)

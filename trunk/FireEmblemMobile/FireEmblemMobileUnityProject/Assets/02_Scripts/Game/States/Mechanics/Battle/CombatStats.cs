@@ -57,6 +57,20 @@ namespace Game.Mechanics.Battle
             Attack = bonusStats.Attack;
            
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is CombatStats combatStats)
+            {
+             
+                return combatStats.AttackSpeed == AttackSpeed && combatStats.MagicResistance == MagicResistance && combatStats.Crit == Crit &&
+                       combatStats.Armor == Armor && combatStats.CritAvoid == CritAvoid && combatStats.Hit == Hit &&
+                       combatStats.Attack == Attack && combatStats.Avoid == Avoid;
+                
+            }
+            return base.Equals(obj);
+        }
+
         public static string GetAsText(CombatStatType type)
         {
             switch (type)

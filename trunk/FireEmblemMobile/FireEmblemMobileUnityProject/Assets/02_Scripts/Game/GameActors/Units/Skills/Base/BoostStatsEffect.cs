@@ -17,6 +17,7 @@ namespace Game.GameActors.Units.Skills
         public float multiplier = 1;
         public bool skillTransferDataIsMultiplier;
         public SkillTransferData SkillTransferData;
+        private bool activated = false;
         public override void Activate(Unit target, int level)
         {
            
@@ -39,11 +40,15 @@ namespace Game.GameActors.Units.Skills
                     target.Stats.BonusStatsFromEffects += BonusStats[BonusStats.Length-1];
                 }
             }
-               
+
+            activated = true;
         }
 
         public override void Deactivate(Unit target, int level)
         {
+            if (!activated)
+                return;
+            activated = false;
            //"TODO remove actual added attributes because level can change");
             if (BonusAttributes != null && BonusAttributes.Length > 0)
             {

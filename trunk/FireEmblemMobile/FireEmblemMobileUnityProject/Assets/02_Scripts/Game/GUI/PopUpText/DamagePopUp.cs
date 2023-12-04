@@ -118,7 +118,7 @@ namespace Game.GUI.PopUpText
                 new Vector3(transformPosition.x, transformPosition.y, transformPosition.z), Quaternion.identity);
             damagePopUpTransform.layer = LayerMask.NameToLayer("Characters");
             DamagePopUp damagePopUp = damagePopUpTransform.GetComponent<DamagePopUp>();
-            damagePopUp.Setup("Missed!", style, scale, moveVector);
+            damagePopUp.Setup("miss", style, scale, moveVector);
             return damagePopUp;
         }
     }

@@ -26,6 +26,21 @@ namespace Game.GameActors.Units.CharStateEffects
         [SerializeField] public DebuffType debuffType;
         [SerializeField] public List<DebuffType> negateTypes;
 
+        public override bool Equals(object other)
+        {
+            Debug.Log("DEBUFF EQUALS CALLED");
+            if (other is Debuff debuff)
+            {
+                return debuff.debuffType == debuffType;
+            }
+            return base.Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return debuffType.GetHashCode();
+        }
+
         public override void Apply(Unit caster, Unit target, int skilllevel)
         {
             base.Apply(caster, target, skilllevel);

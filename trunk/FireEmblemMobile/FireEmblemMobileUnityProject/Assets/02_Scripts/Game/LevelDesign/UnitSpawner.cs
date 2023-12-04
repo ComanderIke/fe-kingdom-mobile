@@ -1,5 +1,7 @@
-﻿using Game.AI;
+﻿using System;
+using Game.AI;
 using Game.GameActors.Units;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -26,7 +28,7 @@ namespace Game.GameActors
 
         public Unit GetUnit()
         {
-            return unitBp.Create();
+            return unitBp.Create(Guid.NewGuid());
         }
     }
 }

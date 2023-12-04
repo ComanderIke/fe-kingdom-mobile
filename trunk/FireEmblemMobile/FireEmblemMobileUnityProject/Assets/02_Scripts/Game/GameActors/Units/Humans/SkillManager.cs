@@ -50,7 +50,9 @@ namespace Game.GameActors.Units.Humans
                 return skills;
             }
         }
-        [SerializeField] private int skillPoints = 1;
+
+        [SerializeField] private int maxSkillPoints;
+        [SerializeField] private int skillPoints = 0;
 
         public int SkillPoints
         {
@@ -124,10 +126,31 @@ namespace Game.GameActors.Units.Humans
         public void Init(Unit u)
         {
             this.unit = u;
+            u.Stats.onStatsUpdated -= UpdateSkillPoints;
+            u.Stats.onStatsUpdated += UpdateSkillPoints;
+                UpdateSkillPoints();
             foreach (var skill in Skills)
             {
                 skill.BindSkill(u);
             }
+        }
+
+        public void RefreshSkillPoints()
+        {
+            skillPoints = maxSkillPoints;
+        }
+        void UpdateSkillPoints()
+        {
+            int pointsBefore = maxSkillPoints;
+            maxSkillPoints = unit.Stats.CombinedAttributes().INT;
+            int diff = maxSkillPoints - pointsBefore;
+            if (diff > 0)
+            {
+                skillPoints += diff;
+            }
+           
+            if (skillPoints > maxSkillPoints)
+                skillPoints = maxSkillPoints;
         }
 
         public void RemoveSkill(Skill skill)
@@ -169,6 +192,7 @@ namespace Game.GameActors.Units.Humans
 
         public void RefreshSkills()
         {
+            RefreshSkillPoints();
             foreach (var skill in skills)
             {
                 if (skill.FirstActiveMixin != null)

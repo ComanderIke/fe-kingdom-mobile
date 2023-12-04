@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.GameActors.Units.Numbers;
+using Game.GameResources;
 using Game.Manager;
 using Game.Map;
 using Game.Mechanics;
@@ -40,6 +41,8 @@ namespace Game.GameActors.Units.Skills.Passive
         public AffectType affectType;
         public SkillTargetArea areaType;
         private List<Unit> inRangeTargets;
+        [SerializeField] private bool visualizeAura = false;
+        
        [SerializeField] private int[] range;
         
         void AddToTargetList(Unit u)
@@ -79,6 +82,7 @@ namespace Game.GameActors.Units.Skills.Passive
         public override void BindToUnit(Unit unit, Skill skill)
         {
             base.BindToUnit(unit, skill);
+            Debug.Log("BIND TO UNIT========================================");
             inRangeTargets = new List<Unit>();
             //Also on ResetPosition
             //TurnSystem.OnStartOfFirstTurn += UpdateList;
@@ -96,30 +100,62 @@ namespace Game.GameActors.Units.Skills.Passive
             }
             inRangeTargets.Clear();
         }
+
+        private List<GameObject> InstantiatedVisualizations;
+        void ShowVisualization(int x, int y)
+        {
+            if (!visualizeAura)
+                return;
+            if (InstantiatedVisualizations == null)
+                InstantiatedVisualizations = new List<GameObject>();
+            GameObject go=Instantiate(GameAssets.Instance.visuals.debug.auraRangePrefab, new Vector3(x, y, 0.01f), Quaternion.identity,null) as GameObject;
+            InstantiatedVisualizations.Add(go);
+        }
+        void ClearVisualization()
+        {
+            if (!visualizeAura)
+                return;
+            if (InstantiatedVisualizations == null)
+                return;
+            for (int i = InstantiatedVisualizations.Count - 1; i >= 0; i--)
+            {
+                Destroy(InstantiatedVisualizations[i]);
+            }
+            InstantiatedVisualizations.Clear();
+        }
         void OnAnyUnitMoved(IGridActor gridActor)
         {
             Unit unit = (Unit)gridActor;
-            Debug.Log("On Unit Moved: "+unit.name+" "+skill.owner);
+            Debug.Log("On Unit Moved: "+unit.name);
+            Debug.Log("Skillowner: "+skill.owner);
             if (unit.Equals(skill.owner))
             {
+                ClearVisualization();
                 ClearAllTargets();
                 var gridSystem = ServiceProvider.Instance.GetSystem<GridSystem>();
                 var startPos = unit.GridComponent.GridPosition;
+                //Debug.Log("Check for objects in range: "+range[skill.Level]);
                 for (int x = -range[skill.Level]; x <= range[skill.Level]; x++)
                 {
                     for (int y = -range[skill.Level]; y <= range[skill.Level]; y++)
                     {
                         if (x == 0 && y == 0)
                             continue;
+                      
                         var currentPos = new Vector2Int(startPos.X + x, startPos.Y + y);
+                        ShowVisualization(currentPos.x, currentPos.y);
+                        //Debug.Log("CURRENT POS: "+currentPos);
                         if(gridSystem.IsOutOfBounds(currentPos))
                             continue;
                         
                         var currentTile = gridSystem.Tiles[currentPos.x, currentPos.y]; 
+                       
                         if (currentTile.GridObject != null && currentTile.GridObject is Unit unitOnTile)
                         {
-                            if(unit.Equals(skill.owner))
+                           
+                            if(unitOnTile.Equals(skill.owner))
                                 continue;
+                            //Debug.Log("GRIDOBJECT DETECTED: "+currentPos);
                             if (affectType == AffectType.All)
                             {
                                 if (!inRangeTargets.Contains(unitOnTile))
@@ -134,6 +170,7 @@ namespace Game.GameActors.Units.Skills.Passive
                             else if (affectType == AffectType.Enemies &&
                                      unitOnTile.Faction.IsOpponentFaction(unit.Faction))
                             {
+                                //Debug.Log("ENEMY DETECTED: "+currentPos);
                                 if (!inRangeTargets.Contains(unitOnTile))
                                     AddToTargetList(unitOnTile);
                             }
@@ -143,7 +180,10 @@ namespace Game.GameActors.Units.Skills.Passive
             }
             else if (affectType == AffectType.All)
             {
-                if (unit.GridComponent.IsInRange(skill.owner.GridComponent, range[skill.Level]))
+                var diff = new Vector2Int(Math.Abs(skill.owner.GridComponent.GridPosition.X - unit.GridComponent.GridPosition.X),
+                    Math.Abs(skill.owner.GridComponent.GridPosition.Y - unit.GridComponent.GridPosition.Y));
+                var r = range[skill.Level];
+                if ((diff.x<= r&&diff.y<=r))
                 {
                     if (!inRangeTargets.Contains(unit))
                         AddToTargetList(unit);
@@ -156,7 +196,10 @@ namespace Game.GameActors.Units.Skills.Passive
             }
             else if (unit.Faction.Id == skill.owner.Faction.Id && affectType == AffectType.Allies)
             {
-                if (unit.GridComponent.IsInRange(skill.owner.GridComponent, range[skill.Level]))
+                var diff = new Vector2Int(Math.Abs(skill.owner.GridComponent.GridPosition.X - unit.GridComponent.GridPosition.X),
+                    Math.Abs(skill.owner.GridComponent.GridPosition.Y - unit.GridComponent.GridPosition.Y));
+                var r = range[skill.Level];
+                if ((diff.x<= r&&diff.y<=r))
                 {
                     if (!inRangeTargets.Contains(unit))
                         AddToTargetList(unit);
@@ -170,7 +213,11 @@ namespace Game.GameActors.Units.Skills.Passive
             }
             else if (unit.Faction.IsOpponentFaction(skill.owner.Faction) && affectType == AffectType.Enemies)
             {
-                if (unit.GridComponent.IsInRange(skill.owner.GridComponent, range[skill.Level]))
+                Debug.Log("IS ENEMY");
+                var diff = new Vector2Int(Math.Abs(skill.owner.GridComponent.GridPosition.X - unit.GridComponent.GridPosition.X),
+                    Math.Abs(skill.owner.GridComponent.GridPosition.Y - unit.GridComponent.GridPosition.Y));
+                var r = range[skill.Level];
+                if ((diff.x<= r&&diff.y<=r))
                 {
                     if (!inRangeTargets.Contains(unit))
                         AddToTargetList(unit);
@@ -190,7 +237,8 @@ namespace Game.GameActors.Units.Skills.Passive
             base.UnbindFromUnit(unit, skill);
             if(inRangeTargets==null)
                 inRangeTargets = new List<Unit>();
-             ClearAllTargets();
+            ClearAllTargets();
+            Debug.Log("UNBIND TO UNIT========================================");
             
             GridActorComponent.AnyUnitChangedPosition -= OnAnyUnitMoved;
         }

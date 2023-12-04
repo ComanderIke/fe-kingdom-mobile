@@ -6,7 +6,6 @@ namespace Game.GameActors.Units.Numbers
     [Serializable]
     public class Attributes
     {
-        public Action OnAttributesUpdated;
         [SerializeField]
         private int str;
 
@@ -28,7 +27,7 @@ namespace Game.GameActors.Units.Numbers
         [SerializeField] 
         private int maxHp;
 
-        public Action AttributesUpdated => OnAttributesUpdated;
+        public event Action OnAttributesUpdated;
 
         public int STR => str;
 
@@ -66,6 +65,7 @@ namespace Game.GameActors.Units.Numbers
             lck = attributes.LCK;
            
         }
+        
         public static Attributes operator +(Attributes a, Attributes b)
         {
             var sum = new Attributes(a);
@@ -190,6 +190,18 @@ namespace Game.GameActors.Units.Numbers
 
             return 0;
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Attributes attributes)
+            {
+                return attributes.MaxHp == MaxHp && attributes.str == str && attributes.intel == intel &&
+                       attributes.dex == dex && attributes.lck == lck && attributes.faith == faith &&
+                       attributes.agi == agi && attributes.def == def;
+            }
+            return base.Equals(obj);
+        }
+
         public void IncreaseAttribute(int value, AttributeType attributeType)
         {
             switch (attributeType)

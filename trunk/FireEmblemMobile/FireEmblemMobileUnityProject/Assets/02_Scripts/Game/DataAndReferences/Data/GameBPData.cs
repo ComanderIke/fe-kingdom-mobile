@@ -246,7 +246,7 @@ namespace Game.GameResources
         }
         public Unit GetHumanFromBlueprint(string name)
         {
-            return allUnits.First(a => a.bluePrintID == name).Create();
+            return allUnits.First(a => a.bluePrintID == name).Create(Guid.NewGuid());
         }
         public MetaUpgradeBP GetMetaUpgradeBlueprints(string name)
         {

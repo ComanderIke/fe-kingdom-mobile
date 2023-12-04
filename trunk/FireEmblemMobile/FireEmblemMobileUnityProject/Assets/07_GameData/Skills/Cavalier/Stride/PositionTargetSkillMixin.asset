@@ -12,6 +12,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f15adf6c1890134c8534ab6f2181d3c, type: 3}
   m_Name: PositionTargetSkillMixin
   m_EditorClassIdentifier: 
+  synergies:
+    list:
+    - Key: {fileID: 11400000, guid: 574b483c7e49fe2449dd8e280a0a969f, type: 2}
+      Value:
+        skillEffectMixins:
+        - {fileID: 11400000, guid: fefdb7f9c936b458ebd253c6e656cd01, type: 2}
+        replacesOtherEffects: 1
+        compareTypeWithExistingConditions: 0
+        conditionManager:
+          CompareType: 0
+          Conditions: []
+        replacesOtherCOnditions: 0
+    - Key: {fileID: 11400000, guid: a5cf9685305ec2e449183fbe8f4938d1, type: 2}
+      Value:
+        skillEffectMixins:
+        - {fileID: 11400000, guid: d7448e2c5acc349da901af22ad3abb87, type: 2}
+        replacesOtherEffects: 0
+        compareTypeWithExistingConditions: 0
+        conditionManager:
+          CompareType: 0
+          Conditions: []
+        replacesOtherCOnditions: 0
+    - Key: {fileID: 11400000, guid: 0be8008156283d74c9c456dce5a18c26, type: 2}
+      Value:
+        skillEffectMixins:
+        - {fileID: 11400000, guid: 17b8fa3e8f76741ec95fbad3bfc59563, type: 2}
+        replacesOtherEffects: 0
+        compareTypeWithExistingConditions: 0
+        conditionManager:
+          CompareType: 0
+          Conditions: []
+        replacesOtherCOnditions: 0
   AnimationObject: {fileID: 8595305276469772356, guid: 1d6eb7e3428f51b4f9a9394d14799d88,
     type: 3}
   spawnAnimationAtCaster: 1
@@ -25,14 +57,17 @@ MonoBehaviour:
   size: 02000000
   jump: 0
   jumpPush: 0
+  rotateFXTowardsTarget: 0
   stopOnCollision: 0
   OnCollisionEffects: []
   minRange: 0
   confirmPositionClick: 1
   skillTransferData: {fileID: 0}
+  skillTransferDataType: 0
   Animation: 
   <TargetArea>k__BackingField: 3
   SkillEffects:
   - {fileID: 11400000, guid: 4b96b5422079d3d4096de21dae90adf1, type: 2}
   <Rooted>k__BackingField: 1
+  <IncludeUnitPos>k__BackingField: 0
   <IncludeMiddlePos>k__BackingField: 0

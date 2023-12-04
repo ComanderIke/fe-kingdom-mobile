@@ -34,10 +34,14 @@ namespace Game.GameActors.Players
             Destroyables = new List<Destroyable>();
             Units = new List<Unit>();
         }
+
+        [SerializeField] private string factionPrefix;
+        private int unitAutoId;
         public Faction(FactionId number, string name, bool isPlayerControlled):this()
         {
             Id = number;
             Name = name;
+            unitAutoId = 0;
             IsPlayerControlled = isPlayerControlled;
         }
 

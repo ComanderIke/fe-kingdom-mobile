@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09cd96f8777de8b4ca8b2a08b9666ec3, type: 3}
+  m_Name: SelfTargetSkillMixin
+  m_EditorClassIdentifier: 
+  synergies:
+    list: []
+  AnimationObject: {fileID: 5987682418372324815, guid: 1acba51dbb7c14f4eabb4054cf67f3fc,
+    type: 3}
+  spawnAnimationAtCaster: 1
+  useScreenPosition: 0
+  effectType: 0
+  effectDelay: 0
+  logicDelay: 0
+  maxUsesPerLevel: 01000000
+  hpCostPerLevel: 00000000
+  effectMixins:
+  - {fileID: 11400000, guid: 9c318aa7e37a743f8b39bad709993b66, type: 2}
+  - {fileID: 11400000, guid: 759c5e1f12f1b44919a59dbdc7b296c8, type: 2}
+  - {fileID: 11400000, guid: 97780e00f86cb428486b6fdccf86441c, type: 2}

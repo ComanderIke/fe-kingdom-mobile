@@ -56,6 +56,9 @@ namespace LostGrace
        
        
         [SerializeField] private GameObject moveSkill;
+        [SerializeField] private TextMeshProUGUI synergieText;
+        [SerializeField] private Transform blessingParent;
+        [SerializeField] private GameObject synergieBlessingPrefab;
         public event Action<ChooseSkillButtonUI> OnClick;
       
         private Vector3 defaultSkillPosition;
@@ -74,6 +77,7 @@ namespace LostGrace
         void InstantiateSkill(Skill skill, bool blessing, bool showDeleteIfFull)
         {
             skillUIParent.DeleteAllChildren();
+            blessingParent.DeleteAllChildren();
             var prefab = skillButtonPrefab;
             if (skill.activeMixins.Count > 0)
                 prefab = activeSkillButtonPrefab;
@@ -82,6 +86,17 @@ namespace LostGrace
             var go = Instantiate(prefab, skillUIParent);
             var skillUI = go.GetComponent<SkillUI>();
             skillUI.SetSkill(skill, true, blessing, true,false,false, false);
+            var synergies = skill.GetSynergies();
+            synergieText.gameObject.SetActive(synergies!=null);
+            if (synergies != null)
+            {
+                foreach (var synergy in skill.GetSynergies())
+                {
+                    var synergyGO = Instantiate(synergieBlessingPrefab, blessingParent);
+                    synergyGO.GetComponent<Image>().sprite = synergy.Key.Icon;
+                }
+            }
+            
        
         }
         public void SetSkill(Skill skill, bool blessed,bool upgrade, bool locked =false)

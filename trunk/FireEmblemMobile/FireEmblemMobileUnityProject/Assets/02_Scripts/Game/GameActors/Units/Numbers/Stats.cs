@@ -25,6 +25,7 @@ namespace Game.GameActors.Units.Numbers
         public CombatStats BonusStatsFromEquips { get; set; }
 
         public CombatStats BonusStatsFromWeapon { get; set; }
+        
 
         // [SerializeField]
         // public int MaxSp;
@@ -33,6 +34,7 @@ namespace Game.GameActors.Units.Numbers
         public AttributeType Bane{ get; private set; }
         public Stats()
         {
+            Debug.Log("TEST CONSTRUCTOR CALLED?!");
             BaseAttributes = new Attributes();
             BaseGrowths = new Attributes();
             BonusGrowths = new Attributes();
@@ -48,6 +50,17 @@ namespace Game.GameActors.Units.Numbers
             AttackRanges = new List<int>();
             Bane = AttributeType.NONE;
             Boon = AttributeType.NONE;
+            BaseAttributes.OnAttributesUpdated += AttributesUpdate;
+            BonusAttributesFromEffects.OnAttributesUpdated += AttributesUpdate;
+            BonusAttributesFromEquips.OnAttributesUpdated += AttributesUpdate;
+            BonusAttributesFromFood.OnAttributesUpdated += AttributesUpdate;
+            BonusAttributesFromWeapon.OnAttributesUpdated += AttributesUpdate;
+            
+        }
+
+        void AttributesUpdate()
+        {
+            onStatsUpdated?.Invoke();
         }
 
 
@@ -228,5 +241,7 @@ namespace Game.GameActors.Units.Numbers
             BaseAttributes.sum = BaseAttributes.GetSum(true);
             BaseGrowths.sum = BaseGrowths.GetSum();
         }
+
+        public event Action onStatsUpdated;
     }
 }

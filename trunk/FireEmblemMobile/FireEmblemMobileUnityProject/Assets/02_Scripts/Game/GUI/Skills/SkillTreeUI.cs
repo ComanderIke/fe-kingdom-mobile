@@ -29,7 +29,7 @@ public class SkillTreeUI : MonoBehaviour
     void UpdateUI(Unit u)
     {
         this.u = u;
-        skillPoints.SetText(""+u.SkillManager.SkillPoints);
+     
       
     }
     public void LearnSkillClicked(SkillTreeEntryUI clickedSkillTreeEntry)

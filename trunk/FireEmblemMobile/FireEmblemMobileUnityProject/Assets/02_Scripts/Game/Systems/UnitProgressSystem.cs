@@ -189,10 +189,10 @@ namespace Game.Mechanics
                 levelUpRenderer.OnFinished += LevelUpFinished;
             }
 
-            if (unit.ExperienceManager.Level % 2 == 0)
-            {
-                unit.SkillManager.SkillPoints += 1;
-            }
+            // if (unit.ExperienceManager.Level % 2 == 0)
+            // {
+            //     unit.SkillManager.SkillPoints += 1;
+            // }
 
             
            

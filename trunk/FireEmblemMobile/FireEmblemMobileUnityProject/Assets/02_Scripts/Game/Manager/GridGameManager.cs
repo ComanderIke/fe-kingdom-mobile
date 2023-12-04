@@ -40,6 +40,7 @@ namespace Game.Manager
         private void Awake()
         {
             Instance = this;
+            Debug.Log("Awake" +gameObject.name);
             if (SceneTransferData.Instance != null &&SceneTransferData.Instance.BattleMap!=null&&SceneTransferData.Instance.BattleMap!=null )
                 BattleMap = SceneTransferData.Instance.BattleMap;
             else
@@ -49,6 +50,10 @@ namespace Game.Manager
             {
                 tutorial = SceneTransferData.Instance.TutorialBattle1;
             }
+            Debug.Log(transform.gameObject.name);
+            Debug.Log(Scene1InstantiatedContentParent.gameObject.name);
+            Debug.Log(BattleMap.mapPrefab.name);
+            Debug.Log(BattleMap.mapPrefab.transform);
             Instantiate(BattleMap.mapPrefab, Scene1InstantiatedContentParent);
             //Debug.Log("Initialize");
             FactionManager = new FactionManager();

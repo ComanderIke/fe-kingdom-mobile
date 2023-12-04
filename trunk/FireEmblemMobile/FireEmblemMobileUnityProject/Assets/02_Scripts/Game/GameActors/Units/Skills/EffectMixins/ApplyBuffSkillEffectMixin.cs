@@ -36,14 +36,15 @@ namespace Game.GameActors.Units.Skills
 
         public override void Deactivate(Unit target, Unit caster, int skillLevel)
         {
-            // if (target == null)
-            //     return;
-            // if (appliedBuff != null)
-            //     target.StatusEffectManager.RemoveBuff(Instantiate(appliedBuff));
-            // if (appliedDebuff != null)
-            //     target.StatusEffectManager.RemoveDebuff(Instantiate(appliedDebuff));
-            // if (AppliedStatModifier!= null)
-            //     target.StatusEffectManager.RemoveStatModifier(Instantiate(AppliedStatModifier));
+            if (target == null)
+                return;
+            Debug.Log("REMOVE BUFF/DEBUFF/STAT MODIFIER");
+            if (appliedBuff != null)
+                target.StatusEffectManager.RemoveBuff(Instantiate(appliedBuff));
+            if (appliedDebuff != null)
+                target.StatusEffectManager.RemoveDebuff(Instantiate(appliedDebuff));
+            if (AppliedStatModifier!= null)
+                target.StatusEffectManager.RemoveStatModifier(Instantiate(AppliedStatModifier));
         }
 
         public override List<EffectDescription> GetEffectDescription(Unit caster,int level)

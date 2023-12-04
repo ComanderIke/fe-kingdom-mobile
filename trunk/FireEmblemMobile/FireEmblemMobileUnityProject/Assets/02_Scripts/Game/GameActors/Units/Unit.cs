@@ -68,7 +68,7 @@ namespace Game.GameActors.Units
         [NonSerialized]
         public StockedCombatItem CombatItem1;
         // [NonSerialized]
-        // public StockedCombatItem CombatItem2;
+        // public StockedCombatIte CombatItem2;
      
         public string name;
 
@@ -128,9 +128,10 @@ namespace Game.GameActors.Units
             get { return visuals; }
         } 
 
-        public Unit(string bluePrintID, string name, RpgClass rpgClass, Stats stats, MoveType moveType,
+        public Unit(string bluePrintID, Guid uniqueIdentifier, string name, RpgClass rpgClass, Stats stats, MoveType moveType,
             UnitVisual visuals, SkillManager skillManager, ExperienceManager experienceManager, bool isBoss, AIBehaviour aiBehaviour)
         {
+            this.uniqueIdentifier = uniqueIdentifier;
             this.bluePrintID = bluePrintID;
             HealingMultipliers = new List<float>();
             Fielded = false;
@@ -150,7 +151,7 @@ namespace Game.GameActors.Units
             BattleComponent = new BattleComponent(this);
             GameTransformManager = new GameTransformManager();
             StatusEffectManager = new StatusEffectManager(this);
-            AIComponent = new AIComponent(aiBehaviour);
+            AIComponent = new AIComponent(aiBehaviour, this);
             MaxHp = stats.CombinedAttributes().MaxHp;
             tags = new List<UnitTags>();
             hp = MaxHp;
@@ -334,6 +335,7 @@ namespace Game.GameActors.Units
         public List<int> BonusAttackRanges { get; set; }
         public Bonds Bonds { get; set; }
         public int RevivalStones { get; set; }
+        public Guid uniqueIdentifier;
      
 
         public void Equip(Weapon w)
@@ -485,10 +487,10 @@ namespace Game.GameActors.Units
             // clone.GridComponent.previousTile = GridComponent.previousTile;
             clone.GameTransformManager = new GameTransformManager();
             clone.StatusEffectManager = new StatusEffectManager(clone);
-            clone.AIComponent = new AIComponent(clone.AIComponent.AIBehaviour);
+            clone.AIComponent = new AIComponent(AIComponent.AIBehaviour, clone,false);
             clone.visuals.UnitEffectVisual = visuals.UnitEffectVisual;
             clone.visuals = visuals;
-            clone.SkillManager = new SkillManager(clone.SkillManager);
+            clone.SkillManager = new SkillManager(SkillManager);
             clone.hp = hp;
             //clone.sp = sp;
 
@@ -618,7 +620,7 @@ namespace Game.GameActors.Units
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return name == other.name && Equals(Party, other.Party);
+            return uniqueIdentifier == other.uniqueIdentifier;
         }
 
         public override bool Equals(object obj)
@@ -633,7 +635,7 @@ namespace Game.GameActors.Units
         {
             unchecked
             {
-                return ((name != null ? name.GetHashCode() : 0) * 397) ^ (Party != null ? Party.GetHashCode() : 0);
+                return (uniqueIdentifier.GetHashCode());
             }
         }
 

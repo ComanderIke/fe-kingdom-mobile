@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using _02_Scripts.Game.GUI.Utility;
+using LostGrace;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Skills
@@ -8,6 +10,7 @@ namespace Game.GameActors.Units.Skills
     {
         public const int MAXLEVEL = 5;
         [NonSerialized]public Skill skill;
+        [SerializeField]public SerializableDictionary<BlessingBP,SynergieEffects> synergies;
 
         protected bool bound = false;
 
@@ -26,6 +29,28 @@ namespace Game.GameActors.Units.Skills
             this.skill = null;//TODO is this right?
             bound = false;
 
+        }
+        protected BlessingBP GetKey(Unit user)
+        {
+            if (user.Blessing == null)
+                return null;
+            foreach (var key in synergies.Keys)
+            {
+                if (key.Name == user.Blessing.Name)
+                    return key;
+            }
+
+            return null;
+        }
+        protected bool HasSynergy(Unit user)
+        {
+            foreach (var key in synergies.Keys)
+            {
+                if (key.Name == user.Blessing.Name)
+                    return true;
+            }
+
+            return false;
         }
        
     }

@@ -10,7 +10,7 @@ namespace Game.GameActors.Units.CharStateEffects
         [field:SerializeField] public Sprite Icon { get; set; }
 
         protected int level;
-
+        
         public virtual void Apply(Unit caster, Unit target, int skilllevel)
         {
             if (vfx != null)

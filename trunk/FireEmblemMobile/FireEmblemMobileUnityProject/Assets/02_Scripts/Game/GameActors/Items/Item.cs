@@ -46,7 +46,7 @@ namespace Game.GameActors.Items
 
         protected bool Equals(Item other)
         {
-            return Name == other.Name && Description == other.Description && cost == other.cost && Equals(Sprite, other.Sprite);
+            return Name == other.Name;//&& Description == other.Description && cost == other.cost && Equals(Sprite, other.Sprite);
         }
 
         public override int GetHashCode()

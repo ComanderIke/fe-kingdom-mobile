@@ -10,6 +10,7 @@ namespace Game.Manager
         public List<Faction> Factions { get; set; }
         public Faction ActiveFaction { get; set; }
         private int activeFactionNumber;
+        private const int ENEMY_FACTION_INDEX = 1;
 
         public int ActivePlayerNumber
         {
@@ -20,6 +21,17 @@ namespace Game.Manager
                 ActiveFaction = Factions[activeFactionNumber];
             }
         }
+
+        public Faction EnemyFaction
+        {
+            get
+            {
+                return Factions[ENEMY_FACTION_INDEX];
+            }
+            
+        }
+
+        
 
         public FactionManager()
         {

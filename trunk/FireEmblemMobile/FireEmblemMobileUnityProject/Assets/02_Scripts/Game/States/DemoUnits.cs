@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Game.GameActors.Items;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
@@ -25,7 +26,7 @@ namespace Game.States
             var list = new List<Unit>();
             foreach (var unit in units)
             {
-                list.Add(unit.Create());
+                list.Add(unit.Create(Guid.NewGuid()));
             }
 
             return list;
