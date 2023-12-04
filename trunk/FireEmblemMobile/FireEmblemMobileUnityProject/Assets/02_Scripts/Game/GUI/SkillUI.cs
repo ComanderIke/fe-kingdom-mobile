@@ -19,6 +19,7 @@ namespace LostGrace
         [SerializeField] private TextMeshProUGUI uses;
         [SerializeField] private float scaleSmall = 0.7f;
         [SerializeField] private float scaleBig = 0.9f;
+        [SerializeField] private CanvasGroup canvasGroup;
    
         [SerializeField] private Image frame;
         [SerializeField] private Image background;
@@ -28,7 +29,8 @@ namespace LostGrace
         [SerializeField] private Color curseFrameColor;
         [SerializeField] private Color blessingBackgroundColor;
         [SerializeField] private Color curseBackgroundColor;
-        [SerializeField] private TMP_ColorGradient hpCostBlueColor;
+        // [SerializeField] private TMP_ColorGradient hpCostBlueColor;
+        [SerializeField] private TMP_ColorGradient skillPointColor;
         [SerializeField] private TMP_ColorGradient hpCostRedColor;
         [SerializeField] private GameObject deleteButton;
         [SerializeField] private GameObject selectedVfx;
@@ -55,12 +57,14 @@ namespace LostGrace
             {
                 // Debug.Log("combatSkillActive MISSING " + skill.Name+" "+gameObject.name+" "+combatSkillSelected);
                 combatSkillActive.enabled=combatSkillSelected;
+               
             }
 
             if(big)
                 (transform as RectTransform).sizeDelta = bigSize;
             button.interactable = interactable;
             this.canAffordHpCost = canAfforHpCost;
+            canvasGroup.alpha = canAffordHpCost ? 1f : .6f;
             this.hasUses = hasUses;
             // if (button.interactable)
             //     button.interactable = canAfforHpCost;
@@ -74,12 +78,20 @@ namespace LostGrace
                     uses.text = skill.FirstActiveMixin.Uses + "/" +
                                 skill.FirstActiveMixin.maxUsesPerLevel[skill.Level];
                     hpCost.text = "-" + skill.FirstActiveMixin.hpCostPerLevel[skill.Level];
+                    if (hpCost != null)
+                    {
+                        hpCost.colorGradientPreset = skillPointColor; //canAfforHpCost?skillPointColor: hpCostRedColor;
+                    }
                 }
                 else
                 {
                     uses.text = skill.CombatSkillMixin.Uses + "/" +
                                 skill.CombatSkillMixin.maxUsesPerLevel[skill.Level];
                     hpCost.text = "-" + skill.CombatSkillMixin.hpCostPerLevel[skill.Level];
+                    if (hpCost != null)
+                    {
+                        hpCost.colorGradientPreset = hpCostRedColor; //canAfforHpCost?hpCostBlueColor: hpCostRedColor;
+                    }
                 }
 
 
@@ -108,8 +120,8 @@ namespace LostGrace
                 background.color = curseBackgroundColor;
             }
 
-            if(hpCost!=null)
-                hpCost.colorGradientPreset = canAfforHpCost?hpCostBlueColor: hpCostRedColor;
+            
+               
             
         }
 
