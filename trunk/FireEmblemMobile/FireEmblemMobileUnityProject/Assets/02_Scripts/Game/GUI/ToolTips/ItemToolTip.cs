@@ -48,13 +48,13 @@ public class ItemToolTip : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
-    public void SetValues(StockedItem item, Vector3 position)
+    public void SetValues(StockedItem item, Vector3 position, bool exactPos=false)
     {
         headerText.text = item.item.Name;
         descriptionText.text = item.item.Description;
         if(itemIcon!=null)
             itemIcon.SetValues(item, 0);
-        rectTransform.anchoredPosition = position+ new Vector3(0,280,0);
+        rectTransform.anchoredPosition = position+ new Vector3(0,exactPos?0:280,0);
         UpdateTextWrap(position);
     }
 }

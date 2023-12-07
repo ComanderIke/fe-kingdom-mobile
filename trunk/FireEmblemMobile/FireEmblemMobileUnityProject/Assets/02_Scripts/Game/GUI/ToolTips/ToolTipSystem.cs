@@ -49,14 +49,17 @@ public class ToolTipSystem : MonoBehaviour
         
     }
     
-    
-    public static void Show(StockedItem item, Vector3 position)
+    public static void Show(Item item, Vector3 position, bool screenPos=false, bool exactPos=false)
+    {
+        Show(new StockedItem(item, 1), position, screenPos, exactPos);
+    }
+    public static void Show(StockedItem item, Vector3 position, bool screenPos=false, bool exactPos=false)
     {
         Debug.Log("SHOW STOCKED TOOLTIP" + item.item.Name);
         instance.tooltipShownThisFrame = true;
         CloseAllToolTips();
 
-        instance.ItemToolTip.SetValues(item, Camera.main.WorldToScreenPoint(position));
+        instance.ItemToolTip.SetValues(item, screenPos?position:Camera.main.WorldToScreenPoint(position), exactPos);
         
         instance.ItemToolTip.gameObject.SetActive(true);
     }

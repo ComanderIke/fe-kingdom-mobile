@@ -49,7 +49,7 @@ namespace Game.GameActors.Units
 
     
 
-        public int drainableExp = 100;
+        public int drainableExp = 25;
 [HideInInspector]
         public int expLeftToDrain;
 
