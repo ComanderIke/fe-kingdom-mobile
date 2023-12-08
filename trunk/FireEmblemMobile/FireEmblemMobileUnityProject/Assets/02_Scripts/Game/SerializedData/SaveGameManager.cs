@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
+using Game.GameResources;
 using Game.Systems;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -50,9 +51,9 @@ namespace LostGrace
             return currentSaveData.playerData.partyData.humanData.Count != 0;
         }
     
-        public static void NewGame(int slot, string label)
+        public static void NewGame(int slot, string label, string difficulty)
         {
-            currentSaveData = new SaveData(slot, label);
+            currentSaveData = new SaveData(slot, label, difficulty);
             Debug.Log("New Game: "+label+" Slot: "+slot);
             Save(slot);
         }
@@ -81,6 +82,7 @@ namespace LostGrace
         {
             try
             {
+                
                 foreach (IDataPersistance dataPersistance in dataPersistanceObjects)
                 {
                     dataPersistance.SaveData(ref currentSaveData);
@@ -181,7 +183,7 @@ namespace LostGrace
         }
 
         private static SaveData tmpData;
-        public static string LoadMetaDataOnly(int slot)
+        public static SlotData LoadMetaDataOnly(int slot)
         {
             string path = Path.Combine(Application.persistentDataPath+"/saves", SaveFileName+slot+".fe");
             try
@@ -196,10 +198,10 @@ namespace LostGrace
                         Debug.Log("Loading Successfull!");
                     }
 
-                    tmpData = new SaveData(0, "tmp");
+                    tmpData = new SaveData(0, "tmp", "tmp");
                     // Debug.Log("JsonFile: "+json);
                     JsonUtility.FromJsonOverwrite(json, tmpData);
-                    return tmpData.fileLabel;
+                    return tmpData.slotData;
                     tmpData = null;
                 }
                 else
@@ -215,7 +217,7 @@ namespace LostGrace
                 Debug.LogWarning("Failed to load data file. Attempting to roll back");
             }
 
-            return "LOAD ERROR";
+            return null;
         }
         public static void Load(int slot, bool allowRollback=true)
         {
@@ -240,7 +242,7 @@ namespace LostGrace
                         Debug.Log("Loading Successfull!");
                     }
 
-                    currentSaveData = new SaveData(0, "tmp");
+                    currentSaveData = new SaveData(0, "tmp", "tmp");
                    // Debug.Log("JsonFile: "+json);
                     JsonUtility.FromJsonOverwrite(json, currentSaveData);
                     //Debug.Log("FileSlotNameBer: " + currentSaveData.fileLabel);
@@ -276,6 +278,7 @@ namespace LostGrace
             //     NewGame(slot, "File "+slot);
             // }
 
+            GameConfig.Instance.ConfigProfile.chosenDifficulty = GameBPData.Instance.GetDifficultyProfile(currentSaveData.slotData.difficulty);
             foreach (IDataPersistance dataPersistance in dataPersistanceObjects)
             {
                 dataPersistance.LoadData(currentSaveData);
@@ -316,17 +319,11 @@ namespace LostGrace
             return File.Exists(Path.Combine(folder, SaveFileName + slot + ".fe"));
         }
 
-        public static string GetFileSlotName(int slot)
+        public static SlotData GetFileSlotData(int slot)
         {
             var metaData = LoadMetaDataOnly(slot);
           //  Debug.Log("FileSlotName: "+currentSaveData.fileLabel);
             return metaData;
-        }
-        public static string GetFileSlotDifficulty(int slot)
-        {
-            var metaData = LoadMetaDataOnly(slot);
-            //  Debug.Log("FileSlotName: "+currentSaveData.fileLabel);
-            return "Normal";
         }
 
         public static bool HasEncounterSaveData()

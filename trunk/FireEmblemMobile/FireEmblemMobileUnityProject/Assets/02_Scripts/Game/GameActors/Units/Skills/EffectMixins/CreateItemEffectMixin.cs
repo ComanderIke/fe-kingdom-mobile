@@ -23,7 +23,9 @@ namespace Game.GameActors.Units.Skills
             // check if objects in the way
             if (randomPotion)
             {
+                
                 var potion = GameBPData.Instance.GetRandomPotion(rarityIncrease[level]);
+                ToolTipSystem.Show(potion, new Vector2(Screen.width/2f, Screen.height/2f), true, true);
                 if (target.CombatItem1 == null&&potion is IEquipableCombatItem combatItem)
                 {
                     target.Equip(new StockedCombatItem(combatItem, 1),1);
@@ -36,6 +38,7 @@ namespace Game.GameActors.Units.Skills
                 {
                     Player.Instance.Party.AddItem(potion);
                 }
+                
                 
             }
 

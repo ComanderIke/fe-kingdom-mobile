@@ -20,6 +20,7 @@ public class TimeLineController : MonoBehaviour
     public GameObject battleBackground;//BattleBackgroundOpenFieldPrefab
     public Action zoomInFinished;
     public Action zoomOutFinished;
+    public float battleAnimationAlternatePositionXOffset;
 
     void PlayAtSpeed(PlayableDirector playableDirector, float speed)
     {
@@ -54,7 +55,7 @@ public class TimeLineController : MonoBehaviour
     {
         playableDirector.Stop();
         PlayIntro(introReverse);
-        SetupBackground();
+        SetupBackground(introReverse);
         
         PlayAtSpeed(playableDirector, introWalkInPlaySpeed);
         
@@ -63,17 +64,19 @@ public class TimeLineController : MonoBehaviour
 
     void PlayIntro(bool reverse)
     {
-        playableDirector.playableAsset = reverse ? cameraIntro : cameraIntroInverse;
+        playableDirector.playableAsset = reverse ? cameraIntro : cameraIntroInverse; 
+        //playableDirector.playableAsset = cameraIntroInverse; 
+        //camera.transform.localPosition = new Vector3( -80, camera.transform.localPosition.y, camera.transform.localPosition.z);
         camera.transform.localPosition = new Vector3(reverse ? -80 : 80, camera.transform.localPosition.y, camera.transform.localPosition.z);
     }
 
     private GameObject background;
-    void SetupBackground()
+    void SetupBackground(bool reverse=false)
     {
         if(background!=null)
             Destroy(background);
         background = GameObject.Instantiate(battleBackground, transform);
-        background.transform.position = new Vector3(camera.transform.position.x, background.transform.position.y,
+        background.transform.position = new Vector3(camera.transform.position.x+(!reverse?battleAnimationAlternatePositionXOffset:0), background.transform.position.y,
             background.transform.position.z);
     }
 

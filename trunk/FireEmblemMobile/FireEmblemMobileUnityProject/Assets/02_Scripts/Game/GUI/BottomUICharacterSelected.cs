@@ -190,6 +190,48 @@ namespace LostGrace
            UpdateUI();
         }
 
+        public void WeaponClicked()
+        {
+            ToolTipSystem.Show(unit.equippedWeapon, weaponSlot.transform.position);
+            var weapon = unit.equippedWeapon;
+            if (!interactableForPlayer)
+                return;
+            if (weapon.Skill!=null && weapon.Skill.activeMixins.Count > 0)
+            {
+                if (ServiceProvider.Instance.GetSystem<UnitSelectionSystem>().SelectedSkill == null)
+                {
+                    new GameplayCommands().SelectSkill(weapon.Skill);
+                    
+                }
+                else
+                {
+                    Debug.Log("DESELECT SKILL");
+                    new GameplayCommands().DeselectSkill();
+                }
+            }
+        }
+        public void RelicClicked()
+        {
+            ToolTipSystem.Show(unit.EquippedRelic, weaponSlot.transform.position);
+            var relic = unit.EquippedRelic;
+            if (!interactableForPlayer)
+                return;
+            if (relic == null)
+                return;
+            if (relic.Skill!=null && relic.Skill.activeMixins.Count > 0)
+            {
+                if (ServiceProvider.Instance.GetSystem<UnitSelectionSystem>().SelectedSkill == null)
+                {
+                    new GameplayCommands().SelectSkill(relic.Skill);
+                    
+                }
+                else
+                {
+                    Debug.Log("DESELECT SKILL");
+                    new GameplayCommands().DeselectSkill();
+                }
+            }
+        }
         public void CombatItemClicked(UICombatItemSlot  clickedCombatItemUI)
         {
          

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
+using Game.GameActors.Units.Skills;
 using Game.Mechanics;
 using UnityEngine;
 
@@ -20,7 +21,7 @@ namespace Game.GameActors.Items.Weapons
         public WeaponAttributes[] UpgradeAttributes;
         public int weaponLevel = 1;
         public int maxLevel = 3;
-        
+        public SkillBp skillBp;
         public WeaponType WeaponType;
         public DamageType DamageType;
         public List<EffectiveAgainstType> effectiveAgainst;
@@ -34,7 +35,7 @@ namespace Game.GameActors.Items.Weapons
                 effectiveness.Add(effectiveAgainst[i], effectiveAgainstCoefficients[i]);
             }
             return new Weapon(name, description, cost, rarity,maxStack,sprite, weaponLevel, maxLevel, AttackRanges,
-                WeaponAttributes,UpgradeAttributes, WeaponType, DamageType, effectiveness);
+                WeaponAttributes,UpgradeAttributes, WeaponType, DamageType, skillBp==null?null:skillBp.Create(),effectiveness );
         }
     }
 }
