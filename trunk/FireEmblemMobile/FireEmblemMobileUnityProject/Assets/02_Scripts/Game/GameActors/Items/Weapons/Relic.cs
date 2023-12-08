@@ -5,6 +5,7 @@ using Game.GameActors.Units;
 using Game.GameActors.Units.Numbers;
 using Game.GameActors.Units.Skills;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game.GameActors.Items.Weapons
 {
@@ -30,12 +31,12 @@ namespace Game.GameActors.Items.Weapons
         [Header("RelicAttributes")]
         public int slotCount = 0;
         public GemSlot[] slots;
-        public Skill skill;
+        [FormerlySerializedAs("skill")] public Skill Skill;
         private Unit user;
         public Relic(string name, string description, int cost, int rarity, int maxStack,Sprite sprite,Skill skill,int slotCount) : base(name, description, cost,rarity, maxStack,sprite)
         {
             this.slotCount = slotCount;
-            this.skill = skill;
+            this.Skill = skill;
             
             slots = new GemSlot[slotCount];
             for (int i=0; i < slotCount; i++)
@@ -105,17 +106,17 @@ namespace Game.GameActors.Items.Weapons
 
         public void Unequip(Unit unit)
         {
-            if (skill != null)
+            if (Skill != null)
             {
-                skill.UnbindSkill(unit);
+                Skill.UnbindSkill(unit);
             }
         }
 
         public void Equip(Unit unit)
         {
-            if (skill != null)
+            if (Skill != null)
             {
-                skill.BindSkill(unit);
+                Skill.BindSkill(unit);
             }
         }
     }

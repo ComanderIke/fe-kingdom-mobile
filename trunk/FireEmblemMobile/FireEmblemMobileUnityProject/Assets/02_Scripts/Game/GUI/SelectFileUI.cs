@@ -28,7 +28,8 @@ namespace LostGrace
             {
               
                 slot1Button.SetLoaded(true);
-                slot1Button.UpdateText(SaveGameManager.GetFileSlotName(1),SaveGameManager.GetFileSlotDifficulty(1));
+                var slotData = SaveGameManager.GetFileSlotData(1);
+                slot1Button.UpdateText(slotData.fileName,slotData.difficulty);
                 slot1Button.ShowDeleteButton();
             }
             else
@@ -41,7 +42,8 @@ namespace LostGrace
             {
                 Debug.Log("Slot 2 Exists");
                 slot2Button.SetLoaded(true);
-                slot2Button.UpdateText(SaveGameManager.GetFileSlotName(2), SaveGameManager.GetFileSlotDifficulty(2));
+                var slotData = SaveGameManager.GetFileSlotData(2);
+                slot2Button.UpdateText(slotData.fileName,slotData.difficulty);
                 slot2Button.ShowDeleteButton();
             }
             else
@@ -54,7 +56,8 @@ namespace LostGrace
             {
                 Debug.Log("Slot 3 Exists");
                 slot3Button.SetLoaded(true);
-                slot3Button.UpdateText(SaveGameManager.GetFileSlotName(3),SaveGameManager.GetFileSlotDifficulty(3));
+                var slotData = SaveGameManager.GetFileSlotData(3);
+                slot3Button.UpdateText(slotData.fileName,slotData.difficulty);
                 slot3Button.ShowDeleteButton();
             }
             else
@@ -149,12 +152,12 @@ namespace LostGrace
             switch (selected)
             {
                 case 1:  slot1Button.UpdateText(name, difficulty);
-                    SaveGameManager.NewGame(1, name);
+                    SaveGameManager.NewGame(1, name, difficulty);
                     break;
                 case 2:  slot2Button.UpdateText(name, difficulty);
-                    SaveGameManager.NewGame(2, name);break;
+                    SaveGameManager.NewGame(2, name, difficulty);break;
                 case 3:  slot3Button.UpdateText(name, difficulty);
-                    SaveGameManager.NewGame(3, name);break;
+                    SaveGameManager.NewGame(3, name, difficulty);break;
             }
             // slot1Button.SetInteractable(true);
             // slot2Button.SetInteractable(true);

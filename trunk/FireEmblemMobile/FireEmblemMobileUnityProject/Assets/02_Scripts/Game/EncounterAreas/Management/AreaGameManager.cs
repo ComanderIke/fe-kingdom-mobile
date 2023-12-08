@@ -53,7 +53,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
             startFreshSaveFirstTime = true;
             startFreshSave = false;
             Debug.Log("Started game from EncounterArea => creating new game savedata");
-            SaveGameManager.NewGame(0, "DebugEditorSave");
+            SaveGameManager.NewGame(0, "DebugEditorSave", GameConfig.Instance.ConfigProfile.chosenDifficulty.name);
         }
         else
         {

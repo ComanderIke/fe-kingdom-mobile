@@ -34,7 +34,7 @@ namespace Game.GameActors.Units.Numbers
         public AttributeType Bane{ get; private set; }
         public Stats()
         {
-            Debug.Log("TEST CONSTRUCTOR CALLED?!");
+            
             BaseAttributes = new Attributes();
             BaseGrowths = new Attributes();
             BonusGrowths = new Attributes();

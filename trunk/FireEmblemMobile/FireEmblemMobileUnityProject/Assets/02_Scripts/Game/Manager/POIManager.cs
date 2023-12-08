@@ -122,7 +122,6 @@ namespace LostGrace
             TweenUtility.FadeIn(Fade).setOnComplete(()=>
             {
                 sanctuary.gameObject.SetActive(false);
-                backGround.gameObject.SetActive(true);
                 base.Hide();
                 nextMenu?.Show();
                 TweenUtility.FadeOut(Fade);

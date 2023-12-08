@@ -448,5 +448,11 @@ namespace Game.GameResources
         {
             return allBattleMaps.First(a => a.name == id);
         }
+
+        [SerializeField] private List<DifficultyProfile> difficultyProfiles;
+        public DifficultyProfile GetDifficultyProfile(string name)
+        {
+            return difficultyProfiles.First(d => d.name == name);
+        }
     }
 }
