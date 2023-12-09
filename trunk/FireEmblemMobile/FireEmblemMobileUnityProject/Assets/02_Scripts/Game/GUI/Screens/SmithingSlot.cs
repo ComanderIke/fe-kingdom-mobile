@@ -1,4 +1,6 @@
 ﻿using Game.GameActors.Items.Weapons;
+using Game.GameActors.Units;
+using LostGrace;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,10 +15,13 @@ public class SmithingSlot : MonoBehaviour
     [SerializeField] Color bGSelectedColor;
     [SerializeField] private Image gem;
     [SerializeField] private GameObject slot;
+    [SerializeField] private SkillUI skillUI;
     private bool selected = false;
     private EquipableItem equipable;
-    public void Show(EquipableItem equipable, bool selected=false)
+    private Unit unit;
+    public void Show(Unit unit,EquipableItem equipable, bool selected=false)
     {
+        this.unit = unit;
         this.selected = selected;
         this.equipable = equipable;
        UpdateUI();
@@ -25,6 +30,22 @@ public class SmithingSlot : MonoBehaviour
 
     void UpdateUI()
     {
+        if (skillUI != null&&equipable!=null)
+        {
+            var skill = equipable.Skill;
+            if (skill != null)
+            {
+                Debug.Log("TODO");
+                bool canAffordHPCost = skill.FirstActiveMixin != null && unit.Hp > skill.FirstActiveMixin.GetHpCost(skill.level) || skill.CombatSkillMixin != null && unit.Hp > skill.CombatSkillMixin.GetHpCost(skill.level);
+                bool hasUses=skill.FirstActiveMixin != null &&skill.FirstActiveMixin.Uses>0 || skill.CombatSkillMixin != null && skill.CombatSkillMixin.Uses>0;
+
+                skillUI.SetSkill(skill, true, false, canAffordHPCost, hasUses);
+            }
+            else
+            {
+                skillUI.Hide();
+            }
+        }
         if (equipable == null)
         {
             image.color = emptyColor;

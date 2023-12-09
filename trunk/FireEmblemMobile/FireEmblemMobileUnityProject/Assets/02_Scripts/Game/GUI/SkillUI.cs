@@ -46,7 +46,7 @@ namespace LostGrace
         private bool combatSkillSelected = false;
         public void SetSkill(Skill skill, bool big, bool blessed,bool canAfforHpCost,bool hasUses, bool showTooltips = false, bool interactable=true)
         {
-            
+            gameObject.SetActive(true);
             deleteButton.SetActive(false);
             this.blessed = blessed;
             this.showTooltips = showTooltips;
@@ -209,6 +209,10 @@ namespace LostGrace
         public event Action<SkillUI> OnDeleteClicked;
         public event Action<SkillUI> OnClicked;
 
-        
+
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

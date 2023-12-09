@@ -26,12 +26,10 @@ namespace Game.GameActors.Items.Weapons
         public WeaponType WeaponType;
         public DamageType DamageType;
         [SerializeField] private Dictionary<EffectiveAgainstType, float> effectiveAgainst;
-        public Skill Skill;
-        
 
         public Weapon(string name, string description, int cost,int rarity, int maxStack,Sprite sprite, int weaponLevel, int maxLevel,int[] attackRanges,
             WeaponAttributes weaponAttributes,WeaponAttributes[] weaponUpgrades, WeaponType weaponType, DamageType damageType, 
-            Skill skill, Dictionary<EffectiveAgainstType,  float> effectiveAgainst=null) : base(name, description, cost, rarity,maxStack,sprite)
+            Skill skill, Dictionary<EffectiveAgainstType,  float> effectiveAgainst=null) : base(name, description, cost, rarity,maxStack,sprite, skill)
         {
             this.weaponLevel = weaponLevel;
             this.maxLevel = maxLevel;
@@ -41,7 +39,6 @@ namespace Game.GameActors.Items.Weapons
             this.DamageType = damageType;
             this.effectiveAgainst = effectiveAgainst;
             this.WeaponUpgrades = weaponUpgrades;
-            this.Skill = skill;
 
         }
     

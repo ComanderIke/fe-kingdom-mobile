@@ -134,8 +134,8 @@ namespace LostGrace
             // {
             //     moveIcon.gameObject.SetActive(true);
             // }
-            weaponSlot.Show(unit.equippedWeapon);
-            RelicSlot1.Show(unit.EquippedRelic);
+            weaponSlot.Show(unit,unit.equippedWeapon);
+            RelicSlot1.Show(unit,unit.EquippedRelic);
             combatItem1.Show(unit.CombatItem1);
             combatItem1.OnClicked -= CombatItemClicked;
             combatItem1.OnClicked += CombatItemClicked;
@@ -156,7 +156,8 @@ namespace LostGrace
                     prefab = combatSkillprefab;
                 var go =Instantiate(prefab, skillContainer);
                 var skillUI =  go.GetComponent<SkillUI>();
-                bool canAffordHPCost = skill.FirstActiveMixin != null && unit.Hp > skill.FirstActiveMixin.GetHpCost(skill.level) || skill.CombatSkillMixin != null && unit.Hp > skill.CombatSkillMixin.GetHpCost(skill.level);
+                bool canAffordHPCost = skill.FirstActiveMixin != null && unit.Hp > skill.FirstActiveMixin.GetHpCost(skill.level) || 
+                                       skill.CombatSkillMixin != null && unit.Hp > skill.CombatSkillMixin.GetHpCost(skill.level);
                 bool hasUses=skill.FirstActiveMixin != null &&skill.FirstActiveMixin.Uses>0 || skill.CombatSkillMixin != null && skill.CombatSkillMixin.Uses>0;
             
                 skillUI.SetSkill(skill, true, unit.Blessing!=null, canAffordHPCost, hasUses);
