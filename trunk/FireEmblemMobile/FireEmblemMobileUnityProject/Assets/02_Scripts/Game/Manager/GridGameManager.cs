@@ -17,6 +17,7 @@ using Game.Mechanics;
 using Game.States;
 using Game.WorldMapStuff.Model;
 using GameEngine;
+using LostGrace;
 using UnityEngine;
 
 namespace Game.Manager
@@ -81,6 +82,7 @@ namespace Game.Manager
                 new MoveSystem(),
                 new UnitProgressSystem(FactionManager),
                 new PopUpTextSystem(),
+                new ReinforcementSystem(FindObjectsOfType<Reinforcement>(), new UnitSpawnHelper(FactionManager, null)),
                 new SkillSystem(GameBPData.Instance.SkillGenerationConfig,FindObjectsOfType<MonoBehaviour>().OfType<ISkillUIRenderer>().First()),
             };
 

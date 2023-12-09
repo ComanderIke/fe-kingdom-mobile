@@ -18,5 +18,16 @@ namespace LostGrace
                 Gizmos.DrawCube(pos+new Vector3(.5f,.5f,0), new Vector3(1,1,1f));
             }
         }
+
+        public bool Contains(Vector2 asVector)
+        {
+            foreach (var pos in positions)
+            {
+                if (Math.Abs(pos.x - asVector.x) < 0.01f && Math.Abs(pos.y - asVector.y) < 0.01f)
+                    return true;
+            }
+
+            return false;
+        }
     }
 }

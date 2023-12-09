@@ -23,5 +23,12 @@ namespace LostGrace
             if (ReinforcementUnits[0].Trigger == ReinforcementTrigger.Turn)
                 gameObject.name += "_Turn" + ReinforcementUnits[0].turn;
         }
+
+        public void ReinforcementSpawned(ReinforcementUnit unit)
+        {
+            ReinforcementUnits.Remove(unit);
+         
+                
+        }
     }
 }
