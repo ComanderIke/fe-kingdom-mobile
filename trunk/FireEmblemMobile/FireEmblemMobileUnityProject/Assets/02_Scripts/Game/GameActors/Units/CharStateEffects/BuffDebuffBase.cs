@@ -35,7 +35,8 @@ namespace Game.GameActors.Units.CharStateEffects
         Frog
     }
 
-    public abstract class BuffDebuffBase : ScriptableObject
+    [CreateAssetMenu(menuName = "GameData/Buffs/BuffDebuffBase")]
+    public class BuffDebuffBase : ScriptableObject
     {
 
         public BuffDebuffBaseData BuffData;
