@@ -45,7 +45,7 @@ namespace Game.GameActors.Units.Skills
         public override List<EffectDescription> GetEffectDescription(Unit caster,int level)
         {
             var list = new List<EffectDescription>();
-            var buff=appliedBuff==null?null:appliedBuff.GetEffectDescription(level);
+            var buff=appliedBuff==null?null:appliedBuff.GetEffectDescription(caster, level);
             var statModifier=AppliedStatModifier==null?null:AppliedStatModifier.GetEffectDescription(level);
          
             if(buff!=null)
