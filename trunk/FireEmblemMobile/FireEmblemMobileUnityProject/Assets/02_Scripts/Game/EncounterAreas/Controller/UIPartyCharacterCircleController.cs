@@ -11,7 +11,8 @@ using UnityEngine;
 public class UIPartyCharacterCircleController : MonoBehaviour, IClickedReceiver, IParticleAttractorTransformProvider
 {
     public GameObject CircleCharacterUIPrefab;
-
+    public GameObject EmpySlotPrefab;
+    [SerializeField] private bool showEmptySlots = false;
     private Dictionary<Unit, CharacterUIController>characterUIs;
 
     private List<GameObject> characterUIgGameObjects;
@@ -41,6 +42,7 @@ public class UIPartyCharacterCircleController : MonoBehaviour, IClickedReceiver,
 
            
         }
+        
     }
 
     void DeleteGOs()
@@ -65,6 +67,14 @@ public class UIPartyCharacterCircleController : MonoBehaviour, IClickedReceiver,
                 characterUIgGameObjects.Add(go);
             }
 
+        }
+
+        if (showEmptySlots)
+        {
+            for (int i = party.members.Count; i < Player.Instance.startPartyMemberCount; i++)
+            {
+                Instantiate(EmpySlotPrefab, transform);
+            }
         }
     }
 

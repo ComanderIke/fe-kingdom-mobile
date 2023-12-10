@@ -30,7 +30,6 @@ namespace Game.GameResources
     public class GameBPData : SingletonScriptableObject<GameBPData> , IBlessingData   {
         public DialogData DialogTexts;
         public UnitData UnitData;
-        public CharacterStateData CharacterStateData;
         
 
         // [SerializeField] private List<EquipableItem> armor = default;

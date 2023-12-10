@@ -46,6 +46,10 @@ public class SmithingSlot : MonoBehaviour
                 skillUI.Hide();
             }
         }
+        else
+        {
+            skillUI.Hide();
+        }
         if (equipable == null)
         {
             image.color = emptyColor;

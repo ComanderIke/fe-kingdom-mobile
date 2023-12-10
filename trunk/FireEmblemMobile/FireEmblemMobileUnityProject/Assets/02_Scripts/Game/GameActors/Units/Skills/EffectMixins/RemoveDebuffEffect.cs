@@ -11,14 +11,14 @@ namespace Game.GameActors.Units.Skills
     public class RemoveDebuffEffect : UnitTargetSkillEffectMixin
     {
        
-        public List<DebuffType> removeDebuffTypes;
+        public List<DebuffData> removeDebuffTypes;
 
 
         public override void Activate(Unit target, Unit caster, int level)
         {
             foreach (var debuff in removeDebuffTypes)
             {
-                target.StatusEffectManager.RemoveDebuff(debuff);
+                target.StatusEffectManager.RemoveBuff(debuff);
             }
            
         }

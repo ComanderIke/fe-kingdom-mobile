@@ -49,6 +49,7 @@ namespace Audio
                     s.Source.volume = s.Volume;
                     s.Source.pitch = s.Pitch;
                     s.Source.loop = s.Loop;
+                    s.Source.playOnAwake = false;
                 }
 
                 foreach (var m in Music)
@@ -58,6 +59,7 @@ namespace Audio
                     m.Source.volume = m.Volume;
                     m.Source.pitch = m.Pitch;
                     m.Source.loop = m.Loop;
+                    m.Source.playOnAwake = false;
                 }
 
                 initialized = true;
@@ -96,7 +98,7 @@ namespace Audio
                 s.Source.Play();
         }
 
-        public void PlayMusic(string name, float delay = 0, float fadeDuration = -1.0f)
+        private void PlayMusic(string name, float delay = 0, float fadeDuration = -1.0f)
         {
             var m = Array.Find(Music, music => music.Name == name);
             if (m == null)
@@ -105,6 +107,9 @@ namespace Audio
 
                 return;
             }
+
+            if (currentlyPlayedMusic.Contains(m))
+                return;
 
             currentlyPlayedMusic.Add(m);
             if (fadeDuration != -1.0f)
@@ -129,14 +134,18 @@ namespace Audio
         public void ChangeMusic(string newMusicName, string currentMusicName, bool freshRestart = false,
             float fadeOutDuration = 1.0f, float fadeInDelay = 0.5f, float fadeInDuration = 1.0f)
         {
+            Debug.Log("Change Music: "+newMusicName+" "+currentMusicName);
             FadeOut(currentMusicName, fadeOutDuration, freshRestart);
             PlayMusic(newMusicName, fadeInDelay, fadeInDuration);
         }
         public void ChangeAllMusic(string newMusicName,  bool freshRestart = false,
             float fadeOutDuration = 1.0f, float fadeInDelay = 0.5f, float fadeInDuration = 1.0f)
         {
+            Debug.Log("Change All Music: "+newMusicName);
             foreach (var musicName in GetCurrentlyPlayedMusicTracks())
             {
+                if (musicName == newMusicName)
+                    continue;
                 FadeOut(musicName, fadeOutDuration, freshRestart);
             }
            

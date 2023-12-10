@@ -36,15 +36,15 @@ namespace Game.GameActors.Units.Skills.Passive
             {
                 if (type == StatModifierType.RemoveDebuff)
                 {
-                    if(buffBase is Debuff debuff)
-                        unit.StatusEffectManager.RemoveDebuff(debuff);
+                    if(buffBase.BuffData is DebuffData debuff)
+                        unit.StatusEffectManager.RemoveBuff(buffBase);
                     // if(buffBase is StatModifier statModifier&& statModifier.HasNegatives()&&!statModifier.HasPositives())
                     //     unit.StatusEffectManager.RemoveStatModifier(statModifier);
                 }
                 else if (type == StatModifierType.IncreaseBuffDuration)
                 {
-                    if (buffBase is Buff buff)
-                        buff.IncreaseCurrentDuration();
+                    if (buffBase.BuffData is BuffData buff)
+                        buffBase.IncreaseCurrentDuration();
                     // if (buffBase is StatModifier statModifier && !statModifier.HasNegatives() &&
                     //     statModifier.HasPositives())
                     //     statModifier.IncreaseCurrentDuration();

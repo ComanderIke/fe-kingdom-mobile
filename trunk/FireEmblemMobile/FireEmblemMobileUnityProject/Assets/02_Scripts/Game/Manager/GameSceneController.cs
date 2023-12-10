@@ -86,5 +86,15 @@ namespace Game.WorldMapStuff.Controller
                 GridGameManager.Instance.CleanUp();
             SceneController.LoadSceneAsync(Scenes.Sanctuary, false);
         }
+
+        public void LoadMainMenu()
+        {
+            SaveGameManager.Save();
+            if(AreaGameManager.Instance!=null)
+                AreaGameManager.Instance.CleanUp();
+            if(GridGameManager.Instance!=null)
+                GridGameManager.Instance.CleanUp();
+            SceneController.LoadSceneAsync(Scenes.MainMenu, false);
+        }
     }
 }

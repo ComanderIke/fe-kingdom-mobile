@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Game.GameActors.Units.CharStateEffects;
 using Game.Mechanics;
 using UnityEngine;
 using UnityEngine.UI;
@@ -67,7 +68,7 @@ namespace Game.GameActors.Units
             if (agent is Unit unit)
             {
                 //check if stunned change state to stunned
-                if (unit.StatusEffectManager.Debuffs.Any(d => d.name.Contains("Stunned")))
+                if (unit.StatusEffectManager.Buffs.Any(d => d.BuffData is DebuffData debuffData&& debuffData.debuffType==DebuffType.Stunned))
                 {
                     state = State.Stunned;
                 }

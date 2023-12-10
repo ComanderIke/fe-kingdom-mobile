@@ -22,7 +22,7 @@ AssetImportWorker41
 -logFile
 Logs/AssetImportWorker41.log
 -srvPort
-49232
+49287
 Successfully changed project path to: /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject
 /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -54,13 +54,13 @@ Successfully changed project path to: /Users/daniel/Documents/fe-kingdom-mobile/
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [8031248064] Host "[IP] 192.168.0.17 [Port] 0 [Flags] 2 [Guid] 799347008 [EditorId] 799347008 [Version] 1048832 [Id] OSXEditor(0,Daniels-MacBook-Pro.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+Player connection [8035589824] Host "[IP] 192.168.0.2 [Port] 0 [Flags] 2 [Guid] 1562180978 [EditorId] 1562180978 [Version] 1048832 [Id] OSXEditor(0,Daniels-MacBook-Pro.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
 
-Player connection [8031248064] Host "[IP] 192.168.0.17 [Port] 0 [Flags] 2 [Guid] 799347008 [EditorId] 799347008 [Version] 1048832 [Id] OSXEditor(0,Daniels-MacBook-Pro.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [8035589824] Host "[IP] 192.168.0.2 [Port] 0 [Flags] 2 [Guid] 1562180978 [EditorId] 1562180978 [Version] 1048832 [Id] OSXEditor(0,Daniels-MacBook-Pro.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
 
 [Physics::Module] Initialized MultithreadedJobDispatcher with {0} workers.
-Refreshing native plugins compatible for Editor in 136.61 ms, found 2 plugins.
-Preloading 1 native plugins for Editor in 0.62 ms.
+Refreshing native plugins compatible for Editor in 141.93 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 1.25 ms.
 Initialize engine version: 2021.3.32f1 (3b9dae9532f5)
 [Subsystems] Discovering subsystems at path /Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/Resources/UnitySubsystems
 [Subsystems] Discovering subsystems at path /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets
@@ -77,87 +77,87 @@ Initialize mono
 Mono path[0] = '/Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/Managed'
 Mono path[1] = '/Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/MonoBleedingEdge/lib/mono/unityjit-macos'
 Mono config path = '/Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56798
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56587
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: /Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
 Register platform support module: /Applications/Unity/Hub/Editor/2021.3.32f1/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 Register platform support module: /Applications/Unity/Hub/Editor/2021.3.32f1/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
-Registered in 0.001016 seconds.
+Registered in 0.001683 seconds.
 [usbmuxd] Start listen thread
 [usbmuxd] Listen thread started
 [usbmuxd] Send listen message
 Native extension for iOS target not found
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 63 ms
+Android Extension - Scanning For ADB Devices 86 ms
 Native extension for OSXStandalone target not found
-Refreshing native plugins compatible for Editor in 116.83 ms, found 2 plugins.
-Preloading 1 native plugins for Editor in 0.23 ms.
+Refreshing native plugins compatible for Editor in 132.62 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.19 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.523 seconds
+- Completed reload, in  0.595 seconds
 Domain Reload Profiling:
-	ReloadAssembly (523ms)
-		BeginReloadAssembly (59ms)
+	ReloadAssembly (595ms)
+		BeginReloadAssembly (65ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (0ms)
-		EndReloadAssembly (420ms)
-			LoadAssemblies (60ms)
+		EndReloadAssembly (484ms)
+			LoadAssemblies (66ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (56ms)
+			SetupTypeCache (60ms)
 			ReleaseScriptCaches (0ms)
 			RebuildScriptCaches (15ms)
-			SetupLoadedEditorAssemblies (326ms)
+			SetupLoadedEditorAssemblies (385ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (159ms)
+				InitializePlatformSupportModulesInManaged (198ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (117ms)
+				RefreshPlugins (133ms)
 				BeforeProcessingInitializeOnLoad (1ms)
-				ProcessInitializeOnLoadAttributes (32ms)
-				ProcessInitializeOnLoadMethodAttributes (17ms)
+				ProcessInitializeOnLoadAttributes (34ms)
+				ProcessInitializeOnLoadMethodAttributes (20ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.007651 seconds.
+Registered in 0.010290 seconds.
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory is not a mono symbol file
 Native extension for iOS target not found
 Native extension for Android target not found
 Native extension for OSXStandalone target not found
-Refreshing native plugins compatible for Editor in 112.43 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 140.62 ms, found 2 plugins.
 Preloading 1 native plugins for Editor in 0.18 ms.
 Package Manager log level set to [2]
 [Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
 [Package Manager] Cannot connect to Unity Package Manager local server
 Mono: successfully reloaded assembly
-- Completed reload, in  1.215 seconds
+- Completed reload, in  1.291 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1215ms)
-		BeginReloadAssembly (48ms)
+	ReloadAssembly (1292ms)
+		BeginReloadAssembly (54ms)
 			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (2ms)
+			DisableScriptedObjects (3ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (13ms)
-		EndReloadAssembly (1116ms)
-			LoadAssemblies (93ms)
+			CreateAndSetChildDomain (14ms)
+		EndReloadAssembly (1186ms)
+			LoadAssemblies (87ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (190ms)
+			SetupTypeCache (204ms)
 			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (60ms)
-			SetupLoadedEditorAssemblies (736ms)
+			RebuildScriptCaches (66ms)
+			SetupLoadedEditorAssemblies (787ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (12ms)
+				InitializePlatformSupportModulesInManaged (17ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (113ms)
-				BeforeProcessingInitializeOnLoad (56ms)
-				ProcessInitializeOnLoadAttributes (473ms)
-				ProcessInitializeOnLoadMethodAttributes (82ms)
+				RefreshPlugins (141ms)
+				BeforeProcessingInitializeOnLoad (59ms)
+				ProcessInitializeOnLoadAttributes (485ms)
+				ProcessInitializeOnLoadMethodAttributes (85ms)
 				AfterProcessingInitializeOnLoad (1ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
@@ -169,13 +169,13 @@ Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not fou
 Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
 Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
 Launching external process: /Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/Tools/UnityShaderCompiler
-Launched and connected shader compiler UnityShaderCompiler after 0.04 seconds
-Refreshing native plugins compatible for Editor in 1.10 ms, found 2 plugins.
-Preloading 1 native plugins for Editor in 0.12 ms.
-Unloading 6761 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 102 unused Assets / (2.1 MB). Loaded Objects now: 7262.
-Memory consumption went from 368.4 MB to 366.4 MB.
-Total: 4.825667 ms (FindLiveObjects: 0.187375 ms CreateObjectMapping: 0.063542 ms MarkObjects: 4.222708 ms  DeleteObjects: 0.351750 ms)
+Launched and connected shader compiler UnityShaderCompiler after 0.13 seconds
+Refreshing native plugins compatible for Editor in 1.13 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.14 ms.
+Unloading 6765 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 102 unused Assets / (2.1 MB). Loaded Objects now: 7267.
+Memory consumption went from 363.4 MB to 361.4 MB.
+Total: 5.225500 ms (FindLiveObjects: 0.174209 ms CreateObjectMapping: 0.067417 ms MarkObjects: 4.599625 ms  DeleteObjects: 0.383834 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
@@ -189,6 +189,796 @@ AssetImportParameters requested are different than current active one (requested
   custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
   custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001664 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x2c1a87000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.21 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.26 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.211 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1212ms)
+		BeginReloadAssembly (162ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (7ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (78ms)
+		EndReloadAssembly (998ms)
+			LoadAssemblies (109ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (220ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (32ms)
+			SetupLoadedEditorAssemblies (598ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (17ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (43ms)
+				ProcessInitializeOnLoadAttributes (448ms)
+				ProcessInitializeOnLoadMethodAttributes (87ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.17 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.16 ms.
+Unloading 6533 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7283.
+Memory consumption went from 342.2 MB to 340.1 MB.
+Total: 5.618042 ms (FindLiveObjects: 0.217500 ms CreateObjectMapping: 0.065917 ms MarkObjects: 5.016208 ms  DeleteObjects: 0.318000 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001612 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x16d9d3000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.23 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.18 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.164 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1165ms)
+		BeginReloadAssembly (140ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (64ms)
+		EndReloadAssembly (978ms)
+			LoadAssemblies (118ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (200ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (31ms)
+			SetupLoadedEditorAssemblies (593ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (14ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (40ms)
+				ProcessInitializeOnLoadAttributes (452ms)
+				ProcessInitializeOnLoadMethodAttributes (84ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.27 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.17 ms.
+Unloading 6532 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7298.
+Memory consumption went from 342.1 MB to 340.1 MB.
+Total: 5.205209 ms (FindLiveObjects: 0.195833 ms CreateObjectMapping: 0.064167 ms MarkObjects: 4.640666 ms  DeleteObjects: 0.304167 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001655 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x16d22b000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.11 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.15 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.060 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1061ms)
+		BeginReloadAssembly (101ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (47ms)
+		EndReloadAssembly (916ms)
+			LoadAssemblies (43ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (208ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (31ms)
+			SetupLoadedEditorAssemblies (580ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (14ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (41ms)
+				ProcessInitializeOnLoadAttributes (442ms)
+				ProcessInitializeOnLoadMethodAttributes (81ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.29 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.18 ms.
+Unloading 6532 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7313.
+Memory consumption went from 342.2 MB to 340.1 MB.
+Total: 5.276917 ms (FindLiveObjects: 0.198084 ms CreateObjectMapping: 0.066541 ms MarkObjects: 4.665167 ms  DeleteObjects: 0.346625 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002237 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x16d9d3000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.17 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.17 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.136 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1137ms)
+		BeginReloadAssembly (121ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (46ms)
+		EndReloadAssembly (968ms)
+			LoadAssemblies (110ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (203ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (31ms)
+			SetupLoadedEditorAssemblies (586ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (15ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (40ms)
+				ProcessInitializeOnLoadAttributes (439ms)
+				ProcessInitializeOnLoadMethodAttributes (89ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (6ms)
+Platform modules already initialized, skipping
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.15 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.22 ms.
+Unloading 6532 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7328.
+Memory consumption went from 342.2 MB to 340.1 MB.
+Total: 5.305750 ms (FindLiveObjects: 0.198375 ms CreateObjectMapping: 0.062959 ms MarkObjects: 4.692459 ms  DeleteObjects: 0.351166 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 6.74 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.24 ms.
+Unloading 78 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 78 unused Assets / (2.1 MB). Loaded Objects now: 7328.
+Memory consumption went from 210.9 MB to 208.8 MB.
+Total: 20.777875 ms (FindLiveObjects: 0.272709 ms CreateObjectMapping: 0.066583 ms MarkObjects: 19.765291 ms  DeleteObjects: 0.672917 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001539 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x16d9d3000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.12 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.16 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.269 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1270ms)
+		BeginReloadAssembly (195ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (11ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (66ms)
+		EndReloadAssembly (1025ms)
+			LoadAssemblies (145ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (223ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (31ms)
+			SetupLoadedEditorAssemblies (628ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (46ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (41ms)
+				ProcessInitializeOnLoadAttributes (452ms)
+				ProcessInitializeOnLoadMethodAttributes (86ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.03 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.57 ms.
+Unloading 6532 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7343.
+Memory consumption went from 342.2 MB to 340.1 MB.
+Total: 5.226125 ms (FindLiveObjects: 0.202875 ms CreateObjectMapping: 0.070209 ms MarkObjects: 4.606833 ms  DeleteObjects: 0.345750 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002465 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x29cad3000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.18 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.17 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.167 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1168ms)
+		BeginReloadAssembly (130ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (56ms)
+		EndReloadAssembly (990ms)
+			LoadAssemblies (131ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (212ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (32ms)
+			SetupLoadedEditorAssemblies (578ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (14ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (40ms)
+				ProcessInitializeOnLoadAttributes (442ms)
+				ProcessInitializeOnLoadMethodAttributes (79ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.11 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.13 ms.
+Unloading 6532 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7358.
+Memory consumption went from 342.2 MB to 340.2 MB.
+Total: 5.463333 ms (FindLiveObjects: 0.225250 ms CreateObjectMapping: 0.077375 ms MarkObjects: 4.826125 ms  DeleteObjects: 0.334125 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 606011.965421 seconds.
+  path: Assets/Feel/NiceVibrations/HapticSamples/ApplicationUX/Award1.wav
+  artifactKey: Guid(ccdc1026f90774226b4c0759093380b3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/NiceVibrations/HapticSamples/ApplicationUX/Award1.wav using Guid(ccdc1026f90774226b4c0759093380b3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd7662166bf235df03f855a4bc8c014db') in 0.902564 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000053 seconds.
+  path: Assets/Feel/NiceVibrations/HapticSamples/Nature/CatPurr1.wav
+  artifactKey: Guid(21790ef8523e44ebc8e5c7b53f1cb9ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/NiceVibrations/HapticSamples/Nature/CatPurr1.wav using Guid(21790ef8523e44ebc8e5c7b53f1cb9ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3fc250413514f56983d492ba90b0a295') in 0.010272 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/Feel/NiceVibrations/HapticSamples/Impacts/Concrete3.wav
+  artifactKey: Guid(d761cbd3d012843919eaa563a15a4a91) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/NiceVibrations/HapticSamples/Impacts/Concrete3.wav using Guid(d761cbd3d012843919eaa563a15a4a91) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c908477440b62d5a20d583d944e4e8e5') in 0.007490 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000037 seconds.
+  path: Assets/Feel/FeelDemos/Barbarians/Sounds/FeelBarbariansAmbient.wav
+  artifactKey: Guid(219ef5de70dc5644cb3cc8e41fdeb81e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/FeelDemos/Barbarians/Sounds/FeelBarbariansAmbient.wav using Guid(219ef5de70dc5644cb3cc8e41fdeb81e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cb872df29c6a36be6427912349547037') in 0.005175 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000032 seconds.
+  path: Assets/Feel/FeelDemosHDRP/Falcon/Sounds/FeelFalconEngineStartSound.wav
+  artifactKey: Guid(2ed1a43e37258a645b445d25eaa6c8e7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/FeelDemosHDRP/Falcon/Sounds/FeelFalconEngineStartSound.wav using Guid(2ed1a43e37258a645b445d25eaa6c8e7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5d3f92c7d630e30bb65f84239601d681') in 0.007587 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000031 seconds.
+  path: Assets/Feel/FeelDemos/Blob/Sounds/FeelBlobNote3.wav
+  artifactKey: Guid(98046261e6947b64eb462140e10a5b35) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/FeelDemos/Blob/Sounds/FeelBlobNote3.wav using Guid(98046261e6947b64eb462140e10a5b35) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cba42019c6d48b4a03d36d17c9209202') in 0.005680 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000172 seconds.
+  path: Assets/Feel/NiceVibrations/HapticSamples/Music/Cymbal2.wav
+  artifactKey: Guid(2d66f3a41d3cc474e9f6459b66651913) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/NiceVibrations/HapticSamples/Music/Cymbal2.wav using Guid(2d66f3a41d3cc474e9f6459b66651913) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'be028b24469e11a27bc03ba5b68e9a2a') in 0.004528 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000044 seconds.
+  path: Assets/Feel/NiceVibrations/HapticSamples/Objects/DoorKnob1.wav
+  artifactKey: Guid(16e89c535fc76465eb13606cb2c2a039) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/NiceVibrations/HapticSamples/Objects/DoorKnob1.wav using Guid(16e89c535fc76465eb13606cb2c2a039) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '25e1f74fa9756a35eabe69f08cbce2d4') in 0.003974 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000039 seconds.
+  path: Assets/Feel/FeelDemos/Duck/Sounds/FeelDuckBoom.wav
+  artifactKey: Guid(1739ff78014ab3f44a5757aede3c7ea9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/FeelDemos/Duck/Sounds/FeelDuckBoom.wav using Guid(1739ff78014ab3f44a5757aede3c7ea9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4ffe2dd03fb9a2daf86ab3a6dba95317') in 0.005660 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/Feel/NiceVibrations/HapticSamples/Objects/Fan1.wav
+  artifactKey: Guid(b6447e61f053e4ba4becea7c6e766f69) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/NiceVibrations/HapticSamples/Objects/Fan1.wav using Guid(b6447e61f053e4ba4becea7c6e766f69) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '57aecb94d9aeb366532a964f0a35feaf') in 0.006659 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000037 seconds.
+  path: Assets/Feel/FeelDemos/Barbarians/Sounds/FeelBarbariansAttack4.wav
+  artifactKey: Guid(18fda017e94319a4ba06c1f3843e9068) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/FeelDemos/Barbarians/Sounds/FeelBarbariansAttack4.wav using Guid(18fda017e94319a4ba06c1f3843e9068) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '06f2e14d6c6fbb8510e06bc6b4d78401') in 0.009955 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000079 seconds.
+  path: Assets/Feel/NiceVibrations/HapticSamples/Weapons/DistanceGunShot1.wav
+  artifactKey: Guid(ba3d33391dcef4288a8ab5210877f166) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/NiceVibrations/HapticSamples/Weapons/DistanceGunShot1.wav using Guid(ba3d33391dcef4288a8ab5210877f166) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7bac17e903682a8089b6c4c7c3ace0bd') in 0.003944 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000053 seconds.
+  path: Assets/Feel/NiceVibrations/HapticSamples/ApplicationUX/Beep1.wav
+  artifactKey: Guid(adb24518d159048ca9cb62d63113784f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/NiceVibrations/HapticSamples/ApplicationUX/Beep1.wav using Guid(adb24518d159048ca9cb62d63113784f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1921f605101359d03ce065508904cab5') in 0.003916 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000048 seconds.
+  path: Assets/Feel/NiceVibrations/HapticSamples/ApplicationUX/Button1.wav
+  artifactKey: Guid(801a894d272f24eb5ad28f5219e62bfe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/NiceVibrations/HapticSamples/ApplicationUX/Button1.wav using Guid(801a894d272f24eb5ad28f5219e62bfe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ce181ca2347eed3a6b085657c4a82f0d') in 0.004811 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000046 seconds.
+  path: Assets/Feel/NiceVibrations/HapticSamples/SoundFX/Boost1.wav
+  artifactKey: Guid(8ad403f13bc6243c4aadcc0a8348e389) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/NiceVibrations/HapticSamples/SoundFX/Boost1.wav using Guid(8ad403f13bc6243c4aadcc0a8348e389) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '42d90d6a854c45d9fd4fdde69b059e3a') in 0.004693 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000038 seconds.
+  path: Assets/Feel/FeelDemos/Barbarians/Sounds/FeelBarbariansAttack3.wav
+  artifactKey: Guid(68ac7c55765933d40835defbccf9f137) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/FeelDemos/Barbarians/Sounds/FeelBarbariansAttack3.wav using Guid(68ac7c55765933d40835defbccf9f137) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '02ce2a62769b154e789e7f8e67ba086f') in 0.005817 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/Feel/NiceVibrations/HapticSamples/Impacts/Concrete1.wav
+  artifactKey: Guid(cafd91303a9ae4c378d26b3c26979091) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/NiceVibrations/HapticSamples/Impacts/Concrete1.wav using Guid(cafd91303a9ae4c378d26b3c26979091) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '472cf6fb915507c8e0528266693c44a2') in 0.004898 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000034 seconds.
+  path: Assets/Feel/FeelDemos/Brass/Audio/FeelBrassBackgroundMusic.wav
+  artifactKey: Guid(93f81efbdad4ade4c9c4b6b83eae7e4b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/FeelDemos/Brass/Audio/FeelBrassBackgroundMusic.wav using Guid(93f81efbdad4ade4c9c4b6b83eae7e4b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1637c459880934f32082ab8267c8223a') in 0.005366 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000036 seconds.
+  path: Assets/Feel/FeelDemos/Barbarians/Sounds/FeelBarbarianHit.wav
+  artifactKey: Guid(676793e8b24f07a49a5aac3b0985ad69) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/FeelDemos/Barbarians/Sounds/FeelBarbarianHit.wav using Guid(676793e8b24f07a49a5aac3b0985ad69) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cb75eb3487136bfb3e13b5766c3a504b') in 0.004198 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000033 seconds.
+  path: Assets/Feel/FeelDemosHDRP/Falcon/Sounds/FeelFalconEngineStopSound.wav
+  artifactKey: Guid(36489e3c9ef010142a4e77dbde1de467) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/FeelDemosHDRP/Falcon/Sounds/FeelFalconEngineStopSound.wav using Guid(36489e3c9ef010142a4e77dbde1de467) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e152518db82ec90b52f1d359131c5f50') in 0.004639 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000032 seconds.
+  path: Assets/Feel/NiceVibrations/HapticSamples/ApplicationUX/Beep3.wav
+  artifactKey: Guid(ebf4609aed0dc4d82ad954bb603461fd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/NiceVibrations/HapticSamples/ApplicationUX/Beep3.wav using Guid(ebf4609aed0dc4d82ad954bb603461fd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '676797b1e7c998dd8a04d03c32d97e29') in 0.004762 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000042 seconds.
+  path: Assets/Feel/FeelDemos/Barbarians/Sounds/FeelBarbariansGrunt1.wav
+  artifactKey: Guid(ca7e829e9f876ea4a95a4edad95deb8e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/FeelDemos/Barbarians/Sounds/FeelBarbariansGrunt1.wav using Guid(ca7e829e9f876ea4a95a4edad95deb8e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '757de4f3b998d746b93015d46cbe970d') in 0.004229 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000042 seconds.
+  path: Assets/Feel/NiceVibrations/HapticSamples/Objects/Coins5.wav
+  artifactKey: Guid(a5599c7a88b15404cb3156e44481ed9e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/NiceVibrations/HapticSamples/Objects/Coins5.wav using Guid(a5599c7a88b15404cb3156e44481ed9e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2cf56d6cffa87bbe5fd67e503e62fa08') in 0.004311 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000047 seconds.
+  path: Assets/Feel/NiceVibrations/HapticSamples/Objects/Coins4.wav
+  artifactKey: Guid(cb1351b69866d47b6bdd382d752086b6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/NiceVibrations/HapticSamples/Objects/Coins4.wav using Guid(cb1351b69866d47b6bdd382d752086b6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4f225afb62100ae0a8e962bb8461af4f') in 0.004056 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000110 seconds.
+  path: Assets/Feel/NiceVibrations/HapticSamples/Impacts/Concrete2.wav
+  artifactKey: Guid(0d21bb180934c4750a88d2b5148467e9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/NiceVibrations/HapticSamples/Impacts/Concrete2.wav using Guid(0d21bb180934c4750a88d2b5148467e9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6f1aae58adfa7071574585300495226e') in 0.004790 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/Feel/NiceVibrations/HapticSamples/Music/Cymbal1.wav
+  artifactKey: Guid(a9441784149b3412aa2800f86d9a0647) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/NiceVibrations/HapticSamples/Music/Cymbal1.wav using Guid(a9441784149b3412aa2800f86d9a0647) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c08e468d6dae07f22b290c83006c7f37') in 0.004171 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000034 seconds.
+  path: Assets/Feel/NiceVibrations/HapticSamples/SoundFX/CarEngine1.wav
+  artifactKey: Guid(72c274521f3154cc4b3c1db9ca2deb64) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/NiceVibrations/HapticSamples/SoundFX/CarEngine1.wav using Guid(72c274521f3154cc4b3c1db9ca2deb64) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7a60403f529d4a97f2987f33b7961c1d') in 0.003921 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/Feel/FeelDemos/Duck/Sounds/FeelDuckQuack.wav
+  artifactKey: Guid(4cf47ad5b31ea6640addd4045fa77c8b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/FeelDemos/Duck/Sounds/FeelDuckQuack.wav using Guid(4cf47ad5b31ea6640addd4045fa77c8b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b2880961dc6f4d0d59de816fc626d541') in 0.006404 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/Feel/NiceVibrations/HapticSamples/Impacts/BulletMetal1.wav
+  artifactKey: Guid(08b15283493d14e6ebacebed36250d4e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/NiceVibrations/HapticSamples/Impacts/BulletMetal1.wav using Guid(08b15283493d14e6ebacebed36250d4e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7cc79b0a3e2a8662454440113ca1a232') in 0.005059 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000035 seconds.
+  path: Assets/Feel/NiceVibrations/HapticSamples/Objects/Coins2.wav
+  artifactKey: Guid(f0a0e30b878024715bc0e4289cdb1eaf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/NiceVibrations/HapticSamples/Objects/Coins2.wav using Guid(f0a0e30b878024715bc0e4289cdb1eaf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd297765fc78b2748ce5de5ed1c46f8ca') in 0.021361 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000037 seconds.
+  path: Assets/Feel/FeelDemos/Letters/Sounds/FeelLettersDemoHa3.wav
+  artifactKey: Guid(72a8c11f7795a064fae15e2fe8631436) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/FeelDemos/Letters/Sounds/FeelLettersDemoHa3.wav using Guid(72a8c11f7795a064fae15e2fe8631436) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f8c0348362586d05cb47487c9cdb2b78') in 0.005947 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/Feel/FeelDemos/Barbarians/Sounds/FeelBarbarianThunder.wav
+  artifactKey: Guid(46dcfa1187f4a1e4cb3793dd1351f669) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/FeelDemos/Barbarians/Sounds/FeelBarbarianThunder.wav using Guid(46dcfa1187f4a1e4cb3793dd1351f669) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cc6dbd5b3cb3336f9114424a0e7a3b31') in 0.005655 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000033 seconds.
+  path: Assets/Feel/FeelDemos/Letters/Sounds/FeelLettersDemoSing2.wav
+  artifactKey: Guid(5345706f9ba649047aa5920c8340f9ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/FeelDemos/Letters/Sounds/FeelLettersDemoSing2.wav using Guid(5345706f9ba649047aa5920c8340f9ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5d2169b155313df4866cc8313bead1fb') in 0.005743 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/Feel/NiceVibrations/HapticSamples/Objects/Coins7.wav
+  artifactKey: Guid(d9eb08a69941e416e9dfe63c5b987148) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/NiceVibrations/HapticSamples/Objects/Coins7.wav using Guid(d9eb08a69941e416e9dfe63c5b987148) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '55a048f1e5913bf18c95156538343b6b') in 0.003946 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000034 seconds.
+  path: Assets/Feel/FeelDemos/Barbarians/Sounds/FeelBarbariansAttack5.wav
+  artifactKey: Guid(f64645274284d784286a968d4afbd09a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/FeelDemos/Barbarians/Sounds/FeelBarbariansAttack5.wav using Guid(f64645274284d784286a968d4afbd09a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ec4024f8ad3cf7f847bc322236bd7474') in 0.004586 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000032 seconds.
+  path: Assets/Feel/NiceVibrations/HapticSamples/ApplicationUX/Beep2.wav
+  artifactKey: Guid(0dfe9f9829141478689194368436b534) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/NiceVibrations/HapticSamples/ApplicationUX/Beep2.wav using Guid(0dfe9f9829141478689194368436b534) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '713bbdf2086871e6a664ec5c39f11faf') in 0.003869 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/Feel/FeelDemos/Duck/Sounds/FeelDuckDenied.wav
+  artifactKey: Guid(5e569d2a692222842bfc96e94520ab9a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/FeelDemos/Duck/Sounds/FeelDuckDenied.wav using Guid(5e569d2a692222842bfc96e94520ab9a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9b3bec22e70fcca3df83554a45a09044') in 0.003802 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000031 seconds.
+  path: Assets/Feel/FeelDemosHDRP/Falcon/Sounds/FeelFalconEngineSound.wav
+  artifactKey: Guid(fa8bcdcc1157f3840a8443f651fe600d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/FeelDemosHDRP/Falcon/Sounds/FeelFalconEngineSound.wav using Guid(fa8bcdcc1157f3840a8443f651fe600d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '972f632046f90bc7021b313d2b21ac15') in 0.004040 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000036 seconds.
+  path: Assets/Feel/NiceVibrations/HapticSamples/ApplicationUX/Button4.wav
+  artifactKey: Guid(21896ba3ac38b4ae99d5dca706ab412d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/NiceVibrations/HapticSamples/ApplicationUX/Button4.wav using Guid(21896ba3ac38b4ae99d5dca706ab412d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ad8aad549c4b1048c58206f756f887ed') in 0.003609 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000048 seconds.
+  path: Assets/Feel/FeelDemos/Bounce/Sounds/FeelBounceJump.wav
+  artifactKey: Guid(ca77d13bf4f3b7442b324e68259c72e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/FeelDemos/Bounce/Sounds/FeelBounceJump.wav using Guid(ca77d13bf4f3b7442b324e68259c72e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'afa0ea3513f23aa77f0715a93d72de2f') in 0.004410 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000046 seconds.
+  path: Assets/Feel/NiceVibrations/HapticSamples/SoundFX/CarScreech2.wav
+  artifactKey: Guid(8484d859781934d68aeb95578a86949f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/NiceVibrations/HapticSamples/SoundFX/CarScreech2.wav using Guid(8484d859781934d68aeb95578a86949f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '53e50bd402ed169dca137ea9fc727472') in 0.004363 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000040 seconds.
+  path: Assets/Feel/FeelDemos/Letters/Sounds/FeelLettersDemoHat.wav
+  artifactKey: Guid(eff75a5dd81342a4a8d052f270b6047c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/FeelDemos/Letters/Sounds/FeelLettersDemoHat.wav using Guid(eff75a5dd81342a4a8d052f270b6047c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c35057aa9c62996391896056e3f42d16') in 0.004092 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000040 seconds.
+  path: Assets/Feel/FeelDemos/Duck/Sounds/FeelDuckWoosh.wav
+  artifactKey: Guid(86aa66a501648034f8ec69ba5d404514) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/FeelDemos/Duck/Sounds/FeelDuckWoosh.wav using Guid(86aa66a501648034f8ec69ba5d404514) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fc14c6a546db52f728fb0854c8ed00a7') in 0.004750 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000044 seconds.
+  path: Assets/Feel/NiceVibrations/HapticSamples/Objects/Cash2.wav
+  artifactKey: Guid(dcb02f28cff3445d390346c407d9a425) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/NiceVibrations/HapticSamples/Objects/Cash2.wav using Guid(dcb02f28cff3445d390346c407d9a425) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '47d9aefa8a184a7841aaf08d1f2adb49') in 0.003592 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000035 seconds.
+  path: Assets/Feel/NiceVibrations/HapticSamples/Weapons/DistanceGunShot2.wav
+  artifactKey: Guid(31835a5eb705f4a30865b07048197974) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/NiceVibrations/HapticSamples/Weapons/DistanceGunShot2.wav using Guid(31835a5eb705f4a30865b07048197974) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '959dca6b54fdf86c3eefc5237ca2428c') in 0.005243 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/Feel/NiceVibrations/HapticSamples/Impacts/BulletCrack3.wav
+  artifactKey: Guid(5a869e67b96944f83be76a0f7896ad47) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/NiceVibrations/HapticSamples/Impacts/BulletCrack3.wav using Guid(5a869e67b96944f83be76a0f7896ad47) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7d636da36f2d99d635a230766d7edc50') in 0.004799 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000047 seconds.
+  path: Assets/Feel/FeelDemos/Bounce/Sounds/FeelBounceLanding.wav
+  artifactKey: Guid(cc685207a46826746af448ba3a0eaa07) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Feel/FeelDemos/Bounce/Sounds/FeelBounceLanding.wav using Guid(cc685207a46826746af448ba3a0eaa07) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6817e78c63efea66ab6f64c8f24f9247') in 0.004216 seconds 
+Number of asset objects unloaded after import = 2
 Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
 AssetImportWorker is now disconnected from the server
 Process exiting
