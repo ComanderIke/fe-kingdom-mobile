@@ -5,13 +5,13 @@ using UnityEngine;
 namespace Game.GameActors.Units.CharStateEffects
 {
     [CreateAssetMenu(fileName = "MovementBuff", menuName = "GameData/Buff/Movement")]
-    public class MovementBuff:Buff
+    public class MovementBuff:BuffData
     {
         //[SerializeField]private List<PassiveSkillMixin> buffMixins;
 
         [SerializeField] private int[] extraMov;
 
-        public override List<EffectDescription> GetEffectDescription(int level)
+        public override IEnumerable<EffectDescription> GetEffectDescription(int level)
         {
             string value="+"+extraMov[level];
             string upg = value;
@@ -19,17 +19,17 @@ namespace Game.GameActors.Units.CharStateEffects
                 upg="+"+extraMov[level + 1];
             return new List<EffectDescription>() { new EffectDescription("Mov", value, upg) };
         }
-        public override void Apply(Unit caster, Unit target, int skilllevel)
+        public override void Apply(Unit caster, Unit target, int skillLevel)
         {
-            base.Apply(caster, target, skilllevel);
-            target.Stats.Mov += extraMov[level];
+            base.Apply(caster, target, skillLevel);
+            target.Stats.Mov += extraMov[skillLevel];
 
         }
-        public override void Unapply(Unit target)
+        public override void Unapply(Unit target, int skillLevel)
         {
            
-            target.Stats.Mov -= extraMov[level];
-            base.Unapply(target);
+            target.Stats.Mov -= extraMov[skillLevel];
+            base.Unapply(target, skillLevel);
 
         }
 
