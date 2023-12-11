@@ -14,6 +14,8 @@ namespace Game.GameActors.Units.Skills
         [SerializeField] public ConditionCompareType compareTypeWithExistingConditions;
         [SerializeField] public ConditionBigPackage conditionManager;
         [FormerlySerializedAs("replacesOtherCOnditions")] [SerializeField] public bool replacesOtherConditions;
-        
+        [SerializeField] public int extraRange;
+        [SerializeField] public int costReduction;
+
     }
 }

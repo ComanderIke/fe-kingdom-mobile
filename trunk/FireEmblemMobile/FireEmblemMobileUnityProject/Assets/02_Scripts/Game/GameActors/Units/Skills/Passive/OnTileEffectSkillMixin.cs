@@ -26,15 +26,5 @@ namespace Game.GameActors.Units.Skills.Passive
             base.UnbindFromUnit(unit, skill);
             unit.GridComponent.OnTileChanged-=OnTileChanged;
         }
-
-        public override List<EffectDescription> GetEffectDescription(Unit unit, int level)
-        {
-            var list = new List<EffectDescription>();
-            foreach (var skillEffect in skillEffectMixins)
-            {
-                list.AddRange(skillEffect.GetEffectDescription(unit,level));
-            }
-            return list;
-        }
     }
 }

@@ -13,10 +13,8 @@ namespace Game.GameActors.Units.Skills.Passive
     {
         public SerializableDictionary<TerrainType, int> TerrainTypeMovementCostsReduction;
         
-        public bool canMoveThroughEnemies;
-        public List<SkillEffectMixin> onMoveOverEnemy;
-        
-        private bool activated = false;
+        // public bool canMoveThroughEnemies;
+        // public List<SkillEffectMixin> onMoveOverEnemy;
         public override void BindToUnit(Unit unit, Skill skill)
         {
             //skill.SubscribeTo(unit.BattleComponent.onAttack);
@@ -26,7 +24,6 @@ namespace Game.GameActors.Units.Skills.Passive
             {
                 if (unit.GridComponent is GridActorComponent actor)
                 {
-                   
                     actor.AddBonusMovementCosts(keyValuePair.Key, keyValuePair.Value);
                 }
             }
@@ -36,7 +33,6 @@ namespace Game.GameActors.Units.Skills.Passive
         
         public override void UnbindFromUnit(Unit unit, Skill skill)
         {
-            base.UnbindFromUnit(unit, skill);
             if (activated)
             {
                 foreach (var keyValuePair in TerrainTypeMovementCostsReduction)
@@ -44,18 +40,13 @@ namespace Game.GameActors.Units.Skills.Passive
                     if (unit.GridComponent is GridActorComponent actor)
                         actor.RemoveBonusMovementCosts(keyValuePair.Key, keyValuePair.Value);
                 }
+
+                activated = false;
             }
+            base.UnbindFromUnit(unit, skill);
+            
 
         }
-
-        public override List<EffectDescription> GetEffectDescription(Unit unit, int level)
-        {
-            var list = new List<EffectDescription>();
-            foreach (var skillEffect in skillEffectMixins)
-            {
-                list.AddRange(skillEffect.GetEffectDescription(unit,level));
-            }
-            return list;
-        }
+        
     }
 }

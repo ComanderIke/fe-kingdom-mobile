@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Game.GameActors.Units.CharStateEffects
 {
    
-    [CreateAssetMenu( menuName = "GameData/Skills/EffectMixin/ExtraMov")]
+    [CreateAssetMenu( menuName = "GameData/Skills/Effectmixin/ExtraMov")]
     public class ExtraMovSkillEffectMixin:UnitTargetSkillEffectMixin
     {
         //[SerializeField]private List<PassiveSkillMixin> buffMixins;

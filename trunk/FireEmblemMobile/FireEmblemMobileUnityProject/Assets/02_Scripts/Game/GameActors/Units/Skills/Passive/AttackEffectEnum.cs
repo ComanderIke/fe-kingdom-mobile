@@ -7,7 +7,8 @@ namespace Game.GameActors.Units.Skills.Passive
         Sol,
         Luna,
         Adept,
-        Cancel
+        Cancel,
+        GuaranteedHit
     }
     
 }

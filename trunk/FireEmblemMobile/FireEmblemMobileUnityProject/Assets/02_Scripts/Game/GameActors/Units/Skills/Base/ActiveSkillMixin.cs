@@ -57,11 +57,16 @@ namespace Game.GameActors.Units.Skills
 
         public int GetMaxUses(int level)
         {
+            
             return maxUsesPerLevel[level];
         }
         public int GetHpCost(int level)
         {
-            return hpCostPerLevel[level];
+            var blessing = GetBlessing(skill.owner);
+            int costReduction = 0;
+            if (blessing != null)
+                costReduction = synergies[blessing].costReduction;
+            return hpCostPerLevel[level]-costReduction;
         }
 
         public void RefreshUses(int level)

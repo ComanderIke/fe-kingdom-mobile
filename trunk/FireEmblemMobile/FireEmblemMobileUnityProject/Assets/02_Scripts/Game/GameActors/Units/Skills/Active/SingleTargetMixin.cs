@@ -82,8 +82,12 @@ namespace Game.GameActors.Units.Skills
        
         public int GetRange(int level)
         {
+            var blessing = GetBlessing(skill.owner);
+            int extraRange = 0;
+            if (blessing != null)
+                extraRange = synergies[blessing].extraRange;
             if (!sameAsAttackRange)
-                return range[level];
+                return range[level]+extraRange;
             return skill.owner.AttackRanges.Max();
             
         }

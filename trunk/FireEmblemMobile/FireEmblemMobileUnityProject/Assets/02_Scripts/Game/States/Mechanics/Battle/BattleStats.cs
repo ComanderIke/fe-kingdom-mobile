@@ -70,6 +70,7 @@ namespace Game.Mechanics.Battle
         public int MovementToASMultiplier { get; set; }
         public bool MovementToAS { get; set; }
         public bool MovementToCrit { get; set; }
+        public bool DealMagicDamage { get; set; }
 
         public enum ImmunityType
         {
@@ -206,11 +207,13 @@ namespace Game.Mechanics.Battle
 
         public DamageType GetDamageType()
         {
+            if (DealMagicDamage)
+                return DamageType.Magic;
             if (owner.GetEquippedWeapon() != null)
             {
                 return owner.GetEquippedWeapon().DamageType;
             }
-
+           
             return DamageType.Physical;
         }
 
