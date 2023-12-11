@@ -6,6 +6,7 @@ using Game.Manager;
 using Game.Map;
 using LostGrace;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game.GameActors.Units.Skills
 {
@@ -36,13 +37,11 @@ namespace Game.GameActors.Units.Skills
     [CreateAssetMenu(menuName = "GameData/Skills/Active/SingleTarget", fileName = "SingleTargetMixin")]
     public class SingleTargetMixin : ActiveSkillMixin
     {
-        public List<SingleTargetCondition> conditions;
-        
+        [FormerlySerializedAs("conditions")] public List<SingleTargetCondition> singleTargetConditions;
         public SingleTargetType targetType;
         [field: SerializeField] private int minRange = 0;
         [field: SerializeField] private int[] range;
         [SerializeField]private bool sameAsAttackRange = false;
-        public List<SkillEffectMixin> SkillEffectMixins;
         public bool confirmPosition = true;
 
         public void Activate(Unit user, Unit target)
@@ -58,7 +57,6 @@ namespace Game.GameActors.Units.Skills
                             Quaternion.identity, null);
                         go.GetComponentInChildren<CastPosition>().transform.position =
                             Camera.main.WorldToScreenPoint(user.GameTransformManager.GetCenterPosition());
-
                     }
                     else
                     {
@@ -68,27 +66,10 @@ namespace Game.GameActors.Units.Skills
                            castPosition.transform.position = user.GameTransformManager.GetCenterPosition();
                     }
                 }, effectDelay);
-             
             }
-            
-
             MonoUtility.DelayFunction(() =>
             {
-                bool replaceEffects = false;
-                var blessing = GetBlessing(user);
-                if (blessing != null)
-                {
-                    replaceEffects = synergies[blessing].replacesOtherEffects;
-                    foreach (SkillEffectMixin effect in synergies[blessing].skillEffectMixins)
-                    {
-                        ActivateSkillEffects(effect, target,user);
-                    }
-                }
-                if(!replaceEffects)
-                    foreach (SkillEffectMixin effect in SkillEffectMixins)
-                    {
-                        ActivateSkillEffects(effect, target,user);
-                    }
+                Activate(target);
                 Debug.Log("ACTIVATE SINGLE TARGET MIXIN");
                 if (target != null && skill.skillTransferData != null)
                 {
@@ -96,20 +77,11 @@ namespace Game.GameActors.Units.Skills
                     skill.skillTransferData.data = (object)target;
                 }
             }, logicDelay);
-            base.Activate();
+            base.PayActivationCost();
         }
-
-        void ActivateSkillEffects(SkillEffectMixin effect, Unit target, Unit caster)
-        {
-            if (effect is UnitTargetSkillEffectMixin unitTargetSkillEffectMixin)
-                unitTargetSkillEffectMixin.Activate(target, caster, skill.Level);
-
-        }
-
        
         public int GetRange(int level)
         {
-            
             if (!sameAsAttackRange)
                 return range[level];
             return skill.owner.AttackRanges.Max();
@@ -117,11 +89,9 @@ namespace Game.GameActors.Units.Skills
         }
         public int GetMinRange(int level)
         {
-            
             if (!sameAsAttackRange)
                 return minRange;
             return skill.owner.AttackRanges.Min();
-            
         }
 
         public List<Unit> GetTargets(Unit user)
@@ -158,7 +128,7 @@ namespace Game.GameActors.Units.Skills
 
         public bool CanTarget(Unit user, Unit target)
         {
-            foreach(var condition in conditions)
+            foreach(var condition in singleTargetConditions)
             {
                 if (!condition.CanTarget(user, target))
                     return false;
@@ -174,8 +144,6 @@ namespace Game.GameActors.Units.Skills
             return !user.Faction.IsOpponentFaction(target.Faction);
         }
 
-
-
         public void HideTargets(Unit user)
         {
             var gridSystem = ServiceProvider.Instance.GetSystem<GridSystem>();
@@ -185,7 +153,7 @@ namespace Game.GameActors.Units.Skills
             gridSystem.ShowCastRange(user, GetRange(skill.Level), GetMinRange(skill.Level));
             foreach (var target in targets)
             {
-                foreach (SkillEffectMixin effect in SkillEffectMixins)
+                foreach (SkillEffectMixin effect in skillEffectMixins)
                 {
                     if (effect is DamageSkillEffectMixin dmgMixin)
                         dmgMixin.HideDamagePreview(target);
@@ -205,7 +173,7 @@ namespace Game.GameActors.Units.Skills
             gridSystem.ShowCastRange(user, GetRange(skill.Level), GetMinRange(skill.Level));
             foreach (var target in targets)
             {
-                foreach (SkillEffectMixin effect in SkillEffectMixins)
+                foreach (SkillEffectMixin effect in skillEffectMixins)
                 {
                     if (effect is DamageSkillEffectMixin dmgMixin)
                         dmgMixin.ShowDamagePreview(target, user, skill.Level);
@@ -220,35 +188,20 @@ namespace Game.GameActors.Units.Skills
 
         }
 
-        
-        public List<EffectDescription> GetEffectDescription(Unit unit, int level)
-        {
-            var list = new List<EffectDescription>();
-            foreach (var skillEffect in SkillEffectMixins)
-            {
-                var skillEffectList = skillEffect.GetEffectDescription(unit,level);
-                if(skillEffectList!=null)
-                    list.AddRange(skillEffectList);
-            }
-            return list;
-        }
-
         public int GetDamageDone(Unit selectedUnit, Unit target)
         {
-            foreach (SkillEffectMixin effect in SkillEffectMixins)
+            foreach (SkillEffectMixin effect in skillEffectMixins)
             {
                 if (effect is DamageSkillEffectMixin damageSkillEffectMixin)
                     return damageSkillEffectMixin.GetDamageDealtToTarget(selectedUnit, target, skill.level);
                 if (effect is OverrideSkillEffectMixin overrideSkillEffect)
                     return overrideSkillEffect.GetDamageDealtToTarget(selectedUnit, target, skill.level);
-
             }
-
             return 0;
         }
         public int GetHealingDone(Unit selectedUnit, Unit target)
         {
-            foreach (SkillEffectMixin effect in SkillEffectMixins)
+            foreach (SkillEffectMixin effect in skillEffectMixins)
             {
                 if (effect is HealEffect healMixin)
                     return healMixin.GetHealAmount(selectedUnit, target,skill.level);
@@ -256,7 +209,6 @@ namespace Game.GameActors.Units.Skills
                     return overrideSkillEffect.GetHealAmount(selectedUnit, target, skill.level);
 
             }
-
             return 0;
         }
     }

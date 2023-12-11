@@ -222,7 +222,7 @@ namespace Game.GameActors.Units.Skills
                         : new Vector3(x + .5f, y + 0.5f), Quaternion.Euler(rotation), null);
             }
 
-            base.Activate();
+            base.PayActivationCost();
         }
 
         private void ActivateSkillEffects(Unit user, Tile[,] tiles, SkillEffectMixin effect, int xPosition, int yPosition)

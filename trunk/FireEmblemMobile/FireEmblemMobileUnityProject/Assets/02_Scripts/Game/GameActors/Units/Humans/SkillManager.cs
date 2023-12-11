@@ -156,6 +156,7 @@ namespace Game.GameActors.Units.Humans
         public void RemoveSkill(Skill skill)
         {
             skills.Remove(skill);
+            skill.UnbindSkill(unit);
             OnSkillsChanged?.Invoke();
         }
 

@@ -12,54 +12,17 @@ namespace LostGrace
        
         public override void BindToUnit(Unit unit, Skill skill)
         {
-           
-            foreach(var effect in skillEffectMixins)
-            {
-                if (effect is SelfTargetSkillEffectMixin stsm)
-                {
-                    stsm.Activate(unit, skill.level);
-                }
-            }
-            var key = GetBlessing(unit);
-            if (key != null)
-            {
-                foreach (var skillEffect in synergies[key].skillEffectMixins)
-                {
-                    if (skillEffect is SelfTargetSkillEffectMixin selfTargetSkillMixin)
-                        selfTargetSkillMixin.Activate(unit, skill.level);
-                }
-            }
             base.BindToUnit(unit,skill);
+            Activate(unit);
         }
         public override void UnbindFromUnit(Unit unit, Skill skill)
         {
-            
-            foreach(var effect in skillEffectMixins)
-            {
-                if (effect is SelfTargetSkillEffectMixin stsm)
-                {
-                    stsm.Deactivate(unit, skill.level);
-                }
-            }
-            var key = GetBlessing(unit);
-            if (key != null)
-            {
-                foreach (var skillEffect in synergies[key].skillEffectMixins)
-                {
-                    if (skillEffect is SelfTargetSkillEffectMixin selfTargetSkillMixin)
-                        selfTargetSkillMixin.Deactivate(unit, skill.level);
-                }
-            }
+
+            Deactivate(unit);
             base.UnbindFromUnit(unit,skill);
 
         }
-        public override List<EffectDescription> GetEffectDescription(Unit unit, int level)
-        {
-            var list = new List<EffectDescription>();
-            foreach (var effect in skillEffectMixins)
-                list.AddRange(effect.GetEffectDescription(unit, level));
-            return list;
-        }
+       
 
     }
 }

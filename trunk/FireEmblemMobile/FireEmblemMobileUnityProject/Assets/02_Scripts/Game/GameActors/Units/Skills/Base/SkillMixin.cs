@@ -15,9 +15,14 @@ namespace Game.GameActors.Units.Skills
         [SerializeField]public SerializableDictionary<BlessingBP,SynergieEffects> synergies;
         [SerializeField] private ConditionBigPackage conditionBigPackage;
         [SerializeField]protected List<SkillEffectMixin> skillEffectMixins;
-        private bool activated = false;
+        protected bool activated = false;
         private bool blessingActivated = false;
         protected bool bound = false;
+        private BlessingBP blessing;
+        private bool replaceConditions = false;
+        private bool replaceEffects = false;
+        private bool blessingConditionValid = false;
+        private bool baseConditionValid = false;
 
         public virtual void BindToUnit(Unit unit, Skill skill)
         {
@@ -27,15 +32,33 @@ namespace Game.GameActors.Units.Skills
                 skill.skillTransferData.data = null;
         }
 
-        private BlessingBP blessing;
-        protected void UpdateContext(Unit target=null, Tile tile =null)
+       
+
+        protected bool Activate(Unit target=null)
         {
-            blessing = GetBlessing(skill.owner);
-            bool replaceConditions = false;
-            bool blessingConditionValid = false;
-            bool replaceEffects = false;
-            bool baseConditionValid = conditionBigPackage.Valid(skill.owner, target, tile);
-            
+            CheckConditions(target);
+            if (replaceConditions?blessingConditionValid:baseConditionValid){
+                CheckSkillEffectsAndSynergies(skill.owner, target, skill.level, replaceEffects, blessingConditionValid);
+                return true;
+            }
+
+            return false;
+        }
+        protected void Deactivate(Unit target=null)
+        {
+            CheckConditions(target);
+            CheckDeactivateSkillEffectsAndSynergies(skill.owner, target, skill.level, replaceEffects);
+        }
+
+       
+
+        void CheckConditions(Unit target, Tile tile=null)
+        {
+            blessing = GetBlessing(skill.owner); 
+            replaceConditions = false;
+            blessingConditionValid = false;
+            replaceEffects = false;
+            baseConditionValid = conditionBigPackage.Valid(skill.owner, target, tile);
             if (blessing != null)
             {
                 replaceEffects = synergies[blessing].replacesOtherEffects;
@@ -53,6 +76,11 @@ namespace Game.GameActors.Units.Skills
                 }
                 
             }
+        }
+        protected void UpdateContext(Unit target=null, Tile tile =null)
+        {
+            
+            CheckConditions(target, tile);
             if (replaceConditions?blessingConditionValid:baseConditionValid){
                 CheckSkillEffectsAndSynergies(skill.owner, target, skill.level, replaceEffects, blessingConditionValid);
             }
@@ -104,7 +132,7 @@ namespace Game.GameActors.Units.Skills
                 DeactivateSkillEffects(skillEffect, user, target, level);
             }
         }
-        public void ActivateSkillEffects(SkillEffectMixin skillEffect, Unit user, Unit target, int level)
+        private void ActivateSkillEffects(SkillEffectMixin skillEffect, Unit user, Unit target, int level)
         {
             if (skillEffect is SelfTargetSkillEffectMixin stm)
             {
@@ -115,7 +143,7 @@ namespace Game.GameActors.Units.Skills
                 uts.Activate(target, user,level);
             }
         }
-        public void DeactivateSkillEffects(SkillEffectMixin skillEffect, Unit user, Unit target, int level)
+        private void DeactivateSkillEffects(SkillEffectMixin skillEffect, Unit user, Unit target, int level)
         {
             if (skillEffect is SelfTargetSkillEffectMixin stm)
             {
@@ -156,6 +184,16 @@ namespace Game.GameActors.Units.Skills
             }
 
             return false;
+        }
+        public virtual List<EffectDescription> GetEffectDescription(Unit unit, int level)
+        {
+            var list = new List<EffectDescription>();
+
+            foreach (var skillEffect in skillEffectMixins)
+            {
+                list.AddRange(skillEffect.GetEffectDescription(unit, level));
+            }
+            return list;
         }
        
     }

@@ -10,16 +10,12 @@ namespace Game.GameActors.Units.Skills
     [CreateAssetMenu(menuName = "GameData/Skills/CombatSkillMixin", fileName = "CombatMixin")]
     public class CombatSkillMixin:SkillMixin
     {
-        
-      
-        
         public int[] maxUsesPerLevel;
         public int[] hpCostPerLevel;
         private Unit target;
         private Unit unit;
         private int activatedLevel = -1;
         public bool preventDouble = true;
-        private bool activated = false;
         [HideInInspector]public int Uses { get; set; }
       
 
@@ -51,66 +47,28 @@ namespace Game.GameActors.Units.Skills
 
         public void Activate(Unit user, Unit enemy, bool reduceHp=false)
         {
-            if (activated)
-                return;
-            if (reduceHp)
+            if (base.Activate(enemy))
             {
-                user.Hp -= hpCostPerLevel[skill.level];
-                Uses--;
-            }
-
-            activated = true;
-            this.unit = user;
-            this.target = enemy;
-            this.activatedLevel = skill.Level;
-            user.BattleComponent.BattleStats.SetPreventDoubleAttacks(preventDouble);
-            CheckSkillAndSynergyEffects(user, enemy);
-
-
-
-        }
-
-        protected void CheckSkillAndSynergyEffects(Unit user, Unit target)
-        {
-            var key = GetBlessing(unit);
-            bool replaceEffects = false;
-            if (key != null)
-            {
-                replaceEffects = synergies[key].replacesOtherEffects;
-                foreach (var skillEffect in synergies[key].skillEffectMixins)
+                if (activated)
+                    return;
+                if (reduceHp)
                 {
-                    ActivateSkillEffects(skillEffect,user, target, skill.level);
+                    user.Hp -= hpCostPerLevel[skill.level];
+                    Uses--;
                 }
+                this.unit = user;
+                this.target = enemy;
+                this.activatedLevel = skill.Level;
+                user.BattleComponent.BattleStats.SetPreventDoubleAttacks(preventDouble);
             }
-            if(!replaceEffects)
-                foreach (var skilleffect in skillEffectMixins)
-                {
-                    ActivateSkillEffects(skilleffect,user, this.target, skill.level);
-                }
         }
-
-       
-
-
        
         public void Deactivate()
         {
             if (!activated)
                 return;
-            activated = false;
             unit.BattleComponent.BattleStats.SetPreventDoubleAttacks(false);
-            foreach (var skilleffect in skillEffectMixins)
-            {
-                DeactivateSkillEffects(skilleffect);
-            }
-            var key = GetBlessing(unit);
-            if (key != null)
-            {
-                foreach (var skillEffect in synergies[key].skillEffectMixins)
-                {
-                    DeactivateSkillEffects(skillEffect);
-                }
-            }
+            Deactivate(skill.owner);
         }
 
         private void DeactivateSkillEffects(SkillEffectMixin skilleffect)

@@ -31,7 +31,7 @@ namespace Game.GameActors.Units.Skills
         //     this.currentUses = maxUsesPerLevel;
         //     this.hpCostPerLevel = hpCostPerLevel;
         // }
-        public void Activate()
+        public void PayActivationCost()
         {
             if (skill.owner != null)
             {
