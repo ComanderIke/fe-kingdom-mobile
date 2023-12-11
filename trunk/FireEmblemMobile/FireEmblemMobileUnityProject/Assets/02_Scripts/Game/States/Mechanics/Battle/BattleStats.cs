@@ -66,6 +66,10 @@ namespace Game.Mechanics.Battle
         public BonusAttackStats BonusAttackStats { get; set; }
         public int WrathDamage { get; set; }
         public int MovementToDmgMultiplier { get; set; }
+        public int MovementToCritMultiplier { get; set; }
+        public int MovementToASMultiplier { get; set; }
+        public bool MovementToAS { get; set; }
+        public bool MovementToCrit { get; set; }
 
         public enum ImmunityType
         {
@@ -271,14 +275,22 @@ namespace Game.Mechanics.Battle
         public int GetAttackSpeed()
         {
             int spd = owner.Stats.CombinedAttributes().AGI + owner.Stats.CombinedBonusStats().AttackSpeed;
-          
+            if (MovementToAS)
+            {
+                spd += ((GridActorComponent)owner.GridComponent).MovedTileCount* MovementToASMultiplier;
+            }
             return spd;
            
         }
 
         public int GetCrit()
         {
-            return owner.Stats.CombinedAttributes().LCK+ owner.Stats.CombinedBonusStats().Crit;
+            int crit = owner.Stats.CombinedAttributes().LCK + owner.Stats.CombinedBonusStats().Crit;
+            if (MovementToCrit)
+            {
+                crit += ((GridActorComponent)owner.GridComponent).MovedTileCount* MovementToCritMultiplier;
+            }
+            return crit;
         }
         public const int CRIT_AVO_LCK_MULT=2;
         public int GetCritAvoid()

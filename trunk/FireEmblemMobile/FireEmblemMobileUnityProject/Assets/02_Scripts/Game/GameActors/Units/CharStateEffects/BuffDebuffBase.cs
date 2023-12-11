@@ -51,7 +51,7 @@ namespace Game.GameActors.Units.CharStateEffects
             list.AddRange(BuffData.GetEffectDescription(level));
             foreach(var mixin in mixins)
                 list.AddRange(mixin.GetEffectDescription(caster, level));
-           
+            Debug.Log("TEST");
             return list;
         }
         public virtual void Apply(Unit caster, Unit target, int skilllevel)

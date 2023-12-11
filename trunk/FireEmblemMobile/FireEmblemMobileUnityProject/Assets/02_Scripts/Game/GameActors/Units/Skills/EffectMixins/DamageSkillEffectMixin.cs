@@ -17,12 +17,16 @@ namespace Game.GameActors.Units.Skills
         public AttributeType scalingType;
         public float[] scalingcoeefficient;
         public bool lethalDmg;
+        public bool damageAlly=true;
         [SerializeField] private SkillTransferData skillTransferData;
 
         public override void Activate(Unit target, Unit caster, int level)
         {
 
 
+            if(!damageAlly)
+                if (!target.Faction.IsOpponentFaction(caster.Faction))
+                    return;
             Debug.Log("Activate Damage: " + CalculateDamage(caster, target, level) + " " + damageType);
             if (skillTransferData != null)
                 MonoUtility.DelayFunction(
@@ -36,9 +40,13 @@ namespace Game.GameActors.Units.Skills
 
         public void ShowDamagePreview(Unit target, Unit caster, int level)
         {
+            if(!damageAlly)
+                if (!target.Faction.IsOpponentFaction(caster.Faction))
+                    return;
             int hpAfter = target.Hp-GetDamageDealtToTarget(caster,target,level);
             if (hpAfter < 0)
                 hpAfter = 0;
+            Debug.Log("SHOW DAMAGE PREVIEW: "+hpAfter);
             target.visuals.unitRenderer.ShowPreviewHp(hpAfter);
         }
         public void HideDamagePreview(Unit target)
@@ -67,7 +75,7 @@ namespace Game.GameActors.Units.Skills
         private int GetScaledDamage(Unit user, int level)
         {
             int baseDamageg = dmg[level];
-            if (scalingcoeefficient.Length > 1)
+            if (scalingcoeefficient.Length > 0)
             {
                 float scaling = scalingcoeefficient[0];
                 if (level < scalingcoeefficient.Length)
@@ -125,6 +133,9 @@ namespace Game.GameActors.Units.Skills
 
         public int GetDamageDealtToTarget(Unit caster, Unit target, int level)
         {
+            if(!damageAlly)
+                if (!target.Faction.IsOpponentFaction(caster.Faction))
+                    return 0;
             return target.GetDamageDealt(caster, CalculateDamage(caster, target, level), damageType);
         }
     }

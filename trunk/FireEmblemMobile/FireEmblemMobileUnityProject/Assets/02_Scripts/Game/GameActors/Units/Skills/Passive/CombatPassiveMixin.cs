@@ -48,7 +48,7 @@ namespace Game.GameActors.Units.Skills.Passive
             {
                 DeactivateSkillEffects(unit, target, skillEffect);
             }
-            var key = GetKey(unit);
+            var key = GetBlessing(unit);
             if (key != null)
             {
                 foreach (var skillEffect in synergies[key].skillEffectMixins)
@@ -82,12 +82,12 @@ namespace Game.GameActors.Units.Skills.Passive
             if (activated)
                 return;
             var compareConditions = conditionManager;
-            var key = GetKey(unit);
+            var key = GetBlessing(unit);
             if (key != null)
             {
                 if (synergies[key].conditionManager.Conditions.Count != 0)
                 {
-                    if (synergies[key].replacesOtherCOnditions)
+                    if (synergies[key].replacesOtherConditions)
                     {
                         compareConditions = synergies[key].conditionManager;
                     }

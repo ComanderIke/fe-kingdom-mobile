@@ -30,28 +30,41 @@ MonoBehaviour:
     AttackRanges: 
     BaseAttributes:
       str: 3
-      intel: 3
       dex: 3
+      intel: 3
       agi: 3
-      maxHp: 10
       lck: 3
       def: 3
       faith: 3
+      maxHp: 10
+      sum: 26
     <BaseGrowths>k__BackingField:
       str: 0
-      intel: 0
       dex: 0
+      intel: 0
       agi: 0
-      maxHp: 0
       lck: 0
       def: 0
       faith: 0
+      maxHp: 0
+      sum: 0
+    <FixedGrowthOffsets>k__BackingField:
+      str: 0
+      dex: 0
+      intel: 0
+      agi: 0
+      lck: 0
+      def: 0
+      faith: 0
+      maxHp: 0
+      sum: 0
     Mov: 3
   moveType: {fileID: 11400000, guid: 580bbea6e1e3e824a81881f8e2a825ba, type: 2}
   SkillManager:
     startSkills: []
     startBlessing: {fileID: 0}
     maxSkillCount: 0
+    maxSkillPoints: 0
     skillPoints: 0
   rpgClass: 0
   bluePrintID: 
@@ -72,7 +85,7 @@ MonoBehaviour:
   experienceManager:
     level: 0
     exp: 0
-    drainableExp: 100
+    drainableExp: 50
     expLeftToDrain: 100
   <ChronikComponent>k__BackingField:
     <BodySprite>k__BackingField: {fileID: 0}

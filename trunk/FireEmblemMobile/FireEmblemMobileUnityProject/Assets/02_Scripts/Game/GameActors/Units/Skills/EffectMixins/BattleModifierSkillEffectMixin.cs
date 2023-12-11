@@ -10,6 +10,8 @@ namespace Game.GameActors.Units.Skills
     {
         public bool excessHitToCrit = false;
         public bool movementToDmg = false;
+        public bool movementToCrit = false;
+        public bool movementToAS = false;
         public bool desperationEffect = false;
         public bool vantage;
         public int[] multiplier;
@@ -19,8 +21,14 @@ namespace Game.GameActors.Units.Skills
             Debug.Log("ACTIVATE BATTLE MODIFIER");
             user.BattleComponent.BattleStats.ExcessHitToCrit = excessHitToCrit;
             user.BattleComponent.BattleStats.MovementToDmg = movementToDmg;
+            user.BattleComponent.BattleStats.MovementToAS = movementToAS;
+            user.BattleComponent.BattleStats.MovementToCrit = movementToCrit;
             if(movementToDmg)
                 user.BattleComponent.BattleStats.MovementToDmgMultiplier = multiplier[level];
+            if(movementToAS)
+                user.BattleComponent.BattleStats.MovementToASMultiplier = multiplier[level];
+            if(movementToCrit)
+                user.BattleComponent.BattleStats.MovementToCritMultiplier = multiplier[level];
         }
         
 
@@ -29,7 +37,11 @@ namespace Game.GameActors.Units.Skills
             Debug.Log("DEACTIVATE BATTLE MODIFIER");
             user.BattleComponent.BattleStats.ExcessHitToCrit = false;
             user.BattleComponent.BattleStats.MovementToDmg = false;
+            user.BattleComponent.BattleStats.MovementToAS = false;
+            user.BattleComponent.BattleStats.MovementToCrit = false;
             user.BattleComponent.BattleStats.MovementToDmgMultiplier = 1;
+            user.BattleComponent.BattleStats.MovementToASMultiplier = 1;
+            user.BattleComponent.BattleStats.MovementToCritMultiplier = 1;
         }
 
 

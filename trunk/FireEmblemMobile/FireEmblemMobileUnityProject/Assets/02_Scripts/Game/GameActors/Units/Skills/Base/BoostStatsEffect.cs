@@ -13,14 +13,15 @@ namespace Game.GameActors.Units.Skills
       
         public Attributes[] BonusAttributes;
         public CombatStats[] BonusStats;
-        public int BonusMov;
+        public int BonusMov; 
+        [SerializeField] private int[] cantoAmount;
         public float multiplier = 1;
         public bool skillTransferDataIsMultiplier;
         public SkillTransferData SkillTransferData;
         private bool activated = false;
         public override void Activate(Unit target, int level)
         {
-           
+            
             if (BonusAttributes != null&& BonusAttributes.Length>0)
             {
                 if(level < BonusAttributes.Length)
@@ -40,7 +41,9 @@ namespace Game.GameActors.Units.Skills
                     target.Stats.BonusStatsFromEffects += BonusStats[BonusStats.Length-1];
                 }
             }
-
+            if(level<cantoAmount.Length)
+                target.GridComponent.Canto = cantoAmount[level];
+            Debug.Log("BOOST STATS ACTIVATED "+target.GridComponent.Canto);
             activated = true;
         }
 
@@ -69,6 +72,9 @@ namespace Game.GameActors.Units.Skills
                     target.Stats.BonusStatsFromEffects -= BonusStats[BonusStats.Length-1];
                 }
             }
+            if(cantoAmount.Length>0)
+                target.GridComponent.Canto = 0;
+            Debug.Log("BOOST STATS DEACTIVATED "+target.GridComponent.Canto);
         }
 
         public override List<EffectDescription> GetEffectDescription(Unit caster,int level)
@@ -101,6 +107,9 @@ namespace Game.GameActors.Units.Skills
                     list.Add(new EffectDescription(bonusStatsLabels[i], "+"+bonusStatsValues[i], "+"+bonusStatsUpgrades[i]));
                 }
             }
+            if(level<cantoAmount.Length)
+                list.Add(new EffectDescription("Canto", ""+cantoAmount[level],  ""+cantoAmount[level+1]));
+
 
             return list;
         }

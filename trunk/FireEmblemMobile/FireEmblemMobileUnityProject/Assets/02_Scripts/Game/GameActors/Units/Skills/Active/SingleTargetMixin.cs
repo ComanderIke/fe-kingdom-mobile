@@ -74,12 +74,21 @@ namespace Game.GameActors.Units.Skills
 
             MonoUtility.DelayFunction(() =>
             {
-                foreach (SkillEffectMixin effect in SkillEffectMixins)
+                bool replaceEffects = false;
+                var blessing = GetBlessing(user);
+                if (blessing != null)
                 {
-                    if (effect is UnitTargetSkillEffectMixin unitTargetSkillEffectMixin)
-                        unitTargetSkillEffectMixin.Activate(target, user, skill.Level);
+                    replaceEffects = synergies[blessing].replacesOtherEffects;
+                    foreach (SkillEffectMixin effect in synergies[blessing].skillEffectMixins)
+                    {
+                        ActivateSkillEffects(effect, target,user);
+                    }
                 }
-
+                if(!replaceEffects)
+                    foreach (SkillEffectMixin effect in SkillEffectMixins)
+                    {
+                        ActivateSkillEffects(effect, target,user);
+                    }
                 Debug.Log("ACTIVATE SINGLE TARGET MIXIN");
                 if (target != null && skill.skillTransferData != null)
                 {
@@ -90,6 +99,12 @@ namespace Game.GameActors.Units.Skills
             base.Activate();
         }
 
+        void ActivateSkillEffects(SkillEffectMixin effect, Unit target, Unit caster)
+        {
+            if (effect is UnitTargetSkillEffectMixin unitTargetSkillEffectMixin)
+                unitTargetSkillEffectMixin.Activate(target, caster, skill.Level);
+
+        }
 
        
         public int GetRange(int level)
@@ -194,6 +209,8 @@ namespace Game.GameActors.Units.Skills
                 {
                     if (effect is DamageSkillEffectMixin dmgMixin)
                         dmgMixin.ShowDamagePreview(target, user, skill.Level);
+                    if (effect is OverrideSkillEffectMixin overrideMixin)
+                        overrideMixin.ShowDamagePreview(target, user, skill.Level);
                     if (effect is HealEffect healMixin)
                         healMixin.ShowHealPreview(target, user, skill.Level);
                 }
@@ -222,6 +239,9 @@ namespace Game.GameActors.Units.Skills
             {
                 if (effect is DamageSkillEffectMixin damageSkillEffectMixin)
                     return damageSkillEffectMixin.GetDamageDealtToTarget(selectedUnit, target, skill.level);
+                if (effect is OverrideSkillEffectMixin overrideSkillEffect)
+                    return overrideSkillEffect.GetDamageDealtToTarget(selectedUnit, target, skill.level);
+
             }
 
             return 0;
@@ -232,6 +252,9 @@ namespace Game.GameActors.Units.Skills
             {
                 if (effect is HealEffect healMixin)
                     return healMixin.GetHealAmount(selectedUnit, target,skill.level);
+                if (effect is OverrideSkillEffectMixin overrideSkillEffect)
+                    return overrideSkillEffect.GetHealAmount(selectedUnit, target, skill.level);
+
             }
 
             return 0;

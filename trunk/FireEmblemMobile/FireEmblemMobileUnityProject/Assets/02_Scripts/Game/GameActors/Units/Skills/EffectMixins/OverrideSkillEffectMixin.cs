@@ -96,5 +96,39 @@ namespace Game.GameActors.Units.Skills
             }
             return list;
         }
+
+        public void ShowDamagePreview(Unit target, Unit user, int skillLevel)
+        {
+            foreach (var effect in skillEffects)
+            {
+                if (effect is DamageSkillEffectMixin dmgMixin)
+                    dmgMixin.ShowDamagePreview(target, user, skillLevel);
+                if (effect is HealEffect healMixin)
+                    healMixin.ShowHealPreview(target, user, skillLevel);
+            }
+        }
+
+        public int GetDamageDealtToTarget(Unit selectedUnit, Unit target, int skillLevel)
+        {
+            foreach (SkillEffectMixin effect in skillEffects)
+            {
+                if (effect is DamageSkillEffectMixin damageSkillEffectMixin)
+                    return damageSkillEffectMixin.GetDamageDealtToTarget(selectedUnit, target, skillLevel);
+                
+            }
+
+            return 0;
+        }
+
+        public int GetHealAmount(Unit selectedUnit, Unit target, int skillLevel)
+        {
+            foreach (var effect in skillEffects)
+            {
+                if (effect is HealEffect healMixin)
+                    return healMixin.GetHealAmount(selectedUnit, target, skillLevel);
+            }
+
+            return 0;
+        }
     }
 }

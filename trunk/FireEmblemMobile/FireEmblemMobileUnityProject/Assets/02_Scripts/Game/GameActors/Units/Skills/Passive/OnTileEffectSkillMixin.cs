@@ -10,44 +10,9 @@ namespace Game.GameActors.Units.Skills.Passive
     [CreateAssetMenu(menuName = "GameData/Skills/Passive/OnTile", fileName = "OnTileMixin")]
     public class OnTileEffectSkillMixin:PassiveSkillMixin, ITurnStateListener
     {
-        public List<TerrainType> TerrainTypes;
-        private bool activated = false;
-
         void OnTileChanged(Tile tile)
         {
-            if (TerrainTypes.Contains(tile.TileData.TerrainType))
-            {
-                if (activated)
-                    return;
-                activated = true;
-                foreach (var skillEffect in skillEffectMixins)
-                {
-                    if (skillEffect is SelfTargetSkillEffectMixin stm)
-                    {
-                        stm.Activate(skill.owner, skill.Level);
-                    }
-                    if (skillEffect is UnitTargetSkillEffectMixin uts)
-                    {
-                        uts.Activate(skill.owner, skill.owner, skill.Level);
-                    }
-                }
-            }
-            else if(activated)
-            {
-                activated = false;
-                foreach (var skillEffect in skillEffectMixins)
-                {
-                    if (skillEffect is SelfTargetSkillEffectMixin stm)
-                    {
-                        stm.Deactivate(skill.owner, skill.Level);
-                    }
-                    if (skillEffect is UnitTargetSkillEffectMixin uts)
-                    {
-                        uts.Deactivate(skill.owner, skill.owner, skill.Level);
-                    }
-                }
-            }
-            
+            UpdateContext(skill.owner, tile);
         }
         public override void BindToUnit(Unit unit, Skill skill)
         {
@@ -56,7 +21,6 @@ namespace Game.GameActors.Units.Skills.Passive
             unit.GridComponent.OnTileChanged+=OnTileChanged;
             
         }
-        
         public override void UnbindFromUnit(Unit unit, Skill skill)
         {
             base.UnbindFromUnit(unit, skill);

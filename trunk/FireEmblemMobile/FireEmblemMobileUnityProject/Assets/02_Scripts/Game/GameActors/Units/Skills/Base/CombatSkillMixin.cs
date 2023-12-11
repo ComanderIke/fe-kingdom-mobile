@@ -11,7 +11,7 @@ namespace Game.GameActors.Units.Skills
     public class CombatSkillMixin:SkillMixin
     {
         
-        [SerializeField]protected List<SkillEffectMixin> skillEffectMixins;
+      
         
         public int[] maxUsesPerLevel;
         public int[] hpCostPerLevel;
@@ -64,40 +64,32 @@ namespace Game.GameActors.Units.Skills
             this.target = enemy;
             this.activatedLevel = skill.Level;
             user.BattleComponent.BattleStats.SetPreventDoubleAttacks(preventDouble);
-            foreach (var skilleffect in skillEffectMixins)
-            {
-                ActivateSkillEffect(user, enemy, skilleffect);
-            }
+            CheckSkillAndSynergyEffects(user, enemy);
 
-            var key = GetKey(unit);
+
+
+        }
+
+        protected void CheckSkillAndSynergyEffects(Unit user, Unit target)
+        {
+            var key = GetBlessing(unit);
+            bool replaceEffects = false;
             if (key != null)
             {
+                replaceEffects = synergies[key].replacesOtherEffects;
                 foreach (var skillEffect in synergies[key].skillEffectMixins)
                 {
-                    ActivateSkillEffect(user, enemy, skillEffect);
+                    ActivateSkillEffects(skillEffect,user, target, skill.level);
                 }
             }
-            
+            if(!replaceEffects)
+                foreach (var skilleffect in skillEffectMixins)
+                {
+                    ActivateSkillEffects(skilleffect,user, this.target, skill.level);
+                }
         }
 
-        private void ActivateSkillEffect(Unit user, Unit enemy, SkillEffectMixin skilleffect)
-        {
-            if (skilleffect is SelfTargetSkillEffectMixin selfTargetSkillEffectMixin)
-            {
-                //Debug.Log(skill.Name);
-                // Debug.Log(user.Name);
-                // Debug.Log(skilleffect);
-                selfTargetSkillEffectMixin.Activate(user, skill.Level);
-            }
-
-            if (skilleffect is UnitTargetSkillEffectMixin unitTargetSkillEffectMixin)
-            {
-                if (unitTargetSkillEffectMixin.TargetIsCaster)
-                    unitTargetSkillEffectMixin.Activate(user, user, skill.Level);
-                else
-                    unitTargetSkillEffectMixin.Activate(enemy, user, skill.Level);
-            }
-        }
+       
 
 
        
@@ -111,7 +103,7 @@ namespace Game.GameActors.Units.Skills
             {
                 DeactivateSkillEffects(skilleffect);
             }
-            var key = GetKey(unit);
+            var key = GetBlessing(unit);
             if (key != null)
             {
                 foreach (var skillEffect in synergies[key].skillEffectMixins)
