@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.Grid;
+
 
 namespace Game.GameActors.Units.Skills.Passive
 {
@@ -9,7 +11,7 @@ namespace Game.GameActors.Units.Skills.Passive
         public ConditionCompareType CompareType;
         public List<Condition> Conditions;
 
-        public bool Valid(Unit unit, Unit target = null)
+        public bool Valid(Unit unit, Unit target = null, Tile tile =null)
         {
             if (Conditions == null || Conditions.Count == 0)
                 return true;
@@ -26,6 +28,11 @@ namespace Game.GameActors.Units.Skills.Passive
                         else if (condition is SingleTargetCondition sitc)
                         {
                             if (!sitc.CanTarget(unit, target))
+                                return false;
+                        }
+                        else if (condition is TileCondition tc)
+                        {
+                            if (!tc.Valid(tile))
                                 return false;
                         }
                         
@@ -46,6 +53,11 @@ namespace Game.GameActors.Units.Skills.Passive
                             if (sitc.CanTarget(unit, target))
                                 return true;
                         }
+                        else if (condition is TileCondition tc)
+                        {
+                            if (!tc.Valid(tile))
+                                return true;
+                        }
                     }
 
                     return false;
@@ -58,7 +70,7 @@ namespace Game.GameActors.Units.Skills.Passive
                         {
                             if (stc.CanTarget(unit))
                             {
-                                if (oneValid == true)
+                                if (oneValid)
                                     return false;
                                 oneValid = true;
                             }
@@ -67,20 +79,19 @@ namespace Game.GameActors.Units.Skills.Passive
                         {
                             if (sitc.CanTarget(unit, target))
                             {
-                                if (oneValid == true)
+                                if (oneValid)
                                     return false;
                                 oneValid = true;
                             }
                         }
-
-                        return oneValid;
+                        else if (condition is TileCondition tc)
+                        {
+                            if (!tc.Valid(tile))
+                                return false;
+                        }
                     }
-
-                    return false;
-                    break;
-                
+                    return oneValid;
             }
-
             return true;
         }
     }

@@ -16,18 +16,26 @@ namespace Game.GameActors.Units.Skills
 
         public bool percentage = false;
         public bool healToPercentageHealth = false;
+        public bool healAlsoEnemies = true;
         public override void Activate(Unit target, Unit caster, int level)
         {
       
+            if(!healAlsoEnemies)
+                if (target.Faction.IsOpponentFaction(caster.Faction))
+                    return;
             Debug.Log("ACTIVATE HEAL" +GetHealAmount(caster,target, level));
           
             target.Heal(GetHealAmount(caster,target, level));
 
-            var go = Instantiate(healingVfx, target.GameTransformManager.Transform);
+            if(healingVfx!=null)
+                Instantiate(healingVfx, target.GameTransformManager.Transform);
         }
 
         public int GetHealAmount(Unit caster, Unit target, int level)
         {
+            if(!healAlsoEnemies)
+                if (!target.Faction.IsOpponentFaction(caster.Faction))
+                    return 0;
             if (healToPercentageHealth)
                 return (int)((target.MaxHp * heal[level]) - target.Hp);
             if (percentage)
@@ -77,7 +85,9 @@ namespace Game.GameActors.Units.Skills
 
         public void ShowHealPreview(Unit target, Unit caster, int skillLevel)
         {
-           
+            if(!healAlsoEnemies)
+                if (!target.Faction.IsOpponentFaction(caster.Faction))
+                    return;
             int hpAfter = target.Hp+GetHealAmount(caster,target,skillLevel);
             if (hpAfter > target.MaxHp)
                 hpAfter = target.MaxHp;

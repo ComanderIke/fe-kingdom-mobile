@@ -31,12 +31,13 @@ namespace Game.GameActors.Items.Weapons
         [Header("RelicAttributes")]
         public int slotCount = 0;
         public GemSlot[] slots;
-        [FormerlySerializedAs("skill")] public Skill Skill;
+     
         private Unit user;
-        public Relic(string name, string description, int cost, int rarity, int maxStack,Sprite sprite,Skill skill,int slotCount) : base(name, description, cost,rarity, maxStack,sprite)
+        public Relic(string name, string description, int cost, int rarity, int maxStack,Sprite sprite,Skill skill,int slotCount) : 
+            base(name, description, cost,rarity, maxStack,sprite, skill)
         {
             this.slotCount = slotCount;
-            this.Skill = skill;
+            
             
             slots = new GemSlot[slotCount];
             for (int i=0; i < slotCount; i++)

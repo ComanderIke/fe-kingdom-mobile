@@ -13,15 +13,13 @@ namespace Game.GameActors.Units
         public event Action<Unit, BuffDebuffBase> OnStatusEffectRemoved;
         private Unit unit;
         //public  List<StatusEffect> StatusEffects { get; private set; }//TODO those will be removed because debuffs are basically them
-        public List<Buff> Buffs { get; private set; }
-        public List<Debuff> Debuffs { get; private set; }
+        public List<BuffDebuffBase> Buffs { get; private set; }
         public List<StatModifier> StatModifiers { get; private set; }
         public StatusEffectManager(Unit unit)
         {
             this.unit = unit;
            // StatusEffects = new List<StatusEffect>();
-            Buffs = new List<Buff>();
-            Debuffs = new List<Debuff>();
+            Buffs = new List<BuffDebuffBase>();
             StatModifiers = new List<StatModifier>();
         }
         // public void AddStatusEffect(StatusEffect statusEffect)
@@ -35,44 +33,26 @@ namespace Game.GameActors.Units
         //     StatusEffects.Remove(statusEffect);
         //     OnStatusEffectRemoved?.Invoke(statusEffect);
         // }
-        public void AddBuff(Buff buff, Unit caster, int level)
+        
+        public void AddBuffDebuff(BuffDebuffBase debuff, Unit caster, int level)
         {
-            Buffs.Add(buff);
-            buff.Apply(caster, unit, level);
-            OnStatusEffectAdded?.Invoke(unit, buff);
-        }
-        public void AddDebuff(Debuff debuff, Unit caster, int level)
-        {
-            foreach (var negate in debuff.negateTypes)
-            {
-                var tmpList = Debuffs.Where(d => d.debuffType == negate);
-                foreach (var entry in tmpList)
-                {
-                    Debuffs.Remove(entry);
-                }
-            }
+            
             debuff.Apply(caster,unit, level);
-            Debuffs.Add(debuff);
+            Buffs.Add(debuff);
             OnStatusEffectAdded?.Invoke(unit, debuff);
         }
-        public void RemoveBuff(Buff buff)
+        public void RemoveBuff(BuffDebuffBase buff)
         {
             Buffs.Remove(buff);
             buff.Unapply(unit);
             OnStatusEffectRemoved?.Invoke(unit, buff);
         }
-        public void RemoveDebuff(Debuff debuff)
+        public void RemoveBuff(BuffDebuffBaseData buffData)
         {
-            Debug.Log("REMOVE DEBUFFS"+ Debuffs.Contains(debuff)+ Debuffs.Count);
-            Debuffs.Remove(debuff);
-            OnStatusEffectRemoved?.Invoke(unit, debuff);
-        }
-        public void RemoveDebuff(DebuffType debuffType)
-        {
-            for (int i = Debuffs.Count - 1; i >= 0; i--)
+            for (int i = Buffs.Count - 1; i >= 0; i--)
             {
-                if(Debuffs[i].debuffType == debuffType)
-                    RemoveDebuff(Debuffs[i]);
+                if(Buffs[i].BuffData == buffData)
+                    RemoveBuff(Buffs[i]);
             }
         }
 
@@ -80,11 +60,9 @@ namespace Game.GameActors.Units
         
         public void UpdateTurn()
         {
-            var debuffEnd = Debuffs.Where(d => d.TakeEffect(unit)).ToList();
             var buffEnd = Buffs.Where(b => b.TakeEffect(unit)).ToList();
             var statModifierEnd = StatModifiers.Where(s => s.TakeEffect(unit)).ToList();
             //Debug.Log("UPDATE TURN BUFF END: "+buffEnd.Count);
-            foreach (var d in debuffEnd) RemoveDebuff(d);
             foreach (var b in buffEnd) RemoveBuff(b);
             foreach (var s in statModifierEnd) RemoveStatModifier(s);
         }

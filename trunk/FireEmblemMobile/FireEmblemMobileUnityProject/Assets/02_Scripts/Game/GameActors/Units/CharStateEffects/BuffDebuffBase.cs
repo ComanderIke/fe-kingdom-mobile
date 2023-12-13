@@ -1,23 +1,66 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using Game.GameActors.Units.Skills;
+using LostGrace;
+using UnityEngine;
 using UnityEngine.Rendering.LookDev;
 
 namespace Game.GameActors.Units.CharStateEffects
 {
-    public abstract class BuffDebuffBase : ScriptableObject
+    public enum BuffType
     {
-        [SerializeField] private GameObject vfx;
-        [SerializeField] public int[] duration;
-        [field:SerializeField] public Sprite Icon { get; set; }
+        Custom,
+        CurseResistance,
+        MagicResistance,
+        Cleansing,
+        Regeneration,
+        Stealth,
+        AbsorbingDmg,
+        Invulnerability,
+        Stride,
+        Rage
+        //ClearMovement
+        //Add as needed
+    }
 
+    [Serializable]
+    public enum DebuffType
+    {
+        Stunned,
+        Silenced,
+        Poisened,
+        Enwebed,
+        Slept,
+        Tempted,
+        Frog
+    }
+
+    [CreateAssetMenu(menuName = "GameData/Buffs/BuffDebuffBase")]
+    public class BuffDebuffBase : ScriptableObject
+    {
+
+        public BuffDebuffBaseData BuffData;
+        [SerializeField] public int[] duration;
+        [SerializeField] private List<UnitTargetSkillEffectMixin> mixins;
+        private Unit caster;
         protected int level;
-        
+        public List<EffectDescription> GetEffectDescription(Unit caster,int level)
+        {
+            var list = new List<EffectDescription>();
+            list.Add(new EffectDescription("For "+duration[level]+" Turns: ", "", ""));
+            list.AddRange(BuffData.GetEffectDescription(level));
+            foreach(var mixin in mixins)
+                list.AddRange(mixin.GetEffectDescription(caster, level));
+            Debug.Log("TEST");
+            return list;
+        }
         public virtual void Apply(Unit caster, Unit target, int skilllevel)
         {
-            if (vfx != null)
-            {
-                var go = Instantiate(vfx, null);
-                go.transform.position = target.GameTransformManager.GetCenterPosition();
-            }
+            this.caster = caster;
+            BuffData.Apply(caster,target,skilllevel);
+            foreach(var mixin in mixins)
+               mixin.Activate(target, caster, skilllevel);
+
 
             Debug.Log("SPAWNED VFX");
             this.level = skilllevel;
@@ -28,6 +71,8 @@ namespace Game.GameActors.Units.CharStateEffects
         }
         public virtual bool TakeEffect(Unit unit)
         {
+            BuffData.TakeEffect(unit);
+           
             Debug.Log("TAKE EFFECT"+duration[level]);
             duration[level]--;
             return duration[level] <= 0;
@@ -35,7 +80,11 @@ namespace Game.GameActors.Units.CharStateEffects
 
         public virtual void Unapply(Unit target)
         {
+            foreach(var mixin in mixins)
+                mixin.Deactivate(target, caster, level);
+            this.caster = null;
             level = 0;
+
         }
 
         public int GetDuration()

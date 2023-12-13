@@ -12,6 +12,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bab17bb935501b1498716d73895f3be9, type: 3}
   m_Name: SingleTargetMixin
   m_EditorClassIdentifier: 
+  synergies:
+    list:
+    - Key: {fileID: 11400000, guid: 1ab4088f23153084cafb9d37e1f6bad8, type: 2}
+      Value:
+        skillEffectMixins:
+        - {fileID: 11400000, guid: 32cef04ab9ae64e16a2003448490712a, type: 2}
+        replacesOtherEffects: 1
+        compareTypeWithExistingConditions: 0
+        conditionManager:
+          CompareType: 0
+          Conditions: []
+        replacesOtherConditions: 0
+    - Key: {fileID: 11400000, guid: a5cf9685305ec2e449183fbe8f4938d1, type: 2}
+      Value:
+        skillEffectMixins:
+        - {fileID: 11400000, guid: 796ad538769204006baf6e1e9b64a746, type: 2}
+        replacesOtherEffects: 1
+        compareTypeWithExistingConditions: 0
+        conditionManager:
+          CompareType: 0
+          Conditions: []
+        replacesOtherConditions: 0
+  conditionBigPackage:
+    CompareType: 0
+    Conditions: []
+  skillEffectMixins:
+  - {fileID: 11400000, guid: 3333988f52c84fd42b91db0779e607b1, type: 2}
   AnimationObject: {fileID: 0}
   spawnAnimationAtCaster: 0
   useScreenPosition: 0
@@ -20,12 +47,11 @@ MonoBehaviour:
   logicDelay: 0
   maxUsesPerLevel: 01000000
   hpCostPerLevel: 05000000
-  conditions:
+  costIsSkillPoints: 1
+  singleTargetConditions:
   - {fileID: 11400000, guid: d07cb851dbe48f54c8d5e40447ecd9ba, type: 2}
   targetType: 1
   minRange: 0
   range: 01000000
   sameAsAttackRange: 0
-  SkillEffectMixins:
-  - {fileID: 11400000, guid: 3333988f52c84fd42b91db0779e607b1, type: 2}
   confirmPosition: 1

@@ -10,16 +10,12 @@ namespace Game.GameActors.Units.Skills
     [CreateAssetMenu(menuName = "GameData/Skills/CombatSkillMixin", fileName = "CombatMixin")]
     public class CombatSkillMixin:SkillMixin
     {
-        
-        [SerializeField]protected List<SkillEffectMixin> skillEffectMixins;
-        
         public int[] maxUsesPerLevel;
         public int[] hpCostPerLevel;
         private Unit target;
         private Unit unit;
         private int activatedLevel = -1;
         public bool preventDouble = true;
-        private bool activated = false;
         [HideInInspector]public int Uses { get; set; }
       
 
@@ -51,74 +47,28 @@ namespace Game.GameActors.Units.Skills
 
         public void Activate(Unit user, Unit enemy, bool reduceHp=false)
         {
-            if (activated)
-                return;
-            if (reduceHp)
+            if (base.Activate(enemy))
             {
-                user.Hp -= hpCostPerLevel[skill.level];
-                Uses--;
-            }
-
-            activated = true;
-            this.unit = user;
-            this.target = enemy;
-            this.activatedLevel = skill.Level;
-            user.BattleComponent.BattleStats.SetPreventDoubleAttacks(preventDouble);
-            foreach (var skilleffect in skillEffectMixins)
-            {
-                ActivateSkillEffect(user, enemy, skilleffect);
-            }
-
-            var key = GetKey(unit);
-            if (key != null)
-            {
-                foreach (var skillEffect in synergies[key].skillEffectMixins)
+                if (activated)
+                    return;
+                if (reduceHp)
                 {
-                    ActivateSkillEffect(user, enemy, skillEffect);
+                    user.Hp -= hpCostPerLevel[skill.level];
+                    Uses--;
                 }
-            }
-            
-        }
-
-        private void ActivateSkillEffect(Unit user, Unit enemy, SkillEffectMixin skilleffect)
-        {
-            if (skilleffect is SelfTargetSkillEffectMixin selfTargetSkillEffectMixin)
-            {
-                //Debug.Log(skill.Name);
-                // Debug.Log(user.Name);
-                // Debug.Log(skilleffect);
-                selfTargetSkillEffectMixin.Activate(user, skill.Level);
-            }
-
-            if (skilleffect is UnitTargetSkillEffectMixin unitTargetSkillEffectMixin)
-            {
-                if (unitTargetSkillEffectMixin.TargetIsCaster)
-                    unitTargetSkillEffectMixin.Activate(user, user, skill.Level);
-                else
-                    unitTargetSkillEffectMixin.Activate(enemy, user, skill.Level);
+                this.unit = user;
+                this.target = enemy;
+                this.activatedLevel = skill.Level;
+                user.BattleComponent.BattleStats.SetPreventDoubleAttacks(preventDouble);
             }
         }
-
-
        
         public void Deactivate()
         {
             if (!activated)
                 return;
-            activated = false;
             unit.BattleComponent.BattleStats.SetPreventDoubleAttacks(false);
-            foreach (var skilleffect in skillEffectMixins)
-            {
-                DeactivateSkillEffects(skilleffect);
-            }
-            var key = GetKey(unit);
-            if (key != null)
-            {
-                foreach (var skillEffect in synergies[key].skillEffectMixins)
-                {
-                    DeactivateSkillEffects(skillEffect);
-                }
-            }
+            Deactivate(skill.owner);
         }
 
         private void DeactivateSkillEffects(SkillEffectMixin skilleffect)

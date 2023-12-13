@@ -31,7 +31,7 @@ namespace Game.GameActors.Units.Skills
                 go.transform.position = user.GameTransformManager.GetCenterPosition();
             }
 
-            base.Activate();
+            base.PayActivationCost();
         }
 
         // protected SelfTargetSkillMixin( int[] maxUses, int[] hpCost,GameObject animationObject) : base(maxUses,hpCost,animationObject)

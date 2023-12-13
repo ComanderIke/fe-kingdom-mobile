@@ -58,7 +58,7 @@ public class AchievementManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        eventManager.Cleanup();
+        eventManager?.Cleanup();
     }
 
     private void PlaySound (AudioClip Sound)

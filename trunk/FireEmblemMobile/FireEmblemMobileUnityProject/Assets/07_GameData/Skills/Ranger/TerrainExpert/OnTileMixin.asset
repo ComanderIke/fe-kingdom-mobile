@@ -12,6 +12,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34736b4fdfdb445284ba45788968faee, type: 3}
   m_Name: OnTileMixin
   m_EditorClassIdentifier: 
+  synergies:
+    list:
+    - Key: {fileID: 11400000, guid: c70f27e718bc80146b9cd0d4de69166c, type: 2}
+      Value:
+        skillEffectMixins:
+        - {fileID: 11400000, guid: 9106c70ed18b64b29b97d61b9f9aa97c, type: 2}
+        replacesOtherEffects: 0
+        compareTypeWithExistingConditions: 0
+        conditionManager:
+          CompareType: 0
+          Conditions: []
+        replacesOtherConditions: 0
+    - Key: {fileID: 11400000, guid: a5cf9685305ec2e449183fbe8f4938d1, type: 2}
+      Value:
+        skillEffectMixins:
+        - {fileID: 11400000, guid: b47edb2acd2004a6ea9223544828ded6, type: 2}
+        replacesOtherEffects: 0
+        compareTypeWithExistingConditions: 0
+        conditionManager:
+          CompareType: 0
+          Conditions: []
+        replacesOtherConditions: 0
+    - Key: {fileID: 11400000, guid: 574b483c7e49fe2449dd8e280a0a969f, type: 2}
+      Value:
+        skillEffectMixins:
+        - {fileID: 11400000, guid: f11782d3917e94924854ebc560282692, type: 2}
+        replacesOtherEffects: 0
+        compareTypeWithExistingConditions: 0
+        conditionManager:
+          CompareType: 0
+          Conditions: []
+        replacesOtherConditions: 0
+  conditionBigPackage:
+    CompareType: 0
+    Conditions:
+    - CompareType: 0
+      Conditions:
+      - {fileID: 11400000, guid: 4bee36f0685244baba19d9d2ccf6d9d0, type: 2}
   skillEffectMixins:
   - {fileID: 11400000, guid: 0135ea8ff0906e148a48ff7656415a77, type: 2}
-  TerrainTypes: 0100000004000000
+  toogleAble: 0

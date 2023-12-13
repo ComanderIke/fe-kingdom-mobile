@@ -23,7 +23,7 @@ MonoBehaviour:
         conditionManager:
           CompareType: 0
           Conditions: []
-        replacesOtherCOnditions: 0
+        replacesOtherConditions: 0
     - Key: {fileID: 11400000, guid: a5cf9685305ec2e449183fbe8f4938d1, type: 2}
       Value:
         skillEffectMixins:
@@ -33,7 +33,7 @@ MonoBehaviour:
         conditionManager:
           CompareType: 0
           Conditions: []
-        replacesOtherCOnditions: 0
+        replacesOtherConditions: 0
     - Key: {fileID: 11400000, guid: 0be8008156283d74c9c456dce5a18c26, type: 2}
       Value:
         skillEffectMixins:
@@ -43,7 +43,12 @@ MonoBehaviour:
         conditionManager:
           CompareType: 0
           Conditions: []
-        replacesOtherCOnditions: 0
+        replacesOtherConditions: 0
+  conditionBigPackage:
+    CompareType: 0
+    Conditions: []
+  skillEffectMixins:
+  - {fileID: 11400000, guid: 4b96b5422079d3d4096de21dae90adf1, type: 2}
   AnimationObject: {fileID: 8595305276469772356, guid: 1d6eb7e3428f51b4f9a9394d14799d88,
     type: 3}
   spawnAnimationAtCaster: 1
@@ -53,6 +58,7 @@ MonoBehaviour:
   logicDelay: 0
   maxUsesPerLevel: 01000000
   hpCostPerLevel: 01000000
+  costIsSkillPoints: 1
   range: 00000000
   size: 02000000
   jump: 0
@@ -66,8 +72,6 @@ MonoBehaviour:
   skillTransferDataType: 0
   Animation: 
   <TargetArea>k__BackingField: 3
-  SkillEffects:
-  - {fileID: 11400000, guid: 4b96b5422079d3d4096de21dae90adf1, type: 2}
   <Rooted>k__BackingField: 1
-  <IncludeUnitPos>k__BackingField: 0
-  <IncludeMiddlePos>k__BackingField: 0
+  <IncludeUnitPos>k__BackingField: 1
+  <IncludeMiddlePos>k__BackingField: 1

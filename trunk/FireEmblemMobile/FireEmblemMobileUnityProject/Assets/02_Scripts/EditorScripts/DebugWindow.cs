@@ -140,6 +140,10 @@ namespace __2___Scripts.External.Editor
                 {
                     activeUnit.InflictFixedDamage(null,5, DamageType.True);
                 }
+                if (GUILayout.Button("Remove Random Skill"))
+                {
+                    activeUnit.SkillManager.RemoveRandomSkill();
+                }
             }
             else if (activeEnemy != null)
             {

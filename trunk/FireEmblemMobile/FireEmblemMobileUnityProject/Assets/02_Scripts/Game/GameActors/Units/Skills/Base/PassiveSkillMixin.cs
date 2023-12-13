@@ -9,19 +9,5 @@ namespace Game.GameActors.Units.Skills
     public abstract class PassiveSkillMixin:SkillMixin
     {
         [SerializeField] public bool toogleAble;
-        [SerializeField]public List<SkillEffectMixin> skillEffectMixins;
-        //[SerializeField]private EffectDescription[] effectDescriptionsPerLevel;
-
-        public virtual List<EffectDescription> GetEffectDescription(Unit unit, int level)
-        {
-            var list = new List<EffectDescription>();
-
-            foreach (var skillEffect in skillEffectMixins)
-            {
-                list.AddRange(skillEffect.GetEffectDescription(unit, level));
-            }
-            return list;
-        }
-
     }
 }

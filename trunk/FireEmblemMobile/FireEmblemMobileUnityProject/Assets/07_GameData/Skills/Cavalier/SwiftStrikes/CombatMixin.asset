@@ -12,6 +12,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c56b3e1b098645cc927f11edf7885e69, type: 3}
   m_Name: CombatMixin
   m_EditorClassIdentifier: 
+  synergies:
+    list:
+    - Key: {fileID: 11400000, guid: 5f85d1dbc987df4468623abd3eee499e, type: 2}
+      Value:
+        skillEffectMixins:
+        - {fileID: 11400000, guid: 4f11df93c270747ffbdf9dc12cd926d8, type: 2}
+        replacesOtherEffects: 0
+        compareTypeWithExistingConditions: 0
+        conditionManager:
+          CompareType: 0
+          Conditions: []
+        replacesOtherConditions: 0
+    - Key: {fileID: 11400000, guid: c70f27e718bc80146b9cd0d4de69166c, type: 2}
+      Value:
+        skillEffectMixins:
+        - {fileID: 11400000, guid: c70a960c3f7cf45dcaa321b37679968f, type: 2}
+        replacesOtherEffects: 0
+        compareTypeWithExistingConditions: 0
+        conditionManager:
+          CompareType: 0
+          Conditions: []
+        replacesOtherConditions: 0
+  conditionBigPackage:
+    CompareType: 0
+    Conditions: []
   skillEffectMixins:
   - {fileID: 11400000, guid: 6aad2d4ab37d6be45834d1e249e3e7ea, type: 2}
   - {fileID: 11400000, guid: dfb5f937ac146044b88b8f52827e7bc8, type: 2}

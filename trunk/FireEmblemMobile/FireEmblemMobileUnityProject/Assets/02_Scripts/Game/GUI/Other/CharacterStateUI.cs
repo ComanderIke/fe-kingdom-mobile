@@ -37,10 +37,6 @@ namespace Game.GUI
             {
                 AddStatusEffect(unit, state);
             }
-            foreach (var state in statusEffectManager.Debuffs)
-            {
-                AddStatusEffect(unit, state);
-            }
             foreach (var state in statusEffectManager.StatModifiers)
             {
                 AddStatusEffect(unit, state);
@@ -93,11 +89,11 @@ namespace Game.GUI
             else
             {
                 Debug.Log("Instantiate Buff/DEBUFF");
-                bool good = state is Buff;
+                bool good = state.BuffData is BuffData;
                 var parent = good ? positiveStateParent : negativeStateParent;
                 go = Instantiate(statePrefab, parent);
                 var statusEffect = go.GetComponent<StatusEffectUI>();
-                statusEffect.Show( state.Icon, good?positiveStateColor:negativeStateColor,good?positiveStateColor:negativeStateColor, state.GetDuration());
+                statusEffect.Show( state.BuffData.Icon, good?positiveStateColor:negativeStateColor,good?positiveStateColor:negativeStateColor, state.GetDuration());
 
                 
                 //go.SetActive(false);
@@ -108,23 +104,11 @@ namespace Game.GUI
         void RemoveStatusEffect(Unit unit, BuffDebuffBase state)
         {
             Debug.Log("try remove status effect from UI" + state);
-            Debug.Log(instantiatedStatusEffects.Count);
-            if (state is Debuff debuff)
-            {
-                if (!instantiatedStatusEffects.ContainsKey(debuff))
-                    return;
-                Debug.Log("DESTROY statuseffect GO DEBUFF");
-                Destroy(instantiatedStatusEffects[debuff]);
-                instantiatedStatusEffects.Remove(debuff);
-            }
-            else
-            {
-                if (!instantiatedStatusEffects.ContainsKey(state))
-                    return;
-                Debug.Log("DESTROY statuseffect GO");
-                Destroy(instantiatedStatusEffects[state]);
-                instantiatedStatusEffects.Remove(state);
-            }
+            if (!instantiatedStatusEffects.ContainsKey(state))
+                return;
+            Destroy(instantiatedStatusEffects[state]);
+            instantiatedStatusEffects.Remove(state);
+           
             
         }
       

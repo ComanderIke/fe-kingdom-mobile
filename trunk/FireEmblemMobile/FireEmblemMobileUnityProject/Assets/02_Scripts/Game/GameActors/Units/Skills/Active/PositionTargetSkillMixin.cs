@@ -54,7 +54,7 @@ namespace Game.GameActors.Units.Skills
             return confirmPositionClick;
         }
 
-        [field: SerializeField] public List<SkillEffectMixin> SkillEffects;
+      
         [field: SerializeField] public bool Rooted { get; set; }
         [field: SerializeField] public bool IncludeUnitPos { get; set; }
         [field: SerializeField] public bool IncludeMiddlePos { get; set; }
@@ -77,7 +77,7 @@ namespace Game.GameActors.Units.Skills
         public virtual void Activate(Unit user, Tile[,] tiles, int x, int y)
         {
             Debug.Log("ACTIVATE POS TARGET SKILL MIXIN");
-            var key = GetKey(user);
+            var key = GetBlessing(user);
             Debug.Log("TODO account for if synergy replaced Effects");
             
             var targetPos = new Vector2Int(x, y);
@@ -165,7 +165,7 @@ namespace Game.GameActors.Units.Skills
                             //     GameObject.Instantiate(AnimationObject, tiles[xPosition, yPosition].GetTransform().position,
                             //         Quaternion.identity, null);
 
-                            foreach (SkillEffectMixin effect in SkillEffects)
+                            foreach (SkillEffectMixin effect in skillEffectMixins)
                             {
                                 ActivateSkillEffects(user, tiles, effect, xPosition, yPosition);
                             }
@@ -222,7 +222,7 @@ namespace Game.GameActors.Units.Skills
                         : new Vector3(x + .5f, y + 0.5f), Quaternion.Euler(rotation), null);
             }
 
-            base.Activate();
+            base.PayActivationCost();
         }
 
         private void ActivateSkillEffects(Unit user, Tile[,] tiles, SkillEffectMixin effect, int xPosition, int yPosition)
@@ -403,11 +403,11 @@ namespace Game.GameActors.Units.Skills
         {
             prevPreviewPosX = x;
             prevPreviewPosY = y;
-            var key = GetKey(caster);
+            var key = GetBlessing(caster);
             Debug.Log("TODO account for if synergy replaced Effects");
             foreach (var target in GetAllTargets(caster, ServiceProvider.Instance.GetSystem<GridSystem>().Tiles, x, y))
             {
-                foreach (SkillEffectMixin effect in SkillEffects)
+                foreach (SkillEffectMixin effect in skillEffectMixins)
                 {
                     if (effect is DamageSkillEffectMixin dmgMixin)
                         dmgMixin.ShowDamagePreview((Unit)target, caster, skill.Level);
@@ -433,12 +433,12 @@ namespace Game.GameActors.Units.Skills
 
         public void HidePreview(Unit caster)
         {
-            var key = GetKey(caster);
+            var key = GetBlessing(caster);
             Debug.Log("TODO account for if synergy replaced Effects");
             foreach (var target in GetAllTargets(caster, ServiceProvider.Instance.GetSystem<GridSystem>().Tiles,
                          prevPreviewPosX, prevPreviewPosY))
             {
-                foreach (SkillEffectMixin effect in SkillEffects)
+                foreach (SkillEffectMixin effect in skillEffectMixins)
                 {
                     if (effect is DamageSkillEffectMixin dmgMixin)
                         dmgMixin.HideDamagePreview((Unit)target);
@@ -468,12 +468,12 @@ namespace Game.GameActors.Units.Skills
 
         public int GetDamageDone(Unit selectedUnit, Unit target)
         {
-            foreach (SkillEffectMixin effect in SkillEffects)
+            foreach (SkillEffectMixin effect in skillEffectMixins)
             {
                 if (effect is DamageSkillEffectMixin damageSkillEffectMixin)
                     return damageSkillEffectMixin.GetDamageDealtToTarget(selectedUnit, target, skill.level);
             }
-            var key = GetKey(selectedUnit);
+            var key = GetBlessing(selectedUnit);
             Debug.Log("TODO account for if synergy replaced Effects");
             if (key != null)
             {
@@ -499,13 +499,13 @@ namespace Game.GameActors.Units.Skills
 
         public int GetHealingDone(Unit selectedUnit, Unit target)
         {
-            foreach (SkillEffectMixin effect in SkillEffects)
+            foreach (SkillEffectMixin effect in skillEffectMixins)
             {
                 if (effect is HealEffect healMixin)
                     return healMixin.GetHealAmount(selectedUnit, target, skill.level);
             }
             Debug.Log("TODO account for if synergy replaced Effects");
-            var key = GetKey(selectedUnit);
+            var key = GetBlessing(selectedUnit);
             if (key != null)
             {
                 foreach (SkillEffectMixin effect in synergies[key].skillEffectMixins)
@@ -554,7 +554,7 @@ namespace Game.GameActors.Units.Skills
         public List<EffectDescription> GetEffectDescription(Unit unit, int level)
         {
             var list = new List<EffectDescription>();
-            foreach (var skillEffect in SkillEffects)
+            foreach (var skillEffect in skillEffectMixins)
             {
                 list.AddRange(skillEffect.GetEffectDescription(unit, level));
             }
@@ -599,7 +599,7 @@ namespace Game.GameActors.Units.Skills
 
         public DamageSkillEffectMixin GetDamageMixin()
         {
-            return (DamageSkillEffectMixin)SkillEffects.First(s => s is DamageSkillEffectMixin);
+            return (DamageSkillEffectMixin)skillEffectMixins.First(s => s is DamageSkillEffectMixin);
         }
     }
 }

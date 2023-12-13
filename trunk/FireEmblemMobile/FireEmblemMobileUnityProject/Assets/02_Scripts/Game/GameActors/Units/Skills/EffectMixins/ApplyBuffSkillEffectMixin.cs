@@ -10,9 +10,8 @@ namespace Game.GameActors.Units.Skills
     {
         public GameObject effect;
         public float[] applyChance;
-        public Buff appliedBuff;
+        public BuffDebuffBase appliedBuff;
         public StatModifier AppliedStatModifier;
-        public Debuff appliedDebuff;
 
        
 
@@ -24,9 +23,7 @@ namespace Game.GameActors.Units.Skills
             if (effect != null)
                 GameObject.Instantiate(effect, target.GameTransformManager.GetCenterPosition(), Quaternion.identity);
             if (appliedBuff != null)
-                target.StatusEffectManager.AddBuff(Instantiate(appliedBuff), caster, level);
-            if (appliedDebuff != null)
-                target.StatusEffectManager.AddDebuff(Instantiate(appliedDebuff), caster, level);
+                target.StatusEffectManager.AddBuffDebuff(Instantiate(appliedBuff), caster, level);
             if (AppliedStatModifier != null)
             {
                 Debug.Log("ADD STAT MODIFIER");
@@ -41,8 +38,6 @@ namespace Game.GameActors.Units.Skills
             Debug.Log("REMOVE BUFF/DEBUFF/STAT MODIFIER");
             if (appliedBuff != null)
                 target.StatusEffectManager.RemoveBuff(Instantiate(appliedBuff));
-            if (appliedDebuff != null)
-                target.StatusEffectManager.RemoveDebuff(Instantiate(appliedDebuff));
             if (AppliedStatModifier!= null)
                 target.StatusEffectManager.RemoveStatModifier(Instantiate(AppliedStatModifier));
         }
@@ -50,14 +45,11 @@ namespace Game.GameActors.Units.Skills
         public override List<EffectDescription> GetEffectDescription(Unit caster,int level)
         {
             var list = new List<EffectDescription>();
-            var buff=appliedBuff==null?null:appliedBuff.GetEffectDescription(level);
-            var debuff=appliedDebuff==null?null:appliedDebuff.GetEffectDescription(level);
+            var buff=appliedBuff==null?null:appliedBuff.GetEffectDescription(caster, level);
             var statModifier=AppliedStatModifier==null?null:AppliedStatModifier.GetEffectDescription(level);
          
             if(buff!=null)
              list.AddRange(buff);
-            if(debuff!=null)
-                list.AddRange(debuff);
             if(statModifier!=null)
                 list.AddRange(statModifier);
        

@@ -22,7 +22,7 @@ AssetImportWorker13
 -logFile
 Logs/AssetImportWorker13.log
 -srvPort
-49287
+50955
 Successfully changed project path to: /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject
 /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -54,13 +54,13 @@ Successfully changed project path to: /Users/daniel/Documents/fe-kingdom-mobile/
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [8035589824] Host "[IP] 192.168.0.2 [Port] 0 [Flags] 2 [Guid] 2713490247 [EditorId] 2713490247 [Version] 1048832 [Id] OSXEditor(0,Daniels-MacBook-Pro.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+Player connection [7958519488] Host "[IP] 192.168.0.2 [Port] 0 [Flags] 2 [Guid] 3749364942 [EditorId] 3749364942 [Version] 1048832 [Id] OSXEditor(0,Daniels-MacBook-Pro.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
 
-Player connection [8035589824] Host "[IP] 192.168.0.2 [Port] 0 [Flags] 2 [Guid] 2713490247 [EditorId] 2713490247 [Version] 1048832 [Id] OSXEditor(0,Daniels-MacBook-Pro.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [7958519488] Host "[IP] 192.168.0.2 [Port] 0 [Flags] 2 [Guid] 3749364942 [EditorId] 3749364942 [Version] 1048832 [Id] OSXEditor(0,Daniels-MacBook-Pro.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
 
 [Physics::Module] Initialized MultithreadedJobDispatcher with {0} workers.
-Refreshing native plugins compatible for Editor in 138.43 ms, found 2 plugins.
-Preloading 1 native plugins for Editor in 0.56 ms.
+Refreshing native plugins compatible for Editor in 124.16 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.52 ms.
 Initialize engine version: 2021.3.32f1 (3b9dae9532f5)
 [Subsystems] Discovering subsystems at path /Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/Resources/UnitySubsystems
 [Subsystems] Discovering subsystems at path /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets
@@ -77,236 +77,437 @@ Initialize mono
 Mono path[0] = '/Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/Managed'
 Mono path[1] = '/Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/MonoBleedingEdge/lib/mono/unityjit-macos'
 Mono config path = '/Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56004
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56873
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: /Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
 Register platform support module: /Applications/Unity/Hub/Editor/2021.3.32f1/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 Register platform support module: /Applications/Unity/Hub/Editor/2021.3.32f1/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
-Registered in 0.001596 seconds.
+Registered in 0.001881 seconds.
 [usbmuxd] Start listen thread
 [usbmuxd] Listen thread started
 [usbmuxd] Send listen message
 Native extension for iOS target not found
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 69 ms
+Android Extension - Scanning For ADB Devices 63 ms
 Native extension for OSXStandalone target not found
-Refreshing native plugins compatible for Editor in 120.01 ms, found 2 plugins.
-Preloading 1 native plugins for Editor in 0.21 ms.
+Refreshing native plugins compatible for Editor in 111.41 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.20 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.548 seconds
+- Completed reload, in  0.552 seconds
 Domain Reload Profiling:
-	ReloadAssembly (548ms)
-		BeginReloadAssembly (56ms)
+	ReloadAssembly (552ms)
+		BeginReloadAssembly (74ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (0ms)
-		EndReloadAssembly (444ms)
-			LoadAssemblies (57ms)
+		EndReloadAssembly (431ms)
+			LoadAssemblies (74ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (61ms)
+			SetupTypeCache (59ms)
 			ReleaseScriptCaches (0ms)
 			RebuildScriptCaches (16ms)
-			SetupLoadedEditorAssemblies (341ms)
+			SetupLoadedEditorAssemblies (333ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (172ms)
+				InitializePlatformSupportModulesInManaged (170ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (120ms)
+				RefreshPlugins (112ms)
 				BeforeProcessingInitializeOnLoad (1ms)
-				ProcessInitializeOnLoadAttributes (30ms)
-				ProcessInitializeOnLoadMethodAttributes (18ms)
+				ProcessInitializeOnLoadAttributes (32ms)
+				ProcessInitializeOnLoadMethodAttributes (19ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.002209 seconds.
+Registered in 0.007149 seconds.
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory is not a mono symbol file
 Native extension for iOS target not found
 Native extension for Android target not found
 Native extension for OSXStandalone target not found
-Refreshing native plugins compatible for Editor in 125.99 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 121.37 ms, found 2 plugins.
 Preloading 1 native plugins for Editor in 0.18 ms.
 Package Manager log level set to [2]
 [Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
 [Package Manager] Cannot connect to Unity Package Manager local server
 Mono: successfully reloaded assembly
-- Completed reload, in  1.192 seconds
+- Completed reload, in  1.260 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1192ms)
-		BeginReloadAssembly (48ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (2ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (13ms)
-		EndReloadAssembly (1093ms)
-			LoadAssemblies (81ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (185ms)
-			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (57ms)
-			SetupLoadedEditorAssemblies (733ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (12ms)
-				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (126ms)
-				BeforeProcessingInitializeOnLoad (55ms)
-				ProcessInitializeOnLoadAttributes (451ms)
-				ProcessInitializeOnLoadMethodAttributes (88ms)
-				AfterProcessingInitializeOnLoad (1ms)
-				EditorAssembliesLoaded (0ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (1ms)
-Platform modules already initialized, skipping
-========================================================================
-Worker process is ready to serve import requests
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
-Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
-Launching external process: /Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/Tools/UnityShaderCompiler
-Launched and connected shader compiler UnityShaderCompiler after 0.04 seconds
-Refreshing native plugins compatible for Editor in 1.08 ms, found 2 plugins.
-Preloading 1 native plugins for Editor in 0.15 ms.
-Unloading 6760 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 102 unused Assets / (2.1 MB). Loaded Objects now: 7261.
-Memory consumption went from 362.3 MB to 360.2 MB.
-Total: 4.981916 ms (FindLiveObjects: 0.201958 ms CreateObjectMapping: 0.077500 ms MarkObjects: 4.330250 ms  DeleteObjects: 0.371667 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
-  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.001526 seconds.
-Begin MonoManager ReloadAssembly
-Thread 0x2cbac7000 may have been prematurely finalized
-Symbol file LoadedFromMemory is not a mono symbol file
-Native extension for iOS target not found
-2023-12-01 09:22:25.785 Unity[8004:395014] [XcodeApplications] Failed to read NSDictionary from path =X/Contents/Info.plist
-Native extension for Android target not found
-Native extension for OSXStandalone target not found
-Refreshing native plugins compatible for Editor in 1.44 ms, found 2 plugins.
-Preloading 1 native plugins for Editor in 0.20 ms.
-[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
-[Package Manager] Cannot connect to Unity Package Manager local server
-Mono: successfully reloaded assembly
-- Completed reload, in  1.140 seconds
-Domain Reload Profiling:
-	ReloadAssembly (1140ms)
-		BeginReloadAssembly (98ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (4ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (45ms)
-		EndReloadAssembly (998ms)
-			LoadAssemblies (41ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (216ms)
-			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (46ms)
-			SetupLoadedEditorAssemblies (634ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (44ms)
-				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (2ms)
-				BeforeProcessingInitializeOnLoad (45ms)
-				ProcessInitializeOnLoadAttributes (456ms)
-				ProcessInitializeOnLoadMethodAttributes (86ms)
-				AfterProcessingInitializeOnLoad (1ms)
-				EditorAssembliesLoaded (0ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (6ms)
-Platform modules already initialized, skipping
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
-Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
-Refreshing native plugins compatible for Editor in 1.25 ms, found 2 plugins.
-Preloading 1 native plugins for Editor in 0.14 ms.
-Unloading 6528 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7277.
-Memory consumption went from 341.0 MB to 338.9 MB.
-Total: 5.504042 ms (FindLiveObjects: 0.213125 ms CreateObjectMapping: 0.070333 ms MarkObjects: 4.870833 ms  DeleteObjects: 0.349083 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
-  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.001476 seconds.
-Begin MonoManager ReloadAssembly
-Thread 0x16b823000 may have been prematurely finalized
-Symbol file LoadedFromMemory is not a mono symbol file
-Native extension for iOS target not found
-Native extension for Android target not found
-Native extension for OSXStandalone target not found
-Refreshing native plugins compatible for Editor in 1.44 ms, found 2 plugins.
-Preloading 1 native plugins for Editor in 0.22 ms.
-[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
-[Package Manager] Cannot connect to Unity Package Manager local server
-Mono: successfully reloaded assembly
-- Completed reload, in  1.095 seconds
-Domain Reload Profiling:
-	ReloadAssembly (1095ms)
-		BeginReloadAssembly (91ms)
+	ReloadAssembly (1261ms)
+		BeginReloadAssembly (53ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (3ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (42ms)
-		EndReloadAssembly (960ms)
-			LoadAssemblies (45ms)
+			CreateAndSetChildDomain (14ms)
+		EndReloadAssembly (1153ms)
+			LoadAssemblies (86ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (218ms)
+			SetupTypeCache (195ms)
 			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (38ms)
-			SetupLoadedEditorAssemblies (598ms)
+			RebuildScriptCaches (60ms)
+			SetupLoadedEditorAssemblies (773ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (14ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (122ms)
+				BeforeProcessingInitializeOnLoad (57ms)
+				ProcessInitializeOnLoadAttributes (487ms)
+				ProcessInitializeOnLoadMethodAttributes (93ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (2ms)
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Launching external process: /Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/Tools/UnityShaderCompiler
+Launched and connected shader compiler UnityShaderCompiler after 0.04 seconds
+Refreshing native plugins compatible for Editor in 1.12 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.14 ms.
+Unloading 6618 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 102 unused Assets / (2.6 MB). Loaded Objects now: 7120.
+Memory consumption went from 360.1 MB to 357.5 MB.
+Total: 5.105625 ms (FindLiveObjects: 0.212625 ms CreateObjectMapping: 0.077209 ms MarkObjects: 4.413625 ms  DeleteObjects: 0.401709 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 72303.858190 seconds.
+  path: Assets/07_GameData/Skills/Witch/Frog/ApplyBuffSkillEffect.asset
+  artifactKey: Guid(79160dfd07a1eb2419e35bb491e4d7fa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/Witch/Frog/ApplyBuffSkillEffect.asset using Guid(79160dfd07a1eb2419e35bb491e4d7fa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7420225520654a7d565dcd2573e1d7ad') in 0.054527 seconds 
+Number of asset objects unloaded after import = 52
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001620 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x2d8fbb000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.45 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.34 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.151 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1151ms)
+		BeginReloadAssembly (118ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (57ms)
+		EndReloadAssembly (982ms)
+			LoadAssemblies (50ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (223ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (35ms)
+			SetupLoadedEditorAssemblies (615ms)
 				LogAssemblyErrors (0ms)
 				InitializePlatformSupportModulesInManaged (16ms)
 				SetLoadedEditorAssemblies (0ms)
 				RefreshPlugins (2ms)
-				BeforeProcessingInitializeOnLoad (42ms)
-				ProcessInitializeOnLoadAttributes (449ms)
+				BeforeProcessingInitializeOnLoad (44ms)
+				ProcessInitializeOnLoadAttributes (465ms)
 				ProcessInitializeOnLoadMethodAttributes (88ms)
 				AfterProcessingInitializeOnLoad (1ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (5ms)
 Platform modules already initialized, skipping
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
 Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
 Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.20 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.16 ms.
+Unloading 6391 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7137.
+Memory consumption went from 342.9 MB to 340.9 MB.
+Total: 6.403833 ms (FindLiveObjects: 0.241916 ms CreateObjectMapping: 0.060959 ms MarkObjects: 5.776917 ms  DeleteObjects: 0.323708 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 4684.946431 seconds.
+  path: Assets/07_GameData/Skills/Cavalier/Override/DamageSkillEffect 1.asset
+  artifactKey: Guid(ff2fdbd619d3d4a818fb79b07bec9c38) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/Cavalier/Override/DamageSkillEffect 1.asset using Guid(ff2fdbd619d3d4a818fb79b07bec9c38) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a4af609b160a474065e390e8b8f78772') in 0.016071 seconds 
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 6.658246 seconds.
+  path: Assets/07_GameData/Skills/Cavalier/Override/DamageSkillEffectApollo.asset
+  artifactKey: Guid(ff2fdbd619d3d4a818fb79b07bec9c38) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/Cavalier/Override/DamageSkillEffectApollo.asset using Guid(ff2fdbd619d3d4a818fb79b07bec9c38) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '07c6dd49e1245411d248d0b00e467d22') in 0.001496 seconds 
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 30.155427 seconds.
+  path: Assets/07_GameData/Skills/Cavalier/Override/HealEffect.asset
+  artifactKey: Guid(3d1166115c668418896e105f01699d0b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/Cavalier/Override/HealEffect.asset using Guid(3d1166115c668418896e105f01699d0b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e3fe6567e8266246ea0a8d53c38ef48f') in 0.001525 seconds 
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 28.860118 seconds.
+  path: Assets/07_GameData/Skills/Cavalier/Override/HealEffectApollo.asset
+  artifactKey: Guid(3d1166115c668418896e105f01699d0b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/Cavalier/Override/HealEffectApollo.asset using Guid(3d1166115c668418896e105f01699d0b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ff9f819bc05dd8f1fffef99281bd7c66') in 0.001734 seconds 
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001517 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x2b6dd7000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.28 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.18 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.120 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1120ms)
+		BeginReloadAssembly (121ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (55ms)
+		EndReloadAssembly (952ms)
+			LoadAssemblies (58ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (212ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (33ms)
+			SetupLoadedEditorAssemblies (601ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (15ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (41ms)
+				ProcessInitializeOnLoadAttributes (450ms)
+				ProcessInitializeOnLoadMethodAttributes (92ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
 Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
-Refreshing native plugins compatible for Editor in 1.30 ms, found 2 plugins.
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.20 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.15 ms.
+Unloading 6390 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7152.
+Memory consumption went from 342.9 MB to 340.8 MB.
+Total: 5.021667 ms (FindLiveObjects: 0.208584 ms CreateObjectMapping: 0.058125 ms MarkObjects: 4.450125 ms  DeleteObjects: 0.304583 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 135.571922 seconds.
+  path: Assets/07_GameData/Units/UnitBlueprints/CavalryBP.asset
+  artifactKey: Guid(2bffb6f8e03530e4ca68d2eb796ee08b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Units/UnitBlueprints/CavalryBP.asset using Guid(2bffb6f8e03530e4ca68d2eb796ee08b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1d9d3c2d96562a064e85b5c5e377abcc') in 0.155715 seconds 
+Number of asset objects unloaded after import = 1040
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001656 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x16d09f000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.11 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.18 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.034 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1035ms)
+		BeginReloadAssembly (86ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (3ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (40ms)
+		EndReloadAssembly (905ms)
+			LoadAssemblies (34ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (195ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (32ms)
+			SetupLoadedEditorAssemblies (587ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (14ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (41ms)
+				ProcessInitializeOnLoadAttributes (443ms)
+				ProcessInitializeOnLoadMethodAttributes (87ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.22 ms, found 2 plugins.
 Preloading 1 native plugins for Editor in 0.17 ms.
-Unloading 6527 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7292.
-Memory consumption went from 341.0 MB to 338.9 MB.
-Total: 5.527833 ms (FindLiveObjects: 0.206666 ms CreateObjectMapping: 0.062875 ms MarkObjects: 4.917125 ms  DeleteObjects: 0.340500 ms)
+Unloading 6390 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 81 unused Assets / (2.1 MB). Loaded Objects now: 7169.
+Memory consumption went from 343.1 MB to 341.0 MB.
+Total: 5.941708 ms (FindLiveObjects: 0.219583 ms CreateObjectMapping: 0.067000 ms MarkObjects: 5.192292 ms  DeleteObjects: 0.462375 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 64.697130 seconds.
+  path: Assets/07_GameData/Skills/Cavalier/Override/SingleTargetMixin.asset
+  artifactKey: Guid(e1364f8e916ebc649abf57c6837abcaa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/Cavalier/Override/SingleTargetMixin.asset using Guid(e1364f8e916ebc649abf57c6837abcaa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '08552fffb7a7fd587bab964a0d6183a7') in 0.079593 seconds 
+Number of asset objects unloaded after import = 122
+========================================================================
+Received Import Request.
+  Time since last request: 45.134611 seconds.
+  path: Assets/07_GameData/Skills/Cavalier/Override/OverrideSkillEffectHephaistos.asset
+  artifactKey: Guid(32cef04ab9ae64e16a2003448490712a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/Cavalier/Override/OverrideSkillEffectHephaistos.asset using Guid(32cef04ab9ae64e16a2003448490712a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8ffcfc5c76bbb7cfbabc40c6a7524977') in 0.005657 seconds 
+Number of asset objects unloaded after import = 96
+========================================================================
+Received Import Request.
+  Time since last request: 3.416924 seconds.
+  path: Assets/07_GameData/Skills/Cavalier/Override/ApplyBuffSkillEffect.asset
+  artifactKey: Guid(c97a42330f90240e2ba733c432dc7860) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/Cavalier/Override/ApplyBuffSkillEffect.asset using Guid(c97a42330f90240e2ba733c432dc7860) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6dbd36285402ba8db93edd41ed47d806') in 0.002204 seconds 
+Number of asset objects unloaded after import = 52
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001438 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x2b6dd7000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.98 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.12 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.060 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1060ms)
+		BeginReloadAssembly (119ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (54ms)
+		EndReloadAssembly (897ms)
+			LoadAssemblies (46ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (200ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (32ms)
+			SetupLoadedEditorAssemblies (570ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (14ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (39ms)
+				ProcessInitializeOnLoadAttributes (437ms)
+				ProcessInitializeOnLoadMethodAttributes (79ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.17 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.16 ms.
+Unloading 6390 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.0 MB). Loaded Objects now: 7184.
+Memory consumption went from 343.1 MB to 341.1 MB.
+Total: 5.277500 ms (FindLiveObjects: 0.195583 ms CreateObjectMapping: 0.060750 ms MarkObjects: 4.710875 ms  DeleteObjects: 0.310042 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
@@ -323,120 +524,386 @@ AssetImportParameters requested are different than current active one (requested
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.001506 seconds.
+Registered in 0.002183 seconds.
 Begin MonoManager ReloadAssembly
-Thread 0x16f787000 may have been prematurely finalized
+Thread 0x17fc87000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.22 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.16 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.022 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1023ms)
+		BeginReloadAssembly (84ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (3ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (37ms)
+		EndReloadAssembly (895ms)
+			LoadAssemblies (37ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (196ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (31ms)
+			SetupLoadedEditorAssemblies (579ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (13ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (41ms)
+				ProcessInitializeOnLoadAttributes (440ms)
+				ProcessInitializeOnLoadMethodAttributes (83ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.14 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.15 ms.
+Unloading 6390 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.0 MB). Loaded Objects now: 7199.
+Memory consumption went from 343.1 MB to 341.1 MB.
+Total: 5.287250 ms (FindLiveObjects: 0.205958 ms CreateObjectMapping: 0.090750 ms MarkObjects: 4.649334 ms  DeleteObjects: 0.340792 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002104 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x2b6dd7000 may have been prematurely finalized
 Symbol file LoadedFromMemory is not a mono symbol file
 Native extension for iOS target not found
 Native extension for Android target not found
 Native extension for OSXStandalone target not found
 Refreshing native plugins compatible for Editor in 1.18 ms, found 2 plugins.
-Preloading 1 native plugins for Editor in 0.17 ms.
+Preloading 1 native plugins for Editor in 0.15 ms.
 [Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
 [Package Manager] Cannot connect to Unity Package Manager local server
 Mono: successfully reloaded assembly
-- Completed reload, in  1.058 seconds
+- Completed reload, in  1.035 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1058ms)
+	ReloadAssembly (1035ms)
+		BeginReloadAssembly (84ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (3ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (37ms)
+		EndReloadAssembly (907ms)
+			LoadAssemblies (39ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (197ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (32ms)
+			SetupLoadedEditorAssemblies (587ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (13ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (40ms)
+				ProcessInitializeOnLoadAttributes (441ms)
+				ProcessInitializeOnLoadMethodAttributes (90ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (6ms)
+Platform modules already initialized, skipping
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.71 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.17 ms.
+Unloading 6390 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7214.
+Memory consumption went from 343.2 MB to 341.1 MB.
+Total: 5.492916 ms (FindLiveObjects: 0.238750 ms CreateObjectMapping: 0.066916 ms MarkObjects: 4.818042 ms  DeleteObjects: 0.368584 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 661.443307 seconds.
+  path: Assets/03_Prefabs/Units/BattleAnimation/ArmorKnightGO.prefab
+  artifactKey: Guid(b0be9194b5bf1bd449a323260251b36c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/Units/BattleAnimation/ArmorKnightGO.prefab using Guid(b0be9194b5bf1bd449a323260251b36c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '133b5b9773bd242d759005f41caa6970') in 0.364141 seconds 
+Number of asset objects unloaded after import = 1307
+========================================================================
+Received Import Request.
+  Time since last request: 0.000118 seconds.
+  path: Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V2.prefab
+  artifactKey: Guid(3d505437386df25458c4fadbf652ccc2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V2.prefab using Guid(3d505437386df25458c4fadbf652ccc2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd30288ddc299ad22e61b4b9b24a894dd') in 0.009552 seconds 
+Number of asset objects unloaded after import = 15
+========================================================================
+Received Import Request.
+  Time since last request: 0.000034 seconds.
+  path: Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V11.prefab
+  artifactKey: Guid(0c07ea51b08d711419758bd5d03b446d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V11.prefab using Guid(0c07ea51b08d711419758bd5d03b446d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '72766d6dd26fae52aaf045ad29250dff') in 0.009281 seconds 
+Number of asset objects unloaded after import = 16
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Arrow_Indicator_V2.prefab
+  artifactKey: Guid(0f4925723176a08409ab6319ae9c9a6f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Arrow_Indicator_V2.prefab using Guid(0f4925723176a08409ab6319ae9c9a6f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '619ed4a586e06f70ee1bd9785fe7a5e2') in 0.009559 seconds 
+Number of asset objects unloaded after import = 16
+========================================================================
+Received Import Request.
+  Time since last request: 0.000034 seconds.
+  path: Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V15.prefab
+  artifactKey: Guid(05bfcb4216cc59544adad36b74779d83) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V15.prefab using Guid(05bfcb4216cc59544adad36b74779d83) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1274d658c62859b478db9dc51e414e17') in 0.168881 seconds 
+Number of asset objects unloaded after import = 15
+========================================================================
+Received Import Request.
+  Time since last request: 0.000038 seconds.
+  path: Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Arrow_Indicator_V3.prefab
+  artifactKey: Guid(6524d578b379dd14095e1e921d9ec770) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Arrow_Indicator_V3.prefab using Guid(6524d578b379dd14095e1e921d9ec770) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8bef7bdd95f2c8ed17a2f34ea2171866') in 0.011633 seconds 
+Number of asset objects unloaded after import = 16
+========================================================================
+Received Import Request.
+  Time since last request: 0.000037 seconds.
+  path: Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V1.prefab
+  artifactKey: Guid(7b1dac6665df70740a1829305960b330) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V1.prefab using Guid(7b1dac6665df70740a1829305960b330) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aedc219484d967b49f78c975a59c4ba3') in 0.010656 seconds 
+Number of asset objects unloaded after import = 15
+========================================================================
+Received Import Request.
+  Time since last request: 0.000038 seconds.
+  path: Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V13.prefab
+  artifactKey: Guid(8c978005442133a45a339c0e66a58964) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V13.prefab using Guid(8c978005442133a45a339c0e66a58964) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '99dcb9ed882afd4ed9d10d71b28f6b98') in 0.008363 seconds 
+Number of asset objects unloaded after import = 15
+========================================================================
+Received Import Request.
+  Time since last request: 0.000046 seconds.
+  path: Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V10.prefab
+  artifactKey: Guid(8f148ebd16b8a084faca1d5f44112edb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V10.prefab using Guid(8f148ebd16b8a084faca1d5f44112edb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f93e54a17f8dd0a9fdaeda8b67efeefe') in 0.006759 seconds 
+Number of asset objects unloaded after import = 15
+========================================================================
+Received Import Request.
+  Time since last request: 0.000041 seconds.
+  path: Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V16.prefab
+  artifactKey: Guid(fafa181ad0252a343a26c989e54c5b3b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V16.prefab using Guid(fafa181ad0252a343a26c989e54c5b3b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3b840a9d51fdd378c66cc55abda20a1d') in 0.005247 seconds 
+Number of asset objects unloaded after import = 13
+========================================================================
+Received Import Request.
+  Time since last request: 0.000049 seconds.
+  path: Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V4.prefab
+  artifactKey: Guid(f5ca0ff418807384dba2d0a87362bd4c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V4.prefab using Guid(f5ca0ff418807384dba2d0a87362bd4c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'caaed9723b8fa74c44fba01ba5851c98') in 0.006414 seconds 
+Number of asset objects unloaded after import = 15
+========================================================================
+Received Import Request.
+  Time since last request: 0.000041 seconds.
+  path: Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V5.prefab
+  artifactKey: Guid(8134fd3fc2925294cb11c744bd5c463d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V5.prefab using Guid(8134fd3fc2925294cb11c744bd5c463d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8a8be6edf9901f72be735a791ae36b86') in 0.006424 seconds 
+Number of asset objects unloaded after import = 15
+========================================================================
+Received Import Request.
+  Time since last request: 0.000040 seconds.
+  path: Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V18.prefab
+  artifactKey: Guid(0dd22b3d9aa758e4191f240f336a8c97) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V18.prefab using Guid(0dd22b3d9aa758e4191f240f336a8c97) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b079a72b5e11deedd579486370b6ab69') in 0.006921 seconds 
+Number of asset objects unloaded after import = 16
+========================================================================
+Received Import Request.
+  Time since last request: 0.000036 seconds.
+  path: Assets/03_Prefabs/BattleAnimations/AttackTrail.prefab
+  artifactKey: Guid(db29fe1d06d73c145b6216b195c25564) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/BattleAnimations/AttackTrail.prefab using Guid(db29fe1d06d73c145b6216b195c25564) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9f196c81c3222705bab939337b395ced') in 0.005555 seconds 
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000062 seconds.
+  path: Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V19.prefab
+  artifactKey: Guid(d8aaee5fcde9b634aa627f60a84db0e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Aura_V19.prefab using Guid(d8aaee5fcde9b634aa627f60a84db0e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0e1d5d4d840e65b1b90574d75afaade8') in 0.008448 seconds 
+Number of asset objects unloaded after import = 16
+========================================================================
+Received Import Request.
+  Time since last request: 0.271591 seconds.
+  path: Assets/03_Prefabs/Units/BattleAnimation/BossSkeletDragonBattleGONew.prefab
+  artifactKey: Guid(fafbc628ac853a649ac7a1663204b9d1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/03_Prefabs/Units/BattleAnimation/BossSkeletDragonBattleGONew.prefab using Guid(fafbc628ac853a649ac7a1663204b9d1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3183c0b7f0807bca0edd05930ca701a4') in 0.274217 seconds 
+Number of asset objects unloaded after import = 1836
+========================================================================
+Received Import Request.
+  Time since last request: 0.605327 seconds.
+  path: Assets/07_GameData/Skills/Ranger/Königskraut/KönigskrautCasterFX.prefab
+  artifactKey: Guid(074d04a290c9bf54788a316cbe170830) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/Ranger/Königskraut/KönigskrautCasterFX.prefab using Guid(074d04a290c9bf54788a316cbe170830) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7136fccba2bffeda57cf0f04af2e90dc') in 0.023299 seconds 
+Number of asset objects unloaded after import = 29
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002294 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x2b6dd7000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.27 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.15 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.120 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1121ms)
+		BeginReloadAssembly (131ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (12ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (64ms)
+		EndReloadAssembly (945ms)
+			LoadAssemblies (41ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (207ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (33ms)
+			SetupLoadedEditorAssemblies (604ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (14ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (41ms)
+				ProcessInitializeOnLoadAttributes (460ms)
+				ProcessInitializeOnLoadMethodAttributes (86ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (7ms)
+Platform modules already initialized, skipping
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.38 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.12 ms.
+Unloading 6397 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 96 unused Assets / (1.7 MB). Loaded Objects now: 7290.
+Memory consumption went from 352.4 MB to 350.7 MB.
+Total: 6.994583 ms (FindLiveObjects: 0.232459 ms CreateObjectMapping: 0.076333 ms MarkObjects: 6.399125 ms  DeleteObjects: 0.286125 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002468 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x16d09f000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.21 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.15 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.059 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1060ms)
 		BeginReloadAssembly (90ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (3ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (42ms)
-		EndReloadAssembly (923ms)
-			LoadAssemblies (43ms)
+		EndReloadAssembly (925ms)
+			LoadAssemblies (38ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (204ms)
+			SetupTypeCache (203ms)
 			ReleaseScriptCaches (1ms)
 			RebuildScriptCaches (33ms)
-			SetupLoadedEditorAssemblies (591ms)
+			SetupLoadedEditorAssemblies (590ms)
 				LogAssemblyErrors (0ms)
 				InitializePlatformSupportModulesInManaged (14ms)
 				SetLoadedEditorAssemblies (0ms)
 				RefreshPlugins (1ms)
-				BeforeProcessingInitializeOnLoad (42ms)
-				ProcessInitializeOnLoadAttributes (447ms)
-				ProcessInitializeOnLoadMethodAttributes (86ms)
-				AfterProcessingInitializeOnLoad (1ms)
-				EditorAssembliesLoaded (0ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (5ms)
-Platform modules already initialized, skipping
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
-Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
-Refreshing native plugins compatible for Editor in 1.34 ms, found 2 plugins.
-Preloading 1 native plugins for Editor in 0.17 ms.
-Unloading 6527 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7307.
-Memory consumption went from 341.0 MB to 338.9 MB.
-Total: 5.331916 ms (FindLiveObjects: 0.206125 ms CreateObjectMapping: 0.063500 ms MarkObjects: 4.727167 ms  DeleteObjects: 0.334750 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
-  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.001512 seconds.
-Begin MonoManager ReloadAssembly
-Thread 0x16f787000 may have been prematurely finalized
-Symbol file LoadedFromMemory is not a mono symbol file
-Native extension for iOS target not found
-Native extension for Android target not found
-Native extension for OSXStandalone target not found
-Refreshing native plugins compatible for Editor in 1.34 ms, found 2 plugins.
-Preloading 1 native plugins for Editor in 0.19 ms.
-[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
-[Package Manager] Cannot connect to Unity Package Manager local server
-Mono: successfully reloaded assembly
-- Completed reload, in  1.103 seconds
-Domain Reload Profiling:
-	ReloadAssembly (1103ms)
-		BeginReloadAssembly (106ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (3ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (52ms)
-		EndReloadAssembly (950ms)
-			LoadAssemblies (54ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (212ms)
-			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (33ms)
-			SetupLoadedEditorAssemblies (600ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (16ms)
-				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (2ms)
-				BeforeProcessingInitializeOnLoad (43ms)
-				ProcessInitializeOnLoadAttributes (451ms)
+				BeforeProcessingInitializeOnLoad (40ms)
+				ProcessInitializeOnLoadAttributes (445ms)
 				ProcessInitializeOnLoadMethodAttributes (88ms)
 				AfterProcessingInitializeOnLoad (1ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (5ms)
+			AwakeInstancesAfterBackupRestoration (8ms)
 Platform modules already initialized, skipping
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
 Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
 Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
-Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
-Refreshing native plugins compatible for Editor in 1.23 ms, found 2 plugins.
-Preloading 1 native plugins for Editor in 0.13 ms.
-Unloading 6527 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7322.
-Memory consumption went from 341.0 MB to 339.0 MB.
-Total: 5.454083 ms (FindLiveObjects: 0.204958 ms CreateObjectMapping: 0.060333 ms MarkObjects: 4.830042 ms  DeleteObjects: 0.358083 ms)
+Refreshing native plugins compatible for Editor in 1.32 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.12 ms.
+Unloading 6387 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 77 unused Assets / (1.7 MB). Loaded Objects now: 7305.
+Memory consumption went from 351.6 MB to 349.8 MB.
+Total: 5.621041 ms (FindLiveObjects: 0.225083 ms CreateObjectMapping: 0.065000 ms MarkObjects: 5.083000 ms  DeleteObjects: 0.247458 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
@@ -450,728 +917,6 @@ AssetImportParameters requested are different than current active one (requested
   custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
   custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.001464 seconds.
-Begin MonoManager ReloadAssembly
-Thread 0x16b823000 may have been prematurely finalized
-Symbol file LoadedFromMemory is not a mono symbol file
-Native extension for iOS target not found
-Native extension for Android target not found
-Native extension for OSXStandalone target not found
-Refreshing native plugins compatible for Editor in 1.23 ms, found 2 plugins.
-Preloading 1 native plugins for Editor in 0.18 ms.
-[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
-[Package Manager] Cannot connect to Unity Package Manager local server
-Mono: successfully reloaded assembly
-- Completed reload, in  1.054 seconds
-Domain Reload Profiling:
-	ReloadAssembly (1055ms)
-		BeginReloadAssembly (93ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (3ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (41ms)
-		EndReloadAssembly (918ms)
-			LoadAssemblies (37ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (200ms)
-			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (34ms)
-			SetupLoadedEditorAssemblies (592ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (14ms)
-				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (1ms)
-				BeforeProcessingInitializeOnLoad (41ms)
-				ProcessInitializeOnLoadAttributes (445ms)
-				ProcessInitializeOnLoadMethodAttributes (89ms)
-				AfterProcessingInitializeOnLoad (1ms)
-				EditorAssembliesLoaded (0ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (6ms)
-Platform modules already initialized, skipping
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
-Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
-Refreshing native plugins compatible for Editor in 1.38 ms, found 2 plugins.
-Preloading 1 native plugins for Editor in 0.24 ms.
-Unloading 6527 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7337.
-Memory consumption went from 341.0 MB to 339.0 MB.
-Total: 5.589125 ms (FindLiveObjects: 0.206250 ms CreateObjectMapping: 0.064042 ms MarkObjects: 4.949458 ms  DeleteObjects: 0.368917 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
-  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.001501 seconds.
-Begin MonoManager ReloadAssembly
-Thread 0x16f787000 may have been prematurely finalized
-Symbol file LoadedFromMemory is not a mono symbol file
-Native extension for iOS target not found
-Native extension for Android target not found
-Native extension for OSXStandalone target not found
-Refreshing native plugins compatible for Editor in 1.38 ms, found 2 plugins.
-Preloading 1 native plugins for Editor in 0.20 ms.
-[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
-[Package Manager] Cannot connect to Unity Package Manager local server
-Mono: successfully reloaded assembly
-- Completed reload, in  1.086 seconds
-Domain Reload Profiling:
-	ReloadAssembly (1086ms)
-		BeginReloadAssembly (104ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (4ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (48ms)
-		EndReloadAssembly (936ms)
-			LoadAssemblies (41ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (205ms)
-			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (34ms)
-			SetupLoadedEditorAssemblies (602ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (16ms)
-				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (2ms)
-				BeforeProcessingInitializeOnLoad (44ms)
-				ProcessInitializeOnLoadAttributes (451ms)
-				ProcessInitializeOnLoadMethodAttributes (89ms)
-				AfterProcessingInitializeOnLoad (1ms)
-				EditorAssembliesLoaded (0ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (6ms)
-Platform modules already initialized, skipping
-Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
-Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
-Refreshing native plugins compatible for Editor in 1.21 ms, found 2 plugins.
-Preloading 1 native plugins for Editor in 0.15 ms.
-Unloading 6527 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7352.
-Memory consumption went from 341.0 MB to 339.0 MB.
-Total: 6.131667 ms (FindLiveObjects: 0.221375 ms CreateObjectMapping: 0.081250 ms MarkObjects: 5.450375 ms  DeleteObjects: 0.377959 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
-  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Import Request.
-  Time since last request: 53355.100750 seconds.
-  path: Assets/Feel/MMFeedbacks/Demos/SequencingDemo/Prefabs/Crate.fbx
-  artifactKey: Guid(d15c44bfaa8a88c4790fa0fa2782404a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMFeedbacks/Demos/SequencingDemo/Prefabs/Crate.fbx using Guid(d15c44bfaa8a88c4790fa0fa2782404a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3cb2928ff98b41018b101668262db054') in 0.406614 seconds 
-Number of asset objects unloaded after import = 19
-========================================================================
-Received Import Request.
-  Time since last request: 0.000054 seconds.
-  path: Assets/Feel/MMTools/Demos/MMTween/Materials/MMPlotterPointMaterial 8.mat
-  artifactKey: Guid(a169a75d065778d43bdabbe1097da6d7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Demos/MMTween/Materials/MMPlotterPointMaterial 8.mat using Guid(a169a75d065778d43bdabbe1097da6d7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a751e11b3159c7c496799fed678d5374') in 0.092768 seconds 
-Number of asset objects unloaded after import = 2
-========================================================================
-Received Import Request.
-  Time since last request: 0.000050 seconds.
-  path: Assets/06_ Materials/BattleAnimation/MercenaryCritAttackTrail.mat
-  artifactKey: Guid(cf6457ff82a9e8c40846ca2d639d129c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/06_ Materials/BattleAnimation/MercenaryCritAttackTrail.mat using Guid(cf6457ff82a9e8c40846ca2d639d129c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bb821ef43ab7a9a6c12543cac9b6c5ae') in 0.021612 seconds 
-Number of asset objects unloaded after import = 4
-========================================================================
-Received Import Request.
-  Time since last request: 0.000032 seconds.
-  path: Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/MMBPR_BlueDots.mat
-  artifactKey: Guid(391d11fb65b61014eb313e127073582f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/MMBPR_BlueDots.mat using Guid(391d11fb65b61014eb313e127073582f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'abd0e2033d2b86fb64b6889031f4ee1b') in 0.029596 seconds 
-Number of asset objects unloaded after import = 5
-========================================================================
-Received Import Request.
-  Time since last request: 0.000034 seconds.
-  path: Assets/Feel/MMTools/Demos/MMTween/Materials/MMPlotterPointMaterial.mat
-  artifactKey: Guid(e9acbfc937f10684283102450bb59ac1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Demos/MMTween/Materials/MMPlotterPointMaterial.mat using Guid(e9acbfc937f10684283102450bb59ac1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7fb7309e3b6b3ddbfc5514f01aeab8eb') in 0.022677 seconds 
-Number of asset objects unloaded after import = 2
-========================================================================
-Received Import Request.
-  Time since last request: 0.000043 seconds.
-  path: Assets/Feel/MMTools/Demos/MMTween/Materials/MMPlotterPointMaterial 6.mat
-  artifactKey: Guid(c8be763e295055541902ebe2b9522d25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Demos/MMTween/Materials/MMPlotterPointMaterial 6.mat using Guid(c8be763e295055541902ebe2b9522d25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fde44ad34ca4e9162344dccfb818db27') in 0.006740 seconds 
-Number of asset objects unloaded after import = 2
-========================================================================
-Received Import Request.
-  Time since last request: 0.000050 seconds.
-  path: Assets/Feel/MMTools/Demos/MMTween/Materials/MMPlotterPointMaterial 10.mat
-  artifactKey: Guid(04d198feac2c8154ba5ce7f03711ddad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Demos/MMTween/Materials/MMPlotterPointMaterial 10.mat using Guid(04d198feac2c8154ba5ce7f03711ddad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5d25ed5b652dbddede8de37f49d75570') in 0.005472 seconds 
-Number of asset objects unloaded after import = 2
-========================================================================
-Received Import Request.
-  Time since last request: 0.000035 seconds.
-  path: Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/Skybox/MMBRP_BlueSkybox.mat
-  artifactKey: Guid(071011635f1949c46a85b7caac317267) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/Skybox/MMBRP_BlueSkybox.mat using Guid(071011635f1949c46a85b7caac317267) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '94a803c4963ded30f668e09a9f6c0715') in 0.107412 seconds 
-Number of asset objects unloaded after import = 2
-========================================================================
-Received Import Request.
-  Time since last request: 0.000042 seconds.
-  path: Assets/06_ Materials/Shaders/ShaderGraphs/MultiplyUI.mat
-  artifactKey: Guid(ebb001b7884bb4dba9d336e67d797b99) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/06_ Materials/Shaders/ShaderGraphs/MultiplyUI.mat using Guid(ebb001b7884bb4dba9d336e67d797b99) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '673ef523a8b89d720b1a319bd9968fbb') in 0.247996 seconds 
-Number of asset objects unloaded after import = 6
-========================================================================
-Received Import Request.
-  Time since last request: 0.000055 seconds.
-  path: Assets/06_ Materials/Effects/MoveOptionParticlesNormalAttack.mat
-  artifactKey: Guid(9d8a20679c2bd5641b8802ee741b4fac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/06_ Materials/Effects/MoveOptionParticlesNormalAttack.mat using Guid(9d8a20679c2bd5641b8802ee741b4fac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fa92548498558c25a2faf979a0f9ba72') in 0.007838 seconds 
-Number of asset objects unloaded after import = 4
-========================================================================
-Received Import Request.
-  Time since last request: 0.000039 seconds.
-  path: Assets/Feel/MMTools/Demos/MMTween/Materials/MMPlotterPointMaterial 4.mat
-  artifactKey: Guid(894fa61f3a6269747b79df1bd99a23cd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Demos/MMTween/Materials/MMPlotterPointMaterial 4.mat using Guid(894fa61f3a6269747b79df1bd99a23cd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5dd7d39f6cc7d83819a384cccdacfa55') in 0.005591 seconds 
-Number of asset objects unloaded after import = 2
-========================================================================
-Received Import Request.
-  Time since last request: 0.000059 seconds.
-  path: Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/MMBPR_BlueFrame.mat
-  artifactKey: Guid(e0e8a571ef6fce34890952889b35afda) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/MMBPR_BlueFrame.mat using Guid(e0e8a571ef6fce34890952889b35afda) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd2bafab13b35e2ffaac174db32e5ec1a') in 0.007966 seconds 
-Number of asset objects unloaded after import = 5
-========================================================================
-Received Import Request.
-  Time since last request: 0.000054 seconds.
-  path: Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/MMBPR_RedDots.mat
-  artifactKey: Guid(40702ed620cf055428c35adf00a2c9b1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/MMBPR_RedDots.mat using Guid(40702ed620cf055428c35adf00a2c9b1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0d7bb700eb675c37c367e1c989d499ca') in 0.008335 seconds 
-Number of asset objects unloaded after import = 5
-========================================================================
-Received Import Request.
-  Time since last request: 0.000033 seconds.
-  path: Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/MMBPR_RedFrame.mat
-  artifactKey: Guid(959bef68856013d4da4cbe9176c989c0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/MMBPR_RedFrame.mat using Guid(959bef68856013d4da4cbe9176c989c0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '975fc6844edf55f4af95316b205a9b32') in 0.006558 seconds 
-Number of asset objects unloaded after import = 5
-========================================================================
-Received Import Request.
-  Time since last request: 0.000033 seconds.
-  path: Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/MMBPR_RedCrosses.mat
-  artifactKey: Guid(816fe783c3103644790f46de0cbeb161) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/MMBPR_RedCrosses.mat using Guid(816fe783c3103644790f46de0cbeb161) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5a525591be0f022cab64f702282000e4') in 0.007385 seconds 
-Number of asset objects unloaded after import = 5
-========================================================================
-Received Import Request.
-  Time since last request: 0.000035 seconds.
-  path: Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/MMBPR_GreenFrame.mat
-  artifactKey: Guid(40ebbdf2c7a17d342843431f58d3e892) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/MMBPR_GreenFrame.mat using Guid(40ebbdf2c7a17d342843431f58d3e892) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '477f2c87dc3dfe5d87f50ff73b1023d9') in 0.010515 seconds 
-Number of asset objects unloaded after import = 5
-========================================================================
-Received Import Request.
-  Time since last request: 0.000038 seconds.
-  path: Assets/Feel/MMTools/Demos/MMGhostCamera/Materials/MMGhostCameraSpheres.mat
-  artifactKey: Guid(f16d5230fcc97a542a77ce5f30353b47) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Demos/MMGhostCamera/Materials/MMGhostCameraSpheres.mat using Guid(f16d5230fcc97a542a77ce5f30353b47) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7e438f109a0b98e6b6a85040c37e98d4') in 0.005426 seconds 
-Number of asset objects unloaded after import = 2
-========================================================================
-Received Import Request.
-  Time since last request: 0.000033 seconds.
-  path: Assets/Feel/MMTools/Tools/MMVFX/MMRipple/MMRippleCircle1.mat
-  artifactKey: Guid(a1a494236fc81314c8aa9585a019ccdc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Tools/MMVFX/MMRipple/MMRippleCircle1.mat using Guid(a1a494236fc81314c8aa9585a019ccdc) Importer(815301076,1909f56bfc062723c751e8b465ee728b) Shader properties can't be added to this global property sheet. Trying to add _BackgroundTexture (type 4 count 1)
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
-UnityEngine.Rendering.ScriptableRenderContext:Submit_Internal ()
-UnityEngine.Rendering.ScriptableRenderContext:Submit () (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/ScriptableRenderContext.cs:110)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Rendering.Universal.CameraData,bool) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:446)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Camera) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:339)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:Render (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:294)
-UnityEngine.Rendering.RenderPipeline:InternalRender (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipeline.cs:51)
-UnityEngine.Rendering.RenderPipelineManager:DoRenderLoop_Internal (UnityEngine.Rendering.RenderPipelineAsset,intptr,System.Collections.Generic.List`1<UnityEngine.Camera/RenderRequest>,Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipelineManager.cs:124)
-UnityEditor.PreviewRenderUtility:Render (bool,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/PreviewRenderUtility.cs:534)
-UnityEditor.MaterialEditor:DoRenderPreview (UnityEditor.PreviewRenderUtility,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2261)
-UnityEditor.MaterialEditor:RenderStaticPreview (string,UnityEngine.Object[],int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2123)
-UnityEditor.AssetPreviewUpdater:CreatePreview (UnityEngine.Object,UnityEngine.Object[],string,int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:47)
-UnityEditor.AssetPreviewUpdater:CreatePreviewForAsset (UnityEngine.Object,UnityEngine.Object[],string) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:14)
-
-[/Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs line 37]
-
-Shader properties can't be added to this global property sheet. Trying to add _BackgroundTexture_ST (type 2 count 1)
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
-UnityEngine.Rendering.ScriptableRenderContext:Submit_Internal ()
-UnityEngine.Rendering.ScriptableRenderContext:Submit () (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/ScriptableRenderContext.cs:110)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Rendering.Universal.CameraData,bool) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:446)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Camera) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:339)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:Render (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:294)
-UnityEngine.Rendering.RenderPipeline:InternalRender (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipeline.cs:51)
-UnityEngine.Rendering.RenderPipelineManager:DoRenderLoop_Internal (UnityEngine.Rendering.RenderPipelineAsset,intptr,System.Collections.Generic.List`1<UnityEngine.Camera/RenderRequest>,Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipelineManager.cs:124)
-UnityEditor.PreviewRenderUtility:Render (bool,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/PreviewRenderUtility.cs:534)
-UnityEditor.MaterialEditor:DoRenderPreview (UnityEditor.PreviewRenderUtility,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2261)
-UnityEditor.MaterialEditor:RenderStaticPreview (string,UnityEngine.Object[],int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2123)
-UnityEditor.AssetPreviewUpdater:CreatePreview (UnityEngine.Object,UnityEngine.Object[],string,int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:47)
-UnityEditor.AssetPreviewUpdater:CreatePreviewForAsset (UnityEngine.Object,UnityEngine.Object[],string) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:14)
-
-[/Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs line 37]
-
-Shader properties can't be added to this global property sheet. Trying to add _BackgroundTexture_TexelSize (type 2 count 1)
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
-UnityEngine.Rendering.ScriptableRenderContext:Submit_Internal ()
-UnityEngine.Rendering.ScriptableRenderContext:Submit () (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/ScriptableRenderContext.cs:110)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Rendering.Universal.CameraData,bool) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:446)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Camera) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:339)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:Render (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:294)
-UnityEngine.Rendering.RenderPipeline:InternalRender (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipeline.cs:51)
-UnityEngine.Rendering.RenderPipelineManager:DoRenderLoop_Internal (UnityEngine.Rendering.RenderPipelineAsset,intptr,System.Collections.Generic.List`1<UnityEngine.Camera/RenderRequest>,Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipelineManager.cs:124)
-UnityEditor.PreviewRenderUtility:Render (bool,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/PreviewRenderUtility.cs:534)
-UnityEditor.MaterialEditor:DoRenderPreview (UnityEditor.PreviewRenderUtility,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2261)
-UnityEditor.MaterialEditor:RenderStaticPreview (string,UnityEngine.Object[],int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2123)
-UnityEditor.AssetPreviewUpdater:CreatePreview (UnityEngine.Object,UnityEngine.Object[],string,int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:47)
-UnityEditor.AssetPreviewUpdater:CreatePreviewForAsset (UnityEngine.Object,UnityEngine.Object[],string) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:14)
-
-[/Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs line 37]
-
-Shader properties can't be added to this global property sheet. Trying to add _BackgroundTexture_HDR (type 2 count 1)
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
-UnityEngine.Rendering.ScriptableRenderContext:Submit_Internal ()
-UnityEngine.Rendering.ScriptableRenderContext:Submit () (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/ScriptableRenderContext.cs:110)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Rendering.Universal.CameraData,bool) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:446)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Camera) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:339)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:Render (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:294)
-UnityEngine.Rendering.RenderPipeline:InternalRender (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipeline.cs:51)
-UnityEngine.Rendering.RenderPipelineManager:DoRenderLoop_Internal (UnityEngine.Rendering.RenderPipelineAsset,intptr,System.Collections.Generic.List`1<UnityEngine.Camera/RenderRequest>,Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipelineManager.cs:124)
-UnityEditor.PreviewRenderUtility:Render (bool,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/PreviewRenderUtility.cs:534)
-UnityEditor.MaterialEditor:DoRenderPreview (UnityEditor.PreviewRenderUtility,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2261)
-UnityEditor.MaterialEditor:RenderStaticPreview (string,UnityEngine.Object[],int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2123)
-UnityEditor.AssetPreviewUpdater:CreatePreview (UnityEngine.Object,UnityEngine.Object[],string,int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:47)
-UnityEditor.AssetPreviewUpdater:CreatePreviewForAsset (UnityEngine.Object,UnityEngine.Object[],string) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:14)
-
-[/Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs line 37]
-
- -> (artifact id: 'c6380cafb6baadff43ebde7fd63550d5') in 0.010170 seconds 
-Number of asset objects unloaded after import = 3
-========================================================================
-Received Import Request.
-  Time since last request: 0.000053 seconds.
-  path: Assets/JMO Assets/Cartoon FX Remaster/CFXR Assets/Meshes/cfxr mesh donut.fbx
-  artifactKey: Guid(5d48695472dfda94b92ac5316397da95) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/JMO Assets/Cartoon FX Remaster/CFXR Assets/Meshes/cfxr mesh donut.fbx using Guid(5d48695472dfda94b92ac5316397da95) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '812c3e62dcf0039fc4c82cc41e44c62f') in 0.012333 seconds 
-Number of asset objects unloaded after import = 9
-========================================================================
-Received Import Request.
-  Time since last request: 0.000039 seconds.
-  path: Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/MMBPR_LightGreyDots.mat
-  artifactKey: Guid(06b0ed03b4a01634c8b5eb55bc95df8d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/MMBPR_LightGreyDots.mat using Guid(06b0ed03b4a01634c8b5eb55bc95df8d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3ac6415a97e8def846e35c51f34cccb9') in 0.007058 seconds 
-Number of asset objects unloaded after import = 5
-========================================================================
-Received Import Request.
-  Time since last request: 0.000045 seconds.
-  path: Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/MMBPR_YellowFrame.mat
-  artifactKey: Guid(9d99964e7e8afe34b8ee7943eabcd19e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/MMBPR_YellowFrame.mat using Guid(9d99964e7e8afe34b8ee7943eabcd19e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '75494ebba52aa5709b684d9d0765a60f') in 0.007687 seconds 
-Number of asset objects unloaded after import = 5
-========================================================================
-Received Import Request.
-  Time since last request: 0.000043 seconds.
-  path: Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/MMBPR_GreenCrosses.mat
-  artifactKey: Guid(467db2a28dc1c6a45b450dc6d124de59) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/MMBPR_GreenCrosses.mat using Guid(467db2a28dc1c6a45b450dc6d124de59) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9219a37484ee67fc5c901947d1fd291d') in 0.006560 seconds 
-Number of asset objects unloaded after import = 5
-========================================================================
-Received Import Request.
-  Time since last request: 0.000033 seconds.
-  path: Assets/Feel/MMTools/Tools/MMGUI/Materials/MMFaderRoundMaterialMask.mat
-  artifactKey: Guid(d9497e52f2de0254eaec18ccb13d788f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Tools/MMGUI/Materials/MMFaderRoundMaterialMask.mat using Guid(d9497e52f2de0254eaec18ccb13d788f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd2494e0cad69530830c7e86b2286bdd7') in 0.025691 seconds 
-Number of asset objects unloaded after import = 2
-========================================================================
-Received Import Request.
-  Time since last request: 0.000051 seconds.
-  path: Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/MMBPR_DarkGreyCrosses.mat
-  artifactKey: Guid(2a42e638cd366184aad3203b2732b2e2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/MMBPR_DarkGreyCrosses.mat using Guid(2a42e638cd366184aad3203b2732b2e2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0a0776a522e6f130f2e855149aa79d19') in 0.006709 seconds 
-Number of asset objects unloaded after import = 5
-========================================================================
-Received Import Request.
-  Time since last request: 0.000049 seconds.
-  path: Assets/Feel/MMTools/Tools/MMVFX/MMRipple/MMRippleSaw2.mat
-  artifactKey: Guid(0d8a387a51a2b414b8160677b26c9d1a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Tools/MMVFX/MMRipple/MMRippleSaw2.mat using Guid(0d8a387a51a2b414b8160677b26c9d1a) Importer(815301076,1909f56bfc062723c751e8b465ee728b) Shader properties can't be added to this global property sheet. Trying to add _BackgroundTexture (type 4 count 1)
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
-UnityEngine.Rendering.ScriptableRenderContext:Submit_Internal ()
-UnityEngine.Rendering.ScriptableRenderContext:Submit () (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/ScriptableRenderContext.cs:110)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Rendering.Universal.CameraData,bool) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:446)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Camera) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:339)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:Render (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:294)
-UnityEngine.Rendering.RenderPipeline:InternalRender (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipeline.cs:51)
-UnityEngine.Rendering.RenderPipelineManager:DoRenderLoop_Internal (UnityEngine.Rendering.RenderPipelineAsset,intptr,System.Collections.Generic.List`1<UnityEngine.Camera/RenderRequest>,Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipelineManager.cs:124)
-UnityEditor.PreviewRenderUtility:Render (bool,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/PreviewRenderUtility.cs:534)
-UnityEditor.MaterialEditor:DoRenderPreview (UnityEditor.PreviewRenderUtility,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2261)
-UnityEditor.MaterialEditor:RenderStaticPreview (string,UnityEngine.Object[],int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2123)
-UnityEditor.AssetPreviewUpdater:CreatePreview (UnityEngine.Object,UnityEngine.Object[],string,int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:47)
-UnityEditor.AssetPreviewUpdater:CreatePreviewForAsset (UnityEngine.Object,UnityEngine.Object[],string) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:14)
-
-[/Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs line 37]
-
-Shader properties can't be added to this global property sheet. Trying to add _BackgroundTexture_ST (type 2 count 1)
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
-UnityEngine.Rendering.ScriptableRenderContext:Submit_Internal ()
-UnityEngine.Rendering.ScriptableRenderContext:Submit () (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/ScriptableRenderContext.cs:110)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Rendering.Universal.CameraData,bool) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:446)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Camera) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:339)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:Render (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:294)
-UnityEngine.Rendering.RenderPipeline:InternalRender (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipeline.cs:51)
-UnityEngine.Rendering.RenderPipelineManager:DoRenderLoop_Internal (UnityEngine.Rendering.RenderPipelineAsset,intptr,System.Collections.Generic.List`1<UnityEngine.Camera/RenderRequest>,Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipelineManager.cs:124)
-UnityEditor.PreviewRenderUtility:Render (bool,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/PreviewRenderUtility.cs:534)
-UnityEditor.MaterialEditor:DoRenderPreview (UnityEditor.PreviewRenderUtility,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2261)
-UnityEditor.MaterialEditor:RenderStaticPreview (string,UnityEngine.Object[],int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2123)
-UnityEditor.AssetPreviewUpdater:CreatePreview (UnityEngine.Object,UnityEngine.Object[],string,int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:47)
-UnityEditor.AssetPreviewUpdater:CreatePreviewForAsset (UnityEngine.Object,UnityEngine.Object[],string) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:14)
-
-[/Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs line 37]
-
-Shader properties can't be added to this global property sheet. Trying to add _BackgroundTexture_TexelSize (type 2 count 1)
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
-UnityEngine.Rendering.ScriptableRenderContext:Submit_Internal ()
-UnityEngine.Rendering.ScriptableRenderContext:Submit () (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/ScriptableRenderContext.cs:110)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Rendering.Universal.CameraData,bool) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:446)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Camera) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:339)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:Render (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:294)
-UnityEngine.Rendering.RenderPipeline:InternalRender (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipeline.cs:51)
-UnityEngine.Rendering.RenderPipelineManager:DoRenderLoop_Internal (UnityEngine.Rendering.RenderPipelineAsset,intptr,System.Collections.Generic.List`1<UnityEngine.Camera/RenderRequest>,Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipelineManager.cs:124)
-UnityEditor.PreviewRenderUtility:Render (bool,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/PreviewRenderUtility.cs:534)
-UnityEditor.MaterialEditor:DoRenderPreview (UnityEditor.PreviewRenderUtility,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2261)
-UnityEditor.MaterialEditor:RenderStaticPreview (string,UnityEngine.Object[],int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2123)
-UnityEditor.AssetPreviewUpdater:CreatePreview (UnityEngine.Object,UnityEngine.Object[],string,int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:47)
-UnityEditor.AssetPreviewUpdater:CreatePreviewForAsset (UnityEngine.Object,UnityEngine.Object[],string) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:14)
-
-[/Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs line 37]
-
-Shader properties can't be added to this global property sheet. Trying to add _BackgroundTexture_HDR (type 2 count 1)
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
-UnityEngine.Rendering.ScriptableRenderContext:Submit_Internal ()
-UnityEngine.Rendering.ScriptableRenderContext:Submit () (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/ScriptableRenderContext.cs:110)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Rendering.Universal.CameraData,bool) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:446)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Camera) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:339)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:Render (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:294)
-UnityEngine.Rendering.RenderPipeline:InternalRender (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipeline.cs:51)
-UnityEngine.Rendering.RenderPipelineManager:DoRenderLoop_Internal (UnityEngine.Rendering.RenderPipelineAsset,intptr,System.Collections.Generic.List`1<UnityEngine.Camera/RenderRequest>,Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipelineManager.cs:124)
-UnityEditor.PreviewRenderUtility:Render (bool,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/PreviewRenderUtility.cs:534)
-UnityEditor.MaterialEditor:DoRenderPreview (UnityEditor.PreviewRenderUtility,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2261)
-UnityEditor.MaterialEditor:RenderStaticPreview (string,UnityEngine.Object[],int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2123)
-UnityEditor.AssetPreviewUpdater:CreatePreview (UnityEngine.Object,UnityEngine.Object[],string,int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:47)
-UnityEditor.AssetPreviewUpdater:CreatePreviewForAsset (UnityEngine.Object,UnityEngine.Object[],string) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:14)
-
-[/Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs line 37]
-
- -> (artifact id: 'fa5ae1f4f11775acd84499e57a736774') in 0.005741 seconds 
-Number of asset objects unloaded after import = 3
-========================================================================
-Received Import Request.
-  Time since last request: 0.000034 seconds.
-  path: Assets/Feel/FeelDemos/Wheel/Models/FeelWheel.fbx
-  artifactKey: Guid(929e9c3132f78f24ea8557de7820d64a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/FeelDemos/Wheel/Models/FeelWheel.fbx using Guid(929e9c3132f78f24ea8557de7820d64a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f84f11126048852747f842cf0e2f6d64') in 0.036318 seconds 
-Number of asset objects unloaded after import = 31
-========================================================================
-Received Import Request.
-  Time since last request: 0.000035 seconds.
-  path: Assets/06_ Materials/BattleAnimation/MinotaurAttackTrail.mat
-  artifactKey: Guid(4304f3a26d85f2d47ad5b6b7f52d7dff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/06_ Materials/BattleAnimation/MinotaurAttackTrail.mat using Guid(4304f3a26d85f2d47ad5b6b7f52d7dff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5d88e31b023ab5904082c9505dd8b9ef') in 0.006532 seconds 
-Number of asset objects unloaded after import = 4
-========================================================================
-Received Import Request.
-  Time since last request: 0.000032 seconds.
-  path: Assets/JMO Assets/Cartoon FX Remaster/CFXR Assets/Meshes/cfxr mesh leave.fbx
-  artifactKey: Guid(f8defa343e39b2545bf3101b50eefa17) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/JMO Assets/Cartoon FX Remaster/CFXR Assets/Meshes/cfxr mesh leave.fbx using Guid(f8defa343e39b2545bf3101b50eefa17) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '39acd8f7e3772a69b39a0da61d8b365b') in 0.011079 seconds 
-Number of asset objects unloaded after import = 9
-========================================================================
-Received Import Request.
-  Time since last request: 0.000039 seconds.
-  path: Assets/Feel/MMTools/Tools/MMGUI/Materials/MMFaderRoundMaterialMasked.mat
-  artifactKey: Guid(1297af1e1808f5a48b35411d71934370) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Tools/MMGUI/Materials/MMFaderRoundMaterialMasked.mat using Guid(1297af1e1808f5a48b35411d71934370) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7299c004d4c750f35e29c07120f5ca8b') in 0.008654 seconds 
-Number of asset objects unloaded after import = 2
-========================================================================
-Received Import Request.
-  Time since last request: 0.000041 seconds.
-  path: Assets/06_ Materials/Utility/Merge2TextureAlpha.mat
-  artifactKey: Guid(97cc3526f4728224c9220d1a4c21c62b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/06_ Materials/Utility/Merge2TextureAlpha.mat using Guid(97cc3526f4728224c9220d1a4c21c62b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '17c14c1cc23191c504a7041bce9b5204') in 0.012726 seconds 
-Number of asset objects unloaded after import = 4
-========================================================================
-Received Import Request.
-  Time since last request: 0.000099 seconds.
-  path: Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/MMBPR_YellowCrosses.mat
-  artifactKey: Guid(d642a4ab722ef8a46af4d261e5227b0c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/MMBPR_YellowCrosses.mat using Guid(d642a4ab722ef8a46af4d261e5227b0c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd4d3c4647e885e033320a732f60a4f2b') in 0.011270 seconds 
-Number of asset objects unloaded after import = 5
-========================================================================
-Received Import Request.
-  Time since last request: 0.000036 seconds.
-  path: Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/MMBPR_DarkGreyFrame.mat
-  artifactKey: Guid(13516cfdf366d2542bc2fa983b6f803a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/MMBPR_DarkGreyFrame.mat using Guid(13516cfdf366d2542bc2fa983b6f803a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd482d7bcf0267db4c4bf0fbdb3708306') in 0.006173 seconds 
-Number of asset objects unloaded after import = 5
-========================================================================
-Received Import Request.
-  Time since last request: 0.000027 seconds.
-  path: Assets/06_ Materials/BattleAnimation/MercenaryAttackTrail.mat
-  artifactKey: Guid(38f816368923b1e46acff0c957e76dbf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/06_ Materials/BattleAnimation/MercenaryAttackTrail.mat using Guid(38f816368923b1e46acff0c957e76dbf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aa8265ba43d8bd5a4e606f74f2176a68') in 0.005844 seconds 
-Number of asset objects unloaded after import = 4
-========================================================================
-Received Import Request.
-  Time since last request: 0.000036 seconds.
-  path: Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/MMBPR_YellowSquares.mat
-  artifactKey: Guid(b6acb67784ba02a46b350cd11c745e4c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/MMBPR_YellowSquares.mat using Guid(b6acb67784ba02a46b350cd11c745e4c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '803664563b39b913024dcf8377c9ad33') in 0.006742 seconds 
-Number of asset objects unloaded after import = 5
-========================================================================
-Received Import Request.
-  Time since last request: 0.000037 seconds.
-  path: Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/Neutral/MMBRP_NeutralBlack.mat
-  artifactKey: Guid(fc636806db6f2654d970ed32802db8be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/Neutral/MMBRP_NeutralBlack.mat using Guid(fc636806db6f2654d970ed32802db8be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c2a7f15e1f1fc0ebfdd677def20c0fc6') in 0.006047 seconds 
-Number of asset objects unloaded after import = 5
-========================================================================
-Received Import Request.
-  Time since last request: 0.000031 seconds.
-  path: Assets/Feel/MMTools/Tools/MMVFX/MMRipple/MMRippleBubble1.mat
-  artifactKey: Guid(e0e80ff7156603346bbdc8c121863234) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Tools/MMVFX/MMRipple/MMRippleBubble1.mat using Guid(e0e80ff7156603346bbdc8c121863234) Importer(815301076,1909f56bfc062723c751e8b465ee728b) Shader properties can't be added to this global property sheet. Trying to add _BackgroundTexture (type 4 count 1)
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
-UnityEngine.Rendering.ScriptableRenderContext:Submit_Internal ()
-UnityEngine.Rendering.ScriptableRenderContext:Submit () (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/ScriptableRenderContext.cs:110)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Rendering.Universal.CameraData,bool) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:446)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Camera) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:339)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:Render (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:294)
-UnityEngine.Rendering.RenderPipeline:InternalRender (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipeline.cs:51)
-UnityEngine.Rendering.RenderPipelineManager:DoRenderLoop_Internal (UnityEngine.Rendering.RenderPipelineAsset,intptr,System.Collections.Generic.List`1<UnityEngine.Camera/RenderRequest>,Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipelineManager.cs:124)
-UnityEditor.PreviewRenderUtility:Render (bool,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/PreviewRenderUtility.cs:534)
-UnityEditor.MaterialEditor:DoRenderPreview (UnityEditor.PreviewRenderUtility,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2261)
-UnityEditor.MaterialEditor:RenderStaticPreview (string,UnityEngine.Object[],int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2123)
-UnityEditor.AssetPreviewUpdater:CreatePreview (UnityEngine.Object,UnityEngine.Object[],string,int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:47)
-UnityEditor.AssetPreviewUpdater:CreatePreviewForAsset (UnityEngine.Object,UnityEngine.Object[],string) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:14)
-
-[/Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs line 37]
-
-Shader properties can't be added to this global property sheet. Trying to add _BackgroundTexture_ST (type 2 count 1)
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
-UnityEngine.Rendering.ScriptableRenderContext:Submit_Internal ()
-UnityEngine.Rendering.ScriptableRenderContext:Submit () (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/ScriptableRenderContext.cs:110)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Rendering.Universal.CameraData,bool) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:446)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Camera) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:339)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:Render (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:294)
-UnityEngine.Rendering.RenderPipeline:InternalRender (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipeline.cs:51)
-UnityEngine.Rendering.RenderPipelineManager:DoRenderLoop_Internal (UnityEngine.Rendering.RenderPipelineAsset,intptr,System.Collections.Generic.List`1<UnityEngine.Camera/RenderRequest>,Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipelineManager.cs:124)
-UnityEditor.PreviewRenderUtility:Render (bool,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/PreviewRenderUtility.cs:534)
-UnityEditor.MaterialEditor:DoRenderPreview (UnityEditor.PreviewRenderUtility,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2261)
-UnityEditor.MaterialEditor:RenderStaticPreview (string,UnityEngine.Object[],int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2123)
-UnityEditor.AssetPreviewUpdater:CreatePreview (UnityEngine.Object,UnityEngine.Object[],string,int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:47)
-UnityEditor.AssetPreviewUpdater:CreatePreviewForAsset (UnityEngine.Object,UnityEngine.Object[],string) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:14)
-
-[/Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs line 37]
-
-Shader properties can't be added to this global property sheet. Trying to add _BackgroundTexture_TexelSize (type 2 count 1)
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
-UnityEngine.Rendering.ScriptableRenderContext:Submit_Internal ()
-UnityEngine.Rendering.ScriptableRenderContext:Submit () (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/ScriptableRenderContext.cs:110)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Rendering.Universal.CameraData,bool) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:446)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Camera) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:339)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:Render (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:294)
-UnityEngine.Rendering.RenderPipeline:InternalRender (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipeline.cs:51)
-UnityEngine.Rendering.RenderPipelineManager:DoRenderLoop_Internal (UnityEngine.Rendering.RenderPipelineAsset,intptr,System.Collections.Generic.List`1<UnityEngine.Camera/RenderRequest>,Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipelineManager.cs:124)
-UnityEditor.PreviewRenderUtility:Render (bool,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/PreviewRenderUtility.cs:534)
-UnityEditor.MaterialEditor:DoRenderPreview (UnityEditor.PreviewRenderUtility,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2261)
-UnityEditor.MaterialEditor:RenderStaticPreview (string,UnityEngine.Object[],int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2123)
-UnityEditor.AssetPreviewUpdater:CreatePreview (UnityEngine.Object,UnityEngine.Object[],string,int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:47)
-UnityEditor.AssetPreviewUpdater:CreatePreviewForAsset (UnityEngine.Object,UnityEngine.Object[],string) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:14)
-
-[/Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs line 37]
-
-Shader properties can't be added to this global property sheet. Trying to add _BackgroundTexture_HDR (type 2 count 1)
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
-UnityEngine.Rendering.ScriptableRenderContext:Submit_Internal ()
-UnityEngine.Rendering.ScriptableRenderContext:Submit () (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/ScriptableRenderContext.cs:110)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Rendering.Universal.CameraData,bool) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:446)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Camera) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:339)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:Render (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:294)
-UnityEngine.Rendering.RenderPipeline:InternalRender (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipeline.cs:51)
-UnityEngine.Rendering.RenderPipelineManager:DoRenderLoop_Internal (UnityEngine.Rendering.RenderPipelineAsset,intptr,System.Collections.Generic.List`1<UnityEngine.Camera/RenderRequest>,Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipelineManager.cs:124)
-UnityEditor.PreviewRenderUtility:Render (bool,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/PreviewRenderUtility.cs:534)
-UnityEditor.MaterialEditor:DoRenderPreview (UnityEditor.PreviewRenderUtility,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2261)
-UnityEditor.MaterialEditor:RenderStaticPreview (string,UnityEngine.Object[],int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2123)
-UnityEditor.AssetPreviewUpdater:CreatePreview (UnityEngine.Object,UnityEngine.Object[],string,int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:47)
-UnityEditor.AssetPreviewUpdater:CreatePreviewForAsset (UnityEngine.Object,UnityEngine.Object[],string) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:14)
-
-[/Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs line 37]
-
- -> (artifact id: '2871b5bfd69c114698dbb01072b4df05') in 0.005833 seconds 
-Number of asset objects unloaded after import = 3
-========================================================================
-Received Import Request.
-  Time since last request: 0.000038 seconds.
-  path: Assets/Feel/MMTools/Tools/MMVFX/MMRipple/MMRippleSpiral2.mat
-  artifactKey: Guid(432948ea802b17943bde6d7614555a06) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Tools/MMVFX/MMRipple/MMRippleSpiral2.mat using Guid(432948ea802b17943bde6d7614555a06) Importer(815301076,1909f56bfc062723c751e8b465ee728b) Shader properties can't be added to this global property sheet. Trying to add _BackgroundTexture (type 4 count 1)
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
-UnityEngine.Rendering.ScriptableRenderContext:Submit_Internal ()
-UnityEngine.Rendering.ScriptableRenderContext:Submit () (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/ScriptableRenderContext.cs:110)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Rendering.Universal.CameraData,bool) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:446)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Camera) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:339)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:Render (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:294)
-UnityEngine.Rendering.RenderPipeline:InternalRender (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipeline.cs:51)
-UnityEngine.Rendering.RenderPipelineManager:DoRenderLoop_Internal (UnityEngine.Rendering.RenderPipelineAsset,intptr,System.Collections.Generic.List`1<UnityEngine.Camera/RenderRequest>,Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipelineManager.cs:124)
-UnityEditor.PreviewRenderUtility:Render (bool,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/PreviewRenderUtility.cs:534)
-UnityEditor.MaterialEditor:DoRenderPreview (UnityEditor.PreviewRenderUtility,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2261)
-UnityEditor.MaterialEditor:RenderStaticPreview (string,UnityEngine.Object[],int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2123)
-UnityEditor.AssetPreviewUpdater:CreatePreview (UnityEngine.Object,UnityEngine.Object[],string,int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:47)
-UnityEditor.AssetPreviewUpdater:CreatePreviewForAsset (UnityEngine.Object,UnityEngine.Object[],string) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:14)
-
-[/Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs line 37]
-
-Shader properties can't be added to this global property sheet. Trying to add _BackgroundTexture_ST (type 2 count 1)
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
-UnityEngine.Rendering.ScriptableRenderContext:Submit_Internal ()
-UnityEngine.Rendering.ScriptableRenderContext:Submit () (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/ScriptableRenderContext.cs:110)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Rendering.Universal.CameraData,bool) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:446)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Camera) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:339)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:Render (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:294)
-UnityEngine.Rendering.RenderPipeline:InternalRender (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipeline.cs:51)
-UnityEngine.Rendering.RenderPipelineManager:DoRenderLoop_Internal (UnityEngine.Rendering.RenderPipelineAsset,intptr,System.Collections.Generic.List`1<UnityEngine.Camera/RenderRequest>,Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipelineManager.cs:124)
-UnityEditor.PreviewRenderUtility:Render (bool,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/PreviewRenderUtility.cs:534)
-UnityEditor.MaterialEditor:DoRenderPreview (UnityEditor.PreviewRenderUtility,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2261)
-UnityEditor.MaterialEditor:RenderStaticPreview (string,UnityEngine.Object[],int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2123)
-UnityEditor.AssetPreviewUpdater:CreatePreview (UnityEngine.Object,UnityEngine.Object[],string,int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:47)
-UnityEditor.AssetPreviewUpdater:CreatePreviewForAsset (UnityEngine.Object,UnityEngine.Object[],string) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:14)
-
-[/Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs line 37]
-
-Shader properties can't be added to this global property sheet. Trying to add _BackgroundTexture_TexelSize (type 2 count 1)
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
-UnityEngine.Rendering.ScriptableRenderContext:Submit_Internal ()
-UnityEngine.Rendering.ScriptableRenderContext:Submit () (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/ScriptableRenderContext.cs:110)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Rendering.Universal.CameraData,bool) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:446)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Camera) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:339)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:Render (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:294)
-UnityEngine.Rendering.RenderPipeline:InternalRender (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipeline.cs:51)
-UnityEngine.Rendering.RenderPipelineManager:DoRenderLoop_Internal (UnityEngine.Rendering.RenderPipelineAsset,intptr,System.Collections.Generic.List`1<UnityEngine.Camera/RenderRequest>,Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipelineManager.cs:124)
-UnityEditor.PreviewRenderUtility:Render (bool,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/PreviewRenderUtility.cs:534)
-UnityEditor.MaterialEditor:DoRenderPreview (UnityEditor.PreviewRenderUtility,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2261)
-UnityEditor.MaterialEditor:RenderStaticPreview (string,UnityEngine.Object[],int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2123)
-UnityEditor.AssetPreviewUpdater:CreatePreview (UnityEngine.Object,UnityEngine.Object[],string,int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:47)
-UnityEditor.AssetPreviewUpdater:CreatePreviewForAsset (UnityEngine.Object,UnityEngine.Object[],string) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:14)
-
-[/Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs line 37]
-
-Shader properties can't be added to this global property sheet. Trying to add _BackgroundTexture_HDR (type 2 count 1)
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
-UnityEngine.Rendering.ScriptableRenderContext:Submit_Internal ()
-UnityEngine.Rendering.ScriptableRenderContext:Submit () (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/ScriptableRenderContext.cs:110)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Rendering.Universal.CameraData,bool) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:446)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Camera) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:339)
-UnityEngine.Rendering.Universal.UniversalRenderPipeline:Render (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at Library/PackageCache/com.unity.render-pipelines.universal@12.1.13/Runtime/UniversalRenderPipeline.cs:294)
-UnityEngine.Rendering.RenderPipeline:InternalRender (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipeline.cs:51)
-UnityEngine.Rendering.RenderPipelineManager:DoRenderLoop_Internal (UnityEngine.Rendering.RenderPipelineAsset,intptr,System.Collections.Generic.List`1<UnityEngine.Camera/RenderRequest>,Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle) (at /Users/bokken/build/output/unity/unity/Runtime/Export/RenderPipeline/RenderPipelineManager.cs:124)
-UnityEditor.PreviewRenderUtility:Render (bool,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/PreviewRenderUtility.cs:534)
-UnityEditor.MaterialEditor:DoRenderPreview (UnityEditor.PreviewRenderUtility,bool) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2261)
-UnityEditor.MaterialEditor:RenderStaticPreview (string,UnityEngine.Object[],int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/Inspector/MaterialEditor.cs:2123)
-UnityEditor.AssetPreviewUpdater:CreatePreview (UnityEngine.Object,UnityEngine.Object[],string,int,int) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:47)
-UnityEditor.AssetPreviewUpdater:CreatePreviewForAsset (UnityEngine.Object,UnityEngine.Object[],string) (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssetPreviewUpdater.cs:14)
-
-[/Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs line 37]
-
- -> (artifact id: '2e8c2161fd3ef01fa231e770a40e4de8') in 0.005233 seconds 
-Number of asset objects unloaded after import = 3
-========================================================================
-Received Import Request.
-  Time since last request: 0.000034 seconds.
-  path: Assets/Feel/MMTools/Demos/MMFollowTarget/MMFollowTargetDemoGroundMaterial.mat
-  artifactKey: Guid(618ddfc15e28454459ee2236b25eb5be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Demos/MMFollowTarget/MMFollowTargetDemoGroundMaterial.mat using Guid(618ddfc15e28454459ee2236b25eb5be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a8d44517f0da78578cd26e8c0530eaec') in 0.005709 seconds 
-Number of asset objects unloaded after import = 5
-========================================================================
-Received Import Request.
-  Time since last request: 0.000035 seconds.
-  path: Assets/Feel/MMTools/Demos/MMGizmos/MMGizmoDemoSkybox.mat
-  artifactKey: Guid(5232fa07f925b52418fdfb492eac5485) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Demos/MMGizmos/MMGizmoDemoSkybox.mat using Guid(5232fa07f925b52418fdfb492eac5485) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '421bc851a0cc9570db93081c64950050') in 0.039721 seconds 
-Number of asset objects unloaded after import = 2
-========================================================================
-Received Import Request.
-  Time since last request: 0.000057 seconds.
-  path: Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/MMBPR_DarkGreyDots.mat
-  artifactKey: Guid(db11353047c997f46a4760754f00c788) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/Feel/MMTools/Tools/MMPrototypeTextures/MMBRP_Materials/MMBPR_DarkGreyDots.mat using Guid(db11353047c997f46a4760754f00c788) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3bc868374ea15003baa1112bc54c13d3') in 0.007161 seconds 
-Number of asset objects unloaded after import = 5
 Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
 AssetImportWorker is now disconnected from the server
 Process exiting

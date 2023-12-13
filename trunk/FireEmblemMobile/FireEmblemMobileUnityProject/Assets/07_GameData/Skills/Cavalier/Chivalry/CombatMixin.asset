@@ -18,14 +18,16 @@ MonoBehaviour:
       Value:
         skillEffectMixins:
         - {fileID: 11400000, guid: 4a78156a437bd4038bc147dae914e6f1, type: 2}
+        replacesOtherEffects: 0
         compareTypeWithExistingConditions: 0
         conditionManager:
           CompareType: 0
           Conditions: []
-        replacesOtherCOnditions: 0
+        replacesOtherConditions: 0
     - Key: {fileID: 11400000, guid: 574b483c7e49fe2449dd8e280a0a969f, type: 2}
       Value:
         skillEffectMixins: []
+        replacesOtherEffects: 0
         compareTypeWithExistingConditions: 0
         conditionManager:
           CompareType: 1
@@ -38,12 +40,8 @@ MonoBehaviour:
             Conditions:
             - {fileID: 11400000, guid: 2524426e0b4085444af042fa0d087a5b, type: 2}
             - {fileID: 11400000, guid: 9e62fcc40868fed4b815da4a2c94e2e1, type: 2}
-        replacesOtherCOnditions: 1
-  toogleAble: 0
-  skillEffectMixins:
-  - {fileID: 11400000, guid: 5cb499e0041195047ae183f056b9970c, type: 2}
-  CombatState: 0
-  conditionManager:
+        replacesOtherConditions: 1
+  conditionBigPackage:
     CompareType: 1
     Conditions:
     - CompareType: 0
@@ -54,3 +52,7 @@ MonoBehaviour:
       Conditions:
       - {fileID: 11400000, guid: 9e62fcc40868fed4b815da4a2c94e2e1, type: 2}
       - {fileID: 11400000, guid: be52bcfeba8e9554cae46665297b524c, type: 2}
+  skillEffectMixins:
+  - {fileID: 11400000, guid: 5cb499e0041195047ae183f056b9970c, type: 2}
+  toogleAble: 0
+  CombatState: 0

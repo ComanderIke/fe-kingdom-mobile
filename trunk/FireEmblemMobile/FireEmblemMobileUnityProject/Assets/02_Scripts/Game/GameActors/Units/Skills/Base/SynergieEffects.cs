@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Game.GameActors.Units.Skills.Passive;
 using Game.Mechanics;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game.GameActors.Units.Skills
 {
@@ -12,7 +13,9 @@ namespace Game.GameActors.Units.Skills
         [SerializeField] public bool replacesOtherEffects;
         [SerializeField] public ConditionCompareType compareTypeWithExistingConditions;
         [SerializeField] public ConditionBigPackage conditionManager;
-        [SerializeField] public bool replacesOtherCOnditions;
-        
+        [FormerlySerializedAs("replacesOtherCOnditions")] [SerializeField] public bool replacesOtherConditions;
+        [SerializeField] public int extraRange;
+        [SerializeField] public int costReduction;
+
     }
 }

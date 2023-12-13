@@ -178,6 +178,7 @@ namespace Game.Mechanics
           float luna = 0;
           float pavise = 0;
           float wrath = 0;
+          bool guaranteedHit = false;
           foreach (var attackEffect in attacker.BattleComponent.BattleStats.BonusAttackStats.AttackEffects)
           {
               switch (attackEffect.Key)
@@ -186,6 +187,9 @@ namespace Game.Mechanics
                       luna = (float)attackEffect.Value; break;
                   case AttackEffectEnum.Sol:
                       sol = (float)attackEffect.Value; break;
+                  case AttackEffectEnum.GuaranteedHit:
+                      guaranteedHit = true;
+                      break;
               }
           }
           foreach (var defenseEffect in defender.BattleComponent.BattleStats.BonusAttackStats.DefenseEffects)
@@ -204,7 +208,7 @@ namespace Game.Mechanics
             var hitRng = UnityEngine.Random.Range(0, 101);
             var critRng = UnityEngine.Random.Range(0, 101);
      
-            attackData.hit =  hitRng< attacker.BattleComponent.BattleStats.GetHitAgainstTarget(defender);
+            attackData.hit =  guaranteedHit || hitRng < attacker.BattleComponent.BattleStats.GetHitAgainstTarget(defender);
         
             attackData.crit =  critRng< attacker.BattleComponent.BattleStats.GetCritAgainstTarget(defender)&&attackData.hit;
             if (attackData.crit&&!preview)

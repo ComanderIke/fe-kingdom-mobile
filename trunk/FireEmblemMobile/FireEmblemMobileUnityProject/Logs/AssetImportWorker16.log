@@ -22,7 +22,7 @@ AssetImportWorker16
 -logFile
 Logs/AssetImportWorker16.log
 -srvPort
-49287
+50955
 Successfully changed project path to: /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject
 /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -54,13 +54,13 @@ Successfully changed project path to: /Users/daniel/Documents/fe-kingdom-mobile/
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [8035589824] Host "[IP] 192.168.0.2 [Port] 0 [Flags] 2 [Guid] 858528565 [EditorId] 858528565 [Version] 1048832 [Id] OSXEditor(0,Daniels-MacBook-Pro.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+Player connection [7958519488] Host "[IP] 192.168.0.2 [Port] 0 [Flags] 2 [Guid] 2522805165 [EditorId] 2522805165 [Version] 1048832 [Id] OSXEditor(0,Daniels-MacBook-Pro.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
 
-Player connection [8035589824] Host "[IP] 192.168.0.2 [Port] 0 [Flags] 2 [Guid] 858528565 [EditorId] 858528565 [Version] 1048832 [Id] OSXEditor(0,Daniels-MacBook-Pro.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [7958519488] Host "[IP] 192.168.0.2 [Port] 0 [Flags] 2 [Guid] 2522805165 [EditorId] 2522805165 [Version] 1048832 [Id] OSXEditor(0,Daniels-MacBook-Pro.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
 
 [Physics::Module] Initialized MultithreadedJobDispatcher with {0} workers.
-Refreshing native plugins compatible for Editor in 153.74 ms, found 2 plugins.
-Preloading 1 native plugins for Editor in 0.53 ms.
+Refreshing native plugins compatible for Editor in 137.66 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.49 ms.
 Initialize engine version: 2021.3.32f1 (3b9dae9532f5)
 [Subsystems] Discovering subsystems at path /Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/Resources/UnitySubsystems
 [Subsystems] Discovering subsystems at path /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets
@@ -77,105 +77,105 @@ Initialize mono
 Mono path[0] = '/Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/Managed'
 Mono path[1] = '/Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/MonoBleedingEdge/lib/mono/unityjit-macos'
 Mono config path = '/Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56825
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56836
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: /Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
 Register platform support module: /Applications/Unity/Hub/Editor/2021.3.32f1/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 Register platform support module: /Applications/Unity/Hub/Editor/2021.3.32f1/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
-Registered in 0.001976 seconds.
+Registered in 0.002613 seconds.
 [usbmuxd] Start listen thread
 [usbmuxd] Listen thread started
 [usbmuxd] Send listen message
 Native extension for iOS target not found
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 66 ms
+Android Extension - Scanning For ADB Devices 67 ms
 Native extension for OSXStandalone target not found
-Refreshing native plugins compatible for Editor in 120.96 ms, found 2 plugins.
-Preloading 1 native plugins for Editor in 0.18 ms.
+Refreshing native plugins compatible for Editor in 190.95 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.17 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.540 seconds
+- Completed reload, in  0.653 seconds
 Domain Reload Profiling:
-	ReloadAssembly (540ms)
-		BeginReloadAssembly (59ms)
+	ReloadAssembly (653ms)
+		BeginReloadAssembly (57ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (0ms)
-		EndReloadAssembly (434ms)
-			LoadAssemblies (60ms)
+		EndReloadAssembly (547ms)
+			LoadAssemblies (57ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (62ms)
+			SetupTypeCache (59ms)
 			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (14ms)
-			SetupLoadedEditorAssemblies (333ms)
+			RebuildScriptCaches (15ms)
+			SetupLoadedEditorAssemblies (448ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (163ms)
+				InitializePlatformSupportModulesInManaged (187ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (121ms)
-				BeforeProcessingInitializeOnLoad (1ms)
-				ProcessInitializeOnLoadAttributes (31ms)
-				ProcessInitializeOnLoadMethodAttributes (17ms)
+				RefreshPlugins (191ms)
+				BeforeProcessingInitializeOnLoad (2ms)
+				ProcessInitializeOnLoadAttributes (48ms)
+				ProcessInitializeOnLoadMethodAttributes (19ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.006891 seconds.
+Registered in 0.006907 seconds.
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory is not a mono symbol file
 Native extension for iOS target not found
 Native extension for Android target not found
 Native extension for OSXStandalone target not found
-Refreshing native plugins compatible for Editor in 134.79 ms, found 2 plugins.
-Preloading 1 native plugins for Editor in 0.19 ms.
+Refreshing native plugins compatible for Editor in 154.09 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.20 ms.
 Package Manager log level set to [2]
 [Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
 [Package Manager] Cannot connect to Unity Package Manager local server
 Mono: successfully reloaded assembly
-- Completed reload, in  1.253 seconds
+- Completed reload, in  1.320 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1254ms)
-		BeginReloadAssembly (66ms)
+	ReloadAssembly (1320ms)
+		BeginReloadAssembly (55ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (3ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (29ms)
-		EndReloadAssembly (1135ms)
-			LoadAssemblies (94ms)
+			CreateAndSetChildDomain (16ms)
+		EndReloadAssembly (1212ms)
+			LoadAssemblies (98ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (193ms)
+			SetupTypeCache (209ms)
 			ReleaseScriptCaches (1ms)
 			RebuildScriptCaches (60ms)
-			SetupLoadedEditorAssemblies (747ms)
+			SetupLoadedEditorAssemblies (805ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (14ms)
+				InitializePlatformSupportModulesInManaged (13ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (135ms)
-				BeforeProcessingInitializeOnLoad (57ms)
-				ProcessInitializeOnLoadAttributes (454ms)
-				ProcessInitializeOnLoadMethodAttributes (86ms)
+				RefreshPlugins (154ms)
+				BeforeProcessingInitializeOnLoad (58ms)
+				ProcessInitializeOnLoadAttributes (490ms)
+				ProcessInitializeOnLoadMethodAttributes (89ms)
 				AfterProcessingInitializeOnLoad (1ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (1ms)
+			AwakeInstancesAfterBackupRestoration (2ms)
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
 Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
 Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
-Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
 Launching external process: /Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/Tools/UnityShaderCompiler
 Launched and connected shader compiler UnityShaderCompiler after 0.04 seconds
-Refreshing native plugins compatible for Editor in 1.16 ms, found 2 plugins.
-Preloading 1 native plugins for Editor in 0.14 ms.
-Unloading 6760 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 102 unused Assets / (2.1 MB). Loaded Objects now: 7261.
-Memory consumption went from 362.4 MB to 360.3 MB.
-Total: 5.107750 ms (FindLiveObjects: 0.225417 ms CreateObjectMapping: 0.064958 ms MarkObjects: 4.402958 ms  DeleteObjects: 0.414084 ms)
+Refreshing native plugins compatible for Editor in 1.09 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.20 ms.
+Unloading 6618 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 102 unused Assets / (2.1 MB). Loaded Objects now: 7120.
+Memory consumption went from 359.6 MB to 357.5 MB.
+Total: 4.750584 ms (FindLiveObjects: 0.164667 ms CreateObjectMapping: 0.058958 ms MarkObjects: 4.158958 ms  DeleteObjects: 0.367709 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
@@ -189,6 +189,686 @@ AssetImportParameters requested are different than current active one (requested
   custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
   custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002993 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x2d2107000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.19 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.17 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.114 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1114ms)
+		BeginReloadAssembly (122ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (6ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (57ms)
+		EndReloadAssembly (948ms)
+			LoadAssemblies (43ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (208ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (33ms)
+			SetupLoadedEditorAssemblies (619ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (15ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (42ms)
+				ProcessInitializeOnLoadAttributes (475ms)
+				ProcessInitializeOnLoadMethodAttributes (84ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.31 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.17 ms.
+Unloading 6391 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7136.
+Memory consumption went from 338.8 MB to 336.7 MB.
+Total: 6.231167 ms (FindLiveObjects: 0.215625 ms CreateObjectMapping: 0.065417 ms MarkObjects: 5.585583 ms  DeleteObjects: 0.364083 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002152 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x16d953000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.09 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.13 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.057 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1058ms)
+		BeginReloadAssembly (90ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (3ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (40ms)
+		EndReloadAssembly (923ms)
+			LoadAssemblies (40ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (203ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (33ms)
+			SetupLoadedEditorAssemblies (594ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (15ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (41ms)
+				ProcessInitializeOnLoadAttributes (447ms)
+				ProcessInitializeOnLoadMethodAttributes (89ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.21 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.11 ms.
+Unloading 6390 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7151.
+Memory consumption went from 338.7 MB to 336.7 MB.
+Total: 5.601250 ms (FindLiveObjects: 0.208209 ms CreateObjectMapping: 0.064375 ms MarkObjects: 4.969625 ms  DeleteObjects: 0.358541 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003779 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x2bca87000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.24 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.17 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.109 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1109ms)
+		BeginReloadAssembly (111ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (59ms)
+		EndReloadAssembly (954ms)
+			LoadAssemblies (43ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (204ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (31ms)
+			SetupLoadedEditorAssemblies (621ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (15ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (40ms)
+				ProcessInitializeOnLoadAttributes (464ms)
+				ProcessInitializeOnLoadMethodAttributes (100ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (6ms)
+Platform modules already initialized, skipping
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.20 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.19 ms.
+Unloading 6390 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7166.
+Memory consumption went from 338.8 MB to 336.7 MB.
+Total: 5.116416 ms (FindLiveObjects: 0.210125 ms CreateObjectMapping: 0.073750 ms MarkObjects: 4.498833 ms  DeleteObjects: 0.333416 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002103 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x2bca87000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.25 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.18 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.025 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1025ms)
+		BeginReloadAssembly (84ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (3ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (36ms)
+		EndReloadAssembly (897ms)
+			LoadAssemblies (37ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (196ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (31ms)
+			SetupLoadedEditorAssemblies (581ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (14ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (40ms)
+				ProcessInitializeOnLoadAttributes (441ms)
+				ProcessInitializeOnLoadMethodAttributes (84ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.18 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.19 ms.
+Unloading 6390 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7181.
+Memory consumption went from 338.8 MB to 336.7 MB.
+Total: 5.467834 ms (FindLiveObjects: 0.212875 ms CreateObjectMapping: 0.067625 ms MarkObjects: 4.805792 ms  DeleteObjects: 0.380792 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 78340.067838 seconds.
+  path: Assets/07_GameData/Skills/Common/Passive/Vantage/HpThreshold.asset
+  artifactKey: Guid(11670ce5bebce1c4baed015be5f65859) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/Common/Passive/Vantage/HpThreshold.asset using Guid(11670ce5bebce1c4baed015be5f65859) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e3138d4188b8a7561f3d4150d6c53340') in 0.073972 seconds 
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001459 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x2bca87000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.96 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.11 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.090 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1091ms)
+		BeginReloadAssembly (128ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (61ms)
+		EndReloadAssembly (918ms)
+			LoadAssemblies (47ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (198ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (32ms)
+			SetupLoadedEditorAssemblies (599ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (13ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (38ms)
+				ProcessInitializeOnLoadAttributes (458ms)
+				ProcessInitializeOnLoadMethodAttributes (87ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 0.95 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.11 ms.
+Unloading 6390 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.0 MB). Loaded Objects now: 7197.
+Memory consumption went from 342.9 MB to 340.9 MB.
+Total: 4.896833 ms (FindLiveObjects: 0.204500 ms CreateObjectMapping: 0.070208 ms MarkObjects: 4.309834 ms  DeleteObjects: 0.311666 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002191 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x2bca87000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.38 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.19 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.178 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1179ms)
+		BeginReloadAssembly (121ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (61ms)
+		EndReloadAssembly (1010ms)
+			LoadAssemblies (58ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (226ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (35ms)
+			SetupLoadedEditorAssemblies (635ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (16ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (2ms)
+				BeforeProcessingInitializeOnLoad (44ms)
+				ProcessInitializeOnLoadAttributes (483ms)
+				ProcessInitializeOnLoadMethodAttributes (89ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (6ms)
+Platform modules already initialized, skipping
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.47 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.17 ms.
+Unloading 6391 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7213.
+Memory consumption went from 343.0 MB to 340.9 MB.
+Total: 5.392125 ms (FindLiveObjects: 0.240916 ms CreateObjectMapping: 0.078792 ms MarkObjects: 4.725750 ms  DeleteObjects: 0.346041 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001443 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x2bca87000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.08 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.14 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.067 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1067ms)
+		BeginReloadAssembly (102ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (49ms)
+		EndReloadAssembly (922ms)
+			LoadAssemblies (47ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (203ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (32ms)
+			SetupLoadedEditorAssemblies (587ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (13ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (40ms)
+				ProcessInitializeOnLoadAttributes (454ms)
+				ProcessInitializeOnLoadMethodAttributes (78ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.18 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.27 ms.
+Unloading 6391 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7228.
+Memory consumption went from 343.0 MB to 340.9 MB.
+Total: 5.184208 ms (FindLiveObjects: 0.195333 ms CreateObjectMapping: 0.069625 ms MarkObjects: 4.595250 ms  DeleteObjects: 0.323291 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001554 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x2bca87000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.48 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.19 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.154 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1155ms)
+		BeginReloadAssembly (123ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (58ms)
+		EndReloadAssembly (985ms)
+			LoadAssemblies (54ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (212ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (34ms)
+			SetupLoadedEditorAssemblies (630ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (15ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (2ms)
+				BeforeProcessingInitializeOnLoad (41ms)
+				ProcessInitializeOnLoadAttributes (470ms)
+				ProcessInitializeOnLoadMethodAttributes (101ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (6ms)
+Platform modules already initialized, skipping
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.17 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.15 ms.
+Unloading 6391 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7243.
+Memory consumption went from 343.0 MB to 340.9 MB.
+Total: 5.421875 ms (FindLiveObjects: 0.212750 ms CreateObjectMapping: 0.079833 ms MarkObjects: 4.768750 ms  DeleteObjects: 0.359833 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 888.086743 seconds.
+  path: Assets/07_GameData/Skills/Valkyrie/LowHpStronger/StatsEffect.asset
+  artifactKey: Guid(aa96ca6cfe5a72a4da7155fb3084301a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/Valkyrie/LowHpStronger/StatsEffect.asset using Guid(aa96ca6cfe5a72a4da7155fb3084301a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b564edf46ab4a55eecb42936f6d4da9e') in 0.013420 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000032 seconds.
+  path: Assets/07_GameData/Skills/Cavalier/SwiftStrikes/StatsEffect.asset
+  artifactKey: Guid(6aad2d4ab37d6be45834d1e249e3e7ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/Cavalier/SwiftStrikes/StatsEffect.asset using Guid(6aad2d4ab37d6be45834d1e249e3e7ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd4cd2de39a06d5a5b56e982823c2cf7d') in 0.000899 seconds 
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000043 seconds.
+  path: Assets/07_GameData/Units/Bosses/SlothLion/Sharp Claws/StatsEffect.asset
+  artifactKey: Guid(8ebf60dd961d640baa7239832e7ed02f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Units/Bosses/SlothLion/Sharp Claws/StatsEffect.asset using Guid(8ebf60dd961d640baa7239832e7ed02f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd053b152cae0623bd94d347537bbed3a') in 0.001044 seconds 
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000031 seconds.
+  path: Assets/07_GameData/Skills/Common/Passive/Formation/StatsEffect.asset
+  artifactKey: Guid(7be952a4e8605884bb2b59668036a5b4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/Common/Passive/Formation/StatsEffect.asset using Guid(7be952a4e8605884bb2b59668036a5b4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c7cbc77aab95c441c6512feb1cd1c09d') in 0.000794 seconds 
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000028 seconds.
+  path: Assets/07_GameData/Skills/Common/Passive/Resolve/StatsEffect.asset
+  artifactKey: Guid(033b3aaf3bc2c0d4d8ef44b45ac5c5fc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/Common/Passive/Resolve/StatsEffect.asset using Guid(033b3aaf3bc2c0d4d8ef44b45ac5c5fc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5c86fc84dcd90267f388bdb7f1a88713') in 0.000864 seconds 
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/07_GameData/Skills/NewSkills/ActiveSkills/RallyStrength/StrengthModifierEffect.asset
+  artifactKey: Guid(c947b0731139022458ae3f57fb83d499) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/NewSkills/ActiveSkills/RallyStrength/StrengthModifierEffect.asset using Guid(c947b0731139022458ae3f57fb83d499) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3d8c5c84de091d9f87326aecd8e23d4a') in 0.001534 seconds 
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/07_GameData/Skills/Common/Combat/CautiousStrike/StatsEffectAthena.asset
+  artifactKey: Guid(361c2881ecbd74fa49ccaa467e51ab0f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/Common/Combat/CautiousStrike/StatsEffectAthena.asset using Guid(361c2881ecbd74fa49ccaa467e51ab0f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '28f668b2b353cdeb7929f219edfda866') in 0.001657 seconds 
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000032 seconds.
+  path: Assets/07_GameData/Skills/Ranger/HuntersVolley/StatsEffect.asset
+  artifactKey: Guid(5ae77b4b609ac3342974ada27e878121) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/Ranger/HuntersVolley/StatsEffect.asset using Guid(5ae77b4b609ac3342974ada27e878121) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c3c78ac2d708c7bc3544f44590bcdb06') in 0.000825 seconds 
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000031 seconds.
+  path: Assets/07_GameData/Skills/Common/Passive/Strengthtaker/StatsEffect 1.asset
+  artifactKey: Guid(ead2e351b3f96294481bb9cdffb8cb60) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/Common/Passive/Strengthtaker/StatsEffect 1.asset using Guid(ead2e351b3f96294481bb9cdffb8cb60) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '25de446c5209ce45af7a53b09adda651') in 0.000899 seconds 
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/07_GameData/Skills/NewSkills/ActiveSkills/Warp/WarpEffect.asset
+  artifactKey: Guid(f8c5d497a3bab424b8ce0202680c6ec7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/NewSkills/ActiveSkills/Warp/WarpEffect.asset using Guid(f8c5d497a3bab424b8ce0202680c6ec7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f07f9b73af99481f90eb5c09436cccfe') in 0.001821 seconds 
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/07_GameData/Skills/Scorpion/Sandstorm/StatsEffect.asset
+  artifactKey: Guid(13b51ce345d28bc4a9e72ef63ff06387) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/Scorpion/Sandstorm/StatsEffect.asset using Guid(13b51ce345d28bc4a9e72ef63ff06387) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '87251eee8d4b27a90d11fa264ba625b0') in 0.001065 seconds 
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000031 seconds.
+  path: Assets/07_GameData/Skills/NewSkills/MovementSkills/RoomSwap/SwapSkillEffect.asset
+  artifactKey: Guid(1e2d0e67ea342a74bb490a9df3229642) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/NewSkills/MovementSkills/RoomSwap/SwapSkillEffect.asset using Guid(1e2d0e67ea342a74bb490a9df3229642) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9fcc680dd2d70179a7638182d0c6288a') in 0.001758 seconds 
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000061 seconds.
+  path: Assets/07_GameData/Skills/Rogue/Backstab/StatsEffect.asset
+  artifactKey: Guid(ac8b288f24fe4424bb1edd27fdc5cd28) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/Rogue/Backstab/StatsEffect.asset using Guid(ac8b288f24fe4424bb1edd27fdc5cd28) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ed053a29a7e6c8daaef1c99d4896b8ee') in 0.001017 seconds 
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000031 seconds.
+  path: Assets/07_GameData/Skills/Common/Passive/CriticalBlow/StatsEffect.asset
+  artifactKey: Guid(9e02b3d6c34c7bd4c87e62c0f4312002) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/Common/Passive/CriticalBlow/StatsEffect.asset using Guid(9e02b3d6c34c7bd4c87e62c0f4312002) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '85cf0e87cef2712cafded20c35fc2fe0') in 0.000986 seconds 
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000097 seconds.
+  path: Assets/07_GameData/Skills/Common/Combat/ConfidentStrike/StatsEffect.asset
+  artifactKey: Guid(36ef9d455e667a44780fb5545cd92173) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/Common/Combat/ConfidentStrike/StatsEffect.asset using Guid(36ef9d455e667a44780fb5545cd92173) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3b9ca8f49fee198cb87f306f0ede6075') in 0.000949 seconds 
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000039 seconds.
+  path: Assets/07_GameData/Skills/Common/Passive/Stance/StatsEffect.asset
+  artifactKey: Guid(ce0bd536c971dff478c2b98baf2d01f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/Common/Passive/Stance/StatsEffect.asset using Guid(ce0bd536c971dff478c2b98baf2d01f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '134f644694a90094c5f38401fe56eb5c') in 0.000870 seconds 
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000039 seconds.
+  path: Assets/07_GameData/Skills/Rogue/Bomb Expert/TagEffect.asset
+  artifactKey: Guid(4e491d5b988bd4340ba2c735daf6f379) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/Rogue/Bomb Expert/TagEffect.asset using Guid(4e491d5b988bd4340ba2c735daf6f379) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c91905cce3f7803723c0ff6c5239f3d0') in 0.001371 seconds 
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000059 seconds.
+  path: Assets/07_GameData/Skills/Scorpion/ChitinArmor/StatsEffect.asset
+  artifactKey: Guid(7ca416534cb4dff45a26d42892266e2e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/Scorpion/ChitinArmor/StatsEffect.asset using Guid(7ca416534cb4dff45a26d42892266e2e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '863e3f888b737a95a0da3636136b8cd8') in 0.001128 seconds 
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/07_GameData/Skills/Ranger/Precision/StatsEffect.asset
+  artifactKey: Guid(1ddf5a8b5898580428d2ebc48a3fa943) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Skills/Ranger/Precision/StatsEffect.asset using Guid(1ddf5a8b5898580428d2ebc48a3fa943) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b4718ddbd2553bd5cc1ec1f9bb895e2f') in 0.000960 seconds 
+Number of asset objects unloaded after import = 1
 Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
 AssetImportWorker is now disconnected from the server
 Process exiting

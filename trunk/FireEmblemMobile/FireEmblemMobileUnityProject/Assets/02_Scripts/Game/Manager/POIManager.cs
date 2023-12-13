@@ -1,14 +1,17 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Audio;
 using Game.Dialog;
 using Game.GameActors.Players;
 using Game.GameResources;
+using Game.WorldMapStuff.Controller;
 using Game.WorldMapStuff.Model;
 using Menu;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace LostGrace
@@ -54,7 +57,12 @@ namespace LostGrace
         {
             Debug.Log("POI Clicked: "+index);
         }
-        
+
+        private void Start()
+        {
+            Show();
+        }
+
         public override void Show()
         {
             //ContinueButton.SetActive(SaveData.currentSaveData!=null);
@@ -62,15 +70,14 @@ namespace LostGrace
             //LoadButton.SetActive(GetLoadFiles()!=0);
             base.Show();
             
-            AudioSystem.Instance.ChangeMusic("SanctuaryTheme", 
-                AudioSystem.Instance.GetCurrentlyPlayedMusicTracks()[0],true, 4f,.0f, 2f);
+            AudioSystem.Instance.ChangeAllMusic("SanctuaryTheme",true, 4f,.0f, 2f);
             StartCoroutine(ShowCoroutine());
           //  poiPortal.SetInteractable(false);
           //  poiUpgrades.SetInteractable(false);
             backButton.interactable = false;
            // poiTutorial.SetInteractable(false);
             sanctuary.gameObject.SetActive(true);
-            backGround.gameObject.SetActive(false);
+            //backGround.gameObject.SetActive(false);
 
         }
 
@@ -129,7 +136,8 @@ namespace LostGrace
         }
         public override void Hide()
         {
-            StartCoroutine(HideCoroutine(goBackMenu));
+            GameSceneController.Instance.LoadMainMenu();
+            //StartCoroutine(HideCoroutine(goBackMenu));
         }
         public override void BackClicked()
         {

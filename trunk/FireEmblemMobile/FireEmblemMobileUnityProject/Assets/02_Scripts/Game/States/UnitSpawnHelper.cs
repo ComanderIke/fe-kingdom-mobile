@@ -164,9 +164,11 @@ namespace Game.States
             unitInstantiator.PlaceCharacter(unit, x, y);
             Debug.Log("Spawn Unit"+ unit.name + " " + x + " " + y+" ");
         }
-        
-       
-      
 
+
+        public void SpawnReinforcement(Faction faction, Unit spawnedUnit, int reinforcementX, int reinforcementY)
+        {
+            SpawnUnit(faction, spawnedUnit, reinforcementX, reinforcementY);
+        }
     }
 }

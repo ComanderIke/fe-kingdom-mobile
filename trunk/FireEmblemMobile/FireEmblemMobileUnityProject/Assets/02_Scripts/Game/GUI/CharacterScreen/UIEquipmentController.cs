@@ -19,6 +19,7 @@ public class UIEquipmentController:MonoBehaviour
     [SerializeField] UICombatItemSlot combatItemSlot1;
 //    [SerializeField] UICombatItemSlot combatItemSlot2;
     [SerializeField] private UIConvoyController convoy;
+    [SerializeField] private bool openConvoyWhenEquipmentClicked = true;
 
     public Color inActiveColor;
     [FormerlySerializedAs("weaponBp")] public Weapon weapon;
@@ -39,6 +40,9 @@ public class UIEquipmentController:MonoBehaviour
             ToolTipSystem.Show(new StockedItem(relic,1), RelicSlotUpper.transform.position);
           
         }
+
+        if (!openConvoyWhenEquipmentClicked)
+            return;
         // else
         // {
             if (selectedSlot != null)
@@ -56,6 +60,8 @@ public class UIEquipmentController:MonoBehaviour
             ToolTipSystem.Show(new StockedItem((Item)combatItem1.item, combatItem1.stock), combatItemSlot1.transform.position);
           
         }
+        if (!openConvoyWhenEquipmentClicked)
+            return;
         // else
         // {
         if (selectedSlotCombatItemSlot != null)
@@ -93,7 +99,7 @@ public class UIEquipmentController:MonoBehaviour
     }
     public void Show(Unit unit)
     {
-        WeaponSlot.Show(unit.equippedWeapon);
+        WeaponSlot.Show(unit, unit.equippedWeapon);
         if (unit.equippedWeapon != null)
         {
           
@@ -104,7 +110,7 @@ public class UIEquipmentController:MonoBehaviour
             weapon = null;
         }
         equipmentLineImage.material = unit.Blessing==null?null:blessedMaterial;
-        RelicSlotUpper.Show(unit.EquippedRelic);
+        RelicSlotUpper.Show(unit, unit.EquippedRelic);
         relic = unit.EquippedRelic;
         combatItemSlot1.Show(unit.CombatItem1);
         if(unit.CombatItem1!=null)
