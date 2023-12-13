@@ -23,15 +23,20 @@ MonoBehaviour:
           CompareType: 0
           Conditions: []
         replacesOtherConditions: 0
+        extraRange: 2
+        costReduction: 0
     - Key: {fileID: 11400000, guid: 5f85d1dbc987df4468623abd3eee499e, type: 2}
       Value:
-        skillEffectMixins: []
-        replacesOtherEffects: 0
+        skillEffectMixins:
+        - {fileID: 11400000, guid: 28f575bfd919145f58b9799af0a96775, type: 2}
+        replacesOtherEffects: 1
         compareTypeWithExistingConditions: 0
         conditionManager:
           CompareType: 0
           Conditions: []
         replacesOtherConditions: 0
+        extraRange: 0
+        costReduction: 0
     - Key: {fileID: 11400000, guid: a5cf9685305ec2e449183fbe8f4938d1, type: 2}
       Value:
         skillEffectMixins: []
@@ -41,6 +46,8 @@ MonoBehaviour:
           CompareType: 0
           Conditions: []
         replacesOtherConditions: 0
+        extraRange: 1
+        costReduction: 0
   conditionBigPackage:
     CompareType: 0
     Conditions: []

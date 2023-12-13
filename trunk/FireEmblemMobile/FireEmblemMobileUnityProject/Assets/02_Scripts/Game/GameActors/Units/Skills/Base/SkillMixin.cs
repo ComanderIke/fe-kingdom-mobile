@@ -165,6 +165,8 @@ namespace Game.GameActors.Units.Skills
         }
         protected BlessingBP GetBlessing(Unit user)
         {
+            if (user == null)
+                return null;
             if (user.Blessing == null)
                 return null;
             foreach (var key in synergies.Keys)

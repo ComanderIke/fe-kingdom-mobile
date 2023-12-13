@@ -28,6 +28,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7112809735216822928}
   m_Father: {fileID: 0}
@@ -74,7 +75,6 @@ MonoBehaviour:
   rectT: {fileID: 7112809735546415681}
   canvasGroup: {fileID: 7112809735546415682}
   particles: {fileID: 7112809734417578975}
-  glow: {fileID: 7112809734162376580}
   clouds: {fileID: 7112809734511105993}
   animator: {fileID: 7112809735546415683}
 --- !u!1 &7112809734162376569
@@ -105,6 +105,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 2.95, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7112809735546415681}
   m_RootOrder: 0
@@ -4922,6 +4923,7 @@ ParticleSystemRenderer:
   m_SortingLayer: 5
   m_SortingOrder: 450
   m_RenderMode: 0
+  m_MeshDistribution: 0
   m_SortMode: 0
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
@@ -4945,6 +4947,10 @@ ParticleSystemRenderer:
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
+  m_MeshWeighting: 1
+  m_MeshWeighting1: 1
+  m_MeshWeighting2: 1
+  m_MeshWeighting3: 1
   m_MaskInteraction: 0
 --- !u!1 &7112809734417578972
 GameObject:
@@ -4974,6 +4980,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7112809735216822928}
   m_RootOrder: 0
@@ -5619,7 +5626,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 3.2, y: 3.2, z: 3.2}
+    m_Scale: {x: 6.7, y: 6, z: 3}
     placementMode: 2
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -5682,7 +5689,7 @@ ParticleSystem:
     m_Mesh: {fileID: 0}
     m_MeshRenderer: {fileID: 0}
     m_SkinnedMeshRenderer: {fileID: 0}
-    m_Sprite: {fileID: 21300000, guid: 17f11be720fe62c429de1eebb99a1116, type: 3}
+    m_Sprite: {fileID: 21300000, guid: fc637a14d5d1b4b50879eaccfd9dd39f, type: 3}
     m_SpriteRenderer: {fileID: 0}
     m_UseMeshMaterialIndex: 0
     m_UseMeshColors: 1
@@ -9733,6 +9740,7 @@ ParticleSystemRenderer:
   m_SortingLayer: 5
   m_SortingOrder: 450
   m_RenderMode: 0
+  m_MeshDistribution: 0
   m_SortMode: 0
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
@@ -9756,6 +9764,10 @@ ParticleSystemRenderer:
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
+  m_MeshWeighting: 1
+  m_MeshWeighting1: 1
+  m_MeshWeighting2: 1
+  m_MeshWeighting3: 1
   m_MaskInteraction: 0
 --- !u!1 &7112809734511105998
 GameObject:
@@ -9785,6 +9797,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7112809735216822928}
   m_RootOrder: 1
@@ -10430,7 +10443,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 5, y: 3.36, z: 3.2}
+    m_Scale: {x: 8, y: 7, z: 3}
     placementMode: 2
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -10493,7 +10506,7 @@ ParticleSystem:
     m_Mesh: {fileID: 0}
     m_MeshRenderer: {fileID: 0}
     m_SkinnedMeshRenderer: {fileID: 0}
-    m_Sprite: {fileID: 21300000, guid: 17f11be720fe62c429de1eebb99a1116, type: 3}
+    m_Sprite: {fileID: 21300000, guid: fc637a14d5d1b4b50879eaccfd9dd39f, type: 3}
     m_SpriteRenderer: {fileID: 0}
     m_UseMeshMaterialIndex: 0
     m_UseMeshColors: 1
@@ -14544,6 +14557,7 @@ ParticleSystemRenderer:
   m_SortingLayer: 5
   m_SortingOrder: 450
   m_RenderMode: 0
+  m_MeshDistribution: 0
   m_SortMode: 0
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
@@ -14567,6 +14581,10 @@ ParticleSystemRenderer:
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
+  m_MeshWeighting: 1
+  m_MeshWeighting1: 1
+  m_MeshWeighting2: 1
+  m_MeshWeighting3: 1
   m_MaskInteraction: 0
 --- !u!1 &7112809735216822935
 GameObject:
@@ -14594,6 +14612,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7112809734417578973}
   - {fileID: 7112809734511105999}
@@ -14635,6 +14654,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7112809735546415681}
   m_RootOrder: 1
@@ -14672,7 +14692,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 17f11be720fe62c429de1eebb99a1116, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fc637a14d5d1b4b50879eaccfd9dd39f, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -14725,6 +14745,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7112809734162376570}
   - {fileID: 7112809735453363400}
@@ -14750,7 +14771,7 @@ CanvasGroup:
   m_IgnoreParentGroups: 0
 --- !u!95 &7112809735546415683
 Animator:
-  serializedVersion: 3
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -14763,7 +14784,9 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

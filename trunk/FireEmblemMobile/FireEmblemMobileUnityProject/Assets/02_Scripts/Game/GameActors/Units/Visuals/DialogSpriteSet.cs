@@ -6,6 +6,7 @@ namespace Game.GameActors.Units
     [CreateAssetMenu(menuName = "GameData/Units/DialogSpriteSet", fileName = "DialogSpriteSet")]
     public class DialogSpriteSet : ScriptableObject
     {
+        public Sprite BodySprite;
         public Sprite FaceSprite;
         [field:SerializeField]public Sprite MouthClosed { get; set; }
         [field:SerializeField]public Sprite MouthOpen { get; set; }

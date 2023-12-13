@@ -12,6 +12,9 @@ namespace LostGrace
     {
         Sprite BodySprite { get; set; }
         Sprite FaceSprite { get; set; }
+        Sprite AlternateBodySprite { get; set; }
+        Sprite AlternateFaceSprite { get; set; }
+
         string Name { get; set; }
         string Description { get; set; }
     }
@@ -28,11 +31,13 @@ namespace LostGrace
         [SerializeField] private Image middleImage;
         [SerializeField] private Image middleImageFace;
         private bool showBody = true;
+        private bool showAlternate = false;
         [SerializeField] private TextMeshProUGUI toggleButtonText;
         
         public void Show(List<IChronikEntry> entries)
         {
             showBody = true;
+            showAlternate = false;
             this.entries = entries;
             entryListUI.Init(entries);
             entryListUI.OnSelectEntry -= SelectEntry;
@@ -49,6 +54,12 @@ namespace LostGrace
         public void ToogleImageClicked()
         {
             showBody = !showBody;
+            
+            UpdateUI();
+        }
+        public void ToogleAlternateClicked()
+        {
+            showAlternate = !showAlternate;
             
             UpdateUI();
         }
@@ -72,8 +83,8 @@ namespace LostGrace
             description.text = "{fade}"+currentEntry.Description;
             middleImage.enabled = showBody;
             middleImageFace.enabled = !showBody;
-            middleImage.sprite = currentEntry.BodySprite;
-            middleImageFace.sprite=currentEntry.FaceSprite;
+            middleImage.sprite = showAlternate?(currentEntry.AlternateBodySprite==null?currentEntry.BodySprite:currentEntry.AlternateBodySprite):currentEntry.BodySprite;
+            middleImageFace.sprite=showAlternate?(currentEntry.AlternateFaceSprite==null?currentEntry.FaceSprite:currentEntry.AlternateFaceSprite):currentEntry.FaceSprite;
             entryListUI.UpdateUI(currentIndex);
         }
         IEnumerator ShowCoroutine()

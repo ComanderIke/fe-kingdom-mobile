@@ -8,7 +8,7 @@ namespace LostGrace
     {
         public string Name;
         public DialogSpriteSet DialogSpriteSet;
-        public Sprite Body;
+        public DialogSpriteSet AlternateSpriteSet;
         public Color Color;
         public BlessingBP BlessingBp;
         public Material GlowMaterial;
