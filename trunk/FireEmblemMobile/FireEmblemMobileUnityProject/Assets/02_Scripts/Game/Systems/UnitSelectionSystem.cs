@@ -113,11 +113,11 @@ namespace Game.Mechanics
             {
                 SelectedCharacter.GridComponent.ResetPosition();
                 SelectedCharacter.TurnStateManager.IsSelected = false;
-                if (SelectedCharacter.TurnStateManager.HasMoved)
-                {
-                    gameplayCommands.Wait(SelectedCharacter);
-                    gameplayCommands.ExecuteInputActions(null);
-                }
+                // if (SelectedCharacter.TurnStateManager.HasMoved)
+                // {
+                //     gameplayCommands.Wait(SelectedCharacter);
+                //     gameplayCommands.ExecuteInputActions(null);
+                // }
             }
             OnDeselectCharacter?.Invoke(SelectedCharacter);
             SelectedCharacter = null;

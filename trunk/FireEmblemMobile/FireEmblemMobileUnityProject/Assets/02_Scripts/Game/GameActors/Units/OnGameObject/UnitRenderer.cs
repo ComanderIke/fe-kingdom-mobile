@@ -17,6 +17,10 @@ namespace Game.GameActors.Units.OnGameObject
     public class UnitRenderer : MonoBehaviour
     {
 
+        [SerializeField]Color waitingBlueColor;
+        [SerializeField] private Image hpBarImage;
+        [SerializeField]private CanvasGroup grayOutCanvasObject;
+        [SerializeField] private ParticleSystem canMoveVFX;
         [SerializeField] private StatsBarOnMap hpBar;
         [SerializeField] private TextMeshProUGUI hpText;
         [SerializeField] private GameObject pointLight;
@@ -42,6 +46,7 @@ namespace Game.GameActors.Units.OnGameObject
         private static readonly int Effective = Animator.StringToHash("effective");
         private static readonly int Ineffective = Animator.StringToHash("ineffective");
 
+        private Color hpBarColorBefore;
         public void HideAttackDamage()
         {
             //attackDamageObject.SetActive(false);
@@ -60,9 +65,11 @@ namespace Game.GameActors.Units.OnGameObject
         private void Start()
         {
             unit.HpValueChanged += HpValueChanged;
-    
+            hpBarColorBefore = hpBarImage.color;
             if(unit!=null)
                 unit.TurnStateManager.UnitWaiting += SetWaitingSprite;
+            if(unit!=null)
+                unit.TurnStateManager.UnitCanMove += ToogleMoveEffect;
             Unit.OnEquippedWeapon += OnEquippedWeapon;
             
            // hoverCanvas.alpha = 0;
@@ -100,7 +107,7 @@ namespace Game.GameActors.Units.OnGameObject
         {
             //hpBarAlternate.SetColor();
             hpBar.GetComponent<Image>().color = ColorManager.Instance.GetFactionColor(unit.Faction.Id);
-            hpText.color = ColorManager.Instance.GetFactionColor(unit.Faction.Id);
+            hpText.color=ColorManager.Instance.GetFactionColor(unit.Faction.Id);
             float intensity = 2;
             moveTypeIcon.sprite = unit.MoveType.icon;
             if(moveTypeIcon.sprite==null)
@@ -130,8 +137,19 @@ namespace Game.GameActors.Units.OnGameObject
             // Unit.SpValueChanged -= SpValueChanged;
             // Unit.SpBarsValueChanged -= SpBarsValueChanged;
             if(unit!=null)
+                unit.TurnStateManager.UnitCanMove -= ToogleMoveEffect;
+            if(unit!=null)
                 unit.TurnStateManager.UnitWaiting -= SetWaitingSprite;
             Unit.OnEquippedWeapon -= OnEquippedWeapon;
+        }
+
+        void ToogleMoveEffect(bool canMove)
+        {
+            Debug.Log("Unit can move: "+canMove);
+            if(canMove)
+                canMoveVFX.Play();
+            else
+                canMoveVFX.Stop();
         }
         public void SetVisible(bool visible)
         {
@@ -197,6 +215,9 @@ namespace Game.GameActors.Units.OnGameObject
         private void SetWaitingSprite(bool waiting)
         {
 
+            hpBarImage.color = waiting ? waitingBlueColor : hpBarColorBefore;
+            hpText.color = waiting ? waitingBlueColor:ColorManager.Instance.GetFactionColor(unit.Faction.Id);
+            //grayOutCanvasObject.alpha=waiting?.6f:1f;
             GetComponentInChildren<SpriteRenderer>().color = !waiting ? Color.white : Color.grey;
         }
 

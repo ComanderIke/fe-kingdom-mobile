@@ -267,7 +267,7 @@ namespace Game.GameInput
                     {
                         gameplayCommands.MoveUnit(selectionDataProvider.SelectedActor, new GridPosition(x, y),
                             GridPosition.GetFromVectorList(inputPathManager.MovementPath));
-                        gameplayCommands.Wait(selectionDataProvider.SelectedActor);
+                        //gameplayCommands.Wait(selectionDataProvider.SelectedActor);
 
                         gameplayCommands.ExecuteInputActions(() =>
                         {
@@ -298,7 +298,7 @@ namespace Game.GameInput
                                 gridSystem.ShowAttackRangeOnGrid(selectionDataProvider.SelectedActor,
                                     selectionDataProvider.SelectedActor.AttackRanges);
                                 selectionDataProvider.SetUndoAbleActor(selectionDataProvider.SelectedActor);
-                                gameplayCommands.Wait(selectionDataProvider.SelectedActor);
+                                //gameplayCommands.Wait(selectionDataProvider.SelectedActor);
                                 gameplayCommands.ExecuteInputActions(null);
                             }
                         });
