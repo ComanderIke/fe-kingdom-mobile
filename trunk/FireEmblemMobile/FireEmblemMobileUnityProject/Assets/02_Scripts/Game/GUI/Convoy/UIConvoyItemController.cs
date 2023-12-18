@@ -31,7 +31,7 @@ public class UIConvoyItemController : UIButtonController
         if (stockeditem.item is Relic relic)
         {
             backgroundImage.sprite = relicSprite;
-           slot.gameObject.SetActive(relic.slotCount>0);
+           slot.gameObject.SetActive(true);
            if (relic.GetGem(0) == null)
            {
                gemImage.enabled = false;

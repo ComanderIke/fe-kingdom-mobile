@@ -10,40 +10,18 @@ using UnityEngine.Serialization;
 namespace Game.GameActors.Items.Weapons
 {
     [Serializable]
-    public class GemSlot
-    {
-        [SerializeReference]
-        public Gem gem;
-
-        public GemSlot()
-        {
-            gem = null;
-        }
-        public bool IsEmpty()
-        {
-            return gem == null;
-        }
-    }
-    
-    [Serializable]
     public class Relic:EquipableItem
     {
-        [Header("RelicAttributes")]
-        public int slotCount = 0;
-        public GemSlot[] slots;
+        public GemSlot gemSlot;
      
-        private Unit user;
-        public Relic(string name, string description, int cost, int rarity, int maxStack,Sprite sprite,Skill skill,int slotCount) : 
+        public Unit user;
+        public Relic(string name, string description, int cost, int rarity, int maxStack,Sprite sprite,Skill skill, Gem gem) : 
             base(name, description, cost,rarity, maxStack,sprite, skill)
         {
-            this.slotCount = slotCount;
-            
-            
-            slots = new GemSlot[slotCount];
-            for (int i=0; i < slotCount; i++)
-            {
-                slots[i] = new GemSlot();
-            }
+
+            gemSlot = new GemSlot();
+            if (gem != null)
+                gemSlot.gem = gem;
         }
 
        
@@ -62,18 +40,18 @@ namespace Game.GameActors.Items.Weapons
             }
         }
 
-        public void InsertGem(Gem gem, int slotindex)
+        public void InsertGem(Gem gem)
         {
-            slots[slotindex].gem = gem;
+            gemSlot.gem = gem;
             gem.Insert();
             UpdateUser();
 
         }
-        public Gem RemoveGem(int slotindex)
+        public Gem RemoveGem()
         {
-            var gem = slots[slotindex].gem;
+            var gem = gemSlot.gem;
             gem.Remove();
-            slots[slotindex].gem = null;
+            gemSlot.gem = null;
             UpdateUser();
             return gem;
 
@@ -81,43 +59,45 @@ namespace Game.GameActors.Items.Weapons
 
         public bool HasEmptySlot()
         {
-            foreach (var slot in slots)
-            {
-                if (slot.IsEmpty())
-                    return true;
-            }
-
-            return false;
+            return gemSlot.IsEmpty();
         }
-
-
-        public int GetSlotCount()
-        {
-            return slotCount;
-        }
+        
 
         public Gem GetGem(int index)
         {
-            if (slots == null)
-                return null;
-            if (slots.Length > index)
-                return slots[index].gem;
+            if (!gemSlot.IsEmpty())
+                return gemSlot.gem;
             return null;
         }
 
         public void Unequip(Unit unit)
         {
+            Debug.Log("UNEQUIP RELIC");
+            user = null;
             if (Skill != null)
             {
                 Skill.UnbindSkill(unit);
+            }
+
+            if (!gemSlot.IsEmpty())
+            {
+                gemSlot.gem.gemEffect.UnbindSkill(unit);
+
             }
         }
 
         public void Equip(Unit unit)
         {
+            Debug.Log("EQUIP RELIC");
+            user = unit;
             if (Skill != null)
             {
                 Skill.BindSkill(unit);
+            }
+            if (!gemSlot.IsEmpty())
+            {
+                gemSlot.Bind(this);
+                
             }
         }
     }

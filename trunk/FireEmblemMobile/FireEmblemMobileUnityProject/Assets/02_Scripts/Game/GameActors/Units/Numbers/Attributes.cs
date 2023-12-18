@@ -92,6 +92,19 @@ namespace Game.GameActors.Units.Numbers
             sum.faith -= b.faith;
             return sum;
         }
+        public static Attributes operator *(Attributes a, float b)
+        {
+            var sum = new Attributes(a);
+            sum.agi = (int)(sum.agi * b);
+            sum.str = (int)(sum.str * b);
+            sum.def = (int)(sum.def * b);
+            sum.lck = (int)(sum.lck * b);
+            sum.maxHp = (int)(sum.maxHp * b);
+            sum.dex = (int)(sum.dex * b);
+            sum.intel = (int)(sum.intel * b);
+            sum.faith = (int)(sum.faith * b);
+            return sum;
+        }
         public Attributes Clone()
         {
             //Debug.Log("CloneAttriubtes");

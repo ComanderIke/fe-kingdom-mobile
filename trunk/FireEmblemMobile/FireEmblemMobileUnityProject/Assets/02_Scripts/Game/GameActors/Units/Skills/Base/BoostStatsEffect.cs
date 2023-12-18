@@ -17,33 +17,42 @@ namespace Game.GameActors.Units.Skills
         [SerializeField] private int[] cantoAmount;
         public float multiplier = 1;
         public bool skillTransferDataIsMultiplier;
+        public float skillTransferDataMultiplierMultiplier;
+     
         public SkillTransferData SkillTransferData;
         private bool activated = false;
         public override void Activate(Unit target, int level)
         {
-            
+
+            if (skillTransferDataIsMultiplier && SkillTransferData != null&& SkillTransferData.data!=null)
+            {
+                Debug.Log("GUID:" +SkillTransferData.guid);
+                multiplier = (float)SkillTransferData.data * skillTransferDataMultiplierMultiplier;
+            }
+
+           
+
             if (BonusAttributes != null&& BonusAttributes.Length>0)
             {
                 if(level < BonusAttributes.Length)
-                    target.Stats.BonusAttributesFromEffects += BonusAttributes[level];
+                    target.Stats.BonusAttributesFromEffects += BonusAttributes[level]*multiplier;
                 else
                 {
-                    target.Stats.BonusAttributesFromEffects += BonusAttributes[BonusAttributes.Length-1];
+                    target.Stats.BonusAttributesFromEffects += BonusAttributes[BonusAttributes.Length-1]*multiplier;
                 }
             }
 
             if (BonusStats != null&& BonusStats.Length>0)
             {
                 if(level < BonusStats.Length)
-                    target.Stats.BonusStatsFromEffects += BonusStats[level];
+                    target.Stats.BonusStatsFromEffects += BonusStats[level]*multiplier;
                 else
                 {
-                    target.Stats.BonusStatsFromEffects += BonusStats[BonusStats.Length-1];
+                    target.Stats.BonusStatsFromEffects += BonusStats[BonusStats.Length-1]*multiplier;
                 }
             }
             if(level<cantoAmount.Length)
                 target.GridComponent.Canto = cantoAmount[level];
-            Debug.Log("BOOST STATS ACTIVATED "+target.GridComponent.Canto);
             activated = true;
         }
 
@@ -52,24 +61,27 @@ namespace Game.GameActors.Units.Skills
             if (!activated)
                 return;
             activated = false;
+            if (skillTransferDataIsMultiplier && SkillTransferData != null&& SkillTransferData.data!=null)
+                multiplier = (float)SkillTransferData.data * skillTransferDataMultiplierMultiplier;
+
            //"TODO remove actual added attributes because level can change");
             if (BonusAttributes != null && BonusAttributes.Length > 0)
             {
                 if (level < BonusAttributes.Length)
-                    target.Stats.BonusAttributesFromEffects -= BonusAttributes[level];
+                    target.Stats.BonusAttributesFromEffects -= BonusAttributes[level]*multiplier;
                 else
                 {
-                    target.Stats.BonusAttributesFromEffects -= BonusAttributes[BonusAttributes.Length - 1];
+                    target.Stats.BonusAttributesFromEffects -= BonusAttributes[BonusAttributes.Length - 1]*multiplier;
                 }
             }
 
             if (BonusStats != null&& BonusStats.Length>0)
             {
                 if(level < BonusStats.Length)
-                    target.Stats.BonusStatsFromEffects -= BonusStats[level];
+                    target.Stats.BonusStatsFromEffects -= BonusStats[level]*multiplier;
                 else
                 {
-                    target.Stats.BonusStatsFromEffects -= BonusStats[BonusStats.Length-1];
+                    target.Stats.BonusStatsFromEffects -= BonusStats[BonusStats.Length-1]*multiplier;
                 }
             }
             if(cantoAmount.Length>0)

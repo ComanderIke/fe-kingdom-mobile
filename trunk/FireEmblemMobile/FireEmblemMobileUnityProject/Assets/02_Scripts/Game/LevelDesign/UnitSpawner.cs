@@ -14,6 +14,7 @@ namespace Game.GameActors
         [FormerlySerializedAs("unit")] [SerializeField]private UnitBP unitBp;
         public FactionId FactionId;
         public WeightSet AIWeightSet;
+        public AIBehaviour AIBehaviour;
         public int X => (int) transform.localPosition.x;
         public int Y => (int)transform.localPosition.y;
 

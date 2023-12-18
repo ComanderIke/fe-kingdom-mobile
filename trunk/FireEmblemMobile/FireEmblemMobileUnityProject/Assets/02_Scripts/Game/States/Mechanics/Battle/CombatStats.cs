@@ -148,6 +148,20 @@ namespace Game.Mechanics.Battle
             return sum;
 
         }
+        public static CombatStats operator *(CombatStats a, float b)
+        {
+            var sum = new CombatStats(a);
+            sum.Hit = (int)(sum.Hit * b);
+            sum.Avoid =(int)(sum.Avoid * b);
+            sum.CritAvoid =(int)(sum.CritAvoid * b);
+            sum.Crit =(int)(sum.Crit * b);
+            sum.AttackSpeed= (int)(sum.AttackSpeed * b);
+            sum.Armor =(int)(sum.Armor * b);
+            sum.MagicResistance =(int)(sum.MagicResistance * b);
+            sum.Attack =(int)(sum.Attack * b);
+            return sum;
+
+        }
         public int[] AsArray()
         {
             return new []{Attack,Hit,Avoid,AttackSpeed,Crit,CritAvoid,Armor, MagicResistance,};

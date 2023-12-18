@@ -77,12 +77,9 @@ namespace Game.GameActors.Players
             if (unit.EquippedRelic != null)
             {
                 relic1Id = unit.EquippedRelic.Name;
-               
-                foreach (var slot in unit.EquippedRelic.slots)
-                {
-                    if (slot != null&&slot.gem!=null)
-                        relic1slotIds.Add(slot.gem.Name);
-                }
+                if (!unit.EquippedRelic.gemSlot.IsEmpty())
+                    relic1slotIds.Add(unit.EquippedRelic.gemSlot.gem.Name);
+                
             }
 
             if (unit.CombatItem1 != null)
@@ -144,7 +141,7 @@ namespace Game.GameActors.Players
                 int index = 0;
                 foreach (var gemId in relic1slotIds)
                 {
-                    unit.EquippedRelic.InsertGem(GameBPData.Instance.GetGem(gemId),index);
+                    unit.EquippedRelic.InsertGem(GameBPData.Instance.GetGem(gemId));
                     index++;
                 }
             }

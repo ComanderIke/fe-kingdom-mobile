@@ -16,6 +16,8 @@ namespace Game.GameActors.Units.Skills
         public int[] dmg;
         public AttributeType scalingType;
         public float[] scalingcoeefficient;
+        public float[] healPercentageOfDamage;
+        public float[] pierceArmorPercentage;
         public bool lethalDmg;
         public bool damageAlly=true;
         [SerializeField] private SkillTransferData skillTransferData;
@@ -27,15 +29,27 @@ namespace Game.GameActors.Units.Skills
             if(!damageAlly)
                 if (!target.Faction.IsOpponentFaction(caster.Faction))
                     return;
+           
             Debug.Log("Activate Damage: " + CalculateDamage(caster, target, level) + " " + damageType);
             if (skillTransferData != null)
                 MonoUtility.DelayFunction(
-                    () => target.InflictFixedDamage(caster, CalculateDamage(caster, target, level), damageType),
+                    () => DealDamage(target,caster,level),
                     (float)skillTransferData.data);
             else
-                target.InflictFixedDamage(caster, CalculateDamage(caster, target, level), damageType);
+                DealDamage(target, caster, level);
 
 
+        }
+
+        void DealDamage(Unit target, Unit caster, int level)
+        {
+            if (healPercentageOfDamage.Length != 0)
+            {
+                int dmg=GetDamageDealtToTarget(caster, target, level);
+                caster.Heal((int)(healPercentageOfDamage[level<healPercentageOfDamage.Length?level:0]*dmg));
+            }
+            Debug.Log("ACTUAL DAMAGE: "+CalculateDamage(caster,target,level));
+            target.InflictFixedDamage(caster, CalculateDamage(caster, target, level), damageType);
         }
 
         public void ShowDamagePreview(Unit target, Unit caster, int level)
@@ -43,6 +57,7 @@ namespace Game.GameActors.Units.Skills
             if(!damageAlly)
                 if (!target.Faction.IsOpponentFaction(caster.Faction))
                     return;
+            Debug.Log("PREVIEW DAMAGE: "+GetDamageDealtToTarget(caster,target,level)+ " To Target: "+target);
             int hpAfter = target.Hp-GetDamageDealtToTarget(caster,target,level);
             if (hpAfter < 0)
                 hpAfter = 0;
@@ -69,12 +84,13 @@ namespace Game.GameActors.Units.Skills
 
             
 
-            return GetScaledDamage(caster, level);
+            return GetScaledDamage(caster, target,level);
         }
 
-        private int GetScaledDamage(Unit user, int level)
+        private int GetScaledDamage(Unit user, Unit target, int level)
         {
-            int baseDamageg = dmg[level];
+            int baseDamage = dmg[level];
+            Debug.Log("Base Damage: "+dmg[level]);
             if (scalingcoeefficient.Length > 0)
             {
                 float scaling = scalingcoeefficient[0];
@@ -82,11 +98,11 @@ namespace Game.GameActors.Units.Skills
                     scaling = scalingcoeefficient[level];
                 if (scalingType == AttributeType.ATK)
                 {
-                    baseDamageg += (int)(user.BattleComponent.BattleStats.GetDamage()* scaling);
+                    baseDamage += (int)(user.BattleComponent.BattleStats.GetDamage()* scaling);
                 }
                 else
                 {
-                    baseDamageg += (int)(user.Stats.CombinedAttributes().GetAttributeStat(scalingType) *
+                    baseDamage += (int)(user.Stats.CombinedAttributes().GetAttributeStat(scalingType) *
                                          scaling);
                 }
 
@@ -95,8 +111,15 @@ namespace Game.GameActors.Units.Skills
             {
                 
             }
-
-            return baseDamageg;
+            Debug.Log("Scaled Damage: "+baseDamage);
+            if (target != null && pierceArmorPercentage.Length > 0)
+            {
+                Debug.Log("PIERCING");
+                baseDamage += (int)pierceArmorPercentage[level < pierceArmorPercentage.Length ? level : 0] *
+                               target.BattleComponent.BattleStats.GetPhysicalResistance();
+            }
+            Debug.Log("Pierce Damage: "+baseDamage+" "+target);
+            return baseDamage;
         }
         public override void Deactivate(Unit user, Unit caster, int skillLevel)
         {
@@ -123,8 +146,8 @@ namespace Game.GameActors.Units.Skills
                 upgLabel = valueLabel;
             }
 
-            list.Add(new EffectDescription("Damage: ", "" + GetScaledDamage(caster, level),
-                "" + ((level + 1 < dmg.Length) ?GetScaledDamage(caster, level+1) : GetScaledDamage(caster, level))));
+            list.Add(new EffectDescription("Damage: ", "" + GetScaledDamage(caster, null,level),
+                "" + ((level + 1 < dmg.Length) ?GetScaledDamage(caster, null,level+1) : GetScaledDamage(caster,null ,level))));
             if (level < scalingcoeefficient.Length)
                 list.Add(new EffectDescription("Scaling " + scalingType + ": ", valueLabel, upgLabel));
             return list;
@@ -136,6 +159,7 @@ namespace Game.GameActors.Units.Skills
             if(!damageAlly)
                 if (!target.Faction.IsOpponentFaction(caster.Faction))
                     return 0;
+            Debug.Log("DAMAGE DEALT TO: "+target+"TARGET: "+CalculateDamage(caster, target, level));
             return target.GetDamageDealt(caster, CalculateDamage(caster, target, level), damageType);
         }
     }

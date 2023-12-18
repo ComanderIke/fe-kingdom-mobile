@@ -15,19 +15,19 @@ namespace Game.GameActors.Items.Weapons
     [CreateAssetMenu(menuName = "GameData/Items/Relic", fileName = "Relic")]
     public class RelicBP : EquipableItemBP
     {
-       
-        [Header("RelicAttributes")] 
-        public int slotCount=1;
 
         [SerializeField] private SkillBp skillBp;
-      
+        [SerializeField] private GemBP startGem;
 
         public override Item Create()
         {
             Skill instSkill = null;
             if (skillBp != null)
                 instSkill = skillBp.Create();
-            return new Relic(name, description, cost, rarity,maxStack,sprite,  instSkill, slotCount);
+            Gem gem = null;
+            if (startGem != null)
+                 gem = (Gem)startGem.Create();
+            return new Relic(name, description, cost, rarity,maxStack,sprite,  instSkill, gem);
         }
     }
 

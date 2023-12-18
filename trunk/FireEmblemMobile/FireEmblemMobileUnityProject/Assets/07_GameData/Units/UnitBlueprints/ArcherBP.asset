@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ArcherBP
   m_EditorClassIdentifier: 
   equippedWeaponBp: {fileID: 11400000, guid: 83e1761a127b1a54ca3c98ca2850f24a, type: 2}
-  EquippedRelic1: {fileID: 0}
+  EquippedRelic1: {fileID: 11400000, guid: 647852495d9c59d4ea6316a815ed33ec, type: 2}
   Name: Selena
   isEnemy: 0
   isBoss: 0
@@ -61,9 +61,8 @@ MonoBehaviour:
     Mov: 3
   moveType: {fileID: 11400000, guid: d13592b1fa0af024a841b121149b8014, type: 2}
   SkillManager:
-    startSkills:
-    - {fileID: 11400000, guid: e10cf9e427b74994dbb617f13be86c35, type: 2}
-    startBlessing: {fileID: 11400000, guid: c70f27e718bc80146b9cd0d4de69166c, type: 2}
+    startSkills: []
+    startBlessing: {fileID: 0}
     maxSkillCount: 0
     maxSkillPoints: 0
     skillPoints: 1
@@ -94,6 +93,8 @@ MonoBehaviour:
       type: 3}
     <FaceSprite>k__BackingField: {fileID: 21300000, guid: 1ae6c5a0399db39409041869f4580357,
       type: 3}
+    <AlternateBodySprite>k__BackingField: {fileID: 0}
+    <AlternateFaceSprite>k__BackingField: {fileID: 0}
     <Name>k__BackingField: Selena The Forest Sentinel
     <Description>k__BackingField: 'Deep within the heart of an ancient, enchanted
       forest lies a village untouched by time, and it is here that Selena, "The Forest

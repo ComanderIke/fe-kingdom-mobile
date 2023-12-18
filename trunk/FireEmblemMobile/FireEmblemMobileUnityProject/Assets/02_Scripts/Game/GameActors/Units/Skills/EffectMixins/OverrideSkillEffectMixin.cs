@@ -130,5 +130,16 @@ namespace Game.GameActors.Units.Skills
 
             return 0;
         }
+
+        public void HideDamagePreview(Unit target)
+        {
+            foreach (var effect in skillEffects)
+            {
+                if (effect is DamageSkillEffectMixin dmgMixin)
+                    dmgMixin.HideDamagePreview(target);
+                if (effect is HealEffect healMixin)
+                    healMixin.HideHealPreview(target);
+            }
+        }
     }
 }

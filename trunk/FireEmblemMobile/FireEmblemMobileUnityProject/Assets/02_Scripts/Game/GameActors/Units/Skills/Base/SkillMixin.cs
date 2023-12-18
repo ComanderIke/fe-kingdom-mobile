@@ -28,8 +28,8 @@ namespace Game.GameActors.Units.Skills
         {
             this.skill = skill;
             bound = true;
-            if(skill.skillTransferData!=null)
-                skill.skillTransferData.data = null;
+            // if(skill.skillTransferData!=null)
+            //     skill.skillTransferData.data = null;
         }
 
        
@@ -157,8 +157,8 @@ namespace Game.GameActors.Units.Skills
 
         public virtual void UnbindFromUnit(Unit unit, Skill skill)
         {
-            if(skill.skillTransferData!=null)
-                skill.skillTransferData.data = null;
+            // if(skill.skillTransferData!=null)
+            //     skill.skillTransferData.data = null;
             this.skill = null;//TODO is this right?
             bound = false;
 
@@ -197,6 +197,26 @@ namespace Game.GameActors.Units.Skills
             }
             return list;
         }
-       
+        protected void ShowSkillEffectsPreview(SkillEffectMixin effect, Unit target, Unit user, int level)
+        {
+            if (effect is DamageSkillEffectMixin dmgMixin)
+                dmgMixin.ShowDamagePreview(target, user, level);
+            if (effect is OverrideSkillEffectMixin overrideMixin)
+                overrideMixin.ShowDamagePreview(target, user, level);
+            if (effect is HealEffect healMixin)
+                healMixin.ShowHealPreview(target, user, level);
+
+        }
+
+        protected void HideSkillEffectsPreview(SkillEffectMixin effect, Unit target, Unit user)
+        {
+            if (effect is DamageSkillEffectMixin dmgMixin)
+                dmgMixin.HideDamagePreview(target);
+            if (effect is OverrideSkillEffectMixin overrideMixin)
+                overrideMixin.HideDamagePreview(target);
+            if (effect is HealEffect healMixin)
+                healMixin.HideHealPreview(target);
+        }
+
     }
 }

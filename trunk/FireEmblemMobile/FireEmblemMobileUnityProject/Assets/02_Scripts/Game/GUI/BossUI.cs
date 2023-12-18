@@ -50,9 +50,9 @@ namespace LostGrace
             {
                 Instantiate(revivalStonePrefab, revivalStonesContainer);
             }
-            if (unit.AIComponent.AIBehaviour.GetMaxRageMeter() != 0)
+            if (unit.AIComponent.AIBehaviour is MinotaurAIBehaviour minotaurAIBehaviour && minotaurAIBehaviour.GetMaxRageMeter() != 0)
             {
-                rageUI.Show(unit.AIComponent.AIBehaviour);
+                rageUI.Show(minotaurAIBehaviour);
                 
             }
         }

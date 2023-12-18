@@ -44,7 +44,7 @@ public class InsertGemUI : MonoBehaviour
         this.Icon.sprite = currentRelic.Sprite;
         nameText.text = currentRelic.Name;
         description.text = currentRelic.Description;
-        slotGameObject.SetActive(currentRelic.slotCount > 0);
+        slotGameObject.SetActive(true);
        // relic1.Show(Player.Instance.Party.ActiveUnit.EquippedRelic, currentRelic == Player.Instance.Party.ActiveUnit.EquippedRelic);
       
         gemParent.DeleteAllChildren();
@@ -122,7 +122,7 @@ public class InsertGemUI : MonoBehaviour
         if (selected.item == currentRelic.GetGem(0))
         {
             Debug.Log("Remove Gem!");
-            var gem=currentRelic.RemoveGem(0);
+            var gem=currentRelic.RemoveGem();
             Player.Instance.Party.AddItem(gem);
             
         }
@@ -130,7 +130,7 @@ public class InsertGemUI : MonoBehaviour
         {
             Debug.Log("Insert Gem!");
             Debug.Log(currentRelic.Name);
-            currentRelic.InsertGem((Gem)selected.item,0);
+            currentRelic.InsertGem((Gem)selected.item);
             Player.Instance.Party.RemoveItem(selected.item);
         }
         UpdateUI();

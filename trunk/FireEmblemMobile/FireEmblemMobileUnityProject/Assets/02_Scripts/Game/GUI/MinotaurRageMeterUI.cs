@@ -15,8 +15,8 @@ namespace LostGrace
 
         [SerializeField] private Sprite ragePointFullSprite;
         // Start is called before the first frame update
-        private AIBehaviour aiBehaviour;
-        public void Show(AIBehaviour minotaurBehaviour)
+        private MinotaurAIBehaviour aiBehaviour;
+        public void Show(MinotaurAIBehaviour minotaurBehaviour)
         {
             this.aiBehaviour = minotaurBehaviour;
             

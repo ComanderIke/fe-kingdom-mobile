@@ -10,13 +10,17 @@ namespace Game.GameActors.Items.Gems
         [SerializeField]
         private GemType gemType;
 
-        [SerializeField] private SkillEffectMixin gemEffect;
+        [SerializeField] public Skill gemEffect;
         private bool inserted = false;
         private Gem upgradeTo;
-        public Gem(string name, string description, int cost, int maxStack,Sprite sprite, int rarity, SkillEffectMixin gemEffect, Gem upgradeTo) : base(name, description, cost, rarity,maxStack,sprite)
+        private int soulCapacity;
+        private int currentSouls;
+        public Gem(string name, string description, int cost, int maxStack,Sprite sprite, int rarity, Skill gemEffect,int startSouls, int soulCapacity, Gem upgradeTo) : base(name, description, cost, rarity,maxStack,sprite)
         {
             this.gemEffect = gemEffect;
             this.upgradeTo = upgradeTo;
+            this.soulCapacity = soulCapacity;
+            currentSouls = startSouls;
         }
 
         // public GemType GetGemType(GemType gemType)
@@ -39,6 +43,27 @@ namespace Game.GameActors.Items.Gems
         public Gem GetUpgradedGem()
         {
             return upgradeTo;
+        }
+
+        public void IncreaseSouls()
+        {
+            currentSouls++;
+            if (currentSouls > soulCapacity)
+                currentSouls = soulCapacity;
+            else
+            {
+                Rebind();
+            }
+            
+        }
+
+        public void Rebind()
+        {
+            Debug.Log("REBIND GEM");
+            gemEffect.skillTransferData.data= (float)currentSouls;
+            Debug.Log("TransferData: "+ gemEffect.skillTransferData.data);
+            Debug.Log("GUID:" +gemEffect.skillTransferData.guid);
+            gemEffect.Rebind();
         }
 
         public bool HasUpgrade()

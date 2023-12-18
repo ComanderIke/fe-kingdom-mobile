@@ -28,13 +28,10 @@ namespace Game.GameActors.Units.Humans
                 foreach (var skillbp in startSkills)
                 {
                     Skills.Add(skillbp.Create());
-                    Debug.Log("Create Start Skill");
                 }
             }
-            Debug.Log("Add Start Skills/Blessings");
             if (startBlessing != null)
                 blessing = (Blessing)startBlessing.Create();
-            Debug.Log("Blessing: "+blessing);
 
         }
         public List<Skill> Skills

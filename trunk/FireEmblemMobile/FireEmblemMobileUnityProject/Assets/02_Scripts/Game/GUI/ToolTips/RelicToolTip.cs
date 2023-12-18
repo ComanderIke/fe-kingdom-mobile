@@ -18,26 +18,17 @@ public class RelicToolTip : ItemToolTip
     public void SetValues(Relic relic,  Vector3 position)
     {
         this.relic = relic;
-        Debug.Log(""+relic.GetSlotCount());
-        if (relic.GetSlotCount() != 0)
+        slotButtonPanel.gameObject.SetActive(true);
+        if (relic.GetGem(0) != null)
         {
-            
-            slotButtonPanel.gameObject.SetActive(true);
-            if (relic.GetGem(0) != null)
-            {
-                gemImage.sprite = relic.GetGem(0).Sprite;
-                gemImage.gameObject.SetActive(true);
-            }
-            else
-            {
-                gemImage.gameObject.SetActive(false);
-            }
+            gemImage.sprite = relic.GetGem(0).Sprite;
+            gemImage.gameObject.SetActive(true);
         }
         else
         {
-            slotButtonPanel.gameObject.SetActive(false);
-           
+            gemImage.gameObject.SetActive(false);
         }
+       
         base.SetValues(new StockedItem(relic,1), position);
     }
 

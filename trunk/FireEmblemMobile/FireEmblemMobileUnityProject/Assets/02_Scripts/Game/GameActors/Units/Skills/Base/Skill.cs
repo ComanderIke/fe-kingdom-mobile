@@ -23,7 +23,7 @@ namespace Game.GameActors.Units.Skills
         public List<ActiveSkillMixin> activeMixins;
         public Unit owner;
         public SkillTransferData skillTransferData;
-
+       
         public Skill(string Name, string Description, Sprite icon, int tier,int maxLevel, List<PassiveSkillMixin> passiveMixins, CombatSkillMixin combatSkillMixin, List<ActiveSkillMixin> activeMixins, SkillTransferData data)
         {
             this.Name = Name;

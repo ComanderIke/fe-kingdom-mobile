@@ -155,18 +155,26 @@ namespace Game.GameActors.Units.Skills
             var targets = GetTargets(user);
             gridSystem.HideMoveRange();
             gridSystem.ShowCastRange(user, GetRange(skill.Level), GetMinRange(skill.Level));
+            var blessing = GetBlessing(user);
             foreach (var target in targets)
             {
+                tiles[target.GridComponent.GridPosition.X, target.GridComponent.GridPosition.Y].SetCastCursorMaterial(EffectType.Bad, user.Faction.Id);
+                if (blessing != null)
+                {
+                    foreach (SkillEffectMixin effect in synergies[GetBlessing(user)].skillEffectMixins)
+                    {
+                        HideSkillEffectsPreview(effect, target, user);
+                    }
+
+                    if (synergies[GetBlessing(user)].replacesOtherConditions)
+                        continue;
+                }
                 foreach (SkillEffectMixin effect in skillEffectMixins)
                 {
-                    if (effect is DamageSkillEffectMixin dmgMixin)
-                        dmgMixin.HideDamagePreview(target);
-                    if (effect is HealEffect healMixin)
-                        healMixin.HideHealPreview(target);
+                    HideSkillEffectsPreview(effect, target, user);
                 }
                 
-                tiles[target.GridComponent.GridPosition.X, target.GridComponent.GridPosition.Y].SetCastCursorMaterial(EffectType.Bad, user.Faction.Id);
-            }
+           }
         }
         public void ShowTargets(Unit user)
         {
@@ -175,42 +183,77 @@ namespace Game.GameActors.Units.Skills
             var targets = GetTargets(user);
             gridSystem.HideMoveRange();
             gridSystem.ShowCastRange(user, GetRange(skill.Level), GetMinRange(skill.Level));
+            var blessing = GetBlessing(user);
+            Debug.Log("Blessing; "+blessing);
             foreach (var target in targets)
             {
-                foreach (SkillEffectMixin effect in skillEffectMixins)
-                {
-                    if (effect is DamageSkillEffectMixin dmgMixin)
-                        dmgMixin.ShowDamagePreview(target, user, skill.Level);
-                    if (effect is OverrideSkillEffectMixin overrideMixin)
-                        overrideMixin.ShowDamagePreview(target, user, skill.Level);
-                    if (effect is HealEffect healMixin)
-                        healMixin.ShowHealPreview(target, user, skill.Level);
-                }
                 
                 tiles[target.GridComponent.GridPosition.X, target.GridComponent.GridPosition.Y].SetCastCursorMaterial(effectType, user.Faction.Id);
+                if (blessing != null)
+                {
+                    foreach (SkillEffectMixin effect in synergies[blessing].skillEffectMixins)
+                    {
+                        ShowSkillEffectsPreview(effect, target,user,skill.level);
+                    }
+
+                    if (synergies[blessing].replacesOtherConditions)
+                        continue;
+                }
+
+                foreach (SkillEffectMixin effect in skillEffectMixins)
+                {
+                    ShowSkillEffectsPreview(effect, target,user,skill.level);
+                }
+                
             }
 
         }
 
-        public int GetDamageDone(Unit selectedUnit, Unit target)
+        
+
+        public int GetDamageDone(Unit user, Unit target)
         {
+            var blessing = GetBlessing(user);
+            if (blessing != null)
+            {
+                foreach (SkillEffectMixin effect in synergies[GetBlessing(user)].skillEffectMixins)
+                {
+                    if (effect is DamageSkillEffectMixin damageSkillEffectMixin)
+                        return damageSkillEffectMixin.GetDamageDealtToTarget(user, target, skill.level);
+                }
+
+                if (synergies[GetBlessing(user)].replacesOtherConditions)
+                    return 0;
+            }
             foreach (SkillEffectMixin effect in skillEffectMixins)
             {
                 if (effect is DamageSkillEffectMixin damageSkillEffectMixin)
-                    return damageSkillEffectMixin.GetDamageDealtToTarget(selectedUnit, target, skill.level);
+                    return damageSkillEffectMixin.GetDamageDealtToTarget(user, target, skill.level);
                 if (effect is OverrideSkillEffectMixin overrideSkillEffect)
-                    return overrideSkillEffect.GetDamageDealtToTarget(selectedUnit, target, skill.level);
+                    return overrideSkillEffect.GetDamageDealtToTarget(user, target, skill.level);
             }
             return 0;
         }
-        public int GetHealingDone(Unit selectedUnit, Unit target)
+        public int GetHealingDone(Unit user, Unit target)
         {
+            var blessing = GetBlessing(user);
+            if (blessing != null)
+            {
+                foreach (SkillEffectMixin effect in synergies[GetBlessing(user)].skillEffectMixins)
+                {
+                    if (effect is HealEffect healMixin)
+                        return healMixin.GetHealAmount(user, target,skill.level);
+                }
+
+                if (synergies[GetBlessing(user)].replacesOtherConditions)
+                    return 0;
+            }
             foreach (SkillEffectMixin effect in skillEffectMixins)
             {
                 if (effect is HealEffect healMixin)
-                    return healMixin.GetHealAmount(selectedUnit, target,skill.level);
+                    return healMixin.GetHealAmount(user, target,skill.level);
                 if (effect is OverrideSkillEffectMixin overrideSkillEffect)
-                    return overrideSkillEffect.GetHealAmount(selectedUnit, target, skill.level);
+                    return overrideSkillEffect.GetHealAmount(user, target, skill.level);
 
             }
             return 0;

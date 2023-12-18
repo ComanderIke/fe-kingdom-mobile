@@ -65,8 +65,7 @@ public class SmithingSlot : MonoBehaviour
             image.color = normalColor;
             if (equipable is Relic relic)
             {
-                if(relic.slotCount>0)
-                    slot.gameObject.SetActive(true);
+                slot.gameObject.SetActive(true);
                 if (relic.GetGem(0) != null)
                 {
                     gem.sprite = relic.GetGem(0).Sprite;

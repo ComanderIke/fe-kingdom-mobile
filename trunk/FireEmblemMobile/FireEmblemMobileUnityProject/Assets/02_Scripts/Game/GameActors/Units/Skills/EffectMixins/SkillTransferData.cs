@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Game.GameActors.Units.Skills
 {
@@ -6,5 +7,6 @@ namespace Game.GameActors.Units.Skills
     public class SkillTransferData : ScriptableObject
     {
         public object data;
+        public Guid guid = System.Guid.NewGuid();
     }
 }
