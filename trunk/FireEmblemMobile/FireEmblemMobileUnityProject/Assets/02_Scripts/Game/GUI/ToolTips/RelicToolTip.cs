@@ -19,9 +19,9 @@ public class RelicToolTip : ItemToolTip
     {
         this.relic = relic;
         slotButtonPanel.gameObject.SetActive(true);
-        if (relic.GetGem(0) != null)
+        if (relic.GetGem() != null)
         {
-            gemImage.sprite = relic.GetGem(0).Sprite;
+            gemImage.sprite = relic.GetGem().Sprite;
             gemImage.gameObject.SetActive(true);
         }
         else

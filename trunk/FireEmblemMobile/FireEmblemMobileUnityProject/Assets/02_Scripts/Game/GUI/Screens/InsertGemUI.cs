@@ -48,13 +48,13 @@ public class InsertGemUI : MonoBehaviour
        // relic1.Show(Player.Instance.Party.ActiveUnit.EquippedRelic, currentRelic == Player.Instance.Party.ActiveUnit.EquippedRelic);
       
         gemParent.DeleteAllChildren();
-        var equippedGem = currentRelic.GetGem(0);
+        var equippedGem = currentRelic.GetGem();
         if (selected != null)
         {
             if(selected.item is Gem gem)
                 if (gem.IsInserted())
                 {
-                    if(currentRelic.GetGem(0)!=gem)
+                    if(!Equals(currentRelic.GetGem(), gem))
                         selected = null;
                 }
         }
@@ -94,7 +94,7 @@ public class InsertGemUI : MonoBehaviour
             instantiatedItems[0].Select();
         }
 
-        if (selected != null && selected.item == currentRelic.GetGem(0))
+        if (selected != null && Equals(selected.item, currentRelic.GetGem()))
         {
             var colors = insertButton.colors;
             removeButton.gameObject.SetActive(true);
@@ -119,7 +119,7 @@ public class InsertGemUI : MonoBehaviour
     {
         if (selected == null)
             return;
-        if (selected.item == currentRelic.GetGem(0))
+        if (Equals(selected.item, currentRelic.GetGem()))
         {
             Debug.Log("Remove Gem!");
             var gem=currentRelic.RemoveGem();

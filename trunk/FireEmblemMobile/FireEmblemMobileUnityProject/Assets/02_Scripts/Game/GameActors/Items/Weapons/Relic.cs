@@ -63,7 +63,7 @@ namespace Game.GameActors.Items.Weapons
         }
         
 
-        public Gem GetGem(int index)
+        public Gem GetGem()
         {
             if (!gemSlot.IsEmpty())
                 return gemSlot.gem;

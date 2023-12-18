@@ -743,5 +743,10 @@ namespace Game.GameActors.Units
 
 
         public event Action<bool> OnSpecialState;
+
+        public void UpdateStats()
+        {
+            OnUnitDataChanged?.Invoke(this);
+        }
     }
 }

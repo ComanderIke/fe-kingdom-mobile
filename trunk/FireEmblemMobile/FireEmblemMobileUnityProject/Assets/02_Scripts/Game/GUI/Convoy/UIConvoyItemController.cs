@@ -32,7 +32,7 @@ public class UIConvoyItemController : UIButtonController
         {
             backgroundImage.sprite = relicSprite;
            slot.gameObject.SetActive(true);
-           if (relic.GetGem(0) == null)
+           if (relic.GetGem() == null)
            {
                gemImage.enabled = false;
                gemImage.sprite = null;
@@ -40,7 +40,7 @@ public class UIConvoyItemController : UIButtonController
            else
            {
                gemImage.enabled = true;
-               gemImage.sprite = relic.GetGem(0).Sprite;
+               gemImage.sprite = relic.GetGem().Sprite;
            }
         }
         else if (stockeditem.item is IEquipableCombatItem)

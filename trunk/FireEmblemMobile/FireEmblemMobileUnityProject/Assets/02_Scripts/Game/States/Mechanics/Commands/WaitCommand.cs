@@ -27,7 +27,7 @@ namespace Game.Mechanics.Commands
                     !unit.TurnStateManager.HasAttacked)
                 {
                     unit.TurnStateManager.Wait();
-                    if (unit.GridComponent.Tile.HasGlowSpot())
+                    if (unit.GridComponent.Tile.HasGlowSpot()&& unit.Faction.IsPlayerControlled)
                     {
                         unit.GridComponent.Tile.RemoveGlowSpot();
                         ((Unit)unit).ExperienceManager.AddExp(30);

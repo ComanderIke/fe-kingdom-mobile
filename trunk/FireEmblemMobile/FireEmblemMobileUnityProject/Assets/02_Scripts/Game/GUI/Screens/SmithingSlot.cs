@@ -1,6 +1,7 @@
 ﻿using Game.GameActors.Items.Weapons;
 using Game.GameActors.Units;
 using LostGrace;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +17,7 @@ public class SmithingSlot : MonoBehaviour
     [SerializeField] private Image gem;
     [SerializeField] private GameObject slot;
     [SerializeField] private SkillUI skillUI;
+    [SerializeField] private TextMeshProUGUI soulsText;
     private bool selected = false;
     private EquipableItem equipable;
     private Unit unit;
@@ -66,15 +68,18 @@ public class SmithingSlot : MonoBehaviour
             if (equipable is Relic relic)
             {
                 slot.gameObject.SetActive(true);
-                if (relic.GetGem(0) != null)
+                if (relic.GetGem() != null)
                 {
-                    gem.sprite = relic.GetGem(0).Sprite;
+                    gem.sprite = relic.GetGem().Sprite;
                     gem.enabled = true;
+                    soulsText.enabled = true;
+                    soulsText.text = ""+relic.GetGem().GetCurrentSouls();
                 }
                 else
                 {
                     gem.sprite = null;
                     gem.enabled = false;
+                    soulsText.enabled = false;
                 }
             }
             else

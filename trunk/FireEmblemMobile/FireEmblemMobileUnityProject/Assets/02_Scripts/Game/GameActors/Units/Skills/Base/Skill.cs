@@ -73,6 +73,7 @@ namespace Game.GameActors.Units.Skills
 
         public void Rebind()
         {
+            Debug.Log("REBIND");
             if (owner != null)
             {
                 foreach (var passive in passiveMixins)
@@ -92,6 +93,10 @@ namespace Game.GameActors.Units.Skills
                     active.UnbindFromUnit(owner,this);
                     active.BindToUnit(owner, this);
                 }
+            }
+            else
+            {
+                Debug.Log("OWNER NULL");
             }
         }
 

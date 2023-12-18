@@ -1,4 +1,5 @@
-﻿using Game.GameActors.Items.Weapons;
+﻿using System;
+using Game.GameActors.Items.Weapons;
 using Game.GameActors.Units.Skills;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ namespace Game.GameActors.Items.Gems
         private Gem upgradeTo;
         private int soulCapacity;
         private int currentSouls;
+        public event Action onSoulsIncreased;
         public Gem(string name, string description, int cost, int maxStack,Sprite sprite, int rarity, Skill gemEffect,int startSouls, int soulCapacity, Gem upgradeTo) : base(name, description, cost, rarity,maxStack,sprite)
         {
             this.gemEffect = gemEffect;
@@ -52,7 +54,10 @@ namespace Game.GameActors.Items.Gems
                 currentSouls = soulCapacity;
             else
             {
+                
+                
                 Rebind();
+                onSoulsIncreased?.Invoke();
             }
             
         }
@@ -69,6 +74,11 @@ namespace Game.GameActors.Items.Gems
         public bool HasUpgrade()
         {
             return upgradeTo != null;
+        }
+
+        public int GetCurrentSouls()
+        {
+            return currentSouls;
         }
     }
 }
