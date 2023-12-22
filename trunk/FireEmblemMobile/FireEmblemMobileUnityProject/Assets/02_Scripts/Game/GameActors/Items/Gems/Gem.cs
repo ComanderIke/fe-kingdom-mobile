@@ -80,5 +80,10 @@ namespace Game.GameActors.Items.Gems
         {
             return currentSouls;
         }
+
+        public void SetSouls(int souls)
+        {
+            this.currentSouls = souls;
+        }
     }
 }

@@ -17,10 +17,10 @@ namespace Game.GameActors.Items.Weapons
         [Header("WeaponAttributes")] public WeaponAttributes[] WeaponUpgrades;
         public WeaponAttributes WeaponAttributes;
         public int weaponLevel = 1;
-        private int powerUpgLvl = 0;
-        private int accUpgLvl = 0;
-        private int critUpgLvl = 0;
-        private int specialUpgLvl = 0;
+        public int powerUpgLvl = 0;
+        public int accUpgLvl = 0;
+        public int critUpgLvl = 0;
+        public int specialUpgLvl = 0;
         public int maxLevel = 3;
         
         public WeaponType WeaponType;

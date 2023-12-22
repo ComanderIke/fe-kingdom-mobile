@@ -13,7 +13,7 @@ namespace Game.GameActors.Items.Weapons
     public class Relic:EquipableItem
     {
         public GemSlot gemSlot;
-     
+        public int level;
         public Unit user;
         public Relic(string name, string description, int cost, int rarity, int maxStack,Sprite sprite,Skill skill, Gem gem) : 
             base(name, description, cost,rarity, maxStack,sprite, skill)

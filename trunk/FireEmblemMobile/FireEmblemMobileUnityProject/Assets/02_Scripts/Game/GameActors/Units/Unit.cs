@@ -35,6 +35,9 @@ namespace Game.GameActors.Units
 
         #region Events
 
+        public event Action<Unit> OnAboutToDie;
+
+        public event Action<bool> OnSpecialState;
         public event Action HpValueChanged;
 
         public delegate void OnUnitShowActiveEffect(Unit unit, bool canMove, bool disableOthers);
@@ -60,6 +63,7 @@ namespace Game.GameActors.Units
         public static event Action<Unit, int, int> OnExpGained;
         public static LevelupEvent OnLevelUp;
         #endregion
+        
         [NonSerialized]public UnitBP unitBP;
         public string bluePrintID;
         [NonSerialized]public Weapon equippedWeapon;
@@ -67,6 +71,8 @@ namespace Game.GameActors.Units
         public Relic EquippedRelic;
         [NonSerialized]
         public StockedCombatItem CombatItem1;
+
+        public List<UnitTags> tags;
         // [NonSerialized]
         // public StockedCombatIte CombatItem2;
      
@@ -99,7 +105,7 @@ namespace Game.GameActors.Units
         private MoveType moveType;
         [NonSerialized]
         public SkillManager SkillManager;
-        private List<EncounterBasedBuff> encounterBuffs;
+        public List<EncounterBasedBuff> encounterBuffs;
         public string BluePrintId;
         public MoveType MoveType
         {
@@ -236,12 +242,10 @@ namespace Game.GameActors.Units
         
         void SkillPointsUpdated(int skillPoints)
         {
-          
             OnUnitDataChanged?.Invoke(this);
         }
         private void LevelUp()
         {
-        
             OnLevelUp?.Invoke(this);
         }
 
@@ -305,7 +309,6 @@ namespace Game.GameActors.Units
             OnUnitDamaged?.Invoke(this,dmg, damageType,false, false);
             CheckDeath(attacker);
         }
-
         void CheckDeath(Unit damageSource)
         {
             if(!IsAlive())
@@ -423,23 +426,6 @@ namespace Game.GameActors.Units
                     OnEquippedCombatItem?.Invoke(CombatItem1);
                 }
             }
-            // else if (slot==2)
-            // {
-            //     if (CombatItem2 == null)
-            //     {
-            //         CombatItem2=combatItem;
-            //     }
-            //     else
-            //     {
-            //         UnEquip(CombatItem2);
-            //         CombatItem2=combatItem;
-            //     }
-            //
-            //     if (triggerEvents)
-            //     {
-            //         OnEquippedCombatItem?.Invoke(CombatItem2);
-            //     }
-            // }
 
             if (triggerEvents)
             {
@@ -483,8 +469,6 @@ namespace Game.GameActors.Units
                     new GridPosition(GridComponent.GridPosition.X, GridComponent.GridPosition.Y);
                 clone.GridComponent.Tile = GridComponent.Tile;
             }
-
-            // clone.GridComponent.previousTile = GridComponent.previousTile;
             clone.GameTransformManager = new GameTransformManager();
             clone.StatusEffectManager = new StatusEffectManager(clone);
             clone.AIComponent = new AIComponent(AIComponent.AIBehaviour, clone,false);
@@ -492,8 +476,6 @@ namespace Game.GameActors.Units
             clone.visuals = visuals;
             clone.SkillManager = new SkillManager(SkillManager);
             clone.hp = hp;
-            //clone.sp = sp;
-
             clone.Bonds = (Bonds)Bonds.Clone();
             clone.Stats = (Stats) Stats.Clone();
             clone.MoveType = MoveType;
@@ -503,10 +485,6 @@ namespace Game.GameActors.Units
             clone.tags = new List<UnitTags>(tags);
             if(CombatItem1!=null)
                 clone.CombatItem1 = new StockedCombatItem((IEquipableCombatItem)CombatItem1.item.Clone(),CombatItem1.stock);
-            // if(CombatItem2!=null)
-            //     clone.CombatItem2 = new StockedCombatItem((IEquipableCombatItem)CombatItem2.item.Clone(),CombatItem2.stock);
-            //human.Inventory = (Inventory)Inventory.Clone();
-            //Only for
         }
         public object Clone()
         {
@@ -549,32 +527,28 @@ namespace Game.GameActors.Units
         {
             if (oldTile != null)
             {
-              
                 var oldTileData = oldTile.TileData;
                 Stats.BonusStatsFromTerrain.Avoid -= oldTileData.avoBonus;
                 Stats.BonusStatsFromTerrain.Armor -= oldTileData.defenseBonus;
                 Stats.BonusStatsFromTerrain.MagicResistance -= oldTileData.defenseBonus;
                 Stats.BonusStatsFromTerrain.AttackSpeed -= oldTileData.speedMalus;
-              //  Debug.Log("RemovedTerrainBonuses: "+ Stats.BonusStatsFromTerrain.Avoid+" "+oldTileData.avoBonus);
             }
             var tileData = newTile.TileData;
             Stats.BonusStatsFromTerrain.Avoid += tileData.avoBonus;
             Stats.BonusStatsFromTerrain.Armor += tileData.defenseBonus;
             Stats.BonusStatsFromTerrain.MagicResistance += tileData.defenseBonus;
             Stats.BonusStatsFromTerrain.AttackSpeed += tileData.speedMalus;
-        //    Debug.Log("AddedTerrainBonuses: "+ Stats.BonusStatsFromTerrain.Avoid+" "+tileData.avoBonus);
         }
       
         public void SetGridPosition(Tile newTile, bool moveGameobject=true)//Just use this from GridSystem to avoid not setting old gridobject to null
         {
-            
             UpdateTerrainBonuses(GridComponent.Tile, newTile);
             GridComponent.SetPosition(newTile, moveGameobject);
         }
 
         public void SetToOriginPosition()
         {
-            Debug.Log("SetUnitToOriginPosition: "+GridComponent.OriginTile.X+" "+GridComponent.OriginTile.Y);
+            //Debug.Log("SetUnitToOriginPosition: "+GridComponent.OriginTile.X+" "+GridComponent.OriginTile.Y);
             UpdateTerrainBonuses(GridComponent.Tile, GridComponent.OriginTile);
             GridComponent.SetToOriginPosition();
         }
@@ -653,17 +627,12 @@ namespace Game.GameActors.Units
             SkillManager.LearnSkill(curse);
             Debug.Log("TODO Receive Curse");
         }
-
-        
-
         
         public void EncounterTick()
         {
             // if(blessing!=null)
             //     blessing.DecreaseDuration();
         }
-
-        
         public void ApplyEncounterBuff(EncounterBasedBuff buff)
         {
             encounterBuffs.Add(buff);
@@ -671,15 +640,10 @@ namespace Game.GameActors.Units
             
         }
 
-        
-
         public void RemoveDebuffs()
         {
             Debug.Log("TODO Remove Debuffs");
         }
-        
-
-
         public Relic GetRelicSlot(int equipmentControllerSelectedSlotNumber)
         {
             if (equipmentControllerSelectedSlotNumber == 1)
@@ -696,13 +660,11 @@ namespace Game.GameActors.Units
             EquippedRelic = null;
             OnUnequippedRelic?.Invoke(relic);
         }
-
-
+        
         public void UnEquipCombatItem()
         {
             UnEquip(CombatItem1);
         }
-
 
         public void RemoveCurse(Curse curse)
         {
@@ -711,11 +673,8 @@ namespace Game.GameActors.Units
             //     SkillManager.RemoveSkill(Curse);
         }
 
-        public event Action<Unit> OnAboutToDie;
-
-        private List<UnitTags> tags;
-   
-
+        
+        
         public void AddTag(UnitTags tag)
         {
             if(!tags.Contains(tag))
@@ -742,7 +701,7 @@ namespace Game.GameActors.Units
         }
 
 
-        public event Action<bool> OnSpecialState;
+       
 
         public void UpdateStats()
         {

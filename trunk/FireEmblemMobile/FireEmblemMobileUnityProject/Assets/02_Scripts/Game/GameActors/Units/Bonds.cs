@@ -26,7 +26,7 @@ namespace Game.GameActors.Units
     }
     public class Bonds
     {
-        private Dictionary<God, BondExperience> Experiences;
+        public Dictionary<God, BondExperience> Experiences;
 
         public Bonds()
         {

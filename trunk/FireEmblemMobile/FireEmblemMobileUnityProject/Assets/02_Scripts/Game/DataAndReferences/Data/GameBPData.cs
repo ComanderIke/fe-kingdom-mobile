@@ -9,6 +9,7 @@ using Game.GameActors.Items.Gems;
 using Game.GameActors.Items.Weapons;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
+using Game.GameActors.Units.CharStateEffects;
 using Game.GameActors.Units.Humans;
 using Game.GameActors.Units.Monsters;
 using Game.GameActors.Units.Skills;
@@ -452,6 +453,17 @@ namespace Game.GameResources
         public DifficultyProfile GetDifficultyProfile(string name)
         {
             return difficultyProfiles.First(d => d.name == name);
+        }
+
+        public EncounterBasedBuff GetEncounterBuff(string buffId)
+        {
+            Debug.Log("TODO");
+            return null;
+        }
+
+        public God GetGod(string godId)
+        {
+            return allGods.First(god => god.Name == godId);
         }
     }
 }
