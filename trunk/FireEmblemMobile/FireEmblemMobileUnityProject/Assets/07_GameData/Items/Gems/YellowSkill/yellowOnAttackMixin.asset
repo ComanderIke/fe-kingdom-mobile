@@ -9,13 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d88cc788e39c4399998fb0bae875fdc4, type: 3}
-  m_Name: whiteAlwaysActiveMixin 2
+  m_Script: {fileID: 11500000, guid: 6fbd00e6f7b74c3490f8b9850c3c76de, type: 3}
+  m_Name: yellowOnAttackMixin
   m_EditorClassIdentifier: 
   synergies:
     list: []
   conditionBigPackage:
     CompareType: 0
     Conditions: []
-  skillEffectMixins: []
+  skillEffectMixins:
+  - {fileID: 11400000, guid: 491794a3de16a49c59f377f8f302f07d, type: 2}
   toogleAble: 0
+  procChance:
+  - 1
+  skillTransferDataIsMultiplier: 0
+  SkillTransferData: {fileID: 11400000, guid: f92025166787a41b78eeea2ade7180e9, type: 2}
+  scalingType: 0

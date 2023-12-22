@@ -7,6 +7,7 @@ namespace Game.GameActors.Units.Skills.Passive
     public enum GetHitEffectEnum
     {
         Pavise,
+        Block,
         Wrath
     }
     [CreateAssetMenu(menuName = "GameData/Skills/Effectmixin/OnGetHitEffect", fileName = "OnGetHitEffect")]

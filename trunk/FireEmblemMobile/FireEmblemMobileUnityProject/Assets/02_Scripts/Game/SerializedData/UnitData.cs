@@ -12,6 +12,8 @@ namespace Game.GameActors.Players
     public class UnitData
     {
         [SerializeField]
+        public bool dead;
+        [SerializeField]
         public string name;
         [SerializeField]
         public string weaponId;
@@ -55,8 +57,10 @@ namespace Game.GameActors.Players
         public List<string> skillIds;
         [SerializeField]
         public List<int> skillLevels;
-        public UnitData(Unit unit)
+
+        public UnitData(Unit unit, bool dead = false)
         {
+            this.dead = dead;
             this.name = unit.name;
             ExperienceManager = unit.ExperienceManager;
             TurnStateManager = unit.TurnStateManager;

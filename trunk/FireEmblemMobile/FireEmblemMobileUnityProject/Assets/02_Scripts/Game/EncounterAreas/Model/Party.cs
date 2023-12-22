@@ -16,32 +16,6 @@ using UnityEngine;
 namespace Game.WorldMapStuff.Model
 {
     [System.Serializable]
-    public class Morality
-    {
-        public event Action<float, float> OnMoralityChanged;
-        private float morality = 0;
-
-        public void AddMorality(float add) // make it harder to gain morality if its close to 1 and harder to lose morality if close to -1?
-        {
-            Debug.Log("Add Morality: "+add);
-            if (add == 0)
-                return;
-            morality += add;
-            if (morality < -100)
-            {
-                morality = -100;
-            }
-            else if (morality > 100)
-                morality = 100;
-            OnMoralityChanged?.Invoke(morality, add);
-        }
-        public float GetCurrentMoralityValue() // -1 to 1 or 0 to 1? with 0.5 being neutral
-        {
-            return morality;
-        }
-        
-    }
-    [System.Serializable]
     public class Party
     {
 
@@ -67,7 +41,10 @@ namespace Game.WorldMapStuff.Model
         public Convoy Convoy;
         public Convoy Storage;
         int activeUnitIndex = 0;
+        public EncounterPosition EncounterComponent { get; set; }
 
+        public GameObject GameObject { get; set; }
+        public int AreaIndex { get; set; }
         public int ActiveUnitIndex
         {
             get { return activeUnitIndex; }
@@ -125,7 +102,6 @@ namespace Game.WorldMapStuff.Model
             Convoy = new Convoy();
             Storage = new Convoy();
             EncounterComponent = new EncounterPosition();
-            DeadCharacters = new List<Unit>();
             money = 1000;
             Morality = new Morality();
             VisitedEvents = new List<LGEventDialogSO>();
@@ -133,9 +109,7 @@ namespace Game.WorldMapStuff.Model
 
         }
 
-        public EncounterPosition EncounterComponent { get; set; }
-
-        public GameObject GameObject { get; set; }
+        
 
 
         public Unit ActiveUnit
@@ -147,9 +121,8 @@ namespace Game.WorldMapStuff.Model
                 return null;
             }
         }
-
-        public List<Unit> DeadCharacters { get; set; }
-        public int AreaIndex { get; set; }
+        
+       
 
 
         public void SetActiveUnit(Unit unit)

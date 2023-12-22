@@ -226,5 +226,24 @@ namespace Game.GameActors.Units.Humans
 
             return -1;
         }
+
+        public bool nextCastIsFree = false;
+        public event Action OnPayCast;
+        public void PaySkillPoints(int points, bool costIsSkillPoints)
+        {
+            OnPayCast?.Invoke();
+            if (nextCastIsFree)
+            {
+                nextCastIsFree = false;
+                return;
+            }
+
+            if(costIsSkillPoints)
+                SkillPoints -= points;
+            else
+            {
+                unit.Hp -= points;
+            }
+        }
     }
 }

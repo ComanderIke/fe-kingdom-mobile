@@ -8,7 +8,8 @@ namespace Game.GameActors.Units.Skills.Passive
         Luna,
         Adept,
         Cancel,
-        GuaranteedHit
+        GuaranteedHit,
+        ExtraTrueDmg
     }
     
 }

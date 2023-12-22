@@ -35,14 +35,9 @@ namespace Game.GameActors.Units.Skills
         {
             if (skill.owner != null)
             {
-                if (costIsSkillPoints)
-                {
-                    skill.owner.SkillManager.SkillPoints -= hpCostPerLevel[skill.level];
-                }
-                else
-                {
-                    skill.owner.Hp -= hpCostPerLevel[skill.level];
-                }
+               
+                skill.owner.SkillManager.PaySkillPoints(hpCostPerLevel[skill.level],costIsSkillPoints);
+                    
             }
                 
             Uses--;

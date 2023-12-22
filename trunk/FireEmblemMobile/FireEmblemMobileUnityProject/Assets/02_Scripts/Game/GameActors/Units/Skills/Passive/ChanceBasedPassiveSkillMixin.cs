@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Game.GameActors.Units.Numbers;
 using LostGrace;
+using UnityEngine;
 
 namespace Game.GameActors.Units.Skills.Passive
 {
@@ -10,16 +11,21 @@ namespace Game.GameActors.Units.Skills.Passive
     public abstract class ChanceBasedPassiveSkillMixin : PassiveSkillMixin
     {
         public float[] procChance;
+        public bool skillTransferDataIsMultiplier;
         protected float extraChanceFromStatInfluence = 0;
+        public SkillTransferData SkillTransferData;
         public AttributeType scalingType;
         public bool DoesActivate(Unit unit, int level)
         {
+            Debug.Log("Chance: "+GetChance(unit, level));
             return UnityEngine.Random.value <= GetChance(unit, level);
         }
 
         private float GetChance(Unit unit, int level)
         {
             float chance = procChance[level];
+            if (skillTransferDataIsMultiplier && SkillTransferData.data != null)
+                chance *= (float)SkillTransferData.data;
             switch (scalingType)
             {
                 case AttributeType.NONE: break;

@@ -9,6 +9,7 @@ namespace Game.GameActors.Units.Skills.Passive
     {
         bool ReactToDefense(IBattleActor unit);
     }
+    
     [CreateAssetMenu(menuName = "GameData/Skills/Passive/OnDefense", fileName = "OnDefense")]
     public class OnDefenseEffectMixin:ChanceBasedPassiveSkillMixin, IOnDefenseEffect
     {
