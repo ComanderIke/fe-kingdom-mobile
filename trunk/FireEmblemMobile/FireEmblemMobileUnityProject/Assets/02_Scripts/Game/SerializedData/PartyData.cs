@@ -16,8 +16,6 @@ namespace Game.GameActors.Players
         [SerializeField] public List<UnitData> humanData;
         [SerializeField] public int money;
         [SerializeField] public ConvoyData convoy;
-       
-
         [SerializeField] public string currentEncounterNodeId;
         [SerializeField] public List<string> movedEncounterIds;
         public bool activatedEncounter;

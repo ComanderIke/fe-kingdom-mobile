@@ -27,6 +27,10 @@ namespace Game.WorldMapStuff.Model
         {
             return morality;
         }
-        
+
+        public void Set(float f)
+        {
+            morality = f;
+        }
     }
 }

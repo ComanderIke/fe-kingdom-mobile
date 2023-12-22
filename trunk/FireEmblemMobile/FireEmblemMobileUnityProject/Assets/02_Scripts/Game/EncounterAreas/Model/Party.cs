@@ -278,11 +278,18 @@ namespace Game.WorldMapStuff.Model
             Debug.Log("Load Party Data");
             money = playerDataPartyData.money;
             members = new List<Unit>();
-
+            maxSize = playerDataPartyData.maxSize;
+            collectedGrace = playerDataPartyData.collectedGrace;
+            activeUnitIndex = playerDataPartyData.activeUnitIndex;
             foreach (var data in playerDataPartyData.humanData)
             {
                 Unit unit = data.Load();
-                members.Add(unit);
+                if(!data.dead)
+                    members.Add(unit);
+                else
+                {
+                    deadMembers.Add(unit);
+                }
             }
 
             Convoy = new Convoy();
@@ -307,6 +314,7 @@ namespace Game.WorldMapStuff.Model
                 MovedEncounterIds = playerDataPartyData.movedEncounterIds
             };
             AreaIndex = playerDataPartyData.areaIndex;
+            Morality.Set(playerDataPartyData.morality);
 
         }
 
