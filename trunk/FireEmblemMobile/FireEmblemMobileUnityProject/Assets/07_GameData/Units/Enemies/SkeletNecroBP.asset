@@ -61,11 +61,13 @@ MonoBehaviour:
     Mov: 2
   moveType: {fileID: 11400000, guid: d13592b1fa0af024a841b121149b8014, type: 2}
   SkillManager:
-    startSkills: []
+    startSkills:
+    - {fileID: 11400000, guid: 85a480235267e4fe3a16b045a5007b35, type: 2}
     startBlessing: {fileID: 0}
     maxSkillCount: 0
     maxSkillPoints: 0
     skillPoints: 0
+    nextCastIsFree: 0
   rpgClass: 0
   bluePrintID: 
   dialogActor: {fileID: 0}
@@ -90,5 +92,7 @@ MonoBehaviour:
   <ChronikComponent>k__BackingField:
     <BodySprite>k__BackingField: {fileID: 0}
     <FaceSprite>k__BackingField: {fileID: 0}
+    <AlternateBodySprite>k__BackingField: {fileID: 0}
+    <AlternateFaceSprite>k__BackingField: {fileID: 0}
     <Name>k__BackingField: 
     <Description>k__BackingField: 

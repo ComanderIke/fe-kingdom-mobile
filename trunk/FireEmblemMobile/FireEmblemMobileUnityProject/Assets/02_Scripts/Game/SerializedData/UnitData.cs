@@ -32,8 +32,6 @@ namespace Game.GameActors.Players
         [SerializeField]
         private StatsData statsData;
         [SerializeField]
-        private Attributes growthsData;
-        [SerializeField]
         public ExperienceManager ExperienceManager;
         [SerializeField]
         public TurnStateManager TurnStateManager;

@@ -31,6 +31,15 @@ namespace Game.GameActors.Units.Skills
         //     this.currentUses = maxUsesPerLevel;
         //     this.hpCostPerLevel = hpCostPerLevel;
         // }
+        public void SpawnAnimation(Unit user)
+        {
+            if (AnimationObject != null)
+            {
+                var go = Instantiate(AnimationObject);
+                go.transform.position = user.GameTransformManager.GetCenterPosition();
+
+            }
+        }
         public void PayActivationCost()
         {
             if (skill.owner != null)

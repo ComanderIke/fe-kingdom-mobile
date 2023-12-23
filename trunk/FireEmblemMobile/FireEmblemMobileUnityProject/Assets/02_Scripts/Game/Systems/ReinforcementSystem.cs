@@ -124,24 +124,30 @@ namespace LostGrace
             //UnitPlacementState look how to spawn unit
             //add unit to enemy faction
             var gridSystem = GridGameManager.Instance.GetSystem<GridSystem>();
-            if (!gridSystem.Tiles[reinforcement.X, reinforcement.Y].HasFreeSpace())
+            var spawnedUnit=unit.unitBp.Create(Guid.NewGuid());
+            if (!gridSystem.Tiles[reinforcement.X, reinforcement.Y].CanMoveOnto(spawnedUnit))
             {
                 return false;
             }
           
-            var spawnedUnit=unit.unitBp.Create(Guid.NewGuid());
+           
             spawnedUnit.AIComponent.WeightSet = unit.AIWeightSet;
-            foreach (var faction in GridGameManager.Instance.FactionManager.Factions)
-            {
-                if (faction.Id == unit.FactionId)
-                {
-                    faction.AddUnit(spawnedUnit);
-                    spawnHelper.SpawnReinforcement(faction, spawnedUnit, reinforcement.X, reinforcement.Y);
-                }
-            }
+            SpawnFactionUnit(unit.FactionId, spawnedUnit, reinforcement.X, reinforcement.Y);
 
             return true;
 
+        }
+
+        void SpawnFactionUnit(FactionId factionId, Unit spawnedUnit, int x, int y)
+        {
+            foreach (var faction in GridGameManager.Instance.FactionManager.Factions)
+            {
+                if (faction.Id == factionId)
+                {
+                    faction.AddUnit(spawnedUnit);
+                    spawnHelper.SpawnReinforcement(faction, spawnedUnit, x, y);
+                }
+            }
         }
         
         public void Activate()
@@ -150,6 +156,12 @@ namespace LostGrace
             turnSystem.OnStartTurn += CheckTurnReinforcements;
             GridActorComponent.AnyUnitChangedPosition -= CheckAreaReinforcements;
             GridActorComponent.AnyUnitChangedPosition += CheckAreaReinforcements;
+        }
+
+        public void SpawnUnit(Unit summon, FactionId factionId, int posX, int posY)
+        {
+            Debug.Log("SPAWN UNIT");
+           SpawnFactionUnit(factionId,summon, posX, posY);
         }
     }
 }

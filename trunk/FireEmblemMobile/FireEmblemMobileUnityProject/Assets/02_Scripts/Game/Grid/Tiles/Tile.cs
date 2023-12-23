@@ -184,6 +184,10 @@ namespace Game.Grid
         {
             return GridObject == null;
         }
+        public bool CanMoveOnto(Unit unit)
+        {
+            return HasFreeSpace()&&TileData.CanMoveThrough(unit.MoveType);
+        }
 
 
         public bool HasGlowSpot()
