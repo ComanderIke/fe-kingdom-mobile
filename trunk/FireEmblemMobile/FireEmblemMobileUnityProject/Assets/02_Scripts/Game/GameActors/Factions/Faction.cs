@@ -52,7 +52,11 @@ namespace Game.GameActors.Players
 
         public List<Unit> GetActiveUnits()
         {
-            return Units.Where(c => !c.TurnStateManager.IsWaiting && c.IsAlive()).ToList();
+            return Units.Where(c => !c.TurnStateManager.IsWaiting && !c.TurnStateManager.HasMoved&&c.IsAlive()).ToList();
+        }
+        public bool AllUnitsMoved()
+        {
+            return Units.Where(c => !c.TurnStateManager.HasMoved && c.IsAlive()).Count()==0;
         }
 
       

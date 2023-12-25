@@ -50,7 +50,7 @@ namespace Game.AI
         private CameraSystem cameraSystem;
         public void Think()
         {
-            if (IsStartOfTurn())
+            if (IsStartOfTurn()||!decisionMaker.moveOrderList.Any())
             {
                 //Sort units based on melee=> range
                 //if both same range distance to closest enemy as tie break
@@ -64,7 +64,7 @@ namespace Game.AI
             }
 
             // Debug.Log("PrepareGoals");
-            if (player.GetActiveUnits().Count == 0)
+            if (player.AllUnitsMoved())
             {
                 finished = true;
                 Debug.Log("No Active Units");
@@ -85,6 +85,7 @@ namespace Game.AI
                 }
 
                 ObstacleRemoved = false;
+                
                 var action = decisionMaker.ChooseBestAction(player.GetActiveUnits());
                 decisionMaker.RemoveUnitFromListPool(action.Performer);
                 ExecuteAction(action);
@@ -151,7 +152,7 @@ namespace Game.AI
         }
         private bool IsStartOfTurn()
         {
-            return player.Units.All(u => !u.TurnStateManager.IsWaiting);
+            return player.Units.All(u => !u.TurnStateManager.IsWaiting&&!u.TurnStateManager.HasMoved);
         }
 
 

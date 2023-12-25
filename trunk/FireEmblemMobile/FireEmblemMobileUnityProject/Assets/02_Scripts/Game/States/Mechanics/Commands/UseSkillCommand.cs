@@ -32,6 +32,11 @@ namespace Game.Mechanics.Commands
                 Debug.Log(castLocation.x+" "+ castLocation.y);
                 ptsm.Activate(user,gridSystem.Tiles, castLocation.x, castLocation.y);
             }
+            else if (activeSkillMixin is SelfTargetSkillMixin stsm)
+            {
+                Debug.Log(castLocation.x+" "+ castLocation.y);
+                stsm.Activate(user);
+            }
 
             IsFinished = true;
          //   MonoUtility.DelayFunction(()=>IsFinished=true, 2f);

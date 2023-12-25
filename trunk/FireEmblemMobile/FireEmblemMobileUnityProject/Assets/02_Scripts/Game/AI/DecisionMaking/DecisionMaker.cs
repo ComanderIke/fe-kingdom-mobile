@@ -104,6 +104,7 @@ namespace Game.AI
         public AIUnitAction ChooseBestMovementAction()
         {
             AIUnitAction bestAction = new AIUnitAction();
+            
             Debug.Log(moveOrderList.Count);
             moveOrderList.RemoveAll(unit => unit.TurnStateManager.HasMoved);
             IAIAgent unit = moveOrderList.First();
@@ -212,6 +213,8 @@ namespace Game.AI
         public AIUnitAction ChooseBestAction(IEnumerable<IAIAgent> units)
         {
 
+            if (moveOrderList.Count() == 0)
+                CreateMoveOrderList(units);
             CreateAttackerList(units);
             CreateSkillUserList(units);
             if (skillUserList.Count != 0)
@@ -231,6 +234,7 @@ namespace Game.AI
                // Debug.Log("Best Target: "+bestAttacker.AIComponent.BestAttackTarget.Target+" "+bestAttacker.AIComponent.AttackableTargets.Last().Target);
                 return CreateAttackAction(bestAttacker);
             }
+           
             return ChooseBestMovementAction();
             //return bestAction;
         }
@@ -251,7 +255,7 @@ namespace Game.AI
         }
         private AIUnitAction CreateUseSkillAction(IAIAgent attacker)
         {
-            return new AIUnitAction(attacker.AIComponent.BestAttackTarget.OptimalAttackPos,attacker.AIComponent.BestAttackTarget.Target, UnitActionType.UseSkill, attacker , attacker.AIComponent.BestAttackTarget.OptimalCastPos);
+            return new AIUnitAction(attacker.AIComponent.BestAttackTarget==null?attacker.GridComponent.GridPosition.AsVectorInt():attacker.AIComponent.BestAttackTarget.OptimalAttackPos,attacker.AIComponent.BestAttackTarget==null?null:attacker.AIComponent.BestAttackTarget.Target, UnitActionType.UseSkill, attacker , attacker.AIComponent.BestAttackTarget==null?attacker.GridComponent.GridPosition.AsVectorInt():attacker.AIComponent.BestAttackTarget.OptimalCastPos);
 
         }
         private void ChooseBestAttackTargets()
@@ -267,8 +271,9 @@ namespace Game.AI
         {
             foreach (var attacker in skillUserList)
             {
+                if(attacker.AIComponent.AttackableTargets.Count==0)
+                    continue;
                 attacker.AIComponent.AttackableTargets.Sort(new AttackTargetComparer());
-
                 attacker.AIComponent.BestAttackTarget = attacker.AIComponent.AttackableTargets.Last();
             }
         }
@@ -449,10 +454,20 @@ namespace Game.AI
                 if (unit.AIComponent.AIBehaviour != null &&
                     unit.AIComponent.AIBehaviour.GetState() == AIBehaviour.State.UseSkill)
                 {
-                    unit.AIComponent.AttackableTargets = GetSkillTargets(unit);
-
-                    if (unit.AIComponent.AttackableTargets.Count() != 0)
+                    Unit u = (Unit)unit;
+                    var firstActiveSkill = u.SkillManager.ActiveSkills.First();
+                    if (firstActiveSkill.FirstActiveMixin is SelfTargetSkillMixin)
+                    {
                         skillUserList.Add(unit);
+                    }
+                    else
+                    {
+                        unit.AIComponent.AttackableTargets = GetSkillTargets(unit);
+
+                        if (unit.AIComponent.AttackableTargets.Count() != 0)
+                            skillUserList.Add(unit);
+                    }
+                   
                 }
             }
             Debug.Log("SkillUserListCount: "+skillUserList.Count);

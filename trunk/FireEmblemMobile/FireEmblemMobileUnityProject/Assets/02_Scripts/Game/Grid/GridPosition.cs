@@ -44,5 +44,10 @@ namespace Game.Grid
         {
             return "x: " + X + " y: " + Y;
         }
+
+        public Vector2Int AsVectorInt()
+        {
+            return new Vector2Int(X, Y);
+        }
     }
 }
