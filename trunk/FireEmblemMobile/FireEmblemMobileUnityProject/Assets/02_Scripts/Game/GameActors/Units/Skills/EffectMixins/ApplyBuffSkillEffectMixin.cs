@@ -12,7 +12,7 @@ namespace Game.GameActors.Units.Skills
         public float[] applyChance;
         public BuffDebuffBase appliedBuff;
         public StatModifier AppliedStatModifier;
-
+        private bool applied = false;
        
 
         
@@ -20,20 +20,26 @@ namespace Game.GameActors.Units.Skills
         public override void Activate(Unit target,Unit caster, int level)
         {
             Debug.Log("ACTIVATE APPLY BUFF EFFECT MIXIN");
-            if (effect != null)
-                GameObject.Instantiate(effect, target.GameTransformManager.GetCenterPosition(), Quaternion.identity);
-            if (appliedBuff != null)
-                target.StatusEffectManager.AddBuffDebuff(Instantiate(appliedBuff), caster, level);
-            if (AppliedStatModifier != null)
+            float rng = Random.value;
+            if (applyChance.Length <= level || rng <= applyChance[level])
             {
-                Debug.Log("ADD STAT MODIFIER");
-                target.StatusEffectManager.AddStatModifier(Instantiate(AppliedStatModifier), level);
+                applied = true;
+                if (effect != null)
+                    GameObject.Instantiate(effect, target.GameTransformManager.GetCenterPosition(),
+                        Quaternion.identity);
+                if (appliedBuff != null)
+                    target.StatusEffectManager.AddBuffDebuff(Instantiate(appliedBuff), caster, level);
+                if (AppliedStatModifier != null)
+                {
+                    Debug.Log("ADD STAT MODIFIER");
+                    target.StatusEffectManager.AddStatModifier(Instantiate(AppliedStatModifier), level);
+                }
             }
         }
 
         public override void Deactivate(Unit target, Unit caster, int skillLevel)
         {
-            if (target == null)
+            if (target == null||!applied)
                 return;
             Debug.Log("REMOVE BUFF/DEBUFF/STAT MODIFIER");
             if (appliedBuff != null)
@@ -47,7 +53,13 @@ namespace Game.GameActors.Units.Skills
             var list = new List<EffectDescription>();
             var buff=appliedBuff==null?null:appliedBuff.GetEffectDescription(caster, level);
             var statModifier=AppliedStatModifier==null?null:AppliedStatModifier.GetEffectDescription(level);
-         
+
+            if (applyChance.Length > level)
+            {
+                string val = applyChance[level] * 100f + "%";
+                string upg = applyChance.Length > level + 1 ? applyChance[level+1] * 100f + "%" : val;
+                list.Add(new EffectDescription("Chance: ", val,upg));
+            }
             if(buff!=null)
              list.AddRange(buff);
             if(statModifier!=null)
