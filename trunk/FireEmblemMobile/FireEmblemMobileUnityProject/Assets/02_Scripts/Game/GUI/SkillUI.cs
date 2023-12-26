@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
 using Game.GameInput;
@@ -20,6 +21,7 @@ namespace LostGrace
         [SerializeField] private float scaleSmall = 0.7f;
         [SerializeField] private float scaleBig = 0.9f;
         [SerializeField] private CanvasGroup canvasGroup;
+        [SerializeField] private GameObject toggledOnEffect;
    
         [SerializeField] private Image frame;
         [SerializeField] private Image background;
@@ -106,6 +108,14 @@ namespace LostGrace
                     uses.transform.localScale = new Vector3(scaleBig, scaleBig ,scaleBig);
                 }
             }
+            else
+            {
+                var passiveMixin = skill.passiveMixins.First();
+                if (passiveMixin.toogleAble)
+                {
+                    toggledOnEffect.SetActive(passiveMixin.toggledOn);
+                }
+            }
 
             if (skill is Blessing)
             {
@@ -182,6 +192,7 @@ namespace LostGrace
             {
                 Debug.Log("Show Skill Tooltip!"+transform.position);
                 ToolTipSystem.Show(Skill,blessed, transform.position);
+                OnClicked?.Invoke(this);
             }
         }
 

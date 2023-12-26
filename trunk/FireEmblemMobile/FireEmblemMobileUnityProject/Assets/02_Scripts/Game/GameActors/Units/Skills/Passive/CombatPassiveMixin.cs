@@ -43,7 +43,8 @@ namespace Game.GameActors.Units.Skills.Passive
         {
             if (activated)
                 return;
-            Activate(target);
+            if(toogleAble&& toggledOn||!toogleAble)
+                Activate(target);
         }
 
       

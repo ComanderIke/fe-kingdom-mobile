@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using __2___Scripts.Game.Utility;
 using Game.GameActors.Items;
 using Game.GameActors.Players;
@@ -296,6 +297,11 @@ namespace LostGrace
 
                     
                 // }
+            }
+            else if (skillUI.Skill.passiveMixins.First().toogleAble)
+            {
+                skillUI.Skill.passiveMixins.First().Toggle();
+                UpdateUI();
             }
 
         }

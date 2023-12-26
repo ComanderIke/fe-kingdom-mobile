@@ -18,6 +18,11 @@ namespace Game.GameActors.Units.CharStateEffects
                 var go = Instantiate(vfxApplied, null);
                 go.transform.position = target.GameTransformManager.GetCenterPosition();
             }
+            if (vfxTakeEffect != null)
+            {
+                var go = Instantiate(vfxTakeEffect, null);
+                go.transform.position = target.GameTransformManager.GetCenterPosition();
+            }
         }
         public virtual void Unapply(Unit target,int skillLevel)
         {
@@ -25,7 +30,7 @@ namespace Game.GameActors.Units.CharStateEffects
         }
         public virtual void TakeEffect(Unit unit)
         {
-            if (vfxApplied != null)
+            if (vfxTakeEffect != null)
             {
                 var go = Instantiate(vfxTakeEffect, null);
                 go.transform.position = unit.GameTransformManager.GetCenterPosition();

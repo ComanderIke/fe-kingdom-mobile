@@ -22,6 +22,7 @@ namespace Game.GameActors.Units.CharStateEffects
         }
         public override void TakeEffect(Unit unit)
         {
+            base.TakeEffect(unit);
             switch (buffType)
             {
                 case BuffType.Cleansing: //TODO

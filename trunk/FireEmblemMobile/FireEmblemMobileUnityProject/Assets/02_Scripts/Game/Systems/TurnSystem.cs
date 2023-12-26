@@ -93,16 +93,16 @@ namespace Game.Mechanics
 
             factionManager.ActivePlayerNumber++;
             OnEndTurn?.Invoke();
+            foreach (var c in factionManager.ActiveFaction.Units)
+            {
+                c.StatusEffectManager.UpdateTurn();
+            }
             if (factionManager.ActivePlayerNumber == 0){
                 TurnCount++;
                 Debug.Log("NEW TURN: "+TurnCount);
-                foreach(var faction in factionManager.Factions)
-                {
-                    foreach (var c in faction.Units)
-                    {
-                        c.StatusEffectManager.UpdateTurn();
-                    }
-                }
+              
+                
+                
                 OnStartTurn?.Invoke();
 
             }

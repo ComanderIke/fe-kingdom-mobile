@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ArcherBP
   m_EditorClassIdentifier: 
   equippedWeaponBp: {fileID: 11400000, guid: 83e1761a127b1a54ca3c98ca2850f24a, type: 2}
-  EquippedRelic1: {fileID: 11400000, guid: 647852495d9c59d4ea6316a815ed33ec, type: 2}
+  EquippedRelic1: {fileID: 0}
   Name: Selena
   isEnemy: 0
   isBoss: 0
@@ -29,15 +29,15 @@ MonoBehaviour:
   stats:
     AttackRanges: 02000000
     BaseAttributes:
-      str: 16
+      str: 6
       dex: 10
       intel: 5
       agi: 9
       lck: 5
-      def: 13
+      def: 3
       faith: 3
       maxHp: 12
-      sum: 67
+      sum: 47
     <BaseGrowths>k__BackingField:
       str: 35
       dex: 55
@@ -64,6 +64,7 @@ MonoBehaviour:
     startSkills:
     - {fileID: 11400000, guid: e10cf9e427b74994dbb617f13be86c35, type: 2}
     - {fileID: 11400000, guid: 5d7711bb154e0264881e2d474c75cddc, type: 2}
+    - {fileID: 11400000, guid: 4763c7a10ab0a4ab28a763854732ada4, type: 2}
     startBlessing: {fileID: 0}
     maxSkillCount: 0
     maxSkillPoints: 0

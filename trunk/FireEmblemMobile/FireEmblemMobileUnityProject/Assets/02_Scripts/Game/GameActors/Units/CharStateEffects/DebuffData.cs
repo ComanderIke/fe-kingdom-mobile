@@ -13,6 +13,7 @@ namespace Game.GameActors.Units.CharStateEffects
 
         public override void Apply(Unit caster, Unit target, int skilllevel)
         {
+            Debug.Log("DEBUFF APPLY");
             base.Apply(caster,target,skilllevel);
             foreach (var negate in negateTypes)
             {
@@ -37,9 +38,13 @@ namespace Game.GameActors.Units.CharStateEffects
         }
         public override void TakeEffect(Unit unit)
         {
+            base.TakeEffect(unit);
+            Debug.Log("DEBUFF TAKE EFFECT");
             switch (debuffType)
             {
                 case DebuffType.Stunned: unit.TurnStateManager.UnitTurnFinished(); //unit set phys invulnerable
+                    break;
+                case DebuffType.Poisened: unit.Hp -= unit.MaxHp / 10;
                     break;
                 
             }
