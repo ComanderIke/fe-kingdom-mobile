@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 42cf566ca2edd3849b9a53faf87d4b3e, type: 3}
-  m_Name: Fussiliade
+  m_Name: PoisonArrows
   m_EditorClassIdentifier: 
-  Icon: {fileID: 21300000, guid: 5767bb9f24d9644269cf9ae574ffde3f, type: 3}
-  Description: Rains down areas on an area.
-  Name: Fussiliade
+  Icon: {fileID: 21300000, guid: 8a0fae565eeed4fdca5762156239dbca, type: 3}
+  Description: When active poisons attacked foes.
+  Name: Poison Arrows
   Tier: 0
-  passiveMixins: []
+  passiveMixins:
+  - {fileID: 11400000, guid: 61c8e00777c9c46cd82b6c07f29cc1b4, type: 2}
   combatSkillMixin: {fileID: 0}
-  activeMixins:
-  - {fileID: 11400000, guid: 07db0b977cb21b84098f717521f2cf6c, type: 2}
+  activeMixins: []
   maxLevel: 5
   SkillTransferData: {fileID: 0}

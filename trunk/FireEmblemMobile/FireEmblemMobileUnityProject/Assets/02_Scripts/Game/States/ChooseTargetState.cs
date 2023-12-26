@@ -334,7 +334,7 @@ namespace Game.Mechanics
                         
                          skillMixin.Activate(selectedUnit, gridSystem.Tiles, x,y);
                          
-                         WaitAfterSkills(targets, wait);
+                         WaitAfterSkills(targets, wait, skillMixin.GetDuration());
 
                      }
                      else

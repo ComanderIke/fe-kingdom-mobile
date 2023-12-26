@@ -216,10 +216,9 @@ namespace Game.GameActors.Units.Skills
                         direction.y < 0 ? 270 : 0);
                 }
 
-                var go = GameObject.Instantiate(AnimationObject,
-                    spawnAnimationAtCaster
-                        ? user.GameTransformManager.GetCenterPosition()
-                        : new Vector3(x + .5f, y + 0.5f), Quaternion.Euler(rotation), null);
+                SpawnAnimation(spawnAnimationAtCaster
+                    ? user.GameTransformManager.GetCenterPosition()
+                    : new Vector3(x + .5f, y + 0.5f),Quaternion.Euler(rotation));
             }
 
             base.PayActivationCost();
@@ -495,6 +494,11 @@ namespace Game.GameActors.Units.Skills
         public EffectType GetEffectType()
         {
             return effectType;
+        }
+
+        public float GetDuration()
+        {
+            return effectDelay > logicDelay ? effectDelay : logicDelay;
         }
 
         public int GetHealingDone(Unit selectedUnit, Unit target)

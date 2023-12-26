@@ -31,12 +31,17 @@ namespace Game.GameActors.Units.Skills
         //     this.currentUses = maxUsesPerLevel;
         //     this.hpCostPerLevel = hpCostPerLevel;
         // }
-        public void SpawnAnimation(Unit user)
+        public void SpawnAnimation(Vector3 position, Quaternion rotation=new Quaternion())
         {
             if (AnimationObject != null)
             {
-                var go = Instantiate(AnimationObject);
-                go.transform.position = user.GameTransformManager.GetCenterPosition();
+                MonoUtility.DelayFunction(() =>
+                {
+                    var go = Instantiate(AnimationObject);
+                    go.transform.position = position;
+                    go.transform.rotation = rotation;
+                }, effectDelay);
+                
 
             }
         }

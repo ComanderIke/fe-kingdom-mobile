@@ -15,7 +15,7 @@ namespace Game.GameActors.Units.Skills
 
             if (user != null)
             {
-               SpawnAnimation(user);
+               SpawnAnimation(user.GameTransformManager.GetCenterPosition());
             }
 
             base.PayActivationCost();

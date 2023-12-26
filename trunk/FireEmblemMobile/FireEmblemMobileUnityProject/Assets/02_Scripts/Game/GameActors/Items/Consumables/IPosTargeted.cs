@@ -23,5 +23,6 @@ namespace _02_Scripts.Game.GameActors.Items.Consumables
         int GetDamageDone(Unit selectedUnit, Unit target);
         string GetName();
         EffectType GetEffectType();
+        float GetDuration();
     }
 }
