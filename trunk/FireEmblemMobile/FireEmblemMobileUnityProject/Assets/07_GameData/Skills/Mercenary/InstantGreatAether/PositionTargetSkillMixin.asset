@@ -12,15 +12,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f15adf6c1890134c8534ab6f2181d3c, type: 3}
   m_Name: PositionTargetSkillMixin
   m_EditorClassIdentifier: 
-  AnimationObject: {fileID: 0}
+  synergies:
+    list: []
+  conditionBigPackage:
+    CompareType: 0
+    Conditions: []
+  skillEffectMixins:
+  - {fileID: 11400000, guid: 0dd4003a484c4f644b209b15e1772f05, type: 2}
+  AnimationObject: {fileID: 157412573960146067, guid: 7a42bd101948a411496196954ffbea71,
+    type: 3}
+  spawnAnimationAtCaster: 1
+  useScreenPosition: 0
+  effectType: 2
+  effectDelay: 0.2
+  logicDelay: 0.4
   maxUsesPerLevel: 01000000
   hpCostPerLevel: 0a000000
+  costIsSkillPoints: 1
   range: 00000000
   size: 02000000
   jump: 0
+  jumpPush: 0
+  rotateFXTowardsTarget: 0
+  stopOnCollision: 0
+  OnCollisionEffects: []
   minRange: 0
   confirmPositionClick: 1
+  skillTransferData: {fileID: 0}
+  skillTransferDataType: 0
+  Animation: 
   <TargetArea>k__BackingField: 3
-  SkillEffects:
-  - {fileID: 11400000, guid: 0dd4003a484c4f644b209b15e1772f05, type: 2}
   <Rooted>k__BackingField: 1
+  <IncludeUnitPos>k__BackingField: 0
+  <IncludeMiddlePos>k__BackingField: 0
