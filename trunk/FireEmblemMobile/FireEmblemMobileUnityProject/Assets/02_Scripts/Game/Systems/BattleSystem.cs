@@ -245,6 +245,8 @@ namespace Game.Mechanics
             if (defender is IBattleActor defenderActor)
             {
                 battlePreview.Defender = defenderActor;
+                int attackerDmg = attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defender);//Do Before cause Battle could change attack dmg
+                int defenderDmg = defenderActor.BattleComponent.BattleStats.GetDamageAgainstTarget(attacker);
                 battleSimulation = new BattleSimulation(attacker, defenderActor, attackPosition);
                 battleSimulation.StartBattle(true, grid);
                 
@@ -253,6 +255,11 @@ namespace Game.Mechanics
                 //Debug.Log(defender.Hp+" "+battleSimulation.combatRounds[0].DefenderStats.MaxHp+ " "+battleSimulation.combatRounds[0].DefenderStats.CurrentHp);
                 battlePreview.AttackerStats = new BattlePreviewStats(battleSimulation.combatRounds[0].AttackerStats,true, battleSimulation.combatRounds[0].AttackerHP);
                 battlePreview.DefenderStats = new BattlePreviewStats(battleSimulation.combatRounds[0].DefenderStats,battleSimulation.combatRounds[0].DefenderCanCounter, battleSimulation.combatRounds[0].DefenderHP);
+               // battlePreview.AttackerStats.Damage = attackerDmg;
+               // battlePreview.DefenderStats.Damage = defenderDmg;
+                Debug.Log("TODO: Right Damage shown? Wrath damage...");
+                
+
                 // battlePreview.AttackerStats = new BattlePreviewStats(attacker.BattleComponent.BattleStats.GetDamage(),
                 //     attacker.Stats.BaseAttributes.AGI, defenderActor.BattleComponent.BattleStats.GetDamageType(),
                 //     defenderActor.BattleComponent.BattleStats.GetDamageType() == DamageType.Physical
@@ -280,14 +287,17 @@ namespace Game.Mechanics
             else
             {
                 battlePreview.TargetObject = defender;
+
+                int attackerDmg = attacker.BattleComponent.BattleStats.GetDamage();//Do Before cause Battle could change attack dmg
                 
                 battleSimulation = new BattleSimulation(attacker, defender, attackPosition);
+               
                 battleSimulation.StartBattle(true, grid);
                 
                 battlePreview.AttacksData = battleSimulation.combatRounds[0].AttacksData;
                 Debug.Log("BattlePreview: " + battleSimulation.combatRounds[0].AttackerAttackCount + "DefenderAttackCount: " +
                           battleSimulation.combatRounds[0].DefenderAttackCount);
-                battlePreview.AttackerStats = new BattlePreviewStats(attacker.BattleComponent.BattleStats.GetDamage(),
+                battlePreview.AttackerStats = new BattlePreviewStats(attackerDmg,
                     attacker.Stats.BaseAttributes.AGI, attacker.BattleComponent.BattleStats.GetDamageType(),0,
                     attacker.Stats.BaseAttributes.DEX,
                     0,
@@ -348,7 +358,7 @@ namespace Game.Mechanics
               
              }
 
-            battleSim.StartBattle(false, true);
+            battleSim.StartBattle(true, true);
             return battleSim;
         }
 

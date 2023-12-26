@@ -23,7 +23,7 @@ namespace Game.GameActors.Units.Skills.Passive
 
         private float GetChance(Unit unit, int level)
         {
-            float chance = procChance[level];
+            float chance = procChance.Length>level?procChance[level]:procChance[0];
             if (skillTransferDataIsMultiplier && SkillTransferData.data != null)
                 chance *= (float)SkillTransferData.data;
             switch (scalingType)
@@ -40,7 +40,7 @@ namespace Game.GameActors.Units.Skills.Passive
         }
         public override List<EffectDescription> GetEffectDescription(Unit unit, int level)
         {
-            var list = new List<EffectDescription>();
+            var list = base.GetEffectDescription(unit, level);
            
             list.Add(new EffectDescription("Chance:", ""+GetChance(unit,level)*100+"%", ""+GetChance(unit,level+1)*100+"%"));
             if(scalingType!=AttributeType.NONE)

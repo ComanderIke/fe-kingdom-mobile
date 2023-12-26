@@ -29,7 +29,7 @@ MonoBehaviour:
   stats:
     AttackRanges: 01000000
     BaseAttributes:
-      str: 12
+      str: 7
       dex: 8
       intel: 2
       agi: 6
@@ -37,7 +37,7 @@ MonoBehaviour:
       def: 6
       faith: 1
       maxHp: 18
-      sum: 47
+      sum: 42
     <BaseGrowths>k__BackingField:
       str: 65
       dex: 45
@@ -64,9 +64,12 @@ MonoBehaviour:
     startSkills:
     - {fileID: 11400000, guid: 9a11bbe18cbaf5f4aab101ca8b350ce9, type: 2}
     - {fileID: 11400000, guid: 57e794fbbf74a464f8dba328685c3cc8, type: 2}
+    - {fileID: 11400000, guid: dd53fbe60d517a14bade662667967c94, type: 2}
     startBlessing: {fileID: 0}
     maxSkillCount: 0
+    maxSkillPoints: 0
     skillPoints: 0
+    nextCastIsFree: 0
   rpgClass: 1
   bluePrintID: Mercenary
   dialogActor: {fileID: 0}
@@ -94,6 +97,8 @@ MonoBehaviour:
       type: 3}
     <FaceSprite>k__BackingField: {fileID: 21300000, guid: ce11d8fd8ecbbd14291b5aca204c9b9d,
       type: 3}
+    <AlternateBodySprite>k__BackingField: {fileID: 0}
+    <AlternateFaceSprite>k__BackingField: {fileID: 0}
     <Name>k__BackingField: Dragan, The Emerald Enforcer
     <Description>k__BackingField: "The greek world has moved on from it\u2019s golden
       years, centuries before the demons ever took the land and the seas. The cities
