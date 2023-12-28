@@ -203,15 +203,15 @@ namespace Game.Grid
             if (!locations.Contains(new Vector2Int(x, y)))//(Tiles[x, y].GridObject == null||Tiles[x, y].GridObject==unit)
                 locations.Add(new Vector2Int(x, y)); //TODO Height?!
             GridManager.NodeHelper.Nodes[x, y].C = c;
-            c++;
+            c+=tileChecker.GetMovementCost(x, y, unit);
             if (CheckField(x - 1, y, unit, range) && GridManager.NodeHelper.NodeFaster(x - 1, y, c))
-                GetMoveLocations(x - 1, y, locations, range - 1, c, unit);
+                GetMoveLocations(x - 1, y, locations, range - tileChecker.GetMovementCost(x-1, y, unit), c, unit);
             if (CheckField(x + 1, y, unit, range) && GridManager.NodeHelper.NodeFaster(x + 1, y, c))
-                GetMoveLocations(x + 1, y, locations, range - 1, c, unit);
+                GetMoveLocations(x + 1, y, locations, range - tileChecker.GetMovementCost(x+1, y, unit), c, unit);
             if (CheckField(x, y - 1, unit, range) && GridManager.NodeHelper.NodeFaster(x, y - 1, c))
-                GetMoveLocations(x, y - 1, locations, range - 1, c, unit);
+                GetMoveLocations(x, y - 1, locations, range - tileChecker.GetMovementCost(x, y-1, unit), c, unit);
             if (CheckField(x, y + 1, unit, range) && GridManager.NodeHelper.NodeFaster(x, y + 1, c))
-                GetMoveLocations(x, y + 1, locations, range - 1, c, unit);
+                GetMoveLocations(x, y + 1, locations, range - tileChecker.GetMovementCost(x, y+1, unit), c, unit);
         }
 
         #endregion

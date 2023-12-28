@@ -16,6 +16,7 @@ namespace Game.GameActors.Units
             Stunned,
             Aggressive,
             UseSkill,
+            OnRange,
             Guard
         }
 
@@ -74,6 +75,29 @@ namespace Game.GameActors.Units
         public Vector2Int GetActivePatrolPoints()
         {
             return patrolPoints[activeIndex];
+        }
+
+        public bool WillAttackOnTargetInRange()
+        {
+            return state == AIBehaviour.State.Aggressive || state == State.OnRange||state==State.Guard;
+        }
+
+        public bool WillMoveIfAble()
+        {
+            return state != State.Guard;
+        }
+
+        public bool WillStayIfNoEnemies()
+        {
+            return state == AIBehaviour.State.Guard || state == AIBehaviour.State.OnRange;
+        }
+
+        public void AttackTriggered()
+        {
+            if (state == State.Patrol || state == State.OnRange)
+            {
+                state = State.Aggressive;
+            }
         }
     }
 }

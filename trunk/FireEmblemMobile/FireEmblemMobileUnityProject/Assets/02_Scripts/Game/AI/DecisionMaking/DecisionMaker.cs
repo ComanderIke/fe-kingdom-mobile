@@ -126,6 +126,10 @@ namespace Game.AI
             
                 //Get towards current patrolPoint and if reached activate it.
             }
+            else if (unit.AIComponent.AIBehaviour != null &&
+                     unit.AIComponent.AIBehaviour.WillStayIfNoEnemies()){
+                return new AIUnitAction(unit.GridComponent.GridPosition.AsVectorInt(), null, UnitActionType.Wait, unit,Vector2Int.zero);
+            }
             else
             {
                 var chaseTarget = ChooseChaseTarget(unit);
@@ -250,6 +254,8 @@ namespace Game.AI
         }
         private AIUnitAction CreateAttackAction(IAIAgent attacker)
         {
+            if(attacker.AIComponent.AIBehaviour!=null)
+                attacker.AIComponent.AIBehaviour.AttackTriggered();
             return new AIUnitAction(attacker.AIComponent.BestAttackTarget.OptimalAttackPos,attacker.AIComponent.BestAttackTarget.Target, UnitActionType.Attack, attacker, Vector2Int.zero );
 
         }
@@ -482,8 +488,12 @@ namespace Game.AI
                     unit.AIComponent.AIBehaviour.UpdateState(unit, unit.AIComponent.AttackableTargets.Count()!=0 );
                 if (unit.AIComponent.AttackableTargets.Count() != 0)
                 {
-                    if (unit.AIComponent.AIBehaviour == null|| unit.AIComponent.AIBehaviour.GetState() == AIBehaviour.State.Aggressive)
+                    if (unit.AIComponent.AIBehaviour == null ||
+                        unit.AIComponent.AIBehaviour.WillAttackOnTargetInRange())
+                    {
                         attackerList.Add(unit);
+                    }
+                        
                 }
                     
             }
@@ -540,7 +550,12 @@ namespace Game.AI
         {
             foreach (var unit in units)
             {
-               unit.AIComponent.MovementOptions=gridInfo.GetMoveLocations(unit);
+                if(unit.AIComponent.AIBehaviour==null ||unit.AIComponent.AIBehaviour.WillMoveIfAble())
+                    unit.AIComponent.MovementOptions=gridInfo.GetMoveLocations(unit);
+                else
+                {
+                    unit.AIComponent.MovementOptions = new List<Vector2Int>() { unit.GridComponent.GridPosition.AsVectorInt()};
+                }
             }
         }
         public void InitTurnData(IEnumerable<IAIAgent> units)
