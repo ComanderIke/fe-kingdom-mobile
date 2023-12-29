@@ -208,6 +208,17 @@ namespace Game.GameActors.Units.Numbers
                     ? AttributeBonusState.Decreasing
                     : AttributeBonusState.Same;
         }
+        public AttributeBonusState GetGrowthBonusState(AttributeType attribute)
+        {
+            int baseAttributesAndWeapon = BaseGrowths.GetAttributeStat(attribute);
+            return baseAttributesAndWeapon <
+                   CombinedGrowths().GetAttributeStat(attribute)
+                ? AttributeBonusState.Increasing
+                : baseAttributesAndWeapon >
+                  CombinedGrowths().GetAttributeStat(attribute)
+                    ? AttributeBonusState.Decreasing
+                    : AttributeBonusState.Same;
+        }
 
      
         public void SetBane(AttributeType bane)
@@ -243,5 +254,7 @@ namespace Game.GameActors.Units.Numbers
         }
 
         public event Action onStatsUpdated;
+
+      
     }
 }

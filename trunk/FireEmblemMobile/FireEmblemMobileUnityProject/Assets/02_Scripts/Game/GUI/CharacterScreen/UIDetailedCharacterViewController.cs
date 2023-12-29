@@ -23,7 +23,7 @@ public class UIDetailedCharacterViewController : UICharacterViewController
     [SerializeField] private Image blessingEffect;
     [SerializeField] private Image blessingEffect2;
     [SerializeField] private Image blessingImage;
-
+    [SerializeField] private TextMeshProUGUI attributeHeaderText;
     [SerializeField] private UIBoonBaneController boonBaneController;
     public void SkillTreeClicked()
     {
@@ -81,6 +81,7 @@ public class UIDetailedCharacterViewController : UICharacterViewController
     [SerializeField] private Color baneColor;
     [SerializeField] private Color boonColor;
     [SerializeField] private Color normalColor;
+    
     protected override void UpdateUI(Unit unit)
     {
         if(uiAnimationSpriteSwapper!=null)
@@ -88,6 +89,15 @@ public class UIDetailedCharacterViewController : UICharacterViewController
         if (unit != base.unit&&boonBaneController!=null)
         {
             boonBaneController.SoftResetBoonBane();
+        }
+
+        if (showAttributes)
+        {
+            attributeHeaderText.SetText("Attributes");
+        }
+        else
+        {
+            attributeHeaderText.SetText("Growths");
         }
         base.UpdateUI(unit);
         Lv.SetText("Lv. "+unit.ExperienceManager.Level);

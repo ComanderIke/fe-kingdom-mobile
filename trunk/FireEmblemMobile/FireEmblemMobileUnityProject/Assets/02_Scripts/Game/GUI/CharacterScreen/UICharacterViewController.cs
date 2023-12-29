@@ -117,16 +117,36 @@ public class UICharacterViewController : MonoBehaviour
         sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Critavoid,physical);
         CritAvoid.SetValue(unit.BattleComponent.BattleStats.GetCritAvoid(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
 
-        
-        STR.SetValue(unit.Stats.CombinedAttributes().STR,unit.Stats.GetAttributeBonusState(AttributeType.STR));
-        INT.SetValue(unit.Stats.CombinedAttributes().INT,unit.Stats.GetAttributeBonusState(AttributeType.INT));
-        DEX.SetValue(unit.Stats.CombinedAttributes().DEX,unit.Stats.GetAttributeBonusState(AttributeType.DEX));
-        AGI.SetValue(unit.Stats.CombinedAttributes().AGI,unit.Stats.GetAttributeBonusState(AttributeType.AGI));
-        CON.SetValue(unit.Stats.CombinedAttributes().MaxHp,unit.Stats.GetAttributeBonusState(AttributeType.CON));
-        FTH.SetValue(unit.Stats.CombinedAttributes().FAITH,unit.Stats.GetAttributeBonusState(AttributeType.FTH));
-        LCK.SetValue(unit.Stats.CombinedAttributes().LCK,unit.Stats.GetAttributeBonusState(AttributeType.LCK));
-        DEF.SetValue(unit.Stats.CombinedAttributes().DEF,unit.Stats.GetAttributeBonusState(AttributeType.DEF));
+        if (showAttributes)
+        {
+            STR.SetValue(unit.Stats.CombinedAttributes().STR,unit.Stats.GetAttributeBonusState(AttributeType.STR));
+            INT.SetValue(unit.Stats.CombinedAttributes().INT,unit.Stats.GetAttributeBonusState(AttributeType.INT));
+            DEX.SetValue(unit.Stats.CombinedAttributes().DEX,unit.Stats.GetAttributeBonusState(AttributeType.DEX));
+            AGI.SetValue(unit.Stats.CombinedAttributes().AGI,unit.Stats.GetAttributeBonusState(AttributeType.AGI));
+            CON.SetValue(unit.Stats.CombinedAttributes().MaxHp,unit.Stats.GetAttributeBonusState(AttributeType.CON));
+            FTH.SetValue(unit.Stats.CombinedAttributes().FAITH,unit.Stats.GetAttributeBonusState(AttributeType.FTH));
+            LCK.SetValue(unit.Stats.CombinedAttributes().LCK,unit.Stats.GetAttributeBonusState(AttributeType.LCK));
+            DEF.SetValue(unit.Stats.CombinedAttributes().DEF,unit.Stats.GetAttributeBonusState(AttributeType.DEF));
+        }
+        else
+        {
+            STR.SetValue(unit.Stats.CombinedGrowths().STR,unit.Stats.GetGrowthBonusState(AttributeType.STR));
+            INT.SetValue(unit.Stats.CombinedGrowths().INT,unit.Stats.GetGrowthBonusState(AttributeType.INT));
+            DEX.SetValue(unit.Stats.CombinedGrowths().DEX,unit.Stats.GetGrowthBonusState(AttributeType.DEX));
+            AGI.SetValue(unit.Stats.CombinedGrowths().AGI,unit.Stats.GetGrowthBonusState(AttributeType.AGI));
+            CON.SetValue(unit.Stats.CombinedGrowths().MaxHp,unit.Stats.GetGrowthBonusState(AttributeType.CON));
+            FTH.SetValue(unit.Stats.CombinedGrowths().FAITH,unit.Stats.GetGrowthBonusState(AttributeType.FTH));
+            LCK.SetValue(unit.Stats.CombinedGrowths().LCK,unit.Stats.GetGrowthBonusState(AttributeType.LCK));
+            DEF.SetValue(unit.Stats.CombinedGrowths().DEF,unit.Stats.GetGrowthBonusState(AttributeType.DEF));
+        }
         //Debug.Log("FTH: "+unit.Stats.BaseAttributes.FAITH+" "+unit.Stats.CombinedAttributes().FAITH+" "+unit.Stats.BonusAttributesFromFood.FAITH+" "+unit.Stats.BonusAttributesFromEffects.FAITH+" "+unit.Stats.BonusAttributesFromEquips.FAITH+" "+unit.Stats.BonusAttributesFromWeapon.FAITH+" "+unit.Stats.BaseAttributesAndWeapons().FAITH+unit.Stats.GetAttributeBonusState(AttributeType.FTH));
+    }
+
+    protected bool showAttributes = true;
+    public void ToggleAttributeGrowths()
+    {
+        showAttributes = !showAttributes;
+        UpdateUI(unit);
     }
 
     public void CombatStatsButtonClicked()

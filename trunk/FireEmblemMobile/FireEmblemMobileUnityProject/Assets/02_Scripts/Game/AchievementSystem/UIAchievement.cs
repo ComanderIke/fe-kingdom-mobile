@@ -67,6 +67,7 @@ public class UIAchievement : MonoBehaviour
             claimText.text = State.Claimed?"Claimed":"Claim";
             ClaimIcon.sprite = State.Achieved ? ClaimSprite : greyClaimSprite;
             canvasGroup.alpha = State.Claimed ? .3f : 1f;
+            canvasGroup.interactable = !State.Claimed;
             BackgroundImage.sprite = State.Achieved ? State.Claimed?BackgroundSpriteNormal: BackgroundSpriteAchieved : BackgroundSpriteNormal;
             rewardText.text =""+ Information.RewardAmount;
             rewardCanvasGroup.alpha = State.Achieved?1f:.5f;
