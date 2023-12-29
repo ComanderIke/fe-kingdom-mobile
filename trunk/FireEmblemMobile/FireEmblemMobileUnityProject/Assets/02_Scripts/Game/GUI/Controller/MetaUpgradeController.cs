@@ -90,10 +90,10 @@ public class MetaUpgradeController : MonoBehaviour
                 }
                 else
                 {
-                    if (upg.blueprint.availableAtStart)
+                    // if (upg.blueprint.availableAtStart)
+                    //     upg.locked = false;
+                    // else
                         upg.locked = false;
-                    else
-                        upg.locked = true;
                 }
         }
         UpdateUI();
