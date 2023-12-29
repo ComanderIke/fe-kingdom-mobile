@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using _02_Scripts.Game.GUI.Utility;
 using Game.GameActors.Units.Numbers;
 using UnityEngine;
@@ -6,9 +7,26 @@ using UnityEngine;
 public class MiscellaneousMetaUpgradeMixin : MetaUpgradeMixin
 {
     public SerializableDictionary<MiscellaneousType, int> intValues;
+
     public override void Activate(int level)
     {
-        throw new System.NotImplementedException();
+        foreach (KeyValuePair<MiscellaneousType, int> valuePair in intValues)
+        {
+            switch (valuePair.Key)
+            {
+                case MiscellaneousType.DayBonuses: break;
+                case MiscellaneousType.NightMaluses: break;
+                case MiscellaneousType.BattleGoldReward: break;
+                case MiscellaneousType.CriticalHitIncrease: break;
+                case MiscellaneousType.DamageDoneIncrease: break;
+                case MiscellaneousType.DamageReceivedIncrease: break;
+                case MiscellaneousType.GemstoneMaxSouls: break;
+                case MiscellaneousType.MaxStatCaps1: break;
+                case MiscellaneousType.MaxStatCaps2: break;
+                case MiscellaneousType.GemStoneMergeAmount: break;
+                case MiscellaneousType.GoldBonusPerTurnCount: break;
+            }
+        }
     }
 }
 

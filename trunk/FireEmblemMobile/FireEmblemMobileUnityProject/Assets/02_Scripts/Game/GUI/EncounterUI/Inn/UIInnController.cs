@@ -48,6 +48,9 @@ namespace Game.GUI.EncounterUI.Inn
         private List<Recipe> used;
         private UIShopItemController test;
         private InnEncounterNode node;
+        public static float PriceRate { get; set; }
+        public static int FoodSlots { get; set; }
+
         private void OnDestroy()
         {
             party.onActiveUnitChanged -= ActiveUnitChanged;

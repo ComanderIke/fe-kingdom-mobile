@@ -58,10 +58,18 @@ namespace Game.WorldMapStuff.Model
             }
         }
 
+        public int MaxItems { get; set; }
+        public static Dictionary<ItemBP, int> StartItems { get; set; }
+
 
         public Convoy()
         {
             items = new List<StockedItem>();
+            foreach (KeyValuePair<ItemBP, int> keyValuePair in StartItems)
+            {
+                Debug.Log("TODO Filter for Storage and Convoy Items");
+                items.Add(new StockedItem(keyValuePair.Key.Create(), keyValuePair.Value));
+            }
            
         }
         public override string ToString()

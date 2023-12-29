@@ -28,6 +28,8 @@ public class Church
         alreadyAcceptedBlessing = new Dictionary<Unit, Blessing>();
         alreadyGeneratedBlessing = new Dictionary<Unit, Blessing>();
     }
+
+    public static float PriceRate { get; set; }
     // public void AddItem(ShopItem item)
     // {
     //     shopItems.Add(item);

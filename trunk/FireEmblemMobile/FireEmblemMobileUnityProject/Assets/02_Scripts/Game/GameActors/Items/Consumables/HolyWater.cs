@@ -14,6 +14,8 @@ namespace Game.GameActors.Items.Weapons
        
         }
 
+        public static int ExtraFaithAmount { get; set; }
+
         public override void Use(Unit character, Party convoy)
         {
             

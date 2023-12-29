@@ -13,6 +13,9 @@ public class Smithy
 
 
     public List<EquipableItem> shopItems = new List<EquipableItem>();
+    public static float PriceRate { get; set; }
+    public static int MaxUpgradeLevel { get; set; }
+
     public void AddItem(EquipableItem item)
     {
         shopItems.Add(item);

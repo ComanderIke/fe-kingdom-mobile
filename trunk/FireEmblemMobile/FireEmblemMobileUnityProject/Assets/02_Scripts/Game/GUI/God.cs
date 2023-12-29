@@ -13,6 +13,8 @@ namespace LostGrace
         public BlessingBP BlessingBp;
         public Material GlowMaterial;
         [field:SerializeField]public ChronikEntry ChronikComponent { get; set; }
+        [field:SerializeField]public float BondExpRate { get; set; }
+        [field:SerializeField]public int MaxBondLevel { get; set; }
 
 
         public Blessing GetBlessing()

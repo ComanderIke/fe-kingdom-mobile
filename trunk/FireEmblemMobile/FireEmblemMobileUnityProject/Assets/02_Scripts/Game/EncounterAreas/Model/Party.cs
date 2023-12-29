@@ -121,8 +121,8 @@ namespace Game.WorldMapStuff.Model
                 return null;
             }
         }
-        
-       
+
+        public static int StartGold { get; set; }
 
 
         public void SetActiveUnit(Unit unit)

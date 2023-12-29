@@ -24,6 +24,12 @@ namespace Game.GameActors.Players
         public bool RerollSkills { get; set; }
         public bool RerollLevelUps { get; set; }
         public bool RevivalStoneStart { get; set; }
+        public bool PartyMemberAfterArea1 { get; set; }
+        public bool PartyMemberAfterArea2 { get; set; }
+        public bool PartyMemberAfterArea3 { get; set; }
+        public bool PartyMemberAfterArea4 { get; set; }
+        public bool PartyMemberAfterArea5 { get; set; }
+        public bool PartyMemberAfterArea6 { get; set; }
     }
 
     [System.Serializable]

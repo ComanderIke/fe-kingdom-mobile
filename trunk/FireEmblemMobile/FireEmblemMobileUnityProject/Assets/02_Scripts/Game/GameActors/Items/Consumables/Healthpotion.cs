@@ -16,6 +16,9 @@ namespace Game.GameActors.Items.Weapons
             this.healEffect = healEffect;
             this.percentage = percentage;
         }
+
+        public static int ExtraHealAmount { get; set; }
+
         public override void Use(Unit character, Party convoy)
         {
             Debug.Log("Use Healthpotion!");

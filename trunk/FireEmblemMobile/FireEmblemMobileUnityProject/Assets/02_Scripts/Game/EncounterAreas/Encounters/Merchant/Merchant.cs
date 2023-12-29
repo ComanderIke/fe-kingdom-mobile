@@ -16,6 +16,10 @@ public class Merchant
         this.merchantName = merchantName;
     }
     public float priceMultiplier = 1.0f;
+    public static float PriceRateSelling { get; set; }
+    public static float PriceRateBuying { get; set; }
+    public static int SlotCount { get; set; }
+
     public void AddItem(ShopItem item)
     {
         shopItems.Add(item);

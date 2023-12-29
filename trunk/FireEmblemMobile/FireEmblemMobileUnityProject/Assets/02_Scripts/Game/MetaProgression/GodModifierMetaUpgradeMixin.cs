@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using _02_Scripts.Game.GUI.Utility;
 using LostGrace;
 using UnityEngine;
@@ -10,7 +11,18 @@ public class GodModifierMetaUpgradeMixin: MetaUpgradeMixin
 
     public override void Activate(int level)
     {
-        throw new System.NotImplementedException();
+        foreach (KeyValuePair<God, GodModifierType> keyValuePair in godModifierType)
+        {
+            switch (keyValuePair.Value)
+            {
+                case GodModifierType.BondExp:
+                    keyValuePair.Key.BondExpRate = percentage[level];
+                    break;
+                case GodModifierType.MaxBondLevelINT:
+                    keyValuePair.Key.MaxBondLevel = (int)percentage[level];
+                    break;
+            }
+        }
     }
 }
 public enum GodModifierType
