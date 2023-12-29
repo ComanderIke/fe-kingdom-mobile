@@ -8,6 +8,10 @@ public class ItemModifierMetaUpgradeMixin : MetaUpgradeMixin
     public SerializableDictionary<ResourceType, int> startResource;
     public SerializableDictionary<ItemBP, int> startItems;
     public SerializableDictionary<ItemModifierType, int> itemModifiers;
+    public override void Activate(int level)
+    {
+        throw new System.NotImplementedException();
+    }
 }
 public enum ItemModifierType
 {

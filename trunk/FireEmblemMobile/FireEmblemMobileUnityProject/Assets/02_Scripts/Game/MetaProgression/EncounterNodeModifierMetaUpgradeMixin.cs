@@ -6,6 +6,10 @@ using UnityEngine;
 public class EncounterNodeModifierMetaUpgradeMixin : MetaUpgradeMixin
 {
     public SerializableDictionary<EncounterNodeModifierType, int> modifiers;
+    public override void Activate(int level)
+    {
+        throw new System.NotImplementedException();
+    }
 }
 
 public enum EncounterNodeModifierType

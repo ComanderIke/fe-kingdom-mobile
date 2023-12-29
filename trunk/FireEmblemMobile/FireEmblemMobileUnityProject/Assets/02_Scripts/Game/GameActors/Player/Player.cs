@@ -11,6 +11,20 @@ using UnityEngine;
 
 namespace Game.GameActors.Players
 {
+    public class PlayerFlags
+    {
+        public bool BoonBaneUnlocked { get; set; }
+        public bool StrongestAttributeIncrease { get; set; }
+        public bool GluttonyForceEat { get; set; }
+        public bool SpecialUpgradeUnlocked { get; set; }
+        public bool EventPreviewsUnlocked { get; set; }
+        public bool StartingRelic { get; set; }
+        public bool MoralityVisible { get; set; }
+        public bool WeakestAttributeIncrease { get; set; }
+        public bool RerollSkills { get; set; }
+        public bool RerollLevelUps { get; set; }
+        public bool RevivalStoneStart { get; set; }
+    }
 
     [System.Serializable]
     public class Player : MonoBehaviour, IDataPersistance
@@ -45,8 +59,10 @@ namespace Game.GameActors.Players
                 SaveGameManager.RegisterDataPersistanceObject(this);
             }
         }
-        
 
+
+        public Modifiers Modifiers;
+        public PlayerFlags Flags;
         private void OnDestroy()
         {
             SaveGameManager.UnregisterDataPersistanceObject(this);

@@ -7,6 +7,10 @@ public class PartyModifierMetaUpgradeMixin : MetaUpgradeMixin
     public int[] value;
     public PartyModifierType ModifierType;
     public SerializableDictionary<PartyFlag, bool> flags;
+    public override void Activate(int level)
+    {
+        throw new System.NotImplementedException();
+    }
 }
 
 public enum PartyFlag

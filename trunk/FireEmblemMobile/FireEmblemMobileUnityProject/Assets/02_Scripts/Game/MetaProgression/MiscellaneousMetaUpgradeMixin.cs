@@ -6,6 +6,10 @@ using UnityEngine;
 public class MiscellaneousMetaUpgradeMixin : MetaUpgradeMixin
 {
     public SerializableDictionary<MiscellaneousType, int> intValues;
+    public override void Activate(int level)
+    {
+        throw new System.NotImplementedException();
+    }
 }
 
 public enum MiscellaneousType

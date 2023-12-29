@@ -8,6 +8,10 @@ public class GodModifierMetaUpgradeMixin: MetaUpgradeMixin
     public float[] percentage;
     public SerializableDictionary<God,GodModifierType> godModifierType;
 
+    public override void Activate(int level)
+    {
+        throw new System.NotImplementedException();
+    }
 }
 public enum GodModifierType
 {

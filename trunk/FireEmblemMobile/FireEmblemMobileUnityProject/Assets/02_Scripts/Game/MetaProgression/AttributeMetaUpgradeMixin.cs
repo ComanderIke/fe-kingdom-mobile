@@ -6,4 +6,8 @@ using UnityEngine;
 public class AttributeMetaUpgradeMixin : MetaUpgradeMixin
 {
     public SerializableDictionary<AttributeType, int> attributes;
+    public override void Activate(int level)
+    {
+        throw new System.NotImplementedException();
+    }
 }

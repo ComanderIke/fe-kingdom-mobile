@@ -5,6 +5,10 @@ public class GoldModifierMetaUpgradeMixin: MetaUpgradeMixin
 {
     public float[] percentage;
     public GoldModifierType ModifierType;
+    public override void Activate(int level)
+    {
+        throw new System.NotImplementedException();
+    }
 }
 public enum GoldModifierType
 {
