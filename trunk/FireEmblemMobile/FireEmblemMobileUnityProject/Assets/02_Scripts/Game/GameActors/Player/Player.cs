@@ -49,7 +49,7 @@ namespace Game.GameActors.Players
 
         private void Awake()
         {
-           
+            
             if (instance != null)
             {
                 Debug.LogWarning("Destroy player instance(duplicate)");
@@ -61,6 +61,8 @@ namespace Game.GameActors.Players
             {
                 Debug.Log("No Player Instance found! Making this new instance");
                 instance = this;
+                Flags = new PlayerFlags();
+                Modifiers = new Modifiers();
                 DontDestroyOnLoad(gameObject);
                 SaveGameManager.RegisterDataPersistanceObject(this);
             }

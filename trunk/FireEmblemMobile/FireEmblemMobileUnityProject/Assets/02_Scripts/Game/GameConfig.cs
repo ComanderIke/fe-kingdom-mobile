@@ -27,7 +27,8 @@ namespace LostGrace
         {
             foreach (var unit in units)
             {
-                unit.Stats.BaseAttributes += BonusStartAttributes;
+                if(BonusStartAttributes!=null)
+                    unit.Stats.BaseAttributes += BonusStartAttributes;
                 if (Player.Instance.Flags.StrongestAttributeIncrease)
                 {
                     int strongest = 0;

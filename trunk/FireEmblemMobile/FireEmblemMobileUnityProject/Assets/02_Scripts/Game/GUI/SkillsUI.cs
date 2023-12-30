@@ -22,6 +22,8 @@ namespace LostGrace
         public void Show(Unit unit, bool showDeleteIfFull=false)
         {
             this.unit = unit;
+            
+            gameObject.SetActive(true);
            // Debug.Log("SKill UI Show");
             transform.DeleteAllChildren();
             instantiatedButtons = new List<SkillUI>();
@@ -68,6 +70,12 @@ namespace LostGrace
         public void AddSkill(Skill chooseSkill1Skill)
         {
             InstantiateSkill(chooseSkill1Skill, false);
+        }
+
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+            
         }
     }
 }

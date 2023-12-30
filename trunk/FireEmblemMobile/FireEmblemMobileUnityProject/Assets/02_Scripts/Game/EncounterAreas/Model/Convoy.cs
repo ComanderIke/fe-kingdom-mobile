@@ -65,11 +65,12 @@ namespace Game.WorldMapStuff.Model
         public Convoy()
         {
             items = new List<StockedItem>();
-            foreach (KeyValuePair<ItemBP, int> keyValuePair in StartItems)
-            {
-                Debug.Log("TODO Filter for Storage and Convoy Items");
-                items.Add(new StockedItem(keyValuePair.Key.Create(), keyValuePair.Value));
-            }
+            if(StartItems!=null)
+                foreach (KeyValuePair<ItemBP, int> keyValuePair in StartItems)
+                {
+                    Debug.Log("TODO Filter for Storage and Convoy Items");
+                    items.Add(new StockedItem(keyValuePair.Key.Create(), keyValuePair.Value));
+                }
            
         }
         public override string ToString()

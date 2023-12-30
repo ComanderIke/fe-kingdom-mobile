@@ -84,6 +84,8 @@ public class UIDetailedCharacterViewController : UICharacterViewController
     
     protected override void UpdateUI(Unit unit)
     {
+        if (!canvas.enabled)
+            return;
         if(uiAnimationSpriteSwapper!=null)
             uiAnimationSpriteSwapper.Init(unit.visuals.CharacterSpriteSet);
         if (unit != base.unit&&boonBaneController!=null)
@@ -93,11 +95,13 @@ public class UIDetailedCharacterViewController : UICharacterViewController
 
         if (showAttributes)
         {
-            attributeHeaderText.SetText("Attributes");
+            if(attributeHeaderText!=null)
+                attributeHeaderText.SetText("Attributes");
         }
         else
         {
-            attributeHeaderText.SetText("Growths");
+            if(attributeHeaderText!=null)
+                attributeHeaderText.SetText("Growths");
         }
         base.UpdateUI(unit);
         Lv.SetText("Lv. "+unit.ExperienceManager.Level);
@@ -202,6 +206,7 @@ Debug.Log("UPDATE UI");
     public override void Hide()
     {
         equipmentController.Hide();
+        skillsUI.Hide();
         base.Hide();
     }
 }
