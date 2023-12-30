@@ -31,9 +31,6 @@ namespace Game.GameInput
 
         private bool dragInitiated;
         private bool dragStarted;
-        private bool doubleClick;
-        private float timerForDoubleClick;
-        private const float DOUBLE_CLICK_TIME = 0.4f;
         //private bool unitSelectedBeforeClicking = false;
         
         
