@@ -84,7 +84,9 @@ namespace LostGrace
             TweenUtility.FadeIn(charViewCanvasGroup);
             TweenUtility.FadeIn(charButtonsCanvasGroup);
             TweenUtility.FadeIn(partySizeCanvasGroup);
-            characterSelector.Show(GameConfig.Instance.GetUnits());
+            var units = GameConfig.Instance.GetPlayerUnits();
+            
+            characterSelector.Show(units);
             characterSelector.OnUnitSelected-=UnitSelected;
             characterSelector.OnUnitSelected+=UnitSelected;
             
