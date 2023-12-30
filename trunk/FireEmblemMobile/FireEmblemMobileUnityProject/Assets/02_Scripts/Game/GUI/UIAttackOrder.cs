@@ -20,7 +20,9 @@ namespace LostGrace
         {
             parent.DeleteAllChildren();
             var label= GameObject.Instantiate(attackLabelPrefab, parent);
-            label.GetComponentInChildren<TextMeshProUGUI>().text = "<bounce>"+attackLabel;
+            var uiAttackLabel = label.GetComponent<UIAttackLabel>();
+            uiAttackLabel.SetValue("<bounce>" + attackLabel, attackerIsPlayer);
+            
            // Debug.Log("TODO Consecutive Attacks(Brave Effect)");
           //  Debug.Log("Attacks in Order: ");
          // attackLabelText.text = attackLabel;
