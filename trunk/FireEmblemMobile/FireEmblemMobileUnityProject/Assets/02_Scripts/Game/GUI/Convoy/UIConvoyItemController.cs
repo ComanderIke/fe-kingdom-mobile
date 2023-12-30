@@ -4,14 +4,19 @@ using System.Collections.Generic;
 using Game.GameActors.Items;
 using Game.GameActors.Items.Weapons;
 using Game.GameActors.Units;
+using Game.GameActors.Units.CharStateEffects;
 using MoreMountains.Feedbacks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+public interface IShopItemClickedReceiver
+{
+    void ItemClicked(UIConvoyItemController item);
+}
 public class UIConvoyItemController : UIButtonController
 {
-    public StockedItem stockedItem;
+    [HideInInspector]public StockedItem stockedItem;
     public TextMeshProUGUI stockCount;
     [SerializeField] private Image gemImage;
     [SerializeField] private GameObject slot;
@@ -21,9 +26,48 @@ public class UIConvoyItemController : UIButtonController
     [SerializeField] private Sprite relicSprite;
     [SerializeField] private Sprite combatItemSprite;
     [SerializeField] private MMF_Player addedFeedbacks;
-    public int index;
-    public virtual void SetValues(StockedItem stockeditem, int index, bool added=false,bool grayedOut=false)
+    [HideInInspector] public int index;
+    private IShopItemClickedReceiver clickedReceiver;
+    [SerializeField] private float tooExpensiveAlpha = 1f;
+    private bool affordable = false;
+    public Color tooExpensiveColor;
+    public Color normalColor;
+    public TextMeshProUGUI cost;
+    public Image costIcon;
+    public void SetValues(StockedItem stockeditem,bool affordable, bool first,IShopItemClickedReceiver receiver)
     {
+        ShopItemState();
+        this.affordable = affordable;
+        this.clickedReceiver = receiver;
+        this.cost.SetText(""+stockeditem.item.cost);
+        if (affordable)
+        {
+            cost.color = normalColor;
+            canvasGroup.alpha = 1;
+        }
+        else
+        {
+            cost.color = tooExpensiveColor;
+            canvasGroup.alpha = tooExpensiveAlpha;
+        }
+        SetValues(stockeditem, 0, first);
+    }
+
+    void ShopItemState()
+    {
+        costIcon.gameObject.SetActive(true);
+        cost.gameObject.SetActive(true);
+    }
+    void ConvoyItemState()
+    {
+        costIcon.gameObject.SetActive(false);
+        cost.gameObject.SetActive(false);
+    }
+    public void SetValues(StockedItem stockeditem, int index, bool added=false,bool grayedOut=false)
+    {
+        ConvoyItemState();
+       
+        
         if(added)
             addedFeedbacks.PlayFeedbacks();
         backgroundImage.sprite = normalSprite;
@@ -53,7 +97,7 @@ public class UIConvoyItemController : UIButtonController
             slot.gameObject.SetActive(false);
         }
         this.stockedItem = stockeditem;
-        SetValues(stockeditem.item.Sprite, stockeditem.item.Description, grayedOut);
+        SetValues(stockeditem.item.Sprite, grayedOut);
         stockCount.text = "" + stockeditem.stock+"x";
         stockCount.gameObject.SetActive(stockeditem.stock > 1);
         if (grayedOut)
@@ -66,13 +110,14 @@ public class UIConvoyItemController : UIButtonController
             button.interactable = true;
             canvasGroup.alpha = 1.0f;
         }
+        
     }
     
 
     public virtual void Clicked()
     {
         onClicked?.Invoke(this);
-      
+        clickedReceiver?.ItemClicked(this);
        
         //FindObjectOfType<UIMerchantController>().ItemClicked(item.item);
         // ToolTipSystem.Show(transform.position, item.name, item.description, item.sprite);

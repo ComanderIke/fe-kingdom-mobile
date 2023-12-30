@@ -46,7 +46,6 @@ namespace Game.GUI.EncounterUI.Inn
         private Recipe specialItem;
         
         private List<Recipe> used;
-        private UIShopItemController test;
         private InnEncounterNode node;
         public static float PriceRate { get; set; }
         public static int FoodSlots { get; set; }
