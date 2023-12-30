@@ -22,9 +22,6 @@ namespace Game.GameInput
 
         private Dictionary<UnitInputController,bool> dragInitiated;
         private Dictionary<UnitInputController,bool> dragStarted;
-        private bool doubleClick;
-        private float timerForDoubleClick;
-        private const float DOUBLE_CLICK_TIME = 0.4f;
         private bool unitSelectedBeforeClicking = false;
         public bool Active { get; private set; }
 
@@ -95,7 +92,6 @@ namespace Game.GameInput
             AddToDictionary(unitController);
             dragStarted[unitController] = false;
             dragInitiated[unitController] = false;
-            doubleClick = false;
             if (InputReceiver==null)
             {
                 return;
@@ -107,19 +103,10 @@ namespace Game.GameInput
             // if (EventSystem.current.currentSelectedGameObject==null||EventSystem.current.currentSelectedGameObject.CompareTag(TagManager.UnitTag))
             // {
                 //Debug.Log("Clicked Unit: "+unitController.unit.name);
-                if (timerForDoubleClick != 0 &&  Time.time - timerForDoubleClick < DOUBLE_CLICK_TIME&&lastClickedUnitInputController==unitController)
-                {
-                   
-                    timerForDoubleClick = 0;
-                    unitSelectedBeforeClicking = unitController.unit.TurnStateManager.IsSelected;
-                    doubleClick = true;
-                }
-                else
-                {
-                    timerForDoubleClick = Time.time;
-                    if (unitController.unit.IsDragable())
-                        DragManager.StartDrag(unitController.transform);
-                }
+            
+                if (unitController.unit.IsDragable())
+                    DragManager.StartDrag(unitController.transform);
+            
 
                 lastClickedUnitInputController = unitController;
                 // }
@@ -155,21 +142,15 @@ namespace Game.GameInput
 
                 // unitController.boxCollider.enabled = true;
             }
-            else if (!CameraSystem.IsDragging && (unitSelectedBeforeClicking||( !GridGameManager.Instance.FactionManager.IsActiveFaction(unit.Faction)||doubleClick||unit.TurnStateManager.IsWaiting)))
+            else if (!CameraSystem.IsDragging && (unitSelectedBeforeClicking||( !GridGameManager.Instance.FactionManager.IsActiveFaction(unit.Faction)||unit.TurnStateManager.IsWaiting)))
             {
                 // if (EventSystem.current.currentSelectedGameObject==null||EventSystem.current.currentSelectedGameObject.CompareTag(TagManager.UnitTag))
                 // {
-                    if(doubleClick)
-                        InputReceiver.ActorDoubleClicked(unit);
-                    else
                         InputReceiver.ActorClicked(unit);
                 // }
             }
 
-            if (doubleClick)
-            {
-                doubleClick = false;
-            }
+            
         }
 
         public void OnDrop(UnitInputController unitInputController)
