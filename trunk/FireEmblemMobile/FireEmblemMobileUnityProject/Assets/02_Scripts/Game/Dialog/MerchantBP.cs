@@ -19,7 +19,7 @@ public class MerchantBP:ScriptableObject
         var merchant = new Merchant(merchantFace, merchantName);
         foreach (var item in items)
         {
-            merchant.AddItem(new ShopItem(item.item.Create(), item.stock));
+            merchant.AddItem(new StockedItem(item.item.Create(), item.stock));
         }
 
         return merchant;

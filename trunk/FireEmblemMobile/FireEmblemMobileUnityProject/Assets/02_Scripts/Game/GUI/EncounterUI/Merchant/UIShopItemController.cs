@@ -8,22 +8,22 @@ using UnityEngine.UI;
 
 public interface IShopItemClickedReceiver
 {
-    void ItemClicked(ShopItem item);
+    void ItemClicked(StockedItem item);
 }
 public class UIShopItemController : UIButtonController
 {
     public Color tooExpensiveColor;
     public Color normalColor;
     public TextMeshProUGUI cost;
-    public ShopItem item;
+    public StockedItem item;
     public TextMeshProUGUI stockCount;
     private IShopItemClickedReceiver clickedReceiver;
     [SerializeField] private float tooExpensiveAlpha = 1f;
   
     private bool affordable = false;
-    public void SetValues(ShopItem item, bool affordable,IShopItemClickedReceiver receiver)
+    public void SetValues(StockedItem item, bool affordable,IShopItemClickedReceiver receiver)
     {
-        this.cost.SetText(""+item.cost);
+        this.cost.SetText(""+item.item.cost);
         this.item = item;
         this.clickedReceiver = receiver;
         this.affordable = affordable;
@@ -47,7 +47,7 @@ public class UIShopItemController : UIButtonController
 
         if (item != null)
         {
-            image.sprite = item.Item.Sprite;
+            image.sprite = item.item.Sprite;
             stockCount.text = "" + item.stock + "x";
             stockCount.gameObject.SetActive(item.stock > 1);
 
@@ -60,7 +60,7 @@ public class UIShopItemController : UIButtonController
   
     public void Clicked()
     {
-        Debug.Log("ItemClicked!" + item.name);
+        Debug.Log("ItemClicked!" + item.item.Name);
         clickedReceiver.ItemClicked(item);
         // ToolTipSystem.Show(transform.position, item.name, item.description, item.sprite);
     }

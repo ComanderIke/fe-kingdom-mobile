@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Game.GameActors.Items;
 using Game.GameActors.Players;
 using Game.WorldMapStuff.Model;
 using LostGrace;
@@ -17,14 +18,14 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
     public Party party;
     // public TextMeshProUGUI personName;
     //public TextMeshProUGUI talkText;
-    private List<UIShopItemController> shopItems;
+    private List<UIShopConvoyItemController> shopItems;
     [SerializeField] private UICharacterFace characterFace;
     [SerializeField] private UIUnitIdleAnimation unitIdleAnimation;
     public Transform itemParent;
     public GameObject shopItemPrefab;
     private Merchant merchant;
     public BuyItemUI buyItemUI;
-    private ShopItem selectedItem;
+    private StockedItem selectedItem;
     [SerializeField] private NPCFaceController npcFaceController;
     private List<GameObject> instantiatedItems= new List<GameObject>();
     public Button switchBuyButton;
@@ -46,7 +47,7 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
         canvas.enabled = true;
         this.party = party;
         this.merchant = merchant;
-        shopItems = new List<UIShopItemController>();
+        shopItems = new List<UIShopConvoyItemController>();
         selectedItem = merchant.shopItems[0];
         buying = true;
         npcFaceController.Show("Travelers are welcome to check out these wares.");
@@ -108,14 +109,14 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
                     var go = Instantiate(shopItemPrefab, itemParent);
                     var item = merchant.shopItems[i];
                     instantiatedItems.Add(go);
-                    shopItems.Add(go.GetComponent<UIShopItemController>());
-                    bool affordable = party.CanAfford(merchant.GetCost(merchant.shopItems[i]));
+                    shopItems.Add(go.GetComponent<UIShopConvoyItemController>());
+                    bool affordable = party.CanAfford(merchant.GetCost(merchant.shopItems[i].item));
 
-                    shopItems[i].SetValues(item, affordable, this);
+                    shopItems[i].SetValues(item, i, affordable, this);
                 }
 
                 if (selectedItem != null)
-                    buyItemUI.Show(selectedItem.Item, party.CanAfford(merchant.GetCost(merchant.shopItems[0])), buying);
+                    buyItemUI.Show(selectedItem.item, party.CanAfford(merchant.GetCost(merchant.shopItems[0].item)), buying);
                 else
                 {
                     buyItemUI.Hide();
@@ -139,13 +140,13 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
                 var go=Instantiate(shopItemPrefab, itemParent);
                 var item = party.Convoy.Items[i];
                 instantiatedItems.Add(go);
-                shopItems.Add(go.GetComponent<UIShopItemController>());
+                shopItems.Add(go.GetComponent<UIShopConvoyItemController>());
                 bool affordable =true; //Because we are selling
     
-                shopItems[i].SetValues(new ShopItem(item.item, item.stock), affordable, this);
+                shopItems[i].SetValues(item, i,affordable, this);
             }
             if(selectedItem !=null)
-                buyItemUI.Show(selectedItem.Item,  true, buying);
+                buyItemUI.Show(selectedItem.item,  true, buying);
             else
             {
                 buyItemUI.Hide();
@@ -163,12 +164,12 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
     {
         if (buying)
         {
-            merchant.Buy(selectedItem);
+            merchant.Buy(selectedItem.item);
             
         }
         else
         {
-            merchant.Sell(selectedItem);
+            merchant.Sell(selectedItem.item);
           
         }
 
@@ -192,7 +193,7 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
         else
         {
             if (party.Convoy.Items.Count != 0)
-                selectedItem = new ShopItem(party.Convoy.Items[0].item, party.Convoy.Items[0].stock);
+                selectedItem = party.Convoy.Items[0];
             else
             {
                 selectedItem = null;
@@ -207,22 +208,22 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
         {
             shopItem.Deselect();
   
-            if (shopItem.item.Equals(selectedItem))
+            if (shopItem.stockedItem.item.Equals(selectedItem))
             {
            
                 shopItem.Select();
             }
         }
     }
-    public void ItemClicked(ShopItem item)
+    public void ItemClicked(StockedItem item)
     {
         selectedItem = item;
         UpdateUI();
-        Debug.Log(item.name+ " "+item.cost);
+        //Debug.Log(item.name+ " "+item.cost);
         if(buying)
-            buyItemUI.Show(item.Item,  party.CanAfford(merchant.GetCost(item)), buying);
+            buyItemUI.Show(item.item,  party.CanAfford(merchant.GetCost(item.item)), buying);
         else
-            buyItemUI.Show(item.Item,  true, buying);
+            buyItemUI.Show(item.item,  true, buying);
     }
 
     public void Hide()
@@ -254,7 +255,7 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
     {
         buying = false;
         if (party.Convoy.Items.Count != 0)
-            selectedItem = new ShopItem(party.Convoy.Items[0].item, party.Convoy.Items[0].stock);
+            selectedItem = party.Convoy.Items[0];
         else
         {
             selectedItem = null;

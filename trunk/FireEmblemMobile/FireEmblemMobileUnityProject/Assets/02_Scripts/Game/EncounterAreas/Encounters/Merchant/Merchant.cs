@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Merchant
 {
-    public List<ShopItem> shopItems = new List<ShopItem>();
+    public List<StockedItem> shopItems = new List<StockedItem>();
     public Sprite merchantFace;
     public string merchantName;
 
@@ -20,17 +20,17 @@ public class Merchant
     public static float PriceRateBuying { get; set; }
     public static int SlotCount { get; set; }
 
-    public void AddItem(ShopItem item)
+    public void AddItem(StockedItem item)
     {
         shopItems.Add(item);
     }
 
     public void RemoveItem(Item selectedItem)
     {
-        ShopItem itemToRemove = null;
+        StockedItem itemToRemove = null;
         foreach (var shopItem in shopItems)
         {
-            if (shopItem.Item == selectedItem)
+            if (shopItem.item == selectedItem)
             {
               
                 itemToRemove = shopItem;
@@ -50,21 +50,21 @@ public class Merchant
         }
     }
 
-    public void Buy(ShopItem selectedItem)
+    public void Buy(Item selectedItem)
     {
         Player.Instance.Party.Money -=GetCost(selectedItem);
-        Player.Instance.Party.AddItem(selectedItem.Item);
-        RemoveItem(selectedItem.Item);
+        Player.Instance.Party.AddItem(selectedItem);
+        RemoveItem(selectedItem);
     }
 
-    public void Sell(ShopItem selectedItem)
+    public void Sell(Item selectedItem)
     {
         Player.Instance.Party.Money += GetCost(selectedItem);
-        Player.Instance.Party.RemoveItem(selectedItem.Item);
+        Player.Instance.Party.RemoveItem(selectedItem);
     }
 
   
-    public int GetCost(ShopItem item)
+    public int GetCost(Item item)
     {
         if (Player.Instance.Party.Convoy.ContainsItem(GameBPData.Instance.GetMemberCard()))
             priceMultiplier = 0.8f;

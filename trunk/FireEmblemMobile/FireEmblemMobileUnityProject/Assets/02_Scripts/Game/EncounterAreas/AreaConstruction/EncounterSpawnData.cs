@@ -16,7 +16,6 @@ public class EncounterSpawnData
     public List<ColumnSpawn> ColumnSpawns;
     public List<ColumnSpawn> Area2ColumnSpawns;
     public EncounterNodeData startNodeData;
-    public EncounterNodeData FirstEncounter;
     public List<EncounterNodeData> allNodeDatas;
     public List<EncounterNodeData> nodeDatas;
     public List<EncounterNodeData> battleNodeDatas;

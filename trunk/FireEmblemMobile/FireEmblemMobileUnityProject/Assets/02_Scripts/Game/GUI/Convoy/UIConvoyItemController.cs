@@ -22,7 +22,7 @@ public class UIConvoyItemController : UIButtonController
     [SerializeField] private Sprite combatItemSprite;
     [SerializeField] private MMF_Player addedFeedbacks;
     public int index;
-    public void SetValues(StockedItem stockeditem, int index, bool added=false,bool grayedOut=false)
+    public virtual void SetValues(StockedItem stockeditem, int index, bool added=false,bool grayedOut=false)
     {
         if(added)
             addedFeedbacks.PlayFeedbacks();
@@ -69,7 +69,7 @@ public class UIConvoyItemController : UIButtonController
     }
     
 
-    public void Clicked()
+    public virtual void Clicked()
     {
         onClicked?.Invoke(this);
       
