@@ -105,7 +105,7 @@ LeanTween.cancel(wholeBottomUI);
         }
         void UnitDeselected(IGridActor unit)
         {
-           Debug.Log("Unit Deselected: "+unit);
+           // Debug.Log("Unit Deselected: "+unit);
             if (unit.Faction.IsPlayerControlled)
             {
                 bottomUICharacterSelected.Hide();

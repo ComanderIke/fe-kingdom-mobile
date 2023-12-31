@@ -31,7 +31,7 @@ namespace LostGrace
         {
             if (dataPersistanceObjects.Contains(obj))
             {
-                Debug.Log("Unregister data-persistant object: "+obj.ToString());
+                MyDebug.LogPersistance("Unregister data-persistant object: "+obj.ToString());
                 dataPersistanceObjects.Remove(obj);
             }
         }

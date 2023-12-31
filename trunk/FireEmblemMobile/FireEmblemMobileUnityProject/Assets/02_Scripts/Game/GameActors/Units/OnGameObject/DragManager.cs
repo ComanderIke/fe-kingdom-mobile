@@ -85,7 +85,7 @@ namespace Game.GameActors.Units.OnGameObject
         }
         public void StartDrag(Transform dragObjectTransform)
         {
-            Debug.Log("START DRAG FOR: "+dragObjectTransform);
+            MyDebug.LogInput("Start drag for: "+dragObjectTransform);
             AddToDictionary(dragObjectTransform);
             DragStarted[dragObjectTransform] = true;
             IsDragging[dragObjectTransform] = false;
@@ -125,7 +125,7 @@ namespace Game.GameActors.Units.OnGameObject
             AddToDictionary(dragObjectTransform);
             // if (!DragStarted[dragObjectTransform])
             //     return;
-            Debug.Log("END DRAG FOR: "+dragObjectTransform);
+            MyDebug.LogInput("END DRAG FOR: "+dragObjectTransform);
             IsDragging[dragObjectTransform] = false;
             if(dragObjectTransform!=null)
                 dragObjectTransform.localPosition = posBeforeDrag;

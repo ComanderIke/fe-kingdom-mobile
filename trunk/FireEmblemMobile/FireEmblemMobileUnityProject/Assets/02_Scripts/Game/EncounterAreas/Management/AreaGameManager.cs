@@ -424,7 +424,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     }
     public void NodeClicked(EncounterNode encounterNode)
     {
-        Debug.Log("Node Clicked: "+encounterNode);
+        MyDebug.LogInput("Node Clicked: "+encounterNode);
       
         cursor.Show();
         cursor.SetPosition(encounterNode.gameObject.transform.position);
@@ -504,7 +504,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         float time = 0;
         float speed = 3;
         actionSystem.Move(target);
-        Debug.Log("Reset Moveoptions!");
+        // Debug.Log("Reset Moveoptions!");
         ResetMoveOptions();
         ShowMovedRoads();
        
@@ -681,7 +681,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
 
     public void CleanUp()
     {
-        Debug.Log("TODO here and in gridgamemanager cleanup happens multiple times from ondestroy/ondisable and cleanup");
+        MyDebug.LogTODO("TODO here and in gridgamemanager cleanup happens multiple times from ondestroy/ondisable and cleanup");
         Deactivate();
     }
 }

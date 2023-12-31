@@ -113,7 +113,7 @@ namespace Game.Mechanics
             }
             else if (conditionManager.CheckWin())
             {
-                Debug.Log("WON");
+                MyDebug.LogLogic("Won Battle");
                 return WinState.Create();
             }
             return NextState;
@@ -122,7 +122,7 @@ namespace Game.Mechanics
        
         public override void Exit()
         {
-            Debug.Log("PlayerphaseExit");
+            // Debug.Log("PlayerphaseExit");
             if (stateMachine.GetCurrentState() != mainState)
                 stateMachine.SwitchState(mainState);
             stateMachine.Exit();

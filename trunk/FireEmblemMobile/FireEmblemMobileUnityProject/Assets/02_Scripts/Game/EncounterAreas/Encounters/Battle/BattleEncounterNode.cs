@@ -25,6 +25,7 @@ public class BattleEncounterNode : EncounterNode
 
     public override void Activate(Party party)
     {
+        MyDebug.LogLogic("Visiting Battle" );
         base.Activate(party);
         //TODO Continue should be called after the battle has ended.
         Continue();
@@ -40,7 +41,7 @@ public class BattleEncounterNode : EncounterNode
             cnt++;
         }
 
-        MyDebug.Log("Visited BattleMap: " + BattleMap.name, Color.magenta);
+        MyDebug.LogTest("Visited BattleMap: " + BattleMap.name);
         party.VisitedMaps.Add(BattleMap);
         GameSceneController.Instance.LoadBattleLevel(levelindex, BattleMap); //, this);
     }

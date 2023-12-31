@@ -335,7 +335,7 @@ namespace Game.Map
 
         public void SwapUnits(IGridActor unit,IGridActor unit2)
         {
-            Debug.Log("Swap Units:  "+((Unit)unit).name+" "+((Unit)unit2).name);
+            MyDebug.LogInput("Swap Units:  "+((Unit)unit).name+" "+((Unit)unit2).name);
             var tmpPosX = unit.GridComponent.GridPosition.X;
             var tmpPosY = unit.GridComponent.GridPosition.Y;
             var tmpPos2X = unit2.GridComponent.GridPosition.X;
@@ -655,7 +655,7 @@ namespace Game.Map
 
         public void DeleteObjectAtTile(Tile gridComponentOriginTile)
         {
-            Debug.Log("TODO TEST IF THIS WORKS AS INTENDED"+gridComponentOriginTile.X+" "+gridComponentOriginTile.Y);
+            MyDebug.LogTODO("TODO TEST IF THIS WORKS AS INTENDED"+gridComponentOriginTile.X+" "+gridComponentOriginTile.Y);
             gridComponentOriginTile.GridObject = null;
         }
     }

@@ -150,7 +150,7 @@ public class UIStorageController : MonoBehaviour
     }
     public void Hide()
     {
-        Debug.Log("Hide Convoy");
+        MyDebug.LogUI("Hide Convoy");
         DeselectAllItems();
         if(storage!=null)
             storage.Deselect();

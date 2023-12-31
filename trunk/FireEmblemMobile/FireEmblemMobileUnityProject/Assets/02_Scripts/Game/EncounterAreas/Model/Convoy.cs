@@ -50,7 +50,7 @@ namespace Game.WorldMapStuff.Model
             {
                 if (selectedItemIndex == -1)
                 {
-                    Debug.Log("No Item Selected");
+                    // Debug.Log("No Item Selected");
                     return null;
                 }
 
@@ -85,7 +85,7 @@ namespace Game.WorldMapStuff.Model
         }
         public void AddItem(Item item)
         {
-            Debug.Log("Add Item to Convoy: "+item);
+            MyDebug.LogLogic("Add Item to Convoy: "+item);
             bool instock = false;
             foreach (var stockedItem in Items)
             {
@@ -104,7 +104,7 @@ namespace Game.WorldMapStuff.Model
         }
         public void AddItem(StockedItem item)
         {
-            Debug.Log("Add Item to Convoy: "+item);
+            MyDebug.LogLogic("Add Stocked Item to Convoy: "+item);
             
             Items.Add(item);
             //convoyUpdated?.Invoke();

@@ -257,7 +257,6 @@ namespace Game.Mechanics
                 battlePreview.DefenderStats = new BattlePreviewStats(battleSimulation.combatRounds[0].DefenderStats,battleSimulation.combatRounds[0].DefenderCanCounter, battleSimulation.combatRounds[0].DefenderHP);
                // battlePreview.AttackerStats.Damage = attackerDmg;
                // battlePreview.DefenderStats.Damage = defenderDmg;
-                Debug.Log("TODO: Right Damage shown? Wrath damage...");
                 
 
                 // battlePreview.AttackerStats = new BattlePreviewStats(attacker.BattleComponent.BattleStats.GetDamage(),

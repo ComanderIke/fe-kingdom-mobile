@@ -67,7 +67,7 @@ public class UIConvoyController:MonoBehaviour
         {
             if (!itemClicked&& !useButton.WasPressingUntilLastFrame&&!equipButton.WasPressingUntilLastFrame&&!dropButton.WasPressingUntilLastFrame)
             {
-                Debug.Log("Deselect");
+                // Debug.Log("Deselect");
                 convoy.Deselect();
           
                 UpdateValues();
@@ -76,7 +76,7 @@ public class UIConvoyController:MonoBehaviour
             }
             else
             {
-                Debug.Log("Dont Deselect");
+                // Debug.Log("Dont Deselect");
             }
             //
         }
@@ -143,7 +143,7 @@ public class UIConvoyController:MonoBehaviour
   
     public void Show()
     {
-        Debug.Log("ShowConvoy");
+        MyDebug.LogUI("Show Convoy");
         Show(typeof(Item), ConvoyContext.Default);
     }
     public void Show(ConvoyContext context)
@@ -176,7 +176,7 @@ public class UIConvoyController:MonoBehaviour
         var go = Instantiate(convoyItemPrefab, DropAreas[index].transform);
         var itemController = go.GetComponent<UIConvoyItemController>();
         bool isNewItem = newItems.Contains(stockedItem);
-        Debug.Log("Create Item: "+stockedItem.item+" isNew: "+isNewItem);
+        MyDebug.LogLogic("Create Item: "+stockedItem.item+" isNew: "+isNewItem);
       
       
        // Debug.Log("Item type: "+stockedItem.item.GetType()+" "+typeFilter.IsAssignableFrom(stockedItem.item.GetType()));
@@ -264,11 +264,11 @@ public class UIConvoyController:MonoBehaviour
             if (y.item == null) return 1;
             if (x.item.GetType()== typeFilter)
             {
-                Debug.Log("X is Relic");
+                // Debug.Log("X is Relic");
                 
                 if (y.item.GetType() == typeFilter)
                 {
-                    Debug.Log("Both Relics");
+                    // Debug.Log("Both Relics");
                     return 0;
                 }
 
@@ -277,10 +277,10 @@ public class UIConvoyController:MonoBehaviour
 
             if (y.item.GetType() == typeFilter)
             {
-                Debug.Log("Y is Relic");
+                // Debug.Log("Y is Relic");
                 return 1;
             }
-            Debug.Log("No Gem");  
+            // Debug.Log("No Gem");  
             return 0;
         });
 
@@ -327,9 +327,8 @@ public class UIConvoyController:MonoBehaviour
     private int selecteditemIndex = 0;
     private void ItemClicked(UIConvoyItemController clickedItem)
     {
-        Debug.Log("ItemClicked "+clickedItem.stockedItem.item);
+        MyDebug.LogInput("ItemClicked "+clickedItem.stockedItem.item);
         itemClicked = true;
-        Debug.Log("Item Clicked: "+clickedItem);
         convoy.Select(clickedItem.stockedItem);
         ToolTipSystem.Show(clickedItem.stockedItem, clickedItem.transform.position);
         UpdateValues();
@@ -338,7 +337,7 @@ public class UIConvoyController:MonoBehaviour
     private List<StockedItem> newItems;
     void AddedItem(StockedItem item)
     {
-        Debug.Log("Added item: "+item.item);
+        // Debug.Log("Added item: "+item.item);
         newItems.Add(item);
         UpdateValues();
     }

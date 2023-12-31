@@ -145,7 +145,7 @@ namespace Game.GameActors.Units.OnGameObject
 
         void ToogleMoveEffect(bool canMove)
         {
-            Debug.Log("Unit can move: "+canMove);
+            // Debug.Log("Unit can move: "+canMove);
             if(canMove)
                 canMoveVFX.Play();
             else
@@ -168,21 +168,21 @@ namespace Game.GameActors.Units.OnGameObject
         {
             if (unit.equippedWeapon == null)
             {
-                Debug.Log("EquippedWeapon null");
+                MyDebug.LogTest("EquippedWeapon null");
                 return;
             }
 
             if (weaponTypeIcon == null)
             {
-                Debug.Log("WeaponTypeIcon is null");
+                MyDebug.LogTest("WeaponTypeIcon is null");
             }
             if (unit.equippedWeapon.WeaponType == null)
             {
-                Debug.Log("WeaponType is null" +unit.name+" "+unit.equippedWeapon.Name);
+                MyDebug.LogTest("WeaponType is null" +unit.name+" "+unit.equippedWeapon.Name);
             }
             if (unit.equippedWeapon.WeaponType.Icon == null)
             {
-                Debug.Log("Icon is null");
+                MyDebug.LogTest("Icon is null");
             }
             weaponTypeIcon.sprite = unit.equippedWeapon.WeaponType.Icon;
            

@@ -11,7 +11,7 @@ namespace Game.WorldMapStuff.Model
 
         public void AddMorality(float add) // make it harder to gain morality if its close to 1 and harder to lose morality if close to -1?
         {
-            Debug.Log("Add Morality: "+add);
+            MyDebug.LogLogic("Add Morality: "+add);
             if (add == 0)
                 return;
             morality += add;

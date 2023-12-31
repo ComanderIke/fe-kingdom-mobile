@@ -90,7 +90,6 @@ namespace Game.GameActors.Units.Skills
         private int GetScaledDamage(Unit user, Unit target, int level)
         {
             int baseDamage = dmg[level];
-            Debug.Log("Base Damage: "+dmg[level]);
             if (scalingcoeefficient.Length > 0)
             {
                 float scaling = scalingcoeefficient[0];
@@ -111,14 +110,11 @@ namespace Game.GameActors.Units.Skills
             {
                 
             }
-            Debug.Log("Scaled Damage: "+baseDamage);
             if (target != null && pierceArmorPercentage.Length > 0)
             {
-                Debug.Log("PIERCING");
                 baseDamage += (int)pierceArmorPercentage[level < pierceArmorPercentage.Length ? level : 0] *
                                target.BattleComponent.BattleStats.GetPhysicalResistance();
             }
-            Debug.Log("Pierce Damage: "+baseDamage+" "+target);
             return baseDamage;
         }
         public override void Deactivate(Unit user, Unit caster, int skillLevel)

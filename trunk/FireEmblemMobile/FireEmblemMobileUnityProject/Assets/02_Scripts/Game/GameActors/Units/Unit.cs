@@ -495,7 +495,7 @@ namespace Game.GameActors.Units
         }
         public void Heal(int heal, bool percentage=false)
         {
-            Debug.Log(name+" HEALED: "+ heal);
+            MyDebug.LogLogic(name+" HEALED: "+ heal);
             float tmpHeal = heal;
             if (percentage)
             {

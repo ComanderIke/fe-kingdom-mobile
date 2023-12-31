@@ -36,7 +36,7 @@ namespace Game.GameInput
 
         public void DraggedOnGrid(int x, int y)
         {
-            Debug.Log("DraggedOnGrid");
+            MyDebug.LogInput("DraggedOnGrid");
             selectionDataProvider.SetSelectedTile(x, y);
             ClickedOnGrid(x, y, true);
         }
@@ -98,7 +98,7 @@ namespace Game.GameInput
             //Debug.Log("SetUnitToOriginPosition" + selectionDataProvider.SelectedActor.GameTransformManager.GameObject);
             if (selectionDataProvider.SelectedActor != null)
             {
-                Debug.Log("SetUnitToOriginPosition" + selectionDataProvider.SelectedActor.GameTransformManager.GameObject+" "+  selectionDataProvider.SelectedActor.GridComponent.OriginTile);
+                // Debug.Log("SetUnitToOriginPosition" + selectionDataProvider.SelectedActor.GameTransformManager.GameObject+" "+  selectionDataProvider.SelectedActor.GridComponent.OriginTile);
                 gridSystem.SetUnitPosition(selectionDataProvider.SelectedActor,
                     selectionDataProvider.SelectedActor.GridComponent.OriginTile, deleteOtherGridObject,
                     moveGameObject);
@@ -139,19 +139,19 @@ namespace Game.GameInput
             ResetDragSelectables();
             gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[gridObject.GridComponent.GridPosition.X,
                 gridObject.GridComponent.GridPosition.Y]);
-            Debug.Log("Dragged Over: "+gridObject.GridComponent.GridPosition.X+" "+gridObject.GridComponent.GridPosition.Y);
+            MyDebug.LogInput("Dragged Over: "+gridObject.GridComponent.GridPosition.X+" "+gridObject.GridComponent.GridPosition.Y);
             if (!gridObject.IsEnemy(selectionDataProvider.SelectedActor))
             {
                 if (gridObject == selectionDataProvider.SelectedActor)
                 {
-                    Debug.Log("Dragged over selected Actor");
+                    MyDebug.LogInput("Dragged over selected Actor");
                
                     ResetInput(true);
                     UpdateMovementPath(selectionDataProvider.SelectedActor);
                 }
                 else
                 {
-                    Debug.Log("Dragged over Ally! Show only Cursor on StartPos and ad as valid Position for passthrough");
+                    MyDebug.LogInput("Dragged over Ally! Show only Cursor on StartPos and ad as valid Position for passthrough");
                     if (gridSystem.IsTileMoveableAndActive(gridObject.GridComponent.GridPosition.X,
                             gridObject.GridComponent.GridPosition.Y))
                     {
@@ -258,7 +258,7 @@ namespace Game.GameInput
 
                     return;
                 }
-                Debug.Log("Clicked on Grid: "+x+" "+y+" "+selectionDataProvider.SelectedActor +" "+resetPosition);
+                MyDebug.LogTest("Clicked on Grid: "+x+" "+y+" "+selectionDataProvider.SelectedActor +" "+resetPosition);
                 if (gridSystem.GridLogic.IsFieldFreeAndActive(x, y) && selectionDataProvider.SelectedActor != null &&
                     (!selectionDataProvider.SelectedActor.TurnStateManager.HasMoved||(selectionDataProvider.SelectedActor.GridComponent.Canto>0&& !selectionDataProvider.SelectedActor.TurnStateManager.HasCantoed)))
                 {
@@ -274,11 +274,11 @@ namespace Game.GameInput
                             selectionDataProvider.SetUndoAbleActor(selectionDataProvider.SelectedActor);
                         });
                         selectionDataProvider.ClearData();
-                        Debug.Log("SelectedTile");
+                        // Debug.Log("SelectedTile");
                     }
                     else
                     {
-                        Debug.Log("NonSelectedTile");
+                        // Debug.Log("NonSelectedTile");
                         inputPathManager.CalculateMousePathToPosition(selectionDataProvider.SelectedActor, x, y);
                         //Debug.Log("GameInput SetPosition");
                         //selectionDataProvider.SelectedActor.GameTransformManager.SetPosition(x, y);
@@ -541,25 +541,25 @@ namespace Game.GameInput
                   
                     if (inputPathManager.IsPreviousMovementPathEmpty())
                     {
-                        Debug.Log("PREVIOUS PATH EMPTY");
+                        // Debug.Log("PREVIOUS PATH EMPTY");
                         DraggedOverEnemyWithoutMovePath(selectedActor, x, y, enemy);
                     }
                     else
                     {
-                        Debug.Log("PREVIOUS PATH NOT EMPTY");
+                        // Debug.Log("PREVIOUS PATH NOT EMPTY");
                         int attackPositionIndex = -1;
                         bool foundAttackPosition = false;
                         attackPositionIndex = SearchForSuitableAttackPositionFromPreviousDraggedOverTiles(x, y, selectedActor,
                             attackPositionIndex, ref foundAttackPosition);
                         if (foundAttackPosition)
                         {
-                            Debug.Log("PREVIOUS PATH FOUND ATTACK POS");
+                            // Debug.Log("PREVIOUS PATH FOUND ATTACK POS");
                             inputPathManager.SetMovementPathToPrevious();
                             SearchForSuitableAttackPosition(x, y, enemy, selectedActor);
                         }
                         else
                         {
-                            Debug.Log("PREVIOUS PATH FOUND NO ATTACK POS");
+                            // Debug.Log("PREVIOUS PATH FOUND NO ATTACK POS");
                             DraggedOverEnemyWithoutMovePath(selectedActor, x, y, enemy);
                         }
                     }

@@ -404,7 +404,7 @@ namespace Game.Mechanics
             Attacker.BattleComponent.BattleStats.WrathDamage = 0;
             Defender.BattleComponent.BattleStats.WrathDamage = 0;
             //this.preview = certainHit;
-            Debug.Log("TODO if certainHit also check for skills and only do 100% procChance skills");
+            MyDebug.LogTODO("TODO if certainHit also check for skills and only do 100% procChance skills");
             if (continuos)
             {
                 int cnt = 0;

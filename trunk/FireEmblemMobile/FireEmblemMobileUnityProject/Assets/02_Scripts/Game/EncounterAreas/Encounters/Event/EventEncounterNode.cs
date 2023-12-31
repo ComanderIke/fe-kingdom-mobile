@@ -27,6 +27,7 @@ public class EventEncounterNode : EncounterNode
 
     public override void Activate(Party party)
     {
+        MyDebug.LogLogic("Visiting Event");
         base.Activate(party);
         int cnt = 0;
         while (party.HasVisitedEvent(randomEvent)&& cnt<100)

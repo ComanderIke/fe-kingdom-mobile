@@ -124,7 +124,7 @@ namespace GameCamera
         {
             //_targetPosition = CameraSystem.camera.transform.position;
            // _targetSize = CameraSystem.camera.orthographicSize;
-            Debug.Log("Camera Target Pos: "+_targetPosition);
+            // Debug.Log("Camera Target Pos: "+_targetPosition);
             lockYAxis = lockY;
             this.focusTime = focusTime;
             this.follow = follow;

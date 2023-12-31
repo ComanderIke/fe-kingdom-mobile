@@ -105,7 +105,7 @@ public class UIUnitPlacement : IUnitPlacementUI
             selectedUnits = units;
         //UpdateValues();
         GetComponent<Canvas>().enabled = true;
-        Debug.Log("party size: "+Player.Instance.Party.members.Count);
+        // Debug.Log("party size: "+Player.Instance.Party.members.Count);
         charCircleController.Show(units);
         
     }

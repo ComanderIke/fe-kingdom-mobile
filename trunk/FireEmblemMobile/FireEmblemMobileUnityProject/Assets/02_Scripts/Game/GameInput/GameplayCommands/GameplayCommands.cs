@@ -35,7 +35,7 @@ namespace Game.GameInput
 
         public void AttackUnit(IBattleActor u, IAttackableTarget attackTarget)
         {
-            Debug.Log("GameInput: Attack Unit: " + u+" Target: " +attackTarget);
+            MyDebug.LogLogic("Attack Unit: " + u+" Target: " +attackTarget);
             OnAttackUnit?.Invoke(u, attackTarget);
         }
         public void DeselectUnit(IGridActor unit)
@@ -48,43 +48,43 @@ namespace Game.GameInput
         public void MoveUnit(IGridActor u, GridPosition position, List<GridPosition> movePath)
         {
             
-            Debug.Log("GameInput: Move Unit: " + u +" to [" +position.X +"/"+position.Y+"]");
+            MyDebug.LogLogic("Move Unit: " + u +" to [" +position.X +"/"+position.Y+"]");
             OnMoveUnit?.Invoke(u, position, movePath);
         }
 
         public void SelectUnit(IGridActor u)
         {
-            Debug.Log("GameInput: Select Unit: " + u);
+            MyDebug.LogLogic("Select Unit: " + u);
             OnSelectUnit?.Invoke(u);
         }
         public void ViewUnit(Unit u)
         {
-            Debug.Log("GameInput: View Unit: " + u.name);
+            MyDebug.LogLogic("View Unit: " + u.name);
             OnViewUnit?.Invoke(u);
         }
         public void Wait(IGridActor u)
         {
-            Debug.Log("GameInput: Wait Unit: " + u+" "+u.GridComponent.GridPosition.AsVector());
+            MyDebug.LogLogic("Wait Unit: " + u+" "+u.GridComponent.GridPosition.AsVector());
             OnWait?.Invoke(u);
         }
         public void SelectItem(Item item)
         {
-            Debug.Log("SelectItem");
+            MyDebug.LogLogic("SelectItem");
             OnSelectItem(item);
         }
         public void DeselectItem()
         {
-            Debug.Log("DeSelectItem");
+            MyDebug.LogLogic("DeselectItem");
             OnDeselectItem();
         }
         public void SelectSkill(Skill s)
         {
-            Debug.Log("SelectSkill");
+            MyDebug.LogLogic("SelectSkill");
             OnSelectSkill(s);
         }
         public void DeselectSkill()
         {
-            Debug.Log("DeSelectSkill");
+            MyDebug.LogLogic("DeselectSkill");
             OnDeselectSkill();
         }
         public void UseItem(ItemBP i)

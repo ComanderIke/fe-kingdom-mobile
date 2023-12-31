@@ -64,7 +64,6 @@ namespace Game.GameActors.Players
             this.maxSize = party.MaxSize;
             this.morality = party.Morality.GetCurrentMoralityValue();
             humanData = new List<UnitData>();
-            Debug.Log("<color=purple>Test4");
             foreach (var member in party.members)
             {
                 humanData.Add(new UnitData(member));

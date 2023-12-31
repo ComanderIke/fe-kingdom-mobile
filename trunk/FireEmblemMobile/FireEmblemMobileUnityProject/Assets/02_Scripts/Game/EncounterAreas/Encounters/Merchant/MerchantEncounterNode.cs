@@ -33,12 +33,13 @@ public class MerchantEncounterNode : EncounterNode
 
     public override void Activate(Party party)
     {
+        MyDebug.LogLogic("Visiting Merchant");
         base.Activate(party);
         GameObject.FindObjectOfType<UIMerchantController>().Show(merchant,party);
         UIMerchantController.OnFinished += MerchantFinished;
         
         //GameObject.FindObjectOfType<UIInnController>().Show(Player.Instance.Party);
-        Debug.Log("Activate MerchantEncounterNode");
+        
     }
 
     void MerchantFinished()

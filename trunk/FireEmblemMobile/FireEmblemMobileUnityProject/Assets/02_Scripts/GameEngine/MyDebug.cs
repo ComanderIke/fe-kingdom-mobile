@@ -59,4 +59,21 @@ public class MyDebug
             (byte)(color.b * 255f));
         Debug.Log(colorString+"#LOGIC: "+message+"</color>");
     }
+
+
+    public static void LogUI(string message)
+    {
+        Color color=new Color(.4f, .6f, .4f);
+        string colorString= string.Format("<color=#{0:X2}{1:X2}{2:X2}>", (byte)(color.r * 255f), (byte)(color.g * 255f),
+            (byte)(color.b * 255f));
+        Debug.Log(colorString+"#UI: "+message+"</color>");
+    }
+
+    public static void LogTODO(string message)
+    {
+        Color color=new Color(.8f, .5f, .7f);
+        string colorString= string.Format("<color=#{0:X2}{1:X2}{2:X2}>", (byte)(color.r * 255f), (byte)(color.g * 255f),
+            (byte)(color.b * 255f));
+        Debug.Log(colorString+"#TODO: "+message+"</color>");
+    }
 }

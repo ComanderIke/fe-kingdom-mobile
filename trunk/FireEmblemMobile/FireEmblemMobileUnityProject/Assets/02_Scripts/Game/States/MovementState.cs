@@ -38,7 +38,7 @@ namespace Game.Mechanics
         public void StartMovement(IGridActor c,  int x, int y, bool skipAnimation=false,List<GridPosition> path = null )
         {
             this.skipAnimation = skipAnimation;
-            Debug.Log("Move to: "+x+" "+y+" from "+c);
+            MyDebug.LogLogic("Move to: "+x+" "+y+" from "+c);
             mousePath = path;
             this.x = x;
             this.y = y;

@@ -41,20 +41,16 @@ namespace Game.Manager
         private void Awake()
         {
             Instance = this;
-            Debug.Log("Awake" +gameObject.name);
+            MyDebug.LogEngine("Awake " +gameObject.name);
             if (SceneTransferData.Instance != null &&SceneTransferData.Instance.BattleMap!=null&&SceneTransferData.Instance.BattleMap!=null )
                 BattleMap = SceneTransferData.Instance.BattleMap;
             else
                 BattleMap = FindObjectOfType<DemoUnits>().battleMap;
-            Debug.Log("Choose BattleMap: "+BattleMap);
+            MyDebug.LogLogic("BattleMap: "+BattleMap);
             if (SceneTransferData.Instance != null)
             {
                 tutorial = SceneTransferData.Instance.TutorialBattle1;
             }
-            Debug.Log(transform.gameObject.name);
-            Debug.Log(Scene1InstantiatedContentParent.gameObject.name);
-            Debug.Log(BattleMap.mapPrefab.name);
-            Debug.Log(BattleMap.mapPrefab.transform);
             Instantiate(BattleMap.mapPrefab, Scene1InstantiatedContentParent);
             //Debug.Log("Initialize");
             FactionManager = new FactionManager();
@@ -66,7 +62,7 @@ namespace Game.Manager
             FactionManager.AddFaction(playerFaction);
             FactionManager.AddFaction(enemyFaction);
             AddNoMonoBehaviourSystems();
-            Debug.Log(FactionManager.Factions[1].Units.Count);
+            // Debug.Log(FactionManager.Factions[1].Units.Count);
             GameStateManager = new GridGameStateManager();
         }
 
@@ -74,7 +70,7 @@ namespace Game.Manager
 
         private void AddNoMonoBehaviourSystems()
         {
-            Debug.Log("ADD SYSTEMS!");
+            MyDebug.LogLogic("Creating systems!");
             Systems = new List<IEngineSystem>
             {
                 new TurnSystem(),
@@ -171,16 +167,16 @@ namespace Game.Manager
                     GetSystem<UnitProgressSystem>().ExpBarController = expBar;
             }
            // GetSystem<UnitProgressSystem>().ExpBarController = FindObjectsOfType<MonoBehaviour>().OfType<ExpBarController>().First();
-            Debug.Log("ExpBarController: "+GetSystem<UnitProgressSystem>().ExpBarController.gameObject.name);
+            // Debug.Log("ExpBarController: "+GetSystem<UnitProgressSystem>().ExpBarController.gameObject.name);
         }
 
         private void Update()
         {
             if (!init)
             {
-                Debug.Log("INITIALIZE");
+                MyDebug.LogLogic("Initialize GridGameManager");
                 Initialize();
-                Debug.Log("INITIALIZECOMPLETE");
+                // Debug.Log("INITIALIZECOMPLETE");
                 init = true;
             }
             if (!active)

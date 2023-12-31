@@ -30,7 +30,7 @@ namespace Game.WorldMapStuff.Controller
             SceneTransferData.Instance.Reset();
             
            // Debug.Log("Load Battle Level: "+enemyParty.level + " " + enemyParty.name);
-            Debug.Log("Scene: "+buildIndex);
+            // Debug.Log("Scene: "+buildIndex);
             SceneTransferData.Instance.BattleMap = battleMap;
             //SceneTransferData.Instance.EnemyPartyID = enemyParty.name;
             //SceneTransferData.Instance.NodeData =new NodeData(node.UniqueId);

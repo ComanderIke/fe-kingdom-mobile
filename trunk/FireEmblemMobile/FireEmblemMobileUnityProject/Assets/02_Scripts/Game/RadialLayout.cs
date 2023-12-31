@@ -16,7 +16,7 @@ namespace LostGrace
         protected override void OnEnable() { base.OnEnable(); CalculateRadial(); }
         public override void SetLayoutHorizontal()
         {
-            Debug.Log("TRESTssasds");
+            // Debug.Log("TRESTssasds");
         }
         public override void SetLayoutVertical()
         {

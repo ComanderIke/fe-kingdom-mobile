@@ -251,7 +251,7 @@ namespace LostGrace
                         continue;
                     var line = GameObject.Instantiate(linePrefab, lineContainer);
                     bool upg = effectDescription.upgValue != effectDescription.value && upgrade;
-                    Debug.Log("CombatSkill Mixin: "+upg+" "+effectDescription.value+" "+effectDescription.upgValue);
+                    // Debug.Log("CombatSkill Mixin: "+upg+" "+effectDescription.value+" "+effectDescription.upgValue);
                     line.GetComponent<UISkillEffectLine>().SetValues(effectDescription.label, upg?effectDescription.upgValue: effectDescription.value, upg);
                 }
             }
@@ -261,7 +261,7 @@ namespace LostGrace
                 foreach (var effectDescription in effectDescriptions)
                 {
                     var line = GameObject.Instantiate(linePrefab, lineContainer);
-                    Debug.Log(effectDescription.label+" "+effectDescription.value+" "+effectDescription.upgValue);
+                    // Debug.Log(effectDescription.label+" "+effectDescription.value+" "+effectDescription.upgValue);
                     bool upg = effectDescription.upgValue != effectDescription.value && upgrade;
                     line.GetComponent<UISkillEffectLine>().SetValues(effectDescription.label,upg?effectDescription.upgValue: effectDescription.value, upg);
                 }
@@ -279,7 +279,6 @@ namespace LostGrace
             switch (skill.Tier)
             {
                 case 0: //Mythic 
-                    Debug.Log("Mythic");
                     
                     rarityText.SetText("Mythic");
                     rarityText.colorGradientPreset = mythicColorGradient;

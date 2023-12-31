@@ -55,6 +55,6 @@ public class SmithyEncounterNode : EncounterNode
     {
         base.Activate(party);
         GameObject.FindObjectOfType<UISmithyController>().Show(this,party);
-        Debug.Log("Activate SmithyEncounterNode");
+        MyDebug.LogLogic("Visiting Smithy");
     }
 }

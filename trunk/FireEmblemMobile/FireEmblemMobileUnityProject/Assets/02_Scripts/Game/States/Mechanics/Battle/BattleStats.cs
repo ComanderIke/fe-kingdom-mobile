@@ -103,7 +103,7 @@ namespace Game.Mechanics.Battle
         }
         public bool CanCounter(int attackingRange)
         {
-            Debug.Log(owner.GameTransformManager.GameObject.name+" Can Counter: "+attackingRange+" "+owner.GetEquippedWeapon().AttackRanges.Contains(attackingRange));
+            // Debug.Log(owner.GameTransformManager.GameObject.name+" Can Counter: "+attackingRange+" "+owner.GetEquippedWeapon().AttackRanges.Contains(attackingRange));
             return owner.GetEquippedWeapon().AttackRanges.Contains(attackingRange);
         }
         public bool IsRangeOnly()

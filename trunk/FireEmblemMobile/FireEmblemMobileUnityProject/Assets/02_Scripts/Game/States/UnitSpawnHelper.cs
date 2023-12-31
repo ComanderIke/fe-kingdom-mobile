@@ -162,7 +162,7 @@ namespace Game.States
             unit.Faction = faction;
             unit.Fielded = true;          
             unitInstantiator.PlaceCharacter(unit, x, y);
-            Debug.Log("Spawn Unit"+ unit.name + " " + x + " " + y+" ");
+            MyDebug.LogLogic("Spawn Unit"+ unit.name + " " + x + " " + y+" ");
         }
 
 

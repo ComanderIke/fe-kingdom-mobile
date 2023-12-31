@@ -63,9 +63,9 @@ namespace LostGrace
 
         public void ElapseTimeStep()
         {
-            Debug.Log("Current hour "+hour);
+            // Debug.Log("Current hour "+hour);
             UpdateHour(hour + 6);
-            Debug.Log("new hour "+hour);
+            MyDebug.LogLogic("New Time: "+hour+":00");
         }
 
         public void SetNoon()

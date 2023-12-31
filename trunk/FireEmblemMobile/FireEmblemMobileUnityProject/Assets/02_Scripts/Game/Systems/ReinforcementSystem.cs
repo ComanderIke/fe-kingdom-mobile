@@ -28,7 +28,7 @@ namespace LostGrace
             turnSystem =GridGameManager.Instance.GetSystem<TurnSystem>();
            
             turnSystem.OnStartTurn += CheckTurnReinforcements;
-            Debug.Log("TODO Only on Wait otherwise it procks when dragged there");
+            MyDebug.LogTODO("TODO Only on Wait otherwise it procks when dragged there");
             GridActorComponent.AnyUnitChangedPosition += CheckAreaReinforcements;
         }
 

@@ -29,14 +29,13 @@ namespace LostGrace
         public void Show(Unit unit, AttributeType attribute, Vector3 position)
         {
             instantiatedObjects ??= new List<GameObject>();
-            Debug.Log("CONTAINER OBJECTS BEFORE: "+ instantiatedObjects.Count);
+            
             for (int i = instantiatedObjects.Count - 1; i >= 0; i--)
             {
-                Debug.Log("DESTROY ONE OBJECT" +i);
+               
                 Destroy(instantiatedObjects[i]);
                 instantiatedObjects.RemoveAt(i);
             }
-            Debug.Log("CONTAINER OBJECTS AFTER DESTROY: "+ instantiatedObjects.Count);
             GetComponent<RectTransform>().anchoredPosition= position+ new Vector3(0,100,0);
             this.label.text = Attributes.GetAsLongText((int)attribute);
             var go = Instantiate(statContainerPrefab, statContainerParent.transform);

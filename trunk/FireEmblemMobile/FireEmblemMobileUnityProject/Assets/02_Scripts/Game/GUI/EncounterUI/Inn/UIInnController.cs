@@ -71,7 +71,7 @@ namespace Game.GUI.EncounterUI.Inn
         }
         public void Show(InnEncounterNode node, Party party)
         {
-            Debug.Log("Showing inn ui screen");
+            // Debug.Log("Showing inn ui screen");
             npcFaceController.Show("Welcome how about a nice drink, some grilled meat and a warm bed after?");
             canvas.enabled = true;
             this.node = node;
@@ -122,7 +122,7 @@ namespace Game.GUI.EncounterUI.Inn
                         foreach(var attType in item.AttributeType)
                             member.Stats.BonusAttributesFromFood.IncreaseAttribute(item.bonuses,attType);
                     }
-                    Debug.Log("TODO Remove After Battle");
+                    MyDebug.LogTODO("TODO Remove After Battle");
                 }
                 else if (item.bonusType == Recipe.InnBonusType.RefreshSkills)
                 {
@@ -130,7 +130,6 @@ namespace Game.GUI.EncounterUI.Inn
                     {
                         member.SkillManager.RefreshSkills();
                     }
-                    Debug.Log("TODO Remove After Battle");
                 }
             }
             Player.Instance.Party.AddGold(-item.price);

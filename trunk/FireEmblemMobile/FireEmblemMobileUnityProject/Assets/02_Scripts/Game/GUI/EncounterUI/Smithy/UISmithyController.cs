@@ -179,19 +179,19 @@ public class UISmithyController : MonoBehaviour
   
     public void InsertGemsClicked()
     {
-        Debug.Log("InsertGemsClicked");
+        MyDebug.LogInput("InsertGemsClicked");
         state = SmithyUIState.InsertGems;
         UpdateUI();
     }
     public void SmithingClicked()
     {
-        Debug.Log("SmithingClicked");
+        MyDebug.LogInput("Smithing Tab Clicked");
         state = SmithyUIState.Smithing;
         UpdateUI();
     }
     public void CombineGemsClicked()
     {
-        Debug.Log("CombineGems");
+        MyDebug.LogInput("CombineGems");
         state = SmithyUIState.CombineGems;
         UpdateUI();
     }

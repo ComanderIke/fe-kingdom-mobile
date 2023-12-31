@@ -167,7 +167,7 @@ namespace Game.GUI
         }
         private void HideAttackPreviewOnMapHPBar()
         {
-            Debug.Log("HideAttackPreviewOnMapHPBar"+attackPreviewOnMapShown.Count);
+            // Debug.Log("HideAttackPreviewOnMapHPBar"+attackPreviewOnMapShown.Count);
             for (int i = attackPreviewOnMapShown.Count - 1; i >= 0; i--)
             {
                 attackPreviewOnMapShown[i].visuals.unitRenderer.HidePreviewHp();

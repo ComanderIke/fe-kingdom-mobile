@@ -40,7 +40,7 @@ public class UIEventController : MonoBehaviour
     
     public void Show(EventEncounterNode node, Party party)
     {
-        Debug.Log("Showing event ui screen");
+        // Debug.Log("Showing event ui screen");
         this.node = node;
         canvas.enabled = true;
         this.party = party;
@@ -58,7 +58,7 @@ public class UIEventController : MonoBehaviour
         }
         else
         {
-            Debug.Log("First Time this Event");
+            // Debug.Log("First Time this Event");
             currentNode = randomEvent;
         }
         
@@ -89,10 +89,10 @@ public class UIEventController : MonoBehaviour
     {
         headline.SetText(randomEvent.HeadLine);
         layout.DeleteAllChildren();
-        Debug.Log("CurrentNode: "+currentNode);
+        // Debug.Log("CurrentNode: "+currentNode);
         if (String.Compare(description.text, "<noparse></noparse>"+currentNode.Text, StringComparison.Ordinal)!=0)
         {
-            Debug.Log("Update Text");
+            // Debug.Log("Update Text");
             description.text = currentNode.Text;
         }
 
@@ -134,10 +134,10 @@ public class UIEventController : MonoBehaviour
             }
             if (HasSecredRequirements(textOption))
             {
-                Debug.Log("SECRET REQUIREMENTS" +textOption.Text);
+                // Debug.Log("SECRET REQUIREMENTS" +textOption.Text);
                 if (SecretRequirementsMet(textOption))
                 {
-                    Debug.Log("MET REQUIREMENTS");
+                    // Debug.Log("MET REQUIREMENTS");
                     textOptionType = TextOptionState.Secret;
                     if (textOption.ResourceRequirements != null && textOption.ResourceRequirements.Count > 0)
                     {
@@ -157,7 +157,7 @@ public class UIEventController : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("NOTMET REQUIREMENTS");
+                    // Debug.Log("NOTMET REQUIREMENTS");
                     textOptionType = TextOptionState.SecretHidden;
                 }
             }
@@ -380,13 +380,13 @@ public class UIEventController : MonoBehaviour
         float combinedChance = 1.0f;
         foreach (var statReq in choiceData.AttributeRequirements)
         {
-            Debug.Log("Stat Req: "+statReq.AttributeType+" "+statReq.Amount);
+            // Debug.Log("Stat Req: "+statReq.AttributeType+" "+statReq.Amount);
             float chance=GetSuccessChance(statReq, party.ActiveUnit);
             combinedChance *= chance;
         }
 
         float randomValue = UnityEngine.Random.value;
-        Debug.Log("Roll: "+randomValue+" Goal<= "+combinedChance);
+        // Debug.Log("Roll: "+randomValue+" Goal<= "+combinedChance);
         
         return randomValue <= combinedChance;
     }
@@ -439,12 +439,12 @@ public class UIEventController : MonoBehaviour
             }
             else if (currentNode is LGRandomOutcomeEventDialogSO randomOutcomeEventDialogSo)
             {
-                Debug.Log("RANDOM OUTCOME NODE");
+                // Debug.Log("RANDOM OUTCOME NODE");
                 RandomOutcome(randomOutcomeEventDialogSo);
             }
             else
             {
-                Debug.Log("Normal EVENT NODE");
+                // Debug.Log("Normal EVENT NODE");
                 UpdateUIValues();
             }
         }
@@ -550,17 +550,17 @@ public class UIEventController : MonoBehaviour
     }
     void CheckPossibleRewards()
     {
-        Debug.Log("CHECK REWARDS");
+        // Debug.Log("CHECK REWARDS");
         if (currentNode.RewardResources != null)
         {
-            Debug.Log(currentNode.RewardResources.Count);
+            // Debug.Log(currentNode.RewardResources.Count);
             foreach (var resource in currentNode.RewardResources)
             {
-                Debug.Log(resource.ResourceType);
+                // Debug.Log(resource.ResourceType);
                 switch (resource.ResourceType)
                 {
                     case ResourceType.Gold:
-                        Debug.Log("ADD GOLD " + resource.Amount);
+                        // Debug.Log("ADD GOLD " + resource.Amount);
                         Player.Instance.Party.AddGold(resource.Amount);
                         break;
                     case ResourceType.Exp:
