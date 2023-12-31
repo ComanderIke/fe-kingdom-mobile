@@ -30,7 +30,8 @@ namespace Game.GameActors
         public Unit GetUnit()
         {
             var unit = unitBp.Create(Guid.NewGuid());
-            unit.AIComponent.AIBehaviour=Instantiate(AIBehaviour);
+            if(AIBehaviour!=null)
+                unit.AIComponent.AIBehaviour=Instantiate(AIBehaviour);
             return unit;
         }
     }

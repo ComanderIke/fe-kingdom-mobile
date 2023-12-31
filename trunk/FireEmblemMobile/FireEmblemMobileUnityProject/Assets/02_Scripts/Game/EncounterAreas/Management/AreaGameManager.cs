@@ -473,7 +473,12 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
             road.SetMoveable(false);
         }
     }
-    void MoveClicked(EncounterNode node)
+
+    public void MoveClicked(int nodeIndex)
+    {
+        MoveClicked(nodeClickControllers[nodeIndex].encounterNode);
+    }
+    public void MoveClicked(EncounterNode node)
     {
         HideMoveOptions();
         activeUnitGroundGO.FadeOut();
@@ -490,6 +495,8 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         timeOfDayManager.ElapseTimeStep();
      
     }
+
+   
     IEnumerator MovementAnimation(EncounterNode target)
     {
         Vector3 targetPos = target.gameObject.transform.position;

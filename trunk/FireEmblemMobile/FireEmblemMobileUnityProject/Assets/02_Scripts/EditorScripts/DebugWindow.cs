@@ -4,6 +4,7 @@ using Game.GameActors.Units;
 using Game.GameResources;
 using Game.Manager;
 using Game.Mechanics;
+using Game.WorldMapStuff.Controller;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -55,6 +56,7 @@ namespace __2___Scripts.External.Editor
            
         }
 
+        private string nodeTextFieldText="0";
         public void OnGUI()
         {
             //Debug.Log("OnGUI");
@@ -65,6 +67,18 @@ namespace __2___Scripts.External.Editor
             }
           
             string selectedUnitName = "";
+            if (GUILayout.Button("Win Battle"))
+            {
+                GameSceneController.Instance.LoadEncounterAreaAfterBattle(true);
+            }
+
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Go to Node: "))
+            {
+                AreaGameManager.Instance.MoveClicked(Int32.Parse(nodeTextFieldText));
+            }
+            nodeTextFieldText=GUILayout.TextField(nodeTextFieldText);
+            GUILayout.EndHorizontal();
             if (activeUnit != null)
             {
                 selectedUnitName = activeUnit.name;

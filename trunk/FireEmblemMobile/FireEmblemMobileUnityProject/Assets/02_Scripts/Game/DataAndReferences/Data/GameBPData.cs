@@ -218,7 +218,15 @@ namespace Game.GameResources
         public Skill GetSkill(string name)
         {
             SkillBp weaponBp = null;
-            weaponBp = allSkills.First(a => a.Name == name);
+            try
+            {
+                weaponBp = allSkills.First(a => a.Name == name);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("Skill with name: "+name + " not found in allSkillsCollection");
+                return null;
+            }
 
             return (Skill)weaponBp.Create();
         }
