@@ -85,9 +85,10 @@ namespace LostGrace
                 
                 foreach (IDataPersistance dataPersistance in dataPersistanceObjects)
                 {
+                    Debug.Log("Prepare SaveData: "+ dataPersistance.ToString());
                     dataPersistance.SaveData(ref currentSaveData);
                 }
-
+                Debug.Log("Save Data Preparation Finished!");
                 var formatter = new BinaryFormatter();
                 string pathFolder = Application.persistentDataPath + "/saves/";
                 if (!Directory.Exists(pathFolder))

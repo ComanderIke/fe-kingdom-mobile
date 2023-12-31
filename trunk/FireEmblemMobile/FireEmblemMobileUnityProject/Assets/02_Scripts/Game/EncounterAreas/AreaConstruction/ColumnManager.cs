@@ -329,4 +329,6 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
     {
         data.encounterTreeData = EncounterTree.Instance.GetSaveData();
     }
+
+   
 }

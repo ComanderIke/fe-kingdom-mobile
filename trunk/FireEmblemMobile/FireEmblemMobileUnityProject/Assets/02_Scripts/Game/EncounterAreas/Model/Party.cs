@@ -302,7 +302,7 @@ namespace Game.WorldMapStuff.Model
                 VisitedEvents.Add(GameBPData.Instance.GetEventData().GetEventById(id));
             }
             VisitedMaps = new List<BattleMap>();
-            foreach (var id in playerDataPartyData.visitedEvents)
+            foreach (var id in playerDataPartyData.visitedMaps)
             {
                 VisitedMaps.Add(GameBPData.Instance.GetMapById(id));
             }
