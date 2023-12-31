@@ -59,7 +59,7 @@ namespace Menu
                 //Debug.Log("Current Scene Name: "+_instance.currentSceneName);
                 _instance.PrepareLoadScene();
                 _instance.scenesToLoad.Add(new SceneLoadData(){name=sceneName, scene=buildIndex, additive = additive});
-                Debug.Log("Load Scene: " + sceneName);
+                MyDebug.LogEngine("Load Scene: " + sceneName);
                 
             }
         }

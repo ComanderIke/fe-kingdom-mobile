@@ -84,7 +84,6 @@ namespace Game.GameActors.Players
             }
             skillData = new SkillData(unit.SkillManager);
             fielded = unit.Fielded;
-            Debug.Log("Save uniqueIdentifier: "+unit.uniqueIdentifier);
             uniqueIdentifier = unit.uniqueIdentifier.ToString();
             encounterBasedBuffs = new List<EncounterBasedBuffData>();
             foreach (var encounterBuff in unit.encounterBuffs)

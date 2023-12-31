@@ -23,13 +23,13 @@ public class OKCancelDialogController : MonoBehaviour
 
     public void OkClicked()
     {
-        Debug.Log("OK Clicked!");
+        MyDebug.LogInput("OK Clicked!");
         action?.Invoke();
         gameObject.SetActive(false);
     }
     public void CancelClicked()
     {
-        Debug.Log("Cancel Clicked!");
+        MyDebug.LogInput("Cancel Clicked!");
         cancelAction?.Invoke();
         gameObject.SetActive(false);
     }

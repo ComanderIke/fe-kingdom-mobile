@@ -45,12 +45,12 @@ namespace Game.GameActors.Players
             {
                 movedEncounterIds.Add(encounter);
             }
-
             visitedEvents = new List<string>();
             foreach (var id in party.VisitedEvents)
             {
                 visitedEvents.Add(id.name);
             }
+            MyDebug.LogTest("Test5"+party.VisitedMaps.Count);
             visitedMaps = new List<string>();
             foreach (var id in party.VisitedMaps)
             {
@@ -64,7 +64,7 @@ namespace Game.GameActors.Players
             this.maxSize = party.MaxSize;
             this.morality = party.Morality.GetCurrentMoralityValue();
             humanData = new List<UnitData>();
-            
+            Debug.Log("<color=purple>Test4");
             foreach (var member in party.members)
             {
                 humanData.Add(new UnitData(member));

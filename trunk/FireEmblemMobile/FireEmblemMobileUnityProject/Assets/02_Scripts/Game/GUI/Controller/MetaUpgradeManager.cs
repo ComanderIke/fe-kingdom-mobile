@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "GameData/MetaUpgradeManager")]
-public class MetaUpgradeManager : ScriptableObject
+[System.Serializable]
+public class MetaUpgradeManager
 {
     [SerializeField] private List<MetaUpgrade> metaUpgrades;
     

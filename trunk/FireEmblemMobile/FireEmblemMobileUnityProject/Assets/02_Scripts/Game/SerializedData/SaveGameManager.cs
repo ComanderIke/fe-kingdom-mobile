@@ -40,7 +40,7 @@ namespace LostGrace
         {
             if (!dataPersistanceObjects.Contains(obj))
             {
-                Debug.Log("Register data-persistant object: "+obj.ToString());
+                MyDebug.LogPersistance("Register data-persistant object: "+obj.ToString());
                 dataPersistanceObjects.Add(obj);
             }
         }
@@ -54,7 +54,7 @@ namespace LostGrace
         public static void NewGame(int slot, string label, string difficulty)
         {
             currentSaveData = new SaveData(slot, label, difficulty);
-            Debug.Log("New Game: "+label+" Slot: "+slot);
+            MyDebug.LogPersistance("Creating New Game: "+label+" Slot: "+slot);
             Save(slot);
         }
         public static void Save()
@@ -85,10 +85,10 @@ namespace LostGrace
                 
                 foreach (IDataPersistance dataPersistance in dataPersistanceObjects)
                 {
-                    Debug.Log("Prepare SaveData: "+ dataPersistance.ToString());
+                    MyDebug.LogTest("Prepare SaveData: "+ dataPersistance.ToString());
                     dataPersistance.SaveData(ref currentSaveData);
                 }
-                Debug.Log("Save Data Preparation Finished!");
+                MyDebug.LogTest("Save Data Preparation Finished!");
                 var formatter = new BinaryFormatter();
                 string pathFolder = Application.persistentDataPath + "/saves/";
                 if (!Directory.Exists(pathFolder))
@@ -102,10 +102,10 @@ namespace LostGrace
                // Debug.Log();
                 var jsonData = JsonUtility.ToJson(currentSaveData, true);
                 //Debug.Log("Save JsonFile: "+jsonData);
-                Debug.Log("Save Game: " + path);
+                MyDebug.LogPersistance("Save Game: " + path);
                 if (WriteToFile(path, jsonData))
                 {
-                    Debug.Log("<color=#73E6FF>Save Successfull!</color>");
+                    MyDebug.LogPersistance("Save Successfull!");
                 }
 
                 // Load(slotNumber);
@@ -196,7 +196,7 @@ namespace LostGrace
                     var json = "";
                     if (LoadFromFile(path, out json))
                     {
-                        Debug.Log("Loading Successfull!");
+                        MyDebug.LogPersistance("Loading Successfull!");
                     }
 
                     tmpData = new SaveData(0, "tmp", "tmp");
@@ -236,11 +236,11 @@ namespace LostGrace
                     // var data = formatter.Deserialize(stream); //as Saveata;
                     // stream.Close();
 
-                    Debug.Log("Load Data from: " + path);
+                    MyDebug.LogPersistance("Load Data from: " + path);
                     var json = "";
                     if (LoadFromFile(path, out json))
                     {
-                        Debug.Log("Loading Successfull!");
+                        MyDebug.LogPersistance("Loading Successfull!");
                     }
 
                     currentSaveData = new SaveData(0, "tmp", "tmp");
@@ -340,7 +340,7 @@ namespace LostGrace
             string filePath = Path.Combine(folder, SaveFileName + slot + ".fe");
            
             File.Delete(filePath);
-            Debug.Log("Deleted Save Slot: "+slot+" "+filePath);
+            MyDebug.LogPersistance("Deleted Save Slot: "+slot+" "+filePath);
         }
     }
 }

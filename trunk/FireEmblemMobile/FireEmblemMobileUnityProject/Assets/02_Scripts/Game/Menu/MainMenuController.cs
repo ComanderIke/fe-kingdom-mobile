@@ -59,7 +59,6 @@ namespace Game.GUI
         {
             // animator.SetBool(Show1, false);
             // animator.SetBool(Side, false);
-            Debug.Log("FADEOUT");
             TweenUtility.FadeOut(canvasGroup, 0.7f);
             //base.Hide();
         }

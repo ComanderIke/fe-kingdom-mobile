@@ -139,7 +139,7 @@ namespace Audio
         public void ChangeAllMusic(string newMusicName,  bool freshRestart = false,
             float fadeOutDuration = 1.0f, float fadeInDelay = 0.5f, float fadeInDuration = 1.0f)
         {
-            Debug.Log("Change All Music: "+newMusicName);
+            MyDebug.LogMusic("Change All Music: "+newMusicName);
             foreach (var musicName in GetCurrentlyPlayedMusicTracks())
             {
                 if (musicName == newMusicName)

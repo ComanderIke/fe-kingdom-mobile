@@ -59,10 +59,10 @@ namespace LostGrace
         private void UpdateUI(float morality, float addedMorality)
         {
             fillParticles.Play();
-            Debug.Log("Morality: "+morality+" Added: "+addedMorality);
+       
             valueChangedText.text = addedMorality>0?"+"+addedMorality:""+addedMorality;
             valueChangedText.gameObject.SetActive(true);
-            Debug.Log("UPDATE TEXT");
+
              evilText.SetText(addedMorality<0?EvilAnimationTags+"Evil":"Evil");
              goodText.SetText(addedMorality>0?GoodAnimationTags+"Good":"Good");
             MonoUtility.DelayFunction(()=>valueChangedText.gameObject.SetActive(false), 2.0f);
@@ -75,7 +75,7 @@ namespace LostGrace
                     moralitySlider.SetValueWithoutNotify(val);
                 }).setOnComplete(()=>
             {
-                Debug.Log("RESET TEXT");
+              
               
                
                 fillParticles.Stop();

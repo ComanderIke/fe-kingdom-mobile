@@ -52,12 +52,12 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         {
             startFreshSaveFirstTime = true;
             startFreshSave = false;
-            Debug.Log("Started game from EncounterArea => creating new game savedata");
+            MyDebug.LogEngine("Started game from EncounterArea => creating new game savedata");
             SaveGameManager.NewGame(0, "DebugEditorSave", GameConfig.Instance.ConfigProfile.chosenDifficulty.name);
         }
         else
         {
-            Debug.Log("Load game Slot 0:");
+            MyDebug.LogPersistance("Load game Slot 0:");
             SaveGameManager.Load(0); //Trigger load at start of scenes to trigger all persistance objects observers
         }
         
@@ -76,7 +76,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
        
         if (Player.Instance.Party!=null)
         {
-            Debug.Log("Using existing party data");
+            MyDebug.LogLogic("Using existing party data");
             Player.Instance.Party.Initialize();
             LoadEncounterAreaData(Player.Instance.Party, EncounterTree.Instance);
             
@@ -86,7 +86,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     
 
         if (Player.Instance.Party == null || Player.Instance.Party.members.Count == 0){
-            Debug.Log("No existing party! Creating new party with default units");
+            MyDebug.LogLogic("No existing party! Creating new party with default units");
            
             if(Player.Instance.Party==null)
                 Player.Instance.Party = new Party();
@@ -115,7 +115,6 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
 
  
         ShowAllInactiveNodes();
-        Debug.Log("Loaded Area Game Manager: " + Player.Instance.Party.EncounterComponent.activatedEncounter);
         if (!Player.Instance.Party.EncounterComponent.activatedEncounter)
         {
             Player.Instance.Party.EncounterComponent.EncounterNode.Activate(Player.Instance.Party);
@@ -528,16 +527,15 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
  
     private void ShowActiveUnitGroundFX()
     {
-        Debug.Log("SHowActiveUnitGroundFX");
+        
         if (activeUnitGroundGO == null)
         {
             activeUnitGroundGO = Instantiate(activeUnitGroundPrefab, partyGo.transform, false)
                 .GetComponent<ActiveUnitGroundFX>();
-            Debug.Log("CREATING ACTIVE UNIT GROUND NEW");
         }
         else
         {
-            Debug.Log("FADEIN");
+           
             activeUnitGroundGO.FadeIn();
         }
         

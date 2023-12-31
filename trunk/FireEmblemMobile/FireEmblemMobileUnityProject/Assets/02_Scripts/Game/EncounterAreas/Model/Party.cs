@@ -198,20 +198,20 @@ namespace Game.WorldMapStuff.Model
             string party = "";
 
             party += "PartySize: " + members.Count;
-            foreach (var member in members)
-            {
-                party += member.ToString() + ",\n";
-            }
-
-            party += "Gold: " + money + "\n";
-            party += Convoy.ToString() + "\n";
-            party += "EncounterNode: " + EncounterComponent.EncounterNodeId + "\n";
-            party += "ActiveUnit: " + ActiveUnitIndex + "\n";
-            party += "Moved Encounters: ";
-            foreach (var node in EncounterComponent.MovedEncounterIds)
-            {
-                party += node.ToString() + ", ";
-            }
+            // foreach (var member in members)
+            // {
+            //     party += member.ToString() + ",\n";
+            // }
+            //
+            // party += "Gold: " + money + "\n";
+            // party += Convoy.ToString() + "\n";
+            // party += "EncounterNode: " + EncounterComponent.EncounterNodeId + "\n";
+            // party += "ActiveUnit: " + ActiveUnitIndex + "\n";
+            // party += "Moved Encounters: ";
+            // foreach (var node in EncounterComponent.MovedEncounterIds)
+            // {
+            //     party += node.ToString() + ", ";
+            // }
 
             return party;
         }

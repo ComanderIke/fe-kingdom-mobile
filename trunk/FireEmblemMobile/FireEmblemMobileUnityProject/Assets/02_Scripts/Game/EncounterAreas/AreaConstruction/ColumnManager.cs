@@ -57,7 +57,7 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
             EncounterTree.Instance.spawnData = spawnData;
             EncounterTree.Instance.columns.Clear();
             //Debug.Log(SaveGameManager.currentSaveData.encounterTreeData.columns.Count);
-            Debug.Log("Create New EncounterTree!");
+            MyDebug.LogLogic("Create New EncounterTree!");
             EncounterTree.Instance.spawnData.InitNodeAppearanceChances();
             EncounterTree.Instance.Create();
             

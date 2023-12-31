@@ -37,7 +37,7 @@ namespace LostGrace
         
         public override void Show()
         {
-            Debug.Log("Creating new party");
+            MyDebug.LogLogic("Creating new party");
             //disableBackground.gameObject.SetActive(false);
             Player.Instance.Party = new Party();
             Player.Instance.Party.onMemberRemoved += PartyChanged;

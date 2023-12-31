@@ -102,7 +102,7 @@ namespace Game.GameResources
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void FirstInitialize()
         {
-            Debug.Log("First initialization before scene loads!");
+            MyDebug.LogEngine("First initialization before scene loads!");
         }
 
         // public List<Weapon> Weapons

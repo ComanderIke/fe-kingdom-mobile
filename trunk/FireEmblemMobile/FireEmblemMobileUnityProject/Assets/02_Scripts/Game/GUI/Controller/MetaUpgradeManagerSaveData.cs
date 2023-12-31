@@ -17,6 +17,8 @@ public class MetaUpgradeManagerSaveData
     {
         if (manager == null)
             return;
+        if (manager.GetUpgrades() == null)
+            return;
         foreach (var upg in manager.GetUpgrades())
         {
             metaUpgrades.Add(new MetaUpgradeSaveData(upg));

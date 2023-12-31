@@ -32,7 +32,6 @@ namespace GameCamera
         public void SetTargets(GameObject[] targets)
         {
             this.targets = targets;
-            Debug.Log("SET TARGETS: "+targets.Length);
             Focus();
         }
 
@@ -45,9 +44,8 @@ namespace GameCamera
             {
                 camStartPos = transform.position;
                 time = 0;
-                Debug.Log("DOING FOCUS" +bounds.size);
                 _targetPosition = bounds.center;
-                Debug.Log("TARGETPOS: "+_targetPosition);
+                
                 if (lockYAxis)
                     _targetPosition.y = transform.position.y;
                 if(lockZAxis)

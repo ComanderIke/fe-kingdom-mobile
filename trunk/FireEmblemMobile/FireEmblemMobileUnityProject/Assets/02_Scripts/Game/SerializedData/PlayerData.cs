@@ -28,17 +28,18 @@ namespace Game.GameActors.Players
         //currentEventNodeUserData
         public PlayerData (Player player)
         {
-            Debug.Log("Create PlayerData");
+            MyDebug.LogTest("Create PlayerData");
             Name = player.Name;
-            Debug.Log(player.Party);
+            MyDebug.LogTest(player.Party);
             partyData = new PartyData(player.Party);
-            Debug.Log(player.MetaUpgradeManager);
+            MyDebug.LogTest("TEST");
+            MyDebug.LogTest(player.MetaUpgradeManager);
             metaUpgradeManagerData = new MetaUpgradeManagerSaveData(player.MetaUpgradeManager);
             acceptedQuests = new SerializableDictionary<string, bool>();
-            Debug.Log(player.CurrentEventDialogID);
+            MyDebug.LogTest(player.CurrentEventDialogID);
             currentEventDialogID = player.CurrentEventDialogID;
             unlockedCharacterIds = new List<string>(); 
-            Debug.Log("unlockedCharacterCount: "+player.UnlockedCharacterIds.Count);
+            MyDebug.LogTest("unlockedCharacterCount: "+player.UnlockedCharacterIds.Count);
             foreach (var id in player.UnlockedCharacterIds)
             {
                 unlockedCharacterIds.Add(id);

@@ -39,6 +39,8 @@ public class BattleEncounterNode : EncounterNode
             BattleMap = GameBPData.Instance.GetRandomMap(BattleType);;
             cnt++;
         }
+
+        MyDebug.Log("Visited BattleMap: " + BattleMap.name, Color.magenta);
         party.VisitedMaps.Add(BattleMap);
         GameSceneController.Instance.LoadBattleLevel(levelindex, BattleMap); //, this);
     }

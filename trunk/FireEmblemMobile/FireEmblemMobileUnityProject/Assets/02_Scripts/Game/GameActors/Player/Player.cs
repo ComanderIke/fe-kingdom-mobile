@@ -59,7 +59,7 @@ namespace Game.GameActors.Players
             }
             else
             {
-                Debug.Log("No Player Instance found! Making this new instance");
+                MyDebug.LogEngine("No Player Instance found! Making this new instance");
                 instance = this;
                 Flags = new PlayerFlags();
                 Modifiers = new Modifiers();

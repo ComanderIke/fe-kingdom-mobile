@@ -55,7 +55,7 @@ public class ToolTipSystem : MonoBehaviour
     }
     public static void Show(StockedItem item, Vector3 position, bool screenPos=false, bool exactPos=false)
     {
-        Debug.Log("SHOW STOCKED TOOLTIP" + item.item.Name);
+        MyDebug.LogInput("Show StockedItem Tooltip" + item.item.Name);
         instance.tooltipShownThisFrame = true;
         CloseAllToolTips();
 
@@ -65,7 +65,7 @@ public class ToolTipSystem : MonoBehaviour
     }
     public static void Show(Weapon weapon, Vector3 position)
     {
-        Debug.Log("SHOW WEAPON TOOLTIP");
+        MyDebug.LogInput("Show Weapon Tooltip");
         instance.tooltipShownThisFrame = true;
         CloseAllToolTips();
         instance.WeaponToolTip.SetValues(weapon, Camera.main.WorldToScreenPoint(position));

@@ -40,7 +40,7 @@ namespace LostGrace
             }
             if (SaveGameManager.FileSlotExists(2))
             {
-                Debug.Log("Slot 2 Exists");
+                
                 slot2Button.SetLoaded(true);
                 var slotData = SaveGameManager.GetFileSlotData(2);
                 slot2Button.UpdateText(slotData.fileName,slotData.difficulty);
@@ -54,7 +54,7 @@ namespace LostGrace
             }
             if (SaveGameManager.FileSlotExists(3))
             {
-                Debug.Log("Slot 3 Exists");
+                
                 slot3Button.SetLoaded(true);
                 var slotData = SaveGameManager.GetFileSlotData(3);
                 slot3Button.UpdateText(slotData.fileName,slotData.difficulty);

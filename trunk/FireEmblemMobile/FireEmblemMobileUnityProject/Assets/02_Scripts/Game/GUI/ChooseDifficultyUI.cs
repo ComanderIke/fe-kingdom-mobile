@@ -52,7 +52,7 @@ public class ChooseDifficultyUI : MonoBehaviour
   
     public void ChooseClicked()
     {
-        Debug.Log("Choose Clicked");
+        MyDebug.LogInput("Choose Clicked");
         if (selected == null||difficultySelected)
             return;
         difficultySelected = true;
