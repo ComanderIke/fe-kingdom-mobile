@@ -35,9 +35,12 @@ namespace Game.Manager
             UnitPlacementState = new UnitPlacementState();
             stateMachine = new StateMachine<NextStateTrigger>(UnitPlacementState);
         }
+
+        private bool gameStateTransitionsInitialized = false;
         public override void Init()
         {
-            InitGameStateTransitions();
+            if(!gameStateTransitionsInitialized)
+                InitGameStateTransitions();
             PlayerPhaseState.Init();
             UnitPlacementState.Init();
             base.Init();
@@ -46,7 +49,7 @@ namespace Game.Manager
 
         private void InitGameStateTransitions()
         {
-    
+           
             EnemyPhaseState.AddTransition(PhaseTransitionState, NextStateTrigger.Transition);
         
             PlayerPhaseState.AddTransition(PhaseTransitionState, NextStateTrigger.Transition);
@@ -66,6 +69,7 @@ namespace Game.Manager
             // BattleState.AddTransition(PlayerPhaseState, NextStateTrigger.BattleEnded);
             //MovementState.AddTransition(EnemyPhaseState, NextStateTrigger.FinishedAIMovement);
             // BattleState.AddTransition(EnemyPhaseState, NextStateTrigger.AIBattleEnded);
+            gameStateTransitionsInitialized = true;
         }
 
         public GameState<NextStateTrigger> GetActiveState()

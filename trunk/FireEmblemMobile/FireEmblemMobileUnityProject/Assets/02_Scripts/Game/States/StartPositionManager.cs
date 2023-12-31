@@ -52,7 +52,9 @@ namespace Game.States
         public void HideStartPos()
         {
             for(int i= startPositions.Length-1; i>=0;i-- )
-            { 
+            {
+                if (startPositions[i] == null || startPositions[i].gameObject == null)//Switched Scene
+                    continue;
                 var tile= gridSystem.GetTile(startPositions[i].GetXOnGrid(), startPositions[i].GetYOnGrid());
                 tile.tileVfx.Hide(tile);
                 GameObject.Destroy(startPositions[i].gameObject);

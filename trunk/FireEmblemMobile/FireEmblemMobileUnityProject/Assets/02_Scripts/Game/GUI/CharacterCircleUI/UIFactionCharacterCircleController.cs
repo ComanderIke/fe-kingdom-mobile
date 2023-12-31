@@ -30,6 +30,7 @@ public class UIFactionCharacterCircleController : MonoBehaviour,IClickedReceiver
     // Start is called before the first frame update
     private void Start()
     {
+        Debug.Log("START UI FACTRIONCIRCLECONTROLLER");
         characterUIgGameObjects = new Dictionary<Unit, GameObject>();
         characterUIs = new Dictionary<Unit, CharacterUIController>();
     }
@@ -127,9 +128,7 @@ public class UIFactionCharacterCircleController : MonoBehaviour,IClickedReceiver
 
     private void SpawnGOs()
     {
-
-
-        
+        Debug.Log("SPAWN CIRCLE GOS ");
         foreach (var unit in units)
         {
             if (!unit.IsAlive())

@@ -74,6 +74,7 @@ namespace Game.Manager
 
         private void AddNoMonoBehaviourSystems()
         {
+            Debug.Log("ADD SYSTEMS!");
             Systems = new List<IEngineSystem>
             {
                 new TurnSystem(),
@@ -177,7 +178,9 @@ namespace Game.Manager
         {
             if (!init)
             {
+                Debug.Log("INITIALIZE");
                 Initialize();
+                Debug.Log("INITIALIZECOMPLETE");
                 init = true;
             }
             if (!active)

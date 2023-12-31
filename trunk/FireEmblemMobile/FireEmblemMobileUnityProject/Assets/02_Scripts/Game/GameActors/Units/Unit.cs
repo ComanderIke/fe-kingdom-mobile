@@ -483,6 +483,7 @@ namespace Game.GameActors.Units
             clone.equippedWeapon = (Weapon)equippedWeapon?.Clone();
             clone.EquippedRelic= (Relic)EquippedRelic?.Clone();
             clone.tags = new List<UnitTags>(tags);
+            clone.uniqueIdentifier = uniqueIdentifier;
             if(CombatItem1!=null)
                 clone.CombatItem1 = new StockedCombatItem((IEquipableCombatItem)CombatItem1.item.Clone(),CombatItem1.stock);
         }

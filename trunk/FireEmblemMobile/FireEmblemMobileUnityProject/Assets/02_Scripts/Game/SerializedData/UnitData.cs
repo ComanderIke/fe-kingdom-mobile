@@ -51,7 +51,7 @@ namespace Game.GameActors.Players
         [SerializeField] public bool classUpgraded;
         [SerializeField] private SkillData skillData;
         [SerializeField] private List<EncounterBasedBuffData> encounterBasedBuffs;
-        [SerializeField] private Guid uniqueIdentifier;
+        [SerializeField] private string uniqueIdentifier;
         [SerializeField] private bool fielded;
         public UnitData(Unit unit, bool dead = false)
         {
@@ -84,7 +84,8 @@ namespace Game.GameActors.Players
             }
             skillData = new SkillData(unit.SkillManager);
             fielded = unit.Fielded;
-            uniqueIdentifier = unit.uniqueIdentifier;
+            Debug.Log("Save uniqueIdentifier: "+unit.uniqueIdentifier);
+            uniqueIdentifier = unit.uniqueIdentifier.ToString();
             encounterBasedBuffs = new List<EncounterBasedBuffData>();
             foreach (var encounterBuff in unit.encounterBuffs)
             {
@@ -133,7 +134,8 @@ namespace Game.GameActors.Players
             unit.SpecialState = specialState;
             unit.RevivalStones = revivalStones;
             unit.tags = unitTags;
-            unit.uniqueIdentifier = uniqueIdentifier;
+            unit.uniqueIdentifier = new Guid(uniqueIdentifier);
+            Debug.Log("Load uniqueIdentifier: "+unit.uniqueIdentifier);
             foreach (var encounterBuff in encounterBasedBuffs)
             {
                 unit.encounterBuffs.Add(encounterBuff.Load());

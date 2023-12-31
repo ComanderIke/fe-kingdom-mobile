@@ -164,7 +164,8 @@ namespace Game.States
         public override void Exit()
         {
             DeInitializeCamera();
-            UnitPlacementUI.Hide();
+            if(UnitPlacementUI!=null && UnitPlacementUI.gameObject!=null)
+                UnitPlacementUI.Hide();
           
             var gridSystem = GridGameManager.Instance.GetSystem<GridSystem>();
             

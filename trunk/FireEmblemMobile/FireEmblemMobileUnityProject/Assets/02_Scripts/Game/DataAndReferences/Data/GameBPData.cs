@@ -454,7 +454,16 @@ namespace Game.GameResources
 
         public BattleMap GetMapById(string id)
         {
-            return allBattleMaps.First(a => a.name == id);
+            try
+            {
+                return allBattleMaps.First(a => a.name == id);
+            }
+            catch
+            {
+                Debug.LogError("Battlemap: "+id+" not found in allBattleMapsCollection");
+                return null;
+            }
+            
         }
 
         [SerializeField] private List<DifficultyProfile> difficultyProfiles;

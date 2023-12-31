@@ -112,6 +112,8 @@ public class UIUnitPlacement : IUnitPlacementUI
     
     public override void Hide()
     {
+        if (gameObject == null)
+            return;
         GetComponent<Canvas>().enabled = false;
     }
 
