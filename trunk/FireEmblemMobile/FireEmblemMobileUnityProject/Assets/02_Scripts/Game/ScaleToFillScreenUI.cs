@@ -10,7 +10,6 @@ namespace LostGrace
         // Start is called before the first frame update
         void OnEnable()
         {
-            Debug.Log("ON ENABLE SET SIZE DELTA");
             GetComponent<RectTransform>().sizeDelta = new Vector2(Screen.width, Screen.height);
         }
 

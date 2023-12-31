@@ -354,7 +354,7 @@ namespace Game.GameActors.Units
             Stats.AttackRanges.Clear();
             equippedWeapon = w;
             foreach (int r in w.AttackRanges) Stats.AttackRanges.Add(r);
-            Debug.Log("Equip " + w.Name + " on " + name + " " + w.AttackRanges.Length+" "+ Stats.AttackRanges.Count);
+            // Debug.Log("Equip " + w.Name + " on " + name + " " + w.AttackRanges.Length+" "+ Stats.AttackRanges.Count);
             stats.BonusStatsFromWeapon.Attack += equippedWeapon.GetDamage();
             stats.BonusStatsFromWeapon.Hit += equippedWeapon.GetHit();
             stats.BonusStatsFromWeapon.Crit += equippedWeapon.GetCrit();
@@ -408,7 +408,7 @@ namespace Game.GameActors.Units
 
         public void Equip(StockedCombatItem combatItem, int slot, bool triggerEvents = true)
         {
-            Debug.Log("Equip Combat Item on Slot: "+slot);
+            // Debug.Log("Equip Combat Item on Slot: "+slot);
             if (slot==1)
             {
                 if (CombatItem1 == null)

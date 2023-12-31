@@ -41,13 +41,13 @@ namespace LostGrace
             {
                 var go = Instantiate(selectableCharacterPrefab, characterContainer);
                 var last = go.GetComponent<SelectableCharacterUI>();
-                Debug.Log(unit.bluePrintID);
-                Debug.Log(Player.Instance.UnlockedCharacterIds.Count);
+                // Debug.Log(unit.bluePrintID);
+                // Debug.Log(Player.Instance.UnlockedCharacterIds.Count);
                 last.SetCharacter(unit,!Player.Instance.UnlockedCharacterIds.Contains(unit.bluePrintID));
                 last.onClicked += UnitClicked;
                 if (cnt == 0)
                 {
-                    Debug.Log("Select Last: "+last.unit);
+                    // Debug.Log("Select Last: "+last.unit);
                     //AddUnit(last);
                     SelectUnit(last);
                     characterView.Show(last.unit);
@@ -83,14 +83,14 @@ namespace LostGrace
         }
         public void AddUnit(SelectableCharacterUI unit)
         {
-            Debug.Log(Player.Instance.Party.IsFull()+" "+Player.Instance.Party.members.Count+" "+Player.Instance.startPartyMemberCount);
+            // Debug.Log(Player.Instance.Party.IsFull()+" "+Player.Instance.Party.members.Count+" "+Player.Instance.startPartyMemberCount);
             if (Player.Instance.Party.IsFull()||Player.Instance.Party.members.Count>= Player.Instance.startPartyMemberCount)
                 return;
-            Debug.Log("Before Add");
+            // Debug.Log("Before Add");
             Player.Instance.Party.AddMember(unit.unit);
-            Debug.Log("Before Select");
+            // Debug.Log("Before Select");
             unit.Add();
-            Debug.Log("Actually Selected: "+unit.unit);
+            // Debug.Log("Actually Selected: "+unit.unit);
             
             UpdatePartySizeText();
             if (Player.Instance.Party.IsFull()||Player.Instance.Party.members.Count>= Player.Instance.startPartyMemberCount)
@@ -134,12 +134,12 @@ namespace LostGrace
         {
             if (Player.Instance.Party.members.Contains(lastSelected.unit))
             {
-                Debug.Log("Deselect: "+lastSelected.unit);
+                // Debug.Log("Deselect: "+lastSelected.unit);
                 RemoveUnit(lastSelected);
             }
             else
             {
-                Debug.Log("Select: "+lastSelected.unit);
+                // Debug.Log("Select: "+lastSelected.unit);
                 AddUnit(lastSelected);
             }
             if(Player.Instance.Party.members.Contains(lastSelected.unit))
@@ -169,7 +169,7 @@ namespace LostGrace
         public void UnitClicked(SelectableCharacterUI unit)
         {
             SelectUnit(unit);
-            Debug.Log("Show unit: "+unit.unit);
+            // Debug.Log("Show unit: "+unit.unit);
             characterView.Show(unit.unit);
             
         }

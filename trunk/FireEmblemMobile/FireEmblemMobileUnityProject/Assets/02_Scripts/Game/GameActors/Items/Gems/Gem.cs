@@ -64,10 +64,10 @@ namespace Game.GameActors.Items.Gems
 
         public void Rebind()
         {
-            Debug.Log("REBIND GEM");
+            // Debug.Log("REBIND GEM");
             gemEffect.skillTransferData.data= (float)currentSouls;
-            Debug.Log("TransferData: "+ gemEffect.skillTransferData.data);
-            Debug.Log("GUID:" +gemEffect.skillTransferData.guid);
+            // Debug.Log("TransferData: "+ gemEffect.skillTransferData.data);
+            // Debug.Log("GUID:" +gemEffect.skillTransferData.guid);
             gemEffect.Rebind();
         }
 

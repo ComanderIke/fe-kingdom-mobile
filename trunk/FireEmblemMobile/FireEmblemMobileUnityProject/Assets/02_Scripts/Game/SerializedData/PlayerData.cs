@@ -30,9 +30,12 @@ namespace Game.GameActors.Players
         {
             Debug.Log("Create PlayerData");
             Name = player.Name;
+            Debug.Log(player.Party);
             partyData = new PartyData(player.Party);
+            Debug.Log(player.MetaUpgradeManager);
             metaUpgradeManagerData = new MetaUpgradeManagerSaveData(player.MetaUpgradeManager);
             acceptedQuests = new SerializableDictionary<string, bool>();
+            Debug.Log(player.CurrentEventDialogID);
             currentEventDialogID = player.CurrentEventDialogID;
             unlockedCharacterIds = new List<string>(); 
             Debug.Log("unlockedCharacterCount: "+player.UnlockedCharacterIds.Count);

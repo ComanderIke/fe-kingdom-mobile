@@ -223,15 +223,15 @@ namespace Game.WorldMapStuff.Model
                 Debug.LogError("Party Size To Big");
                 return;
             }
-            Debug.Log("Before Inner Init");
+            // Debug.Log("Before Inner Init");
             InitMember(unit);
-            Debug.Log("Before Inner Add");
+            // Debug.Log("Before Inner Add");
             members.Add(unit);
             if (ActiveUnitIndex <0)
                 ActiveUnitIndex = 0;
-            Debug.Log("Before Inner Event");
-            Debug.Log(members.Count+" "+activeUnitIndex);
-            Debug.Log(ActiveUnit);
+            // Debug.Log("Before Inner Event");
+            // Debug.Log(members.Count+" "+activeUnitIndex);
+            // Debug.Log(ActiveUnit);
             
             onMemberAdded?.Invoke(unit);
         }
@@ -239,7 +239,7 @@ namespace Game.WorldMapStuff.Model
         void InitMember(Unit unit)
         {
             unit.Party = this;
-            Debug.Log("INIT UNIT "+unit.name);
+            // Debug.Log("INIT UNIT "+unit.name);
             unit.SkillManager.RefreshSkills();
         }
 

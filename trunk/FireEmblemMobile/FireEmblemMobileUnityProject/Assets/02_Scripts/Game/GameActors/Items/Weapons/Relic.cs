@@ -88,7 +88,7 @@ namespace Game.GameActors.Items.Weapons
 
         public void Equip(Unit unit)
         {
-            Debug.Log("EQUIP RELIC");
+            // Debug.Log("EQUIP RELIC");
             user = unit;
             if (Skill != null)
             {

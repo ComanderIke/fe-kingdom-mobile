@@ -49,7 +49,6 @@ public class AchievementManager : MonoBehaviour
        {
             Destroy(gameObject);
        }
-       Debug.Log("SET DONT DESTROY ON LOAD");
        DontDestroyOnLoad(gameObject);
        AudioSource = gameObject.GetComponent<AudioSource>();
        Stack = GetComponentInChildren<AchievenmentStack>();

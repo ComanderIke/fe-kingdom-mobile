@@ -49,7 +49,7 @@ namespace Game.GameActors.Units.Skills.Passive
         {
             //skill.SubscribeTo(unit.BattleComponent.onAttack);
             base.BindToUnit(unit, skill);
-            Debug.Log("ADD TO ATTACK SKILL LIST: "+skill.Name+ " "+unit.Name);
+            // Debug.Log("ADD TO ATTACK SKILL LIST: "+skill.Name+ " "+unit.Name);
             unit.BattleComponent.AddToAttackSkillList(skill, this); 
             
         }
@@ -59,7 +59,7 @@ namespace Game.GameActors.Units.Skills.Passive
         public override void UnbindFromUnit(Unit unit, Skill skill)
         {
             base.UnbindFromUnit(unit, skill);
-            Debug.Log("REMOVE FROM ATTACK SKILL LIST: "+skill.Name+ " "+unit.Name);
+            // Debug.Log("REMOVE FROM ATTACK SKILL LIST: "+skill.Name+ " "+unit.Name);
             unit.BattleComponent.RemoveFromAttackSkillList(skill, this); 
         }
 

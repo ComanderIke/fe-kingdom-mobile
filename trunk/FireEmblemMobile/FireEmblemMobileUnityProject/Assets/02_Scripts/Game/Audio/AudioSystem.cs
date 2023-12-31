@@ -23,13 +23,11 @@ namespace Audio
         {
             if (Instance == null)
             {
-                Debug.Log("AUDIO SYSTEM AWAKE INSTANCE");
                 Instance = this;
                 Init();
             }
             else
             {
-                Debug.Log("AUDIO SYSTEM AWAKE DESTORY");
                 Destroy(gameObject);
                 return;
             }

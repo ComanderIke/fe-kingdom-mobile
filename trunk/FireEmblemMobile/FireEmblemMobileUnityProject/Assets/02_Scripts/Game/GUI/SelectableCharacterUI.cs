@@ -66,7 +66,7 @@ namespace LostGrace
         }
         public void Clicked()
         {
-            Debug.Log("CLICKED: "+unit.Name);
+            // Debug.Log("CLICKED: "+unit.Name);
             onClicked?.Invoke(this);
         }
 

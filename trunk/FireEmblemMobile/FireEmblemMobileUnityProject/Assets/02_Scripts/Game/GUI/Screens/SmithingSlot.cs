@@ -37,7 +37,7 @@ public class SmithingSlot : MonoBehaviour
             var skill = equipable.Skill;
             if (skill != null)
             {
-                Debug.Log("TODO");
+                // Debug.Log("TODO");
                 bool canAffordHPCost = skill.FirstActiveMixin != null && unit.Hp > skill.FirstActiveMixin.GetHpCost(skill.level) || skill.CombatSkillMixin != null && unit.Hp > skill.CombatSkillMixin.GetHpCost(skill.level);
                 bool hasUses=skill.FirstActiveMixin != null &&skill.FirstActiveMixin.Uses>0 || skill.CombatSkillMixin != null && skill.CombatSkillMixin.Uses>0;
 

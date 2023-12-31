@@ -121,9 +121,9 @@ namespace Game.GameActors.Units
         }
         public void RemoveFromAttackSkillList(Skill skill, IOnAttackEffect attackEffectMixin)
         {
-            Debug.Log("TRY REMOVE FROM ATTACK SKILL LIST: ");
-            Debug.Log(skill.Name);
-            Debug.Log(attackEffectMixin);
+            // Debug.Log("TRY REMOVE FROM ATTACK SKILL LIST: ");
+            // Debug.Log(skill.Name);
+            // Debug.Log(attackEffectMixin);
             for (int i= attackEffects.Count-1; i>=0; i--)
             {
                 if (attackEffects[i].skill == skill && attackEffects[i].attackEffect == attackEffectMixin)
@@ -134,9 +134,9 @@ namespace Game.GameActors.Units
         }
         public void RemoveFromDefenseSkillList(Skill skill, IOnDefenseEffect defenseEffectMixin)
         {
-            Debug.Log("TRY REMOVE FROM DEFENSE SKILL LIST: ");
-            Debug.Log(skill.Name);
-            Debug.Log(defenseEffectMixin);
+            // Debug.Log("TRY REMOVE FROM DEFENSE SKILL LIST: ");
+            // Debug.Log(skill.Name);
+            // Debug.Log(defenseEffectMixin);
             for (int i= defenseEffects.Count-1; i>=0; i--)
             {
                 if (defenseEffects[i].skill == skill && defenseEffects[i].attackEffect == defenseEffectMixin)

@@ -95,7 +95,7 @@ public class UICharacterViewController : MonoBehaviour
        
         this.unit = unit;
        // Debug.Log("CharFace: "+CharacterFace);
-        Debug.Log("UpdateUI: "+unit);
+        // Debug.Log("UpdateUI: "+unit);
         if(CharacterFace!=null)
             CharacterFace.Show(unit);
         charName.SetText(unit.name);//+", "+unit.jobClass);

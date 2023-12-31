@@ -73,7 +73,7 @@ namespace Game.GameActors.Units.Skills
 
         public void Rebind()
         {
-            Debug.Log("REBIND");
+            // Debug.Log("REBIND");
             if (owner != null)
             {
                 foreach (var passive in passiveMixins)
@@ -124,7 +124,7 @@ namespace Game.GameActors.Units.Skills
         
         public void BindSkill(Unit unit)
         {
-            Debug.Log("BIND SKILL "+Name +" TO " +unit);
+            // Debug.Log("BIND SKILL "+Name +" TO " +unit);
             owner = unit;
             Rebind();
         }

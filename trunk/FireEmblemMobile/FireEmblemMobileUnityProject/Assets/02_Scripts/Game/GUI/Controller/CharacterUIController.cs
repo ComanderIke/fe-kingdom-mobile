@@ -73,7 +73,7 @@ namespace Game.GUI
         public void ShowActive(Unit unit)
         {
             this.unit = unit;
-            Debug.Log("Show UnitCharacterUI ACTIVE: "+unit.name);
+            // Debug.Log("Show UnitCharacterUI ACTIVE: "+unit.name);
             unit.HpValueChanged -= UpdateValues;
             unit.HpValueChanged += UpdateValues;
             unit.ExperienceManager.ExpGained -= UpdateExp;
