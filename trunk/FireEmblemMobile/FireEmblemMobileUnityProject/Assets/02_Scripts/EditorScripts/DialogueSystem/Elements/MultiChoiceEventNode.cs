@@ -188,6 +188,16 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
                 ObjectField charItemField = new ObjectField();
                 charItemField.objectType = typeof(UnitBP);
                 charItemField.value =charReq;
+                charItemField.RegisterValueChangedCallback(callback =>
+                {
+                    RemoveCharacterRequirement(charReq,choiceData);
+                    if (charItemField.objectType == typeof(UnitBP)&&(UnitBP)callback.newValue!=null)
+                    {
+                        var newUnit = (UnitBP)callback.newValue;
+                        choiceData.CharacterRequirements.Add(newUnit);
+                    }
+                   
+                });
                 responseContainer.Insert(2,charItemField);
             }
             foreach (var blessingReq in choiceData.BlessingRequirements)

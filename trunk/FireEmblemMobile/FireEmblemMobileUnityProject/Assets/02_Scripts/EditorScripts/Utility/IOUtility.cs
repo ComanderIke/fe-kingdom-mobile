@@ -66,7 +66,7 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
             LoadEventNodes(graphData.EventNodes);
             LoadFightNodes(graphData.FightNodes);
             LoadBattleNodes(graphData.BattleNodes);
-            Debug.Log(graphData.RandomNodes[0].Choices[0].RandomRate);
+            //Debug.Log(graphData.RandomNodes[0].Choices[0].RandomRate);
             LoadRandomNodes(graphData.RandomNodes);
             LoadNodesConnections();
         }
@@ -124,16 +124,16 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
             {
                 DialogNode node = graphView.CreateNode(nodeData.Name,nodeData.DialgueType, nodeData.Position, false);
                 
-                foreach (var choice in nodeData.Choices)
-                {
-                    Debug.Log(choice.RandomRate);
-                }
+                // foreach (var choice in nodeData.Choices)
+                // {
+                //     Debug.Log(choice.RandomRate);
+                // }
                 List<LGChoiceSaveData> choices = CloneNodeChoices(nodeData.Choices);
              
-               foreach (var choice in choices)
-               {
-                   Debug.Log(choice.RandomRate);
-               }
+               // foreach (var choice in choices)
+               // {
+               //     Debug.Log(choice.RandomRate);
+               // }
                 node.ID = nodeData.ID;
                 node.Choices = choices;
                 node.Text = nodeData.Text;
@@ -399,7 +399,7 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
             foreach (DialogNode node in nodes)
             {
                
-                
+                //Debug.Log("Save To SO " + node);
                 if (node is FightNode fightNode)
                 {
                     SaveNodeToGraph(fightNode, graphSaveData);
@@ -611,9 +611,9 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                 dialogContainer.UngroupedDialogs.Add(dialog);
             }
 
-            Debug.Log("Save To SO " + node.ItemRewards.Count);
-            if(node.ItemRewards.Count>=1)
-                Debug.Log("Item: " + node.ItemRewards[0].name);
+             Debug.Log("Save To SO " + node.ItemRewards.Count);
+            // if(node.ItemRewards.Count>=1)
+            //     Debug.Log("Item: " + node.ItemRewards[0].name);
             dialog.Initialize(
                 node.DialogueName, 
                 node.DialogActor,
@@ -812,11 +812,11 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
                 RewardItems = node.ItemRewards,
                 Events = node.Events
             };
-            Debug.Log("SAVE RANDOM OUTCOME NODE:");
-            foreach (var choice in nodeData.Choices)
-            {
-                Debug.Log(choice.RandomRate);
-            }
+            // Debug.Log("SAVE RANDOM OUTCOME NODE:");
+            // foreach (var choice in nodeData.Choices)
+            // {
+            //     Debug.Log(choice.RandomRate);
+            // }
             graphSaveData.RandomNodes.Add(nodeData);
         }
         private static void SaveNodeToGraph(BattleNode node, LgGraphSaveData graphSaveData)
