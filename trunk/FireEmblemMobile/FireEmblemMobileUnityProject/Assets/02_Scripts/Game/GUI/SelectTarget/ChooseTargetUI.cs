@@ -81,7 +81,7 @@ public class ChooseTargetUI : MonoBehaviour, IChooseTargetUI, IClickedReceiver
 
     private void NoNameYet(Unit selectedUnit, Unit target,string skillName, int totalDamage, int totalHeal, int hpAfter)
     {
-        Debug.Log("TOTALHEAL: "+totalHeal);
+        // Debug.Log("TOTALHEAL: "+totalHeal);
         battlePreviewSo.Attacker = selectedUnit;
         battlePreviewSo.Defender = target;
         int hit = 100;

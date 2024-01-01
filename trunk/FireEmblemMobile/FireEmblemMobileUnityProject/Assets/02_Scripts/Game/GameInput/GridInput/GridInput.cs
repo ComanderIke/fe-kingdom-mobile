@@ -50,7 +50,7 @@ namespace Game.GameInput
                             //Debug.Log("Check Clicked on Grid?");
                             if (IsClickOnGrid(hit))
                             {
-                                Debug.Log("Player Input: Grid clicked: " + x + " " + y);
+                                // Debug.Log("Player Input: Grid clicked: " + x + " " + y);
                                 foreach (var inputReceiver in inputReceivers)
                                 {
                                     inputReceiver.GridClicked(x, y);

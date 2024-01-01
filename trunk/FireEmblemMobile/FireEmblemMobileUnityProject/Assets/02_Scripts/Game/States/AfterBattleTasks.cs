@@ -95,7 +95,6 @@ namespace Game.States
                     }
                     
                 }
-            Debug.Log("ALMOST FINISHED EXP COROUTINE");
             yield return new WaitForSeconds(WaitTimeWhenFinished);
             Finished();
             

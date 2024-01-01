@@ -79,7 +79,7 @@ namespace Game.GameInput
         }
         public void SelectSkill(Skill s)
         {
-            MyDebug.LogLogic("SelectSkill");
+            MyDebug.LogLogic("SelectSkill "+s.Name);
             OnSelectSkill(s);
         }
         public void DeselectSkill()

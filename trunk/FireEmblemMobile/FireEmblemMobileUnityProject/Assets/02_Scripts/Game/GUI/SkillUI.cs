@@ -171,7 +171,7 @@ namespace LostGrace
                 return;
             }
 
-            Debug.Log(Skill.CombatSkillMixin+" "+canAffordHpCost+" "+hasUses);
+            // Debug.Log(Skill.CombatSkillMixin+" "+canAffordHpCost+" "+hasUses);
            
             if (Skill.activeMixins.Count > 0)
             {

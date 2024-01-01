@@ -112,7 +112,7 @@ namespace Game.Mechanics
         }
         private void SkillSelected(Skill skill)
         {
-            Debug.Log("Skill Selected");
+            // Debug.Log("Skill Selected");
             playerPhaseState.Feed(PPStateTrigger.ChooseTarget);
         }
         

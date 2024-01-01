@@ -70,10 +70,10 @@ namespace Game.GameActors.Units.Skills
             MonoUtility.DelayFunction(() =>
             {
                 Activate(target);
-                Debug.Log("ACTIVATE SINGLE TARGET MIXIN");
+                // Debug.Log("ACTIVATE SINGLE TARGET MIXIN");
                 if (target != null && skill.skillTransferData != null)
                 {
-                    Debug.Log("Set SkilltransferData");
+                    // Debug.Log("Set SkilltransferData");
                     skill.skillTransferData.data = (object)target;
                 }
             }, logicDelay);
@@ -107,14 +107,14 @@ namespace Game.GameActors.Units.Skills
                 foreach (var unit in faction.FieldedUnits)
                 {
                     var targetUnitPos = unit.GridComponent.GridPosition.AsVector();
-                    Debug.Log("Check Is In Range: "+unit.name);
+                    // Debug.Log("Check Is In Range: "+unit.name);
                     if (IsInRange(user,unit))
                     {
-                        Debug.Log("Is In Range: "+unit.name);
+                        // Debug.Log("Is In Range: "+unit.name);
                         if (CanTarget(user, unit))
                         {
-                            Debug.Log("Can Target: "+unit.name);
-                           Debug.Log(GetRange(skill.Level)+ " "+userPos+" "+targetUnitPos+" "+unit.name+" "+Math.Ceiling(Vector2.Distance(userPos, targetUnitPos)));
+                            // Debug.Log("Can Target: "+unit.name);
+                           // Debug.Log(GetRange(skill.Level)+ " "+userPos+" "+targetUnitPos+" "+unit.name+" "+Math.Ceiling(Vector2.Distance(userPos, targetUnitPos)));
                             targetList.Add(unit);
                         }
                     }
@@ -184,7 +184,7 @@ namespace Game.GameActors.Units.Skills
             gridSystem.HideMoveRange();
             gridSystem.ShowCastRange(user, GetRange(skill.Level), GetMinRange(skill.Level));
             var blessing = GetBlessing(user);
-            Debug.Log("Blessing; "+blessing);
+            // Debug.Log("Blessing; "+blessing);
             foreach (var target in targets)
             {
                 

@@ -258,7 +258,7 @@ namespace LostGrace
         {
          
            
-            Debug.Log("CLICKED Skill: " +skillUI.Skill.Name);
+            // Debug.Log("CLICKED Skill: " +skillUI.Skill.Name);
             //ToolTipSystem.Show(skillUI.Skill, unit.Blessing!=null,skillUI.transform.position);
             if (!interactableForPlayer)
                 return;

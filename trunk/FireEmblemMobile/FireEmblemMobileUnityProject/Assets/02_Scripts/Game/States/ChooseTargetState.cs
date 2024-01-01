@@ -59,12 +59,12 @@ namespace Game.Mechanics
             unitInputSystem.InputReceiver = this;
             selectedUnit = (Unit)selectionSystem.SelectedCharacter;
             gridSystem.cursor.SetCurrentTile(selectedUnit.GridComponent.Tile);
-            Debug.Log("ENTER CHOOSE TARGET");
+            // Debug.Log("ENTER CHOOSE TARGET");
             UI.OnBackClicked += BackClicked;
             UnitSelectionSystem.OnSkillDeselected += SkillDeselected;
             if (selectionSystem.SelectedSkill != null)
             {
-                Debug.Log("ENTER HÄH TARGET");
+                // Debug.Log("ENTER HÄH TARGET");
                 selectedSkill = selectionSystem.SelectedSkill;
                 activeSkillMixin = selectedSkill.FirstActiveMixin;
                 SkillSelected();
@@ -135,7 +135,7 @@ namespace Game.Mechanics
         }
         void ShowSkillCastRange(ActiveSkillMixin activeSkillMixin)
         {
-            Debug.Log("ShowCastRange");
+            MyDebug.LogLogic("ShowCastRange");
             if (activeSkillMixin is PositionTargetSkillMixin pts)
             {
                 if (pts.Rooted)
@@ -257,7 +257,7 @@ namespace Game.Mechanics
                     if (stm.CanTarget(selectedUnit, target)&& stm.IsInRange(selectedUnit, target))
                     {
                         if(gridSystem.cursor.GetCurrentTile() == gridSystem.Tiles[x, y]|| !stm.confirmPosition){
-                            Debug.Log("Activate SingleTargetMixin");
+                            // Debug.Log("Activate SingleTargetMixin");
                             LastSkillTargetPosition = new Vector2Int(x, y);
                             stm.Activate(selectedUnit, target);
                             WaitAfterSkills(new List<IAttackableTarget>() { target }, true, stm.logicDelay);
@@ -292,7 +292,7 @@ namespace Game.Mechanics
         {
             MonoUtility.DelayFunction(()=>
             {
-                Debug.Log("Wait after Skills");
+                // Debug.Log("Wait after Skills");
                 if (selectedItem != null && selectedItem is ConsumableItem c)
                 {
                     var unit = (Unit)selectionSystem.SelectedCharacter;
@@ -303,7 +303,7 @@ namespace Game.Mechanics
                     new GameplayCommands().Wait(selectedUnit);
                 new GameplayCommands().ExecuteInputActions(()=>
                 {
-                    Debug.Log("TRIGGER CANCEL");
+                    // Debug.Log("TRIGGER CANCEL");
                     playerPhaseState.Feed(PPStateTrigger.Cancel);
                     var task = new AfterBattleTasks(ServiceProvider.Instance.GetSystem<UnitProgressSystem>(),(Unit)selectedUnit, targets, false);
                     task.StartTask();

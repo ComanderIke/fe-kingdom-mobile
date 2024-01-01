@@ -102,7 +102,7 @@ namespace Game.Mechanics
       
             AnimationQueue.Add(() =>
             {
-                Debug.Log("Show from AnimationQueue"+unit.name+" "+exp+" "+expBefore);
+                // Debug.Log("Show from AnimationQueue"+unit.name+" "+exp+" "+expBefore);
                 unit.visuals.UnitCharacterCircleUI.GetExpRenderer().UpdateInstant(expBefore);
                 unit.visuals.UnitCharacterCircleUI.GetExpRenderer().UpdateWithAnimatedTextOnly(exp);
                 ExpBarController.Show(unit.FaceSprite, expBefore);
@@ -224,7 +224,7 @@ namespace Game.Mechanics
                     //var expRenderer = ((Unit)defender).visuals.UnitCharacterCircleUI.GetExpRenderer();
                     ServiceProvider.Instance.GetSystem<UiSystem>()?.SelectedCharacter((Unit)expReceiver);
                    
-                    Debug.Log("Calculated Exp: "+exp);
+                    // Debug.Log("Calculated Exp: "+exp);
                    // expRenderer.Play((Unit)expReceiver, pos, exp);
 
                     expReceiver.ExperienceManager.AddExp(exp);
@@ -280,7 +280,7 @@ namespace Game.Mechanics
             }
             if (exp <= 0)
                 exp = 0;
-            Debug.Log("EXP : " +exp);
+            MyDebug.LogLogic("EXP : " +exp+" gained");
             return exp;
         }
         private int[] CalculateStatIncreases(int[] growths)

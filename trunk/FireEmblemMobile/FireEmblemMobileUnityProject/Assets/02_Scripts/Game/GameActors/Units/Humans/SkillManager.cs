@@ -57,7 +57,7 @@ namespace Game.GameActors.Units.Humans
             set
             {
                 skillPoints = value;
-                Debug.Log("SkillPoints value changed");
+                // Debug.Log("SkillPoints value changed");
                 SkillPointsUpdated?.Invoke(skillPoints);
             }
         }

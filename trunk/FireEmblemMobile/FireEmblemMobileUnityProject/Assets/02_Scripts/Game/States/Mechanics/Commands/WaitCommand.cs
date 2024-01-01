@@ -17,7 +17,7 @@ namespace Game.Mechanics.Commands
 
         public override void Execute()
         {
-            Debug.Log("Execute Wait Command!");
+            MyDebug.LogLogic("Execute Wait Command!");
             var gridSystem = GridGameManager.Instance.GetSystem<Map.GridSystem>();
             var unitSelectionManager = GridGameManager.Instance.GetSystem<UnitSelectionSystem>();
             if (unit != null && !unit.TurnStateManager.IsWaiting)
