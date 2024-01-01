@@ -18,6 +18,8 @@ namespace Game.WorldMapStuff.Model
         public string EnemyPartyID { get; set; }
 
         public bool TutorialBattle1 { get; set; }
+
+        public bool IsBoss { get; set; }
         // public LocationData LocationData { get; set; }
 
      
@@ -30,6 +32,7 @@ namespace Game.WorldMapStuff.Model
             BattleOutCome = BattleOutcome.None;
             BattleMap = null;
             UnitsGoingIntoBattle = new List<Unit>();
+            IsBoss = false;
         }
     }
 }

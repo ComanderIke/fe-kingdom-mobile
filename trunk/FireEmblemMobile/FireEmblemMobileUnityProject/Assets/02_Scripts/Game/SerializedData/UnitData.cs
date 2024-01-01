@@ -134,7 +134,7 @@ namespace Game.GameActors.Players
             unit.RevivalStones = revivalStones;
             unit.tags = unitTags;
             unit.uniqueIdentifier = new Guid(uniqueIdentifier);
-            Debug.Log("Load uniqueIdentifier: "+unit.uniqueIdentifier);
+            // Debug.Log("Load uniqueIdentifier: "+unit.uniqueIdentifier);
             foreach (var encounterBuff in encounterBasedBuffs)
             {
                 unit.encounterBuffs.Add(encounterBuff.Load());

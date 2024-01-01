@@ -21,14 +21,15 @@ namespace Game.WorldMapStuff.Controller
         public static GameSceneController Instance => instance ??= new GameSceneController();
 
         
-        public void LoadBattleLevel(Scenes buildIndex, BattleMap battleMap)//, EncounterNode node)
+        public void LoadBattleLevel(Scenes buildIndex, BattleMap battleMap, bool boss=false)//, EncounterNode node)
         {
             Vector3 cameraPos = GameObject.FindObjectOfType<EncounterAreaCameraController>().transform.position;
             PlayerPrefs.SetFloat("CameraX", cameraPos.x);
             PlayerPrefs.SetFloat("CameraX", cameraPos.y);
             PlayerPrefs.Save();
             SceneTransferData.Instance.Reset();
-            
+            SceneTransferData.Instance.IsBoss = boss;
+            MyDebug.LogTest("Boss: "+boss);
            // Debug.Log("Load Battle Level: "+enemyParty.level + " " + enemyParty.name);
             // Debug.Log("Scene: "+buildIndex);
             SceneTransferData.Instance.BattleMap = battleMap;
@@ -62,11 +63,22 @@ namespace Game.WorldMapStuff.Controller
         }
 
       
-    
+        
         public void LoadEncounterAreaAfterBattle(bool victory)
         {
             // SceneTransferData.Instance.BattleOutCome = victory?BattleOutcome.Victory:  BattleOutcome.Defeat;
             //
+            MyDebug.LogTest("Boss: "+SceneTransferData.Instance.IsBoss);
+            if (victory)
+            {
+                if (SceneTransferData.Instance.IsBoss)
+                {
+                    Player.Instance.Party.AreaIndex++;
+                    MyDebug.LogTest("AREAINDEX: "+ Player.Instance.Party.AreaIndex);
+                    Player.Instance.Party.EncounterComponent.Reset();
+                }
+                    
+            }
             Player.Instance.Party.ResetFoodBuffs();
             SaveGameManager.Save();
             GridGameManager.Instance.CleanUp();

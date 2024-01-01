@@ -51,5 +51,12 @@ namespace Game.WorldMapStuff.Model
            
             MovedEncounterIds.RemoveAt(i);
         }
+
+        public void Reset()
+        {
+            MovedEncounterIds.Clear();
+            activatedEncounter = false;
+            EncounterNode = null;
+        }
     }
 }

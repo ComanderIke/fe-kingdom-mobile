@@ -96,7 +96,7 @@ namespace Game.GameActors.Units.Skills
             }
             else
             {
-                Debug.Log("OWNER NULL");
+                // Debug.Log("OWNER NULL");
             }
         }
 

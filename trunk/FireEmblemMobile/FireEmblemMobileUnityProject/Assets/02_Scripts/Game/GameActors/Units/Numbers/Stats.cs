@@ -111,7 +111,7 @@ namespace Game.GameActors.Units.Numbers
         {
 
             //MaxSp = statsData.MaxSp;
-            Debug.Log("TODO Load Data which bonus stats to serialize?");
+            MyDebug.LogTODO("TODO Load Data which bonus stats to serialize?");
             Mov = statsData.Mov;
             AttackRanges = statsData.AttackRanges;
             BaseAttributes = new Attributes(statsData.Attributes);

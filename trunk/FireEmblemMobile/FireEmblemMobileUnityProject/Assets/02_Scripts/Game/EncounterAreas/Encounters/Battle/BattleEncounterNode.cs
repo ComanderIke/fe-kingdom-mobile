@@ -43,6 +43,6 @@ public class BattleEncounterNode : EncounterNode
 
         MyDebug.LogTest("Visited BattleMap: " + BattleMap.name);
         party.VisitedMaps.Add(BattleMap);
-        GameSceneController.Instance.LoadBattleLevel(levelindex, BattleMap); //, this);
+        GameSceneController.Instance.LoadBattleLevel(levelindex, BattleMap, BattleType==BattleType.Boss); //, this);
     }
 }

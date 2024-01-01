@@ -44,6 +44,8 @@ namespace Game.Grid
         {
             foreach (var transform in gridTransform.GetComponentsInChildren<Transform>())
             {
+                if(transform==null)
+                    continue;
                 if (transform.gameObject != gridTransform.gameObject)
                     DestroyImmediate(transform.gameObject);
             }

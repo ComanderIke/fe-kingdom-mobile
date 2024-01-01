@@ -28,10 +28,10 @@ namespace Game.GameResources
                 var eventPool = new List<LGEventDialogSO>(allEventsExceptAreaOnlyEvents);
                 switch (Player.Instance.Party.AreaIndex)
                 {
-                    case 1: 
+                    case 0: 
                         eventPool.AddRange(Area1OnlyEvents);
                         break;
-                    case 2:
+                    case 1:
                         eventPool.AddRange(Area2OnlyEvents);break;
                 }
                 return eventPool[rng.Next(0, eventPool.Count)];
@@ -62,7 +62,7 @@ namespace Game.GameResources
 
         public LGEventDialogSO GetEventById(string prefabName)
         {
-            Debug.Log("Get Event by ID: "+prefabName);
+            // Debug.Log("Get Event by ID: "+prefabName);
             return allEvents.First(a => a.name == prefabName);
         }
     }

@@ -236,7 +236,7 @@ namespace Game.GameActors.Players
             }
 
             unlockedCharacterIds = new List<string>();
-            Debug.Log("unlockedCharacterCount: "+data.playerData.unlockedCharacterIds.Count);
+            // Debug.Log("unlockedCharacterCount: "+data.playerData.unlockedCharacterIds.Count);
             foreach (var id in data.playerData.unlockedCharacterIds)
             {
                 unlockedCharacterIds.Add(id);

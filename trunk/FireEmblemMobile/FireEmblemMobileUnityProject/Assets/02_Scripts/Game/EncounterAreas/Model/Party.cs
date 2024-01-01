@@ -179,7 +179,7 @@ namespace Game.WorldMapStuff.Model
                 InitMember(member);
             }
 
-            AreaIndex = 1;
+            
             Unit.UnitDied -= PartyMemberDied;
             Unit.UnitDied += PartyMemberDied;
             Unit.OnUnequippedRelic -= AddItem;

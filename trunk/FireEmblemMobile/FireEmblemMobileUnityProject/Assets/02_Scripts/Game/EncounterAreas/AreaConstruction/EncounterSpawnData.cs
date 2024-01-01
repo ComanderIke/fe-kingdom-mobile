@@ -13,8 +13,8 @@ public class EncounterSpawnData
     public float encounter3ChildPercentage=0.45f;
     public float chanceToConnectToOtherNode = 0.5f;
     public int columnMaxEncounter = 3;
-    public List<ColumnSpawn> ColumnSpawns;
-    public List<ColumnSpawn> Area2ColumnSpawns;
+    [SerializeField]private List<ColumnSpawn> ColumnSpawns;
+    [SerializeField]private List<ColumnSpawn> Area2ColumnSpawns;
     public EncounterNodeData startNodeData;
     public List<EncounterNodeData> allNodeDatas;
     public List<EncounterNodeData> nodeDatas;
@@ -59,8 +59,29 @@ public class EncounterSpawnData
         
     }
 
-    public int GetColumnCount()
+    public int GetColumnCount(int areaIndex)
     {
-        return ColumnSpawns.Count + 1;
+        switch (areaIndex)
+        {
+            case 0:
+                return ColumnSpawns.Count+1; break;
+            case 1: return Area2ColumnSpawns.Count+1;
+                break;
+        }
+
+        return 0;
+    }
+
+    public List<ColumnSpawn> GetColumns(int areaIndex)
+    {
+        switch (areaIndex)
+        {
+            case 0:
+                return ColumnSpawns; break;
+            case 1: return Area2ColumnSpawns;
+                break;
+        }
+
+        return null;
     }
 }

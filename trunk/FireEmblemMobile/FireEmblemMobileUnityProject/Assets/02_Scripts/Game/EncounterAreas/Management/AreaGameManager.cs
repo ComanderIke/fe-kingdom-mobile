@@ -19,6 +19,7 @@ using GameCamera;
 using GameEngine;
 using LostGrace;
 using Menu;
+using TMPro;
 using UnityEngine;
 using IServiceProvider = Game.Manager.IServiceProvider;
 
@@ -37,7 +38,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
 
 
     [SerializeField]private float moveToNodeHoldTime = 1.5f;
-   
+    [SerializeField] private TextMeshProUGUI areaText;
     
     public TimeOfDayManager timeOfDayManager;
     [SerializeField] private bool startFreshSave = false;
@@ -126,12 +127,16 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
 
         FindObjectOfType<CameraSystem>().GetMixin<FocusCameraMixin>().SetTargets(Player.Instance.Party.EncounterComponent.EncounterNode.gameObject);
         ShowActiveUnitGroundFX();
+        MyDebug.LogLogic("Enter Area: "+ (Player.Instance.Party.AreaIndex+1));
+        areaText.SetText("Area <size=120%>"+(Player.Instance.Party.AreaIndex+1));
     }
 
     
     public void LoadEncounterAreaData(Party party, EncounterTree tree){
-      
+        MyDebug.LogTest("EncounterNodeId: "+party.EncounterComponent.EncounterNodeId);
         party.EncounterComponent.EncounterNode = tree.GetEncounterNodeById(party.EncounterComponent.EncounterNodeId);
+        if(party.EncounterComponent.EncounterNode!=null)
+            MyDebug.LogTest("EncounterNode: " +party.EncounterComponent.EncounterNode );
         // for (int i = 0; i < party.EncounterComponent.MovedEncounterIds.Count; i++)
         // {
         //     party.EncounterComponent.AddMovedEncounter(tree.GetEncounterNodeById(party.EncounterComponent.MovedEncounterIds[i]));

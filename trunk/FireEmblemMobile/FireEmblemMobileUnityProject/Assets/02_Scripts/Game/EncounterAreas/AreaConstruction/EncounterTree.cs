@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Game.GameActors.Players;
 using Game.Systems;
+using Game.WorldMapStuff.Model;
 using Random = UnityEngine.Random;
 
 [Serializable]
@@ -17,6 +19,8 @@ public class EncounterTree
     {
         get { return _instance ??= new EncounterTree(); }
     }
+
+    public int AreaIndex { get; set; }
 
     public EncounterTree()
     {
@@ -143,7 +147,7 @@ public class EncounterTree
     }
     public void CreateMiddleColumns()
     {
-        for (int i = 1; i < spawnData.ColumnSpawns.Count+1; i++)
+        for (int i = 1; i < spawnData.GetColumnCount(Player.Instance.Party.AreaIndex); i++)
         {
             Column column = new Column();
             column.index = i;
@@ -203,7 +207,7 @@ public class EncounterTree
        if (current.children.Count >= spawnData.columnMaxEncounter)
            return;
        
-       var fixedNodes = spawnData.ColumnSpawns[current.index - 1].fixedNodes;
+       var fixedNodes = spawnData.GetColumns(Player.Instance.Party.AreaIndex)[current.index - 1].fixedNodes;
        if (fixedNodes.Count!=0)
        {
            for (int j = 0; j < fixedNodes.Count; j++)

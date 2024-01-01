@@ -427,12 +427,13 @@ namespace Game.GameResources
             switch (battleType)
             {
                 case BattleType.Boss:
+                    Debug.LogError("Should not look for BossBattleMap");
                     return null;
                 case BattleType.Normal:
                     switch (areaIndex)
                     {
-                        case 1:   return battleEncounterMapsArea1  [Random.Range(0, battleEncounterMapsArea1.Length)];
-                        case 2:   return battleEncounterMapsArea2  [Random.Range(0, battleEncounterMapsArea2.Length)];
+                        case 0:   return battleEncounterMapsArea1  [Random.Range(0, battleEncounterMapsArea1.Length)];
+                        case 1:   return battleEncounterMapsArea2  [Random.Range(0, battleEncounterMapsArea2.Length)];
                     }
 
                     break;
@@ -440,15 +441,15 @@ namespace Game.GameResources
                 case BattleType.Elite: 
                     switch (areaIndex)
                     {
-                        case 1:   return eliteBattleEncounterMapsArea1
+                        case 0:   return eliteBattleEncounterMapsArea1
                             [Random.Range(0, eliteBattleEncounterMapsArea1.Length)];
-                        case 2:   return eliteBattleEncounterMapsArea2
+                        case 1:   return eliteBattleEncounterMapsArea2
                             [Random.Range(0, eliteBattleEncounterMapsArea2.Length)];
                     }
 
                     break;
             }
-
+            Debug.LogError("No Battle Map Found: "+battleType);
             return null;
         }
 

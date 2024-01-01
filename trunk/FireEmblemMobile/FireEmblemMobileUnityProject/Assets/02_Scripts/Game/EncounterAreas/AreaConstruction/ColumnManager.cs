@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Linq;
 using __2___Scripts.Game.Areas;
+using Game.GameActors.Players;
 using Game.Systems;
 using LostGrace;
 using Pathfinding;
@@ -52,8 +53,9 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
     {
         //OnDisable();
        
-        if(!SaveGameManager.HasEncounterSaveData())
-        { 
+        if(!SaveGameManager.HasEncounterSaveData()||Player.Instance.Party.AreaIndex!=EncounterTree.Instance.AreaIndex)
+        {
+            EncounterTree.Instance.AreaIndex = Player.Instance.Party.AreaIndex;
             EncounterTree.Instance.spawnData = spawnData;
             EncounterTree.Instance.columns.Clear();
             //Debug.Log(SaveGameManager.currentSaveData.encounterTreeData.columns.Count);
@@ -82,6 +84,7 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
         {
             foreach (var node in columns[i].children)
             {
+                MyDebug.LogTest(node.prefabIdx+" "+spawnData.allNodeDatas.Count);
                 CreateNodeGameObject(spawnData.allNodeDatas[node.prefabIdx].prefab, node, i);
             }
         }
@@ -129,7 +132,7 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
   
     void ConnectEncounters(List<Column> columns)
     {
-        for (int i = 0; i < spawnData.GetColumnCount()-1; i++)
+        for (int i = 0; i < spawnData.GetColumnCount(Player.Instance.Party.AreaIndex)-1; i++)
         {
 
             foreach (int j in Enumerable.Range(0, columns[i].children.Count)
@@ -270,7 +273,7 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
 
     void PositionEncounters(List<Column> columns)
     {
-        for (int i = 1; i < spawnData.GetColumnCount(); i++)
+        for (int i = 1; i < spawnData.GetColumnCount(Player.Instance.Party.AreaIndex); i++)
         {
             for (int j = 0; j < columns[i].children.Count; j++)
             {
