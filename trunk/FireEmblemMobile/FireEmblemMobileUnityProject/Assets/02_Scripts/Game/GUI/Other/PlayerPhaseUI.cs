@@ -95,7 +95,7 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
 
     private void OnDestroy()
     {
-        Debug.Log("PLAYERPHASE UI GETS DESTROYED HERE =======================");
+        // Debug.Log("PLAYERPHASE UI GETS DESTROYED HERE =======================");
     }
 
     public void Hide()

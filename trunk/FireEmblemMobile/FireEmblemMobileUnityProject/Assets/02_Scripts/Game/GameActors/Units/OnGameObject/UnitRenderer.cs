@@ -19,6 +19,9 @@ namespace Game.GameActors.Units.OnGameObject
     {
 
         [SerializeField]Color waitingBlueColor;
+        [SerializeField]Color waitingRedColor;
+        [SerializeField]Color normalBlueColor;
+        [SerializeField]Color normalRedColor;
         [SerializeField] private Image hpBarImage;
         [SerializeField]private CanvasGroup grayOutCanvasObject;
         [SerializeField] private ParticleSystem canMoveVFX;
@@ -46,8 +49,7 @@ namespace Game.GameActors.Units.OnGameObject
         [FormerlySerializedAs("unitBp")] public Unit unit;
         private static readonly int Effective = Animator.StringToHash("effective");
         private static readonly int Ineffective = Animator.StringToHash("ineffective");
-
-        private Color hpBarColorBefore;
+        
         public void HideAttackDamage()
         {
             //attackDamageObject.SetActive(false);
@@ -67,7 +69,6 @@ namespace Game.GameActors.Units.OnGameObject
         {
             Faction.UnitAddedStatic += FactionChanged;
             unit.HpValueChanged += HpValueChanged;
-            hpBarColorBefore = hpBarImage.color;
             if(unit!=null)
                 unit.TurnStateManager.UnitWaiting += SetWaitingSprite;
             if(unit!=null)
@@ -209,6 +210,7 @@ namespace Game.GameActors.Units.OnGameObject
         }
         private void HpValueChanged()
         {
+            MyDebug.LogTest("HPVALUECHANGED");
             if (hpBar != null && unit != null){
                 hpBar.SetValue(unit.Hp, unit.MaxHp, false);
                 hpText.SetText(""+unit.Hp);
@@ -235,7 +237,8 @@ namespace Game.GameActors.Units.OnGameObject
         private void SetWaitingSprite(bool waiting)
         {
 
-            hpBarImage.color = waiting ? waitingBlueColor : hpBarColorBefore;
+            MyDebug.LogTest("SETWAITING"+unit.IsPlayerControlled());
+             hpBarImage.color = waiting ? (unit.IsPlayerControlled()?waitingBlueColor:waitingRedColor) : (unit.IsPlayerControlled()?normalBlueColor:normalRedColor);
             hpText.color = waiting ? waitingBlueColor:ColorManager.Instance.GetFactionColor(unit.Faction.Id);
             //grayOutCanvasObject.alpha=waiting?.6f:1f;
             GetComponentInChildren<SpriteRenderer>().color = !waiting ? Color.white : Color.grey;

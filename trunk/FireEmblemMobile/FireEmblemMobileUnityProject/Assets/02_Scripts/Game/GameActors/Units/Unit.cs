@@ -579,7 +579,7 @@ namespace Game.GameActors.Units
         {
             if (Faction != null)
             {
-                if (includeTempted)
+                if (!includeTempted)
                     return Faction.IsPlayerControlled && OriginalFaction.IsPlayerControlled;
                 return Faction.IsPlayerControlled;
             }

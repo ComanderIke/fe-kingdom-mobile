@@ -228,10 +228,10 @@ namespace Game.Manager
         }
         private void OnDisable()
         {
-            Debug.Log("ON DISABLE GRID GAME MANAGER");
+            // Debug.Log("ON DISABLE GRID GAME MANAGER");
             Deactivate();
             
-            Debug.Log("Before Disable GameStateManager");
+            // Debug.Log("Before Disable GameStateManager");
             GameStateManager.OnDisable();
            
         }

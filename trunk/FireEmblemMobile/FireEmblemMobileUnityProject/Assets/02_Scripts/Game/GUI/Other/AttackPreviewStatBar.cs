@@ -40,7 +40,7 @@ namespace Game.GUI
         [SerializeField] private Gradient blinkColorEnemyHeal;
         public void UpdateValues(int maxHp, int currentHp, int afterBattleHp)
         {
-
+            MyDebug.LogTest("UpdateValues");
 //            Debug.Log("UpdateValues");
             this.currentHp = currentHp;
             width = GetComponent<RectTransform>().rect.width;
@@ -78,6 +78,7 @@ namespace Game.GUI
     
         public void UpdateValuesWithoutDamagePreview(int maxHp, int currentHp, int afterHp)
         {
+            MyDebug.LogTest("UpdateValuesWithoutDamagePreview");
             this.currentHp = currentHp;
             width = GetComponent<RectTransform>().rect.width;
             if(hpText!=null)
@@ -104,6 +105,7 @@ namespace Game.GUI
 
         public void UpdateValuesAnimated(int maxHp, int newHp)
         {
+            MyDebug.LogTest("UpdateValuesAnimated");
             if(hpText!=null)
                 hpText.text =""+ newHp;
             beforeHpBar.gameObject.SetActive(false);
@@ -127,6 +129,7 @@ namespace Game.GUI
 
         public void SetEnemyColors()
         {
+            MyDebug.LogTest("SET ENEMY COLORS:");
             currentHpBar.color = mainEnemyColor;
             beforeHpBar.color=previewEnemyColor;
             
@@ -137,6 +140,7 @@ namespace Game.GUI
 
         public void SetAllyColors()
         {
+            MyDebug.LogTest("SET ALLY COLORS:");
             currentHpBar.color = mainAllyColor;
             beforeHpBar.color=previewAllyColor;
             feedbacks.GetFeedbackOfType<MMF_Image>().ColorOverTime = blinkColorAlly;
