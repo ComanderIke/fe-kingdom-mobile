@@ -103,6 +103,8 @@ namespace Game.Mechanics
             AnimationQueue.Add(() =>
             {
                 // Debug.Log("Show from AnimationQueue"+unit.name+" "+exp+" "+expBefore);
+                if (!unit.IsPlayerControlled(false))
+                    return;
                 unit.visuals.UnitCharacterCircleUI.GetExpRenderer().UpdateInstant(expBefore);
                 unit.visuals.UnitCharacterCircleUI.GetExpRenderer().UpdateWithAnimatedTextOnly(exp);
                 ExpBarController.Show(unit.FaceSprite, expBefore);

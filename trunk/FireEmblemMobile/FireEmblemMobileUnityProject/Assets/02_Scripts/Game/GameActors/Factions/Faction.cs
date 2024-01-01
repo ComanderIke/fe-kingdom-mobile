@@ -82,9 +82,19 @@ namespace Game.GameActors.Players
             unit.Faction = this;
             unit.Faction.Id = Id;
             Units.Add(unit);
+            unit.OriginalFaction = this;
             OnAddUnit?.Invoke(unit);
+            UnitAddedStatic?.Invoke(unit);
         }
-
+        public void AddUnitTemporarily(Unit unit)
+        {
+            unit.Faction = this;
+            unit.Faction.Id = Id;
+            Units.Add(unit);
+            OnAddUnit?.Invoke(unit);
+            UnitAddedStatic?.Invoke(unit);
+        }
+        public static event Action<Unit> UnitAddedStatic;
         public List<Faction> GetOpponentFactions()
         {
             return GridGameManager.Instance.FactionManager.Factions.Where(faction => faction.Id != Id).ToList();

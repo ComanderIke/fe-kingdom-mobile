@@ -73,13 +73,15 @@ namespace Game.GameActors.Units.CharStateEffects
         {
             BuffData.TakeEffect(unit);
            
-            Debug.Log("TAKE EFFECT"+duration[level]);
+            // Debug.Log("TAKE EFFECT"+duration[level]);
             duration[level]--;
             return duration[level] <= 0;
         }
 
         public virtual void Unapply(Unit target)
         {
+            MyDebug.LogTest("unapply in BuffDebuffBase");
+            BuffData.Unapply(target,level);
             foreach(var mixin in mixins)
                 mixin.Deactivate(target, caster, level);
             this.caster = null;

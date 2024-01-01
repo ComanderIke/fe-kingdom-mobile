@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.GameActors.Players;
 using Game.GameActors.Units.Humans;
 using Game.GameActors.Units.Monsters;
 using Game.GameResources;
@@ -64,6 +65,7 @@ namespace Game.GameActors.Units.OnGameObject
         }
         private void Start()
         {
+            Faction.UnitAddedStatic += FactionChanged;
             unit.HpValueChanged += HpValueChanged;
             hpBarColorBefore = hpBarImage.color;
             if(unit!=null)
@@ -74,6 +76,16 @@ namespace Game.GameActors.Units.OnGameObject
             
            // hoverCanvas.alpha = 0;
             HpValueChanged();
+        }
+
+        void FactionChanged(Unit unit)
+        {
+            if (unit.Equals(this.unit))
+            {
+                MyDebug.LogTest("WHUUUUT");
+                Init();
+            }
+                
         }
 
         private void Update()
@@ -106,7 +118,14 @@ namespace Game.GameActors.Units.OnGameObject
         public void Init()
         {
             //hpBarAlternate.SetColor();
+            MyDebug.LogTest("INIT UNIT: "+ColorManager.Instance.GetFactionColor(unit.Faction.Id)+" "+unit.Faction.Id);
             hpBar.GetComponent<Image>().color = ColorManager.Instance.GetFactionColor(unit.Faction.Id);
+            if(unit.Faction.IsPlayerControlled)
+                hpBarAlternate.SetAllyColors();
+            else 
+            {
+                hpBarAlternate.SetEnemyColors();
+            }
             hpText.color=ColorManager.Instance.GetFactionColor(unit.Faction.Id);
             float intensity = 2;
             moveTypeIcon.sprite = unit.MoveType.icon;
@@ -133,6 +152,7 @@ namespace Game.GameActors.Units.OnGameObject
         }
         void OnDestroy()
         {
+            Faction.UnitAddedStatic -= FactionChanged;
             unit.HpValueChanged -= HpValueChanged;
             // Unit.SpValueChanged -= SpValueChanged;
             // Unit.SpBarsValueChanged -= SpBarsValueChanged;
@@ -296,5 +316,7 @@ namespace Game.GameActors.Units.OnGameObject
                 
             }
         }
+
+        
     }
 }

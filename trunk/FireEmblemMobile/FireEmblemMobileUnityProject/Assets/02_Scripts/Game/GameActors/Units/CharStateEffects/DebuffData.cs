@@ -27,7 +27,7 @@ namespace Game.GameActors.Units.CharStateEffects
             {
                 case DebuffType.Tempted:
                     target.Faction.RemoveUnit(target);
-                    caster.Faction.AddUnit(target);
+                    caster.Faction.AddUnitTemporarily(target);
                     break;
                 
             }
@@ -48,6 +48,19 @@ namespace Game.GameActors.Units.CharStateEffects
                     break;
                 
             }
+        }
+        public override void Unapply(Unit target,int skillLevel)
+        {
+            MyDebug.LogTest("UNAPPLY DEBUFF");
+            switch (debuffType)
+            {
+                case DebuffType.Tempted:
+                    target.Faction.RemoveUnit(target);
+                    target.OriginalFaction.AddUnit(target);
+                    break;
+                
+            }
+            base.Unapply(target, skillLevel);
         }
     }
 }

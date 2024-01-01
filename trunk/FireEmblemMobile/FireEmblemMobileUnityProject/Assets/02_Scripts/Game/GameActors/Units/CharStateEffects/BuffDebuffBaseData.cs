@@ -26,7 +26,7 @@ namespace Game.GameActors.Units.CharStateEffects
         }
         public virtual void Unapply(Unit target,int skillLevel)
         {
-            
+            MyDebug.LogTest("unapply in BuffDebuffBaseData");
         }
         public virtual void TakeEffect(Unit unit)
         {

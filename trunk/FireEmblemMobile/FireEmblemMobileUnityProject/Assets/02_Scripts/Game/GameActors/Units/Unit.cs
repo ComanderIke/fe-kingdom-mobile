@@ -217,6 +217,7 @@ namespace Game.GameActors.Units
 
 
         [field:NonSerialized] public Faction Faction { get; set; }
+        [field:NonSerialized] public Faction OriginalFaction { get; set; }
         public List<int> AttackRanges => stats.AttackRanges;
         public int MovementRange => stats.Mov;
         public int Hp
@@ -574,10 +575,14 @@ namespace Game.GameActors.Units
             return GridComponent.Tile;
         }
 
-        public bool IsPlayerControlled()
+        public bool IsPlayerControlled(bool includeTempted=true)
         {
-            if(Faction!=null)
+            if (Faction != null)
+            {
+                if (includeTempted)
+                    return Faction.IsPlayerControlled && OriginalFaction.IsPlayerControlled;
                 return Faction.IsPlayerControlled;
+            }
             else if(Party!=null)
             {
                 return true;

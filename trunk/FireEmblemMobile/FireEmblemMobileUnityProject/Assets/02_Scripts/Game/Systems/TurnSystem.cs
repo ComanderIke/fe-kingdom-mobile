@@ -93,9 +93,9 @@ namespace Game.Mechanics
 
             factionManager.ActivePlayerNumber++;
             OnEndTurn?.Invoke();
-            foreach (var c in factionManager.ActiveFaction.Units)
+            for (int i=factionManager.ActiveFaction.Units.Count-1; i >=0; i--)//Collection might be modified(tempted)
             {
-                c.StatusEffectManager.UpdateTurn();
+                factionManager.ActiveFaction.Units[i].StatusEffectManager.UpdateTurn();
             }
             if (factionManager.ActivePlayerNumber == 0){
                 TurnCount++;

@@ -131,7 +131,8 @@ namespace Game.GUI
             beforeHpBar.color=previewEnemyColor;
             
             feedbacks.GetFeedbackOfType<MMF_Image>().ColorOverTime = blinkColorEnemy;
-            losingHPBarFeedbacks.GetFeedbackOfType<MMF_Image>().ColorOverTime = blinkColorEnemy;
+            if(losingHPBarFeedbacks!=null)
+                losingHPBarFeedbacks.GetFeedbackOfType<MMF_Image>().ColorOverTime = blinkColorEnemy;
         }
 
         public void SetAllyColors()
