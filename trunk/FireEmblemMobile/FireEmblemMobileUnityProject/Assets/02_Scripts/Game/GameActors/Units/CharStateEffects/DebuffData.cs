@@ -42,7 +42,7 @@ namespace Game.GameActors.Units.CharStateEffects
             Debug.Log("DEBUFF TAKE EFFECT");
             switch (debuffType)
             {
-                case DebuffType.Stunned: unit.TurnStateManager.UnitTurnFinished(); //unit set phys invulnerable
+                case DebuffType.Stunned: unit.TurnStateManager.UnitTurnFinished(); 
                     break;
                 case DebuffType.Poisened: unit.Hp -= unit.MaxHp / 10;
                     break;
