@@ -339,6 +339,9 @@ namespace Game.GameActors.Units
         public List<int> BonusAttackRanges { get; set; }
         public Bonds Bonds { get; set; }
         public int RevivalStones { get; set; }
+        public event Action<Curse> OnAddCurse;
+        public event Action<Curse> OnRemoveCurse;
+
         public Guid uniqueIdentifier;
      
 
@@ -631,6 +634,7 @@ namespace Game.GameActors.Units
             if(SkillManager.IsFull())
                 SkillManager.RemoveRandomSkill();
             SkillManager.LearnSkill(curse);
+            OnAddCurse?.Invoke(curse);
             Debug.Log("TODO Receive Curse");
         }
         
@@ -675,6 +679,7 @@ namespace Game.GameActors.Units
         public void RemoveCurse(Curse curse)
         {
             SkillManager.RemoveSkill(curse);
+            OnRemoveCurse?.Invoke(curse);
             // if(Curse!=null)
             //     SkillManager.RemoveSkill(Curse);
         }
@@ -712,6 +717,16 @@ namespace Game.GameActors.Units
         public void UpdateStats()
         {
             OnUnitDataChanged?.Invoke(this);
+        }
+
+        public bool IsCursed()
+        {
+            return SkillManager.GetCurses().Count >= 1;
+        }
+
+        public void SpreadCurse()
+        {
+            SkillManager.GetCurses()[0].Spread();
         }
     }
 }

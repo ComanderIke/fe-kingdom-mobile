@@ -22,6 +22,7 @@ namespace Game.GameActors.Units.OnGameObject
         [SerializeField]Color waitingRedColor;
         [SerializeField]Color normalBlueColor;
         [SerializeField]Color normalRedColor;
+        [SerializeField] private GameObject curseVfxPrefab;
         [SerializeField] private Image hpBarImage;
         [SerializeField]private CanvasGroup grayOutCanvasObject;
         [SerializeField] private ParticleSystem canMoveVFX;
@@ -65,6 +66,24 @@ namespace Game.GameActors.Units.OnGameObject
             xText.gameObject.SetActive(doubleAttack);
             x2Text.gameObject.SetActive(doubleAttack);
         }
+
+        private GameObject curseInstantiated;
+        public void ShowCurse()
+        {
+            if (curseInstantiated != null)
+                return;
+            
+            curseInstantiated = Instantiate(curseVfxPrefab, transform);
+            curseInstantiated.transform.Translate(new Vector3(.5f,0,0),Space.Self);
+            
+        }
+
+        public void HideCurse()
+        {
+            if (curseInstantiated == null)
+                return;
+            Destroy(curseInstantiated);
+        }
         private void Start()
         {
             Faction.UnitAddedStatic += FactionChanged;
@@ -74,9 +93,22 @@ namespace Game.GameActors.Units.OnGameObject
             if(unit!=null)
                 unit.TurnStateManager.UnitCanMove += ToogleMoveEffect;
             Unit.OnEquippedWeapon += OnEquippedWeapon;
-            
+            unit.OnAddCurse += CurseChanged;
+            unit.OnRemoveCurse += CurseChanged;
+            if(unit.IsCursed())
+                ShowCurse();
            // hoverCanvas.alpha = 0;
             HpValueChanged();
+        }
+
+        void CurseChanged(Curse curse)
+        {
+            if(unit.IsCursed())
+                ShowCurse();
+            else
+            {
+                HideCurse();
+            }
         }
 
         void FactionChanged(Unit unit)

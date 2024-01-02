@@ -8,13 +8,18 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: CurseVFXForegroundLayer
-  m_Shader: {fileID: 4800000, guid: 6b10eff4bdd4fe145b220a0c2cdbe77d, type: 3}
-  m_ValidKeywords:
-  - _ENABLECUSTOMFADE_ON
+  m_Shader: {fileID: 4800000, guid: b18ba7d6b1971d749a37f38162e3e483, type: 3}
+  m_ValidKeywords: []
   m_InvalidKeywords:
   - ETC1_EXTERNAL_ALPHA
+  - _
+  - _ALPHABLEND_ON
+  - _CFXR_DITHERED_SHADOWS_OFF
+  - _CFXR_OVERLAYBLEND_RGBA
+  - _CFXR_OVERLAYTEX_OFF
   - _CUSTOMFADE_ON
   - _DISTORT_ON
+  - _ENABLECUSTOMFADE_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -24,6 +29,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _CustomFadeFadeMask:
         m_Texture: {fileID: 2800000, guid: 2ba5a82a50d34e04a93a6fd2f05d712a, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -36,12 +45,32 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DissolveTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DistortTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DitherCustom:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: dfe07aebf5c67994d93a344f15e7bfe4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NoiseTexture:
         m_Texture: {fileID: 2800000, guid: ab121f448d5baa245889334d7d590291, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OverlayTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SecondColorTex:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _UVDistortNoiseTexture:
@@ -66,17 +95,30 @@ Material:
     - _AlphaTintFade: 1
     - _AlphaTintMinAlpha: 1
     - _AlphaTintPower: 1
+    - _BacklightTransmittance: 1
     - _BlackTint: 0
     - _BlackTintFade: 1
     - _BlackTintPower: 2
+    - _BlendingType: 0
+    - _BumpScale: 1
+    - _CFXR_DITHERED_SHADOWS: 0
+    - _CFXR_OVERLAYBLEND: 0
+    - _CFXR_OVERLAYTEX: 0
     - _CustomFade: 1
     - _CustomFadeAlpha: 1
     - _CustomFadeBrightness: 1
     - _CustomFadeNoiseFactor: 0.5
-    - _CustomFadeSmoothness: 0.01
+    - _CustomFadeSmoothness: 0.0001
+    - _Cutoff: 0.1
     - _CutoutFadeFrom: 0
     - _CutoutFadeTo: 1
+    - _DirLightScreenAtten: 1
+    - _DirectLightingRamp: 1
+    - _DissolveSmooth: 0.1
     - _Distort: 1
+    - _DoubleDissolve: 0
+    - _DstBlend: 10
+    - _EdgeFadePow: 1
     - _EnableAdjustColor: 0
     - _EnableAlphaTint: 0
     - _EnableBlackTint: 0
@@ -85,21 +127,55 @@ Material:
     - _EnableSplitToning: 0
     - _EnableUVDistort: 0
     - _EnableUVScroll: 0
+    - _FadeAlongU: 0
+    - _HdrBoost: 0
+    - _HdrMultiply: 2
+    - _IndirectLightingMix: 0.5
     - _InvFade: 1
+    - _InvertDissolveTex: 0
+    - _LightingWorldPosStrength: 0.2
+    - _SecondColorSmooth: 0.2
+    - _ShadowStrength: 1
+    - _SingleChannel: 0
+    - _SoftParticlesFadeDistanceFar: 1
+    - _SoftParticlesFadeDistanceNear: 0
     - _SplitToningBalance: 1
     - _SplitToningContrast: 1
     - _SplitToningFade: 1
     - _SplitToningShift: 0.74
+    - _SrcBlend: 5
     - _UVDistortFade: 1
     - _UVDistortSpace: 0
+    - _UVDistortionAdd: 0
+    - _UseAlphaClip: 0
+    - _UseBackLighting: 0
+    - _UseDissolve: 0
+    - _UseDissolveOffsetUV: 0
+    - _UseEF: 0
+    - _UseEmission: 0
+    - _UseFB: 0
+    - _UseFontColor: 0
+    - _UseLighting: 0
+    - _UseLightingWorldPosOffset: 0
+    - _UseNormalMap: 0
+    - _UseSP: 0
+    - _UseSecondColor: 0
+    - _UseUV2Distortion: 0
+    - _UseUVDistortion: 0
+    - _ZWrite: 0
     m_Colors:
     - _AlphaTintColor: {r: 0.8018868, g: 0.07943218, b: 0.07943218, a: 1}
-    - _BlackTintColor: {r: 1, g: 0, b: 0, a: 0.3882353}
+    - _BaseColor: {r: 0, g: 0, b: 0, a: 0.5}
+    - _BlackTintColor: {r: 0.9056604, g: 0, b: 0, a: 0.3882353}
     - _CustomFadeAddColor: {r: 0, g: 0, b: 0, a: 0}
     - _CustomFadeNoiseScale: {r: 0.2, g: 0.2, b: 0, a: 0}
+    - _DissolveScroll: {r: 0, g: 0, b: 0, a: 0}
+    - _DistortScrolling: {r: 0, g: 0, b: 1, a: 1}
+    - _OverlayTex_Scroll: {r: 0.1, g: 0.1, b: 1, a: 1}
+    - _ShadowColor: {r: 0, g: 0, b: 0, a: 1}
     - _SplitToningHighlightsColor: {r: 1, g: 0.1, b: 0.1, a: 0.9019608}
     - _SplitToningShadowsColor: {r: 0.1, g: 0.4000002, b: 1, a: 0}
-    - _TintColor: {r: 1, g: 1, b: 1, a: 0.5}
+    - _TintColor: {r: 0.063593976, g: 0.0073424703, b: 0.103773594, a: 0.94509804}
     - _UVDistortFrom: {r: -1, g: -1, b: 0, a: 0}
     - _UVDistortNoiseScale: {r: 0.1, g: 0.1, b: 0, a: 0}
     - _UVDistortSpeed: {r: 1, g: 1, b: 0, a: 0}

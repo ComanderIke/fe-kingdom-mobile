@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Game.GameActors.Units;
 using Game.GameInput;
 using Game.GUI.Text;
@@ -93,9 +94,19 @@ namespace Game.Mechanics
 
             factionManager.ActivePlayerNumber++;
             OnEndTurn?.Invoke();
+            foreach (var faction in factionManager.Factions)
+            {
+                var cursedUnits = factionManager.ActiveFaction.Units.Where(u => u.IsCursed());
+                foreach (var cursedUnit in cursedUnits)
+                {
+                    cursedUnit.SpreadCurse();
+                }
+            }
+            
             for (int i=factionManager.ActiveFaction.Units.Count-1; i >=0; i--)//Collection might be modified(tempted)
             {
                 factionManager.ActiveFaction.Units[i].StatusEffectManager.UpdateTurn();
+                
             }
             if (factionManager.ActivePlayerNumber == 0){
                 TurnCount++;

@@ -658,5 +658,19 @@ namespace Game.Map
             MyDebug.LogTODO("TODO TEST IF THIS WORKS AS INTENDED"+gridComponentOriginTile.X+" "+gridComponentOriginTile.Y);
             gridComponentOriginTile.GridObject = null;
         }
+
+        public  List<Tile>  GetAdjacentTiles(Tile gridComponentTile)
+        {
+            List<Tile> adjacentTiles = new List<Tile>();
+            if(gridComponentTile.Y+1 < Tiles.GetLength(1))
+                adjacentTiles.Add(Tiles[gridComponentTile.X, gridComponentTile.Y+1]);
+            if(gridComponentTile.Y-1 >=0)
+                adjacentTiles.Add(Tiles[gridComponentTile.X, gridComponentTile.Y-1]);
+            if(gridComponentTile.X+1 < Tiles.GetLength(0))
+                adjacentTiles.Add(Tiles[gridComponentTile.X+1, gridComponentTile.Y]);
+            if(gridComponentTile.X-1 >=0)
+                adjacentTiles.Add(Tiles[gridComponentTile.X-1, gridComponentTile.Y]);
+            return adjacentTiles;
+        }
     }
 }

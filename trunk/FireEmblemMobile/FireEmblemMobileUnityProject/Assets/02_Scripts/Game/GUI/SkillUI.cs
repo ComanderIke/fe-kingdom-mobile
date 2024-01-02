@@ -110,10 +110,13 @@ namespace LostGrace
             }
             else
             {
-                var passiveMixin = skill.passiveMixins.First();
-                if (passiveMixin.toogleAble)
+                if (skill.passiveMixins.Count != 0)
                 {
-                    toggledOnEffect.SetActive(passiveMixin.toggledOn);
+                    var passiveMixin = skill.passiveMixins.First();
+                    if (passiveMixin.toogleAble)
+                    {
+                        toggledOnEffect.SetActive(passiveMixin.toggledOn);
+                    }
                 }
             }
 
