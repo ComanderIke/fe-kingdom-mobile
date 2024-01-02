@@ -340,6 +340,7 @@ namespace Game.GameActors.Units
         public Bonds Bonds { get; set; }
         public int RevivalStones { get; set; }
         public event Action<Curse> OnAddCurse;
+        public event Action OnCurseResisted;
         public event Action<Curse> OnRemoveCurse;
 
         public Guid uniqueIdentifier;
@@ -631,6 +632,16 @@ namespace Game.GameActors.Units
 
         public void ReceiveCurse(Curse curse)
         {
+            var curseResistance = BattleComponent.BattleStats.GetFaithResistance()*30;
+            var rng = Random.Range(1, 101);
+            if (rng <= curseResistance)
+            {
+                MyDebug.LogLogic("Resisted Curse");
+                MyDebug.LogTODO("Show Resisted VFX + Text");
+                OnCurseResisted?.Invoke();
+                return;
+            }
+                
             if(SkillManager.IsFull())
                 SkillManager.RemoveRandomSkill();
             SkillManager.LearnSkill(curse);

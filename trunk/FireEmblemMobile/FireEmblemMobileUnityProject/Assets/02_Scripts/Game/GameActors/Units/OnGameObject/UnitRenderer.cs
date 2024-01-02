@@ -23,6 +23,7 @@ namespace Game.GameActors.Units.OnGameObject
         [SerializeField]Color normalBlueColor;
         [SerializeField]Color normalRedColor;
         [SerializeField] private GameObject curseVfxPrefab;
+        [SerializeField] private GameObject curseResistedVfxPrefab;
         [SerializeField] private Image hpBarImage;
         [SerializeField]private CanvasGroup grayOutCanvasObject;
         [SerializeField] private ParticleSystem canMoveVFX;
@@ -95,10 +96,18 @@ namespace Game.GameActors.Units.OnGameObject
             Unit.OnEquippedWeapon += OnEquippedWeapon;
             unit.OnAddCurse += CurseChanged;
             unit.OnRemoveCurse += CurseChanged;
+            unit.OnCurseResisted += CurseResisted;
             if(unit.IsCursed())
                 ShowCurse();
            // hoverCanvas.alpha = 0;
             HpValueChanged();
+        }
+
+        void CurseResisted()
+        {
+            var go = Instantiate(curseResistedVfxPrefab, transform) as GameObject;
+            go.transform.Translate(new Vector3(.5f,.5f,0),Space.Self);
+
         }
 
         void CurseChanged(Curse curse)
@@ -187,6 +196,9 @@ namespace Game.GameActors.Units.OnGameObject
         {
             Faction.UnitAddedStatic -= FactionChanged;
             unit.HpValueChanged -= HpValueChanged;
+            unit.OnAddCurse -= CurseChanged;
+            unit.OnRemoveCurse -= CurseChanged;
+            unit.OnCurseResisted -= CurseResisted;
             // Unit.SpValueChanged -= SpValueChanged;
             // Unit.SpBarsValueChanged -= SpBarsValueChanged;
             if(unit!=null)
