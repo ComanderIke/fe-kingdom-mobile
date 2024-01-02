@@ -267,6 +267,21 @@ namespace Game.GameActors.Players
                 Quests[questName] = true;
         }
 
-       
+        public event Action<int> FlameLevelChanged;
+        public event Action<float> FlameExpChanged;
+        private float flameExp = 0;
+        private int flameLevel = 1;
+        public void AddFlameExp(int exp)
+        {
+            flameExp += exp;
+            if (flameExp >= 100)
+            {
+                flameExp = 0;
+                flameLevel++;
+                FlameLevelChanged?.Invoke(flameLevel);
+            }
+               
+            FlameExpChanged?.Invoke(flameExp);
+        }
     }
 }

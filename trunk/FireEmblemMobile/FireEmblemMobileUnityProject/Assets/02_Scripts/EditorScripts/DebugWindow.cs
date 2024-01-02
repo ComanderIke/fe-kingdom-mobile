@@ -106,11 +106,19 @@ namespace __2___Scripts.External.Editor
                 {
                     Player.Instance.Party.AddGold(-50);
                 }
-                if (GUILayout.Button("+50 Grace"))
+                if (GUILayout.Button("+50 Grace (Player)"))
+                {
+                    Player.Instance.Grace+=50;
+                }
+                if (GUILayout.Button("-50 Grace (Player)"))
+                {
+                    Player.Instance.Grace-=50;
+                }
+                if (GUILayout.Button("+50 Grace (Party)"))
                 {
                     Player.Instance.Party.AddGrace(50);
                 }
-                if (GUILayout.Button("-50 Grace"))
+                if (GUILayout.Button("-50 Grace (Party)"))
                 {
                     Player.Instance.Party.AddGrace(-50);
                 }

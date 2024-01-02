@@ -18,6 +18,7 @@ namespace LostGrace
 {
     public class POIManager : UIMenu
     {
+        [SerializeField] private FlameUI flameUI;
         [SerializeField] private POIController poiTutorial;
         [SerializeField] private POIController poiIAP;
         [SerializeField] private POIController poiUpgrades;
@@ -148,6 +149,12 @@ namespace LostGrace
         {
             Hide();
         }
+
+        public void FlameClicked()
+        {
+            flameUI.Show();
+        }
+        
         public void LoreClicked()
         {
             var unlockedCharacter = Player.Instance.UnlockedCharacterIds;

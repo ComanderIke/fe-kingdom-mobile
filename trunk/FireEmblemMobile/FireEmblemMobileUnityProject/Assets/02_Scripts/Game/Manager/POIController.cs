@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using __2___Scripts.Game.Utility;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -26,8 +27,9 @@ namespace LostGrace
 
         private void OnMouseDown()
         {
-            if (interactable)
+            if (interactable&&!UIClickChecker.CheckUIObjectsInPosition())
             {
+                MyDebug.LogInput("POI Clicked: "+gameObject);
                 sr.material = selectedMaterial;
                 onClickEvent?.Invoke();
             }
