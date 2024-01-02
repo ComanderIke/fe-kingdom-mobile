@@ -1,22 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &291015469955451595
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2861010742256422526}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a8b2c9671eb0fb4ba447532b00d30c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shadowColor: {r: 0, g: 0, b: 0, a: 0.47058824}
-  shadowOffset: {x: 0.02, y: 0.032, z: 0}
-  shadowDirection: {x: 60, y: 0, z: 15.3}
-  shadowScale: {x: 1, y: 1.2, z: 1}
-  shadowMat: {fileID: 0}
 --- !u!1 &8215363086031316897
 GameObject:
   m_ObjectHideFlags: 0
@@ -41,9 +24,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8215363086031316897}
-  m_LocalRotation: {x: 0.49554992, y: -0.06656066, z: 0.115286455, w: 0.85831755}
+  m_LocalRotation: {x: 0.49554992, y: -0.06656067, z: 0.115286455, w: 0.8583176}
   m_LocalPosition: {x: 0.02, y: 0.032, z: 0}
   m_LocalScale: {x: 1, y: 1.2, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2863292242632037946}
   m_RootOrder: 0
@@ -108,6 +92,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1089187949433298099, guid: 3354878379061eb4d965f27520d43c6c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1230524308258484256, guid: 3354878379061eb4d965f27520d43c6c,
         type: 3}
       propertyPath: m_RootOrder
@@ -179,6 +168,16 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 83d6ca6a6b53e6f4896c5b63afe80c76, type: 2}
+    - target: {fileID: 6490586582912490707, guid: 3354878379061eb4d965f27520d43c6c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6674510549518585479, guid: 3354878379061eb4d965f27520d43c6c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3354878379061eb4d965f27520d43c6c, type: 3}
 --- !u!1 &2861010742256422526 stripped
@@ -187,9 +186,100 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 3940586217603343898}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &291015469955451595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2861010742256422526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a8b2c9671eb0fb4ba447532b00d30c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shadowColor: {r: 0, g: 0, b: 0, a: 0.47058824}
+  shadowOffset: {x: 0.02, y: 0.032, z: 0}
+  shadowDirection: {x: 60, y: 0, z: 15.3}
+  shadowScale: {x: 1, y: 1.2, z: 1}
+  shadowMat: {fileID: 0}
 --- !u!4 &2863292242632037946 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1230524308258484256, guid: 3354878379061eb4d965f27520d43c6c,
     type: 3}
   m_PrefabInstance: {fileID: 3940586217603343898}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7772903092451805207
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2863292242632037946}
+    m_Modifications:
+    - target: {fileID: 1706130283102978791, guid: faf097d30eb984a54a7d940dec6f586a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792952625170753261, guid: faf097d30eb984a54a7d940dec6f586a,
+        type: 3}
+      propertyPath: m_Name
+      value: CurseVFXNew
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792952625170753262, guid: faf097d30eb984a54a7d940dec6f586a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792952625170753262, guid: faf097d30eb984a54a7d940dec6f586a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792952625170753262, guid: faf097d30eb984a54a7d940dec6f586a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792952625170753262, guid: faf097d30eb984a54a7d940dec6f586a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792952625170753262, guid: faf097d30eb984a54a7d940dec6f586a,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792952625170753262, guid: faf097d30eb984a54a7d940dec6f586a,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792952625170753262, guid: faf097d30eb984a54a7d940dec6f586a,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792952625170753262, guid: faf097d30eb984a54a7d940dec6f586a,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792952625170753262, guid: faf097d30eb984a54a7d940dec6f586a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792952625170753262, guid: faf097d30eb984a54a7d940dec6f586a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792952625170753262, guid: faf097d30eb984a54a7d940dec6f586a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: faf097d30eb984a54a7d940dec6f586a, type: 3}
