@@ -62,6 +62,7 @@ namespace Game.Mechanics.Battle
         public bool MovementToDmg { get; set; }
         private readonly IBattleActor owner;
         private bool preventDoubleAttacks = false;
+        
         public List<ImmunityType> Immunities { get; set; }
         public BonusAttackStats BonusAttackStats { get; set; }
         public int WrathDamage { get; set; }
@@ -295,11 +296,17 @@ namespace Game.Mechanics.Battle
             }
             return crit;
         }
+        public const int CURSE_RES_FTH_MULT = 3;
         public const int CRIT_AVO_LCK_MULT=2;
         public int GetCritAvoid()
         {
             return 0;
            // return owner.Stats.CombinedAttributes().LCK*CRIT_AVO_LCK_MULT+ owner.Stats.CombinedBonusStats().CritAvoid;
+        }
+
+        public int GetCurseResistance()
+        {
+            return owner.Stats.CombinedAttributes().FAITH * BattleStats.CURSE_RES_FTH_MULT;
         }
 
         public int GetPhysicalResistance()
@@ -358,11 +365,12 @@ namespace Game.Mechanics.Battle
                 case CombatStats.CombatStatType.Attack: return GetDamage();
                 case CombatStats.CombatStatType.Avoid: return GetAvoid();
                 case CombatStats.CombatStatType.Crit: return GetCrit();
-                case CombatStats.CombatStatType.Critavoid: return GetCritAvoid();
+                case CombatStats.CombatStatType.CritAvoid: return GetCritAvoid();
                 case CombatStats.CombatStatType.Hit: return GetHitrate();
                 case CombatStats.CombatStatType.Resistance: return GetFaithResistance();
                 case CombatStats.CombatStatType.Protection: return GetPhysicalResistance();
                 case CombatStats.CombatStatType.AttackSpeed: return GetAttackSpeed();
+                case CombatStats.CombatStatType.CurseResistance: return GetCurseResistance();
             }
 
             return -1;
@@ -375,16 +383,19 @@ namespace Game.Mechanics.Battle
                 case CombatStats.CombatStatType.Attack: return owner.Stats.GetBonusStatsWithoutWeapon().Attack;
                 case CombatStats.CombatStatType.Avoid: return owner.Stats.GetBonusStatsWithoutWeapon().Avoid;
                 case CombatStats.CombatStatType.Crit: return owner.Stats.GetBonusStatsWithoutWeapon().Crit;
-                case CombatStats.CombatStatType.Critavoid: return owner.Stats.GetBonusStatsWithoutWeapon().CritAvoid;
+                case CombatStats.CombatStatType.CritAvoid: return owner.Stats.GetBonusStatsWithoutWeapon().CritAvoid;
                 case CombatStats.CombatStatType.Hit: return owner.Stats.GetBonusStatsWithoutWeapon().Hit;
                 case CombatStats.CombatStatType.Resistance: return owner.Stats.GetBonusStatsWithoutWeapon().MagicResistance;
                 case CombatStats.CombatStatType.Protection: return owner.Stats.GetBonusStatsWithoutWeapon().Armor;
                 case CombatStats.CombatStatType.AttackSpeed: return owner.Stats.GetBonusStatsWithoutWeapon().AttackSpeed;
+                case CombatStats.CombatStatType.CurseResistance: return owner.Stats.GetBonusStatsWithoutWeapon().CurseResistance;
+
             }
 
             return -1;
         }
 
-        
+
+       
     }
 }

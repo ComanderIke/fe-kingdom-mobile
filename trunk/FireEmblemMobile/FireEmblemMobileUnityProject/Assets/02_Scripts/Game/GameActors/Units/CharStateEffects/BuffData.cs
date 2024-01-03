@@ -32,7 +32,7 @@ namespace Game.GameActors.Units.CharStateEffects
         }
         public override IEnumerable<EffectDescription> GetEffectDescription(int level)
         {
-            return new List<EffectDescription>(){new("Grants", buffType.ToString(), buffType.ToString())};
+            return new List<EffectDescription>(){new("Grants", buffType!=BuffType.Custom?buffType.ToString():"", buffType!=BuffType.Custom?buffType.ToString():"")};
         }
 
        

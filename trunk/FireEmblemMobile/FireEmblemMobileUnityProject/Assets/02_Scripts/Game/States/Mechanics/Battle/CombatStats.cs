@@ -15,9 +15,10 @@ namespace Game.Mechanics.Battle
             Avoid,
             AttackSpeed,
             Crit,
-            Critavoid,
+            CritAvoid,
             Protection,
-            Resistance
+            Resistance,
+            CurseResistance
         }
         [field:SerializeField]
         public int Hit { get; set; }
@@ -25,6 +26,8 @@ namespace Game.Mechanics.Battle
         public int Avoid { get; set; }
         [field:SerializeField]
         public int CritAvoid { get; set; }
+        [field:SerializeField]
+        public int CurseResistance { get; set; }
         [field:SerializeField]
         public int Crit { get; set; }
         [field:SerializeField]
@@ -55,7 +58,8 @@ namespace Game.Mechanics.Battle
             Armor = bonusStats.Armor;
             MagicResistance = bonusStats.MagicResistance;
             Attack = bonusStats.Attack;
-           
+            CurseResistance = bonusStats.CurseResistance;
+
         }
 
         public override bool Equals(object obj)
@@ -65,7 +69,7 @@ namespace Game.Mechanics.Battle
              
                 return combatStats.AttackSpeed == AttackSpeed && combatStats.MagicResistance == MagicResistance && combatStats.Crit == Crit &&
                        combatStats.Armor == Armor && combatStats.CritAvoid == CritAvoid && combatStats.Hit == Hit &&
-                       combatStats.Attack == Attack && combatStats.Avoid == Avoid;
+                       combatStats.Attack == Attack && combatStats.Avoid == Avoid&& combatStats.CurseResistance == CurseResistance;
                 
             }
             return base.Equals(obj);
@@ -78,11 +82,12 @@ namespace Game.Mechanics.Battle
                 case CombatStatType.Attack: return "Attack";
                 case CombatStatType.Avoid: return "Avoid";
                 case CombatStatType.Crit: return "Critical";
-                case CombatStatType.Critavoid: return "Critavoid";
+                case CombatStatType.CritAvoid: return "Critavoid";
                 case CombatStatType.Hit: return "Hitrate";
-                case CombatStatType.Resistance: return "Faith";
+                case CombatStatType.Resistance: return "M. Resistance";
                 case CombatStatType.Protection: return "Defense";
                 case CombatStatType.AttackSpeed: return "Speed";
+                case CombatStatType.CurseResistance: return "C. Resistance";
             }
 
             return "";
@@ -94,11 +99,12 @@ namespace Game.Mechanics.Battle
                 case CombatStatType.Attack: return "Atk";
                 case CombatStatType.Avoid: return "Avo";
                 case CombatStatType.Crit: return "Crit";
-                case CombatStatType.Critavoid: return "C. Avo";
+                case CombatStatType.CritAvoid: return "C. Avo";
                 case CombatStatType.Hit: return "Hit";
-                case CombatStatType.Resistance: return "Res";
+                case CombatStatType.Resistance: return "M. Res";
                 case CombatStatType.Protection: return "Prot";
                 case CombatStatType.AttackSpeed: return "A. Spd";
+                case CombatStatType.CurseResistance: return "C. Res.";
             }
 
             return "";
@@ -110,11 +116,12 @@ namespace Game.Mechanics.Battle
                 case CombatStatType.Attack: return Attack;
                 case CombatStatType.Avoid: return Avoid;
                 case CombatStatType.Crit: return Crit;
-                case CombatStatType.Critavoid: return CritAvoid;
+                case CombatStatType.CritAvoid: return CritAvoid;
                 case CombatStatType.Hit: return Hit;
                 case CombatStatType.Resistance: return MagicResistance;
                 case CombatStatType.Protection: return Armor;
                 case CombatStatType.AttackSpeed: return AttackSpeed;
+                case CombatStatType.CurseResistance: return CurseResistance;
             }
 
             return 0;
@@ -131,6 +138,7 @@ namespace Game.Mechanics.Battle
             sum.Armor += b.Armor;
             sum.MagicResistance += b.MagicResistance;
             sum.Attack += b.Attack;
+            sum.CurseResistance += b.CurseResistance;
             return sum;
 
         }
@@ -145,6 +153,7 @@ namespace Game.Mechanics.Battle
             sum.Armor -= b.Armor;
             sum.MagicResistance -= b.MagicResistance;
             sum.Attack -= b.Attack;
+            sum.CurseResistance -= b.CurseResistance;
             return sum;
 
         }
@@ -159,12 +168,13 @@ namespace Game.Mechanics.Battle
             sum.Armor =(int)(sum.Armor * b);
             sum.MagicResistance =(int)(sum.MagicResistance * b);
             sum.Attack =(int)(sum.Attack * b);
+            sum.CurseResistance =(int)(sum.CurseResistance * b);
             return sum;
 
         }
         public int[] AsArray()
         {
-            return new []{Attack,Hit,Avoid,AttackSpeed,Crit,CritAvoid,Armor, MagicResistance,};
+            return new []{Attack,Hit,Avoid,AttackSpeed,Crit,CritAvoid,Armor, MagicResistance,CurseResistance};
         }
 
         public static string GetScalingText(CombatStatType type)
@@ -174,11 +184,12 @@ namespace Game.Mechanics.Battle
                 case CombatStatType.Attack: return "STR/INT";
                 case CombatStatType.Avoid: return "AGI * "+BattleStats.AVO_AGI_MULT;
                 case CombatStatType.Crit: return "LCK DEX";
-                case CombatStatType.Critavoid: return "LCK * "+BattleStats.CRIT_AVO_LCK_MULT;
+                case CombatStatType.CritAvoid: return "LCK * "+BattleStats.CRIT_AVO_LCK_MULT;
                 case CombatStatType.Hit: return "DEX * " +BattleStats.HIT_DEX_MULT;
                 case CombatStatType.Resistance: return "FTH";
                 case CombatStatType.Protection: return "DEF";
                 case CombatStatType.AttackSpeed: return "AGI";
+                case CombatStatType.CurseResistance: return "FTH *" + BattleStats.CURSE_RES_FTH_MULT;
             }
 
             return "";

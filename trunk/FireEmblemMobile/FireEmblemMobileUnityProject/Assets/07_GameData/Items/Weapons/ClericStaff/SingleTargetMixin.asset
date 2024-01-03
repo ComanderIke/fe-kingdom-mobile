@@ -14,6 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   synergies:
     list: []
+  conditionBigPackage:
+    CompareType: 0
+    Conditions: []
+  skillEffectMixins: []
   AnimationObject: {fileID: 0}
   spawnAnimationAtCaster: 0
   useScreenPosition: 0
@@ -21,13 +25,11 @@ MonoBehaviour:
   effectDelay: 0
   logicDelay: 0
   maxUsesPerLevel: 03000000
-  hpCostPerLevel: 0000000000000000
+  hpCostPerLevel: 02000000
   costIsSkillPoints: 1
-  conditions: []
+  singleTargetConditions: []
   targetType: 0
   minRange: 0
   range: 01000000
   sameAsAttackRange: 0
-  SkillEffectMixins:
-  - {fileID: 11400000, guid: bc99d0352d4624068987b74d5d75e59e, type: 2}
   confirmPosition: 1

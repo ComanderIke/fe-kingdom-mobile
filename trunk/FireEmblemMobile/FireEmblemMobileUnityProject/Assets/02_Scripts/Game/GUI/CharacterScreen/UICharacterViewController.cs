@@ -36,7 +36,7 @@ public class UICharacterViewController : MonoBehaviour
     public UIStatText Hitrate;
     public UIStatText DodgeRate;
     public UIStatText Crit;
-    public UIStatText CritAvoid;
+    [FormerlySerializedAs("CritAvoid")] public UIStatText CurseResistance;
     
     public TextMeshProUGUI STR_Label;
     public TextMeshProUGUI INT_Label;
@@ -114,8 +114,8 @@ public class UICharacterViewController : MonoBehaviour
         DodgeRate.SetValue(unit.BattleComponent.BattleStats.GetAvoid(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
         sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Crit,physical);
         Crit.SetValue(unit.BattleComponent.BattleStats.GetCrit(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
-        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Critavoid,physical);
-        CritAvoid.SetValue(unit.BattleComponent.BattleStats.GetCritAvoid(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
+        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.CurseResistance,physical);
+        CurseResistance.SetValue(unit.BattleComponent.BattleStats.GetCurseResistance(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
 
         if (showAttributes)
         {
@@ -149,6 +149,12 @@ public class UICharacterViewController : MonoBehaviour
         UpdateUI(unit);
     }
 
+    public void ShowGrowths()
+    {
+        showAttributes = false;
+        UpdateUI(unit);
+    }
+
     public void CombatStatsButtonClicked()
     {
         baseAttributeButton.GetComponent<CanvasGroup>().alpha = 1;
@@ -158,10 +164,12 @@ public class UICharacterViewController : MonoBehaviour
     }
     public void BaseAttributeButtonClicked()
     {
+        showAttributes = true;
         baseAttributeButton.GetComponent<CanvasGroup>().alpha = .6f;
         combatStatsButton.GetComponent<CanvasGroup>().alpha = 1f;
         baseAttributePanel.SetActive(true);
         combatStatsPanel.SetActive(false);
+        UpdateUI(unit);
     }
     public void STR_Clicked()
     {
@@ -226,9 +234,9 @@ public class UICharacterViewController : MonoBehaviour
         ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Crit, Crit.transform.position);
         // ToolTipSystem.ShowAttribute("Faith", "Increases ones holy and occult damage and increases magical damage resistance!",unit.Stats.BaseAttributes.FAITH,FTH.transform.position);
     }
-    public void CritAvoid_Clicked()
+    public void CurseRes_Clicked()
     {
-        ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Critavoid, CritAvoid.transform.position);
+        ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.CurseResistance, CurseResistance.transform.position);
         // ToolTipSystem.ShowAttribute("Faith", "Increases ones holy and occult damage and increases magical damage resistance!",unit.Stats.BaseAttributes.FAITH,FTH.transform.position);
     }
     public void PhysResistance_Clicked()

@@ -36,7 +36,7 @@ namespace LostGrace
         DodgeRate.SetValue(unit.BattleComponent.BattleStats.GetAvoid(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
         sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Crit,physical);
         Crit.SetValue(unit.BattleComponent.BattleStats.GetCrit(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
-        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Critavoid,physical);
+        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.CritAvoid,physical);
         CritAvoid.SetValue(unit.BattleComponent.BattleStats.GetCritAvoid(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
 
         }
@@ -52,7 +52,7 @@ namespace LostGrace
                 case CombatStats.CombatStatType.Hit: position = Hitrate.transform.position; break;
                 case CombatStats.CombatStatType.Avoid: position = DodgeRate.transform.position; break;
                 case CombatStats.CombatStatType.Crit: position = Crit.transform.position; break;
-                case CombatStats.CombatStatType.Critavoid: position = CritAvoid.transform.position; break;
+                case CombatStats.CombatStatType.CritAvoid: position = CritAvoid.transform.position; break;
                 case CombatStats.CombatStatType.Resistance: position = MagicArmor.transform.position; break;
                 case CombatStats.CombatStatType.Protection: position = PhysArmor.transform.position; break;
             }

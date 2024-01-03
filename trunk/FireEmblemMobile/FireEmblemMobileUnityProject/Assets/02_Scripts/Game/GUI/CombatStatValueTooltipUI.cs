@@ -81,6 +81,12 @@ namespace LostGrace
                      statContainer.SetValue(Attributes.GetAsText((int)AttributeType.DEX)+" * "+BattleStats.HIT_DEX_MULT, unit.Stats.CombinedAttributes().DEX*BattleStats.HIT_DEX_MULT,false, bonusState);
                      instantiatedObjects.Add(go);
                      break;
+                 case CombatStats.CombatStatType.CurseResistance: 
+                    
+                     bonusState=unit.Stats.GetAttributeBonusState(AttributeType.FTH);
+                     statContainer.SetValue(Attributes.GetAsText((int)AttributeType.FTH)+" * "+BattleStats.CURSE_RES_FTH_MULT, unit.Stats.CombinedAttributes().FAITH*BattleStats.CURSE_RES_FTH_MULT,false, bonusState);
+                     instantiatedObjects.Add(go);
+                     break;
                  case CombatStats.CombatStatType.Resistance: 
                    
                      bonusState=unit.Stats.GetAttributeBonusState(AttributeType.FTH);

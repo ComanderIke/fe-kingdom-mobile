@@ -182,6 +182,10 @@ namespace Game.GameActors.Units.Numbers
                     baseAttributeValue = BaseAttributesAndWeapons().AGI;
                     combinedAttributeValue = CombinedAttributes().AGI;
                     break;
+                case CombatStats.CombatStatType.CurseResistance:
+                    baseAttributeValue = BaseAttributesAndWeapons().FAITH * BattleStats.CURSE_RES_FTH_MULT;
+                    combinedAttributeValue = CombinedAttributes().FAITH * BattleStats.CURSE_RES_FTH_MULT;
+                    break;
             }
 
             return new Vector2Int(baseAttributeValue, combinedAttributeValue);

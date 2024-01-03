@@ -10,6 +10,7 @@ public class SkillToolTip : MonoBehaviour
     // public TextMeshProUGUI descriptionText;
     // public Image skillIcon;
 
+    [SerializeField] private Canvas canvas;
     [SerializeField] private ChooseSkillButtonUI chooseSkillButtonUI;
 
     private Skill skill;
@@ -29,8 +30,30 @@ public class SkillToolTip : MonoBehaviour
     }
     void UpdateTextWrap(Vector3 position)
     {
+        
+        
+        // transform.position = position+ new Vector3(0,100,0);
+    }
 
-       // transform.position = position+ new Vector3(0,100,0);
+    void ClampOnScreen()
+    {
+        var canvasRect = canvas.transform as RectTransform;
+        if (rectTransform.anchoredPosition.x +rectTransform.rect.width> canvasRect.rect.width)
+        {
+            rectTransform.anchoredPosition = new Vector2(canvasRect.rect.width - rectTransform.rect.width,rectTransform.anchoredPosition.y);
+        }
+        if (rectTransform.anchoredPosition.y +rectTransform.rect.height> canvasRect.rect.height)
+        {
+            rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, canvasRect.rect.height - rectTransform.rect.height);
+        }
+        if (rectTransform.anchoredPosition.x -rectTransform.pivot.x*rectTransform.rect.width< 0)
+        {
+            rectTransform.anchoredPosition = new Vector2( -rectTransform.pivot.x*rectTransform.rect.width,rectTransform.anchoredPosition.y);
+        }
+        if (rectTransform.anchoredPosition.y-rectTransform.pivot.y*rectTransform.rect.height< 0)
+        {
+            rectTransform.anchoredPosition = new Vector2( rectTransform.anchoredPosition.x,-rectTransform.pivot.y*rectTransform.rect.height);
+        }
     }
 
     public void ExitClicked()
@@ -55,6 +78,7 @@ public class SkillToolTip : MonoBehaviour
         chooseSkillButtonUI.SetSkill(skill, blessed, upgrade);
         rectTransform.anchoredPosition=position+ new Vector3(0,080+((chooseSkillButtonUI.transform as RectTransform).rect.height/2),0);
         UpdateTextWrap(position);
+        ClampOnScreen();
 
     }
 }
