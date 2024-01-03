@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using _02_Scripts.Game.GUI.Utility;
 using Game.GameActors.Players;
-using PlasticGui.WorkspaceWindow.QueryViews.Attributes;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "GameData/Upgrades/MetaUpgrade/Flags", fileName = "MetaUpgrade1")]

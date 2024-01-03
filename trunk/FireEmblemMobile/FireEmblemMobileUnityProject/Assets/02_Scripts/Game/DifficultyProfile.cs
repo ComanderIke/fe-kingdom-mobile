@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using _02_Scripts.Game.Dialog.DialogSystem;
 using _02_Scripts.Game.GUI.Utility;
 using Game.GameActors.Units;
@@ -40,18 +41,18 @@ namespace LostGrace
         public List<DifficultyVariable> GetDifficultyVariables()
         {
             var list = new List<DifficultyVariable>();
-            var textStyle = ExpMult < 1 ? DifficultyVariableStyle.Decrease : DifficultyVariableStyle.Increase;
-            string prefix = ExpMult < 1 ? "-" : "+";
-            list.Add(new DifficultyVariable("Exp:", prefix+(ExpMult*100f-100)+"%", textStyle));
-            textStyle = GoldMult < 1 ? DifficultyVariableStyle.Decrease : DifficultyVariableStyle.Increase;
-            prefix = GoldMult < 1 ? "-" : "+";
-            list.Add(new DifficultyVariable("Gold:", prefix+(GoldMult*100f-100)+"%", textStyle));
-            textStyle = GraceMult < 0 ? DifficultyVariableStyle.Decrease : DifficultyVariableStyle.Increase;
-            prefix = GraceMult < 0 ? "-" : "+";
-            list.Add(new DifficultyVariable("Grace:", prefix+(GraceMult*100f-100)+"%", textStyle));
-            textStyle = BondexpRate < 0 ? DifficultyVariableStyle.Decrease : DifficultyVariableStyle.Increase;
-            prefix = BondexpRate < 0 ? "-" : "+";
-            list.Add(new DifficultyVariable("Bond Exp:", prefix+(BondexpRate*100f-100)+"%", textStyle));
+            var textStyle = ExpMult < 1 ? DifficultyVariableStyle.Decrease : Math.Abs(ExpMult - 1) < 0.01f?DifficultyVariableStyle.Normal:DifficultyVariableStyle.Increase;
+            string prefix = ExpMult <= 1 ? "" : "+";
+            list.Add(new DifficultyVariable("Exp:", prefix+(int)(ExpMult*100f-100)+"%", textStyle));
+            textStyle = GoldMult < 1 ? DifficultyVariableStyle.Decrease : Math.Abs(GoldMult - 1) < 0.01f?DifficultyVariableStyle.Normal:DifficultyVariableStyle.Increase;
+            prefix = GoldMult <= 1 ? "" : "+";
+            list.Add(new DifficultyVariable("Gold:", prefix+(int)(GoldMult*100f-100)+"%", textStyle));
+            textStyle = GraceMult < 1 ? DifficultyVariableStyle.Decrease : Math.Abs(GraceMult - 1) < 0.01f?DifficultyVariableStyle.Normal:DifficultyVariableStyle.Increase;
+            prefix = GraceMult <= 1 ? "" : "+";
+            list.Add(new DifficultyVariable("Grace:", prefix+(int)(GraceMult*100f-100)+"%", textStyle));
+            textStyle = BondexpRate < 1 ? DifficultyVariableStyle.Decrease :!(Math.Abs(BondexpRate - 1) < 0.01f)? DifficultyVariableStyle.Increase:DifficultyVariableStyle.Normal;
+            prefix = BondexpRate <= 1 ? "" : "+";
+            list.Add(new DifficultyVariable("Bond Exp:", prefix+(int)(BondexpRate*100f-100)+"%", textStyle));
             return list;
         }
 

@@ -9,6 +9,7 @@ namespace LostGrace
     {
         [SerializeField] private TextMeshProUGUI label;
         [SerializeField] private GameObject upgradeArrow;
+        [SerializeField] private GameObject downgradeArrow;
         [SerializeField] private TextMeshProUGUI value;
 
         [SerializeField] private TMP_ColorGradient defaultColor;
@@ -22,6 +23,7 @@ namespace LostGrace
             this.label.text = label;
             this.value.text = ""+value;
             upgradeArrow.gameObject.SetActive(upg&&!downgrade);
+            downgradeArrow.gameObject.SetActive(downgrade);
             this.value.colorGradientPreset = downgrade?downGradeColor:upg?upgColor:defaultColor;
 
         }
