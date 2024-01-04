@@ -8,6 +8,7 @@ namespace LostGrace
 {
     public class UIToSanctuaryButton : MonoBehaviour
     {
+        [SerializeField] private OKCancelDialogController okCancelDialogController;
         // Start is called before the first frame update
         void Start()
         {
@@ -22,7 +23,8 @@ namespace LostGrace
 
         public void Clicked()
         {
-            GameSceneController.Instance.LoadSanctuary();
+            okCancelDialogController.Show("Return to the Sanctuary?",()=>GameSceneController.Instance.LoadSanctuary() );
+            
         }
     }
 }

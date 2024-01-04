@@ -93,7 +93,8 @@ namespace LostGrace
                 foreach (var synergy in skill.GetSynergies())
                 {
                     var synergyGO = Instantiate(synergieBlessingPrefab, blessingParent);
-                    synergyGO.GetComponent<Image>().sprite = synergy.Key.Icon;
+                    var uiSynergy = synergyGO.GetComponent<UISynergy>();
+                    uiSynergy.Show(synergy.Key, synergy.Value, blessing&&skill.owner.Blessing.God==synergy.Key.god);
                 }
             }
             

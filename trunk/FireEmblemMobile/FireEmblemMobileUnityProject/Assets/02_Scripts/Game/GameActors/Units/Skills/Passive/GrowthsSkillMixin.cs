@@ -15,7 +15,7 @@ namespace LostGrace
         public override List<EffectDescription> GetEffectDescription(Unit unit, int level)
         {
             var list = new List<EffectDescription>();
-            list.Add(new EffectDescription("Increased Growths:", ""+growths[level].MaxHp+"%", ""+growths[level+1].MaxHp+"%"));
+            list.Add(new EffectDescription("Incr. Growths:", ""+growths[level].MaxHp+"%", ""+growths[level+1].MaxHp+"%"));
             return list;
         }
         public override void BindToUnit(Unit unit, Skill skill)

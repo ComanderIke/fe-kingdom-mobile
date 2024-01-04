@@ -8,7 +8,7 @@ namespace LostGrace
     [CreateAssetMenu(menuName = "GameData/Skills/Blessing", fileName = "Blessing")]
     public class BlessingBP : SkillBp
     {
-        [SerializeField]private God god;
+        [SerializeField]public God god;
         public override Skill Create()
         {
             var instantiatedPassiveMixins = new List<PassiveSkillMixin>();
