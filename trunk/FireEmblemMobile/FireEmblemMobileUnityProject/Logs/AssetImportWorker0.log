@@ -22,7 +22,7 @@ AssetImportWorker0
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-49251
+49245
 Successfully changed project path to: /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject
 /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -54,12 +54,12 @@ Successfully changed project path to: /Users/daniel/Documents/fe-kingdom-mobile/
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [8030576320] Host "[IP] 192.168.0.2 [Port] 0 [Flags] 2 [Guid] 2112225787 [EditorId] 2112225787 [Version] 1048832 [Id] OSXEditor(0,Daniels-MacBook-Pro.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+Player connection [8016223936] Host "[IP] 192.168.0.2 [Port] 0 [Flags] 2 [Guid] 3255392632 [EditorId] 3255392632 [Version] 1048832 [Id] OSXEditor(0,Daniels-MacBook-Pro.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
 
-Player connection [8030576320] Host "[IP] 192.168.0.2 [Port] 0 [Flags] 2 [Guid] 2112225787 [EditorId] 2112225787 [Version] 1048832 [Id] OSXEditor(0,Daniels-MacBook-Pro.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [8016223936] Host "[IP] 192.168.0.2 [Port] 0 [Flags] 2 [Guid] 3255392632 [EditorId] 3255392632 [Version] 1048832 [Id] OSXEditor(0,Daniels-MacBook-Pro.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
 
 [Physics::Module] Initialized MultithreadedJobDispatcher with {0} workers.
-Refreshing native plugins compatible for Editor in 108.59 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 117.56 ms, found 2 plugins.
 Preloading 1 native plugins for Editor in 0.49 ms.
 Initialize engine version: 2021.3.32f1 (3b9dae9532f5)
 [Subsystems] Discovering subsystems at path /Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/Resources/UnitySubsystems
@@ -77,88 +77,87 @@ Initialize mono
 Mono path[0] = '/Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/Managed'
 Mono path[1] = '/Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/MonoBleedingEdge/lib/mono/unityjit-macos'
 Mono config path = '/Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56309
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56304
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: /Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
 Register platform support module: /Applications/Unity/Hub/Editor/2021.3.32f1/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 Register platform support module: /Applications/Unity/Hub/Editor/2021.3.32f1/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
-Registered in 0.002219 seconds.
+Registered in 0.001687 seconds.
 [usbmuxd] Start listen thread
 [usbmuxd] Listen thread started
 [usbmuxd] Send listen message
 Native extension for iOS target not found
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 72 ms
+Android Extension - Scanning For ADB Devices 70 ms
 Native extension for OSXStandalone target not found
-Refreshing native plugins compatible for Editor in 116.72 ms, found 2 plugins.
-Preloading 1 native plugins for Editor in 0.19 ms.
+Refreshing native plugins compatible for Editor in 122.83 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.18 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.544 seconds
+- Completed reload, in  0.540 seconds
 Domain Reload Profiling:
-	ReloadAssembly (544ms)
-		BeginReloadAssembly (60ms)
+	ReloadAssembly (540ms)
+		BeginReloadAssembly (51ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (0ms)
-		EndReloadAssembly (438ms)
-			LoadAssemblies (62ms)
+		EndReloadAssembly (442ms)
+			LoadAssemblies (52ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (56ms)
+			SetupTypeCache (58ms)
 			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (14ms)
-			SetupLoadedEditorAssemblies (345ms)
+			RebuildScriptCaches (15ms)
+			SetupLoadedEditorAssemblies (344ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (177ms)
+				InitializePlatformSupportModulesInManaged (169ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (117ms)
+				RefreshPlugins (123ms)
 				BeforeProcessingInitializeOnLoad (1ms)
-				ProcessInitializeOnLoadAttributes (31ms)
-				ProcessInitializeOnLoadMethodAttributes (20ms)
+				ProcessInitializeOnLoadAttributes (32ms)
+				ProcessInitializeOnLoadMethodAttributes (19ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.002141 seconds.
+Registered in 0.007640 seconds.
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory is not a mono symbol file
 Native extension for iOS target not found
-2023-12-31 23:22:09.791 Unity[1309:22204] [XcodeApplications] Failed to read NSDictionary from path HU%+/Contents/Info.plist
 Native extension for Android target not found
 Native extension for OSXStandalone target not found
-Refreshing native plugins compatible for Editor in 120.54 ms, found 2 plugins.
-Preloading 1 native plugins for Editor in 0.18 ms.
+Refreshing native plugins compatible for Editor in 128.27 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.19 ms.
 Package Manager log level set to [2]
 [Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
 [Package Manager] Cannot connect to Unity Package Manager local server
 Mono: successfully reloaded assembly
-- Completed reload, in  1.210 seconds
+- Completed reload, in  1.227 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1211ms)
-		BeginReloadAssembly (49ms)
+	ReloadAssembly (1227ms)
+		BeginReloadAssembly (53ms)
 			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (2ms)
+			DisableScriptedObjects (3ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (13ms)
-		EndReloadAssembly (1111ms)
-			LoadAssemblies (76ms)
+			CreateAndSetChildDomain (14ms)
+		EndReloadAssembly (1119ms)
+			LoadAssemblies (75ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (187ms)
-			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (55ms)
-			SetupLoadedEditorAssemblies (753ms)
+			SetupTypeCache (190ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (59ms)
+			SetupLoadedEditorAssemblies (757ms)
 				LogAssemblyErrors (0ms)
 				InitializePlatformSupportModulesInManaged (13ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (121ms)
-				BeforeProcessingInitializeOnLoad (56ms)
-				ProcessInitializeOnLoadAttributes (481ms)
-				ProcessInitializeOnLoadMethodAttributes (82ms)
+				RefreshPlugins (128ms)
+				BeforeProcessingInitializeOnLoad (57ms)
+				ProcessInitializeOnLoadAttributes (472ms)
+				ProcessInitializeOnLoadMethodAttributes (85ms)
 				AfterProcessingInitializeOnLoad (1ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
@@ -166,17 +165,169 @@ Domain Reload Profiling:
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
 Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
 Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
 Launching external process: /Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/Tools/UnityShaderCompiler
-Launched and connected shader compiler UnityShaderCompiler after 0.05 seconds
-Refreshing native plugins compatible for Editor in 1.13 ms, found 2 plugins.
-Preloading 1 native plugins for Editor in 0.15 ms.
-Unloading 6643 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 102 unused Assets / (2.1 MB). Loaded Objects now: 7145.
-Memory consumption went from 361.2 MB to 359.2 MB.
-Total: 5.308209 ms (FindLiveObjects: 0.170208 ms CreateObjectMapping: 0.080834 ms MarkObjects: 4.679500 ms  DeleteObjects: 0.377083 ms)
+Launched and connected shader compiler UnityShaderCompiler after 0.04 seconds
+Refreshing native plugins compatible for Editor in 1.08 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.36 ms.
+Unloading 6649 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 102 unused Assets / (2.6 MB). Loaded Objects now: 7152.
+Memory consumption went from 363.4 MB to 360.8 MB.
+Total: 5.052750 ms (FindLiveObjects: 0.195625 ms CreateObjectMapping: 0.069750 ms MarkObjects: 4.391875 ms  DeleteObjects: 0.394834 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Refreshing native plugins compatible for Editor in 3.00 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.12 ms.
+Unloading 78 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 78 unused Assets / (2.1 MB). Loaded Objects now: 7152.
+Memory consumption went from 211.4 MB to 209.4 MB.
+Total: 5.159500 ms (FindLiveObjects: 0.159667 ms CreateObjectMapping: 0.066208 ms MarkObjects: 4.642000 ms  DeleteObjects: 0.291500 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001957 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x2eef6b000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.17 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.17 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.040 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1040ms)
+		BeginReloadAssembly (86ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (3ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (38ms)
+		EndReloadAssembly (911ms)
+			LoadAssemblies (47ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (192ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (32ms)
+			SetupLoadedEditorAssemblies (586ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (14ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (41ms)
+				ProcessInitializeOnLoadAttributes (449ms)
+				ProcessInitializeOnLoadMethodAttributes (79ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Refreshing native plugins compatible for Editor in 1.23 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.17 ms.
+Unloading 6417 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7168.
+Memory consumption went from 341.5 MB to 339.4 MB.
+Total: 5.113459 ms (FindLiveObjects: 0.209583 ms CreateObjectMapping: 0.100292 ms MarkObjects: 4.466166 ms  DeleteObjects: 0.336917 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002172 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x16f5af000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.17 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.16 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.053 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1054ms)
+		BeginReloadAssembly (84ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (3ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (37ms)
+		EndReloadAssembly (926ms)
+			LoadAssemblies (53ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (191ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (32ms)
+			SetupLoadedEditorAssemblies (598ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (14ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (41ms)
+				ProcessInitializeOnLoadAttributes (450ms)
+				ProcessInitializeOnLoadMethodAttributes (90ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Refreshing native plugins compatible for Editor in 1.33 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.19 ms.
+Unloading 6416 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7183.
+Memory consumption went from 341.5 MB to 339.4 MB.
+Total: 5.833834 ms (FindLiveObjects: 0.267916 ms CreateObjectMapping: 0.076084 ms MarkObjects: 5.101416 ms  DeleteObjects: 0.387750 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
@@ -192,356 +343,358 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  Time since last request: 652.670145 seconds.
-  path: Assets/07_GameData/Encounters/BossEncounter 1.asset
-  artifactKey: Guid(b170cfc84344a4ccbb2a5bbac2bb8d43) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+  Time since last request: 426.933261 seconds.
+  path: Assets/01_Scenes/EncounterArea.unity
+  artifactKey: Guid(42c2386d9327d6c4197acd575ef9891a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/Encounters/BossEncounter 1.asset using Guid(b170cfc84344a4ccbb2a5bbac2bb8d43) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cd67c69167711ada2882c3c58f3ed777') in 0.940474 seconds 
-Number of asset objects unloaded after import = 4310
+Start importing Assets/01_Scenes/EncounterArea.unity using Guid(42c2386d9327d6c4197acd575ef9891a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ed1f95706b5360bf3991342a35d4b1a6') in 0.037868 seconds 
+Number of asset objects unloaded after import = 0
 ========================================================================
 Received Import Request.
-  Time since last request: 0.606436 seconds.
-  path: Assets/07_GameData/Encounters/Boss2Encounter.asset
-  artifactKey: Guid(b170cfc84344a4ccbb2a5bbac2bb8d43) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+  Time since last request: 2.005729 seconds.
+  path: Assets/01_Scenes/EncounterArea.unity
+  artifactKey: Guid(42c2386d9327d6c4197acd575ef9891a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/Encounters/Boss2Encounter.asset using Guid(b170cfc84344a4ccbb2a5bbac2bb8d43) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '60862098b5da9dfe30c5a594d55df9bd') in 0.097419 seconds 
-Number of asset objects unloaded after import = 4309
+Start importing Assets/01_Scenes/EncounterArea.unity using Guid(42c2386d9327d6c4197acd575ef9891a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '42863d72aa53d0c89c9582fdcc8e0e98') in 0.000365 seconds 
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001492 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x17c247000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.45 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.20 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.098 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1099ms)
+		BeginReloadAssembly (105ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (7ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (48ms)
+		EndReloadAssembly (949ms)
+			LoadAssemblies (49ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (206ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (35ms)
+			SetupLoadedEditorAssemblies (602ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (16ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (2ms)
+				BeforeProcessingInitializeOnLoad (41ms)
+				ProcessInitializeOnLoadAttributes (450ms)
+				ProcessInitializeOnLoadMethodAttributes (93ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Refreshing native plugins compatible for Editor in 1.74 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.29 ms.
+Unloading 6416 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7198.
+Memory consumption went from 341.5 MB to 339.4 MB.
+Total: 6.035125 ms (FindLiveObjects: 0.283500 ms CreateObjectMapping: 0.068875 ms MarkObjects: 5.252750 ms  DeleteObjects: 0.429583 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  Time since last request: 26.923247 seconds.
-  path: Assets/07_GameData/Encounters/BossEncounter.asset
-  artifactKey: Guid(999b302d3da552a4ab7519ab822505b6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+  Time since last request: 712.596033 seconds.
+  path: ProjectSettings/TagManager.asset
+  artifactKey: Guid(00000000000000003000000000000000) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/Encounters/BossEncounter.asset using Guid(999b302d3da552a4ab7519ab822505b6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f9a423c415a692444e71b8c0548cc134') in 0.099858 seconds 
-Number of asset objects unloaded after import = 4309
+Start importing ProjectSettings/TagManager.asset using Guid(00000000000000003000000000000000) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '19bab2191335f5b376b253ec6a3c814b') in 0.078665 seconds 
+Number of asset objects unloaded after import = 0
 ========================================================================
 Received Import Request.
-  Time since last request: 20.858712 seconds.
-  path: Assets/07_GameData/BattleMaps/Area1Maps/Area1_BattleBeforeBoss 1.asset
-  artifactKey: Guid(5ff3727e0c9d84991ac280f988c6a4c0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+  Time since last request: 3.769015 seconds.
+  path: Assets/03_Prefabs/AIHelper
+  artifactKey: Guid(f47a278494f1e50468ca5ee428bdbe4b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/BattleMaps/Area1Maps/Area1_BattleBeforeBoss 1.asset using Guid(5ff3727e0c9d84991ac280f988c6a4c0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c23bc78f603f0f9fc175ef023d329141') in 0.090669 seconds 
-Number of asset objects unloaded after import = 4167
+Start importing Assets/03_Prefabs/AIHelper using Guid(f47a278494f1e50468ca5ee428bdbe4b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a3e0750ee9fafe2d82b5cdd67e492a17') in 0.001536 seconds 
+Number of asset objects unloaded after import = 0
 ========================================================================
-Received Import Request.
-  Time since last request: 16.426721 seconds.
-  path: Assets/07_GameData/BattleMaps/Area1Maps/Area2_BattleBeforeBoss.asset
-  artifactKey: Guid(5ff3727e0c9d84991ac280f988c6a4c0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/BattleMaps/Area1Maps/Area2_BattleBeforeBoss.asset using Guid(5ff3727e0c9d84991ac280f988c6a4c0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cc40c69622299532e9dc6b878991d4de') in 0.083266 seconds 
-Number of asset objects unloaded after import = 4167
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001484 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x17bed3000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.34 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.23 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.074 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1074ms)
+		BeginReloadAssembly (97ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (3ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (46ms)
+		EndReloadAssembly (933ms)
+			LoadAssemblies (42ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (200ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (34ms)
+			SetupLoadedEditorAssemblies (603ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (16ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (2ms)
+				BeforeProcessingInitializeOnLoad (42ms)
+				ProcessInitializeOnLoadAttributes (452ms)
+				ProcessInitializeOnLoadMethodAttributes (90ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (6ms)
+Platform modules already initialized, skipping
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Refreshing native plugins compatible for Editor in 1.46 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.22 ms.
+Unloading 6416 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 81 unused Assets / (2.1 MB). Loaded Objects now: 7214.
+Memory consumption went from 345.6 MB to 343.6 MB.
+Total: 5.856250 ms (FindLiveObjects: 0.210250 ms CreateObjectMapping: 0.065500 ms MarkObjects: 5.212042 ms  DeleteObjects: 0.367792 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
-Received Import Request.
-  Time since last request: 21.445132 seconds.
-  path: Assets/07_GameData/Encounters/Boss2Encounter.asset
-  artifactKey: Guid(b170cfc84344a4ccbb2a5bbac2bb8d43) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/Encounters/Boss2Encounter.asset using Guid(b170cfc84344a4ccbb2a5bbac2bb8d43) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2870ee52f0a50744af130a687db89da4') in 0.107158 seconds 
-Number of asset objects unloaded after import = 4309
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002230 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x17becf000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.53 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.22 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.058 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1059ms)
+		BeginReloadAssembly (85ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (3ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (36ms)
+		EndReloadAssembly (930ms)
+			LoadAssemblies (44ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (193ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (32ms)
+			SetupLoadedEditorAssemblies (606ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (16ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (2ms)
+				BeforeProcessingInitializeOnLoad (44ms)
+				ProcessInitializeOnLoadAttributes (452ms)
+				ProcessInitializeOnLoadMethodAttributes (91ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (6ms)
+Platform modules already initialized, skipping
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Refreshing native plugins compatible for Editor in 1.45 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.21 ms.
+Unloading 6416 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7229.
+Memory consumption went from 345.7 MB to 343.6 MB.
+Total: 6.141917 ms (FindLiveObjects: 0.239917 ms CreateObjectMapping: 0.070375 ms MarkObjects: 5.320375 ms  DeleteObjects: 0.510584 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
-Received Import Request.
-  Time since last request: 17.073770 seconds.
-  path: Assets/07_GameData/Encounters/FinalBattleEncounterData 1.asset
-  artifactKey: Guid(26532e01824e5471e90d919bb05b4446) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/Encounters/FinalBattleEncounterData 1.asset using Guid(26532e01824e5471e90d919bb05b4446) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '791cab96f36f17ed6775da6e0eccef84') in 0.190072 seconds 
-Number of asset objects unloaded after import = 4301
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002010 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x17becf000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.20 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.18 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.073 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1074ms)
+		BeginReloadAssembly (107ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (51ms)
+		EndReloadAssembly (921ms)
+			LoadAssemblies (44ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (206ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (33ms)
+			SetupLoadedEditorAssemblies (589ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (15ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (42ms)
+				ProcessInitializeOnLoadAttributes (445ms)
+				ProcessInitializeOnLoadMethodAttributes (85ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Refreshing native plugins compatible for Editor in 1.26 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.16 ms.
+Unloading 6416 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7244.
+Memory consumption went from 345.7 MB to 343.6 MB.
+Total: 5.405541 ms (FindLiveObjects: 0.217375 ms CreateObjectMapping: 0.063917 ms MarkObjects: 4.748042 ms  DeleteObjects: 0.375750 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
-Received Import Request.
-  Time since last request: 6.250998 seconds.
-  path: Assets/07_GameData/Encounters/Final2BattleEncounterData.asset
-  artifactKey: Guid(26532e01824e5471e90d919bb05b4446) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/Encounters/Final2BattleEncounterData.asset using Guid(26532e01824e5471e90d919bb05b4446) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0bda03580bc760de1f0fedca61f25d49') in 0.087294 seconds 
-Number of asset objects unloaded after import = 4301
-========================================================================
-Received Import Request.
-  Time since last request: 6.982547 seconds.
-  path: Assets/07_GameData/Encounters/Area1_FinalBattleEncounterData.asset
-  artifactKey: Guid(04d404bc05976d94fb674535ed7e911c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/Encounters/Area1_FinalBattleEncounterData.asset using Guid(04d404bc05976d94fb674535ed7e911c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7293cbbf6cde9565ee02868bbc86535c') in 0.093602 seconds 
-Number of asset objects unloaded after import = 4301
-========================================================================
-Received Import Request.
-  Time since last request: 7.350577 seconds.
-  path: Assets/07_GameData/Encounters/Area2_FinalBattleEncounterData.asset
-  artifactKey: Guid(26532e01824e5471e90d919bb05b4446) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/Encounters/Area2_FinalBattleEncounterData.asset using Guid(26532e01824e5471e90d919bb05b4446) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '638972aa028f9499e799dc8d404d88bc') in 0.092651 seconds 
-Number of asset objects unloaded after import = 4301
-========================================================================
-Received Import Request.
-  Time since last request: 20.286840 seconds.
-  path: Assets/07_GameData/Encounters/BossEncounter.asset
-  artifactKey: Guid(999b302d3da552a4ab7519ab822505b6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/Encounters/BossEncounter.asset using Guid(999b302d3da552a4ab7519ab822505b6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c0287b5e3b039ec85024642127accec2') in 0.107062 seconds 
-Number of asset objects unloaded after import = 4309
-========================================================================
-Received Import Request.
-  Time since last request: 29.656462 seconds.
-  path: Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Impact_Shock.prefab
-  artifactKey: Guid(acce4b02a2ce6664aace9033fd7085a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Impact_Shock.prefab using Guid(acce4b02a2ce6664aace9033fd7085a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cb1ada6f40c595cfe3bc8c7c01d9b55c') in 0.241049 seconds 
-Number of asset objects unloaded after import = 53
-========================================================================
-Received Import Request.
-  Time since last request: 0.000059 seconds.
-  path: Assets/07_GameData/BattleMaps/BattleMaps/Level1_DeadForest_Encounter_Boss.prefab
-  artifactKey: Guid(a558e6c03a2eb4a4da25141c6243e20e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/BattleMaps/BattleMaps/Level1_DeadForest_Encounter_Boss.prefab using Guid(a558e6c03a2eb4a4da25141c6243e20e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '07524f2a2182b1b2e23112fe2c81c4b0') in 0.396577 seconds 
-Number of asset objects unloaded after import = 5880
-========================================================================
-Received Import Request.
-  Time since last request: 0.000069 seconds.
-  path: Assets/12_External/Cartoon Coffee/2D Slash VFX/Prefabs/Loops/Lightning Slash v1 - Flurry.prefab
-  artifactKey: Guid(f15c1635cdc6efe49a4ffddd01cfae17) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/12_External/Cartoon Coffee/2D Slash VFX/Prefabs/Loops/Lightning Slash v1 - Flurry.prefab using Guid(f15c1635cdc6efe49a4ffddd01cfae17) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2cda3b431718249da4346fbd94e924df') in 0.147813 seconds 
-Number of asset objects unloaded after import = 54
-========================================================================
-Received Import Request.
-  Time since last request: 0.000051 seconds.
-  path: Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Jet_Water.prefab
-  artifactKey: Guid(c17e075fd76363e4e9cf9eca79564655) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Jet_Water.prefab using Guid(c17e075fd76363e4e9cf9eca79564655) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3642e04c484cd44665a63bf29e2f3e13') in 0.010880 seconds 
-Number of asset objects unloaded after import = 30
-========================================================================
-Received Import Request.
-  Time since last request: 0.000052 seconds.
-  path: Assets/03_Prefabs/UI/Screens/ItemConvoy Variant.prefab
-  artifactKey: Guid(3d77a511c53f1164a8c7ab13705b6212) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/03_Prefabs/UI/Screens/ItemConvoy Variant.prefab using Guid(3d77a511c53f1164a8c7ab13705b6212) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '23b344626197349217f1366386e678c0') in 0.039095 seconds 
-Number of asset objects unloaded after import = 911
-========================================================================
-Received Import Request.
-  Time since last request: 0.000041 seconds.
-  path: Assets/03_Prefabs/UI/Screens/InnPanel.prefab
-  artifactKey: Guid(a6f15fdc1e53bc9479daa66388cbbc39) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/03_Prefabs/UI/Screens/InnPanel.prefab using Guid(a6f15fdc1e53bc9479daa66388cbbc39) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9b5e1e864e03548c020f5947b27795a2') in 0.068546 seconds 
-Number of asset objects unloaded after import = 1739
-========================================================================
-Received Import Request.
-  Time since last request: 0.000051 seconds.
-  path: Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Lens_Flare.prefab
-  artifactKey: Guid(e6ea59b377599d8418fc82a849198702) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Lens_Flare.prefab using Guid(e6ea59b377599d8418fc82a849198702) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd380271e346c1fadd8904d9c2ee55968') in 0.013659 seconds 
-Number of asset objects unloaded after import = 58
-========================================================================
-Received Import Request.
-  Time since last request: 0.000064 seconds.
-  path: Assets/12_External/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/Lightning Slash v1.prefab
-  artifactKey: Guid(1ac1b242062a7e840bd686ad3d66f083) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/12_External/Cartoon Coffee/2D Slash VFX/Prefabs/Bursts/Lightning Slash v1.prefab using Guid(1ac1b242062a7e840bd686ad3d66f083) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '15423cd0a5287367ec21c276ab049ad5') in 0.011475 seconds 
-Number of asset objects unloaded after import = 48
-========================================================================
-Received Import Request.
-  Time since last request: 0.000036 seconds.
-  path: Assets/07_GameData/BattleMaps/BattleMaps/Level1_DeadForest_Encounter_Conquest_10.prefab
-  artifactKey: Guid(be9841dce2428b94b8486b93d06c037b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/BattleMaps/BattleMaps/Level1_DeadForest_Encounter_Conquest_10.prefab using Guid(be9841dce2428b94b8486b93d06c037b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b35ee083ed837762f5648b2077e3a7bf') in 0.193308 seconds 
-Number of asset objects unloaded after import = 4370
-========================================================================
-Received Import Request.
-  Time since last request: 0.000072 seconds.
-  path: Assets/03_Prefabs/Unused/UnusedLevelupScreen/LevelUpScreenNew.prefab
-  artifactKey: Guid(793c181efb57f934f9cc92abfe47ee45) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/03_Prefabs/Unused/UnusedLevelupScreen/LevelUpScreenNew.prefab using Guid(793c181efb57f934f9cc92abfe47ee45) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd878e46d4b9c72fd2e2b3a61a9f5d8d9') in 0.024438 seconds 
-Number of asset objects unloaded after import = 1152
-========================================================================
-Received Import Request.
-  Time since last request: 0.000031 seconds.
-  path: Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Impact_Spark.prefab
-  artifactKey: Guid(8316cbf2b44a4fa46b1fabcd4c2f1428) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Impact_Spark.prefab using Guid(8316cbf2b44a4fa46b1fabcd4c2f1428) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3c9c54003b2d189f8ad802f35a126009') in 0.006808 seconds 
-Number of asset objects unloaded after import = 36
-========================================================================
-Received Import Request.
-  Time since last request: 0.000039 seconds.
-  path: Assets/03_Prefabs/UI/Screens/Teile/MiddleItemArea.prefab
-  artifactKey: Guid(2b47ff200d6e2064392d1957e930ebfe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/03_Prefabs/UI/Screens/Teile/MiddleItemArea.prefab using Guid(2b47ff200d6e2064392d1957e930ebfe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2dc2a3a2cb51d4c2f750f9f20138df47') in 0.011967 seconds 
-Number of asset objects unloaded after import = 147
-========================================================================
-Received Import Request.
-  Time since last request: 0.000037 seconds.
-  path: Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Jet_Smoke.prefab
-  artifactKey: Guid(296240fbcb391f44f89e9aadcdcb528f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Jet_Smoke.prefab using Guid(296240fbcb391f44f89e9aadcdcb528f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1a179953155cae80fb1036b88b226ed6') in 0.007079 seconds 
-Number of asset objects unloaded after import = 16
-========================================================================
-Received Import Request.
-  Time since last request: 0.000039 seconds.
-  path: Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Impact_Star_V2.prefab
-  artifactKey: Guid(ddd8c73046d4f364d969ed13ca53c644) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Impact_Star_V2.prefab using Guid(ddd8c73046d4f364d969ed13ca53c644) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'afb1b5be48e3cafbd8932f23e337ee5a') in 0.008468 seconds 
-Number of asset objects unloaded after import = 35
-========================================================================
-Received Import Request.
-  Time since last request: 0.000035 seconds.
-  path: Assets/07_GameData/BattleMaps/BattleMaps/Level1_DeadForest_Encounter_Big_3_1.prefab
-  artifactKey: Guid(41aa21a4e5e522e4fb89af9b5c2db670) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/BattleMaps/BattleMaps/Level1_DeadForest_Encounter_Big_3_1.prefab using Guid(41aa21a4e5e522e4fb89af9b5c2db670) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2695a3fa4faa12442181ba348adf050f') in 0.186909 seconds 
-Number of asset objects unloaded after import = 4608
-========================================================================
-Received Import Request.
-  Time since last request: 0.000043 seconds.
-  path: Assets/07_GameData/BattleMaps/BattleMaps/Level1_DeadForest_Encounter_Medium_2_4.prefab
-  artifactKey: Guid(4092637d861ba074394085733e3f13e2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/BattleMaps/BattleMaps/Level1_DeadForest_Encounter_Medium_2_4.prefab using Guid(4092637d861ba074394085733e3f13e2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f0defdab44f31ff32cbd76a9bed058ae') in 0.171975 seconds 
-Number of asset objects unloaded after import = 4607
-========================================================================
-Received Import Request.
-  Time since last request: 0.000041 seconds.
-  path: Assets/07_GameData/BattleMaps/BattleMaps/Level1_DeadForest_Encounter_Small1_4.prefab
-  artifactKey: Guid(fc2bd94ef89a06b42981118b27c26e50) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/BattleMaps/BattleMaps/Level1_DeadForest_Encounter_Small1_4.prefab using Guid(fc2bd94ef89a06b42981118b27c26e50) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fe6120a8c7c6c7e2d1b236714087a410') in 0.160091 seconds 
-Number of asset objects unloaded after import = 3937
-========================================================================
-Received Import Request.
-  Time since last request: 0.000055 seconds.
-  path: Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Jet_Poison.prefab
-  artifactKey: Guid(9d8e222531b8b2e439b6ba2f2b8073a6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Jet_Poison.prefab using Guid(9d8e222531b8b2e439b6ba2f2b8073a6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '04a6a25548d3a5a78954ebdf093db76a') in 0.008353 seconds 
-Number of asset objects unloaded after import = 16
-========================================================================
-Received Import Request.
-  Time since last request: 0.000047 seconds.
-  path: Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Impact_Sonar.prefab
-  artifactKey: Guid(c98bbb5686fba314bbccabafe9920443) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Impact_Sonar.prefab using Guid(c98bbb5686fba314bbccabafe9920443) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd03087f5a3ed5608555a024bb001a430') in 0.008030 seconds 
-Number of asset objects unloaded after import = 33
-========================================================================
-Received Import Request.
-  Time since last request: 0.000043 seconds.
-  path: Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Impact_Wind_Lv1.prefab
-  artifactKey: Guid(6985e73a336888e4eae65baa727db325) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Impact_Wind_Lv1.prefab using Guid(6985e73a336888e4eae65baa727db325) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ee5d911025bd6aada8cb5af3b212f6d0') in 0.009252 seconds 
-Number of asset objects unloaded after import = 41
-========================================================================
-Received Import Request.
-  Time since last request: 0.000040 seconds.
-  path: Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Impact_Water_Lv3.prefab
-  artifactKey: Guid(f68cc08d428971d419e7217e98698079) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Impact_Water_Lv3.prefab using Guid(f68cc08d428971d419e7217e98698079) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c5954bc61ef5b87d959a07118b52508f') in 0.010776 seconds 
-Number of asset objects unloaded after import = 68
-========================================================================
-Received Import Request.
-  Time since last request: 0.000039 seconds.
-  path: Assets/07_GameData/Items/Bombs/Magic Bomb/MagicBomb.prefab
-  artifactKey: Guid(a1357353f979149679edca08b7c792c5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/Items/Bombs/Magic Bomb/MagicBomb.prefab using Guid(a1357353f979149679edca08b7c792c5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '36d0a24bfab96dd8e6844f5da18883a9') in 0.024841 seconds 
-Number of asset objects unloaded after import = 36
-========================================================================
-Received Import Request.
-  Time since last request: 0.000035 seconds.
-  path: Assets/07_GameData/BattleMaps/BattleMaps/Level1_DeadForest_Encounter_Medium_2_1.prefab
-  artifactKey: Guid(7706e562e0705b84c8154ca0f19e9221) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/BattleMaps/BattleMaps/Level1_DeadForest_Encounter_Medium_2_1.prefab using Guid(7706e562e0705b84c8154ca0f19e9221) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd0649064ff494d21cceb9264004599db') in 0.175144 seconds 
-Number of asset objects unloaded after import = 4076
-========================================================================
-Received Import Request.
-  Time since last request: 0.000033 seconds.
-  path: Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Impact_Star_V4.prefab
-  artifactKey: Guid(5d017848b8b7f6d4083c7a88c0d332d5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Impact_Star_V4.prefab using Guid(5d017848b8b7f6d4083c7a88c0d332d5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4f8410f7470e71c57c25337c36d96377') in 0.011428 seconds 
-Number of asset objects unloaded after import = 35
-========================================================================
-Received Import Request.
-  Time since last request: 0.000023 seconds.
-  path: Assets/03_Prefabs/EncounterArea/Nodes/InnEncounter.prefab
-  artifactKey: Guid(b9f4ef7d3874571469b84858a8158365) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/03_Prefabs/EncounterArea/Nodes/InnEncounter.prefab using Guid(b9f4ef7d3874571469b84858a8158365) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8e60ceae590c86afed823d5812df03cd') in 0.013318 seconds 
-Number of asset objects unloaded after import = 55
-========================================================================
-Received Import Request.
-  Time since last request: 0.000034 seconds.
-  path: Assets/07_GameData/BattleMaps/BattleMaps/Level2_DeadForest_Encounter_Middle.prefab
-  artifactKey: Guid(ccf9a7a44fc94234280b99261406d6a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/BattleMaps/BattleMaps/Level2_DeadForest_Encounter_Middle.prefab using Guid(ccf9a7a44fc94234280b99261406d6a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '45f6d9e0adcd6bf22c9c4e19bf6b4865') in 0.175123 seconds 
-Number of asset objects unloaded after import = 4241
-========================================================================
-Received Import Request.
-  Time since last request: 0.000032 seconds.
-  path: Assets/03_Prefabs/EncounterArea/Nodes/MerchantEncounter.prefab
-  artifactKey: Guid(d5147c6567c3eb643a2dc741a1efe41f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/03_Prefabs/EncounterArea/Nodes/MerchantEncounter.prefab using Guid(d5147c6567c3eb643a2dc741a1efe41f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9345a32a5be7ef9c7ef9270b327b7f04') in 0.016457 seconds 
-Number of asset objects unloaded after import = 119
-========================================================================
-Received Import Request.
-  Time since last request: 0.000033 seconds.
-  path: Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Jet_Flame.prefab
-  artifactKey: Guid(7bc9c8693c704ee439495e2747953efc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Loops/Jet_Flame.prefab using Guid(7bc9c8693c704ee439495e2747953efc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6b16b6b4f70091bb13133aab4eaf8bf2') in 0.006827 seconds 
-Number of asset objects unloaded after import = 16
-========================================================================
-Received Import Request.
-  Time since last request: 0.000036 seconds.
-  path: Assets/12_External/Feel/MMTools/Tools/MMDebugMenu/Prefabs/MMDebugMenuDebugPanel.prefab
-  artifactKey: Guid(94cfa935aa4cff74a9451b22cb7627a6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/12_External/Feel/MMTools/Tools/MMDebugMenu/Prefabs/MMDebugMenuDebugPanel.prefab using Guid(94cfa935aa4cff74a9451b22cb7627a6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c78d846ede1cce805a4380ecf8ee7791') in 0.004278 seconds 
-Number of asset objects unloaded after import = 63
-========================================================================
-Received Import Request.
-  Time since last request: 0.000033 seconds.
-  path: Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Impact_Water_Lv1.prefab
-  artifactKey: Guid(3421a70049d1bca4aa45c86266da3c50) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/12_External/Cartoon Coffee/VFX Deluxe/Prefabs/Bursts/Impact_Water_Lv1.prefab using Guid(3421a70049d1bca4aa45c86266da3c50) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1f5c3c7cc984521866173db03cab27cb') in 0.009062 seconds 
-Number of asset objects unloaded after import = 49
-========================================================================
-Received Import Request.
-  Time since last request: 0.000038 seconds.
-  path: Assets/07_GameData/BattleMaps/BattleMaps/Level1_DeadForest_Encounter_Big_3_2.prefab
-  artifactKey: Guid(faabd7d96e0eee84faf224e98e6fc8d8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/BattleMaps/BattleMaps/Level1_DeadForest_Encounter_Big_3_2.prefab using Guid(faabd7d96e0eee84faf224e98e6fc8d8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '204b5a271439041e60ea012a6be26140') in 0.174631 seconds 
-Number of asset objects unloaded after import = 4816
-========================================================================
-Received Import Request.
-  Time since last request: 0.000058 seconds.
-  path: Assets/07_GameData/BattleMaps/BattleMaps/Level3_Middle_Rescue.prefab
-  artifactKey: Guid(4eb8cb3187ba79741be57260aafbf60c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/BattleMaps/BattleMaps/Level3_Middle_Rescue.prefab using Guid(4eb8cb3187ba79741be57260aafbf60c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e42a88c2f6f538e89c5890071ecfd78b') in 0.148213 seconds 
-Number of asset objects unloaded after import = 3547
-========================================================================
-Received Import Request.
-  Time since last request: 0.000035 seconds.
-  path: Assets/03_Prefabs/UI/Screens/BottomUI/LeftSideWhole.prefab
-  artifactKey: Guid(c67d4846dd934414390b5ec8ccba523f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/03_Prefabs/UI/Screens/BottomUI/LeftSideWhole.prefab using Guid(c67d4846dd934414390b5ec8ccba523f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd230aca867c9915ae4130a624482ec1f') in 0.072305 seconds 
-Number of asset objects unloaded after import = 1951
-Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
-AssetImportWorker is now disconnected from the server
-Process exiting
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002144 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x16f5af000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.27 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.16 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.065 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1065ms)
+		BeginReloadAssembly (88ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (3ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (40ms)
+		EndReloadAssembly (932ms)
+			LoadAssemblies (55ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (198ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (32ms)
+			SetupLoadedEditorAssemblies (597ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (14ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (41ms)
+				ProcessInitializeOnLoadAttributes (449ms)
+				ProcessInitializeOnLoadMethodAttributes (91ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Refreshing native plugins compatible for Editor in 1.58 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.27 ms.
+Unloading 6416 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7259.
+Memory consumption went from 345.7 MB to 343.6 MB.
+Total: 6.323792 ms (FindLiveObjects: 0.244334 ms CreateObjectMapping: 0.068584 ms MarkObjects: 5.485750 ms  DeleteObjects: 0.523542 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 

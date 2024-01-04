@@ -355,9 +355,11 @@ namespace Game.GameActors.Units
                 stats.BonusStatsFromWeapon.Attack -= equippedWeapon.GetDamage();
                 stats.BonusStatsFromWeapon.Hit -= equippedWeapon.GetHit();
                 stats.BonusStatsFromWeapon.Crit -= equippedWeapon.GetCrit();
+                equippedWeapon.Unbind(this);
             }
             Stats.AttackRanges.Clear();
             equippedWeapon = w;
+            equippedWeapon.Bind(this);
             foreach (int r in w.AttackRanges) Stats.AttackRanges.Add(r);
             // Debug.Log("Equip " + w.Name + " on " + name + " " + w.AttackRanges.Length+" "+ Stats.AttackRanges.Count);
             stats.BonusStatsFromWeapon.Attack += equippedWeapon.GetDamage();

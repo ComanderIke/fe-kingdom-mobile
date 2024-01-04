@@ -82,6 +82,7 @@ namespace Game.GUI
             gameObject.SetActive(true);
             hpBar.transform.localScale = selectedScale;
             hpBarToScale.transform.localScale = selectedScaleHpBarBackground;
+            hpBarToScale.GetComponent<RectTransform>().sizeDelta = selectedSizeBars;
             expBar.transform.localScale = expSelectedScale;
              GetComponent<RectTransform>().sizeDelta = selectedSize;
             // expBar.GetComponent<RectTransform>().sizeDelta = selectedSizeExpBar;
@@ -108,6 +109,7 @@ namespace Game.GUI
             gameObject.SetActive(true);
             hpBar.transform.localScale = normalScale;
             hpBarToScale.transform.localScale = normalScale;
+            hpBarToScale.GetComponent<RectTransform>().sizeDelta = normalSizeBars;
             GetComponent<RectTransform>().sizeDelta = normalSize;
              expBar.transform.localScale = normalScale;
             // expBar.GetComponent<RectTransform>().sizeDelta = normalSizeExpBar;

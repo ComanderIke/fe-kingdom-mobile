@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Object = System.Object;
 
 public class MonoUtility : MonoBehaviour
@@ -73,5 +74,23 @@ public class MonoUtility : MonoBehaviour
         Instance.StartCoroutine(Instance.InvokeNextFrameCoroutine(action));
     }
 
-   
+
+    public void DisableOtherGraphicRaycasters(GraphicRaycaster exclude)
+    {
+        var raycasters = FindObjectsOfType<GraphicRaycaster>();
+        foreach (var raycaster in raycasters)
+        {
+            if (raycaster != exclude)
+                raycaster.enabled = false;
+        }
+    }
+    public void EnableOtherGraphicRaycasters(GraphicRaycaster exclude)
+    {
+        var raycasters = FindObjectsOfType<GraphicRaycaster>();
+        foreach (var raycaster in raycasters)
+        {
+            if (raycaster != exclude)
+                raycaster.enabled = true;
+        }
+    }
 }

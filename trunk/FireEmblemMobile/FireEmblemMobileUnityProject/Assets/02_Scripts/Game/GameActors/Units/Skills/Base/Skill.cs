@@ -21,7 +21,7 @@ namespace Game.GameActors.Units.Skills
         public CombatSkillMixin CombatSkillMixin;
         public List<PassiveSkillMixin> passiveMixins;
         public List<ActiveSkillMixin> activeMixins;
-        public Unit owner;
+        [field: SerializeField] public Unit owner { get; private set; }
         public SkillTransferData skillTransferData;
        
         public Skill(string Name, string Description, Sprite icon, int tier,int maxLevel, List<PassiveSkillMixin> passiveMixins, CombatSkillMixin combatSkillMixin, List<ActiveSkillMixin> activeMixins, SkillTransferData data)

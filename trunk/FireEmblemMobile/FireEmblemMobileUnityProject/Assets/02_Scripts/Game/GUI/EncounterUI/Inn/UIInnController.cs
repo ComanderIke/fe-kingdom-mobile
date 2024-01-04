@@ -59,7 +59,7 @@ namespace Game.GUI.EncounterUI.Inn
         {
             specialItem = specialItemPool[Random.Range(0, specialItemPool.Count)];
             items = new List<Recipe>();
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 4; i++)
             {
                 var item = itemsPool[Random.Range(0, itemsPool.Count)];
                 while (items.Contains(item))

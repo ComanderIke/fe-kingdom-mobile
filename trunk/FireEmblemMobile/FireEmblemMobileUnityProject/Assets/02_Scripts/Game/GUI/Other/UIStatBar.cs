@@ -23,6 +23,7 @@ namespace Game.GUI
             
            // barController.SetFillAmount(currentValue*1.0f/maxValue);
             valueText.SetText(currentValue+"/"+maxValue);
+            MyDebug.LogTest("HP Bar Set Value: "+value+" "+maxValue+" "+animated);
             if (progressBar != null)
             {
                 if (animated)

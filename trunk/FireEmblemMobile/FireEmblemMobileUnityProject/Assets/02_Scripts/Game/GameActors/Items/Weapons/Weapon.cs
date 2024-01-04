@@ -41,8 +41,21 @@ namespace Game.GameActors.Items.Weapons
             this.WeaponUpgrades = weaponUpgrades;
 
         }
-    
 
+        public void Bind(Unit user)
+        {
+            if (Skill != null)
+            {
+                Skill.BindSkill(user);
+            }
+        }
+        public void Unbind(Unit user)
+        {
+            if (Skill != null)
+            {
+                Skill.UnbindSkill(user);
+            }
+        }
         public int GetDamage()
         {
             return WeaponAttributes.Dmg;
@@ -118,5 +131,7 @@ namespace Game.GameActors.Items.Weapons
         {
             return WeaponType.HasAdvantage(type);
         }
+
+        
     }
 }

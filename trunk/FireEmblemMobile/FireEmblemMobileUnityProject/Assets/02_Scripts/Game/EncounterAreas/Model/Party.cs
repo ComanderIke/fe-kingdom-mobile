@@ -116,7 +116,7 @@ namespace Game.WorldMapStuff.Model
         {
             get
             {
-                if(activeUnitIndex<members.Count)
+                if(activeUnitIndex<members.Count&& activeUnitIndex>=0)
                     return members[ActiveUnitIndex];
                 return null;
             }
@@ -127,6 +127,14 @@ namespace Game.WorldMapStuff.Model
 
         public void SetActiveUnit(Unit unit)
         {
+            if (!members.Contains(unit))
+            {
+                activeUnitIndex = -1;//Deselect So no Active Unit Exists
+                onActiveUnitChanged?.Invoke();//Since we dont use property we need to call this
+                return;
+            }
+                
+            MyDebug.LogLogic("Set active unit: "+unit.name);
             ActiveUnitIndex = members.IndexOf(unit);
         }
         private void OnEnable()
@@ -223,6 +231,7 @@ namespace Game.WorldMapStuff.Model
                 Debug.LogError("Party Size To Big");
                 return;
             }
+            MyDebug.LogLogic("Add Party Member: "+unit.name);
             // Debug.Log("Before Inner Init");
             InitMember(unit);
             // Debug.Log("Before Inner Add");

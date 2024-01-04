@@ -42,6 +42,8 @@ namespace LostGrace
             Player.Instance.Party = new Party();
             Player.Instance.Party.onMemberRemoved += PartyChanged;
             Player.Instance.Party.onMemberAdded += PartyChanged;
+            Player.Instance.Party.onActiveUnitChanged -= ActiveUnitChanged;
+            Player.Instance.Party.onActiveUnitChanged += ActiveUnitChanged;
             UpdateButtonState();
             StartCoroutine(ShowCoroutine());
             characterViewController.ShowBoonBaneSelection();
@@ -141,9 +143,15 @@ namespace LostGrace
             yield return null;
         }
 
+        void ActiveUnitChanged()
+        {
+            characterCircles.Show(Player.Instance.Party);
+            characterSelector.UpdateUI();
+        }
         void PartyChanged(Unit u)
         {
             characterCircles.Show(Player.Instance.Party);
+            characterSelector.UpdateUI();
             UpdateButtonState();
         }
 
@@ -166,6 +174,7 @@ namespace LostGrace
         {
             Player.Instance.Party.onMemberAdded -= PartyChanged;
             Player.Instance.Party.onMemberRemoved -= PartyChanged;
+            Player.Instance.Party.onActiveUnitChanged -= ActiveUnitChanged;
             StartCoroutine(HideCoroutine());
         }
     }

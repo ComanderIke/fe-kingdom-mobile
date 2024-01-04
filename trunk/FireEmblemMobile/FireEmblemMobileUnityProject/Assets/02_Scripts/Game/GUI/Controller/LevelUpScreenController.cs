@@ -65,6 +65,7 @@ namespace Game.GUI
                 .setOnComplete(()=>
                 {
                     levelText.transform.localScale = Vector3.one;
+                    MonoUtility.Instance.EnableOtherGraphicRaycasters(GetComponent<GraphicRaycaster>());
                     OnFinished?.Invoke();
                     canvas.enabled = false;
                 });
@@ -120,7 +121,8 @@ namespace Game.GUI
         // Start is called before the first frame update
         public void Play()
         {
-       
+
+            MonoUtility.Instance.DisableOtherGraphicRaycasters(GetComponent<GraphicRaycaster>());
             canvas.enabled = true;
            // LeanTween.alphaCanvas(levelUpText.GetComponent<CanvasGroup>(), 1, 0.15f).setEaseOutQuad();
            // LeanTween.scale(levelUpText.gameObject, Vector3.one, 0.15f).setEaseOutQuad();

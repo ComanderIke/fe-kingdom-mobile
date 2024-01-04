@@ -29,7 +29,7 @@ public class UIPartyCharacterCircleController : MonoBehaviour, IClickedReceiver,
         SpawnGOs();
         foreach (var unit in party.members)
         {
-            if (unit == party.ActiveUnit)
+            if (unit.Equals(party.ActiveUnit))
             {
                 characterUIs[unit].ShowActive(unit);
                 unit.visuals.UnitCharacterCircleUI = characterUIs[unit];

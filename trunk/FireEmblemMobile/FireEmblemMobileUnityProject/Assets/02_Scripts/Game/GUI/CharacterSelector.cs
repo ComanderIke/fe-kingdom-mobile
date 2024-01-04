@@ -88,6 +88,7 @@ namespace LostGrace
                 return;
             // Debug.Log("Before Add");
             Player.Instance.Party.AddMember(unit.unit);
+            SelectUnit(unit);
             // Debug.Log("Before Select");
             unit.Add();
             // Debug.Log("Actually Selected: "+unit.unit);
@@ -152,17 +153,22 @@ namespace LostGrace
 
         void SelectUnit(SelectableCharacterUI unit)
         {
+            MyDebug.LogLogic("Char Selector: Select "+unit.unit);
             if(lastSelected!=null)
                 lastSelected.Deselect();
             lastSelected = unit;
             unit.Select();
-            OnUnitSelected?.Invoke(unit.unit);
-            if(Player.Instance.Party.members.Contains(unit.unit))
+            if (Player.Instance.Party.members.Contains(unit.unit))
+            {
                 addRemoveButton.ShowRemove();
+                //Player.Instance.Party.SetActiveUnit(unit.unit);
+            }
             else
             {
                 addRemoveButton.ShowAdd();
             }
+            OnUnitSelected?.Invoke(unit.unit);
+            
         }
      
         [SerializeField] private UIAddRemoveButton addRemoveButton;
@@ -175,5 +181,18 @@ namespace LostGrace
         }
 
         public event Action<Unit> OnUnitSelected;
+
+        public void UpdateUI()
+        {
+            foreach (var unit in selectableCharacterUis)
+            {
+                if (Player.Instance.Party.ActiveUnit != null&&Player.Instance.Party.ActiveUnit.Equals(unit.unit))
+                {
+                    if(lastSelected!=unit)
+                        SelectUnit(unit);
+                }
+            }
+            
+        }
     }
 }
