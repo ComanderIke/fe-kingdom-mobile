@@ -245,5 +245,11 @@ namespace Game.GameActors.Units.Humans
                 unit.Hp -= points;
             }
         }
+
+        public void Reset()
+        {
+            skills.Clear();
+            blessing = null;
+        }
     }
 }

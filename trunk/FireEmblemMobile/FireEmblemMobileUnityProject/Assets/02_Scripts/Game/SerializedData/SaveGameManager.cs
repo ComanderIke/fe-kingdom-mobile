@@ -105,7 +105,7 @@ namespace LostGrace
                 MyDebug.LogPersistance("Save Game: " + path);
                 if (WriteToFile(path, jsonData))
                 {
-                    MyDebug.LogPersistance("Save Successfull!");
+                    MyDebug.LogPersistance("Save Successfull! Slot: " +slotNumber);
                 }
 
                 // Load(slotNumber);

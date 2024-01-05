@@ -128,7 +128,7 @@ namespace Game.GameActors.Players
                 unit.CombatItem1 = new StockedCombatItem((IEquipableCombatItem)GameBPData.Instance.GetItemByName(combatItem1Id), combatItem1Stock);
             }
             unit.ClassUpgraded = classUpgraded;
-
+            unit.SkillManager.Reset();
             skillData.Load(unit.SkillManager);
             unit.SpecialState = specialState;
             unit.RevivalStones = revivalStones;

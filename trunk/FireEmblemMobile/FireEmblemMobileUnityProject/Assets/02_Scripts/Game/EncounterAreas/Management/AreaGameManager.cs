@@ -48,7 +48,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     {
         Instance = this;
        
-       
+        Debug.Log(Player.Instance.Party);
         if (startFreshSave&&startFreshSaveFirstTime==false)//Just for Testing when starting from encounterArea
         {
             startFreshSaveFirstTime = true;
@@ -61,6 +61,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
             MyDebug.LogPersistance("Load game Slot 0:");
             SaveGameManager.Load(0); //Trigger load at start of scenes to trigger all persistance objects observers
         }
+        Debug.Log(Player.Instance.Party);
         
        
     }

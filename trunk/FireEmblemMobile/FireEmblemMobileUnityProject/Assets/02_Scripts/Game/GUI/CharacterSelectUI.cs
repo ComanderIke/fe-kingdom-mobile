@@ -52,6 +52,7 @@ namespace LostGrace
         }
         public void StartClicked()
         {
+            Hide();
             MenuActionController.StartGame();
         }
         private void Update()

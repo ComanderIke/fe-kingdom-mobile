@@ -10,6 +10,7 @@ namespace LostGrace
     {
         public static void StartGame()
         {
+            SaveGameManager.Save();
             SceneTransferData.Instance.Reset();
             //SceneTransferData.Instance.TutorialBattle1 = true;
             SceneController.LoadSceneAsync(Scenes.EncounterArea, false);
