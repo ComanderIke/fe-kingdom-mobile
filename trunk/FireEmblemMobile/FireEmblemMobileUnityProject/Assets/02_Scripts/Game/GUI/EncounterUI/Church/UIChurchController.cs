@@ -21,6 +21,9 @@ public class UIChurchController : MonoBehaviour
     [HideInInspector]
     public Party party;
     [SerializeField] private UICharacterFace characterFace;
+    [SerializeField] private TextMeshProUGUI godStatueNameText;
+    [SerializeField] private TextMeshProUGUI Bonusestext;
+    [SerializeField] private Image godStatueImage;
     [SerializeField] private UIUnitIdleAnimation unitIdleAnimation;
     private Church church;
     [SerializeField] UIRemoveCurseArea removeCurseUI;
@@ -59,6 +62,9 @@ public class UIChurchController : MonoBehaviour
         prayButton.interactable = affordable;
         prayButton.GetComponentInChildren<TextMeshProUGUI>().text = prayButton.interactable ? "<bounce>Pray" : "</bounce>Underfunded";
         receiveBlessingButton.gameObject.SetActive(false);
+        godStatueNameText.text = "Shrine of " + church.GetGod().Name;
+        godStatueImage.sprite = church.GetGod().DialogSpriteSet.FaceSprite;
+        Bonusestext.text = church.GetGod().Name + "\nBond Exp +15%";
         if (party.CanReceiveBlessing(party.ActiveUnit, gods[selectedGod]))
         {
             receiveBlessingButton.gameObject.SetActive(true);

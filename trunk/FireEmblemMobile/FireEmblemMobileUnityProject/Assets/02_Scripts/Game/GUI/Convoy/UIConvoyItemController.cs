@@ -36,6 +36,7 @@ public class UIConvoyItemController : UIButtonController
     public Image costIcon;
     public void SetValues(StockedItem stockeditem,bool affordable, bool first,IShopItemClickedReceiver receiver)
     {
+       
         ShopItemState();
         this.affordable = affordable;
         this.clickedReceiver = receiver;
@@ -50,7 +51,8 @@ public class UIConvoyItemController : UIButtonController
             cost.color = tooExpensiveColor;
             canvasGroup.alpha = tooExpensiveAlpha;
         }
-        SetValues(stockeditem, 0, first);
+        UpdateUI(stockeditem,  first);
+        
     }
 
     void ShopItemState()
@@ -63,11 +65,9 @@ public class UIConvoyItemController : UIButtonController
         costIcon.gameObject.SetActive(false);
         cost.gameObject.SetActive(false);
     }
-    public void SetValues(StockedItem stockeditem, int index, bool added=false,bool grayedOut=false)
+
+    private void UpdateUI(StockedItem stockeditem,bool added=false,bool grayedOut=false)
     {
-        ConvoyItemState();
-       
-        
         if(added)
             addedFeedbacks.PlayFeedbacks();
         backgroundImage.sprite = normalSprite;
@@ -75,17 +75,17 @@ public class UIConvoyItemController : UIButtonController
         if (stockeditem.item is Relic relic)
         {
             backgroundImage.sprite = relicSprite;
-           slot.gameObject.SetActive(true);
-           if (relic.GetGem() == null)
-           {
-               gemImage.enabled = false;
-               gemImage.sprite = null;
-           }
-           else
-           {
-               gemImage.enabled = true;
-               gemImage.sprite = relic.GetGem().Sprite;
-           }
+            slot.gameObject.SetActive(true);
+            if (relic.GetGem() == null)
+            {
+                gemImage.enabled = false;
+                gemImage.sprite = null;
+            }
+            else
+            {
+                gemImage.enabled = true;
+                gemImage.sprite = relic.GetGem().Sprite;
+            }
         }
         else if (stockeditem.item is IEquipableCombatItem)
         {
@@ -110,6 +110,15 @@ public class UIConvoyItemController : UIButtonController
             button.interactable = true;
             canvasGroup.alpha = 1.0f;
         }
+    }
+    public void SetValues(StockedItem stockeditem, int index, bool added=false,bool grayedOut=false)
+    {
+        MyDebug.LogTest("CONVOYSTATE WHUT?");
+        ConvoyItemState();
+        UpdateUI(stockeditem,added,grayedOut);
+       
+        
+       
         
     }
     

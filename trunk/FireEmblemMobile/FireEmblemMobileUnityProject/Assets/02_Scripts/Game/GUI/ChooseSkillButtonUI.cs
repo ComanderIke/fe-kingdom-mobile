@@ -5,11 +5,13 @@ using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
 using TMPro;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace LostGrace
 {
+    
     
     public class ChooseSkillButtonUI : MonoBehaviour
     {
@@ -79,13 +81,21 @@ namespace LostGrace
             skillUIParent.DeleteAllChildren();
             blessingParent.DeleteAllChildren();
             var prefab = skillButtonPrefab;
+           
             if (skill.activeMixins.Count > 0)
                 prefab = activeSkillButtonPrefab;
             else if (skill.CombatSkillMixin != null)
                 prefab = combatSkillButtonPrefab;
-            var go = Instantiate(prefab, skillUIParent);
-            var skillUI = go.GetComponent<SkillUI>();
-            skillUI.SetSkill(skill, true, blessing, true,false,false, false);
+            if (skill is Blessing)
+                prefab = null;
+            if (prefab != null)
+            {
+                var go = Instantiate(prefab, skillUIParent);
+                var skillUI = go.GetComponent<SkillUI>();
+                skillUI.SetSkill(skill, true, blessing, true, false, false, false);
+
+            }
+
             var synergies = skill.GetSynergies();
             synergieText.gameObject.SetActive(synergies!=null);
             if (synergies != null)

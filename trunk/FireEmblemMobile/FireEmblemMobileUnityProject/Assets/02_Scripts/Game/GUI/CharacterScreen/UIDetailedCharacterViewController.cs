@@ -22,7 +22,7 @@ public class UIDetailedCharacterViewController : UICharacterViewController
     
     [SerializeField] private Image blessingEffect;
     [SerializeField] private Image blessingEffect2;
-    [SerializeField] private Image blessingImage;
+    [SerializeField] private UIBlessingButton blessingButton;
     [SerializeField] private TextMeshProUGUI attributeHeaderText;
     [SerializeField] private UIBoonBaneController boonBaneController;
     public void SkillTreeClicked()
@@ -107,16 +107,16 @@ public class UIDetailedCharacterViewController : UICharacterViewController
         Lv.SetText("Lv. "+unit.ExperienceManager.Level);
         if(blessingEffect!=null)
             blessingEffect.gameObject.SetActive(unit.Blessing!=null);
-        if(blessingImage!=null)
-            blessingImage.gameObject.SetActive(unit.Blessing!=null);
+        if(blessingButton!=null)
+            blessingButton.gameObject.SetActive(unit.Blessing!=null);
         if (unit.Blessing != null)
         {
             if(blessingEffect!=null)
                 blessingEffect.color = unit.Blessing.God.Color;
             if(blessingEffect2!=null)
                 blessingEffect2.color = unit.Blessing.God.Color;
-            if(blessingImage!=null)
-                blessingImage.sprite = unit.Blessing.Icon;
+            if(blessingButton!=null)
+                blessingButton.SetValues(unit.Blessing);
         }
         
         // if(ExpBar!=null)

@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class SkillToolTip : MonoBehaviour
 {
     // public TextMeshProUGUI headerText;
@@ -12,6 +13,7 @@ public class SkillToolTip : MonoBehaviour
 
     [SerializeField] private Canvas canvas;
     [SerializeField] private ChooseSkillButtonUI chooseSkillButtonUI;
+    [SerializeField] private Image blessingIcon;
 
     private Skill skill;
     [SerializeField]

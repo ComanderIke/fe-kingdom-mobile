@@ -20,7 +20,7 @@ public class ToolTipSystem : MonoBehaviour
     public ItemToolTip ItemToolTip;
     public WeaponToolTip WeaponToolTip;
     public SkillToolTip skillToolTip;
-
+    public SkillToolTip blessingTooltip;
     public AttributeValueTooltipUI AttributeValueTooltipUI;
     public CombatStatValueTooltipUI CombatStatalueTooltipUI;
    
@@ -81,6 +81,16 @@ public class ToolTipSystem : MonoBehaviour
             CloseAllToolTips();
         
         instance.tooltipShownThisFrame = false;
+    }
+    public static void Show(Blessing blessing, Vector3 position)
+    {
+        instance.tooltipShownThisFrame = true;
+        CloseAllToolTips();
+        //Debug.Log(skill.Name);
+        //Debug.Log("TooltipPosition: "+GameObject.FindWithTag("UICamera").GetComponent<Camera>().WorldToScreenPoint(position));
+        instance.blessingTooltip.SetValues(blessing, true, false,Camera.main.WorldToScreenPoint(position));
+        
+        instance.blessingTooltip.gameObject.SetActive(true);
     }
 
     public static void Show(Skill skill, bool blessed,Vector3 position)

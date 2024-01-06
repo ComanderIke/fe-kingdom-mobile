@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Game.GameActors.Items;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
@@ -21,14 +22,22 @@ public class Church
     private const int ChurchDonationSmallAmount = 25;
     private const int ChurchDonationMiddleAmount = 100;
     private const int ChurchDonationHighAmount = 200;
+    private God god;
     public Church(IBlessingData blessingData)
     {
         this.blessingData = blessingData;
+        List<God> gods= GameBPData.Instance.GetAllGods().ToList();
+        
+        god = gods[UnityEngine.Random.Range(0, gods.Count())];
         alreadyDonated = new List<Unit>();
         alreadyAcceptedBlessing = new Dictionary<Unit, Blessing>();
         alreadyGeneratedBlessing = new Dictionary<Unit, Blessing>();
     }
 
+    public God GetGod()
+    {
+        return god;
+    }
     public static float PriceRate { get; set; }
     // public void AddItem(ShopItem item)
     // {

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Serialization;
 using __2___Scripts.Game.Utility;
 using Game.GameActors.Players;
@@ -24,11 +25,25 @@ namespace LostGrace
         [SerializeField] private Button removeCurseButton;
         [SerializeField] private Color tooExpensiveTextColor;
         [SerializeField] private float faithPriceReduction = 5;
+        [SerializeField] private GameObject noCurseArea;
+        [SerializeField] private GameObject cursedArea;
         public void Show(Unit unit)
         {
-            curses = unit.Curses;
-            
             gameObject.SetActive(true);
+            curses = unit.Curses;
+            if (curses.Count == 0)
+            {
+                noCurseArea.gameObject.SetActive(true);
+                cursedArea.gameObject.SetActive(false);
+                
+            }
+            else
+            {
+                noCurseArea.gameObject.SetActive(false);
+                cursedArea.gameObject.SetActive(true);
+            }
+            
+           
             curseIndex = 0;
             bool affordable = Player.Instance.Party.CanAfford(removeCurseCost);
             removeCurseButton.interactable =affordable ;
@@ -70,8 +85,8 @@ namespace LostGrace
             prevCurse.sprite = curses[prevIndex].Icon;
             nextCurse.sprite = curses[nextIndex].Icon;
             selectedCurse.sprite = curses[curseIndex].Icon;
-            nextCurse.gameObject.SetActive(nextIndex!=curseIndex&& (nextIndex !=prevIndex||nextIndex>curseIndex));
-            prevCurse.gameObject.SetActive(prevIndex!=curseIndex&& (prevIndex!= nextIndex||prevIndex<curseIndex));
+            nextCurse.transform.parent.gameObject.SetActive(nextIndex!=curseIndex&& (nextIndex !=prevIndex||nextIndex>curseIndex));
+            prevCurse.transform.parent.gameObject.SetActive(prevIndex!=curseIndex&& (prevIndex!= nextIndex||prevIndex<curseIndex));
         }
 
         public void Hide()

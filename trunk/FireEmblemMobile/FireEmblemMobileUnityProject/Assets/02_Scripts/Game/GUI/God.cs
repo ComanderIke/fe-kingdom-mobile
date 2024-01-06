@@ -10,6 +10,8 @@ namespace LostGrace
         public DialogSpriteSet DialogSpriteSet;
         public DialogSpriteSet AlternateSpriteSet;
         public Color Color;
+        public Color TooltipColor;
+        public Color TooltipFrameColor;
         public BlessingBP BlessingBp;
         public Material GlowMaterial;
         [field:SerializeField]public ChronikEntry ChronikComponent { get; set; }

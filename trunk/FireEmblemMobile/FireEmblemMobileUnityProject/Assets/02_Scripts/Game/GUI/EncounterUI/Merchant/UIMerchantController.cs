@@ -124,9 +124,11 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
         }
         else
         {
+            
             if (party.Convoy.Items.Count == 0)
             {
                 SoldOutArea.SetStateNothingToSell();
+                buyItemUI.Hide();
             }
             else
             {
