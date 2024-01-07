@@ -42,6 +42,10 @@ public class UIEventController : MonoBehaviour
     public void Show(EventEncounterNode node, Party party)
     {
         // Debug.Log("Showing event ui screen");
+        if (textOptionStates == null)
+            textOptionStates = new List<TextOptionVisualData>();
+        textOptionStates.Clear();
+        textAnimationFinished = false;
         this.node = node;
         canvas.enabled = true;
         this.party = party;
@@ -77,12 +81,13 @@ public class UIEventController : MonoBehaviour
     public void NextClicked()
     {
         party.ActiveUnitIndex++;
-        UpdateUI();
+      
     }
 
     public void TextAnimaterTextShowed()
     {
         MyDebug.LogTest("TEXT SHOWED");
+        textAnimationFinished = true;
         if(currentNode!=null)
             ShowTextOptions(currentNode.Choices);
     }
@@ -90,7 +95,7 @@ public class UIEventController : MonoBehaviour
     public void PrevClicked()
     {
         party.ActiveUnitIndex--;
-        UpdateUI();
+     
     }
 
     public void UpdateUIValues()
@@ -101,15 +106,25 @@ public class UIEventController : MonoBehaviour
         if (String.Compare(description.text, "<noparse></noparse>"+currentNode.Text, StringComparison.Ordinal)!=0)
         {
             // Debug.Log("Update Text");
+            textAnimationFinished = false;
             description.text = currentNode.Text;
         }
 
         
     }
-    public void UpdateUI()
+
+    private bool textAnimationFinished = false;
+    public void UpdateUICharacterRelated()
     {
         unitIdleAnimation.Show(party.ActiveUnit);
         characterFace.Show(party.ActiveUnit);
+        if(textAnimationFinished)
+            ShowTextOptions(currentNode.Choices);
+    }
+    public void UpdateUI()
+    {
+        UpdateUICharacterRelated();
+       
         UpdateUIValues();
     }
 
@@ -125,15 +140,20 @@ public class UIEventController : MonoBehaviour
             return 1.0f - diff/10f;
         }
     }
+
+    private List<TextOptionVisualData> textOptionStates;
     void ShowTextOptions(List<LGDialogChoiceData> textOptions)
     {
         int index = 0;
         int delayIndex = 0;
         
+      
+        var localTextOptionStates = new List<TextOptionVisualData>();
         foreach (var textOption in textOptions)
         {
             string statText = "";
             TextOptionState textOptionType = TextOptionState.Normal;
+           
             //make all requirements GO and check and if some of them are not met make them RED
             if (!SemiRequirementsMet(textOption))
             {
@@ -175,27 +195,96 @@ public class UIEventController : MonoBehaviour
             GameObject prefab = textOptionPrefab;
             if (textOption.NextDialogue is LGFightEventDialogSO)
                 prefab = fightOptionPrefab;
+            localTextOptionStates.Add(new TextOptionVisualData(textOption,textOptionType,statText, prefab, index, delayIndex));
+        }
 
+        if (!ListsAreEqual(localTextOptionStates,textOptionStates))
+        {
+            layout.DeleteAllChildren();
+            textOptionStates = new List<TextOptionVisualData>(localTextOptionStates);
+            UpdateTextOptions();
+        }
 
-            if (textOptionType != TextOptionState.SecretHidden)
+       
+
+    }
+
+    private bool ListsAreEqual(List<TextOptionVisualData> list1, List<TextOptionVisualData> list2)
+    {
+        if (list1.Count != list2.Count)
+            return false;
+        for (int i = 0; i < list1.Count; i++)
+        {
+            if (!list1[i].Equals(list2[i]))
             {
-                MonoUtility.DelayFunction(() =>
-                {
-                    var go = Instantiate(prefab, layout);
-
-
-                    var textOptionController = go.GetComponent<TextOptionController>();
-
-                    textOptionController.Setup(textOption, textOption.Text, statText, textOptionType, this);
-                    if (textOptionType != TextOptionState.Locked)
-                        textOptionController.SetIndex(index);
-                    index++;
-                }, textOptionsDelay*delayIndex);
-                delayIndex++;
+                return false;
             }
+        }
+        return true;
+    }
+
+    private void UpdateTextOptions( )
+    {
+        if (textOptionStates != null)
+        {
+            
+            foreach (var textOption in textOptionStates)
+            {
+                SpawnTextOption(textOption);
+            }
+        }
+        
+    }
+
+    struct TextOptionVisualData: IEquatable<TextOptionVisualData>
+    {
+        public LGDialogChoiceData textOption;
+        public TextOptionState textOptionType;
+        public string statText;
+        public GameObject prefab;
+        public int index;
+        public int delayIndex;
+
+        public TextOptionVisualData(LGDialogChoiceData lgDialogChoiceData, TextOptionState textOptionState, string s, GameObject o, int i, int delayIndex1)
+        {
+            textOption = lgDialogChoiceData;
+            textOptionType = textOptionState;
+            this.statText = s;
+            prefab = o;
+            index = i;
+            delayIndex = delayIndex1;
+        }
 
 
+        public bool Equals(TextOptionVisualData other)
+        {
+            return Equals(textOption, other.textOption) && textOptionType == other.textOptionType && statText == other.statText && Equals(prefab, other.prefab) && index == other.index && delayIndex == other.delayIndex;
+        }
 
+        public override bool Equals(object obj)
+        {
+            return obj is TextOptionVisualData other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(textOption, (int)textOptionType, statText, prefab, index, delayIndex);
+        }
+    }
+
+    private void SpawnTextOption(TextOptionVisualData textOptionVisualData)
+    {
+        if (textOptionVisualData.textOptionType != TextOptionState.SecretHidden)
+        {
+            MonoUtility.DelayFunction(() =>
+            {
+                var go = Instantiate(textOptionVisualData.prefab, layout);
+                var textOptionController = go.GetComponent<TextOptionController>();
+                textOptionController.Setup(textOptionVisualData.textOption, textOptionVisualData.textOption.Text, textOptionVisualData.statText, textOptionVisualData.textOptionType, this);
+                if (textOptionVisualData.textOptionType != TextOptionState.Locked)
+                    textOptionController.SetIndex(textOptionVisualData.index);
+                
+            }, textOptionsDelay*textOptionVisualData.delayIndex);
         }
     }
 
@@ -239,7 +328,7 @@ public class UIEventController : MonoBehaviour
 
     void ActiveUnitChanged()
     {
-        UpdateUI();
+        UpdateUICharacterRelated();
     }
     void Hide()
     {
