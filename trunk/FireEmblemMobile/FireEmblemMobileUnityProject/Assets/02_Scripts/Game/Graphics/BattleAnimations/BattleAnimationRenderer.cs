@@ -4,6 +4,8 @@ using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
 using Game.GameInput;
+using Game.GUI;
+using Game.Manager;
 using Game.Mechanics;
 using Game.Mechanics.Battle;
 using LostGrace;
@@ -41,6 +43,14 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     }
     public void Show(BattleSimulation battleSimulation, BattlePreview battlePreview, IBattleActor attackingActor, IAttackableTarget defendingActor)
     {
+        var uiSystem = ServiceProvider.Instance.GetSystem<UiSystem>();
+        if (uiSystem != null)
+        {
+            uiSystem.HideMainCanvas();
+            uiSystem.BottomUI.HideAll();
+            uiSystem.charCircleCanvas.enabled = false;
+        }
+            
         gameObject.SetActive(true);
         this.battleSimulation = battleSimulation;
         canvas.Show();
@@ -98,6 +108,13 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
     public void Hide()
     {
         canvas.Hide();
+        var uiSystem = ServiceProvider.Instance.GetSystem<UiSystem>();
+        if (uiSystem != null)
+        {
+            uiSystem.ShowMainCanvas();
+            uiSystem.charCircleCanvas.enabled = true;
+        }
+           
         //light.SetActive(false);
         // Debug.Log("Volume: "+volume.weight);
         // Debug.Log("GameObject: "+gameObject);

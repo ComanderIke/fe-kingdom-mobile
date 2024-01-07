@@ -12,6 +12,7 @@ using LostGrace;
 using TMPro;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
+using UnityEngine.UI;
 
 public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
 {
@@ -21,6 +22,7 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
     public TileInfoPanel TileInfoPanel;
     [SerializeField] private UICharacterViewController characterView;
     [SerializeField] private TextMeshProUGUI endTurnButtonText;
+    [SerializeField] private Button endTurnButton;
     [SerializeField] private BossUI bossUI;
     private static PlayerPhaseUI instance;
    // [SerializeField] private UICharacterViewController enemyView;
@@ -135,15 +137,24 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
 
         if (allWaiting)
         {
-            if(!buttonAnimated)
+            if (!buttonAnimated)
+            {
+                LeanTween.scale(endTurnButton.gameObject, new Vector3(1.03f,1.03f,1.03f), .5f).setLoopPingPong(-1)
+                    .setEaseInOutBounce();
                 endTurnButtonText.text = "<bounce><shinier>End Turn";
+            }
+               
             buttonAnimated = true;
         }
         else
         {
-           
-            if(buttonAnimated)
+
+            if (buttonAnimated)
+            {
                 endTurnButtonText.text = "</bounce></shinier>End Turn";
+                LeanTween.cancel(endTurnButton.gameObject);
+            }
+              
             buttonAnimated = false;
         }
        

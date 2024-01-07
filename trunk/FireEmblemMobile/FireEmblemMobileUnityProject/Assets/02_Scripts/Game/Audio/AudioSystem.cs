@@ -16,6 +16,7 @@ namespace Audio
         public MusicData[] Music;
 
         public SoundData[] Sounds;
+        [SerializeField] float battleVolumeFadeTime=1.0f;
 
         private bool initialized = false;
 
@@ -116,6 +117,47 @@ namespace Audio
                 m.Source.Play();
         }
 
+        public void SwitchIntoBattle()
+        {
+            MyDebug.LogMusic("Switch  into Battle");
+            foreach (var playedMusic in currentlyPlayedMusic)
+            {
+                if (playedMusic is BattleMusicData battleMusicData)
+                {
+                    var tmpTime = battleMusicData.Source.time;
+                    battleMusicData.Source.clip = battleMusicData.ClipInBattle;
+                    battleMusicData.Source.time = tmpTime;
+                    LeanTween.value(gameObject, battleMusicData.Source.volume, battleMusicData.VolumeBattle, battleVolumeFadeTime)
+                        .setEaseInOutQuad().setOnUpdate((val) =>
+                        {
+                            battleMusicData.Source.volume = val;
+                        });
+                    //battleMusicData.Source.volume = battleMusicData.VolumeBattle;
+                    battleMusicData.Source.Play();
+                }
+            }
+        }
+        public void SwitchOutofBattle()
+        {
+            MyDebug.LogMusic("Switch out of Battle");
+            foreach (var playedMusic in currentlyPlayedMusic)
+            {
+                if (playedMusic is BattleMusicData battleMusicData)
+                {
+                    var tmpTime = battleMusicData.Source.time;
+                    battleMusicData.Source.clip = battleMusicData.Clip;
+                    battleMusicData.Source.time = tmpTime;
+                    //battleMusicData.Source.volume = battleMusicData.Volume;
+                    battleMusicData.Source.Play();
+                    LeanTween.value(gameObject, battleMusicData.Source.volume, battleMusicData.Volume, battleVolumeFadeTime)
+                        .setEaseInOutQuad().setOnUpdate((val) =>
+                        {
+                            battleMusicData.Source.volume = val;
+                        });
+                }
+            }
+        }
+
         public void StopSound(string name)
         {
             var s = Array.Find(Sounds, sound => sound.Name == name);
@@ -152,6 +194,8 @@ namespace Audio
 
         public List<string> GetCurrentlyPlayedMusicTracks()
         {
+            if (currentlyPlayedMusic == null || currentlyPlayedMusic.Count == 0)
+                return new List<string>();
             return currentlyPlayedMusic.Select(m => m.Name).ToList();
         }
 

@@ -53,10 +53,12 @@ namespace Game.Mechanics
            
            BattleSystem.OnBattleFinished -= EndBattle;
            BattleSystem.OnBattleFinished += EndBattle;
+           BattleSystem.OnBattleFinishedBeforeAfterBattleStuff -= ActualBattleEnded;
+           BattleSystem.OnBattleFinishedBeforeAfterBattleStuff += ActualBattleEnded;
          
             //Debug.Log("ENTER FIGHTSTATE");
 
-            SetUpMusic();
+            AudioSystem.Instance.SwitchIntoBattle();
             OnEnter?.Invoke();
         }
 
@@ -69,8 +71,13 @@ namespace Game.Mechanics
             return null;
         }
 
+        private void ActualBattleEnded(AttackResult result)
+        {
+            AudioSystem.Instance.SwitchOutofBattle();
+        }
         private void EndBattle(AttackResult result)
         {
+            
             Debug.Log("Battle Ended");
             BattleSystem.OnBattleFinished -= EndBattle;
             if(GridGameManager.Instance.FactionManager.ActiveFaction.IsPlayerControlled)
@@ -86,20 +93,16 @@ namespace Game.Mechanics
             // HideFightVisuals();
             attacker.TurnStateManager.HasAttacked = true;
 
+            BattleSystem.OnBattleFinishedBeforeAfterBattleStuff -= ActualBattleEnded;
             battleSystem.CleanUp();
             attacker = null;
             attackedTarget = null;
 
-            AudioSystem.Instance.ChangeMusic(startMusic, "BattleTheme", true);
             OnExit?.Invoke();
         }
 
         
-
-        private void SetUpMusic()
-        {
-            AudioSystem.Instance.ChangeAllMusic("BattleTheme");
-        }
+        
 
         public static event Action<IBattleActor, IAttackableTarget> OnStartBattle;
         public void Start(IBattleActor battleActor, IAttackableTarget target)

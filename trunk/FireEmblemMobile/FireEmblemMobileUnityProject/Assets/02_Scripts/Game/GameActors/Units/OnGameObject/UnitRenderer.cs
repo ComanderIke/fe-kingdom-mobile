@@ -283,7 +283,7 @@ namespace Game.GameActors.Units.OnGameObject
 
             MyDebug.LogTest("SETWAITING"+unit.IsPlayerControlled());
              hpBarImage.color = waiting ? (unit.IsPlayerControlled()?waitingBlueColor:waitingRedColor) : (unit.IsPlayerControlled()?normalBlueColor:normalRedColor);
-            hpText.color = waiting ? waitingBlueColor:ColorManager.Instance.GetFactionColor(unit.Faction.Id);
+            hpText.color = waiting ? (unit.IsPlayerControlled()?waitingBlueColor:waitingRedColor):ColorManager.Instance.GetFactionColor(unit.Faction.Id);
             //grayOutCanvasObject.alpha=waiting?.6f:1f;
             GetComponentInChildren<SpriteRenderer>().color = !waiting ? Color.white : Color.grey;
         }

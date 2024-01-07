@@ -10,6 +10,7 @@ using Game.Map;
 using Game.Mechanics;
 using Game.Mechanics.Battle;
 using GameEngine;
+using LostGrace;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -23,8 +24,10 @@ namespace Game.GUI
         public IObjectiveUI objectiveUI;
         public IUnitPlacementUI unitPlacementUI;
         public Canvas MainUICanvas;
-
+        public BottomUI BottomUI;
+        public PlayerPhaseUI PlayerPhaseUI;
         public SelectionUI SelectionUI;
+        public Canvas charCircleCanvas;
         public static event Action OnShowAttackPreview;
         public static event Action OnHideAttackPreview;
         //public UIFactionCharacterCircleController characterCircleController;

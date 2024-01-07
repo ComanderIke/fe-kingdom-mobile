@@ -368,6 +368,8 @@ namespace Game.GameInput
                     if (gridSystem.GridLogic.IsFieldAttackable(enemyActor.GridComponent.GridPosition.X,
                             enemyActor.GridComponent.GridPosition.Y))
                     {
+                        gridSystem.GetTile(enemyActor.GridComponent.GridPosition.X,
+                            enemyActor.GridComponent.GridPosition.Y).ShowAttackable(false);
                         if (selectionDataProvider.GetSelectedAttackTarget() != enemyActor)
                         {
                       
@@ -535,6 +537,7 @@ namespace Game.GameInput
                 // Debug.Log("Dragged on enemy: " + enemy +" at ["+x+"/"+y+"]");
                 if (!IsTileAttackAble(x, y))
                     return;
+                gridSystem.GetTile(x,y).ShowAttackable(false);
                 selectionDataProvider.SetSelectedAttackTarget(enemy);
                 if (inputPathManager.IsMovementPathEmpty())
                 {

@@ -37,7 +37,7 @@ namespace LostGrace
             bottomUIRight.UpdateUI();
             bottomUICharacterSelected.UpdateUI();
         }
-        void HideAll()
+        public void HideAll()
         {
             bottomUICharacterSelected.Hide();
             bottomUILeftEmpty.Hide();
@@ -125,7 +125,7 @@ LeanTween.cancel(wholeBottomUI);
             GridActorComponent.AnyUnitChangedPositionAfter -= AnyUnitChangedPosition;
             WinState.OnEnter -= HideAll;
         }
-
+        
         public static void Hide()
         {
             if(instance!=null&& instance.gameObject!=null)

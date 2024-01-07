@@ -34,6 +34,7 @@ public class UIEventController : MonoBehaviour
     [SerializeField] private UIUnitIdleAnimation unitIdleAnimation;
     [SerializeField] GameObject textOptionPrefab;
     [SerializeField] GameObject fightOptionPrefab;
+    [SerializeField] private float textOptionsDelay = .5f;
     private LGEventDialogSO randomEvent;
     private LGEventDialogSO currentNode;
     private LGDialogChoiceData current;
@@ -79,6 +80,13 @@ public class UIEventController : MonoBehaviour
         UpdateUI();
     }
 
+    public void TextAnimaterTextShowed()
+    {
+        MyDebug.LogTest("TEXT SHOWED");
+        if(currentNode!=null)
+            ShowTextOptions(currentNode.Choices);
+    }
+   
     public void PrevClicked()
     {
         party.ActiveUnitIndex--;
@@ -96,7 +104,7 @@ public class UIEventController : MonoBehaviour
             description.text = currentNode.Text;
         }
 
-        ShowTextOptions(currentNode.Choices);
+        
     }
     public void UpdateUI()
     {
@@ -120,6 +128,7 @@ public class UIEventController : MonoBehaviour
     void ShowTextOptions(List<LGDialogChoiceData> textOptions)
     {
         int index = 0;
+        int delayIndex = 0;
         
         foreach (var textOption in textOptions)
         {
@@ -170,15 +179,19 @@ public class UIEventController : MonoBehaviour
 
             if (textOptionType != TextOptionState.SecretHidden)
             {
-                var go = Instantiate(prefab, layout);
+                MonoUtility.DelayFunction(() =>
+                {
+                    var go = Instantiate(prefab, layout);
 
 
-                var textOptionController = go.GetComponent<TextOptionController>();
+                    var textOptionController = go.GetComponent<TextOptionController>();
 
-                textOptionController.Setup(textOption, textOption.Text, statText, textOptionType, this);
-                if (textOptionType != TextOptionState.Locked)
-                    textOptionController.SetIndex(index);
-                index++;
+                    textOptionController.Setup(textOption, textOption.Text, statText, textOptionType, this);
+                    if (textOptionType != TextOptionState.Locked)
+                        textOptionController.SetIndex(index);
+                    index++;
+                }, textOptionsDelay*delayIndex);
+                delayIndex++;
             }
 
 

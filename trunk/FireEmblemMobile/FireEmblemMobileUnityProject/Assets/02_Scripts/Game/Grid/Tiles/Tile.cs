@@ -100,6 +100,16 @@ namespace Game.Grid
         {
             TileRenderer.DangerVisual(active);
         }
+
+        public void ShowAttackable(bool show)
+        {
+            if(show)
+                tileVfx.ShowAttackable(this);
+            else
+            {
+                tileVfx.Hide(this);
+            }
+        }
         public void SetAttackMaterial(FactionId playerId, bool activeUnit, bool activePlayer)
         {
             Reset();
@@ -110,12 +120,12 @@ namespace Game.Grid
             {
                 if (GridObject != null&& playerId != GridObject.Faction.Id && activePlayer)
                 {
-                    tileVfx.ShowAttackable(this);
+                    ShowAttackable(true);
                     TileRenderer.ActiveAttackVisual();
                 }
                 else if (GridObject!=null && playerId != GridObject.Faction.Id && activePlayer)
                 {
-                    tileVfx.ShowAttackable(this);
+                    ShowAttackable(true);
                     TileRenderer.ActiveAttackVisual();
                 }
                 else if (!TileData.walkable)

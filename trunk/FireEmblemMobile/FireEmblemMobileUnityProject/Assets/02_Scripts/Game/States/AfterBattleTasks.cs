@@ -65,11 +65,17 @@ namespace Game.States
         IEnumerator ExpCoroutine()
         {
             yield return new WaitForSeconds(initialDelay);
+
+            if (attacker is Unit unitAttacker && attacker.IsPlayerControlled())
+            {
+                if(unitAttacker.Blessing!=null)
+                    unitAttacker.Bonds.Increase(unitAttacker.Blessing.God, unitAttacker.Stats.CombinedAttributes().FAITH);
+            }
+            
             //Debug.Log("Start EXP Coroutine: "+attacker+" "+defenders.Count);
             if(defenders!=null)
                 foreach (var defender in defenders)
                 {
-                 
                     if (!attacker.IsAlive())
                     {
                         attacker.Die((Unit)defender);
@@ -82,12 +88,15 @@ namespace Game.States
                     }
                     if (defender is Unit unitDefender)
                     {
+                        
 
                         if(attacker.IsAlive()&& attacker.IsPlayerControlled())
                             yield return ExpForAttacker(unitDefender);
                         
                         if (defender.IsAlive() && unitDefender.IsPlayerControlled())
                         {
+                            if(unitDefender.Blessing!=null)
+                                unitDefender.Bonds.Increase(unitDefender.Blessing.God, unitDefender.Stats.CombinedAttributes().FAITH);
                             if(expForTargets)
                                 yield return ExpForDefender(unitDefender);
                         }

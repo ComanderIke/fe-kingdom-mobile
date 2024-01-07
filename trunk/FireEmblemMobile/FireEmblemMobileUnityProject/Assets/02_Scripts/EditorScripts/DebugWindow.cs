@@ -4,6 +4,7 @@ using Game.GameActors.Units;
 using Game.GameResources;
 using Game.Manager;
 using Game.Mechanics;
+using Game.States;
 using Game.WorldMapStuff.Controller;
 using UnityEditor;
 using UnityEngine;
@@ -70,6 +71,10 @@ namespace __2___Scripts.External.Editor
             if (GUILayout.Button("Win Battle"))
             {
                 GameSceneController.Instance.LoadEncounterAreaAfterBattle(true);
+            }
+            if (GUILayout.Button("ResultScreen"))
+            {
+                GridGameManager.Instance.GameStateManager.SwitchState(WinState.Create());
             }
 
             GUILayout.BeginHorizontal();

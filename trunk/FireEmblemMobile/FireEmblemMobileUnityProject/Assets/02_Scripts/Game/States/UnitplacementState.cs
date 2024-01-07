@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Audio;
 using Game.AI;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
@@ -57,6 +58,7 @@ namespace Game.States
         public override void Enter()
         {
             
+            AudioSystem.Instance.ChangeAllMusic("Battle Theme",true);
             finished = false;
             factionManager = GridGameManager.Instance.FactionManager;
             NextState =  GridGameManager.Instance.GameStateManager.PhaseTransitionState;
@@ -163,6 +165,7 @@ namespace Game.States
        
         public override void Exit()
         {
+            
             DeInitializeCamera();
             if(UnitPlacementUI!=null && UnitPlacementUI.gameObject!=null)
                 UnitPlacementUI.Hide();
