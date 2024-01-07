@@ -158,7 +158,9 @@ namespace Game.GameActors.Units.OnGameObject
     
         public void Damaged(float playSpeed,DamagedState damagedState)
         {
-       
+
+            if (hitFeedbackController == null)
+                return;
             hitFeedbackController.SetState(damagedState);
             hitFeedbackController.PlayHitFeedback();
          //  spriteRenderer.sortingOrder = sortOrderNormal;

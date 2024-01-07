@@ -27,7 +27,13 @@ public class BattleAnimationRenderer : MonoBehaviour, IBattleAnimation
 
     void ShowActivatedAttackSkills(IBattleActor activater, AttackData attackData)
     {
-        bool playerControlled = activater.Faction.IsPlayerControlled;
+        bool playerControlled = false;
+        if(activater.Faction!=null)
+          playerControlled = activater.Faction.IsPlayerControlled;
+        else
+        {
+            playerControlled = ((Unit)activater).Party!=null;
+        }
         skillActivationRenderer.Show((Unit)activater, attackData.activatedAttackSkills, playerControlled);
         Debug.Log("ACTIVATE DEFENSE SKILL: "+activater+" "+attackData.attacker);
         skillActivationRenderer.Show((Unit)activater, attackData.activatedDefenseSkills, !playerControlled);

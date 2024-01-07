@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using __2___Scripts.External.Editor.Data.Save;
 using __2___Scripts.Game.Utility;
 using _02_Scripts.Game.Dialog.DialogSystem;
+using Febucci.UI;
 using Game.AI;
 using Game.GameActors.Items;
 using Game.GameActors.Players;
@@ -29,6 +30,7 @@ public class UIEventController : MonoBehaviour
   
     [SerializeField] TextMeshProUGUI headline;
     [SerializeField] TextMeshProUGUI description;
+    
     [SerializeField] Transform layout;
     [SerializeField] private UICharacterFace characterFace;
     [SerializeField] private UIUnitIdleAnimation unitIdleAnimation;
@@ -71,6 +73,15 @@ public class UIEventController : MonoBehaviour
         party.onActiveUnitChanged += ActiveUnitChanged;
         UpdateUI();
     
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            var typeWriter = description.GetComponent<TypewriterByCharacter>();
+            typeWriter.SkipTypewriter();
+        }
     }
 
     private void OnDestroy()
@@ -196,6 +207,8 @@ public class UIEventController : MonoBehaviour
             if (textOption.NextDialogue is LGFightEventDialogSO)
                 prefab = fightOptionPrefab;
             localTextOptionStates.Add(new TextOptionVisualData(textOption,textOptionType,statText, prefab, index, delayIndex));
+            index++;
+            delayIndex++;
         }
 
         if (!ListsAreEqual(localTextOptionStates,textOptionStates))

@@ -77,7 +77,8 @@ namespace Game.Mechanics
         public BattleSimulation(IBattleActor attacker, IBattleActor defender, GridPosition attackPosition, bool continuos = false)
         {
             combatRounds = new List<CombatRound>();
-            attackPosTile = ServiceProvider.Instance.GetSystem<GridSystem>().GetTile(attackPosition.X, attackPosition.Y);
+            if(ServiceProvider.Instance is GridGameManager)
+                attackPosTile = ServiceProvider.Instance.GetSystem<GridSystem>().GetTile(attackPosition.X, attackPosition.Y);
             Attacker = attacker.Clone() as IBattleActor;
             Defender = defender.Clone() as IBattleActor;
             this.continuos = continuos;
@@ -510,17 +511,22 @@ namespace Game.Mechanics
 
         public int GetTileDefenseBonuses()
         {
-            
+            if (attackPosTile == null)
+                return 0;
             return attackPosTile.TileData.defenseBonus;
         }
 
         public int GetTileSpeedBonuses()
         {
+            if (attackPosTile == null)
+                return 0;
             return attackPosTile.TileData.speedMalus;
         }
 
         public int GetTileAvoidBonuses()
         {
+            if (attackPosTile == null)
+                return 0;
             return attackPosTile.TileData.avoBonus;
         }
     }
