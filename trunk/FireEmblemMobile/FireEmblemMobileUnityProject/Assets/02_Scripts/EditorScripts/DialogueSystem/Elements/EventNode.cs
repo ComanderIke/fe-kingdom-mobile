@@ -150,6 +150,13 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
                 ObjectField eventField = new ObjectField("Event");
                 eventField.objectType = typeof(DialogEvent);
                 eventField.value = dialogEvent;
+                eventField.RegisterValueChangedCallback(callback =>
+                {
+                    
+                    Events.Remove(dialogEvent);
+                    var newDialogEvent = (DialogEvent)callback.newValue;
+                    Events.Add(newDialogEvent);
+                });
                 eventFouldout.Add(eventField);
             }
 
@@ -192,6 +199,13 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
                 ObjectField itemRewardField = new ObjectField("Item");
                 itemRewardField.objectType = typeof(ItemBP);
                 itemRewardField.value = itemReward;
+                itemRewardField.RegisterValueChangedCallback(callback =>
+                {
+                    
+                    ItemRewards.Remove(itemReward);
+                    var newitemReward = (ItemBP)callback.newValue;
+                    ItemRewards.Add(newitemReward);
+                });
                 rewardFouldout.Add(itemRewardField);
             }
         }

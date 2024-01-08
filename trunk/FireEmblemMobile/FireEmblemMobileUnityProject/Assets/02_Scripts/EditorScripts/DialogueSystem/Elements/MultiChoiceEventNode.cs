@@ -205,6 +205,16 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
                 ObjectField charItemField = new ObjectField();
                 charItemField.objectType = typeof(BlessingBP);
                 charItemField.value =blessingReq;
+                charItemField.RegisterValueChangedCallback(callback =>
+                {
+                    RemoveBlessingRequirement(blessingReq,choiceData);
+                    if (charItemField.objectType == typeof(BlessingBP)&&(BlessingBP)callback.newValue!=null)
+                    {
+                        var newUnit = (BlessingBP)callback.newValue;
+                        choiceData.BlessingRequirements.Add(newUnit);
+                    }
+                   
+                });
                 responseContainer.Insert(2,charItemField);
             }
             foreach (var itemReq in choiceData.ItemRequirements)
@@ -212,6 +222,17 @@ namespace _02_Scripts.EditorScripts.DialogueSystem.Elements
                 ObjectField charItemField = new ObjectField();
                 charItemField.objectType = typeof(ItemBP);
                 charItemField.value =itemReq;
+                charItemField.RegisterValueChangedCallback(callback =>
+                {
+                    RemoveItemRequirement(itemReq,choiceData);
+                    MyDebug.LogTest("VALUECHANGEDCALLBACK ITEMREQ");
+                    if (charItemField.objectType == typeof(ItemBP)&&(ItemBP)callback.newValue!=null)
+                    {
+                        var newUnit = (ItemBP)callback.newValue;
+                        choiceData.ItemRequirements.Add(newUnit);
+                    }
+                   
+                });
                 responseContainer.Insert(2,charItemField);
             }
             

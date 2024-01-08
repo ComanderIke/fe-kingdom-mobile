@@ -26,6 +26,9 @@ namespace Game.GUI
         [SerializeField] private TextMeshProUGUI hpValueText;
         [SerializeField] private int hpTextSizeSmall;
         [SerializeField] private int hpTextSizeBig;
+        [SerializeField] private Color hpBarColorNormal;
+        [SerializeField] private Color hpBarColorWaiting;
+        [SerializeField] private Image currentHpColor;
         [SerializeField]
         private Image faceSprite;
         [SerializeField]
@@ -80,6 +83,7 @@ namespace Game.GUI
             // Debug.Log("Show UnitCharacterUI ACTIVE: "+unit.name);
             unit.HpValueChanged -= UpdateValues;
             unit.HpValueChanged += UpdateValues;
+            MyDebug.LogTest("UNIT HP VALUE CHANGE SUBSCRIBE");
             unit.ExperienceManager.ExpGained -= UpdateExp;
             unit.ExperienceManager.ExpGained += UpdateExp;
             UpdateValues();
@@ -87,6 +91,7 @@ namespace Game.GUI
             hpText.fontSize = hpTextSizeBig;
             hpValueText.fontSize = hpTextSizeBig;
             hpBar.transform.localScale = selectedScale;
+            currentHpColor.color = unit.TurnStateManager.IsWaiting ? hpBarColorWaiting : hpBarColorNormal;
             hpBarToScale.transform.localScale = selectedScaleHpBarBackground;
             hpBarToScale.GetComponent<RectTransform>().sizeDelta = selectedSizeBars;
             expBar.transform.localScale = expSelectedScale;
@@ -105,10 +110,12 @@ namespace Game.GUI
         {
             this.unit = unit;
             canvasGroup.alpha = unit.TurnStateManager.IsWaiting ? inActiveAlpha : 1;
+            currentHpColor.color = unit.TurnStateManager.IsWaiting ? hpBarColorWaiting : hpBarColorNormal;
             canvas.sortingOrder =sortOrder;
            // Debug.Log("Show UnitCharacterUI: "+unit.name);
             unit.HpValueChanged -= UpdateValues;
             unit.HpValueChanged += UpdateValues;
+            MyDebug.LogTest("UNIT HP VALUE CHANGE SUBSCRIBE");
             unit.ExperienceManager.ExpGained -= UpdateExp;
             unit.ExperienceManager.ExpGained += UpdateExp;
             hpText.fontSize = hpTextSizeSmall;
@@ -153,6 +160,8 @@ namespace Game.GUI
         {
             gameObject.SetActive(false);
             unit.HpValueChanged -= UpdateValues;
+            unit.ExperienceManager.ExpGained -= UpdateExp;
+            MyDebug.LogTest("UNIT HP VALUE CHANGE UNSUB");
         }
 
         public override ExpBarController GetExpRenderer()
@@ -166,17 +175,20 @@ namespace Game.GUI
         {
             if (unit == null)
                 return;
-            unit.HpValueChanged -= UpdateValues;
-            unit.ExperienceManager.ExpGained -= UpdateExp;
+            //MyDebug.LogTest("UNIT HP VALUE CHANGE UNSUB");
+            //unit.HpValueChanged -= UpdateValues; DONT DO THIS HERE cause layout resets will call ondisable
+            //unit.ExperienceManager.ExpGained -= UpdateExp;
         }
 
         void UpdateValues()
         {
+            MyDebug.LogTest("UNIT UPDATE VALUES");
             if (unit == null)
                 return;
             characterName.SetText(unit.name);
-           // Debug.Log("Update Unit Values: "+unit.name);
+           
             expBar.UpdateInstant(unit.ExperienceManager.Exp);
+            Debug.Log("Update Unit Values: "+unit.name+" "+unit.Hp+" "+ unit.MaxHp);
             hpBar.SetValue(unit.Hp, unit.MaxHp, true);
            
             if ((unit.Hp*1.0f) / unit.MaxHp <= lowHealthThreshold)
