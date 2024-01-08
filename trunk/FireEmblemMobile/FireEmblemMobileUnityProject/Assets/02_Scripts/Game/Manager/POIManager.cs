@@ -35,6 +35,7 @@ namespace LostGrace
         [SerializeField] private UIMenu goBackMenu;
         [SerializeField] private GameObject backGround;
         [SerializeField] private GameObject sanctuary;
+        [SerializeField] private OKCancelDialogController okCancelDialogController;
       
         [Header("SaveLoadStuff: ")]
 
@@ -142,7 +143,8 @@ namespace LostGrace
         }
         public override void BackClicked()
         {
-            Hide();
+            okCancelDialogController.Show("Return to Main Menu?",()=> Hide());
+           
             
         }
         public void ContinueClicked()

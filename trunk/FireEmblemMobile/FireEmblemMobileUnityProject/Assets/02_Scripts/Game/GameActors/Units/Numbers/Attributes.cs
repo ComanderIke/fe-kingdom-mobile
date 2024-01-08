@@ -92,6 +92,7 @@ namespace Game.GameActors.Units.Numbers
             sum.faith -= b.faith;
             return sum;
         }
+        
         public static Attributes operator *(Attributes a, float b)
         {
             var sum = new Attributes(a);
@@ -326,6 +327,40 @@ namespace Game.GameActors.Units.Numbers
         public int GetSum(bool hpHalf=false)
         {
             return STR + DEX + INT + LCK + AGI + DEF + FAITH + (hpHalf?MaxHp/2:MaxHp);
+        }
+
+        public Attributes GetWithMalus(int malus)
+        {
+            var ret = new Attributes(this);
+            if (ret.str > 0)
+                ret.str -= malus;
+            if (ret.dex != 0)
+                ret.dex -= malus;
+            if (ret.intel != 0)
+                ret.intel -= malus;
+            if (ret.def != 0)
+                ret.def -= malus;
+            if (ret.faith != 0)
+                ret.faith -= malus;
+            if (ret.lck != 0)
+                ret.lck -= malus;
+            if (ret.agi != 0)
+                ret.agi -= malus;
+            if (ret.str < 0)
+                ret.str = 0;
+            if (ret.agi < 0)
+                ret.agi = 0;
+            if (ret.dex < 0)
+                ret.dex = 0;
+            if (ret.def < 0)
+                ret.def = 0;
+            if (ret.faith < 0)
+                ret.faith = 0;
+            if (ret.intel < 0)
+                ret.intel = 0;
+            if (ret.lck < 0)
+                ret.lck = 0;
+            return ret;
         }
     }
 

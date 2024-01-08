@@ -154,8 +154,8 @@ namespace LostGrace
                 gameObject.SetActive(false);
                 return;
             }
-
-            InstantiateSkill(skill,blessed, false);
+            if(!(skill is Curse) && !(skill is Blessing))
+                InstantiateSkill(skill,blessed, false);
            
 
             if (!gameObject.activeSelf)

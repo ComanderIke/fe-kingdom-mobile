@@ -253,5 +253,47 @@ namespace Game.Mechanics.Battle
             }
             return list;
         }
+
+        public CombatStats GetWithMalus(int malus)
+        {
+            var ret = new CombatStats(this);
+            if (ret.Attack > 0)
+                ret.Attack -= malus;
+            if (ret.Hit != 0)
+                ret.Hit -= malus;
+            if (ret.Avoid != 0)
+                ret.Avoid -= malus;
+            if (ret.AttackSpeed != 0)
+                ret.AttackSpeed -= malus;
+            if (ret.MagicResistance != 0)
+                ret.MagicResistance -= malus;
+            if (ret.CurseResistance != 0)
+                ret.CurseResistance -= malus;
+            if (ret.Crit != 0)
+                ret.Crit -= malus;
+            if (ret.CritAvoid != 0)
+                ret.CritAvoid -= malus;
+            if (ret.Armor != 0)
+                ret.Armor -= malus;
+            if (ret.Attack < 0)
+                ret.Attack = 0;
+            if (ret.Avoid < 0)
+                ret.Avoid = 0;
+            if (ret.Hit < 0)
+                ret.Hit = 0;
+            if (ret.AttackSpeed < 0)
+                ret.AttackSpeed = 0;
+            if (ret.MagicResistance < 0)
+                ret.MagicResistance = 0;
+            if (ret.CurseResistance < 0)
+                ret.CurseResistance = 0;
+            if (ret.Armor < 0)
+                ret.Armor = 0;
+            if (ret.Crit < 0)
+                ret.Crit = 0;
+            if (ret.CritAvoid < 0)
+                ret.CritAvoid = 0;
+            return ret;
+        }
     }
 }

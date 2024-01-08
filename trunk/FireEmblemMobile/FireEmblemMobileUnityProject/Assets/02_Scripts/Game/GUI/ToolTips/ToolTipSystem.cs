@@ -16,11 +16,13 @@ using UnityEngine.Serialization;
 
 public class ToolTipSystem : MonoBehaviour
 {
+    [SerializeField] private Canvas tooltipCanvas;
     private static ToolTipSystem instance;
     public ItemToolTip ItemToolTip;
     public WeaponToolTip WeaponToolTip;
     public SkillToolTip skillToolTip;
-    public SkillToolTip blessingTooltip;
+    public BlessingTooltip blessingTooltip;
+    public SkillToolTip curseTooltip;
     public AttributeValueTooltipUI AttributeValueTooltipUI;
     public CombatStatValueTooltipUI CombatStatalueTooltipUI;
    
@@ -42,6 +44,8 @@ public class ToolTipSystem : MonoBehaviour
         instance.skillToolTip.gameObject.SetActive(false);
       
         //instance.skillTreeToolTip.gameObject.SetActive(false);
+        instance.blessingTooltip.gameObject.SetActive(false);
+        instance.curseTooltip.gameObject.SetActive(false);
         instance.ItemToolTip.gameObject.SetActive(false);
         instance.CombatStatalueTooltipUI.gameObject.SetActive(false);
         instance.TimeOfDayTooltip.gameObject.SetActive(false);
@@ -59,7 +63,7 @@ public class ToolTipSystem : MonoBehaviour
         instance.tooltipShownThisFrame = true;
         CloseAllToolTips();
 
-        instance.ItemToolTip.SetValues(item, screenPos?position:Camera.main.WorldToScreenPoint(position), exactPos);
+        instance.ItemToolTip.SetValues(item, screenPos?position:GetAnchoredPositionInTooltipCanvas(position), exactPos);
         
         instance.ItemToolTip.gameObject.SetActive(true);
     }
@@ -68,9 +72,22 @@ public class ToolTipSystem : MonoBehaviour
         MyDebug.LogInput("Show Weapon Tooltip");
         instance.tooltipShownThisFrame = true;
         CloseAllToolTips();
-        instance.WeaponToolTip.SetValues(weapon, Camera.main.WorldToScreenPoint(position));
-        
+        instance.WeaponToolTip.SetValues(weapon, GetAnchoredPositionInTooltipCanvas(position));
         instance.WeaponToolTip.gameObject.SetActive(true);
+    }
+
+    private static Vector2 GetAnchoredPositionInTooltipCanvas(Vector2 position)
+    {
+        MyDebug.LogTest("TooltipCaller position: "+ position);
+        Vector2 tooltipAnchoredPos;
+        Vector2 startPos = Camera.main.WorldToScreenPoint(position);
+        MyDebug.LogTest("TooltipCaller screen position: "+ startPos);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(instance.transform as RectTransform, startPos, Camera.main,
+            out tooltipAnchoredPos);
+        tooltipAnchoredPos += new Vector2((instance.transform as RectTransform).rect.width / 2f,(instance.transform as RectTransform).rect.height / 2f);
+        MyDebug.LogTest("Tooltip new anchoredPosition: "+ tooltipAnchoredPos);
+
+        return tooltipAnchoredPos;
     }
    
     private bool tooltipShownThisFrame = false;
@@ -88,18 +105,34 @@ public class ToolTipSystem : MonoBehaviour
         CloseAllToolTips();
         //Debug.Log(skill.Name);
         //Debug.Log("TooltipPosition: "+GameObject.FindWithTag("UICamera").GetComponent<Camera>().WorldToScreenPoint(position));
-        instance.blessingTooltip.SetValues(blessing, true, false,Camera.main.WorldToScreenPoint(position));
+        instance.blessingTooltip.SetValues(blessing,GetAnchoredPositionInTooltipCanvas(position));
         
         instance.blessingTooltip.gameObject.SetActive(true);
     }
-
-    public static void Show(Skill skill, bool blessed,Vector3 position)
+    public static void Show(Curse curse, Vector3 position)
     {
         instance.tooltipShownThisFrame = true;
         CloseAllToolTips();
         //Debug.Log(skill.Name);
         //Debug.Log("TooltipPosition: "+GameObject.FindWithTag("UICamera").GetComponent<Camera>().WorldToScreenPoint(position));
-        instance.skillToolTip.SetValues(skill, blessed, false,Camera.main.WorldToScreenPoint(position));
+        instance.curseTooltip.SetValues(curse, true, false,GetAnchoredPositionInTooltipCanvas(position));
+        
+        instance.curseTooltip.gameObject.SetActive(true);
+    }
+
+    public static void Show(Skill skill, bool blessed,Vector3 position)
+    {
+        if (skill is Curse curse)
+        {
+            Show(curse, position);
+            return;
+        }
+            
+        instance.tooltipShownThisFrame = true;
+        CloseAllToolTips();
+        //Debug.Log(skill.Name);
+        //Debug.Log("TooltipPosition: "+GameObject.FindWithTag("UICamera").GetComponent<Camera>().WorldToScreenPoint(position));
+        instance.skillToolTip.SetValues(skill, blessed, false,GetAnchoredPositionInTooltipCanvas(position));
         
         instance.skillToolTip.gameObject.SetActive(true);
     }
@@ -117,7 +150,7 @@ public class ToolTipSystem : MonoBehaviour
         CloseAllToolTips();
         // Debug.Log("transformPos: "+position+" ScreenPos"+Camera.main.WorldToScreenPoint(position));
         instance.AttributeValueTooltipUI.gameObject.SetActive(true);
-        instance.AttributeValueTooltipUI.Show(unit,  attributeType, Camera.main.WorldToScreenPoint(position));
+        instance.AttributeValueTooltipUI.Show(unit,  attributeType, GetAnchoredPositionInTooltipCanvas(position));
     }
     public static void ShowCombatStatValue(Unit unit,CombatStats.CombatStatType combatStatType, Vector3 position)
     {
@@ -125,7 +158,7 @@ public class ToolTipSystem : MonoBehaviour
         CloseAllToolTips();
         // Debug.Log("transformPos: "+position+" ScreenPos"+Camera.main.WorldToScreenPoint(position));
         instance.CombatStatalueTooltipUI.gameObject.SetActive(true);
-        instance.CombatStatalueTooltipUI.Show(unit,  combatStatType, Camera.main.WorldToScreenPoint(position));
+        instance.CombatStatalueTooltipUI.Show(unit,  combatStatType, GetAnchoredPositionInTooltipCanvas(position));
     }
 
 

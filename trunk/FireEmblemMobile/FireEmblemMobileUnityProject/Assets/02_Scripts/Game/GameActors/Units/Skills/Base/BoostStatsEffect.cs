@@ -22,73 +22,107 @@ namespace Game.GameActors.Units.Skills
         public SkillTransferData SkillTransferData;
         private bool activated = false;
         private float activatedMultiplier = 1;
+        [SerializeField] private bool decreaseOverTimeBy1;
+        private Unit target;
+        private int activatedLevel = 0;
+        private int malus;
+
+        void UpdateTurn()
+        {
+            RemoveAttributes(activatedLevel);
+            malus++;
+            ApplyAttributes(activatedLevel);
+        }
         public override void Activate(Unit target, int level)
         {
 
+            this.target = target;
+            this.activatedLevel = level;
+            malus = 0;
+            if (decreaseOverTimeBy1)
+            {
+                target.TurnStateManager.OnUpdateTurn-=UpdateTurn;
+                target.TurnStateManager.OnUpdateTurn+=UpdateTurn;
+            }
+                
+            ApplyAttributes(level);
+            activated = true;
+        }
+
+        private void ApplyAttributes(int level)
+        {
             if (skillTransferDataIsMultiplier && SkillTransferData != null&& SkillTransferData.data!=null)
             {
-               
                 multiplier = (float)SkillTransferData.data * skillTransferDataMultiplierMultiplier;
                 Debug.Log("Activate with multiplier:" +multiplier + " "+SkillTransferData.data);
             }
 
-           
-
             if (BonusAttributes != null&& BonusAttributes.Length>0)
             {
                 if(level < BonusAttributes.Length)
-                    target.Stats.BonusAttributesFromEffects += BonusAttributes[level]*multiplier;
+                    target.Stats.BonusAttributesFromEffects += BonusAttributes[level].GetWithMalus(malus)*multiplier;
                 else
                 {
-                    target.Stats.BonusAttributesFromEffects += BonusAttributes[BonusAttributes.Length-1]*multiplier;
+                    target.Stats.BonusAttributesFromEffects += BonusAttributes[BonusAttributes.Length-1].GetWithMalus(malus)*multiplier;
+                }
+
+            }
+
+            if (BonusStats != null&& BonusStats.Length>0)
+            {
+                if(level < BonusStats.Length)
+                    target.Stats.BonusStatsFromEffects += BonusStats[level].GetWithMalus(malus)*multiplier;
+                else
+                {
+                    target.Stats.BonusStatsFromEffects += BonusStats[BonusStats.Length-1].GetWithMalus(malus)*multiplier;
+                }
+            }
+            if(level<cantoAmount.Length)
+                target.GridComponent.Canto = cantoAmount[level];
+        }
+
+        void RemoveAttributes(int level)
+        {
+            // if (skillTransferDataIsMultiplier && SkillTransferData != null&& SkillTransferData.data!=null)
+            //     multiplier = (float)SkillTransferData.data * skillTransferDataMultiplierMultiplier;
+            //USING LAST MULTIPLIER
+            //"TODO remove actual added attributes because level can change");
+            if (BonusAttributes != null && BonusAttributes.Length > 0)
+            {
+                if (level < BonusAttributes.Length)
+                    target.Stats.BonusAttributesFromEffects -= BonusAttributes[level].GetWithMalus(malus)*multiplier;
+                else
+                {
+                    target.Stats.BonusAttributesFromEffects -= BonusAttributes[^1].GetWithMalus(malus)*multiplier;
                 }
             }
 
             if (BonusStats != null&& BonusStats.Length>0)
             {
                 if(level < BonusStats.Length)
-                    target.Stats.BonusStatsFromEffects += BonusStats[level]*multiplier;
+                    target.Stats.BonusStatsFromEffects -= BonusStats[level].GetWithMalus(malus)*multiplier;
                 else
                 {
-                    target.Stats.BonusStatsFromEffects += BonusStats[BonusStats.Length-1]*multiplier;
+                    target.Stats.BonusStatsFromEffects -= BonusStats[^1].GetWithMalus(malus)*multiplier;
                 }
             }
-            if(level<cantoAmount.Length)
-                target.GridComponent.Canto = cantoAmount[level];
-            activated = true;
+            if(cantoAmount.Length>0)
+                target.GridComponent.Canto = 0;
+            Debug.Log("BOOST STATS DEACTIVATED "+target.GridComponent.Canto);
         }
 
         public override void Deactivate(Unit target, int level)
         {
             if (!activated)
                 return;
+            RemoveAttributes(level);
+            malus = 0;
+            this.target = null;
+            this.activatedLevel = 0;
+            if (decreaseOverTimeBy1)
+                target.TurnStateManager.OnUpdateTurn-=UpdateTurn;
             activated = false;
-            // if (skillTransferDataIsMultiplier && SkillTransferData != null&& SkillTransferData.data!=null)
-            //     multiplier = (float)SkillTransferData.data * skillTransferDataMultiplierMultiplier;
-            //USING LAST MULTIPLIER
-           //"TODO remove actual added attributes because level can change");
-            if (BonusAttributes != null && BonusAttributes.Length > 0)
-            {
-                if (level < BonusAttributes.Length)
-                    target.Stats.BonusAttributesFromEffects -= BonusAttributes[level]*multiplier;
-                else
-                {
-                    target.Stats.BonusAttributesFromEffects -= BonusAttributes[^1]*multiplier;
-                }
-            }
-
-            if (BonusStats != null&& BonusStats.Length>0)
-            {
-                if(level < BonusStats.Length)
-                    target.Stats.BonusStatsFromEffects -= BonusStats[level]*multiplier;
-                else
-                {
-                    target.Stats.BonusStatsFromEffects -= BonusStats[^1]*multiplier;
-                }
-            }
-            if(cantoAmount.Length>0)
-                target.GridComponent.Canto = 0;
-            Debug.Log("BOOST STATS DEACTIVATED "+target.GridComponent.Canto);
+           
         }
 
         public override List<EffectDescription> GetEffectDescription(Unit caster,int level)

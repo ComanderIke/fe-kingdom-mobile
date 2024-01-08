@@ -54,7 +54,7 @@ namespace Game.GameActors.Units.Skills
             var buff=appliedBuff==null?null:appliedBuff.GetEffectDescription(caster, level);
             var statModifier=AppliedStatModifier==null?null:AppliedStatModifier.GetEffectDescription(level);
 
-            if (applyChance.Length > level)
+            if (applyChance.Length > level&& applyChance[level]!=1f)
             {
                 string val = applyChance[level] * 100f + "%";
                 string upg = applyChance.Length > level + 1 ? applyChance[level+1] * 100f + "%" : val;

@@ -12,16 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 889faa4cfb7742bba5e0702aa0f34ab6, type: 3}
   m_Name: StatModifierBuff
   m_EditorClassIdentifier: 
-  vfx: {fileID: 0}
+  BuffData: {fileID: 0}
   duration: 03000000
-  <Icon>k__BackingField: {fileID: 0}
-  BonusAttributes: []
-  BonusStats:
-  - <Hit>k__BackingField: -20
-    <Avoid>k__BackingField: -20
-    <CritAvoid>k__BackingField: 0
-    <Crit>k__BackingField: 0
-    <AttackSpeed>k__BackingField: -4
-    <Armor>k__BackingField: -4
-    <MagicResistance>k__BackingField: -4
-    <Attack>k__BackingField: -4
+  mixins: []
+  BonusAttributes:
+  - str: -4
+    dex: -4
+    intel: -4
+    agi: -4
+    lck: -4
+    def: -4
+    faith: -4
+    maxHp: 0
+    sum: 0
+  BonusStats: []

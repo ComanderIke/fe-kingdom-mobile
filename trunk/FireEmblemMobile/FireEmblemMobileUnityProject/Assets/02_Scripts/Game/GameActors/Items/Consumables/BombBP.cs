@@ -15,7 +15,7 @@ namespace Game.GameActors.Items.Consumables
       //  public int range;
       //  public int size;
        // public EffectType effectType;
-        public SkillBp skill;
+       
         //public SkillTargetArea targetArea;
 
         public override Item Create()

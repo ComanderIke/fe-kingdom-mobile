@@ -59,11 +59,11 @@ public class ItemToolTip : MonoBehaviour
     void UpdateTextWrap(Vector3 position)
     {
         ClampOnScreen();
-        if(rectTransform==null)
-            rectTransform = GetComponent<RectTransform>();
-        float pivotX = 0;//position.x / Screen.width;
-        float pivotY = position.y / Screen.height;
-        rectTransform.pivot = new Vector2(pivotX, pivotY);
+        // if(rectTransform==null)
+        //     rectTransform = GetComponent<RectTransform>();
+        // float pivotX = 0;//position.x / Screen.width;
+        // float pivotY = position.y / Screen.height;
+        // rectTransform.pivot = new Vector2(pivotX, pivotY);
     }
 
     public void ExitClicked()
@@ -74,6 +74,7 @@ public class ItemToolTip : MonoBehaviour
     {
         headerText.text = item.item.Name;
         descriptionText.text = item.item.Description;
+        MyDebug.LogTest("Tooltip Position before Offset: "+position);
         if(itemIcon!=null)
             itemIcon.SetValues(item, 0);
         rectTransform.anchoredPosition = position+ new Vector3(offset.x,exactPos?0:offset.y,0);

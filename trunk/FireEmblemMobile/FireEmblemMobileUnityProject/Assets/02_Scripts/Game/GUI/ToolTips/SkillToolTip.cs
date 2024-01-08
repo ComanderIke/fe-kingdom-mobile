@@ -13,8 +13,9 @@ public class SkillToolTip : MonoBehaviour
 
     [SerializeField] private Canvas canvas;
     [SerializeField] private ChooseSkillButtonUI chooseSkillButtonUI;
-    [SerializeField] private Image blessingIcon;
-
+   
+    [SerializeField] private Image curseIcon;
+    [SerializeField] private Vector3 offset;
     private Skill skill;
     [SerializeField]
     private RectTransform rectTransform;
@@ -77,9 +78,12 @@ public class SkillToolTip : MonoBehaviour
         //
         // descriptionText.text = description;
         // skillIcon.sprite = icon;
+       
+        if (skill is Curse curse)
+            curseIcon.sprite = curse.Icon;
         chooseSkillButtonUI.SetSkill(skill, blessed, upgrade);
-        rectTransform.anchoredPosition=position+ new Vector3(0,080+((chooseSkillButtonUI.transform as RectTransform).rect.height/2),0);
-        UpdateTextWrap(position);
+        rectTransform.anchoredPosition=position+ offset;
+        //UpdateTextWrap(position);
         ClampOnScreen();
 
     }

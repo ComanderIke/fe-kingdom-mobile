@@ -96,7 +96,9 @@ namespace Game.GameActors.Units
             // if(actor is Unit unit)
             //     unit.StatusEffectManager.Update();
           
+            
             Reset();
+            OnUpdateTurn?.Invoke();
         }
 
         public void Reset()
@@ -147,6 +149,7 @@ namespace Game.GameActors.Units
             }
         }
 
-       
+
+        public event Action OnUpdateTurn;
     }
 }

@@ -94,6 +94,7 @@ public class UIEquipmentController:MonoBehaviour
     
     public void WeaponSlotClicked()
     {
+        
         ToolTipSystem.Show(weapon,WeaponSlot.transform.position);
     }
     public void Show(Unit unit)

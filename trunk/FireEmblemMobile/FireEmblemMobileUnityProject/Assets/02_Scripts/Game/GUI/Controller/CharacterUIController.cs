@@ -22,6 +22,10 @@ namespace Game.GUI
         [SerializeField] private float inActiveAlpha=.7f;
         [SerializeField] private Canvas canvas;
         [SerializeField] private Animator animator;
+        [SerializeField] private TextMeshProUGUI hpText;
+        [SerializeField] private TextMeshProUGUI hpValueText;
+        [SerializeField] private int hpTextSizeSmall;
+        [SerializeField] private int hpTextSizeBig;
         [SerializeField]
         private Image faceSprite;
         [SerializeField]
@@ -80,6 +84,8 @@ namespace Game.GUI
             unit.ExperienceManager.ExpGained += UpdateExp;
             UpdateValues();
             gameObject.SetActive(true);
+            hpText.fontSize = hpTextSizeBig;
+            hpValueText.fontSize = hpTextSizeBig;
             hpBar.transform.localScale = selectedScale;
             hpBarToScale.transform.localScale = selectedScaleHpBarBackground;
             hpBarToScale.GetComponent<RectTransform>().sizeDelta = selectedSizeBars;
@@ -105,6 +111,8 @@ namespace Game.GUI
             unit.HpValueChanged += UpdateValues;
             unit.ExperienceManager.ExpGained -= UpdateExp;
             unit.ExperienceManager.ExpGained += UpdateExp;
+            hpText.fontSize = hpTextSizeSmall;
+            hpValueText.fontSize = hpTextSizeSmall;
             UpdateValues();
             gameObject.SetActive(true);
             hpBar.transform.localScale = normalScale;

@@ -8,16 +8,18 @@ namespace LostGrace
     {
         [SerializeField] private Button button;
         [SerializeField] private TextMeshProUGUI nameText;
+        [SerializeField] private TextMeshProUGUI fileSlotText;
         [SerializeField] private TextMeshProUGUI difficultyText;
         [SerializeField] private Image image;
         [SerializeField] private CanvasGroup canvasGroup;
         [SerializeField] private float newGameTextAlpha;
         [SerializeField] private float loadedTextAlpha;
         [SerializeField] private GameObject deleteButton;
-        public void UpdateText(string name, string difficulty)
+        public void UpdateText(string name, string difficulty, string fileSlot)
         {
             nameText.SetText(name);
             difficultyText.SetText(difficulty);
+            fileSlotText.text = fileSlot;
         }
 
         public void SetLoaded(bool loaded)
