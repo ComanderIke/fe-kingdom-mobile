@@ -173,11 +173,18 @@ namespace Game.GUI
 
         private void OnDisable()
         {
-            if (unit == null)
-                return;
             //MyDebug.LogTest("UNIT HP VALUE CHANGE UNSUB");
             //unit.HpValueChanged -= UpdateValues; DONT DO THIS HERE cause layout resets will call ondisable
             //unit.ExperienceManager.ExpGained -= UpdateExp;
+        }
+
+        private void OnDestroy()
+        {
+            if (unit == null)
+                return;
+            //MyDebug.LogTest("UNIT HP VALUE CHANGE UNSUB");
+            unit.HpValueChanged -= UpdateValues;
+            unit.ExperienceManager.ExpGained -= UpdateExp;
         }
 
         void UpdateValues()

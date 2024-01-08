@@ -59,6 +59,8 @@ namespace Game.GameActors.Units
 
         public void Increase(God god, int expAdded)
         {
+            if(!Experiences.ContainsKey(god))
+                Experiences.Add(god, new BondExperience());
             Experiences[god].AddExp(expAdded);
         }
     }

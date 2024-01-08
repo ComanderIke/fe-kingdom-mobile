@@ -16,23 +16,27 @@ namespace Game.GameActors.Units.Skills.Passive
             var list = new List<EffectDescription>();
             string valueLabel = "";
             string upgLabel="";
-            switch (extraDataType)
+            if (level < attackEffectExtraData.Length)
             {
-                case ExtraDataType.number:
-                    valueLabel = ""+attackEffectExtraData[level];
-                    if (level < attackEffectExtraData.Length - 1)
-                        level++;
-                    upgLabel =""+attackEffectExtraData[level];
-                    list.Add(new EffectDescription(attackEffectExtraDataLabel,"+"+valueLabel , "+"+upgLabel));
-                    break;
-                case ExtraDataType.percentage:  
-                    valueLabel = ""+attackEffectExtraData[level]*100+"%";
-                    if (level < attackEffectExtraData.Length - 1)
-                        level++;
-                    upgLabel =""+attackEffectExtraData[level]*100+"%";
-                    list.Add(new EffectDescription(attackEffectExtraDataLabel, valueLabel , upgLabel));
-                    break;
+                switch (extraDataType)
+                {
+                    case ExtraDataType.number:
+                        valueLabel = "" + attackEffectExtraData[level];
+                        if (level < attackEffectExtraData.Length - 1)
+                            level++;
+                        upgLabel = "" + attackEffectExtraData[level];
+                        list.Add(new EffectDescription(attackEffectExtraDataLabel, "+" + valueLabel, "+" + upgLabel));
+                        break;
+                    case ExtraDataType.percentage:
+                        valueLabel = "" + attackEffectExtraData[level] * 100 + "%";
+                        if (level < attackEffectExtraData.Length - 1)
+                            level++;
+                        upgLabel = "" + attackEffectExtraData[level] * 100 + "%";
+                        list.Add(new EffectDescription(attackEffectExtraDataLabel, valueLabel, upgLabel));
+                        break;
+                }
             }
+
             return list;
         }
 
