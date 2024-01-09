@@ -734,6 +734,8 @@ namespace Game.GameActors.Units
 
         public bool IsCursed()
         {
+            if (SkillManager == null)
+                return false;
             return SkillManager.GetCurses().Count >= 1;
         }
 

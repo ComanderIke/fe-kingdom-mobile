@@ -89,10 +89,13 @@ namespace Game.GameActors.Units.OnGameObject
         {
             Faction.UnitAddedStatic += FactionChanged;
             unit.HpValueChanged += HpValueChanged;
-            if(unit!=null)
+            if (unit != null && unit.TurnStateManager != null)
+            {
                 unit.TurnStateManager.UnitWaiting += SetWaitingSprite;
-            if(unit!=null)
+
                 unit.TurnStateManager.UnitCanMove += ToogleMoveEffect;
+            }
+
             Unit.OnEquippedWeapon += OnEquippedWeapon;
             unit.OnAddCurse += CurseChanged;
             unit.OnRemoveCurse += CurseChanged;

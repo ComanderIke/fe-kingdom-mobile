@@ -71,6 +71,12 @@ public class MonoUtility : MonoBehaviour
 
     public static void InvokeNextFrame(Action action)
     {
+        if (Instance == null)
+        {
+            Debug.LogError("MonoUtility Instance null");
+            return;
+        }
+            
         Instance.StartCoroutine(Instance.InvokeNextFrameCoroutine(action));
     }
 
