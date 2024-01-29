@@ -14,11 +14,13 @@ public class MonoUtility : MonoBehaviour
     {
         if (Instance == null)
         {
+            Debug.Log("MonoUtility Instance created");
             Instance = this;
             coroutines = new Dictionary<Object, List<Coroutine>>();
         }
         else
         {
+            Debug.Log("MonoUtility Instance Destroyed");
             Destroy(this);
         }
         

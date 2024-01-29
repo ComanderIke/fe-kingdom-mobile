@@ -1,6 +1,7 @@
 trackSelection = true
+refreshSearchWindowsInPlayMode = false
 fetchPreview = true
-wantsMore = false
+defaultFlags = 0
 keepOpen = false
 queryFolder = "Assets"
 onBoardingDoNotAskAgain = true
@@ -13,6 +14,12 @@ scopes = {
 	"last_search.785D90A9" = "Blueprint"
 	"InspectorPreview.785D90A9" = "0"
 	"currentGroup.785D90A9" = "all"
+	"last_search.2138236A" = "button"
+	"OpenInspectorPreview.2138236A" = "0"
+	"currentGroup.2138236A" = "asset"
+	"last_search.F8949528" = "button"
+	"OpenInspectorPreview.F8949528" = "0"
+	"currentGroup.F8949528" = "all"
 }
 providers = {
 	asset = {
@@ -50,6 +57,23 @@ providers = {
 		priority = 100
 		defaultAction = null
 	}
+	performance = {
+		active = false
+		priority = 100
+		defaultAction = null
+	}
+	profilermarkers = {
+		active = false
+		priority = 100
+		defaultAction = null
+	}
+	adb = {
+		active = false
+		priority = 2500
+		defaultAction = null
+	}
+}
+objectSelectors = {
 }
 recentSearches = [
 	"Blueprint"
@@ -59,3 +83,12 @@ searchItemFavorites = [
 ]
 savedSearchesSortOrder = 0
 showSavedSearchPanel = false
+hideTabs = false
+expandedQueries = [
+]
+queryBuilder = false
+ignoredProperties = "id;name;classname;imagecontentshash"
+helperWidgetCurrentArea = "all"
+disabledIndexers = ""
+minIndexVariations = 2
+findProviderIndexHelper = true

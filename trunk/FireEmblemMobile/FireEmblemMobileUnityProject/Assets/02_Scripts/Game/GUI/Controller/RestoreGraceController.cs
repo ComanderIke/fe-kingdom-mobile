@@ -6,6 +6,7 @@ using Game.GameActors.Players;
 using Game.Systems;
 using LostGrace;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class RestoreGraceController : UIMenu, IDataPersistance
@@ -14,7 +15,7 @@ public class RestoreGraceController : UIMenu, IDataPersistance
     [SerializeField] private CanvasGroup buttonBackGroup;
     [SerializeField] private CanvasGroup gracePanel;
     [SerializeField] private CanvasGroup titleGroup;
-    [SerializeField] private CanvasGroup tabGroup;
+    [FormerlySerializedAs("tabGroup")] [SerializeField] private CanvasGroup upgradesGroup;
     [SerializeField] private GoddessUI goddessUI;
     [SerializeField] private CanvasGroup Fade;
     [SerializeField] private UIRessourceAmount graceAmount;
@@ -38,12 +39,12 @@ public class RestoreGraceController : UIMenu, IDataPersistance
         buttonBackGroup.alpha = 0;
         gracePanel.alpha = 0;
         titleGroup.alpha = 0;
-        tabGroup.alpha = 0;
+        upgradesGroup.alpha = 0;
         tutorialRaycastBlocker.gameObject.SetActive(true);
         detailPanelController.SetButtonInteractable(false);
         yield return new WaitForSeconds(.5f);
         upgradeController.Show();
-        TweenUtility.FadeIn(tabGroup);
+        TweenUtility.FadeIn(upgradesGroup);
         TweenUtility.FadeIn(titleGroup);
         yield return new WaitForSeconds(.5f);
         TweenUtility.FadeIn(gracePanel);
@@ -89,7 +90,7 @@ public class RestoreGraceController : UIMenu, IDataPersistance
         yield return new WaitForSeconds(0.5f);
            
         TweenUtility.FadeOut(detailPanel);
-        TweenUtility.FadeOut(tabGroup);
+        TweenUtility.FadeOut(upgradesGroup);
         yield return new WaitForSeconds(2.0f);
             
         TweenUtility.FadeIn(Fade).setOnComplete(()=>
