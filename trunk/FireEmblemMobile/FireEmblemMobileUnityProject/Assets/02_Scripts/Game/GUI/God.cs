@@ -14,6 +14,7 @@ namespace LostGrace
         public Color TooltipFrameColor;
         public BlessingBP BlessingBp;
         public Material GlowMaterial;
+        public Sprite statueSprite;
         [field:SerializeField]public ChronikEntry ChronikComponent { get; set; }
         [field:SerializeField]public float BondExpRate { get; set; }
         [field:SerializeField]public int MaxBondLevel { get; set; }
