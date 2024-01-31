@@ -111,6 +111,46 @@ namespace Game.GUI
             ResetTextObject(lckAddedText);
             ResetTextObject(conAddedText);
             ResetTextObject(fthAddedText);
+            strLabelText.colorGradientPreset = textBaseColor;
+            intLabelText.colorGradientPreset = textBaseColor;
+            dexLabelText.colorGradientPreset = textBaseColor;
+            agiLabelText.colorGradientPreset = textBaseColor; 
+            conLabelText.colorGradientPreset = textBaseColor;
+            fthLabelText.colorGradientPreset = textBaseColor;
+            defLabelText.colorGradientPreset = textBaseColor;
+            lckLabelText.colorGradientPreset = textBaseColor;
+            strText.colorGradientPreset = textBaseColor;
+            intText.colorGradientPreset = textBaseColor;
+            dexText.colorGradientPreset = textBaseColor;
+            agiText.colorGradientPreset = textBaseColor; 
+            conText.colorGradientPreset = textBaseColor;
+            fthText.colorGradientPreset = textBaseColor;
+            defText.colorGradientPreset = textBaseColor;
+            lckText.colorGradientPreset = textBaseColor;
+            strLabelText.text = "";
+            intLabelText.text = "";
+            dexLabelText.text = "";
+            agiLabelText.text = "";
+            conLabelText.text = "";
+            fthLabelText.text = "";
+            defLabelText.text = "";
+            lckLabelText.text = "";
+            strText.text = "";
+            intText.text = "";
+            dexText.text = "";
+            agiText.text = "";
+            conText.text = "";
+            fthText.text = "";
+            defText.text = "";
+            lckText.text = "";
+            strAddedText.text = "";
+            intAddedText.text = "";
+            dexAddedText.text = "";
+            agiAddedText.text = "";
+            conAddedText.text = "";
+            fthAddedText.text = "";
+            defAddedText.text = "";
+            lckAddedText.text = "";
         }
         public void OnRerollClicked()
         {
@@ -122,7 +162,9 @@ namespace Game.GUI
         public void Play()
         {
 
-            MonoUtility.Instance.DisableOtherGraphicRaycasters(GetComponent<GraphicRaycaster>());
+            MonoUtility.DelayFunction(() =>
+            {
+                 MonoUtility.Instance.DisableOtherGraphicRaycasters(GetComponent<GraphicRaycaster>());
             canvas.enabled = true;
            // LeanTween.alphaCanvas(levelUpText.GetComponent<CanvasGroup>(), 1, 0.15f).setEaseOutQuad();
            // LeanTween.scale(levelUpText.gameObject, Vector3.one, 0.15f).setEaseOutQuad();
@@ -134,7 +176,8 @@ namespace Game.GUI
            dexLabelText.text =  "</>"+Attributes.GetAsLongText(1);
            intLabelText.text =  "</>"+Attributes.GetAsLongText(2);
            agiLabelText.text =  "</>"+Attributes.GetAsLongText(3);
-           fthAddedText.text =  "</>"+Attributes.GetAsLongText(7);
+           lckLabelText.text= "</>"+Attributes.GetAsLongText(5);
+           fthLabelText.text =  "</>"+Attributes.GetAsLongText(7);
            defLabelText.text =  "</>"+Attributes.GetAsLongText(6);
            
            if (statsIncreases[4] > 0)
@@ -188,58 +231,50 @@ namespace Game.GUI
                         actionIndex++;
                     });
                 });
+            },.11f);
+           
         }
         public void UpdateValues(string name, Sprite sprite,int levelBefore, int levelAfter, int[] stats, int[] statsIncreases, int rerollAmount)
         {
 
-            rerollAmountText.text = "" + rerollAmount+"(-1)";
-            RerollButton.interactable = rerollAmount > 0;
-            faceImage.sprite = sprite;
-            this.statsIncreases = statsIncreases;
-            this.stats = stats;//str, int ,dex,agi,con,fth
-            this.levelAfter = levelAfter;
-            nameText.text = "" + name;
-            levelText.text = "Lv " + levelBefore;
-            strText.text = "" + stats[0];
-            dexText.text = "" + stats[1];
-            intText.text = "" + stats[2];
-            agiText.text = "" + stats[3]; 
-            conText.text = "" + stats[4];
-            lckText.text = "" + stats[5];
-            defText.text = "" + stats[6];
-            fthText.text = "" + stats[7];
-            strLabelText.colorGradientPreset = textBaseColor;
-            intLabelText.colorGradientPreset = textBaseColor;
-            dexLabelText.colorGradientPreset = textBaseColor;
-            agiLabelText.colorGradientPreset = textBaseColor; 
-            conLabelText.colorGradientPreset = textBaseColor;
-            fthLabelText.colorGradientPreset = textBaseColor;
-            defLabelText.colorGradientPreset = textBaseColor;
-            lckLabelText.colorGradientPreset = textBaseColor;
-            strText.colorGradientPreset = textBaseColor;
-            intText.colorGradientPreset = textBaseColor;
-            dexText.colorGradientPreset = textBaseColor;
-            agiText.colorGradientPreset = textBaseColor; 
-            conText.colorGradientPreset = textBaseColor;
-            fthText.colorGradientPreset = textBaseColor;
-            defText.colorGradientPreset = textBaseColor;
-            lckText.colorGradientPreset = textBaseColor;
-            strAddedText.text = "";
-            intAddedText.text = "";
-            dexAddedText.text = "";
-            agiAddedText.text = "";
-            conAddedText.text = "";
-            fthAddedText.text = "";
-            defAddedText.text = "";
-            lckAddedText.text = "";
             Reset();
+            MonoUtility.DelayFunction(() =>
+            {
+                rerollAmountText.text = "" + rerollAmount+"(-1)";
+                RerollButton.interactable = rerollAmount > 0;
+                faceImage.sprite = sprite;
+                this.statsIncreases = statsIncreases;
+                this.stats = stats;//str, int ,dex,agi,con,fth
+                this.levelAfter = levelAfter;
+                nameText.text = "" + name;
+                levelText.text = "Lv " + levelBefore;
+                strText.text = "" + stats[0];
+                dexText.text = "" + stats[1];
+                intText.text = "" + stats[2];
+                agiText.text = "" + stats[3]; 
+                conText.text = "" + stats[4];
+                lckText.text = "" + stats[5];
+                defText.text = "" + stats[6];
+                fthText.text = "" + stats[7];
+          
+                strAddedText.text = "";
+                intAddedText.text = "";
+                dexAddedText.text = "";
+                agiAddedText.text = "";
+                conAddedText.text = "";
+                fthAddedText.text = "";
+                defAddedText.text = "";
+                lckAddedText.text = "";
+            },.1f);
+            
+           
         }
 
         public event Action OnFinished;
         public event Action OnReroll;
         public void ResetForReroll()
         {
-          Reset();
+          // Reset();
         }
 
         private void ResetTextObject(TextMeshProUGUI text)

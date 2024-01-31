@@ -66,8 +66,9 @@ namespace Game.GameActors.Units.Skills
 
         public int GetMaxUses(int level)
         {
-            
-            return maxUsesPerLevel[level];
+            if(level<maxUsesPerLevel.Length)
+                return maxUsesPerLevel[level];
+            return 0;
         }
         public int GetHpCost(int level)
         {

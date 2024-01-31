@@ -375,6 +375,7 @@ public class UIEventController : MonoBehaviour
         {
             currentNode =(LGEventDialogSO)currentNode.Choices[1].NextDialogue;
         }
+        CheckPossibleRewards();
         UpdateUI();
     }
 

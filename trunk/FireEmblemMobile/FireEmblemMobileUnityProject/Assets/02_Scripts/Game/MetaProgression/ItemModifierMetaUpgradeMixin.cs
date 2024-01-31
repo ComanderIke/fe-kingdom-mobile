@@ -33,14 +33,11 @@ public class ItemModifierMetaUpgradeMixin : MetaUpgradeMixin
             {
                 case ItemModifierType.HealthPotionsHeal:
                     HealthPotion.ExtraHealAmount = valuePair.Value;break;
-                case ItemModifierType.HolyWaterEffect:
-                    HolyWater.ExtraFaithAmount = valuePair.Value;break;
             }
         }
     }
 }
 public enum ItemModifierType
 {
-    HealthPotionsHeal,
-    HolyWaterEffect,
+    HealthPotionsHeal
 }

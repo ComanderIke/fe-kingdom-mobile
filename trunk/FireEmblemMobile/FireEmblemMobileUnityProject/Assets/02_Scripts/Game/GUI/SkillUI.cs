@@ -78,8 +78,8 @@ namespace LostGrace
 
 
                     uses.text = skill.FirstActiveMixin.Uses + "/" +
-                                skill.FirstActiveMixin.maxUsesPerLevel[skill.Level];
-                    hpCost.text = "-" + skill.FirstActiveMixin.hpCostPerLevel[skill.Level];
+                                skill.FirstActiveMixin.GetMaxUses(skill.Level);
+                    hpCost.text = "-" + skill.FirstActiveMixin.GetHpCost(skill.Level);
                     if (hpCost != null)
                     {
                         hpCost.colorGradientPreset = skillPointColor; //canAfforHpCost?skillPointColor: hpCostRedColor;
@@ -88,8 +88,8 @@ namespace LostGrace
                 else
                 {
                     uses.text = skill.CombatSkillMixin.Uses + "/" +
-                                skill.CombatSkillMixin.maxUsesPerLevel[skill.Level];
-                    hpCost.text = "-" + skill.CombatSkillMixin.hpCostPerLevel[skill.Level];
+                                skill.CombatSkillMixin.GetMaxUses(skill.Level);
+                    hpCost.text = "-" + skill.CombatSkillMixin.GetHpCost(skill.Level);
                     if (hpCost != null)
                     {
                         hpCost.colorGradientPreset = hpCostRedColor; //canAfforHpCost?hpCostBlueColor: hpCostRedColor;
