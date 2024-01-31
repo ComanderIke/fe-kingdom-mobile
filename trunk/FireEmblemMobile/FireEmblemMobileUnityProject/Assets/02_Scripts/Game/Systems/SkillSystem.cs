@@ -31,34 +31,47 @@ public class SkillSystem : IEngineSystem
 
     public void LearnNewSkill(Unit unit, List<SkillBp> skillPool)
     {
-        Debug.Log("Learn new SKill");
-        var skills = GenerateSkills(unit, skillPool);
-        renderer.OnFinished += FinishedAnimation;
-        skillClickedDelegate = ( skill) =>
+        MyDebug.LogLogic("Choose new SKill: "+unit);
+        
+       
+        
+       
+        AnimationQueue.Add(()=>
         {
-            Debug.Log("LEARN SKILL DELEGATE!");
-            renderer.Hide();
-            LearnSkill(unit, skill);
-           
-            renderer.onSkillChosen -= skillClickedDelegate;
-        };
-        renderer.onSkillChosen += skillClickedDelegate;
-        AnimationQueue.Add(()=>renderer.Show(unit, skills[0], skills[1], skills[2]));
+            MyDebug.LogTest(("Learn new Skill: "+unit.Name));
+            var skills = GenerateSkills(unit, skillPool);
+            renderer.OnFinished -= FinishedAnimation;
+            renderer.OnFinished += FinishedAnimation;
+            skillClickedDelegate=(skill)=>
+            {
+                renderer.Hide();
+                LearnSkill(unit, skill);
+                MyDebug.LogTest("Skill Clicked Delegate" + unit.Name);
+                renderer.onSkillChosen -= skillClickedDelegate;
+            };
+            renderer.onSkillChosen += skillClickedDelegate;
+            
+            renderer.Show(unit, skills[0], skills[1], skills[2]);
+        });
     }
+
+   
     Action<Skill> skillClickedDelegate = null;
     public void LearnNewSkill(Unit unit, Skill skill1, Skill skill2, Skill skill3)
     {
-        renderer.OnFinished += FinishedAnimation;
-        Debug.Log("LEARN NEW SKILL");
-        skillClickedDelegate = ( skill) =>
-        {
-            Debug.Log("LEARN SKILL DELEGATE!");
-            renderer.Hide();
-            LearnSkill(unit, skill);
-            renderer.onSkillChosen -= skillClickedDelegate;
-        };
-        renderer.onSkillChosen += skillClickedDelegate;
-        AnimationQueue.Add(()=>renderer.Show(unit, skill1, skill2, skill3));
+        Debug.LogError("Should not be called?");
+        // renderer.OnFinished -= FinishedAnimation;
+        // renderer.OnFinished += FinishedAnimation;
+        // Debug.Log("LEARN NEW SKILL");
+        // skillClickedDelegate = ( skill) =>
+        // {
+        //     Debug.Log("LEARN SKILL DELEGATE!");
+        //     renderer.Hide();
+        //     LearnSkill(unit, skill);
+        //     renderer.onSkillChosen -= skillClickedDelegate;
+        // };
+        // renderer.onSkillChosen += skillClickedDelegate;
+        // AnimationQueue.Add(()=>renderer.Show(unit, skill1, skill2, skill3));
     }
 
     void LearnSkill(Unit unit, Skill skill)
@@ -75,7 +88,8 @@ public class SkillSystem : IEngineSystem
     void FinishedAnimation()
     {
         renderer.OnFinished -= FinishedAnimation;
-        renderer.onSkillChosen -= skillClickedDelegate;
+       // renderer.onSkillChosen -= skillClickedDelegate;
+        MyDebug.LogTest("Choose Skill Animation Finished");
         AnimationQueue.OnAnimationEnded?.Invoke();
     }
 
@@ -83,7 +97,7 @@ public class SkillSystem : IEngineSystem
     private int maxUpgrades = 2;
     private List<Skill> GenerateSkills(Unit unit, List<SkillBp> skillPool, bool includeUpgrades=true)
     {
-        Debug.Log("GENERATE SKILLS");
+        //Debug.Log("GENERATE SKILLS");
         List<Skill> skills = new List<Skill>();
         int upgradeCount = 0;
         int Rounds = 30;
@@ -129,9 +143,9 @@ public class SkillSystem : IEngineSystem
     {
         var skillPool = skPool==null?new List<SkillBp>(config.CommonSkillPool):skPool;
         skillPool.AddRange(config.GetClassSkillPool(unit.rpgClass));
-        Debug.Log("SKILLPOOL SIZE: "+skillPool.Count);
+        //Debug.Log("SKILLPOOL SIZE: "+skillPool.Count);
         int rng = Random.Range(0, skillPool.Count);
-        Debug.Log("RNG: "+rng);
+       // Debug.Log("RNG: "+rng);
         var skill = skillPool[rng].Create();
         GenerateSkillRarity(skill);
         return skill;

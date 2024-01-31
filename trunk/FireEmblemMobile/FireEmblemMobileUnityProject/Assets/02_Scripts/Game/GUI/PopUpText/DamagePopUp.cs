@@ -20,10 +20,10 @@ namespace Game.GUI.PopUpText
 
         public static DamagePopUp Create(Vector3 position, int damageAmount, TextStyle style, float scale = 1.0f)
         {
-            Debug.LogError("Should not be called?! Will this be called automatically when unit gets damaged?");
+            //Debug.LogError("Should not be called?! Will this be called automatically when unit gets damaged?");
             GameObject damagePopUpTransform =
                 Instantiate(GameAssets.Instance.prefabs.DamagePopUptext, position, Quaternion.identity);
-            Debug.Log("");
+            //Debug.Log("");
             DamagePopUp damagePopUp = damagePopUpTransform.GetComponent<DamagePopUp>();
             damagePopUp.Setup(damageAmount.ToString(), style, scale, new Vector3(.2f, .7f) * 2.5f);
             return damagePopUp;

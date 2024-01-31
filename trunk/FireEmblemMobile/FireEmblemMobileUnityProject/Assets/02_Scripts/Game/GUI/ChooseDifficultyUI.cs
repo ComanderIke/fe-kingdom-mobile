@@ -58,7 +58,7 @@ public class ChooseDifficultyUI : MonoBehaviour
         difficultySelected = true;
         GameConfig.Instance.ConfigProfile.chosenDifficulty = selected.profile;
         //SaveGameManager.currentSaveData.slotData.difficulty = selected.profile.name;
-        SaveGameManager.Save();
+        //SaveGameManager.Save();
         Hide();
     }
 

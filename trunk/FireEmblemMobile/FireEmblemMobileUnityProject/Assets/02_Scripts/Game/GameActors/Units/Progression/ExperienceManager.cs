@@ -88,7 +88,7 @@ namespace Game.GameActors.Units
 
         private void PerformLevelUp()
         {
-            Debug.Log("Level Up");
+            
             Level++;
             LevelUp?.Invoke();
         }

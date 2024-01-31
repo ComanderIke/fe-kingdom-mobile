@@ -43,6 +43,7 @@ namespace Utility
         {
             if (queue.Count != 0)
             {
+                
                 queue.Peek().runAfterAction?.Invoke();
                 queue.Dequeue();
                 NextAnimation();
@@ -54,6 +55,7 @@ namespace Utility
                 queue.Peek().action?.Invoke();
             else
             {
+                MyDebug.LogTest("ANIMATION QUEUE ALL ENDED");
                 OnAllAnimationsEnded?.Invoke();
             }
                 

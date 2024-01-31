@@ -143,6 +143,11 @@ namespace __2___Scripts.External.Editor
                 {
                     activeUnit.ExperienceManager.AddExp(100);
                 }
+                if (GUILayout.Button("+100 EXP Party"))
+                {
+                    foreach(var unit in Player.Instance.Party.members)
+                        unit.ExperienceManager.AddExp(100);
+                }
                 GUILayout.Label("Selected Unit: " + selectedUnitName);
                 GUILayout.Label("Hp: " + activeUnit.Hp + "/" + activeUnit.MaxHp);
                 if (activeUnit.SkillManager!=null && activeUnit.SkillManager.Skills != null)

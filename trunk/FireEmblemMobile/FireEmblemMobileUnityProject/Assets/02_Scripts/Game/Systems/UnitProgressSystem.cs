@@ -83,33 +83,39 @@ namespace Game.Mechanics
 
         void OnLevelUp(Unit u)
         {
-            Debug.Log("On level Up in UnitProgressSystem");
+            //Debug.Log("On level Up in UnitProgressSystem");
             //check if Exp Animation Finished
             //check if Couroutine is active or flag finished or whatever
-            AnimationQueue.Add(()=>LevelUp(u));
-            Debug.Log("Huh");
+            MyDebug.LogTest("ANIMATION QUEUE ADD LEVEL UP "+u.Name);
+            AnimationQueue.Add(()=>
+            {
+                MyDebug.LogTest("Animation Queue start Level up " + u.Name);
+                LevelUp(u);
+            });
+            //Debug.Log("Huh");
             LearnNewSkill(u);
         }
 
         public void LearnNewSkill(Unit u, List<SkillBp> skillPool = null)
         {
-            Debug.Log("HÄH");
+            //Debug.Log("HÄH");
             skillSystem.LearnNewSkill(u, skillPool);
         }
 
         void Expgained(Unit unit, int exp, int expBefore)
         {
-      
+            MyDebug.LogTest("add To animation Queue "+unit.name+" "+exp+" "+expBefore);
             AnimationQueue.Add(() =>
             {
-                // Debug.Log("Show from AnimationQueue"+unit.name+" "+exp+" "+expBefore);
+                 MyDebug.LogTest("Do Exp Animation "+unit.name+" "+exp+" "+expBefore);
                 if (!unit.IsPlayerControlled(false))
                     return;
                 unit.visuals.UnitCharacterCircleUI.GetExpRenderer().UpdateInstant(expBefore);
                 unit.visuals.UnitCharacterCircleUI.GetExpRenderer().UpdateWithAnimatedTextOnly(exp);
+                ExpBarController.onFinished -= FinishedExpAnimation;
                 ExpBarController.Show(unit.FaceSprite, expBefore);
                 ExpBarController.UpdateWithAnimatedTextOnly(exp);
-                ExpBarController.onFinished -= FinishedExpAnimation;
+               
                 ExpBarController.onFinished += FinishedExpAnimation;
             });
            
@@ -117,6 +123,7 @@ namespace Game.Mechanics
         void FinishedExpAnimation()
         {
             ExpBarController.Hide();
+            MyDebug.LogTest("Finished EXP ANIMATION");
             AnimationQueue.OnAnimationEnded?.Invoke();
         }
         public void Deactivate()
@@ -202,6 +209,7 @@ namespace Game.Mechanics
 
         void LevelUpFinished()
         {
+            MyDebug.LogTest("Level up Animatin Finished");
             currentLevelupUnit.Stats.BaseAttributes.Update(currentStatIncreases);
             AnimationQueue.OnAnimationEnded?.Invoke();
         }
@@ -287,7 +295,7 @@ namespace Game.Mechanics
         }
         private int[] CalculateStatIncreases(int[] growths)
         {
-            Debug.Log("Calculate Stat Increases");
+            //Debug.Log("Calculate Stat Increases");
             int[] increaseAmount = new int[growths.Length];
             bool atleast1 = false;
             while (!atleast1)

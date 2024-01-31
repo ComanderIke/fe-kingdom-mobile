@@ -76,7 +76,9 @@ namespace Game.GameActors.Units.Skills
             int costReduction = 0;
             if (blessing != null)
                 costReduction = synergies[blessing].costReduction;
-            return hpCostPerLevel[level]-costReduction;
+            if(level < hpCostPerLevel.Length)
+                return hpCostPerLevel[level]-costReduction;
+            return 0;
         }
 
         public void RefreshUses(int level)

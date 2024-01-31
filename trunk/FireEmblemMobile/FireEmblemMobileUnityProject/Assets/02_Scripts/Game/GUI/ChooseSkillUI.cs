@@ -79,11 +79,11 @@ public class ChooseSkillUI : MonoBehaviour, ISkillUIRenderer
     private bool skillChosen = false;
     public void ChooseClicked()
     {
-        Debug.Log("Choose Clicked");
+        MyDebug.LogInput("Choose Clicked");
         if (selected == null||skillChosen)
             return;
         skillChosen = true;
-        Debug.Log("SkillSelected");
+      //  Debug.Log("SkillSelected");
 
         if (unit != null)
             skillCount = unit.SkillManager.Skills.Count;
@@ -125,7 +125,7 @@ public class ChooseSkillUI : MonoBehaviour, ISkillUIRenderer
             unit.SkillManager.OnSkillsChanged -= UpdateUI;
         TweenUtility.FadeOut(canvasGroup).setOnComplete(()=>
         {
-           
+           MyDebug.LogTest("Choose Skill Renderer Finished");
             OnFinished?.Invoke();
             chooseSkill1.Hide();
             chooseSkill2.Hide();

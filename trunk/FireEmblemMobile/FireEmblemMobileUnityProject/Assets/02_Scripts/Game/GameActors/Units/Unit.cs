@@ -247,6 +247,7 @@ namespace Game.GameActors.Units
         }
         private void LevelUp()
         {
+            MyDebug.LogLogic("Level Up: "+Name);
             OnLevelUp?.Invoke(this);
         }
 
