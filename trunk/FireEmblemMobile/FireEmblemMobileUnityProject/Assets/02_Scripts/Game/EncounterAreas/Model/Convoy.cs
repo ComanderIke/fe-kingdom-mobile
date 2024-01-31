@@ -17,7 +17,7 @@ namespace Game.WorldMapStuff.Model
         [SerializeField] public event Action<StockedItem> itemAdded;
 
         private int selectedItemIndex = -1;
-
+        public event Action<Item> onItemReceived;
 
 
         public void Select(StockedItem item)
@@ -87,12 +87,14 @@ namespace Game.WorldMapStuff.Model
         {
             MyDebug.LogLogic("Add Item to Convoy: "+item);
             bool instock = false;
+            
             foreach (var stockedItem in Items)
             {
                 if (stockedItem.item.Equals(item)&& stockedItem.stock< item.maxStack)
                 {
                     instock = true;
                     stockedItem.stock++;
+                    onItemReceived?.Invoke(item);
                     UpdateStockCounts();
                     break;
                 }
@@ -110,6 +112,7 @@ namespace Game.WorldMapStuff.Model
             //convoyUpdated?.Invoke();
             UpdateStockCounts();
             itemAdded?.Invoke(item);
+            onItemReceived?.Invoke(item.item);
         }
      
         public void AddItem(StockedCombatItem item)
@@ -120,6 +123,7 @@ namespace Game.WorldMapStuff.Model
             //convoyUpdated?.Invoke();
             UpdateStockCounts();
             itemAdded?.Invoke(stockedItem);
+            onItemReceived?.Invoke(stockedItem.item);
         }
         public void RemoveItem(Item item)
         {

@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using Game.GameActors.Items;
+using Game.GameActors.Players;
 using UnityEngine;
 
 public class ItemStackUI : MonoBehaviour
@@ -10,10 +12,20 @@ public class ItemStackUI : MonoBehaviour
     public GameObject AchievementTemplate;
     [SerializeField] private int numberOnScreen = 3;
 
-    /// <summary>
-    /// Add an achievement to screen if it fits, otherwise, add to the backlog list
-    /// </summary>
-    /// <param name="Index">Index of achievement to add</param>
+    private void Start()
+    {
+        Player.Instance.Party.Convoy.onItemReceived -= ShowItemReceived;
+        Player.Instance.Party.Convoy.onItemReceived += ShowItemReceived;
+        Player.Instance.Party.Storage.onItemReceived -= ShowItemReceived;
+        Player.Instance.Party.Storage.onItemReceived += ShowItemReceived;
+    }
+
+    private void OnDestroy()
+    {
+        Player.Instance.Party.Convoy.onItemReceived -= ShowItemReceived;
+        Player.Instance.Party.Storage.onItemReceived -= ShowItemReceived;
+    }
+
     public void ShowItemReceived (Item item)
     {
         var Spawned = Instantiate(AchievementTemplate).GetComponent<UIItemReceived>();
