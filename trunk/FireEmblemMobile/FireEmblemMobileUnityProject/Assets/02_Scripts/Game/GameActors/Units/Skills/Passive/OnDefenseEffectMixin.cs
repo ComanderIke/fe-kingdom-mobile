@@ -16,11 +16,11 @@ namespace Game.GameActors.Units.Skills.Passive
      
         public bool ReactToDefense(IBattleActor unit)
         {
-            Debug.Log("Check Activate: "+skill.Name);
+            //Debug.Log("Check Activate: "+skill.Name);
             if (DoesActivate((Unit)unit, skill.Level))
             {
-                Debug.Log("Activated: "+skill.Name);
-                Debug.Log("TODO CLEAR ATTACK EFFECTS AFTER EACH ATTACK?OR IS IT CLEARD ALREADY??");
+                MyDebug.LogLogic("Activated: "+skill.Name);
+                MyDebug.LogTODO("TODO CLEAR ATTACK EFFECTS AFTER EACH ATTACK?OR IS IT CLEARD ALREADY??");
                 foreach (var skilleffect in skillEffectMixins)
                 {
                     if (skilleffect is UnitTargetSkillEffectMixin unitTargetSkillEffectMixin)

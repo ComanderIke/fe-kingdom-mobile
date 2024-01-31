@@ -44,7 +44,7 @@ namespace Game.GameActors.Units.Skills.Passive
 
         public override void Activate(Unit target, int level)
         {
-            Debug.Log("OnGetHitEffect Activate!!!");
+            //Debug.Log("OnGetHitEffect Activate!!!");
            
             target.BattleComponent.BattleStats.BonusAttackStats.AddGetHitEffect(getHitEffect,getHitEffectExtraData[level]);
         }

@@ -624,7 +624,7 @@ public class UIEventController : MonoBehaviour
     {
         var battleSystem = AreaGameManager.Instance.GetSystem<BattleSystem>();
         var enemy = ((LGFightEventDialogSO)current.NextDialogue).Enemy.Create(Guid.NewGuid());
-            Debug.Log("Start Event Battle: "+party.ActiveUnit+" "+enemy);
+            MyDebug.LogLogic("Start Event Battle: "+party.ActiveUnit+" "+enemy);
         battleSystem.StartBattle(party.ActiveUnit, enemy, false, true);
         BattleSystem.OnBattleFinishedBeforeAfterBattleStuff += BattleEnded;
     }

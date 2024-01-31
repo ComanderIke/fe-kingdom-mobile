@@ -390,7 +390,7 @@ namespace Game.Mechanics
         private IEnumerable<Skill> ActivateDefenseSkills(IBattleActor attacker)
         {
             var skills = new List<Skill>();
-            Debug.Log("ACTIVATE DEFENSE SKILLS " +attacker.BattleComponent.defenseEffects.Count);
+           // Debug.Log("ACTIVATE DEFENSE SKILLS " +attacker.BattleComponent.defenseEffects.Count);
             foreach (var attackEffect in attacker.BattleComponent.defenseEffects)
             {
                 if(attackEffect.attackEffect.ReactToDefense(attacker))
@@ -447,7 +447,6 @@ namespace Game.Mechanics
                         Defender.BattleComponent.BattleStats.GetCritAgainstTarget(Attacker),
                         Attacker.BattleComponent.BattleStats.GetAttackCountAgainst(Attacker), Defender.Hp, Defender.MaxHp);
                     combatRounds.Add(combatRound);
-                   
                     StartRound(combatRound, certainHit, grid);
                     cnt++;
                 }

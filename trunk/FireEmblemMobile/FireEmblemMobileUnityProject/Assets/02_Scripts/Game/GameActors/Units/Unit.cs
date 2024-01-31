@@ -273,7 +273,7 @@ namespace Game.GameActors.Units
             Debug.Log("Die: " + name);
             KilledBy = damageSource;
             UnitDied?.Invoke(this);
-            
+            Party.RemoveMember(this);
             Faction?.RemoveUnit(this);
             GameTransformManager?.Die();
             

@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Controls the display of achievements on the screen
-/// </summary>
 public class AchievenmentStack : MonoBehaviour
 {
     public RectTransform[] StackPanels;
