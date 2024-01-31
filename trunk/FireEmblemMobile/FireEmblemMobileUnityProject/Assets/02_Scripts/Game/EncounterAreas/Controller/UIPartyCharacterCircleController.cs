@@ -62,7 +62,7 @@ public class UIPartyCharacterCircleController : MonoBehaviour, IClickedReceiver,
                 var go = Instantiate(CircleCharacterUIPrefab, transform);
                 var uiController = go.GetComponent<CharacterUIController>();
                 uiController.parentController = this;
-                uiController.Show(unit);
+               // uiController.Show(unit);
                 characterUIs.Add(unit,uiController);
                 characterUIgGameObjects.Add(go);
             }

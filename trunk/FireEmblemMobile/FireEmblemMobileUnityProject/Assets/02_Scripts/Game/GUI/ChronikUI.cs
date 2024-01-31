@@ -30,6 +30,7 @@ namespace LostGrace
         [SerializeField] private TextMeshProUGUI description;
         [SerializeField] private Image middleImage;
         [SerializeField] private Image middleImageFace;
+        [SerializeField] private GameObject alternateButton;
         private bool showBody = true;
         private bool showAlternate = false;
         [SerializeField] private TextMeshProUGUI toggleButtonText;
@@ -79,6 +80,16 @@ namespace LostGrace
         void UpdateUI()
         {
             toggleButtonText.text = showBody ? "Show Portrait" : "Show Body";
+            bool showAltButton = false;
+            if (currentEntry.AlternateBodySprite==null)
+            {
+                showAlternate = false;
+            }
+            else
+            {
+                showAltButton = true;
+            }
+            alternateButton.gameObject.SetActive(showAltButton);
             name.text = "<shine>"+currentEntry.Name+"</shine>";
             description.text = "{fade}"+currentEntry.Description;
             middleImage.enabled = showBody;

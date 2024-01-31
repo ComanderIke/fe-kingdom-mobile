@@ -193,14 +193,14 @@ namespace Game.GUI
             if (unit == null)
                 return;
             characterName.SetText(unit.name);
-           
+            
             expBar.UpdateInstant(unit.ExperienceManager.Exp);
             Debug.Log("Update Unit Values: "+unit.name+" "+unit.Hp+" "+ unit.MaxHp);
-            hpBar.SetValue(unit.Hp, unit.MaxHp, true);
-           
+             hpBar.SetValue(unit.Hp, unit.MaxHp, true);
+            
             if ((unit.Hp*1.0f) / unit.MaxHp <= lowHealthThreshold)
             {
-                normalHealthFeedback.StopFeedbacks();
+               normalHealthFeedback.StopFeedbacks();
                 lowHealthFeedback.PlayFeedbacks();
                 
             }
