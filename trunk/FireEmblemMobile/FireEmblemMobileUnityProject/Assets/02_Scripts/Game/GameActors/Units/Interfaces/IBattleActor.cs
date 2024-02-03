@@ -29,6 +29,7 @@ namespace Game.GameInput
         Weapon GetEquippedWeapon();
         Tile GetTile();
 
-        bool IsPlayerControlled(bool includeTempted=true);
+        bool IsPlayerControlled(bool includeTempted=true); 
+        float GetAttackDelay();
     }
 }

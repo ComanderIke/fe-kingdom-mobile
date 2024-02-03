@@ -1,22 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &4432426993103448010
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2861010742256422526}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a8b2c9671eb0fb4ba447532b00d30c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shadowColor: {r: 0, g: 0, b: 0, a: 0.47058824}
-  shadowOffset: {x: 0.02, y: 0.032, z: 0}
-  shadowDirection: {x: 60, y: 0, z: 15.3}
-  shadowScale: {x: 1, y: 1.2, z: 1}
-  shadowMat: {fileID: 0}
 --- !u!1 &6255647984068042782
 GameObject:
   m_ObjectHideFlags: 0
@@ -41,9 +24,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6255647984068042782}
-  m_LocalRotation: {x: 0.49554992, y: -0.06656066, z: 0.115286455, w: 0.85831755}
+  m_LocalRotation: {x: 0.49554992, y: -0.06656067, z: 0.115286455, w: 0.8583176}
   m_LocalPosition: {x: 0.02, y: 0.032, z: 0}
   m_LocalScale: {x: 1, y: 1.2, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2863292242632037946}
   m_RootOrder: 0
@@ -89,13 +73,13 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 9
-  m_Sprite: {fileID: -4922462820477873683, guid: 2a41aa59cef6bc1469be33744aa28306,
+  m_Sprite: {fileID: 5111201388502539729, guid: f8c6cec1aa8be114b851c565016f92b3,
     type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0.47058824}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.5, y: 1.5}
+  m_Size: {x: 1.1130434, y: 1.1130434}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -108,6 +92,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 603069830117310761, guid: 3354878379061eb4d965f27520d43c6c,
+        type: 3}
+      propertyPath: managedReferences[15].TargetShaderController
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1089187949433298099, guid: 3354878379061eb4d965f27520d43c6c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1230524308258484256, guid: 3354878379061eb4d965f27520d43c6c,
         type: 3}
       propertyPath: m_RootOrder
@@ -170,13 +164,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1436444745586099328, guid: 3354878379061eb4d965f27520d43c6c,
         type: 3}
+      propertyPath: m_Size.x
+      value: 1.1130434
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436444745586099328, guid: 3354878379061eb4d965f27520d43c6c,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1.1130434
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436444745586099328, guid: 3354878379061eb4d965f27520d43c6c,
+        type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -4922462820477873683, guid: 2a41aa59cef6bc1469be33744aa28306,
+      objectReference: {fileID: 5111201388502539729, guid: f8c6cec1aa8be114b851c565016f92b3,
         type: 3}
     - target: {fileID: 1436444745586099328, guid: 3354878379061eb4d965f27520d43c6c,
         type: 3}
       propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1887015637661973759, guid: 3354878379061eb4d965f27520d43c6c,
+        type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3164541116706881109, guid: 3354878379061eb4d965f27520d43c6c,
@@ -184,6 +193,26 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: a3b0a2ec346fa9b40bbf729e22ac5cda, type: 2}
+    - target: {fileID: 3792206174044562886, guid: 3354878379061eb4d965f27520d43c6c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5619406320197973535, guid: 3354878379061eb4d965f27520d43c6c,
+        type: 3}
+      propertyPath: managedReferences[15].TargetShaderController
+      value: 
+      objectReference: {fileID: 3215500799941466853}
+    - target: {fileID: 6490586582912490707, guid: 3354878379061eb4d965f27520d43c6c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6674510549518585479, guid: 3354878379061eb4d965f27520d43c6c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3354878379061eb4d965f27520d43c6c, type: 3}
 --- !u!1 &2861010742256422526 stripped
@@ -192,9 +221,38 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 3940586217603343898}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4432426993103448010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2861010742256422526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a8b2c9671eb0fb4ba447532b00d30c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shadowColor: {r: 0, g: 0, b: 0, a: 0.47058824}
+  shadowOffset: {x: 0.02, y: 0.032, z: 0}
+  shadowDirection: {x: 60, y: 0, z: 15.3}
+  shadowScale: {x: 1, y: 1.2, z: 1}
+  shadowMat: {fileID: 0}
 --- !u!4 &2863292242632037946 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1230524308258484256, guid: 3354878379061eb4d965f27520d43c6c,
     type: 3}
   m_PrefabInstance: {fileID: 3940586217603343898}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3215500799941466853 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1887015637661973759, guid: 3354878379061eb4d965f27520d43c6c,
+    type: 3}
+  m_PrefabInstance: {fileID: 3940586217603343898}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2861010742256422526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ad986206bb726846a202cfdedd282dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

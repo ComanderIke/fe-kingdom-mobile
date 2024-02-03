@@ -18,6 +18,7 @@ namespace Game.GameActors.Units
     public class BattleComponent
     {
         public BattleStats BattleStats { get;  set; }
+        
 
         private readonly IBattleActor owner;
         public event Action<IBattleActor> onAttack;

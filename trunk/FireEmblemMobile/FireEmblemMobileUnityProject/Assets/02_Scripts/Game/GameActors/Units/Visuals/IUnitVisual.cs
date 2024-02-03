@@ -25,6 +25,8 @@ namespace Game.GameActors.Units
         [HideInInspector]
         public UnitRenderer unitRenderer;
 
+        public float AttackDelay;
+
         public UnitVisual(UnitVisual other)
         {
             // CharacterSpriteSet = ScriptableObject.CreateInstance<CharacterSpriteSet>();
@@ -39,6 +41,7 @@ namespace Game.GameActors.Units
             Prefabs = new UnitPrefabs(other.Prefabs);
             UnitCharacterCircleUI = other.UnitCharacterCircleUI;
             unitRenderer = other.unitRenderer;
+            AttackDelay = other.AttackDelay;
         }
     }
 

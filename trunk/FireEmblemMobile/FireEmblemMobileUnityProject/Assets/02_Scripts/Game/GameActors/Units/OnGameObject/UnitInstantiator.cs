@@ -27,6 +27,7 @@ namespace Game.GameActors.Units.OnGameObject
             unitGameObject.name = unit.name;
             unitGameObject.transform.parent = gameObject.transform;
             unitGameObject.layer = LayerMask.NameToLayer("Characters");
+            Debug.Log(unit.Name);
             GameObject animatedSprite=Instantiate(unit.visuals.CharacterSpriteSet.animatedSprite, unitGameObject.transform, false);
             animatedSprite.transform.localPosition= new Vector3(0.5f, 0, 0);
          

@@ -351,6 +351,10 @@ namespace Game.AI
                     }
                     //make new ResultComparer based on target number and damage
                     combatInfos.Sort(new CombatResultComparer());
+                    if (combatInfos.Count == 0)
+                    {
+                        Debug.LogError("Combat Infos is NULL TODO DEBUG should not happen");
+                    }
                     target.OptimalAttackPos =combatInfos.Last().GetAttackPosition() ;
                     target.OptimalCastPos = combatInfos.Last().GetCastPosition();
                     target.CombatResult = combatInfos.Last();

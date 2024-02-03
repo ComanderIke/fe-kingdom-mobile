@@ -597,6 +597,12 @@ namespace Game.GameActors.Units
 
             return false;
         }
+
+        public float GetAttackDelay()
+        {
+            return visuals.AttackDelay;
+        }
+
         public Weapon GetEquippedWeapon()
         {
             return equippedWeapon;

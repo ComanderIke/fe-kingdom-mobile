@@ -123,7 +123,8 @@ public class CharacterCombatAnimations : MonoBehaviour
         else
         {
             Attack(attackingCharacter,defendingCharacter, attackData.crit, attackData.kill);
-            Defend(attackData, defendingCharacter);
+            Debug.Log("==============DELAY DEFENCE: "+attackingCharacter.Actor.GetAttackDelay());
+            MonoUtility.DelayFunction(()=>Defend(attackData, defendingCharacter),attackingCharacter.Actor.GetAttackDelay());
         }
     }
 

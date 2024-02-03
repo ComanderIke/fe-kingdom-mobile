@@ -11,6 +11,7 @@ public class AnimatedCombatCharacter
     private AnimationSpriteSwapper spriteSwapper;
    
     public Action OnPrepareFinished;
+   
     public Action OnAttackFinished;
     public GameObject GameObject { get; set; }
     private bool left;
@@ -19,6 +20,7 @@ public class AnimatedCombatCharacter
     public AnimatedCombatCharacter(IBattleActor actor,GameObject gameObject, bool left)
     {
         Actor = actor;
+        
         this.GameObject = gameObject;
         gameObject.name = left ? "Combat Actor: Left" : "Combat Actor: Right";
         this.spriteController = gameObject.GetComponentInChildren<BattleAnimationSpriteController>();
@@ -58,7 +60,7 @@ public class AnimatedCombatCharacter
     {
         spriteController.Critical(playSpeed);
     
-        MonoUtility.DelayFunction(AttackFinished, duration);
+        MonoUtility.DelayFunction(AttackFinished, Math.Max(duration,spriteController.GetCriticalAttackAnimationDuration()));
     }
 
     public void WalkIn(float playSpeed)
@@ -97,7 +99,7 @@ public class AnimatedCombatCharacter
     {
         spriteController.Attack(playSpeed);
     
-        MonoUtility.DelayFunction(AttackFinished, duration);
+        MonoUtility.DelayFunction(AttackFinished, Math.Max(duration,spriteController.GetAttackAnimationDuration()));
     }
 
     void AttackFinished()
