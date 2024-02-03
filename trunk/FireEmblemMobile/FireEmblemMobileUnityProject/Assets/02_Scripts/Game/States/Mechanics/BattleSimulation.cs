@@ -32,7 +32,7 @@ namespace Game.Mechanics
 
     public class BattleSimulation: ICombatResult
     {
-        private bool continuos;
+        public bool continuos;
         // private bool preview = false;
         public IBattleActor Attacker { get; private set; }
         public IBattleActor Defender { get; private set; }

@@ -177,8 +177,11 @@ namespace Game.Mechanics
                 attacker = null;
                 defender = null;
             }, .7f);
-            
-            
+
+            if (battleSimulation.continuos && battleSimulation.combatRounds[lastCombatRoundIndex].AttackerHP == 0)//Make Duells not lethal
+                battleSimulation.combatRounds[lastCombatRoundIndex].AttackerHP = 1;
+            if (battleSimulation.continuos && battleSimulation.combatRounds[lastCombatRoundIndex].DefenderHP == 0)//Make Duells not lethal
+                battleSimulation.combatRounds[lastCombatRoundIndex].DefenderHP = 1;
             int hpDelta = attacker.Hp - battleSimulation.combatRounds[lastCombatRoundIndex].AttackerHP;
             ((Unit) attacker).InflictDirectDamage((Unit)defender, hpDelta,defender.GetEquippedWeapon().DamageType, true);
            // attacker.Hp = battleSimulation.Attacker.Hp;
@@ -209,7 +212,11 @@ namespace Game.Mechanics
 
         void CheckExp()
         {
-         
+            if (battleSimulation.continuos)
+            {
+                OnBattleFinished?.Invoke(battleSimulation.AttackResult);
+                return;
+            }
             
             var system = ServiceProvider.Instance.GetSystem<UnitProgressSystem>();
             // Debug.Log("GET SYSTEM: "+system +" from serviceProvider: "+ServiceProvider.Instance);

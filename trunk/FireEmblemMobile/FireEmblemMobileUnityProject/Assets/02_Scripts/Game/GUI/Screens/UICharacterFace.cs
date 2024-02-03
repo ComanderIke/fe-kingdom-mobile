@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Game.GameActors.Units;
 using Game.GUI;
 using MoreMountains.Feedbacks;
@@ -15,7 +16,14 @@ public class UICharacterFace : MonoBehaviour
     [SerializeField] private MMF_Player feedbacks;
     [SerializeField] private ExpBarController expBar = default;
     [SerializeField] private Image blessingBackground;
+    [SerializeField] private GameObject selected;
     private Unit unit;
+    public event Action<Unit> onClicked;
+
+    public void Clicked()
+    {
+        onClicked?.Invoke(unit);
+    }
     public void Show(Unit unit)
     {
 
@@ -84,5 +92,10 @@ public class UICharacterFace : MonoBehaviour
     public void Hide()
     {
        gameObject.SetActive(false);
+    }
+
+    public void Select()
+    {
+        selected.gameObject.SetActive(true);
     }
 }

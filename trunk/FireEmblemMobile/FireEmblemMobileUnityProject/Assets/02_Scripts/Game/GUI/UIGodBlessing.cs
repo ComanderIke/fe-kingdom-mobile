@@ -11,14 +11,9 @@ namespace LostGrace
 {
     public class UIGodBlessing : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI name;
         [SerializeField] private Image face;
         [SerializeField] private GameObject selected;
-        [SerializeField] private GameObject blessed;
-        [SerializeField] private TextMeshProUGUI lv;
-        [SerializeField] private ExpBarController expBarController;
         [SerializeField] private Image godColorImage;
-        [SerializeField] private Image blessedChar;
         public event Action<int> onClicked;
 
         [SerializeField]
@@ -27,28 +22,18 @@ namespace LostGrace
         private Vector3 selectedScale;
 
         private int index = 0;
-        private Unit unit;
-        private God god;
-        public void Show(Unit unit, God god, int index, int addedExp, bool selected, Unit blessedUnit)
+        public void Show(Unit unit, God god, int index, bool selected)
         {
-            name.SetText(god.name);
-            this.unit = unit;
-            if(blessedUnit!=null)
-                blessedChar.sprite = blessedUnit.FaceSprite;
-            this.god = god;
             this.index = index;
             face.sprite = god.DialogSpriteSet.FaceSprite;
-            lv.SetText("Lv. "+unit.Bonds.GetBondLevel(god));
             godColorImage.color = god.Color;
+            transform.localScale = normalScale;
             if(selected)
-                expBarController.UpdatePreview(unit.Bonds.GetBondExperience(god)+addedExp);
+                Select();
             else
             {
-                expBarController.UpdatePreview(0);
+                Deselect();
             }
-            expBarController.UpdateInstant(unit.Bonds.GetBondExperience(god));
-            blessed.gameObject.SetActive(blessedUnit!=null);
-            transform.localScale = normalScale;
         }
 
         // public void UpdateExpPreview(int addedExp)

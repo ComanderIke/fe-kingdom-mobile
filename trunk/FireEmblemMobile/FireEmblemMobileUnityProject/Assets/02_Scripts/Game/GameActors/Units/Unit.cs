@@ -632,6 +632,10 @@ namespace Game.GameActors.Units
             SkillManager.LearnSkill(blessing);
             Debug.Log("TODO Receive Blessing");
         }
+        public void RemoveBlessing()
+        {
+            SkillManager.RemoveSkill(SkillManager.GetBlessing());
+        }
 
         public void ReceiveCurse(Curse curse)
         {
@@ -744,5 +748,16 @@ namespace Game.GameActors.Units
         {
             SkillManager.GetCurses()[0].Spread();
         }
+
+        public void RemoveAllCurses()
+        {
+            var curses = new List<Curse>(Curses);//Make copy to modify collection
+            foreach (var curse in curses)
+            {
+                RemoveCurse(curse);
+            }
+        }
+
+       
     }
 }

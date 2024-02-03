@@ -46,10 +46,26 @@ namespace LostGrace
             var go = Instantiate(prefab, transform);
             var skillUI = go.GetComponent<SkillUI>();
             instantiatedButtons.Add(skillUI);
-            bool canAffordHPCost = skill.FirstActiveMixin != null && unit.Hp > skill.FirstActiveMixin.GetHpCost(skill.level) || skill.CombatSkillMixin != null && unit.Hp > skill.CombatSkillMixin.GetHpCost(skill.level);
-            bool hasUses=skill.FirstActiveMixin != null &&skill.FirstActiveMixin.Uses>0 || skill.CombatSkillMixin != null && skill.CombatSkillMixin.Uses>0;
+            bool canAffordHPCost =
+                skill.FirstActiveMixin != null && unit.Hp > skill.FirstActiveMixin.GetHpCost(skill.level) ||
+                skill.CombatSkillMixin != null && unit.Hp > skill.CombatSkillMixin.GetHpCost(skill.level);
+            bool hasUses = skill.FirstActiveMixin != null && skill.FirstActiveMixin.Uses > 0 ||
+                           skill.CombatSkillMixin != null && skill.CombatSkillMixin.Uses > 0;
+            bool hasSynergy = false;
+            if (unit.Blessing != null)
+            {
+                foreach (var synergy in skill.GetSynergies())
+                {
+                    if (synergy.Key.god == unit.Blessing.God)
+                    {
+                        hasSynergy = true;
+                        break;
+                    }
 
-            skillUI.SetSkill(skill, false, unit.Blessing!=null, canAffordHPCost,hasUses,showToolTips, interactable);
+                }
+            }
+
+            skillUI.SetSkill(skill, false, hasSynergy, canAffordHPCost,hasUses,showToolTips, interactable);
             if(showDeleteIfFull)
                 skillUI.ShowDelete();
             skillUI.OnDeleteClicked += DeleteClicked;

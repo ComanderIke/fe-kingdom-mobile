@@ -1,4 +1,5 @@
-﻿using Game.GameInput;
+﻿using System.Collections.Generic;
+using Game.GameInput;
 using GameEngine.Input;
 using GameEngine.Tools;
 using UnityEngine;
@@ -30,21 +31,27 @@ namespace GameCamera
                 return;
             if (CameraInputProvider.InputPressed())
             {
-                DragPerformer.Drag(transform,CameraInputProvider.InputPosition());
-                
+                DragPerformer.Drag(transform, CameraInputProvider.InputPosition());
+
             }
+
             if (CameraInputProvider.InputPressedDown())
             {
                 var ray = RayProvider.CreateRay(CameraInputProvider.InputPosition());
-                if (HitChecker.CheckHit(ray) )
+                if (HitChecker.CheckHit(ray))
                 {
+                    if (!CheckUIObjectsInPosition())
+                    {
+                        DragPerformer.StartDrag(transform, CameraInputProvider.InputPosition());
+                    }
+
                     // if (EventSystem.current.currentSelectedGameObject == null ||
                     //     !HitChecker.HasTagExcluded(EventSystem.current
                     //         .currentSelectedGameObject.tag))
                     // Debug.Log(CurrentInput.GameObjectUnderPointer());
                     // if(Input.touchCount>0 && !EventSystem.current.IsPointerOverGameObject(Input.touches[0].fingerId))
                     // {
-                        DragPerformer.StartDrag(transform, CameraInputProvider.InputPosition());
+
                     // }
                     // else if (CurrentInput.GameObjectUnderPointer()!=null &&CurrentInput.GameObjectUnderPointer().CompareTag("Grid"))
                     // {
@@ -52,11 +59,47 @@ namespace GameCamera
                     // }
                 }
             }
+
             if (CameraInputProvider.InputPressedUp())
             {
                 DragPerformer.EndDrag(transform);
                 CameraSystem.ActivateMixins();
             }
+        }
+
+        public static bool CheckUIObjectsInPosition()
+        {
+            PointerEventData pointer = new PointerEventData(EventSystem.current);
+            pointer.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+            List<RaycastResult> raycastResults = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(pointer, raycastResults);
+            //Debug.Log("Raycast Position: " + pointer.position);
+
+            if (raycastResults.Count > 0)
+            {
+                //Debug.Log("Results: " + raycastResults.Count);
+                foreach (var go in raycastResults)
+                {
+                    if (!go.gameObject.CompareTag("Grid"))
+                    {
+                        //  Debug.Log("RAYCAST NOT GRID: "+go.gameObject.name);
+
+                    }
+                    else
+                    {
+                        //Debug.Log("RAYCAST GRID: "+go.gameObject.name);
+                    }
+                }
+            }
+           // Debug.Log("RAYCHECK: "+raycastResults.Count);
+            if (raycastResults.Count > 0)
+            {
+                //    Debug.Log("UICLICKCHECKER RETURN TRUE");
+                return true;
+            }
+
+            //Debug.Log("UICLICKCHECKER RETURN FALSE");
+            return false;
         }
     }
 }

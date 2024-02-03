@@ -191,7 +191,7 @@ namespace Game.GameActors.Units.Skills
                 return FirstActiveMixin.synergies;
             if (passiveMixins.Count != 0)
                 return passiveMixins[0].synergies;
-            return null;
+            return new SerializableDictionary<BlessingBP, SynergieEffects>();
         }
     }
 }

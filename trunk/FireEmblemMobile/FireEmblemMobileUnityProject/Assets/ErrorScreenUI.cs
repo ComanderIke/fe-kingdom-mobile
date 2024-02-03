@@ -30,6 +30,7 @@ namespace LostGrace
         void Show()
         {
             gameObject.SetActive(true);
+            GetComponent<Canvas>().enabled = true;
         }
 
         public void Hide()

@@ -114,29 +114,6 @@ MonoBehaviour:
     <RewardResources>k__BackingField: []
     <RewardItems>k__BackingField: []
     <Events>k__BackingField: []
-  - <ID>k__BackingField: 84bd9d23-78e8-437b-aaff-748d5384a29b
-    <Name>k__BackingField: KnightHaremLost
-    <Text>k__BackingField: Having defeated his opponent the knight takes his leave
-      after taking most of the valuables of the defeated challenger.
-    <IsPortraitLeft>k__BackingField: 1
-    <DialogActor>k__BackingField: {fileID: 0}
-    <Choices>k__BackingField:
-    - <Text>k__BackingField: Leave.
-      <NodeID>k__BackingField: 
-      <NodeFailID>k__BackingField: 
-      <AttributeRequirements>k__BackingField: []
-      <CharacterRequirements>k__BackingField: []
-      <ResourceRequirements>k__BackingField: []
-      <ItemRequirements>k__BackingField: []
-      <BlessingRequirements>k__BackingField: []
-      <RandomRate>k__BackingField: 0
-    <GroupID>k__BackingField: d96fbdee-cad3-4ec3-be32-53a519f68161
-    <DialgueType>k__BackingField: 3
-    <Position>k__BackingField: {x: 2516, y: 669}
-    <Headline>k__BackingField: 
-    <RewardResources>k__BackingField: []
-    <RewardItems>k__BackingField: []
-    <Events>k__BackingField: []
   - <ID>k__BackingField: 37837253-e1ef-439b-a6e7-c64d4f330c61
     <Name>k__BackingField: KnightHarem3
     <Text>k__BackingField: "His hand moves to the hilt of his sword - \u201CTry and
@@ -2831,6 +2808,33 @@ MonoBehaviour:
     <RewardItems>k__BackingField:
     - {fileID: 11400000, guid: 2c4120914bc011b4cb5213bda2664c59, type: 2}
     <Events>k__BackingField: []
+  - <ID>k__BackingField: 84bd9d23-78e8-437b-aaff-748d5384a29b
+    <Name>k__BackingField: KnightHaremLost
+    <Text>k__BackingField: Having defeated his opponent the knight takes his leave
+      after taking most of the valuables of the defeated challenger.
+    <IsPortraitLeft>k__BackingField: 1
+    <DialogActor>k__BackingField: {fileID: 0}
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Leave.
+      <NodeID>k__BackingField: 
+      <NodeFailID>k__BackingField: 
+      <AttributeRequirements>k__BackingField: []
+      <CharacterRequirements>k__BackingField: []
+      <ResourceRequirements>k__BackingField: []
+      <ItemRequirements>k__BackingField: []
+      <BlessingRequirements>k__BackingField: []
+      <RandomRate>k__BackingField: 0
+    <GroupID>k__BackingField: d96fbdee-cad3-4ec3-be32-53a519f68161
+    <DialgueType>k__BackingField: 3
+    <Position>k__BackingField: {x: 2516, y: 669}
+    <Headline>k__BackingField: 
+    <RewardResources>k__BackingField:
+    - Amount: -50
+      ResourceType: 0
+    - Amount: 20
+      ResourceType: 2
+    <RewardItems>k__BackingField: []
+    <Events>k__BackingField: []
   <OldGroupNames>k__BackingField:
   - TheKnightAndHisHarem
   - ChasedBySkeletons
@@ -2860,10 +2864,10 @@ MonoBehaviour:
     - Key: TheKnightAndHisHarem
       Value:
       - KnightHarem2
-      - KnightHaremLost
       - KnightHarem3
       - KnightHaremWon
       - KnightHarem1
+      - KnightHaremLost
       - KnightHarem4
     - Key: ChasedBySkeletons
       Value:

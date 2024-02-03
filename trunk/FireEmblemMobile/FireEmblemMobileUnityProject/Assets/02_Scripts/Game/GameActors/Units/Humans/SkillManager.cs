@@ -152,8 +152,16 @@ namespace Game.GameActors.Units.Humans
 
         public void RemoveSkill(Skill skill)
         {
-            skills.Remove(skill);
-            skill.UnbindSkill(unit);
+            if (skill is Blessing blessing)
+            {
+                this.blessing = null;
+            }
+            else
+            {
+                skills.Remove(skill);
+                skill.UnbindSkill(unit);
+            }
+
             OnSkillsChanged?.Invoke();
         }
 

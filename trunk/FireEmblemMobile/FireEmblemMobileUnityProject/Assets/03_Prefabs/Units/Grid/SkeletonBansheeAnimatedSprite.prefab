@@ -24,9 +24,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3277863703846139561}
-  m_LocalRotation: {x: 0.4980974, y: -0.04357787, z: 0.07547909, w: 0.8627299}
+  m_LocalRotation: {x: 0.4980974, y: -0.043577872, z: 0.07547909, w: 0.86272997}
   m_LocalPosition: {x: -0.04, y: 0.016, z: 0}
   m_LocalScale: {x: 1, y: 1.2, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2863292242632037946}
   m_RootOrder: 1
@@ -84,23 +85,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4433164540126192571
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2861010742256422526}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a8b2c9671eb0fb4ba447532b00d30c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shadowColor: {r: 0, g: 0, b: 0, a: 0.47058824}
-  shadowOffset: {x: -0.04, y: 0.016, z: 0}
-  shadowDirection: {x: 60, y: 0, z: 10}
-  shadowScale: {x: 1, y: 1.2, z: 1}
-  shadowMat: {fileID: 0}
 --- !u!1 &6738279691227117772
 GameObject:
   m_ObjectHideFlags: 0
@@ -127,6 +111,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2863292242632037946}
   m_RootOrder: 0
@@ -141,7 +126,7 @@ PrefabInstance:
     - target: {fileID: 1089187949433298099, guid: 3354878379061eb4d965f27520d43c6c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1230524308258484256, guid: 3354878379061eb4d965f27520d43c6c,
         type: 3}
@@ -218,7 +203,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 657a9dda302e3bb41bbae907c52d3b54, type: 2}
+      objectReference: {fileID: 2100000, guid: ae8eafc5b099e69489132cb3cd0896ee, type: 2}
     - target: {fileID: 3164541116706881109, guid: 3354878379061eb4d965f27520d43c6c,
         type: 3}
       propertyPath: m_Controller
@@ -227,7 +212,7 @@ PrefabInstance:
     - target: {fileID: 6674510549518585479, guid: 3354878379061eb4d965f27520d43c6c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3354878379061eb4d965f27520d43c6c, type: 3}
@@ -237,6 +222,23 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 3940586217603343898}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4433164540126192571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2861010742256422526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a8b2c9671eb0fb4ba447532b00d30c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shadowColor: {r: 0, g: 0, b: 0, a: 0.47058824}
+  shadowOffset: {x: -0.04, y: 0.016, z: 0}
+  shadowDirection: {x: 60, y: 0, z: 10}
+  shadowScale: {x: 1, y: 1.2, z: 1}
+  shadowMat: {fileID: 0}
 --- !u!4 &2863292242632037946 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1230524308258484256, guid: 3354878379061eb4d965f27520d43c6c,
