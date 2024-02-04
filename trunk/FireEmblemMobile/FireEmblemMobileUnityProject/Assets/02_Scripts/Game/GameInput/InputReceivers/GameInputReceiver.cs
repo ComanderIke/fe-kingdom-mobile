@@ -578,10 +578,16 @@ namespace Game.GameInput
                     UpdateMovementPath(selectedActor);
                     //Debug.Log("Check Attack Preview from HEre: "+x+" "+y+" "+inputPathManager.GetLastMovementPathPosition().x+" "+inputPathManager.GetLastMovementPathPosition().y);
                     if (selectedActor is IBattleActor battleActor && enemy is IBattleActor enemyBattleActor)
+                    {
+                        var lastMovementPathPosition = inputPathManager.GetLastMovementPathPosition();
+                        if (lastMovementPathPosition.x == -1 || lastMovementPathPosition.y == -1)
+                            return;
                         gameplayCommands.CheckAttackPreview(battleActor, enemyBattleActor,
-                            new GridPosition(inputPathManager.GetLastMovementPathPosition().x,
-                                inputPathManager.GetLastMovementPathPosition().y));
-                    selectionDataProvider.SetUndoAbleActor(selectionDataProvider.SelectedActor);
+                            new GridPosition(lastMovementPathPosition.x,
+                                lastMovementPathPosition.y));
+                        selectionDataProvider.SetUndoAbleActor(selectionDataProvider.SelectedActor);
+                    }
+                        
                 }
             }
 

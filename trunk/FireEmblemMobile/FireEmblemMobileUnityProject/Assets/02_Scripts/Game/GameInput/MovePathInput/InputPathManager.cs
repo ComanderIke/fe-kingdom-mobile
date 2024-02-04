@@ -158,7 +158,7 @@ namespace Game.GameInput
             if (MovementPath.Count == 0)
             {
                 Debug.Log("should not happen! test if 0/0 is fine");
-                return new Vector2Int(0, 0);
+                return new Vector2Int(-1, -1);
             }
 
             return new Vector2Int((int)MovementPath[MovementPath.Count - 1].x, (int) MovementPath[MovementPath.Count - 1].y);

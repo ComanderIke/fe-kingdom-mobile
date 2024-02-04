@@ -34,10 +34,11 @@ public class TileManager : MonoBehaviour
         props = new List<PropOnGrid>();
         destroyables = new List<DestroyableController>();
         glowSpots = new List<GlowSpot>();
-        foreach (var prop in propsParent.GetComponentsInChildren<PropOnGrid>())
-        {
-            props.Add(prop);
-        }
+        if(propsParent!=null)
+            foreach (var prop in propsParent.GetComponentsInChildren<PropOnGrid>())
+            {
+                props.Add(prop);
+            }
         foreach (var destroyable in FindObjectsOfType<DestroyableController>())
         {
             destroyables.Add(destroyable);
