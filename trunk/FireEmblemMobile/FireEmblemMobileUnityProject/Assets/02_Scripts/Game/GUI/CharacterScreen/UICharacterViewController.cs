@@ -23,20 +23,10 @@ public class UICharacterViewController : MonoBehaviour
     [FormerlySerializedAs("unitBp")] public Unit unit;
     public TextMeshProUGUI charName;
 
-
-    public GameObject baseAttributePanel;
-    public GameObject combatStatsPanel;
-    public GameObject baseAttributeButton;
-    public GameObject combatStatsButton;
     
-    public UIStatText Atk;
-    public UIStatText AtkSpeed;
-    public UIStatText PhysArmor;
-    public UIStatText MagicArmor;
-    public UIStatText Hitrate;
-    public UIStatText DodgeRate;
-    public UIStatText Crit;
-    [FormerlySerializedAs("CritAvoid")] public UIStatText CurseResistance;
+
+    public ShowAttributeState showAttributeState;
+  
     
     public TextMeshProUGUI STR_Label;
     public TextMeshProUGUI INT_Label;
@@ -99,25 +89,8 @@ public class UICharacterViewController : MonoBehaviour
         if(CharacterFace!=null)
             CharacterFace.Show(unit);
         charName.SetText(unit.name);//+", "+unit.jobClass);
-        bool physical = unit.equippedWeapon.DamageType == DamageType.Physical;
-        int sumBonuses = unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Attack,physical);
-        Atk.SetValue(unit.BattleComponent.BattleStats.GetDamage(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
-        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.AttackSpeed,physical);
-        AtkSpeed.SetValue(unit.BattleComponent.BattleStats.GetAttackSpeed(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
-        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Protection,physical);
-        PhysArmor.SetValue(unit.BattleComponent.BattleStats.GetPhysicalResistance(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
-        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Resistance,physical);
-        MagicArmor.SetValue(unit.BattleComponent.BattleStats.GetFaithResistance(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
-        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Hit,physical);
-        Hitrate.SetValue(unit.BattleComponent.BattleStats.GetHitrate(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
-        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Avoid,physical);
-        DodgeRate.SetValue(unit.BattleComponent.BattleStats.GetAvoid(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
-        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Crit,physical);
-        Crit.SetValue(unit.BattleComponent.BattleStats.GetCrit(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
-        sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.CurseResistance,physical);
-        CurseResistance.SetValue(unit.BattleComponent.BattleStats.GetCurseResistance(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
-
-        if (showAttributes)
+       
+        if (showAttributeState==ShowAttributeState.Attributes)
         {
             STR.SetValue(unit.Stats.CombinedAttributes().STR,unit.Stats.GetAttributeBonusState(AttributeType.STR));
             INT.SetValue(unit.Stats.CombinedAttributes().INT,unit.Stats.GetAttributeBonusState(AttributeType.INT));
@@ -127,8 +100,17 @@ public class UICharacterViewController : MonoBehaviour
             FTH.SetValue(unit.Stats.CombinedAttributes().FAITH,unit.Stats.GetAttributeBonusState(AttributeType.FTH));
             LCK.SetValue(unit.Stats.CombinedAttributes().LCK,unit.Stats.GetAttributeBonusState(AttributeType.LCK));
             DEF.SetValue(unit.Stats.CombinedAttributes().DEF,unit.Stats.GetAttributeBonusState(AttributeType.DEF));
+            STR_Label.text = Attributes.GetAsLongText(0);
+            DEX_Label.text = Attributes.GetAsLongText(1);
+            INT_Label.text = Attributes.GetAsLongText(2);
+            AGI_Label.text = Attributes.GetAsLongText(3);
+            LCK_Label.text = Attributes.GetAsLongText(5);
+            CON_Label.text = Attributes.GetAsLongText(4);
+            DEF_Label.text = Attributes.GetAsLongText(6);
+            FTH_Label.text = Attributes.GetAsLongText(7);
+            
         }
-        else
+        else if(showAttributeState==ShowAttributeState.Growths)
         {
             STR.SetValue(unit.Stats.CombinedGrowths().STR,unit.Stats.GetGrowthBonusState(AttributeType.STR));
             INT.SetValue(unit.Stats.CombinedGrowths().INT,unit.Stats.GetGrowthBonusState(AttributeType.INT));
@@ -138,122 +120,136 @@ public class UICharacterViewController : MonoBehaviour
             FTH.SetValue(unit.Stats.CombinedGrowths().FAITH,unit.Stats.GetGrowthBonusState(AttributeType.FTH));
             LCK.SetValue(unit.Stats.CombinedGrowths().LCK,unit.Stats.GetGrowthBonusState(AttributeType.LCK));
             DEF.SetValue(unit.Stats.CombinedGrowths().DEF,unit.Stats.GetGrowthBonusState(AttributeType.DEF));
+            STR_Label.text = Attributes.GetAsLongText(0);
+            DEX_Label.text = Attributes.GetAsLongText(1);
+            INT_Label.text = Attributes.GetAsLongText(2);
+            AGI_Label.text = Attributes.GetAsLongText(3);
+            LCK_Label.text = Attributes.GetAsLongText(5);
+            CON_Label.text = Attributes.GetAsLongText(4);
+            DEF_Label.text = Attributes.GetAsLongText(6);
+            FTH_Label.text = Attributes.GetAsLongText(7);
+        }
+        else
+        {
+            bool physical = unit.equippedWeapon.DamageType == DamageType.Physical;
+            int sumBonuses = unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Attack,physical);
+            STR.SetValue(unit.BattleComponent.BattleStats.GetDamage(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
+            sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.AttackSpeed,physical);
+            INT.SetValue(unit.BattleComponent.BattleStats.GetAttackSpeed(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
+            sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Protection,physical);
+            DEF.SetValue(unit.BattleComponent.BattleStats.GetPhysicalResistance(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
+            sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Resistance,physical);
+            FTH.SetValue(unit.BattleComponent.BattleStats.GetFaithResistance(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
+            sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Hit,physical);
+            DEX.SetValue(unit.BattleComponent.BattleStats.GetHitrate(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
+            sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Avoid,physical);
+            AGI.SetValue(unit.BattleComponent.BattleStats.GetAvoid(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
+            sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Crit,physical);
+            LCK.SetValue(unit.BattleComponent.BattleStats.GetCrit(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
+            sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.CurseResistance,physical);
+            CON.SetValue(unit.BattleComponent.BattleStats.GetCurseResistance(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
+            STR_Label.text = CombatStats.GetAsText(CombatStats.CombatStatType.Attack);
+            DEX_Label.text = CombatStats.GetAsText(CombatStats.CombatStatType.Hit);
+            INT_Label.text = CombatStats.GetAsText(CombatStats.CombatStatType.AttackSpeed);
+            AGI_Label.text = CombatStats.GetAsText(CombatStats.CombatStatType.Avoid);
+            LCK_Label.text = CombatStats.GetAsText(CombatStats.CombatStatType.Crit);
+            CON_Label.text = CombatStats.GetAsText(CombatStats.CombatStatType.CurseResistance);
+            DEF_Label.text = CombatStats.GetAsText(CombatStats.CombatStatType.Protection);
+            FTH_Label.text = CombatStats.GetAsText(CombatStats.CombatStatType.Resistance);
         }
         //Debug.Log("FTH: "+unit.Stats.BaseAttributes.FAITH+" "+unit.Stats.CombinedAttributes().FAITH+" "+unit.Stats.BonusAttributesFromFood.FAITH+" "+unit.Stats.BonusAttributesFromEffects.FAITH+" "+unit.Stats.BonusAttributesFromEquips.FAITH+" "+unit.Stats.BonusAttributesFromWeapon.FAITH+" "+unit.Stats.BaseAttributesAndWeapons().FAITH+unit.Stats.GetAttributeBonusState(AttributeType.FTH));
     }
 
-    protected bool showAttributes = true;
+
     public void ToggleAttributeGrowths()
     {
-        showAttributes = !showAttributes;
-        UpdateUI(unit);
-    }
-
-    public void ShowGrowths()
-    {
-        showAttributes = false;
-        UpdateUI(unit);
-    }
-
-    public void CombatStatsButtonClicked()
-    {
-        baseAttributeButton.GetComponent<CanvasGroup>().alpha = 1;
-        combatStatsButton.GetComponent<CanvasGroup>().alpha = .6f;
-        baseAttributePanel.SetActive(false);
-        combatStatsPanel.SetActive(true);
-    }
-    public void BaseAttributeButtonClicked()
-    {
-        showAttributes = true;
-        baseAttributeButton.GetComponent<CanvasGroup>().alpha = .6f;
-        combatStatsButton.GetComponent<CanvasGroup>().alpha = 1f;
-        baseAttributePanel.SetActive(true);
-        combatStatsPanel.SetActive(false);
+        switch (showAttributeState)
+        {
+            case ShowAttributeState.Attributes:
+                showAttributeState = ShowAttributeState.Growths; break;
+            case ShowAttributeState.Growths: 
+                showAttributeState = ShowAttributeState.CombatStats;break;
+            case ShowAttributeState.CombatStats: 
+                showAttributeState = ShowAttributeState.Attributes;break;
+        }
         UpdateUI(unit);
     }
     public void STR_Clicked()
     {
         Debug.Log("STR CLICKED");
-        ToolTipSystem.ShowAttributeValue(unit, AttributeType.STR, STR.transform.position);
+        if(showAttributeState==ShowAttributeState.Attributes)
+            ToolTipSystem.ShowAttributeValue(unit, AttributeType.STR, STR.transform.position);
+        else if(showAttributeState==ShowAttributeState.CombatStats)
+            ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Attack, STR.transform.position);
         //ToolTipSystem.ShowAttribute("Strength", "Increases ones physical damage output!",unit.Stats.BaseAttributes.STR, STR.transform.position);
     }
     public void INT_Clicked()
     {
         Debug.Log("INT CLICKED");
-        ToolTipSystem.ShowAttributeValue(unit, AttributeType.INT, INT.transform.position);
+        if(showAttributeState==ShowAttributeState.Attributes)
+            ToolTipSystem.ShowAttributeValue(unit, AttributeType.INT, INT.transform.position);
+        else if(showAttributeState==ShowAttributeState.CombatStats)
+            ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.AttackSpeed, INT.transform.position);
         //ToolTipSystem.ShowAttribute("Intelligence", "Increases ones magical damage output and something else!",unit.Stats.BaseAttributes.INT,INT.transform.position);
     }
     public void DEX_Clicked()
     {
-        
-        ToolTipSystem.ShowAttributeValue(unit, AttributeType.DEX, DEX.transform.position);
+        if(showAttributeState==ShowAttributeState.Attributes)
+            ToolTipSystem.ShowAttributeValue(unit, AttributeType.DEX, DEX.transform.position);
+        else if(showAttributeState==ShowAttributeState.CombatStats)
+            ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Hit, DEX.transform.position);
         //ToolTipSystem.ShowAttribute("Dexterity", "Increases ones accuracy and influences critical hitrate!",unit.Stats.BaseAttributes.DEX,DEX.transform.position);
     }
     public void AGI_Clicked()
     {
-        ToolTipSystem.ShowAttributeValue(unit, AttributeType.AGI, AGI.transform.position);
+        if(showAttributeState==ShowAttributeState.Attributes)
+            ToolTipSystem.ShowAttributeValue(unit, AttributeType.AGI, AGI.transform.position);
+        else if(showAttributeState==ShowAttributeState.CombatStats)
+            ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Avoid, AGI.transform.position);
+
        // ToolTipSystem.ShowAttribute("Agility", "Increases ones ability to dodge as well as attack speed! Having 5 higher than your opponent allows for double attacks",unit.Stats.BaseAttributes.AGI,AGI.transform.position);
     }
     public void DEF_Clicked()
     {
-        ToolTipSystem.ShowAttributeValue(unit, AttributeType.DEF, DEF.transform.position);
+        if(showAttributeState==ShowAttributeState.Attributes)
+            ToolTipSystem.ShowAttributeValue(unit, AttributeType.DEF, DEF.transform.position);
+        else if(showAttributeState==ShowAttributeState.CombatStats)
+            ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Protection, DEF.transform.position);
+
         //ToolTipSystem.ShowAttribute("Defense", "Increases your physical damage resistance!",unit.Stats.BaseAttributes.DEF,DEF.transform.position);
     }
     public void LCK_Clicked()
     {
-        ToolTipSystem.ShowAttributeValue(unit, AttributeType.LCK, LCK.transform.position);
+        if(showAttributeState==ShowAttributeState.Attributes)
+            ToolTipSystem.ShowAttributeValue(unit, AttributeType.LCK, LCK.transform.position);
+        else if(showAttributeState==ShowAttributeState.CombatStats)
+            ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Crit, LCK.transform.position);
         //ToolTipSystem.ShowAttribute("Luck", "Increases ones critical hit rate and many other things!",unit.Stats.BaseAttributes.LCK,LCK.transform.position);
     }
     public void CON_Clicked()
     {
-        ToolTipSystem.ShowAttributeValue(unit, AttributeType.CON, CON.transform.position);
+        if(showAttributeState==ShowAttributeState.Attributes)
+            ToolTipSystem.ShowAttributeValue(unit, AttributeType.CON, CON.transform.position);
+        else if(showAttributeState==ShowAttributeState.CombatStats)
+            ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.CurseResistance, CON.transform.position);
         //ToolTipSystem.ShowAttribute("Constitution", "Increases ones maximum Hitpoints and allows to wield heavier weapons!",unit.Stats.BaseAttributes.CON,CON.transform.position);
     }
     public void FTH_Clicked()
     {
-        ToolTipSystem.ShowAttributeValue(unit, AttributeType.FTH, FTH.transform.position);
+        if(showAttributeState==ShowAttributeState.Attributes)
+            ToolTipSystem.ShowAttributeValue(unit, AttributeType.FTH, FTH.transform.position);
+        else if(showAttributeState==ShowAttributeState.CombatStats)
+            ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Resistance, FTH.transform.position);
        // ToolTipSystem.ShowAttribute("Faith", "Increases ones holy and occult damage and increases magical damage resistance!",unit.Stats.BaseAttributes.FAITH,FTH.transform.position);
     }
-    public void Attack_Clicked()
-    {
-        ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Attack, Atk.transform.position);
-        // ToolTipSystem.ShowAttribute("Faith", "Increases ones holy and occult damage and increases magical damage resistance!",unit.Stats.BaseAttributes.FAITH,FTH.transform.position);
-    }
-    public void Hit_Clicked()
-    {
-        ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Hit, Hitrate.transform.position);
-        // ToolTipSystem.ShowAttribute("Faith", "Increases ones holy and occult damage and increases magical damage resistance!",unit.Stats.BaseAttributes.FAITH,FTH.transform.position);
-    }
-    public void Avoid_Clicked()
-    {
-        ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Avoid, DodgeRate.transform.position);
-        // ToolTipSystem.ShowAttribute("Faith", "Increases ones holy and occult damage and increases magical damage resistance!",unit.Stats.BaseAttributes.FAITH,FTH.transform.position);
-    }
-    public void Crit_Clicked()
-    {
-        ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Crit, Crit.transform.position);
-        // ToolTipSystem.ShowAttribute("Faith", "Increases ones holy and occult damage and increases magical damage resistance!",unit.Stats.BaseAttributes.FAITH,FTH.transform.position);
-    }
-    public void CurseRes_Clicked()
-    {
-        ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.CurseResistance, CurseResistance.transform.position);
-        // ToolTipSystem.ShowAttribute("Faith", "Increases ones holy and occult damage and increases magical damage resistance!",unit.Stats.BaseAttributes.FAITH,FTH.transform.position);
-    }
-    public void PhysResistance_Clicked()
-    {
-        ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Protection, PhysArmor.transform.position);
-        // ToolTipSystem.ShowAttribute("Faith", "Increases ones holy and occult damage and increases magical damage resistance!",unit.Stats.BaseAttributes.FAITH,FTH.transform.position);
-    }
-    public void MagResistance_Clicked()
-    {
-        ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Resistance, MagicArmor.transform.position);
-        // ToolTipSystem.ShowAttribute("Faith", "Increases ones holy and occult damage and increases magical damage resistance!",unit.Stats.BaseAttributes.FAITH,FTH.transform.position);
-    }
-    public void AttackSpeed_Clicked()
-    {
-        ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.AttackSpeed, AtkSpeed.transform.position);
-        // ToolTipSystem.ShowAttribute("Faith", "Increases ones holy and occult damage and increases magical damage resistance!",unit.Stats.BaseAttributes.FAITH,FTH.transform.position);
-    }
+   
+   
+   
+    
+   
+  
+   
+   
     
     public virtual void Hide()
     {

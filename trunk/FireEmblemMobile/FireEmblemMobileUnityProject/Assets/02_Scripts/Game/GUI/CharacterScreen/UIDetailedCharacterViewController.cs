@@ -9,6 +9,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum ShowAttributeState
+{
+    Attributes,
+    Growths,
+    CombatStats,
+}
 [ExecuteInEditMode]
 public class UIDetailedCharacterViewController : UICharacterViewController
 {
@@ -19,7 +25,7 @@ public class UIDetailedCharacterViewController : UICharacterViewController
     public SkillTreeUI skillTreeUI;
     public Animator IdleAnimation;
     public SkillsUI skillsUI;
-    
+   
     [SerializeField] private Image blessingEffect;
     [SerializeField] private Image blessingEffect2;
     [SerializeField] private UIBlessingButton blessingButton;
@@ -38,6 +44,7 @@ public class UIDetailedCharacterViewController : UICharacterViewController
     // }
     public override void Show(Unit unit)
     {
+        showAttributeState = ShowAttributeState.Attributes;
         base.Show(unit);
         // Debug.Log("SHOW");
         if (boonBaneController != null)
@@ -93,15 +100,21 @@ public class UIDetailedCharacterViewController : UICharacterViewController
             boonBaneController.SoftResetBoonBane();
         }
 
-        if (showAttributes)
+        if (showAttributeState==ShowAttributeState.Attributes)
         {
             if(attributeHeaderText!=null)
                 attributeHeaderText.SetText("Attributes");
         }
-        else
+        else if(showAttributeState==ShowAttributeState.Growths)
         {
             if(attributeHeaderText!=null)
                 attributeHeaderText.SetText("Growths");
+        }
+        else
+        {
+            if(attributeHeaderText!=null)
+                attributeHeaderText.SetText("Combat Stats");
+
         }
         base.UpdateUI(unit);
         Lv.SetText("Lv. "+unit.ExperienceManager.Level);

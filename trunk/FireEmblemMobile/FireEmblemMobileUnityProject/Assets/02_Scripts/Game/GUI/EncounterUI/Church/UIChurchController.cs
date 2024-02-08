@@ -18,6 +18,8 @@ public class UIChurchController : MonoBehaviour
     public ChurchEncounterNode node;
     [HideInInspector]
     public Party party;
+
+    [SerializeField] private ShrineController shrineController;
     [SerializeField] private GameObject characterFacesContainers;
     [SerializeField] private GameObject characterFacePrefab;
     [SerializeField] private TextMeshProUGUI godStatueNameText;
@@ -92,10 +94,16 @@ public class UIChurchController : MonoBehaviour
         if (prevGod != selectedGod)
         {
            
-            
-            unitIdleAnimation.PlayRunning(selectedGod<prevGod);
+           if(prevGod>selectedGod)
+                shrineController.NextStatue();
+           else
+           {
+               shrineController.PrevStatue();
+           }
+            //unitIdleAnimation.PlayRunning(selectedGod<prevGod);
             prevGod = selectedGod;
         }
+        shrineController.SetUnit(party.ActiveUnit);
 
         curseButton.gameObject.SetActive(party.ActiveUnit.Curses.Count != 0);
         prayButton.GetComponentInChildren<TextMeshProUGUI>().text=(!alreadyPrayed.Contains(party.ActiveUnit)?"<bounce>Pray" : "</bounce>Already Prayed");
@@ -187,6 +195,7 @@ public class UIChurchController : MonoBehaviour
 
     public void Hide()
     {
+        shrineController.Hide();
         canvas.enabled = false;
         party.onActiveUnitChanged -= ActiveUnitChanged;
       
@@ -210,6 +219,7 @@ public class UIChurchController : MonoBehaviour
         canvas.enabled = true;
         this.party = party;
         this.church = node.church;
+        shrineController.Show();
         party.onActiveUnitChanged -= ActiveUnitChanged;
         party.onActiveUnitChanged += ActiveUnitChanged;
         alreadyPrayed = new List<Unit>();

@@ -11,7 +11,7 @@ namespace MoreMountains.Tools
 	public class MMBillboard : MonoBehaviour
 	{
 		/// the camera we're facing
-		public Camera MainCamera { get; set; }
+		[SerializeField] private Camera MainCamera;
 		/// whether or not this object should automatically grab a camera on start
 		[Tooltip("whether or not this object should automatically grab a camera on start")]
 		public bool GrabMainCameraOnStart = true;
